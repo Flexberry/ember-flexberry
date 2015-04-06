@@ -1,7 +1,7 @@
 {
   "name": "prototype-ember-cli-application",
   "version": "0.0.0",
-  "description": "Small description for prototype-ember-cli-application goes here",
+  "description": "Flexberry Template prototype written in Ember.js using Ember CLI",
   "private": true,
   "directories": {
     "doc": "doc",

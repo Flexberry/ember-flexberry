@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import SortableHeaderCellView from 'app/views/ember-table/sortable-header-cell.js';
+import SortableHeaderCellView from 'prototype-ember-cli-application/views/ember-table/sortable-header-cell';
 
 // TODO: move to ember-table/ folder?
 export default Ember.Mixin.create({

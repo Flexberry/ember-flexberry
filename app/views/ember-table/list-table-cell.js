@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import EmberTableCell from '../../views/table-cell';
 
 /**
  * Представление для ячейки списковой таблицы. Вызывает обработчик клика по строке у контроллера
  * списковой формы.
  */
-export default Ember.Table.TableCell.extend({
+export default EmberTableCell.extend({
     /**
      * Обработчик клика по ячейке.
      *

@@ -11,6 +11,9 @@
     "ember-load-initializers": "ember-cli/ember-load-initializers#0.0.2",
     "ember-qunit": "0.3.0",
     "ember-qunit-notifications": "0.0.7",
-    "qunit": "~1.17.1"
+    "qunit": "~1.17.1",
+    "jquery-ui": "1.10.1",
+    "jquery-mousewheel": "~3.1.4",
+    "antiscroll": "fa3f81d3c07b647a63036da1de859fcaf1355993"
   }
 }

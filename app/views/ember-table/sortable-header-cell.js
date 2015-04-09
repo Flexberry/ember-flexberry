@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import EmberTableCell from '../../views/table-cell';
 
-export default Ember.Table.TableCell.extend({
+export default EmberTableCell.extend({
     templateName: 'ember-table/sortable-header-cell',
 
     /**

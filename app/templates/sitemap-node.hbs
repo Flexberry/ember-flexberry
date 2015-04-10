@@ -1,0 +1,17 @@
+<li class="list-group-item">
+    {{#if link}}
+        {{#link-to link}}
+            {{title}}
+        {{/link-to}}
+    {{else}}
+        {{title}}
+    {{/if}}
+
+    {{#if children.length}}
+        <ul>
+        {{#each child in children}}
+            {{render "sitemap-node" child}}
+        {{/each}}
+        </ul>
+    {{/if}}
+</li>

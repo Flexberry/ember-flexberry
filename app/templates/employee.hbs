@@ -33,7 +33,8 @@
     <div class="form-group">
         <label class="col-sm-2 control-label">BirthDate</label>
         <div class="col-sm-10">
-            {{view "date-picker" class="form-control" placeholder="(no value)" dateBinding="birthDate"}}
+            {{bootstrap-datepicker class="form-control" placeholder="(no value)" value=birthDate
+              format="dd.mm.yyyy" todayBtn="linked" clearBtn=true orientation="top auto" autoclose=true todayHighlight=true}}
         </div>
     </div>
 </form>

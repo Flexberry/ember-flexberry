@@ -1,7 +1,22 @@
-$font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
+@import "bootstrap";
 
-body {
-  font: 100% $font-stack;
-  color: $primary-color;
+html, body {
+    margin: 30px 0;
+}
+
+li a.active {
+    background-color: royalblue;
+    color: #fff;
+}
+
+.spinner {
+    background: url('http://gdelekarstvo.ru/img/ajax-loader-blue.gif') no-repeat;
+    height: 11px;
+    width: 43px;
+    margin: 0 auto;
+}
+
+.loading-message {
+    text-align: center;
+    color: #aaa;
 }

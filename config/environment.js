@@ -37,6 +37,13 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+  } else {
+    ENV['simple-auth'] = {
+      authorizer: 'authorizer:custom',
+      // FIXME: dublicates with application-adapter.
+      crossOriginWhitelist: ['http://northwindodata.azurewebsites.net/odata', 'http://localhost:4356/odata'],
+      store: 'simple-auth-session-store:cookie'
+    };
   }
 
   if (environment === 'production') {

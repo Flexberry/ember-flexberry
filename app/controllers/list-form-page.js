@@ -2,6 +2,7 @@ import Ember from 'ember';
 import PaginatedControllerMixin from 'prototype-ember-cli-application/mixins/paginated-controller';
 import SortableControllerMixin from 'prototype-ember-cli-application/mixins/sortable-controller';
 import SortableColumnMixin from 'prototype-ember-cli-application/mixins/sortable-column';
+import EmberTableColumnDefinition from '../column-definition';
 
 export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableControllerMixin, {
     actions: {
@@ -26,7 +27,7 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
             return {};
         } else {
             return model.objectAt(0).get('_view').properties.map(function (propName) {
-                var columnDefinition = Ember.Table.ColumnDefinition.createWithMixins(SortableColumnMixin, {
+                var columnDefinition = EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, {
                     columnWidth: 150,
                     textAlign: 'text-align-center',
                     headerCellName: propName,

@@ -1,6 +1,6 @@
 <div id="employee-list" class="list-group">
     {{#link-to 'employee.new' class="list-group-item bold"}}+ New Employee{{/link-to}}
-    {{table-component
+    {{ember-table
         hasFooter=false
         enableContentSelection=false
         columnsBinding="tableColumns"

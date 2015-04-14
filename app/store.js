@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-DS.Store.reopen({
+export default DS.Store.reopen({
     // https://github.com/emberjs/data/issues/1576
     findOneQuery: function(type, id, query) {
         var store = this,

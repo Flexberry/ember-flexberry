@@ -3,6 +3,7 @@ import PaginatedControllerMixin from 'prototype-ember-cli-application/mixins/pag
 import SortableControllerMixin from 'prototype-ember-cli-application/mixins/sortable-controller';
 import SortableColumnMixin from 'prototype-ember-cli-application/mixins/sortable-column';
 import EmberTableColumnDefinition from '../column-definition';
+import ListTableCellView from 'prototype-ember-cli-application/views/ember-table/list-table-cell';
 
 export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableControllerMixin, {
     actions: {
@@ -31,7 +32,7 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
                     columnWidth: 150,
                     textAlign: 'text-align-center',
                     headerCellName: propName,
-                    tableCellViewClass: 'App.ListTableCellView',
+                    tableCellViewClass: ListTableCellView,
                     getCellContent: function (row) {
                         return row.content.get(propName);
                     }

@@ -41,8 +41,7 @@ module.exports = function(environment) {
     ENV['simple-auth'] = {
       authorizer: 'authorizer:custom',
       // FIXME: dublicates with application-adapter.
-      crossOriginWhitelist: ['http://northwindodata.azurewebsites.net/odata', 'http://localhost:4356/odata'],
-      store: 'simple-auth-session-store:cookie'
+      crossOriginWhitelist: ['http://northwindodata.azurewebsites.net/odata', 'http://localhost:4356/odata']
     };
   }
 

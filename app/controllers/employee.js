@@ -3,22 +3,24 @@ import EmberValidations from 'ember-validations';
 
 // Structure to show common errors.
 var ErrorableControllerMixin = Ember.Mixin.create({
-    init: function(){
+    init: function() {
         this._super();
         this.set('errorMessages', []);
     },
 
     actions:{
-        addErrorMessage: function(msg){
+        addErrorMessage: function(msg) {
             this.get('errorMessages').pushObject(msg);
         },
 
-        dismissErrorMessages: function(){
+        dismissErrorMessages: function() {
             this.get('errorMessages').clear();
         }
     }
 });
 
+// TODO: Ember.ObjectController is deprecated, please use Ember.Controller.
+// But validations don't work using Ember.Controller.
 export default Ember.ObjectController.extend(EmberValidations.Mixin, ErrorableControllerMixin, {
     actions: {
         save: function() {
@@ -50,15 +52,19 @@ export default Ember.ObjectController.extend(EmberValidations.Mixin, ErrorableCo
             // TODO: нужно учитывать пэйджинг.
             // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
             // Либо редиректить на что-то типа /employees/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-            this.transitionTo('employees');
+            this.transitionToRoute('employees');
         }
     },
 
     // Validators.
     validations: {
         firstName: {
-            presence: { message: ' значение не может быть пустым' },
-            length: { minimum: 5, messages: { tooShort: ' значение должно быть минимум 5 символов'} }
+            presence: true,
+            length: { minimum: 5 }
+        },
+        lastName: {
+            presence: true,
+            length: { minimum: 5 }
         }
     },
 

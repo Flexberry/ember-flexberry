@@ -21,19 +21,20 @@
         <label class="col-sm-2 control-label">FirstName</label>
         <span style="color:red">{{errors.firstName}}</span>
         <div class="col-sm-10">
-            {{input type="text" class="form-control" placeholder="(no value)" required=true value=firstName}}
+            {{input type="text" class="form-control" placeholder="(no value)" required=true value=model.firstName}}
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">LastName</label>
+        <span style="color:red">{{errors.lastName}}</span>
         <div class="col-sm-10">
-            {{input type="text" class="form-control" placeholder="(no value)" required=true value=lastName}}
+            {{input type="text" class="form-control" placeholder="(no value)" required=true value=model.lastName}}
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">BirthDate</label>
         <div class="col-sm-10">
-            {{bootstrap-datepicker class="form-control" placeholder="(no value)" value=birthDate
+            {{bootstrap-datepicker class="form-control" placeholder="(no value)" value=model.birthDate
               format="dd.mm.yyyy" todayBtn="linked" clearBtn=true orientation="top auto" autoclose=true todayHighlight=true}}
         </div>
     </div>

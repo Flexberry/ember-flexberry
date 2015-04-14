@@ -164,16 +164,16 @@ export default DS.RESTAdapter.extend({
         return url;
     },
 
-    updateRecord: function(store, type, record) {
+    updateRecord: function(store, type, snapshot) {
         var data = {},
             serializer = store.serializerFor(type.typeKey),
-            objectView = record.get('_view');
+            objectView = snapshot.record.get('_view');
 
-        serializer.serializeIntoHash(data, type, record);
+        serializer.serializeIntoHash(data, type, snapshot);
 
-        var id = Ember.get(record, 'id');
+        var id = Ember.get(snapshot, 'id');
         var method = objectView ? 'PATCH' : 'PUT';
 
-        return this.ajax(this.buildURL(type.typeKey, id, record), method, { data: data });
+        return this.ajax(this.buildURL(type.typeKey, id, snapshot), method, { data: data });
     }
 });

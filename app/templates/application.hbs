@@ -10,7 +10,7 @@
             <a class="navbar-brand" href="#">Flexberry prototype written in Ember.js</a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-            User: {{username}}
+            User: {{model.username}}
             {{#if session.isAuthenticated}}
                 <a {{ action 'invalidateSession' }}>Logout</a>
             {{else}}
@@ -24,7 +24,7 @@
                 <div class="col-md-3">
                     <div class="well sidebar-nav">
                         <strong>Navigation</strong>
-                        {{render "sitemap" sitemap}}
+                        {{render "sitemap" model.sitemap}}
                     </div>
                 </div>
                 <div class="col-md-9">

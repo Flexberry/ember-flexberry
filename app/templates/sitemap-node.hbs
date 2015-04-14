@@ -1,15 +1,15 @@
 <li class="list-group-item">
-    {{#if link}}
-        {{#link-to link}}
-            {{title}}
+    {{#if model.link}}
+        {{#link-to model.link}}
+            {{model.title}}
         {{/link-to}}
     {{else}}
-        {{title}}
+        {{model.title}}
     {{/if}}
 
-    {{#if children.length}}
+    {{#if model.children.length}}
         <ul>
-        {{#each child in children}}
+        {{#each child in model.children}}
             {{render "sitemap-node" child}}
         {{/each}}
         </ul>

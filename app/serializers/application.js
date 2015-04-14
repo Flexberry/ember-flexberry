@@ -22,9 +22,7 @@ export default DS.RESTSerializer.extend({
             }
         }
 
-        // metaForType has been deprecated, use setMetadataFor in newer versions.
-        // https://github.com/emberjs/data/blob/master/CHANGELOG.md
-        store.metaForType(type, meta);
+        store.setMetadataFor(type, meta);
     },
 
     normalizePayload: function(payload) {
@@ -57,7 +55,7 @@ export default DS.RESTSerializer.extend({
     },
 
     serialize: function(snapshot, options) {
-        var objectView = snapshot.get('_view');
+        var objectView = snapshot.record.get('_view');
         if (!objectView) {
             return this._super.apply(this, arguments);
         }

@@ -16,6 +16,15 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    // Read more about CSP:
+    // http://www.ember-cli.com/#content-security-policy
+    // https://github.com/rwjblue/ember-cli-content-security-policy
+    // http://content-security-policy.com
+    contentSecurityPolicy: {
+      'style-src': "'self' 'unsafe-inline'",
+      'connect-src': "'self' http://northwindodata.azurewebsites.net http://localhost:4356"
     }
   };
 

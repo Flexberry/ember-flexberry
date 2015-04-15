@@ -14,17 +14,13 @@ export default FetchModelRoute.extend({
         return store.findOneByView(this.modelTypeKey, params.id, this.view);
     },
 
-    beforeModel: function(transition, queryParams){
-        // Без этого не отрабатывает запрос на авторизацию.
-        this._super(transition, queryParams);
+    resetController: function(controller, isExisting, transition) {
+        this._super.apply(arguments);
 
-        var controller = this.get('controller');
-        if (controller) {
-            controller.send('dismissErrorMessages');
-            var oldModel = controller.get('model');
-            if (oldModel && oldModel.get('isDirty')) {
-                oldModel.rollback();
-            }
+        controller.send('dismissErrorMessages');
+        var model = controller.get('model');
+        if (model && model.get('isDirty')) {
+            model.rollback();
         }
     }
 });

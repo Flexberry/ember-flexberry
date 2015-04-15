@@ -24,5 +24,5 @@ export default Router.map(function() {
     this.resource('employee', {path: 'employees/:id'});
 
     // /employees/new
-    this.route('employee.new', { path: 'employees/new' });
+    this.resource('employee.new', { path: 'employees/new' });
 });

@@ -70,7 +70,7 @@ export default DS.RESTSerializer.extend({
             }
         }
 
-        var changedAttributes = Object.keys(snapshot.get('_inFlightAttributes'));
+        var changedAttributes = Object.keys(snapshot.record.get('_inFlightAttributes'));
 
         snapshot.eachAttribute(function(key, attribute) {
             if (changedAttributes.indexOf(key) !== -1) {

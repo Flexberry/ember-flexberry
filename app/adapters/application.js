@@ -31,6 +31,41 @@ export default DS.RESTAdapter.extend({
         return query;
     },
 
+    find: function(store, type, id, snapshot) {
+        var view = snapshot.get('_view');
+        if (!view) {
+            return this._super.apply(this, arguments);
+        } else {
+            var url = this.buildURL(type.typeKey, id);
+            var serializer = store.serializerFor(type);
+            var query = this.getDataObjectViewQuery(view, serializer);
+            return this.ajax(url, 'GET', { data: query }).then(function(data) {
+                data._view = view;
+                return data;
+            });
+        }
+    },
+
+    findQuery: function(store, type, query) {
+        var view = query._view;
+        if (!view) {
+            return this._super.apply(this, arguments);
+        } else {
+            delete query._view;
+            var serializer = store.serializerFor(type);
+            var viewQuery = this.getDataObjectViewQuery(view, serializer);
+            query = Ember.merge(viewQuery, query);
+            return this._super(store, type, query).then(function(data) {
+                for(var i = 0; i < data.value.length; i++) {
+                    data.value[i]._view = view;
+                }
+
+                data._manyview = view;
+                return data;
+            });
+        }
+    },
+
     // TODO: Логику view2query можно вынести в отдельный класс, наверное, а то целых 4 вспомогательных функции.
     // Supports OData v4 only.
     getDataObjectViewQuery: function(view, serializer) {

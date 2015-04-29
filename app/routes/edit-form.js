@@ -11,7 +11,21 @@ export default FetchModelRoute.extend({
         var store = this.store;
 
         // :id param defined in router.js
-        return store.findOneByView(this.modelTypeKey, params.id, this.view);
+
+        // Because fetchById don't setup preload if hasRecordForId returns true.
+        if (store.hasRecordForId(this.modelTypeKey, params.id)) {
+            var record = store.getById(this.modelTypeKey, params.id);
+            if (record.get('_view') !== this.view) {
+                record.set('_view', this.view);
+                return record.reload();
+            } else {
+                //return record;
+                // Fetch always, refresh record.
+                return record.reload();
+            }
+        } else {
+            return store.find(this.modelTypeKey, params.id, { _view: this.view });
+        }
     },
 
     resetController: function(controller, isExisting, transition) {

@@ -24,7 +24,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, PaginatedRouteMixin, 
         var sorting = self.deserializeSortingParam(params['sort']);
         var pageQuery = adapter.getPaginationQuery(page, perPage, sorting, store.serializerFor(typeKey));
 
-        return store.findManyByView(this.get('modelTypeKey'), this.get('view'), pageQuery)
+        var query = Ember.merge(pageQuery, { _view: this.get('view') });
+
+        //return store.findManyByView(this.get('modelTypeKey'), this.get('view'), pageQuery)
+        //find by query always fetching
+        return store.find(this.get('modelTypeKey'), query)
             .then(function(records) {
                 self.includeSorting(records, sorting);
                 return self.includePagination(records, page, perPage);

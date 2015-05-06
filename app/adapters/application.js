@@ -32,7 +32,17 @@ export default DS.RESTAdapter.extend({
     },
 
     find: function(store, type, id, snapshot) {
-        var view = snapshot.get('_view');
+        var view;
+        if (id && id[id.length - 1] === '@') {
+            var viewName = id.split('@')[1];
+            id = id.split('@')[0];
+            view = type.Views[viewName];
+        }
+
+        if (!view) {
+            view = snapshot.get('_view');
+        }
+
         if (!view) {
             return this._super.apply(this, arguments);
         } else {

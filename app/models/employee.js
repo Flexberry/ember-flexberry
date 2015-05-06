@@ -8,6 +8,7 @@ var Model = DS.Model.extend({
     reportsTo: DS.belongsTo('employee', { inverse: null, async: true }),
     tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),
 
+    _origId: DS.attr(),
     _view: DS.attr()
 });
 

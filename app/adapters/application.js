@@ -117,7 +117,7 @@ export default DS.RESTAdapter.extend({
         }
 
         if (expand) {
-            query['$expand'] = expand;
+            //query['$expand'] = expand;
         }
 
         return query;

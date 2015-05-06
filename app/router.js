@@ -25,4 +25,7 @@ export default Router.map(function() {
 
     // /employees/new
     this.resource('employee.new', { path: 'employees/new' });
+
+    // Temporary stub for orders route.
+    this.resource('orders');
 });

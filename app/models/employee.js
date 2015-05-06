@@ -1,15 +1,27 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 
 var Model = DS.Model.extend({
     firstName: DS.attr('string'),
     lastName: DS.attr('string'),
     birthDate: DS.attr('date'),
-    //employee1: DS.belongsTo('employee', { inverse: 'employees1' }),
-    //employees1: DS.hasMany('employee', { inverse: 'employee1' })
     reportsTo: DS.belongsTo('employee', { inverse: null, async: true }),
-    //tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),
+    tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),
 
     _view: DS.attr()
+});
+
+Ember.$.mockjax({
+    url: "*Employees(3)",
+    responseText: {
+        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
+        "EmployeeID": 3,
+        "FirstName": "Janet225 Oo",
+        "LastName": "Leverling",
+        "BirthDate": "1963-08-30T00:00:00Z",
+        "ReportsTo": 2,
+        "TmpChildren": [4,5]
+    }
 });
 
 Model.reopenClass({
@@ -18,28 +30,21 @@ Model.reopenClass({
         EmployeeE: {
             type: 'employee',
             name: 'EmployeeE',
-            properties: ['firstName', 'lastName', 'birthDate', 'reportsTo'],
+            properties: ['firstName', 'lastName', 'birthDate', 'reportsTo', 'tmpChildren'],
             masters: {
                 reportsTo: {
                     type: 'employee',
                     name: '~masterview',
                     properties: ['firstName']
                 }
-            }
-            /*masters: {
-                employee1: {
-                    type: 'employee',
-                    name: '~masterview',
-                    properties: ['firstName']
-                }
             },
             details: {
-                employees1: {
+                tmpChildren: {
                     type: 'employee',
                     name: '~detailview',
                     properties: ['lastName']
                 }
-            }*/
+            }
         },
         EmployeeL: {
             type: 'employee',

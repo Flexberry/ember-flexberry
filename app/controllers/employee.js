@@ -1,23 +1,6 @@
 import Ember from 'ember';
 import EmberValidations from 'ember-validations';
-
-// Structure to show common errors.
-var ErrorableControllerMixin = Ember.Mixin.create({
-    init: function() {
-        this._super();
-        this.set('errorMessages', []);
-    },
-
-    actions:{
-        addErrorMessage: function(msg) {
-            this.get('errorMessages').pushObject(msg);
-        },
-
-        dismissErrorMessages: function() {
-            this.get('errorMessages').clear();
-        }
-    }
-});
+import ErrorableControllerMixin from 'prototype-ember-cli-application/mixins/errorable-controller';
 
 // TODO: Ember.ObjectController is deprecated, please use Ember.Controller.
 // But validations don't work using Ember.Controller.

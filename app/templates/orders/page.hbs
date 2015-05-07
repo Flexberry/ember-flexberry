@@ -1,0 +1,40 @@
+<div id="order-list" class="list-group">
+    {{#link-to 'order.new' class="list-group-item bold"}}+ New Order{{/link-to}}
+    {{ember-table
+        hasFooter=false
+        enableContentSelection=false
+        columns=tableColumns
+        content=tableContent
+    }}
+</div>
+<nav>
+    <ul class="pagination pull-left" style="margin: 0;">
+        <li {{bind-attr class="hasPreviousPage::disabled"}}>
+            <a {{action 'previousPage'}} href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {{#each page in pages}}
+            {{#if page.isCurrent}}
+                <li class="active">
+                    <a>
+                        {{page.number}}
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+            {{else}}
+                <li>
+                    <a {{action 'gotoPage' page.number}} href="#">{{page.number}}</a>
+                </li>
+            {{/if}}
+        {{/each}}
+        <li {{bind-attr class="hasNextPage::disabled"}}>
+            <a {{action 'nextPage'}} href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+    <div class="pull-right">
+        {{view "select" content=perPageValues value=per_page classNames="form-control"}}
+    </div>
+</nav>

@@ -34,20 +34,15 @@ export default Ember.ObjectController.extend(EmberValidations.Mixin, ErrorableCo
         close: function() {
             // TODO: нужно учитывать пэйджинг.
             // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
-            // Либо редиректить на что-то типа /employees/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-            this.transitionToRoute('employees');
+            // Либо редиректить на что-то типа /orders/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
+            this.transitionToRoute('orders');
         }
     },
 
     // Validators.
     validations: {
-        firstName: {
-            presence: true,
-            length: { minimum: 5 }
-        },
-        lastName: {
-            presence: true,
-            length: { minimum: 5 }
+        orderDate: {
+            presence: true
         }
     },
 

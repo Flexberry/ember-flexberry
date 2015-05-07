@@ -25,4 +25,15 @@ export default Router.map(function() {
 
     // /employees/new
     this.resource('employee.new', { path: 'employees/new' });
+
+    // /orders
+    this.resource('orders', function() {
+        this.route('page', { path: 'page/:page' });
+    });
+
+    // /orders/2 - render into outlet in application template
+    this.resource('order', {path: 'orders/:id'});
+
+    // /employees/new
+    this.resource('order.new', { path: 'orders/new' });
 });

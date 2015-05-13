@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import IdProxy from '../utils/idproxy';
 
 // Adapter for OData service.
 // TODO: ODataAdapter.
@@ -33,27 +34,27 @@ export default DS.RESTAdapter.extend({
 
     find: function(store, type, id, snapshot) {
         var view;
-        if (id && id[id.length - 1] === '@') {
-            var viewName = id.split('@')[1];
-            id = id.split('@')[0];
-            view = type.Views[viewName];
+        if (IdProxy.idIsProxied(id)) {
+            // Retrieve original primary key and view.
+            var data = IdProxy.retrieve(id, type);
+            id = data.id;
+            view = data.view;
+            Ember.assert('view should be defined', !!view);
         }
-
-        if (!view) {
+        else {
             view = snapshot.get('_view');
+            if (!view) {
+                return this._super.apply(this, arguments);
+            }
         }
 
-        if (!view) {
-            return this._super.apply(this, arguments);
-        } else {
-            var url = this.buildURL(type.typeKey, id);
-            var serializer = store.serializerFor(type);
-            var query = this.getDataObjectViewQuery(view, serializer);
-            return this.ajax(url, 'GET', { data: query }).then(function(data) {
-                data._view = view;
-                return data;
-            });
-        }
+        var url = this.buildURL(type.typeKey, id);
+        var serializer = store.serializerFor(type);
+        var query = this.getDataObjectViewQuery(view, serializer);
+        return this.ajax(url, 'GET', { data: query }).then(function(data) {
+            data._view = view;
+            return data;
+        });
     },
 
     findQuery: function(store, type, query) {

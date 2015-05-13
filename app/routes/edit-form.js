@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import FetchModelRoute from 'prototype-ember-cli-application/routes/fetch-model';
+import IdProxy from '../utils/idproxy';
 
 export default FetchModelRoute.extend({
     view: Ember.required(),
@@ -11,7 +12,7 @@ export default FetchModelRoute.extend({
         var store = this.store;
 
         // :id param defined in router.js
-        var id = params.id + '@' + this.view.name + '@';
+        var id = IdProxy.mutate(params.id, this.view);
 
         // Because fetchById don't setup preload if hasRecordForId returns true.
         if (store.hasRecordForId(this.modelTypeKey, id)) {

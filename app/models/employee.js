@@ -35,14 +35,14 @@ Model.reopenClass({
             masters: {
                 reportsTo: {
                     type: 'employee',
-                    name: '~masterview',
+                    name: 'EmployeeE~master',
                     properties: ['firstName']
                 }
             },
             details: {
                 tmpChildren: {
                     type: 'employee',
-                    name: '~detailview',
+                    name: 'EmployeeE~detail',
                     properties: ['lastName']
                 }
             }

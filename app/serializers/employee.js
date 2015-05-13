@@ -1,5 +1,6 @@
 //import DS from 'ember-data';
 import ApplicationSerializer from 'prototype-ember-cli-application/serializers/application';
+import IdProxy from '../utils/idproxy';
 
 // TODO? or override extractArray in ApplicationSerializer.
 // (http://emberjs.com/api/data/classes/DS.RESTSerializer.html#method_extractArray)
@@ -26,26 +27,27 @@ export default ApplicationSerializer.extend(/*DS.EmbeddedRecordsMixin,*/ {
         return payload;
     },
 
+    // TODO: move to application serializer or extract into mixin/baseclass.
     normalize: function(type, hash, prop) {
         hash = this._super.apply(this, arguments);
 
         var view = hash._view;
         if (view) {
             hash._origId = hash.id;
-            hash.id += '@' + view.name + '@';
+            hash.id = IdProxy.mutate(hash.id, view);
 
             type.eachRelationship(function(key, relationship) {
                 // It works with async relationships.
                 // TODO: support embedded relationships (without links)
                 if (relationship.kind === 'belongsTo') {
                     if (hash[key]) {
-                        hash[key] += '@' + view.masters[key].name + '@';
+                        hash[key] = IdProxy.mutate(hash[key], view.masters[key]);
                     }
                 } else if (relationship.kind === 'hasMany') {
                     if (hash[key]) {
-                        var subviewName = view.details[key].name;
-                        var ids  = hash[key].map(function(id) {
-                            return id + '@' + subviewName + '@';
+                        var subview = view.details[key];
+                        var ids = hash[key].map(function(id) {
+                            return IdProxy.mutate(id, subview);
                         });
 
                         hash[key] = ids;

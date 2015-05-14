@@ -2,29 +2,40 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import DataObjectViewsCollection from '../objects/data-object-views-collection';
 import DataObjectView from '../objects/data-object-view';
+import IdProxy from '../utils/idproxy';
 
 var Model = DS.Model.extend({
-    firstName: DS.attr('string'),
-    lastName: DS.attr('string'),
-    birthDate: DS.attr('date'),
-    reportsTo: DS.belongsTo('employee', { inverse: null, async: true }),
-    tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),
+  firstName: DS.attr('string'),
+  lastName: DS.attr('string'),
+  birthDate: DS.attr('date'),
+  reportsTo: DS.belongsTo('employee', { inverse: null, async: true }),
+  tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),
 
-    _origId: DS.attr(),
-    _view: DS.attr()
+  primaryKey: Ember.computed('id', {
+    get: function() {
+      var id = this.get('id');
+      if (IdProxy.idIsProxied(id)) {
+        return IdProxy.retrieve(id).id;
+      } else {
+        return id;
+      }
+    }
+  }),
+
+  _view: DS.attr()
 });
 
 Ember.$.mockjax({
-    url: "*Employees(3)",
-    responseText: {
-        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
-        "EmployeeID": 3,
-        "FirstName": "Janet225 Oo",
-        "LastName": "Leverling",
-        "BirthDate": "1963-08-30T00:00:00Z",
-        "ReportsTo": 2,
-        "TmpChildren": [4,5]
-    }
+  url: "*Employees(3)",
+  responseText: {
+    "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
+    "EmployeeID": 3,
+    "FirstName": "Janet225 Oo",
+    "LastName": "Leverling",
+    "BirthDate": "1963-08-30T00:00:00Z",
+    "ReportsTo": 2,
+    "TmpChildren": [4,5]
+  }
 });
 
 Model.reopenClass({

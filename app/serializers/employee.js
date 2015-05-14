@@ -33,7 +33,6 @@ export default ApplicationSerializer.extend(/*DS.EmbeddedRecordsMixin,*/ {
 
         var view = hash._view;
         if (view) {
-            hash._origId = hash.id;
             hash.id = IdProxy.mutate(hash.id, view);
 
             type.eachRelationship(function(key, relationship) {

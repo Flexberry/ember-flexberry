@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import DataObjectViewsCollection from '../objects/data-object-views-collection';
+import DataObjectView from '../objects/data-object-view';
 
 var Model = DS.Model.extend({
     firstName: DS.attr('string'),
@@ -26,33 +28,32 @@ Ember.$.mockjax({
 });
 
 Model.reopenClass({
-    // TODO: DataObjectView = Ember.Object.extend or mixin?
-    Views: {
-        EmployeeE: {
-            type: 'employee',
-            name: 'EmployeeE',
-            properties: ['firstName', 'lastName', 'birthDate', 'reportsTo', 'tmpChildren'],
-            masters: {
-                reportsTo: {
-                    type: 'employee',
-                    name: 'EmployeeE~master',
-                    properties: ['firstName']
-                }
-            },
-            details: {
-                tmpChildren: {
-                    type: 'employee',
-                    name: 'EmployeeE~detail',
-                    properties: ['lastName']
-                }
-            }
-        },
-        EmployeeL: {
-            type: 'employee',
-            name: 'EmployeeL',
-            properties: ['firstName', 'lastName']
-        }
-    }
+  Views: DataObjectViewsCollection.create({
+    EmployeeE: DataObjectView.create({
+      type: 'employee',
+      name: 'EmployeeE',
+      properties: ['firstName', 'lastName', 'birthDate', 'reportsTo', 'tmpChildren'],
+      masters: DataObjectViewsCollection.create({
+        reportsTo: DataObjectView.create({
+          type: 'employee',
+          name: 'EmployeeE.masters.reportsTo',
+          properties: ['firstName']
+        })
+      }),
+      details: DataObjectViewsCollection.create({
+        tmpChildren: DataObjectView.create({
+          type: 'employee',
+          name: 'EmployeeE.details.tmpChildren',
+          properties: ['lastName']
+        })
+      })
+    }),
+    EmployeeL: DataObjectView.create({
+      type: 'employee',
+      name: 'EmployeeL',
+      properties: ['firstName', 'lastName']
+    })
+  })
 });
 
 export default Model;

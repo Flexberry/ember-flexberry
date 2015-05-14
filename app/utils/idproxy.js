@@ -16,7 +16,7 @@ export default {
     return {
       id: arr[0],
       viewName: viewName,
-      view: type ? type.Views[viewName] : null
+      view: type ? type.Views.get(viewName) : null
     };
   },
 

@@ -5,9 +5,10 @@ import SortableRouteMixin from 'prototype-ember-cli-application/mixins/sortable-
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, PaginatedRouteMixin, SortableRouteMixin, {
     // 'employee'
-    modelTypeKey: Ember.required(),
+    modelTypeKey: undefined,
 
-    view: Ember.required(),
+    // TODO: use view name instead? And rename __fetchingView to __fetchingViewName?
+    view: undefined,
 
     model: function(params, transition) {
         var page = parseInt(params.page, 10),
@@ -24,11 +25,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, PaginatedRouteMixin, 
         var sorting = self.deserializeSortingParam(params['sort']);
         var pageQuery = adapter.getPaginationQuery(page, perPage, sorting, store.serializerFor(typeKey));
 
-        var query = Ember.merge(pageQuery, { _view: this.get('view') });
+        // __fetchingView is tmp variable, which will be handled by adapter.findQuery.
+        var query = Ember.merge(pageQuery, { __fetchingView: this.get('view') });
 
-        //return store.findManyByView(this.get('modelTypeKey'), this.get('view'), pageQuery)
-        //find by query always fetching
-        return store.find(this.get('modelTypeKey'), query)
+        // find by query is always fetching.
+        // TODO: support getting from cache with "store.all->filterByView".
+        return store.find(typeKey, query)
             .then(function(records) {
                 self.includeSorting(records, sorting);
                 return self.includePagination(records, page, perPage);

@@ -33,48 +33,46 @@ export default DS.RESTAdapter.extend({
     },
 
     find: function(store, type, id, snapshot) {
-        var view;
-        if (IdProxy.idIsProxied(id)) {
-            // Retrieve original primary key and view.
-            var data = IdProxy.retrieve(id, type);
-            id = data.id;
-            view = data.view;
-            Ember.assert('view should be defined', !!view);
-        }
-        else {
-            view = snapshot.get('_view');
-            if (!view) {
-                return this._super.apply(this, arguments);
-            }
+        if (!IdProxy.idIsProxied(id)) {
+            return this._super.apply(this, arguments);
         }
 
-        var url = this.buildURL(type.typeKey, id);
+        // Retrieve original primary key and view.
+        var data = IdProxy.retrieve(id, type);
+        var view = data.view;
+        Ember.assert('view should be defined', !!view);
+
+        var url = this.buildURL(type.typeKey, data.id);
         var serializer = store.serializerFor(type);
         var query = this.getDataObjectViewQuery(view, serializer);
         return this.ajax(url, 'GET', { data: query }).then(function(data) {
+          // TODO: Use tmp variable __fetchedViewName instead of model attribute (read __fetchedViewName in serializer.normalize and then remove it).
             data._view = view;
             return data;
         });
     },
 
     findQuery: function(store, type, query) {
-        var view = query._view;
+        var view = query.__fetchingView;
         if (!view) {
             return this._super.apply(this, arguments);
-        } else {
-            delete query._view;
-            var serializer = store.serializerFor(type);
-            var viewQuery = this.getDataObjectViewQuery(view, serializer);
-            query = Ember.merge(viewQuery, query);
-            return this._super(store, type, query).then(function(data) {
-                for(var i = 0; i < data.value.length; i++) {
-                    data.value[i]._view = view;
-                }
-
-                data._manyview = view;
-                return data;
-            });
         }
+
+        delete query.__fetchingView;
+        var serializer = store.serializerFor(type);
+        var viewQuery = this.getDataObjectViewQuery(view, serializer);
+        query = Ember.merge(viewQuery, query);
+        return this._super(store, type, query).then(function(data) {
+            for(var i = 0; i < data.value.length; i++) {
+              // TODO: Use tmp variable __fetchedViewName instead of model attribute (read __fetchedViewName in serializer.normalize and then remove it).
+                data.value[i]._view = view;
+            }
+
+          // TODO: Remove this, because not used?
+          // TODO: Remove this due to WARNING: Encountered "_manyview" in payload, but no model was found for model name "manyview" (resolved model name using prototype-ember-cli-application@serializer:employee:.typeForRoot("_manyview")).
+            data._manyview = view;
+            return data;
+        });
     },
 
     // TODO: Логику view2query можно вынести в отдельный класс, наверное, а то целых 4 вспомогательных функции.

@@ -13,6 +13,7 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
          * @param {Ember.Object} rowContent Объект данных, соответствующий строке.
          */
         rowClick: function (rowContent) {
+          // TODO: rowContent.constructor(.typeKey) instead of rowContent.get(_view.type)?
             this.transitionToRoute(rowContent.get('_view.type'), rowContent.get('primaryKey'));
         }
     },

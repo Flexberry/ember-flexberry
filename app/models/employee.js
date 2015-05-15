@@ -14,6 +14,11 @@ var Model = DS.Model.extend({
   primaryKey: Ember.computed('id', {
     get: function() {
       var id = this.get('id');
+      if (id === null) {
+        // id isn't setted in newly created records.
+        return null;
+      }
+
       if (IdProxy.idIsProxied(id)) {
         return IdProxy.retrieve(id).id;
       } else {
@@ -22,7 +27,33 @@ var Model = DS.Model.extend({
     }
   }),
 
-  _view: DS.attr()
+  // TODO: remove this. Use projection instead.
+  _view: DS.attr(),
+
+  projectionName: DS.attr('string'),
+
+  // TODO: computed by id: retrieve viewname from id. Remove projectionName.
+  projection: Ember.computed('projectionName', {
+    get: function() {
+      var projName = this.get('projectionName');
+      if (!projName) {
+        return null;
+      }
+
+      var projCollection = this.constructor.Views;
+      if (!projCollection) {
+        throw new Error(`Unable to get projection '${projName}': ` +
+                        `projections are not defined in ${this.constructor}.`);
+      }
+
+      var proj = projCollection.get(projName);
+      if (!proj) {
+        throw new Error(`Projection '${projName}' is not found in ${this.constructor}.`);
+      }
+
+      return proj;
+    }
+  })
 });
 
 Ember.$.mockjax({
@@ -39,6 +70,7 @@ Ember.$.mockjax({
 });
 
 Model.reopenClass({
+  // TODO: rename Views to Projections.
   Views: DataObjectViewsCollection.create({
     EmployeeE: DataObjectView.create({
       type: 'employee',

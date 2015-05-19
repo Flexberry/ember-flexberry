@@ -10,9 +10,10 @@ li a.active {
 }
 
 .spinner {
-    background: url('http://gdelekarstvo.ru/img/ajax-loader-blue.gif') no-repeat;
-    height: 11px;
-    width: 43px;
+    background: url('/assets/images/nyan.gif') no-repeat;
+    background-size: contain;
+    height: 100px;
+    width: 100px;
     margin: 0 auto;
 }
 

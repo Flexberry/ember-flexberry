@@ -1,13 +1,14 @@
-import DS from 'ember-data';
+//import DS from 'ember-data';
 import ApplicationSerializer from 'prototype-ember-cli-application/serializers/application';
+import IdProxy from '../utils/idproxy';
 
 // TODO? or override extractArray in ApplicationSerializer.
 // (http://emberjs.com/api/data/classes/DS.RESTSerializer.html#method_extractArray)
-export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
-    attrs: {
+export default ApplicationSerializer.extend(/*DS.EmbeddedRecordsMixin,*/ {
+    /*attrs: {
         employee1: { embedded: 'always' },
-        employees1: { embedded: 'always' }
-    },
+        employees1: { serialize: 'ids', deserialize: 'records' }
+    },*/
 
     // Раньше можно было определить primaryKey как функцию, и задать один алгоритм для всех сериализаторов.
     // Щас либо по отдельности для каждого задавать это свойство, либо переопределять функции,
@@ -24,5 +25,40 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
         }
 
         return payload;
+    },
+
+    // TODO: move to application serializer or extract into mixin/baseclass.
+    normalize: function(type, hash, prop) {
+        hash = this._super.apply(this, arguments);
+
+        // Get a view on which the hash was fetched
+        // (see adapter find and findQuery methods).
+        var view = hash._fetchedView;
+        if (view) {
+            delete hash._fetchedView;
+
+            hash.id = IdProxy.mutate(hash.id, view);
+
+            type.eachRelationship(function(key, relationship) {
+                // It works with async relationships.
+                // TODO: support embedded relationships (without links)
+                if (relationship.kind === 'belongsTo') {
+                    if (hash[key]) {
+                        hash[key] = IdProxy.mutate(hash[key], view.masters[key]);
+                    }
+                } else if (relationship.kind === 'hasMany') {
+                    if (hash[key]) {
+                        var subview = view.details[key];
+                        var ids = hash[key].map(function(id) {
+                            return IdProxy.mutate(id, subview);
+                        });
+
+                        hash[key] = ids;
+                    }
+                }
+            });
+        }
+
+        return hash;
     }
 });

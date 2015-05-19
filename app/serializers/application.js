@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import IdProxy from '../utils/idproxy';
 
 export default DS.RESTSerializer.extend({
     // Раньше можно было определить primaryKey как функцию, и задать один алгоритм для всех сериализаторов.
@@ -54,17 +55,24 @@ export default DS.RESTSerializer.extend({
         Ember.merge(hash, this.serialize(record, options));
     },
 
+    // To serialize only changed attributes when saving a record with projection.
+    // Accordingly, the adapter will send a PATCH request instead of PUT
+    // (see adapter.updateRecord method).
     serialize: function(snapshot, options) {
-        var objectView = snapshot.record.get('_view');
-        if (!objectView) {
+        if (!IdProxy.idIsProxied(snapshot.id)) {
+            return this._super.apply(this, arguments);
+        }
+
+        var data = IdProxy.retrieve(snapshot.id, snapshot.type);
+        if (!data.view) {
+            // TODO: case with dynamically created view? Or it must be added to the Views collection?
             return this._super.apply(this, arguments);
         }
 
         var json = {};
 
         if (options && options.includeId) {
-            var id = snapshot.id;
-
+            var id = data.id;
             if (id) {
                 json[Ember.get(this, 'primaryKey')] = id;
             }
@@ -74,10 +82,10 @@ export default DS.RESTSerializer.extend({
 
         snapshot.eachAttribute(function(key, attribute) {
             if (changedAttributes.indexOf(key) !== -1) {
-                if (objectView.properties.indexOf(key) === -1) {
+                if (data.view.get('properties').indexOf(key) === -1) {
                     throw new Error('Property "' + key +
                                     '" is modified, but not exists in current DataObject View: "' +
-                                    objectView.name + '".');
+                                    data.viewName + '".');
                 }
 
                 this.serializeAttribute(snapshot, json, key, attribute);

@@ -1,26 +1,33 @@
-import Ember from 'ember';
+//import Ember from 'ember';
 import FetchModelRoute from 'prototype-ember-cli-application/routes/fetch-model';
+import IdProxy from '../utils/idproxy';
 
+// TODO: rename to ProjectedModelRoute or something else.
+// TODO: routes/list-form-page contains view and modelTypeKey too. Move them to base class "DataObjectRoute" or something else.
 export default FetchModelRoute.extend({
-    view: Ember.required(),
-    modelTypeKey: Ember.required(),
+  // TODO: rename to modelProjection (or modelProjectionName maybe?).
+  view: undefined,
 
-    model: function(params, transition) {
-        this._super(params, transition);
+  // TODO: really needed? maybe it is possible to get type from current route?
+  modelTypeKey: undefined,
 
-        var store = this.store;
+  model: function(params, transition) {
+    this._super.apply(this, arguments);
 
-        // :id param defined in router.js
-        return store.findOneByView(this.modelTypeKey, params.id, this.view);
-    },
+    // :id param defined in router.js
+    var id = IdProxy.mutate(params.id, this.view);
 
-    resetController: function(controller, isExisting, transition) {
-        this._super.apply(arguments);
+    // TODO: optionally: fetch or find.
+    return this.store.fetchById(this.modelTypeKey, id);
+  },
 
-        controller.send('dismissErrorMessages');
-        var model = controller.get('model');
-        if (model && model.get('isDirty')) {
-            model.rollback();
-        }
+  resetController: function(controller, isExisting, transition) {
+    this._super.apply(this, arguments);
+
+    controller.send('dismissErrorMessages');
+    var model = controller.get('model');
+    if (model && model.get('isDirty')) {
+      model.rollback();
     }
+  }
 });

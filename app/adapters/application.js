@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import IdProxy from '../utils/idproxy';
 
 // Adapter for OData service.
 // TODO: ODataAdapter.
@@ -29,6 +30,49 @@ export default DS.RESTAdapter.extend({
         }
 
         return query;
+    },
+
+    find: function(store, type, id, snapshot) {
+        if (!IdProxy.idIsProxied(id)) {
+            return this._super.apply(this, arguments);
+        }
+
+        // Retrieve original primary key and view.
+        var data = IdProxy.retrieve(id, type);
+        var view = data.view;
+        Ember.assert('view should be defined', !!view);
+
+        var url = this.buildURL(type.typeKey, data.id);
+        var serializer = store.serializerFor(type);
+        var query = this.getDataObjectViewQuery(view, serializer);
+        return this.ajax(url, 'GET', { data: query }).then(function(data) {
+            // This variable will be handled by serializer in the normalize method.
+            data._fetchedView = view;
+            return data;
+        });
+    },
+
+    findQuery: function(store, type, query) {
+        var view = query.__fetchingView;
+        if (!view) {
+            return this._super.apply(this, arguments);
+        }
+
+        delete query.__fetchingView;
+        var serializer = store.serializerFor(type);
+        var viewQuery = this.getDataObjectViewQuery(view, serializer);
+        query = Ember.merge(viewQuery, query);
+        return this._super(store, type, query).then(function(data) {
+            for (var i = 0; i < data.value.length; i++) {
+                // This variable will be handled by serializer in the normalize method.
+                data.value[i]._fetchedView = view;
+            }
+
+          // TODO: Remove this, because not used?
+          // TODO: Remove this due to WARNING: Encountered "_manyview" in payload, but no model was found for model name "manyview" (resolved model name using prototype-ember-cli-application@serializer:employee:.typeForRoot("_manyview")).
+            data._manyview = view;
+            return data;
+        });
     },
 
     // TODO: Логику view2query можно вынести в отдельный класс, наверное, а то целых 4 вспомогательных функции.
@@ -82,7 +126,7 @@ export default DS.RESTAdapter.extend({
         }
 
         if (expand) {
-            query['$expand'] = expand;
+            //query['$expand'] = expand;
         }
 
         return query;
@@ -164,16 +208,19 @@ export default DS.RESTAdapter.extend({
         return url;
     },
 
+    // TODO: override createRecord and deleteRecord for projections support.
     updateRecord: function(store, type, snapshot) {
-        var data = {},
-            serializer = store.serializerFor(type.typeKey),
-            objectView = snapshot.record.get('_view');
+        if (!IdProxy.idIsProxied(snapshot.id)) {
+            // Sends a PUT request.
+            return this._super.apply(this, arguments);
+        }
 
+        var data = {};
+        var serializer = store.serializerFor(type.typeKey);
         serializer.serializeIntoHash(data, type, snapshot);
 
-        var id = Ember.get(snapshot, 'id');
-        var method = objectView ? 'PATCH' : 'PUT';
-
-        return this.ajax(this.buildURL(type.typeKey, id, snapshot), method, { data: data });
+        var originalId = IdProxy.retrieve(snapshot.id).id;
+        var url = this.buildURL(type.typeKey, originalId, snapshot);
+        return this.ajax(url, 'PATCH', { data: data });
     }
 });

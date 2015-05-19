@@ -4,31 +4,36 @@ import SortableControllerMixin from 'prototype-ember-cli-application/mixins/sort
 import SortableColumnMixin from 'prototype-ember-cli-application/mixins/sortable-column';
 import EmberTableColumnDefinition from '../column-definition';
 import ListTableCellView from 'prototype-ember-cli-application/views/ember-table/list-table-cell';
+import IdProxy from '../utils/idproxy';
 
 export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableControllerMixin, {
     actions: {
         /**
          * Обработчик клика по строке таблицы.
          *
-         * @param {Ember.Object} rowContent Объект данных, соответствующий строке.
+         * @param {Ember.Object} record Объект данных, соответствующий строке.
          */
-        rowClick: function (rowContent) {
-          // TODO: rowContent.constructor(.typeKey) instead of rowContent.get(_view.type)?
-            this.transitionToRoute(rowContent.get('_view.type'), rowContent.get('primaryKey'));
+        rowClick: function (record) {
+            this.transitionToRoute(record.constructor.typeKey, record.get('primaryKey'));
         }
     },
 
     /**
      * Описание колонок для компонента ember-table. Формируется на основе представления.
-     * ToDo: сейчас представление берется из первого объекта в модели. Его там может и не быть.
      */
+    // FIXME: сейчас представление берется из первого объекта в модели.
+    //        Его там может и не быть, если список пуст.
+    //        Нужно брать представление со списковой формы (child controller or route?), наверное.
+    // FIXME: what is `view` in computed definition?
     tableColumns: Ember.computed('view', 'computedSorting', function() {
         var model = this.get('model'),
             sorting = this.get('computedSorting');
         if (model.length === 0) {
             return {};
         } else {
-            return model.objectAt(0).get('_view').properties.map(function (propName) {
+            var firstObject = model.objectAt(0);
+            var projection = IdProxy.retrieve(firstObject.get('id'), firstObject.constructor).view;
+            return projection.get('properties').map(function (propName) {
                 var columnDefinition = EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, {
                     columnWidth: 150,
                     textAlign: 'text-align-center',

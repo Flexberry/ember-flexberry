@@ -31,8 +31,12 @@ export default ApplicationSerializer.extend(/*DS.EmbeddedRecordsMixin,*/ {
     normalize: function(type, hash, prop) {
         hash = this._super.apply(this, arguments);
 
-        var view = hash._view;
+        // Get a view on which the hash was fetched
+        // (see adapter find and findQuery methods).
+        var view = hash._fetchedView;
         if (view) {
+            delete hash._fetchedView;
+
             hash.id = IdProxy.mutate(hash.id, view);
 
             type.eachRelationship(function(key, relationship) {

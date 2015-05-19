@@ -46,8 +46,8 @@ export default DS.RESTAdapter.extend({
         var serializer = store.serializerFor(type);
         var query = this.getDataObjectViewQuery(view, serializer);
         return this.ajax(url, 'GET', { data: query }).then(function(data) {
-          // TODO: Use tmp variable __fetchedViewName instead of model attribute (read __fetchedViewName in serializer.normalize and then remove it).
-            data._view = view;
+            // This variable will be handled by serializer in the normalize method.
+            data._fetchedView = view;
             return data;
         });
     },
@@ -63,9 +63,9 @@ export default DS.RESTAdapter.extend({
         var viewQuery = this.getDataObjectViewQuery(view, serializer);
         query = Ember.merge(viewQuery, query);
         return this._super(store, type, query).then(function(data) {
-            for(var i = 0; i < data.value.length; i++) {
-              // TODO: Use tmp variable __fetchedViewName instead of model attribute (read __fetchedViewName in serializer.normalize and then remove it).
-                data.value[i]._view = view;
+            for (var i = 0; i < data.value.length; i++) {
+                // This variable will be handled by serializer in the normalize method.
+                data.value[i]._fetchedView = view;
             }
 
           // TODO: Remove this, because not used?
@@ -208,16 +208,19 @@ export default DS.RESTAdapter.extend({
         return url;
     },
 
+    // TODO: override createRecord and deleteRecord for projections support.
     updateRecord: function(store, type, snapshot) {
-        var data = {},
-            serializer = store.serializerFor(type.typeKey),
-            objectView = snapshot.record.get('_view');
+        if (!IdProxy.idIsProxied(snapshot.id)) {
+            // Sends a PUT request.
+            return this._super.apply(this, arguments);
+        }
 
+        var data = {};
+        var serializer = store.serializerFor(type.typeKey);
         serializer.serializeIntoHash(data, type, snapshot);
 
-        var id = Ember.get(snapshot, 'id');
-        var method = objectView ? 'PATCH' : 'PUT';
-
-        return this.ajax(this.buildURL(type.typeKey, id, snapshot), method, { data: data });
+        var originalId = IdProxy.retrieve(snapshot.id).id;
+        var url = this.buildURL(type.typeKey, originalId, snapshot);
+        return this.ajax(url, 'PATCH', { data: data });
     }
 });

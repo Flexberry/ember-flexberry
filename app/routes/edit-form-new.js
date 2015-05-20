@@ -2,9 +2,6 @@ import EditFormRoute from 'prototype-ember-cli-application/routes/edit-form';
 
 export default EditFormRoute.extend({
   model: function() {
-    // TODO: WTF is going on here?
-    this._modelIsFetched = true;
-
     // NOTE: record.id is null.
     var record = this.store.createRecord(this.modelTypeKey);
     return record;

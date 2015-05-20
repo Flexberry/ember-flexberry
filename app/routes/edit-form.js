@@ -1,9 +1,10 @@
-import FetchModelRoute from 'prototype-ember-cli-application/routes/fetch-model';
+import Ember from 'ember';
 import IdProxy from '../utils/idproxy';
+import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
 // TODO: rename to ProjectedModelRoute or something else.
 // TODO: routes/list-form-page contains modelProjection and modelTypeKey too. Move them to base class "DataObjectRoute" or something else (projected-model-route maybe).
-export default FetchModelRoute.extend({
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
   modelProjection: undefined,
 
   // TODO: really needed? maybe it is possible to get type from current route?

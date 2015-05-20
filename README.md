@@ -1,4 +1,4 @@
-# Prototype-ember-cli-application
+# Prototype-ember-cli-application [![Build Status](https://travis-ci.org/Flexberry/prototype-ember-application.svg)](https://travis-ci.org/Flexberry/prototype-ember-application)
 
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.

@@ -1,4 +1,3 @@
-//import Ember from 'ember';
 import FetchModelRoute from 'prototype-ember-cli-application/routes/fetch-model';
 import IdProxy from '../utils/idproxy';
 

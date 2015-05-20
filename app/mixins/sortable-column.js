@@ -3,8 +3,8 @@ import SortableHeaderCellView from 'prototype-ember-cli-application/views/ember-
 
 // TODO: move to ember-table/ folder?
 export default Ember.Mixin.create({
-    sorted: false,
-    sortNumber: -1, // 1-based
-    sortAscending: true,
-    headerCellViewClass: SortableHeaderCellView
+  sorted: false,
+  sortNumber: -1, // 1-based
+  sortAscending: true,
+  headerCellViewClass: SortableHeaderCellView
 });

@@ -1,17 +1,17 @@
 <li class="list-group-item">
-    {{#if model.link}}
-        {{#link-to model.link}}
-            {{model.title}}
-        {{/link-to}}
-    {{else}}
-        {{model.title}}
-    {{/if}}
+  {{#if model.link}}
+    {{#link-to model.link}}
+      {{model.title}}
+    {{/link-to}}
+  {{else}}
+    {{model.title}}
+  {{/if}}
 
-    {{#if model.children.length}}
-        <ul>
-        {{#each child in model.children}}
-            {{render "sitemap-node" child}}
-        {{/each}}
-        </ul>
-    {{/if}}
+  {{#if model.children.length}}
+    <ul>
+      {{#each child in model.children}}
+        {{render "sitemap-node" child}}
+      {{/each}}
+    </ul>
+  {{/if}}
 </li>

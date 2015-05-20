@@ -1,27 +1,27 @@
 import EditFormRoute from 'prototype-ember-cli-application/routes/edit-form';
 
 export default EditFormRoute.extend({
-    model: function() {
-        // TODO: WTF is going on here?
-        this._modelIsFetched = true;
+  model: function() {
+    // TODO: WTF is going on here?
+    this._modelIsFetched = true;
 
-        // NOTE: record.id is null.
-        var record = this.store.createRecord(this.modelTypeKey);
-        return record;
-    },
+    // NOTE: record.id is null.
+    var record = this.store.createRecord(this.modelTypeKey);
+    return record;
+  },
 
-    renderTemplate: function(controller, model) {
-        this.render(this.modelTypeKey, {
-            model: model
-        });
-    },
+  renderTemplate: function(controller, model) {
+    this.render(this.modelTypeKey, {
+      model: model
+    });
+  },
 
-    deactivate: function(){
-        var model = this.get('controller').get('model');
-        model.rollback();
+  deactivate: function() {
+    var model = this.get('controller').get('model');
+    model.rollback();
 
-        if (model.get('isNew')) {
-            model.deleteRecord();
-        }
+    if (model.get('isNew')) {
+      model.deleteRecord();
     }
+  }
 });

@@ -5,12 +5,13 @@ import EmberTableCell from '../../views/table-cell';
  * списковой формы.
  */
 export default EmberTableCell.extend({
-    /**
-     * Обработчик клика по ячейке.
-     *
-     * @param {jQuery.Event} event Объект события.
-     */
-    click: function(event) {
-        this.get('controller.targetObject').send('rowClick', this.get('row.content'));
-    }
+  /**
+   * Обработчик клика по ячейке.
+   *
+   * @param {jQuery.Event} event Объект события.
+   */
+  click: function(event) {
+    this.get('controller.targetObject')
+      .send('rowClick', this.get('row.content'));
+  }
 });

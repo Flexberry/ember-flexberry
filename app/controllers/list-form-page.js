@@ -7,59 +7,59 @@ import ListTableCellView from 'prototype-ember-cli-application/views/ember-table
 import IdProxy from '../utils/idproxy';
 
 export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableControllerMixin, {
-    actions: {
-        /**
-         * Обработчик клика по строке таблицы.
-         *
-         * @param {Ember.Object} record Объект данных, соответствующий строке.
-         */
-        rowClick: function (record) {
-            this.transitionToRoute(record.constructor.typeKey, record.get('primaryKey'));
-        }
-    },
-
+  actions: {
     /**
-     * Описание колонок для компонента ember-table. Формируется на основе представления.
+     * Обработчик клика по строке таблицы.
+     *
+     * @param {Ember.Object} record Объект данных, соответствующий строке.
      */
-    // FIXME: сейчас представление берется из первого объекта в модели.
-    //        Его там может и не быть, если список пуст.
-    //        Нужно брать представление со списковой формы (child controller or route?), наверное.
-    // FIXME: what is `view` in computed definition?
-    tableColumns: Ember.computed('view', 'computedSorting', function() {
-        var model = this.get('model'),
-            sorting = this.get('computedSorting');
-        if (model.length === 0) {
-            return {};
-        } else {
-            var firstObject = model.objectAt(0);
-            var projection = IdProxy.retrieve(firstObject.get('id'), firstObject.constructor).view;
-            return projection.get('properties').map(function (propName) {
-                var columnDefinition = EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, {
-                    columnWidth: 150,
-                    textAlign: 'text-align-center',
-                    headerCellName: propName,
-                    tableCellViewClass: ListTableCellView,
-                    getCellContent: function (row) {
-                        return row.content.get(propName);
-                    }
-                });
+    rowClick: function (record) {
+      this.transitionToRoute(record.constructor.typeKey, record.get('primaryKey'));
+    }
+  },
 
-                var sortDef = sorting[propName];
-                if (sortDef) {
-                    columnDefinition.set('sorted', true);
-                    columnDefinition.set('sortAscending', sortDef.sortAscending);
-                    columnDefinition.set('sortNumber', sortDef.sortNumber);
-                }
+  /**
+   * Описание колонок для компонента ember-table. Формируется на основе представления.
+   */
+  // FIXME: сейчас представление берется из первого объекта в модели.
+  //        Его там может и не быть, если список пуст.
+  //        Нужно брать представление со списковой формы (child controller or route?), наверное.
+  // FIXME: what is `view` in computed definition?
+  tableColumns: Ember.computed('view', 'computedSorting', function() {
+    var model = this.get('model'),
+        sorting = this.get('computedSorting');
+    if (model.length === 0) {
+      return {};
+    } else {
+      var firstObject = model.objectAt(0);
+      var projection = IdProxy.retrieve(firstObject.get('id'), firstObject.constructor).view;
+      return projection.get('properties').map(function (propName) {
+        var columnDefinition = EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, {
+          columnWidth: 150,
+          textAlign: 'text-align-center',
+          headerCellName: propName,
+          tableCellViewClass: ListTableCellView,
+          getCellContent: function (row) {
+            return row.content.get(propName);
+          }
+        });
 
-                return columnDefinition;
-            });
+        var sortDef = sorting[propName];
+        if (sortDef) {
+          columnDefinition.set('sorted', true);
+          columnDefinition.set('sortAscending', sortDef.sortAscending);
+          columnDefinition.set('sortNumber', sortDef.sortNumber);
         }
-    }),
 
-    /**
-     * Контент для отображения в таблице ember-table. Соответствует модели.
-     */
-    tableContent: Ember.computed('model', function() {
-        return this.get('model');
-    })
+        return columnDefinition;
+      });
+    }
+  }),
+
+  /**
+   * Контент для отображения в таблице ember-table. Соответствует модели.
+   */
+  tableContent: Ember.computed('model', function() {
+    return this.get('model');
+  })
 });

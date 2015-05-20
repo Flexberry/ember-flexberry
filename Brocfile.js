@@ -18,7 +18,7 @@ var app = new EmberApp();
 // along with the exports of each module as its value.
 
 if (app.env !== 'production') {
-    app.import('bower_components/jquery-mockjax/jquery.mockjax.js');
+  app.import('bower_components/jquery-mockjax/jquery.mockjax.js');
 }
 
 module.exports = app.toTree();

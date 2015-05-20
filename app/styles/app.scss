@@ -1,23 +1,23 @@
 @import "bootstrap";
 
 html, body {
-    margin: 30px 0;
+  margin: 30px 0;
 }
 
 li a.active {
-    background-color: royalblue;
-    color: #fff;
+  background-color: royalblue;
+  color: #fff;
 }
 
 .spinner {
-    background: url('/assets/images/nyan.gif') no-repeat;
-    background-size: contain;
-    height: 100px;
-    width: 100px;
-    margin: 0 auto;
+  background: url('/assets/images/nyan.gif') no-repeat;
+  background-size: contain;
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
 }
 
 .loading-message {
-    text-align: center;
-    color: #aaa;
+  text-align: center;
+  color: #aaa;
 }

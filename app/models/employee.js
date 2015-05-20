@@ -2,46 +2,14 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import DataObjectViewsCollection from '../objects/data-object-views-collection';
 import DataObjectView from '../objects/data-object-view';
-import IdProxy from '../utils/idproxy';
+import ProjectedModel from './projected-model';
 
-var Model = DS.Model.extend({
+var Model = ProjectedModel.extend({
   firstName: DS.attr('string'),
   lastName: DS.attr('string'),
   birthDate: DS.attr('date'),
   reportsTo: DS.belongsTo('employee', { inverse: null, async: true }),
-  tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),
-
-  primaryKey: Ember.computed('id', {
-    get: function() {
-      var id = this.get('id');
-      if (id === null) {
-        // id isn't setted in newly created records.
-        return null;
-      }
-
-      if (IdProxy.idIsProxied(id)) {
-        return IdProxy.retrieve(id).id;
-      } else {
-        return id;
-      }
-    }
-  }),
-
-  projection: Ember.computed('id', {
-    get: function() {
-      var id = this.get('id');
-      if (id === null) {
-        // id isn't setted in newly created records.
-        return null;
-      }
-
-      if (IdProxy.idIsProxied(id, this.constructor)) {
-        return IdProxy.retrieve(id).view;
-      } else {
-        return null;
-      }
-    }
-  })
+  tmpChildren: DS.hasMany('employee', { inverse: null, async: true })
 });
 
 Ember.$.mockjax({

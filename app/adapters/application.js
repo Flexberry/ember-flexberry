@@ -14,11 +14,9 @@ export default DS.RESTAdapter.extend({
   },
 
   // Own property - to solve the problem: id always is string - see ember-data.js, comments for function coerceId(id).
-  // TODO: вынести в базовый "абстрактный" класс и поставить атрибут Ember.required.
   idType: 'number',
 
   // Own method.
-  // TODO: вынести в базовый "абстрактный" класс и поставить атрибут Ember.required (для метода работает?, либо просто throw not implemented).
   getPaginationQuery: function(page, perPage, sortingInfo, serializer) {
     var query = { '$top': perPage, '$skip': (page - 1) * perPage, '$count': true };
 
@@ -72,7 +70,7 @@ export default DS.RESTAdapter.extend({
     });
   },
 
-  // TODO: Логику projection2query можно вынести в отдельный класс, наверное, а то целых 4 вспомогательных функции.
+  // TODO: move these functions to utils/.
   // Supports OData v4 only.
   getModelProjectionQuery: function(projection, serializer) {
     var tree = this._getODataQueryTree(projection, serializer),

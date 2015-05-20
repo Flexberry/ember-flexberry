@@ -61,51 +61,5 @@ export default DS.Store.reopen({
         }
       }
     });
-  },
-
-  // https://github.com/emberjs/data/issues/1576
-  // TODO: remove, not used.
-  findOneQuery: function(type, id, query) {
-    Ember.assert('deprecated');
-    var store = this,
-        typeClass = store.modelFor(type),
-        adapter = store.adapterFor(typeClass),
-        serializer = store.serializerFor(typeClass),
-        url = adapter.buildURL(type, id),
-        ajaxPromise = adapter.ajax(url, 'GET', { data: query });
-
-    return ajaxPromise.then(function(rawPayload) {
-      var extractedPayload = serializer.extract(store, typeClass, rawPayload, id, 'find'),
-          model = store.push(typeClass, extractedPayload);
-      return model;
-    });
-  },
-
-  // TODO: remove, not used.
-  findOneByView: function(type, id, view, query) {
-    Ember.assert('deprecated');
-    var store = this,
-        typeClass = store.modelFor(type),
-        adapter = store.adapterFor(typeClass),
-        serializer = store.serializerFor(typeClass),
-        url = adapter.buildURL(type, id);
-
-    var viewQuery = adapter.getDataObjectViewQuery(view, serializer);
-    query = Ember.merge(viewQuery, query);
-    return adapter.ajax(url, 'GET', { data: query });
-  },
-
-  // TODO: remove, not used.
-  findManyByView: function(type, view, query) {
-    Ember.assert('deprecated');
-    var store = this,
-        typeClass = store.modelFor(type),
-        adapter = store.adapterFor(typeClass),
-        serializer = store.serializerFor(typeClass);
-
-    var viewQuery = adapter.getDataObjectViewQuery(view, serializer);
-    query = Ember.merge(viewQuery, query);
-
-    return store.find(type, query);
   }
 });

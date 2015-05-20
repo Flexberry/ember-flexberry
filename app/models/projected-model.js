@@ -28,7 +28,7 @@ var Model = DS.Model.extend({
       }
 
       if (IdProxy.idIsProxied(id, this.constructor)) {
-        return IdProxy.retrieve(id).view;
+        return IdProxy.retrieve(id).projection;
       } else {
         return null;
       }
@@ -38,11 +38,10 @@ var Model = DS.Model.extend({
 
 Model.reopenClass({
   /**
-   * Define Data Object Projections here using
-   * DataObjectViewsCollection and DataObjectView.
+   * Define Model Projections here using
+   * ModelProjectionsCollection and ModelProjection classes.
    */
-  // TODO: rename Views to Projections.
-  Views: null
+  Projections: null
 });
 
 export default Model;

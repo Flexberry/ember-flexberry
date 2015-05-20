@@ -1,6 +1,6 @@
 import DS from 'ember-data';
-import DataObjectViewsCollection from '../objects/data-object-views-collection';
-import DataObjectView from '../objects/data-object-view';
+import ModelProjectionsCollection from '../objects/model-projections-collection';
+import ModelProjection from '../objects/model-projection';
 import ProjectedModel from './projected-model';
 
 var Model = ProjectedModel.extend({
@@ -8,14 +8,13 @@ var Model = ProjectedModel.extend({
 });
 
 Model.reopenClass({
-  // TODO: DataObjectView = Ember.Object.extend or mixin?
-  Views: DataObjectViewsCollection.create({
-    OrderE: DataObjectView.create({
+  Projections: ModelProjectionsCollection.create({
+    OrderE: ModelProjection.create({
       type: 'order',
       name: 'OrderE',
       properties: ['orderDate']
     }),
-    OrderL: DataObjectView.create({
+    OrderL: ModelProjection.create({
       type: 'order',
       name: 'OrderL',
       properties: ['orderDate']

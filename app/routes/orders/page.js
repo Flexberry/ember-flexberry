@@ -4,7 +4,7 @@ import Model from 'prototype-ember-cli-application/models/order';
 
 export default ListFormPageRoute.extend({
   modelTypeKey: 'order',
-  view: Ember.computed(function() {
-    return Model.Views.OrderL;
+  modelProjection: Ember.computed(function() {
+    return Model.Projections.OrderL;
   })
 });

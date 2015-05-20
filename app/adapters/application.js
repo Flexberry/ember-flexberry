@@ -37,62 +37,59 @@ export default DS.RESTAdapter.extend({
       return this._super.apply(this, arguments);
     }
 
-    // Retrieve original primary key and view.
+    // Retrieve original primary key and projection.
     var data = IdProxy.retrieve(id, type);
-    var view = data.view;
-    Ember.assert('view should be defined', !!view);
+    var projection = data.projection;
+    Ember.assert('projection should be defined', !!projection);
 
     var url = this.buildURL(type.typeKey, data.id);
     var serializer = store.serializerFor(type);
-    var query = this.getDataObjectViewQuery(view, serializer);
+    var query = this.getModelProjectionQuery(projection, serializer);
     return this.ajax(url, 'GET', { data: query }).then(function(data) {
       // This variable will be handled by serializer in the normalize method.
-      data._fetchedView = view;
+      data._fetchedProjection = projection;
       return data;
     });
   },
 
   findQuery: function(store, type, query) {
-    var view = query.__fetchingView;
-    if (!view) {
+    var projection = query.__fetchingProjection;
+    if (!projection) {
       return this._super.apply(this, arguments);
     }
 
-    delete query.__fetchingView;
+    delete query.__fetchingProjection;
     var serializer = store.serializerFor(type);
-    var viewQuery = this.getDataObjectViewQuery(view, serializer);
-    query = Ember.merge(viewQuery, query);
+    var projectionQuery = this.getModelProjectionQuery(projection, serializer);
+    query = Ember.merge(projectionQuery, query);
     return this._super(store, type, query).then(function(data) {
       for (var i = 0; i < data.value.length; i++) {
         // This variable will be handled by serializer in the normalize method.
-        data.value[i]._fetchedView = view;
+        data.value[i]._fetchedProjection = projection;
       }
 
-      // TODO: Remove this, because not used?
-      // TODO: Remove this due to WARNING: Encountered "_manyview" in payload, but no model was found for model name "manyview" (resolved model name using prototype-ember-cli-application@serializer:employee:.typeForRoot("_manyview")).
-      data._manyview = view;
       return data;
     });
   },
 
-  // TODO: Логику view2query можно вынести в отдельный класс, наверное, а то целых 4 вспомогательных функции.
+  // TODO: Логику projection2query можно вынести в отдельный класс, наверное, а то целых 4 вспомогательных функции.
   // Supports OData v4 only.
-  getDataObjectViewQuery: function(view, serializer) {
-    var tree = this._getODataQueryTree(view, serializer),
+  getModelProjectionQuery: function(projection, serializer) {
+    var tree = this._getODataQueryTree(projection, serializer),
         query = this._getODataQuery(tree);
     return query;
   },
 
-  _getODataQueryTree: function(view, serializer) {
+  _getODataQueryTree: function(projection, serializer) {
     var self = this,
         tree = {
           select: [serializer.primaryKey],
           expand: {}
         },
-        expanders = [view.masters, view.details];
+        expanders = [projection.masters, projection.details];
 
-    if (view.properties) {
-      view.properties.forEach(function(prop) {
+    if (projection.properties) {
+      projection.properties.forEach(function(prop) {
         tree.select.push(serializer.keyForAttribute(prop));
       });
     }
@@ -107,8 +104,8 @@ export default DS.RESTAdapter.extend({
           var normalizedPropName = serializer.keyForAttribute(propertyName);
           tree.select.push(normalizedPropName);
 
-          var expanderView = expander[propertyName];
-          tree.expand[normalizedPropName] = self._getODataQueryTree(expanderView, serializer);
+          var expanderProjection = expander[propertyName];
+          tree.expand[normalizedPropName] = self._getODataQueryTree(expanderProjection, serializer);
         }
       }
     });

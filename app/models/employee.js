@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import DataObjectViewsCollection from '../objects/data-object-views-collection';
-import DataObjectView from '../objects/data-object-view';
+import ModelProjectionsCollection from '../objects/model-projections-collection';
+import ModelProjection from '../objects/model-projection';
 import ProjectedModel from './projected-model';
 
 var Model = ProjectedModel.extend({
@@ -26,28 +26,27 @@ Ember.$.mockjax({
 });
 
 Model.reopenClass({
-  // TODO: rename Views to Projections.
-  Views: DataObjectViewsCollection.create({
-    EmployeeE: DataObjectView.create({
+  Projections: ModelProjectionsCollection.create({
+    EmployeeE: ModelProjection.create({
       type: 'employee',
       name: 'EmployeeE',
       properties: ['firstName', 'lastName', 'birthDate', 'reportsTo', 'tmpChildren'],
-      masters: DataObjectViewsCollection.create({
-        reportsTo: DataObjectView.create({
+      masters: ModelProjectionsCollection.create({
+        reportsTo: ModelProjection.create({
           type: 'employee',
           name: 'EmployeeE.masters.reportsTo',
           properties: ['firstName']
         })
       }),
-      details: DataObjectViewsCollection.create({
-        tmpChildren: DataObjectView.create({
+      details: ModelProjectionsCollection.create({
+        tmpChildren: ModelProjection.create({
           type: 'employee',
           name: 'EmployeeE.details.tmpChildren',
           properties: ['lastName']
         })
       })
     }),
-    EmployeeL: DataObjectView.create({
+    EmployeeL: ModelProjection.create({
       type: 'employee',
       name: 'EmployeeL',
       properties: ['firstName', 'lastName']

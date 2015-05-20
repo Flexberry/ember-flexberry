@@ -41,26 +41,26 @@ export default DS.RESTSerializer.extend({
   normalize: function(type, hash, prop) {
     hash = this._super.apply(this, arguments);
 
-    // Get a view on which the hash was fetched
+    // Get a projection on which the hash was fetched
     // (see adapter find and findQuery methods).
-    var view = hash._fetchedView;
-    if (view) {
-      delete hash._fetchedView;
+    var projection = hash._fetchedProjection;
+    if (projection) {
+      delete hash._fetchedProjection;
 
-      hash.id = IdProxy.mutate(hash.id, view);
+      hash.id = IdProxy.mutate(hash.id, projection);
 
       type.eachRelationship(function(key, relationship) {
         // It works with async relationships.
         // TODO: support embedded relationships (without links)
         if (relationship.kind === 'belongsTo') {
           if (hash[key]) {
-            hash[key] = IdProxy.mutate(hash[key], view.masters[key]);
+            hash[key] = IdProxy.mutate(hash[key], projection.masters[key]);
           }
         } else if (relationship.kind === 'hasMany') {
           if (hash[key]) {
-            var subview = view.details[key];
+            var subproj = projection.details[key];
             var ids = hash[key].map(function(id) {
-              return IdProxy.mutate(id, subview);
+              return IdProxy.mutate(id, subproj);
             });
 
             hash[key] = ids;
@@ -98,8 +98,8 @@ export default DS.RESTSerializer.extend({
     }
 
     var data = IdProxy.retrieve(snapshot.id, snapshot.type);
-    if (!data.view) {
-      // TODO: case with dynamically created view? Or it must be added to the Views collection?
+    if (!data.projection) {
+      // TODO: case with dynamically created projection? Or it must be added to the Projections collection?
       return this._super.apply(this, arguments);
     }
 
@@ -116,10 +116,10 @@ export default DS.RESTSerializer.extend({
 
     snapshot.eachAttribute(function(key, attribute) {
       if (changedAttributes.indexOf(key) !== -1) {
-        if (data.view.get('properties').indexOf(key) === -1) {
+        if (data.projection.get('properties').indexOf(key) === -1) {
           throw new Error('Property "' + key +
-                          '" is modified, but not exists in current DataObject View: "' +
-                          data.viewName + '".');
+                          '" is modified, but not exists in current Model Projection: "' +
+                          data.projectionName + '".');
         }
 
         this.serializeAttribute(snapshot, json, key, attribute);

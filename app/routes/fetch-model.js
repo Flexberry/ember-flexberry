@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
-// TODO: deprecated since id+view was implemented?
+// TODO: deprecated since id+projection was implemented?
+// TODO: deprecated since transition making by id, not record.
 /*
  * Костыльный базовый класс для роута, чтобы модель всегда вычитывалась с сервера.
  * Внимание: может поломаться при обновлении версии Ember.

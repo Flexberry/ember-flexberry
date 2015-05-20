@@ -3,20 +3,20 @@ import Ember from 'ember';
 export let separator = ':';
 
 export default {
-  mutate: function(id, view) {
+  mutate: function(id, projection) {
     Ember.assert('id is defined', !!id);
-    Ember.assert('view.name is defined', !!view.name);
-    return id + separator + view.name + separator;
+    Ember.assert('projection.name is defined', !!projection.name);
+    return id + separator + projection.name + separator;
   },
 
   retrieve: function(id, type = null) {
     var arr = id.split(separator);
     Ember.assert('id splitted into 3 parts', arr.length === 3);
-    var viewName = arr[1];
+    var projectionName = arr[1];
     return {
       id: arr[0],
-      viewName: viewName,
-      view: type ? type.Views.get(viewName) : null
+      projectionName: projectionName,
+      projection: type ? type.Projections.get(projectionName) : null
     };
   },
 

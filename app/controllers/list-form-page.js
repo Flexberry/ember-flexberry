@@ -24,15 +24,14 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
   // FIXME: сейчас представление берется из первого объекта в модели.
   //        Его там может и не быть, если список пуст.
   //        Нужно брать представление со списковой формы (child controller or route?), наверное.
-  // FIXME: what is `view` in computed definition?
-  tableColumns: Ember.computed('view', 'computedSorting', function() {
+  tableColumns: Ember.computed('computedSorting', function() {
     var model = this.get('model'),
         sorting = this.get('computedSorting');
     if (model.length === 0) {
       return {};
     } else {
       var firstObject = model.objectAt(0);
-      var projection = IdProxy.retrieve(firstObject.get('id'), firstObject.constructor).view;
+      var projection = IdProxy.retrieve(firstObject.get('id'), firstObject.constructor).projection;
       return projection.get('properties').map(function (propName) {
         var columnDefinition = EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, {
           columnWidth: 150,

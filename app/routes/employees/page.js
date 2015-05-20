@@ -4,7 +4,7 @@ import Model from 'prototype-ember-cli-application/models/employee';
 
 export default ListFormPageRoute.extend({
   modelTypeKey: 'employee',
-  view: Ember.computed(function() {
-    return Model.Views.EmployeeL;
+  modelProjection: Ember.computed(function() {
+    return Model.Projections.EmployeeL;
   })
 });

@@ -1,9 +1,8 @@
 import Ember from 'ember';
 
-// Structure to show common errors.
 export default Ember.Mixin.create({
   init: function() {
-    this._super();
+    this._super.apply(this, arguments);
     this.set('errorMessages', []);
   },
 

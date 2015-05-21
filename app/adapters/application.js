@@ -5,7 +5,7 @@ import IdProxy from '../utils/idproxy';
 // Adapter for OData service.
 // TODO: ODataAdapter.
 export default DS.RESTAdapter.extend({
-  host: 'http://northwindodata.azurewebsites.net/odata',
+  host: 'https://northwindodata.azurewebsites.net/odata',
   //host: 'http://localhost:4356/odata',
   pathForType: function(type) {
     var camelized = Ember.String.camelize(type),

@@ -24,7 +24,7 @@ module.exports = function(environment) {
     // http://content-security-policy.com
     contentSecurityPolicy: {
       'style-src': "'self' 'unsafe-inline'",
-      'connect-src': "'self' http://northwindodata.azurewebsites.net http://localhost:4356"
+      'connect-src': "'self' https://northwindodata.azurewebsites.net http://localhost:4356"
     }
   };
 

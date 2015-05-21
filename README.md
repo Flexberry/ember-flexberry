@@ -40,8 +40,10 @@ Make use of the many generators for code, try `ember help generate` for more det
 * `ember build --environment production` (production)
 
 ### Deploying
-
-Specify what it takes to deploy your app.
+Manual deployment:
+* `npm install -g firebase-tools` (install [Firebase CLI](https://www.firebase.com/docs/hosting/command-line-tool.html))
+* `ember build` (build application to `dist/` directory)
+* `firebase deploy` (deploy `dist/` directory on https://prototype-ember-app.firebaseapp.com, as described in the [firebase.json](/firebase.json))
 
 ## Further Reading / Useful Links
 

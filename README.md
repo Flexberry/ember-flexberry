@@ -43,7 +43,9 @@ Make use of the many generators for code, try `ember help generate` for more det
 Manual deployment:
 * `npm install -g firebase-tools` (install [Firebase CLI](https://www.firebase.com/docs/hosting/command-line-tool.html))
 * `ember build` (build application to `dist/` directory)
-* `firebase deploy` (deploy `dist/` directory on https://prototype-ember-app.firebaseapp.com, as described in the [firebase.json](/firebase.json))
+* Deploying:
+ * For owners, who have access to the https://prototype-ember-app.firebaseio.com:</br>`firebase deploy` (deploy `dist/` directory on https://prototype-ember-app.firebaseapp.com, as described in the [firebase.json](/firebase.json))
+ * For others:</br>`firebase deploy -f you-firebase-app` (deploy `dist/` directory on your own Firebase application)
 
 ## Further Reading / Useful Links
 

@@ -9,7 +9,7 @@
 </div>
 <nav>
   <ul class="pagination pull-left" style="margin: 0;">
-    <li {{bind-attr class="hasPreviousPage::disabled"}}>
+    <li class="{{unless hasPreviousPage 'disabled'}}">
       <a {{action 'previousPage'}} href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
@@ -28,7 +28,7 @@
         </li>
       {{/if}}
     {{/each}}
-    <li {{bind-attr class="hasNextPage::disabled"}}>
+    <li class="{{unless hasNextPage 'disabled'}}">
       <a {{action 'nextPage'}} href="#" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>

@@ -1,4 +1,3 @@
-import DS from 'ember-data';
 import ApplicationSerializer from 'prototype-ember-cli-application/serializers/application';
 
 // TODO? or override extractArray in ApplicationSerializer.

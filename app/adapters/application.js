@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import IdProxy from '../utils/idproxy';
+import ProjectionQuery from '../utils/projection-query';
 
 // Adapter for OData service.
 // TODO: ODataAdapter.
@@ -42,7 +43,7 @@ export default DS.RESTAdapter.extend({
 
     var url = this.buildURL(type.typeKey, data.id);
     var serializer = store.serializerFor(type);
-    var query = this.getModelProjectionQuery(projection, serializer);
+    var query = ProjectionQuery.get(projection, serializer);
     return this.ajax(url, 'GET', { data: query }).then(function(data) {
       // This variable will be handled by serializer in the normalize method.
       data._fetchedProjection = projection;
@@ -58,7 +59,7 @@ export default DS.RESTAdapter.extend({
 
     delete query.__fetchingProjection;
     var serializer = store.serializerFor(type);
-    var projectionQuery = this.getModelProjectionQuery(projection, serializer);
+    var projectionQuery = ProjectionQuery.get(projection, serializer);
     query = Ember.merge(projectionQuery, query);
     return this._super(store, type, query).then(function(data) {
       for (var i = 0; i < data.value.length; i++) {
@@ -68,103 +69,6 @@ export default DS.RESTAdapter.extend({
 
       return data;
     });
-  },
-
-  // TODO: move these functions to utils/.
-  // Supports OData v4 only.
-  getModelProjectionQuery: function(projection, serializer) {
-    var tree = this._getODataQueryTree(projection, serializer),
-        query = this._getODataQuery(tree);
-    return query;
-  },
-
-  _getODataQueryTree: function(projection, serializer) {
-    var self = this,
-        tree = {
-          select: [serializer.primaryKey],
-          expand: {}
-        },
-        expanders = [projection.masters, projection.details];
-
-    if (projection.properties) {
-      projection.properties.forEach(function(prop) {
-        tree.select.push(serializer.keyForAttribute(prop));
-      });
-    }
-
-    expanders.forEach(function(expander) {
-      if (!expander) {
-        return;
-      }
-
-      for (var propertyName in expander) {
-        if (expander.hasOwnProperty(propertyName)) {
-          var normalizedPropName = serializer.keyForAttribute(propertyName);
-          tree.select.push(normalizedPropName);
-
-          var expanderProjection = expander[propertyName];
-          tree.expand[normalizedPropName] = self._getODataQueryTree(expanderProjection, serializer);
-        }
-      }
-    });
-
-    return tree;
-  },
-
-  _getODataQuery: function(queryTree) {
-    var select = this._getODataSelectQuery(queryTree),
-        expand = this._getODataExpandQuery(queryTree);
-
-    var query = {};
-    if (select) {
-      query['$select'] = select;
-    }
-
-    if (expand) {
-      //query['$expand'] = expand;
-    }
-
-    return query;
-  },
-
-  _getODataExpandQuery: function(queryTree) {
-    var expandProperties = Object.keys(queryTree.expand);
-    if (!expandProperties.length) {
-      return null;
-    }
-
-    var self = this,
-        query = [];
-    expandProperties.forEach(function(propertyName) {
-      var subTree = queryTree.expand[propertyName];
-      var expr = propertyName;
-      var select = self._getODataSelectQuery(subTree);
-      var expand = self._getODataExpandQuery(subTree);
-      if (select || expand) {
-        expr += '(';
-        if (select) {
-          expr += '$select=' + select;
-        }
-
-        if (expand) {
-          expr += ';' + '$expand=' + expand;
-        }
-
-        expr += ')';
-      }
-
-      query.push(expr);
-    });
-
-    return query.join(',');
-  },
-
-  _getODataSelectQuery: function(queryTree) {
-    if (queryTree.select.length) {
-      return queryTree.select.join(',');
-    } else {
-      return null;
-    }
   },
 
   buildURL: function(type, id, record) {

@@ -94,6 +94,7 @@ export default DS.RESTSerializer.extend({
   // (see adapter.updateRecord method).
   serialize: function(snapshot, options) {
     if (!IdProxy.idIsProxied(snapshot.id)) {
+      // FIXME: relationship id maybe proxied.
       return this._super.apply(this, arguments);
     }
 
@@ -127,6 +128,7 @@ export default DS.RESTSerializer.extend({
     }, this);
 
     snapshot.eachRelationship(function(key, relationship) {
+      // TODO: override to retrieve original ids for relationships.
       if (relationship.kind === 'belongsTo') {
         this.serializeBelongsTo(snapshot, json, relationship);
       } else if (relationship.kind === 'hasMany') {

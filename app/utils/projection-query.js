@@ -28,8 +28,6 @@ function getODataQueryTree(projection, serializer) {
     for (var propertyName in expander) {
       if (expander.hasOwnProperty(propertyName)) {
         var normalizedPropName = serializer.keyForAttribute(propertyName);
-        tree.select.push(normalizedPropName);
-
         var expanderProjection = expander[propertyName];
         tree.expand[normalizedPropName] = getODataQueryTree(expanderProjection, serializer);
       }

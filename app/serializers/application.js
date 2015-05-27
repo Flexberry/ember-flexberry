@@ -87,55 +87,5 @@ export default DS.RESTSerializer.extend({
 
     // {...} instead of {"application": {...}}
     Ember.merge(hash, this.serialize(record, options));
-  },
-
-  // To serialize only changed attributes when saving a record with projection.
-  // Accordingly, the adapter will send a PATCH request instead of PUT
-  // (see adapter.updateRecord method).
-  serialize: function(snapshot, options) {
-    if (!IdProxy.idIsProxied(snapshot.id)) {
-      // FIXME: relationship id maybe proxied.
-      return this._super.apply(this, arguments);
-    }
-
-    var data = IdProxy.retrieve(snapshot.id, snapshot.type);
-    if (!data.projection) {
-      // TODO: case with dynamically created projection? Or it must be added to the Projections collection?
-      return this._super.apply(this, arguments);
-    }
-
-    var json = {};
-
-    if (options && options.includeId) {
-      var id = data.id;
-      if (id) {
-        json[Ember.get(this, 'primaryKey')] = id;
-      }
-    }
-
-    var changedAttributes = Object.keys(snapshot.record.get('_inFlightAttributes'));
-
-    snapshot.eachAttribute(function(key, attribute) {
-      if (changedAttributes.indexOf(key) !== -1) {
-        if (data.projection.get('properties').indexOf(key) === -1) {
-          throw new Error('Property "' + key +
-                          '" is modified, but not exists in current Model Projection: "' +
-                          data.projectionName + '".');
-        }
-
-        this.serializeAttribute(snapshot, json, key, attribute);
-      }
-    }, this);
-
-    snapshot.eachRelationship(function(key, relationship) {
-      // TODO: override to retrieve original ids for relationships.
-      if (relationship.kind === 'belongsTo') {
-        this.serializeBelongsTo(snapshot, json, relationship);
-      } else if (relationship.kind === 'hasMany') {
-        this.serializeHasMany(snapshot, json, relationship);
-      }
-    }, this);
-
-    return json;
   }
 });

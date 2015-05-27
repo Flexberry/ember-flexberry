@@ -2,6 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import IdProxy from '../utils/idproxy';
 import ProjectionQuery from '../utils/projection-query';
+import SnapshotTransform from '../utils/snapshot-transform';
 
 // Adapter for OData service.
 // TODO: ODataAdapter.
@@ -109,7 +110,12 @@ export default DS.RESTAdapter.extend({
 
   // TODO: override createRecord and deleteRecord for projections support.
   updateRecord: function(store, type, snapshot) {
-    if (!IdProxy.idIsProxied(snapshot.id)) {
+    var hasProjection = IdProxy.idIsProxied(snapshot.id);
+
+    // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
+    SnapshotTransform.transformForSerialize(snapshot, hasProjection, hasProjection);
+
+    if (!hasProjection) {
       // Sends a PUT request.
       return this._super.apply(this, arguments);
     }
@@ -118,8 +124,7 @@ export default DS.RESTAdapter.extend({
     var serializer = store.serializerFor(type.typeKey);
     serializer.serializeIntoHash(data, type, snapshot);
 
-    var originalId = IdProxy.retrieve(snapshot.id).id;
-    var url = this.buildURL(type.typeKey, originalId, snapshot);
+    var url = this.buildURL(type.typeKey, snapshot.id, snapshot);
     return this.ajax(url, 'PATCH', { data: data });
   }
 });

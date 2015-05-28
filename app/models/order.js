@@ -16,7 +16,8 @@ Model.reopenClass({
       properties: ['orderDate', 'employeeID'],
       masters: ModelProjectionsCollection.create({
         employeeID: ModelProjection.create({
-          type: 'employee',
+          // TODO: rename type to ownerType or something else.
+          type: 'order',
           name: 'OrderE.masters.employeeID',
           properties: ['firstName']
         })

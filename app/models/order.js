@@ -4,7 +4,8 @@ import ModelProjection from '../objects/model-projection';
 import ProjectedModel from './projected-model';
 
 var Model = ProjectedModel.extend({
-  orderDate: DS.attr('date')
+  orderDate: DS.attr('date'),
+  employeeID: DS.belongsTo('employee', { inverse: null, async: true })
 });
 
 Model.reopenClass({
@@ -12,7 +13,14 @@ Model.reopenClass({
     OrderE: ModelProjection.create({
       type: 'order',
       name: 'OrderE',
-      properties: ['orderDate']
+      properties: ['orderDate', 'employeeID'],
+      masters: ModelProjectionsCollection.create({
+        employeeID: ModelProjection.create({
+          type: 'employee',
+          name: 'OrderE.masters.employeeID',
+          properties: ['firstName']
+        })
+      }),
     }),
     OrderL: ModelProjection.create({
       type: 'order',

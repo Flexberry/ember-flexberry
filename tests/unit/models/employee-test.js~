@@ -14,12 +14,12 @@ moduleForModel('employee', {
     },
     teardown: function(){
         Ember.run(App, 'destroy');
-        Ember.$.mockjax.clear();
     }
 });
 
 test('it exists', function(assert) {
   var model = this.subject();
+  // var store = this.store();
   assert.ok(!!model);
 });
 

@@ -8,15 +8,17 @@ module('idproxy');
 test('it works', function(assert) {
   var id = '1';
   var projection = ModelProjection.create({
-    name: 'tmpProjectionName'
+    name: 'tmpProjectionName',
+    type: 'tmpProjectionType'
   });
 
   var proxiedId = IdProxy.mutate(id, projection);
   var originalData = IdProxy.retrieve(proxiedId);
 
-  assert.ok(proxiedId === id + separator + projection.name + separator);
+  assert.ok(proxiedId === id + separator + projection.type + separator + projection.name + separator);
   assert.ok(originalData.id === id);
   assert.ok(originalData.projectionName === projection.name);
+  assert.ok(originalData.projectionOwner === projection.type);
   assert.ok(IdProxy.idIsProxied(proxiedId));
   assert.ok(!IdProxy.idIsProxied(id));
 });

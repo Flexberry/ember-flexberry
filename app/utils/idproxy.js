@@ -6,17 +6,34 @@ export default {
   mutate: function(id, projection) {
     Ember.assert('id is defined', !!id);
     Ember.assert('projection.name is defined', !!projection.name);
-    return id + separator + projection.name + separator;
+    return id + separator + projection.type + separator + projection.name + separator;
   },
 
+  // TODO: refactor? maybe func(id, store)??
   retrieve: function(id, type = null) {
     var arr = id.split(separator);
-    Ember.assert('id splitted into 3 parts', arr.length === 3);
-    var projectionName = arr[1];
+    Ember.assert('id splitted into 4 parts', arr.length === 4);
+    var projectionOwner = arr[1];
+    var projectionName = arr[2];
+    var projection;
+
+    if (type) {
+      if (type.typeKey === projectionOwner) {
+        projection = type.Projections.get(projectionName);
+      } else {
+        var store = type.store;
+        var ownerType = store.modelFor(projectionOwner);
+        projection = ownerType.Projections.get(projectionName);
+      }
+    } else {
+      projection = null;
+    }
+
     return {
       id: arr[0],
+      projectionOwner: projectionOwner,
       projectionName: projectionName,
-      projection: type ? type.Projections.get(projectionName) : null
+      projection: projection
     };
   },
 

@@ -27,8 +27,8 @@ var Model = DS.Model.extend({
         return null;
       }
 
-      if (IdProxy.idIsProxied(id, this.constructor)) {
-        return IdProxy.retrieve(id).projection;
+      if (IdProxy.idIsProxied(id)) {
+        return IdProxy.retrieve(id, this.constructor).projection;
       } else {
         return null;
       }

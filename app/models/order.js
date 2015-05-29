@@ -8,7 +8,9 @@ var Model = ProjectedModel.extend({
   employeeID: DS.belongsTo('employee', { inverse: null, async: true })
 });
 
+// TODO: why not Model.Projections = ...?
 Model.reopenClass({
+  // TODO: rename Projections to lowercase.
   Projections: ModelProjectionsCollection.create({
     OrderE: ModelProjection.create({
       type: 'order',
@@ -21,7 +23,7 @@ Model.reopenClass({
           name: 'OrderE.masters.employeeID',
           properties: ['firstName']
         })
-      }),
+      })
     }),
     OrderL: ModelProjection.create({
       type: 'order',

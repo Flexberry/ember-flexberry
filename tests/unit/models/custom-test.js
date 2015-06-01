@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import { test, moduleForModel } from 'ember-qunit';
+import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import ApplicationSerializer from 'prototype-ember-cli-application/serializers/application';
 
@@ -8,14 +8,13 @@ var CustomModel;
 var CustomSerializer;
 var App;
 
-// TODO: remove it, it is custom model, not employee.
-moduleForModel('employee', {
-  //// Specify the other units that are required for this test.
-  //  needs: ['model:projected-model'],
-    setup: function(){
+module('Test detail load for custom class', {
+    //// Specify the other units that are required for this test.
+    //  needs: ['model:projected-model'],
+    beforeEach: function(){
         App = startApp();
     },
-    teardown: function(){
+    afterEach: function(){
         Ember.run(App, 'destroy');
         Ember.$.mockjax.clear();
     }

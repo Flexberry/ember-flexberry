@@ -11,6 +11,7 @@ export default {
 
       // TODO: skipUnchangedAttrs for nonproxied snapshot too?
       if (skipUnchangedAttrs || skipNoProjectionAttrs) {
+        // TODO: use record.changedAttributes?
         let changedAttributes = Ember.keys(snapshot.record.get('_inFlightAttributes'));
         let projectionAttributes = data.projection.get('properties');
         for (let attrKey in snapshot._attributes) {

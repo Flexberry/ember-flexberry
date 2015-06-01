@@ -43,7 +43,7 @@ export default Ember.ObjectController.extend(EmberValidations.Mixin, ErrorableCo
   validations: {
   },
 
-  // Common number of validation errors.
+  // Total number of validation errors.
   numTotalErrors: function () {
     return this.get('validators').mapBy('errors.length').reduce(
       function (beforeSum, addValue) {

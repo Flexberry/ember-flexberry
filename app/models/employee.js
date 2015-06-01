@@ -1,8 +1,6 @@
 // Remove commented out lines, when they will be covered with tests.
 /*import Ember from 'ember';*/
 import DS from 'ember-data';
-//import ModelProjectionsCollection from '../objects/model-projections-collection';
-//import ModelProjection from '../objects/model-projection';
 import ProjectedModel from './projected-model';
 
 var Model = ProjectedModel.extend({
@@ -26,9 +24,10 @@ var Model = ProjectedModel.extend({
   }
 });*/
 
-Model.defineProjection('EmployeeE', ['firstName', 'lastName', 'birthDate', 'reportsTo.firstName']);
-Model.defineProjection('EmployeeL', ['firstName', 'lastName']);
+Model.defineProjection('employee', 'EmployeeE', ['firstName', 'lastName', 'birthDate', 'reportsTo.firstName'/*, 'tmpChildren.lastName'*/]);
+Model.defineProjection('employee', 'EmployeeL', ['firstName', 'lastName']);
 
+// TODO: defineProjection tests.
 // Model.reopenClass({
 //   Projections: ModelProjectionsCollection.create({
 //     EmployeeE: ModelProjection.create({

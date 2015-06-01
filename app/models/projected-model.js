@@ -45,9 +45,12 @@ Model.reopenClass({
    */
   Projections: null,
 
-  buildProjection: function(name, attributes) {
+  // TODO: remove typeKey and ModelProjection.type? Instead, use name with Convention Over Configuration for reading type (see IdProxy)?
+  buildProjection: function(typeKey, name, attributes) {
     let proj = ModelProjection.create({
-      type: this.typeKey,
+      // TODO: rename to ownerType or something else.
+      // NOTE: this.typeKey and this.store is undefined here.
+      type: typeKey,
       name: name,
       properties: undefined,
       masters: ModelProjectionsCollection.create(),
@@ -77,12 +80,12 @@ Model.reopenClass({
 
     let relationshipNames = Ember.get(this, 'relationshipNames');
     for (let attrKey in relAttributes) {
-      if (relationshipNames.hasMany.indexOf(attrKey) !== 1) {
+      if (relationshipNames.hasMany.indexOf(attrKey) !== -1) {
         let projName = name + '.details.' + attrKey;
-        proj.details[attrKey] = this.buildProjection(projName, relAttributes[attrKey]);
+        proj.details[attrKey] = this.buildProjection(typeKey, projName, relAttributes[attrKey]);
       } else if (relationshipNames.belongsTo.indexOf(attrKey) !== -1) {
         let projName = name + '.masters.' + attrKey;
-        proj.masters[attrKey] = this.buildProjection(projName, relAttributes[attrKey]);
+        proj.masters[attrKey] = this.buildProjection(typeKey, projName, relAttributes[attrKey]);
       } else {
         throw new Error('Unknown attribute ${attrKey}.');
       }
@@ -91,14 +94,18 @@ Model.reopenClass({
     return proj;
   },
 
-  defineProjection: function(name, attributes) {
-    let proj = this.buildProjection(name, attributes);
+  defineProjection: function(typeKey, name, attributes) {
+    let proj = this.buildProjection(typeKey, name, attributes);
 
     if (!this.Projections) {
-      this.Projections = ModelProjectionsCollection.create();
+      // TODO: rename to lowercase.
+      this.reopenClass({
+        Projections: ModelProjectionsCollection.create()
+      });
     }
 
     this.Projections[name] = proj;
+    return proj;
   }
 });
 

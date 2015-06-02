@@ -11,10 +11,10 @@ var App;
 module('Test detail load for custom class', {
     //// Specify the other units that are required for this test.
     //  needs: ['model:projected-model'],
-    beforeEach: function(){
+    beforeEach: function() {
         App = startApp();
     },
-    afterEach: function(){
+    afterEach: function() {
         Ember.run(App, 'destroy');
         Ember.$.mockjax.clear();
     }
@@ -31,28 +31,14 @@ test('it loads details', function(assert) {
 
     // Create serializer for custom model.
     CustomSerializer = ApplicationSerializer.extend({
-        primaryKey: 'CustomID',
-
-        // TODO: remove after refactor of similar serializers.
-        normalizePayload: function(payload) {
-            if (payload.value) {
-                payload.customs = payload.value;
-                delete payload.value;
-            } else {
-                payload = { custom: payload };
-            }
-
-            return payload;
-        }
+        primaryKey: 'CustomID'
     });
 
     // Register custom structures.
     App.register('model:custom', CustomModel);
     App.register('serializer:custom', CustomSerializer);
 
-    
-    Ember.run(function(){
-
+    Ember.run(function() {
         Ember.$.mockjax({
             url: "*Customs(99)",
             responseText: {

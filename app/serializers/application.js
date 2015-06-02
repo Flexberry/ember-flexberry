@@ -3,13 +3,30 @@ import DS from 'ember-data';
 import IdProxy from '../utils/idproxy';
 
 export default DS.RESTSerializer.extend({
+  extractSingle: function(store, typeClass, payload, id) {
+    payload = {
+      [typeClass.typeKey]: payload
+    };
+
+    return this._super(store, typeClass, payload, id);
+  },
+
+  extractArray: function(store, typeClass, payload) {
+    let rootKey = Ember.String.pluralize(typeClass.typeKey);
+    payload = {
+      [rootKey]: payload.value
+    };
+
+    return this._super(store, typeClass, payload);
+  },
+
   extractMeta: function(store, type, payload) {
     if (!payload) {
       return;
     }
 
-    var odataMetaPrefix = '@odata.',
-        meta = {};
+    let odataMetaPrefix = '@odata.';
+    let meta = {};
     for (var key in payload) {
       if (payload.hasOwnProperty(key) && key.indexOf(odataMetaPrefix) === 0) {
         var metaKey = key.substring(odataMetaPrefix.length);

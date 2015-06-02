@@ -3,7 +3,7 @@ import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
   model: function() {
-    return this.store.find('application', 0);
+    return this.store.find('context', 0);
   },
 
   actions: {

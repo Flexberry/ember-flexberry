@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('application', {
+moduleForModel('context', {
   // Specify the other units that are required for this test.
-  needs: ['serializer:application']
+  needs: ['serializer:context']
 });
 
 // Replace this with your real tests.

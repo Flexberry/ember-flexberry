@@ -3,11 +3,6 @@ import DS from 'ember-data';
 import IdProxy from '../utils/idproxy';
 
 export default DS.RESTSerializer.extend({
-  // Раньше можно было определить primaryKey как функцию, и задать один алгоритм для всех сериализаторов.
-  // Щас либо по отдельности для каждого задавать это свойство, либо переопределять функции,
-  // в которых задействован primaryKey (нужно иметь ввиду, что Ember Data в бете).
-  primaryKey: 'ApplicationID',
-
   extractMeta: function(store, type, payload) {
     if (!payload) {
       return;
@@ -24,18 +19,6 @@ export default DS.RESTSerializer.extend({
     }
 
     store.setMetadataFor(type, meta);
-  },
-
-  normalizePayload: function(payload) {
-    // TODO: refactor using extractSingle and extractArray.
-    if (payload.value) {
-      payload.applications = payload.value;
-      delete payload.value;
-    } else {
-      payload = { application: payload };
-    }
-
-    return payload;
   },
 
   normalize: function(type, hash, prop) {

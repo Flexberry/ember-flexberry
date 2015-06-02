@@ -30,8 +30,8 @@ export default {
               delete snapshot._attributes[attrKey];
 
               // Print warning if property has been changed.
-              Ember.warn('Property ${attrKey} is modified, but not exists ' +
-                         'in current projection ${data.projectionName}.', !attrIsChanged);
+              Ember.warn(`Property ${attrKey} is modified, but not exists ` +
+                         `in current projection ${data.projectionName}.`, !attrIsChanged);
             }
           }
         }

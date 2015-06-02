@@ -87,7 +87,7 @@ Model.reopenClass({
         let projName = name + '.masters.' + attrKey;
         proj.masters[attrKey] = this.buildProjection(typeKey, projName, relAttributes[attrKey]);
       } else {
-        throw new Error('Unknown attribute ${attrKey}.');
+        throw new Error(`Unknown attribute ${attrKey}.`);
       }
     }
 

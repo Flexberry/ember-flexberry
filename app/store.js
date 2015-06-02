@@ -5,7 +5,12 @@ export default DS.Store.reopen({
   push: function(typeName, data) {
     var backburner = this._backburner;
     var store = this;
-    var type = this.modelFor(typeName); //TODO: get type of record maybe?
+    var type = this.modelFor(typeName);
+
+    // NOTE: Для чего это? Мы можем управлять получением модели:
+    // store.find (getById) или store.fetch, но получением ее отношений нет.
+    // Поэтому, если нужен fetch для отношений (мастера и детейлы),
+    // нужно заюзать _fetchAsyncRelationships.
     var fetchAsyncRelationships = true;
     if (fetchAsyncRelationships) {
       backburner.join(function() {
@@ -21,7 +26,7 @@ export default DS.Store.reopen({
   _fetchAsyncRelationships: function(type, data) {
     var store = this;
     type.eachRelationship(function(key, relationship) {
-      if (relationship.options.polymorphic) { //TODO: if (options.async) maybe?
+      if (relationship.options.polymorphic) { //TODO: if (!options.async) maybe?
         return;
       }
 

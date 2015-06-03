@@ -26,7 +26,7 @@ export default DS.Store.reopen({
   _fetchAsyncRelationships: function(type, data) {
     var store = this;
     type.eachRelationship(function(key, relationship) {
-      if (relationship.options.polymorphic) { //TODO: if (!options.async) maybe?
+      if (!relationship.options.async) {
         return;
       }
 

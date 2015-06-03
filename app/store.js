@@ -37,34 +37,33 @@ export default DS.Store.reopen({
 
       var kind = relationship.kind;
       if (kind === 'belongsTo') {
-        value = store.getById(relationship.type, value);
-        if (Ember.isNone(value)) {
-          return;
-        }
-
-        if (!value.get('isEmpty')) {
-          // TODO: value остается в памяти record? Нужно проверить.
-          store.unloadRecord(value);
-          //value = store.buildRecord(relationship.type, value.id); // or store.recordForId
-          //data[key] = value;
-
-          // Не релоад, потому что async relationships загружаются по требованию
-          // и логичнее все же делать анлоад. Релоад же сразу загрузит.
-          ////value.reload();
-        }
+        let id = value;
+        store._fetchAsyncRelationshipRecord(relationship.type, id);
       } else if (kind === 'hasMany') {
-        for (var i = 0; i < value.length; i++) {
-          var val = store.getById(relationship.type, value[i]);
-          if (Ember.isNone(val)) {
-            return;
-          }
-
-          if (!val.get('isEmpty')) {
-            ////val.reload();
-            store.unloadRecord(val);
-          }
+        let ids = value;
+        for (let i = 0; i < ids.length; i++) {
+          store._fetchAsyncRelationshipRecord(relationship.type, ids[i]);
         }
       }
     });
+  },
+
+  _fetchAsyncRelationshipRecord: function(type, id) {
+    // Не reload, потому что async relationships загружаются по требованию,
+    // и логичнее все же делать unload. Reload же сразу загрузит отношение.
+    const reloadRightNow = false;
+
+    let record = this.getById(type, id);
+    if (Ember.isNone(record)) {
+      return;
+    }
+
+    if (!record.get('isEmpty')) {
+      if (reloadRightNow) {
+        record.reload();
+      } else {
+        this.unloadRecord(record);
+      }
+    }
   }
 });

@@ -82,10 +82,10 @@ Model.reopenClass({
     for (let attrKey in relAttributes) {
       if (relationshipNames.hasMany.indexOf(attrKey) !== -1) {
         let projName = name + '.details.' + attrKey;
-        proj.details.set(attrKey, this.buildProjection(typeKey, projName, relAttributes[attrKey]));
+        proj.details.add(attrKey, this.buildProjection(typeKey, projName, relAttributes[attrKey]));
       } else if (relationshipNames.belongsTo.indexOf(attrKey) !== -1) {
         let projName = name + '.masters.' + attrKey;
-        proj.masters.set(attrKey, this.buildProjection(typeKey, projName, relAttributes[attrKey]));
+        proj.masters.add(attrKey, this.buildProjection(typeKey, projName, relAttributes[attrKey]));
       } else {
         throw new Error(`Unknown attribute ${attrKey}.`);
       }
@@ -103,7 +103,7 @@ Model.reopenClass({
       });
     }
 
-    this.projections.add(proj);
+    this.projections.add(name, proj);
     return proj;
   }
 });

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Object.extend({
-    add: function (proj) {
-        this.set(proj.get('name'), proj);
+    add: function (projPropName, proj) {
+        this.set(projPropName, proj);
     }
 });

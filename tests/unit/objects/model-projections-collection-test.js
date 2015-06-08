@@ -17,13 +17,13 @@ moduleFor('object:model-projections-collection', {
 });
 
 test('it exists', function(assert) {
-  var model = this.subject();
-  assert.ok(!!model);
+  var collection = this.subject();
+  assert.ok(!!collection);
 });
 
 test('add() works', function(assert){
-  var model = this.subject();
+  var collection = this.subject();
   var testValue = 'testValue';
-  model.add('newKey', testValue);
-  assert.equal(model.get('newKey'), testValue);
+  collection.add('newKey', testValue);
+  assert.equal(collection.get('newKey'), testValue);
 });

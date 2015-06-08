@@ -23,34 +23,41 @@ export default Ember.Mixin.create({
     return records;
   },
 
+  _getLast: function (pagination = this.get('controller.content.pagination')) {
+    return Math.ceil(pagination.count / pagination.per_page);
+  },
+  _getNum: function (pageNum, pagination = this.get('controller.content.pagination')) {
+    var last = this._getLast(pagination);
+    return Math.max(1, Math.min(pageNum, last));
+  },
+
+  transitionToPageRoute: function (pageNum){
+    this.transitionTo(this.paginationRoute, pageNum);
+  },
+
   actions: {
     gotoPage: function(pageNum) {
       // this.get('controller.model.pagination') or this.get('controller.content.pagination')
       // (content is alias for model).
-      var pagination = this.get('controller.content.pagination');
-      var last = Math.ceil(pagination.count / pagination.per_page);
-      var num = Math.max(1, Math.min(pageNum, last));
-      this.transitionTo(this.paginationRoute, num);
+      var num = this._getNum(pageNum);
+      this.transitionToPageRoute(num);
     },
     nextPage: function() {
       var pagination = this.get('controller.content.pagination');
-      var last = Math.ceil(pagination.count / pagination.per_page);
-      var num = Math.max(1, Math.min(pagination.page + 1, last));
-      this.transitionTo(this.paginationRoute, num);
+      var num = this._getNum(pagination.page + 1, pagination);
+      this.transitionToPageRoute(num);
     },
     previousPage: function() {
       var pagination = this.get('controller.content.pagination');
-      var last = Math.ceil(pagination.count / pagination.per_page);
-      var num = Math.max(1, Math.min(pagination.page - 1, last));
-      this.transitionTo(this.paginationRoute, num, this.get('queryParams'));
+      var num = this._getNum(pagination.page - 1, pagination);
+      this.transitionToPageRoute(num);
     },
     lastPage: function() {
-      var pagination = this.get('controller.content.pagination');
-      var last = Math.ceil(pagination.count / pagination.per_page);
-      this.transitionTo(this.paginationRoute, last, this.get('queryParams'));
+      var last = this._getLast();
+      this.transitionToPageRoute(last);
     },
     firstPage: function() {
-      this.transitionTo(this.paginationRoute, 1, this.get('queryParams'));
+      this.transitionToPageRoute(1);
     }
   }
 });

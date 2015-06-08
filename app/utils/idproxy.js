@@ -19,11 +19,11 @@ export default {
 
     if (type) {
       if (type.typeKey === projectionOwner) {
-        projection = type.Projections.get(projectionName);
+        projection = type.projections.get(projectionName);
       } else {
         var store = type.store;
         var ownerType = store.modelFor(projectionOwner);
-        projection = ownerType.Projections.get(projectionName);
+        projection = ownerType.projections.get(projectionName);
       }
     } else {
       projection = null;

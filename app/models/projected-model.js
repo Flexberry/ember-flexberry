@@ -43,7 +43,7 @@ Model.reopenClass({
    * Define Model Projections here using
    * ModelProjectionsCollection and ModelProjection classes.
    */
-  Projections: null,
+  projections: null,
 
   // TODO: remove typeKey and ModelProjection.type? Instead, use name with Convention Over Configuration for reading type (see IdProxy)?
   buildProjection: function(typeKey, name, attributes) {
@@ -82,10 +82,10 @@ Model.reopenClass({
     for (let attrKey in relAttributes) {
       if (relationshipNames.hasMany.indexOf(attrKey) !== -1) {
         let projName = name + '.details.' + attrKey;
-        proj.details[attrKey] = this.buildProjection(typeKey, projName, relAttributes[attrKey]);
+        proj.details.add(attrKey, this.buildProjection(typeKey, projName, relAttributes[attrKey]));
       } else if (relationshipNames.belongsTo.indexOf(attrKey) !== -1) {
         let projName = name + '.masters.' + attrKey;
-        proj.masters[attrKey] = this.buildProjection(typeKey, projName, relAttributes[attrKey]);
+        proj.masters.add(attrKey, this.buildProjection(typeKey, projName, relAttributes[attrKey]));
       } else {
         throw new Error(`Unknown attribute ${attrKey}.`);
       }
@@ -97,14 +97,13 @@ Model.reopenClass({
   defineProjection: function(typeKey, name, attributes) {
     let proj = this.buildProjection(typeKey, name, attributes);
 
-    if (!this.Projections) {
-      // TODO: rename to lowercase.
+    if (!this.projections) {
       this.reopenClass({
-        Projections: ModelProjectionsCollection.create()
+          projections: ModelProjectionsCollection.create()
       });
     }
 
-    this.Projections[name] = proj;
+    this.projections.add(name, proj);
     return proj;
   }
 });

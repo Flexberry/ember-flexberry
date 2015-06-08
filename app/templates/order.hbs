@@ -19,21 +19,21 @@
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">ShipName</label>
-    <span style="color:red">{{errors.shipName}}</span>
+    <span style="color:red">{{model.errors.shipName}}</span>
     <div class="col-sm-10">
       {{input type="text" class="form-control" placeholder="(no value)" required=true value=model.shipName}}
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">ShipCountry</label>
-    <span style="color:red">{{errors.shipCountry}}</span>
+    <span style="color:red">{{model.errors.shipCountry}}</span>
     <div class="col-sm-10">
       {{input type="text" class="form-control" placeholder="(no value)" required=true value=model.shipCountry}}
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">OrderDate</label>
-    <span style="color:red">{{errors.orderDate}}</span>
+    <span style="color:red">{{model.errors.orderDate}}</span>
     <div class="col-sm-10">
       {{bootstrap-datepicker class="form-control" placeholder="(no value)" value=model.orderDate
         format="dd.mm.yyyy" todayBtn="linked" clearBtn=true orientation="top auto" autoclose=true todayHighlight=true}}
@@ -41,14 +41,14 @@
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">Employee FirstName</label>
-    <span style="color:red">{{errors.employeeID.firstName}}</span>
+    <span style="color:red">{{model.errors.employeeID.firstName}}</span>
     <div class="col-sm-10">
       {{input type="text" class="form-control" placeholder="(no value)" required=true value=model.employeeID.firstName readonly=true}}
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label">Employee LastName</label>
-    <span style="color:red">{{errors.employeeID.lastName}}</span>
+    <span style="color:red">{{model.errors.employeeID.lastName}}</span>
     <div class="col-sm-10">
       {{input type="text" class="form-control" placeholder="(no value)" required=true value=model.employeeID.lastName readonly=true}}
     </div>

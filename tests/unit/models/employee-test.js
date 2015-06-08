@@ -8,7 +8,9 @@ var App;
 
 moduleForModel('employee', {
     // Specify the other units that are required for this test.
-    needs: [],
+    needs: ['service:validations',
+            'ember-validations@validator:local/presence',
+            'ember-validations@validator:local/length'],
     setup: function(){
         App = startApp();
     },
@@ -40,6 +42,20 @@ test('it returns fields', function(assert) {
     assert.ok(reportsToEmployee);
     assert.equal(reportsToEmployee.get('firstName'), "Sidorov");
     assert.equal(reportsToEmployee.get('lastName'), "Sidor");
+});
+
+test('it validates', function (assert) {
+  var model = this.subject({ lastName: 'asdfgh' });
+
+  Ember.run(function (){
+    assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
+    assert.throws(function () { model.save(); }, Error,
+      'Model is invalid but save() works. Check save method and validation rules');
+
+    model.set('firstName', 'Qwerty');
+    model.set('lastName', 'Qwerty');
+    assert.ok(model.get('isValid'), 'Data was set but model is invalid. Check validation rules.');
+  });
 });
 
 test('it loads fields', function(assert) {

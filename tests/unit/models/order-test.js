@@ -8,7 +8,10 @@ var App;
 
 moduleForModel('order', {
   // Specify the other units that are required for this test.
-    needs: ["model:employee"],
+    needs: ["model:employee",
+            'service:validations',
+            'ember-validations@validator:local/presence',
+            'ember-validations@validator:local/length'],
     setup: function(){
         App = startApp();
     },
@@ -24,14 +27,16 @@ test('it exists', function(assert) {
 });
 
 test('it returns fields', function(assert) {
-  var model = this.subject({ orderDate: "1933-10-30T00:00:00Z" });
+  var model = this.subject();
   var store = this.store();
   assert.ok(model);
   assert.ok(model instanceof DS.Model);
-  assert.equal(model.get('orderDate'), "1933-10-30T00:00:00Z");
-  
+
   // set a relationship
   Ember.run(function() {
+    var date = '1933-10-30T00:00:00Z';
+    model.set('orderDate', date);
+    assert.equal(model.get('orderDate'), date);
     model.set('employeeID', store.createRecord('employee', { firstName: "Sidorov", lastName: "Sidor" }));
   });
   
@@ -41,9 +46,21 @@ test('it returns fields', function(assert) {
   assert.equal(reportsToEmployee.get('lastName'), "Sidor");
 });
 
+test('it validates', function (assert) {
+  var model = this.subject();
+
+  Ember.run(function (){
+    assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
+    assert.throws(function () { model.save(); }, Error,
+      'Model is invalid but save() works. Check save method and validation rules');
+
+    model.set('orderDate', '1933-10-30T00:00:00Z');
+    assert.ok(model.get('isValid'), 'Data was set but model is invalid. Check validation rules.');
+  });
+});
+
 test('it loads fields', function(assert) {
   var store = App.__container__.lookup('store:main');
-  var record = null;
   Ember.run(function(){
 
     Ember.$.mockjax({

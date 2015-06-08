@@ -1,10 +1,11 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import IdProxy from '../utils/idproxy';
+import EmberValidations from 'ember-validations';
 import ModelProjection from '../objects/model-projection';
 import ModelProjectionsCollection from '../objects/model-projections-collection';
 
-var Model = DS.Model.extend({
+var Model = DS.Model.extend(EmberValidations.Mixin, {
   primaryKey: Ember.computed('id', {
     get: function() {
       var id = this.get('id');
@@ -35,7 +36,18 @@ var Model = DS.Model.extend({
         return null;
       }
     }
-  })
+  }),
+
+  // validation rules
+  validations: {},
+
+  save: function() {
+    if (!this.get('isDeleted') && !this.get('isValid')) {
+      throw new Error('Model is not valid. Saving prevented.');
+    }
+
+    return this._super.apply(this, arguments);
+  }
 });
 
 Model.reopenClass({

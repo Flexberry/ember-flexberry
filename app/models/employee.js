@@ -7,8 +7,20 @@ var Model = ProjectedModel.extend({
   firstName: DS.attr('string'),
   lastName: DS.attr('string'),
   birthDate: DS.attr('date'),
-  reportsTo: DS.belongsTo('employee', { inverse: null, async: true })/*,
-  tmpChildren: DS.hasMany('employee', { inverse: null, async: true })*/
+  reportsTo: DS.belongsTo('employee', { inverse: null, async: true }),
+  /*tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),*/
+
+  // validation rules.
+  validations: {
+    firstName: {
+      presence: true,
+      length: { minimum: 5 }
+    },
+    lastName: {
+      presence: true,
+      length: { minimum: 5 }
+    }
+  }
 });
 
 /*Ember.$.mockjax({

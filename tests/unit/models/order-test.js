@@ -48,11 +48,14 @@ test('it returns fields', function(assert) {
 
 test('it validates', function (assert) {
   var model = this.subject();
+  assert.expect(3);
 
   Ember.run(function (){
     assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
-    assert.throws(function () { model.save(); }, Error,
-      'Model is invalid but save() works. Check save method and validation rules');
+
+    model.save().then(function (data) {
+      assert.ok(data.anyErrors);
+    });
 
     model.set('orderDate', '1933-10-30T00:00:00Z');
     assert.ok(model.get('isValid'), 'Data was set but model is invalid. Check validation rules.');

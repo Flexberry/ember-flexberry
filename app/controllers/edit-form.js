@@ -5,28 +5,26 @@ export default Ember.Controller.extend(ErrorableControllerMixin, {
   actions: {
     save: function() {
       this.send('dismissErrorMessages');
-
       var model = this.get('model');
-      if (!model.get('isValid')) {
-        this.send('addErrorMessage', 'В модели присутствуют ошибки.');
-        return;
-      }
-
-      if (model.get('isDirty')) {
-        model.save().then(function() {
-          alert('Saved');
-        }, function(ajaxError) {
-          alert('Save failed');
-          if (ajaxError){
-            var jsonErrors = Ember.$.parseJSON(ajaxError.responseText);
-            if (jsonErrors && jsonErrors.error && jsonErrors.error.message){
-              this.send('addErrorMessage', jsonErrors.error.message);
-            }
+      model.save().then(function (data){
+        if (data.anyErrors) {
+          this.send('addErrorMessage', 'В модели присутствуют ошибки.');
+          return;
+        }
+        if (data.noChanges) {
+          alert('There are no changes');
+          return;
+        }
+        alert('Saved');
+      }.bind(this), function (ajaxError) {
+        alert('Save failed');
+        if (ajaxError){
+          var jsonErrors = Ember.$.parseJSON(ajaxError.responseText);
+          if (jsonErrors && jsonErrors.error && jsonErrors.error.message){
+            this.send('addErrorMessage', jsonErrors.error.message);
           }
-        }.bind(this));
-      } else {
-        alert('There are no changes');
-      }
+        }
+      }.bind(this));
     },
 
     close: function() {
@@ -35,17 +33,5 @@ export default Ember.Controller.extend(ErrorableControllerMixin, {
       // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
       this.transitionToRoute(this.get('parentRoute'));
     }
-  },
-
-  // Validation rules.
-  validations: {
-  },
-
-  // Total number of validation errors.
-  numTotalErrors: function () {
-    return this.get('validators').mapBy('errors.length').reduce(
-      function (beforeSum, addValue) {
-        return beforeSum + addValue;
-      }, 0);
-  }.property('validators.@each.errors.length')
+  }
 });

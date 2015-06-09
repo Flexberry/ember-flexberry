@@ -42,11 +42,26 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
   validations: {},
 
   save: function() {
-    if (!this.get('isDeleted') && !this.get('isValid')) {
-      throw new Error('Model is not valid. Saving prevented.');
-    }
+    var saveData = {};
+    var model = this;
+    if (!model.get('isDeleted')){
+      saveData.noChanges = !model.get('isDirty');
+      saveData.anyErrors = model.get('isInvalid');
+      saveData.errors = {};
 
-    return this._super.apply(this, arguments);
+      this.eachAttribute(function (name){
+        let propErrors = model.errors.get(name);
+        if (propErrors.length > 0){
+          saveData.errors[name] = propErrors;
+        }
+      });
+    }
+    if (saveData.noChanges || saveData.anyErrors){
+      return new Ember.RSVP.Promise(function (resolve) {
+        resolve(saveData);
+      });
+    }
+    return this._super.apply(model, arguments);
   }
 });
 

@@ -45,14 +45,17 @@ test('it returns fields', function(assert) {
 });
 
 test('it validates', function (assert) {
-  var model = this.subject({ lastName: 'asdfgh' });
+  var model = this.subject({ lastName: 'asd' });
+  assert.expect(3);
 
   Ember.run(function (){
-    assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
-    assert.throws(function () { model.save(); }, Error,
-      'Model is invalid but save() works. Check save method and validation rules');
-
     model.set('firstName', 'Qwerty');
+    assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
+
+    model.save().then(function (data) {
+      assert.ok(data.anyErrors);
+    });
+
     model.set('lastName', 'Qwerty');
     assert.ok(model.get('isValid'), 'Data was set but model is invalid. Check validation rules.');
   });
@@ -60,7 +63,6 @@ test('it validates', function (assert) {
 
 test('it loads fields', function(assert) {
     var store = App.__container__.lookup('store:main');
-    var record = null;
     Ember.run(function(){
 
         Ember.$.mockjax({

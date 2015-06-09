@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ValidationData from '../objects/validation-data';
 import ErrorableControllerMixin from 'prototype-ember-cli-application/mixins/errorable-controller';
 
 export default Ember.Controller.extend(ErrorableControllerMixin, {
@@ -6,22 +7,25 @@ export default Ember.Controller.extend(ErrorableControllerMixin, {
     save: function() {
       this.send('dismissErrorMessages');
       var model = this.get('model');
-      model.save().then(function (data){
-        if (data.anyErrors) {
-          this.send('addErrorMessage', 'В модели присутствуют ошибки.');
-          return;
-        }
-        if (data.noChanges) {
-          alert('There are no changes');
-          return;
-        }
+      model.save().then(function () {
         alert('Saved');
-      }.bind(this), function (ajaxError) {
+      }.bind(this), function (errorData) {
+        if (errorData instanceof ValidationData) {
+          if (errorData.anyErrors) {
+            this.send('addErrorMessage', 'В модели присутствуют ошибки.');
+            return;
+          }
+          if (errorData.noChanges) {
+            alert('There are no changes');
+            return;
+          }
+        }
+
         alert('Save failed');
-        if (ajaxError){
-          var jsonErrors = Ember.$.parseJSON(ajaxError.responseText);
-          if (jsonErrors && jsonErrors.error && jsonErrors.error.message){
-            this.send('addErrorMessage', jsonErrors.error.message);
+        if (errorData && errorData.responseJSON) {
+          var respJson = errorData.responseJSON;
+          if (respJson && respJson.error && respJson.error.message){
+            this.send('addErrorMessage', respJson.error.message);
           }
         }
       }.bind(this));

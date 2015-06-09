@@ -46,14 +46,15 @@ test('it returns fields', function(assert) {
 
 test('it validates', function (assert) {
   var model = this.subject({ lastName: 'asd' });
-  assert.expect(3);
+  assert.expect(4);
 
   Ember.run(function (){
     model.set('firstName', 'Qwerty');
     assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
 
-    model.save().then(function (data) {
-      assert.ok(data.anyErrors);
+    model.save().then(null, function (errorData) {
+      assert.ok(errorData instanceof Ember.Object);
+      assert.ok(errorData.anyErrors);
     });
 
     model.set('lastName', 'Qwerty');

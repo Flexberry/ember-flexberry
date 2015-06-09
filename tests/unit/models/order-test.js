@@ -48,13 +48,14 @@ test('it returns fields', function(assert) {
 
 test('it validates', function (assert) {
   var model = this.subject();
-  assert.expect(3);
+  assert.expect(4);
 
   Ember.run(function (){
     assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
 
-    model.save().then(function (data) {
-      assert.ok(data.anyErrors);
+    model.save().then(null, function (errorData) {
+      assert.ok(errorData instanceof Ember.Object);
+      assert.ok(errorData.anyErrors);
     });
 
     model.set('orderDate', '1933-10-30T00:00:00Z');

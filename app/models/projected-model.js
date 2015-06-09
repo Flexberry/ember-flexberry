@@ -2,6 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import IdProxy from '../utils/idproxy';
 import EmberValidations from 'ember-validations';
+import ValidationData from '../objects/validation-data';
 import ModelProjection from '../objects/model-projection';
 import ModelProjectionsCollection from '../objects/model-projections-collection';
 
@@ -42,26 +43,20 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
   validations: {},
 
   save: function() {
-    var saveData = {};
-    var model = this;
-    if (!model.get('isDeleted')){
-      saveData.noChanges = !model.get('isDirty');
-      saveData.anyErrors = model.get('isInvalid');
-      saveData.errors = {};
+    if (!this.get('isDeleted')) {
+      var validationData = ValidationData.create({
+        noChanges: !this.get('isDirty'),
+        anyErrors: this.get('isInvalid')
+      });
+      validationData.fillErrorsFromProjectedModel(this);
 
-      this.eachAttribute(function (name){
-        let propErrors = model.errors.get(name);
-        if (propErrors.length > 0){
-          saveData.errors[name] = propErrors;
-        }
-      });
+      if (validationData.noChanges || validationData.anyErrors) {
+        return new Ember.RSVP.Promise(function (resolve, reject) {
+          reject(validationData);
+        });
+      }
     }
-    if (saveData.noChanges || saveData.anyErrors){
-      return new Ember.RSVP.Promise(function (resolve) {
-        resolve(saveData);
-      });
-    }
-    return this._super.apply(model, arguments);
+    return this._super.apply(this, arguments);
   }
 });
 

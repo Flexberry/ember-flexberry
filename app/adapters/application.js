@@ -42,7 +42,7 @@ export default DS.RESTAdapter.extend({
     var projection = data.projection;
     Ember.assert('projection should be defined', !!projection);
 
-    var url = this.buildURL(type.typeKey, data.id);
+    var url = this.buildURL(type.typeKey, data.id, snapshot, 'find');
     var serializer = store.serializerFor(type);
     var query = ProjectionQuery.get(projection, serializer);
     return this.ajax(url, 'GET', { data: query }).then(function(data) {
@@ -72,42 +72,6 @@ export default DS.RESTAdapter.extend({
     });
   },
 
-  buildURL: function(type, id, record) {
-    var url = [],
-        host = Ember.get(this, 'host'),
-        prefix = this.urlPrefix();
-
-    if (type) {
-      url.push(this.pathForType(type));
-    }
-
-    if (prefix) {
-      url.unshift(prefix);
-    }
-
-    url = url.join('/');
-    if (!host && url) {
-      url = '/' + url;
-    }
-
-    //We might get passed in an array of ids from findMany
-    //in which case we don't want to modify the url, as the
-    //ids will be passed in through a query param
-    if (id && !Ember.isArray(id)) {
-      var encId = encodeURIComponent(id),
-          idType = Ember.get(this, 'idType');
-      if (idType !== 'number') {
-        encId = "'" + encId + "'";
-      }
-
-      url += '(' + encId + ')';
-    }
-
-    // /Customers('ALFKI')
-    // /Employees(4)
-    return url;
-  },
-
   // TODO: override createRecord and deleteRecord for projections support.
   updateRecord: function(store, type, snapshot) {
     var hasProjection = IdProxy.idIsProxied(snapshot.id);
@@ -124,7 +88,54 @@ export default DS.RESTAdapter.extend({
     var serializer = store.serializerFor(type.typeKey);
     serializer.serializeIntoHash(data, type, snapshot);
 
-    var url = this.buildURL(type.typeKey, snapshot.id, snapshot);
+    var url = this.buildURL(type.typeKey, snapshot.id, snapshot, 'updateRecord');
     return this.ajax(url, 'PATCH', { data: data });
+  },
+
+  _buildURL: function(modelName, id) {
+    var url = [];
+    var host = Ember.get(this, 'host');
+    var prefix = this.urlPrefix();
+    var path;
+
+    if (modelName) {
+      path = this.pathForType(modelName);
+      if (path) {
+        url.push(path);
+      }
+    }
+
+    if (prefix) {
+      url.unshift(prefix);
+    }
+
+    url = url.join('/');
+    if (!host && url && url.charAt(0) !== '/') {
+      url = '/' + url;
+    }
+
+    if (id) {
+      // Append id as `(id)` (OData specification) instead of `/id`.
+      url = this._appendIdToURL(id, url);
+    }
+
+    return url;
+  },
+
+  /**
+   * Appends id to URL according to the OData specification.
+   * @private
+   */
+  _appendIdToURL: function(id, url) {
+    let encId = encodeURIComponent(id);
+    let idType = Ember.get(this, 'idType');
+    if (idType !== 'number') {
+      encId = "'" + encId + "'";
+    }
+
+    // /Customers('ALFKI')
+    // /Employees(4)
+    url += '(' + encId + ')';
+    return url;
   }
 });

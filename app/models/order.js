@@ -5,7 +5,14 @@ var Model = ProjectedModel.extend({
   shipName: DS.attr('string'),
   shipCountry: DS.attr('string'),
   orderDate: DS.attr('date'),
-  employeeID: DS.belongsTo('employee', { inverse: null, async: true })
+  employeeID: DS.belongsTo('employee', { inverse: null, async: true }),
+
+  // validation rules.
+  validations: {
+    orderDate: {
+      presence: true
+    }
+  }
 });
 
 Model.defineProjection('order', 'OrderE', [

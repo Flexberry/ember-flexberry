@@ -1,34 +1,15 @@
 import Ember from 'ember';
-import EmberValidations from 'ember-validations';
-import ErrorableControllerMixin from 'prototype-ember-cli-application/mixins/errorable-controller';
+import ValidationData from '../objects/validation-data';
+import ErrorableControllerMixin from '../mixins/errorable-controller';
 
-// TODO: Ember.ObjectController is deprecated, please use Ember.Controller.
-// TODO: But validations don't work using Ember.Controller.
-export default Ember.ObjectController.extend(EmberValidations.Mixin, ErrorableControllerMixin, {
+export default Ember.Controller.extend(ErrorableControllerMixin, {
   actions: {
     save: function() {
       this.send('dismissErrorMessages');
-      if (this.get('numTotalErrors')) {
-        this.send('addErrorMessage', 'В модели присутствуют ошибки.');
-        return;
-      }
-
-      var model = this.get('model');
-      if (model.get('isDirty')) {
-        model.save().then(function() {
-          alert('Saved');
-        }, function(ajaxError) {
-          alert('Save failed');
-          if (ajaxError){
-            var jsonErrors = Ember.$.parseJSON(ajaxError.responseText);
-            if (jsonErrors && jsonErrors.error && jsonErrors.error.message){
-              this.send('addErrorMessage', jsonErrors.error.message);
-            }
-          }
-        }.bind(this));
-      } else {
-        alert('There are no changes');
-      }
+      let model = this.get('model');
+      model.save().then(
+        this._onSaveFulfilled.bind(this),
+        this._onSaveRejected.bind(this));
     },
 
     close: function() {
@@ -39,15 +20,45 @@ export default Ember.ObjectController.extend(EmberValidations.Mixin, ErrorableCo
     }
   },
 
-  // Validation rules.
-  validations: {
+  _onSaveFulfilled: function() {
+    alert('Saved');
   },
 
-  // Total number of validation errors.
-  numTotalErrors: function () {
-    return this.get('validators').mapBy('errors.length').reduce(
-      function (beforeSum, addValue) {
-        return beforeSum + addValue;
-      }, 0);
-  }.property('validators.@each.errors.length')
+  _onSaveRejected: function(errorData) {
+    if (errorData instanceof ValidationData) {
+      this._throwValidationError(errorData);
+      return;
+    }
+
+    let isAjaxError = errorData && errorData.hasOwnProperty('responseText');
+    if (isAjaxError) {
+      this._throwAjaxError(errorData);
+      return;
+    }
+
+    throw new Error('Unknown error has been rejected.');
+  },
+
+  _throwValidationError: function(validationError) {
+    if (validationError.anyErrors) {
+      // TODO: more detail message about validation errors.
+      this.send('addErrorMessage', 'There are validation errors.');
+      alert('Save failed');
+    } else if (validationError.noChanges) {
+      alert('There are no changes');
+    } else {
+      throw new Error('Unknown validation error.');
+    }
+  },
+
+  _throwAjaxError: function(ajaxError) {
+    var respJson = ajaxError.responseJSON;
+    Ember.assert('XMLHttpRequest has responseJSON property', respJson);
+
+    if (respJson.error && respJson.error.message) {
+      this.send('addErrorMessage', respJson.error.message);
+    }
+
+    alert('Save failed');
+  }
 });

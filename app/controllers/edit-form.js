@@ -1,34 +1,15 @@
 import Ember from 'ember';
 import ValidationData from '../objects/validation-data';
-import ErrorableControllerMixin from 'prototype-ember-cli-application/mixins/errorable-controller';
+import ErrorableControllerMixin from '../mixins/errorable-controller';
 
 export default Ember.Controller.extend(ErrorableControllerMixin, {
   actions: {
     save: function() {
       this.send('dismissErrorMessages');
-      var model = this.get('model');
-      model.save().then(function () {
-        alert('Saved');
-      }.bind(this), function (errorData) {
-        if (errorData instanceof ValidationData) {
-          if (errorData.anyErrors) {
-            this.send('addErrorMessage', 'В модели присутствуют ошибки.');
-            return;
-          }
-          if (errorData.noChanges) {
-            alert('There are no changes');
-            return;
-          }
-        }
-
-        alert('Save failed');
-        if (errorData && errorData.responseJSON) {
-          var respJson = errorData.responseJSON;
-          if (respJson && respJson.error && respJson.error.message){
-            this.send('addErrorMessage', respJson.error.message);
-          }
-        }
-      }.bind(this));
+      let model = this.get('model');
+      model.save().then(
+        this._onSaveFulfilled.bind(this),
+        this._onSaveRejected.bind(this));
     },
 
     close: function() {
@@ -37,5 +18,47 @@ export default Ember.Controller.extend(ErrorableControllerMixin, {
       // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
       this.transitionToRoute(this.get('parentRoute'));
     }
+  },
+
+  _onSaveFulfilled: function() {
+    alert('Saved');
+  },
+
+  _onSaveRejected: function(errorData) {
+    if (errorData instanceof ValidationData) {
+      this._throwValidationError(errorData);
+      return;
+    }
+
+    let isAjaxError = errorData && errorData.hasOwnProperty('responseText');
+    if (isAjaxError) {
+      this._throwAjaxError(errorData);
+      return;
+    }
+
+    throw new Error('Unknown error has been rejected.');
+  },
+
+  _throwValidationError: function(validationError) {
+    if (validationError.anyErrors) {
+      // TODO: more detail message about validation errors.
+      this.send('addErrorMessage', 'There are validation errors.');
+      alert('Save failed');
+    } else if (validationError.noChanges) {
+      alert('There are no changes');
+    } else {
+      throw new Error('Unknown validation error.');
+    }
+  },
+
+  _throwAjaxError: function(ajaxError) {
+    var respJson = ajaxError.responseJSON;
+    Ember.assert('XMLHttpRequest has responseJSON property', respJson);
+
+    if (respJson.error && respJson.error.message) {
+      this.send('addErrorMessage', respJson.error.message);
+    }
+
+    alert('Save failed');
   }
 });

@@ -1,4 +1,4 @@
-# Prototype-ember-cli-application <br/>[![Build Status](https://travis-ci.org/Flexberry/prototype-ember-application.svg)](https://travis-ci.org/Flexberry/prototype-ember-application) [![Dependency Status](https://david-dm.org/Flexberry/prototype-ember-application.svg)](https://david-dm.org/Flexberry/prototype-ember-application) [![devDependency Status](https://david-dm.org/Flexberry/prototype-ember-application/dev-status.svg)](https://david-dm.org/Flexberry/prototype-ember-application#info=devDependencies)
+# Prototype-ember-cli-application <br/>[![Build Status](https://travis-ci.org/Flexberry/prototype-ember-application.svg?branch=master)](https://travis-ci.org/Flexberry/prototype-ember-application) [![Dependency Status](https://david-dm.org/Flexberry/prototype-ember-application.svg)](https://david-dm.org/Flexberry/prototype-ember-application) [![devDependency Status](https://david-dm.org/Flexberry/prototype-ember-application/dev-status.svg)](https://david-dm.org/Flexberry/prototype-ember-application#info=devDependencies)
 
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.

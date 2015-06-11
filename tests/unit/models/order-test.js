@@ -39,7 +39,7 @@ test('it returns fields', function(assert) {
     assert.equal(model.get('orderDate'), date);
     model.set('employeeID', store.createRecord('employee', { firstName: "Sidorov", lastName: "Sidor" }));
   });
-  
+
   var reportsToEmployee = model.get('employeeID');
   assert.ok(reportsToEmployee);
   assert.equal(reportsToEmployee.get('firstName'), "Sidorov");
@@ -94,12 +94,12 @@ test('it loads fields', function(assert) {
       assert.ok(record instanceof DS.Model);
 
       var orderDate = record.get('orderDate');
-      assert.ok(String(orderDate).indexOf("1933") > -1);  
+      assert.ok(String(orderDate).indexOf("1933") > -1);
 
       record.get('employeeID').then(function(masterRecord){
         assert.ok(masterRecord);
         assert.ok(masterRecord instanceof DS.Model);
-        assert.equal(masterRecord.get('firstName'), "Sidor"); 
+        assert.equal(masterRecord.get('firstName'), "Sidor");
         assert.equal(masterRecord.get('lastName'), "Sidorov");
       });
     });

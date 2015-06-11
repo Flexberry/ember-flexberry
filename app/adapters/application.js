@@ -7,8 +7,8 @@ import SnapshotTransform from '../utils/snapshot-transform';
 // Adapter for OData service.
 // TODO: ODataAdapter.
 export default DS.RESTAdapter.extend({
-  //host: 'https://northwindodata.azurewebsites.net/odata',
-  host: 'http://localhost:1180/odata',
+  host: 'https://northwindodata.azurewebsites.net/odata',
+  //host: 'http://localhost:1180/odata',
   pathForType: function(type) {
     var camelized = Ember.String.camelize(type);
     var capitalized = Ember.String.capitalize(camelized);
@@ -71,10 +71,10 @@ export default DS.RESTAdapter.extend({
     });
   },
 
-  buildURL: function(type, id) {
-    var url = [],
-      host = Ember.get(this, 'host'),
-      prefix = this.urlPrefix();
+  buildURL: function(type, id, record) {
+    var url = [];
+    var host = Ember.get(this, 'host');
+    var prefix = this.urlPrefix();
 
     if (type) {
       url.push(this.pathForType(type));
@@ -93,8 +93,8 @@ export default DS.RESTAdapter.extend({
     //in which case we don't want to modify the url, as the
     //ids will be passed in through a query param
     if (id && !Ember.isArray(id)) {
-      var encId = encodeURIComponent(id),
-        idType = Ember.get(this, 'idType');
+      var encId = encodeURIComponent(id);
+      var idType = Ember.get(this, 'idType');
       if (idType !== 'number') {
         encId = "'" + encId + "'";
       }

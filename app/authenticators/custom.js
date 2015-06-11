@@ -3,7 +3,8 @@ import BaseAuthenticator from 'simple-auth/authenticators/base';
 
 export default BaseAuthenticator.extend({
 
-  tokenEndpoint: 'http://localhost:1180/Token',
+  tokenEndpoint: 'https://northwindodata.azurewebsites.net/Token',
+  //tokenEndpoint: 'http://localhost:1180/Token',
 
   restore: function(data) {
     return new Ember.RSVP.Promise(function(resolve, reject) {

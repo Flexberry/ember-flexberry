@@ -7,11 +7,11 @@ import SnapshotTransform from '../utils/snapshot-transform';
 // Adapter for OData service.
 // TODO: ODataAdapter.
 export default DS.RESTAdapter.extend({
-  host: 'https://northwindodata.azurewebsites.net/odata',
-  //host: 'http://localhost:4356/odata',
+  //host: 'https://northwindodata.azurewebsites.net/odata',
+  host: 'http://localhost:1180/odata',
   pathForType: function(type) {
-    var camelized = Ember.String.camelize(type),
-        capitalized = Ember.String.capitalize(camelized);
+    var camelized = Ember.String.camelize(type);
+    var capitalized = Ember.String.capitalize(camelized);
     return Ember.String.pluralize(capitalized);
   },
 
@@ -23,10 +23,9 @@ export default DS.RESTAdapter.extend({
     var query = { '$top': perPage, '$skip': (page - 1) * perPage, '$count': true };
 
     if (sortingInfo && sortingInfo.length > 0) {
-      var serializedSortingInfo = sortingInfo.map(function(element) {
+      query['$orderby'] = sortingInfo.map(function(element) {
         return serializer.keyForAttribute(element.propName) + ' ' + element.direction;
       }).join(', ');
-      query['$orderby'] = serializedSortingInfo;
     }
 
     return query;
@@ -72,10 +71,10 @@ export default DS.RESTAdapter.extend({
     });
   },
 
-  buildURL: function(type, id, record) {
+  buildURL: function(type, id) {
     var url = [],
-        host = Ember.get(this, 'host'),
-        prefix = this.urlPrefix();
+      host = Ember.get(this, 'host'),
+      prefix = this.urlPrefix();
 
     if (type) {
       url.push(this.pathForType(type));
@@ -95,7 +94,7 @@ export default DS.RESTAdapter.extend({
     //ids will be passed in through a query param
     if (id && !Ember.isArray(id)) {
       var encId = encodeURIComponent(id),
-          idType = Ember.get(this, 'idType');
+        idType = Ember.get(this, 'idType');
       if (idType !== 'number') {
         encId = "'" + encId + "'";
       }

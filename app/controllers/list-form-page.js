@@ -7,6 +7,9 @@ import ListTableCellView from 'prototype-ember-cli-application/views/ember-table
 import IdProxy from '../utils/idproxy';
 
 export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableControllerMixin, {
+
+  tratra: 'OMG',
+
   actions: {
     /**
      * Обработчик клика по строке таблицы.

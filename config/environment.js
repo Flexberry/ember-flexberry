@@ -24,7 +24,7 @@ module.exports = function(environment) {
     // http://content-security-policy.com
     contentSecurityPolicy: {
       'style-src': "'self' 'unsafe-inline'",
-      'connect-src': "'self' https://northwindodata.azurewebsites.net http://localhost:4356"
+      'connect-src': "'self' https://northwindodata.azurewebsites.net http://localhost:1180"
     }
   };
 
@@ -50,7 +50,7 @@ module.exports = function(environment) {
     ENV['simple-auth'] = {
       authorizer: 'authorizer:custom',
       // FIXME: dublicates with application-adapter.
-      crossOriginWhitelist: ['http://northwindodata.azurewebsites.net/odata', 'http://localhost:4356/odata']
+      crossOriginWhitelist: ['http://northwindodata.azurewebsites.net/odata', 'http://localhost:1180/odata']
     };
   }
 

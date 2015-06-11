@@ -9,12 +9,12 @@
       </button>
       <a class="navbar-brand" href="#">Flexberry prototype written in Ember.js</a>
     </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-      User: {{model.username}}
+    <div class="collapse navbar-collapse navbar-ex1-collapse" style="float:right; margin: 5px;">
       {{#if session.isAuthenticated}}
-        <a {{ action 'invalidateSession' }}>Logout</a>
+      User: {{session.secure.userName}}
+      <a {{ action 'invalidateSession' }}>Logout</a>
       {{else}}
-        {{#link-to 'login'}}Login{{/link-to}}
+      {{#link-to 'login'}}Login{{/link-to}}
       {{/if}}
     </div>
   </nav>

@@ -3,7 +3,7 @@ import UnauthenticatedRouteMixin from 'simple-auth/mixins/unauthenticated-route-
 
 export default Ember.Route.extend(UnauthenticatedRouteMixin, {
   // clear a potentially stale error message from previous login attempts
-  setupController: function(controller, model) {
+  setupController: function(controller) {
     controller.set('errorMessage', null);
   }
 });

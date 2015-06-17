@@ -65,12 +65,12 @@ test('it validates', function (assert) {
 
 test('it loads fields', function(assert) {
   var store = App.__container__.lookup('store:main');
-  Ember.run(function(){
+  Ember.run(function() {
 
     Ember.$.mockjax({
        url: "*Orders(99)",
        responseText: {
-         "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Orders(OrderID,OrderDate,EmployeeID)/$entity",
+         "@odata.context": App.activeHost.odata + "/$metadata#Orders(OrderID,OrderDate,EmployeeID)/$entity",
          "OrderID": 99,
          "OrderDate": "1933-10-30T00:00:00Z",
          "EmployeeID": 97
@@ -80,7 +80,7 @@ test('it loads fields', function(assert) {
     Ember.$.mockjax({
        url: "*Employees(97)",
        responseText: {
-         "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
+         "@odata.context": App.activeHost.odata + "/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
          "EmployeeID": 97,
          "FirstName": "Sidor",
          "LastName": "Sidorov",

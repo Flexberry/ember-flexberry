@@ -1,17 +1,17 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import IdProxy from '../utils/idproxy';
+import config from '../config/environment';
 import ProjectionQuery from '../utils/projection-query';
 import SnapshotTransform from '../utils/snapshot-transform';
 
 // Adapter for OData service.
 // TODO: ODataAdapter.
 export default DS.RESTAdapter.extend({
-  host: 'https://northwindodata.azurewebsites.net/odata',
-  //host: 'http://localhost:4356/odata',
+  host: config.APP.activeHost.odata,
   pathForType: function(type) {
-    var camelized = Ember.String.camelize(type),
-        capitalized = Ember.String.capitalize(camelized);
+    var camelized = Ember.String.camelize(type);
+    var capitalized = Ember.String.capitalize(camelized);
     return Ember.String.pluralize(capitalized);
   },
 

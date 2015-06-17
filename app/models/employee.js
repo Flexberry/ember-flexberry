@@ -1,6 +1,7 @@
 // Remove commented out lines, when they will be covered with tests.
 /*import Ember from 'ember';*/
 import DS from 'ember-data';
+//import config from '../config/environment';
 import ProjectedModel from './projected-model';
 
 var Model = ProjectedModel.extend({
@@ -26,7 +27,7 @@ var Model = ProjectedModel.extend({
 /*Ember.$.mockjax({
   url: "*Employees(3)",
   responseText: {
-    "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
+    "@odata.context": config.APP.activeHost.odata + "/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
     "EmployeeID": 3,
     "FirstName": "Janet225 Oo",
     "LastName": "Leverling",

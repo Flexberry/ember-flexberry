@@ -13,11 +13,11 @@ moduleForModel('order', {
             'ember-validations@validator:local/presence',
             'ember-validations@validator:local/length'],
     setup: function(){
-        App = startApp();
+      App = startApp();
     },
     teardown: function(){
-        Ember.run(App, 'destroy');
-        Ember.$.mockjax.clear();
+      Ember.run(App, 'destroy');
+      Ember.$.mockjax.clear();
     }
 });
 
@@ -68,26 +68,26 @@ test('it loads fields', function(assert) {
   Ember.run(function(){
 
     Ember.$.mockjax({
-       url: "*Orders(99)",
-       responseText: {
-         "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Orders(OrderID,OrderDate,EmployeeID)/$entity",
-         "OrderID": 99,
-         "OrderDate": "1933-10-30T00:00:00Z",
-         "EmployeeID": 97
-       }
+      url: "*Orders(99)",
+      responseText: {
+        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Orders(OrderID,OrderDate,EmployeeID)/$entity",
+        "OrderID": 99,
+        "OrderDate": "1933-10-30T00:00:00Z",
+        "EmployeeID": 97
+      }
      });
 
     Ember.$.mockjax({
-       url: "*Employees(97)",
-       responseText: {
-         "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
-         "EmployeeID": 97,
-         "FirstName": "Sidor",
-         "LastName": "Sidorov",
-         "BirthDate": "1946-10-30T00:00:00Z",
-         "ReportsTo": 96
-       }
-     });
+      url: "*Employees(97)",
+      responseText: {
+        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
+        "EmployeeID": 97,
+        "FirstName": "Sidor",
+        "LastName": "Sidorov",
+        "BirthDate": "1946-10-30T00:00:00Z",
+        "ReportsTo": 96
+      }
+    });
 
     store.find('order', 99).then(function(record) {
       assert.ok(record);
@@ -104,6 +104,7 @@ test('it loads fields', function(assert) {
       });
     });
 
-    andThen(function(){});
+    // waiting for async operations to finish
+    wait();
   });
 });

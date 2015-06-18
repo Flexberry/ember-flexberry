@@ -42,7 +42,7 @@ test('it loads details', function(assert) {
         Ember.$.mockjax({
             url: "*Customs(99)",
             responseText: {
-                "@odata.context": App.activeHost.odata + "/$metadata#Customs(firstName,ReportsTo)/$entity",
+                "@odata.context": App.activeHost.api + "/$metadata#Customs(firstName,ReportsTo)/$entity",
                 "CustomID": 99,
                 "FirstName": "TestCustomModel",
                 "ReportsTo": 98,
@@ -53,7 +53,7 @@ test('it loads details', function(assert) {
         Ember.$.mockjax({
             url: "*Customs(98)",
             responseText: {
-                "@odata.context": App.activeHost.odata + "/$metadata#Customs(firstName,ReportsTo)/$entity",
+                "@odata.context": App.activeHost.api + "/$metadata#Customs(firstName,ReportsTo)/$entity",
                 "CustomID": 98,
                 "FirstName": "TestCustomModelMaster",
                 "ReportsTo": 97
@@ -63,7 +63,7 @@ test('it loads details', function(assert) {
         Ember.$.mockjax({
             url: "*Customs(1)",
             responseText: {
-                "@odata.context": App.activeHost.odata + "/$metadata#Customs(firstName,ReportsTo)/$entity",
+                "@odata.context": App.activeHost.api + "/$metadata#Customs(firstName,ReportsTo)/$entity",
                 "CustomID": 1,
                 "FirstName": "TestCustomModelDetail1",
                 "ReportsTo": 100
@@ -73,7 +73,7 @@ test('it loads details', function(assert) {
         Ember.$.mockjax({
             url: "*Customs(2)",
             responseText: {
-                "@odata.context": App.activeHost.odata + "/$metadata#Customs(firstName,ReportsTo)/$entity",
+                "@odata.context": App.activeHost.api + "/$metadata#Customs(firstName,ReportsTo)/$entity",
                 "CustomID": 2,
                 "FirstName": "TestCustomModelDetail2",
                 "ReportsTo": 200

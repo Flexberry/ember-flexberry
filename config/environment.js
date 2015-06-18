@@ -14,128 +14,17 @@ module.exports = function(environment) {
     }
   };
 
-  /*class AppHost {
-   constructor(hostName, cspProtocol, protocol = 'http') {
-   this.protocol = protocol;
-   this.hostName = hostName;
-   this.cspProtocol = cspProtocol;
-   }
-   // host name with protocol
-   pName() {
-   return `${this.protocol}://${this.hostName}`;
-   }
-   // host name with csp protocol
-   cspName() {
-   return `${this.cspProtocol || this.protocol}://${this.hostName}`;
-   }
-   // odata host name
-   odata() {
-   return `${this.pName()}/odata`;
-   }
-   // token host name for token-base-authentication
-   token() {
-   return `${this.pName()}/Token`;
-   }
-   }*/
-  // *************
-  // Not working yet. Transformed that code with babel to code below
-  // *************
-
-  var _createClass = (function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ('value' in descriptor) {
-          descriptor.writable = true;
-        }
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) {
-        defineProperties(Constructor.prototype, protoProps);
-      }
-      if (staticProps) {
-        defineProperties(Constructor, staticProps);
-      }
-      return Constructor;
-    };
-  })();
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError('Cannot call a class as a function');
-    }
-  }
-
-  var AppHost = (function () {
-    function AppHost(hostName, cspProtocol) {
-      var protocol = arguments[2] === undefined ? 'http' : arguments[2];
-
-      _classCallCheck(this, AppHost);
-
-      this.protocol = protocol;
-      this.hostName = hostName;
-      this.cspProtocol = cspProtocol;
-    }
-
-    _createClass(AppHost, [
-      {
-        key: 'pName',
-
-        // host name with protocol
-        value: function pName() {
-          return '' + this.protocol + '://' + this.hostName;
-        }
-      },
-      {
-        key: 'cspName',
-
-        // host name with csp protocol
-        value: function cspName() {
-          return '' + (this.cspProtocol || this.protocol) + '://' + this.hostName;
-        }
-      },
-      {
-        key: 'odata',
-
-        // odata host name
-        value: function odata() {
-          return '' + this.pName() + '/odata';
-        }
-      },
-      {
-        key: 'token',
-
-        // token url name for token-base-authentication
-        value: function token() {
-          return '' + this.pName() + '/Token';
-        }
-      }
-    ]);
-
-    return AppHost;
-  })();
-
-
+  var activeHostName = 'http://' +
+    'northwindodata.azurewebsites.net';
+    //'localhost:4356';
+    //'localhost:1180';
 
   ENV.APP = {
-    // Here you can pass flags/options to your application instance
-    // when it is created
-    availableHosts: [
-      new AppHost("northwindodata.azurewebsites.net", "https"),
-      new AppHost("localhost:4356"),
-      new AppHost("localhost:1180")
-    ]
-  };
-
-  var activeHost = ENV.APP.availableHosts[0]; // just change index to connect to your server
-  ENV.APP.activeHost = {
-    name: activeHost.pName(),
-    odata: activeHost.odata(),
-    token: activeHost.token()
+    activeHost: {
+      name: activeHostName,
+      api: activeHostName + '/odata',
+      token: activeHostName + '/Token'
+    }
   };
 
   // Read more about CSP:
@@ -144,9 +33,7 @@ module.exports = function(environment) {
   // http://content-security-policy.com
   ENV.contentSecurityPolicy = {
     'style-src': "'self' 'unsafe-inline'",
-    'connect-src': "'self' " + ENV.APP.availableHosts.map(function (item) {
-      return item.cspName()
-    }).join(" ")
+    'connect-src': "'self' " + ENV.APP.activeHost.name
   };
 
   if (environment === 'development') {
@@ -170,9 +57,7 @@ module.exports = function(environment) {
   } else {
     ENV['simple-auth'] = {
       authorizer: 'authorizer:custom',
-      crossOriginWhitelist: ENV.APP.availableHosts.map(function (item) {
-        return item.odata();
-      })
+      crossOriginWhitelist: [ENV.APP.activeHost.name]
     };
   }
 

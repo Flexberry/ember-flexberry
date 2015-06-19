@@ -1,6 +1,17 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
+
+  // TODO: rename activeHostName and activeHost (clearer terms are backend or endpoint uri).
+  var activeHostName;
+  if (environment !== 'development-local') {
+    // Use remote service by default.
+    activeHostName = 'https://northwindodata.azurewebsites.net';
+  } else {
+    // To work with a local service, run `ember serve --environment=development-local`.
+    activeHostName = 'http://localhost:1180';
+  }
+
   var ENV = {
     modulePrefix: 'prototype-ember-cli-application',
     environment: environment,
@@ -11,19 +22,14 @@ module.exports = function(environment) {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
       }
-    }
-  };
-
-  var activeHostName = 'http://' +
-    'northwindodata.azurewebsites.net';
-    //'localhost:4356';
-    //'localhost:1180';
-
-  ENV.APP = {
-    activeHost: {
-      name: activeHostName,
-      api: activeHostName + '/odata',
-      token: activeHostName + '/Token'
+    },
+    APP: {
+      // It's a custom property, used to prevent duplicate backend urls in sources.
+      activeHost: {
+        name: activeHostName,
+        api: activeHostName + '/odata',
+        token: activeHostName + '/Token'
+      }
     }
   };
 

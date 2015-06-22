@@ -19,9 +19,48 @@ export default Ember.Controller.extend(ErrorableControllerMixin, {
       this.transitionToRoute(this.get('parentRoute'));
     },
 
-    removeLookupValue: function (propName) {
+    showLookupDialog: function(relationName, projectionName) {
+      if (!projectionName) {
+        throw new Error('ProjectionName is undefined.');
+      }
+
       let model = this.get('model');
-      model.set(propName, undefined);
+      // get ember static function to get relation by name
+      var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+      // get relation property from model
+      var relation = relationshipsByName.get(relationName);
+      if (!relation) {
+        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.typeKey}' model.`);
+      }
+      // get property type name
+      var relatedToType = relation.type.typeKey;
+      // get property type constructor by type name
+      var relatedTypeConstructor = this.store.modelFor(relatedToType);
+      // get a projection from related type model
+      var projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
+      if (!projection) {
+        throw new Error(`No projection with '${projectionName}' name defined in '${relatedToType}' model. `);
+      }
+
+      var controller = this.controllerFor('lookup-dialog')
+        .clear()
+        .set('modelProjection', projection)
+        .set('saveTo', {
+          model: model,
+          propName: relationName
+        });
+
+      this.send('showModalDialog', 'lookup-dialog', {
+        controller: controller,
+        model: this.store.find(relatedToType, {
+          __fetchingProjection: projection
+        })
+      });
+    },
+
+    removeLookupValue: function (relationName) {
+      let model = this.get('model');
+      model.set(relationName, undefined);
 
       // manually set isDirty flag, because its not working now when change relation props
       // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix

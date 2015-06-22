@@ -7,14 +7,7 @@ var Model = ProjectedModel.extend({
   firstName: DS.attr('string'),
   lastName: DS.attr('string'),
   birthDate: DS.attr('date'),
-  reportsTo: DS.belongsTo('employee', {
-    inverse: null,
-    async: true,
-
-    // a projection with that name should be defined in model,
-    // which this entity (property?) belongsTo
-    projection: 'EmployeeL'
-  }),
+  reportsTo: DS.belongsTo('employee', { inverse: null, async: true }),
   /*tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),*/
 
   // validation rules.

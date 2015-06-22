@@ -28,51 +28,5 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     if (model && model.get('isDirty')) {
       model.rollback();
     }
-  },
-
-  actions: {
-    showLookupDialog: function(model, lookupPropName) {
-      // get ember static function to get relation by name
-      var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
-      // get lookup 'belongsTo' property from model
-      var lookupProp = relationshipsByName.get(lookupPropName);
-      if (!lookupProp) {
-        throw new Error(`No relation with '${lookupPropName}' name defined in '${model.constructor.typeKey}' model.`);
-      }
-      // get property type name
-      var relatedToType = lookupProp.type.typeKey;
-      // get projection name from 'belongsTo' options
-      var projectionName = lookupProp.options.projection;
-      if (!projectionName) {
-        throw new Error(`No projection option defined in '${lookupPropName}' relation. ` +
-          `You have to define a projection name prop (projection) in '${lookupPropName}' relation, ` +
-          `and define a projection with that name in '${relatedToType}' model.`);
-      }
-      // get property type constructor by type name
-      var relatedTypeConstructor = this.store.modelFor(relatedToType);
-      // get a projection from related type model
-      var projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
-      if (!projection) {
-        throw new Error(`No projection with '${projectionName}' name defined in '${relatedToType}' model. `);
-      }
-      var self = this;
-
-      this.store.find(relatedToType, {
-        __fetchingProjection: projection
-      }).then(function (data) {
-        var controller = self.controllerFor('lookup-dialog')
-          .clear()
-          .set('modelProjection', projection)
-          .set('saveTo', {
-            model: model,
-            propName: lookupPropName
-          });
-
-        self.send('showModalDialog', 'lookup-dialog', {
-          controller: controller,
-          model: data
-        });
-      });
-    }
   }
 });

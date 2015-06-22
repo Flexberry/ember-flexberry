@@ -34,5 +34,15 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, PaginatedRouteMixin, 
         self.includeSorting(records, sorting);
         return self.includePagination(records, page, perPage);
       });
+  },
+
+  // A hook you can use to setup the controller for the current route.
+  setupController: function (controller, model) {
+    // Call _super for default behavior
+    this._super(controller, model);
+    // Implement your custom setup after
+
+    // Define 'modelProjection' for controller instance
+    controller.set('modelProjection', this.get('modelProjection'));
   }
 });

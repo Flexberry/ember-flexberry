@@ -4,7 +4,6 @@ import SortableControllerMixin from 'prototype-ember-cli-application/mixins/sort
 import SortableColumnMixin from 'prototype-ember-cli-application/mixins/sortable-column';
 import EmberTableColumnDefinition from '../column-definition';
 import ListTableCellView from 'prototype-ember-cli-application/views/ember-table/list-table-cell';
-import IdProxy from '../utils/idproxy';
 
 export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableControllerMixin, {
   actions: {
@@ -21,38 +20,35 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
   /**
    * Описание колонок для компонента ember-table. Формируется на основе представления.
    */
-  // FIXME: сейчас представление берется из первого объекта в модели.
-  //        Его там может и не быть, если список пуст.
-  //        Нужно брать представление со списковой формы (child controller or route?), наверное.
   tableColumns: Ember.computed('computedSorting', function() {
-    var model = this.get('model'),
-        sorting = this.get('computedSorting');
-    if (model.length === 0) {
-      return {};
-    } else {
-      var firstObject = model.objectAt(0);
-      var projection = IdProxy.retrieve(firstObject.get('id'), firstObject.constructor).projection;
-      return projection.get('properties').map(function (propName) {
-        var columnDefinition = EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, {
-          columnWidth: 150,
-          textAlign: 'text-align-center',
-          headerCellName: propName,
-          tableCellViewClass: ListTableCellView,
-          getCellContent: function (row) {
-            return row.content.get(propName);
-          }
-        });
-
-        var sortDef = sorting[propName];
-        if (sortDef) {
-          columnDefinition.set('sorted', true);
-          columnDefinition.set('sortAscending', sortDef.sortAscending);
-          columnDefinition.set('sortNumber', sortDef.sortNumber);
-        }
-
-        return columnDefinition;
-      });
+    var projection = this.get('modelProjection');
+    if (!projection) {
+      // Now projection should be defined in controller.
+      // E.g. it could be init from route's setupController hook
+      throw new Error('No projection was defined.');
     }
+
+    var sorting = this.get('computedSorting');
+    return projection.get('properties').map(function (propName) {
+      var columnDefinition = EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, {
+        columnWidth: 150,
+        textAlign: 'text-align-center',
+        headerCellName: propName,
+        tableCellViewClass: ListTableCellView,
+        getCellContent: function (row) {
+          return row.get(propName);
+        }
+      });
+
+      var sortDef;
+      if (sorting && (sortDef = sorting[propName])) {
+        columnDefinition.set('sorted', true);
+        columnDefinition.set('sortAscending', sortDef.sortAscending);
+        columnDefinition.set('sortNumber', sortDef.sortNumber);
+      }
+
+      return columnDefinition;
+    });
   }),
 
   /**

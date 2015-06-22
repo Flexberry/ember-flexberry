@@ -64,12 +64,11 @@ test('it validates', function (assert) {
 
 test('it loads fields', function(assert) {
   var store = App.__container__.lookup('store:main');
-  Ember.run(function(){
-
+  Ember.run(function() {
     Ember.$.mockjax({
       url: "*Employees(99)",
       responseText: {
-        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
+        "@odata.context": App.activeHost.api + "/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
         "EmployeeID": 99,
         "FirstName": "Ivan",
         "LastName": "Ivanov",
@@ -81,7 +80,7 @@ test('it loads fields', function(assert) {
     Ember.$.mockjax({
       url: "*Employees(98)",
       responseText: {
-        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
+        "@odata.context": App.activeHost.api + "/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
         "EmployeeID": 98,
         "FirstName": "Sidor",
         "LastName": "Sidorov",
@@ -96,7 +95,7 @@ test('it loads fields', function(assert) {
       assert.equal(record.get('firstName'), "Ivan");
       assert.equal(record.get('lastName'), "Ivanov");
 
-      record.get('reportsTo').then(function(masterRecord){
+      record.get('reportsTo').then(function(masterRecord) {
         assert.ok(masterRecord);
         assert.ok(masterRecord instanceof DS.Model);
         assert.equal(masterRecord.get('firstName'), "Sidor");

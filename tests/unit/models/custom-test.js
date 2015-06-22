@@ -21,7 +21,6 @@ module('Test detail load for custom class', {
 });
 
 test('it loads details', function(assert) {
-
   // Create custom model.
   CustomModel = DS.Model.extend({
     firstName: DS.attr('string'),
@@ -42,7 +41,7 @@ test('it loads details', function(assert) {
     Ember.$.mockjax({
       url: "*Customs(99)",
       responseText: {
-        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Customs(firstName,ReportsTo)/$entity",
+        "@odata.context": App.activeHost.api + "/$metadata#Customs(firstName,ReportsTo)/$entity",
         "CustomID": 99,
         "FirstName": "TestCustomModel",
         "ReportsTo": 98,
@@ -53,7 +52,7 @@ test('it loads details', function(assert) {
     Ember.$.mockjax({
       url: "*Customs(98)",
       responseText: {
-        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Customs(firstName,ReportsTo)/$entity",
+        "@odata.context": App.activeHost.api + "/$metadata#Customs(firstName,ReportsTo)/$entity",
         "CustomID": 98,
         "FirstName": "TestCustomModelMaster",
         "ReportsTo": 97
@@ -63,7 +62,7 @@ test('it loads details', function(assert) {
     Ember.$.mockjax({
       url: "*Customs(1)",
       responseText: {
-        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Customs(firstName,ReportsTo)/$entity",
+        "@odata.context": App.activeHost.api + "/$metadata#Customs(firstName,ReportsTo)/$entity",
         "CustomID": 1,
         "FirstName": "TestCustomModelDetail1",
         "ReportsTo": 100
@@ -73,13 +72,12 @@ test('it loads details', function(assert) {
     Ember.$.mockjax({
       url: "*Customs(2)",
       responseText: {
-        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Customs(firstName,ReportsTo)/$entity",
+        "@odata.context": App.activeHost.api + "/$metadata#Customs(firstName,ReportsTo)/$entity",
         "CustomID": 2,
         "FirstName": "TestCustomModelDetail2",
         "ReportsTo": 200
       }
     });
-
 
     var store = App.__container__.lookup('store:main');
     var record = null;

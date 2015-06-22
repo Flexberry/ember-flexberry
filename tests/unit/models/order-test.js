@@ -8,17 +8,17 @@ var App;
 
 moduleForModel('order', {
   // Specify the other units that are required for this test.
-    needs: ["model:employee",
-            'service:validations',
-            'ember-validations@validator:local/presence',
-            'ember-validations@validator:local/length'],
-    setup: function(){
-      App = startApp();
-    },
-    teardown: function(){
-      Ember.run(App, 'destroy');
-      Ember.$.mockjax.clear();
-    }
+  needs: ["model:employee",
+          'service:validations',
+          'ember-validations@validator:local/presence',
+          'ember-validations@validator:local/length'],
+  setup: function(){
+    App = startApp();
+  },
+  teardown: function(){
+    Ember.run(App, 'destroy');
+    Ember.$.mockjax.clear();
+  }
 });
 
 test('it exists', function(assert) {
@@ -39,7 +39,7 @@ test('it returns fields', function(assert) {
     assert.equal(model.get('orderDate'), date);
     model.set('employeeID', store.createRecord('employee', { firstName: "Sidorov", lastName: "Sidor" }));
   });
-  
+
   var reportsToEmployee = model.get('employeeID');
   assert.ok(reportsToEmployee);
   assert.equal(reportsToEmployee.get('firstName'), "Sidorov");
@@ -65,22 +65,21 @@ test('it validates', function (assert) {
 
 test('it loads fields', function(assert) {
   var store = App.__container__.lookup('store:main');
-  Ember.run(function(){
-
+  Ember.run(function() {
     Ember.$.mockjax({
       url: "*Orders(99)",
       responseText: {
-        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Orders(OrderID,OrderDate,EmployeeID)/$entity",
+        "@odata.context": App.activeHost.api + "/$metadata#Orders(OrderID,OrderDate,EmployeeID)/$entity",
         "OrderID": 99,
         "OrderDate": "1933-10-30T00:00:00Z",
         "EmployeeID": 97
       }
-     });
+    });
 
     Ember.$.mockjax({
       url: "*Employees(97)",
       responseText: {
-        "@odata.context": "http://northwindodata.azurewebsites.net/odata/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
+        "@odata.context": App.activeHost.api + "/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
         "EmployeeID": 97,
         "FirstName": "Sidor",
         "LastName": "Sidorov",
@@ -94,12 +93,12 @@ test('it loads fields', function(assert) {
       assert.ok(record instanceof DS.Model);
 
       var orderDate = record.get('orderDate');
-      assert.ok(String(orderDate).indexOf("1933") > -1);  
+      assert.ok(String(orderDate).indexOf("1933") > -1);
 
       record.get('employeeID').then(function(masterRecord){
         assert.ok(masterRecord);
         assert.ok(masterRecord instanceof DS.Model);
-        assert.equal(masterRecord.get('firstName'), "Sidor"); 
+        assert.equal(masterRecord.get('firstName'), "Sidor");
         assert.equal(masterRecord.get('lastName'), "Sidorov");
       });
     });

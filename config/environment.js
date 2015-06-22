@@ -1,6 +1,17 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
+
+  // TODO: rename activeHostName and activeHost (clearer terms are backend or endpoint uri).
+  var activeHostName;
+  if (environment !== 'development-local') {
+    // Use remote service by default.
+    activeHostName = 'https://northwindodata.azurewebsites.net';
+  } else {
+    // To work with a local service, run `ember serve --environment=development-local`.
+    activeHostName = 'http://localhost:1180';
+  }
+
   var ENV = {
     modulePrefix: 'prototype-ember-cli-application',
     environment: environment,
@@ -12,20 +23,23 @@ module.exports = function(environment) {
         // e.g. 'with-controller': true
       }
     },
-
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
-    },
-
-    // Read more about CSP:
-    // http://www.ember-cli.com/#content-security-policy
-    // https://github.com/rwjblue/ember-cli-content-security-policy
-    // http://content-security-policy.com
-    contentSecurityPolicy: {
-      'style-src': "'self' 'unsafe-inline'",
-      'connect-src': "'self' https://northwindodata.azurewebsites.net http://localhost:4356"
+      // It's a custom property, used to prevent duplicate backend urls in sources.
+      activeHost: {
+        name: activeHostName,
+        api: activeHostName + '/odata',
+        token: activeHostName + '/Token'
+      }
     }
+  };
+
+  // Read more about CSP:
+  // http://www.ember-cli.com/#content-security-policy
+  // https://github.com/rwjblue/ember-cli-content-security-policy
+  // http://content-security-policy.com
+  ENV.contentSecurityPolicy = {
+    'style-src': "'self' 'unsafe-inline'",
+    'connect-src': "'self' " + ENV.APP.activeHost.name
   };
 
   if (environment === 'development') {
@@ -49,8 +63,7 @@ module.exports = function(environment) {
   } else {
     ENV['simple-auth'] = {
       authorizer: 'authorizer:custom',
-      // FIXME: dublicates with application-adapter.
-      crossOriginWhitelist: ['http://northwindodata.azurewebsites.net/odata', 'http://localhost:4356/odata']
+      crossOriginWhitelist: [ENV.APP.activeHost.name]
     };
   }
 

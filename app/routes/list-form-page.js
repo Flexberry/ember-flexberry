@@ -1,14 +1,9 @@
 import Ember from 'ember';
-import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
-import PaginatedRouteMixin from 'prototype-ember-cli-application/mixins/paginated-route';
-import SortableRouteMixin from 'prototype-ember-cli-application/mixins/sortable-route';
+import SortableRouteMixin from '../mixins/sortable-route';
+import PaginatedRouteMixin from '../mixins/paginated-route';
+import ProjectedModelRoute from '../routes/base/projected-model-route';
 
-export default Ember.Route.extend(AuthenticatedRouteMixin, PaginatedRouteMixin, SortableRouteMixin, {
-  // eg, 'employee'
-  modelTypeKey: undefined,
-
-  modelProjection: undefined,
-
+export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixin, {
   model: function(params, transition) {
     var page = parseInt(params.page, 10),
         perPage = this.modelFor('application').get('perPage');
@@ -34,5 +29,15 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, PaginatedRouteMixin, 
         self.includeSorting(records, sorting);
         return self.includePagination(records, page, perPage);
       });
+  },
+
+  // A hook you can use to setup the controller for the current route.
+  setupController: function (controller, model) {
+    // Call _super for default behavior
+    this._super(controller, model);
+    // Implement your custom setup after
+
+    // Define 'modelProjection' for controller instance
+    controller.set('modelProjection', this.get('modelProjection'));
   }
 });

@@ -1,8 +1,15 @@
 import Ember from 'ember';
 import ValidationData from '../objects/validation-data';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
+import LookupFieldMixin from '../components/lookup-field/lookup-field-mixin';
 
-export default Ember.Controller.extend(ErrorableControllerMixin, {
+export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixin, {
+
+  // lookup controller name
+  lookupControllerName: 'lookup-dialog',
+  // lookup modal dialog name
+  lookupDialogName: 'lookup-dialog',
+
   actions: {
     save: function() {
       this.send('dismissErrorMessages');

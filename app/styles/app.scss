@@ -21,3 +21,13 @@ li a.active {
   text-align: center;
   color: #aaa;
 }
+
+.form-control-trunc {
+  width: auto;
+  display: inline-block;
+}
+
+.ember-table-body-container .antiscroll-box .antiscroll-inner {
+  height: 100% !important;
+  width: 100% !important;
+}

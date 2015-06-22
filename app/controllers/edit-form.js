@@ -17,6 +17,15 @@ export default Ember.Controller.extend(ErrorableControllerMixin, {
       // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
       // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
       this.transitionToRoute(this.get('parentRoute'));
+    },
+
+    removeLookupValue: function (propName) {
+      let model = this.get('model');
+      model.set(propName, undefined);
+
+      // manually set isDirty flag, because its not working now when change relation props
+      // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
+      model.send('becomeDirty');
     }
   },
 

@@ -1,3 +1,4 @@
+import EmberTableColumnDefinition from '../column-definition';
 import ListFormPageController from '../controllers/list-form-page';
 
 export default ListFormPageController.extend({
@@ -21,6 +22,13 @@ export default ListFormPageController.extend({
       // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
       saveTo.model.send('becomeDirty');
     }
+  },
+
+  /*
+   * override a function to create EmberTableColumnDefinition object without sortable-column mixin
+   */
+  createColumnDefinition: function (params) {
+    return EmberTableColumnDefinition.create(params);
   },
 
   clear: function () {

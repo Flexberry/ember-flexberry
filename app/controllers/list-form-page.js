@@ -17,6 +17,13 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
     }
   },
 
+  /*
+  * function to create EmberTableColumnDefinition object
+  */
+  createColumnDefinition: function (params) {
+    return EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, params);
+  },
+
   /**
    * Описание колонок для компонента ember-table. Формируется на основе представления.
    */
@@ -28,9 +35,10 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
       throw new Error('No projection was defined.');
     }
 
+    var self = this;
     var sorting = this.get('computedSorting');
     return projection.get('properties').map(function (propName) {
-      var columnDefinition = EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, {
+      var columnDefinition = self.createColumnDefinition({
         columnWidth: 150,
         textAlign: 'text-align-center',
         headerCellName: propName,

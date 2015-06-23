@@ -30,6 +30,8 @@ module.exports = function(environment) {
         api: activeHostName + '/odata',
         token: activeHostName + '/Token'
       }
+      // Here you can pass flags/options to your application instance
+      // when it is created
     }
   };
 

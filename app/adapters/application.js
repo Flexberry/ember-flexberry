@@ -23,10 +23,9 @@ export default DS.RESTAdapter.extend({
     var query = { '$top': perPage, '$skip': (page - 1) * perPage, '$count': true };
 
     if (sortingInfo && sortingInfo.length > 0) {
-      var serializedSortingInfo = sortingInfo.map(function(element) {
+      query['$orderby'] = sortingInfo.map(function(element) {
         return serializer.keyForAttribute(element.propName) + ' ' + element.direction;
       }).join(', ');
-      query['$orderby'] = serializedSortingInfo;
     }
 
     return query;
@@ -73,9 +72,9 @@ export default DS.RESTAdapter.extend({
   },
 
   buildURL: function(type, id, record) {
-    var url = [],
-        host = Ember.get(this, 'host'),
-        prefix = this.urlPrefix();
+    var url = [];
+    var host = Ember.get(this, 'host');
+    var prefix = this.urlPrefix();
 
     if (type) {
       url.push(this.pathForType(type));
@@ -94,8 +93,8 @@ export default DS.RESTAdapter.extend({
     //in which case we don't want to modify the url, as the
     //ids will be passed in through a query param
     if (id && !Ember.isArray(id)) {
-      var encId = encodeURIComponent(id),
-          idType = Ember.get(this, 'idType');
+      var encId = encodeURIComponent(id);
+      var idType = Ember.get(this, 'idType');
       if (idType !== 'number') {
         encId = "'" + encId + "'";
       }

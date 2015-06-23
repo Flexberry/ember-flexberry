@@ -16,7 +16,7 @@ export default BaseAuthenticator.extend({
     });
   },
 
-  // аутентификаци¤ с запросом к серверу и получение соответствующего token.
+  // аутентификация с запросом к серверу и получение соответствующего token.
   authenticate: function(credentials) {
     var url = this.tokenEndpoint;
     return new Ember.RSVP.Promise(function(resolve, reject) {

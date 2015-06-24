@@ -4,7 +4,7 @@ import BaseAuthenticator from 'simple-auth/authenticators/base';
 
 export default BaseAuthenticator.extend({
 
-  tokenEndpoint: config.APP.activeHost.token,
+  tokenEndpoint: config.APP.backendUrls.authToken,
 
   restore: function(data) {
     return new Ember.RSVP.Promise(function(resolve, reject) {

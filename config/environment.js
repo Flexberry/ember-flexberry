@@ -2,14 +2,13 @@
 
 module.exports = function(environment) {
 
-  // TODO: rename activeHostName and activeHost (clearer terms are backend or endpoint uri).
-  var activeHostName;
+  var backendRootUrl;
   if (environment !== 'development-local') {
     // Use remote service by default.
-    activeHostName = 'https://northwindodata.azurewebsites.net';
+    backendRootUrl = 'https://northwindodata.azurewebsites.net';
   } else {
     // To work with a local service, run `ember serve --environment=development-local`.
-    activeHostName = 'http://localhost:1180';
+    backendRootUrl = 'http://localhost:1180';
   }
 
   var ENV = {
@@ -24,14 +23,15 @@ module.exports = function(environment) {
       }
     },
     APP: {
-      // It's a custom property, used to prevent duplicate backend urls in sources.
-      activeHost: {
-        name: activeHostName,
-        api: activeHostName + '/odata',
-        token: activeHostName + '/Token'
-      }
       // Here you can pass flags/options to your application instance
-      // when it is created
+      // when it is created.
+
+      // It's a custom property, used to prevent duplicate backend urls in sources.
+      backendUrls: {
+        root: backendRootUrl,
+        api: backendRootUrl + '/odata',
+        authToken: backendRootUrl + '/Token'
+      }
     }
   };
 
@@ -41,7 +41,7 @@ module.exports = function(environment) {
   // http://content-security-policy.com
   ENV.contentSecurityPolicy = {
     'style-src': "'self' 'unsafe-inline'",
-    'connect-src': "'self' " + ENV.APP.activeHost.name
+    'connect-src': "'self' " + ENV.APP.backendUrls.root
   };
 
   if (environment === 'development') {
@@ -65,7 +65,7 @@ module.exports = function(environment) {
   } else {
     ENV['simple-auth'] = {
       authorizer: 'authorizer:custom',
-      crossOriginWhitelist: [ENV.APP.activeHost.name]
+      crossOriginWhitelist: [ENV.APP.backendUrls.root]
     };
   }
 

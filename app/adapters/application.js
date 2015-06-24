@@ -8,7 +8,7 @@ import SnapshotTransform from '../utils/snapshot-transform';
 // Adapter for OData service.
 // TODO: ODataAdapter.
 export default DS.RESTAdapter.extend({
-  host: config.APP.activeHost.api,
+  host: config.APP.backendUrls.api,
   pathForType: function(type) {
     var camelized = Ember.String.camelize(type);
     var capitalized = Ember.String.capitalize(camelized);

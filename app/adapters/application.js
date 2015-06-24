@@ -107,23 +107,54 @@ export default DS.RESTAdapter.extend({
     return url;
   },
 
-  // TODO: override createRecord and deleteRecord for projections support.
-  updateRecord: function(store, type, snapshot) {
-    var hasProjection = IdProxy.idIsProxied(snapshot.id);
+  // create, update or delete operation
+  doSaveRecord: function(operation, store, type, snapshot, superFunc, args) {
+    var projection = snapshot.record.get('projection');
 
     // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
-    SnapshotTransform.transformForSerialize(snapshot, hasProjection, hasProjection);
+    SnapshotTransform.transformForSerialize(snapshot, projection, !!projection);
 
-    if (!hasProjection) {
-      // Sends a PUT request.
-      return this._super.apply(this, arguments);
+    // if no projection defined, then call a super function
+    if (!projection) {
+      return superFunc.apply(this, args);
     }
 
     var data = {};
-    var serializer = store.serializerFor(type.typeKey);
-    serializer.serializeIntoHash(data, type, snapshot);
+    // don't need to send data to server when deleteRecord called
+    if (operation !== 'DELETE') {
+      var serializer = store.serializerFor(type.typeKey);
+      serializer.serializeIntoHash(data, type, snapshot);
+    }
 
-    var url = this.buildURL(type.typeKey, snapshot.id, snapshot);
-    return this.ajax(url, 'PATCH', { data: data });
+    var recordId;
+    // if new record created, then no need a recordId
+    if (operation !== 'POST') {
+      recordId = snapshot.id;
+    }
+
+    var url = this.buildURL(type.typeKey, recordId);
+    return this.ajax(url, operation, { data: data }).then(function (response) {
+      // response will be defined only after createRecord operation
+      if (!response) {
+        return response;
+      }
+      // setup a _fetchedProjection property to response data,
+      // so serializer will use it to mutate new record id
+      response._fetchedProjection = projection;
+      return response;
+    });
+  },
+
+  updateRecord: function(store, type, snapshot) {
+    // here this._super sends a PUT request.
+    return this.doSaveRecord('PATCH', store, type, snapshot, this._super, arguments);
+  },
+
+  createRecord: function (store, type, snapshot) {
+    return this.doSaveRecord('POST', store, type, snapshot, this._super, arguments);
+  },
+
+  deleteRecord: function(store, type, snapshot) {
+    return this.doSaveRecord('DELETE', store, type, snapshot, this._super, arguments);
   }
 });

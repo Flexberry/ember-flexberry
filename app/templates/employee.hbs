@@ -4,6 +4,9 @@
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-primary" {{action 'save'}}>Save</button>
+      {{#unless model.isNew}}
+      <button type="submit" class="btn btn-primary" {{action 'deleteRecord'}}>Delete</button>
+      {{/unless}}
       <button type="submit" class="btn btn-primary" {{action 'close'}}>Close</button>
     </div>
   </div>

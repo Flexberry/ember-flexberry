@@ -23,12 +23,12 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
     }
   }),
 
-  projection: Ember.computed('id', {
+  projection: Ember.computed('id', 'modelProjection', {
     get: function() {
       var id = this.get('id');
       if (id === null) {
         // id isn't setted in newly created records.
-        return null;
+        return this.get('modelProjection') || null;
       }
 
       if (IdProxy.idIsProxied(id)) {
@@ -38,6 +38,28 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
       }
     }
   }),
+
+  // check new created record to have a 'modelProjection' property
+  ready: function () {
+    var isNew = this.get('isNew');
+    if (isNew) {
+      var newRecordProjection = this.get('modelProjection');
+      if (!newRecordProjection) {
+        throw new Error('New projected-model record must have a "modelProjection" property. \n\n' +
+          'Id is null for new records, so IdProxy won\'t retrieve a projection from it. That\'s why ' +
+          'needed to set a projection for a new record. After record saved and new id returned from server ' +
+          'adapter will use that projection to mutate new record id.');
+      }
+      if (!this.constructor.projections[newRecordProjection.name]) {
+        throw new Error('Defined "modelProjection" property doesn\'t belong to record model');
+      }
+    }
+  },
+
+  // delete a 'modelProjection' property after new record is commited to the server
+  didCreate: function () {
+    delete this.modelProjection;
+  },
 
   // validation rules
   validations: {},

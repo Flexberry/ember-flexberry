@@ -19,12 +19,31 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
         this._onSaveRejected.bind(this));
     },
 
+    deleteRecord: function () {
+      if (confirm('Are you sure you want to delete that record?')) {
+        let model = this.get('model');
+        let self = this;
+        model.destroyRecord().then(function() {
+          self.transitionToParentRoute();
+        }, function (errorData) {
+          if (self._throwAjaxError(errorData, 'Delete failed')) {
+            return;
+          }
+          throw new Error('Unknown error has been rejected.');
+        });
+      }
+    },
+
     close: function() {
-      // TODO: нужно учитывать пэйджинг.
-      // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
-      // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-      this.transitionToRoute(this.get('parentRoute'));
+      this.transitionToParentRoute();
     }
+  },
+
+  transitionToParentRoute: function () {
+    // TODO: нужно учитывать пэйджинг.
+    // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
+    // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
+    this.transitionToRoute(this.get('parentRoute'));
   },
 
   _onSaveFulfilled: function() {
@@ -32,14 +51,11 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
   },
 
   _onSaveRejected: function(errorData) {
-    if (errorData instanceof ValidationData) {
-      this._throwValidationError(errorData);
+    if (this._throwValidationError(errorData)) {
       return;
     }
 
-    let isAjaxError = errorData && errorData.hasOwnProperty('responseText');
-    if (isAjaxError) {
-      this._throwAjaxError(errorData);
+    if (this._throwAjaxError(errorData, 'Save failed')) {
       return;
     }
 
@@ -47,6 +63,9 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
   },
 
   _throwValidationError: function(validationError) {
+    if (!(validationError instanceof ValidationData)) {
+      return false;
+    }
     if (validationError.anyErrors) {
       // TODO: more detail message about validation errors.
       this.send('addErrorMessage', 'There are validation errors.');
@@ -56,9 +75,14 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
     } else {
       throw new Error('Unknown validation error.');
     }
+    return true;
   },
 
-  _throwAjaxError: function(ajaxError) {
+  _throwAjaxError: function(ajaxError, message) {
+    if (!(ajaxError && ajaxError.hasOwnProperty('responseText'))){
+      return false;
+    }
+
     var respJson = ajaxError.responseJSON;
     Ember.assert('XMLHttpRequest has responseJSON property', respJson);
 
@@ -66,6 +90,7 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
       this.send('addErrorMessage', respJson.error.message);
     }
 
-    alert('Save failed');
+    alert(message);
+    return true;
   }
 });

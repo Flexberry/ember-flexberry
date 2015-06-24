@@ -38,6 +38,11 @@ export default {
   },
 
   idIsProxied: function(id) {
+    // make method work for new records (with id === null),
+    // and return that no projection defined in 'id' prop
+    if (!id) {
+      return false;
+    }
     return id[id.length - 1] === separator;
   }
 };

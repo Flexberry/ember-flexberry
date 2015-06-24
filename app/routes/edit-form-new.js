@@ -3,7 +3,7 @@ import EditFormRoute from 'prototype-ember-cli-application/routes/edit-form';
 export default EditFormRoute.extend({
   model: function() {
     // NOTE: record.id is null.
-    var record = this.store.createRecord(this.modelTypeKey);
+    var record = this.store.createProjectedRecord(this.modelTypeKey, this.get('modelProjection'));
     return record;
   },
 

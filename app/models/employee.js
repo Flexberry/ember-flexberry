@@ -27,7 +27,6 @@ var Model = ProjectedModel.extend({
 /*Ember.$.mockjax({
   url: "*Employees(3)",
   responseText: {
-    "@odata.context": config.APP.activeHost.api + "/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
     "EmployeeID": 3,
     "FirstName": "Janet225 Oo",
     "LastName": "Leverling",

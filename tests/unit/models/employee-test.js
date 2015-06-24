@@ -68,7 +68,6 @@ test('it loads fields', function(assert) {
     Ember.$.mockjax({
       url: "*Employees(99)",
       responseText: {
-        "@odata.context": App.activeHost.api + "/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
         "EmployeeID": 99,
         "FirstName": "Ivan",
         "LastName": "Ivanov",
@@ -80,7 +79,6 @@ test('it loads fields', function(assert) {
     Ember.$.mockjax({
       url: "*Employees(98)",
       responseText: {
-        "@odata.context": App.activeHost.api + "/$metadata#Employees(EmployeeID,FirstName,LastName,BirthDate,ReportsTo)/$entity",
         "EmployeeID": 98,
         "FirstName": "Sidor",
         "LastName": "Sidorov",

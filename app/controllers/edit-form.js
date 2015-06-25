@@ -15,22 +15,17 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
       this.send('dismissErrorMessages');
       let model = this.get('model');
       model.save().then(
-        this._onSaveFulfilled.bind(this),
-        this._onSaveRejected.bind(this));
+        this._onSaveActionFulfilled.bind(this),
+        this._onSaveActionRejected.bind(this));
     },
 
-    deleteRecord: function () {
+    delete: function () {
       if (confirm('Are you sure you want to delete that record?')) {
         let model = this.get('model');
         let self = this;
-        model.destroyRecord().then(function() {
-          self.transitionToParentRoute();
-        }, function (errorData) {
-          if (self._throwAjaxError(errorData, 'Delete failed')) {
-            return;
-          }
-          throw new Error('Unknown error has been rejected.');
-        });
+        model.destroyRecord().then(
+          this._onDeleteActionFulfilled.bind(this),
+          this._onDeleteActionRejected.bind(this));
       }
     },
 
@@ -46,23 +41,34 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
     this.transitionToRoute(this.get('parentRoute'));
   },
 
-  _onSaveFulfilled: function() {
+  _onSaveActionFulfilled: function() {
     alert('Saved');
   },
 
-  _onSaveRejected: function(errorData) {
-    if (this._throwValidationError(errorData)) {
+  _onSaveActionRejected: function(errorData) {
+    if (this._anyValidationErrors(errorData)) {
       return;
     }
 
-    if (this._throwAjaxError(errorData, 'Save failed')) {
+    if (this._anyAjaxErrors(errorData, 'Save failed')) {
       return;
     }
 
     throw new Error('Unknown error has been rejected.');
   },
 
-  _throwValidationError: function(validationError) {
+  _onDeleteActionFulfilled: function() {
+    this.transitionToParentRoute();
+  },
+
+  _onDeleteActionRejected: function(errorData) {
+    if (this._anyAjaxErrors(errorData, 'Delete failed')) {
+      return;
+    }
+    throw new Error('Unknown error has been rejected.');
+  },
+
+  _anyValidationErrors: function(validationError) {
     if (!(validationError instanceof ValidationData)) {
       return false;
     }
@@ -78,7 +84,7 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
     return true;
   },
 
-  _throwAjaxError: function(ajaxError, message) {
+  _anyAjaxErrors: function(ajaxError, message) {
     if (!(ajaxError && ajaxError.hasOwnProperty('responseText'))){
       return false;
     }

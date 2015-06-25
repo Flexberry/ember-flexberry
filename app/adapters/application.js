@@ -107,10 +107,16 @@ export default DS.RESTAdapter.extend({
     return url;
   },
 
-  // create, update or delete operation
-  doSaveRecord: function(operation, store, type, snapshot, superFunc, args) {
-    var projection = snapshot.record.get('projection');
+  // get http method for save operation
+  _httpMethodFor: {
+    create: 'POST',
+    update: 'PATCH',
+    delete: 'DELETE'
+  },
 
+  // create, update or delete operation
+  _doSaveRecord: function(httpMethod, store, type, snapshot, superFunc, args) {
+    var projection = snapshot.record.get('projection');
     // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
     SnapshotTransform.transformForSerialize(snapshot, projection, !!projection);
 
@@ -121,40 +127,39 @@ export default DS.RESTAdapter.extend({
 
     var data = {};
     // don't need to send data to server when deleteRecord called
-    if (operation !== 'DELETE') {
+    if (httpMethod !== this._httpMethodFor.delete) {
       var serializer = store.serializerFor(type.typeKey);
       serializer.serializeIntoHash(data, type, snapshot);
     }
 
+    var isCreateOperation = httpMethod === this._httpMethodFor.create;
     var recordId;
     // if new record created, then no need a recordId
-    if (operation !== 'POST') {
+    if (!isCreateOperation) {
       recordId = snapshot.id;
     }
 
     var url = this.buildURL(type.typeKey, recordId);
-    return this.ajax(url, operation, { data: data }).then(function (response) {
-      // response will be defined only after createRecord operation
-      if (!response) {
-        return response;
+    return this.ajax(url, httpMethod, { data: data }).then(function (response) {
+      if (isCreateOperation && response) {
+        // setup a _fetchedProjection property to response data,
+        // so serializer will use it to mutate new record id
+        response._fetchedProjection = projection;
       }
-      // setup a _fetchedProjection property to response data,
-      // so serializer will use it to mutate new record id
-      response._fetchedProjection = projection;
       return response;
     });
   },
 
-  updateRecord: function(store, type, snapshot) {
-    // here this._super sends a PUT request.
-    return this.doSaveRecord('PATCH', store, type, snapshot, this._super, arguments);
+  createRecord: function (store, type, snapshot) {
+    return this._doSaveRecord(this._httpMethodFor.create, store, type, snapshot, this._super, arguments);
   },
 
-  createRecord: function (store, type, snapshot) {
-    return this.doSaveRecord('POST', store, type, snapshot, this._super, arguments);
+  updateRecord: function(store, type, snapshot) {
+    // here this._super sends a PUT request.
+    return this._doSaveRecord(this._httpMethodFor.update, store, type, snapshot, this._super, arguments);
   },
 
   deleteRecord: function(store, type, snapshot) {
-    return this.doSaveRecord('DELETE', store, type, snapshot, this._super, arguments);
+    return this._doSaveRecord(this._httpMethodFor.delete, store, type, snapshot, this._super, arguments);
   }
 });

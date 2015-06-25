@@ -70,7 +70,7 @@ export default DS.Store.reopen({
   // create a new record with 'modelProjection'
   createProjectedRecord: function(type, projection) {
     return this.createRecord(type, {
-      modelProjection: projection
+      projection: projection
     });
   }
 });

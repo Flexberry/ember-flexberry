@@ -22,7 +22,6 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
     delete: function () {
       if (confirm('Are you sure you want to delete that record?')) {
         let model = this.get('model');
-        let self = this;
         model.destroyRecord().then(
           this._onDeleteActionFulfilled.bind(this),
           this._onDeleteActionRejected.bind(this));

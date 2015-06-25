@@ -3,7 +3,7 @@ import IdProxy from './idproxy';
 
 export default {
   transformForSerialize: function(snapshot,
-                                  projection,
+                                  skipProjectionAttrs = true,
                                   skipUnchangedAttrs = true) {
 
     if (IdProxy.idIsProxied(snapshot.id)) {
@@ -11,10 +11,12 @@ export default {
     }
 
     // skip unchanged attributes for nonproxied snapshots too, if set to 'true'
-    if (skipUnchangedAttrs || projection) {
+    if (skipUnchangedAttrs || skipProjectionAttrs) {
+      let projection;
       let projectionAttributes;
 
-      if (projection) {
+      if (skipProjectionAttrs) {
+        projection = snapshot.record.get('projection');
         projectionAttributes = projection.get('properties');
       }
 
@@ -30,7 +32,7 @@ export default {
           }
         }
 
-        if (projectionAttributes) {
+        if (skipProjectionAttrs && projectionAttributes) {
           let attrIsProjected = projectionAttributes.indexOf(attrKey) !== -1;
           if (!attrIsProjected) {
             delete snapshot._attributes[attrKey];

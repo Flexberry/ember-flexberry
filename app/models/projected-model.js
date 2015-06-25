@@ -23,20 +23,8 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
     }
   }),
 
-  projection: Ember.computed('id', function() {
-    var id = this.get('id');
-    // no need to check here if record is new and id === null,
-    // if record is new and no projection is set then the Error will be thrown
-    // from this.ready event
-    if (IdProxy.idIsProxied(id)) {
-      return IdProxy.retrieve(id, this.constructor).projection;
-    } else {
-      return null;
-    }
-  }),
-
-  // check new created record to have a 'projection' value
-  ready: function () {
+  _validateNewRecordProjection: function () {
+    // check new created record to have a 'projection' value
     var isNew = this.get('isNew');
     if (isNew) {
       var newRecordProjection = this.get('projection');
@@ -45,7 +33,7 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
           'Id is null for new records, so IdProxy won\'t retrieve a projection from it. That\'s why ' +
           'needed to set a projection for a new record. After record saved and new id returned from server ' +
           'adapter will use that projection to mutate new record id.\n\n' +
-          'Try to create record with store.createProjectedRecord(type, projection).');
+          'Try to set a projection for new record manually.' );
       }
       if (!this.constructor.projections[newRecordProjection.name]) {
         throw new Error('Defined "projection" property doesn\'t belong to record model.');
@@ -53,10 +41,22 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
     }
   },
 
+  projection: Ember.computed('id', function() {
+    this._validateNewRecordProjection();
+    var id = this.get('id');
+    if (IdProxy.idIsProxied(id)) {
+      return IdProxy.retrieve(id, this.constructor).projection;
+    } else {
+      return null;
+    }
+  }),
+
   // validation rules
   validations: {},
 
   save: function() {
+    this._validateNewRecordProjection();
+
     if (!this.get('isDeleted')) {
       var validationData = ValidationData.create({
         noChanges: !this.get('isDirty'),

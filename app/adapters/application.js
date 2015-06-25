@@ -115,14 +115,14 @@ export default DS.RESTAdapter.extend({
   },
 
   // create, update or delete operation
-  _doSaveRecord: function(httpMethod, store, type, snapshot, superFunc, args) {
+  _doSaveRecord: function(httpMethod, store, type, snapshot) {
     var projection = snapshot.record.get('projection');
     // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
-    SnapshotTransform.transformForSerialize(snapshot, projection, !!projection);
+    SnapshotTransform.transformForSerialize(snapshot, !!projection, !!projection);
 
-    // if no projection defined, then call a super function
+    // if no projection defined, then return null result
     if (!projection) {
-      return superFunc.apply(this, args);
+      return null;
     }
 
     var data = {};
@@ -151,15 +151,27 @@ export default DS.RESTAdapter.extend({
   },
 
   createRecord: function (store, type, snapshot) {
-    return this._doSaveRecord(this._httpMethodFor.create, store, type, snapshot, this._super, arguments);
+    var result = this._doSaveRecord(this._httpMethodFor.create, store, type, snapshot);
+    if (result === null) {
+      return this._super.apply(this, arguments);
+    }
+    return result;
   },
 
   updateRecord: function(store, type, snapshot) {
-    // here this._super sends a PUT request.
-    return this._doSaveRecord(this._httpMethodFor.update, store, type, snapshot, this._super, arguments);
+    var result = this._doSaveRecord(this._httpMethodFor.update, store, type, snapshot);
+    if (result === null) {
+      // sends a PUT request.
+      return this._super.apply(this, arguments);
+    }
+    return result;
   },
 
   deleteRecord: function(store, type, snapshot) {
-    return this._doSaveRecord(this._httpMethodFor.delete, store, type, snapshot, this._super, arguments);
+    var result = this._doSaveRecord(this._httpMethodFor.delete, store, type, snapshot);
+    if (result === null) {
+      return this._super.apply(this, arguments);
+    }
+    return result;
   }
 });

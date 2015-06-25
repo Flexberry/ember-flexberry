@@ -25,6 +25,9 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
 
   projection: Ember.computed('id', function() {
     var id = this.get('id');
+    // no need to check here if record is new and id === null,
+    // if record is new and no projection is set then the Error will be thrown
+    // from this.ready event
     if (IdProxy.idIsProxied(id)) {
       return IdProxy.retrieve(id, this.constructor).projection;
     } else {
@@ -32,7 +35,7 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
     }
   }),
 
-  // check new created record to have a 'modelProjection' property
+  // check new created record to have a 'projection' value
   ready: function () {
     var isNew = this.get('isNew');
     if (isNew) {

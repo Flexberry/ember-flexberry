@@ -107,71 +107,64 @@ export default DS.RESTAdapter.extend({
     return url;
   },
 
-  // get http method for save operation
-  _httpMethodFor: {
-    create: 'POST',
-    update: 'PATCH',
-    delete: 'DELETE'
-  },
-
-  // create, update or delete operation
-  _doSaveRecord: function(httpMethod, store, type, snapshot) {
-    var projection = snapshot.record.get('projection');
-    // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
-    SnapshotTransform.transformForSerialize(snapshot, !!projection, !!projection);
-
-    // if no projection defined, then return null result
-    if (!projection) {
-      return null;
-    }
-
-    var data = {};
-    // don't need to send data to server when deleteRecord called
-    if (httpMethod !== this._httpMethodFor.delete) {
-      var serializer = store.serializerFor(type.typeKey);
-      serializer.serializeIntoHash(data, type, snapshot);
-    }
-
-    var isCreateOperation = httpMethod === this._httpMethodFor.create;
-    var recordId;
-    // if new record created, then no need a recordId
-    if (!isCreateOperation) {
-      recordId = snapshot.id;
-    }
-
-    var url = this.buildURL(type.typeKey, recordId);
-    return this.ajax(url, httpMethod, { data: data }).then(function (response) {
-      if (isCreateOperation && response) {
-        // setup a _fetchedProjection property to response data,
-        // so serializer will use it to mutate new record id
-        response._fetchedProjection = projection;
-      }
-      return response;
-    });
-  },
-
   createRecord: function (store, type, snapshot) {
-    var result = this._doSaveRecord(this._httpMethodFor.create, store, type, snapshot);
-    if (result === null) {
-      return this._super.apply(this, arguments);
-    }
-    return result;
+    return this._sendRecord(store, type, snapshot, 'createRecord');
   },
 
   updateRecord: function(store, type, snapshot) {
-    var result = this._doSaveRecord(this._httpMethodFor.update, store, type, snapshot);
-    if (result === null) {
-      // sends a PUT request.
-      return this._super.apply(this, arguments);
-    }
-    return result;
+    return this._sendRecord(store, type, snapshot, 'updateRecord');
   },
 
   deleteRecord: function(store, type, snapshot) {
-    var result = this._doSaveRecord(this._httpMethodFor.delete, store, type, snapshot);
-    if (result === null) {
-      return this._super.apply(this, arguments);
+    return this._sendRecord(store, type, snapshot, 'deleteRecord');
+  },
+
+  /**
+   * Makes HTTP request for creating, updating or deleting the record.
+   */
+  _sendRecord: function(store, type, snapshot, requestType) {
+    let hasProjection = IdProxy.idIsProxied(snapshot.id);
+    // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
+    SnapshotTransform.transformForSerialize(snapshot, hasProjection, hasProjection);
+
+    // FIXME: in newer ember versions buildURL signature has been changed.
+    // NOTE: for newly created records id is not defined.
+    let url = this.buildURL(type.typeKey, snapshot.id);
+
+    let httpMethod;
+    switch (requestType) {
+      case 'createRecord':
+        httpMethod = 'POST';
+        break;
+
+      case 'updateRecord':
+        httpMethod = hasProjection ? 'PATCH' : 'PUT';
+        break;
+
+      case 'deleteRecord':
+        httpMethod = 'DELETE';
+        break;
+
+      default:
+        throw new Error(`Unknown requestType: ${requestType}`);
     }
-    return result;
+
+    let data;
+    // Don't need to send any data for deleting.
+    if (requestType !== 'deleteRecord') {
+      let serializer = store.serializerFor(type.typeKey);
+      data = {};
+      serializer.serializeIntoHash(data, type, snapshot);
+    }
+
+    return this.ajax(url, httpMethod, { data: data }).then(function (response) {
+      if (hasProjection && response && requestType === 'createRecord') {
+        // Serializer will use fetched projection to mutate new record id.
+        let projection = snapshot.record.get('projection');
+        response._fetchedProjection = projection;
+      }
+
+      return response;
+    });
   }
 });

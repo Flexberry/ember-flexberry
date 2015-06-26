@@ -9,6 +9,7 @@ var Model = ProjectedModel.extend({
   lastName: DS.attr('string'),
   birthDate: DS.attr('date'),
   reportsTo: DS.belongsTo('employee', { inverse: null, async: true }),
+  orders: DS.hasMany('order', { inverse: null, async: true }),
   /*tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),*/
 
   // validation rules.
@@ -36,7 +37,7 @@ var Model = ProjectedModel.extend({
   }
 });*/
 
-Model.defineProjection('employee', 'EmployeeE', ['firstName', 'lastName', 'birthDate', 'reportsTo.firstName'/*, 'tmpChildren.lastName'*/]);
+Model.defineProjection('employee', 'EmployeeE', ['firstName', 'lastName', 'birthDate', 'reportsTo.firstName', 'orders.shipName'/*, 'tmpChildren.lastName'*/]);
 Model.defineProjection('employee', 'EmployeeL', ['firstName', 'lastName']);
 
 // TODO: defineProjection tests.

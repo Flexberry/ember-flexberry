@@ -1,0 +1,26 @@
+<table>
+  <tr>
+  {{#each prop in projection.properties}}
+    <th>{{prop}}</th>
+  {{/each}}
+  </tr>
+  {{#each item in items}}
+  <tr>
+    {{#each prop in projection.properties}}
+      <!-- TODO: dynamically bind input to item.prop, how?
+        Don't want to manually write prop names like 'shipName' -->
+      <td>
+        {{input
+          type="text"
+          class="form-control form-control-trunc"
+          value=item.shipName
+        }}
+      </td>
+    {{/each}}
+  </tr>
+  {{else}}
+  <tr>
+    <td colspan="{{projection.properties.length}}">No items yet</td>
+  </tr>
+  {{/each}}
+</table>

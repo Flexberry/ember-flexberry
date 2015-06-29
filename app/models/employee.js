@@ -37,7 +37,7 @@ var Model = ProjectedModel.extend({
   }
 });*/
 
-Model.defineProjection('employee', 'EmployeeE', ['firstName', 'lastName', 'birthDate', 'reportsTo.firstName', 'orders.shipName'/*, 'tmpChildren.lastName'*/]);
+Model.defineProjection('employee', 'EmployeeE', ['firstName', 'lastName', 'birthDate', 'reportsTo.firstName', 'orders.shipName', 'orders.shipCountry', 'orders.orderDate'/*, 'tmpChildren.lastName'*/]);
 Model.defineProjection('employee', 'EmployeeL', ['firstName', 'lastName']);
 
 // TODO: defineProjection tests.

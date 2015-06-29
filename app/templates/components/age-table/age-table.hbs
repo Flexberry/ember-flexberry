@@ -7,9 +7,8 @@
   {{#each item in items}}
   <tr>
     {{#each prop in projection.properties}}
-      <!-- TODO: dynamically bind input to item.prop, how?
-        Don't want to manually write prop names like 'shipName' -->
       <td>
+        <!-- render an input and bind it to item[prop] -->
         {{dynamic-input
           type="text"
           classes="form-control form-control-trunc"

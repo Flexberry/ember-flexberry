@@ -5,7 +5,8 @@ import {
 
 moduleForModel('employee', {
   // Specify the other units that are required for this test.
-  needs: ['serializer:employee']
+  needs: ['model:order',
+          'serializer:employee']
 });
 
 // Replace this with your real tests.

@@ -10,10 +10,11 @@
       <!-- TODO: dynamically bind input to item.prop, how?
         Don't want to manually write prop names like 'shipName' -->
       <td>
-        {{input
+        {{dynamic-input
           type="text"
-          class="form-control form-control-trunc"
-          value=item.shipName
+          classes="form-control form-control-trunc"
+          item=item
+          propName=prop
         }}
       </td>
     {{/each}}

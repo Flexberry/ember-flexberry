@@ -20,10 +20,10 @@ export default DS.RESTAdapter.extend({
 
   // Own method.
   getPaginationQuery: function(page, perPage, sortingInfo, serializer) {
-    var query = { '$top': perPage, '$skip': (page - 1) * perPage, '$count': true };
+    var query = { $top: perPage, $skip: (page - 1) * perPage, $count: true };
 
     if (sortingInfo && sortingInfo.length > 0) {
-      query['$orderby'] = sortingInfo.map(function(element) {
+      query.$orderby = sortingInfo.map(function(element) {
         return serializer.keyForAttribute(element.propName) + ' ' + element.direction;
       }).join(', ');
     }
@@ -96,7 +96,7 @@ export default DS.RESTAdapter.extend({
       var encId = encodeURIComponent(id);
       var idType = Ember.get(this, 'idType');
       if (idType !== 'number') {
-        encId = "'" + encId + "'";
+        encId = `'${encId}'`;
       }
 
       url += '(' + encId + ')';
@@ -107,7 +107,7 @@ export default DS.RESTAdapter.extend({
     return url;
   },
 
-  createRecord: function (store, type, snapshot) {
+  createRecord: function(store, type, snapshot) {
     return this._sendRecord(store, type, snapshot, 'createRecord');
   },
 
@@ -157,6 +157,7 @@ export default DS.RESTAdapter.extend({
     }
 
     let data;
+
     // Don't need to send any data for deleting.
     if (requestType !== 'deleteRecord') {
       let serializer = store.serializerFor(type.typeKey);
@@ -164,7 +165,7 @@ export default DS.RESTAdapter.extend({
       serializer.serializeIntoHash(data, type, snapshot);
     }
 
-    return this.ajax(url, httpMethod, { data: data }).then(function (response) {
+    return this.ajax(url, httpMethod, { data: data }).then(function(response) {
       if (hasProjection && response && requestType === 'createRecord') {
         // Serializer will use fetched projection to mutate new record id.
         response._fetchedProjection = projection;

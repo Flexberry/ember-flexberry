@@ -15,17 +15,21 @@
       </a>
     </li>
     {{#each page in pages}}
-      {{#if page.isCurrent}}
-        <li class="active">
-          <a>
-            {{page.number}}
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-      {{else}}
-        <li>
-          <a {{action 'gotoPage' page.number}} href="#">{{page.number}}</a>
-        </li>
+	  {{#if page.isEllipsis}}
+		<li><span aria-hidden="true">...</span></li>
+	  {{else}}
+		  {{#if page.isCurrent}}
+			<li class="active">
+			  <a>
+				{{page.number}}
+				<span class="sr-only">(current)</span>
+			  </a>
+			</li>
+		  {{else}}
+			<li>
+			  <a {{action 'gotoPage' page.number}} href="#">{{page.number}}</a>
+			</li>
+		{{/if}}
       {{/if}}
     {{/each}}
     <li class="{{unless hasNextPage 'disabled'}}">

@@ -1,12 +1,11 @@
 import Ember from 'ember';
-import ValidationData from '../objects/validation-data';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import LookupFieldMixin from '../components/lookup-field/lookup-field-mixin';
 
 export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixin, {
-
   // lookup controller name
   lookupControllerName: 'lookup-dialog',
+
   // lookup modal dialog name
   lookupDialogName: 'lookup-dialog',
 
@@ -15,57 +14,45 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
       this.send('dismissErrorMessages');
       let model = this.get('model');
       model.save().then(
-        this._onSaveFulfilled.bind(this),
-        this._onSaveRejected.bind(this));
+        this._onSaveActionFulfilled.bind(this),
+        this._onSaveActionRejected.bind(this));
+    },
+
+    delete: function () {
+      if (confirm('Are you sure you want to delete that record?')) {
+        this.send('dismissErrorMessages');
+        let model = this.get('model');
+        model.destroyRecord().then(
+          this._onDeleteActionFulfilled.bind(this),
+          this._onDeleteActionRejected.bind(this));
+      }
     },
 
     close: function() {
-      // TODO: нужно учитывать пэйджинг.
-      // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
-      // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-      this.transitionToRoute(this.get('parentRoute'));
+      this.transitionToParentRoute();
     }
   },
 
-  _onSaveFulfilled: function() {
-    alert('Saved');
+  transitionToParentRoute: function () {
+    // TODO: нужно учитывать пэйджинг.
+    // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
+    // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
+    this.transitionToRoute(this.get('parentRoute'));
   },
 
-  _onSaveRejected: function(errorData) {
-    if (errorData instanceof ValidationData) {
-      this._throwValidationError(errorData);
-      return;
-    }
-
-    let isAjaxError = errorData && errorData.hasOwnProperty('responseText');
-    if (isAjaxError) {
-      this._throwAjaxError(errorData);
-      return;
-    }
-
-    throw new Error('Unknown error has been rejected.');
+  _onSaveActionFulfilled: function() {
+    alert('Saved.');
   },
 
-  _throwValidationError: function(validationError) {
-    if (validationError.anyErrors) {
-      // TODO: more detail message about validation errors.
-      this.send('addErrorMessage', 'There are validation errors.');
-      alert('Save failed');
-    } else if (validationError.noChanges) {
-      alert('There are no changes');
-    } else {
-      throw new Error('Unknown validation error.');
-    }
+  _onSaveActionRejected: function(errorData) {
+    this.rejectError(errorData, 'Save failed.');
   },
 
-  _throwAjaxError: function(ajaxError) {
-    var respJson = ajaxError.responseJSON;
-    Ember.assert('XMLHttpRequest has responseJSON property', respJson);
+  _onDeleteActionFulfilled: function() {
+    this.transitionToParentRoute();
+  },
 
-    if (respJson.error && respJson.error.message) {
-      this.send('addErrorMessage', respJson.error.message);
-    }
-
-    alert('Save failed');
+  _onDeleteActionRejected: function(errorData) {
+    this.rejectError(errorData, 'Delete failed.');
   }
 });

@@ -10,11 +10,6 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
   primaryKey: Ember.computed('id', {
     get: function() {
       var id = this.get('id');
-      if (id === null) {
-        // id isn't setted in newly created records.
-        return null;
-      }
-
       if (IdProxy.idIsProxied(id)) {
         return IdProxy.retrieve(id).id;
       } else {
@@ -26,16 +21,18 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
   projection: Ember.computed('id', {
     get: function() {
       var id = this.get('id');
-      if (id === null) {
-        // id isn't setted in newly created records.
-        return null;
-      }
-
       if (IdProxy.idIsProxied(id)) {
         return IdProxy.retrieve(id, this.constructor).projection;
       } else {
         return null;
       }
+    },
+    set: function(key, value, oldValue) {
+      if (this.get('id') !== null) {
+        throw new Error('Unable to set projection for model with defined id.');
+      }
+
+      return value;
     }
   }),
 
@@ -56,6 +53,7 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
         });
       }
     }
+
     return this._super.apply(this, arguments);
   }
 });

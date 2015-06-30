@@ -61,10 +61,10 @@ export default {
       }
     }
 
-    for (let key in snapshot._hasManyToIds) {
-      let ids = snapshot._hasManyToIds[key];
+    for (let key in snapshot._hasManyIds) {
+      let ids = snapshot._hasManyIds[key];
       if (ids) {
-        snapshot._hasManyToIds[key] = ids.map(getOriginalId);
+        snapshot._hasManyIds[key] = ids.map(getOriginalId);
       }
     }
 

@@ -87,22 +87,5 @@ export default DS.RESTSerializer.extend({
 
     // {...} instead of {"application": {...}}
     Ember.merge(hash, this.serialize(record, options));
-  },
-
-  // override serializeHasMany method to retrieve origin ids from proxied ids
-  serializeHasMany: function(snapshot, json, relationship) {
-    this._super.apply(this, arguments);
-
-    // get payload relationship key
-    var key = relationship.key;
-    var payloadKey = this.keyForRelationship(this._getMappedKey(key));
-
-    // check if there are any array data by payloadKey presented
-    if (json[payloadKey] && json[payloadKey].map) {
-      json[payloadKey] = json[payloadKey].map(function (item) {
-        // check if id is proxied and retrieve origin id if true
-        return IdProxy.idIsProxied(item) ? IdProxy.retrieve(item).id : item;
-      });
-    }
   }
 });

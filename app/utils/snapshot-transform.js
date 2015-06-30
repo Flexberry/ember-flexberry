@@ -7,10 +7,10 @@ export default {
                                   skipUnchangedAttrs = true) {
 
     if (IdProxy.idIsProxied(snapshot.id)) {
-      snapshot.id = IdProxy.retrieve(snapshot.id, snapshot.type).id;
+      let data = IdProxy.retrieve(snapshot.id, snapshot.type);
+      snapshot.id = data.id;
     }
 
-    // skip unchanged attributes for nonproxied snapshots too, if set to 'true'
     if (skipUnchangedAttrs || skipProjectionAttrs) {
       let projection;
       let projectionAttributes;

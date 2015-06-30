@@ -45,9 +45,7 @@ test('it returns fields', function(assert) {
 });
 
 test('it validates', function (assert) {
-  var constructor = this.store().modelFor('employee');
-  // need to set a projection for the new record, or the save() method will throw an error
-  var model = this.subject({ lastName: 'asd', projection: constructor.projections.EmployeeE });
+  var model = this.subject({ lastName: 'asd' });
   assert.expect(4);
 
   Ember.run(function (){

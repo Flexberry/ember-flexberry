@@ -123,9 +123,16 @@ export default DS.RESTAdapter.extend({
    * Makes HTTP request for creating, updating or deleting the record.
    */
   _sendRecord: function(store, type, snapshot, requestType) {
-    let hasProjection = IdProxy.idIsProxied(snapshot.id);
+    let projection = snapshot.record.get('projection');
+
+    // IdProxy.idIsProxied isn't used because new record has no id,
+    // but has a projection.
+    let hasProjection = !!projection;
+
     // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
-    SnapshotTransform.transformForSerialize(snapshot, hasProjection, hasProjection);
+    let skipProjectionAttrs = hasProjection;
+    let skipUnchangedAttrs = hasProjection;
+    SnapshotTransform.transformForSerialize(snapshot, skipProjectionAttrs, skipUnchangedAttrs);
 
     // FIXME: in newer ember versions buildURL signature has been changed.
     // NOTE: for newly created records id is not defined.
@@ -160,7 +167,6 @@ export default DS.RESTAdapter.extend({
     return this.ajax(url, httpMethod, { data: data }).then(function (response) {
       if (hasProjection && response && requestType === 'createRecord') {
         // Serializer will use fetched projection to mutate new record id.
-        let projection = snapshot.record.get('projection');
         response._fetchedProjection = projection;
       }
 

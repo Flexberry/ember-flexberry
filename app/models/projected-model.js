@@ -10,11 +10,6 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
   primaryKey: Ember.computed('id', {
     get: function() {
       var id = this.get('id');
-      if (id === null) {
-        // id isn't setted in newly created records.
-        return null;
-      }
-
       if (IdProxy.idIsProxied(id)) {
         return IdProxy.retrieve(id).id;
       } else {
@@ -23,31 +18,21 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
     }
   }),
 
-  _validateNewRecordProjection: function () {
-    // check new created record to have a 'projection' value
-    var isNew = this.get('isNew');
-    if (isNew) {
-      var newRecordProjection = this.get('projection');
-      if (!newRecordProjection) {
-        throw new Error('New projected-model record must have a "projection" property value. \n\n' +
-          'Id is null for new records, so IdProxy won\'t retrieve a projection from it. That\'s why ' +
-          'needed to set a projection for a new record. After record saved and new id returned from server ' +
-          'adapter will use that projection to mutate new record id.\n\n' +
-          'Try to set a projection for new record manually.' );
+  projection: Ember.computed('id', {
+    get: function() {
+      var id = this.get('id');
+      if (IdProxy.idIsProxied(id)) {
+        return IdProxy.retrieve(id, this.constructor).projection;
+      } else {
+        return null;
       }
-      if (!this.constructor.projections[newRecordProjection.name]) {
-        throw new Error('Defined "projection" property doesn\'t belong to record model.');
+    },
+    set: function(key, value, oldValue) {
+      if (this.get('id') !== null) {
+        throw new Error('Unable to set projection for model with defined id.');
       }
-    }
-  },
 
-  projection: Ember.computed('id', function() {
-    this._validateNewRecordProjection();
-    var id = this.get('id');
-    if (IdProxy.idIsProxied(id)) {
-      return IdProxy.retrieve(id, this.constructor).projection;
-    } else {
-      return null;
+      return value;
     }
   }),
 
@@ -55,8 +40,6 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
   validations: {},
 
   save: function() {
-    this._validateNewRecordProjection();
-
     if (!this.get('isDeleted')) {
       var validationData = ValidationData.create({
         noChanges: !this.get('isDirty'),
@@ -70,6 +53,7 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
         });
       }
     }
+
     return this._super.apply(this, arguments);
   }
 });

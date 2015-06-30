@@ -8,7 +8,8 @@ var App;
 
 moduleForModel('employee', {
   // Specify the other units that are required for this test.
-  needs: ['service:validations',
+  needs: ['model:order',
+          'service:validations',
           'ember-validations@validator:local/presence',
           'ember-validations@validator:local/length'],
   setup: function() {

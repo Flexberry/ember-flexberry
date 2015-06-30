@@ -1,0 +1,27 @@
+<table>
+  <tr>
+  {{#each prop in projection.properties}}
+    <th>{{prop}}</th>
+  {{/each}}
+  </tr>
+  {{#each item in items}}
+  <tr>
+    {{#each prop in projection.properties}}
+      <td>
+        <!-- render an input and bind it to item[prop] -->
+        {{dynamic-input
+          type="text"
+          classes="form-control form-control-trunc"
+          readonly=true
+          item=item
+          propName=prop
+        }}
+      </td>
+    {{/each}}
+  </tr>
+  {{else}}
+  <tr>
+    <td colspan="{{projection.properties.length}}">No items yet</td>
+  </tr>
+  {{/each}}
+</table>

@@ -10,6 +10,8 @@ export default Ember.Component.extend({
   propName: undefined,
   // string with input css classes
   classes: undefined,
+  // flag to make control readonly
+  readonly: false,
   // input value
   value: undefined,
 

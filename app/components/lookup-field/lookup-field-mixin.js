@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-  // lookup controller name
+  // Lookup controller name.
   lookupControllerName: undefined,
-  // lookup modal dialog name
+
+  // Lookup modal dialog name.
   lookupDialogName: undefined,
 
   actions: {
@@ -12,6 +13,7 @@ export default Ember.Mixin.create({
       if (!lookupControllerName) {
         throw new Error('Lookup controller name is undefined.');
       }
+
       var lookupDialogName = this.get('lookupDialogName');
       if (!lookupDialogName) {
         throw new Error('Lookup modal dialog name is undefined.');
@@ -22,18 +24,23 @@ export default Ember.Mixin.create({
       }
 
       let model = this.get('model');
-      // get ember static function to get relation by name
+
+      // Get ember static function to get relation by name.
       var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
-      // get relation property from model
+
+      // Get relation property from model.
       var relation = relationshipsByName.get(relationName);
       if (!relation) {
         throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.typeKey}' model.`);
       }
-      // get property type name
+
+      // Get property type name.
       var relatedToType = relation.type.typeKey;
-      // get property type constructor by type name
+
+      // Get property type constructor by type name.
       var relatedTypeConstructor = this.store.modelFor(relatedToType);
-      // get a projection from related type model
+
+      // Get a projection from related type model.
       var projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
       if (!projection) {
         throw new Error(`No projection with '${projectionName}' name defined in '${relatedToType}' model. `);
@@ -55,7 +62,7 @@ export default Ember.Mixin.create({
       });
     },
 
-    removeLookupValue: function (relationName) {
+    removeLookupValue: function(relationName) {
       let model = this.get('model');
       model.set(relationName, undefined);
 

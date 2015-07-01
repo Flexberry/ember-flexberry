@@ -38,19 +38,19 @@ function getODataQueryTree(projection, serializer) {
 }
 
 function getODataQuery(queryTree) {
-  var select = getODataSelectQuery(queryTree);
-  var expand = getODataExpandQuery(queryTree);
   var query = {};
 
+  var select = getODataSelectQuery(queryTree);
   if (select) {
-    query['$select'] = select;
+    query.$select = select;
   }
 
+  // TODO: detect by embedded\async relationships mode for model attr (serializer attrs?).
+  // FIXME: commented out for async relationships working.
+  /*var expand = getODataExpandQuery(queryTree);
   if (expand) {
-    // TODO: detect by embedded\async relationships mode for model attr (serializer attrs?).
-    // FIXME: commented out for async relationships working.
-    //query['$expand'] = expand;
-  }
+    query.$expand = expand;
+  }*/
 
   return query;
 }

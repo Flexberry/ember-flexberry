@@ -48,7 +48,7 @@ var Model = DS.Model.extend(EmberValidations.Mixin, {
       validationData.fillErrorsFromProjectedModel(this);
 
       if (validationData.noChanges || validationData.anyErrors) {
-        return new Ember.RSVP.Promise(function (resolve, reject) {
+        return new Ember.RSVP.Promise(function(resolve, reject) {
           reject(validationData);
         });
       }
@@ -88,7 +88,7 @@ Model.reopenClass({
         let rightSide = attr.substring(dotIndex + 1);
         if (plainAttributes.indexOf(rootAttr) === -1) {
           plainAttributes.push(rootAttr);
-          relAttributes[rootAttr] = [ rightSide ];
+          relAttributes[rootAttr] = [rightSide];
         } else {
           // eg { reportsTo: [firstName, lastName, reportsTo.firstName]}
           relAttributes[rootAttr].push(rightSide);
@@ -119,7 +119,7 @@ Model.reopenClass({
 
     if (!this.projections) {
       this.reopenClass({
-          projections: ModelProjectionsCollection.create()
+        projections: ModelProjectionsCollection.create()
       });
     }
 

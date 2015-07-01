@@ -8,10 +8,10 @@ export default Ember.Component.extend({
   projection: undefined,
 
   actions: {
-    add: function () {
+    add: function() {
       this.sendAction('add');
     },
-    remove: function () {
+    remove: function() {
       this.sendAction('remove');
     }
   }

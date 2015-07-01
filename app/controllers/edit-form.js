@@ -18,7 +18,7 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
         this._onSaveActionRejected.bind(this));
     },
 
-    delete: function () {
+    delete: function() {
       if (confirm('Are you sure you want to delete that record?')) {
         this.send('dismissErrorMessages');
         let model = this.get('model');
@@ -33,7 +33,7 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
     }
   },
 
-  transitionToParentRoute: function () {
+  transitionToParentRoute: function() {
     // TODO: нужно учитывать пэйджинг.
     // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
     // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.

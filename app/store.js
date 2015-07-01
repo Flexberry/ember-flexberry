@@ -4,17 +4,17 @@ import DS from 'ember-data';
 export default DS.Store.reopen({
   push: function(typeName, data) {
     var backburner = this._backburner;
-    var store = this;
+    var _this = this;
     var type = this.modelFor(typeName);
 
     // NOTE: Для чего это? Мы можем управлять получением модели:
-    // store.find (getById) или store.fetch, но получением ее отношений нет.
+    // _this.find (getById) или _this.fetch, но получением ее отношений нет.
     // Поэтому, если нужен fetch для отношений (мастера и детейлы),
     // нужно заюзать _fetchAsyncRelationships.
     var fetchAsyncRelationships = true;
     if (fetchAsyncRelationships) {
       backburner.join(function() {
-        backburner.schedule('normalizeRelationships', store,
+        backburner.schedule('normalizeRelationships', _this,
                             '_fetchAsyncRelationships', type, data);
       });
     }
@@ -24,7 +24,7 @@ export default DS.Store.reopen({
   },
 
   _fetchAsyncRelationships: function(type, data) {
-    var store = this;
+    var _this = this;
     type.eachRelationship(function(key, relationship) {
       if (!relationship.options.async) {
         return;
@@ -38,11 +38,11 @@ export default DS.Store.reopen({
       var kind = relationship.kind;
       if (kind === 'belongsTo') {
         let id = value;
-        store._fetchAsyncRelationshipRecord(relationship.type, id);
+        _this._fetchAsyncRelationshipRecord(relationship.type, id);
       } else if (kind === 'hasMany') {
         let ids = value;
         for (let i = 0; i < ids.length; i++) {
-          store._fetchAsyncRelationshipRecord(relationship.type, ids[i]);
+          _this._fetchAsyncRelationshipRecord(relationship.type, ids[i]);
         }
       }
     });

@@ -28,7 +28,12 @@ export default BaseAuthenticator.extend({
       }).then(function(response) {
         Ember.run(function() {
           resolve({
+            // FIXME: need for requirePaddingNewLinesBeforeLineComments due to https://github.com/jscs-dev/node-jscs/issues/1313.
+            // jscs:disable requireCamelCaseOrUpperCaseIdentifiers, requirePaddingNewLinesBeforeLineComments
+            // Reason: access_token is standard parameter for OAuth2.
             token: response.access_token,
+            // jscs:enable requireCamelCaseOrUpperCaseIdentifiers, requirePaddingNewLinesBeforeLineComments
+
             userName: response.userName
           });
         });

@@ -12,7 +12,7 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
      *
      * @param {Ember.Object} record Объект данных, соответствующий строке.
      */
-    rowClick: function (record) {
+    rowClick: function(record) {
       this.transitionToRoute(record.constructor.typeKey, record.get('primaryKey'));
     }
   },
@@ -20,7 +20,7 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
   /*
   * function to create EmberTableColumnDefinition object
   */
-  createColumnDefinition: function (params) {
+  createColumnDefinition: function(params) {
     return EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, params);
   },
 
@@ -35,15 +35,15 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
       throw new Error('No projection was defined.');
     }
 
-    var self = this;
+    var _this = this;
     var sorting = this.get('computedSorting');
-    return projection.get('properties').map(function (propName) {
-      var columnDefinition = self.createColumnDefinition({
+    return projection.get('properties').map(function(propName) {
+      var columnDefinition = _this.createColumnDefinition({
         columnWidth: 150,
         textAlign: 'text-align-center',
         headerCellName: propName,
         tableCellViewClass: ListTableCellView,
-        getCellContent: function (row) {
+        getCellContent: function(row) {
           return row.get(propName);
         }
       });

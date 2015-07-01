@@ -8,16 +8,16 @@ export default Ember.Mixin.create({
   },
 
   computedSorting: Ember.computed('model.sorting', function() {
-    var sorting = this.get('model.sorting'),
-        result = {};
+    var sorting = this.get('model.sorting');
+    var result = {};
 
     if (sorting) {
       for (var i = 0; i < sorting.length; i++) {
-        var propName = sorting[i].propName,
-            sortDef = {
-              sortAscending: sorting[i].direction === 'asc' ? true : false,
-              sortNumber: i + 1
-            };
+        var propName = sorting[i].propName;
+        var sortDef = {
+          sortAscending: sorting[i].direction === 'asc' ? true : false,
+          sortNumber: i + 1
+        };
         result[propName] = sortDef;
       }
     }
@@ -36,9 +36,9 @@ export default Ember.Mixin.create({
      * @param {String} propName Имя свойства, которое нужно использовать для сортировки.
      */
     sortByColumn: function(propName) {
-      var oldSorting = this.get('model.sorting'),
-          newSorting = [],
-          sortDirection;
+      var oldSorting = this.get('model.sorting');
+      var newSorting = [];
+      var sortDirection;
       if (oldSorting) {
         sortDirection = 'asc';
         for (var i = 0; i < oldSorting.length; i++) {
@@ -65,9 +65,9 @@ export default Ember.Mixin.create({
      * @param {String} propName Имя свойства, по которому нужно изменить параметры сортировки.
      */
     addColumnToSorting: function(propName) {
-      var oldSorting = this.get('model.sorting'),
-          newSorting = [],
-          changed = false;
+      var oldSorting = this.get('model.sorting');
+      var newSorting = [];
+      var changed = false;
 
       for (var i = 0; i < oldSorting.length; i++) {
         if (oldSorting[i].propName === propName) {
@@ -75,6 +75,7 @@ export default Ember.Mixin.create({
           if (newDirection !== 'none') {
             newSorting.push({ propName: propName, direction: newDirection });
           }
+
           changed = true;
         } else {
           newSorting.push(oldSorting[i]);

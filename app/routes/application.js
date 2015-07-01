@@ -12,7 +12,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     },
 
     // action to show modal-dialog by name
-    showModalDialog: function (modalDialogName, data) {
+    showModalDialog: function(modalDialogName, data) {
       var params = Ember.$.extend({
         into: 'application',
         outlet: 'modal'

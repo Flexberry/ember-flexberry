@@ -22,6 +22,10 @@ export default Ember.Mixin.create({
     });
     return records;
   },
+  
+  _getCurrent: function (pagination = this.get('controller.content.pagination')) {
+    return pagination.page;
+  },
 
   _getLast: function (pagination = this.get('controller.content.pagination')) {
     return Math.ceil(pagination.count / pagination.per_page);

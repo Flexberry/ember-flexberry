@@ -36,7 +36,17 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
     // Call _super for default behavior
     this._super(controller, model);
     // Implement your custom setup after
-
+	
+	var currentPage = this._getCurrent();
+	var lastPage = this._getLast();
+	
+	if (currentPage > lastPage)
+	{
+		// After changing records number per page there is possibility that current page is greater then last one.
+		// In this case we have to change current page to last.
+		this.transitionToPageRoute(lastPage);
+	}
+	
     // Define 'modelProjection' for controller instance
     controller.set('modelProjection', this.get('modelProjection'));
   }

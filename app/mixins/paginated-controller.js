@@ -25,7 +25,6 @@ export default Ember.Mixin.create({
   }.observes('per_page'),
 
   perPageValues: [2, 3, 4, 5, 10, 20, 50],
-  
 
   hasPreviousPage: Ember.computed('content.pagination', function() {
     var pagination = this.get('content.pagination');
@@ -42,76 +41,71 @@ export default Ember.Mixin.create({
     var pagination = this.get('content.pagination');
     var last = Math.ceil(pagination.count / pagination.per_page);
 
-	// Страницы отображаются списком вида [1] [2] … [10] {11} [12] … [18] [19], т.е. начальные и конечные страницы отображаются всегда,
-	// а для текущей отображаются ее ближающие соседи.  В случае, если текущая страница находится в непосредственной близости от начала или конца, // список соответственно отображается [1] [2] [3] {4} [5] … [18] [19] или [1] [2] … [15] {16} [17] [18] [19]	
-	var VISIBLE_PAGE_COUNT = 7;
-	var VISIBLE_END_PAGE_COUNT = 2;
-	var i =0;
+    // Pages are shown via list like [1] [2] … [10] {11} [12] … [18] [19], initial and final pages are shown always,
+    // and nearest neighbors are and displayed for the current page. In case, when the current page is located in close to the beginning or end
+    // list of page is shown accordingly [1] [2] [3] {4} [5] … [18] [19] or [1] [2] … [15] {16} [17] [18] [19].
+    var visiblePageCount = 7;
+    var visibleEndPageCount = 2;
+    var i = 0;
     var arr = [];
-	
-	if (VISIBLE_PAGE_COUNT >= last) // Отдельно обработаем случай, при котором число доступных страниц меньше максимально видимого, т.к. в //противном случае вычисления становятся слишком сложными.
-	{
-		for (i = 1; i <= last; i++)
-		{
-			this.addPageNumberIntoArray(arr, i, false);
-		}
-	}
-	else
-	{
-		// Число видимых страниц слева и справой от текущей, если слева и справа от текущей страницы многоточия.
-		var visibleMidlePageHalfCount =  Math.floor((VISIBLE_PAGE_COUNT - VISIBLE_END_PAGE_COUNT * 2) / 2);
-		
-		// Число видимых страниц с левого края.
-		var leftEndPageCount = pagination.page < VISIBLE_END_PAGE_COUNT + visibleMidlePageHalfCount + 1 ?
-			VISIBLE_PAGE_COUNT - VISIBLE_END_PAGE_COUNT : VISIBLE_END_PAGE_COUNT;
-		
-		// Число видимых конечных с правого края.
-		var rightEndPageCount = pagination.page > last - (VISIBLE_END_PAGE_COUNT + visibleMidlePageHalfCount) ?
-			VISIBLE_PAGE_COUNT - VISIBLE_END_PAGE_COUNT: VISIBLE_END_PAGE_COUNT;
-		
-		// Добавляем страницы с левого края.
-		for (i = 1; i <= Math.min(leftEndPageCount, last); i++)
-		{
-			this.addPageNumberIntoArray(arr, i, false);
-		}
-		
-		// При необходимости отобразим левое относительно текущей страницы многоточие.	
-		if (pagination.page > VISIBLE_END_PAGE_COUNT + visibleMidlePageHalfCount + 1)
-		{
-			this.addPageNumberIntoArray(arr, 0, true);
-		}
-		
-		// Добавляем страницы среднего блока, включающего текущую страницу.
-		var middleBlockStartPage = Math.max(leftEndPageCount + 1, pagination.page-visibleMidlePageHalfCount);
-		var middleBlockEndPage = Math.min(pagination.page + visibleMidlePageHalfCount, last - rightEndPageCount);
-		for (i = middleBlockStartPage; i <= middleBlockEndPage; i++)
-		{
-			this.addPageNumberIntoArray(arr, i, false);
-		}
-		
-		// При необходимости отобразим правое относительно текущей страницы многоточие.
-		if (pagination.page < last - (VISIBLE_END_PAGE_COUNT+visibleMidlePageHalfCount))
-		{
-			this.addPageNumberIntoArray(arr, 0, true);
-		}
-		
-		// Добавляем страницы с правого края.	
 
-		for (i = last - rightEndPageCount+1; i <= last; i++)
-		{
-			this.addPageNumberIntoArray(arr, i, false);
-		}
-	}
-	return arr;
+    if (visiblePageCount >= last) { 
+      // If the total page number do not exceed the number of visible pages.
+      for (i = 1; i <= last; i++) {
+        this.addPageNumberIntoArray(arr, i, false);
+      }
+    }
+    else {
+      // Number of visible pages near current page.
+      var visibleMidlePageHalfCount =  Math.floor((visiblePageCount - visibleEndPageCount * 2) / 2);
+
+      // Number of visible pages to the left end.
+      var leftEndPageCount = 
+          pagination.page < visibleEndPageCount + visibleMidlePageHalfCount + 1 ?
+            visiblePageCount - visibleEndPageCount : visibleEndPageCount;
+
+      // Number of visible pages to the right end.
+      var rightEndPageCount = 
+          pagination.page > last - (visibleEndPageCount + visibleMidlePageHalfCount) ?
+            visiblePageCount - visibleEndPageCount: visibleEndPageCount;
+
+      // Add pages to the left edge.
+      for (i = 1; i <= Math.min(leftEndPageCount, last); i++) {
+        this._addPageNumberIntoArray(arr, i, false);
+      }
+
+      // Add left ellipsis if needed
+      if (pagination.page > visibleEndPageCount + visibleMidlePageHalfCount + 1) {
+        this._addPageNumberIntoArray(arr, 0, true);
+      }
+
+      // Add middle pades including current page.
+      var middleBlockStartPage = Math.max(leftEndPageCount + 1, pagination.page - visibleMidlePageHalfCount);
+      var middleBlockEndPage = Math.min(pagination.page + visibleMidlePageHalfCount, last - rightEndPageCount);
+      for (i = middleBlockStartPage; i <= middleBlockEndPage; i++){
+        this._addPageNumberIntoArray(arr, i, false);
+      }
+
+      // Add right ellipsis if needed.
+      if (pagination.page < last - (visibleEndPageCount + visibleMidlePageHalfCount)) {
+        this._addPageNumberIntoArray(arr, 0, true);
+      }
+
+      // Add pages to the right edge.
+      for (i = last - rightEndPageCount + 1; i <= last; i++) {
+        this._addPageNumberIntoArray(arr, i, false);
+      }
+    }
+    return arr;
   }),
   
-  addPageNumberIntoArray: function(arr, pageNumber, isEllipsis) {
+  _addPageNumberIntoArray: function(arr, pageNumber, isEllipsis) {
 	var pagination = this.get('content.pagination');
 	
 	arr.push({
         number: pageNumber,
         isCurrent: (pageNumber === pagination.page),
-		isEllipsis:isEllipsis
+		isEllipsis: isEllipsis
       });
   }
   

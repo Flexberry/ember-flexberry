@@ -23,19 +23,19 @@ export default Ember.Mixin.create({
     return records;
   },
   
-  _getCurrent: function (pagination = this.get('controller.content.pagination')) {
+  _getCurrent: function(pagination = this.get('controller.content.pagination')) {
     return pagination.page;
   },
 
-  _getLast: function (pagination = this.get('controller.content.pagination')) {
+  _getLast: function(pagination = this.get('controller.content.pagination')) {
     return Math.ceil(pagination.count / pagination.per_page);
   },
-  _getNum: function (pageNum, pagination = this.get('controller.content.pagination')) {
+  _getNum: function(pageNum, pagination = this.get('controller.content.pagination')) {
     var last = this._getLast(pagination);
     return Math.max(1, Math.min(pageNum, last));
   },
 
-  transitionToPageRoute: function (pageNum){
+  transitionToPageRoute: function(pageNum){
     this.transitionTo(this.paginationRoute, pageNum);
   },
 

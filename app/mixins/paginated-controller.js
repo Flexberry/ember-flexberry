@@ -52,7 +52,7 @@ export default Ember.Mixin.create({
     if (visiblePageCount >= last) {
       // If the total page number do not exceed the number of visible pages.
       for (i = 1; i <= last; i++) {
-        this.addPageNumberIntoArray(arr, i, false);
+        this._addPageNumberIntoArray(arr, i, false);
       }
     } else {
       // Number of visible pages near current page.

@@ -55,7 +55,7 @@ function getODataQuery(queryTree) {
   return query;
 }
 
-function getODataExpandQuery(queryTree) {
+/*function getODataExpandQuery(queryTree) {
   var expandProperties = Object.keys(queryTree.expand);
   if (!expandProperties.length) {
     return null;
@@ -85,7 +85,7 @@ function getODataExpandQuery(queryTree) {
   });
 
   return query.join(',');
-}
+}*/
 
 function getODataSelectQuery(queryTree) {
   if (queryTree.select.length) {

@@ -39,39 +39,39 @@ test('it loads details', function(assert) {
 
   Ember.run(function() {
     Ember.$.mockjax({
-      url: "*Customs(99)",
+      url: '*Customs(99)',
       responseText: {
-        "CustomID": 99,
-        "FirstName": "TestCustomModel",
-        "ReportsTo": 98,
-        "TmpChildren": [1,2]
+        CustomID: 99,
+        FirstName: 'TestCustomModel',
+        ReportsTo: 98,
+        TmpChildren: [1, 2]
       }
     });
 
     Ember.$.mockjax({
-      url: "*Customs(98)",
+      url: '*Customs(98)',
       responseText: {
-        "CustomID": 98,
-        "FirstName": "TestCustomModelMaster",
-        "ReportsTo": 97
+        CustomID: 98,
+        FirstName: 'TestCustomModelMaster',
+        ReportsTo: 97
       }
     });
 
     Ember.$.mockjax({
-      url: "*Customs(1)",
+      url: '*Customs(1)',
       responseText: {
-        "CustomID": 1,
-        "FirstName": "TestCustomModelDetail1",
-        "ReportsTo": 100
+        CustomID: 1,
+        FirstName: 'TestCustomModelDetail1',
+        ReportsTo: 100
       }
     });
 
     Ember.$.mockjax({
-      url: "*Customs(2)",
+      url: '*Customs(2)',
       responseText: {
-        "CustomID": 2,
-        "FirstName": "TestCustomModelDetail2",
-        "ReportsTo": 200
+        CustomID: 2,
+        FirstName: 'TestCustomModelDetail2',
+        ReportsTo: 200
       }
     });
 
@@ -80,22 +80,22 @@ test('it loads details', function(assert) {
     store.find('custom', 99).then(function(record) {
       assert.ok(record);
       assert.ok(record instanceof DS.Model);
-      assert.equal(record.get('firstName'), "TestCustomModel");
+      assert.equal(record.get('firstName'), 'TestCustomModel');
       record.get('reportsTo').then(function(masterData) {
         assert.ok(masterData);
         assert.ok(masterData instanceof DS.Model);
-        assert.equal(masterData.get('firstName'), "TestCustomModelMaster");
+        assert.equal(masterData.get('firstName'), 'TestCustomModelMaster');
       });
       record.get('tmpChildren').then(function(detailData) {
         assert.ok(detailData);
 
         var firstDetail = detailData.objectAt(0);
         assert.ok(firstDetail instanceof DS.Model);
-        assert.equal(firstDetail.get('firstName'), "TestCustomModelDetail1");
+        assert.equal(firstDetail.get('firstName'), 'TestCustomModelDetail1');
 
         var secondDetail = detailData.objectAt(1);
         assert.ok(firstDetail instanceof DS.Model);
-        assert.equal(secondDetail.get('firstName'), "TestCustomModelDetail2");
+        assert.equal(secondDetail.get('firstName'), 'TestCustomModelDetail2');
       });
     });
 

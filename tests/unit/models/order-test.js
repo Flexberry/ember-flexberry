@@ -8,14 +8,14 @@ var App;
 
 moduleForModel('order', {
   // Specify the other units that are required for this test.
-  needs: ["model:employee",
+  needs: ['model:employee',
           'service:validations',
           'ember-validations@validator:local/presence',
           'ember-validations@validator:local/length'],
-  setup: function(){
+  setup: function() {
     App = startApp();
   },
-  teardown: function(){
+  teardown: function() {
     Ember.run(App, 'destroy');
     Ember.$.mockjax.clear();
   }
@@ -37,23 +37,23 @@ test('it returns fields', function(assert) {
     var date = '1933-10-30T00:00:00Z';
     model.set('orderDate', date);
     assert.equal(model.get('orderDate'), date);
-    model.set('employeeID', store.createRecord('employee', { firstName: "Sidorov", lastName: "Sidor" }));
+    model.set('employeeID', store.createRecord('employee', { firstName: 'Sidorov', lastName: 'Sidor' }));
   });
 
   var reportsToEmployee = model.get('employeeID');
   assert.ok(reportsToEmployee);
-  assert.equal(reportsToEmployee.get('firstName'), "Sidorov");
-  assert.equal(reportsToEmployee.get('lastName'), "Sidor");
+  assert.equal(reportsToEmployee.get('firstName'), 'Sidorov');
+  assert.equal(reportsToEmployee.get('lastName'), 'Sidor');
 });
 
-test('it validates', function (assert) {
+test('it validates', function(assert) {
   var model = this.subject();
   assert.expect(4);
 
-  Ember.run(function (){
+  Ember.run(function() {
     assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
 
-    model.save().then(null, function (errorData) {
+    model.save().then(null, function(errorData) {
       assert.ok(errorData instanceof Ember.Object);
       assert.ok(errorData.anyErrors);
     });
@@ -67,22 +67,22 @@ test('it loads fields', function(assert) {
   var store = App.__container__.lookup('store:main');
   Ember.run(function() {
     Ember.$.mockjax({
-      url: "*Orders(99)",
+      url: '*Orders(99)',
       responseText: {
-        "OrderID": 99,
-        "OrderDate": "1933-10-30T00:00:00Z",
-        "EmployeeID": 97
+        OrderID: 99,
+        OrderDate: '1933-10-30T00:00:00Z',
+        EmployeeID: 97
       }
     });
 
     Ember.$.mockjax({
-      url: "*Employees(97)",
+      url: '*Employees(97)',
       responseText: {
-        "EmployeeID": 97,
-        "FirstName": "Sidor",
-        "LastName": "Sidorov",
-        "BirthDate": "1946-10-30T00:00:00Z",
-        "ReportsTo": 96
+        EmployeeID: 97,
+        FirstName: 'Sidor',
+        LastName: 'Sidorov',
+        BirthDate: '1946-10-30T00:00:00Z',
+        ReportsTo: 96
       }
     });
 
@@ -91,13 +91,13 @@ test('it loads fields', function(assert) {
       assert.ok(record instanceof DS.Model);
 
       var orderDate = record.get('orderDate');
-      assert.ok(String(orderDate).indexOf("1933") > -1);
+      assert.ok(String(orderDate).indexOf('1933') > -1);
 
-      record.get('employeeID').then(function(masterRecord){
+      record.get('employeeID').then(function(masterRecord) {
         assert.ok(masterRecord);
         assert.ok(masterRecord instanceof DS.Model);
-        assert.equal(masterRecord.get('firstName'), "Sidor");
-        assert.equal(masterRecord.get('lastName'), "Sidorov");
+        assert.equal(masterRecord.get('firstName'), 'Sidor');
+        assert.equal(masterRecord.get('lastName'), 'Sidorov');
       });
     });
 

@@ -1,28 +1,28 @@
 import Ember from 'ember';
 
 /*
- This can be mixed into a route to provide pagination support.
+ * This can be mixed into a route to provide pagination support.
  */
 export default Ember.Mixin.create({
-  // 'employees.page'
+  // E.g. 'employees.page'.
   paginationRoute: undefined,
 
   // This function is for use in a route that calls find() to get a
   // paginated collection of records.  It takes the pagination metadata
   // from the store and puts it into the record array.
-  includePagination: function(records, page, per_page) {
+  includePagination: function(records, page, perPage) {
     this.paginationRoute = this.paginationRoute || this.routeName;
-
     var metadata = records.store.typeMapFor(records.type).metadata;
-    // put the pagination content directly on the collection
+
+    // Put the pagination content directly on the collection.
     records.set('pagination', {
       page: page,
-      per_page: per_page,
+      per_page: perPage,
       count: metadata.count
     });
     return records;
   },
-  
+
   _getCurrent: function(pagination = this.get('controller.content.pagination')) {
     return pagination.page;
   },
@@ -30,12 +30,13 @@ export default Ember.Mixin.create({
   _getLast: function(pagination = this.get('controller.content.pagination')) {
     return Math.ceil(pagination.count / pagination.per_page);
   },
+
   _getNum: function(pageNum, pagination = this.get('controller.content.pagination')) {
     var last = this._getLast(pagination);
     return Math.max(1, Math.min(pageNum, last));
   },
 
-  transitionToPageRoute: function(pageNum){
+  transitionToPageRoute: function(pageNum) {
     this.transitionTo(this.paginationRoute, pageNum);
   },
 

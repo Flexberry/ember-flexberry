@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
+  perPageValues: [2, 3, 4, 5, 10, 20, 50],
+
   per_page: function() {
     var val = this.get('content.pagination.per_page');
     if (!this.perPageValues.contains(val)) {
@@ -23,8 +25,6 @@ export default Ember.Mixin.create({
     // Reload current route.
     this.target.router.refresh();
   }.observes('per_page'),
-
-  perPageValues: [2, 3, 4, 5, 10, 20, 50],
 
   hasPreviousPage: Ember.computed('content.pagination', function() {
     var pagination = this.get('content.pagination');
@@ -49,25 +49,24 @@ export default Ember.Mixin.create({
     var i = 0;
     var arr = [];
 
-    if (visiblePageCount >= last) { 
+    if (visiblePageCount >= last) {
       // If the total page number do not exceed the number of visible pages.
       for (i = 1; i <= last; i++) {
         this.addPageNumberIntoArray(arr, i, false);
       }
-    }
-    else {
+    } else {
       // Number of visible pages near current page.
       var visibleMidlePageHalfCount =  Math.floor((visiblePageCount - visibleEndPageCount * 2) / 2);
 
       // Number of visible pages to the left end.
-      var leftEndPageCount = 
+      var leftEndPageCount =
           pagination.page < visibleEndPageCount + visibleMidlePageHalfCount + 1 ?
             visiblePageCount - visibleEndPageCount : visibleEndPageCount;
 
       // Number of visible pages to the right end.
-      var rightEndPageCount = 
+      var rightEndPageCount =
           pagination.page > last - (visibleEndPageCount + visibleMidlePageHalfCount) ?
-            visiblePageCount - visibleEndPageCount: visibleEndPageCount;
+            visiblePageCount - visibleEndPageCount : visibleEndPageCount;
 
       // Add pages to the left edge.
       for (i = 1; i <= Math.min(leftEndPageCount, last); i++) {
@@ -82,7 +81,7 @@ export default Ember.Mixin.create({
       // Add middle pades including current page.
       var middleBlockStartPage = Math.max(leftEndPageCount + 1, pagination.page - visibleMidlePageHalfCount);
       var middleBlockEndPage = Math.min(pagination.page + visibleMidlePageHalfCount, last - rightEndPageCount);
-      for (i = middleBlockStartPage; i <= middleBlockEndPage; i++){
+      for (i = middleBlockStartPage; i <= middleBlockEndPage; i++) {
         this._addPageNumberIntoArray(arr, i, false);
       }
 
@@ -96,17 +95,16 @@ export default Ember.Mixin.create({
         this._addPageNumberIntoArray(arr, i, false);
       }
     }
+
     return arr;
   }),
-  
+
   _addPageNumberIntoArray: function(arr, pageNumber, isEllipsis) {
-	var pagination = this.get('content.pagination');
-	
-	arr.push({
-        number: pageNumber,
-        isCurrent: (pageNumber === pagination.page),
-		isEllipsis: isEllipsis
-      });
+    var pagination = this.get('content.pagination');
+    arr.push({
+      number: pageNumber,
+      isCurrent: (pageNumber === pagination.page),
+      isEllipsis: isEllipsis
+    });
   }
-  
 });

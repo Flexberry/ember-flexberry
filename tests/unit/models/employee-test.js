@@ -27,33 +27,33 @@ test('it exists', function(assert) {
 });
 
 test('it returns fields', function(assert) {
-  var model = this.subject({ firstName: "Ivanov", lastName: "Ivan" });
+  var model = this.subject({ firstName: 'Ivanov', lastName: 'Ivan' });
   var store = this.store();
   assert.ok(model);
   assert.ok(model instanceof DS.Model);
-  assert.equal(model.get('firstName'), "Ivanov");
-  assert.equal(model.get('lastName'), "Ivan");
+  assert.equal(model.get('firstName'), 'Ivanov');
+  assert.equal(model.get('lastName'), 'Ivan');
 
   // set a relationship
   Ember.run(function() {
-    model.set('reportsTo', store.createRecord('employee', { firstName: "Sidorov", lastName: "Sidor" }));
+    model.set('reportsTo', store.createRecord('employee', { firstName: 'Sidorov', lastName: 'Sidor' }));
   });
 
   var reportsToEmployee = model.get('reportsTo');
   assert.ok(reportsToEmployee);
-  assert.equal(reportsToEmployee.get('firstName'), "Sidorov");
-  assert.equal(reportsToEmployee.get('lastName'), "Sidor");
+  assert.equal(reportsToEmployee.get('firstName'), 'Sidorov');
+  assert.equal(reportsToEmployee.get('lastName'), 'Sidor');
 });
 
-test('it validates', function (assert) {
+test('it validates', function(assert) {
   var model = this.subject({ lastName: 'asd' });
   assert.expect(4);
 
-  Ember.run(function (){
+  Ember.run(function() {
     model.set('firstName', 'Qwerty');
     assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
 
-    model.save().then(null, function (errorData) {
+    model.save().then(null, function(errorData) {
       assert.ok(errorData instanceof Ember.Object);
       assert.ok(errorData.anyErrors);
     });
@@ -67,38 +67,38 @@ test('it loads fields', function(assert) {
   var store = App.__container__.lookup('store:main');
   Ember.run(function() {
     Ember.$.mockjax({
-      url: "*Employees(99)",
+      url: '*Employees(99)',
       responseText: {
-        "EmployeeID": 99,
-        "FirstName": "Ivan",
-        "LastName": "Ivanov",
-        "BirthDate": "1933-10-30T00:00:00Z",
-        "ReportsTo": 98
+        EmployeeID: 99,
+        FirstName: 'Ivan',
+        LastName: 'Ivanov',
+        BirthDate: '1933-10-30T00:00:00Z',
+        ReportsTo: 98
       }
     });
 
     Ember.$.mockjax({
-      url: "*Employees(98)",
+      url: '*Employees(98)',
       responseText: {
-        "EmployeeID": 98,
-        "FirstName": "Sidor",
-        "LastName": "Sidorov",
-        "BirthDate": "1946-10-30T00:00:00Z",
-        "ReportsTo": 97
+        EmployeeID: 98,
+        FirstName: 'Sidor',
+        LastName: 'Sidorov',
+        BirthDate: '1946-10-30T00:00:00Z',
+        ReportsTo: 97
       }
     });
 
     store.find('employee', 99).then(function(record) {
       assert.ok(record);
       assert.ok(record instanceof DS.Model);
-      assert.equal(record.get('firstName'), "Ivan");
-      assert.equal(record.get('lastName'), "Ivanov");
+      assert.equal(record.get('firstName'), 'Ivan');
+      assert.equal(record.get('lastName'), 'Ivanov');
 
       record.get('reportsTo').then(function(masterRecord) {
         assert.ok(masterRecord);
         assert.ok(masterRecord instanceof DS.Model);
-        assert.equal(masterRecord.get('firstName'), "Sidor");
-        assert.equal(masterRecord.get('lastName'), "Sidorov");
+        assert.equal(masterRecord.get('firstName'), 'Sidor');
+        assert.equal(masterRecord.get('lastName'), 'Sidorov');
       });
     });
 

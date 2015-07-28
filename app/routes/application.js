@@ -11,7 +11,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       this.get('session').invalidate();
     },
 
-    // action to show modal-dialog by name
+    // Action to show modal-dialog by name.
     showModalDialog: function(modalDialogName, data) {
       var params = Ember.$.extend({
         into: 'application',
@@ -21,7 +21,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       this.render(modalDialogName, params);
     },
 
-    // action to remove modal outlet on modal-dialog close
+    // Action to remove modal outlet on modal-dialog close.
     removeModalDialog: function() {
       this.disconnectOutlet({
         outlet: 'modal',

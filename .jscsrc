@@ -3,5 +3,6 @@
   "preset": "airbnb",
   "requirePaddingNewLinesAfterBlocks": {
     "allExcept": ["inCallExpressions", "inArrayExpressions", "inProperties"]
-  }
+  },
+  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties"
 }

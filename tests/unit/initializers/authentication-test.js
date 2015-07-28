@@ -2,7 +2,8 @@ import Ember from 'ember';
 import { initialize } from '../../../initializers/authentication';
 import { module, test } from 'qunit';
 
-var container, application;
+var container;
+var application;
 
 module('AuthenticationInitializer', {
   beforeEach: function() {

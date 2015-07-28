@@ -9,7 +9,7 @@ export default Ember.Mixin.create({
    * @returns {Array} Массив объектов вида { propName: 'ИмяN', direction: 'asc/desc' }, задающий свойства и
    * направления для сортировки.
    */
-  deserializeSortingParam: function (paramString) {
+  deserializeSortingParam: function(paramString) {
     var result = [];
     while (paramString) {
       var direction = paramString.charAt(0) === '+' ? 'asc' : 'desc';
@@ -28,11 +28,12 @@ export default Ember.Mixin.create({
     return result;
   },
 
-  getNextIndeces: function (paramString) {
-    var nextIndices = ['+', '-'].map(function (element) {
+  getNextIndeces: function(paramString) {
+    var nextIndices = ['+', '-'].map(function(element) {
       var pos = paramString.indexOf(element);
       return pos === -1 ? paramString.length : pos;
     });
+
     return nextIndices;
   },
 
@@ -42,25 +43,26 @@ export default Ember.Mixin.create({
    * @param {Object} sorting Объект с параметрами сортировки, который нужно преобразовать в строку.
    * @returns {String} Результирующая строка.
    */
-  serializeSortingParam: function (sorting) {
-    return sorting.map(function (element) {
+  serializeSortingParam: function(sorting) {
+    return sorting.map(function(element) {
       return (element.direction === 'asc' ? '+' : '-') + element.propName;
     }).join('');
   },
 
-  includeSorting: function (model, sorting) {
+  includeSorting: function(model, sorting) {
     model.set('sorting', sorting);
     return model;
   },
 
   actions: {
-    applySorting: function (sorting) {
+    applySorting: function(sorting) {
       var sortingParam = this.serializeSortingParam(sorting);
       this.transitionTo({
         queryParams: {
-          'sort': sortingParam || undefined
+          sort: sortingParam || undefined
         }
       });
+
       this.refresh();
     }
   }

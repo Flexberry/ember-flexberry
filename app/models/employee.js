@@ -1,7 +1,7 @@
 // Remove commented out lines, when they will be covered with tests.
 /*import Ember from 'ember';*/
 import DS from 'ember-data';
-//import config from '../config/environment';
+/*import config from '../config/environment';*/
 import ProjectedModel from './projected-model';
 
 var Model = ProjectedModel.extend({

@@ -38,24 +38,24 @@ function getODataQueryTree(projection, serializer) {
 }
 
 function getODataQuery(queryTree) {
-  var select = getODataSelectQuery(queryTree);
-  var expand = getODataExpandQuery(queryTree);
   var query = {};
 
+  var select = getODataSelectQuery(queryTree);
   if (select) {
-    query['$select'] = select;
+    query.$select = select;
   }
 
+  // TODO: detect by embedded\async relationships mode for model attr (serializer attrs?).
+  // FIXME: commented out for async relationships working.
+  /*var expand = getODataExpandQuery(queryTree);
   if (expand) {
-    // TODO: detect by embedded\async relationships mode for model attr (serializer attrs?).
-    // FIXME: commented out for async relationships working.
-    //query['$expand'] = expand;
-  }
+    query.$expand = expand;
+  }*/
 
   return query;
 }
 
-function getODataExpandQuery(queryTree) {
+/*function getODataExpandQuery(queryTree) {
   var expandProperties = Object.keys(queryTree.expand);
   if (!expandProperties.length) {
     return null;
@@ -85,7 +85,7 @@ function getODataExpandQuery(queryTree) {
   });
 
   return query.join(',');
-}
+}*/
 
 function getODataSelectQuery(queryTree) {
   if (queryTree.select.length) {

@@ -8,10 +8,10 @@ var App;
 moduleFor('object:model-projections-collection', {
   // Specify the other units that are required for this test.
   needs: [],
-  setup: function(){
+  setup: function() {
     App = startApp();
   },
-  teardown: function(){
+  teardown: function() {
     Ember.run(App, 'destroy');
   }
 });
@@ -21,7 +21,7 @@ test('it exists', function(assert) {
   assert.ok(!!collection);
 });
 
-test('add() works', function(assert){
+test('add() works', function(assert) {
   var collection = this.subject();
   var testValue = 'testValue';
   collection.add('newKey', testValue);

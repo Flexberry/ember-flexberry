@@ -6,11 +6,11 @@ export default Ember.Controller.extend(LoginControllerMixin, {
   authenticator: 'authenticator:custom',
   actions: {
     authenticate: function() {
-      var self = this;
+      var _this = this;
       var credentials = this.getProperties('identification', 'password');
       this.get('session').authenticate('authenticator:custom', credentials)
         .then(null, function(data) {
-          self.set('errorMessage', data.error_description);
+          _this.set('errorMessage', data.error_description);
         });
     }
   }

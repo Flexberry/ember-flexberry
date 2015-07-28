@@ -35,6 +35,6 @@ test('query for async relationships', function(assert) {
   });
 
   var query = ProjectionQuery.get(projection, serializer);
-  assert.equal(query['$select'], 'EmployeeID,FirstName,LastName,BirthDate,ReportsTo,TmpChildren');
-  assert.strictEqual(query['$expand'], undefined);
+  assert.equal(query.$select, 'EmployeeID,FirstName,LastName,BirthDate,ReportsTo,TmpChildren');
+  assert.strictEqual(query.$expand, undefined);
 });

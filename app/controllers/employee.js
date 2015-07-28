@@ -2,5 +2,5 @@ import EditFormController from 'prototype-ember-cli-application/controllers/edit
 
 export default EditFormController.extend({
   // Route to redirect to when closing.
-  parentRoute: "employees"
+  parentRoute: 'employees'
 });

@@ -38,7 +38,7 @@
     "ember-data": "1.0.0-beta.18",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.2",
-    "ember-table": "git+https://github.com/Addepar/ember-table.git#9de50f93c587dfa4f90385c787ab817efe2771a8",
+    "ember-table": "git://github.com/embersherpa/ember-table.git#cd4444034dde15c94a8202816b394e8630c24727",
     "ember-validations": "~2.0.0-alpha.3"
   }
 }

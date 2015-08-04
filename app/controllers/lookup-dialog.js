@@ -1,4 +1,4 @@
-import EmberTableColumnDefinition from '../column-definition';
+import EmberTableColumnDefinition from 'ember-table/models/column-definition';
 import ListFormPageController from '../controllers/list-form-page';
 
 export default ListFormPageController.extend({

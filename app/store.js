@@ -2,9 +2,10 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Store.reopen({
-  push: function(typeName, data) {
+  _pushInternalModel: function(data) {
     var backburner = this._backburner;
     var _this = this;
+    var typeName = data.type;
     var type = this.modelFor(typeName);
 
     // NOTE: Для чего это? Мы можем управлять получением модели:

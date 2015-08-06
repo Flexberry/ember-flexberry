@@ -24,11 +24,14 @@ export default Ember.Component.extend({
   init: function() {
     this._super.apply(this, arguments);
 
+    var item = this.get('item');
+    var propName = this.get('propName');
+
     // Set input value on component init.
-    this.set('value', this.item.get(this.propName));
+    this.set('value', item.get(propName));
 
     // Bind item[propertyName] to this.value property.
     // Now we can edit input and item property will be auto-updated.
-    return Ember.Binding.from('item.' + this.propName).to('value').connect(this);
+    return Ember.Binding.from('item.' + propName).to('value').connect(this);
   }
 });

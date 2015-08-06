@@ -35,7 +35,7 @@ export default Ember.Mixin.create({
       }
 
       // Get property type name.
-      var relatedToType = relation.type.typeKey;
+      var relatedToType = relation.type;
 
       // Get property type constructor by type name.
       var relatedTypeConstructor = this.store.modelFor(relatedToType);

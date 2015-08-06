@@ -37,6 +37,7 @@ export default DS.RESTAdapter.extend({
     }
 
     // Retrieve original primary key and projection.
+    type.store = store; // Temporary fix IdProxy for ember 1.13.5 and newer (IdProxy will be removed coming soon).
     var data = IdProxy.retrieve(id, type);
     var projection = data.projection;
     Ember.assert('projection should be defined', !!projection);

@@ -20,8 +20,7 @@ export default {
         projectionAttributes = projection.get('properties');
       }
 
-      // TODO: use record.changedAttributes?
-      let changedAttributes = Ember.keys(snapshot.record.get('_inFlightAttributes'));
+      let changedAttributes = Ember.keys(snapshot.changedAttributes());
       for (let attrKey in snapshot._attributes) {
         var attrIsChanged;
         if (skipUnchangedAttrs) {

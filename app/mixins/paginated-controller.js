@@ -3,28 +3,29 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
   perPageValues: [2, 3, 4, 5, 10, 20, 50],
 
-  per_page: function() {
-    var val = this.get('content.pagination.per_page');
-    if (!this.perPageValues.contains(val)) {
-      // Если per_page не будет в perPageValues,
-      // то в select-е будет выбрано undefined,
-      // => per_page изменится undefined, т.к. на нем биндинг.
-      this.perPageValues.push(val);
-      this.perPageValues.sort();
+  per_page: Ember.computed('content.pagination.per_page', {
+    get(key) {
+      var val = this.get('content.pagination.per_page');
+      if (!this.perPageValues.contains(val)) {
+        // Если per_page не будет в perPageValues,
+        // то в select-е будет выбрано undefined,
+        // => per_page изменится undefined, т.к. на нем биндинг.
+        this.perPageValues.push(val);
+        this.perPageValues.sort();
+      }
+
+      return val;
+    },
+    set(key, value) {
+      // Save setting.
+      var model = this.controllerFor('application').get('model');
+      model.set('perPage', value);
+      model.save();
+
+      // Reload current route.
+      this.target.router.refresh();
     }
-
-    return val;
-  }.property('content.pagination.per_page'),
-
-  savePerPage: function() {
-    // Save setting.
-    var model = this.controllerFor('application').get('model');
-    model.set('perPage', this.get('per_page'));
-    model.save();
-
-    // Reload current route.
-    this.target.router.refresh();
-  }.observes('per_page'),
+  }),
 
   hasPreviousPage: Ember.computed('content.pagination', function() {
     var pagination = this.get('content.pagination');

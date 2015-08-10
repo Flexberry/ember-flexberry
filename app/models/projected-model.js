@@ -6,7 +6,7 @@ import ValidationData from '../objects/validation-data';
 import ModelProjection from '../objects/model-projection';
 import ModelProjectionsCollection from '../objects/model-projections-collection';
 
-var Model = DS.Model.extend(EmberValidations.Mixin, {
+var Model = DS.Model.extend(EmberValidations, {
   primaryKey: Ember.computed('id', {
     get: function() {
       var id = this.get('id');

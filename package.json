@@ -42,6 +42,7 @@
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.3",
     "ember-table": "git://github.com/Flexberry/ember-table.git",
-    "ember-validations": "~2.0.0-alpha.4"
+    "ember-validations": "~2.0.0-alpha.4",
+    "semantic-ui-ember": "git://github.com/Semantic-Org/Semantic-UI-Ember.git#1d7319d5f9e2bfc51111701580ad64069e3717a3"
   }
 }

@@ -41,6 +41,7 @@ module.exports = function(environment) {
   // http://content-security-policy.com
   ENV.contentSecurityPolicy = {
     'style-src': "'self' 'unsafe-inline'",
+    'font-src': "'self' data:",
     'connect-src': "'self' " + ENV.APP.backendUrls.root
   };
 

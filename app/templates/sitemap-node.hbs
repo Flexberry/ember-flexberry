@@ -9,7 +9,7 @@
 
   {{#if model.children.length}}
     <ul>
-      {{#each child in model.children}}
+      {{#each model.children as |child|}}
         {{render "sitemap-node" child}}
       {{/each}}
     </ul>

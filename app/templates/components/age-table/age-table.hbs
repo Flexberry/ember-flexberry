@@ -1,12 +1,12 @@
 <table>
   <tr>
-  {{#each prop in projection.properties}}
+  {{#each projection.properties as |prop|}}
     <th>{{prop}}</th>
   {{/each}}
   </tr>
-  {{#each item in items}}
+  {{#each items as |item|}}
   <tr>
-    {{#each prop in projection.properties}}
+    {{#each projection.properties as |prop|}}
       <td>
         <!-- render an input and bind it to item[prop] -->
         {{dynamic-input

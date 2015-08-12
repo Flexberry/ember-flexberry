@@ -20,7 +20,10 @@ module.exports = function(environment) {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
-      }
+      },
+
+      // Disable runtime jQuery-version assertions.
+      FORCE_JQUERY: true
     },
     APP: {
       // Here you can pass flags/options to your application instance

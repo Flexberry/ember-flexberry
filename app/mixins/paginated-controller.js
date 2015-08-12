@@ -100,6 +100,12 @@ export default Ember.Mixin.create({
     return arr;
   }),
 
+  actions: {
+    recordsPerPageSelector_onSelectedValueChanged: function(recordsPerPage) {
+      this.set('per_page', recordsPerPage);
+    }
+  },
+
   _addPageNumberIntoArray: function(arr, pageNumber, isEllipsis) {
     var pagination = this.get('content.pagination');
     arr.push({

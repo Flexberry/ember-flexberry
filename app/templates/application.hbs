@@ -1,37 +1,25 @@
-<div>
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Flexberry prototype written in Ember.js</a>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse" style="float:right; margin: 5px;">
-      {{#if session.isAuthenticated}}
-      User: {{session.secure.userName}}
-      <a {{ action 'invalidateSession' }}>Logout</a>
-      {{else}}
-      {{#link-to 'login'}}Login{{/link-to}}
-      {{/if}}
-    </div>
-  </nav>
-  <div class="container" id="main">
-    <div class="row">
-      <div>
-        <div class="col-md-3">
-          <div class="well sidebar-nav">
-            <strong>Navigation</strong>
-            {{render "sitemap" model.sitemap}}
-          </div>
-        </div>
-        <div class="col-md-9">
-          {{outlet}}
-          {{outlet 'modal'}}
-        </div>
+<div class="ui grid page menu">
+  <a class="brand item" href="#">Flexberry prototype written in Ember.js</a>
+  <div class="right menu">
+    {{#if session.isAuthenticated}}
+      <div class="item">
+        <i class="user icon"></i>
+        {{session.secure.userName}}
       </div>
-    </div>
+      <a {{ action 'invalidateSession' }} class="item">Sign out</a>
+    {{else}}
+      <div class="item">
+        {{#link-to 'login' class="ui primary button"}}Sing in{{/link-to}}
+      </div>
+    {{/if}}
+  </div>
+</div>
+<div class="ui grid page">
+  <div class="four wide column">
+    {{render "sitemap" model.sitemap}}
+  </div>
+  <div class="twelve wide column">
+    {{outlet}}
+    {{outlet 'modal'}}
   </div>
 </div>

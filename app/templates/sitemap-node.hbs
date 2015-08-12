@@ -1,17 +1,19 @@
-<li class="list-group-item">
+<div class="item">
   {{#if model.link}}
-    {{#link-to model.link}}
+    {{#link-to model.link class="item"}}
       {{model.title}}
     {{/link-to}}
   {{else}}
-    {{model.title}}
+    <div class="header">
+      {{model.title}}
+    </div>
   {{/if}}
 
   {{#if model.children.length}}
-    <ul>
+    <div class="menu">
       {{#each child in model.children}}
         {{render "sitemap-node" child}}
       {{/each}}
-    </ul>
+    </div>
   {{/if}}
-</li>
+</div>

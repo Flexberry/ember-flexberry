@@ -1,18 +1,21 @@
 {{#if errorMessage}}
-  <div class="alert alert-danger">
-    <strong>Login failed:</strong> {{errorMessage}}
+  {{!TODO: implement component for message, otherwise close don't work. See http://semantic-ui.com/collections/message.html#dismissable-block}}
+  <div class="ui negative message">
+    <i class="close icon"></i>
+    <div class="header">Login failed</div>
+    <p>{{errorMessage}}</p>
   </div>
 {{/if}}
 
 {{! login form; the fields must be named "identification" and "password"; the controller action is "authenticate" }}
-<form {{action 'authenticate' on='submit'}}>
-  <div class="form-group">
-    <label for="identification">Login</label>
-    {{input value=identification placeholder='Enter Login' class='form-control'}}
+<form {{action 'authenticate' on='submit'}} class="ui form">
+  <div class="field">
+    <label>Login</label>
+    {{input value=identification placeholder='Enter Login' type='text'}}
   </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    {{input value=password placeholder='Enter Password' class='form-control' type='password'}}
+  <div class="field">
+    <label>Password</label>
+    {{input value=password placeholder='Enter Password' type='password'}}
   </div>
-  <button type="submit" class="btn btn-default">Login</button>
+  <button type="submit" class="ui button">Login</button>
 </form>

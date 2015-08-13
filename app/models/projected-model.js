@@ -65,12 +65,12 @@ Model.reopenClass({
    */
   projections: null,
 
-  // TODO: remove typeKey and ModelProjection.type? Instead, use name with Convention Over Configuration for reading type (see IdProxy)?
-  buildProjection: function(typeKey, name, attributes) {
+  // TODO: remove modelName and ModelProjection.type? Instead, use name with Convention Over Configuration for reading type (see IdProxy)?
+  buildProjection: function(modelName, name, attributes) {
     let proj = ModelProjection.create({
       // TODO: rename to ownerType or something else.
-      // NOTE: this.typeKey and this.store is undefined here.
-      type: typeKey,
+      // NOTE: this.modelName and this.store is undefined here.
+      type: modelName,
       name: name,
       properties: undefined,
       masters: ModelProjectionsCollection.create(),
@@ -102,10 +102,10 @@ Model.reopenClass({
     for (let attrKey in relAttributes) {
       if (relationshipNames.hasMany.indexOf(attrKey) !== -1) {
         let projName = name + '.details.' + attrKey;
-        proj.details.add(attrKey, this.buildProjection(typeKey, projName, relAttributes[attrKey]));
+        proj.details.add(attrKey, this.buildProjection(modelName, projName, relAttributes[attrKey]));
       } else if (relationshipNames.belongsTo.indexOf(attrKey) !== -1) {
         let projName = name + '.masters.' + attrKey;
-        proj.masters.add(attrKey, this.buildProjection(typeKey, projName, relAttributes[attrKey]));
+        proj.masters.add(attrKey, this.buildProjection(modelName, projName, relAttributes[attrKey]));
       } else {
         throw new Error(`Unknown attribute ${attrKey}.`);
       }
@@ -114,8 +114,8 @@ Model.reopenClass({
     return proj;
   },
 
-  defineProjection: function(typeKey, name, attributes) {
-    let proj = this.buildProjection(typeKey, name, attributes);
+  defineProjection: function(modelName, name, attributes) {
+    let proj = this.buildProjection(modelName, name, attributes);
 
     if (!this.projections) {
       this.reopenClass({

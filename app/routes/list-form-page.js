@@ -13,18 +13,18 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
 
     var _this = this;
     var store = this.store;
-    var typeKey = this.get('modelTypeKey');
-    var adapter = store.adapterFor(store.modelFor(typeKey));
+    var modelName = this.get('modelName');
+    var adapter = store.adapterFor(store.modelFor(modelName));
 
     var sorting = _this.deserializeSortingParam(params.sort);
-    var pageQuery = adapter.getPaginationQuery(page, perPage, sorting, store.serializerFor(typeKey));
+    var pageQuery = adapter.getPaginationQuery(page, perPage, sorting, store.serializerFor(modelName));
 
     // __fetchingProjection is tmp variable, which will be handled by adapter.findQuery.
     var query = Ember.merge(pageQuery, { __fetchingProjection: this.get('modelProjection') });
 
     // find by query is always fetching.
     // TODO: support getting from cache with "store.all->filterByProjection".
-    return store.find(typeKey, query)
+    return store.find(modelName, query)
       .then(function(records) {
         _this.includeSorting(records, sorting);
         return _this.includePagination(records, page, perPage);

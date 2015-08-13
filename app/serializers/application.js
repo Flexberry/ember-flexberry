@@ -5,14 +5,14 @@ import IdProxy from '../utils/idproxy';
 export default DS.RESTSerializer.extend({
   extractSingle: function(store, typeClass, payload, id) {
     payload = {
-      [typeClass.typeKey]: payload
+      [typeClass.modelName]: payload
     };
 
     return this._super(store, typeClass, payload, id);
   },
 
   extractArray: function(store, typeClass, payload) {
-    let rootKey = Ember.String.pluralize(typeClass.typeKey);
+    let rootKey = Ember.String.pluralize(typeClass.modelName);
     payload = {
       [rootKey]: payload.value
     };

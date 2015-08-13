@@ -9,7 +9,7 @@ export default ProjectedModelRoute.extend({
     var id = IdProxy.mutate(params.id, this.get('modelProjection'));
 
     // TODO: optionally: fetch or find.
-    return this.store.fetchById(this.get('modelTypeKey'), id);
+    return this.store.fetchById(this.get('modelName'), id);
   },
 
   resetController: function(controller, isExisting, transition) {

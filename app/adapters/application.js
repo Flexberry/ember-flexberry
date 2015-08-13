@@ -42,7 +42,7 @@ export default DS.RESTAdapter.extend({
     var projection = data.projection;
     Ember.assert('projection should be defined', !!projection);
 
-    var url = this.buildURL(type.typeKey, data.id, snapshot, 'find');
+    var url = this.buildURL(type.modelName, data.id, snapshot, 'find');
     var serializer = store.serializerFor(type);
     var query = ProjectionQuery.get(projection, serializer);
     return this.ajax(url, 'GET', { data: query }).then(function(data) {
@@ -131,7 +131,7 @@ export default DS.RESTAdapter.extend({
 
     // FIXME: in newer ember versions buildURL signature has been changed.
     // NOTE: for newly created records id is not defined.
-    let url = this.buildURL(type.typeKey, snapshot.id);
+    let url = this.buildURL(type.modelName, snapshot.id);
 
     let httpMethod;
     switch (requestType) {
@@ -155,7 +155,7 @@ export default DS.RESTAdapter.extend({
 
     // Don't need to send any data for deleting.
     if (requestType !== 'deleteRecord') {
-      let serializer = store.serializerFor(type.typeKey);
+      let serializer = store.serializerFor(type.modelName);
       data = {};
       serializer.serializeIntoHash(data, type, snapshot);
     }

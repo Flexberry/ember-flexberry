@@ -18,7 +18,7 @@ export default {
     var projection;
 
     if (type) {
-      if (type.typeKey === projectionOwner) {
+      if (type.modelName === projectionOwner) {
         projection = type.projections.get(projectionName);
       } else {
         var store = type.store;

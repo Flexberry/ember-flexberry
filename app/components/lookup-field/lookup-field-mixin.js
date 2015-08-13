@@ -31,7 +31,7 @@ export default Ember.Mixin.create({
       // Get relation property from model.
       var relation = relationshipsByName.get(relationName);
       if (!relation) {
-        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.typeKey}' model.`);
+        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
       }
 
       // Get property type name.

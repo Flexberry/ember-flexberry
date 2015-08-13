@@ -3,5 +3,5 @@ import Model from 'prototype-ember-cli-application/models/employee';
 
 export default EditFormNewRoute.extend({
   modelProjection: Model.projections.EmployeeE,
-  modelTypeKey: 'employee'
+  modelName: 'employee'
 });

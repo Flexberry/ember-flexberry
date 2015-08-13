@@ -31,7 +31,7 @@ export default DS.RESTAdapter.extend({
     return query;
   },
 
-  find: function(store, type, id, snapshot) {
+  findRecord: function(store, type, id, snapshot) {
     if (!IdProxy.idIsProxied(id)) {
       return this._super.apply(this, arguments);
     }

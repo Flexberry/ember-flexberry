@@ -5,7 +5,7 @@ import SortableColumnMixin from 'prototype-ember-cli-application/mixins/sortable
 import EmberTableColumnDefinition from 'ember-table/models/column-definition';
 import ListTableCellView from 'prototype-ember-cli-application/views/ember-table/list-table-cell';
 
-export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableControllerMixin, {
+export default Ember.Controller.extend(PaginatedControllerMixin, SortableControllerMixin, {
   actions: {
     /**
      * Table row click handler.

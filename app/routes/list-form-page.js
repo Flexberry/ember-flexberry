@@ -24,7 +24,7 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
 
     // find by query is always fetching.
     // TODO: support getting from cache with "store.all->filterByProjection".
-    return store.find(modelName, query)
+    return store.query(modelName, query)
       .then(function(records) {
         _this.includeSorting(records, sorting);
         return _this.includePagination(records, page, perPage);

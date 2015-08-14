@@ -74,7 +74,7 @@ export default DS.RESTSerializer.extend({
    */
   normalize: function(type, hash, prop) {
     // Get a projection on which the hash was fetched
-    // (see adapter find and findQuery methods).
+    // (see adapter find and query methods).
     var projection = hash._fetchedProjection;
     delete hash._fetchedProjection;
 

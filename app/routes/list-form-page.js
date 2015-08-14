@@ -19,7 +19,7 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
     var sorting = _this.deserializeSortingParam(params.sort);
     var pageQuery = adapter.getPaginationQuery(page, perPage, sorting, store.serializerFor(modelName));
 
-    // __fetchingProjection is tmp variable, which will be handled by adapter.findQuery.
+    // __fetchingProjection is tmp variable, which will be handled by adapter.query.
     var query = Ember.merge(pageQuery, { __fetchingProjection: this.get('modelProjection') });
 
     // find by query is always fetching.

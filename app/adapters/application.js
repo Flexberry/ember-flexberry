@@ -52,7 +52,7 @@ export default DS.RESTAdapter.extend({
     });
   },
 
-  findQuery: function(store, type, query) {
+  query: function(store, type, query) {
     var projection = query.__fetchingProjection;
     if (!projection) {
       return this._super.apply(this, arguments);

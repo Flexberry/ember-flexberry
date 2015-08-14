@@ -14,7 +14,7 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
     var _this = this;
     var store = this.store;
     var modelName = this.get('modelName');
-    var adapter = store.adapterFor(store.modelFor(modelName));
+    var adapter = store.adapterFor(modelName);
 
     var sorting = _this.deserializeSortingParam(params.sort);
     var pageQuery = adapter.getPaginationQuery(page, perPage, sorting, store.serializerFor(modelName));

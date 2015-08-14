@@ -43,7 +43,7 @@ export default DS.RESTAdapter.extend({
     Ember.assert('projection should be defined', !!projection);
 
     var url = this.buildURL(type.modelName, data.id, snapshot, 'find');
-    var serializer = store.serializerFor(type);
+    var serializer = store.serializerFor(type.modelName);
     var query = ProjectionQuery.get(projection, serializer);
     return this.ajax(url, 'GET', { data: query }).then(function(data) {
       // This variable will be handled by serializer in the normalize method.
@@ -59,7 +59,7 @@ export default DS.RESTAdapter.extend({
     }
 
     delete query.__fetchingProjection;
-    var serializer = store.serializerFor(type);
+    var serializer = store.serializerFor(type.modelName);
     var projectionQuery = ProjectionQuery.get(projection, serializer);
     query = Ember.merge(projectionQuery, query);
     return this._super(store, type, query).then(function(data) {

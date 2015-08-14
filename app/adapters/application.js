@@ -42,7 +42,7 @@ export default DS.RESTAdapter.extend({
     var projection = data.projection;
     Ember.assert('projection should be defined', !!projection);
 
-    var url = this.buildURL(type.modelName, data.id, snapshot, 'find');
+    var url = this.urlForFindRecord(data.id, type.modelName, snapshot);
     var serializer = store.serializerFor(type.modelName);
     var query = ProjectionQuery.get(projection, serializer);
     return this.ajax(url, 'GET', { data: query }).then(function(data) {

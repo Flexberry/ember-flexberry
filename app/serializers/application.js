@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import IdProxy from '../utils/idproxy';
 
 export default DS.RESTSerializer.extend({
   /**
@@ -56,58 +55,13 @@ export default DS.RESTSerializer.extend({
    */
   extractMeta: function(store, type, payload) {
     if (!payload) {
-      return;
+      return undefined;
     }
 
     let meta = {};
     this._moveMeta(meta, payload, false);
 
     return meta;
-  },
-
-  /**
-   * Normalization method for a part of the JSON payload returned by the server.
-   * @param type Type of the record that is being normalized.
-   * @param hash Hash to normalize.
-   * @param prop Property where the hash was originally found.
-   * @returns {object} Normalized hash.
-   */
-  normalize: function(type, hash, prop) {
-    // Get a projection on which the hash was fetched
-    // (see adapter find and query methods).
-    var projection = hash._fetchedProjection;
-    delete hash._fetchedProjection;
-
-    hash = this._super.apply(this, arguments);
-
-    if (projection) {
-      var data = hash.data;
-      var dataRelationships = data.relationships;
-
-      data.id = IdProxy.mutate(data.id, projection);
-
-      type.eachRelationship(function(key, relationship) {
-        var dataRelationship = (dataRelationships[key] || {}).data;
-
-        if (!dataRelationship) {
-          return;
-        }
-
-        // It works with async relationships.
-        // TODO: support embedded relationships (without links)
-        if (relationship.kind === 'belongsTo') {
-          dataRelationship.id = IdProxy.mutate(dataRelationship.id, projection.masters[key]);
-        } else if (relationship.kind === 'hasMany') {
-          var subProjection = projection.details[key];
-
-          dataRelationship.forEach(function(item) {
-            item.id = IdProxy.mutate(item.id, subProjection);
-          });
-        }
-      });
-    }
-
-    return hash;
   },
 
   /**

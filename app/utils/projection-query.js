@@ -45,17 +45,15 @@ function getODataQuery(queryTree) {
     query.$select = select;
   }
 
-  // TODO: detect by embedded\async relationships mode for model attr (serializer attrs?).
-  // FIXME: commented out for async relationships working.
-  /*var expand = getODataExpandQuery(queryTree);
+  var expand = getODataExpandQuery(queryTree);
   if (expand) {
     query.$expand = expand;
-  }*/
+  }
 
   return query;
 }
 
-/*function getODataExpandQuery(queryTree) {
+function getODataExpandQuery(queryTree) {
   var expandProperties = Object.keys(queryTree.expand);
   if (!expandProperties.length) {
     return null;
@@ -85,7 +83,7 @@ function getODataQuery(queryTree) {
   });
 
   return query.join(',');
-}*/
+}
 
 function getODataSelectQuery(queryTree) {
   if (queryTree.select.length) {

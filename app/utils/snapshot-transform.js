@@ -1,16 +1,9 @@
 import Ember from 'ember';
-import IdProxy from './idproxy';
 
 export default {
   transformForSerialize: function(snapshot,
                                   skipProjectionAttrs = true,
                                   skipUnchangedAttrs = true) {
-
-    if (IdProxy.idIsProxied(snapshot.id)) {
-      let data = IdProxy.retrieve(snapshot.id, snapshot.type);
-      snapshot.id = data.id;
-    }
-
     if (skipUnchangedAttrs || skipProjectionAttrs) {
       let projection;
       let projectionAttributes;
@@ -52,36 +45,6 @@ export default {
       };
     }
 
-    snapshot.eachRelationship(function(key, relationship) {
-      if (relationship.kind === 'belongsTo') {
-        snapshot.belongsTo(key, { id: true });
-      } else if (relationship.kind === 'hasMany') {
-        snapshot.hasMany(key, { ids: true });
-      }
-    }, this);
-
-    for (let key in snapshot._belongsToIds) {
-      let id = snapshot._belongsToIds[key];
-      if (id) {
-        snapshot._belongsToIds[key] = getOriginalId(id);
-      }
-    }
-
-    for (let key in snapshot._hasManyIds) {
-      let ids = snapshot._hasManyIds[key];
-      if (ids) {
-        snapshot._hasManyIds[key] = ids.map(getOriginalId);
-      }
-    }
-
     return snapshot;
   }
 };
-
-function getOriginalId(id) {
-  if (IdProxy.idIsProxied(id)) {
-    return IdProxy.retrieve(id).id;
-  } else {
-    return id;
-  }
-}

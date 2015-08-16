@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import IdProxy from '../utils/idproxy';
 import config from '../config/environment';
-import ProjectionQuery from '../utils/projection-query';
 import SnapshotTransform from '../utils/snapshot-transform';
 
 // Adapter for OData service.
@@ -31,45 +29,10 @@ export default DS.RESTAdapter.extend({
     return query;
   },
 
-  findRecord: function(store, type, id, snapshot) {
-    if (!IdProxy.idIsProxied(id)) {
-      return this._super.apply(this, arguments);
-    }
-
-    // Retrieve original primary key and projection.
-    type.store = store; // Temporary fix IdProxy for ember 1.13.5 and newer (IdProxy will be removed coming soon).
-    var data = IdProxy.retrieve(id, type);
-    var projection = data.projection;
-    Ember.assert('projection should be defined', !!projection);
-
-    var url = this.buildURL(type.modelName, data.id, snapshot, 'find');
-    var serializer = store.serializerFor(type.modelName);
-    var query = ProjectionQuery.get(projection, serializer);
-    return this.ajax(url, 'GET', { data: query }).then(function(data) {
-      // This variable will be handled by serializer in the normalize method.
-      data._fetchedProjection = projection;
-      return data;
-    });
-  },
-
-  query: function(store, type, query) {
-    var projection = query.__fetchingProjection;
-    if (!projection) {
-      return this._super.apply(this, arguments);
-    }
-
-    delete query.__fetchingProjection;
-    var serializer = store.serializerFor(type.modelName);
-    var projectionQuery = ProjectionQuery.get(projection, serializer);
-    query = Ember.merge(projectionQuery, query);
-    return this._super(store, type, query).then(function(data) {
-      for (var i = 0; i < data.value.length; i++) {
-        // This variable will be handled by serializer in the normalize method.
-        data.value[i]._fetchedProjection = projection;
-      }
-
-      return data;
-    });
+  urlForQueryRecord: function(query, modelName) {
+    let id = query.id;
+    delete query.id;
+    return this._buildURL(modelName, id);
   },
 
   _buildURL: function(modelName, id) {
@@ -94,7 +57,7 @@ export default DS.RESTAdapter.extend({
       url = '/' + url;
     }
 
-    if (id) {
+    if (id != null) {
       // Append id as `(id)` (OData specification) instead of `/id`.
       url = this._appendIdToURL(id, url);
     }
@@ -119,9 +82,6 @@ export default DS.RESTAdapter.extend({
    */
   _sendRecord: function(store, type, snapshot, requestType) {
     let projection = snapshot.record.get('projection');
-
-    // IdProxy.idIsProxied isn't used because new record has no id,
-    // but has a projection.
     let hasProjection = !!projection;
 
     // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
@@ -161,11 +121,6 @@ export default DS.RESTAdapter.extend({
     }
 
     return this.ajax(url, httpMethod, { data: data }).then(function(response) {
-      if (hasProjection && response && requestType === 'createRecord') {
-        // Serializer will use fetched projection to mutate new record id.
-        response._fetchedProjection = projection;
-      }
-
       return response;
     });
   },

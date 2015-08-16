@@ -1,40 +1,12 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import IdProxy from '../utils/idproxy';
 import EmberValidations from 'ember-validations';
 import ValidationData from '../objects/validation-data';
 import ModelProjection from '../objects/model-projection';
 import ModelProjectionsCollection from '../objects/model-projections-collection';
 
 var Model = DS.Model.extend(EmberValidations, {
-  primaryKey: Ember.computed('id', {
-    get: function() {
-      var id = this.get('id');
-      if (IdProxy.idIsProxied(id)) {
-        return IdProxy.retrieve(id).id;
-      } else {
-        return id;
-      }
-    }
-  }),
-
-  projection: Ember.computed('id', {
-    get: function() {
-      var id = this.get('id');
-      if (IdProxy.idIsProxied(id)) {
-        return IdProxy.retrieve(id, this.constructor).projection;
-      } else {
-        return null;
-      }
-    },
-    set: function(key, value, oldValue) {
-      if (this.get('id') !== null) {
-        throw new Error('Unable to set projection for model with defined id.');
-      }
-
-      return value;
-    }
-  }),
+  projection: null,
 
   // validation rules
   validations: {},
@@ -65,11 +37,11 @@ Model.reopenClass({
    */
   projections: null,
 
-  // TODO: remove modelName and ModelProjection.type? Instead, use name with Convention Over Configuration for reading type (see IdProxy)?
+  // TODO: remove modelName and ModelProjection.type? Instead, use name with Convention Over Configuration for reading type (e.g. EmployeeE -> employee)?
   buildProjection: function(modelName, name, attributes) {
     let proj = ModelProjection.create({
       // TODO: rename to ownerType or something else.
-      // NOTE: this.modelName and this.store is undefined here.
+      // NOTE: this.modelName is undefined here.
       type: modelName,
       name: name,
       properties: undefined,

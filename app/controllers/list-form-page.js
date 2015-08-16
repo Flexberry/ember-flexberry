@@ -13,7 +13,7 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
      * @param {Ember.Object} record Объект данных, соответствующий строке.
      */
     rowClick: function(record) {
-      this.transitionToRoute(record.constructor.modelName, record.get('primaryKey'));
+      this.transitionToRoute(record.constructor.modelName, record.get('id'));
     }
   },
 

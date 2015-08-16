@@ -56,8 +56,8 @@ export default Ember.Mixin.create({
 
       this.send('showModalDialog', lookupDialogName, {
         controller: controller,
-        model: this.store.find(relatedToType, {
-          __fetchingProjection: projection
+        model: this.store.query(relatedToType, {
+          projection: projectionName
         })
       });
     },

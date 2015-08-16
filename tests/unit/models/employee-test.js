@@ -64,7 +64,7 @@ test('it validates', function(assert) {
 });
 
 test('it loads fields', function(assert) {
-  var store = App.__container__.lookup('store:main');
+  var store = App.__container__.lookup('service:store');
   Ember.run(function() {
     Ember.$.mockjax({
       url: '*Employees(99)',
@@ -73,22 +73,17 @@ test('it loads fields', function(assert) {
         FirstName: 'Ivan',
         LastName: 'Ivanov',
         BirthDate: '1933-10-30T00:00:00Z',
-        ReportsTo: 98
+        ReportsTo: {
+          EmployeeID: 98,
+          FirstName: 'Sidor',
+          LastName: 'Sidorov',
+          BirthDate: '1946-10-30T00:00:00Z',
+          ReportsTo: null
+        }
       }
     });
 
-    Ember.$.mockjax({
-      url: '*Employees(98)',
-      responseText: {
-        EmployeeID: 98,
-        FirstName: 'Sidor',
-        LastName: 'Sidorov',
-        BirthDate: '1946-10-30T00:00:00Z',
-        ReportsTo: 97
-      }
-    });
-
-    store.find('employee', 99).then(function(record) {
+    store.findRecord('employee', 99).then(function(record) {
       assert.ok(record);
       assert.ok(record instanceof DS.Model);
       assert.equal(record.get('firstName'), 'Ivan');

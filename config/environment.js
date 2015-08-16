@@ -29,7 +29,7 @@ module.exports = function(environment) {
       // It's a custom property, used to prevent duplicate backend urls in sources.
       backendUrls: {
         root: backendRootUrl,
-        api: backendRootUrl + '/odata/async',
+        api: backendRootUrl + '/odata',
         authToken: backendRootUrl + '/Token'
       }
     }

@@ -8,9 +8,9 @@ var Model = ProjectedModel.extend({
   firstName: DS.attr('string'),
   lastName: DS.attr('string'),
   birthDate: DS.attr('date'),
-  reportsTo: DS.belongsTo('employee', { inverse: null, async: true }),
-  orders: DS.hasMany('order', { inverse: null, async: true }),
-  /*tmpChildren: DS.hasMany('employee', { inverse: null, async: true }),*/
+  reportsTo: DS.belongsTo('employee', { inverse: null, async: false }),
+  orders: DS.hasMany('order', { inverse: null, async: false }),
+  /*tmpChildren: DS.hasMany('employee', { inverse: null, async: false }),*/
 
   // validation rules.
   validations: {

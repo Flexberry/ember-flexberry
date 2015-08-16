@@ -24,12 +24,17 @@ test('it loads details', function(assert) {
   // Create custom model.
   CustomModel = DS.Model.extend({
     firstName: DS.attr('string'),
-    reportsTo: DS.belongsTo('custom', { inverse: null, async: true }),
-    tmpChildren: DS.hasMany('custom', { inverse: null, async: true })
+    reportsTo: DS.belongsTo('custom', { inverse: null, async: false }),
+    tmpChildren: DS.hasMany('custom', { inverse: null, async: false })
   });
 
   // Create serializer for custom model.
-  CustomSerializer = ApplicationSerializer.extend({
+  CustomSerializer = ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
+    attrs: {
+      reportsTo: { serialize: 'id', deserialize: 'record' },
+      tmpChildren: { serialize: 'ids', deserialize: 'records' }
+    },
+
     primaryKey: 'CustomID'
   });
 
@@ -43,41 +48,24 @@ test('it loads details', function(assert) {
       responseText: {
         CustomID: 99,
         FirstName: 'TestCustomModel',
-        ReportsTo: 98,
-        TmpChildren: [1, 2]
+        ReportsTo: {
+          CustomID: 1,
+          FirstName: 'TestCustomModelMaster'
+        },
+        TmpChildren: [{
+            CustomID: 2,
+            FirstName: 'TestCustomModelDetail1'
+          }, {
+            CustomID: 3,
+            FirstName: 'TestCustomModelDetail2'
+          }
+        ]
       }
     });
 
-    Ember.$.mockjax({
-      url: '*Customs(98)',
-      responseText: {
-        CustomID: 98,
-        FirstName: 'TestCustomModelMaster',
-        ReportsTo: 97
-      }
-    });
-
-    Ember.$.mockjax({
-      url: '*Customs(1)',
-      responseText: {
-        CustomID: 1,
-        FirstName: 'TestCustomModelDetail1',
-        ReportsTo: 100
-      }
-    });
-
-    Ember.$.mockjax({
-      url: '*Customs(2)',
-      responseText: {
-        CustomID: 2,
-        FirstName: 'TestCustomModelDetail2',
-        ReportsTo: 200
-      }
-    });
-
-    var store = App.__container__.lookup('store:main');
+    var store = App.__container__.lookup('service:store');
     var record = null;
-    store.find('custom', 99).then(function(record) {
+    store.findRecord('custom', 99).then(function(record) {
       assert.ok(record);
       assert.ok(record instanceof DS.Model);
       assert.equal(record.get('firstName'), 'TestCustomModel');

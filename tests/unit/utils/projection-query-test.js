@@ -5,7 +5,7 @@ import DS from 'ember-data';
 import ModelProjectionsCollection from '../../../objects/model-projections-collection';
 import ModelProjection from '../../../objects/model-projection';
 
-test('query for async relationships', function(assert) {
+test('query for embedded relationships', function(assert) {
   var projection = ModelProjection.create({
     type: 'employee',
     name: 'EmployeeE',
@@ -36,5 +36,5 @@ test('query for async relationships', function(assert) {
 
   var query = ProjectionQuery.get(projection, serializer);
   assert.equal(query.$select, 'EmployeeID,FirstName,LastName,BirthDate,ReportsTo,TmpChildren');
-  assert.strictEqual(query.$expand, undefined);
+  assert.strictEqual(query.$expand, 'ReportsTo($select=EmployeeID,FirstName),TmpChildren($select=EmployeeID,LastName)');
 });

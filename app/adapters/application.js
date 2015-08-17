@@ -89,9 +89,8 @@ export default DS.RESTAdapter.extend({
     let skipUnchangedAttrs = hasProjection;
     SnapshotTransform.transformForSerialize(snapshot, skipProjectionAttrs, skipUnchangedAttrs);
 
-    // FIXME: in newer ember versions buildURL signature has been changed.
     // NOTE: for newly created records id is not defined.
-    let url = this.buildURL(type.modelName, snapshot.id);
+    let url = this.buildURL(type.modelName, snapshot.id, snapshot, requestType);
 
     let httpMethod;
     switch (requestType) {

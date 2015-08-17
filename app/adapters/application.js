@@ -81,13 +81,9 @@ export default DS.RESTAdapter.extend({
    * Makes HTTP request for creating, updating or deleting the record.
    */
   _sendRecord: function(store, type, snapshot, requestType) {
-    let projection = snapshot.record.get('projection');
-    let hasProjection = !!projection;
-
     // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
-    let skipProjectionAttrs = hasProjection;
-    let skipUnchangedAttrs = hasProjection;
-    SnapshotTransform.transformForSerialize(snapshot, skipProjectionAttrs, skipUnchangedAttrs);
+    let skipUnchangedAttrs = true;
+    SnapshotTransform.transformForSerialize(snapshot, skipUnchangedAttrs);
 
     // NOTE: for newly created records id is not defined.
     let url = this.buildURL(type.modelName, snapshot.id, snapshot, requestType);
@@ -99,7 +95,7 @@ export default DS.RESTAdapter.extend({
         break;
 
       case 'updateRecord':
-        httpMethod = hasProjection ? 'PATCH' : 'PUT';
+        httpMethod = skipUnchangedAttrs ? 'PATCH' : 'PUT';
         break;
 
       case 'deleteRecord':

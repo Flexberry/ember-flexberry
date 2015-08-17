@@ -6,8 +6,6 @@ import ModelProjection from '../objects/model-projection';
 import ModelProjectionsCollection from '../objects/model-projections-collection';
 
 var Model = DS.Model.extend(EmberValidations, {
-  projection: null,
-
   // validation rules
   validations: {},
 

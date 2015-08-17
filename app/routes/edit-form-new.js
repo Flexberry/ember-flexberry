@@ -4,7 +4,6 @@ export default EditFormRoute.extend({
   model: function() {
     // NOTE: record.id is null.
     var record = this.store.createRecord(this.modelName);
-    record.set('projection', this.get('modelProjection'));
     return record;
   },
 

@@ -5,6 +5,7 @@ import SortableColumnMixin from 'prototype-ember-cli-application/mixins/sortable
 import EmberTableColumnDefinition from 'ember-table/models/column-definition';
 import ListTableCellView from 'prototype-ember-cli-application/views/ember-table/list-table-cell';
 
+// TODO: move controller to route entirely.
 export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableControllerMixin, {
   actions: {
     /**

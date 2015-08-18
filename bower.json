@@ -19,5 +19,8 @@
     "bootstrap-datepicker": "~1.4.0",
     "bootstrap-sass": "~3.3.4",
     "jquery-mockjax": "~1.6.2"
+  },
+  "resolutions": {
+    "jquery": "3.0.0-alpha1+compat"
   }
 }

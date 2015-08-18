@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   module: 'message',
+  classNameBindings: ['cssClass'],
   visible: true,
   floating: false,
   compact: false,
@@ -88,7 +89,7 @@ export default Ember.Component.extend({
     if (isCloseable) {
       // Inside 'click'-callback 'this' would refer to a jQuery-object.
       var _this = this;
-      _this.$('.message .close').on('click', function() {
+      _this.$('.close').on('click', function() {
         _this.hide();
       });
     }

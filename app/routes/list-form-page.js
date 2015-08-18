@@ -47,7 +47,7 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
 
     // Define 'modelProjection' for controller instance.
     // TODO: remove that when list-form-page controller will be moved to this route.
-    let modelClass = this.modelFor(this.get('modelName'));
+    let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('modelProjection', proj);
   }

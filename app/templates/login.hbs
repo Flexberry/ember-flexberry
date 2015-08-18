@@ -1,13 +1,13 @@
-{{#if errorMessage}}
-  {{!TODO: implement component for message, otherwise close don't work. See http://semantic-ui.com/collections/message.html#dismissable-block}}
-  <div class="ui negative message">
-    <i class="close icon"></i>
-    <div class="header">Login failed</div>
-    <p>{{errorMessage}}</p>
-  </div>
-{{/if}}
+{{ui-message
+  type = 'error'
+  closeable = true
+  visible = errorMessage
+  title = "Login failed"
+  message = errorMessage
+}}
 
-{{! login form; the fields must be named "identification" and "password"; the controller action is "authenticate" }}
+{{! Login form; the fields must be named "identification" and "password"; the controller action is "authenticate" }}
+{{! Error message can be included inside ui form: http://semantic-ui.com/collections/form.html#error }}
 <form {{action 'authenticate' on='submit'}} class="ui form">
   <div class="field">
     <label>Login</label>

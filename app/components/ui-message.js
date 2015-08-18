@@ -15,45 +15,26 @@ export default Ember.Component.extend({
   title: null,
   message: null,
   cssClass: Ember.computed('size', 'type', 'color', 'floating', 'compact', 'attached', 'visible', 'icon', function() {
+    var isNonEmptyString = function(str) {
+      return Ember.typeOf(str) === 'string' && str.trim().length > 0;
+    };
+
     var result = 'ui ';
 
-    // Message size.
+    // Message size ('small', 'large', 'huge', 'massive', or some custom size class).
     var sizeClass = this.get('size');
-    var hasSize = [
-      'small',
-      'large',
-      'huge',
-      'massive'
-    ].contains(sizeClass);
+    var hasSize = isNonEmptyString(sizeClass);
     result += hasSize ? sizeClass + ' ' : '';
 
-    // Message type.
+    // Message type ('info', 'positive', 'success', 'negative', 'error', or some custom type class).
     var typeClass = this.get('type');
-    var hasType = [
-      'info',
-      'positive',
-      'success',
-      'negative',
-      'error'
-    ].contains(typeClass);
+    var hasType = isNonEmptyString(typeClass);
     result += hasType ? typeClass + ' ' : '';
 
-    // Message color.
+    // Message color ('red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple',
+    // 'pink', 'brown', 'black', or some custom color class).
     var colorClass = this.get('color');
-    var hasColor = [
-      'red',
-      'orange',
-      'yellow',
-      'olive',
-      'green',
-      'teal',
-      'blue',
-      'violet',
-      'purple',
-      'pink',
-      'brown',
-      'black'
-    ].contains(colorClass);
+    var hasColor = isNonEmptyString(colorClass);
     result += hasColor ? colorClass + ' ' : '';
 
     // Message block variations.
@@ -76,7 +57,7 @@ export default Ember.Component.extend({
 
     // Message icon.
     var iconClass = this.get('icon');
-    var hasIcon = Ember.typeOf(iconClass) === 'string' && iconClass.length > 0;
+    var hasIcon = isNonEmptyString(iconClass);
     result += hasIcon ? 'icon ' : '';
 
     result += 'message';

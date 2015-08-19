@@ -3,7 +3,7 @@ import ApplicationSerializer from 'prototype-ember-cli-application/serializers/a
 
 export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   attrs: {
-    employeeID: { serialize: 'id', deserialize: 'record' }
+    employee: { serialize: 'id', deserialize: 'record' }
   },
 
   // Раньше можно было определить primaryKey как функцию, и задать один алгоритм для всех сериализаторов.

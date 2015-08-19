@@ -9,11 +9,11 @@ test('query for embedded relationships', function(assert) {
   var projection = ModelProjection.create({
     type: 'employee',
     name: 'EmployeeE',
-    properties: ['firstName', 'lastName', 'birthDate', 'reportsTo', 'tmpChildren'],
+    properties: ['firstName', 'lastName', 'birthDate', 'employee1', 'tmpChildren'],
     masters: ModelProjectionsCollection.create({
-      reportsTo: ModelProjection.create({
+      employee1: ModelProjection.create({
         type: 'employee',
-        name: 'EmployeeE.masters.reportsTo',
+        name: 'EmployeeE.masters.employee1',
         properties: ['firstName']
       })
     }),
@@ -35,6 +35,6 @@ test('query for embedded relationships', function(assert) {
   });
 
   var query = ProjectionQuery.get(projection, serializer);
-  assert.equal(query.$select, 'EmployeeID,FirstName,LastName,BirthDate,ReportsTo,TmpChildren');
-  assert.strictEqual(query.$expand, 'ReportsTo($select=EmployeeID,FirstName),TmpChildren($select=EmployeeID,LastName)');
+  assert.equal(query.$select, 'EmployeeID,FirstName,LastName,BirthDate,Employee1,TmpChildren');
+  assert.strictEqual(query.$expand, 'Employee1($select=EmployeeID,FirstName),TmpChildren($select=EmployeeID,LastName)');
 });

@@ -60,7 +60,7 @@ Model.reopenClass({
           plainAttributes.push(rootAttr);
           relAttributes[rootAttr] = [rightSide];
         } else {
-          // eg { reportsTo: [firstName, lastName, reportsTo.firstName]}
+          // eg { employee1: [firstName, lastName, employee1.firstName]}
           relAttributes[rootAttr].push(rightSide);
         }
       }

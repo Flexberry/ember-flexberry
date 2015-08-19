@@ -24,14 +24,14 @@ test('it loads details', function(assert) {
   // Create custom model.
   CustomModel = DS.Model.extend({
     firstName: DS.attr('string'),
-    reportsTo: DS.belongsTo('custom', { inverse: null, async: false }),
+    employee1: DS.belongsTo('custom', { inverse: null, async: false }),
     tmpChildren: DS.hasMany('custom', { inverse: null, async: false })
   });
 
   // Create serializer for custom model.
   CustomSerializer = ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
     attrs: {
-      reportsTo: { serialize: 'id', deserialize: 'record' },
+      employee1: { serialize: 'id', deserialize: 'record' },
       tmpChildren: { serialize: 'ids', deserialize: 'records' }
     },
 
@@ -48,7 +48,7 @@ test('it loads details', function(assert) {
       responseText: {
         CustomID: 99,
         FirstName: 'TestCustomModel',
-        ReportsTo: {
+        Employee1: {
           CustomID: 1,
           FirstName: 'TestCustomModelMaster'
         },
@@ -69,7 +69,7 @@ test('it loads details', function(assert) {
       assert.ok(record);
       assert.ok(record instanceof DS.Model);
       assert.equal(record.get('firstName'), 'TestCustomModel');
-      record.get('reportsTo').then(function(masterData) {
+      record.get('employee1').then(function(masterData) {
         assert.ok(masterData);
         assert.ok(masterData instanceof DS.Model);
         assert.equal(masterData.get('firstName'), 'TestCustomModelMaster');

@@ -37,10 +37,10 @@ test('it returns fields', function(assert) {
     var date = '1933-10-30T00:00:00Z';
     model.set('orderDate', date);
     assert.equal(model.get('orderDate'), date);
-    model.set('employeeID', store.createRecord('employee', { firstName: 'Sidorov', lastName: 'Sidor' }));
+    model.set('employee', store.createRecord('employee', { firstName: 'Sidorov', lastName: 'Sidor' }));
   });
 
-  var reportsToEmployee = model.get('employeeID');
+  var reportsToEmployee = model.get('employee');
   assert.ok(reportsToEmployee);
   assert.equal(reportsToEmployee.get('firstName'), 'Sidorov');
   assert.equal(reportsToEmployee.get('lastName'), 'Sidor');
@@ -71,12 +71,12 @@ test('it loads fields', function(assert) {
       responseText: {
         OrderID: 99,
         OrderDate: '1933-10-30T00:00:00Z',
-        EmployeeID: {
+        Employee: {
           EmployeeID: 98,
           FirstName: 'Sidor',
           LastName: 'Sidorov',
           BirthDate: '1946-10-30T00:00:00Z',
-          ReportsTo: null
+          Employee1: null
         }
       }
     });
@@ -88,7 +88,7 @@ test('it loads fields', function(assert) {
       var orderDate = record.get('orderDate');
       assert.ok(String(orderDate).indexOf('1933') > -1);
 
-      record.get('employeeID').then(function(masterRecord) {
+      record.get('employee').then(function(masterRecord) {
         assert.ok(masterRecord);
         assert.ok(masterRecord instanceof DS.Model);
         assert.equal(masterRecord.get('firstName'), 'Sidor');

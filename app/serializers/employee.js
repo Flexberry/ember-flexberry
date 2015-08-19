@@ -4,7 +4,7 @@ import ApplicationSerializer from '../serializers/application';
 // TODO: ODataSerializer.extend
 export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   attrs: {
-    reportsTo: { serialize: 'id', deserialize: 'record' },
+    employee1: { serialize: 'id', deserialize: 'record' },
     orders: { serialize: 'ids', deserialize: 'records' }
   },
 

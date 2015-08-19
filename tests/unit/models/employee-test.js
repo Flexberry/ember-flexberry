@@ -36,10 +36,10 @@ test('it returns fields', function(assert) {
 
   // set a relationship
   Ember.run(function() {
-    model.set('reportsTo', store.createRecord('employee', { firstName: 'Sidorov', lastName: 'Sidor' }));
+    model.set('employee1', store.createRecord('employee', { firstName: 'Sidorov', lastName: 'Sidor' }));
   });
 
-  var reportsToEmployee = model.get('reportsTo');
+  var reportsToEmployee = model.get('employee1');
   assert.ok(reportsToEmployee);
   assert.equal(reportsToEmployee.get('firstName'), 'Sidorov');
   assert.equal(reportsToEmployee.get('lastName'), 'Sidor');
@@ -73,12 +73,12 @@ test('it loads fields', function(assert) {
         FirstName: 'Ivan',
         LastName: 'Ivanov',
         BirthDate: '1933-10-30T00:00:00Z',
-        ReportsTo: {
+        Employee1: {
           EmployeeID: 98,
           FirstName: 'Sidor',
           LastName: 'Sidorov',
           BirthDate: '1946-10-30T00:00:00Z',
-          ReportsTo: null
+          Employee1: null
         }
       }
     });
@@ -89,7 +89,7 @@ test('it loads fields', function(assert) {
       assert.equal(record.get('firstName'), 'Ivan');
       assert.equal(record.get('lastName'), 'Ivanov');
 
-      record.get('reportsTo').then(function(masterRecord) {
+      record.get('employee1').then(function(masterRecord) {
         assert.ok(masterRecord);
         assert.ok(masterRecord instanceof DS.Model);
         assert.equal(masterRecord.get('firstName'), 'Sidor');

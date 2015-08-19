@@ -4,6 +4,9 @@
     "window",
     "-Promise"
   ],
+  "globals": {
+    "moment": true
+  },
   "browser": true,
   "boss": true,
   "curly": true,

@@ -25,6 +25,21 @@ module.exports = function(defaults) {
   if (app.env !== 'production') {
     app.import('bower_components/jquery-mockjax/jquery.mockjax.js');
   }
+  
+  app.import({
+    development: 'bower_components/moment/min/moment-with-locales.js',
+    production:  'bower_components/moment/min/moment-with-locales.min.js'
+  });
 
+  app.import({
+    development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.js',
+    production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.js'
+  });
+
+  app.import({
+    development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.css',
+    production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.css'
+  });
+  
   return app.toTree();
 };

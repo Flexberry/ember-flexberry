@@ -28,13 +28,6 @@ export default DS.Store.reopen({
   query: function(modelName, query) {
     query = this._normalizeQuery(modelName, query);
     return this._super(modelName, query).then(function(recordArray) {
-      if (query && query.projection) {
-        recordArray.forEach(function(record) {
-          // TODO: merge projection if it already defined.
-          record.set('projection', query.projection);
-        }, this);
-      }
-
       return recordArray;
     });
   },
@@ -42,11 +35,6 @@ export default DS.Store.reopen({
   queryRecord: function(modelName, query) {
     query = this._normalizeQuery(modelName, query);
     return this._super(modelName, query).then(function(record) {
-      if (query && query.projection) {
-        // TODO: merge projection if it already defined.
-        record.set('projection', query.projection);
-      }
-
       return record;
     });
   },

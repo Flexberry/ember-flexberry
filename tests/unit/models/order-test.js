@@ -81,7 +81,7 @@ test('it loads fields', function(assert) {
       }
     });
 
-    store.find('order', 99).then(function(record) {
+    store.findRecord('order', 99).then(function(record) {
       assert.ok(record);
       assert.ok(record instanceof DS.Model);
 

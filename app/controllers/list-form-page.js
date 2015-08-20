@@ -6,33 +6,37 @@ import EmberTableColumnDefinition from 'ember-table/models/column-definition';
 import ListTableCellView from 'prototype-ember-cli-application/views/ember-table/list-table-cell';
 
 // TODO: move controller to route entirely.
-export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableControllerMixin, {
+export default Ember.Controller.extend(PaginatedControllerMixin, SortableControllerMixin, {
   actions: {
     /**
-     * Обработчик клика по строке таблицы.
+     * Table row click handler.
      *
-     * @param {Ember.Object} record Объект данных, соответствующий строке.
+     * @param {Ember.Object} record Record related to clicked table row.
      */
     rowClick: function(record) {
       this.transitionToRoute(record.constructor.modelName, record.get('id'));
     }
   },
 
-  /*
-  * function to create EmberTableColumnDefinition object
-  */
+  /**
+   * Creates ember table column definition.
+   * @param params Column parameters.
+   * @returns {object} created definition.
+   */
   createColumnDefinition: function(params) {
-    return EmberTableColumnDefinition.createWithMixins(SortableColumnMixin, params);
+    return EmberTableColumnDefinition
+      .extend(SortableColumnMixin)
+      .create(params);
   },
 
   /**
-   * Описание колонок для компонента ember-table. Формируется на основе представления.
+   * Table columns description (forming on the basis of view for data model).
    */
   tableColumns: Ember.computed('computedSorting', function() {
     var projection = this.get('modelProjection');
     if (!projection) {
       // Now projection should be defined in controller.
-      // E.g. it could be init from route's setupController hook
+      // E.g. it could be init from route's setupController hook.
       throw new Error('No projection was defined.');
     }
 
@@ -61,7 +65,7 @@ export default Ember.ArrayController.extend(PaginatedControllerMixin, SortableCo
   }),
 
   /**
-   * Контент для отображения в таблице ember-table. Соответствует модели.
+   * Content to be displayed in ember-table (corresponds to the data model).
    */
   tableContent: Ember.computed('model', function() {
     return this.get('model');

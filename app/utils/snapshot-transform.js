@@ -1,9 +1,7 @@
-import Ember from 'ember';
-
 export default {
   transformForSerialize: function(snapshot, skipUnchangedAttrs = true) {
     if (skipUnchangedAttrs) {
-      let changedAttributes = Ember.keys(snapshot.changedAttributes());
+      let changedAttributes = Object.keys(snapshot.changedAttributes());
       for (let attrKey in snapshot._attributes) {
         let attrIsChanged = changedAttributes.indexOf(attrKey) !== -1;
         if (!attrIsChanged) {

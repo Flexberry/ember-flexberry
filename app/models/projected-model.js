@@ -35,10 +35,8 @@ Model.reopenClass({
    */
   projections: null,
 
-  // TODO: remove modelName and ModelProjection.type? Instead, use name with Convention Over Configuration for reading type (e.g. EmployeeE -> employee)?
   buildProjection: function(modelName, name, attributes) {
     let proj = ModelProjection.create({
-      // TODO: rename to ownerType or something else.
       // NOTE: this.modelName is undefined here.
       type: modelName,
       name: name,
@@ -68,16 +66,21 @@ Model.reopenClass({
 
     proj.properties = plainAttributes;
 
-    let relationshipNames = Ember.get(this, 'relationshipNames');
+    let relationshipsByName = Ember.get(this, 'relationshipsByName');
     for (let attrKey in relAttributes) {
-      if (relationshipNames.hasMany.indexOf(attrKey) !== -1) {
+      let relationship = relationshipsByName.get(attrKey);
+      Ember.assert('Relationship exists', relationship);
+
+      if (relationship.kind === 'hasMany') {
         let projName = name + '.details.' + attrKey;
-        proj.details.add(attrKey, this.buildProjection(modelName, projName, relAttributes[attrKey]));
-      } else if (relationshipNames.belongsTo.indexOf(attrKey) !== -1) {
+        let relProj = this.buildProjection(relationship.type, projName, relAttributes[attrKey]);
+        proj.details.add(attrKey, relProj);
+      } else if (relationship.kind === 'belongsTo') {
         let projName = name + '.masters.' + attrKey;
-        proj.masters.add(attrKey, this.buildProjection(modelName, projName, relAttributes[attrKey]));
+        let relProj = this.buildProjection(relationship.type, projName, relAttributes[attrKey]);
+        proj.masters.add(attrKey, relProj);
       } else {
-        throw new Error(`Unknown attribute ${attrKey}.`);
+        throw new Error(`Unknown type of relationship kind: ${relationship.kind}`);
       }
     }
 

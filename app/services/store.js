@@ -44,8 +44,7 @@ export default DS.Store.reopen({
       let projName = query.projection;
       let typeClass = this.modelFor(modelName);
       let proj = typeClass.projections.get(projName);
-      let serializer = this.serializerFor(modelName);
-      let projQuery = ProjectionQuery.get(proj, serializer);
+      let projQuery = ProjectionQuery.get(proj, this);
 
       delete query.projection;
       query = Ember.merge(query, projQuery);

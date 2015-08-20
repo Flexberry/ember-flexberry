@@ -1,13 +1,14 @@
 export default {
   // Supports OData v4 only.
-  get: function(projection, serializer) {
-    var tree = getODataQueryTree(projection, serializer);
+  get: function(projection, store) {
+    var tree = getODataQueryTree(projection, store);
     var query = getODataQuery(tree);
     return query;
   }
 };
 
-function getODataQueryTree(projection, serializer) {
+function getODataQueryTree(projection, store) {
+  let serializer = store.serializerFor(projection.type);
   var tree = {
     select: [serializer.primaryKey],
     expand: {}
@@ -29,7 +30,7 @@ function getODataQueryTree(projection, serializer) {
       if (expander.hasOwnProperty(propertyName)) {
         var normalizedPropName = serializer.keyForAttribute(propertyName);
         var expanderProjection = expander[propertyName];
-        tree.expand[normalizedPropName] = getODataQueryTree(expanderProjection, serializer);
+        tree.expand[normalizedPropName] = getODataQueryTree(expanderProjection, store);
       }
     }
   });

@@ -1,44 +1,38 @@
-<div id="employee-list" class="list-group">
-  {{#link-to 'employee.new' class="list-group-item bold"}}+ New Employee{{/link-to}}
-  {{ember-table
-    hasFooter=false
-    enableContentSelection=false
-    columns=tableColumns
-    content=tableContent
-  }}
+<div class="ui top attached menu">
+  {{#link-to 'employee.new' class = "item"}}
+      <div class="ui middle aligned content">
+          <p class="ui small header">+ New employee</p>
+      </div>
+  {{/link-to}}
 </div>
-<nav>
-  <ul class="pagination pull-left" style="margin: 0;">
-    <li class="{{unless hasPreviousPage 'disabled'}}">
-      <a {{action 'previousPage'}} href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
+{{ember-table
+  class = "ui bottom attached"
+  hasFooter = false
+  enableContentSelection = false
+  columns = tableColumns
+  content = tableContent
+}}
+<div class="ui secondary menu">
+  <div class="ui basic buttons">
+    <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action "previousPage"}}>&laquo;</button>
     {{#each page in pages}}
       {{#if page.isEllipsis}}
-        <li><span aria-hidden="true">...</span></li>
+          <button class="ui button">...</button>
       {{else}}
         {{#if page.isCurrent}}
-          <li class="active">
-            <a>
-              {{page.number}}
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
+            <button class="ui active button">{{page.number}}</button>
         {{else}}
-          <li>
-            <a {{action 'gotoPage' page.number}} href="#">{{page.number}}</a>
-          </li>
+            <button class="ui button" {{action 'gotoPage' page.number}}>{{page.number}}</button>
         {{/if}}
       {{/if}}
     {{/each}}
-    <li class="{{unless hasNextPage 'disabled'}}">
-      <a {{action 'nextPage'}} href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-  <div class="pull-right">
-    {{view "select" content=perPageValues value=per_page classNames="form-control"}}
+    <button class="ui {{unless hasNextPage 'disabled'}} button" {{action "nextPage"}}>&raquo;</button>
   </div>
-</nav>
+  <div class="right menu">
+    {{view "select"
+      content = perPageValues
+      value = per_page
+      class = "ui dropdown"
+    }}
+  </div>
+</div>

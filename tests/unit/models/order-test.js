@@ -88,12 +88,11 @@ test('it loads fields', function(assert) {
       var orderDate = record.get('orderDate');
       assert.ok(String(orderDate).indexOf('1933') > -1);
 
-      record.get('employee').then(function(masterRecord) {
-        assert.ok(masterRecord);
-        assert.ok(masterRecord instanceof DS.Model);
-        assert.equal(masterRecord.get('firstName'), 'Sidor');
-        assert.equal(masterRecord.get('lastName'), 'Sidorov');
-      });
+      let masterRecord = record.get('employee');
+      assert.ok(masterRecord);
+      assert.ok(masterRecord instanceof DS.Model);
+      assert.equal(masterRecord.get('firstName'), 'Sidor');
+      assert.equal(masterRecord.get('lastName'), 'Sidorov');
     });
 
     // waiting for async operations to finish

@@ -64,27 +64,26 @@ test('it loads details', function(assert) {
     });
 
     var store = App.__container__.lookup('service:store');
-    var record = null;
     store.findRecord('custom', 99).then(function(record) {
       assert.ok(record);
       assert.ok(record instanceof DS.Model);
       assert.equal(record.get('firstName'), 'TestCustomModel');
-      record.get('employee1').then(function(masterData) {
-        assert.ok(masterData);
-        assert.ok(masterData instanceof DS.Model);
-        assert.equal(masterData.get('firstName'), 'TestCustomModelMaster');
-      });
-      record.get('tmpChildren').then(function(detailData) {
-        assert.ok(detailData);
 
-        var firstDetail = detailData.objectAt(0);
-        assert.ok(firstDetail instanceof DS.Model);
-        assert.equal(firstDetail.get('firstName'), 'TestCustomModelDetail1');
+      let masterData = record.get('employee1');
+      assert.ok(masterData);
+      assert.ok(masterData instanceof DS.Model);
+      assert.equal(masterData.get('firstName'), 'TestCustomModelMaster');
 
-        var secondDetail = detailData.objectAt(1);
-        assert.ok(firstDetail instanceof DS.Model);
-        assert.equal(secondDetail.get('firstName'), 'TestCustomModelDetail2');
-      });
+      let detailData = record.get('tmpChildren');
+      assert.ok(detailData);
+
+      var firstDetail = detailData.objectAt(0);
+      assert.ok(firstDetail instanceof DS.Model);
+      assert.equal(firstDetail.get('firstName'), 'TestCustomModelDetail1');
+
+      var secondDetail = detailData.objectAt(1);
+      assert.ok(firstDetail instanceof DS.Model);
+      assert.equal(secondDetail.get('firstName'), 'TestCustomModelDetail2');
     });
 
     // waiting for async operations to finish

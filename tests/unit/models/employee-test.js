@@ -89,12 +89,11 @@ test('it loads fields', function(assert) {
       assert.equal(record.get('firstName'), 'Ivan');
       assert.equal(record.get('lastName'), 'Ivanov');
 
-      record.get('employee1').then(function(masterRecord) {
-        assert.ok(masterRecord);
-        assert.ok(masterRecord instanceof DS.Model);
-        assert.equal(masterRecord.get('firstName'), 'Sidor');
-        assert.equal(masterRecord.get('lastName'), 'Sidorov');
-      });
+      let masterRecord = record.get('employee1');
+      assert.ok(masterRecord);
+      assert.ok(masterRecord instanceof DS.Model);
+      assert.equal(masterRecord.get('firstName'), 'Sidor');
+      assert.equal(masterRecord.get('lastName'), 'Sidorov');
     });
 
     // waiting for async operations to finish

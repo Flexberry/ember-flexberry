@@ -2,8 +2,6 @@
   "name": "prototype-ember-cli-application",
   "dependencies": {
     "antiscroll": "git://github.com/azirbel/antiscroll.git#90391fb371c7be769bc32e7287c5271981428356",
-    "bootstrap-datepicker": "~1.4.0",
-    "bootstrap-sass": "~3.3.5",
     "ember": "1.13.5",
     "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.3",
     "ember-cli-test-loader": "ember-cli-test-loader#0.1.3",

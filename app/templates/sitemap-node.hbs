@@ -1,19 +1,9 @@
-<div class="item">
-  {{#if model.link}}
-    {{#link-to model.link class="item"}}
-      {{model.title}}
-    {{/link-to}}
-  {{else}}
-    <div class="header">
-      {{model.title}}
-    </div>
-  {{/if}}
-
-  {{#if model.children.length}}
-    <div class="menu">
-      {{#each child in model.children}}
-        {{render "sitemap-node" child}}
-      {{/each}}
-    </div>
-  {{/if}}
-</div>
+{{#if model.link}}
+  {{#link-to model.link class="item"}}
+    {{partial "sitemap-node-content"}}
+  {{/link-to}}
+{{else}}
+  <div class="item">
+    {{partial "sitemap-node-content"}}
+  </div>
+{{/if}}

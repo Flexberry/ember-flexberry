@@ -29,10 +29,14 @@
     <button class="ui {{unless hasNextPage 'disabled'}} button" {{action "nextPage"}}>&raquo;</button>
   </div>
   <div class="right menu">
-    {{view "select"
-      content = perPageValues
-      value = per_page
-      class = "ui dropdown"
-    }}
+    {{#ui-dropdown selection = per_page class = "compact selection"}}
+        <i class="dropdown icon"></i>
+        <div class="text">{{per_page}}</div>
+        <div class="menu">
+          {{#each perPageValues as |perPageValue|}}
+              <div class="item" data-value={{perPageValue}}>{{perPageValue}}</div>
+          {{/each}}
+        </div>
+    {{/ui-dropdown}}
   </div>
 </div>

@@ -24,12 +24,17 @@ test('it loads details', function(assert) {
   // Create custom model.
   CustomModel = DS.Model.extend({
     firstName: DS.attr('string'),
-    reportsTo: DS.belongsTo('custom', { inverse: null, async: true }),
-    tmpChildren: DS.hasMany('custom', { inverse: null, async: true })
+    employee1: DS.belongsTo('custom', { inverse: null, async: false }),
+    tmpChildren: DS.hasMany('custom', { inverse: null, async: false })
   });
 
   // Create serializer for custom model.
-  CustomSerializer = ApplicationSerializer.extend({
+  CustomSerializer = ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
+    attrs: {
+      employee1: { serialize: 'id', deserialize: 'records' },
+      tmpChildren: { serialize: 'ids', deserialize: 'records' }
+    },
+
     primaryKey: 'CustomID'
   });
 
@@ -43,60 +48,42 @@ test('it loads details', function(assert) {
       responseText: {
         CustomID: 99,
         FirstName: 'TestCustomModel',
-        ReportsTo: 98,
-        TmpChildren: [1, 2]
+        Employee1: {
+          CustomID: 1,
+          FirstName: 'TestCustomModelMaster'
+        },
+        TmpChildren: [{
+            CustomID: 2,
+            FirstName: 'TestCustomModelDetail1'
+          }, {
+            CustomID: 3,
+            FirstName: 'TestCustomModelDetail2'
+          }
+        ]
       }
     });
 
-    Ember.$.mockjax({
-      url: '*Customs(98)',
-      responseText: {
-        CustomID: 98,
-        FirstName: 'TestCustomModelMaster',
-        ReportsTo: 97
-      }
-    });
-
-    Ember.$.mockjax({
-      url: '*Customs(1)',
-      responseText: {
-        CustomID: 1,
-        FirstName: 'TestCustomModelDetail1',
-        ReportsTo: 100
-      }
-    });
-
-    Ember.$.mockjax({
-      url: '*Customs(2)',
-      responseText: {
-        CustomID: 2,
-        FirstName: 'TestCustomModelDetail2',
-        ReportsTo: 200
-      }
-    });
-
-    var store = App.__container__.lookup('store:main');
-    var record = null;
-    store.find('custom', 99).then(function(record) {
+    var store = App.__container__.lookup('service:store');
+    store.findRecord('custom', 99).then(function(record) {
       assert.ok(record);
       assert.ok(record instanceof DS.Model);
       assert.equal(record.get('firstName'), 'TestCustomModel');
-      record.get('reportsTo').then(function(masterData) {
-        assert.ok(masterData);
-        assert.ok(masterData instanceof DS.Model);
-        assert.equal(masterData.get('firstName'), 'TestCustomModelMaster');
-      });
-      record.get('tmpChildren').then(function(detailData) {
-        assert.ok(detailData);
 
-        var firstDetail = detailData.objectAt(0);
-        assert.ok(firstDetail instanceof DS.Model);
-        assert.equal(firstDetail.get('firstName'), 'TestCustomModelDetail1');
+      let masterData = record.get('employee1');
+      assert.ok(masterData);
+      assert.ok(masterData instanceof DS.Model);
+      assert.equal(masterData.get('firstName'), 'TestCustomModelMaster');
 
-        var secondDetail = detailData.objectAt(1);
-        assert.ok(firstDetail instanceof DS.Model);
-        assert.equal(secondDetail.get('firstName'), 'TestCustomModelDetail2');
-      });
+      let detailData = record.get('tmpChildren');
+      assert.ok(detailData);
+
+      var firstDetail = detailData.objectAt(0);
+      assert.ok(firstDetail instanceof DS.Model);
+      assert.equal(firstDetail.get('firstName'), 'TestCustomModelDetail1');
+
+      var secondDetail = detailData.objectAt(1);
+      assert.ok(firstDetail instanceof DS.Model);
+      assert.equal(secondDetail.get('firstName'), 'TestCustomModelDetail2');
     });
 
     // waiting for async operations to finish

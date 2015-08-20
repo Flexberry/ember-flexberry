@@ -1,15 +1,17 @@
-import IdProxy from '../utils/idproxy';
 import ProjectedModelRoute from '../routes/base/projected-model-route';
 
 export default ProjectedModelRoute.extend({
   model: function(params, transition) {
     this._super.apply(this, arguments);
 
-    // :id param defined in router.js
-    var id = IdProxy.mutate(params.id, this.get('modelProjection'));
+    let modelName = this.get('modelName');
+    let modelProj = this.get('modelProjection');
 
-    // TODO: optionally: fetch or find.
-    return this.store.fetchById(this.get('modelTypeKey'), id);
+    // :id param defined in router.js
+    return this.store.findRecord(modelName, params.id, {
+      reload: true,
+      projection: modelProj
+    });
   },
 
   resetController: function(controller, isExisting, transition) {

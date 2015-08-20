@@ -13,18 +13,16 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
 
     var _this = this;
     var store = this.store;
-    var typeKey = this.get('modelTypeKey');
-    var adapter = store.adapterFor(store.modelFor(typeKey));
+    var modelName = this.get('modelName');
+    var adapter = store.adapterFor(modelName);
 
     var sorting = _this.deserializeSortingParam(params.sort);
-    var pageQuery = adapter.getPaginationQuery(page, perPage, sorting, store.serializerFor(typeKey));
-
-    // __fetchingProjection is tmp variable, which will be handled by adapter.findQuery.
-    var query = Ember.merge(pageQuery, { __fetchingProjection: this.get('modelProjection') });
+    var pageQuery = adapter.getPaginationQuery(page, perPage, sorting, store.serializerFor(modelName));
+    var query = Ember.merge(pageQuery, { projection: this.get('modelProjection') });
 
     // find by query is always fetching.
     // TODO: support getting from cache with "store.all->filterByProjection".
-    return store.find(typeKey, query)
+    return store.query(modelName, query)
       .then(function(records) {
         _this.includeSorting(records, sorting);
         return _this.includePagination(records, page, perPage);
@@ -47,7 +45,10 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
       return;
     }
 
-    // Define 'modelProjection' for controller instance
-    controller.set('modelProjection', this.get('modelProjection'));
+    // Define 'modelProjection' for controller instance.
+    // TODO: remove that when list-form-page controller will be moved to this route.
+    let modelClass = this.store.modelFor(this.get('modelName'));
+    let proj = modelClass.projections.get(this.get('modelProjection'));
+    controller.set('modelProjection', proj);
   }
 });

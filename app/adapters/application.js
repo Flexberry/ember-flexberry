@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import IdProxy from '../utils/idproxy';
 import config from '../config/environment';
-import ProjectionQuery from '../utils/projection-query';
 import SnapshotTransform from '../utils/snapshot-transform';
 
 // Adapter for OData service.
@@ -31,53 +29,23 @@ export default DS.RESTAdapter.extend({
     return query;
   },
 
-  find: function(store, type, id, snapshot) {
-    if (!IdProxy.idIsProxied(id)) {
-      return this._super.apply(this, arguments);
-    }
-
-    // Retrieve original primary key and projection.
-    var data = IdProxy.retrieve(id, type);
-    var projection = data.projection;
-    Ember.assert('projection should be defined', !!projection);
-
-    var url = this.buildURL(type.typeKey, data.id);
-    var serializer = store.serializerFor(type);
-    var query = ProjectionQuery.get(projection, serializer);
-    return this.ajax(url, 'GET', { data: query }).then(function(data) {
-      // This variable will be handled by serializer in the normalize method.
-      data._fetchedProjection = projection;
-      return data;
-    });
+  urlForQueryRecord: function(query, modelName) {
+    let id = query.id;
+    delete query.id;
+    return this._buildURL(modelName, id);
   },
 
-  findQuery: function(store, type, query) {
-    var projection = query.__fetchingProjection;
-    if (!projection) {
-      return this._super.apply(this, arguments);
-    }
-
-    delete query.__fetchingProjection;
-    var serializer = store.serializerFor(type);
-    var projectionQuery = ProjectionQuery.get(projection, serializer);
-    query = Ember.merge(projectionQuery, query);
-    return this._super(store, type, query).then(function(data) {
-      for (var i = 0; i < data.value.length; i++) {
-        // This variable will be handled by serializer in the normalize method.
-        data.value[i]._fetchedProjection = projection;
-      }
-
-      return data;
-    });
-  },
-
-  buildURL: function(type, id, record) {
+  _buildURL: function(modelName, id) {
     var url = [];
     var host = Ember.get(this, 'host');
     var prefix = this.urlPrefix();
+    var path;
 
-    if (type) {
-      url.push(this.pathForType(type));
+    if (modelName) {
+      path = this.pathForType(modelName);
+      if (path) {
+        url.push(path);
+      }
     }
 
     if (prefix) {
@@ -85,25 +53,15 @@ export default DS.RESTAdapter.extend({
     }
 
     url = url.join('/');
-    if (!host && url) {
+    if (!host && url && url.charAt(0) !== '/') {
       url = '/' + url;
     }
 
-    //We might get passed in an array of ids from findMany
-    //in which case we don't want to modify the url, as the
-    //ids will be passed in through a query param
-    if (id && !Ember.isArray(id)) {
-      var encId = encodeURIComponent(id);
-      var idType = Ember.get(this, 'idType');
-      if (idType !== 'number') {
-        encId = `'${encId}'`;
-      }
-
-      url += '(' + encId + ')';
+    if (id != null) {
+      // Append id as `(id)` (OData specification) instead of `/id`.
+      url = this._appendIdToURL(id, url);
     }
 
-    // /Customers('ALFKI')
-    // /Employees(4)
     return url;
   },
 
@@ -123,20 +81,12 @@ export default DS.RESTAdapter.extend({
    * Makes HTTP request for creating, updating or deleting the record.
    */
   _sendRecord: function(store, type, snapshot, requestType) {
-    let projection = snapshot.record.get('projection');
-
-    // IdProxy.idIsProxied isn't used because new record has no id,
-    // but has a projection.
-    let hasProjection = !!projection;
-
     // TODO: maybe move it into serializer (serialize or serializeIntoHash)?
-    let skipProjectionAttrs = hasProjection;
-    let skipUnchangedAttrs = hasProjection;
-    SnapshotTransform.transformForSerialize(snapshot, skipProjectionAttrs, skipUnchangedAttrs);
+    let skipUnchangedAttrs = true;
+    SnapshotTransform.transformForSerialize(snapshot, skipUnchangedAttrs);
 
-    // FIXME: in newer ember versions buildURL signature has been changed.
     // NOTE: for newly created records id is not defined.
-    let url = this.buildURL(type.typeKey, snapshot.id);
+    let url = this.buildURL(type.modelName, snapshot.id, snapshot, requestType);
 
     let httpMethod;
     switch (requestType) {
@@ -145,7 +95,7 @@ export default DS.RESTAdapter.extend({
         break;
 
       case 'updateRecord':
-        httpMethod = hasProjection ? 'PATCH' : 'PUT';
+        httpMethod = skipUnchangedAttrs ? 'PATCH' : 'PUT';
         break;
 
       case 'deleteRecord':
@@ -160,18 +110,28 @@ export default DS.RESTAdapter.extend({
 
     // Don't need to send any data for deleting.
     if (requestType !== 'deleteRecord') {
-      let serializer = store.serializerFor(type.typeKey);
+      let serializer = store.serializerFor(type.modelName);
       data = {};
       serializer.serializeIntoHash(data, type, snapshot);
     }
 
     return this.ajax(url, httpMethod, { data: data }).then(function(response) {
-      if (hasProjection && response && requestType === 'createRecord') {
-        // Serializer will use fetched projection to mutate new record id.
-        response._fetchedProjection = projection;
-      }
-
       return response;
     });
+  },
+
+  /**
+   * Appends id to URL according to the OData specification.
+   * @private
+   */
+  _appendIdToURL: function(id, url) {
+    let encId = encodeURIComponent(id);
+    let idType = Ember.get(this, 'idType');
+    if (idType !== 'number') {
+      encId = `'${encId}'`;
+    }
+
+    url += '(' + encId + ')';
+    return url;
   }
 });

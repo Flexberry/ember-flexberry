@@ -1,5 +1,5 @@
 <ul class="list-group">
-  {{#each node in model.nodes}}
+  {{#each model.nodes as |node|}}
     {{render "sitemap-node" node}}
   {{/each}}
 </ul>

@@ -1,85 +1,95 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import IdProxy from '../utils/idproxy';
 
 export default DS.RESTSerializer.extend({
-  extractSingle: function(store, typeClass, payload, id) {
+  /**
+   * Flag: indicates whether to use new {@link http://jsonapi.org|JSON API} serialization.
+   */
+  isNewSerializerAPI: true,
+
+  /**
+   * Prefix for response metadata properties names.
+   */
+  metaPropertiesPrefix: '@odata.',
+
+  /**
+   * Normalization method for single objects.
+   * @param store Storage.
+   * @param typeClass Type of received object.
+   * @param payload Received object itself.
+   * @param id Identifier of received object.
+   * @returns {object} Valid {@link http://jsonapi.org/format/#document-top-level|JSON API document}.
+   */
+  normalizeSingleResponse: function(store, typeClass, payload, id) {
     payload = {
-      [typeClass.typeKey]: payload
+      [typeClass.modelName]: payload
     };
+
+    // Meta should exist in the root of the payload object, otherwise it would not be extracted by _super method.
+    this._moveMeta(payload, payload[typeClass.modelName], true);
 
     return this._super(store, typeClass, payload, id);
   },
 
-  extractArray: function(store, typeClass, payload) {
-    let rootKey = Ember.String.pluralize(typeClass.typeKey);
-    payload = {
-      [rootKey]: payload.value
-    };
+  /**
+   * Normalization method for arrays of objects.
+   * @param store Storage.
+   * @param typeClass Type of received object.
+   * @param payload Received objects array.
+   * @returns {object} Valid {http://jsonapi.org/format/#document-top-level|@link JSON API document}.
+   */
+  normalizeArrayResponse: function(store, typeClass, payload) {
+    let rootKey = Ember.String.pluralize(typeClass.modelName);
+    payload[rootKey] = payload.value;
+    delete payload.value;
 
     return this._super(store, typeClass, payload);
   },
 
+  /**
+   * Extracts metadata from received object.
+   * @param store Storage.
+   * @param type Type of received object.
+   * @param payload Received object itself.
+   * @returns {object} Metadata extracted from received object (any format is allowed).
+   */
   extractMeta: function(store, type, payload) {
     if (!payload) {
-      return;
+      return undefined;
     }
 
-    let odataMetaPrefix = '@odata.';
     let meta = {};
-    for (var key in payload) {
-      if (payload.hasOwnProperty(key) && key.indexOf(odataMetaPrefix) === 0) {
-        var metaKey = key.substring(odataMetaPrefix.length);
-        meta[metaKey] = payload[key];
-        delete payload[key];
-      }
-    }
+    this._moveMeta(meta, payload, false);
 
-    store.setMetadataFor(type, meta);
+    return meta;
   },
 
-  normalize: function(type, hash, prop) {
-    hash = this._super.apply(this, arguments);
-
-    // Get a projection on which the hash was fetched
-    // (see adapter find and findQuery methods).
-    var projection = hash._fetchedProjection;
-    if (projection) {
-      delete hash._fetchedProjection;
-
-      hash.id = IdProxy.mutate(hash.id, projection);
-
-      type.eachRelationship(function(key, relationship) {
-        // It works with async relationships.
-        // TODO: support embedded relationships (without links)
-        if (relationship.kind === 'belongsTo') {
-          if (hash[key]) {
-            hash[key] = IdProxy.mutate(hash[key], projection.masters[key]);
-          }
-        } else if (relationship.kind === 'hasMany') {
-          if (hash[key]) {
-            var subproj = projection.details[key];
-            var ids = hash[key].map(function(id) {
-              return IdProxy.mutate(id, subproj);
-            });
-
-            hash[key] = ids;
-          }
-        }
-      });
-    }
-
-    return hash;
-  },
-
+  /**
+   * Returns key for a given attribute.
+   * @param attr Attribute.
+   * @returns {string} Key for a given attribute.
+   */
   keyForAttribute: function(attr) {
     return Ember.String.capitalize(attr);
   },
 
+  /**
+   * Returns key for a given relationship.
+   * @param key Existing relationship key.
+   * @param relationship Relationship.
+   * @returns {string} Key for a given relationship.
+   */
   keyForRelationship: function(key, relationship) {
     return Ember.String.capitalize(key);
   },
 
+  /**
+   * Serialization method to serialize record into hash.
+   * @param hash Target hash.
+   * @param type Record type.
+   * @param record Record itself.
+   * @param options Serialization options.
+   */
   serializeIntoHash: function(hash, type, record, options) {
     // OData requires id in request body.
     options = options || {};
@@ -87,5 +97,25 @@ export default DS.RESTSerializer.extend({
 
     // {...} instead of {"application": {...}}
     Ember.merge(hash, this.serialize(record, options));
+  },
+
+  /**
+   * Moves metadata from one object to another.
+   * @param dest Destination object.
+   * @param src Source object.
+   * @param withPrefix Flag: indicates whether to include metadata prefixes into properties names or not.
+   * @private
+   */
+  _moveMeta: function(dest, src, withPrefix) {
+    let prefix = this.get('metaPropertiesPrefix');
+    let prefixLength = prefix.length;
+
+    for (var srcKey in src) {
+      if (src.hasOwnProperty(srcKey) && srcKey.indexOf(prefix) === 0) {
+        var destKey = withPrefix ? srcKey : srcKey.substring(prefixLength);
+        dest[destKey] = src[srcKey];
+        delete src[srcKey];
+      }
+    }
   }
 });

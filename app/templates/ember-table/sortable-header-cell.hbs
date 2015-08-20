@@ -1,5 +1,10 @@
 <div class="ember-table-content-container" title="Click to change ordering for this column">
   <span class="ember-table-content">
+    {{!--
+      Using of {{view.property...}} is deprecated see http://emberjs.com/deprecations/v1.x/#toc_ember-view.
+      This sortable-header-cell should be replaced with Ember.Component in future,
+      when ember-table table-cell will become an extendable Ember.Component.
+    --}}
     {{view.content.headerCellName}}
     {{#if view.content.sorted}}
       <div style="float:right;">

@@ -37,10 +37,10 @@ test('it returns fields', function(assert) {
     var date = '1933-10-30T00:00:00Z';
     model.set('orderDate', date);
     assert.equal(model.get('orderDate'), date);
-    model.set('employeeID', store.createRecord('employee', { firstName: 'Sidorov', lastName: 'Sidor' }));
+    model.set('employee', store.createRecord('employee', { firstName: 'Sidorov', lastName: 'Sidor' }));
   });
 
-  var reportsToEmployee = model.get('employeeID');
+  var reportsToEmployee = model.get('employee');
   assert.ok(reportsToEmployee);
   assert.equal(reportsToEmployee.get('firstName'), 'Sidorov');
   assert.equal(reportsToEmployee.get('lastName'), 'Sidor');
@@ -64,41 +64,35 @@ test('it validates', function(assert) {
 });
 
 test('it loads fields', function(assert) {
-  var store = App.__container__.lookup('store:main');
+  var store = App.__container__.lookup('service:store');
   Ember.run(function() {
     Ember.$.mockjax({
       url: '*Orders(99)',
       responseText: {
         OrderID: 99,
         OrderDate: '1933-10-30T00:00:00Z',
-        EmployeeID: 97
+        Employee: {
+          EmployeeID: 98,
+          FirstName: 'Sidor',
+          LastName: 'Sidorov',
+          BirthDate: '1946-10-30T00:00:00Z',
+          Employee1: null
+        }
       }
     });
 
-    Ember.$.mockjax({
-      url: '*Employees(97)',
-      responseText: {
-        EmployeeID: 97,
-        FirstName: 'Sidor',
-        LastName: 'Sidorov',
-        BirthDate: '1946-10-30T00:00:00Z',
-        ReportsTo: 96
-      }
-    });
-
-    store.find('order', 99).then(function(record) {
+    store.findRecord('order', 99).then(function(record) {
       assert.ok(record);
       assert.ok(record instanceof DS.Model);
 
       var orderDate = record.get('orderDate');
       assert.ok(String(orderDate).indexOf('1933') > -1);
 
-      record.get('employeeID').then(function(masterRecord) {
-        assert.ok(masterRecord);
-        assert.ok(masterRecord instanceof DS.Model);
-        assert.equal(masterRecord.get('firstName'), 'Sidor');
-        assert.equal(masterRecord.get('lastName'), 'Sidorov');
-      });
+      let masterRecord = record.get('employee');
+      assert.ok(masterRecord);
+      assert.ok(masterRecord instanceof DS.Model);
+      assert.equal(masterRecord.get('firstName'), 'Sidor');
+      assert.equal(masterRecord.get('lastName'), 'Sidorov');
     });
 
     // waiting for async operations to finish

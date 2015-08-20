@@ -14,7 +14,7 @@
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    {{#each page in pages}}
+    {{#each pages as |page|}}
       {{#if page.isEllipsis}}
         <li><span aria-hidden="true">...</span></li>
       {{else}}
@@ -39,6 +39,12 @@
     </li>
   </ul>
   <div class="pull-right">
-    {{view "select" content=perPageValues value=per_page classNames="form-control"}}
+    {{drop-down
+      id = 'recordsPerPageSelector'
+      cssClass = 'form-control'
+      action = 'recordsPerPageSelector_onSelectedValueChanged'
+      items = perPageValues
+      selectedItem = per_page
+    }}
   </div>
 </nav>

@@ -31,7 +31,7 @@ test('it loads details', function(assert) {
   // Create serializer for custom model.
   CustomSerializer = ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
     attrs: {
-      employee1: { serialize: 'id', deserialize: 'record' },
+      employee1: { serialize: 'id', deserialize: 'records' },
       tmpChildren: { serialize: 'ids', deserialize: 'records' }
     },
 

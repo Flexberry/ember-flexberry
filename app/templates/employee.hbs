@@ -13,10 +13,13 @@
   <div class="form-group field">
     {{#if errorMessages}}
       {{#each currentError in errorMessages}}
-        <div class="alert alert-warning alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          {{currentError}}
-        </div>
+		<div class="ui negative message">
+		  <i class="close icon"></i>
+		  <div class="header">
+			Error occured
+		  </div>
+		  <p>{{currentError}}</p>
+		</div>
       {{/each}}
     {{/if}}
   </div>

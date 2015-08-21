@@ -1,24 +1,22 @@
 <h3>Order - edit form</h3>
 
+{{#if errorMessages}}
+  {{#each currentError in errorMessages}}
+	{{ui-message
+	  type = 'error'
+	  closeable = true
+	  visible = true
+	  title = "Error occured"
+	  message = currentError
+	}}
+  {{/each}}
+{{/if}}
 <form class="form-horizontal ui form" role="form">
   <div class="form-group field">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
       <button type="submit" class="ui primary button" {{action 'close'}}>Close</button>
     </div>
-  </div>
-  <div class="form-group">
-    {{#if errorMessages}}
-      {{#each currentError in errorMessages}}
-        <div class="ui negative message">
-		  <i class="close icon"></i>
-		  <div class="header">
-			Error occured
-		  </div>
-		  <p>{{currentError}}</p>
-		</div>
-      {{/each}}
-    {{/if}}
   </div>
   <div class="form-group inline field">
     <label class="ui label">ShipName</label>

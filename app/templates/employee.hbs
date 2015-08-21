@@ -1,5 +1,16 @@
 <h3 class="ui header">Employee - edit form</h3>
 
+{{#if errorMessages}}
+  {{#each currentError in errorMessages}}
+	{{ui-message
+	  type = 'error'
+	  closeable = true
+	  visible = true
+	  title = "Error occured"
+	  message = currentError
+	}}
+  {{/each}}
+{{/if}}
 <form class="form-horizontal ui form" role="form">
   <div class="form-group field">
     <div>
@@ -9,19 +20,6 @@
       {{/unless}}
       <button type="submit" class="ui primary button" {{action 'close'}}>Close</button>
     </div>
-  </div>
-  <div class="form-group field">
-    {{#if errorMessages}}
-      {{#each currentError in errorMessages}}
-		<div class="ui negative message">
-		  <i class="close icon"></i>
-		  <div class="header">
-			Error occured
-		  </div>
-		  <p>{{currentError}}</p>
-		</div>
-      {{/each}}
-    {{/if}}
   </div>
   <div class="form-group inline field">
     <label class="ui label">FirstName</label>

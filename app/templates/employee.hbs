@@ -45,8 +45,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.birthDate}}</span>
-		{{bootstrap-datepicker placeholder="(no value)" value=model.birthDate
-			format="dd.mm.yyyy" todayBtn="linked" clearBtn=true orientation="top auto" autoclose=true todayHighlight=true}}
+		{{datetime-picker placeholder="(no value)" value=model.birthDate}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.reportsTo 'error' ''}}">

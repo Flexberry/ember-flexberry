@@ -36,6 +36,7 @@ export default Ember.Component.extend({
       this.$('input').daterangepicker({
         startDate: startDate,
         singleDatePicker: true,
+        showDropdowns: true,
         timePicker: hasTimePicker,
         timePickerIncrement: 1,
         timePicker12Hour: false,

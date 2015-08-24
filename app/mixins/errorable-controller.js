@@ -23,7 +23,7 @@ export default Ember.Mixin.create({
     } else if (errorData.hasOwnProperty('responseText')) {
       this._rejectAjaxError(errorData, message);
     } else {
-	  this.send('addErrorMessage', 'Error occured.');
+      this.send('addErrorMessage', 'Error occured.');
       throw new Error('Unknown error has been rejected.');
     }
   },
@@ -36,7 +36,7 @@ export default Ember.Mixin.create({
     } else if (validationError.noChanges) {
       alert('There are no changes.');
     } else {
-	  this.send('addErrorMessage', 'Error occured.');
+      this.send('addErrorMessage', 'Error occured.');
       throw new Error('Unknown validation error.');
     }
   },

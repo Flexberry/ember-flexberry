@@ -1,3 +1,4 @@
+/* global moment:true */
 import Ember from 'ember';
 
 // DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
@@ -23,7 +24,7 @@ export default Ember.Component.extend({
     var val = this.get('value');
     var startDate = new Date();
     if (val !== undefined && moment(val).isValid()) {
-      startDate = new moment(val);
+      startDate = moment(val);
       this.set('value', moment(val).format(dateTimeFormat));
     }
 

@@ -1,17 +1,9 @@
-<li class="list-group-item">
-  {{#if model.link}}
-    {{#link-to model.link}}
-      {{model.title}}
-    {{/link-to}}
-  {{else}}
-    {{model.title}}
-  {{/if}}
-
-  {{#if model.children.length}}
-    <ul>
-      {{#each model.children as |child|}}
-        {{render "sitemap-node" child}}
-      {{/each}}
-    </ul>
-  {{/if}}
-</li>
+{{#if model.link}}
+  {{#link-to model.link class="item"}}
+    {{partial "sitemap-node-content"}}
+  {{/link-to}}
+{{else}}
+  <div class="item">
+    {{partial "sitemap-node-content"}}
+  </div>
+{{/if}}

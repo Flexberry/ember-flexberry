@@ -28,14 +28,17 @@ export default Ember.Component.extend({
       this.set('value', moment(val).format(dateTimeFormat));
     }
 
-    this.$('input').daterangepicker({
-      startDate: startDate,
-      singleDatePicker: true,
-      timePicker: hasTimePicker,
-      timePickerIncrement: 1,
-      timePicker12Hour: false,
-      timePickerSeconds: true,
-      format: dateTimeFormat
-    });
+    var readonly = this.get('readonly');
+    if (!readonly) {
+      this.$('input').daterangepicker({
+        startDate: startDate,
+        singleDatePicker: true,
+        timePicker: hasTimePicker,
+        timePickerIncrement: 1,
+        timePicker12Hour: false,
+        timePickerSeconds: true,
+        format: dateTimeFormat
+      });
+    }
   }.on('didInsertElement')
 });

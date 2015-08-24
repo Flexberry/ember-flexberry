@@ -15,6 +15,9 @@ export default Ember.Component.extend({
   // Flag to show time in control and time picker inside date picker.
   hasTimePicker: false,
 
+  // Type of input element for render.
+  type: 'text',
+
   // Input value.
   value: undefined,
 

@@ -1,0 +1,8 @@
+{{model.title}}
+{{#if model.children.length}}
+  <div class="menu">
+    {{#each child in model.children}}
+      {{render "sitemap-node" child}}
+    {{/each}}
+  </div>
+{{/if}}

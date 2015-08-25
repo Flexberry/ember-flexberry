@@ -42,14 +42,10 @@ module.exports = function(defaults) {
   });
 
   // Custom build of jQuery.3.0.0-alpha1+compat contains AJAX-only facilities.
-  app.import('vendor/scripts/jquery.compat.3.0.0-alpha1.ajaxonly.min.js', {
-    type: 'vendor'
-  });
+  app.import('vendor/jquery.3.0.0-alpha1+compat/jquery.ajaxonly.min.js');
 
   // Custom script which merges jQuery.3.0.0-alpha1+compat AJAX facilities to ember-related jQuery version.
-  app.import('vendor/scripts/jquery.ajaxreplacement.js', {
-    type: 'vendor'
-  });
+  app.import('vendor/jquery.3.0.0-alpha1+compat/jquery.ajaxreplacement.js');
 
   return app.toTree();
 };

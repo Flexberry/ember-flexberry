@@ -1,7 +1,7 @@
 <h3 class="ui header">Employee - edit form</h3>
 
 {{#if errorMessages}}
-  {{#each currentError in errorMessages}}
+  {{#each errorMessages as |currentError|}}
 	{{ui-message
 	  type = 'error'
 	  closeable = true

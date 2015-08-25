@@ -1,0 +1,18 @@
+{{#if refreshButton}}
+  <div class = "ui button">
+    {{#link-to 'employee.new'}}
+      <div class="ui middle aligned content">
+        <p class="ui small header">Refresh</p>
+      </div>
+    {{/link-to}}
+  </div>
+{{/if}}
+{{#if createNewButton}}
+  <div class = "ui button">
+    {{#link-to createNewPath}}
+      <div class="ui middle aligned content">
+        <p class="ui small header">Add</p>
+      </div>
+    {{/link-to}}
+  </div>
+{{/if}}

@@ -1,10 +1,8 @@
-<div class="ui top attached menu">
-  {{#link-to 'employee.new' class = "item"}}
-      <div class="ui middle aligned content">
-          <p class="ui small header">+ New employee</p>
-      </div>
-  {{/link-to}}
-</div>
+{{olv-toolbar 
+  class = "ui secondary menu"
+  modelName = "employee"
+  createNewButton = true
+  refreshButton = true}}
 {{ember-table
   class = "ui bottom attached"
   hasFooter = false

@@ -70,9 +70,14 @@ export default Ember.Component.extend({
     if (currValueDateTime.isValid()) {
       var currInputDateTime = moment(this.$('input').val(), this.dateTimeFormat);
 
-      // Change current date and time in datetimepicker when changes were made outside of input element.
+      // Change current date and time when changes were made outside of input element.
       if (!currValueDateTime.isSame(currInputDateTime)) {
-        this.$('input').data('daterangepicker').setEndDate(currValueDateTime);
+        if (this.$('input').data('daterangepicker') !== undefined) {
+          this.$('input').data('daterangepicker').setEndDate(currValueDateTime);
+        }
+        else {
+          this.$('input').val(currValueDateTime.format(this.dateTimeFormat));
+        }
       }
     }
   }.observes('value')

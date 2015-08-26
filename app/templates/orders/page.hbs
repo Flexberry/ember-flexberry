@@ -1,10 +1,10 @@
-<div class="ui top attached menu">
-  {{#link-to 'order.new' class="item"}}
-      <div class="ui middle aligned content">
-          <p class="ui small header">+ New order</p>
-      </div>
-  {{/link-to}}
-</div>
+{{olv-toolbar 
+  class = "ui secondary menu"
+  modelName = "order"
+  createNewButton = true
+  refreshButton = true
+  modelController = this
+}}
 {{ember-table
   class = "ui bottom attached"
   hasFooter = false

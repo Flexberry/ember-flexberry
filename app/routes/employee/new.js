@@ -1,4 +1,4 @@
-import EditFormNewRoute from 'prototype-ember-cli-application/routes/edit-form-new';
+import EditFormNewRoute from '../edit-form-new';
 
 export default EditFormNewRoute.extend({
   modelProjection: 'EmployeeE',

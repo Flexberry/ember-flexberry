@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import PaginatedControllerMixin from 'prototype-ember-cli-application/mixins/paginated-controller';
-import SortableControllerMixin from 'prototype-ember-cli-application/mixins/sortable-controller';
-import SortableColumnMixin from 'prototype-ember-cli-application/mixins/sortable-column';
+import PaginatedControllerMixin from '../mixins/paginated-controller';
+import SortableControllerMixin from '../mixins/sortable-controller';
+import SortableColumnMixin from '../mixins/sortable-column';
 import EmberTableColumnDefinition from 'ember-table/models/column-definition';
-import ListTableCellView from 'prototype-ember-cli-application/views/ember-table/list-table-cell';
+import ListTableCellView from '../views/ember-table/list-table-cell';
 
 // TODO: move controller to route entirely.
 export default Ember.Controller.extend(PaginatedControllerMixin, SortableControllerMixin, {

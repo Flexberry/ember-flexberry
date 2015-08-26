@@ -1,4 +1,4 @@
-import ListFormPageRoute from 'prototype-ember-cli-application/routes/list-form-page';
+import ListFormPageRoute from '../list-form-page';
 
 export default ListFormPageRoute.extend({
   modelName: 'order',

@@ -1,4 +1,4 @@
-import EditFormRoute from 'prototype-ember-cli-application/routes/edit-form';
+import EditFormRoute from '../routes/edit-form';
 
 export default EditFormRoute.extend({
   model: function() {

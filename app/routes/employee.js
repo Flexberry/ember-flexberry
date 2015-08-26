@@ -1,4 +1,4 @@
-import EditFormRoute from '../routes/edit-form';
+import EditFormRoute from './edit-form';
 
 export default EditFormRoute.extend({
   modelProjection: 'EmployeeE',

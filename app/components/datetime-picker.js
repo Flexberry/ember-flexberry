@@ -21,14 +21,24 @@ export default Ember.Component.extend({
   // Input value.
   value: undefined,
 
+  // Invalid date for set to model value when needed.
+  invalidDate: new Date('invalid'),
+
+  // Default display format.
+  dateTimeFormat: 'DD.MM.YYYY',
+
+  // Init component when DOM is ready.
   _initializeComponent: function() {
     var hasTimePicker = this.get('hasTimePicker');
-    var dateTimeFormat = hasTimePicker ? 'DD.MM.YYYY HH:mm:ss' : 'DD.MM.YYYY';
+    if (hasTimePicker) {
+      this.dateTimeFormat = 'DD.MM.YYYY HH:mm:ss';
+    }
+
     var val = this.get('value');
     var startDate = new Date();
     if (val !== undefined && moment(val).isValid()) {
       startDate = moment(val);
-      this.$('input').val(startDate.format(dateTimeFormat));
+      this.$('input').val(startDate.format(this.dateTimeFormat));
     }
 
     var readonly = this.get('readonly');
@@ -43,13 +53,27 @@ export default Ember.Component.extend({
         timePickerIncrement: 1,
         timePicker12Hour: false,
         timePickerSeconds: true,
-        format: dateTimeFormat
+        format: this.dateTimeFormat
       },
       function(start, end, label) {
-        _this.set('value', start.toDate());
-        _this.$('input').val(start.format(dateTimeFormat));
+        var dateToSet = start.isValid() ? start.toDate() : _this.invalidDate;
+        _this.set('value', dateToSet);
       }
-    );
+      );
     }
-  }.on('didInsertElement')
+  }.on('didInsertElement'),
+
+  // Set proper start date when value changed outside of component.
+  _valueChanged: function() {
+    var val = this.get('value');
+    var currValueDateTime = moment(val);
+    if (currValueDateTime.isValid()) {
+      var currInputDateTime = moment(this.$('input').val(), this.dateTimeFormat);
+
+      // Change current date and time in datetimepicker when changes were made outside of input element.
+      if (!currValueDateTime.isSame(currInputDateTime)) {
+        this.$('input').data('daterangepicker').setEndDate(currValueDateTime);
+      }
+    }
+  }.observes('value')
 });

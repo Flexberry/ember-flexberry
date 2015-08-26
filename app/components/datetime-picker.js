@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   classes: undefined,
 
   // Flag to make control readonly.
-  readonly: false,
+  readonly: undefined,
 
   // Flag to make control required.
   required: false,
@@ -43,7 +43,7 @@ export default Ember.Component.extend({
 
     var readonly = this.get('readonly');
     var _this = this;
-    if (!readonly) {
+    if (readonly === undefined) {
       this.$('input').daterangepicker(
       {
         startDate: startDate,

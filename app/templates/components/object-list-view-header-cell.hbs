@@ -1,0 +1,16 @@
+<div title="Click to change ordering, Ctrl+Click to append ordering for this column">
+  <span>{{column.header}}</span>
+  {{#if column.sorted}}
+    <div style="float:right;">
+      {{#if column.sortAscending}}
+        <div title="Order ascending">
+          &#8593;{{column.sortNumber}}
+        </div>
+      {{else}}
+        <div title="Order descending">
+          &#8595;{{column.sortNumber}}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>

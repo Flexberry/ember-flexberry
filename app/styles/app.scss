@@ -16,7 +16,7 @@
   display: inline-block;
 }
 
-.ember-table-body-container .antiscroll-box .antiscroll-inner {
-  height: 100% !important;
-  width: 100% !important;
+table.object-list-view tbody,
+table.object-list-view thead {
+  cursor: pointer;
 }

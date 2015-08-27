@@ -1,10 +1,8 @@
 {{#modal-dialog title='Lookup' ok='saveLookupDialog' close='removeModalDialog'}}
   <div id="lookup-list" class="list-group" style="height: 300px; width: 570px;">
-    {{ember-table
-    hasFooter=false
-    enableContentSelection=false
-    columns=tableColumns
-    content=tableContent
+    {{object-list-view
+      columns=tableColumns
+      content=model
     }}
   </div>
 {{/modal-dialog}}

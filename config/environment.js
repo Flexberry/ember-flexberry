@@ -40,8 +40,8 @@ module.exports = function(environment) {
   // https://github.com/rwjblue/ember-cli-content-security-policy
   // http://content-security-policy.com
   ENV.contentSecurityPolicy = {
-    'style-src': "'self' 'unsafe-inline'",
-    'font-src': "'self' data:",
+    'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com",
+    'font-src': "'self' data: https://fonts.gstatic.com",
     'connect-src': "'self' " + ENV.APP.backendUrls.root
   };
 

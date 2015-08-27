@@ -15,6 +15,7 @@
     "loader.js": "ember-cli/loader.js#3.2.1",
     "qunit": "~1.18.0",
     "semantic-ui": "~2.0.8",
-    "semantic-ui-daterangepicker": "git://github.com/BreadMaker/semantic-ui-daterangepicker.git#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be"
+    "semantic-ui-daterangepicker": "git://github.com/BreadMaker/semantic-ui-daterangepicker.git#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be",
+    "datatables": "~1.10.8"
   }
 }

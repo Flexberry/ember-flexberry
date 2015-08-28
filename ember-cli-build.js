@@ -22,10 +22,6 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  if (app.env !== 'production') {
-    app.import('bower_components/jquery-mockjax/jquery.mockjax.js');
-  }
-
   app.import({
     development: 'bower_components/moment/min/moment-with-locales.js',
     production:  'bower_components/moment/min/moment-with-locales.min.js'
@@ -41,11 +37,12 @@ module.exports = function(defaults) {
     production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.css'
   });
 
-  // Custom build of jQuery.3.0.0-alpha1+compat contains AJAX-only facilities.
-  app.import('vendor/jquery.3.0.0-alpha1+compat/jquery.ajaxonly.min.js');
-
-  // Custom script which merges jQuery.3.0.0-alpha1+compat AJAX facilities to ember-related jQuery version.
+  // Custom script which fixes some jQuery 1.10.x+ AJAX bugs with code from newer jQuery.3.0.0-alpha1+compat version.
   app.import('vendor/jquery.3.0.0-alpha1+compat/jquery.ajaxreplacement.js');
+
+  if (app.env !== 'production') {
+    app.import('bower_components/jquery-mockjax/jquery.mockjax.js');
+  }
 
   return app.toTree();
 };

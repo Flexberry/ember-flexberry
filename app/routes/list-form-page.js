@@ -4,6 +4,17 @@ import PaginatedRouteMixin from '../mixins/paginated-route';
 import ProjectedModelRoute from '../routes/base/projected-model-route';
 
 export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixin, {
+  actions: {
+    /**
+     * Table row click handler.
+     *
+     * @param {Ember.Object} record Record related to clicked table row.
+     */
+    rowClick: function(record) {
+      this.transitionTo(record.constructor.modelName, record.get('id'));
+    }
+  },
+
   model: function(params, transition) {
     var page = parseInt(params.page, 10);
     var perPage = this.modelFor('application').get('perPage');

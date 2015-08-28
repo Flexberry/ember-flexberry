@@ -1,21 +1,19 @@
-{{olv-toolbar 
+{{olv-toolbar
   class = "ui secondary menu"
   modelName = "order"
   createNewButton = true
   refreshButton = true
   modelController = this
 }}
-{{ember-table
+{{object-list-view
   class = "ui bottom attached"
-  hasFooter = false
-  enableContentSelection = false
-  columns = tableColumns
-  content = tableContent
+  modelProjection = modelProjection
+  content = model
 }}
 <div id="bottom-menu" class="ui secondary menu">
     <div class="ui basic buttons">
         <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action "previousPage"}}>&laquo;</button>
-      {{#each page in pages}}
+      {{#each pages as |page|}}
         {{#if page.isEllipsis}}
             <button class="ui button">...</button>
         {{else}}

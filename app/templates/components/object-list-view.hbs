@@ -1,0 +1,16 @@
+<thead>
+  <tr>
+    {{#each columns as |column|}}
+      {{component headerCellComponent column=column}}
+    {{/each}}
+  </tr>
+</thead>
+<tbody>
+  {{#each content as |record|}}
+    <tr {{action 'rowClick' record}}>
+      {{#each columns as |column|}}
+        {{component column.cellComponent column=column record=record}}
+      {{/each}}
+    </tr>
+  {{/each}}
+</tbody>

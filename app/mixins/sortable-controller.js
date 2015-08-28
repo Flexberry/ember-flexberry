@@ -25,17 +25,9 @@ export default Ember.Mixin.create({
     return result;
   }),
 
-  columnIsSorted: function(propName) {
-
-  },
-
   actions: {
-    /**
-     * Использовать заданную колонку для сортировки. Сортировка по другим колонкам при этом отключается.
-     *
-     * @param {String} propName Имя свойства, которое нужно использовать для сортировки.
-     */
-    sortByColumn: function(propName) {
+    sortByColumn: function(column) {
+      var propName = column.propName;
       var oldSorting = this.get('model.sorting');
       var newSorting = [];
       var sortDirection;
@@ -58,13 +50,8 @@ export default Ember.Mixin.create({
       this.send('applySorting', newSorting);
     },
 
-    /**
-     * Изменить сортировку по заданной колонке, не трогая остальные. Вызывается при клике по ячейке с нажатой
-     * клавишей ctrl.
-     *
-     * @param {String} propName Имя свойства, по которому нужно изменить параметры сортировки.
-     */
-    addColumnToSorting: function(propName) {
+    addColumnToSorting: function(column) {
+      var propName = column.propName;
       var oldSorting = this.get('model.sorting');
       var newSorting = [];
       var changed = false;

@@ -1,16 +1,15 @@
-{{olv-toolbar 
+{{olv-toolbar
   class = "ui secondary menu"
   modelName = "employee"
   createNewButton = true
   refreshButton = true
   modelController = this
 }}
-{{ember-table
+{{object-list-view
   class = "ui bottom attached"
-  hasFooter = false
-  enableContentSelection = false
-  columns = tableColumns
-  content = tableContent
+  modelProjection = modelProjection
+  content = model
+  sorting = computedSorting
 }}
 <div class="ui secondary menu">
   <div class="ui basic buttons">

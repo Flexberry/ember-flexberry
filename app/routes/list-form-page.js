@@ -12,6 +12,10 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
      */
     rowClick: function(record) {
       this.transitionTo(record.constructor.modelName, record.get('id'));
+    },
+
+    refreshList: function() {
+      this.refresh();
     }
   },
 
@@ -61,11 +65,5 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('modelProjection', proj);
-  },
-
-  actions: {
-    refreshList: function() {
-      this.refresh();
-    }
   }
 });

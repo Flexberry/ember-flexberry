@@ -210,4 +210,4 @@ function createActiveXHR() {
 	} catch ( e ) {}
 }
 
-})(jQuery, document, support);
+})(jQuery, document, {});

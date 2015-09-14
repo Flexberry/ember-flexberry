@@ -8,32 +8,33 @@ export default {
 };
 
 function getODataQueryTree(projection, store) {
-  let serializer = store.serializerFor(projection.type);
-  var tree = {
+  let serializer = store.serializerFor(projection.modelName);
+  let tree = {
     select: [serializer.primaryKey],
     expand: {}
   };
-  var expanders = [projection.masters, projection.details];
 
-  if (projection.properties) {
-    projection.properties.forEach(function(prop) {
-      tree.select.push(serializer.keyForAttribute(prop));
-    });
-  }
+  let attributes = projection.attributes;
+  for (let attrName in attributes) {
+    if (attributes.hasOwnProperty(attrName)) {
+      let attr = attributes[attrName];
+      let normalizedAttrName = serializer.keyForAttribute(attrName);
+      switch (attr.kind) {
+        case 'attr':
+          tree.select.push(normalizedAttrName);
+          break;
 
-  expanders.forEach(function(expander) {
-    if (!expander) {
-      return;
-    }
+        case 'hasMany':
+        case 'belongsTo':
+          tree.select.push(normalizedAttrName);
+          tree.expand[normalizedAttrName] = getODataQueryTree(attr, store);
+          break;
 
-    for (var propertyName in expander) {
-      if (expander.hasOwnProperty(propertyName)) {
-        var normalizedPropName = serializer.keyForAttribute(propertyName);
-        var expanderProjection = expander[propertyName];
-        tree.expand[normalizedPropName] = getODataQueryTree(expanderProjection, store);
+        default:
+          throw new Error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
-  });
+  }
 
   return tree;
 }

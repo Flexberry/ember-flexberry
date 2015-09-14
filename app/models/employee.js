@@ -1,8 +1,6 @@
-// Remove commented out lines, when they will be covered with tests.
-/*import Ember from 'ember';*/
 import DS from 'ember-data';
-/*import config from '../config/environment';*/
 import ProjectedModel from './projected-model';
+import Proj from '../utils/projection-attributes';
 
 var Model = ProjectedModel.extend({
   firstName: DS.attr('string'),
@@ -10,9 +8,8 @@ var Model = ProjectedModel.extend({
   birthDate: DS.attr('date'),
   employee1: DS.belongsTo('employee', { inverse: null, async: false }),
   orders: DS.hasMany('order', { inverse: null, async: false }),
-  /*tmpChildren: DS.hasMany('employee', { inverse: null, async: false }),*/
 
-  // validation rules.
+  // Validation rules.
   validations: {
     firstName: {
       presence: true,
@@ -25,49 +22,24 @@ var Model = ProjectedModel.extend({
   }
 });
 
-/*Ember.$.mockjax({
-  url: "*Employees(3)",
-  responseText: {
-    "EmployeeID": 3,
-    "FirstName": "Janet225 Oo",
-    "LastName": "Leverling",
-    "BirthDate": "1963-08-30T00:00:00Z",
-    "Employee1": 2,
-    "TmpChildren": [4,5]
-  }
-});*/
+Model.defineProjection('EmployeeE', 'employee', {
+  firstName: Proj.attr('First Name'),
+  lastName: Proj.attr('Last Name'),
+  birthDate: Proj.attr('Birth Date'),
+  employee1: Proj.belongsTo('employee', {
+    firstName: Proj.attr('Reports To - First Name'),
+    lastName: Proj.attr('Reports To - Last Name', { hidden: true })
+  }),
+  orders: Proj.hasMany('order', {
+    shipName: Proj.attr('Ship Name'),
+    ShipCountry: Proj.attr('Ship Country'),
+    OrderDate: Proj.attr('Order Date')
+  })
+});
 
-Model.defineProjection('employee', 'EmployeeE', ['firstName', 'lastName', 'birthDate', 'employee1.firstName', 'orders.shipName', 'orders.shipCountry', 'orders.orderDate'/*, 'tmpChildren.lastName'*/]);
-Model.defineProjection('employee', 'EmployeeL', ['firstName', 'lastName']);
-
-// TODO: defineProjection tests.
-// Model.reopenClass({
-//   Projections: ModelProjectionsCollection.create({
-//     EmployeeE: ModelProjection.create({
-//       type: 'employee',
-//       name: 'EmployeeE',
-//       properties: ['firstName', 'lastName', 'birthDate', 'employee1'/*, 'tmpChildren'*/],
-//       masters: ModelProjectionsCollection.create({
-//         employee1: ModelProjection.create({
-//           type: 'employee',
-//           name: 'EmployeeE.masters.employee1',
-//           properties: ['firstName']
-//         })
-//       })/*,
-//       details: ModelProjectionsCollection.create({
-//         tmpChildren: ModelProjection.create({
-//           type: 'employee',
-//           name: 'EmployeeE.details.tmpChildren',
-//           properties: ['lastName']
-//         })
-//       })*/
-//     }),
-//     EmployeeL: ModelProjection.create({
-//       type: 'employee',
-//       name: 'EmployeeL',
-//       properties: ['firstName', 'lastName']
-//     })
-//   })
-// });
+Model.defineProjection('EmployeeL', 'employee', {
+  firstName: Proj.attr('First Name'),
+  lastName: Proj.attr('Last Name')
+});
 
 export default Model;

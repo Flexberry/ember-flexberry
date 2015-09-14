@@ -1,10 +1,11 @@
-import ProjectionQuery from '../../../utils/projection-query';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import Ember from 'ember';
 import DS from 'ember-data';
-import ModelProjectionsCollection from '../../../objects/model-projections-collection';
-import ModelProjection from '../../../objects/model-projection';
+
+import ProjectionQuery from '../../../utils/projection-query';
+import Proj from '../../../utils/projection-attributes';
+import Projection from '../../../utils/projection';
 
 var App;
 
@@ -19,28 +20,18 @@ module('Test detail load for custom class', {
 });
 
 test('query for embedded relationships', function(assert) {
-  var projection = ModelProjection.create({
-    type: 'employee',
-    name: 'EmployeeE',
-    properties: ['firstName', 'lastName', 'birthDate', 'employee1', 'order', 'tmpChildren'],
-    masters: ModelProjectionsCollection.create({
-      employee1: ModelProjection.create({
-        type: 'employee',
-        name: 'EmployeeE.masters.employee1',
-        properties: ['firstName']
-      }),
-      order: ModelProjection.create({
-        type: 'order',
-        name: 'EmployeeE.masters.order',
-        properties: ['orderDate']
-      })
+  var projection = Projection.create('employee', {
+    firstName: Proj.attr('First Name'),
+    lastName: Proj.attr('Last Name'),
+    birthDate: Proj.attr('Birth Date'),
+    employee1: Proj.belongsTo('employee', {
+      firstName: Proj.attr('Reports To - First Name')
     }),
-    details: ModelProjectionsCollection.create({
-      tmpChildren: ModelProjection.create({
-        type: 'employee',
-        name: 'EmployeeE.details.tmpChildren',
-        properties: ['lastName']
-      })
+    order: Proj.belongsTo('order', {
+      orderDate: Proj.attr('Order Date')
+    }),
+    tmpChildren: Proj.hasMany('employee', {
+      lastName: Proj.attr('Tmp Children - Last Name')
     })
   });
 

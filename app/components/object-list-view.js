@@ -51,24 +51,46 @@ export default Ember.Component.extend({
       throw new Error('No projection was defined.');
     }
 
-    var cols = projection.get('properties').map(function(propName) {
-      var def = {
-        header: propName.capitalize(),
-        propName: propName,
-        cellComponent: 'object-list-view-cell'
-      };
+    let cols = this._generateColumns(projection.attributes);
+    return cols;
+  }),
 
-      var sortDef;
-      var sorting = this.get('sorting');
-      if (sorting && (sortDef = sorting[propName])) {
-        def.sorted = true;
-        def.sortAscending = sortDef.sortAscending;
-        def.sortNumber = sortDef.sortNumber;
+  _generateColumns: function(attributes, columnsBuf, relationshipPath) {
+    columnsBuf = columnsBuf || [];
+    relationshipPath = relationshipPath || '';
+
+    for (let attrName in attributes) {
+      if (!attributes.hasOwnProperty(attrName)) {
+        continue;
       }
 
-      return def;
-    }, this);
+      let attr = attributes[attrName];
 
-    return cols;
-  })
+      if (attr.kind === 'belongsTo' || attr.kind === 'hasMany') {
+        relationshipPath += attrName + '.';
+        this._generateColumns(attr.attributes, columnsBuf, relationshipPath);
+        continue;
+      }
+
+      if (attr.kind === 'attr' && !attr.options.hidden) {
+        var def = {
+          header: attr.caption,
+          propName: relationshipPath + attrName,
+          cellComponent: 'object-list-view-cell'
+        };
+
+        var sortDef;
+        var sorting = this.get('sorting');
+        if (sorting && (sortDef = sorting[attrName])) {
+          def.sorted = true;
+          def.sortAscending = sortDef.sortAscending;
+          def.sortNumber = sortDef.sortNumber;
+        }
+
+        columnsBuf.push(def);
+      }
+    }
+
+    return columnsBuf;
+  }
 });

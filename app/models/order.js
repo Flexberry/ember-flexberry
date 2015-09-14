@@ -1,5 +1,6 @@
 import DS from 'ember-data';
 import ProjectedModel from './projected-model';
+import Proj from '../utils/projection-attributes';
 
 var Model = ProjectedModel.extend({
   shipName: DS.attr('string'),
@@ -7,7 +8,7 @@ var Model = ProjectedModel.extend({
   orderDate: DS.attr('date'),
   employee: DS.belongsTo('employee', { inverse: null, async: false }),
 
-  // validation rules.
+  // Validation rules.
   validations: {
     orderDate: {
       presence: true
@@ -15,18 +16,20 @@ var Model = ProjectedModel.extend({
   }
 });
 
-Model.defineProjection('order', 'OrderE', [
-  'shipName',
-  'shipCountry',
-  'orderDate',
-  'employee.firstName',
-  'employee.lastName'
-]);
+Model.defineProjection('OrderE', 'order', {
+  shipName: Proj.attr('Ship Name'),
+  shipCountry: Proj.attr('Ship Country'),
+  orderDate: Proj.attr('Order Date'),
+  employee: Proj.belongsTo('employee', {
+    firstName: Proj.attr('Employee First Name'),
+    lastName: Proj.attr('Employee Last Name')
+  })
+});
 
-Model.defineProjection('order', 'OrderL', [
-  'shipName',
-  'shipCountry',
-  'orderDate'
-]);
+Model.defineProjection('OrderL', 'order', {
+  shipName: Proj.attr('Ship Name'),
+  shipCountry: Proj.attr('Ship Country'),
+  orderDate: Proj.attr('Order Date')
+});
 
 export default Model;

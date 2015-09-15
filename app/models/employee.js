@@ -32,8 +32,8 @@ Model.defineProjection('EmployeeE', 'employee', {
   }),
   orders: Proj.hasMany('order', {
     shipName: Proj.attr('Ship Name'),
-    ShipCountry: Proj.attr('Ship Country'),
-    OrderDate: Proj.attr('Order Date')
+    shipCountry: Proj.attr('Ship Country'),
+    orderDate: Proj.attr('Order Date')
   })
 });
 

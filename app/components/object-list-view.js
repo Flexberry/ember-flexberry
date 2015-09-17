@@ -65,29 +65,35 @@ export default Ember.Component.extend({
       }
 
       let attr = attributes[attrName];
+      switch (attr.kind) {
+        case 'hasMany':
+          continue;
 
-      if (attr.kind === 'belongsTo' || attr.kind === 'hasMany') {
-        relationshipPath += attrName + '.';
-        this._generateColumns(attr.attributes, columnsBuf, relationshipPath);
-        continue;
-      }
+        case 'belongsTo':
+          relationshipPath += attrName + '.';
+          this._generateColumns(attr.attributes, columnsBuf, relationshipPath);
+          continue;
 
-      if (attr.kind === 'attr' && !attr.options.hidden) {
-        var def = {
-          header: attr.caption,
-          propName: relationshipPath + attrName,
-          cellComponent: 'object-list-view-cell'
-        };
+        case 'attr':
+          let column = {
+            header: attr.caption,
+            propName: relationshipPath + attrName,
+            cellComponent: 'object-list-view-cell'
+          };
 
-        var sortDef;
-        var sorting = this.get('sorting');
-        if (sorting && (sortDef = sorting[attrName])) {
-          def.sorted = true;
-          def.sortAscending = sortDef.sortAscending;
-          def.sortNumber = sortDef.sortNumber;
-        }
+          let sortDef;
+          let sorting = this.get('sorting');
+          if (sorting && (sortDef = sorting[attrName])) {
+            column.sorted = true;
+            column.sortAscending = sortDef.sortAscending;
+            column.sortNumber = sortDef.sortNumber;
+          }
 
-        columnsBuf.push(def);
+          columnsBuf.push(column);
+          break;
+
+        default:
+          throw new Error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
 

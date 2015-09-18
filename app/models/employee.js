@@ -26,11 +26,11 @@ Model.defineProjection('EmployeeE', 'employee', {
   firstName: Proj.attr('First Name'),
   lastName: Proj.attr('Last Name'),
   birthDate: Proj.attr('Birth Date'),
-  employee1: Proj.belongsTo('employee', {
+  employee1: Proj.belongsTo('employee', 'Reports To', {
     firstName: Proj.attr('Reports To - First Name'),
     lastName: Proj.attr('Reports To - Last Name', { hidden: true })
-  }),
-  orders: Proj.hasMany('order', {
+  }, { hidden: true }),
+  orders: Proj.hasMany('order', 'Orders', {
     shipName: Proj.attr('Ship Name'),
     shipCountry: Proj.attr('Ship Country'),
     orderDate: Proj.attr('Order Date')
@@ -39,7 +39,10 @@ Model.defineProjection('EmployeeE', 'employee', {
 
 Model.defineProjection('EmployeeL', 'employee', {
   firstName: Proj.attr('First Name'),
-  lastName: Proj.attr('Last Name')
+  lastName: Proj.attr('Last Name'),
+  employee1: Proj.belongsTo('employee', 'Reports To', {
+    firstName: Proj.attr('Reports To - First Name', { hidden: true })
+  }, { displayMemberPath: 'firstName' })
 });
 
 export default Model;

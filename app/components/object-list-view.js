@@ -67,28 +67,32 @@ export default Ember.Component.extend({
       let attr = attributes[attrName];
       switch (attr.kind) {
         case 'hasMany':
-          continue;
+          break;
 
         case 'belongsTo':
-          relationshipPath += attrName + '.';
-          this._generateColumns(attr.attributes, columnsBuf, relationshipPath);
-          continue;
+          if (!attr.options.hidden) {
+            let bindingPath = relationshipPath + attrName;
+            if (attr.options.displayMemberPath) {
+              bindingPath += '.' + attr.options.displayMemberPath;
+            } else {
+              bindingPath += '.id';
+            }
 
-        case 'attr':
-          let column = {
-            header: attr.caption,
-            propName: relationshipPath + attrName,
-            cellComponent: 'object-list-view-cell'
-          };
-
-          let sortDef;
-          let sorting = this.get('sorting');
-          if (sorting && (sortDef = sorting[attrName])) {
-            column.sorted = true;
-            column.sortAscending = sortDef.sortAscending;
-            column.sortNumber = sortDef.sortNumber;
+            let column = this._createColumn(attr, bindingPath);
+            columnsBuf.push(column);
           }
 
+          relationshipPath += attrName + '.';
+          this._generateColumns(attr.attributes, columnsBuf, relationshipPath);
+          break;
+
+        case 'attr':
+          if (attr.options.hidden) {
+            break;
+          }
+
+          let bindingPath = relationshipPath + attrName;
+          let column = this._createColumn(attr, bindingPath);
           columnsBuf.push(column);
           break;
 
@@ -98,5 +102,23 @@ export default Ember.Component.extend({
     }
 
     return columnsBuf;
+  },
+
+  _createColumn: function(attr, bindingPath) {
+    let column = {
+      header: attr.caption,
+      propName: bindingPath,
+      cellComponent: 'object-list-view-cell'
+    };
+
+    let sortDef;
+    let sorting = this.get('sorting');
+    if (sorting && (sortDef = sorting[bindingPath])) {
+      column.sorted = true;
+      column.sortAscending = sortDef.sortAscending;
+      column.sortNumber = sortDef.sortNumber;
+    }
+
+    return column;
   }
 });

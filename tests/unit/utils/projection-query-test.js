@@ -24,13 +24,13 @@ test('query for embedded relationships', function(assert) {
     firstName: Proj.attr('First Name'),
     lastName: Proj.attr('Last Name'),
     birthDate: Proj.attr('Birth Date'),
-    employee1: Proj.belongsTo('employee', {
+    employee1: Proj.belongsTo('employee', 'Reports To', {
       firstName: Proj.attr('Reports To - First Name')
     }),
-    order: Proj.belongsTo('order', {
+    order: Proj.belongsTo('order', 'Order', {
       orderDate: Proj.attr('Order Date')
     }),
-    tmpChildren: Proj.hasMany('employee', {
+    tmpChildren: Proj.hasMany('employee', 'Tmp Children', {
       lastName: Proj.attr('Tmp Children - Last Name')
     })
   });

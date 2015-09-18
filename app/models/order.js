@@ -20,10 +20,10 @@ Model.defineProjection('OrderE', 'order', {
   shipName: Proj.attr('Ship Name'),
   shipCountry: Proj.attr('Ship Country'),
   orderDate: Proj.attr('Order Date'),
-  employee: Proj.belongsTo('employee', {
+  employee: Proj.belongsTo('employee', 'Employee', {
     firstName: Proj.attr('Employee First Name'),
     lastName: Proj.attr('Employee Last Name')
-  })
+  }, { hidden: true })
 });
 
 Model.defineProjection('OrderL', 'order', {

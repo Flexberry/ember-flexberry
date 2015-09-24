@@ -21,6 +21,7 @@ export default Ember.Component.extend({
   sorting: null,
 
   headerCellComponent: 'object-list-view-header-cell',
+  cellComponent: 'object-list-view-cell',
 
   action: 'rowClick',
   addColumnToSorting: 'addColumnToSorting',
@@ -105,10 +106,15 @@ export default Ember.Component.extend({
   },
 
   _createColumn: function(attr, bindingPath) {
+    let cellComponent = this.get('cellComponent');
+    if (typeof cellComponent === 'function') {
+      cellComponent = cellComponent(attr, bindingPath);
+    }
+
     let column = {
       header: attr.caption,
-      propName: bindingPath,
-      cellComponent: 'object-list-view-cell'
+      propName: bindingPath, // TODO: rename column.propName
+      cellComponent: cellComponent
     };
 
     let sortDef;

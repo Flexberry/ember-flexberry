@@ -68,9 +68,11 @@
 		<label>Orders</label>
 	</div>
     <div>
-      {{age-table/age-table
-        items=model.orders
-        projection=model.projection.details.orders
+      {{object-list-view
+        class = "ui attached"
+        modelProjection = modelProjection.attributes.orders
+        content = model.orders
+        cellComponent = getCellComponent
       }}
     </div>
   </div>

@@ -54,5 +54,10 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
 
   _onDeleteActionRejected: function(errorData) {
     this.rejectError(errorData, 'Delete failed.');
+  },
+
+  getCellComponent: function(attr, bindingPath) {
+    // TODO: return different components by attr type.
+    return 'object-list-view-input-cell';
   }
 });

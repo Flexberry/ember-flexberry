@@ -5,12 +5,12 @@ export default ProjectedModelRoute.extend({
     this._super.apply(this, arguments);
 
     let modelName = this.get('modelName');
-    let modelProj = this.get('modelProjection');
+    let modelProjName = this.get('modelProjection');
 
     // :id param defined in router.js
     return this.store.findRecord(modelName, params.id, {
       reload: true,
-      projection: modelProj
+      projection: modelProjName
     });
   },
 
@@ -22,5 +22,16 @@ export default ProjectedModelRoute.extend({
     if (model && model.get('isDirty')) {
       model.rollback();
     }
+  },
+
+  setupController: function(controller, model) {
+    // Call _super for default behavior.
+    this._super(controller, model);
+
+    // Define 'modelProjection' for controller instance.
+    let modelClass = model.constructor;
+    let modelProjName = this.get('modelProjection');
+    let proj = modelClass.projections.get(modelProjName);
+    controller.set('modelProjection', proj);
   }
 });

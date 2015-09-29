@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
-import ApplicationSerializer from 'prototype-ember-cli-application/serializers/application';
+import ApplicationSerializer from '../../../serializers/application';
 
 var CustomModel;
 var CustomSerializer;

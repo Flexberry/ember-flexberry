@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Settings from '../models/settings';
 
 export default Ember.Mixin.create({
   perPageValues: [2, 3, 4, 5, 10, 20, 50],
@@ -18,9 +19,8 @@ export default Ember.Mixin.create({
     },
     set(key, value) {
       // Save setting.
-      var model = this.controllerFor('application').get('model');
-      model.set('perPage', value);
-      model.save();
+      let settings = Settings.create();
+      settings.set('perPage', value);
 
       // Reload current route.
       this.target.router.refresh();

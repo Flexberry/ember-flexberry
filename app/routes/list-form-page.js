@@ -2,6 +2,7 @@ import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import ProjectedModelRoute from '../routes/base/projected-model-route';
+import Settings from '../models/settings';
 
 export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixin, {
   actions: {
@@ -21,7 +22,9 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
 
   model: function(params, transition) {
     var page = parseInt(params.page, 10);
-    var perPage = this.modelFor('application').get('perPage');
+
+    let settings = Settings.create();
+    let perPage = settings.get('perPage');
 
     Ember.assert('page must be greater than zero.', page > 0);
     Ember.assert('per_page must be greater than zero.', perPage > 0);

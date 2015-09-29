@@ -1,4 +1,4 @@
-import ProjectedModelRoute from '../routes/base/projected-model-route';
+import ProjectedModelRoute from '../routes/-projected-model';
 
 export default ProjectedModelRoute.extend({
   model: function(params, transition) {

@@ -1,9 +1,9 @@
 {{input
   type="text"
-  class="form-control form-control-trunc"
+  class="form-control form-control-trunc lookup-field"
   placeholder=placeholder
   disabled=true
   value=value
 }}
-<button class="btn btn-primary" {{action 'choose' relationName projection}}>{{chooseText}}</button>
-<button class="btn btn-primary" {{action 'remove' relationName}}>{{removeText}}</button>
+<button class="ui primary button" {{action 'choose' relationName projection}}>{{chooseText}}</button>
+<button class="ui primary button" {{action 'remove' relationName}}>{{removeText}}</button>

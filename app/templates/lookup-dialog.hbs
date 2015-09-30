@@ -1,8 +1,9 @@
 {{#modal-dialog title='Lookup' ok='saveLookupDialog' close='removeModalDialog'}}
   <div id="lookup-list" class="list-group" style="height: 300px; width: 570px;">
     {{object-list-view
-      columns=tableColumns
-      content=model
+      class = "ui bottom attached"
+      modelProjection = modelProjection
+      content = model
     }}
   </div>
 {{/modal-dialog}}

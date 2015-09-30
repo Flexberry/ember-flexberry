@@ -3,11 +3,14 @@ import ErrorableControllerMixin from '../mixins/errorable-controller';
 import LookupFieldMixin from '../components/lookup-field/lookup-field-mixin';
 
 export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixin, {
-  // lookup controller name
-  lookupControllerName: 'lookup-dialog',
 
-  // lookup modal dialog name
-  lookupDialogName: 'lookup-dialog',
+  // lookup settings
+  lookupSettings: {
+    controllerName: 'lookup-dialog',
+    template: 'lookup-dialog',
+    contentTemplate: 'lookup-dialog-content',
+    loaderTemplate: 'loading'
+  },
 
   actions: {
     save: function() {

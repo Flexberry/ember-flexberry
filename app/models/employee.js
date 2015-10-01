@@ -1,8 +1,8 @@
 import DS from 'ember-data';
-import ProjectedModel from './projected-model';
+import BaseModel from './base';
 import Proj from '../utils/projection-attributes';
 
-var Model = ProjectedModel.extend({
+var Model = BaseModel.extend({
   firstName: DS.attr('string'),
   lastName: DS.attr('string'),
   birthDate: DS.attr('date'),

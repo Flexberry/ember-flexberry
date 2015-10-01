@@ -1,8 +1,8 @@
 import DS from 'ember-data';
-import ProjectedModel from './projected-model';
+import BaseModel from './base';
 import Proj from '../utils/projection-attributes';
 
-var Model = ProjectedModel.extend({
+var Model = BaseModel.extend({
   shipName: DS.attr('string'),
   shipCountry: DS.attr('string'),
   orderDate: DS.attr('date'),

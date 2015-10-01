@@ -1,30 +1,8 @@
 import Ember from 'ember';
-import EmberValidations from 'ember-validations';
 import DS from 'ember-data';
 import Projection from '../utils/projection';
-import ValidationData from '../objects/validation-data';
 
-var Model = DS.Model.extend(EmberValidations, {
-  // Validation rules.
-  validations: {},
-
-  save: function() {
-    if (!this.get('isDeleted')) {
-      var validationData = ValidationData.create({
-        noChanges: !this.get('isDirty'),
-        anyErrors: this.get('isInvalid')
-      });
-      validationData.fillErrorsFromProjectedModel(this);
-
-      if (validationData.noChanges || validationData.anyErrors) {
-        return new Ember.RSVP.Promise(function(resolve, reject) {
-          reject(validationData);
-        });
-      }
-    }
-
-    return this._super.apply(this, arguments);
-  }
+var Model = DS.Model.extend({
 });
 
 Model.reopenClass({

@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from './base';
-import Proj from '../utils/projection-attributes';
+import Proj from 'ember-flexberry-projections/utils/projection-attributes';
 
 var Model = BaseModel.extend({
   shipName: DS.attr('string'),

@@ -5,5 +5,6 @@
     "allExcept": ["inCallExpressions", "inArrayExpressions", "inProperties"]
   },
   "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
-  "requireTrailingComma": null
+  "requireTrailingComma": null,
+  "validateQuoteMarks": { "mark": "'", "escape": true }
 }

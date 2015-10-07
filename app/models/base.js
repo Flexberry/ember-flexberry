@@ -1,5 +1,5 @@
-import ProjectedModel from 'ember-flexberry-projections/models/projected-model';
+import Proj from 'ember-flexberry-projections';
 import ValidateModel from '../mixins/validate-model';
 
-export default ProjectedModel.extend(ValidateModel, {
+export default Proj.Model.extend(ValidateModel, {
 });

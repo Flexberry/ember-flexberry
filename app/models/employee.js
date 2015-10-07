@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from './base';
-import Proj from 'ember-flexberry-projections/utils/projection-attributes';
+import Proj from 'ember-flexberry-projections';
 
 var Model = BaseModel.extend({
   firstName: DS.attr('string'),

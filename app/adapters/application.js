@@ -2,10 +2,11 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import config from '../config/environment';
 import SnapshotTransform from '../utils/snapshot-transform';
+import Proj from 'ember-flexberry-projections';
 
 // Adapter for OData service.
 // TODO: ODataAdapter.
-export default DS.RESTAdapter.extend({
+export default DS.RESTAdapter.extend(Proj.Adapter, {
   host: config.APP.backendUrls.api,
   pathForType: function(type) {
     var camelized = Ember.String.camelize(type);
@@ -27,12 +28,6 @@ export default DS.RESTAdapter.extend({
     }
 
     return query;
-  },
-
-  urlForQueryRecord: function(query, modelName) {
-    let id = query.id;
-    delete query.id;
-    return this._buildURL(modelName, id);
   },
 
   _buildURL: function(modelName, id) {

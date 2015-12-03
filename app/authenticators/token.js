@@ -2,6 +2,8 @@ import Ember from 'ember';
 import BaseAuthenticator from 'simple-auth/authenticators/base';
 
 export default BaseAuthenticator.extend({
+  tokenEndpoint: null,
+
   restore: function(data) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
       if (!Ember.isEmpty(data.token)) {
@@ -14,6 +16,8 @@ export default BaseAuthenticator.extend({
 
   // Аутентификация с запросом к серверу и получение соответствующего token.
   authenticate: function(credentials) {
+    Ember.assert('tokenEndpoint should be defined', this.tokenEndpoint);
+
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.$.ajax({
         url: this.tokenEndpoint,
@@ -42,6 +46,8 @@ export default BaseAuthenticator.extend({
   },
 
   invalidate: function() {
+    Ember.assert('tokenEndpoint should be defined', this.tokenEndpoint);
+
     return new Ember.RSVP.Promise((resolve) => {
       Ember.$.ajax({ url: this.tokenEndpoint, type: 'DELETE' }).always(function() {
         resolve();

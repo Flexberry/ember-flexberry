@@ -37,7 +37,8 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
     // TODO: нужно учитывать пэйджинг.
     // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
     // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-    this.transitionToRoute(this.get('parentRoute'));
+    let routeName = this.get('parentRoute') || Ember.String.pluralize(this.get('model.constructor.modelName'));
+    this.transitionToRoute(routeName);
   },
 
   _onSaveActionFulfilled: function() {

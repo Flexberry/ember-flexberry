@@ -1,12 +1,4 @@
-import Ember from 'ember';
-import BaseAuthorizer from 'simple-auth/authorizers/base';
+import TokenAuthorizer from './token';
 
-export default BaseAuthorizer.extend({
-  authorize: function(jqXHR, requestOptions) {
-    var session = this.get('session');
-    var secure = session.get('secure');
-    if (session.get('isAuthenticated') && !Ember.isEmpty(secure.token)) {
-      jqXHR.setRequestHeader('Authorization', 'Bearer ' + secure.token);
-    }
-  }
+export default TokenAuthorizer.extend({
 });

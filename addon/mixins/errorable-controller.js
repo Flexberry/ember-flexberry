@@ -4,7 +4,7 @@ import ValidationData from '../objects/validation-data';
 export default Ember.Mixin.create({
   init: function() {
     this._super.apply(this, arguments);
-    this.set('errorMessages', []);
+    this.set('errorMessages', Ember.A([]));
   },
 
   actions:{

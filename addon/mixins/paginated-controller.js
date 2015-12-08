@@ -2,12 +2,12 @@ import Ember from 'ember';
 import Settings from '../models/settings';
 
 export default Ember.Mixin.create({
-  perPageValues: [2, 3, 4, 5, 10, 20, 50],
+  perPageValues: ['2', '3', '4', '5', '10', '20', '50'],
 
   per_page: Ember.computed('content.pagination.per_page', {
     get(key) {
       var val = this.get('content.pagination.per_page');
-      if (!this.perPageValues.contains(val)) {
+      if (this.perPageValues.indexOf(val) === -1) {
         // Если per_page не будет в perPageValues,
         // то в select-е будет выбрано undefined,
         // => per_page изменится undefined, т.к. на нем биндинг.

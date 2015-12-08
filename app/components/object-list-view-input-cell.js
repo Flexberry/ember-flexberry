@@ -1,8 +1,2 @@
-import Ember from 'ember';
-
-export default Ember.Component.extend({
-  tagName: 'td',
-  classNames: [],
-  column: null,
-  record: null
-});
+import ObjectListViewInputCell from 'ember-flexberry/components/object-list-view-input-cell';
+export default ObjectListViewInputCell;

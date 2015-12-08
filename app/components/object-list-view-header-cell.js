@@ -1,11 +1,2 @@
-import Ember from 'ember';
-
-export default Ember.Component.extend({
-  tagName: 'th',
-  classNames: ['dt-head-left'],
-  column: null,
-  action: 'headerCellClick',
-  click: function(event) {
-    this.sendAction('action', this.column, event);
-  }
-});
+import ObjectListViewHeaderCell from 'ember-flexberry/components/object-list-view-header-cell';
+export default ObjectListViewHeaderCell;

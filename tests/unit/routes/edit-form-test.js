@@ -1,14 +1,7 @@
-import {
-  moduleFor,
-  test
-} from 'ember-qunit';
-
-moduleFor('route:edit-form', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
-});
+import { test } from 'ember-qunit';
+import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 test('it exists', function(assert) {
-  var route = this.subject();
+  var route = EditFormRoute.create();
   assert.ok(route);
 });

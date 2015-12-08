@@ -6,18 +6,6 @@ export default Ember.Controller.extend({
       link: 'index',
       title: 'Home',
       children: null
-    }, {
-      link: null,
-      title: 'Objects',
-      children: [{
-        link: 'employees',
-        title: 'Employees',
-        children: null
-      }, {
-        link: 'orders',
-        title: 'Orders',
-        children: null
-      }]
     }]
   }
 });

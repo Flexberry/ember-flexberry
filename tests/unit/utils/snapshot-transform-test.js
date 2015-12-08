@@ -1,4 +1,4 @@
-import SnapshotTransform from '../../../utils/snapshot-transform';
+import SnapshotTransform from 'ember-flexberry/utils/snapshot-transform';
 import { module, test } from 'qunit';
 
 module('snapshotTransform');

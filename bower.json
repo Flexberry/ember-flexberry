@@ -1,5 +1,5 @@
 {
-  "name": "prototype-ember-cli-application",
+  "name": "ember-flexberry",
   "dependencies": {
     "ember": "1.13.7",
     "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.3",
@@ -14,9 +14,9 @@
     "jquery-mockjax": "~1.6.2",
     "loader.js": "ember-cli/loader.js#3.2.1",
     "qunit": "~1.18.0",
-    "semantic-ui": "~2.0.8",
     "semantic-ui-daterangepicker": "git://github.com/BreadMaker/semantic-ui-daterangepicker.git#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be",
     "datatables": "~1.10.8",
-    "blob-polyfill": "~1.0.20150320"
+    "blob-polyfill": "~1.0.20150320",
+    "semantic-ui": "~2.1.6"
   }
 }

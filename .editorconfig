@@ -21,7 +21,7 @@ insert_final_newline = false
 indent_style = space
 indent_size = 2
 
-[*.{css,scss}]
+[*.css]
 indent_style = space
 indent_size = 2
 

@@ -1,4 +1,2 @@
-import Ember from 'ember';
-import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
-
-export default Ember.Route.extend(AuthenticatedRouteMixin);
+import ApplicationIndexRoute from 'ember-flexberry/routes/index';
+export default ApplicationIndexRoute;

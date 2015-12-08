@@ -1,5 +1,5 @@
-import BaseLoginController from './base-login';
+import LoginController from 'ember-flexberry/controllers/login';
 
-export default BaseLoginController.extend({
+export default LoginController.extend({
   authenticator: 'authenticator:custom'
 });

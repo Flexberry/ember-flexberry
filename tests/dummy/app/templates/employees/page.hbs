@@ -28,7 +28,7 @@
     <button class="ui {{unless hasNextPage 'disabled'}} button" {{action "nextPage"}}>&raquo;</button>
   </div>
   <div class="right menu">
-    {{#ui-dropdown selection = per_page class = "compact selection"}}
+    {{#ui-dropdown value=per_page class="compact selection"}}
         <i class="dropdown icon"></i>
         <div class="text">{{per_page}}</div>
         <div class="menu">

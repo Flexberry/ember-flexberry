@@ -45,22 +45,22 @@
 		{{datetime-picker placeholder="(no value)" hasTimePicker=true value=model.orderDate}}
 	</div>
   </div>
-  <div class="ui grid {{if model.errors.employeeID.firstName 'error' ''}}">
+  <div class="ui grid {{if model.errors.employee.firstName 'error' ''}}">
 	<div class="ui two wide column right aligned middle aligned content">
 		<label>Employee FirstName</label>
 	</div>
 	<div class="ten wide column">
-		<span style="color:red">{{model.errors.employeeID.firstName}}</span>
-		{{input type="text" placeholder="(no value)" required=true value=model.employeeID.firstName}}
+		<span style="color:red">{{model.errors.employee.firstName}}</span>
+		{{input type="text" placeholder="(no value)" required=true value=model.employee.firstName}}
 	</div>
   </div>
-  <div class="ui grid {{if model.errors.employeeID.lastName 'error' ''}}">
+  <div class="ui grid {{if model.errors.employee.lastName 'error' ''}}">
 	<div class="ui two wide column right aligned middle aligned content">
 		<label>Employee LastName</label>
 	</div>
 	<div class="ten wide column">
-		<span style="color:red">{{model.errors.employeeID.lastName}}</span>
-		{{input type="text" placeholder="(no value)" required=true value=model.employeeID.lastName}}
+		<span style="color:red">{{model.errors.employee.lastName}}</span>
+		{{input type="text" placeholder="(no value)" required=true value=model.employee.lastName}}
 	</div>
   </div>
 </form>

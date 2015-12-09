@@ -3,6 +3,8 @@ import ListFormPageController from '../controllers/list-form-page';
 export default ListFormPageController.extend({
   _currentRow: undefined,
 
+  title: undefined,
+
   actions: {
 
     // Save the currentRow on rowClicked.

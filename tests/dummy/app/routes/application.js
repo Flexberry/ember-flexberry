@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
+// TODO: split auth\modal logic into separate classes and move to addon.
 export default Ember.Route.extend(ApplicationRouteMixin, {
   actions: {
     invalidateSession: function() {

@@ -1,4 +1,3 @@
-import EmberTableColumnDefinition from 'ember-table/models/column-definition';
 import ListFormPageController from '../controllers/list-form-page';
 
 export default ListFormPageController.extend({
@@ -25,14 +24,6 @@ export default ListFormPageController.extend({
       // will do it automatically after bug fix.
       saveTo.model.send('becomeDirty');
     }
-  },
-
-  /*
-   * Override a function to create EmberTableColumnDefinition object
-   * without sortable-column mixin.
-   */
-  createColumnDefinition: function(params) {
-    return EmberTableColumnDefinition.create(params);
   },
 
   clear: function() {

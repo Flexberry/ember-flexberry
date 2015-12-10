@@ -1,24 +1,17 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-  // Lookup controller name.
-  lookupControllerName: undefined,
 
-  // Lookup modal dialog name.
-  lookupDialogName: undefined,
+  // Lookup settings.
+  lookupSettings: {
+    controllerName: undefined,
+    template: undefined,
+    contentTemplate: undefined,
+    loaderTemplate: undefined
+  },
 
   actions: {
     showLookupDialog: function(relationName, projectionName) {
-      var lookupControllerName = this.get('lookupControllerName');
-      if (!lookupControllerName) {
-        throw new Error('Lookup controller name is undefined.');
-      }
-
-      var lookupDialogName = this.get('lookupDialogName');
-      if (!lookupDialogName) {
-        throw new Error('Lookup modal dialog name is undefined.');
-      }
-
       if (!projectionName) {
         throw new Error('ProjectionName is undefined.');
       }
@@ -46,19 +39,55 @@ export default Ember.Mixin.create({
         throw new Error(`No projection with '${projectionName}' name defined in '${relatedToType}' model. `);
       }
 
-      var controller = this.controllerFor(lookupControllerName)
-        .clear()
-        .set('modelProjection', projection)
-        .set('saveTo', {
-          model: model,
-          propName: relationName
-        });
+      // Lookup
+      var lookupSettings = this.get('lookupSettings');
+      if (!lookupSettings) {
+        throw new Error('Lookup settings are undefined.');
+      }
 
-      this.send('showModalDialog', lookupDialogName, {
-        controller: controller,
-        model: this.store.query(relatedToType, {
-          projection: projectionName
-        })
+      if (!lookupSettings.template) {
+        throw new Error('Lookup template is undefined.');
+      }
+
+      if (!lookupSettings.controllerName) {
+        throw new Error('Lookup controller name is undefined.');
+      }
+
+      if (!lookupSettings.contentTemplate) {
+        throw new Error('Lookup content template is undefined.');
+      }
+
+      if (!lookupSettings.loaderTemplate) {
+        throw new Error('Lookup loader template is undefined.');
+      }
+
+      var titleForModalDialog = this.get('title');
+
+      this.send('showModalDialog', lookupSettings.template);
+      var loadingParams = {
+        view: lookupSettings.template,
+        outlet: 'modal-content'
+      };
+      this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
+
+      this.store.query(relatedToType, {
+        projection: projectionName
+      }).then(data => {
+        this.send('removeModalDialog', loadingParams);
+        var controller = this.controllerFor(lookupSettings.controllerName)
+          .clear()
+          .set('modelProjection', projection)
+          .set('title', titleForModalDialog)
+          .set('saveTo', {
+            model: model,
+            propName: relationName
+          })
+          .setCurrentRow();
+
+        this.send('showModalDialog', lookupSettings.contentTemplate, {
+          controller: controller,
+          model: data
+        }, loadingParams);
       });
     },
 

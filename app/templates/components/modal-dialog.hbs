@@ -1,17 +1,15 @@
-<div class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">{{title}}</h4>
-      </div>
-      <div class="modal-body">
-        {{yield}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" {{action 'ok'}}>OK</button>
-      </div>
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+    {{title}}
+  </div>
+  <div class="content">
+    <div class="description">
+      {{yield}}
     </div>
+  </div>
+  <div class="actions">
+    <button type="button" class="ui cancel button" data-dismiss="modal">Close</button>
+    <button type="button" class="ui positive button">OK</button>
   </div>
 </div>

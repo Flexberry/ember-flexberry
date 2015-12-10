@@ -74,7 +74,6 @@ export default Ember.Mixin.create({
         projection: projectionName
       }).then(data => {
         this.send('removeModalDialog', loadingParams);
-
         var controller = this.controllerFor(lookupSettings.controllerName)
           .clear()
           .set('modelProjection', projection)
@@ -82,7 +81,8 @@ export default Ember.Mixin.create({
           .set('saveTo', {
             model: model,
             propName: relationName
-          });
+          })
+          .setCurrentRow();
 
         this.send('showModalDialog', lookupSettings.contentTemplate, {
           controller: controller,

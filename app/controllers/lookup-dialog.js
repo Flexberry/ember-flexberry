@@ -33,5 +33,12 @@ export default ListFormPageController.extend({
     this.set('saveTo', undefined);
     this.set('modelProjection', undefined);
     return this;
+  },
+
+  setCurrentRow: function() {
+    var saveTo = this.get('saveTo');
+    var currentRowVal = saveTo.model.get(saveTo.propName);
+    this.set('_currentRow', currentRowVal);
+    return this;
   }
 });

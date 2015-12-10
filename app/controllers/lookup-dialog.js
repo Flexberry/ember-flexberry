@@ -3,6 +3,8 @@ import ListFormPageController from '../controllers/list-form-page';
 export default ListFormPageController.extend({
   _currentRow: undefined,
 
+  title: undefined,
+
   actions: {
 
     // Save the currentRow on rowClicked.
@@ -30,6 +32,13 @@ export default ListFormPageController.extend({
     this.set('_currentRow', undefined);
     this.set('saveTo', undefined);
     this.set('modelProjection', undefined);
+    return this;
+  },
+
+  setCurrentRow: function() {
+    var saveTo = this.get('saveTo');
+    var currentRowVal = saveTo.model.get(saveTo.propName);
+    this.set('_currentRow', currentRowVal);
     return this;
   }
 });

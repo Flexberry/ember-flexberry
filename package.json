@@ -42,6 +42,7 @@
     "ember-flexberry-projections": "https://github.com/Flexberry/ember-flexberry-projections.git",
     "ember-get-helper": "1.0.1",
     "ember-local-storage": "0.0.10",
+    "ember-truth-helpers": "1.2.0",
     "ember-validations": "~2.0.0-alpha.4",
     "semantic-ui-ember": "git://github.com/Semantic-Org/Semantic-UI-Ember.git#1d7319d5f9e2bfc51111701580ad64069e3717a3"
   }

@@ -11,7 +11,7 @@ export default Ember.Mixin.create({
   },
 
   actions: {
-    showLookupDialog: function(relationName, projectionName) {
+    showLookupDialog: function(relationName, projectionName, title) {
       if (!projectionName) {
         throw new Error('ProjectionName is undefined.');
       }
@@ -61,8 +61,6 @@ export default Ember.Mixin.create({
         throw new Error('Lookup loader template is undefined.');
       }
 
-      var titleForModalDialog = this.get('title');
-
       this.send('showModalDialog', lookupSettings.template);
       var loadingParams = {
         view: lookupSettings.template,
@@ -77,7 +75,7 @@ export default Ember.Mixin.create({
         var controller = this.controllerFor(lookupSettings.controllerName)
           .clear()
           .set('modelProjection', projection)
-          .set('title', titleForModalDialog)
+          .set('title', title)
           .set('saveTo', {
             model: model,
             propName: relationName

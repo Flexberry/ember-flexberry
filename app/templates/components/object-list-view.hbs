@@ -7,7 +7,7 @@
 </thead>
 <tbody>
   {{#each content as |record|}}
-    <tr {{action 'rowClick' record}}>
+    <tr class="{{ if (eq selectedRecord record ) 'active' }}" {{action 'rowClick' record}}>
       {{#each columns as |column|}}
         {{component column.cellComponent column=column record=record}}
       {{/each}}

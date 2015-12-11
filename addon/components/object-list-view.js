@@ -19,6 +19,7 @@ export default Ember.Component.extend({
   modelProjection: null,
   content: null,
   sorting: null,
+  selectedRecord: null,
 
   headerCellComponent: 'object-list-view-header-cell',
   cellComponent: 'object-list-view-cell',
@@ -29,6 +30,7 @@ export default Ember.Component.extend({
 
   actions: {
     rowClick: function(record) {
+      this.set('selectedRecord', record);
       this.sendAction('action', record);
     },
     headerCellClick: function(column, event) {

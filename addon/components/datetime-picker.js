@@ -56,11 +56,22 @@ export default Ember.Component.extend({
         format: this.dateTimeFormat
       },
       function(start, end, label) {
-        var dateToSet = start.isValid() ? start.toDate() : _this.invalidDate;
-        _this.set('value', dateToSet);
+        _this.setValue(start);
       }
       );
+      this.$('input').on('apply.daterangepicker', function(ev, picker) {
+        var currentValue = _this.get('value');
+        var pickerStartDateString = moment(picker.startDate.toDate()).format(_this.dateTimeFormat);
+        if (!currentValue || !moment(moment(currentValue).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerStartDateString, _this.dateTimeFormat))) {
+          _this.setValue(picker.startDate);
+        }
+      });
     }
+  },
+
+  setValue: function(dateFromPicker) {
+    var dateToSet = dateFromPicker.isValid() ? dateFromPicker.toDate() : this.invalidDate;
+    this.set('value', dateToSet);
   },
 
   // Set proper start date when value changed outside of component.

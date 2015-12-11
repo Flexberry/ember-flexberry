@@ -5,7 +5,7 @@ module.exports = {
   name: 'ember-flexberry',
 
   included: function(app) {
-    this._super.included.apply(this, arguments);
+    this._super.included.apply(this._super, arguments);
 
     app.import({
       development: 'bower_components/moment/min/moment-with-locales.js',

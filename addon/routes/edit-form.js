@@ -1,6 +1,6 @@
-import ProjectedModelRoute from '../routes/-projected-model';
+import ProjectedModelFormRoute from '../routes/projected-model-form';
 
-export default ProjectedModelRoute.extend({
+export default  ProjectedModelFormRoute.extend({
   model: function(params, transition) {
     this._super.apply(this, arguments);
 

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
-import ProjectedModelRoute from '../routes/-projected-model';
+import ProjectedModelRoute from '../routes/projected-model-form';
 import Settings from '../models/settings';
 
 export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixin, {

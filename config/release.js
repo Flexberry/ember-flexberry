@@ -29,8 +29,11 @@ module.exports = {
         encoding: 'utf8'
       });
 
-      // replace version number in line "var version = 'x.x.x';".
-      contents = contents.replace(/(version = ')(.+)(';)/, '$12.2.2$3');
+      // Version string without 'v' tag prefix.
+      var newVersion = versions.next.replace(/^v/, '');
+
+      // Replace version number in line "var version = 'x.x.x';".
+      contents = contents.replace(/(version = ')(.+)(';)/, '$1' + newVersion + '$3');
 
       fs.writeFileSync(filePath, contents, {
         encoding: 'utf8'

@@ -4,6 +4,8 @@ export default ListFormPageController.extend({
   _currentRow: undefined,
 
   title: undefined,
+  modalWindowHeight: undefined,
+  modalWindowWidth: undefined,
 
   actions: {
 

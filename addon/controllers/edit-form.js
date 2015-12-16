@@ -9,7 +9,9 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
     controllerName: 'lookup-dialog',
     template: 'lookup-dialog',
     contentTemplate: 'lookup-dialog-content',
-    loaderTemplate: 'loading'
+    loaderTemplate: 'loading',
+    modalWindowWidth: 750,
+    modalWindowHeight:600
   },
 
   actions: {

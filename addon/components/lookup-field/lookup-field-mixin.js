@@ -7,7 +7,9 @@ export default Ember.Mixin.create({
     controllerName: undefined,
     template: undefined,
     contentTemplate: undefined,
-    loaderTemplate: undefined
+    loaderTemplate: undefined,
+    modalWindowWidth: undefined,
+    modalWindowHeight:undefined
   },
 
   actions: {
@@ -61,6 +63,14 @@ export default Ember.Mixin.create({
         throw new Error('Lookup loader template is undefined.');
       }
 
+      if (!lookupSettings.modalWindowWidth) {
+        throw new Error('Lookup modal window width is undefined.');
+      }
+
+      if (!lookupSettings.modalWindowHeight) {
+        throw new Error('Lookup modal window height is undefined.');
+      }
+
       this.send('showModalDialog', lookupSettings.template);
       var loadingParams = {
         view: lookupSettings.template,
@@ -76,6 +86,8 @@ export default Ember.Mixin.create({
           .clear()
           .set('modelProjection', projection)
           .set('title', title)
+          .set('modalWindowHeight', lookupSettings.modalWindowHeight)
+          .set('modalWindowWidth', lookupSettings.modalWindowWidth)
           .set('saveTo', {
             model: model,
             propName: relationName

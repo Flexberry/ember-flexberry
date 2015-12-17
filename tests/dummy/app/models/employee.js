@@ -18,6 +18,9 @@ var Model = BaseModel.extend({
     lastName: {
       presence: true,
       length: { minimum: 5 }
+    },
+    orderDate: {
+      datetime: true
     }
   }
 });

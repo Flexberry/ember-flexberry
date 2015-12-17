@@ -11,7 +11,7 @@ var Model = BaseModel.extend({
   // Validation rules.
   validations: {
     orderDate: {
-      presence: true
+      datetime: { allowBlank: false, messages: { blank: 'order date can\'t be blank', invalid: 'please input valid date' } }
     }
   }
 });

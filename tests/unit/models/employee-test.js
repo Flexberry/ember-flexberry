@@ -11,7 +11,8 @@ moduleForModel('employee', {
   needs: ['model:order',
           'service:validations',
           'ember-validations@validator:local/presence',
-          'ember-validations@validator:local/length'],
+          'ember-validations@validator:local/length',
+          'validator:local/datetime'],
   setup: function() {
     App = startApp();
   },
@@ -59,6 +60,7 @@ test('it validates', function(assert) {
     });
 
     model.set('lastName', 'Qwerty');
+    model.set('birthDate', '1933-10-30T00:00:00Z');
     assert.ok(model.get('isValid'), 'Data was set but model is invalid. Check validation rules.');
   });
 });

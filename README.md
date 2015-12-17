@@ -62,9 +62,12 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 
 #### Releasing
 
-* `ember release` 
-
-For more information visit [ember-cli-release](https://github.com/lytics/ember-cli-release).
+* Merge develop with master branch
+  * `git checkout master`
+  * `git merge --no-ff develop`
+  * `git push`
+* `ember release` (for more information visit [ember-cli-release](https://github.com/lytics/ember-cli-release))
+* `npm publish ./` (for more information visit [How to publish packages to NPM](https://gist.github.com/coolaj86/1318304))
 
 #### Deploying
 Manual deployment on [Firebase](https://www.firebase.com):

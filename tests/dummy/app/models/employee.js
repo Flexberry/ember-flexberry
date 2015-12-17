@@ -19,7 +19,7 @@ var Model = BaseModel.extend({
       presence: true,
       length: { minimum: 5 }
     },
-    orderDate: {
+    birthDate: {
       datetime: true
     }
   }

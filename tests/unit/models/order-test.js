@@ -11,7 +11,8 @@ moduleForModel('order', {
   needs: ['model:employee',
           'service:validations',
           'ember-validations@validator:local/presence',
-          'ember-validations@validator:local/length'],
+          'ember-validations@validator:local/length',
+          'validator:local/datetime'],
   setup: function() {
     App = startApp();
   },

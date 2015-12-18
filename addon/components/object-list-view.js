@@ -64,6 +64,7 @@ export default Ember.Component.extend({
     relationshipPath = relationshipPath || '';
 
     for (let attrName in attributes) {
+      let currentRelationshipPath = relationshipPath;
       if (!attributes.hasOwnProperty(attrName)) {
         continue;
       }
@@ -75,7 +76,7 @@ export default Ember.Component.extend({
 
         case 'belongsTo':
           if (!attr.options.hidden) {
-            let bindingPath = relationshipPath + attrName;
+            let bindingPath = currentRelationshipPath + attrName;
             if (attr.options.displayMemberPath) {
               bindingPath += '.' + attr.options.displayMemberPath;
             } else {
@@ -86,8 +87,8 @@ export default Ember.Component.extend({
             columnsBuf.push(column);
           }
 
-          relationshipPath += attrName + '.';
-          this._generateColumns(attr.attributes, columnsBuf, relationshipPath);
+          currentRelationshipPath += attrName + '.';
+          this._generateColumns(attr.attributes, columnsBuf, currentRelationshipPath);
           break;
 
         case 'attr':
@@ -95,7 +96,7 @@ export default Ember.Component.extend({
             break;
           }
 
-          let bindingPath = relationshipPath + attrName;
+          let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, bindingPath);
           columnsBuf.push(column);
           break;

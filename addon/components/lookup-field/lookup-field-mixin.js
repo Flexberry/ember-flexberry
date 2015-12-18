@@ -101,8 +101,8 @@ export default Ember.Mixin.create({
       });
     },
 
-    removeLookupValue: function(relationName) {
-      let model = this.get('model');
+    removeLookupValue: function(relationName, modelToLookup) {
+      let model = modelToLookup ? modelToLookup : this.get('model');
       model.set(relationName, undefined);
 
       // manually set isDirty flag, because its not working now when change relation props

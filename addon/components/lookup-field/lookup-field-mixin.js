@@ -13,12 +13,12 @@ export default Ember.Mixin.create({
   },
 
   actions: {
-    showLookupDialog: function(relationName, projectionName, title) {
+    showLookupDialog: function(relationName, projectionName, title, modelToLookup) {
       if (!projectionName) {
         throw new Error('ProjectionName is undefined.');
       }
 
-      let model = this.get('model');
+      let model = modelToLookup ? modelToLookup : this.get('model');
 
       // Get ember static function to get relation by name.
       var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');

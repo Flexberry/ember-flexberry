@@ -12,10 +12,10 @@ export default Ember.Component.extend({
 
   actions: {
     choose: function(relationName, projection, title) {
-      this.sendAction('choose', relationName, projection, title);
+      this.sendAction('choose', relationName, projection, title, undefined);
     },
     remove: function(relationName) {
-      this.sendAction('remove', relationName);
+      this.sendAction('remove', relationName, undefined);
     }
   }
 });

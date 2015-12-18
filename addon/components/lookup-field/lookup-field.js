@@ -9,6 +9,24 @@ export default Ember.Component.extend({
   value: undefined,
   relationName: undefined,
   title: undefined,
+  cssClass: undefined,
+
+  init() {
+    this._super();
+    if (this.cssClass !== undefined) {
+      var classes = this.cssClass.split(' ');
+      for (var i = 0; i < classes.length; i++) {
+        var classNameToSet = classes[i].trim();
+        if (classNameToSet !== '') {
+          if (this.classNames === undefined) {
+            this.classNames = [];
+          }
+
+          this.classNames.push(classNameToSet);
+        }
+      }
+    }
+  },
 
   actions: {
     choose: function(relationName, projection, title) {

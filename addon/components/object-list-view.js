@@ -20,6 +20,7 @@ export default Ember.Component.extend({
   content: null,
   sorting: null,
   selectedRecord: null,
+  customColumnAttributes: null,
 
   headerCellComponent: 'object-list-view-header-cell',
   cellComponent: 'object-list-view-cell',
@@ -118,6 +119,14 @@ export default Ember.Component.extend({
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent
     };
+
+    let customColumnAttributesFunc = this.get('customColumnAttributes');
+    if (customColumnAttributesFunc) {
+      let customColAttr = customColumnAttributesFunc(attr, bindingPath);
+      if (customColAttr && (typeof customColAttr === 'object')) {
+        Ember.$.extend(true, column, customColAttr);
+      }
+    }
 
     let sortDef;
     let sorting = this.get('sorting');

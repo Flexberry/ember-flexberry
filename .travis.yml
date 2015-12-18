@@ -31,6 +31,11 @@ install:
   - npm install -g bower
   - npm install
   - bower install
+  - npm install -g firebase-tools
 
 script:
   - ember try $EMBER_TRY_SCENARIO test
+
+after_success:
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy -f ember-flexberry-dev -m "Travis Build #$TRAVIS_BUILD_NUMBER"
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember build && firebase deploy -f ember-flexberry -m "Travis Build #$TRAVIS_BUILD_NUMBER"

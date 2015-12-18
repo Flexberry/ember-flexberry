@@ -1,5 +1,5 @@
 {
-  "firebase": "prototype-ember-app",
+  "firebase": "ember-flexberry-test",
   "public": "./dist",
   "ignore": [
     "firebase.json",

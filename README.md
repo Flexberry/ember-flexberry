@@ -19,9 +19,9 @@ Ember Flexberry Addon - Flexberry Template written in Ember.js.
 
 Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality of the addon.
 
-* Stable version (master branch): https://ember-flexberry.firebaseapp.com (TODO)
-* Bleeding edge version (develop branch): https://ember-flexberry-dev.firebaseapp.com (TODO)
-* Temporarily: https://prototype-ember-app.firebaseapp.com
+* Stable version (master branch): https://ember-flexberry.firebaseapp.com
+* Bleeding edge version (develop branch): https://ember-flexberry-dev.firebaseapp.com
+* For temporal testing: https://ember-flexberry-test.firebaseapp.com
 
 ## Collaborating / Development
 
@@ -69,13 +69,19 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 * `ember release` (for more information visit [ember-cli-release](https://github.com/lytics/ember-cli-release))
 * `npm publish ./` (for more information visit [How to publish packages to NPM](https://gist.github.com/coolaj86/1318304))
 
-#### Deploying
+#### Deploying Dummy Application
+
+Automatic deployment on [Firebase](https://www.firebase.com):
+* After a successful [Travis CI build](https://travis-ci.org/Flexberry/ember-flexberry), dummy app deploys on
+  * https://ember-flexberry.firebaseapp.com for master branch
+  * https://ember-flexberry-dev.firebaseapp.com for develop branch
+
 Manual deployment on [Firebase](https://www.firebase.com):
 * `npm install -g firebase-tools` (install [Firebase CLI](https://www.firebase.com/docs/hosting/command-line-tool.html))
 * `ember build` (build application to `dist/` directory)
 * Deploying:
- * For owners, who have access to the https://prototype-ember-app.firebaseio.com:</br>`firebase deploy` (deploy `dist/` directory on https://prototype-ember-app.firebaseapp.com, as described in the [firebase.json](/firebase.json))
- * For others:</br>`firebase deploy -f you-firebase-app` (deploy `dist/` directory on your own Firebase application)
+  * For owners, who have access to the https://ember-flexberry-test.firebaseio.com:</br>`firebase deploy` (deploy `dist/` directory on https://ember-flexberry-test.firebaseapp.com, as described in the [firebase.json](/firebase.json))
+  * For others:</br>`firebase deploy -f you-firebase-app` (deploy `dist/` directory on your own Firebase application)
 
 ## Further Reading / Useful Links
 

@@ -83,6 +83,12 @@ Manual deployment on [Firebase](https://www.firebase.com):
   * For owners, who have access to the https://ember-flexberry-test.firebaseio.com:</br>`firebase deploy` (deploy `dist/` directory on https://ember-flexberry-test.firebaseapp.com, as described in the [firebase.json](/firebase.json))
   * For others:</br>`firebase deploy -f you-firebase-app` (deploy `dist/` directory on your own Firebase application)
 
+#### Documenting
+
+* Document your code using [YUIDoc Syntax Reference](http://yui.github.io/yuidoc/syntax/index.html). For examples, you can look at the documented code in the ember.js repository.
+* After pushing into master branch, documentation will be automatically generated and updated (TODO) in [Flexberry/Documentation repository](https://github.com/Flexberry/Documentation), which is available via http://flexberry.github.io/Documentation.
+* For testing and generating documentation by hands use [YUIDoc](http://yui.github.io/yuidoc/).
+
 ## Further Reading / Useful Links
 
 * [ember.js](http://emberjs.com/)

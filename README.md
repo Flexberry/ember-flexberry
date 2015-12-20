@@ -13,7 +13,7 @@ Ember Flexberry Addon - Flexberry Template written in Ember.js.
 
 ## Documentation
 
-* Auto-generated (TODO, manually for now): http://flexberry.github.io/Documentation
+* Auto-generated under master branch: http://flexberry.github.io/Documentation
 
 ## Demo
 
@@ -86,7 +86,7 @@ Manual deployment on [Firebase](https://www.firebase.com):
 #### Documenting
 
 * Document your code using [YUIDoc Syntax Reference](http://yui.github.io/yuidoc/syntax/index.html). For examples, you can look at the documented code in the ember.js repository.
-* After pushing into master branch, documentation will be automatically generated and updated (TODO) in [Flexberry/Documentation repository](https://github.com/Flexberry/Documentation), which is available via http://flexberry.github.io/Documentation.
+* After pushing into master branch, documentation will be automatically generated and updated in [Flexberry/Documentation repository](https://github.com/Flexberry/Documentation), which is available via http://flexberry.github.io/Documentation.
 * For testing and generating documentation by hands use [YUIDoc](http://yui.github.io/yuidoc/).
 
 ## Further Reading / Useful Links

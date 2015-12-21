@@ -15,6 +15,26 @@ module.exports = {
     });
 
     app.import({
+      development: 'bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js',
+      production:  'bower_components/blueimp-file-upload/js/vendor/jquery.ui.widget.js'
+    });
+
+    app.import({
+      development: 'bower_components/blueimp-file-upload/js/jquery.iframe-transport.js',
+      production:  'bower_components/blueimp-file-upload/js/jquery.iframe-transport.js'
+    });
+
+    app.import({
+      development: 'bower_components/blueimp-file-upload/js/jquery.fileupload.js',
+      production:  'bower_components/blueimp-file-upload/js/jquery.fileupload.js'
+    });
+
+    app.import({
+      development: 'bower_components/jquery-file-download/src/Scripts/jquery.fileDownload.js',
+      production:  'bower_components/jquery-file-download/src/Scripts/jquery.fileDownload.js'
+    });
+
+    app.import({
       development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.js',
       production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.js'
     });

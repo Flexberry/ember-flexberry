@@ -17,6 +17,8 @@
     "semantic-ui-daterangepicker": "git://github.com/BreadMaker/semantic-ui-daterangepicker.git#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be",
     "datatables": "~1.10.8",
     "blob-polyfill": "~1.0.20150320",
-    "semantic-ui": "~2.1.6"
+    "semantic-ui": "~2.1.6",
+    "blueimp-file-upload": "9.11.2",
+    "jquery-file-download": "1.4.4"
   }
 }

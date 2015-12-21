@@ -2,7 +2,7 @@ import Ember from 'ember';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import LookupFieldMixin from '../components/lookup-field/lookup-field-mixin';
 
-export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixin, {
+export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, ErrorableControllerMixin, {
 
   // lookup settings
   lookupSettings: {
@@ -16,11 +16,30 @@ export default Ember.Controller.extend(LookupFieldMixin, ErrorableControllerMixi
 
   actions: {
     save: function() {
-      this.send('dismissErrorMessages');
-      let model = this.get('model');
-      model.save().then(
-        this._onSaveActionFulfilled.bind(this),
-        this._onSaveActionRejected.bind(this));
+      var _this = this;
+
+      // Trigger 'presave' event, and  give handlers possibility to add aync operations promises.
+      var presaveEventArgs = {
+        promises: [],
+        model: _this.get('model')
+      };
+      _this.trigger('modelPreSave', presaveEventArgs);
+
+      // Promises array could be totally changed in event handlers, we should prevent possible errors.
+      presaveEventArgs.promises = Ember.isArray(presaveEventArgs.promises) ? presaveEventArgs.promises : [];
+      presaveEventArgs.promises = presaveEventArgs.promises.filter(function(item, index, array) {
+        return item instanceof  Ember.RSVP.Promise;
+      });
+
+      // Wait for all promises to be resolved.
+      Ember.RSVP.all(presaveEventArgs.promises).then(function(values) {
+        _this.send('dismissErrorMessages');
+        _this.get('model').save().then(
+          _this._onSaveActionFulfilled.bind(_this),
+          _this._onSaveActionRejected.bind(_this));
+      }, function(reason) {
+        _this._onSaveActionRejected.call(_this, reason);
+      });
     },
 
     delete: function() {

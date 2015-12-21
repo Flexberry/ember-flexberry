@@ -22,8 +22,10 @@ export default Ember.Mixin.create({
       this._rejectValidationError(errorData, message);
     } else if (errorData.hasOwnProperty('responseText')) {
       this._rejectAjaxError(errorData, message);
+    } else if (Ember.typeOf(errorData) === 'string') {
+      this._rejectCommonError(errorData, message);
     } else {
-      this.send('addErrorMessage', 'Error occured.');
+      this.send('addErrorMessage', 'Unknown error occurred.');
       throw new Error('Unknown error has been rejected.');
     }
   },
@@ -41,14 +43,18 @@ export default Ember.Mixin.create({
     }
   },
 
-  _rejectAjaxError: function(ajaxError, message) {
-    var respJson = ajaxError.responseJSON;
-    Ember.assert('XMLHttpRequest has responseJSON property', respJson);
+  _rejectAjaxError: function(xhr, message) {
+    var ajaxErrorMessage = Ember.get(xhr, 'responseJSON.error.message') || xhr.statusText;
 
-    if (respJson.error && respJson.error.message) {
-      this.send('addErrorMessage', respJson.error.message);
+    if (responseJson.error && responseJson.error.message) {
+      this.send('addErrorMessage', responseJson.error.message);
     }
 
+    alert(message);
+  },
+
+  _rejectCommonError: function(errorText, message) {
+    this.send('addErrorMessage', errorText);
     alert(message);
   }
 });

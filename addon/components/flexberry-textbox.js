@@ -1,4 +1,4 @@
-import BaseComponent from './base';
+import BaseComponent from './flexberry-base';
 
 // Textbox component for Semantic UI.
 export default BaseComponent.extend({

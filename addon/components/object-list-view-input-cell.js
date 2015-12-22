@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import BaseComponent from './flexberry-base';
 
-export default Ember.Component.extend({
+export default BaseComponent.extend({
   tagName: 'td',
   classNames: [],
   column: null,

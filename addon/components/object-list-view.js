@@ -29,11 +29,14 @@ export default BaseComponent.extend({
   action: 'rowClick',
   addColumnToSorting: 'addColumnToSorting',
   sortByColumn: 'sortByColumn',
+  rowClickable: true,
 
   actions: {
     rowClick: function(record) {
       this.set('selectedRecord', record);
-      this.sendAction('action', record);
+      if (this.rowClickable) {
+        this.sendAction('action', record);
+      }
     },
     headerCellClick: function(column, event) {
       var action = event.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';

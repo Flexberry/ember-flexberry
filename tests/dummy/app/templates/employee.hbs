@@ -14,9 +14,11 @@
 <form class="ui form" role="form">
   <div class="field">
     <div>
-      <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
-      {{#unless model.isNew}}
-      <button type="submit" class="ui primary button" {{action 'delete'}}>Delete</button>
+	  {{#unless readonly}}
+        <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
+        {{#unless model.isNew}}
+        <button type="submit" class="ui primary button" {{action 'delete'}}>Delete</button>
+        {{/unless}}
       {{/unless}}
       <button type="submit" class="ui primary button" {{action 'close'}}>Close</button>
     </div>
@@ -27,7 +29,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.firstName}}</span>
-		{{input type="text" placeholder="(no value)" required=true value=model.firstName}}
+		{{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.firstName}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.lastName 'error' ''}}">
@@ -36,7 +38,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.lastName}}</span>
-		{{input type="text" placeholder="(no value)" required=true value=model.lastName}}
+		{{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.lastName}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.birthDate 'error' ''}}">
@@ -45,7 +47,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.birthDate}}</span>
-		{{datetime-picker placeholder="(no value)" value=model.birthDate}}
+		{{datetime-picker placeholder="(no value)" readonly=readonly value=model.birthDate}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.reportsTo 'error' ''}}">
@@ -74,6 +76,7 @@
         modelProjection = modelProjection.attributes.orders
         content = model.orders
         cellComponent = getCellComponent
+        readonly = readonly
       }}
     </div>
   </div>

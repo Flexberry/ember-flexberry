@@ -1,13 +1,11 @@
 /* global moment:true */
 import Ember from 'ember';
+import BaseComponent from './flexberry-base';
 
 // DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
-export default Ember.Component.extend({
+export default BaseComponent.extend({
   // String with input css classes.
   classes: undefined,
-
-  // Flag to make control readonly.
-  readonly: undefined,
 
   // Flag to make control required.
   required: false,

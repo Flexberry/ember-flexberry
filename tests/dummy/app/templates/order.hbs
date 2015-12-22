@@ -29,7 +29,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.shipName}}</span>
-		{{input type="text" placeholder="(no value)" required=true value=model.shipName}}
+		{{flexberry-textbox placeholder="(no value)" required=true value=model.shipName}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.shipCountry 'error' ''}}">
@@ -38,7 +38,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.shipCountry}}</span>
-		{{input type="text" placeholder="(no value)" required=true value=model.shipCountry}}
+		{{flexberry-textbox placeholder="(no value)" required=true value=model.shipCountry}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.orderDate 'error' ''}}">
@@ -56,7 +56,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.employee.firstName}}</span>
-		{{input type="text" placeholder="(no value)" required=true value=model.employee.firstName}}
+		{{flexberry-textbox placeholder="(no value)" required=true value=model.employee.firstName}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.employee.lastName 'error' ''}}">
@@ -65,7 +65,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.employee.lastName}}</span>
-		{{input type="text" placeholder="(no value)" required=true value=model.employee.lastName}}
+		{{flexberry-textbox placeholder="(no value)" required=true value=model.employee.lastName}}
 	</div>
   </div>
 </form>

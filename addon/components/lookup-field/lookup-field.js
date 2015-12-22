@@ -11,6 +11,9 @@ export default Ember.Component.extend({
   title: undefined,
   cssClass: undefined,
 
+  readonly:  false,
+  buttonToggleReadonlyVisible: false,
+
   init() {
     this._super();
     if (this.cssClass !== undefined) {
@@ -29,6 +32,9 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    toggleReadonly() {
+      this.toggleProperty('readonly');
+    },
     choose: function(relationName, projection, title) {
       this.sendAction('choose', relationName, projection, title, undefined);
     },

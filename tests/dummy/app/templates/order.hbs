@@ -14,7 +14,12 @@
 <form class="ui form" role="form">
   <div class="field">
     <div>
-      <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
+      {{#unless readOnly}}
+        <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
+        {{#unless model.isNew}}
+        <button type="submit" class="ui primary button" {{action 'delete'}}>Delete</button>
+        {{/unless}}
+      {{/unless}}
       <button type="submit" class="ui primary button" {{action 'close'}}>Close</button>
     </div>
   </div>

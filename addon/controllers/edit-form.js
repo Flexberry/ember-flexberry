@@ -14,8 +14,30 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
     modalWindowHeight:600
   },
 
+  // Get query parameters.
+  queryParams: {
+    readOnlyQueryMode: 'readonly'
+  },
+
+  // Query parameter for readonly.
+  readOnlyQueryMode: null,
+
+  // Get if current form opened only for reading.
+  readOnly: Ember.computed('readOnlyQueryMode', function() {
+    var formMode = this.get('readOnlyQueryMode');
+    return formMode && String(formMode).toLowerCase() === 'true';
+  }),
+
+  // Message to show if user tries to do something with readonly form.
+  readonlyMessage: 'Form was opened only for reading.',
+
   actions: {
     save: function() {
+      if (this.get('readOnly')) {
+        alert(this.get('readonlyMessage'));
+        return;
+      }
+
       var _this = this;
 
       // Trigger 'presave' event, and  give handlers possibility to add aync operations promises.
@@ -43,6 +65,11 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
     },
 
     delete: function() {
+      if (this.get('readOnly')) {
+        alert(this.get('readonlyMessage'));
+        return;
+      }
+
       if (confirm('Are you sure you want to delete that record?')) {
         this.send('dismissErrorMessages');
         let model = this.get('model');

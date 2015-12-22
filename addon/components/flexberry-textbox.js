@@ -5,9 +5,6 @@ export default BaseComponent.extend({
   // String with input css classes.
   classes: undefined,
 
-  // Flag to make control readonly.
-  readonly: undefined,
-
   // Flag to make control required.
   required: false,
 

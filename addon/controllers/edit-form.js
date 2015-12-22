@@ -23,7 +23,7 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
   readOnlyQueryMode: null,
 
   // Get if current form opened only for reading.
-  readOnly: Ember.computed('readOnlyQueryMode', function() {
+  readonly: Ember.computed('readOnlyQueryMode', function() {
     var formMode = this.get('readOnlyQueryMode');
     return formMode && String(formMode).toLowerCase() === 'true';
   }),
@@ -33,7 +33,7 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
 
   actions: {
     save: function() {
-      if (this.get('readOnly')) {
+      if (this.get('readonly')) {
         alert(this.get('readonlyMessage'));
         return;
       }
@@ -65,7 +65,7 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
     },
 
     delete: function() {
-      if (this.get('readOnly')) {
+      if (this.get('readonly')) {
         alert(this.get('readonlyMessage'));
         return;
       }

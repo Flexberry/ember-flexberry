@@ -1,7 +1,7 @@
-<div class="file-component-wrapper ui fluid action input">
+<div class="flexberry-file-wrapper ui fluid action input">
 	{{input
 		type = "text"
-		class = "file-component-filename-input"
+		class = "flexberry-file-filename-input"
 		readonly = "readonly"
 		placeholder = placeholder
 		required = required
@@ -9,44 +9,44 @@
 	}}
 	{{#unless readonly}}
 		{{#if addButtonIsVisible}}
-			<label class="file-component-add-button ui icon primary {{unless addButtonIsEnabled "disabled"}} button"
+			<label class="flexberry-file-add-button ui icon primary {{unless addButtonIsEnabled "disabled"}} button"
 				   title={{addButtonTitle}}>
 				<i class="add outline square icon"></i>
 			</label>
 		{{/if}}
 		{{#if removeButtonIsVisible}}
-			<label class="file-component-remove-button ui icon primary {{unless removeButtonIsEnabled "disabled"}} button"
+			<label class="flexberry-file-remove-button ui icon primary {{unless removeButtonIsEnabled "disabled"}} button"
 				   title={{removeButtonTitle}}>
 				<i class="trash outline icon"></i>
 			</label>
 		{{/if}}
 		{{#if uploadButtonIsVisible}}
-			<label class="file-component-upload-button ui icon primary {{unless uploadButtonIsEnabled "disabled"}} {{if uploadIsInProgress "loading"}} button"
+			<label class="flexberry-file-upload-button ui icon primary {{unless uploadButtonIsEnabled "disabled"}} {{if uploadIsInProgress "loading"}} button"
 				   title={{uploadButtonTitle}}>
 				<i class="upload outline icon"></i>
 			</label>
 		{{/if}}
 	{{/unless}}
 	{{#if downloadButtonIsVisible}}
-    <label class="file-component-download-button ui icon primary {{unless downloadButtonIsEnabled "disabled"}} {{if downloadIsInProgress "loading"}} button"
+    <label class="flexberry-file-download-button ui icon primary {{unless downloadButtonIsEnabled "disabled"}} {{if downloadIsInProgress "loading"}} button"
          title={{downloadButtonTitle}}>
       <i class="download outline icon"></i>
     </label>
 	{{/if}}
 </div>
-<input type="file" name="files[]" class="file-component-file-input" style="display:none" />
-<div class="file-component-error-modal-dialog ui small basic modal">
+<input type="file" name="files[]" class="flexberry-file-file-input" style="display:none" />
+<div class="flexberry-file-error-modal-dialog ui small basic modal">
   <div class="ui icon header">
     <i class="file icon"></i>
     {{errorModalDialogTitle}}
   </div>
   <div class="content">
-	  <div class="file-component-error-modal-dialog-content center aligned ui grid">
+	  <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
 		  {{errorModalDialogContent}}
 	  </div>
   </div>
   <div class="actions center aligned ui grid">
-	<div class="file-component-error-modal-dialog-ok-button ui approve green inverted button">
+	<div class="flexberry-file-error-modal-dialog-ok-button ui approve green inverted button">
 		<i class="checkmark icon"></i>
 		Ok
 	</div>

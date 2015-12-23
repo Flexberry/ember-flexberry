@@ -45,10 +45,7 @@ export default Ember.Mixin.create({
 
   _rejectAjaxError: function(xhr, message) {
     var ajaxErrorMessage = Ember.get(xhr, 'responseJSON.error.message') || xhr.statusText;
-
-    if (responseJson.error && responseJson.error.message) {
-      this.send('addErrorMessage', responseJson.error.message);
-    }
+    this.send('addErrorMessage', ajaxErrorMessage);
 
     alert(message);
   },

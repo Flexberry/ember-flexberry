@@ -37,6 +37,16 @@ export default Ember.Component.extend({
   }),
 
   /**
+   * Change value handler.
+   */
+  valueChange: Ember.observer('value', function() {
+    this.sendAction('fileChange', {
+      uploadData: this.get('uploadData'),
+      value: this.get('value')
+    });
+  }),
+
+  /**
    * Data from jQuery fileupload plugin (contains selected file).
    */
   uploadData: null,
@@ -381,10 +391,6 @@ export default Ember.Component.extend({
       }
 
       _this.set('uploadData', uploadData);
-      _this.sendAction('fileChange', {
-        uploadData: uploadData,
-        value: _this.get('value')
-      });
     };
 
     // Initialize jQuery fileupload plugin (https://github.com/blueimp/jQuery-File-Upload/wiki/API).
@@ -437,11 +443,6 @@ export default Ember.Component.extend({
   removeFile: function() {
     this.set('uploadData', null);
     this.set('value', null);
-
-    this.sendAction('fileChange', {
-      uploadData: null,
-      value: null
-    });
   },
 
   /**

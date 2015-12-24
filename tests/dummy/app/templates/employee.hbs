@@ -71,6 +71,10 @@
 		<label>Orders</label>
 	</div>
     <div>
+      {{groupedit-toolbar
+        selectedRecords = selectedRecords
+        selectedRows = selectedRows
+      }}
       {{object-list-view
         class = "ui attached"
         modelProjection = modelProjection.attributes.orders
@@ -81,6 +85,8 @@
         headerClickable = false
         showCheckBoxInRow = true
         showDeleteButtonInRow = true
+        selectedRecords = selectedRecords
+        selectedRows = selectedRows
       }}
     </div>
   </div>

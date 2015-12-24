@@ -1,0 +1,10 @@
+{{#if createNewButton}}
+  <div class="column">
+    <button class="ui primary button" {{action 'addRow'}} disabled={{readonly}}><i class="plus icon"></i></button>
+  </div>
+{{/if}}
+{{#if deleteButton}}
+  <div class="column">
+    <button class={{if isDeleteRowsEnabled 'ui primary button' 'ui disabled primary button'}} disabled={{readonly}} {{action 'deleteRows'}}><i class="minus icon"></i></button>
+  </div>
+{{/if}}

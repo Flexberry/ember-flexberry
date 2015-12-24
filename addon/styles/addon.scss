@@ -28,3 +28,25 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   width: 100%;
   bottom: 0;
 }
+
+// Styles for GroupEdit component
+table.object-list-view tbody tr td:first-child button {
+  padding: 9px 7px;
+  margin: 0 !important;
+}
+
+table.object-list-view tbody tr td:first-child button i {
+  margin: 0 !important;
+}
+
+.groupedit-toolbar {
+  margin-bottom: 1px !important;
+}
+
+.groupedit-toolbar button {
+  padding: 9px 9px !important;
+}
+
+.groupedit-toolbar button i {
+  margin: 0 !important;
+}

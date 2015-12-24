@@ -18,14 +18,14 @@
             {{#if showCheckBoxInRow}}
               <div class="column">
 		        <div class="ui checkbox">
-                <input type="checkbox" disabled={{readonly}}>
+                <input type="checkbox" disabled={{readonly}} {{action 'selectRow' record preventDefault=false}}>
 			    <label></label>
 			  </div>
             </div>
             {{/if}}
             {{#if showDeleteButtonInRow}}
               <div class="column">
-                <button class="ui primary button" style="padding: 11px 9px;" disabled={{readonly}} {{action 'deleteRow' record}}>X</button>
+                <button class="ui primary button" disabled={{readonly}} {{action 'deleteRow' record}}><i class="minus icon"></i></button>
               </div>
             {{/if}}
 		  </div>

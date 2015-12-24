@@ -49,10 +49,35 @@ export default BaseComponent.extend({
     },
     deleteRow: function(record) {
       if (confirm('Do you really want to delete this record?')) {
-        var id = record.get('id');
-        var rowToDelete = this._getRowById(id);
+        var rowToDelete = this._getRowById(record.get('id'));
         rowToDelete.remove();
         record.deleteRecord();
+      }
+    },
+    selectRow: function(record) {
+      var selectedRecords = this.get('selectedRecords');
+      var selectedRows = this.get('selectedRows');
+	  var recordId = record.get('id');
+      var selectedRow = this._getRowById(recordId);
+      var checkBoxChecked = selectedRow.find('input[type=checkbox]').prop("checked");
+      if (checkBoxChecked) {
+        if (selectedRecords.indexOf(record) === -1) {
+          selectedRecords.pushObject(record);
+        }
+        if (selectedRows.indexOf(selectedRow) === -1) {
+          selectedRows.pushObject(selectedRow);
+        }
+      }
+      else {
+        selectedRecords.removeObject(record);
+        var itemToDelete;
+        selectedRows.forEach(function(item, index, enumerable) {
+          var currentKey = item.find('td:eq(0) div:eq(0)').text();
+          if (currentKey === recordId) {
+            itemToDelete = item;
+          }
+        });
+        selectedRows.removeObject(itemToDelete);
       }
     }
   },

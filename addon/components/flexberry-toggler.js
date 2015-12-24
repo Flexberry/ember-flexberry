@@ -61,7 +61,7 @@ export default Ember.Component.extend({
   /**
    * Tag name for component wrapper.
    *
-   * @property classNames
+   * @property tagName
    * @type String
    * @default 'div'
    * @readOnly

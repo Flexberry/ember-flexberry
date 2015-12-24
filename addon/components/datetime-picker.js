@@ -50,7 +50,7 @@ export default BaseComponent.extend({
 
     var readonly = this.get('readonly');
     var _this = this;
-    if (readonly === undefined) {
+    if (!readonly) {
       this.$('input').daterangepicker(
       {
         startDate: startDate,

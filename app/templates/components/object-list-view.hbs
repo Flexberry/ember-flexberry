@@ -1,5 +1,8 @@
 <thead>
   <tr>
+    {{#if (or showCheckBoxInRow showDeleteButtonInRow ) }}
+      <th></th>
+    {{/if}}
     {{#each columns as |column|}}
       {{component headerCellComponent column=column}}
     {{/each}}
@@ -8,6 +11,26 @@
 <tbody>
   {{#each content as |record|}}
     <tr class="{{ if (eq selectedRecord record ) 'active' }}" {{action 'rowClick' record preventDefault=false}}>
+      {{#if (or showCheckBoxInRow showDeleteButtonInRow) }}
+        <td>
+          <div style="display: none">{{record.id}}</div>
+          <div class="ui middle aligned grid">
+            {{#if showCheckBoxInRow}}
+              <div class="column">
+		        <div class="ui checkbox">
+                <input type="checkbox" disabled={{readonly}}>
+			    <label></label>
+			  </div>
+            </div>
+            {{/if}}
+            {{#if showDeleteButtonInRow}}
+              <div class="column">
+                <button class="ui primary button" style="padding: 11px 9px;" disabled={{readonly}} {{action 'deleteRow' record}}>X</button>
+              </div>
+            {{/if}}
+		  </div>
+        </td>
+      {{/if}}
       {{#each columns as |column|}}
         {{component column.cellComponent column=column record=record readonly=readonly}}
       {{/each}}

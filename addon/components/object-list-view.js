@@ -30,6 +30,9 @@ export default BaseComponent.extend({
   addColumnToSorting: 'addColumnToSorting',
   sortByColumn: 'sortByColumn',
   rowClickable: true,
+  headerClickable: true,
+  showCheckBoxInRow: false,
+  showDeleteButtonInRow: false,
 
   actions: {
     rowClick: function(record) {
@@ -39,8 +42,18 @@ export default BaseComponent.extend({
       }
     },
     headerCellClick: function(column, event) {
-      var action = event.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
-      this.sendAction(action, column);
+      if (this.headerClickable) {
+        var action = event.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
+        this.sendAction(action, column);
+      }
+    },
+    deleteRow: function(record) {
+      if (confirm('Do you really want to delete this record?')) {
+        var id = record.get('id');
+        var rowToDelete = this._getRowById(id);
+        rowToDelete.remove();
+        record.deleteRecord();
+      }
     }
   },
 
@@ -111,6 +124,19 @@ export default BaseComponent.extend({
     }
 
     return columnsBuf;
+  },
+
+  _getRowById: function(id) {
+    var _this = this;
+    var row = null;
+    this.$('tbody tr').each(function() {
+      var currentKey = _this.$(this).find('td:eq(0) div:eq(0)').text();
+      if (currentKey === id) {
+        row = _this.$(this);
+        return false;
+      }
+    });
+	return row;
   },
 
   _createColumn: function(attr, bindingPath) {

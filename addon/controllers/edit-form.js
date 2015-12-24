@@ -2,78 +2,102 @@ import Ember from 'ember';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import LookupFieldMixin from '../components/lookup-field/lookup-field-mixin';
 
+/**
+ * Edit form base controller.
+ */
 export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, ErrorableControllerMixin, {
-
-  // lookup settings
+  /**
+   * Lookup settings.
+   */
   lookupSettings: {
     controllerName: 'lookup-dialog',
     template: 'lookup-dialog',
     contentTemplate: 'lookup-dialog-content',
     loaderTemplate: 'loading',
     modalWindowWidth: 750,
-    modalWindowHeight:600
+    modalWindowHeight: 600
   },
 
-  // Get query parameters.
+  /**
+   * Query parameters.
+   */
   queryParams: {
     readOnlyQueryMode: 'readonly'
   },
 
-  // Query parameter for readonly.
+  /**
+   * Query parameter for readonly mode.
+   */
   readOnlyQueryMode: null,
 
-  // Get if current form opened only for reading.
+  /**
+   * Flag: indicates whether the current form is opened only for reading.
+   */
   readonly: Ember.computed('readOnlyQueryMode', function() {
     var formMode = this.get('readOnlyQueryMode');
     return formMode && String(formMode).toLowerCase() === 'true';
   }),
 
-  // Message to show if user tries to do something with readonly form.
+  /**
+   * Message to show if user tries to do something with readonly form.
+   */
   readonlyMessage: 'Form was opened only for reading.',
 
+  /**
+   * Model change handler.
+   */
+  modelChange: Ember.observer('model', function() {
+    // Unsubscribe from previous model 'preSave' event.
+    var onModelPreSave = this.get('_onModelPreSave');
+    if (!(Ember.isNone(onModelPreSave) || Ember.isNone(this._previousModel) || Ember.isNone(this._previousModel.off))) {
+      this._previousModel.off('preSave', onModelPreSave);
+    }
+
+    // Remember new model as previous.
+    var model = this.get('model');
+    if (model !== this._previousModel) {
+      this._previousModel = model;
+    }
+
+    if (!(Ember.isNone(model) || Ember.isNone(model.on))) {
+      // Trigger 'modelPreSave' event on controller, to allow components to handle model's 'preSave' event.
+      onModelPreSave = function(e) {
+        e.model = model;
+        this.trigger('modelPreSave', e);
+      }.bind(this);
+
+      model.on('preSave', onModelPreSave);
+      this.set('_onModelPreSave', onModelPreSave);
+    }
+  }),
+
+  /**
+   * Actions handlers.
+   */
   actions: {
     save: function() {
+      this.send('dismissErrorMessages');
+
       if (this.get('readonly')) {
-        alert(this.get('readonlyMessage'));
+        this._onSaveActionFulfilled(this.get('readonlyMessage'));
         return;
       }
 
-      var _this = this;
-
-      // Trigger 'presave' event, and  give handlers possibility to add aync operations promises.
-      var presaveEventArgs = {
-        promises: [],
-        model: _this.get('model')
-      };
-      _this.trigger('modelPreSave', presaveEventArgs);
-
-      // Promises array could be totally changed in event handlers, we should prevent possible errors.
-      presaveEventArgs.promises = Ember.isArray(presaveEventArgs.promises) ? presaveEventArgs.promises : [];
-      presaveEventArgs.promises = presaveEventArgs.promises.filter(function(item, index, array) {
-        return item instanceof  Ember.RSVP.Promise;
-      });
-
-      // Wait for all promises to be resolved.
-      Ember.RSVP.all(presaveEventArgs.promises).then(function(values) {
-        _this.send('dismissErrorMessages');
-        _this.get('model').save().then(
-          _this._onSaveActionFulfilled.bind(_this),
-          _this._onSaveActionRejected.bind(_this));
-      }, function(reason) {
-        _this._onSaveActionRejected.call(_this, reason);
-      });
+      this.get('model').save().then(this._onSaveActionFulfilled.bind(this),
+      this._onSaveActionRejected.bind(this));
     },
 
     delete: function() {
       if (this.get('readonly')) {
-        alert(this.get('readonlyMessage'));
+        this.send('dismissErrorMessages');
+        this._onSaveActionFulfilled(this.get('readonlyMessage'));
         return;
       }
 
       if (confirm('Are you sure you want to delete that record?')) {
         this.send('dismissErrorMessages');
-        let model = this.get('model');
-        model.destroyRecord().then(
+
+        this.get('model').destroyRecord().then(
           this._onDeleteActionFulfilled.bind(this),
           this._onDeleteActionRejected.bind(this));
       }
@@ -84,6 +108,9 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
     }
   },
 
+  /**
+   * Method to transit to parent's route (previous route).
+   */
   transitionToParentRoute: function() {
     // TODO: нужно учитывать пэйджинг.
     // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
@@ -92,24 +119,44 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
     this.transitionToRoute(routeName);
   },
 
+  /**
+   * Method to get type of object list view cell.
+   */
+  getCellComponent: function(attr, bindingPath) {
+    // TODO: return different components by attr type.
+    return 'object-list-view-input-cell';
+  },
+
+  /**
+   * On save model success handler.
+   */
   _onSaveActionFulfilled: function() {
     alert('Saved.');
   },
 
+  /**
+   * On save model fail handler.
+   */
   _onSaveActionRejected: function(errorData) {
     this.rejectError(errorData, 'Save failed.');
   },
 
+  /**
+   * On delete model success handler.
+   */
   _onDeleteActionFulfilled: function() {
     this.transitionToParentRoute();
   },
 
+  /**
+   * On delete model fail handler.
+   */
   _onDeleteActionRejected: function(errorData) {
     this.rejectError(errorData, 'Delete failed.');
   },
 
-  getCellComponent: function(attr, bindingPath) {
-    // TODO: return different components by attr type.
-    return 'object-list-view-input-cell';
-  }
+  /**
+   * On model 'preSave' event handler.
+   */
+  _onModelPreSave: null
 });

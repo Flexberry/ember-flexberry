@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   /**
    * Class names for component wrapping <div>.
    */
-  classNames: ['file-component'],
+  classNames: ['file-component', 'ui', 'fluid', 'action', 'input'],
 
   /**
    * Copy of value created at initialization moment or after successful upload.
@@ -253,6 +253,8 @@ export default Ember.Component.extend({
    * Initializes file-control component.
    */
   init: function() {
+    this._super.apply(this, arguments);
+
     // Remember initial value.
     var value = this.get('value');
     this.set('initialValue', Ember.copy(value, true));
@@ -327,8 +329,6 @@ export default Ember.Component.extend({
       propertyName: 'downloadButtonTitle',
       defaultPropertyValue: 'Download file'
     });
-
-    this._super.apply(this, arguments);
   },
 
   /**
@@ -411,25 +411,22 @@ export default Ember.Component.extend({
       add: onFileAdd
     });
 
-    // If upload on model presave is allowed, call uploadFile method on controllers 'modelPreSave' event,
-    // and return upload RSVP.Promise to controller.
-    var uploadOnModelPreSave = _this.get('uploadOnModelPreSave');
-    var controller = _this.get('targetObject');
-    if (uploadOnModelPreSave && controller && controller.on) {
-      controller.on('modelPreSave', function(e) {
-        var uploadFilePromise = _this.uploadFile.call(_this, null);
-
-        if (!Ember.isNone(uploadFilePromise) && !Ember.isNone(e) && Ember.isArray(e.promises)) {
-          e.promises.push(uploadFilePromise);
-        }
-      });
+    var targetObject = this.get('targetObject');
+    if (!Ember.isNone(targetObject) && targetObject instanceof Ember.Controller)  {
+      _this.set('currentController', targetObject);
     }
+
+    // Subscribe on controller's 'modelPreSave'event.
+    _this.subscribeOnModelPreSaveEvent();
   },
 
   /**
    * Destroys file-control component.
    */
   willDestroyElement: function() {
+    // Unsubscribe from controller's 'modelPreSave'event.
+    this.unsubscribeFromModelPresaveEvent();
+
     var fileInput = this.$('.flexberry-file-file-input');
     fileInput.fileupload('destroy');
   },
@@ -487,9 +484,8 @@ export default Ember.Component.extend({
       }).fail(function(jqXhr, textStatus, errorThrown) {
         var fileName = ' \'' + file.name + '\'';
         var errorText = errorThrown ? ' (' + errorThrown + ')' : '';
-        var responseText = jqXhr.responseText ? ' Response text: ' + jqXhr.responseText : '';
         var errorTitle = 'File upload error';
-        var errorContent = 'Upload' + fileName + ' failed' + errorText + '.' + responseText;
+        var errorContent = 'Upload' + fileName + ' failed' + errorText + '.';
 
         var showModalDialogOnUploadError = _this.get('showModalDialogOnUploadError');
         if (showModalDialogOnUploadError) {
@@ -501,7 +497,7 @@ export default Ember.Component.extend({
           response: jqXhr,
           value: _this.get('value')
         });
-        reject(Ember.isBlank(responseText) ? errorContent : jqXhr);
+        reject(new Error(errorContent));
       }).always(function() {
         _this.set('uploadIsInProgress', false);
       });
@@ -548,7 +544,7 @@ export default Ember.Component.extend({
             response: errorText,
             value: _this.get('value')
           });
-          reject(errorText);
+          reject(new Error(errorText));
           _this.set('downloadIsInProgress', false);
         }
       });
@@ -567,5 +563,52 @@ export default Ember.Component.extend({
       this.set('errorModalDialogContent', errorContent);
       errorModalDialog.modal('show');
     }
+  },
+
+  /**
+   * Current controller.
+   */
+  currentController: null,
+
+  /**
+   * Controllers 'modelPreSave' event handler.
+   */
+  onModelPresave: null,
+
+  /**
+   * Method to subscribe on controller's 'modelPreSave' event.
+   */
+  subscribeOnModelPreSaveEvent: function() {
+    var uploadOnModelPreSave = this.get('uploadOnModelPreSave');
+    var currentController = this.get('currentController');
+    if (!uploadOnModelPreSave || Ember.isNone(currentController) || Ember.isNone(currentController.on)) {
+      return;
+    }
+
+    // If upload 'modelPreSave' is allowed, call uploadFile method on controllers 'modelPreSave' event,
+    // and return upload RSVP.Promise to controller.
+    var onModelPreSave = function(e) {
+      var uploadFilePromise = this.uploadFile();
+
+      if (!Ember.isNone(uploadFilePromise) && !Ember.isNone(e) && Ember.isArray(e.promises)) {
+        e.promises.push(uploadFilePromise);
+      }
+    }.bind(this);
+
+    currentController.on('modelPreSave', onModelPreSave);
+    this.set('onModelPresave', onModelPreSave);
+  },
+
+  /**
+   * Method to unsubscribe from controller's 'modelPreSave' event.
+   */
+  unsubscribeFromModelPresaveEvent: function() {
+    var currentController = this.get('currentController');
+    var onModelPresave = this.get('onModelPresave');
+    if (Ember.isNone(currentController) || Ember.isNone(currentController.off) || Ember.isNone(onModelPresave)) {
+      return;
+    }
+
+    currentController.off('modelPreSave', onModelPresave);
   }
 });

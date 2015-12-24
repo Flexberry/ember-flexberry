@@ -59,10 +59,21 @@ export default Ember.Component.extend({
   }),
 
   /**
+   * Tag name for component wrapper.
+   *
+   * @property classNames
+   * @type String
+   * @default 'div'
+   * @readOnly
+   */
+  tagName: 'div',
+
+  /**
    * Default class for component wrapper.
    *
    * @property classNames
    * @type Array
+   * @readOnly
    */
   classNames: ['flexberry-toggler'],
 

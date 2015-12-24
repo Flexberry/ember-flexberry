@@ -39,6 +39,7 @@ export default Ember.Component.extend({
         },
         onHidden: function() {
           _this.sendAction('close');
+          this.remove();
         },
         onVisible: function() {
           var wholeHeight = Ember.$(this).height();

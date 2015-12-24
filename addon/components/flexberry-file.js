@@ -417,10 +417,14 @@ export default Ember.Component.extend({
       add: onFileAdd
     });
 
-    var targetObject = this.get('targetObject');
-    if (!Ember.isNone(targetObject) && targetObject instanceof Ember.Controller)  {
-      _this.set('currentController', targetObject);
-    }
+    // Try to get current controller (to subscribe then on controller's 'modelPreSave' event).
+    // Component's 'targetObject' is parent component or a controller (in the end of components hierarchy).
+    var currentController = null;
+    do {
+      currentController = this.get('targetObject');
+    } while (!(Ember.isNone(currentController) || currentController instanceof Ember.Controller));
+
+    _this.set('currentController', currentController);
 
     // Subscribe on controller's 'modelPreSave'event.
     _this.subscribeOnModelPreSaveEvent();

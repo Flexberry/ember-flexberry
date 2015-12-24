@@ -419,10 +419,10 @@ export default Ember.Component.extend({
 
     // Try to get current controller (to subscribe then on controller's 'modelPreSave' event).
     // Component's 'targetObject' is parent component or a controller (in the end of components hierarchy).
-    var currentController = this;
-    do {
+    var currentController = _this.get('targetObject');
+    while (!(Ember.isNone(currentController) || currentController instanceof Ember.Controller)) {
       currentController = currentController.get('targetObject');
-    } while (!(Ember.isNone(currentController) || currentController instanceof Ember.Controller));
+    }
 
     _this.set('currentController', currentController);
 

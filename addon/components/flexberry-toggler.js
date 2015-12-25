@@ -85,15 +85,13 @@ export default Ember.Component.extend({
    */
   didInsertElement() {
     var _this = this;
-    var $content = this.$('.flexberry-toggler-content');
-    var expanded;
-
-    this.$('.flexberry-toggler-caption').click(function() {
-      expanded = _this.get('expanded');
-      expanded = !expanded;
-      _this.set('expanded', expanded);
-      $content.toggle(expanded);
-      return false;
+    this.$('.ui.accordion').accordion({
+      onOpening: function() {
+        _this.set('expanded', _this.$(this).hasClass('active'));
+      },
+      onClosing: function() {
+        _this.set('expanded', _this.$(this).hasClass('active'));
+      }
     });
   }
 });

@@ -37,6 +37,16 @@ export default Ember.Component.extend({
   }),
 
   /**
+   * Change value handler.
+   */
+  valueChange: Ember.observer('value', function() {
+    this.sendAction('fileChange', {
+      uploadData: this.get('uploadData'),
+      value: this.get('value')
+    });
+  }),
+
+  /**
    * Data from jQuery fileupload plugin (contains selected file).
    */
   uploadData: null,
@@ -381,10 +391,6 @@ export default Ember.Component.extend({
       }
 
       _this.set('uploadData', uploadData);
-      _this.sendAction('fileChange', {
-        uploadData: uploadData,
-        value: _this.get('value')
-      });
     };
 
     // Initialize jQuery fileupload plugin (https://github.com/blueimp/jQuery-File-Upload/wiki/API).
@@ -411,10 +417,14 @@ export default Ember.Component.extend({
       add: onFileAdd
     });
 
-    var targetObject = this.get('targetObject');
-    if (!Ember.isNone(targetObject) && targetObject instanceof Ember.Controller)  {
-      _this.set('currentController', targetObject);
+    // Try to get current controller (to subscribe then on controller's 'modelPreSave' event).
+    // Component's 'targetObject' is parent component or a controller (in the end of components hierarchy).
+    var currentController = _this.get('targetObject');
+    while (!(Ember.isNone(currentController) || currentController instanceof Ember.Controller)) {
+      currentController = currentController.get('targetObject');
     }
+
+    _this.set('currentController', currentController);
 
     // Subscribe on controller's 'modelPreSave'event.
     _this.subscribeOnModelPreSaveEvent();
@@ -437,11 +447,6 @@ export default Ember.Component.extend({
   removeFile: function() {
     this.set('uploadData', null);
     this.set('value', null);
-
-    this.sendAction('fileChange', {
-      uploadData: null,
-      value: null
-    });
   },
 
   /**

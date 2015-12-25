@@ -7,6 +7,8 @@ export default BaseComponent.extend({
   // String with input css classes.
   classes: undefined,
 
+  classNames: ['ui', 'icon', 'input'],
+
   // Flag to make control required.
   required: false,
 
@@ -66,8 +68,10 @@ export default BaseComponent.extend({
       },
       function(start, end, label) {
         _this.setValue(end);
-      }
-      );
+      });
+      this.$('i').click(function (){
+        _this.$('input').trigger( "click" );
+      });
       this.$('input').on('apply.daterangepicker', function(ev, picker) {
         var currentValue = _this.get('value');
         var pickerDateString = moment(picker.endDate.toDate()).format(_this.dateTimeFormat);

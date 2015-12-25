@@ -48,6 +48,7 @@ export default Ember.Component.extend({
           var closeHeight = Ember.$('.close', this).height();
           var result = wholeHeight - headHeight - actionsHeight - closeHeight - 50;
           _this.set('modalWindowContentHeight', result);
+          _this.sendAction('created', Ember.$(this));
         }
       }).modal('show');
     }

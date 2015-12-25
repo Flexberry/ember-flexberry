@@ -33,5 +33,18 @@ export default  ProjectedModelFormRoute.extend({
     let modelProjName = this.get('modelProjection');
     let proj = modelClass.projections.get(modelProjName);
     controller.set('modelProjection', proj);
+  },
+
+  actions: {
+    /**
+     * Handles willTransition action (this action is fired at the beginning of any attempted transition).
+     * It sends message about transition to corresponding controller.
+     *
+     * @method willTransition
+     */
+    willTransition: function(transition) {
+      this._super(transition);
+      this.controller.send('routeWillTransition');
+    }
   }
 });

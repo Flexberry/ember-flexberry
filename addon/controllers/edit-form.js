@@ -19,6 +19,15 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
   },
 
   /**
+   * Controller to show lookup modal window.
+   *
+   * @property lookupController
+   * @type Ember.InjectedProperty
+   * @default undefined
+   */
+  lookupController: Ember.inject.controller('lookup-dialog'),
+
+  /**
    * Query parameters.
    */
   queryParams: {

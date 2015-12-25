@@ -12,6 +12,15 @@ export default Ember.Mixin.create({
     modalWindowHeight:undefined
   },
 
+  /**
+   * Controller to show lookup modal window.
+   *
+   * @property lookupController
+   * @type Ember.InjectedProperty
+   * @default undefined
+   */
+  lookupController: undefined,
+
   actions: {
     showLookupDialog: function(relationName, projectionName, title, modelToLookup) {
       if (!projectionName) {
@@ -99,6 +108,16 @@ export default Ember.Mixin.create({
           model: data
         }, loadingParams);
       });
+    },
+
+    /**
+     * Handles correcponding route's willTransition action.
+     * It sends message about transition to showing lookup modal window controller.
+     *
+     * @method routeWillTransition
+     */
+    routeWillTransition: function() {
+      this.get('lookupController').send('routeWillTransition');
     },
 
     removeLookupValue: function(relationName, modelToLookup) {

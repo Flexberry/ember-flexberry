@@ -39,7 +39,7 @@ export default BaseComponent.extend({
    * Service that triggers groupedit events.
    *
    * @property groupEditEventsService
-   * @type Service
+   * @type GroupEditEvents
    */
   groupEditEventsService: Ember.inject.service('groupedit-events'),
 

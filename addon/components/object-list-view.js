@@ -110,6 +110,12 @@ export default BaseComponent.extend({
     return cols;
   }),
 
+  willDestroy() {
+    this.get('groupEditEventsService').off('groupEditAddRow', this, this._addRow);
+    this.get('groupEditEventsService').off('groupEditDeleteRows', this, this._deleteRows);
+    this._super(...arguments);
+  },
+
   _generateColumns: function(attributes, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];
     relationshipPath = relationshipPath || '';

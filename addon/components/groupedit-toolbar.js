@@ -77,6 +77,17 @@ export default FlexberryBase.extend({
   },
 
   /**
+   * Implementation of component's teardown.
+   *
+   * @method willDestroy
+   */
+  willDestroy() {
+    this.get('groupEditEventsService').off('groupEditRowSelected', this, this._rowSelected);
+    this.get('groupEditEventsService').off('groupEditRowsDeleted', this, this._rowsDeleted);
+    this._super(...arguments);
+  },
+
+  /**
    * The collection of functions that will be invoked when
    * click on toolbar buttons.
    *

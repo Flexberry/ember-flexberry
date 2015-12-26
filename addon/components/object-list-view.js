@@ -209,7 +209,10 @@ export default BaseComponent.extend({
 
   _addRow: function(componentName) {
     if (componentName === this.get('componentName')) {
-      alert('It is happend');
+      var modelName = this.get('modelProjection').modelName;
+      var modelToAdd = this.store.createRecord(modelName, {});
+      this.get('content').addObject(modelToAdd);
+      this._addModel(modelToAdd);
     }
   },
 

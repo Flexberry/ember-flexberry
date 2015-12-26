@@ -35,6 +35,10 @@ table.object-list-view tbody tr td:first-child button {
   margin: 0 !important;
 }
 
+table.object-list-view tbody tr td.object-list-view-operations-td {
+  min-width: 68px;
+}
+
 table.object-list-view tbody tr td:first-child button i {
   margin: 0 !important;
 }

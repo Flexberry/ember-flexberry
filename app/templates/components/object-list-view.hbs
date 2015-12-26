@@ -12,7 +12,7 @@
   {{#each content as |record|}}
     <tr class="{{ if (eq selectedRecord record ) 'active' }}" {{action 'rowClick' record preventDefault=false}}>
       {{#if (or showCheckBoxInRow showDeleteButtonInRow) }}
-        <td>
+        <td class="object-list-view-operations-td">
           <div style="display: none">{{record.id}}</div>
           <div class="ui middle aligned grid">
             {{#if showCheckBoxInRow}}

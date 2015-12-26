@@ -34,6 +34,7 @@ export default BaseComponent.extend({
   headerClickable: true,
   showCheckBoxInRow: false,
   showDeleteButtonInRow: false,
+  store: null,
 
   /**
    * Service that triggers groupedit events.
@@ -43,11 +44,21 @@ export default BaseComponent.extend({
    */
   groupEditEventsService: Ember.inject.service('groupedit-events'),
 
+  contentWithKeys: null,
+
   init() {
     this._super(...arguments);
+    this.set('store', this.get('targetObject.store'));
     this.set('selectedRecords', Ember.A());
     this.get('groupEditEventsService').on('groupEditAddRow', this, this._addRow);
     this.get('groupEditEventsService').on('groupEditDeleteRows', this, this._deleteRows);
+    this.set('contentWithKeys', Ember.A());
+    var _this = this;
+    if (this.content) {
+      this.get('content').forEach(function(item, index, enumerable) {
+        _this._addModel(item);
+      });
+    }
   },
 
   actions: {
@@ -63,19 +74,18 @@ export default BaseComponent.extend({
         this.sendAction(action, column);
       }
     },
-    deleteRow: function(record) {
+    deleteRow: function(key, record) {
       if (confirm('Do you really want to delete this record?')) {
-        var rowToDelete = this._getRowById(record.get('id'));
+        var rowToDelete = this._getRowByKey(key);
         rowToDelete.remove();
         record.deleteRecord();
         var componentName = this.get('componentName');
         this.get('groupEditEventsService').rowDeletedTrigger(componentName, record);
       }
     },
-    selectRow: function(record) {
+    selectRow: function(key, record) {
       var selectedRecords = this.get('selectedRecords');
-      var recordId = record.get('id');
-      var selectedRow = this._getRowById(recordId);
+      var selectedRow = this._getRowByKey(key);
       var checkBoxChecked = selectedRow.find('input[type=checkbox]').prop('checked');
       if (checkBoxChecked) {
         if (selectedRecords.indexOf(record) === -1) {
@@ -166,17 +176,35 @@ export default BaseComponent.extend({
     return columnsBuf;
   },
 
-  _getRowById: function(id) {
+  _getRowByKey: function(key) {
     var _this = this;
     var row = null;
     this.$('tbody tr').each(function() {
       var currentKey = _this.$(this).find('td:eq(0) div:eq(0)').text();
-      if (currentKey === id) {
+      if (currentKey === key) {
         row = _this.$(this);
         return false;
       }
     });
     return row;
+  },
+
+  _getModelKey: function(record) {
+    var key = null;
+    this.get('contentWithKeys').forEach(function(item, index, enumerable) {
+      if (item.data === record) {
+        key = item.key;
+      }
+    });
+    return key;
+  },
+
+  _addModel: function(record) {
+    var modelWithKey = Ember.Object.create({});
+    var key = Ember.guidFor(record);
+    modelWithKey.set('key', key);
+    modelWithKey.set('data', record);
+    this.get('contentWithKeys').pushObject(modelWithKey);
   },
 
   _addRow: function(componentName) {
@@ -192,8 +220,8 @@ export default BaseComponent.extend({
         var selectedRecords = this.get('selectedRecords');
         var count = selectedRecords.length;
         selectedRecords.forEach(function(item, index, enumerable) {
-          var recordId = item.get('id');
-          var selectedRow = _this._getRowById(recordId);
+          var key = _this._getModelKey(item);
+          var selectedRow = _this._getRowByKey(key);
           selectedRow.remove();
           item.deleteRecord();
           _this.get('groupEditEventsService').rowDeletedTrigger(componentName, item);

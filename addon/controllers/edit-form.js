@@ -31,18 +31,6 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
   // Message to show if user tries to do something with readonly form.
   readonlyMessage: 'Form was opened only for reading.',
 
-  // TODO: Move this definition to flexberry-groupedit component
-  selectedRecords: null,
-  // TODO: Move this definition to flexberry-groupedit component
-  selectedRows: null,
-
-  init: function() {
-    this._super(...arguments);
-  // TODO: Move this initialization to flexberry-groupedit component
-    this.set('selectedRecords', Ember.A());
-    this.set('selectedRows', Ember.A());
-  },
-
   actions: {
     save: function() {
       if (this.get('readonly')) {

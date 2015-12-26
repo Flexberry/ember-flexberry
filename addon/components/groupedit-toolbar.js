@@ -3,8 +3,23 @@
  */
 
 import Ember from 'ember';
+import FlexberryBase from './flexberry-base';
 
-export default Ember.Component.extend({
+/**
+ * Toolbar compoent for flexberry-groupedit component.
+ *
+ * @class GroupEditToolbar
+ * @extends FlexberryBase
+ */
+export default FlexberryBase.extend({
+  /**
+   * Service that triggers groupedit events.
+   *
+   * @property groupEditEventsService
+   * @type Service
+   */
+  groupEditEventsService: Ember.inject.service('groupedit-events'),
+
   /**
    * Boolean property to show or hide add button in toolbar.
    * Add new record button will not display if set to false.
@@ -35,6 +50,33 @@ export default Ember.Component.extend({
   classNames: ['groupedit-toolbar', 'ui', 'middle', 'aligned', 'grid'],
 
   /**
+   * Tag name for component wrapper.
+   *
+   * @property tagName
+   * @type String
+   * @default 'div'
+   * @readOnly
+   */
+  tagName: 'div',
+
+  /**
+   * The method called when component is instantiated.
+   *
+   * @method init
+   * @throws {Error} An error occurred during the initialization of component.
+   */
+  init() {
+    this._super(...arguments);
+    var componentName = this.get('componentName');
+    if (!componentName) {
+      throw new Error('Name of flexberry-groupedit component was not defined.');
+    }
+
+    this.get('groupEditEventsService').on('groupEditRowSelected', this, this._rowSelected);
+    this.get('groupEditEventsService').on('groupEditRowsDeleted', this, this._rowsDeleted);
+  },
+
+  /**
    * The collection of functions that will be invoked when
    * click on toolbar buttons.
    *
@@ -45,41 +87,16 @@ export default Ember.Component.extend({
   actions: {
     // Add record click button handler
     addRow: function() {
+      var componentName = this.get('componentName');
+      this.get('groupEditEventsService').addRowTrigger(componentName);
     },
 
     // Delete records click button handler
     deleteRows: function() {
-      if (confirm('Do you really want to delete selected records?')) {
-        var selectedRecords = this.get('selectedRecords');
-        var selectedRows = this.get('selectedRows');
-        selectedRows.forEach(function(item, index, enumerable) {
-          item.remove();
-        });
-        selectedRecords.forEach(function(item, index, enumerable) {
-          item.deleteRecord();
-        });
-        selectedRows.clear();
-        selectedRecords.clear();
-      }
+      var componentName = this.get('componentName');
+      this.get('groupEditEventsService').deleteRowsTrigger(componentName);
     }
   },
-
-  /**
-   * The array of selected records in object-list-view
-   *
-   * @property selectedRecords
-   * @type Array
-   */
-  selectedRecords: undefined,
-
-  /**
-   * The array of selected rows in object-list-view.
-   * Each row in array is jQuery object.
-   *
-   * @property selectedRows
-   * @type Array
-   */
-  selectedRows: undefined,
 
   /**
    * Boolean flag to indicate enabled state of delete rows button.
@@ -90,14 +107,33 @@ export default Ember.Component.extend({
   isDeleteRowsEnabled: undefined,
 
   /**
-   * Handles the event, when length of {{#crossLink "selectedRecords:property"}}{{/crossLink}} changed.
-   * Changes state of {{#crossLink "isDeleteRowsEnabled:property"}}{{/crossLink}} flag.
+   * Event handler for "row has been selected" event in groupedit.
    *
-   * @method selectedRecordsLengthObserver
+   * @method _rowSelected
+   * @private
+   *
+   * @param {String} componentName The name of flexberry-groupedit component.
+   * @param {Model} record The model corresponding to selected row in groupedit.
+   * @param {Integer} count Count of selected rows in groupedit.
    */
-  selectedRecordsLengthObserver: Ember.observer('selectedRecords.length', function() {
-    var selectedRecords = this.get('selectedRecords');
-    var operationEnabled = selectedRecords && selectedRecords.length > 0;
-    this.set('isDeleteRowsEnabled', operationEnabled);
-  })
+  _rowSelected: function(componentName, record, count) {
+    if (componentName === this.get('componentName')) {
+      this.set('isDeleteRowsEnabled', count > 0);
+    }
+  },
+
+  /**
+   * Event handler for "selected rows has been deleted" event in groupedit.
+   *
+   * @method __rowsDeleted
+   * @private
+   *
+   * @param {String} componentName The name of flexberry-groupedit component.
+   * @param {Integer} count Count of deleted rows in groupedit.
+   */
+  _rowsDeleted: function(componentName, count) {
+    if (componentName === this.get('componentName')) {
+      this.set('isDeleteRowsEnabled', false);
+    }
+  }
 });

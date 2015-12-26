@@ -21,6 +21,7 @@ export default BaseComponent.extend({
   content: null,
   sorting: null,
   selectedRecord: null,
+  selectedRecords: null,
   customColumnAttributes: null,
 
   headerCellComponent: 'object-list-view-header-cell',
@@ -33,6 +34,21 @@ export default BaseComponent.extend({
   headerClickable: true,
   showCheckBoxInRow: false,
   showDeleteButtonInRow: false,
+
+  /**
+   * Service that triggers groupedit events.
+   *
+   * @property groupEditEventsService
+   * @type Service
+   */
+  groupEditEventsService: Ember.inject.service('groupedit-events'),
+
+  init() {
+    this._super(...arguments);
+    this.set('selectedRecords', Ember.A());
+    this.get('groupEditEventsService').on('groupEditAddRow', this, this._addRow);
+    this.get('groupEditEventsService').on('groupEditDeleteRows', this, this._deleteRows);
+  },
 
   actions: {
     rowClick: function(record) {
@@ -52,33 +68,26 @@ export default BaseComponent.extend({
         var rowToDelete = this._getRowById(record.get('id'));
         rowToDelete.remove();
         record.deleteRecord();
+        var componentName = this.get('componentName');
+        this.get('groupEditEventsService').rowDeletedTrigger(componentName, record);
       }
     },
     selectRow: function(record) {
       var selectedRecords = this.get('selectedRecords');
-      var selectedRows = this.get('selectedRows');
-	  var recordId = record.get('id');
+      var recordId = record.get('id');
       var selectedRow = this._getRowById(recordId);
-      var checkBoxChecked = selectedRow.find('input[type=checkbox]').prop("checked");
+      var checkBoxChecked = selectedRow.find('input[type=checkbox]').prop('checked');
       if (checkBoxChecked) {
         if (selectedRecords.indexOf(record) === -1) {
           selectedRecords.pushObject(record);
         }
-        if (selectedRows.indexOf(selectedRow) === -1) {
-          selectedRows.pushObject(selectedRow);
-        }
       }
       else {
         selectedRecords.removeObject(record);
-        var itemToDelete;
-        selectedRows.forEach(function(item, index, enumerable) {
-          var currentKey = item.find('td:eq(0) div:eq(0)').text();
-          if (currentKey === recordId) {
-            itemToDelete = item;
-          }
-        });
-        selectedRows.removeObject(itemToDelete);
       }
+
+      var componentName = this.get('componentName');
+      this.get('groupEditEventsService').rowSelectedTrigger(componentName, record, selectedRecords.length);
     }
   },
 
@@ -161,7 +170,32 @@ export default BaseComponent.extend({
         return false;
       }
     });
-	return row;
+    return row;
+  },
+
+  _addRow: function(componentName) {
+    if (componentName === this.get('componentName')) {
+      alert('It is happend');
+    }
+  },
+
+  _deleteRows: function(componentName) {
+    if (componentName === this.get('componentName')) {
+      if (confirm('Do you really want to delete selected records?')) {
+        var _this = this;
+        var selectedRecords = this.get('selectedRecords');
+        var count = selectedRecords.length;
+        selectedRecords.forEach(function(item, index, enumerable) {
+          var recordId = item.get('id');
+          var selectedRow = _this._getRowById(recordId);
+          selectedRow.remove();
+          item.deleteRecord();
+          _this.get('groupEditEventsService').rowDeletedTrigger(componentName, item);
+        });
+        selectedRecords.clear();
+        this.get('groupEditEventsService').rowsDeletedTrigger(componentName, count);
+      }
+    }
   },
 
   _createColumn: function(attr, bindingPath) {

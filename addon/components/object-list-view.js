@@ -213,6 +213,7 @@ export default BaseComponent.extend({
       var modelToAdd = this.store.createRecord(modelName, {});
       this.get('content').addObject(modelToAdd);
       this._addModel(modelToAdd);
+      this.get('groupEditEventsService').rowAddedTrigger(componentName, modelToAdd);
     }
   },
 

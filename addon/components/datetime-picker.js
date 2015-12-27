@@ -69,8 +69,8 @@ export default BaseComponent.extend({
       function(start, end, label) {
         _this.setValue(end);
       });
-      this.$('i').click(function (){
-        _this.$('input').trigger( "click" );
+      this.$('i').click(function() {
+        _this.$('input').trigger('click');
       });
       this.$('input').on('apply.daterangepicker', function(ev, picker) {
         var currentValue = _this.get('value');

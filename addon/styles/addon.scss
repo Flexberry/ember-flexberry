@@ -13,11 +13,6 @@ table.object-list-view thead {
   margin-right: 3px !important;
 }
 
-// Redefine DataTables jQuery UI styles for hovered rows
-table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
-  background-color: #ececec !important;
-}
-
 // Show scroll for big inner content of modal dialog.
 .ui.modal > .content {
   overflow: auto;

@@ -35,6 +35,7 @@ export default BaseComponent.extend({
   showCheckBoxInRow: false,
   showDeleteButtonInRow: false,
   store: null,
+  dataTable: null,
 
   /**
    * Service that triggers groupedit events.
@@ -62,9 +63,10 @@ export default BaseComponent.extend({
   },
 
   actions: {
-    rowClick: function(record) {
-      this.set('selectedRecord', record);
+    rowClick: function(key, record) {
       if (this.rowClickable) {
+        this.set('selectedRecord', record);
+        this._setActiveRecord(key);
         this.sendAction('action', record);
       }
     },
@@ -77,7 +79,7 @@ export default BaseComponent.extend({
     deleteRow: function(key, record) {
       if (confirm('Do you really want to delete this record?')) {
         var rowToDelete = this._getRowByKey(key);
-        rowToDelete.remove();
+        this.dataTable.api().row(rowToDelete).remove().draw(false);
         record.deleteRecord();
         var componentName = this.get('componentName');
         this.get('groupEditEventsService').rowDeletedTrigger(componentName, record);
@@ -88,11 +90,19 @@ export default BaseComponent.extend({
       var selectedRow = this._getRowByKey(key);
       var checkBoxChecked = selectedRow.find('input[type=checkbox]').prop('checked');
       if (checkBoxChecked) {
+        if (!selectedRow.hasClass('selected')) {
+          selectedRow.addClass('selected');
+        }
+
         if (selectedRecords.indexOf(record) === -1) {
           selectedRecords.pushObject(record);
         }
       }
       else {
+        if (selectedRow.hasClass('selected')) {
+          selectedRow.removeClass('selected');
+        }
+
         selectedRecords.removeObject(record);
       }
 
@@ -102,12 +112,19 @@ export default BaseComponent.extend({
   },
 
   didInsertElement: function() {
-    this.$().dataTable({
+    var table = this.$().dataTable({
       info: false,
       ordering: false,
       paging: false,
       searching: false
     });
+    this.set('dataTable', table);
+    if (this.rowClickable) {
+      var key = this._getModelKey(this.selectedRecord);
+      if (key) {
+        this._setActiveRecord(key);
+      }
+    }
   },
 
   columns: Ember.computed('modelProjection', function() {
@@ -223,10 +240,8 @@ export default BaseComponent.extend({
         var _this = this;
         var selectedRecords = this.get('selectedRecords');
         var count = selectedRecords.length;
+        this.dataTable.api().rows('.selected').remove().draw(false);
         selectedRecords.forEach(function(item, index, enumerable) {
-          var key = _this._getModelKey(item);
-          var selectedRow = _this._getRowByKey(key);
-          selectedRow.remove();
           item.deleteRecord();
           _this.get('groupEditEventsService').rowDeletedTrigger(componentName, item);
         });
@@ -234,6 +249,12 @@ export default BaseComponent.extend({
         this.get('groupEditEventsService').rowsDeletedTrigger(componentName, count);
       }
     }
+  },
+
+  _setActiveRecord: function(key) {
+    this.dataTable.$('tr.selected').removeClass('selected');
+    var selectedRow = this._getRowByKey(key);
+    selectedRow.addClass('selected');
   },
 
   _createColumn: function(attr, bindingPath) {

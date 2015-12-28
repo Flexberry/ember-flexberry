@@ -5,7 +5,7 @@
   readonly='readonly'
   value=value
 }}
-<button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'choose' relationName projection title}}>{{chooseText}}</button>
+<button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'choose' chooseData}}>{{chooseText}}</button>
 <button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'remove' relationName}}>{{removeText}}</button>
 {{#if buttonToggleReadonlyVisible}}
     <button class='ui primary button' {{action 'toggleReadonly'}}>Toggle readonly</button>

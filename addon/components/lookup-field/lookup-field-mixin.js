@@ -22,7 +22,26 @@ export default Ember.Mixin.create({
   lookupController: undefined,
 
   actions: {
-    showLookupDialog: function(relationName, projectionName, title, modelToLookup) {
+    /**
+     * Handles action from lookup choose action.
+     *
+     * @method showLookupDialog
+     * @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
+     */
+    showLookupDialog: function(chooseData) {
+      let options = Ember.$.extend(true, {
+        projection: undefined,
+        relationName: undefined,
+        title: undefined,
+        limitFunction: undefined,
+        modelToLookup: undefined
+      }, chooseData);
+      let projectionName = options.projection;
+      let relationName = options.relationName;
+      let title = options.title;
+      let limitFunction = options.limitFunction;
+      let modelToLookup = options.modelToLookup;
+
       if (!projectionName) {
         throw new Error('ProjectionName is undefined.');
       }

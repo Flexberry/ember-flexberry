@@ -107,7 +107,7 @@ export default Ember.Mixin.create({
       this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
 
       let query = {};
-      if (limitFunction && typeof(limitFunction) === 'string' && limitFunction.length > 0) {
+      if (limitFunction && typeof (limitFunction) === 'string' && limitFunction.length > 0) {
         Ember.merge(query, { $filter: limitFunction });
       }
 
@@ -143,7 +143,20 @@ export default Ember.Mixin.create({
       this.get('lookupController').send('routeWillTransition');
     },
 
-    removeLookupValue: function(relationName, modelToLookup) {
+    /**
+     * Handles action from lookup remove action.
+     *
+     * @method removeLookupValue
+     * @param {Object} removeData Lookup parameters (projection name, etc).
+     */
+    removeLookupValue: function(removeData) {
+      let options = Ember.$.extend(true, {
+        relationName: undefined,
+        modelToLookup: undefined
+      }, removeData);
+      let relationName = options.relationName;
+      let modelToLookup = options.modelToLookup;
+
       let model = modelToLookup ? modelToLookup : this.get('model');
       model.set(relationName, undefined);
 

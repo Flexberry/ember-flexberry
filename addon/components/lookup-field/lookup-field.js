@@ -36,6 +36,19 @@ export default Ember.Component.extend({
     };
   }),
 
+  /**
+   * Object with lookup properties to send on remove action.
+   *
+   * @property removeData
+   * @type Object
+   */
+  removeData: Ember.computed('relationName', function() {
+    return {
+      relationName: this.get('relationName'),
+      modelToLookup: undefined
+    };
+  }),
+
   readonly:  false,
   buttonToggleReadonlyVisible: false,
 

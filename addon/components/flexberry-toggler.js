@@ -3,8 +3,33 @@
  */
 
 import Ember from 'ember';
+import FlexberryBaseComponent from './flexberry-base';
 
-export default Ember.Component.extend({
+/**
+ *
+ *
+ * @class FlexberryToggler
+ */
+export default FlexberryBaseComponent.extend({
+  /**
+   * Tag name for component wrapper.
+   *
+   * @property tagName
+   * @type String
+   * @default 'div'
+   * @readOnly
+   */
+  tagName: 'div',
+
+  /**
+   * Default class for component wrapper.
+   *
+   * @property classNames
+   * @type Array
+   * @readOnly
+   */
+  classNames: ['flexberry-toggler', 'ui', 'accordion'],
+
   /**
    * Common caption in the component header.
    * Used when appropriate sate-related caption ({{#crossLink "expandedCaption:property"}}{{/crossLink}}
@@ -57,25 +82,6 @@ export default Ember.Component.extend({
 
     return caption;
   }),
-
-  /**
-   * Tag name for component wrapper.
-   *
-   * @property tagName
-   * @type String
-   * @default 'div'
-   * @readOnly
-   */
-  tagName: 'div',
-
-  /**
-   * Default class for component wrapper.
-   *
-   * @property classNames
-   * @type Array
-   * @readOnly
-   */
-  classNames: ['flexberry-toggler'],
 
   /**
    * Handles the event, when component has been insterted.

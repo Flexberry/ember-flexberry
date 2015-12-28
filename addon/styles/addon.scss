@@ -13,11 +13,6 @@ table.object-list-view thead {
   margin-right: 3px !important;
 }
 
-// Redefine DataTables jQuery UI styles for hovered rows
-table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
-  background-color: #ececec !important;
-}
-
 // Show scroll for big inner content of modal dialog.
 .ui.modal > .content {
   overflow: auto;
@@ -27,4 +22,30 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   position: fixed;
   width: 100%;
   bottom: 0;
+}
+
+// Styles for GroupEdit component
+table.object-list-view tbody tr td:first-child button {
+  padding: 9px 7px;
+  margin: 0 !important;
+}
+
+table.object-list-view tbody tr td.object-list-view-operations-td {
+  min-width: 68px;
+}
+
+table.object-list-view tbody tr td:first-child button i {
+  margin: 0 !important;
+}
+
+.groupedit-toolbar {
+  margin-bottom: 1px !important;
+}
+
+.groupedit-toolbar button {
+  padding: 9px 9px !important;
+}
+
+.groupedit-toolbar button i {
+  margin: 0 !important;
 }

@@ -1,15 +1,34 @@
 <thead>
   <tr>
+    <th style="{{if (or showCheckBoxInRow showDeleteButtonInRow ) 'display:table-cell' 'display:none'}}"></th>
     {{#each columns as |column|}}
       {{component headerCellComponent column=column}}
     {{/each}}
   </tr>
 </thead>
 <tbody>
-  {{#each content as |record|}}
-    <tr class="{{ if (eq selectedRecord record ) 'active' }}" {{action 'rowClick' record preventDefault=false}}>
+  {{#each contentWithKeys key="key" as |record|}}
+    <tr {{action 'rowClick' record.key record.data preventDefault=false}}>
+      <td class="object-list-view-operations-td" style="{{if (or showCheckBoxInRow showDeleteButtonInRow ) 'display:table-cell' 'display:none'}}">
+        <div style="display: none">{{record.key}}</div>
+        <div class="ui middle aligned grid">
+          {{#if showCheckBoxInRow}}
+            <div class="column">
+            <div class="ui checkbox {{if readonly 'disabled'}}">
+              <input type="checkbox" disabled={{readonly}} {{action 'selectRow' record.key record.data preventDefault=false}}>
+			  <label></label>
+			</div>
+          </div>
+          {{/if}}
+          {{#if showDeleteButtonInRow}}
+            <div class="column">
+              <button class="ui primary button {{if readonly 'disabled'}}" {{action 'deleteRow' record.key record.data}}><i class="minus icon"></i></button>
+            </div>
+          {{/if}}
+		</div>
+      </td>
       {{#each columns as |column|}}
-        {{component column.cellComponent column=column record=record readonly=readonly}}
+        {{component column.cellComponent column=column record=record.data readonly=readonly}}
       {{/each}}
     </tr>
   {{/each}}

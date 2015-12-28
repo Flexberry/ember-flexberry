@@ -8,6 +8,6 @@ moduleForComponent('object-list-view', 'Integration | Component | object list vi
 
 test('columns renders', function(assert) {
   this.set('proj', Employee.projections.get('EmployeeE'));
-  this.render(hbs`{{object-list-view modelProjection=proj}}`);
+  this.render(hbs`{{object-list-view modelProjection=proj componentName = "someName"}}`);
   assert.notEqual(this.$('thead tr th').length, 0);
 });

@@ -295,5 +295,10 @@ export default BaseComponent.extend({
     this.dataTable.$('tr.selected').removeClass('selected');
     var selectedRow = this._getRowByKey(key);
     selectedRow.addClass('selected');
-  }
+  },
+
+  _detailChanged: Ember.observer('content.@each.hasDirtyAttributes', function() {
+    var componentName = this.get('componentName');
+    this.get('groupEditEventsService').rowsChangedTrigger(componentName);
+  })
 });

@@ -79,6 +79,7 @@ export default BaseComponent.extend({
     deleteRow: function(key, record) {
       if (confirm('Do you really want to delete this record?')) {
         var rowToDelete = this._getRowByKey(key);
+        this._removeModelWithKey(key);
         this.dataTable.api().row(rowToDelete).remove().draw(false);
         record.deleteRecord();
         var componentName = this.get('componentName');
@@ -207,13 +208,15 @@ export default BaseComponent.extend({
   },
 
   _getModelKey: function(record) {
-    var key = null;
-    this.get('contentWithKeys').forEach(function(item, index, enumerable) {
-      if (item.data === record) {
-        key = item.key;
-      }
-    });
-    return key;
+    var modelWithKeyItem = this.get('contentWithKeys').findBy('data', record);
+    return modelWithKeyItem ? modelWithKeyItem.key : null;
+  },
+
+  _removeModelWithKey(key) {
+    var itemToRemove = this.get('contentWithKeys').findBy('key', key);
+    if (itemToRemove) {
+      this.get('contentWithKeys').removeObject(itemToRemove);
+    }
   },
 
   _addModel: function(record) {
@@ -226,6 +229,10 @@ export default BaseComponent.extend({
 
   _addRow: function(componentName) {
     if (componentName === this.get('componentName')) {
+      if (this.get('contentWithKeys').length === 0) {
+        this.$('tbody tr:eq(0)').remove();
+      }
+
       var modelName = this.get('modelProjection').modelName;
       var modelToAdd = this.store.createRecord(modelName, {});
       this.get('content').addObject(modelToAdd);
@@ -242,6 +249,8 @@ export default BaseComponent.extend({
         var count = selectedRecords.length;
         this.dataTable.api().rows('.selected').remove().draw(false);
         selectedRecords.forEach(function(item, index, enumerable) {
+          var key = _this._getModelKey(item);
+          _this._removeModelWithKey(key);
           item.deleteRecord();
           _this.get('groupEditEventsService').rowDeletedTrigger(componentName, item);
         });

@@ -1,6 +1,10 @@
 import EditFormRoute from './edit-form';
 
 export default EditFormRoute.extend({
+  activate() {
+    this._super(...arguments);
+  },
+
   model: function() {
     // NOTE: record.id is null.
     var record = this.store.createRecord(this.modelName);
@@ -20,5 +24,7 @@ export default EditFormRoute.extend({
     if (model.get('isNew')) {
       model.deleteRecord();
     }
+
+    this._super(...arguments);
   }
 });

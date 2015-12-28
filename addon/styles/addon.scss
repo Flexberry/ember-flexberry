@@ -13,13 +13,13 @@ table.object-list-view thead {
   margin-right: 3px !important;
 }
 
-// Show scroll for big inner content of modal dialog.
+// Show scroll for big inner content of modal dialog
 .ui.modal > .content {
   overflow: auto;
 }
 
 .ui.modal > .actions {
-  position: fixed;
+  position: absolute;
   width: 100%;
   bottom: 0;
 }

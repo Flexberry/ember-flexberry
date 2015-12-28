@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Settings from '../models/settings';
 
 export default Ember.Mixin.create({
-  perPageValues: ['2', '3', '4', '5', '10', '20', '50'],
+  perPageValues: [2, 3, 4, 5, 10, 20, 50],
 
   per_page: Ember.computed('content.pagination.per_page', {
     get(key) {
@@ -12,7 +12,7 @@ export default Ember.Mixin.create({
         // то в select-е будет выбрано undefined,
         // => per_page изменится undefined, т.к. на нем биндинг.
         this.perPageValues.push(val);
-        this.perPageValues.sort();
+        this.perPageValues.sort((a, b) => a - b);
       }
 
       return val;
@@ -20,6 +20,7 @@ export default Ember.Mixin.create({
     set(key, value) {
       // Save setting.
       let settings = Settings.create();
+      value = parseInt(value, 10);
       settings.set('perPage', value);
 
       // Reload current route.

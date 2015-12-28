@@ -194,6 +194,37 @@ export default BaseComponent.extend({
     return columnsBuf;
   },
 
+  _createColumn: function(attr, bindingPath) {
+    let cellComponent = this.get('cellComponent');
+    if (typeof cellComponent === 'function') {
+      cellComponent = cellComponent(attr, bindingPath);
+    }
+
+    let column = {
+      header: attr.caption,
+      propName: bindingPath, // TODO: rename column.propName
+      cellComponent: cellComponent
+    };
+
+    let customColumnAttributesFunc = this.get('customColumnAttributes');
+    if (customColumnAttributesFunc) {
+      let customColAttr = customColumnAttributesFunc(attr, bindingPath);
+      if (customColAttr && (typeof customColAttr === 'object')) {
+        Ember.$.extend(true, column, customColAttr);
+      }
+    }
+
+    let sortDef;
+    let sorting = this.get('sorting');
+    if (sorting && (sortDef = sorting[bindingPath])) {
+      column.sorted = true;
+      column.sortAscending = sortDef.sortAscending;
+      column.sortNumber = sortDef.sortNumber;
+    }
+
+    return column;
+  },
+
   _getRowByKey: function(key) {
     var _this = this;
     var row = null;
@@ -264,36 +295,5 @@ export default BaseComponent.extend({
     this.dataTable.$('tr.selected').removeClass('selected');
     var selectedRow = this._getRowByKey(key);
     selectedRow.addClass('selected');
-  },
-
-  _createColumn: function(attr, bindingPath) {
-    let cellComponent = this.get('cellComponent');
-    if (typeof cellComponent === 'function') {
-      cellComponent = cellComponent(attr, bindingPath);
-    }
-
-    let column = {
-      header: attr.caption,
-      propName: bindingPath, // TODO: rename column.propName
-      cellComponent: cellComponent
-    };
-
-    let customColumnAttributesFunc = this.get('customColumnAttributes');
-    if (customColumnAttributesFunc) {
-      let customColAttr = customColumnAttributesFunc(attr, bindingPath);
-      if (customColAttr && (typeof customColAttr === 'object')) {
-        Ember.$.extend(true, column, customColAttr);
-      }
-    }
-
-    let sortDef;
-    let sorting = this.get('sorting');
-    if (sorting && (sortDef = sorting[bindingPath])) {
-      column.sorted = true;
-      column.sortAscending = sortDef.sortAscending;
-      column.sortNumber = sortDef.sortNumber;
-    }
-
-    return column;
   }
 });

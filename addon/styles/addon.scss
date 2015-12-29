@@ -8,9 +8,8 @@ table.object-list-view thead {
   cursor: pointer;
 }
 
-.lookup-field {
-  width: 235px !important;
-  margin-right: 3px !important;
+.flexberry-lookup .ui.button > .icon {
+  margin: 0;
 }
 
 // Show scroll for big inner content of modal dialog
@@ -43,9 +42,14 @@ table.object-list-view tbody tr td:first-child button i {
 }
 
 .groupedit-toolbar button {
-  padding: 9px 9px !important;
+  padding: 9px !important;
 }
 
 .groupedit-toolbar button i {
   margin: 0 !important;
+}
+
+// Styles for all tables
+table {
+  border-collapse: collapse !important;
 }

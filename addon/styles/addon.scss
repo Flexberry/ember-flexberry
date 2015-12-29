@@ -42,9 +42,14 @@ table.object-list-view tbody tr td:first-child button i {
 }
 
 .groupedit-toolbar button {
-  padding: 9px 9px !important;
+  padding: 9px !important;
 }
 
 .groupedit-toolbar button i {
   margin: 0 !important;
+}
+
+// Styles for all tables
+table {
+  border-collapse: collapse !important;
 }

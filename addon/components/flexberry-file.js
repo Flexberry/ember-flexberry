@@ -1,9 +1,17 @@
+/**
+ * @module ember-flexberry
+ */
+
 import Ember from 'ember';
+import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
  * Flexberry file component.
+ *
+ * @class FlexberryFile
+ * @extends FlexberryBaseComponent
  */
-export default Ember.Component.extend({
+export default FlexberryBaseComponent.extend({
   /**
    * Class names for component wrapping <div>.
    */

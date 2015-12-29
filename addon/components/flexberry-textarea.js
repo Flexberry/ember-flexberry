@@ -5,9 +5,9 @@
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
- * Checkbox component for Semantic UI.
+ * Textarea component for Semantic UI.
  *
- * @class FlexberrCheckbox
+ * @class FlexberryTextarea
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
@@ -18,14 +18,14 @@ export default FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['flexberry-checkbox', 'ui', 'checkbox'],
+  classNames: ['flexberry-textarea'],
 
   /**
-   * Checked value.
+   * Input value.
    *
-   * @property checked
-   * @type Boolean
+   * @property value
+   * @type String
    * @default undefined
    */
-  checked: undefined
+  value: undefined
 });

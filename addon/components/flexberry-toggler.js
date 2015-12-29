@@ -3,8 +3,24 @@
  */
 
 import Ember from 'ember';
+import FlexberryBaseComponent from './flexberry-base-component';
 
-export default Ember.Component.extend({
+/**
+ * Component for expand / collapse content.
+ *
+ * @class FlexberryToggler
+ * @extends FlexberryBaseComponent
+ */
+var FlexberryToggler =  FlexberryBaseComponent.extend({
+  /**
+   * Default class for component wrapper.
+   *
+   * @property classNames
+   * @type Array
+   * @readOnly
+   */
+  classNames: ['flexberry-toggler', 'ui', 'accordion', 'fluid'],
+
   /**
    * Common caption in the component header.
    * Used when appropriate sate-related caption ({{#crossLink "expandedCaption:property"}}{{/crossLink}}
@@ -59,25 +75,6 @@ export default Ember.Component.extend({
   }),
 
   /**
-   * Tag name for component wrapper.
-   *
-   * @property tagName
-   * @type String
-   * @default 'div'
-   * @readOnly
-   */
-  tagName: 'div',
-
-  /**
-   * Default class for component wrapper.
-   *
-   * @property classNames
-   * @type Array
-   * @readOnly
-   */
-  classNames: ['flexberry-toggler'],
-
-  /**
    * Handles the event, when component has been insterted.
    * Attaches event handlers for expanding / collapsing content.
    *
@@ -85,7 +82,7 @@ export default Ember.Component.extend({
    */
   didInsertElement() {
     var _this = this;
-    this.$('.ui.accordion').accordion({
+    this.$().accordion({
       onOpening: function() {
         _this.set('expanded', _this.$(this).hasClass('active'));
       },
@@ -95,3 +92,5 @@ export default Ember.Component.extend({
     });
   }
 });
+
+export default FlexberryToggler;

@@ -1,6 +1,14 @@
-import Ember from 'ember';
+/**
+ * @module ember-flexberry
+ */
 
-export default Ember.Component.extend({
+import FlexberryBaseComponent from './flexberry-base-component';
+
+/**
+ * @class FlexberryDropDown
+ * @extends FlexberryBaseComponent
+ */
+export default FlexberryBaseComponent.extend({
   items: null,
   selectedItem: null,
   selectedIndex: -1,

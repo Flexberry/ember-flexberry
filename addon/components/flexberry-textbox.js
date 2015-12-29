@@ -1,16 +1,42 @@
-import BaseComponent from './flexberry-base';
+/**
+ * @module ember-flexberry
+ */
 
-// Textbox component for Semantic UI.
-export default BaseComponent.extend({
-  // String with input css classes.
-  classes: undefined,
+import FlexberryBaseComponent from './flexberry-base-component';
 
-  // Flag to make control required.
+/**
+ * Textbox component for Semantic UI.
+ *
+ * @class FlexberryTextbox
+ * @extends FlexberryBaseComponent
+ */
+var FlexberryTextbox = FlexberryBaseComponent.extend({
+  /**
+   * Default classes for component wrapper.
+   *
+   * @property classNames
+   * @type Array
+   * @readOnly
+   */
+  classNames: ['flexberry-textbox', 'ui', 'input', 'fluid'],
+
+  /**
+   * Flag to make control required.
+   *
+   * @property required
+   * @type Boolean
+   * @default false
+   */
   required: false,
 
-  // Type of input element for render.
-  type: 'text',
-
-  // Input value.
+  /**
+   * Input value.
+   *
+   * @property value
+   * @type String
+   * @default undefined
+   */
   value: undefined
 });
+
+export default FlexberryTextbox;

@@ -46,26 +46,14 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
     // TODO: support getting from cache with "store.all->filterByProjection".
     return store.query(modelName, query)
       .then((records) => {
+        // TODO: move to setupController mixins?
         this.includeSorting(records, sorting);
         return this.includePagination(records, page, perPage);
       });
   },
 
-  // A hook you can use to setup the controller for the current route.
   setupController: function(controller, model) {
-    // Call _super for default behavior.
-    this._super(controller, model);
-
-    // Implement your custom setup after.
-
-    var currentPage = this._getCurrent();
-    var lastPage = this._getLast();
-    if (currentPage > lastPage) {
-      // After changing records number per page there is possibility that current page is greater then last one.
-      // In this case we have to change current page to last.
-      this.transitionToPageRoute(lastPage);
-      return;
-    }
+    this._super(...arguments);
 
     // Define 'modelProjection' for controller instance.
     // TODO: remove that when list-form-page controller will be moved to this route.

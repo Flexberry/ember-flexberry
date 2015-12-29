@@ -2,11 +2,38 @@ import Ember from 'ember';
 import Settings from '../models/settings';
 
 export default Ember.Mixin.create({
+  queryParams: ['page'],
+  page: 1,
+
   perPageValues: [2, 3, 4, 5, 10, 20, 50],
 
-  per_page: Ember.computed('content.pagination.per_page', {
+  actions: {
+    gotoPage: function(pageNum) {
+      var num = this._getNum(pageNum);
+      this.transitionToPageRoute(num);
+    },
+    nextPage: function() {
+      var pagination = this.get('model.pagination');
+      var num = this._getNum(pagination.page + 1, pagination);
+      this.transitionToPageRoute(num);
+    },
+    previousPage: function() {
+      var pagination = this.get('model.pagination');
+      var num = this._getNum(pagination.page - 1, pagination);
+      this.transitionToPageRoute(num);
+    },
+    lastPage: function() {
+      var last = this._getLast();
+      this.transitionToPageRoute(last);
+    },
+    firstPage: function() {
+      this.transitionToPageRoute(1);
+    }
+  },
+
+  per_page: Ember.computed('model.pagination.per_page', {
     get(key) {
-      var val = this.get('content.pagination.per_page');
+      var val = this.get('model.pagination.per_page');
       if (this.perPageValues.indexOf(val) === -1) {
         // Если per_page не будет в perPageValues,
         // то в select-е будет выбрано undefined,
@@ -23,24 +50,36 @@ export default Ember.Mixin.create({
       value = parseInt(value, 10);
       settings.set('perPage', value);
 
-      // Reload current route.
-      this.target.router.refresh();
+      // Check that the current page number does not exceed the last page number.
+      var currentPage = this._getCurrent();
+      var newLastPage = this._getLast({
+        count: this.get('model.pagination.count'),
+        per_page: value
+      });
+
+      if (currentPage > newLastPage) {
+        // Changing page value reloads route automatically.
+        this.set('page', newLastPage);
+      } else {
+        // Reload current route.
+        this.target.router.refresh();
+      }
     }
   }),
 
-  hasPreviousPage: Ember.computed('content.pagination', function() {
-    var pagination = this.get('content.pagination');
+  hasPreviousPage: Ember.computed('model.pagination', function() {
+    var pagination = this.get('model.pagination');
     return pagination.page > 1;
   }),
 
-  hasNextPage: Ember.computed('content.pagination', function() {
-    var pagination = this.get('content.pagination');
+  hasNextPage: Ember.computed('model.pagination', function() {
+    var pagination = this.get('model.pagination');
     var last = Math.ceil(pagination.count / pagination.per_page);
     return pagination.page < last;
   }),
 
-  pages: Ember.computed('content.pagination', function() {
-    var pagination = this.get('content.pagination');
+  pages: Ember.computed('model.pagination', function() {
+    var pagination = this.get('model.pagination');
     var last = Math.ceil(pagination.count / pagination.per_page);
 
     // Pages are shown via list like [1] [2] … [10] {11} [12] … [18] [19], initial and final pages are shown always,
@@ -102,11 +141,28 @@ export default Ember.Mixin.create({
   }),
 
   _addPageNumberIntoArray: function(arr, pageNumber, isEllipsis) {
-    var pagination = this.get('content.pagination');
+    var pagination = this.get('model.pagination');
     arr.push({
       number: pageNumber,
       isCurrent: (pageNumber === pagination.page),
       isEllipsis: isEllipsis
     });
+  },
+
+  _getCurrent: function(pagination = this.get('model.pagination')) {
+    return pagination.page;
+  },
+
+  _getLast: function(pagination = this.get('model.pagination')) {
+    return Math.ceil(pagination.count / pagination.per_page);
+  },
+
+  _getNum: function(pageNum, pagination = this.get('model.pagination')) {
+    var last = this._getLast(pagination);
+    return Math.max(1, Math.min(pageNum, last));
+  },
+
+  transitionToPageRoute: function(pageNum) {
+    this.set('page', pageNum);
   }
 });

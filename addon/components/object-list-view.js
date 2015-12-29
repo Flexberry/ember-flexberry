@@ -1,6 +1,14 @@
-import Ember from 'ember';
-import BaseComponent from './flexberry-base';
+/**
+ * @module ember-flexberry
+ */
 
+import Ember from 'ember';
+import BaseComponent from './flexberry-base-component';
+
+/**
+ * @class FlexberryObjectListView
+ * @extends FlexberryBaseComponent
+ */
 export default BaseComponent.extend({
   tagName: 'table',
   classNames: [

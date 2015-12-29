@@ -1,6 +1,14 @@
-import Ember from 'ember';
+/**
+ * @module ember-flexberry
+ */
 
-export default Ember.Component.extend({
+import FlexberryBaseComponent from '../flexberry-base-component';
+
+/**
+ * @class FlexberryLookup
+ * @extends FlexberryBaseComponent
+ */
+export default FlexberryBaseComponent.extend({
   placeholder: '(no value)',
   chooseText: 'Choose',
   removeText: '<i class="remove icon"></i>',

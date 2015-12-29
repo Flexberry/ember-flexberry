@@ -1,3 +1,8 @@
+/**
+ * TODO: delete unused component
+ * @module ember-flexberry
+ */
+
 import Ember from 'ember';
 
 // Dynamic input component to bind {{input}} helper to an object property by property name.

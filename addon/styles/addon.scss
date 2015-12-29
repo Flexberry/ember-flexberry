@@ -8,9 +8,8 @@ table.object-list-view thead {
   cursor: pointer;
 }
 
-.lookup-field {
-  width: 235px !important;
-  margin-right: 3px !important;
+.flexberry-lookup .ui.button > .icon {
+  margin: 0;
 }
 
 // Show scroll for big inner content of modal dialog
@@ -31,7 +30,20 @@ table.object-list-view tbody tr td:first-child button {
 }
 
 table.object-list-view tbody tr td.object-list-view-operations-td {
-  min-width: 68px;
+  min-width: 72px;
+}
+
+table.object-list-view tbody tr td.object-list-view-operations-td .object-list-view-asterisk {
+  padding-left: 5px !important;
+  padding-right: 0 !important;
+}
+
+table.object-list-view tbody tr td.object-list-view-operations-td .object-list-view-asterisk i {
+  font-size: x-small;
+}
+
+table.object-list-view tbody tr td.object-list-view-operations-td .object-list-view-asterisk.hidden {
+  display: none !important;
 }
 
 table.object-list-view tbody tr td:first-child button i {
@@ -43,9 +55,14 @@ table.object-list-view tbody tr td:first-child button i {
 }
 
 .groupedit-toolbar button {
-  padding: 9px 9px !important;
+  padding: 9px !important;
 }
 
 .groupedit-toolbar button i {
   margin: 0 !important;
+}
+
+// Styles for all tables
+table {
+  border-collapse: collapse !important;
 }

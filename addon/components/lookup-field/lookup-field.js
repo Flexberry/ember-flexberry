@@ -2,16 +2,29 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from '../flexberry-base-component';
 
 /**
+ * Lookup component for Semantic UI.
+ *
  * @class FlexberryLookup
  * @extends FlexberryBaseComponent
  */
-export default FlexberryBaseComponent.extend({
+var FlexberryLookup = FlexberryBaseComponent.extend({
+
+  /**
+   * Default classes for component wrapper.
+   *
+   * @property classNames
+   * @type Array
+   * @readOnly
+   */
+  classNames: ['flexberry-lookup', 'ui', 'fluid', 'action', 'input'],
+
   placeholder: '(no value)',
   chooseText: 'Choose',
-  removeText: 'X',
+  removeText: '<i class="remove icon"></i>',
 
   projection: undefined,
   value: undefined,
@@ -89,3 +102,5 @@ export default FlexberryBaseComponent.extend({
     }
   }
 });
+
+export default FlexberryLookup;

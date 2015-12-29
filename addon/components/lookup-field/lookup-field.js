@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   placeholder: '(no value)',
   chooseText: 'Choose',
-  removeText: 'X',
+  removeText: '<i class="remove icon"></i>',
 
   projection: undefined,
   value: undefined,

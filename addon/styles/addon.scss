@@ -8,9 +8,8 @@ table.object-list-view thead {
   cursor: pointer;
 }
 
-.lookup-field {
-  width: 235px !important;
-  margin-right: 3px !important;
+.flexberry-lookup > .ui.icon {
+  margin: 0;
 }
 
 // Show scroll for big inner content of modal dialog

@@ -3,7 +3,7 @@
  */
 
 import Ember from 'ember';
-import FlexberryBaseComponent from '../flexberry-base-component';
+import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
  * Lookup component for Semantic UI.

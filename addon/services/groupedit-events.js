@@ -99,5 +99,17 @@ export default Ember.Service.extend(Ember.Evented, {
    */
   rowSelectedTrigger(componentName, record, count) {
     this.trigger('groupEditRowSelected', componentName, record, count);
+  },
+
+  /**
+   * Trigger for "model(s) corresponding to some row(s) was changed" event in groupedit.
+   * Event name: groupEditRowsChanged.
+   *
+   * @method rowsChangedTrigger
+   *
+   * @param {String} componentName The name of flexberry-groupedit component.
+   */
+  rowsChangedTrigger(componentName) {
+    this.trigger('groupEditRowsChanged', componentName);
   }
 });

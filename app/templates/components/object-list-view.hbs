@@ -12,6 +12,9 @@
       <td class="object-list-view-operations-td" style="{{if (or showCheckBoxInRow showDeleteButtonInRow ) 'display:table-cell' 'display:none'}}">
         <div style="display: none">{{record.key}}</div>
         <div class="ui middle aligned grid">
+        <div class="column object-list-view-asterisk {{if (not record.data.hasDirtyAttributes) 'hidden'}}">
+          <i class="asterisk small red icon"></i>              
+        </div>
           {{#if showCheckBoxInRow}}
             <div class="column">
             <div class="ui checkbox {{if readonly 'disabled'}}">

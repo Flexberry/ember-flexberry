@@ -139,8 +139,69 @@ export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, Errorabl
   /**
    * On save model success handler.
    */
-  _onSaveActionFulfilled: function() {
-    alert('Saved.');
+  _processSavedDetails: function() {
+    var _this = this;
+    var modelsToDelete = Ember.A();
+    var deletePromises = Ember.A();
+    var attributes = this.get('modelProjection').attributes;
+    for (var attrName in attributes) {
+      if (!attributes.hasOwnProperty(attrName)) {
+        continue;
+      }
+
+      var attr = attributes[attrName];
+      if (attr.kind === 'hasMany') {
+        var detailModels = this.get('model').get(attrName).toArray();
+
+        // var changedModels = detailModels.filterBy('hasDirtyAttributes', true);
+        for (var i = 0; i < detailModels.length; i++) {
+          if (detailModels[i].get('hasDirtyAttributes')) {
+            if (detailModels[i].get('isNew')) {
+              modelsToDelete.pushObject(detailModels[i]);
+            }
+            else if (!detailModels[i].get('isDeleted')) {
+              detailModels[i].send('becameClean');
+            }
+            else if (detailModels[i].get('isDeleted')) {
+              deletePromises.pushObject(detailModels[i].save());
+            }
+          }
+        }
+      }
+    }
+
+    modelsToDelete.forEach(function(item) {
+      item.deleteRecord();
+    });
+    modelsToDelete.clear();
+
+    var modelName = this.get('model').constructor.modelName;
+    var id = this.get('model').id;
+    var modelProjName = this.get('modelProjectionName');
+    Ember.RSVP.all(deletePromises).then(function(values) {
+      return _this.store.findRecord(modelName, id, {
+        reload: true,
+        projection: modelProjName
+      });
+    },
+    function(reason) {
+      _this._onSaveActionRejected.call(_this, reason);
+    });
+    return this.store.findRecord(modelName, id, {
+      reload: true,
+      projection: modelProjName
+    });
+  },
+
+  _onSaveActionFulfilled: function(message) {
+    if (!this.get('readonly')) {
+      this._processSavedDetails().then(function() {
+        alert('Saved.');
+      });
+    }
+    else {
+      alert(message);
+    }
   },
 
   /**

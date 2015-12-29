@@ -2,24 +2,15 @@
  * @module ember-flexberry
  */
 
-import FlexberryBaseComponent from './flexberry-base';
+import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
  * Textarea component for Semantic UI.
  *
  * @class FlexberryTextarea
+ * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
-  /**
-   * Tag name for component wrapper.
-   *
-   * @property tagName
-   * @type String
-   * @default 'div'
-   * @readOnly
-   */
-  tagName: 'div',
-
   /**
    * Default classes for component wrapper.
    *

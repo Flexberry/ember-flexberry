@@ -3,15 +3,24 @@
  */
 
 import Ember from 'ember';
-import FlexberryBase from './flexberry-base';
+import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
  * Toolbar compoent for flexberry-groupedit component.
  *
  * @class GroupEditToolbar
- * @extends FlexberryBase
+ * @extends FlexberryBaseComponent
  */
-export default FlexberryBase.extend({
+export default FlexberryBaseComponent.extend({
+  /**
+   * Default class for component wrapper.
+   *
+   * @property classNames
+   * @type Array
+   * @readOnly
+   */
+  classNames: ['groupedit-toolbar', 'ui', 'middle', 'aligned', 'grid'],
+
   /**
    * Service that triggers groupedit events.
    *
@@ -39,25 +48,6 @@ export default FlexberryBase.extend({
    * @default true
    */
   deleteButton: true,
-
-  /**
-   * Default class for component wrapper.
-   *
-   * @property classNames
-   * @type Array
-   * @readOnly
-   */
-  classNames: ['groupedit-toolbar', 'ui', 'middle', 'aligned', 'grid'],
-
-  /**
-   * Tag name for component wrapper.
-   *
-   * @property tagName
-   * @type String
-   * @default 'div'
-   * @readOnly
-   */
-  tagName: 'div',
 
   /**
    * The method called when component is instantiated.

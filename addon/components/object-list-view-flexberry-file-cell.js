@@ -1,3 +1,7 @@
+/**
+ * @module ember-flexberry
+ */
+
 import OlvInputCellComponent from 'ember-flexberry/components/object-list-view-input-cell';
 
 export default OlvInputCellComponent.extend({

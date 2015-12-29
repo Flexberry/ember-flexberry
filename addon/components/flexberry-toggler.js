@@ -3,24 +3,15 @@
  */
 
 import Ember from 'ember';
-import FlexberryBaseComponent from './flexberry-base';
+import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
- *
+ * Component for expand / collapse content.
  *
  * @class FlexberryToggler
+ * @extends FlexberryBaseComponent
  */
-export default FlexberryBaseComponent.extend({
-  /**
-   * Tag name for component wrapper.
-   *
-   * @property tagName
-   * @type String
-   * @default 'div'
-   * @readOnly
-   */
-  tagName: 'div',
-
+var FlexberryToggler =  FlexberryBaseComponent.extend({
   /**
    * Default class for component wrapper.
    *
@@ -28,7 +19,7 @@ export default FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['flexberry-toggler', 'ui', 'accordion'],
+  classNames: ['flexberry-toggler', 'ui', 'accordion', 'fluid'],
 
   /**
    * Common caption in the component header.
@@ -91,7 +82,7 @@ export default FlexberryBaseComponent.extend({
    */
   didInsertElement() {
     var _this = this;
-    this.$('.ui.accordion').accordion({
+    this.$().accordion({
       onOpening: function() {
         _this.set('expanded', _this.$(this).hasClass('active'));
       },
@@ -101,3 +92,5 @@ export default FlexberryBaseComponent.extend({
     });
   }
 });
+
+export default FlexberryToggler;

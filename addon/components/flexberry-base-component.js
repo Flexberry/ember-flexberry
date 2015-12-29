@@ -11,26 +11,17 @@ import Ember from 'ember';
  */
 var FlexberryBaseComponent = Ember.Component.extend({
   /**
-   * Tag name for component wrapper.
-   * Disabled by default (wrapper won't be rendered).
-   *
-   * @property tagName
-   * @type String
-   * @default ''
-   */
-  tagName: '',
-
-  /**
    * Flag to make control readonly.
    *
    * @property readonly
    * @type Boolean
    * @default undefined
    */
-  readonly: undefined,
+  readonly: false,
 
   /**
-   * Name of the component.
+   * Unique name of the component.
+   * TODO: use guidFor from 'ember-metal/utils'
    *
    * @property componentName
    * @type String

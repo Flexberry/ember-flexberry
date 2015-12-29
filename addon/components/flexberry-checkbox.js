@@ -2,25 +2,15 @@
  * @module ember-flexberry
  */
 
-import BaseComponent from './flexberry-base';
+import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
  * Checkbox component for Semantic UI.
  *
  * @class FlexberrCheckbox
+ * @extends FlexberryBaseComponent
  */
-export default BaseComponent.extend({
-  /**
-   * Tag name for component wrapper.
-   * Required by Semantic UI.
-   *
-   * @property tagName
-   * @type String
-   * @default 'div'
-   * @readOnly
-   */
-  tagName: 'div',
-
+export default FlexberryBaseComponent.extend({
   /**
    * Default classes for component wrapper.
    *

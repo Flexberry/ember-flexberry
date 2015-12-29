@@ -5,7 +5,8 @@ import Ember from 'ember';
  */
 export default Ember.Mixin.create({
   queryParams: {
-    page: { refreshModel: true }
+    page: { refreshModel: true },
+    perPage: { refreshModel: true }
   },
 
   // This function is for use in a route that calls find() to get a

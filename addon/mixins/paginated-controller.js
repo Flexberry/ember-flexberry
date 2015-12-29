@@ -2,8 +2,13 @@ import Ember from 'ember';
 import Settings from '../models/settings';
 
 export default Ember.Mixin.create({
-  queryParams: ['page'],
+  queryParams: ['page', 'perPage'],
   page: 1,
+  perPage: Ember.computed(function() {
+    let settings = Settings.create();
+    let perPage = settings.get('perPage');
+    return perPage;
+  }),
 
   perPageValues: [2, 3, 4, 5, 10, 20, 50],
 
@@ -50,6 +55,9 @@ export default Ember.Mixin.create({
       value = parseInt(value, 10);
       settings.set('perPage', value);
 
+      // Changing perPage value reloads route automatically.
+      this.set('perPage', value);
+
       // Check that the current page number does not exceed the last page number.
       var currentPage = this._getCurrent();
       var newLastPage = this._getLast({
@@ -60,9 +68,6 @@ export default Ember.Mixin.create({
       if (currentPage > newLastPage) {
         // Changing page value reloads route automatically.
         this.set('page', newLastPage);
-      } else {
-        // Reload current route.
-        this.target.router.refresh();
       }
     }
   }),

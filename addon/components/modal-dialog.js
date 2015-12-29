@@ -1,3 +1,7 @@
+/**
+ * @module ember-flexberry
+ */
+
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -39,14 +43,15 @@ export default Ember.Component.extend({
         },
         onHidden: function() {
           _this.sendAction('close');
+          this.remove();
         },
         onVisible: function() {
-          var wholeHeight = Ember.$(this).height();
-          var headHeight = Ember.$('.header', this).height();
-          var actionsHeight = Ember.$('.actions', this).height();
-          var closeHeight = Ember.$('.close', this).height();
-          var result = wholeHeight - headHeight - actionsHeight - closeHeight - 50;
+          var wholeHeight = Ember.$(this).outerHeight();
+          var headHeight = Ember.$('.header', this).outerHeight();
+          var actionsHeight = Ember.$('.actions', this).outerHeight();
+          var result = wholeHeight - headHeight - actionsHeight;
           _this.set('modalWindowContentHeight', result);
+          _this.sendAction('created', Ember.$(this));
         }
       }).modal('show');
     }

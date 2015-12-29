@@ -20,41 +20,43 @@ export default Ember.Mixin.create({
   rejectError: function(errorData, message) {
     if (errorData instanceof ValidationData) {
       this._rejectValidationError(errorData, message);
+    } else if (errorData instanceof Error) {
+      this._rejectError(errorData, message);
     } else if (errorData.hasOwnProperty('responseText')) {
       this._rejectAjaxError(errorData, message);
     } else if (Ember.typeOf(errorData) === 'string') {
-      this._rejectCommonError(errorData, message);
+      this._rejectStringError(errorData, message);
     } else {
       this.send('addErrorMessage', 'Unknown error occurred.');
-      throw new Error('Unknown error has been rejected.');
+    }
+  },
+
+  _rejectError: function(errorData, message) {
+    this.send('addErrorMessage', message + ' ' + errorData.message);
+    if (Ember.isArray(errorData.errors) && errorData.errors.length > 0) {
+      var errors = errorData.errors;
+      for (var i = 0, len = errors.length; i < len; i++) {
+        var error = errors[i];
+        this.send('addErrorMessage', error.status + ' - ' + error.title);
+      }
     }
   },
 
   _rejectValidationError: function(validationError, message) {
     if (validationError.anyErrors) {
       // TODO: more detail message about validation errors.
-      this.send('addErrorMessage', 'There are validation errors.');
-      alert(message);
-    } else if (validationError.noChanges) {
-      alert('There are no changes.');
+      this.send('addErrorMessage', message + ' There are validation errors.');
     } else {
-      this.send('addErrorMessage', 'Error occured.');
-      throw new Error('Unknown validation error.');
+      this.send('addErrorMessage', 'Unknown validation error.');
     }
   },
 
   _rejectAjaxError: function(xhr, message) {
     var ajaxErrorMessage = Ember.get(xhr, 'responseJSON.error.message') || xhr.statusText;
-
-    if (responseJson.error && responseJson.error.message) {
-      this.send('addErrorMessage', responseJson.error.message);
-    }
-
-    alert(message);
+    this.send('addErrorMessage', message + ' ' + ajaxErrorMessage);
   },
 
-  _rejectCommonError: function(errorText, message) {
-    this.send('addErrorMessage', errorText);
-    alert(message);
+  _rejectStringError: function(errorText, message) {
+    this.send('addErrorMessage', message + ' ' + errorText);
   }
 });

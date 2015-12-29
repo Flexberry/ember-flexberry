@@ -1,3 +1,7 @@
+/**
+ * @module ember-flexberry
+ */
+
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
@@ -12,8 +16,36 @@ export default Ember.Mixin.create({
     modalWindowHeight:undefined
   },
 
+  /**
+   * Controller to show lookup modal window.
+   *
+   * @property lookupController
+   * @type Ember.InjectedProperty
+   * @default undefined
+   */
+  lookupController: undefined,
+
   actions: {
-    showLookupDialog: function(relationName, projectionName, title, modelToLookup) {
+    /**
+     * Handles action from lookup choose action.
+     *
+     * @method showLookupDialog
+     * @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
+     */
+    showLookupDialog: function(chooseData) {
+      let options = Ember.$.extend(true, {
+        projection: undefined,
+        relationName: undefined,
+        title: undefined,
+        limitFunction: undefined,
+        modelToLookup: undefined
+      }, chooseData);
+      let projectionName = options.projection;
+      let relationName = options.relationName;
+      let title = options.title;
+      let limitFunction = options.limitFunction;
+      let modelToLookup = options.modelToLookup;
+
       if (!projectionName) {
         throw new Error('ProjectionName is undefined.');
       }
@@ -78,9 +110,13 @@ export default Ember.Mixin.create({
       };
       this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
 
-      this.store.query(relatedToType, {
-        projection: projectionName
-      }).then(data => {
+      let query = {};
+      if (limitFunction && typeof (limitFunction) === 'string' && limitFunction.length > 0) {
+        Ember.merge(query, { $filter: limitFunction });
+      }
+
+      Ember.merge(query, { projection: projectionName });
+      this.store.query(relatedToType, query).then(data => {
         this.send('removeModalDialog', loadingParams);
         var controller = this.controllerFor(lookupSettings.controllerName)
           .clear()
@@ -101,7 +137,30 @@ export default Ember.Mixin.create({
       });
     },
 
-    removeLookupValue: function(relationName, modelToLookup) {
+    /**
+     * Handles correcponding route's willTransition action.
+     * It sends message about transition to showing lookup modal window controller.
+     *
+     * @method routeWillTransition
+     */
+    routeWillTransition: function() {
+      this.get('lookupController').send('routeWillTransition');
+    },
+
+    /**
+     * Handles action from lookup remove action.
+     *
+     * @method removeLookupValue
+     * @param {Object} removeData Lookup parameters (projection name, etc).
+     */
+    removeLookupValue: function(removeData) {
+      let options = Ember.$.extend(true, {
+        relationName: undefined,
+        modelToLookup: undefined
+      }, removeData);
+      let relationName = options.relationName;
+      let modelToLookup = options.modelToLookup;
+
       let model = modelToLookup ? modelToLookup : this.get('model');
       model.set(relationName, undefined);
 

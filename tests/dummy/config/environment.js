@@ -27,8 +27,8 @@ module.exports = function(environment) {
 
       // Custom property with components settings.
       components: {
-        // Settings for file-component.
-        fileComponent: {
+        // Settings for flexberry-file component.
+        flexberryFile: {
           // URL of file upload controller.
           uploadUrl: backendRootUrl + '/api/File',
 
@@ -42,7 +42,7 @@ module.exports = function(environment) {
           placeholder: '(no file)',
 
           // Flag: indicates whether to upload file on controllers modelPreSave event.
-          uploadOnModelPreSave: false,
+          uploadOnModelPreSave: true,
 
           // Flag: indicates whether to show upload button or not.
           showUploadButton: true,

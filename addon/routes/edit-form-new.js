@@ -13,7 +13,8 @@ export default EditFormRoute.extend({
 
   renderTemplate: function(controller, model) {
     this.render(this.modelName, {
-      model: model
+      model: model,
+      controller
     });
   },
 

@@ -47,7 +47,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.birthDate}}</span>
-		{{datetime-picker placeholder="(no value)" readonly=readonly value=model.birthDate}}
+		{{flexberry-datepicker placeholder="(no value)" readonly=readonly value=model.birthDate class="fluid"}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.reportsTo 'error' ''}}">
@@ -56,13 +56,16 @@
 	</div>
     <div class="ten wide column">
 		<span style="color:red">{{model.errors.reportsTo}}</span>
-      {{lookup-field/lookup-field
+      {{flexberry-lookup
         choose='showLookupDialog'
         remove='removeLookupValue'
         value=model.employee1.firstName
         relationName='employee1'
         projection='EmployeeL'
         title='Employees'
+        buttonToggleReadonlyVisible=false
+        readonly=readonly
+		    limitFunction = lookupLimitFunction
       }}
     </div>
   </div>

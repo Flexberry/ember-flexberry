@@ -3,6 +3,15 @@ import ListFormPageController from '../controllers/list-form-page';
 export default ListFormPageController.extend({
   _currentRow: undefined,
 
+  /**
+   * Current opened modal window.
+   *
+   * @property _openedModalDialog
+   * @type JQuery
+   * @default undefined
+   */
+  _openedModalDialog: undefined,
+
   title: undefined,
   modalWindowHeight: undefined,
   modalWindowWidth: undefined,
@@ -27,11 +36,37 @@ export default ListFormPageController.extend({
       // No check for 'old' and 'new' lookup data equality, because ember
       // will do it automatically after bug fix.
       saveTo.model.send('becomeDirty');
+    },
+
+    /**
+     * Handles create modal window action.
+	 * It saves created window to have opportunity to close it later.
+     *
+     * @method createdModalDialog
+	 * @param {JQuery} modalDialog Created modal window.
+     */
+    createdModalDialog: function(modalDialog) {
+      this.set('_openedModalDialog', modalDialog);
+    },
+
+    /**
+     * Handles correcponding route's willTransition action.
+     * It closes modal window if it is opened (if Ember uses hash location type, modal window won't be closed automatically).
+     *
+     * @method routeWillTransition
+     */
+    routeWillTransition: function() {
+      let openedDialog = this.get('_openedModalDialog');
+      if (openedDialog) {
+        openedDialog.modal('hide');
+        this.set('_openedModalDialog', undefined);
+      }
     }
   },
 
   clear: function() {
     this.set('_currentRow', undefined);
+    this.set('_openedModalDialog', undefined);
     this.set('saveTo', undefined);
     this.set('modelProjection', undefined);
     return this;

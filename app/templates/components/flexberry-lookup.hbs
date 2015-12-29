@@ -1,0 +1,12 @@
+{{input
+  type="text"
+  class="form-control form-control-trunc lookup-field"
+  placeholder=placeholder
+  readonly='readonly'
+  value=value
+}}
+<button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'choose' chooseData}}>{{{chooseText}}}</button>
+<button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'remove' removeData}}>{{{removeText}}}</button>
+{{#if buttonToggleReadonlyVisible}}
+<button class='ui primary button' {{action 'toggleReadonly'}}>Toggle readonly</button>
+{{/if}}

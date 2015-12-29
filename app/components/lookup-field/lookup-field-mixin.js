@@ -1,3 +1,2 @@
-// TODO: move it to mixins/
-import LookupFieldMixin from 'ember-flexberry/components/lookup-field/lookup-field-mixin';
-export default LookupFieldMixin;
+import FlexberryLookupMixin from 'ember-flexberry/mixins/flexberry-lookup-mixin';
+export default FlexberryLookupMixin;

@@ -56,6 +56,7 @@ export default ProjectedModelFormRoute.extend({
     let modelProjName = this.get('modelProjection');
     let proj = modelClass.projections.get(modelProjName);
     controller.set('modelProjection', proj);
+    controller.set('modelProjectionName', modelProjName);
   },
 
   /**

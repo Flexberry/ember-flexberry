@@ -2,9 +2,9 @@
  * @module ember-flexberry
  */
 
-import OlvInputCellComponent from 'ember-flexberry/components/object-list-view-input-cell';
+import OlvCellComponent from 'ember-flexberry/components/object-list-view-cell';
 
-export default OlvInputCellComponent.extend({
+export default OlvCellComponent.extend({
   actions: {
     fileChange: function(options) {
       this.get('record').set(this.get('column.propName'), options.value);

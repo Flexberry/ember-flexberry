@@ -34,6 +34,15 @@ export default FlexberryBaseComponent.extend({
   checked: false,
 
   /**
+   * Label for the checkbox.
+   *
+   * @property label
+   * @type String
+   * @default ''
+   */
+  label: '',
+
+  /**
    * Additional classes for Semantic UI checkbox.
    * Adds special Semantic UI class ('read-only') when component is readonly.
    *

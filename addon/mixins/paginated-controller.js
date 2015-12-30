@@ -10,13 +10,6 @@ export default Ember.Mixin.create({
     return perPage;
   }),
 
-  perPageValues: [2, 3, 4, 5, 10, 20, 50],
-  recordsTotalCount: Ember.computed('model', function() {
-    let model = this.get('model');
-    let metadata = model.store.typeMapFor(model.type).metadata;
-    return metadata.count;
-  }),
-
   actions: {
     gotoPage: function(pageNum) {
       let num = this._checkPageNumber(pageNum);
@@ -40,6 +33,8 @@ export default Ember.Mixin.create({
       this.set('page', 1);
     }
   },
+
+  perPageValues: [2, 3, 4, 5, 10, 20, 50],
 
   perPageValue: Ember.computed('perPage', {
     get(key) {
@@ -75,6 +70,12 @@ export default Ember.Mixin.create({
 
       return perPage;
     }
+  }),
+
+  recordsTotalCount: Ember.computed('model', function() {
+    let model = this.get('model');
+    let metadata = model.store.typeMapFor(model.type).metadata;
+    return metadata.count;
   }),
 
   hasPreviousPage: Ember.computed('page', function() {

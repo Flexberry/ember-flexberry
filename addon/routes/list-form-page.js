@@ -2,7 +2,6 @@ import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import ProjectedModelRoute from '../routes/projected-model-form';
-import Settings from '../models/settings';
 
 export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixin, {
   actions: {
@@ -21,20 +20,18 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
   },
 
   model: function(params, transition) {
-    var page = parseInt(params.page, 10);
-
-    let settings = Settings.create();
-    let perPage = settings.get('perPage');
+    let page = parseInt(params.page, 10);
+    let perPage = parseInt(params.perPage, 10);
 
     Ember.assert('page must be greater than zero.', page > 0);
-    Ember.assert('per_page must be greater than zero.', perPage > 0);
+    Ember.assert('perPage must be greater than zero.', perPage > 0);
 
-    var store = this.store;
-    var modelName = this.get('modelName');
-    var adapter = store.adapterFor(modelName);
+    let store = this.store;
+    let modelName = this.get('modelName');
+    let adapter = store.adapterFor(modelName);
 
     let pageQuery = adapter.getPaginationQuery(page, perPage);
-    var sorting = this.deserializeSortingParam(params.sort);
+    let sorting = this.deserializeSortingParam(params.sort);
     let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
 
     let query = {};
@@ -47,8 +44,7 @@ export default ProjectedModelRoute.extend(PaginatedRouteMixin, SortableRouteMixi
     return store.query(modelName, query)
       .then((records) => {
         // TODO: move to setupController mixins?
-        this.includeSorting(records, sorting);
-        return this.includePagination(records, page, perPage);
+        return this.includeSorting(records, sorting);
       });
   },
 

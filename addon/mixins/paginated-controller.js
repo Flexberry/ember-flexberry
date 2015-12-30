@@ -11,133 +11,136 @@ export default Ember.Mixin.create({
   }),
 
   perPageValues: [2, 3, 4, 5, 10, 20, 50],
+  recordsTotalCount: Ember.computed('model', function() {
+    let model = this.get('model');
+    let metadata = model.store.typeMapFor(model.type).metadata;
+    return metadata.count;
+  }),
 
   actions: {
     gotoPage: function(pageNum) {
-      var num = this._getNum(pageNum);
-      this.transitionToPageRoute(num);
+      let num = this._checkPageNumber(pageNum);
+      this.set('page', num);
     },
     nextPage: function() {
-      var pagination = this.get('model.pagination');
-      var num = this._getNum(pagination.page + 1, pagination);
-      this.transitionToPageRoute(num);
+      let page = this.get('page');
+      let nextPage = this._checkPageNumber(page + 1);
+      this.set('page', nextPage);
     },
     previousPage: function() {
-      var pagination = this.get('model.pagination');
-      var num = this._getNum(pagination.page - 1, pagination);
-      this.transitionToPageRoute(num);
+      let page = this.get('page');
+      let prevPage = this._checkPageNumber(page - 1);
+      this.set('page', prevPage);
     },
     lastPage: function() {
-      var last = this._getLast();
-      this.transitionToPageRoute(last);
+      let lastPage = this._getLastPage();
+      this.set('page', lastPage);
     },
     firstPage: function() {
-      this.transitionToPageRoute(1);
+      this.set('page', 1);
     }
   },
 
-  per_page: Ember.computed('model.pagination.per_page', {
+  perPageValue: Ember.computed('perPage', {
     get(key) {
-      var val = this.get('model.pagination.per_page');
-      if (this.perPageValues.indexOf(val) === -1) {
-        // Если per_page не будет в perPageValues,
+      let perPage = this.get('perPage');
+      let perPageValues = this.get('perPageValues');
+      if (perPageValues.indexOf(perPage) === -1) {
+        // Если perPage не будет в perPageValues,
         // то в select-е будет выбрано undefined,
-        // => per_page изменится undefined, т.к. на нем биндинг.
-        this.perPageValues.push(val);
-        this.perPageValues.sort((a, b) => a - b);
+        // => perPage изменится undefined, т.к. на нем биндинг.
+        perPageValues.push(perPage);
+        perPageValues.sort((a, b) => a - b);
       }
 
-      return val;
+      return perPage;
     },
     set(key, value) {
+      let perPage = parseInt(value, 10);
+
       // Save setting.
       let settings = Settings.create();
-      value = parseInt(value, 10);
-      settings.set('perPage', value);
+      settings.set('perPage', perPage);
 
       // Changing perPage value reloads route automatically.
-      this.set('perPage', value);
+      this.set('perPage', perPage);
 
       // Check that the current page number does not exceed the last page number.
-      var currentPage = this._getCurrent();
-      var newLastPage = this._getLast({
-        count: this.get('model.pagination.count'),
-        per_page: value
-      });
-
+      let currentPage = this.get('page');
+      let newLastPage = this._getLastPage(perPage);
       if (currentPage > newLastPage) {
         // Changing page value reloads route automatically.
         this.set('page', newLastPage);
       }
+
+      return perPage;
     }
   }),
 
-  hasPreviousPage: Ember.computed('model.pagination', function() {
-    var pagination = this.get('model.pagination');
-    return pagination.page > 1;
+  hasPreviousPage: Ember.computed('page', function() {
+    return this.get('page') > 1;
   }),
 
-  hasNextPage: Ember.computed('model.pagination', function() {
-    var pagination = this.get('model.pagination');
-    var last = Math.ceil(pagination.count / pagination.per_page);
-    return pagination.page < last;
+  hasNextPage: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
+    let page = this.get('page');
+    let lastPage = this._getLastPage();
+    return page < lastPage;
   }),
 
-  pages: Ember.computed('model.pagination', function() {
-    var pagination = this.get('model.pagination');
-    var last = Math.ceil(pagination.count / pagination.per_page);
+  pages: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
+    let page = this.get('page');
+    let lastPage = this._getLastPage();
 
     // Pages are shown via list like [1] [2] … [10] {11} [12] … [18] [19], initial and final pages are shown always,
     // and nearest neighbors are and displayed for the current page. In case, when the current page is located in close to the beginning or end
     // list of page is shown accordingly [1] [2] [3] {4} [5] … [18] [19] or [1] [2] … [15] {16} [17] [18] [19].
-    var visiblePageCount = 7;
-    var visibleEndPageCount = 2;
-    var i = 0;
-    var arr = [];
+    const visiblePageCount = 7;
+    const visibleEndPageCount = 2;
+    let arr = [];
 
-    if (visiblePageCount >= last) {
+    if (visiblePageCount >= lastPage) {
       // If the total page number do not exceed the number of visible pages.
-      for (i = 1; i <= last; i++) {
+      for (let i = 1; i <= lastPage; i++) {
         this._addPageNumberIntoArray(arr, i, false);
       }
     } else {
       // Number of visible pages near current page.
-      var visibleMidlePageHalfCount =  Math.floor((visiblePageCount - visibleEndPageCount * 2) / 2);
+      let visibleMidlePageHalfCount =  Math.floor((visiblePageCount - visibleEndPageCount * 2) / 2);
 
       // Number of visible pages to the left end.
-      var leftEndPageCount =
-          pagination.page < visibleEndPageCount + visibleMidlePageHalfCount + 1 ?
-            visiblePageCount - visibleEndPageCount : visibleEndPageCount;
+      let leftEndPageCount = page < visibleEndPageCount + visibleMidlePageHalfCount + 1 ?
+            visiblePageCount - visibleEndPageCount
+            : visibleEndPageCount;
 
       // Number of visible pages to the right end.
-      var rightEndPageCount =
-          pagination.page > last - (visibleEndPageCount + visibleMidlePageHalfCount) ?
-            visiblePageCount - visibleEndPageCount : visibleEndPageCount;
+      let rightEndPageCount = page > lastPage - (visibleEndPageCount + visibleMidlePageHalfCount) ?
+            visiblePageCount - visibleEndPageCount
+            : visibleEndPageCount;
 
       // Add pages to the left edge.
-      for (i = 1; i <= Math.min(leftEndPageCount, last); i++) {
+      for (let i = 1; i <= Math.min(leftEndPageCount, lastPage); i++) {
         this._addPageNumberIntoArray(arr, i, false);
       }
 
       // Add left ellipsis if needed
-      if (pagination.page > visibleEndPageCount + visibleMidlePageHalfCount + 1) {
+      if (page > visibleEndPageCount + visibleMidlePageHalfCount + 1) {
         this._addPageNumberIntoArray(arr, 0, true);
       }
 
       // Add middle pades including current page.
-      var middleBlockStartPage = Math.max(leftEndPageCount + 1, pagination.page - visibleMidlePageHalfCount);
-      var middleBlockEndPage = Math.min(pagination.page + visibleMidlePageHalfCount, last - rightEndPageCount);
-      for (i = middleBlockStartPage; i <= middleBlockEndPage; i++) {
+      let middleBlockStartPage = Math.max(leftEndPageCount + 1, page - visibleMidlePageHalfCount);
+      let middleBlockEndPage = Math.min(page + visibleMidlePageHalfCount, lastPage - rightEndPageCount);
+      for (let i = middleBlockStartPage; i <= middleBlockEndPage; i++) {
         this._addPageNumberIntoArray(arr, i, false);
       }
 
       // Add right ellipsis if needed.
-      if (pagination.page < last - (visibleEndPageCount + visibleMidlePageHalfCount)) {
+      if (page < lastPage - (visibleEndPageCount + visibleMidlePageHalfCount)) {
         this._addPageNumberIntoArray(arr, 0, true);
       }
 
       // Add pages to the right edge.
-      for (i = last - rightEndPageCount + 1; i <= last; i++) {
+      for (let i = lastPage - rightEndPageCount + 1; i <= lastPage; i++) {
         this._addPageNumberIntoArray(arr, i, false);
       }
     }
@@ -146,28 +149,21 @@ export default Ember.Mixin.create({
   }),
 
   _addPageNumberIntoArray: function(arr, pageNumber, isEllipsis) {
-    var pagination = this.get('model.pagination');
+    let page = this.get('page');
     arr.push({
       number: pageNumber,
-      isCurrent: (pageNumber === pagination.page),
+      isCurrent: (pageNumber === page),
       isEllipsis: isEllipsis
     });
   },
 
-  _getCurrent: function(pagination = this.get('model.pagination')) {
-    return pagination.page;
+  _getLastPage: function(perPage = this.get('perPage'), count = this.get('recordsTotalCount')) {
+    return Math.ceil(count / perPage);
   },
 
-  _getLast: function(pagination = this.get('model.pagination')) {
-    return Math.ceil(pagination.count / pagination.per_page);
-  },
-
-  _getNum: function(pageNum, pagination = this.get('model.pagination')) {
-    var last = this._getLast(pagination);
-    return Math.max(1, Math.min(pageNum, last));
-  },
-
-  transitionToPageRoute: function(pageNum) {
-    this.set('page', pageNum);
+  _checkPageNumber: function(pageNum) {
+    const firstPage = 1;
+    let lastPage = this._getLastPage();
+    return Math.max(firstPage, Math.min(pageNum, lastPage));
   }
 });

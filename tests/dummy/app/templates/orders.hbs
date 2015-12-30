@@ -31,9 +31,9 @@
             <button class="ui {{unless hasNextPage 'disabled'}} button" {{action "nextPage"}}>&raquo;</button>
         </div>
         <div class="right menu">
-          {{#ui-dropdown value=per_page class="compact selection"}}
+          {{#ui-dropdown value=perPageValue class="compact selection"}}
               <i class="dropdown icon"></i>
-              <div class="text">{{per_page}}</div>
+              <div class="text">{{perPageValue}}</div>
               <div class="menu">
                 {{#each perPageValues as |perPageValue|}}
                     <div class="item" data-value={{perPageValue}}>{{perPageValue}}</div>

@@ -86,12 +86,7 @@ export default BaseComponent.extend({
     },
     deleteRow: function(key, record) {
       if (confirm('Do you really want to delete this record?')) {
-        var rowToDelete = this._getRowByKey(key);
-        this._removeModelWithKey(key);
-        this.dataTable.api().row(rowToDelete).remove().draw(false);
-        record.deleteRecord();
-        var componentName = this.get('componentName');
-        this.get('groupEditEventsService').rowDeletedTrigger(componentName, record);
+        this._deleteRecord(record);
       }
     },
     selectRow: function(key, record) {
@@ -288,15 +283,23 @@ export default BaseComponent.extend({
         var count = selectedRecords.length;
         this.dataTable.api().rows('.selected').remove().draw(false);
         selectedRecords.forEach(function(item, index, enumerable) {
-          var key = _this._getModelKey(item);
-          _this._removeModelWithKey(key);
-          item.deleteRecord();
-          _this.get('groupEditEventsService').rowDeletedTrigger(componentName, item);
+          Ember.run.once(this, function() {
+            _this._deleteRecord(item);
+          });
         });
         selectedRecords.clear();
         this.get('groupEditEventsService').rowsDeletedTrigger(componentName, count);
       }
     }
+  },
+
+  _deleteRecord: function(record) {
+    // this.dataTable.api().row(rowToDelete).remove().draw(false);
+    var key = this._getModelKey(record);
+    this._removeModelWithKey(key);
+    record.deleteRecord();
+    var componentName = this.get('componentName');
+    this.get('groupEditEventsService').rowDeletedTrigger(componentName, record);
   },
 
   _setActiveRecord: function(key) {

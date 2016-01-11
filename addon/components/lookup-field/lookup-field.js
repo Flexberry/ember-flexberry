@@ -71,7 +71,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   }),
 
   readonly:  false,
-  buttonToggleReadonlyVisible: false,
 
   init() {
     this._super();

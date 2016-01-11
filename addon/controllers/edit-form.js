@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
-import LookupFieldMixin from '../components/lookup-field/lookup-field-mixin';
+import FlexberryLookupMixin from '../mixins/flexberry-lookup-mixin';
 
 /**
  * Edit form base controller.
  */
-export default Ember.Controller.extend(Ember.Evented, LookupFieldMixin, ErrorableControllerMixin, {
+export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, {
   /**
    * Lookup settings.
    */

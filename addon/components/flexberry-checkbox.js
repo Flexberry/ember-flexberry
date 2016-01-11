@@ -2,7 +2,10 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+
+const ComponentClass = 'flexberry-checkbox';
 
 /**
  * Checkbox component for Semantic UI.
@@ -12,20 +15,42 @@ import FlexberryBaseComponent from './flexberry-base-component';
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Default classes for component wrapper.
+   * Overload wrapper tag name for disabling wrapper.
    *
-   * @property classNames
-   * @type Array
+   * @property tagName
+   * @type String
+   * @default ''
    * @readOnly
    */
-  classNames: ['flexberry-checkbox', 'ui', 'checkbox'],
+  tagName: '',
 
   /**
-   * Checked value.
+   * Current checked value.
    *
    * @property checked
    * @type Boolean
-   * @default undefined
+   * @default false
    */
-  checked: undefined
+  checked: false,
+
+  /**
+   * Label for the checkbox.
+   *
+   * @property label
+   * @type String
+   * @default ''
+   */
+  label: '',
+
+  /**
+   * Additional classes for Semantic UI checkbox.
+   * Adds special Semantic UI class ('read-only') when component is readonly.
+   *
+   * @property _classComputed
+   * @private
+   * @type String
+   */
+  _classComputed: Ember.computed('readonly', function() {
+    return ComponentClass + (this.get('readonly') ? ' read-only' : '');
+  })
 });

@@ -33,6 +33,24 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   cssClass: undefined,
 
   /**
+   * Flag to show that lookup is at autocomplete mode.
+   *
+   * @property autocomplete
+   * @type Boolean
+   * @default false
+   */
+  autocomplete: false,
+
+  /**
+   * Path to request autocomplete items.
+   *
+   * @property url
+   * @type String
+   * @default undefined
+   */
+  url: undefined,
+
+  /**
    * Function to limit accessible values.
    *
    * @property limitFunction
@@ -87,6 +105,33 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
         }
       }
     }
+  },
+
+  // Init component when DOM is ready.
+  didInsertElement: function() {
+    this._super();
+
+    // TODO: only for autocomplete.
+    this.$('.ui.search').search({
+      apiSettings: {
+        url: this.get('url'),
+        beforeSend: function(settings) {
+          let beforeUrl = settings.url;
+          let afterUrl = beforeUrl + '?$filter=contains(FirstName, \'' + settings.urlData.query + '\')'; // TODO: CHANGE IT.
+          settings.url = afterUrl;
+          return settings;
+        }
+      },
+      fields: {
+        results: 'value',
+        title: 'FirstName' // TODO: CHANGE IT.
+      },
+      minCharacters: 3,
+      searchFields: ['FirstName'], // TODO: CHANGE IT.
+      cache: false,
+      maxResults: 10,
+      searchFullText: false
+    });
   },
 
   actions: {

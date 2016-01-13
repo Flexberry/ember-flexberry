@@ -71,7 +71,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   }),
 
   readonly:  false,
-  buttonToggleReadonlyVisible: false,
 
   init() {
     this._super();
@@ -91,9 +90,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   },
 
   actions: {
-    toggleReadonly() {
-      this.toggleProperty('readonly');
-    },
     choose: function(relationName, projection, title) {
       this.sendAction('choose', relationName, projection, title, undefined);
     },

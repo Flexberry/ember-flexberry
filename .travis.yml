@@ -39,4 +39,4 @@ script:
 after_success:
   - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy -f ember-flexberry-dev -m "Travis Build №$TRAVIS_BUILD_NUMBER"
   - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember build && firebase deploy -f ember-flexberry -m "Travis Build №$TRAVIS_BUILD_NUMBER"
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash scripts/update-docs.sh
+  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop") && bash scripts/update-docs.sh

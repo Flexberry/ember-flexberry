@@ -1,4 +1,4 @@
-import ListFormPageController from '../controllers/list-form-page';
+import ListFormPageController from '../controllers/list-form';
 
 export default ListFormPageController.extend({
   _currentRow: undefined,

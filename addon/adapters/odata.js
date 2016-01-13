@@ -22,6 +22,27 @@ export default DS.RESTAdapter.extend({
     return query;
   },
 
+  /**
+   * Creates query with given projection name (if not null) and limit function (if not empty).
+   *
+   * @method getLimitFunctionQuery
+   * @param {String} limitFunction Filter to add to query (if empty noting will be added as filter).
+   * @param {String} projectionName Projection name to add to query (if empty noting will be added as projection name).
+   * @return {Object} Created query.
+   */
+  getLimitFunctionQuery: function(limitFunction, projectionName) {
+    let query = {};
+    if (limitFunction && typeof (limitFunction) === 'string' && limitFunction.length > 0) {
+      Ember.merge(query, { $filter: limitFunction });
+    }
+
+    if (projectionName && typeof (projectionName) === 'string' && projectionName.length > 0) {
+      Ember.merge(query, { projection: projectionName });
+    }
+
+    return query;
+  },
+
   pathForType: function(type) {
     var camelized = Ember.String.camelize(type);
     var capitalized = Ember.String.capitalize(camelized);

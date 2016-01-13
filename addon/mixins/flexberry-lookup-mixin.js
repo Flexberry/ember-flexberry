@@ -110,12 +110,7 @@ export default Ember.Mixin.create({
       };
       this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
 
-      let query = {};
-      if (limitFunction && typeof (limitFunction) === 'string' && limitFunction.length > 0) {
-        Ember.merge(query, { $filter: limitFunction });
-      }
-
-      Ember.merge(query, { projection: projectionName });
+      let query = this.store.adapterFor(relatedToType).getLimitFunctionQuery(limitFunction, projectionName);
       this.store.query(relatedToType, query).then(data => {
         this.send('removeModalDialog', loadingParams);
         var controller = this.controllerFor(lookupSettings.controllerName)

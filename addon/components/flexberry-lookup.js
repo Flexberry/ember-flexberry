@@ -70,6 +70,42 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   autocompleteUrl: undefined,
 
   /**
+   * Action's name to update model's relation value.
+   *
+   * @property autocompleteUpdate
+   * @type String
+   * @default 'updateLookupValue'
+   */
+  autocompleteUpdate: 'updateLookupValue',
+  
+  /**
+   * Min characters count necessary to call autocomplete.
+   *
+   * @property autocompleteMinCharacters
+   * @type Number
+   * @default 3
+   */
+  autocompleteMinCharacters: 3,
+  
+  /**
+   * Maximum number of results to show on autocomplete.
+   *
+   * @property autocompleteMaxResults
+   * @type Number
+   * @default 10
+   */
+  autocompleteMaxResults: 10,
+  
+  /**
+   * Server-side property name of autocomplete property.
+   *
+   * @property autocompleteProperty
+   * @type String
+   * @default undefined
+   */
+  autocompleteProperty: undefined,
+
+  /**
    * Function to limit accessible values.
    *
    * @property limitFunction
@@ -134,32 +170,57 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       return;
     }
 
-    this.set('autocompleteValue', this.get('value'));
+    var autocompleteProperty = this.get('autocompleteProperty');
+    if (!autocompleteProperty) {
+      throw new Error('autocompleteProperty is undefined.');
+    }
+	
+	var autocompleteMinCharacters = this.get('autocompleteMinCharacters');
+    if (!autocompleteMinCharacters || typeof (autocompleteMinCharacters) !== 'number' || autocompleteMinCharacters <= 0) {
+      throw new Error('autocompleteMinCharacters has wrong value.');
+    }
+	
+	var autocompleteMaxResults = this.get('autocompleteMaxResults');
+    if (!autocompleteMaxResults || typeof (autocompleteMaxResults) !== 'number' || autocompleteMaxResults <= 0) {
+      throw new Error('autocompleteMaxResults has wrong value.');
+    }
+	
+	var autocompleteUrl = this.get('autocompleteUrl');
+    if (!autocompleteUrl) {
+      throw new Error('autocompleteUrl is not defined.');
+    }
+	
+	var relationName = this.get('relationName');
+    if (!relationName) {
+      throw new Error('relationName is not defined.');
+    }
+	
+	this.set('autocompleteValue', this.get('value'));
     let _this = this;
     this.$('.ui.search').search({
       apiSettings: {
-        url: this.get('autocompleteUrl'),
+        url: autocompleteUrl,
         beforeSend: function(settings) {
           let beforeUrl = settings.url;
-          let afterUrl = beforeUrl + '?$filter=contains(FirstName, \'' + settings.urlData.query + '\')'; // TODO: CHANGE IT.
+          let afterUrl = beforeUrl + '?$filter=contains(' + autocompleteProperty + ', \'' + settings.urlData.query + '\')'; // TODO: remove odata-specific.
           settings.url = afterUrl;
           return settings;
         }
       },
       fields: {
-        results: 'value',
-        title: 'FirstName' // TODO: CHANGE IT.
+        results: 'value', // TODO: remove odata-specific.
+        title: autocompleteProperty
       },
-      minCharacters: 3,
-      searchFields: ['FirstName'], // TODO: CHANGE IT.
+      minCharacters: autocompleteMinCharacters,
+      searchFields: [autocompleteProperty],
       cache: false,
-      maxResults: 10,
+      maxResults: autocompleteMaxResults,
       searchFullText: false,
       onSelect: function(result, response) {
         _this.sendAction(
           'autocompleteUpdate',
           {
-            relationName: _this.get('relationName'),
+            relationName: relationName,
             modelToLookup: undefined,
             newRelationValue: result
           });

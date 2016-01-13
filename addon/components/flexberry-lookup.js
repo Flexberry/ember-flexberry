@@ -42,13 +42,32 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   autocomplete: false,
 
   /**
-   * Path to request autocomplete items.
+   * Observes changes to value. Set it to autocompleteValue.
    *
-   * @property url
+   * @method valueChanged
+   */
+  valueChanged: Ember.observer('value', function() {
+    this.set('autocompleteValue', this.get('value'));
+  }),
+
+  /**
+   * Value for autocomplete control.
+   * If model's value changes, autocompleteValue is changed too. autocompleteValue may be changed independely, but it won't be applied to model automatically.
+   *
+   * @property autocompleteValue
    * @type String
    * @default undefined
    */
-  url: undefined,
+  autocompleteValue: undefined,
+
+  /**
+   * Path to request autocomplete items.
+   *
+   * @property autocompleteUrl
+   * @type String
+   * @default undefined
+   */
+  autocompleteUrl: undefined,
 
   /**
    * Function to limit accessible values.
@@ -111,10 +130,15 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   didInsertElement: function() {
     this._super();
 
-    // TODO: only for autocomplete.
+    if (this.get('readonly') || !this.get('autocomplete')) {
+      return;
+    }
+
+    this.set('autocompleteValue', this.get('value'));
+    let _this = this;
     this.$('.ui.search').search({
       apiSettings: {
-        url: this.get('url'),
+        url: this.get('autocompleteUrl'),
         beforeSend: function(settings) {
           let beforeUrl = settings.url;
           let afterUrl = beforeUrl + '?$filter=contains(FirstName, \'' + settings.urlData.query + '\')'; // TODO: CHANGE IT.
@@ -130,16 +154,25 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       searchFields: ['FirstName'], // TODO: CHANGE IT.
       cache: false,
       maxResults: 10,
-      searchFullText: false
+      searchFullText: false,
+      onSelect: function(result, response) {
+        _this.sendAction(
+          'autocompleteUpdate',
+          {
+            relationName: _this.get('relationName'),
+            modelToLookup: undefined,
+            newRelationValue: result
+          });
+      }
     });
   },
 
   actions: {
-    choose: function(relationName, projection, title) {
-      this.sendAction('choose', relationName, projection, title, undefined);
+    choose: function(chooseData) {
+      this.sendAction('choose', chooseData);
     },
-    remove: function(relationName) {
-      this.sendAction('remove', relationName, undefined);
+    remove: function(removeData) {
+      this.sendAction('remove', removeData);
     }
   }
 });

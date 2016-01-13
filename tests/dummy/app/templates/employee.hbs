@@ -63,11 +63,11 @@
         relationName='employee1'
         projection='EmployeeL'
         title='Employees'
-        buttonToggleReadonlyVisible=false
         readonly=readonly
 		limitFunction = lookupLimitFunction
-		url = 'https://northwindodata.azurewebsites.net/odata/Employees'
 		autocomplete = true
+		autocompleteUpdate='updateLookupValue'
+		autocompleteUrl = 'https://northwindodata.azurewebsites.net/odata/Employees'
       }}
     </div>
   </div>

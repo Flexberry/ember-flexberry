@@ -167,6 +167,45 @@ export default Ember.Mixin.create({
       // manually set isDirty flag, because its not working now when change relation props
       // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
       model.send('becomeDirty');
+    },
+
+    /**
+     * Update relation value at model.
+     *
+     * @method updateLookupValue
+     * @param {Object} updateData Lookup parameters to update data at model (projection name, etc).
+     */
+    updateLookupValue: function(updateData) {
+      let options = Ember.$.extend(true, {
+        relationName: undefined,
+        newRelationValue: undefined,
+        modelToLookup: undefined
+      }, updateData);
+      let relationName = options.relationName;
+      let newRelationValue = options.newRelationValue;
+      let modelToLookup = options.modelToLookup;
+      let model = modelToLookup ? modelToLookup : this.get('model');
+
+      // Get ember static function to get relation by name.
+      var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+
+      // Get relation property from model.
+      var relation = relationshipsByName.get(relationName);
+      if (!relation) {
+        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
+      }
+
+      let relationType = relation.type;
+      var payload = {};
+      payload[relationType + 's'] = [newRelationValue];
+      this.store.pushPayload(relationType, payload);
+      let realRelationValue = this.store.peekRecord(relationType, newRelationValue[this.store.serializerFor(relationType).get('primaryKey')]);
+
+      model.set(relationName, realRelationValue);
+
+      // manually set isDirty flag, because its not working now when change relation props
+      // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
+      model.send('becomeDirty');
     }
   }
 });

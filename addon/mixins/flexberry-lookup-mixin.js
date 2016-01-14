@@ -25,32 +25,6 @@ export default Ember.Mixin.create({
    */
   lookupController: undefined,
 
-  /**
-   * Forms url to get all availible entities of certain relation.
-   *
-   * @method getLookupAutocompleteUrl
-   * @param {String} relationName Elements for this relation will be searched.
-   * @return {Object} Formed url.
-   * @throws {Error} Throws error if relation was not found at model.
-   */
-  getLookupAutocompleteUrl: function(relationName) {
-    let model = this.get('model');
-
-    // Get ember static function to get relation by name.
-    var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
-
-    // Get relation property from model.
-    var relation = relationshipsByName.get(relationName);
-    if (!relation) {
-      throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
-    }
-
-    // Get property type name.
-    var relatedToType = relation.type;
-    let url = this.store.adapterFor(relatedToType).getUrlForTypeQuery(relatedToType);
-    return url;
-  },
-
   actions: {
     /**
      * Handles action from lookup choose action.
@@ -207,17 +181,7 @@ export default Ember.Mixin.create({
       let newRelationValue = options.newRelationValue;
       let modelToLookup = options.modelToLookup;
       let model = modelToLookup ? modelToLookup : this.get('model');
-
-      // Get ember static function to get relation by name.
-      var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
-
-      // Get relation property from model.
-      var relation = relationshipsByName.get(relationName);
-      if (!relation) {
-        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
-      }
-
-      let relationType = relation.type;
+      let relationType = this._getRelationType(model, relationName);
       var payload = {};
       payload[relationType + 's'] = [newRelationValue];
       this.store.pushPayload(relationType, payload);
@@ -228,6 +192,45 @@ export default Ember.Mixin.create({
       // manually set isDirty flag, because its not working now when change relation props
       // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
       model.send('becomeDirty');
+    },
+
+    /**
+     * Forms url to get all availible entities of certain relation.
+     *
+     * @method getLookupAutocompleteUrl
+     * @param {String} relationName Elements for this relation will be searched.
+     * @return {Object} Formed url.
+     * @throws {Error} Throws error if relation was not found at model.
+     */
+    getLookupAutocompleteUrl: function(relationName) {
+      var relatedToType = this._getRelationType(this.get('model'), relationName);
+      let url = this.store.adapterFor(relatedToType).getUrlForTypeQuery(relatedToType);
+      return url;
+    },
+
+    getAutocompleteLookupQueryOptions: function(urlParameters) {
+      let options = Ember.$.extend(true, {
+        relationName: undefined
+      }, urlParameters);
+
+      let relationName = options.relationName;
+      let relationType = this._getRelationType(this.get('model'), relationName);
+      let queryOptions = this.store.adapterFor(relationType).getQueryOptionsForAutocompleteLookup(urlParameters);
+      return queryOptions;
     }
+  },
+
+  _getRelationType: function(model, relationName) {
+    // Get ember static function to get relation by name.
+    var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+
+    // Get relation property from model.
+    var relation = relationshipsByName.get(relationName);
+    if (!relation) {
+      throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
+    }
+
+    let relationType = relation.type;
+    return relationType;
   }
 });

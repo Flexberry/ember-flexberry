@@ -66,9 +66,10 @@
         readonly=readonly
 		limitFunction = lookupLimitFunction
 		autocomplete = true
-		autocompleteUpdate='updateLookupValue'
-		autocompleteUrl = autoCompleteEmployeeLookupUrl
+		autocompleteUpdateAction='updateLookupValue'
 		autocompleteProperty='FirstName'
+		autocompleteUrl=(action 'getLookupAutocompleteUrl')
+		autocompleteQueryOptions=(action 'getAutocompleteLookupQueryOptions')
       }}
     </div>
   </div>

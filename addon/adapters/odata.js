@@ -56,8 +56,42 @@ export default DS.RESTAdapter.extend({
       throw new Error('Type is undefined.');
     }
 
-    let serverTypeName = this.pathForType(type);
-    return this.get('host') + '/' + serverTypeName;
+    let url = this.urlForFindAll(type);
+    return url;
+  },
+
+  getQueryOptionsForAutocompleteLookup: function(urlParameters) {
+    let options = Ember.$.extend(true, {
+      lookupLimitFunction: undefined,
+      top: undefined,
+      limitField: undefined,
+      limitValue: undefined
+    }, urlParameters);
+
+    let query = {};
+    let lookupLimitFunction = options.lookupLimitFunction;
+    let top = options.top;
+    let limitField = options.limitField;
+    let limitValue = options.limitValue;
+
+    // TODO: add projection?
+    if (limitField && limitValue) {
+      let limitFunction = 'contains(' + limitField + ', \'' + limitValue + '\')';
+      if (lookupLimitFunction) {
+        limitFunction = limitFunction + ' and ' + lookupLimitFunction;
+      }
+
+      Ember.merge(query, { $filter: limitFunction });
+    }
+    else if (lookupLimitFunction) {
+      Ember.merge(query, { $filter: lookupLimitFunction });
+    }
+
+    if (top) {
+      Ember.merge(query, { $top: top });
+    }
+
+    return query;
   },
 
   pathForType: function(type) {

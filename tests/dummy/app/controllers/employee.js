@@ -20,15 +20,5 @@ export default EditFormController.extend({
     }
 
     return undefined;
-  }),
-
-  /**
-   * Url to get all availible entities of relation 'employee1'.
-   *
-   * @property autoCompleteEmployeeLookupUrl
-   * @type String
-   */
-  autoCompleteEmployeeLookupUrl: Ember.computed(function() {
-    return this.getLookupAutocompleteUrl('employee1');
   })
 });

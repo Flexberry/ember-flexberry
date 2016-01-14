@@ -69,6 +69,8 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    */
   autocompleteUrl: undefined,
 
+  autocompleteQueryOptions: undefined,
+
   /**
    * Action's name to update model's relation value.
    *
@@ -76,7 +78,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @type String
    * @default 'updateLookupValue'
    */
-  autocompleteUpdate: 'updateLookupValue',
+  autocompleteUpdateAction: 'updateLookupValue',
 
   /**
    * Min characters count necessary to call autocomplete.
@@ -104,6 +106,10 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @default undefined
    */
   autocompleteProperty: undefined,
+
+  lookupParent: Ember.computed(function() {
+    return this.get('targetObject');
+  }),
 
   /**
    * Function to limit accessible values.
@@ -185,15 +191,13 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       throw new Error('autocompleteMaxResults has wrong value.');
     }
 
-    var autocompleteUrl = this.get('autocompleteUrl');
-    if (!autocompleteUrl) {
-      throw new Error('autocompleteUrl is not defined.');
-    }
-
     var relationName = this.get('relationName');
     if (!relationName) {
       throw new Error('relationName is not defined.');
     }
+
+    let autocompleteUrl = this.get('autocompleteUrl')(relationName);
+    let limitFunction = this.get('limitFunction');
 
     this.set('autocompleteValue', this.get('value'));
     let _this = this;
@@ -201,14 +205,20 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       apiSettings: {
         url: autocompleteUrl,
         beforeSend: function(settings) {
-          let beforeUrl = settings.url;
-          let afterUrl = beforeUrl + '?$filter=contains(' + autocompleteProperty + ', \'' + settings.urlData.query + '\')'; // TODO: remove odata-specific.
-          settings.url = afterUrl;
+          let urlOptions = _this.get('autocompleteQueryOptions')(
+            {
+              relationName: relationName,
+              lookupLimitFunction: limitFunction,
+              top: autocompleteMaxResults,
+              limitField: autocompleteProperty,
+              limitValue: settings.urlData.query
+            });
+          Ember.merge(settings.data, urlOptions);
           return settings;
         }
       },
       fields: {
-        results: 'value', // TODO: remove odata-specific.
+        results: 'value',
         title: autocompleteProperty
       },
       minCharacters: autocompleteMinCharacters,
@@ -218,7 +228,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       searchFullText: false,
       onSelect: function(result, response) {
         _this.sendAction(
-          'autocompleteUpdate',
+          'autocompleteUpdateAction',
           {
             relationName: relationName,
             modelToLookup: undefined,

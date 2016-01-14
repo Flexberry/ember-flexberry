@@ -13,7 +13,7 @@ export default FlexberryBaseComponent.extend({
   selectedItem: null,
   selectedIndex: -1,
   id: null,
-  cssClass: null,
+  cssClass: 'ui dropdown',
 
   actions: {
     dropDown_onSelectedItemChanged: function() {

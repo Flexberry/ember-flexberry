@@ -10,15 +10,7 @@ Router.map(function() {
   this.route('login');
 
   // /employees
-  this.route('employees', function() {
-    //// /employees/2 - render into outlet in employees template
-    //this.resource('employee', {path: ':id'});
-
-    //// /employees/new
-    //this.route('new');
-
-    this.route('page', { path: 'page/:page' });
-  });
+  this.route('employees');
 
   // /employees/2 - render into outlet in application template
   this.route('employee', {path: 'employees/:id'});
@@ -27,9 +19,7 @@ Router.map(function() {
   this.route('employee.new', { path: 'employees/new' });
 
   // /orders
-  this.route('orders', function() {
-    this.route('page', { path: 'page/:page' });
-  });
+  this.route('orders');
 
   // /orders/2 - render into outlet in application template
   this.route('order', {path: 'orders/:id'});

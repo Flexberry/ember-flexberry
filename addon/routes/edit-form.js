@@ -9,12 +9,19 @@ export default ProjectedModelFormRoute.extend({
    * @type Service
    */
   groupEditEventsService: Ember.inject.service('groupedit-events'),
+  deletedRecords: null,
 
   activate() {
     this._super(...arguments);
     this.get('groupEditEventsService').on('groupEditRowAdded', this, this._rowAdded);
     this.get('groupEditEventsService').on('groupEditRowDeleted', this, this._rowDeleted);
     this.get('groupEditEventsService').on('groupEditRowsChanged', this, this._rowChanged);
+    if (!this.get('deletedRecords')) {
+      this.set('deletedRecords', Ember.A());
+    }
+    else {
+      this.get('deletedRecords').clear();
+    }
   },
 
   deactivate() {
@@ -42,7 +49,8 @@ export default ProjectedModelFormRoute.extend({
 
     controller.send('dismissErrorMessages');
     var model = controller.get('model');
-    if (model && model.get('isDirty')) {
+    this._rollbackDetails(model);
+    if (model && model.get('hasDirtyAttributes')) {
       model.rollback();
     }
   },
@@ -97,6 +105,13 @@ export default ProjectedModelFormRoute.extend({
    */
   _rowDeleted: function(componentName, record) {
     // Manually set isDirty flag, because its not working now when change relation props.
+    if (record.get('id')) {
+      this.get('deletedRecords').pushObject({
+        model: record.constructor.modelName,
+        id: record.get('id')
+      });
+    }
+
     this.controller.get('model').send('becomeDirty');
   },
 
@@ -111,5 +126,36 @@ export default ProjectedModelFormRoute.extend({
   _rowChanged: function(componentName) {
     // Manually set isDirty flag, because its not working now when change relation props.
     this.controller.get('model').send('becomeDirty');
+  },
+
+  _rollbackDetails: function(model) {
+    var modelClass = model.constructor;
+    var modelProjName = this.get('modelProjection');
+    var projection = modelClass.projections.get(modelProjName);
+    var attributes = projection.attributes;
+    for (var attrName in attributes) {
+      if (!attributes.hasOwnProperty(attrName)) {
+        continue;
+      }
+
+      var attr = attributes[attrName];
+      if (attr.kind === 'hasMany') {
+        var detailModels = model.get(attrName);
+        for (var i = 0; i < detailModels.get('length'); i++) {
+          if (detailModels.objectAt(i).get('hasDirtyAttributes')) {
+            detailModels.objectAt(i).rollbackAttributes();
+          }
+        }
+      }
+    }
+
+    var _this = this;
+    this.get('deletedRecords').forEach(function(deletedRecord) {
+      _this.store.findRecord(deletedRecord.model, deletedRecord.id, {reload: false}).then(function(record) {
+        record.rollbackAttributes();
+      });
+    });
+    this.get('deletedRecords').clear();
   }
+
 });

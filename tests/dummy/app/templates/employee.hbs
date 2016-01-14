@@ -65,7 +65,7 @@
         title='Employees'
         buttonToggleReadonlyVisible=false
         readonly=readonly
-		    limitFunction = lookupLimitFunction
+        limitFunction = lookupLimitFunction
       }}
     </div>
   </div>
@@ -77,7 +77,7 @@
       {{groupedit-toolbar componentName = "ordersGroupEdit"}}
       {{object-list-view
         componentName = "ordersGroupEdit"
-        class = "ui attached"
+        class = "attached"
         modelProjection = modelProjection.attributes.orders
         content = model.orders
         cellComponent = getCellComponent

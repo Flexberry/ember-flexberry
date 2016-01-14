@@ -1,4 +1,4 @@
-import ListFormPageController from '../controllers/list-form-page';
+import ListFormPageController from '../controllers/list-form';
 
 export default ListFormPageController.extend({
   _currentRow: undefined,
@@ -40,10 +40,10 @@ export default ListFormPageController.extend({
 
     /**
      * Handles create modal window action.
-	 * It saves created window to have opportunity to close it later.
+     * It saves created window to have opportunity to close it later.
      *
      * @method createdModalDialog
-	 * @param {JQuery} modalDialog Created modal window.
+     * @param {JQuery} modalDialog Created modal window.
      */
     createdModalDialog: function(modalDialog) {
       this.set('_openedModalDialog', modalDialog);

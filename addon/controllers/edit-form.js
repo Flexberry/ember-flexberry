@@ -194,9 +194,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   },
 
   _onSaveActionFulfilled: function(message) {
+    var _this = this;
     if (!this.get('readonly')) {
       this._processSavedDetails().then(function() {
         alert('Saved.');
+      }, function(reason) {
+        _this._onSaveActionRejected.call(_this, reason);
       });
     }
     else {

@@ -43,6 +43,23 @@ export default DS.RESTAdapter.extend({
     return query;
   },
 
+  /**
+   * Forms url to get all entities of certain type.
+   *
+   * @method getUrlForTypeQuery
+   * @param {String} type Type of entities.
+   * @return {Object} Formed url.
+   * @throws {Error} Throws error if type parameter is undefined.
+   */
+  getUrlForTypeQuery: function(type) {
+    if (!type) {
+      throw new Error('Type is undefined.');
+    }
+
+    let serverTypeName = this.pathForType(type);
+    return this.get('host') + '/' + serverTypeName;
+  },
+
   pathForType: function(type) {
     var camelized = Ember.String.camelize(type);
     var capitalized = Ember.String.capitalize(camelized);

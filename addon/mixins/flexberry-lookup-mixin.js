@@ -25,6 +25,32 @@ export default Ember.Mixin.create({
    */
   lookupController: undefined,
 
+  /**
+   * Forms url to get all availible entities of certain relation.
+   *
+   * @method getLookupAutocompleteUrl
+   * @param {String} relationName Elements for this relation will be searched.
+   * @return {Object} Formed url.
+   * @throws {Error} Throws error if relation was not found at model.
+   */
+  getLookupAutocompleteUrl: function(relationName) {
+    let model = this.get('model');
+
+    // Get ember static function to get relation by name.
+    var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+
+    // Get relation property from model.
+    var relation = relationshipsByName.get(relationName);
+    if (!relation) {
+      throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
+    }
+
+    // Get property type name.
+    var relatedToType = relation.type;
+    let url = this.store.adapterFor(relatedToType).getUrlForTypeQuery(relatedToType);
+    return url;
+  },
+
   actions: {
     /**
      * Handles action from lookup choose action.
@@ -169,6 +195,7 @@ export default Ember.Mixin.create({
      *
      * @method updateLookupValue
      * @param {Object} updateData Lookup parameters to update data at model (projection name, etc).
+     * @throws {Error} Throws error if relation was not found at model.
      */
     updateLookupValue: function(updateData) {
       let options = Ember.$.extend(true, {

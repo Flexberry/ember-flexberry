@@ -14,15 +14,10 @@ export default BaseComponent.extend({
   classNames: [
     'object-list-view',
 
-    // Semantic UI style.
-    'table',
-
-    // DataTables styles: https://datatables.net/manual/styling/classes.
-    'dataTable',
-    'cell-border',
-    'compact',
-    'hover',
-    'stripe'
+    // Semantic UI styles.
+    'ui',
+    'celled',
+    'table'
   ],
 
   modelProjection: null,
@@ -43,7 +38,7 @@ export default BaseComponent.extend({
   showCheckBoxInRow: false,
   showDeleteButtonInRow: false,
   store: null,
-  dataTable: null,
+  noDataMessage: null,
 
   /**
    * Service that triggers groupedit events.
@@ -62,6 +57,14 @@ export default BaseComponent.extend({
     this.get('groupEditEventsService').on('groupEditAddRow', this, this._addRow);
     this.get('groupEditEventsService').on('groupEditDeleteRows', this, this._deleteRows);
     this.set('contentWithKeys', Ember.A());
+    if (!this.get('noDataMessage')) {
+      this.set('noDataMessage', 'There is no data');
+    }
+
+    if (this.get('showCheckBoxInRow')) {
+      this.get('classNames').push('selectable');
+    }
+
     var _this = this;
     if (this.content) {
       this.get('content').forEach(function(item, index, enumerable) {
@@ -94,8 +97,8 @@ export default BaseComponent.extend({
       var selectedRow = this._getRowByKey(key);
       var checkBoxChecked = selectedRow.find('input[type=checkbox]').prop('checked');
       if (checkBoxChecked) {
-        if (!selectedRow.hasClass('selected')) {
-          selectedRow.addClass('selected');
+        if (!selectedRow.hasClass('active')) {
+          selectedRow.addClass('active');
         }
 
         if (selectedRecords.indexOf(record) === -1) {
@@ -103,8 +106,8 @@ export default BaseComponent.extend({
         }
       }
       else {
-        if (selectedRow.hasClass('selected')) {
-          selectedRow.removeClass('selected');
+        if (selectedRow.hasClass('active')) {
+          selectedRow.removeClass('active');
         }
 
         selectedRecords.removeObject(record);
@@ -116,13 +119,11 @@ export default BaseComponent.extend({
   },
 
   didInsertElement: function() {
-    var table = this.$().dataTable({
-      info: false,
-      ordering: false,
-      paging: false,
-      searching: false
-    });
-    this.set('dataTable', table);
+    if (!(this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow'))) {
+      this.$('thead tr th:eq(1)').css('border-left', 'none');
+      this.$('tbody tr').find('td:eq(1)').css('border-left', 'none');
+    }
+
     if (this.rowClickable) {
       var key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -263,10 +264,6 @@ export default BaseComponent.extend({
 
   _addRow: function(componentName) {
     if (componentName === this.get('componentName')) {
-      if (this.get('contentWithKeys').length === 0) {
-        this.$('tbody tr:eq(0)').remove();
-      }
-
       var modelName = this.get('modelProjection').modelName;
       var modelToAdd = this.store.createRecord(modelName, {});
       this.get('content').addObject(modelToAdd);
@@ -281,12 +278,11 @@ export default BaseComponent.extend({
         var _this = this;
         var selectedRecords = this.get('selectedRecords');
         var count = selectedRecords.length;
-        this.dataTable.api().rows('.selected').remove().draw(false);
         selectedRecords.forEach(function(item, index, enumerable) {
           Ember.run.once(this, function() {
             _this._deleteRecord(item);
           });
-        });
+        }, this);
         selectedRecords.clear();
         this.get('groupEditEventsService').rowsDeletedTrigger(componentName, count);
       }
@@ -294,7 +290,6 @@ export default BaseComponent.extend({
   },
 
   _deleteRecord: function(record) {
-    // this.dataTable.api().row(rowToDelete).remove().draw(false);
     var key = this._getModelKey(record);
     this._removeModelWithKey(key);
     record.deleteRecord();
@@ -303,10 +298,15 @@ export default BaseComponent.extend({
   },
 
   _setActiveRecord: function(key) {
-    this.dataTable.$('tr.selected').removeClass('selected');
     var selectedRow = this._getRowByKey(key);
-    selectedRow.addClass('selected');
+    this.$('tbody tr.active').removeClass('active');
+    selectedRow.addClass('active');
   },
+
+  _colCount: Ember.computed('columns.length', 'showCheckBoxInRow', 'showDeleteButtonInRow', function() {
+    var numOfAdditionalColumns = (this.showCheckBoxInRow || this.showDeleteButtonInRow) ? 1 : 0;
+    return this.get('columns').length + numOfAdditionalColumns;
+  }),
 
   _detailChanged: Ember.observer('content.@each.hasDirtyAttributes', function() {
     var componentName = this.get('componentName');

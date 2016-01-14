@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   queryParams: ['sort'],
+  sortDefaultValue: undefined,
+  sort: Ember.computed.oneWay('sortDefaultValue'),
 
   getNextSortDirection: function(currentDirection) {
     return currentDirection === 'asc' ? 'desc' : 'none';
@@ -25,6 +27,18 @@ export default Ember.Mixin.create({
     return result;
   }),
 
+  /**
+   * Производит операцию, обратную методу deserializeSortingParam.
+   *
+   * @param {Object} sorting Объект с параметрами сортировки, который нужно преобразовать в строку.
+   * @returns {String} Результирующая строка.
+   */
+  serializeSortingParam: function(sorting) {
+    return sorting.map(function(element) {
+      return (element.direction === 'asc' ? '+' : '-') + element.propName;
+    }).join('') || this.get('sortDefaultValue');
+  },
+
   actions: {
     sortByColumn: function(column) {
       var propName = column.propName;
@@ -47,7 +61,8 @@ export default Ember.Mixin.create({
         newSorting.push({ propName: propName, direction: sortDirection });
       }
 
-      this.send('applySorting', newSorting);
+      let sortQueryParam = this.serializeSortingParam(newSorting);
+      this.set('sort', sortQueryParam);
     },
 
     addColumnToSorting: function(column) {
@@ -73,7 +88,8 @@ export default Ember.Mixin.create({
         newSorting.push({ propName: propName, direction: 'asc' });
       }
 
-      this.send('applySorting', newSorting);
+      let sortQueryParam = this.serializeSortingParam(newSorting);
+      this.set('sort', sortQueryParam);
     }
   }
 });

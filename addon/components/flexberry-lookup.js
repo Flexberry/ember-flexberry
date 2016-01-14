@@ -77,16 +77,16 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @default 'updateLookupValue'
    */
   autocompleteUpdate: 'updateLookupValue',
-  
+
   /**
    * Min characters count necessary to call autocomplete.
    *
    * @property autocompleteMinCharacters
    * @type Number
-   * @default 3
+   * @default 1
    */
-  autocompleteMinCharacters: 3,
-  
+  autocompleteMinCharacters: 1,
+
   /**
    * Maximum number of results to show on autocomplete.
    *
@@ -95,7 +95,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @default 10
    */
   autocompleteMaxResults: 10,
-  
+
   /**
    * Server-side property name of autocomplete property.
    *
@@ -183,28 +183,28 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     if (!autocompleteProperty) {
       throw new Error('autocompleteProperty is undefined.');
     }
-	
-	var autocompleteMinCharacters = this.get('autocompleteMinCharacters');
+
+    var autocompleteMinCharacters = this.get('autocompleteMinCharacters');
     if (!autocompleteMinCharacters || typeof (autocompleteMinCharacters) !== 'number' || autocompleteMinCharacters <= 0) {
       throw new Error('autocompleteMinCharacters has wrong value.');
     }
-	
-	var autocompleteMaxResults = this.get('autocompleteMaxResults');
+
+    var autocompleteMaxResults = this.get('autocompleteMaxResults');
     if (!autocompleteMaxResults || typeof (autocompleteMaxResults) !== 'number' || autocompleteMaxResults <= 0) {
       throw new Error('autocompleteMaxResults has wrong value.');
     }
-	
-	var autocompleteUrl = this.get('autocompleteUrl');
+
+    var autocompleteUrl = this.get('autocompleteUrl');
     if (!autocompleteUrl) {
       throw new Error('autocompleteUrl is not defined.');
     }
-	
-	var relationName = this.get('relationName');
+
+    var relationName = this.get('relationName');
     if (!relationName) {
       throw new Error('relationName is not defined.');
     }
-	
-	this.set('autocompleteValue', this.get('value'));
+
+    this.set('autocompleteValue', this.get('value'));
     let _this = this;
     this.$('.ui.search').search({
       apiSettings: {
@@ -234,6 +234,11 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
             newRelationValue: result
           });
       }
+    });
+
+    // TODO: find proper way to restore selected value.
+    this.$('.prompt').blur(function() {
+      _this.set('autocompleteValue', _this.get('value'));
     });
   },
 

@@ -1,7 +1,7 @@
 import StorageObject from 'ember-local-storage/local/object';
 
 export default StorageObject.extend({
-  storageKey: 'prototype-ember-application-settings',
+  storageKey: 'ember-flexberry-settings',
   initialContent: {
     perPage: 5
   }

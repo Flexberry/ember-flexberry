@@ -115,6 +115,15 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   limitFunction: undefined,
 
   /**
+   * Flag to show that lookup is at dropdown mode.
+   *
+   * @property dropdown
+   * @type Boolean
+   * @default false
+   */
+  dropdown: false,
+
+  /**
    * Object with lookup properties to send on choose action.
    *
    * @property chooseData

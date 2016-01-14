@@ -1,22 +1,26 @@
-{{#if (and (not readonly) autocomplete)}}
-  {{#ui-search}}
-    {{input 
-	  type="text"
-      class="prompt"
-      placeholder=placeholder
-	  value=autocompleteValue
-    }}
-    <div class="results"></div>
-  {{/ui-search}}
+{{#if dropdown}}
+  {{flexberry-dropdown placeholder=placeholder}}
 {{else}}
-  {{input
-    type="text"
-    class="form-control form-control-trunc lookup-field"
-    placeholder=placeholder
-    readonly='readonly'
-    value=value
-  }}
-{{/if}}
+  {{#if (and (not readonly) autocomplete)}}
+    {{#ui-search}}
+      {{input 
+        type="text"
+        class="prompt"
+        placeholder=placeholder
+        value=autocompleteValue
+      }}
+      <div class="results"></div>
+    {{/ui-search}}
+  {{else}}
+    {{input
+      type="text"
+      class="form-control form-control-trunc lookup-field"
+      placeholder=placeholder
+      readonly='readonly'
+      value=value
+    }}
+  {{/if}}
 
-<button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'choose' chooseData}}>{{{chooseText}}}</button>
-<button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'remove' removeData}}>{{{removeText}}}</button>
+  <button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'choose' chooseData}}>{{{chooseText}}}</button>
+  <button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'remove' removeData}}>{{{removeText}}}</button>
+{{/if}}

@@ -60,13 +60,20 @@ export default DS.RESTAdapter.extend({
     return url;
   },
 
-  getQueryOptionsForAutocompleteLookup: function(urlParameters) {
+  /**
+   * Forms query options to get entities by specified lookup options.
+   *
+   * @method getQueryOptionsForAutocompleteLookup
+   * @param {Object} lookupParameters Specified lookup autocomplete options.
+   * @return {Object} Formed query options.
+   */
+  getQueryOptionsForAutocompleteLookup: function(lookupParameters) {
     let options = Ember.$.extend(true, {
       lookupLimitFunction: undefined,
       top: undefined,
       limitField: undefined,
       limitValue: undefined
-    }, urlParameters);
+    }, lookupParameters);
 
     let query = {};
     let lookupLimitFunction = options.lookupLimitFunction;

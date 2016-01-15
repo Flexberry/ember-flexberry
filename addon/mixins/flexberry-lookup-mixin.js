@@ -169,7 +169,6 @@ export default Ember.Mixin.create({
      *
      * @method updateLookupValue
      * @param {Object} updateData Lookup parameters to update data at model (projection name, etc).
-     * @throws {Error} Throws error if relation was not found at model.
      */
     updateLookupValue: function(updateData) {
       let options = Ember.$.extend(true, {
@@ -200,7 +199,6 @@ export default Ember.Mixin.create({
      * @method getLookupAutocompleteUrl
      * @param {String} relationName Elements for this relation will be searched.
      * @return {Object} Formed url.
-     * @throws {Error} Throws error if relation was not found at model.
      */
     getLookupAutocompleteUrl: function(relationName) {
       var relatedToType = this._getRelationType(this.get('model'), relationName);
@@ -208,18 +206,34 @@ export default Ember.Mixin.create({
       return url;
     },
 
-    getAutocompleteLookupQueryOptions: function(urlParameters) {
+    /**
+     * Forms query parameters by lookup autocomplete parameters.
+     *
+     * @method getAutocompleteLookupQueryOptions
+     * @param {Object} lookupParameters Lookup autocomplete parameters (current limit function, etc).
+     * @return {Object} Formed query parameters.
+     */
+    getAutocompleteLookupQueryOptions: function(lookupParameters) {
       let options = Ember.$.extend(true, {
         relationName: undefined
-      }, urlParameters);
+      }, lookupParameters);
 
       let relationName = options.relationName;
       let relationType = this._getRelationType(this.get('model'), relationName);
-      let queryOptions = this.store.adapterFor(relationType).getQueryOptionsForAutocompleteLookup(urlParameters);
+      let queryOptions = this.store.adapterFor(relationType).getQueryOptionsForAutocompleteLookup(lookupParameters);
       return queryOptions;
     }
   },
 
+  /**
+   * Gets related object type by relation name from specified model.
+   *
+   * @method _getRelationType
+   * @param {String} model Specified model to get relation from.
+   * @param {String} relationName Relation name.
+   * @return {String} Related object type.
+   * @throws {Error} Throws error if relation was not found at model.
+   */
   _getRelationType: function(model, relationName) {
     // Get ember static function to get relation by name.
     var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');

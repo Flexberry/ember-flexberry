@@ -61,14 +61,21 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   autocompleteValue: undefined,
 
   /**
-   * Path to request autocomplete items.
+   * Method to get url to request autocomplete items.
    *
    * @property autocompleteUrl
-   * @type String
+   * @type Action
    * @default undefined
    */
   autocompleteUrl: undefined,
 
+  /**
+   * Method to get query options to request autocomplete items.
+   *
+   * @property autocompleteQueryOptions
+   * @type Action
+   * @default undefined
+   */
   autocompleteQueryOptions: undefined,
 
   /**
@@ -239,7 +246,9 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
     // TODO: find proper way to restore selected value.
     this.$('.prompt').blur(function() {
-      _this.set('autocompleteValue', _this.get('value'));
+      if (!_this.$('.ui.search').hasClass('focus')) {
+       _this.set('autocompleteValue', _this.get('value'));
+      }
     });
   },
 

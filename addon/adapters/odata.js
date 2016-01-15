@@ -22,6 +22,85 @@ export default DS.RESTAdapter.extend({
     return query;
   },
 
+  /**
+   * Creates query with given projection name (if not null) and limit function (if not empty).
+   *
+   * @method getLimitFunctionQuery
+   * @param {String} limitFunction Filter to add to query (if empty noting will be added as filter).
+   * @param {String} projectionName Projection name to add to query (if empty noting will be added as projection name).
+   * @return {Object} Created query.
+   */
+  getLimitFunctionQuery: function(limitFunction, projectionName) {
+    let query = {};
+    if (limitFunction && typeof (limitFunction) === 'string' && limitFunction.length > 0) {
+      Ember.merge(query, { $filter: limitFunction });
+    }
+
+    if (projectionName && typeof (projectionName) === 'string' && projectionName.length > 0) {
+      Ember.merge(query, { projection: projectionName });
+    }
+
+    return query;
+  },
+
+  /**
+   * Forms url to get all entities of certain type.
+   *
+   * @method getUrlForTypeQuery
+   * @param {String} type Type of entities.
+   * @return {Object} Formed url.
+   * @throws {Error} Throws error if type parameter is undefined.
+   */
+  getUrlForTypeQuery: function(type) {
+    if (!type) {
+      throw new Error('Type is undefined.');
+    }
+
+    let url = this.urlForFindAll(type);
+    return url;
+  },
+
+  /**
+   * Forms query options to get entities by specified lookup options.
+   *
+   * @method getQueryOptionsForAutocompleteLookup
+   * @param {Object} lookupParameters Specified lookup autocomplete options.
+   * @return {Object} Formed query options.
+   */
+  getQueryOptionsForAutocompleteLookup: function(lookupParameters) {
+    let options = Ember.$.extend(true, {
+      lookupLimitFunction: undefined,
+      top: undefined,
+      limitField: undefined,
+      limitValue: undefined
+    }, lookupParameters);
+
+    let query = {};
+    let lookupLimitFunction = options.lookupLimitFunction;
+    let top = options.top;
+    let limitField = options.limitField;
+    let limitValue = options.limitValue;
+
+    // TODO: add projection?
+    if (limitField && limitValue) {
+      let limitFunction = 'contains(' + limitField + ', \'' + limitValue + '\')';
+      if (lookupLimitFunction) {
+        limitFunction = limitFunction + ' and ' + lookupLimitFunction;
+      }
+
+      Ember.merge(query, { $filter: limitFunction });
+    }
+    else if (lookupLimitFunction) {
+      Ember.merge(query, { $filter: lookupLimitFunction });
+    }
+
+    if (top) {
+      Ember.merge(query, { $top: top });
+    }
+
+    return query;
+  },
+
   pathForType: function(type) {
     var camelized = Ember.String.camelize(type);
     var capitalized = Ember.String.capitalize(camelized);

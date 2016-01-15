@@ -114,10 +114,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    */
   autocompleteProperty: undefined,
 
-  lookupParent: Ember.computed(function() {
-    return this.get('targetObject');
-  }),
-
   /**
    * Function to limit accessible values.
    *

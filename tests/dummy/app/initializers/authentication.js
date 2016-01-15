@@ -1,9 +1,9 @@
 import CustomAuthenticator from '../authenticators/custom';
 import CustomAuthorizer from '../authorizers/custom';
 
-export function initialize(container, application) {
-  container.register('authenticator:custom', CustomAuthenticator);
-  container.register('authorizer:custom', CustomAuthorizer);
+export function initialize(application) {
+  application.register('authenticator:custom', CustomAuthenticator);
+  application.register('authorizer:custom', CustomAuthorizer);
 }
 
 export default {

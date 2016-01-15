@@ -20,7 +20,7 @@ export default EditFormRoute.extend({
 
   deactivate: function() {
     var model = this.get('controller').get('model');
-    model.rollback();
+    model.rollbackAttributes();
 
     if (model.get('isNew')) {
       model.deleteRecord();

@@ -1,19 +1,24 @@
 <thead>
   <tr>
-    <th style="{{if (or showCheckBoxInRow showDeleteButtonInRow ) 'display:table-cell' 'display:none'}}"></th>
+    <th class="object-list-view-operations" style="{{if (not (or showCheckBoxInRow showDeleteButtonInRow)) 'display:none'}}"></th>
     {{#each columns as |column|}}
       {{component headerCellComponent column=column}}
     {{/each}}
   </tr>
 </thead>
 <tbody>
+  {{#if (eq contentWithKeys.length 0)}}
+    <tr>
+      <td colspan="{{_colCount}}" style="text-align:center;">{{noDataMessage}}</td>
+    </tr>
+  {{/if}}
   {{#each contentWithKeys key="key" as |record|}}
     <tr {{action 'rowClick' record.key record.data preventDefault=false}}>
-      <td class="object-list-view-operations-td" style="{{if (or showCheckBoxInRow showDeleteButtonInRow ) 'display:table-cell' 'display:none'}}">
+      <td class="object-list-view-operations" style="{{if (not (or showCheckBoxInRow showDeleteButtonInRow)) 'display:none'}}">
         <div style="display: none">{{record.key}}</div>
         <div class="ui middle aligned grid">
         <div class="column object-list-view-asterisk {{if (not record.data.hasDirtyAttributes) 'hidden'}}">
-          <i class="asterisk small red icon"></i>              
+          <i class="asterisk small red icon"></i>
         </div>
           {{#if showCheckBoxInRow}}
             <div class="column">

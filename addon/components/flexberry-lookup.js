@@ -247,7 +247,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     // TODO: find proper way to restore selected value.
     this.$('.prompt').blur(function() {
       if (!_this.$('.ui.search').hasClass('focus')) {
-       _this.set('autocompleteValue', _this.get('value'));
+        _this.set('autocompleteValue', _this.get('value'));
       }
     });
   },

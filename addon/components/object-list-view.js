@@ -3,13 +3,13 @@
  */
 
 import Ember from 'ember';
-import BaseComponent from './flexberry-base-component';
+import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
  * @class FlexberryObjectListView
  * @extends FlexberryBaseComponent
  */
-export default BaseComponent.extend({
+export default FlexberryBaseComponent.extend({
   tagName: 'table',
   classNames: [
     'object-list-view',
@@ -66,7 +66,7 @@ export default BaseComponent.extend({
     }
 
     var _this = this;
-    if (this.content) {
+    if (this.get('content')) {
       this.get('content').forEach(function(item, index, enumerable) {
         _this._addModel(item);
       });

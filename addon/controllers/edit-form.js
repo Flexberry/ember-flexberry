@@ -159,9 +159,6 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
             if (detailModels[i].get('isNew')) {
               modelsToDelete.pushObject(detailModels[i]);
             }
-            else if (!detailModels[i].get('isDeleted')) {
-              // TODO: Probably changed detail objects will be merked as modified after saving
-            }
             else if (detailModels[i].get('isDeleted')) {
               deletePromises.pushObject(detailModels[i].save());
             }

@@ -6,7 +6,6 @@
     "ember-cli-test-loader": "0.2.2",
     "ember-load-initializers": "0.1.7",
     "ember-qunit-notifications": "0.1.0",
-    "ember-simple-auth": "0.8.0",
     "jquery": "1.11.3",
     "jquery-mockjax": "~1.6.2",
     "loader.js": "^3.5.0",

@@ -1,6 +1,6 @@
 <thead>
   <tr>
-    <th class="object-list-view-operations" style="{{if (not (or showCheckBoxInRow showDeleteButtonInRow)) 'display:none'}}"></th>
+    <th class="object-list-view-operations {{if (not (or showCheckBoxInRow showDeleteButtonInRow)) 'hidden'}}"></th>
     {{#each columns as |column|}}
       {{component headerCellComponent column=column}}
     {{/each}}

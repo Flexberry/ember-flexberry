@@ -4,7 +4,6 @@ module.exports = {
     var _this = this;
     return this.addBowerPackagesToProject([
       { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
-      { name: 'datatables', target: '~1.10.8' },
       { name: 'blueimp-file-upload', target: '9.11.2' },
       { name: 'jquery-file-download', target: '1.4.4' }
     ]).then(function() {

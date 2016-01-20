@@ -164,9 +164,8 @@ export default Ember.Mixin.create({
       let model = modelToLookup ? modelToLookup : this.get('model');
       model.set(relationName, undefined);
 
-      // manually set isDirty flag, because its not working now when change relation props
-      // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
-      model.send('becomeDirty');
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      model.makeDirty();
     }
   }
 });

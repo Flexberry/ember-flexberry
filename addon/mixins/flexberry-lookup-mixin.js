@@ -4,8 +4,8 @@
 
 import Ember from 'ember';
 
+// TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
-
   // Lookup settings.
   lookupSettings: {
     controllerName: undefined,
@@ -79,6 +79,7 @@ export default Ember.Mixin.create({
         throw new Error('Lookup settings are undefined.');
       }
 
+      // TODO: maybe default params or Ember.assert\warn?
       if (!lookupSettings.template) {
         throw new Error('Lookup template is undefined.');
       }
@@ -118,17 +119,21 @@ export default Ember.Mixin.create({
       Ember.merge(query, { projection: projectionName });
       this.store.query(relatedToType, query).then(data => {
         this.send('removeModalDialog', loadingParams);
-        var controller = this.controllerFor(lookupSettings.controllerName)
-          .clear()
-          .set('modelProjection', projection)
-          .set('title', title)
-          .set('modalWindowHeight', lookupSettings.modalWindowHeight)
-          .set('modalWindowWidth', lookupSettings.modalWindowWidth)
-          .set('saveTo', {
+
+        let controller = this.get('lookupController');
+        controller.clear();
+        controller.setProperties({
+          modelProjection: projection,
+          title: title,
+          modalWindowHeight: lookupSettings.modalWindowHeight,
+          modalWindowWidth: lookupSettings.modalWindowWidth,
+          saveTo: {
             model: model,
             propName: relationName
-          })
-          .setCurrentRow();
+          }
+        });
+
+        controller.setCurrentRow();
 
         this.send('showModalDialog', lookupSettings.contentTemplate, {
           controller: controller,

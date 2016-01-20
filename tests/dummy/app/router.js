@@ -13,7 +13,7 @@ Router.map(function() {
   this.route('employees');
 
   // /employees/2 - render into outlet in application template
-  this.route('employee', {path: 'employees/:id'});
+  this.route('employee', { path: 'employees/:id' });
 
   // /employees/new
   this.route('employee.new', { path: 'employees/new' });
@@ -22,7 +22,7 @@ Router.map(function() {
   this.route('orders');
 
   // /orders/2 - render into outlet in application template
-  this.route('order', {path: 'orders/:id'});
+  this.route('order', { path: 'orders/:id' });
 
   // /employees/new
   this.route('order.new', { path: 'orders/new' });

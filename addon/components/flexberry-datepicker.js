@@ -121,8 +121,7 @@ export default FlexberryBaseComponent.extend({
     var valueFromInput = this.$('input').val();
     if (valueFromInput === '' && !dateFromPicker.isValid()) {
       this.setEmptyValue();
-    }
-    else {
+    } else {
       var dateToSet = this.getDateToSet(dateFromPicker);
       var currentValue = this.get('value');
       if (currentValue === null || !moment(moment(dateToSet).format(this.dateTimeFormat), this.dateTimeFormat).isSame(moment(moment(currentValue).format(this.dateTimeFormat), this.dateTimeFormat))) {
@@ -159,8 +158,7 @@ export default FlexberryBaseComponent.extend({
     if ((!dateToSet || dateToSet === this.invalidDate) && this.hasTimePicker) {
       this.$().parents('body').find('button.applyBtn').attr('disabled', 'disabled');
       this.$('input').data('daterangepicker').startDate = moment.invalid();
-    }
-    else {
+    } else {
       this.$().parents('body').find('button.applyBtn').removeAttr('disabled');
     }
   },
@@ -183,25 +181,21 @@ export default FlexberryBaseComponent.extend({
         if (this.$('input').data('daterangepicker') !== undefined) {
           this.$('input').data('daterangepicker').startDate = currValueDateTime;
           this.$('input').data('daterangepicker').setEndDate(currValueDateTime);
-        }
-        else {
+        } else {
           this.$('input').val(currValueDateTime.format(this.dateTimeFormat));
         }
       }
-    }
-    else if (val === null) {
+    } else if (val === null) {
       var valueFromInput = this.$('input').val();
       if (valueFromInput !== '') {
         this.$('input').val('');
       }
-    }
-    else if (!currValueDateTime.isValid()) {
+    } else if (!currValueDateTime.isValid()) {
       if (val !== this.invalidDate) {
         this.set('value', this.invalidDate);
         this.$('input').val(currValueDateTime.format(this.dateTimeFormat));
       }
-    }
-    else if (!moment.isDate(val)) {
+    } else if (!moment.isDate(val)) {
       this.set('value', currValueDateTime.toDate());
     }
   })

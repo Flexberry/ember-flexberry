@@ -106,8 +106,7 @@ export default BaseComponent.extend({
         if (selectedRecords.indexOf(record) === -1) {
           selectedRecords.pushObject(record);
         }
-      }
-      else {
+      } else {
         if (selectedRow.hasClass('selected')) {
           selectedRow.removeClass('selected');
         }

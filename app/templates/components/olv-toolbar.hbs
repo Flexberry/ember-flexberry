@@ -1,12 +1,6 @@
 {{#if refreshButton}}
-  <button class="ui button" {{action "clickRefreshButton"}}>Refresh</button>
+  <button class="ui button" {{action "refresh"}}>Refresh</button>
 {{/if}}
 {{#if createNewButton}}
-  <div class = "ui button">
-    {{#link-to createNewPath}}
-      <div class="ui middle aligned content">
-        <p class="ui small">Add</p>
-      </div>
-    {{/link-to}}
-  </div>
+  <button class="ui button" {{action "createNew"}}>Add</button>
 {{/if}}

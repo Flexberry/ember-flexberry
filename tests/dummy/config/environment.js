@@ -89,11 +89,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-  } else {
-    ENV['simple-auth'] = {
-      authorizer: 'authorizer:custom',
-      crossOriginWhitelist: [ENV.APP.backendUrls.root]
-    };
   }
 
   /*if (environment === 'development') {

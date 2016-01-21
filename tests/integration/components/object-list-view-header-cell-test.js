@@ -6,7 +6,7 @@ moduleForComponent('object-list-view-header-cell', 'Integration | Component | ob
 });
 
 test('it renders', function(assert) {
-  this.set('myColumn', { header: 'myHeader'});
+  this.set('myColumn', { header: 'myHeader' });
   this.render(hbs`{{object-list-view-header-cell column=myColumn}}`);
 
   assert.equal(this.$().text().trim(), 'myHeader');

@@ -31,11 +31,8 @@ export default ListFormPageController.extend({
 
       saveTo.model.set(saveTo.propName, this.get('_currentRow'));
 
-      // Manually set isDirty flag, because its not working now
-      // when change relation props.
-      // No check for 'old' and 'new' lookup data equality, because ember
-      // will do it automatically after bug fix.
-      saveTo.model.send('becomeDirty');
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      saveTo.model.makeDirty();
     },
 
     /**

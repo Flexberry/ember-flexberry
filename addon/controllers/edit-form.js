@@ -158,8 +158,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
           if (detailModels[i].get('hasDirtyAttributes')) {
             if (detailModels[i].get('isNew')) {
               modelsToDelete.pushObject(detailModels[i]);
-            }
-            else if (detailModels[i].get('isDeleted')) {
+            } else if (detailModels[i].get('isDeleted')) {
               deletePromises.pushObject(detailModels[i].save());
             }
           }
@@ -198,8 +197,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       }, function(reason) {
         _this._onSaveActionRejected.call(_this, reason);
       });
-    }
-    else {
+    } else {
       alert(message);
     }
   },

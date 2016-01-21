@@ -104,8 +104,7 @@ export default FlexberryBaseComponent.extend({
         if (selectedRecords.indexOf(record) === -1) {
           selectedRecords.pushObject(record);
         }
-      }
-      else {
+      } else {
         if (selectedRow.hasClass('active')) {
           selectedRow.removeClass('active');
         }

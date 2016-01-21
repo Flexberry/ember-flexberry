@@ -4,8 +4,8 @@
 
 import Ember from 'ember';
 
+// TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
-
   // Lookup settings.
   lookupSettings: {
     controllerName: undefined,
@@ -79,6 +79,7 @@ export default Ember.Mixin.create({
         throw new Error('Lookup settings are undefined.');
       }
 
+      // TODO: maybe default params or Ember.assert\warn?
       if (!lookupSettings.template) {
         throw new Error('Lookup template is undefined.');
       }
@@ -113,17 +114,21 @@ export default Ember.Mixin.create({
       let query = this.store.adapterFor(relatedToType).getLimitFunctionQuery(limitFunction, projectionName);
       this.store.query(relatedToType, query).then(data => {
         this.send('removeModalDialog', loadingParams);
-        var controller = this.controllerFor(lookupSettings.controllerName)
-          .clear()
-          .set('modelProjection', projection)
-          .set('title', title)
-          .set('modalWindowHeight', lookupSettings.modalWindowHeight)
-          .set('modalWindowWidth', lookupSettings.modalWindowWidth)
-          .set('saveTo', {
+
+        let controller = this.get('lookupController');
+        controller.clear();
+        controller.setProperties({
+          modelProjection: projection,
+          title: title,
+          modalWindowHeight: lookupSettings.modalWindowHeight,
+          modalWindowWidth: lookupSettings.modalWindowWidth,
+          saveTo: {
             model: model,
             propName: relationName
-          })
-          .setCurrentRow();
+          }
+        });
+
+        controller.setCurrentRow();
 
         this.send('showModalDialog', lookupSettings.contentTemplate, {
           controller: controller,
@@ -159,9 +164,8 @@ export default Ember.Mixin.create({
       let model = modelToLookup ? modelToLookup : this.get('model');
       model.set(relationName, undefined);
 
-      // manually set isDirty flag, because its not working now when change relation props
-      // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
-      model.send('becomeDirty');
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      model.makeDirty();
     },
 
     /**
@@ -188,9 +192,8 @@ export default Ember.Mixin.create({
 
       model.set(relationName, realRelationValue);
 
-      // manually set isDirty flag, because its not working now when change relation props
-      // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
-      model.send('becomeDirty');
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      model.makeDirty();
     },
 
     /**

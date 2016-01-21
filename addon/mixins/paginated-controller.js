@@ -4,11 +4,14 @@ import Settings from '../models/settings';
 export default Ember.Mixin.create({
   queryParams: ['page', 'perPage'],
   page: 1,
-  perPage: Ember.computed(function() {
-    let settings = Settings.create();
-    let perPage = settings.get('perPage');
-    return perPage;
-  }),
+  perPage: 5,
+
+  // FIXME: Fix perPage loading from Settings.
+  // perPage: Ember.computed(function() {
+  //   let settings = Settings.create();
+  //   let perPage = settings.get('perPage');
+  //   return perPage;
+  // }),
 
   actions: {
     gotoPage: function(pageNum) {

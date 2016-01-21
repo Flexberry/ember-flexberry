@@ -9,13 +9,15 @@ export default Ember.Component.extend({
   modelController:null,
   createNewButton: false,
   refreshButton: false,
-  createNewPath: Ember.computed('modelName', function() {
-    return this.get('modelName') + '.new';
-  }),
 
   actions: {
-    clickRefreshButton: function() {
+    refresh: function() {
       this.get('modelController').send('refreshList');
+    },
+    createNew: function() {
+      let modelController = this.get('modelController');
+      let modelName = this.get('modelName');
+      modelController.transitionToRoute(modelName + '.new');
     }
   }
 });

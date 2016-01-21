@@ -51,7 +51,7 @@ export default ProjectedModelFormRoute.extend({
     var model = controller.get('model');
     this._rollbackDetails(model);
     if (model && model.get('hasDirtyAttributes')) {
-      model.rollback();
+      model.rollbackAttributes();
     }
   },
 
@@ -90,8 +90,8 @@ export default ProjectedModelFormRoute.extend({
    * @param {Model} record The model corresponding to added row in groupedit.
    */
   _rowAdded: function(componentName, record) {
-    // Manually set isDirty flag, because its not working now when change relation props.
-    this.controller.get('model').send('becomeDirty');
+    // Manually make record dirty, because ember-data does not do it when relationship changes.
+    this.controller.get('model').makeDirty();
   },
 
   /**
@@ -101,10 +101,9 @@ export default ProjectedModelFormRoute.extend({
    * @private
    *
    * @param {String} componentName The name of flexberry-groupedit component.
-   * @param {Model} record The model corresponding to deleted row in groupedit.
+   * @param {DS.Model} record The model corresponding to deleted row in groupedit.
    */
   _rowDeleted: function(componentName, record) {
-    // Manually set isDirty flag, because its not working now when change relation props.
     if (record.get('id')) {
       this.get('deletedRecords').pushObject({
         model: record.constructor.modelName,
@@ -112,7 +111,8 @@ export default ProjectedModelFormRoute.extend({
       });
     }
 
-    this.controller.get('model').send('becomeDirty');
+    // Manually make record dirty, because ember-data does not do it when relationship changes.
+    this.controller.get('model').makeDirty();
   },
 
   /**
@@ -124,8 +124,8 @@ export default ProjectedModelFormRoute.extend({
    * @param {String} componentName The name of flexberry-groupedit component.
    */
   _rowChanged: function(componentName) {
-    // Manually set isDirty flag, because its not working now when change relation props.
-    this.controller.get('model').send('becomeDirty');
+    // Manually make record dirty, because ember-data does not do it when relationship changes.
+    this.controller.get('model').makeDirty();
   },
 
   _rollbackDetails: function(model) {

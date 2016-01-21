@@ -18,8 +18,7 @@ export default ProjectedModelFormRoute.extend({
     this.get('groupEditEventsService').on('groupEditRowsChanged', this, this._rowChanged);
     if (!this.get('deletedRecords')) {
       this.set('deletedRecords', Ember.A());
-    }
-    else {
+    } else {
       this.get('deletedRecords').clear();
     }
   },
@@ -151,11 +150,10 @@ export default ProjectedModelFormRoute.extend({
 
     var _this = this;
     this.get('deletedRecords').forEach(function(deletedRecord) {
-      _this.store.findRecord(deletedRecord.model, deletedRecord.id, {reload: false}).then(function(record) {
+      _this.store.findRecord(deletedRecord.model, deletedRecord.id, { reload: false }).then(function(record) {
         record.rollbackAttributes();
       });
     });
     this.get('deletedRecords').clear();
   }
-
 });

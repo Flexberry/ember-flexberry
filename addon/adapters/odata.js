@@ -89,8 +89,7 @@ export default DS.RESTAdapter.extend({
       }
 
       Ember.merge(query, { $filter: limitFunction });
-    }
-    else if (lookupLimitFunction) {
+    } else if (lookupLimitFunction) {
       Ember.merge(query, { $filter: lookupLimitFunction });
     }
 

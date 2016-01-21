@@ -10,8 +10,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @class FlexberryGroupedit
  * @extends FlexberryBaseComponent
  */
-
-var FlexberryGroupedit = FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend({
   /**
    * Projection for detail object's model.
    *
@@ -52,5 +51,3 @@ var FlexberryGroupedit = FlexberryBaseComponent.extend({
   _showDeleteButtonInRow: true,
   _rowClickable: false
 });
-
-export default FlexberryGroupedit;

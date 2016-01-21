@@ -9,7 +9,7 @@ import Ember from 'ember';
  *
  * @class FlexberryBaseComponent
  */
-var FlexberryBaseComponent = Ember.Component.extend({
+export default Ember.Component.extend({
   /**
    * Flag to make control readonly.
    *
@@ -29,5 +29,3 @@ var FlexberryBaseComponent = Ember.Component.extend({
    */
   componentName: undefined
 });
-
-export default FlexberryBaseComponent;

@@ -64,7 +64,7 @@
         projection='EmployeeL'
         title='Employees'
         readonly=readonly
-		limitFunction = lookupLimitFunction
+        limitFunction=lookupLimitFunction
       }}
     </div>
   </div>
@@ -73,18 +73,18 @@
 		<label>Orders</label>
 	</div>
     <div>
-      {{groupedit-toolbar componentName = "ordersGroupEdit"}}
+      {{groupedit-toolbar componentName="ordersGroupEdit"}}
       {{object-list-view
-        componentName = "ordersGroupEdit"
-        class = "attached"
-        modelProjection = modelProjection.attributes.orders
-        content = model.orders
-        cellComponent = getCellComponent
-        readonly = readonly
-        rowClickable = false
-        headerClickable = false
-        showCheckBoxInRow = true
-        showDeleteButtonInRow = true
+        componentName="ordersGroupEdit"
+        class="attached"
+        modelProjection=modelProjection.attributes.orders
+        content=model.orders
+        cellComponent=getCellComponent
+        readonly=readonly
+        rowClickable=false
+        headerClickable=false
+        showCheckBoxInRow=true
+        showDeleteButtonInRow=true
       }}
     </div>
   </div>

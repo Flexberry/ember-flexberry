@@ -52,6 +52,7 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 
 #### Running Tests
 
+* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 

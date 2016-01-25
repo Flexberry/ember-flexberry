@@ -8,7 +8,7 @@ module.exports = {
       { name: 'jquery-file-download', target: '1.4.4' }
     ]).then(function() {
       // TODO: Since ember-cli 1.13.10 use addAddonsToProject.
-      return _this.addAddonToProject({ name: 'semantic-ui-ember', target: '0.9.0' });
+      return _this.addAddonToProject({ name: 'semantic-ui-ember', target: '0.9.3' });
     });
   },
 

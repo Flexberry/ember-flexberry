@@ -1,8 +1,11 @@
 # Ember Flexberry
 [![npm](https://img.shields.io/npm/v/ember-flexberry.svg?label=npm%20latest%20version)](https://www.npmjs.com/package/ember-flexberry)
-[![Travis branch](https://img.shields.io/travis/Flexberry/ember-flexberry/master.svg?label=master%20build%20)](https://travis-ci.org/Flexberry/ember-flexberry)
-[![Travis branch](https://img.shields.io/travis/Flexberry/ember-flexberry/develop.svg?label=develop%20build)](https://travis-ci.org/Flexberry/ember-flexberry/branches)
+[![Travis master branch](https://img.shields.io/travis/Flexberry/ember-flexberry/master.svg?label=master%20build%20)](https://travis-ci.org/Flexberry/ember-flexberry)
+[![Travis develop branch](https://img.shields.io/travis/Flexberry/ember-flexberry/develop.svg?label=develop%20build)](https://travis-ci.org/Flexberry/ember-flexberry/branches)
 [![See all badges](https://img.shields.io/badge/all%20badges-visit BADGES.md-blue.svg)](BADGES.md)
+
+![ember](https://embadge.io/v1/badge.svg?label=ember&range=2.3.0)
+![ember-data](https://embadge.io/v1/badge.svg?label=ember-data&range=^2.3.0)
 
 Ember Flexberry Addon - Flexberry Template written in Ember.js.
 

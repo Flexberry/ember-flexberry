@@ -8,7 +8,7 @@
 ![ember-data](https://embadge.io/v1/badge.svg?label=ember-data&range=^2.3.0)
 [![See all badges](https://img.shields.io/badge/all%20badges-visit BADGES.md-blue.svg)](BADGES.md)
 
-Ember Flexberry Addon - Flexberry Template written in Ember.js.
+Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework powered by Ember.js.
 
 ## Installation
 

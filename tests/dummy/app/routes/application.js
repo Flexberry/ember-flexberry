@@ -6,6 +6,12 @@ export default Ember.Route.extend(ModalApplicationRouteMixin, AuthApplicationRou
   actions: {
     invalidateSession: function() {
       this.get('session').invalidate();
+    },
+    openDevCommit: function() {
+      let $el = Ember.$('#app-version');
+      let version = $el[0].innerText.trim();
+      let commitSha = version.split('+')[1];
+      window.location.href = 'https://github.com/Flexberry/ember-flexberry/commit/' + commitSha;
     }
   }
 });

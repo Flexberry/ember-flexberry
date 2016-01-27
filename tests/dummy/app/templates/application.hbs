@@ -1,6 +1,13 @@
 <div class="ui grid page menu">
   <a class="brand item" href="#">Flexberry prototype written in Ember.js</a>
   <div class="right menu">
+    <a {{action 'openDevCommit'}}
+       id="app-version"
+       class="item"
+       title="It is version of ember-flexberry addon, which uses in this dummy application (npm version + commit sha). Click to open commit on GitHub.">
+      {{app-version}}
+    </a>
+
     {{#if session.isAuthenticated}}
       <div class="item">
         <i class="user icon"></i>

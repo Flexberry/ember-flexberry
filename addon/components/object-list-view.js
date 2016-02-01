@@ -37,7 +37,7 @@ export default FlexberryBaseComponent.extend({
   headerClickable: true,
   showCheckBoxInRow: false,
   showDeleteButtonInRow: false,
-  store: null,
+  store: Ember.inject.service(),
   noDataMessage: null,
 
   /**
@@ -52,7 +52,6 @@ export default FlexberryBaseComponent.extend({
 
   init() {
     this._super(...arguments);
-    this.set('store', this.get('targetObject.store'));
     this.set('selectedRecords', Ember.A());
     this.get('groupEditEventsService').on('groupEditAddRow', this, this._addRow);
     this.get('groupEditEventsService').on('groupEditDeleteRows', this, this._deleteRows);

@@ -102,3 +102,46 @@ test('it loads fields', function(assert) {
     wait();
   });
 });
+
+test('makeDirty for loaded unchanged model makes model dirty', function(assert) {
+  assert.expect(3);
+
+  var store = App.__container__.lookup('service:store');
+  Ember.run(() => {
+    Ember.$.mockjax({
+      url: '*Employees(99)',
+      responseText: {
+        EmployeeID: 99,
+        FirstName: 'Ivan',
+        LastName: 'Ivanov',
+        BirthDate: '1933-10-30T00:00:00Z',
+        Employee1: {
+          EmployeeID: 98,
+          FirstName: 'Sidor',
+          LastName: 'Sidorov',
+          BirthDate: '1946-10-30T00:00:00Z',
+          Employee1: null
+        }
+      }
+    });
+
+    store.findRecord('employee', 99).then(function(record) {
+      assert.ok(record instanceof DS.Model);
+      assert.equal(record.get('dirtyType'), undefined);
+
+      record.makeDirty();
+      assert.equal(record.get('dirtyType'), 'updated');
+    });
+
+    wait();
+  });
+});
+
+test('makeDirty for created model does nothing', function(assert) {
+  assert.expect(2);
+
+  var record = this.subject();
+  assert.equal(record.get('dirtyType'), 'created');
+  record.makeDirty();
+  assert.equal(record.get('dirtyType'), 'created');
+});

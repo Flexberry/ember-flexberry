@@ -92,8 +92,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         return;
       }
 
-      this.get('model').save().then(this._onSaveActionFulfilled.bind(this),
-      this._onSaveActionRejected.bind(this));
+      this.get('model').save().then(
+        this._onSaveActionFulfilled.bind(this),
+        this._onSaveActionRejected.bind(this)
+      );
     },
 
     delete: function() {
@@ -108,7 +110,8 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
         this.get('model').destroyRecord().then(
           this._onDeleteActionFulfilled.bind(this),
-          this._onDeleteActionRejected.bind(this));
+          this._onDeleteActionRejected.bind(this)
+        );
       }
     },
 
@@ -179,10 +182,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         reload: true,
         projection: modelProjName
       });
-    },
-    function(reason) {
+    }, function(reason) {
       _this._onSaveActionRejected.call(_this, reason);
     });
+
     return this.store.findRecord(modelName, id, {
       reload: true,
       projection: modelProjName

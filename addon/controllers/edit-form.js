@@ -39,6 +39,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
   /**
    * Model change handler.
+   * TODO: refactor
    */
   modelChange: Ember.observer('model', function() {
     // Unsubscribe from previous model 'preSave' event.
@@ -72,9 +73,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     save: function() {
       this.send('dismissErrorMessages');
 
-      this.get('model').save().then(() => {
-        return this._processSavedDetails();
-      }).then(() => {
+      this.save().then(() => {
         this._onSaveActionFulfilled();
       }).catch((errorData) => {
         this._onSaveActionRejected(errorData);
@@ -85,7 +84,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       if (confirm('Are you sure you want to delete that record?')) {
         this.send('dismissErrorMessages');
 
-        this.get('model').destroyRecord().then(
+        this.delete().then(
           this._onDeleteActionFulfilled.bind(this),
           this._onDeleteActionRejected.bind(this)
         );
@@ -95,6 +94,16 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     close: function() {
       this.transitionToParentRoute();
     }
+  },
+
+  save: function() {
+    return this.get('model').save().then(() => {
+      return this._processSavedDetails();
+    });
+  },
+
+  delete: function() {
+    return this.get('model').destroyRecord();
   },
 
   /**

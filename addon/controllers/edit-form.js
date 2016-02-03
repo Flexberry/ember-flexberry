@@ -9,14 +9,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   /**
    * Query parameters.
    */
-  queryParams: {
-    readOnlyQueryMode: 'readonly'
-  },
+  queryParams: ['readonly'],
 
   /**
-   * Query parameter for readonly mode.
+   * Indicates whether the current form is opened only for reading.
    */
-  readOnlyQueryMode: null,
+  readOnly: false,
 
   /**
    * Lookup settings.
@@ -38,14 +36,6 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    * @default undefined
    */
   lookupController: Ember.inject.controller('lookup-dialog'),
-
-  /**
-   * Flag: indicates whether the current form is opened only for reading.
-   */
-  readonly: Ember.computed('readOnlyQueryMode', function() {
-    var formMode = this.get('readOnlyQueryMode');
-    return formMode && String(formMode).toLowerCase() === 'true';
-  }),
 
   /**
    * Model change handler.

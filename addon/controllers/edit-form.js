@@ -14,7 +14,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   /**
    * Indicates whether the current form is opened only for reading.
    */
-  readOnly: false,
+  readonly: false,
 
   /**
    * Lookup settings.

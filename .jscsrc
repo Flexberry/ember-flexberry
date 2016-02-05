@@ -6,5 +6,6 @@
   },
   "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
   "requireTrailingComma": null,
-  "validateQuoteMarks": { "mark": "'", "escape": true }
+  "validateQuoteMarks": { "mark": "'", "escape": true },
+  "requireSpacesInAnonymousFunctionExpression": null
 }

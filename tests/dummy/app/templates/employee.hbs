@@ -73,19 +73,15 @@
 		<label>Orders</label>
 	</div>
     <div>
-      {{groupedit-toolbar componentName="ordersGroupEdit"}}
-      {{object-list-view
-        componentName="ordersGroupEdit"
-        class="attached"
-        modelProjection=modelProjection.attributes.orders
+	  {{flexberry-groupedit
+	    componentName="ordersGroupEdit"
+		class="attached"
+		modelProjection=modelProjection.attributes.orders
         content=model.orders
         cellComponent=getCellComponent
         readonly=readonly
-        rowClickable=false
-        headerClickable=false
-        showCheckBoxInRow=true
-        showDeleteButtonInRow=true
-      }}
+        orderable=false
+	  }}
     </div>
   </div>
 </form>

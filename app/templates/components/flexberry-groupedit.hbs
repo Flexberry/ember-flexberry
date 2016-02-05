@@ -1,4 +1,7 @@
-{{groupedit-toolbar componentName=componentName}}
+{{groupedit-toolbar 
+  componentName=componentName
+  readonly=readonly
+ }}
 {{object-list-view
   componentName=componentName
   class=class
@@ -10,4 +13,6 @@
   headerClickable=orderable
   showCheckBoxInRow=_showCheckBoxInRow
   showDeleteButtonInRow=_showDeleteButtonInRow
+  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn "sortByColumn"))
+  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting "addColumnToSorting"))
 }}

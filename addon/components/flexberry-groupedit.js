@@ -49,5 +49,27 @@ export default FlexberryBaseComponent.extend({
   orderable: false,
   _showCheckBoxInRow: true,
   _showDeleteButtonInRow: true,
-  _rowClickable: false
+  _rowClickable: false,
+
+  actions: {
+    /**
+     * Handles action from object-list-view when no handler for this component is defined.
+     *
+     * @method sortByColumn
+     * @param {Object} column Column to sort by.
+     */
+    sortByColumn: function(column) {
+      throw new Error('No handler for sortByColumn action set for flexberry-groupedit. Set handler like {{flexberry-groupedit ... sortByColumn=(action "sortByColumn")}}.');
+    },
+
+	/**
+     * Handles action from object-list-view when no handler for this component is defined.
+     *
+     * @method addColumnToSorting
+     * @param {Object} column Column to add sorting by.
+     */
+    addColumnToSorting: function(column) {
+      throw new Error('No handler for addColumnToSorting action set for flexberry-groupedit. Set handler like {{flexberry-groupedit ... addColumnToSorting=(action "addColumnToSorting")}}.');
+    }
+  }
 });

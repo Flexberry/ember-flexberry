@@ -29,7 +29,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.firstName}}</span>
-		{{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.firstName}}
+    {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.firstName}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.lastName 'error' ''}}">
@@ -38,7 +38,7 @@
 	</div>
 	<div class="ten wide column">
 		<span style="color:red">{{model.errors.lastName}}</span>
-		{{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.lastName}}
+    {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.lastName}}
 	</div>
   </div>
   <div class="ui grid {{if model.errors.birthDate 'error' ''}}">
@@ -74,9 +74,9 @@
 	</div>
     <div>
 	  {{flexberry-groupedit
-	    componentName="ordersGroupEdit"
-		class="attached"
-		modelProjection=modelProjection.attributes.orders
+        componentName="ordersGroupEdit"
+        class="attached"
+        modelProjection=modelProjection.attributes.orders
         content=model.orders
         cellComponent=getCellComponent
         readonly=readonly

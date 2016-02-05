@@ -62,7 +62,7 @@ export default FlexberryBaseComponent.extend({
       throw new Error('No handler for sortByColumn action set for flexberry-groupedit. Set handler like {{flexberry-groupedit ... sortByColumn=(action "sortByColumn")}}.');
     },
 
-	/**
+    /**
      * Handles action from object-list-view when no handler for this component is defined.
      *
      * @method addColumnToSorting

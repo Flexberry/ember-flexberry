@@ -1,4 +1,4 @@
-import ListFormPageController from './list-form';
+import ListFormController from './list-form';
 
-var OrdersController = ListFormPageController;
+var OrdersController = ListFormController;
 export default OrdersController;

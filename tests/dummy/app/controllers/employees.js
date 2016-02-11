@@ -1,4 +1,4 @@
-import ListFormPageController from 'ember-flexberry/controllers/list-form';
+import ListFormPageController from './list-form';
 
 var EmployeesController = ListFormPageController;
 export default EmployeesController;

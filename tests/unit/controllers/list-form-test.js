@@ -1,7 +1,12 @@
-import { test } from 'ember-qunit';
-import ListFormPageController from 'ember-flexberry/controllers/list-form';
+import { moduleFor, test } from 'ember-qunit';
 
+moduleFor('controller:list-form', 'Unit | Controller | list form', {
+  // Specify the other units that are required for this test.
+  // needs: ['controller:foo']
+});
+
+// Replace this with your real tests.
 test('it exists', function(assert) {
-  var controller = ListFormPageController.create();
+  let controller = this.subject();
   assert.ok(controller);
 });

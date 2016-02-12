@@ -1,9 +1,40 @@
+/**
+ * @module ember-flexberry
+ */
+
 import Ember from 'ember';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-mixin';
 
 /**
- * Edit form base controller.
+ * Base controller for the Edit Forms.
+
+   This class re-exports to the application as `/controllers/edit-form`.
+   So, you can inherit from `./edit-form`, even if file `app/controllers/edit-form.js`
+   is not presented in the application.
+
+   Example:
+   ```js
+   // app/controllers/employee.js
+   import EditFormController from './edit-form';
+   export default EditFormController.extend({
+   });
+   ```
+
+   If you want to add some common logic on all Edit Forms, you can define
+   (actually override) `app/controllers/edit-form.js` as follows:
+    ```js
+    // app/controllers/edit-form.js
+    import EditFormController from 'ember-flexberry/controllers/edit-form';
+    export default EditFormController.extend({
+    });
+    ```
+
+ * @class EditFormController
+ * @extends Ember.Controller
+ * @uses Ember.Evented
+ * @uses FlexberryLookupMixin
+ * @uses ErrorableControllerMixin
  */
 export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, {
   /**

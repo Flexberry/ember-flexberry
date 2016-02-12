@@ -1,6 +1,38 @@
+/**
+ * @module ember-flexberry
+ */
+
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 
+/**
+ * Base route for the Edit Forms.
+
+ This class re-exports to the application as `/routes/edit-form`.
+ So, you can inherit from `./edit-form`, even if file `app/routes/edit-form.js`
+ is not presented in the application.
+
+ Example:
+ ```js
+ // app/routes/employee.js
+ import EditFormRoute from './edit-form';
+ export default EditFormRoute.extend({
+ });
+ ```
+
+ If you want to add some common logic on all Edit Forms, you can define
+ (actually override) `app/routes/edit-form.js` as follows:
+ ```js
+ // app/routes/edit-form.js
+ import EditFormRoute from 'ember-flexberry/routes/edit-form';
+ export default EditFormRoute.extend({
+ });
+ ```
+
+ * @class EditFormRoute
+ * @extends ProjectedModelFormRoute
+ * @uses FlexberryGroupeditRouteMixin
+ */
 export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
   model: function(params, transition) {
     this._super.apply(this, arguments);

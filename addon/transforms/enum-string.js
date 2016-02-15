@@ -1,110 +1,74 @@
 import Ember from 'ember';
-import DS from 'ember-data';
+import EnumBaseTransform from '../transforms/enum-base';
 
 /**
- * Base transform class that implements an enumeration type.
- * During serialization and deserialization it checks if value is not outside of accessible values and returns same string.
+ * Base transform class that implements an enumeration type for strings.
+ * During serialization and deserialization it checks if value is not outside of accessible values and converts to string or back.
  *
- * @class EnumTransform
- * @extends DS.Transform
+ * @class EnumStringTransform
+ * @extends EnumBaseTransform
  * @public
  */
-export default DS.Transform.extend({
-  // TODO: captions support (add support of type OrderedSet?)
+export default EnumBaseTransform.extend({
   /**
-   * Available choises of enumeration.
-   * It is required field in a derived class.
-   *
-   * @property values
+   * String that represents expected type of serialized enumeration values.
+   * @property expectedSerializedType
+   * @type String
+   * @default 'string'
    * @public
-   * @type Array|Ember.Array|Object
-   * @example
-   *     ['Easy', 'Difficult', 'Hard']
-   *     { Easy: 1, Difficult: 2, Hard: 3 }
    */
-  values: null,
+  expectedSerializedType: 'string',
 
   /**
-   * Returns deserialized enumeration field.
+   * String that represents expected type of deserialized enumeration values.
+   * @property expectedDeserializedType
+   * @type String
+   * @default 'string'
+   * @public
+   */
+  expectedDeserializedType: 'string',
+
+  /**
+   * Returns deserialized enumeration field (name).
    *
    * @method deserialize
    * @public
    *
-   * @param {String} serialized Serialized enumeration field (name).
+   * @param {String} serialized Serialized enumeration field (index).
    * @return {String} Deserialized enumeration field (name).
-   *                  Returns `null` or `undefined` if `serialized` has one of these values.
+   * Returns `null` or `undefined` if `values` does not contain serialized value.
    */
-  deserialize: function(serialized) {
-    let serializedValue = serialized;
-    if (serializedValue === null || serializedValue === undefined) {
-      return serializedValue;
-    }
-
-    if (typeof serializedValue !== 'string') {
-      throw new Error(`Wrong type of serialized enumeration field: ${typeof serializedValue}`);
-    }
-
-    let values = this.values;
+  getDeserializedValue: function(serialized) {
+    let deserialized;
+    let values = this.get('values');
     if (Ember.isArray(values)) {
-      let index = values.indexOf(serializedValue);
-      if (index === -1) {
-        throw new Error(`Unable to find serialized enumeration field: ${serializedValue}`);
-      }
-
-      return serializedValue;
+      deserialized = values.indexOf(serialized) >= 0 ? serialized : undefined;
+    } else {
+      deserialized = values.hasOwnProperty(serialized) ? serialized : undefined;
     }
 
-    if (typeof values === 'object') {
-      let index = values[serializedValue];
-      if (index === null || index === undefined) {
-        throw new Error(`Unable to find serialized enumeration field: ${serializedValue}`);
-      }
-
-      return serializedValue;
-    }
-
-    throw new Error(`Wrong type of values: ${typeof values}`);
+    return deserialized;
   },
 
   /**
-   * Returns serialized enumeration field.
+   * Returns serialized enumeration field (index).
    *
-   * @method serialize
+   * @method getSerializedValue
    * @public
    *
    * @param {String} deserialized Deserialized enumeration field (name).
-   * @return {String} Serialized enumeration field (name).
-   *                  Returns `null` or `undefined` if `deserialized` has one of these values.
+   * @return {String|Number} Serialized enumeration field (index).
+   * Returns `null` or `undefined` if `values` does not contain deserialized value.
    */
-  serialize: function(deserialized) {
-    let name = deserialized;
-    if (name === null || name === undefined) {
-      return name;
-    }
-
-    if (typeof name !== 'string') {
-      throw new Error(`Wrong type of deserialized enumeration field: ${typeof name}`);
-    }
-
-    let values = this.values;
+  getSerializedValue: function(deserialized) {
+    let serialized;
+    let values = this.get('values');
     if (Ember.isArray(values)) {
-      let index = values.indexOf(name);
-      if (index === -1) {
-        throw new Error(`Unable to find deserialized enumeration field: ${name}`);
-      }
-
-      return deserialized;
+      serialized = values.indexOf(deserialized) >= 0 ? deserialized : undefined;
+    } else if (values.hasOwnProperty(deserialized)) {
+      serialized = values.hasOwnProperty(deserialized) ? deserialized : undefined;
     }
 
-    if (typeof values === 'object') {
-      let index = values[name];
-      if (index === null || index === undefined) {
-        throw new Error(`Unable to find deserialized enumeration field: ${name}`);
-      }
-
-      return deserialized;
-    }
-
-    throw new Error(`Wrong type of values: ${typeof values}`);
+    return serialized;
   }
 });

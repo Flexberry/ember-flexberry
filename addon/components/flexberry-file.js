@@ -15,7 +15,16 @@ export default FlexberryBaseComponent.extend({
   /**
    * Class names for component wrapping <div>.
    */
-  classNames: ['file-component', 'ui', 'fluid', 'action', 'input'],
+  classNames: ['flexberry-file', 'ui', 'fluid', 'action', 'input'],
+
+  /**
+   * Path to component's settings in application configuration (JSON from ./config/environment.js).
+   *
+   * @property appConfigSettingsPath
+   * @type String
+   * @default 'APP.components.flexberryBaseComponent'
+   */
+  appConfigSettingsPath: 'APP.components.flexberryFile',
 
   /**
    * Copy of value created at initialization moment or after successful upload.
@@ -94,17 +103,6 @@ export default FlexberryBaseComponent.extend({
   downloadIsInProgress: false,
 
   /**
-   * Flag: indicates whether file component is readonly.
-   * If so, then add, delete, and upload operations will be disabled, only download operation will be accessible.
-   */
-  readonly: false,
-
-  /**
-   * Flag: indicates whether related model property is required.
-   */
-  required: false,
-
-  /**
    * Flag: indicates whether add button is visible now.
    */
   addButtonIsVisible: Ember.computed('readonly', function() {
@@ -123,7 +121,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Add button title (will be shown on mouse hover).
    */
-  addButtonTitle: null,
+  addButtonTitle: undefined,
 
   /**
    * Flag: indicates whether remove button is visible now.
@@ -146,15 +144,17 @@ export default FlexberryBaseComponent.extend({
   /**
    * Remove button title (will be shown on mouse hover).
    */
-  removeButtonTitle: null,
+  removeButtonTitle: undefined,
 
-  // Flag: indicates whether to upload file on controllers 'modelPreSave' event.
-  uploadOnModelPreSave: null,
+  /**
+   * Flag: indicates whether to upload file on 'currentController' 'modelPreSave' event.
+   */
+  uploadOnModelPreSave: undefined,
 
   /**
    * Flag: indicates whether to show upload button or not.
    */
-  showUploadButton: null,
+  showUploadButton: undefined,
 
   /**
    * Flag: indicates whether upload button is visible now.
@@ -177,7 +177,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Upload button title (will be shown on mouse hover).
    */
-  uploadButtonTitle: null,
+  uploadButtonTitle: undefined,
 
   /**
    * Flag: indicates whether download button is visible now.
@@ -201,41 +201,41 @@ export default FlexberryBaseComponent.extend({
   /**
    * Download button title (will be shown on mouse hover).
    */
-  downloadButtonTitle: null,
+  downloadButtonTitle: undefined,
 
   /**
    * Maximum file size in bytes for uploading files.
    * It should be greater then 0 and less or equal then APP.components.file.maxUploadFileSize from application config\environment.
    * If null or undefined, then APP.components.file.maxUploadFileSize from application config\environment will be used.
    */
-  maxUploadFileSize: null,
+  maxUploadFileSize: undefined,
 
   /**
    * Text to be displayed instead of file name, if file has not been selected.
    */
-  placeholder: null,
+  placeholder: undefined,
 
   /**
    * File upload URL.
    * If null or undefined, then APP.components.file.uploadUrl from application config\environment will be used.
    */
-  uploadUrl: null,
+  uploadUrl: undefined,
 
   /**
    * File download URL.
    * If null or undefined, then APP.components.file.downloadUrl from application config\environment will be used.
    */
-  downloadUrl: null,
+  downloadUrl: undefined,
 
   /**
    * Flag: indicates whether to show modal dialog on upload errors or not.
    */
-  showModalDialogOnUploadError: null,
+  showModalDialogOnUploadError: undefined,
 
   /**
    * Flag: indicates whether to show modal dialog on download errors or not.
    */
-  showModalDialogOnDownloadError: null,
+  showModalDialogOnDownloadError: undefined,
 
   /**
    * Title to be displayed in error modal dialog.
@@ -271,88 +271,33 @@ export default FlexberryBaseComponent.extend({
    * Initializes file-control component.
    */
   init: function() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
 
     // Remember initial value.
     var value = this.get('value');
     this.set('initialValue', Ember.copy(value, true));
 
-    // Import application config\environment.
-    var applicationConfig = this.container.lookupFactory('config:environment') || {};
-    var fileComponentConfig = Ember.get(applicationConfig, 'APP.components.flexberryFile') || {};
-
-    // Properties initialization helper method.
-    var initProperty = function(options) {
-      var componentPropertyValue = this.get(options.propertyName);
-      if (!Ember.isNone(componentPropertyValue)) {
-        return;
-      }
-
-      // Property is undefined. Set configuration-defined value or default.
-      var configurationPropertyValue = Ember.get(fileComponentConfig, options.propertyName);
-      var defaultPropertyValue = options.defaultPropertyValue;
-
-      if (!Ember.isNone(configurationPropertyValue)) {
-        this.set(options.propertyName, configurationPropertyValue);
-      } else {
-        this.set(options.propertyName, defaultPropertyValue);
-      }
-    }.bind(this);
-
-    initProperty({
-      propertyName: 'uploadUrl',
-      defaultPropertyValue: null
-    });
-    initProperty({
-      propertyName: 'downloadUrl',
-      defaultPropertyValue: null
-    });
-    initProperty({
-      propertyName: 'maxUploadFileSize',
-      defaultPropertyValue: null
-    });
-    initProperty({
-      propertyName: 'placeholder',
-      defaultPropertyValue: '(no file)'
-    });
-    initProperty({
-      propertyName: 'uploadOnModelPreSave',
-      defaultPropertyValue: true
-    });
-    initProperty({
-      propertyName: 'showUploadButton',
-      defaultPropertyValue: false
-    });
-    initProperty({
-      propertyName: 'showModalDialogOnUploadError',
-      defaultPropertyValue: false
-    });
-    initProperty({
-      propertyName: 'showModalDialogOnDownloadError',
-      defaultPropertyValue: true
-    });
-    initProperty({
-      propertyName: 'addButtonTitle',
-      defaultPropertyValue: 'Add file'
-    });
-    initProperty({
-      propertyName: 'removeButtonTitle',
-      defaultPropertyValue: 'Remove file'
-    });
-    initProperty({
-      propertyName: 'uploadButtonTitle',
-      defaultPropertyValue: 'Upload file'
-    });
-    initProperty({
-      propertyName: 'downloadButtonTitle',
-      defaultPropertyValue: 'Download file'
-    });
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'uploadUrl', defaultValue: null });
+    this.initProperty({ propertyName: 'downloadUrl', defaultValue: null });
+    this.initProperty({ propertyName: 'maxUploadFileSize', defaultValue: null });
+    this.initProperty({ propertyName: 'placeholder', defaultValue: '(no file)' });
+    this.initProperty({ propertyName: 'uploadOnModelPreSave', defaultValue: true });
+    this.initProperty({ propertyName: 'showUploadButton', defaultValue: false });
+    this.initProperty({ propertyName: 'showModalDialogOnUploadError', defaultValue: false });
+    this.initProperty({ propertyName: 'showModalDialogOnDownloadError', defaultValue: true });
+    this.initProperty({ propertyName: 'addButtonTitle', defaultValue: 'Add file' });
+    this.initProperty({ propertyName: 'removeButtonTitle', defaultValue: 'Remove file' });
+    this.initProperty({ propertyName: 'uploadButtonTitle', defaultValue: 'Upload file' });
+    this.initProperty({ propertyName: 'downloadButtonTitle', defaultValue: 'Download file' });
   },
 
   /**
    * Initializes file-control component.
    */
   didInsertElement: function() {
+    this._super(...arguments);
+
     var _this = this;
 
     var fileInputId = _this.get('elementId') + 'FlexberryFile';
@@ -425,15 +370,6 @@ export default FlexberryBaseComponent.extend({
       add: onFileAdd
     });
 
-    // Try to get current controller (to subscribe then on controller's 'modelPreSave' event).
-    // Component's 'targetObject' is parent component or a controller (in the end of components hierarchy).
-    var currentController = _this.get('targetObject');
-    while (!(Ember.isNone(currentController) || currentController instanceof Ember.Controller)) {
-      currentController = currentController.get('targetObject');
-    }
-
-    _this.set('currentController', currentController);
-
     // Subscribe on controller's 'modelPreSave'event.
     _this.subscribeOnModelPreSaveEvent();
   },
@@ -442,6 +378,8 @@ export default FlexberryBaseComponent.extend({
    * Destroys file-control component.
    */
   willDestroyElement: function() {
+    this._super(...arguments);
+
     // Unsubscribe from controller's 'modelPreSave'event.
     this.unsubscribeFromModelPresaveEvent();
 
@@ -579,11 +517,6 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Current controller.
-   */
-  currentController: null,
-
-  /**
    * Controllers 'modelPreSave' event handler.
    */
   onModelPresave: null,
@@ -594,7 +527,7 @@ export default FlexberryBaseComponent.extend({
   subscribeOnModelPreSaveEvent: function() {
     var uploadOnModelPreSave = this.get('uploadOnModelPreSave');
     var currentController = this.get('currentController');
-    if (!uploadOnModelPreSave || Ember.isNone(currentController) || Ember.isNone(currentController.on)) {
+    if (!Ember.isNone(uploadOnModelPreSave) || Ember.isNone(currentController) || Ember.isNone(currentController.on)) {
       return;
     }
 

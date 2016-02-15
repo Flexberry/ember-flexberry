@@ -2,6 +2,7 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -21,13 +22,13 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
   classNames: ['flexberry-textbox', 'ui', 'input', 'fluid'],
 
   /**
-   * Flag to make control required.
+   * Path to component's settings in application configuration (JSON from ./config/environment.js).
    *
-   * @property required
-   * @type Boolean
-   * @default false
+   * @property appConfigSettingsPath
+   * @type String
+   * @default 'APP.components.flexberryTextbox'
    */
-  required: false,
+  appConfigSettingsPath: 'APP.components.flexberryTextbox',
 
   /**
    * Input value.
@@ -36,7 +37,26 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
    * @type String
    * @default undefined
    */
-  value: undefined
+  value: undefined,
+
+  /**
+   * Text to be displayed instead of file name, if file has not been selected.
+   *
+   * @property placeholder
+   * @type string
+   * @default undefined
+   */
+  placeholder: undefined,
+
+  /**
+   * Initializes component.
+   */
+  init: function() {
+    this._super(...arguments);
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'placeholder', defaultValue: null });
+  }
 });
 
 export default FlexberryTextbox;

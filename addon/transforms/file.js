@@ -1,3 +1,7 @@
+/**
+ * @module ember-flexberry
+ */
+
 import StringTransform from 'ember-data/-private/transforms/string';
 
 /**

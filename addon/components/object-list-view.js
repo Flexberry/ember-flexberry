@@ -20,6 +20,15 @@ export default FlexberryBaseComponent.extend({
     'table'
   ],
 
+  /**
+   * Path to component's settings in application configuration (JSON from ./config/environment.js).
+   *
+   * @property appConfigSettingsPath
+   * @type String
+   * @default 'APP.components.flexberryBaseComponent'
+   */
+  appConfigSettingsPath: 'APP.components.objectListView',
+
   modelProjection: null,
   content: null,
   sorting: null,
@@ -28,7 +37,10 @@ export default FlexberryBaseComponent.extend({
   customColumnAttributes: null,
 
   headerCellComponent: 'object-list-view-header-cell',
-  cellComponent: 'object-list-view-cell',
+  cellComponent: {
+    componentName: 'object-list-view-cell',
+    componentProperties: null
+  },
 
   action: 'rowClick',
   addColumnToSorting: 'addColumnToSorting',
@@ -49,28 +61,6 @@ export default FlexberryBaseComponent.extend({
   groupEditEventsService: Ember.inject.service('groupedit-events'),
 
   contentWithKeys: null,
-
-  init() {
-    this._super(...arguments);
-    this.set('selectedRecords', Ember.A());
-    this.get('groupEditEventsService').on('groupEditAddRow', this, this._addRow);
-    this.get('groupEditEventsService').on('groupEditDeleteRows', this, this._deleteRows);
-    this.set('contentWithKeys', Ember.A());
-    if (!this.get('noDataMessage')) {
-      this.set('noDataMessage', 'There is no data');
-    }
-
-    if (this.get('showCheckBoxInRow')) {
-      this.get('classNames').push('selectable');
-    }
-
-    var _this = this;
-    if (this.get('content')) {
-      this.get('content').forEach(function(item, index, enumerable) {
-        _this._addModel(item);
-      });
-    }
-  },
 
   actions: {
     rowClick: function(key, record) {
@@ -116,7 +106,39 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
+  init: function() {
+    this._super(...arguments);
+
+    this.set('selectedRecords', Ember.A());
+    this.get('groupEditEventsService').on('groupEditAddRow', this, this._addRow);
+    this.get('groupEditEventsService').on('groupEditDeleteRows', this, this._deleteRows);
+    this.set('contentWithKeys', Ember.A());
+    if (!this.get('noDataMessage')) {
+      this.set('noDataMessage', 'There is no data');
+    }
+
+    if (this.get('showCheckBoxInRow')) {
+      this.get('classNames').push('selectable');
+    }
+
+    var _this = this;
+    if (this.get('content')) {
+      this.get('content').forEach(function(item, index, enumerable) {
+        _this._addModel(item);
+      });
+    }
+  },
+
+  willDestroy: function() {
+    this.get('groupEditEventsService').off('groupEditAddRow', this, this._addRow);
+    this.get('groupEditEventsService').off('groupEditDeleteRows', this, this._deleteRows);
+
+    this._super(...arguments);
+  },
+
   didInsertElement: function() {
+    this._super(...arguments);
+
     if (!(this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow'))) {
       this.$('thead tr th:eq(1)').css('border-left', 'none');
       this.$('tbody tr').find('td:eq(1)').css('border-left', 'none');
@@ -130,6 +152,10 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
+  willDestroyElement: function() {
+    this._super(...arguments);
+  },
+
   columns: Ember.computed('modelProjection', function() {
     var projection = this.get('modelProjection');
     if (!projection) {
@@ -139,12 +165,6 @@ export default FlexberryBaseComponent.extend({
     let cols = this._generateColumns(projection.attributes);
     return cols;
   }),
-
-  willDestroy() {
-    this.get('groupEditEventsService').off('groupEditAddRow', this, this._addRow);
-    this.get('groupEditEventsService').off('groupEditDeleteRows', this, this._deleteRows);
-    this._super(...arguments);
-  },
 
   _generateColumns: function(attributes, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];
@@ -197,9 +217,17 @@ export default FlexberryBaseComponent.extend({
   },
 
   _createColumn: function(attr, bindingPath) {
+    // We get the 'getCellComponent' function directly from the controller,
+    // and do not pass this function as a component attrubute,
+    // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
+    // if controller's 'getCellComponent' method call its super method from the base controller.
+    let currentController = this.get('currentController');
+    let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
     let cellComponent = this.get('cellComponent');
-    if (typeof cellComponent === 'function') {
-      cellComponent = cellComponent(attr, bindingPath);
+
+    if (Ember.typeOf(getCellComponent) === 'function') {
+      let recordModel =  (this.get('content') || {}).type || null;
+      cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 
     let column = {
@@ -231,7 +259,7 @@ export default FlexberryBaseComponent.extend({
     var _this = this;
     var row = null;
     this.$('tbody tr').each(function() {
-      var currentKey = _this.$(this).find('td:eq(0) div:eq(0)').text();
+      var currentKey = _this.$(this).find('td:eq(0) div:eq(0)').text().trim();
       if (currentKey === key) {
         row = _this.$(this);
         return false;

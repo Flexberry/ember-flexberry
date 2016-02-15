@@ -166,11 +166,57 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   },
 
   /**
-   * Method to get type of object list view cell.
+   * Method to get type and attributes of component,
+   * which will be embeded in object-list-view cell.
+   *
+   * @method getCellComponent.
+   * @param {Object} attr Attribute of projection property related to current cell.
+   * @param {String} attr Attribute of projection property related to current cell.
+   * @param {DS.Model} attr Attribute of projection property related to current cell.
+   * @return {null|Ember.Component|Ember.Controller} Target object which satisfies a given condition or null.
    */
-  getCellComponent: function(attr, bindingPath) {
-    // TODO: return different components by attr type.
-    return 'object-list-view-input-cell';
+  getCellComponent: function(attr, bindingPath, model) {
+    var cellComponent = {
+      componentName: 'flexberry-textbox',
+      componentProperties: null
+    };
+
+    if (attr.kind === 'belongsTo') {
+      cellComponent.componentName = 'flexberry-lookup';
+      return cellComponent;
+    }
+
+    var modelAttr = !Ember.isNone(model) ? Ember.get(model, 'attributes').get(bindingPath) : null;
+    if (attr.kind === 'attr' && modelAttr && modelAttr.type) {
+      switch (modelAttr.type) {
+        case 'boolean':
+          cellComponent.componentName = 'flexberry-checkbox';
+          break;
+        case 'string':
+          cellComponent.componentName = 'flexberry-textbox';
+          break;
+        case 'date':
+          cellComponent.componentName = 'flexberry-datepicker';
+          break;
+        case 'file':
+          cellComponent.componentName = 'flexberry-file';
+          break;
+        default:
+          var modelAttrType = this.container.lookupFactory('transform:' + modelAttr.type);
+
+          // Handle enums.
+          if (modelAttrType && modelAttrType.isEnum) {
+            cellComponent.componentName = 'flexberry-dropdown';
+            cellComponent.componentProperties = {
+              items: modelAttrType.create().get('values')
+            };
+          }
+
+          break;
+      }
+    }
+
+    return cellComponent;
   },
 
   /**

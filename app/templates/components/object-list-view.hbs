@@ -15,28 +15,38 @@
   {{#each contentWithKeys key="key" as |record|}}
     <tr {{action 'rowClick' record.key record.data preventDefault=false}}>
       <td class="object-list-view-operations {{if (not (or showCheckBoxInRow showDeleteButtonInRow)) 'hidden'}}">
-        <div style="display: none">{{record.key}}</div>
-        <div class="ui middle aligned grid">
-        <div class="column object-list-view-asterisk {{if (not record.data.hasDirtyAttributes) 'hidden'}}">
-          <i class="asterisk small red icon"></i>
+        <div style="display: none">{{record.key}}
         </div>
+        <div class="ui middle aligned grid">
+          <div class="column object-list-view-asterisk {{if (not record.data.hasDirtyAttributes) 'hidden'}}">
+            <i class="asterisk small red icon"></i>
+          </div>
           {{#if showCheckBoxInRow}}
             <div class="column">
-            <div class="ui checkbox {{if readonly 'disabled'}}">
-              <input type="checkbox" disabled={{readonly}} {{action 'selectRow' record.key record.data preventDefault=false}}>
-			  <label></label>
-			</div>
-          </div>
+              <div class="ui checkbox {{if readonly 'disabled'}}">
+                <input type="checkbox" disabled={{readonly}} {{action 'selectRow' record.key record.data preventDefault=false}}>
+  			         <label></label>
+  			       </div>
+            </div>
           {{/if}}
           {{#if showDeleteButtonInRow}}
             <div class="column">
-              <button class="ui primary button {{if readonly 'disabled'}}" {{action 'deleteRow' record.key record.data}}><i class="minus icon"></i></button>
+              <button class="ui primary button {{if readonly 'disabled'}}" {{action 'deleteRow' record.key record.data}}>
+                <i class="minus icon"></i>
+              </button>
             </div>
           {{/if}}
-		</div>
+        </div>
       </td>
       {{#each columns as |column|}}
-        {{component column.cellComponent column=column record=record.data readonly=readonly}}
+        <td>
+          {{component column.cellComponent.componentName
+            dynamicProperties=column.cellComponent.componentProperties
+            value=(mut (get record.data column.propName))
+            readonly=readonly
+            required=required
+          }}
+        </td>
       {{/each}}
     </tr>
   {{/each}}

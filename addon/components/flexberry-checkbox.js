@@ -51,7 +51,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Initializes file-control component.
    */
-  init: function () {
+  init: function() {
     this._super(...arguments);
   }
 });

@@ -170,12 +170,13 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    * which will be embeded in object-list-view cell.
    *
    * @method getCellComponent.
-   * @param {Object} attr Attribute of projection property related to current cell.
-   * @param {String} attr Attribute of projection property related to current cell.
-   * @param {DS.Model} attr Attribute of projection property related to current cell.
-   * @return {null|Ember.Component|Ember.Controller} Target object which satisfies a given condition or null.
+   * @param {Object} attr Attribute of projection property related to current table cell.
+   * @param {String} bindingPath Path to model property related to current table cell.
+   * @param {DS.Model} modelClass Model class of data record related to current table row.
+   * @return {Object} Object containing name & properties of component, which will be used to render current table cell.
+   * { componentName: 'my-component',  componentProperties: { ... } }.
    */
-  getCellComponent: function(attr, bindingPath, model) {
+  getCellComponent: function(attr, bindingPath, modelClass) {
     var cellComponent = {
       componentName: 'flexberry-textbox',
       componentProperties: null
@@ -186,7 +187,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       return cellComponent;
     }
 
-    var modelAttr = !Ember.isNone(model) ? Ember.get(model, 'attributes').get(bindingPath) : null;
+    var modelAttr = !Ember.isNone(modelClass) ? Ember.get(modelClass, 'attributes').get(bindingPath) : null;
     if (attr.kind === 'attr' && modelAttr && modelAttr.type) {
       switch (modelAttr.type) {
         case 'boolean':

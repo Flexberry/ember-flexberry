@@ -4,7 +4,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 export default EditFormRoute.extend(AuthenticatedRouteMixin, {
   modelProjection: 'GroupEditTestE',
   modelName: 'group-edit-test',
-  model: function (params) {
+  model: function(params) {
     var store = this.store;
 
     var detail1Master = store.createRecord('group-edit-test-detail-master', {

@@ -70,7 +70,7 @@ export default FlexberryBaseComponent.extend({
    * @property text
    * @type String
    */
-  currentText: Ember.computed('value', 'defaultText', function () {
+  currentText: Ember.computed('value', 'defaultText', function() {
     var value = this.get('value');
     if (Ember.typeOf(value) === 'string') {
       return value;
@@ -87,7 +87,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Handles changes in available items and in selected item.
    */
-  itemsOrValueDidChange: Ember.on('init', Ember.observer('items.[]', 'value', function () {
+  itemsOrValueDidChange: Ember.on('init', Ember.observer('items.[]', 'value', function() {
     var items = this.get('items');
     var value = this.get('value');
 
@@ -103,7 +103,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Initializes component.
    */
-  init: function () {
+  init: function() {
     this._super(...arguments);
 
     // Initialize properties which defaults could be defined in application configuration.

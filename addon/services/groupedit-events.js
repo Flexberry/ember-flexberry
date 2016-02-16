@@ -78,7 +78,7 @@ export default Ember.Service.extend(Ember.Evented, {
    * Trigger for "selected rows has been deleted" event in groupedit.
    * Event name: groupEditRowDeleted.
    *
-   * @method rowDeletedTrigger
+   * @method rowsDeletedTrigger
    *
    * @param {String} componentName The name of flexberry-groupedit component.
    * @param {Integer} count Count of deleted rows in groupedit.

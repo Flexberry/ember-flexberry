@@ -1,0 +1,48 @@
+{{olv-toolbar
+  class = 'ui secondary menu'
+  modelName = modelName
+  createNewButton = createNewButton
+  refreshButton = refreshButton
+  modelController = modelController
+}}
+{{object-list-view
+  class = 'bottom attached'
+  modelProjection = modelProjection
+  content = content
+  sorting = sorting
+  rowClickable=rowClickable
+  headerClickable=orderable
+  showCheckBoxInRow=_showCheckBoxInRow
+  showDeleteButtonInRow=_showDeleteButtonInRow
+  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
+  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  action=action
+}}
+<div class="ui secondary menu">
+  <div class="ui basic buttons">
+	<button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
+	{{#each pages as |page|}}
+	  {{#if page.isEllipsis}}
+		  <button class="ui button">...</button>
+	  {{else}}
+		{{#if page.isCurrent}}
+			<button class="ui active button">{{page.number}}</button>
+		{{else}}
+			<button class="ui button" {{action (if this.attrs.gotoPage this.attrs.gotoPage 'gotoPage') page.number}}>{{page.number}}</button>
+		{{/if}}
+	  {{/if}}
+	{{/each}}
+	<button class="ui {{unless hasNextPage 'disabled'}} button" {{action (if this.attrs.nextPage this.attrs.nextPage 'nextPage')}}>&raquo;</button>
+  </div>
+  <div class="right menu">
+	{{#ui-dropdown value=perPageValue class="compact selection"}}
+		<i class="dropdown icon"></i>
+		<div class="text">{{perPageValue}}</div>
+		<div class="menu">
+		  {{#each perPageValues as |perPageValue|}}
+			  <div class="item" data-value={{perPageValue}}>{{perPageValue}}</div>
+		  {{/each}}
+		</div>
+	{{/ui-dropdown}}
+  </div>
+</div>

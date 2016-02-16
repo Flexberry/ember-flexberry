@@ -93,13 +93,22 @@ export default FlexberryBaseComponent.extend({
   pages: null,
 
   /**
-   * Array of numbers of records to show on one page.
+   * Current number of records to show per page.
    *
    * @property perPageValue
-   * @type ManyArray
+   * @type number
    * @default null
    */
   perPageValue: null,
+
+  /**
+   * Array of numbers of records to show on one page.
+   *
+   * @property perPageValues
+   * @type ManyArray
+   * @default null
+   */
+  perPageValues: null,
 
   /**
    * Function to determine if current page has previous page.

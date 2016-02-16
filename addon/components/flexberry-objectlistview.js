@@ -115,7 +115,7 @@ export default FlexberryBaseComponent.extend({
    *
    * @property hasPreviousPage
    * @type Function
-   * @default false
+   * @default null
    */
   hasPreviousPage: null,
 
@@ -124,7 +124,7 @@ export default FlexberryBaseComponent.extend({
    *
    * @property hasNextPage
    * @type Function
-   * @default false
+   * @default null
    */
   hasNextPage: null,
 
@@ -142,7 +142,7 @@ export default FlexberryBaseComponent.extend({
    *
    * @property rowClickable
    * @type Boolean
-   * @default false
+   * @default true
    */
   rowClickable: true,
 

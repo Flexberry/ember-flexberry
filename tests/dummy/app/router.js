@@ -5,7 +5,7 @@ const Router = Ember.Router.extend({
   location: config.locationType
 });
 
-Router.map(function() {
+Router.map(function () {
   // /login
   this.route('login');
 
@@ -26,6 +26,9 @@ Router.map(function() {
 
   // /employees/new
   this.route('order.new', { path: 'orders/new' });
+
+  // /group-edit-test
+  this.route('group-edit-test');
 });
 
 export default Router;

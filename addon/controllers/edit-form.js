@@ -6,6 +6,8 @@ import Ember from 'ember';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-mixin';
 
+const { getOwner } = Ember;
+
 /**
  * Base controller for the Edit Forms.
 
@@ -193,9 +195,6 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         case 'boolean':
           cellComponent.componentName = 'flexberry-checkbox';
           break;
-        case 'string':
-          cellComponent.componentName = 'flexberry-textbox';
-          break;
         case 'date':
           cellComponent.componentName = 'flexberry-datepicker';
           break;
@@ -203,13 +202,15 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
           cellComponent.componentName = 'flexberry-file';
           break;
         default:
-          var modelAttrType = this.container.lookupFactory('transform:' + modelAttr.type);
 
-          // Handle enums.
+          // Current cell type is possibly custom transform.
+          var modelAttrType = getOwner(this)._lookupFactory('transform:' + modelAttr.type);
+
+          // Handle enums (extended from transforms/enum-base.js).
           if (modelAttrType && modelAttrType.isEnum) {
             cellComponent.componentName = 'flexberry-dropdown';
             cellComponent.componentProperties = {
-              items: modelAttrType.create().get('values')
+              items: modelAttrType.create().getAvailableValuesArray()
             };
           }
 

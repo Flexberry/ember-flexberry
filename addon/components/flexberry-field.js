@@ -2,7 +2,7 @@
  * @module ember-flexberry
  */
 
-import FlexberryBaseComponent from './flexberry-base-component';
+import FlexberryTextbox from './flexberry-textbox';
 
 /**
  * Field component for Semantic UI.
@@ -10,7 +10,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @class FlexberryField
  * @extends FlexberryBaseComponent
  */
-var FlexberryField = FlexberryBaseComponent.extend({
+var FlexberryField = FlexberryTextbox.extend({
   /**
    * Default classes for component wrapper.
    *
@@ -21,13 +21,13 @@ var FlexberryField = FlexberryBaseComponent.extend({
   classNames: ['flexberry-field', 'field'],
 
   /**
-   * Flag to make control required.
+   * Path to component's settings in application configuration (JSON from ./config/environment.js).
    *
-   * @property required
-   * @type Boolean
-   * @default false
+   * @property appConfigSettingsPath
+   * @type String
+   * @default 'APP.components.flexberryField'
    */
-  required: false,
+  appConfigSettingsPath: 'APP.components.flexberryField',
 
   /**
    * Label value.
@@ -36,16 +36,17 @@ var FlexberryField = FlexberryBaseComponent.extend({
    * @type String
    * @default ''
    */
-  label: '',
+  label: undefined,
 
   /**
-   * Input value.
-   *
-   * @property value
-   * @type String
-   * @default undefined
+   * Initializes component.
    */
-  value: undefined
+  init: function() {
+    this._super(...arguments);
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'label', defaultValue: '' });
+  }
 });
 
 export default FlexberryField;

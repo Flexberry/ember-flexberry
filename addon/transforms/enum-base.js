@@ -1,3 +1,7 @@
+/**
+ * @module ember-flexberry
+ */
+
 import Ember from 'ember';
 import DS from 'ember-data';
 
@@ -146,16 +150,18 @@ var EnumBase = DS.Transform.extend({
    * @method getAvailableValuesArray
    * @public
    *
-   * @return {Array} Enumeration values as genuine array.
+   * @return {Array} Enumeration available values as genuine array.
    */
   getAvailableValuesArray: function() {
     let availableValues = [];
-    let values = this.values;
+    let values = this.get('values');
     if (Ember.isArray(values)) {
       availableValues = Ember.typeOf(values.isArray) === 'function' ? values.toArray() : values;
     } else {
       availableValues = Object.getOwnPropertyNames(values);
     }
+
+    return availableValues;
   },
 });
 

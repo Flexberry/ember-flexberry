@@ -2,6 +2,7 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -11,6 +12,44 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
+  /**
+   * Initializes component properties.
+   */
+  init: function() {
+    this._super(...arguments);
+    this.sendAction('limitFunctionAction', this.get('limitFunction'));
+  },
+
+  /**
+   * Limit function to limit loaded data.
+   *
+   * @property limitFunction
+   * @type String
+   * @default null
+   */
+  limitFunction: null,
+
+  /**
+   * Name of action to change limit.
+   *
+   * @property limitFunctionAction
+   * @type String
+   * @default 'changeLimitFunction'
+   */
+  limitFunctionAction: 'changeLimitFunction',
+
+  /**
+   * Detector of limit function changing.
+   *
+   * @property _limitFunctionComputed
+   * @type String
+   */
+  _limitFunctionComputed: Ember.computed('limitFunction', function() {
+    let limitFunction = this.get('limitFunction');
+    this.sendAction('limitFunctionAction', limitFunction);
+    return limitFunction;
+  }),
+
   /**
    * Primary action for row click.
    *
@@ -46,15 +85,6 @@ export default FlexberryBaseComponent.extend({
    * @default false
    */
   refreshButton: false,
-
-  /**
-   * Current contoller.
-   *
-   * @property modelController
-   * @type Object
-   * @default null
-   */
-  modelController: null,
 
   /**
    * Projection for detail object's model.

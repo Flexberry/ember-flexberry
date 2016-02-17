@@ -2,7 +2,6 @@
 
 <div class="row">
   {{flexberry-objectlistview
-    modelController = this
     modelName = "employee"
 	modelProjection = modelProjection
 	content = model
@@ -24,5 +23,8 @@
 	previousPage = (action "previousPage")
 	gotoPage = (action "gotoPage")
 	nextPage = (action "nextPage")
+
+	limitFunction = flexberryOlvLimitFunction
+	limitFunctionAction = 'changeLimitFunction'
   }}
 </div>

@@ -12,8 +12,8 @@ export default Ember.Mixin.create({
    */
   updateLimitFunction: function(limitFunction) {
     if (this.get('lf') !== limitFunction) {
-	  // Changing lf value reloads route automatically.
-  	this.set('lf', limitFunction);
+      // Changing lf value reloads route automatically.
+      this.set('lf', limitFunction);
     }
   }
 });

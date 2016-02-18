@@ -12,21 +12,15 @@ export default Ember.Mixin.create({
    *
    * @param {String} limitFunction New limit function to set.
    * @param {Object} params Route parameters (it is used when limit function changes in beforeModel hook).
-   * @param {Ember.Object} transition Current route transition (it is used when limit function changes in beforeModel hook).
    */
-  updateLimitFunction: function(limitFunction, params, transition) {
-    if (transition) {
+  updateLimitFunction: function(limitFunction, params) {
+    if (!params) {
+      this.transitionTo({ queryParams: limitFunction });
+    } else {
       if (params && params.lf !== limitFunction) {
         params.lf = limitFunction;
         this.transitionTo({ queryParams: params });
       }
-
-      return;
-    }
-
-    if (this.get('lf') !== limitFunction) {
-      // Changing lf value reloads route automatically.
-      this.set('lf', limitFunction);
     }
   }
 });

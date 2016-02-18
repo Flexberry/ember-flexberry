@@ -13,44 +13,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Initializes component properties.
-   */
-  init: function() {
-    this._super(...arguments);
-    this.sendAction('limitFunctionAction', this.get('limitFunction'));
-  },
-
-  /**
-   * Limit function to limit loaded data.
-   *
-   * @property limitFunction
-   * @type String
-   * @default null
-   */
-  limitFunction: null,
-
-  /**
-   * Name of action to change limit.
-   *
-   * @property limitFunctionAction
-   * @type String
-   * @default 'changeLimitFunction'
-   */
-  limitFunctionAction: 'changeLimitFunction',
-
-  /**
-   * Detector of limit function changing.
-   *
-   * @property _limitFunctionComputed
-   * @type String
-   */
-  _limitFunctionComputed: Ember.computed('limitFunction', function() {
-    let limitFunction = this.get('limitFunction');
-    this.sendAction('limitFunctionAction', limitFunction);
-    return limitFunction;
-  }),
-
-  /**
    * Primary action for row click.
    *
    * @property action

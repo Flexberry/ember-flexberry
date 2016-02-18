@@ -5,7 +5,6 @@
 import Ember from 'ember';
 import PaginatedControllerMixin from '../mixins/paginated-controller';
 import SortableControllerMixin from '../mixins/sortable-controller';
-import LimitedControllerMixin from '../mixins/limited-controller';
 
 /**
  * Base controller for the List Forms.
@@ -35,7 +34,6 @@ import LimitedControllerMixin from '../mixins/limited-controller';
  * @extends Ember.Controller
  * @uses PaginatedControllerMixin
  * @uses SortableControllerMixin
- * @uses LimitedControllerMixin
  */
-export default Ember.Controller.extend(PaginatedControllerMixin, SortableControllerMixin, LimitedControllerMixin, {
+export default Ember.Controller.extend(PaginatedControllerMixin, SortableControllerMixin, {
 });

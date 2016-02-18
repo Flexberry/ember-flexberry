@@ -2,19 +2,19 @@
 
 {{#if errorMessages}}
   {{#each errorMessages as |currentError|}}
-	{{ui-message
-	  type = 'error'
-	  closeable = true
-	  visible = true
-	  title = "Error occurred"
-	  message = currentError
-	}}
+  {{ui-message
+    type = 'error'
+    closeable = true
+    visible = true
+    title = "Error occurred"
+    message = currentError
+  }}
   {{/each}}
 {{/if}}
 <form class="ui form" role="form">
   <div class="field">
     <div>
-	  {{#unless readonly}}
+    {{#unless readonly}}
         <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
         {{#unless model.isNew}}
         <button type="submit" class="ui primary button" {{action 'delete'}}>Delete</button>
@@ -24,38 +24,38 @@
     </div>
   </div>
   <div class="ui grid {{if model.errors.firstName 'error' ''}}">
-	<div class="ui two wide column right aligned middle aligned content">
-		<label>FirstName</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.firstName}}</span>
-		{{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.firstName}}
-	</div>
+  <div class="ui two wide column right aligned middle aligned content">
+    <label>FirstName</label>
+  </div>
+  <div class="ten wide column">
+    <span style="color:red">{{model.errors.firstName}}</span>
+    {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.firstName}}
+  </div>
   </div>
   <div class="ui grid {{if model.errors.lastName 'error' ''}}">
-	<div class="ui two wide column right aligned  middle aligned content">
-		<label>LastName</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.lastName}}</span>
-		{{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.lastName}}
-	</div>
+  <div class="ui two wide column right aligned  middle aligned content">
+    <label>LastName</label>
+  </div>
+  <div class="ten wide column">
+    <span style="color:red">{{model.errors.lastName}}</span>
+    {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.lastName}}
+  </div>
   </div>
   <div class="ui grid {{if model.errors.birthDate 'error' ''}}">
-	<div class="ui two wide column right aligned  middle aligned content">
-		<label>BirthDate</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.birthDate}}</span>
-		{{flexberry-datepicker placeholder="(no value)" readonly=readonly value=model.birthDate class="fluid"}}
-	</div>
+  <div class="ui two wide column right aligned  middle aligned content">
+    <label>BirthDate</label>
+  </div>
+  <div class="ten wide column">
+    <span style="color:red">{{model.errors.birthDate}}</span>
+    {{flexberry-datepicker placeholder="(no value)" readonly=readonly value=model.birthDate class="fluid"}}
+  </div>
   </div>
   <div class="ui grid {{if model.errors.reportsTo 'error' ''}}">
-	<div class="ui two wide column right aligned middle aligned content">
-		<label>Reports to</label>
-	</div>
+  <div class="ui two wide column right aligned middle aligned content">
+    <label>Reports to</label>
+  </div>
     <div class="ten wide column">
-		<span style="color:red">{{model.errors.reportsTo}}</span>
+    <span style="color:red">{{model.errors.reportsTo}}</span>
       {{flexberry-lookup
         choose='showLookupDialog'
         remove='removeLookupValue'
@@ -64,18 +64,38 @@
         projection='EmployeeL'
         title='Employees'
         readonly=readonly
-		limitFunction = lookupLimitFunction
-		autocomplete = true
-		autocompleteUpdate='updateLookupValue'
-		autocompleteUrl = autoCompleteEmployeeLookupUrl
-		autocompleteProperty='FirstName'
+        limitFunction = lookupLimitFunction
+        autocomplete = true
+        autocompleteUpdate='updateLookupValue'
+        autocompleteUrl = 'https://northwindodata.azurewebsites.net/odata/Employees'
+        autocompleteProperty='FirstName'
+      }}
+    </div>
+  </div>
+  <div class="ui grid {{if model.errors.reportsTo 'error' ''}}">
+  <div class="ui two wide column right aligned middle aligned content">
+    <label>Lookup dropdown</label>
+  </div>
+    <div class="ten wide column">
+    <span style="color:red">{{model.errors.reportsTo}}</span>
+      {{flexberry-lookup
+        choose='showLookupDialog'
+        remove='removeLookupValue'
+        value=model.employee1.firstName
+        relationName='employee1'
+        projection='EmployeeL'
+        title='Employees'
+        readonly=readonly
+        limitFunction = lookupLimitFunction
+        dropdown = true
+        getDropdownItems = getLookupItems
       }}
     </div>
   </div>
   <div class="form-group field {{if model.errors.orders 'error' ''}}">
-	<div class="ui two wide column right aligned  middle aligned content">
-		<label>Orders</label>
-	</div>
+  <div class="ui two wide column right aligned  middle aligned content">
+    <label>Orders</label>
+  </div>
     <div>
       {{groupedit-toolbar componentName = "ordersGroupEdit"}}
       {{object-list-view

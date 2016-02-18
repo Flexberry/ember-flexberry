@@ -51,6 +51,11 @@ export default Ember.Mixin.create({
     return url;
   },
 
+  getLookupItems: function(chooseData) {
+    // Load Data in select
+    return ["Edit", "Remove", "Hide"];
+  },
+
   actions: {
     /**
      * Handles action from lookup choose action.

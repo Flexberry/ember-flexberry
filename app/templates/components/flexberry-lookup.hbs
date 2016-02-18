@@ -1,5 +1,7 @@
 {{#if dropdown}}
-  {{flexberry-dropdown placeholder=placeholder}}
+  {{flexberry-dropdown
+    items=items
+  }}
 {{else}}
   {{#if (and (not readonly) autocomplete)}}
     {{#ui-search}}

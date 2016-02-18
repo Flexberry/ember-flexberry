@@ -31,6 +31,8 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   relationName: undefined,
   title: undefined,
   cssClass: undefined,
+  items: undefined,
+  //items: ["Edit", "Remove", "Hide"],
 
   /**
    * Flag to show that lookup is at autocomplete mode.
@@ -175,6 +177,16 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   didInsertElement: function() {
     this._super();
 
+    let _this = this;
+
+    // for mode dropdown
+    this.$('select').on('click', function(chooseData) {
+      let getDropdownItems = _this.get('getDropdownItems'); // this.attrs['getDropdownItems']
+      let items = getDropdownItems(chooseData);
+      _this.set('items', items);
+      //_this.set('items', ['Ffff']);
+    });
+
     if (this.get('readonly') || !this.get('autocomplete')) {
       return;
     }
@@ -205,7 +217,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     }
 
     this.set('autocompleteValue', this.get('value'));
-    let _this = this;
     this.$('.ui.search').search({
       apiSettings: {
         url: autocompleteUrl,

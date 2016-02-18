@@ -9,6 +9,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
+  placeholder: '',
   items: null,
   selectedItem: null,
   selectedIndex: -1,

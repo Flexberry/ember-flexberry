@@ -2,6 +2,7 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -46,15 +47,6 @@ export default FlexberryBaseComponent.extend({
    * @default false
    */
   refreshButton: false,
-
-  /**
-   * Current contoller.
-   *
-   * @property modelController
-   * @type Object
-   * @default null
-   */
-  modelController: null,
 
   /**
    * Projection for detail object's model.

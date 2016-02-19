@@ -44,7 +44,20 @@ module.exports = {
       production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.css'
     });
 
+    app.import({
+      development: 'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
+      production:  'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js'
+    });
+
+    app.import({
+      development: 'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',
+      production:  'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css'
+    });
+
     // Custom script which fixes some jQuery 1.10.x+ AJAX bugs with code from newer jQuery.3.0.0-alpha1+compat version.
     app.import('vendor/jquery/jquery.ajax-fix.js');
+
+    // jQuery plugin for DOM-elements initialization (including dynamicly rendered elements).
+    app.import('vendor/jquery/jquery.initialize.js');
   }
 };

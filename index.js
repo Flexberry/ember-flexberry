@@ -45,6 +45,6 @@ module.exports = {
     });
 
     // Custom script which fixes some jQuery 1.10.x+ AJAX bugs with code from newer jQuery.3.0.0-alpha1+compat version.
-    app.import('vendor/jquery.3.0.0-alpha1+compat/jquery.ajaxreplacement.js');
+    app.import('vendor/jquery/jquery.ajax-fix.js');
   }
 };

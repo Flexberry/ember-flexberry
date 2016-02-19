@@ -56,9 +56,5 @@ module.exports = {
 
     // Custom script which fixes some jQuery 1.10.x+ AJAX bugs with code from newer jQuery.3.0.0-alpha1+compat version.
     app.import('vendor/jquery/jquery.ajax-fix.js');
-
-    // Custom script which replaces browser default scrollbars to a custom ones.
-    // Uses jquery.malihu-custom-scrollbar plugin.
-    app.import('vendor/jquery/jquery.malihu-custom-scrollbar-initialize.js');
   }
 };

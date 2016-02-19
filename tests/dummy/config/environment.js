@@ -25,6 +25,15 @@ module.exports = function(environment) {
         authToken: backendRootUrl + '/Token'
       },
 
+      // Custom scrollbars settings (see more settings in plugin documentation http://manos.malihu.gr/jquery-custom-content-scroller).
+      customScrollbars: {
+        // Flag: indicates whether to enable custom scrollbars in application.
+        enable: true,
+
+        // Custom scrollbars theme.
+        theme: 'dark'
+      },
+
       // Custom property with components settings.
       components: {
         // Settings for flexberry-file component.

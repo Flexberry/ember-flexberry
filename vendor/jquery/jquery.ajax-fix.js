@@ -11,7 +11,7 @@
  * Content adapted from
  * https://github.com/jquery/jquery/blob/d29c394c1f1f918daef09bfc6def62c0b01b5d2d/src/ajax/xhr.js.
  */
-(function(jQuery, document, support) {
+;(function(jQuery, document, support) {
 
 	// Create the request object
 	// (This is still attached to ajaxSettings for backward compatibility)

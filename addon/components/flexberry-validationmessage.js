@@ -78,16 +78,15 @@ export default Ember.Component.extend({
         'pointing below',
         'left pointing',
         'right pointing'];
-      if (!possiblePointings.includes(pointing)) {
+      if (possiblePointings.indexOf(pointing) === -1) {
         let messagePointings = possiblePointings.map(function (item) {
           return `'${item}'`;
         });
-        throw new Error(`Wrong value of flexberry-validationmessage pointing property, ` +
-          `actual is '${pointing}', possible values are: ${messagePointings}`);
+        throw new Error(
+          `Wrong value of flexberry-validationmessage pointing property, actual is '${pointing}', possible values are: ${messagePointings}`);
       }
 
       this.get('classNames').push(pointing);
     }
   }
-
 });

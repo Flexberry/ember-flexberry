@@ -13,9 +13,9 @@ var Model = BaseModel.extend({
     orderDate: {
       datetime: { allowBlank: false, messages: { blank: 'order date can\'t be blank', invalid: 'please input valid date' } }
     },
-    shipName: { presence: { message: '*'}},
-    shipCountry: { presence: { message: 'ship country must be set'}},
-    employee: { presence: { message: 'you should choose order employee'}}
+    shipName: { presence: { message: '*' } },
+    shipCountry: { presence: { message: 'ship country must be set' } },
+    employee: { presence: { message: 'you should choose order employee' } }
   }
 });
 

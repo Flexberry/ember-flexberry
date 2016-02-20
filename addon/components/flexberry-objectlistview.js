@@ -48,15 +48,6 @@ export default FlexberryBaseComponent.extend({
   refreshButton: false,
 
   /**
-   * Current contoller.
-   *
-   * @property modelController
-   * @type Object
-   * @default null
-   */
-  modelController: null,
-
-  /**
    * Projection for detail object's model.
    *
    * @property modelProjection
@@ -115,7 +106,7 @@ export default FlexberryBaseComponent.extend({
    *
    * @property hasPreviousPage
    * @type Function
-   * @default false
+   * @default null
    */
   hasPreviousPage: null,
 
@@ -124,7 +115,7 @@ export default FlexberryBaseComponent.extend({
    *
    * @property hasNextPage
    * @type Function
-   * @default false
+   * @default null
    */
   hasNextPage: null,
 
@@ -142,7 +133,7 @@ export default FlexberryBaseComponent.extend({
    *
    * @property rowClickable
    * @type Boolean
-   * @default false
+   * @default true
    */
   rowClickable: true,
 
@@ -172,7 +163,8 @@ export default FlexberryBaseComponent.extend({
      * @param {Object} column Column to sort by.
      */
     sortByColumn: function(column) {
-      throw new Error('No handler for sortByColumn action set for flexberry-objectlistview. Set handler like {{flexberry-objectlistview ... sortByColumn=(action "sortByColumn")}}.');
+      throw new Error('No handler for sortByColumn action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... sortByColumn=(action "sortByColumn")}}.');
     },
 
     /**
@@ -182,7 +174,8 @@ export default FlexberryBaseComponent.extend({
      * @param {Object} column Column to add sorting by.
      */
     addColumnToSorting: function(column) {
-      throw new Error('No handler for addColumnToSorting action set for flexberry-objectlistview. Set handler like {{flexberry-objectlistview ... addColumnToSorting=(action "addColumnToSorting")}}.');
+      throw new Error('No handler for addColumnToSorting action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... addColumnToSorting=(action "addColumnToSorting")}}.');
     },
 
     /**
@@ -201,7 +194,8 @@ export default FlexberryBaseComponent.extend({
      * @method previousPage
      */
     previousPage: function() {
-      throw new Error('No handler for previousPage action set for flexberry-objectlistview. Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
+      throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
     },
 
     /**
@@ -210,7 +204,8 @@ export default FlexberryBaseComponent.extend({
      * @method nextPage
      */
     nextPage: function() {
-      throw new Error('No handler for nextPage action set for flexberry-objectlistview. Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
+      throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
     },
 
     /**
@@ -220,7 +215,8 @@ export default FlexberryBaseComponent.extend({
      * @param {number} pageNumber Number of page to go to
      */
     gotoPage: function(pageNumber) {
-      throw new Error('No handler for gotoPage action set for flexberry-objectlistview. Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
+      throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
     }
   }
 });

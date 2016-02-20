@@ -45,7 +45,7 @@ test('it should throw exception on unknown pointing property', function (assert)
 
 });
 
-test('it should change visibility based on error value', function (assert) {
+test('it should change visibility based on array error value', function (assert) {
 
   let errors = DS.Errors.create();
   this.set('error', errors.get('somefield'));
@@ -57,5 +57,18 @@ test('it should change visibility based on error value', function (assert) {
   this.set('error', errors.get('somefield'));
 
   assert.equal(this.$(':first-child').is(':visible'), true);
-  
+
+});
+
+test('it should change visibility based on string error value', function (assert) {
+
+  this.set('error', '');
+  this.render(hbs`{{flexberry-validationmessage error=error}}`);
+
+  assert.equal(this.$(':first-child').is(':visible'), false);
+
+  this.set('error', 'alarma there is error here');
+
+  assert.equal(this.$(':first-child').is(':visible'), true);
+
 });

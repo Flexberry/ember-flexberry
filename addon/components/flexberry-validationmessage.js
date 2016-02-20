@@ -6,7 +6,7 @@ import Ember from 'ember';
 
 /**
  * Component for showing error message from model validators.
- * Uses Semantic UI label element
+ *
  * @class FlexberryValidationMessage
  */
 
@@ -22,11 +22,14 @@ export default Ember.Component.extend({
   classNames: ['ui', 'basic', 'label'],
 
   /**
-   * Errors array value.
+   * Error messages array or error text for shown.
+   * Typically uses Ember.Model.errors for specific attribute, plain test also supported.
    *
+   * @example
+   *   {{flexberry-validationmessage error=model.errors.email}}
    *
    * @property Error
-   * @type Array
+   * @type Array, String
    * @default undefined
    */
   error: undefined,
@@ -43,6 +46,7 @@ export default Ember.Component.extend({
   /**
    * Label pointing direction
    * possible variants: '', pointing, pointing above, pointing below, left pointing, right pointing
+   *
    * @property Pointing
    * @type String
    * @default 'pointing'
@@ -50,14 +54,14 @@ export default Ember.Component.extend({
   pointing: 'pointing',
 
   /**
-   *
    * If error property isn't exists, the component will appear hidden in DOM.
+   *
    * @property isVisible
    * @type Boolean
    */
   isVisible: Ember.computed('error', function () {
     let error = this.get('error');
-    return !!(error && (Array.isArray(error) && error.length));
+    return !!(Array.isArray(error) ? error.length : error);
   }),
 
   init: function () {

@@ -3,6 +3,7 @@ import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-projections';
 
 var Model = BaseModel.extend({
+  shipVia: DS.attr('number', { defaultValue: 0, isOrderAttribute: true }),
   shipName: DS.attr('string'),
   shipCountry: DS.attr('string'),
   orderDate: DS.attr('date'),

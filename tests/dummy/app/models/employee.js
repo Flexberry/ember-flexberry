@@ -34,6 +34,7 @@ Model.defineProjection('EmployeeE', 'employee', {
     lastName: Proj.attr('Reports To - Last Name', { hidden: true })
   }, { hidden: true }),
   orders: Proj.hasMany('order', 'Orders', {
+    shipVia: Proj.attr('Ship Via (Order Attribute)'),
     shipName: Proj.attr('Ship Name'),
     shipCountry: Proj.attr('Ship Country'),
     orderDate: Proj.attr('Order Date')

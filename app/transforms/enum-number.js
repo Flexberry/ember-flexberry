@@ -1,2 +1,2 @@
-import EnumNumber from 'ember-flexberry/transforms/enum-number';
-export default EnumNumber;
+import EnumNumberTransform from 'ember-flexberry/transforms/enum-number';
+export default EnumNumberTransform;

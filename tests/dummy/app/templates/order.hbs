@@ -12,59 +12,59 @@
   {{/each}}
 {{/if}}
 <form class="ui form" role="form">
-    <div class="field">
-        <div>
-          {{#unless readonly}}
-              <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
-            {{#unless model.isNew}}
-                <button type="submit" class="ui primary button" {{action 'delete'}}>Delete</button>
-            {{/unless}}
-          {{/unless}}
-            <button type="submit" class="ui primary button" {{action 'close'}}>Close</button>
-        </div>
+  <div class="field">
+    <div>
+      {{#unless readonly}}
+        <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
+        {{#unless model.isNew}}
+          <button type="submit" class="ui primary button" {{action 'delete'}}>Delete</button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui primary button" {{action 'close'}}>Close</button>
     </div>
-    <div class="ui grid">
-        <div class="ui two wide column right aligned middle aligned content">
-            <label>ShipName</label>
-        </div>
-        <div class="ten wide column">
-          {{flexberry-validationmessage error=model.errors.shipName position='pointing below'}}
-          {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.shipName}}
-        </div>
+  </div>
+  <div class="ui grid">
+    <div class="ui two wide column right aligned middle aligned content">
+      <label>ShipName</label>
     </div>
-    <div class="ui grid">
-        <div class="ui two wide column right aligned middle aligned content">
-            <label>ShipCountry</label>
-        </div>
-        <div class="ten wide column">
-          {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.shipCountry}}
-          {{flexberry-validationmessage error=model.errors.shipCountry}}
-        </div>
+    <div class="ten wide column">
+      {{flexberry-validationmessage error=model.errors.shipName position='pointing below'}}
+      {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.shipName}}
     </div>
-    <div class="ui grid">
-        <div class="ui two wide column right aligned middle aligned content">
-            <label>OrderDate</label>
-        </div>
-        <div class="ten wide column">
-          {{flexberry-datepicker placeholder="(no value)" readonly=readonly hasTimePicker=true value=model.orderDate}}
-          {{flexberry-validationmessage error=model.errors.orderDate position='left pointing'}}
-        </div>
+  </div>
+  <div class="ui grid">
+    <div class="ui two wide column right aligned middle aligned content">
+      <label>ShipCountry</label>
     </div>
-    <div class="ui grid {{if model.errors.employee.firstName 'error' ''}}">
-        <div class="ui two wide column right aligned middle aligned content">
-            <label>Employee FirstName</label>
-        </div>
-        <div class="ten wide column">
-          {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.employee.firstName}}
-        </div>
+    <div class="ten wide column">
+      {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.shipCountry}}
+      {{flexberry-validationmessage error=model.errors.shipCountry}}
     </div>
-    <div class="ui grid {{if model.errors.employee.lastName 'error' ''}}">
-        <div class="ui two wide column right aligned middle aligned content">
-            <label>Employee LastName</label>
-        </div>
-        <div class="ten wide column">
-            <span style="color:red">{{model.errors.employee.lastName}}</span>
-          {{flexberry-textbox placeholder="(no value)" required=true readonly=readonly value=model.employee.lastName}}
-        </div>
+  </div>
+  <div class="ui grid">
+    <div class="ui two wide column right aligned middle aligned content">
+      <label>OrderDate</label>
     </div>
+    <div class="ten wide column">
+      {{flexberry-datepicker placeholder="(no value)" readonly=readonly hasTimePicker=true value=model.orderDate}}
+      {{flexberry-validationmessage error=model.errors.orderDate position='left pointing'}}
+    </div>
+  </div>
+  <div class="ui grid {{if model.errors.employee.firstName 'error' ''}}">
+    <div class="ui two wide column right aligned middle aligned content">
+      <label>Employee FirstName</label>
+    </div>
+    <div class="ten wide column">
+      {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.employee.firstName}}
+    </div>
+  </div>
+  <div class="ui grid {{if model.errors.employee.lastName 'error' ''}}">
+    <div class="ui two wide column right aligned middle aligned content">
+      <label>Employee LastName</label>
+    </div>
+    <div class="ten wide column">
+      <span style="color:red">{{model.errors.employee.lastName}}</span>
+      {{flexberry-textbox placeholder="(no value)" required=true readonly=readonly value=model.employee.lastName}}
+    </div>
+  </div>
 </form>

@@ -1,2 +1,2 @@
 import EnumStringTransform from 'ember-flexberry/transforms/enum-string';
-export default EnumStringEnumStringTransform;
+export default EnumStringTransform;

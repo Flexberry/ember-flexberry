@@ -5,15 +5,15 @@
 import Ember from 'ember';
 
 /**
- * Component for show error message from model validators.
- *
+ * Component for showing error message from model validators.
+ * Uses Semantic UI label element
  * @class FlexberryValidationMessage
  */
 
 export default Ember.Component.extend({
 
   /**
-   * Default class for component wrapper.
+   * Class names for component wrapping <div>.
    *
    * @property classNames
    * @type Array
@@ -22,16 +22,17 @@ export default Ember.Component.extend({
   classNames: ['ui', 'basic', 'label'],
 
   /**
-   * Error value.
+   * Errors array value.
+   *
    *
    * @property Error
-   * @type String
+   * @type Array
    * @default undefined
    */
   error: undefined,
 
   /**
-   * Color value for label text.
+   * Semantic color class name for label text.
    *
    * @property Color
    * @type String
@@ -40,13 +41,13 @@ export default Ember.Component.extend({
   color: 'red',
 
   /**
-   * Control position related to this message
-   * possible positions: pointing, pointing below, left pointing, right pointing
-   * @property Color
+   * Label pointing direction
+   * possible variants: '', pointing, pointing above, pointing below, left pointing, right pointing
+   * @property Pointing
    * @type String
-   * @default ''
+   * @default 'pointing'
    */
-  position: 'pointing',
+  pointing: 'pointing',
 
   /**
    *
@@ -63,7 +64,26 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     this.get('classNames').push(this.get('color'));
-    this.get('classNames').push(this.get('position'));
+
+    let pointing = this.get('pointing');
+    if (pointing) {
+      let possiblePointings = [
+        '',
+        'pointing',
+        'pointing above',
+        'pointing below',
+        'left pointing',
+        'right pointing'];
+      if (!possiblePointings.includes(pointing)) {
+        let messagePointings = possiblePointings.map(function (item) {
+          return `'${item}'`;
+        });
+        throw new Error(`Wrong value of flexberry-validationmessage pointing property, ` +
+          `actual is '${pointing}', possible values are: ${messagePointings}`);
+      }
+
+      this.get('classNames').push(pointing);
+    }
   }
 
 });

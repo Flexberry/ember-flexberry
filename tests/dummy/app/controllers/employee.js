@@ -5,6 +5,22 @@ export default EditFormController.extend({
   // Caption of this particular edit form.
   title: 'Employee',
 
+  getCellComponent: function(attr, bindingPath, model) {
+    var cellComponent = this._super(...arguments);
+
+    if (attr.kind === 'belongsTo' && attr.modelName === 'customer') {
+      cellComponent.componentProperties = {
+        choose: 'showLookupDialog',
+        remove: 'removeLookupValue',
+        relationName: 'customer',
+        projection: 'CustomerL',
+        title: 'Customer'
+      };
+    }
+
+    return cellComponent;
+  },
+
   /**
    * Current function to limit accessible values of model employee1.
    *

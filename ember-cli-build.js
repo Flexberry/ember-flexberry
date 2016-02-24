@@ -6,7 +6,8 @@ module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
     jscsOptions: {
       enabled: true,
-      esnext: true
+      esnext: true,
+      configPath: './.jscsrc'
     }
   });
 

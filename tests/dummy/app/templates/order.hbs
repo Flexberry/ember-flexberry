@@ -68,4 +68,22 @@
 		{{flexberry-textbox placeholder="(no value)" required=true readonly=readonly value=model.employee.lastName}}
 	</div>
   </div>
+  <div class="ui grid {{if model.errors.customer 'error' ''}}">
+  <div class="ui two wide column right aligned middle aligned content">
+    <label>Customer</label>
+  </div>
+  <div class="ten wide column">
+    <span style="color:red">{{model.errors.customer}}</span>
+    {{flexberry-lookup
+        choose='showLookupDialog'
+        remove='removeLookupValue'
+        value=model.customer.contactName
+        relationName='customer'
+        projection='CustomerL'
+        title='Customer'
+        readonly=readonly
+        limitFunction=lookupLimitFunction
+      }}
+  </div>
+  </div>
 </form>

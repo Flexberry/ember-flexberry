@@ -84,14 +84,21 @@ export default FlexberryBaseComponent.extend({
       this.$('input').on('apply.daterangepicker', function(ev, picker) {
         var currentValue = _this.get('value');
         var pickerDateString = moment(picker.endDate.toDate()).format(_this.dateTimeFormat);
-        if (!currentValue || !moment(moment(currentValue).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat))) {
+
+        // TODO: refactor
+        let tmp = !moment(moment(currentValue).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat));
+        if (!currentValue || tmp) {
           _this.setValue(picker.endDate);
         }
       });
       this.$('input').on('cancel.daterangepicker', function(ev, picker) {
         var currentInputValueString = _this.$('input').val();
         var pickerDateString = picker.endDate.format(_this.dateTimeFormat);
-        if (!moment(moment(currentInputValueString, _this.dateTimeFormat).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat))) {
+
+        // TODO: refactor
+        let tmp = moment(currentInputValueString, _this.dateTimeFormat);
+        let tmp2 = !moment(tmp.format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat));
+        if (tmp2) {
           var oldPickerDateString = picker.endDate._i;
           if (typeof (oldPickerDateString) === 'string' && currentInputValueString !== oldPickerDateString) {
             _this.$('input').val(oldPickerDateString);
@@ -124,7 +131,11 @@ export default FlexberryBaseComponent.extend({
     } else {
       var dateToSet = this.getDateToSet(dateFromPicker);
       var currentValue = this.get('value');
-      if (currentValue === null || !moment(moment(dateToSet).format(this.dateTimeFormat), this.dateTimeFormat).isSame(moment(moment(currentValue).format(this.dateTimeFormat), this.dateTimeFormat))) {
+
+      // TODO: refactor
+      let tmp = moment(dateToSet).format(this.dateTimeFormat);
+      let tmp2 = !moment(tmp, this.dateTimeFormat).isSame(moment(moment(currentValue).format(this.dateTimeFormat), this.dateTimeFormat));
+      if (currentValue === null || tmp2) {
         this.set('value', dateToSet);
         this.setProperOffsetToCalendar();
       }

@@ -6,6 +6,8 @@ import Ember from 'ember';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-mixin';
 
+const { getOwner } = Ember;
+
 /**
  * Base controller for the Edit Forms.
 
@@ -181,11 +183,57 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   },
 
   /**
-   * Method to get type of object list view cell.
+   * Method to get type and attributes of component,
+   * which will be embeded in object-list-view cell.
+   *
+   * @method getCellComponent.
+   * @param {Object} attr Attribute of projection property related to current table cell.
+   * @param {String} bindingPath Path to model property related to current table cell.
+   * @param {DS.Model} modelClass Model class of data record related to current table row.
+   * @return {Object} Object containing name & properties of component, which will be used to render current table cell.
+   * { componentName: 'my-component',  componentProperties: { ... } }.
    */
-  getCellComponent: function(attr, bindingPath) {
-    // TODO: return different components by attr type.
-    return 'object-list-view-input-cell';
+  getCellComponent: function(attr, bindingPath, modelClass) {
+    var cellComponent = {
+      componentName: 'flexberry-textbox',
+      componentProperties: null
+    };
+
+    if (attr.kind === 'belongsTo') {
+      cellComponent.componentName = 'flexberry-lookup';
+      return cellComponent;
+    }
+
+    var modelAttr = !Ember.isNone(modelClass) ? Ember.get(modelClass, 'attributes').get(bindingPath) : null;
+    if (attr.kind === 'attr' && modelAttr && modelAttr.type) {
+      switch (modelAttr.type) {
+        case 'boolean':
+          cellComponent.componentName = 'flexberry-checkbox';
+          break;
+        case 'date':
+          cellComponent.componentName = 'flexberry-datepicker';
+          break;
+        case 'file':
+          cellComponent.componentName = 'flexberry-file';
+          break;
+        default:
+
+          // Current cell type is possibly custom transform.
+          var modelAttrType = getOwner(this)._lookupFactory('transform:' + modelAttr.type);
+
+          // Handle enums (extended from transforms/enum-base.js).
+          if (modelAttrType && modelAttrType.isEnum) {
+            cellComponent.componentName = 'flexberry-dropdown';
+            cellComponent.componentProperties = {
+              items: modelAttrType.create().getAvailableValuesArray()
+            };
+          }
+
+          break;
+      }
+    }
+
+    return cellComponent;
   },
 
   /**

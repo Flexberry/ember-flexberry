@@ -1,0 +1,22 @@
+<h3 class="ui header">{{title}}</h3>
+<form class="ui form" role="form">
+  <div class="form-group field {{if model.errors.orders 'error' ''}}">
+    <div class="ui two wide column right aligned  middle aligned content">
+      <label>Details</label>
+    </div>
+    <div>
+      {{flexberry-groupedit
+        componentName="detailsGroupEdit"
+        class="attached"
+        modelProjection=modelProjection.attributes.details
+        content=model.details
+        readonly=readonly
+        orderable=false
+        rowClickable=false
+        headerClickable=false
+        showCheckBoxInRow=true
+        showDeleteButtonInRow=true
+      }}
+    </div>
+  </div>
+</form>

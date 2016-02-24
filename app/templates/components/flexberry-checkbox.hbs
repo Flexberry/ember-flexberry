@@ -1,5 +1,6 @@
 {{ui-checkbox
-  checked=checked
+  checked=value
   label=label
-  class=_classComputed
+  class=(concat "flexberry-checkbox" (if readonly " disabled" ""))
+  required=required
 }}

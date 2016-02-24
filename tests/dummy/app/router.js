@@ -26,6 +26,9 @@ Router.map(function() {
 
   // /employees/new
   this.route('order.new', { path: 'orders/new' });
+
+  // /group-edit-test
+  this.route('group-edit-test');
 });
 
 export default Router;

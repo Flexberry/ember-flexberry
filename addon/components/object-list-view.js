@@ -4,12 +4,13 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 
 /**
  * @class FlexberryObjectListView
  * @extends FlexberryBaseComponent
  */
-export default FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, {
   tagName: 'table',
   classNames: [
     'object-list-view',

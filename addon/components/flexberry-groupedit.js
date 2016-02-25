@@ -59,7 +59,8 @@ export default FlexberryBaseComponent.extend({
      * @param {Object} column Column to sort by.
      */
     sortByColumn: function(column) {
-      throw new Error('No handler for sortByColumn action set for flexberry-groupedit. Set handler like {{flexberry-groupedit ... sortByColumn=(action "sortByColumn")}}.');
+      throw new Error('No handler for sortByColumn action set for flexberry-groupedit. ' +
+                      'Set handler like {{flexberry-groupedit ... sortByColumn=(action "sortByColumn")}}.');
     },
 
     /**
@@ -69,7 +70,8 @@ export default FlexberryBaseComponent.extend({
      * @param {Object} column Column to add sorting by.
      */
     addColumnToSorting: function(column) {
-      throw new Error('No handler for addColumnToSorting action set for flexberry-groupedit. Set handler like {{flexberry-groupedit ... addColumnToSorting=(action "addColumnToSorting")}}.');
+      throw new Error('No handler for addColumnToSorting action set for flexberry-groupedit. ' +
+                      'Set handler like {{flexberry-groupedit ... addColumnToSorting=(action "addColumnToSorting")}}.');
     }
   }
 });

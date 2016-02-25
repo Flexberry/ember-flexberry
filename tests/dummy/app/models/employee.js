@@ -36,7 +36,10 @@ Model.defineProjection('EmployeeE', 'employee', {
   orders: Proj.hasMany('order', 'Orders', {
     shipName: Proj.attr('Ship Name'),
     shipCountry: Proj.attr('Ship Country'),
-    orderDate: Proj.attr('Order Date')
+    orderDate: Proj.attr('Order Date'),
+    customer: Proj.belongsTo('customer', 'Customer', {
+      contactName: Proj.attr('Contact Name', { hidden: true })
+    }, { displayMemberPath: 'contactName' })
   })
 });
 

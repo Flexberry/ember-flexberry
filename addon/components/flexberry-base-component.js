@@ -53,6 +53,15 @@ export default Ember.Component.extend({
   dynamicProperties: null,
 
   /**
+   * Store record to which current component's value is related.
+   *
+   * @property relatedRecord
+   * @type Object
+   * @default null
+   */
+  relatedRecord: null,
+
+  /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
    *
    * @property appConfigSettingsPath

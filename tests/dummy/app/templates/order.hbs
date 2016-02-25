@@ -1,15 +1,15 @@
 <h3>{{title}} - edit form</h3>
 
 {{#if errorMessages}}
-{{#each errorMessages as |currentError|}}
-{{ui-message
-  type='error'
-  closeable=true
-  visible=true
-  title='Error occurred'
-  message=currentError
-}}
-{{/each}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+    type='error'
+    closeable=true
+    visible=true
+    title='Error occurred'
+    message=currentError
+    }}
+  {{/each}}
 {{/if}}
 <form class="ui form flexberry-horizontal-form" role="form">
   <div class="field">
@@ -24,39 +24,42 @@
     </div>
   </div>
   <div class="inline fields">
-    {{#if model.errors.shipName}}
-      <span style="color:red">{{model.errors.shipName}}</span>
-    {{/if}}
+    <div class="sixteen wide field">
+      <label></label>
+      {{flexberry-validationmessage error=model.errors.shipName pointing='pointing below'}}
+    </div>
+  </div>
+  <div class="inline fields">
     {{flexberry-field
       placeholder='(no value)'
       readonly=readonly
       required=true
       value=model.shipName
       label='ShipName'
-      class=(concat 'sixteen wide' (if model.errors.shipName 'error' ''))
+      class=(concat 'sixteen wide ' (if model.errors.shipName 'error' ''))
     }}
   </div>
   <div class="inline fields">
-    {{#if model.errors.shipCountry}}
-      <span style="color:red">{{model.errors.shipCountry}}</span>
-    {{/if}}
     {{flexberry-field
       placeholder='(no value)'
       readonly=readonly
       required=true
       value=model.shipCountry
       label='ShipCountry'
-      class=(concat 'sixteen wide' (if model.errors.shipCountry 'error' ''))
+      class=(concat 'sixteen wide ' (if model.errors.shipCountry 'error' ''))
     }}
+  </div>
+  <div class="inline fields">
+    <div class="sixteen wide field">
+      <label></label>
+      {{flexberry-validationmessage error=model.errors.shipCountry}}
+    </div>
   </div>
   <div class="inline fields">
     <div class="field no-padding">
       <label>OrderDate</label>
     </div>
     <div class="sixteen wide field">
-      {{#if model.errors.orderDate}}
-        <span style="color:red">{{model.errors.orderDate}}</span>
-      {{/if}}
       {{flexberry-datepicker
         placeholder='(no value)'
         readonly=readonly
@@ -64,6 +67,7 @@
         value=model.orderDate
         class=(if model.errors.orderDate 'error' '')
       }}
+      {{flexberry-validationmessage error=model.errors.orderDate pointing='left pointing'}}
     </div>
   </div>
   <div class="inline fields">
@@ -111,6 +115,11 @@
         limitFunction=lookupLimitFunction
         class=(if model.errors.customer 'error' '')
       }}
+    </div>
+  </div>
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
     </div>
   </div>
 </form>

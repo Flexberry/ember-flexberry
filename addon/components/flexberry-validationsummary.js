@@ -43,8 +43,9 @@ export default Ember.Component.extend({
 
    * @private
    * @property ValidationProperties
+   * @default undefined
    * */
-  validationProperties: new Ember.A(),
+  validationProperties: undefined,
 
   /**
    * Current errors messages
@@ -81,6 +82,8 @@ export default Ember.Component.extend({
     if (!errors) {
       throw new Error('Errors property for flexberry-validationsummary component must be set');
     }
+
+    this.set('validationProperties', new Ember.A());
 
     for (let propertyName in errors) {
       if (errors.hasOwnProperty(propertyName)) {

@@ -30,7 +30,7 @@ export default FlexberryBaseComponent.extend({
   modelName: null,
 
   /**
-   * Flag to use creation button at toolbal.
+   * Flag to use creation button at toolbar.
    *
    * @property createNewButton
    * @type Boolean
@@ -39,7 +39,7 @@ export default FlexberryBaseComponent.extend({
   createNewButton: false,
 
   /**
-   * Flag to use refresh button at toolbal.
+   * Flag to use refresh button at toolbar.
    *
    * @property refreshButton
    * @type Boolean
@@ -215,8 +215,8 @@ export default FlexberryBaseComponent.extend({
      * @param {number} pageNumber Number of page to go to
      */
     gotoPage: function(pageNumber) {
-<<<<<<< HEAD
-      throw new Error('No handler for gotoPage action set for flexberry-objectlistview. Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
+      throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
     },
 
     /**
@@ -240,10 +240,6 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction(actionName);
-=======
-      throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
-                      'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
->>>>>>> develop
     }
   }
 });

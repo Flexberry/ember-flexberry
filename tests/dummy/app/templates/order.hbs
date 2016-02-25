@@ -28,7 +28,7 @@
       <label>ShipName</label>
     </div>
     <div class="ten wide column">
-      {{flexberry-validationmessage error=model.errors.shipName position='pointing below'}}
+      {{flexberry-validationmessage error=model.errors.shipName pointing='pointing below'}}
       {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.shipName}}
     </div>
   </div>
@@ -47,7 +47,7 @@
     </div>
     <div class="ten wide column">
       {{flexberry-datepicker placeholder="(no value)" readonly=readonly hasTimePicker=true value=model.orderDate}}
-      {{flexberry-validationmessage error=model.errors.orderDate position='left pointing'}}
+      {{flexberry-validationmessage error=model.errors.orderDate pointing='left pointing'}}
     </div>
   </div>
   <div class="ui grid {{if model.errors.employee.firstName 'error' ''}}">
@@ -65,6 +65,11 @@
     <div class="ten wide column">
       <span style="color:red">{{model.errors.employee.lastName}}</span>
       {{flexberry-textbox placeholder="(no value)" required=true readonly=readonly value=model.employee.lastName}}
+    </div>
+  </div>
+  <div class="ui grid">
+    <div class="ui twelve wide column">
+      {{flexberry-validationsummary errors=model.errors}}
     </div>
   </div>
 </form>

@@ -18,7 +18,7 @@ export default Ember.Component.extend({
    * @default 'customButtonAction'
    */
   customButtonAction: 'customButtonAction',
-  
+
   /**
    * Handler to get custom buttons from controller.
    * It has to be closure event and return array of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
@@ -28,7 +28,7 @@ export default Ember.Component.extend({
    * @default undefined
    */
   customButtonsClosureEvent: undefined,
-  
+
   /**
    * Array of custom buttons.
    *

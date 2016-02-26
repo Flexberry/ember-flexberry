@@ -69,8 +69,8 @@ test('it validates', function(assert) {
     model.set('orderDate', '1933-10-30T00:00:00Z');
     model.set('shipName', 'bag');
     model.set('shipCountry', 'earth');
-    model.set('employee', store.createRecord('employee', { firstName: 'Surname', lastName: 'Name' }));
-    assert.ok(model.get('isValid'), 'All required fields was set but model is invalid. Check validation rules.');
+    model.set('customer', store.createRecord('customer', { contactName: 'John Smith' }));
+    assert.ok(model.get('isValid'), 'All required fields were set but model is invalid. Check validation rules.');
   });
 });
 

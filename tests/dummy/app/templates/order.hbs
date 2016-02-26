@@ -24,12 +24,6 @@
     </div>
   </div>
   <div class="inline fields">
-    <div class="sixteen wide field">
-      <label></label>
-      {{flexberry-validationmessage error=model.errors.shipName pointing='pointing below'}}
-    </div>
-  </div>
-  <div class="inline fields">
     {{flexberry-field
       placeholder='(no value)'
       readonly=readonly
@@ -38,6 +32,7 @@
       label='ShipName'
       class=(concat 'sixteen wide ' (if model.errors.shipName 'error' ''))
     }}
+    {{flexberry-validationmessage error=model.errors.shipName pointing='left pointing'}}
   </div>
   <div class="inline fields">
     {{flexberry-field
@@ -48,18 +43,13 @@
       label='ShipCountry'
       class=(concat 'sixteen wide ' (if model.errors.shipCountry 'error' ''))
     }}
-  </div>
-  <div class="inline fields">
-    <div class="sixteen wide field">
-      <label></label>
-      {{flexberry-validationmessage error=model.errors.shipCountry}}
-    </div>
+    {{flexberry-validationmessage error=model.errors.shipCountry pointing='left pointing'}}
   </div>
   <div class="inline fields">
     <div class="field no-padding">
       <label>OrderDate</label>
     </div>
-    <div class="sixteen wide field">
+    <div class="field">
       {{flexberry-datepicker
         placeholder='(no value)'
         readonly=readonly
@@ -80,30 +70,24 @@
       required=true
       value=model.employee.firstName
       label='Employee FirstName'
-      class=(concat 'sixteen wide' (if model.errors.firstName 'error' ''))
+      class=(concat 'sixteen wide ' (if model.errors.firstName 'error' ''))
     }}
   </div>
   <div class="inline fields">
-    {{#if model.errors.lastName}}
-      <span style="color:red">{{model.errors.lastName}}</span>
-    {{/if}}
     {{flexberry-field
       placeholder='(no value)'
       readonly=readonly
       required=true
       value=model.employee.lastName
       label='Employee LastName'
-      class=(concat 'sixteen wide' (if model.errors.lastName 'error' ''))
+      class=(concat 'sixteen wide ' (if model.errors.lastName 'error' ''))
     }}
   </div>
   <div class="inline fields">
     <div class="field no-padding">
       <label>Customer</label>
     </div>
-    <div class="sixteen wide field">
-      {{#if model.errors.customer}}
-        <span style="color:red">{{model.errors.customer}}</span>
-      {{/if}}
+    <div class="field sixteen wide">
       {{flexberry-lookup
         choose='showLookupDialog'
         remove='removeLookupValue'
@@ -113,8 +97,9 @@
         title='Customer'
         readonly=readonly
         limitFunction=lookupLimitFunction
-        class=(if model.errors.customer 'error' '')
+        class=(concat 'sixteen wide ' (if model.errors.customer 'error' ''))
       }}
+      {{flexberry-validationmessage error=model.errors.customer}}
     </div>
   </div>
   <div class="field">

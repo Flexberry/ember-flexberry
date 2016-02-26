@@ -7,15 +7,15 @@ export default Ember.Mixin.create({
    * @property groupEditEventsService
    * @type Service
    */
-  groupEditEventsService: Ember.inject.service('groupedit-events'),
+  groupEditEventsService: Ember.inject.service('objectlistview-events'),
   deletedRecords: null,
 
   activate() {
     this._super(...arguments);
 
-    this.get('groupEditEventsService').on('groupEditRowAdded', this, this._rowAdded);
-    this.get('groupEditEventsService').on('groupEditRowDeleted', this, this._rowDeleted);
-    this.get('groupEditEventsService').on('groupEditRowsChanged', this, this._rowChanged);
+    this.get('groupEditEventsService').on('olvRowAdded', this, this._rowAdded);
+    this.get('groupEditEventsService').on('olvRowDeleted', this, this._rowDeleted);
+    this.get('groupEditEventsService').on('olvRowsChanged', this, this._rowChanged);
 
     if (!this.get('deletedRecords')) {
       this.set('deletedRecords', Ember.A());
@@ -27,9 +27,9 @@ export default Ember.Mixin.create({
   deactivate() {
     this._super(...arguments);
 
-    this.get('groupEditEventsService').off('groupEditRowAdded', this, this._rowAdded);
-    this.get('groupEditEventsService').off('groupEditRowDeleted', this, this._rowDeleted);
-    this.get('groupEditEventsService').off('groupEditRowsChanged', this, this._rowChanged);
+    this.get('groupEditEventsService').off('olvRowAdded', this, this._rowAdded);
+    this.get('groupEditEventsService').off('olvRowDeleted', this, this._rowDeleted);
+    this.get('groupEditEventsService').off('olvRowsChanged', this, this._rowChanged);
   },
 
   /**

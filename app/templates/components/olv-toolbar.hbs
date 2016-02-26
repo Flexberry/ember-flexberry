@@ -4,6 +4,9 @@
 {{#if createNewButton}}
   <button class="ui button" {{action "createNew"}}>Add</button>
 {{/if}}
+{{#if deleteButton}}
+  <button class='ui {{if isDeleteButtonEnabled '' 'disabled'}} button' {{action "delete"}}>Delete</button>
+{{/if}}
 {{#each customButtonsArray as |customButton|}}
   <button class="ui button {{ if customButton.buttonClasses customButton.buttonClasses ''}}" {{action 'customButtonAction' customButton.buttonAction}}>{{ if customButton.buttonName customButton.buttonName 'UserButton'}}</button>
 {{/each}}

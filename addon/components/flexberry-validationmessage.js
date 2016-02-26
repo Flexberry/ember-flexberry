@@ -47,9 +47,9 @@ export default Ember.Component.extend({
    *
    * @property pointing
    * @type String
-   * @default 'pointing'
+   * @default ''
    */
-  pointing: 'pointing',
+  pointing: '',
 
   /**
    * If error property isn't exists, the component will appear hidden in DOM.

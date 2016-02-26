@@ -48,6 +48,15 @@ export default FlexberryBaseComponent.extend({
   refreshButton: false,
 
   /**
+   * Flag to use delete button at toolbar.
+   *
+   * @property deleteButton
+   * @type Boolean
+   * @default false
+   */
+  deleteButton: false,
+
+  /**
    * Projection for detail object's model.
    *
    * @property modelProjection
@@ -144,7 +153,7 @@ export default FlexberryBaseComponent.extend({
    * @type Boolean
    * @default false
    */
-  _showCheckBoxInRow: false,
+  showCheckBoxInRow: false,
 
   /**
    * Flag to show delete button in row.

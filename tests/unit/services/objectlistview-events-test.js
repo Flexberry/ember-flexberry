@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:groupedit-events', 'Unit | Service | groupedit events', {
+moduleFor('service:objectlistview-events', 'Unit | Service | objectlistview events', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
 });

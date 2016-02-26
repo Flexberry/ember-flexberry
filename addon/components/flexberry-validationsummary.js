@@ -90,5 +90,11 @@ export default Ember.Component.extend({
 
     this.get('classNames').push(this.get('color'));
     this.changeMessages();
+  },
+
+  willDestroy: function () {
+    let errors = this.get('errors');
+    this.get('validationProperties').forEach(propertyName => errors.removeObserver(propertyName + '.[]', this, 'changeMessages'));
+    this._super(...arguments);
   }
 });

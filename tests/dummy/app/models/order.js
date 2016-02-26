@@ -7,6 +7,7 @@ var Model = BaseModel.extend({
   shipCountry: DS.attr('string'),
   orderDate: DS.attr('date'),
   employee: DS.belongsTo('employee', { inverse: null, async: false }),
+  customer: DS.belongsTo('customer', { inverse: null, async: false }),
 
   // Validation rules.
   validations: {
@@ -26,7 +27,10 @@ Model.defineProjection('OrderE', 'order', {
   employee: Proj.belongsTo('employee', 'Employee', {
     firstName: Proj.attr('Employee First Name'),
     lastName: Proj.attr('Employee Last Name')
-  }, { hidden: true })
+  }, { hidden: true }),
+  customer: Proj.belongsTo('customer', 'Customer', {
+    contactName: Proj.attr('Contact Name', { hidden: true })
+  }, { displayMemberPath: 'contactName' })
 });
 
 Model.defineProjection('OrderL', 'order', {

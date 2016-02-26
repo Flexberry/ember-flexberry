@@ -19,7 +19,7 @@ export default FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['groupedit-toolbar', 'ui', 'middle', 'aligned', 'grid'],
+  classNames: ['groupedit-toolbar'],
 
   /**
    * Service that triggers groupedit events.

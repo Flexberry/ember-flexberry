@@ -7,7 +7,7 @@ module.exports = function(defaults) {
     jscsOptions: {
       enabled: true,
       esnext: true,
-      configPath: '.jscsrc'
+      configPath: './.jscsrc'
     }
   });
 

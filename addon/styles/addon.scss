@@ -72,3 +72,27 @@ table {
 .hidden {
   display: none;
 }
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+// Flexberry form
+.ui.form.flexberry-horizontal-form {
+  .flexberry-field.field label {
+    width: 150px !important;
+  }
+
+  .field label {
+    width: 122px !important;
+    margin-right: 0.85714286em !important;
+  }
+
+  label {
+    text-align: right;
+  }
+}

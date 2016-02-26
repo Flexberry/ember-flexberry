@@ -1,9 +1,16 @@
-{{#ui-dropdown value=value class=(concat "flexberry-dropdown " type " selection" (if readonly " disabled" ""))}}
+{{#ui-dropdown
+  class=(concat "flexberry-dropdown " type " selection" (if readonly " disabled" ""))
+  onChange=(action 'valueChange')
+}}
     <i class="dropdown icon"></i>
-    <div class="text">{{currentText}}</div>
+    {{#if showDefaultText}}
+      <div class="default text">{{defaultText}}</div>
+    {{else}}
+      <div class="text">{{text}}</div>
+    {{/if}}
     <div class="menu">
       {{#each items as |item|}}
-          <div class="item" data-value={{item}}>{{item}}</div>
+        <div class="item" data-value="{{item}}">{{item}}</div>
       {{/each}}
     </div>
 {{/ui-dropdown}}

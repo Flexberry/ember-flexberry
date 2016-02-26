@@ -190,32 +190,45 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     }
 
     var modelAttr = !Ember.isNone(modelClass) ? Ember.get(modelClass, 'attributes').get(bindingPath) : null;
-    if (attr.kind === 'attr' && modelAttr && modelAttr.type) {
-      switch (modelAttr.type) {
-        case 'boolean':
-          cellComponent.componentName = 'flexberry-checkbox';
-          break;
-        case 'date':
-          cellComponent.componentName = 'flexberry-datepicker';
-          break;
-        case 'file':
-          cellComponent.componentName = 'flexberry-file';
-          break;
-        default:
+    if (!(attr.kind === 'attr' && modelAttr && modelAttr.type)) {
+      return cellComponent;
+    }
 
-          // Current cell type is possibly custom transform.
-          var modelAttrType = getOwner(this)._lookupFactory('transform:' + modelAttr.type);
+    var modelAttrOptions = Ember.get(modelAttr, 'options');
 
-          // Handle enums (extended from transforms/enum-base.js).
-          if (modelAttrType && modelAttrType.isEnum) {
-            cellComponent.componentName = 'flexberry-dropdown';
-            cellComponent.componentProperties = {
-              items: modelAttrType.create().getAvailableValuesArray()
-            };
-          }
+    // Handle order attributes (they must be readonly).
+    if (modelAttrOptions && modelAttrOptions.isOrderAttribute) {
+      cellComponent.componentName = 'object-list-view-cell';
+    }
 
-          break;
-      }
+    switch (modelAttr.type) {
+      case 'string':
+      case 'number':
+        break;
+      case 'boolean':
+        cellComponent.componentName = 'flexberry-checkbox';
+        break;
+      case 'date':
+        cellComponent.componentName = 'flexberry-datepicker';
+        break;
+      case 'file':
+        cellComponent.componentName = 'flexberry-file';
+        break;
+      default:
+
+        // Current cell type is possibly custom transform.
+        var transformInstance = getOwner(this).lookup('transform:' + modelAttr.type);
+        var transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
+
+        // Handle enums (extended from transforms/enum-base.js).
+        if (transformClass && transformClass.isEnum) {
+          cellComponent.componentName = 'flexberry-dropdown';
+          cellComponent.componentProperties = {
+            items: transformInstance.getAvailableValuesArray()
+          };
+        }
+
+        break;
     }
 
     return cellComponent;

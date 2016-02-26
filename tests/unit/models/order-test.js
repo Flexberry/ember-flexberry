@@ -55,6 +55,7 @@ test('it returns fields', function(assert) {
 
 test('it validates', function(assert) {
   var model = this.subject();
+  var store = this.store();
   assert.expect(4);
 
   Ember.run(function() {
@@ -66,7 +67,10 @@ test('it validates', function(assert) {
     });
 
     model.set('orderDate', '1933-10-30T00:00:00Z');
-    assert.ok(model.get('isValid'), 'Data was set but model is invalid. Check validation rules.');
+    model.set('shipName', 'bag');
+    model.set('shipCountry', 'earth');
+    model.set('employee', store.createRecord('employee', { firstName: 'Surname', lastName: 'Name' }));
+    assert.ok(model.get('isValid'), 'All required fields was set but model is invalid. Check validation rules.');
   });
 });
 

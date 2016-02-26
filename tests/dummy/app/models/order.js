@@ -16,7 +16,7 @@ var Model = BaseModel.extend({
     },
     shipName: { presence: { message: '*' } },
     shipCountry: { presence: { message: 'ship country must be set' } },
-    employee: { presence: { message: 'you should choose order employee' } }
+    customer: { presence: { message: 'you should choose order customer' } }
   }
 });
 

@@ -7,11 +7,10 @@ import Ember from 'ember';
 /**
  * ValidationSummary component for Semantic UI.
  *
- * @class FlexberryValidationSummary
+ * @class FlexberryValidationsummary
  * @extends Ember.Component
  */
 export default Ember.Component.extend({
-
   /**
    * Class names for component wrapping <div>.
    *
@@ -23,46 +22,43 @@ export default Ember.Component.extend({
   /**
    * Semantic color class name for message text.
    *
-   * @property Color
+   * @property color
    * @type String
    * @default 'red'
    */
   color: 'red',
 
   /**
-   * Errors object for display messages
-
-   * @property Errors
+   * Errors object for display messages.
+   *
+   * @property errors
    * @type Ember.Object
    * @default undefined
    */
   errors: undefined,
 
   /**
-   * Errors own properties with validation errors messages
-
+   * Errors own properties with validation errors messages.
+   *
    * @private
-   * @property ValidationProperties
+   * @property validationProperties
    * @default undefined
-   * */
+   */
   validationProperties: undefined,
 
   /**
    * Current errors messages
 
-   * @property Messages
+   * @property messages
    * @type Ember.A
    * @default undefined
-   * */
+   */
   messages: undefined,
 
   /**
    * Push validation errors to messages array
-   * and change component visibility if no errors occurred
-
-   *
-   *
-   * */
+   * and change component visibility if no errors occurred.
+   */
   changeMessages: function () {
     let messages = new Ember.A();
 
@@ -94,5 +90,11 @@ export default Ember.Component.extend({
 
     this.get('classNames').push(this.get('color'));
     this.changeMessages();
+  },
+
+  willDestroy: function () {
+    let errors = this.get('errors');
+    this.get('validationProperties').forEach(propertyName => errors.removeObserver(propertyName + '.[]', this, 'changeMessages'));
+    this._super(...arguments);
   }
 });

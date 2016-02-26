@@ -7,11 +7,9 @@ import Ember from 'ember';
 /**
  * Component for showing error message from model validators.
  *
- * @class FlexberryValidationMessage
+ * @class FlexberryValidationmessage
  */
-
 export default Ember.Component.extend({
-
   /**
    * Class names for component wrapping <div>.
    *
@@ -28,8 +26,8 @@ export default Ember.Component.extend({
    * @example
    *   {{flexberry-validationmessage error=model.errors.email}}
    *
-   * @property Error
-   * @type Array, String
+   * @property error
+   * @type Array|String
    * @default undefined
    */
   error: undefined,
@@ -37,21 +35,21 @@ export default Ember.Component.extend({
   /**
    * Semantic color class name for label text.
    *
-   * @property Color
+   * @property color
    * @type String
    * @default 'red'
    */
   color: 'red',
 
   /**
-   * Label pointing direction
-   * possible variants: '', pointing, pointing above, pointing below, left pointing, right pointing
+   * Label pointing direction.
+   * Possible variants: '', pointing, pointing above, pointing below, left pointing, right pointing.
    *
-   * @property Pointing
+   * @property pointing
    * @type String
-   * @default 'pointing'
+   * @default ''
    */
-  pointing: 'pointing',
+  pointing: '',
 
   /**
    * If error property isn't exists, the component will appear hidden in DOM.

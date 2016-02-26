@@ -146,7 +146,7 @@ export default Ember.Component.extend({
    */
   _rowSelected: function(componentName, record, count) {
     if (componentName === this.get('componentName')) {
-      this.set('isDeleteRowsEnabled', count > 0);
+      this.set('isDeleteButtonEnabled', count > 0);
     }
   }
 });

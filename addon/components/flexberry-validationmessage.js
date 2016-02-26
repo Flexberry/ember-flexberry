@@ -7,7 +7,7 @@ import Ember from 'ember';
 /**
  * Component for showing error message from model validators.
  *
- * @class FlexberryValidationMessage
+ * @class FlexberryValidationmessage
  */
 export default Ember.Component.extend({
   /**

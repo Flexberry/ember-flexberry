@@ -7,7 +7,7 @@ import Ember from 'ember';
 /**
  * ValidationSummary component for Semantic UI.
  *
- * @class FlexberryValidationSummary
+ * @class FlexberryValidationsummary
  * @extends Ember.Component
  */
 export default Ember.Component.extend({

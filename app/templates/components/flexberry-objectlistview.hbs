@@ -4,6 +4,8 @@
   createNewButton = createNewButton
   refreshButton = refreshButton
   modelController = currentController
+  customButtonAction = 'customButtonAction'
+  customButtonsClosureEvent=(action (if this.attrs.customButtons this.attrs.customButtons 'customButtons'))
 }}
 {{object-list-view
   class = 'bottom attached'

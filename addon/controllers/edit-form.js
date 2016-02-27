@@ -280,14 +280,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   },
 
   _onSaveActionFulfilled: function() {
-    alert('Saved.');
+    alert(this.get('i18n').t('edit-form.saved-message'));
   },
 
   /**
    * On save model fail handler.
    */
   _onSaveActionRejected: function(errorData) {
-    this.rejectError(errorData, 'Save failed.');
+    this.rejectError(errorData, this.get('i18n').t('save-failed-message'));
   },
 
   /**
@@ -301,7 +301,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    * On delete model fail handler.
    */
   _onDeleteActionRejected: function(errorData) {
-    this.rejectError(errorData, 'Delete failed.');
+    this.rejectError(errorData, this.get('i18n').t('delete-failed-message'));
   },
 
   /**

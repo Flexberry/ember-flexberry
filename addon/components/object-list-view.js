@@ -115,7 +115,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.set('contentWithKeys', Ember.A());
     if (!this.get('noDataMessage')) {
-      this.set('noDataMessage', 'There is no data');
+      this.set('noDataMessage', this.get('i18n').t('object-list-view.no-data-text'));
     }
 
     if (this.get('showCheckBoxInRow')) {

@@ -4,7 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
-import { translationMacro as T } from 'ember-i18n';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Lookup component for Semantic UI.
@@ -23,9 +23,9 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    */
   classNames: ['flexberry-lookup', 'ui', 'fluid', 'action', 'input'],
 
-  placeholder: T('flexberry-lookup.placeholder'),
-  chooseText: T('flexberry-lookup.choose-button-text'),
-  
+  placeholder: t('flexberry-lookup.placeholder'),
+  chooseText: t('flexberry-lookup.choose-button-text'),
+
   // ToDo: Use 'flexberry-lookup.remove-button-text' from locale.
   removeText: '<i class="remove icon"></i>',
 

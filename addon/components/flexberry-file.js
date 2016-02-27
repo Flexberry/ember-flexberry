@@ -4,7 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
-import { translationMacro as T } from 'ember-i18n';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Flexberry file component.
@@ -242,13 +242,13 @@ export default FlexberryBaseComponent.extend({
    * Title to be displayed in error modal dialog.
    * It will be displayed only if some error occur.
    */
-  errorModalDialogTitle: T('flexberry-file.error-dialog-title'),
+  errorModalDialogTitle: t('flexberry-file.error-dialog-title'),
 
   /**
    * Content to be displayed in error modal dialog.
    * It will be displayed only if some error occur.
    */
-  errorModalDialogContent: T('flexberry-file.error-dialog-content'),
+  errorModalDialogContent: t('flexberry-file.error-dialog-content'),
 
   /**
    * Selected jQuery object, containing HTML of error modal dialog.
@@ -339,7 +339,12 @@ export default FlexberryBaseComponent.extend({
       // Prevent files greater then maxUploadFileSize.
       if (!Ember.isNone(maxUploadFileSize) && selectedFile.size > maxUploadFileSize) {
         var errorTitle = i18n.t('flexberry-file.add-file-error-title');
-        var errorContent = i18n.t('flexberry-file.file-too-big-message', { fileName: selectedFile.name, maxSize: maxUploadFileSize, actualSize: selectedFile.size });
+        var errorContent = i18n.t(
+          'flexberry-file.file-too-big-message',
+          {
+            fileName: selectedFile.name,
+            maxSize: maxUploadFileSize,
+            actualSize: selectedFile.size });
         _this.showErrorModalDialog.call(_this, errorTitle, errorContent);
 
         return;
@@ -408,7 +413,7 @@ export default FlexberryBaseComponent.extend({
 
     var _this = this;
     var i18n = _this.get('i18n');
-    
+
     return new Ember.RSVP.Promise(function(resolve, reject) {
       _this.set('uploadIsInProgress', true);
 
@@ -470,7 +475,7 @@ export default FlexberryBaseComponent.extend({
 
     var _this = this;
     var i18n = _this.get('i18n');
-    
+
     return new Ember.RSVP.Promise(function(resolve, reject) {
       _this.set('downloadIsInProgress', true);
 

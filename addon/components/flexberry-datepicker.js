@@ -61,10 +61,15 @@ export default FlexberryBaseComponent.extend({
 
     var readonly = this.get('readonly');
     var _this = this;
+    var i18n = _this.get('i18n');
     if (!readonly) {
       this.$('input').daterangepicker(
       {
         startDate: startDate,
+        locale: {
+          applyLabel: i18n.t('flexberry-datepicker.apply-button-text'),
+          cancelLabel: i18n.t('flexberry-datepicker.cancel-button-text')
+        },
         singleDatePicker: true,
         showDropdowns: true,
         timePicker: hasTimePicker,

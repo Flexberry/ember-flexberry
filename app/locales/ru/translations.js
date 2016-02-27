@@ -54,7 +54,7 @@ export default {
   },
   
   'object-list-view': {
-    'no-data-message': 'Нет данных'
+    'no-data-text': 'Нет данных'
   },
   
   'olv-toolbar': {

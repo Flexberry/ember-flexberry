@@ -25,7 +25,7 @@ module.exports = {
         var enumeration = JSON.parse(content);
 
         return {
-            values: "'"+enumeration.values.join("', '")+"'"
+            values: "'"+enumeration.values.join("', '")+"'"// for use in files\__root__\transforms\__name__.js
         };
     }
 

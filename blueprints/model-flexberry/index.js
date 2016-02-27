@@ -30,9 +30,9 @@ module.exports = {
         var model = JSON.parse(content);
 
         return {
-            model: getJSForModel(model),
-            projections: getJSForProjections(model, modelsDir),
-            serializerAttrs: getSerializerAttrs(model)
+            model: getJSForModel(model),// for use in files\__root__\models\__name__.js
+            projections: getJSForProjections(model, modelsDir),// for use in files\__root__\models\__name__.js
+            serializerAttrs: getSerializerAttrs(model)// for use in files\__root__\serializers\__name__.js
         };
   }
 };

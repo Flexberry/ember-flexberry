@@ -3,6 +3,10 @@ import DS from 'ember-data';
 import SnapshotTransform from '../utils/snapshot-transform';
 
 export default DS.RESTAdapter.extend({
+  headers: {
+    Prefer: 'return=representation'
+  },
+
   idType: 'number',
 
   getPaginationQuery: function(page, perPage) {

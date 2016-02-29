@@ -2,7 +2,7 @@
   type = 'error'
   closeable = true
   visible = errorMessage
-  title = "Login failed"
+  title = (t "login.login-failed-message")
   message = errorMessage
 }}
 
@@ -10,12 +10,12 @@
 {{! Error message can be included inside ui form: http://semantic-ui.com/collections/form.html#error }}
 <form {{action 'authenticate' on='submit'}} class="ui form">
   <div class="field">
-    <label>Login</label>
-    {{input value=identification placeholder='Enter Login' type='text'}}
+    <label>{{t "login.login-field-label"}}</label>
+    {{input value=identification placeholder=(t "login.login-field-placeholder") type='text'}}
   </div>
   <div class="field">
-    <label>Password</label>
-    {{input value=password placeholder='Enter Password' type='password'}}
+    <label>{{t "login.password-field-label"}}</label>
+    {{input value=password placeholder=(t "login.password-field-password") type='password'}}
   </div>
-  <button type="submit" class="ui button">Login</button>
+  <button type="submit" class="ui button">{{t "login.login-button-text"}}</button>
 </form>

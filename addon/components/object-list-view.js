@@ -54,12 +54,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   noDataMessage: null,
 
   /**
-   * Service that triggers groupedit events.
+   * Service that triggers objectlistview events.
    *
-   * @property groupEditEventsService
-   * @type GroupEditEvents
+   * @property objectlistviewEventsService
+   * @type Service
    */
-  groupEditEventsService: Ember.inject.service('groupedit-events'),
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   contentWithKeys: null,
 
@@ -103,7 +103,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       }
 
       var componentName = this.get('componentName');
-      this.get('groupEditEventsService').rowSelectedTrigger(componentName, record, selectedRecords.length);
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, record, selectedRecords.length);
     }
   },
 
@@ -111,11 +111,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this._super(...arguments);
 
     this.set('selectedRecords', Ember.A());
-    this.get('groupEditEventsService').on('groupEditAddRow', this, this._addRow);
-    this.get('groupEditEventsService').on('groupEditDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
+    this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.set('contentWithKeys', Ember.A());
     if (!this.get('noDataMessage')) {
-      this.set('noDataMessage', 'There is no data');
+      this.set('noDataMessage', this.get('i18n').t('object-list-view.no-data-text'));
     }
 
     if (this.get('showCheckBoxInRow')) {
@@ -131,8 +131,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   },
 
   willDestroy: function() {
-    this.get('groupEditEventsService').off('groupEditAddRow', this, this._addRow);
-    this.get('groupEditEventsService').off('groupEditDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
+    this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
 
     this._super(...arguments);
   },
@@ -295,11 +295,19 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       var modelToAdd = this.get('store').createRecord(modelName, {});
       this.get('content').addObject(modelToAdd);
       this._addModel(modelToAdd);
-      this.get('groupEditEventsService').rowAddedTrigger(componentName, modelToAdd);
+      this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
     }
   },
 
-  _deleteRows: function(componentName) {
+  /**
+   * Handler for "delete selected rows" event in objectlistview.
+   *
+   * @method _deleteRows
+   *
+   * @param {String} componentName The name of objectlistview component.
+   * @param {Boolean} immediately Flag to delete record immediately.
+   */
+  _deleteRows: function(componentName, immediately) {
     if (componentName === this.get('componentName')) {
       if (confirm('Do you really want to delete selected records?')) {
         var _this = this;
@@ -307,21 +315,26 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         var count = selectedRecords.length;
         selectedRecords.forEach(function(item, index, enumerable) {
           Ember.run.once(this, function() {
-            _this._deleteRecord(item);
+            _this._deleteRecord(item, immediately);
           });
         }, this);
+
         selectedRecords.clear();
-        this.get('groupEditEventsService').rowsDeletedTrigger(componentName, count);
+        this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
       }
     }
   },
 
-  _deleteRecord: function(record) {
+  _deleteRecord: function(record, immediately) {
     var key = this._getModelKey(record);
     this._removeModelWithKey(key);
     record.deleteRecord();
+    if (immediately === true) {
+      record.save();
+    }
+
     var componentName = this.get('componentName');
-    this.get('groupEditEventsService').rowDeletedTrigger(componentName, record);
+    this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
   },
 
   _setActiveRecord: function(key) {
@@ -337,6 +350,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
   _detailChanged: Ember.observer('content.@each.hasDirtyAttributes', function() {
     var componentName = this.get('componentName');
-    this.get('groupEditEventsService').rowsChangedTrigger(componentName);
+    this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
   })
 });

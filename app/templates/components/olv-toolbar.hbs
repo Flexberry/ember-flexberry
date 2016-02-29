@@ -1,8 +1,11 @@
 {{#if refreshButton}}
-  <button class="ui button" {{action "refresh"}}>Refresh</button>
+  <button class="ui button" {{action "refresh"}}>{{t "olv-toolbar.refresh-button-text"}}</button>
 {{/if}}
 {{#if createNewButton}}
-  <button class="ui button" {{action "createNew"}}>Add</button>
+  <button class="ui button" {{action "createNew"}}>{{t "olv-toolbar.add-button-text"}}</button>
+{{/if}}
+{{#if deleteButton}}
+  <button class='ui {{if isDeleteButtonEnabled '' 'disabled'}} button' {{action "delete"}}>Delete</button>
 {{/if}}
 {{#each customButtonsArray as |customButton|}}
   <button class="ui button {{ if customButton.buttonClasses customButton.buttonClasses ''}}" {{action 'customButtonAction' customButton.buttonAction}}>{{ if customButton.buttonName customButton.buttonName 'UserButton'}}</button>

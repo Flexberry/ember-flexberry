@@ -13,7 +13,7 @@
     </tr>
   {{/if}}
   {{#each contentWithKeys key="key" as |record|}}
-    <tr {{action 'rowClick' record.key record.data preventDefault=false}}>
+    <tr>
       <td class="object-list-view-operations {{if (not (or showCheckBoxInRow showDeleteButtonInRow)) 'hidden'}}">
         <div style="display: none">{{record.key}}
         </div>
@@ -39,7 +39,7 @@
         </div>
       </td>
       {{#each columns as |column|}}
-        <td>
+        <td {{action 'rowClick' record.key record.data preventDefault=false}}>
           {{component column.cellComponent.componentName
             dynamicProperties=column.cellComponent.componentProperties
             relatedRecord=record.data

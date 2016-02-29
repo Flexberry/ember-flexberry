@@ -76,9 +76,9 @@ export default FlexberryBaseComponent.extend({
    *
    * @property items
    * @type Array
-   * @default null
+   * @default []
    */
-  items: null,
+  items: [],
 
   /**
    * DOM-element representing semantic ui-dropdown component.

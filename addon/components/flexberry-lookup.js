@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Lookup component for Semantic UI.
@@ -22,8 +23,10 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    */
   classNames: ['flexberry-lookup', 'ui', 'fluid', 'action', 'input'],
 
-  placeholder: '(no value)',
-  chooseText: 'Choose',
+  placeholder: t('flexberry-lookup.placeholder'),
+  chooseText: t('flexberry-lookup.choose-button-text'),
+
+  // ToDo: Use 'flexberry-lookup.remove-button-text' from locale.
   removeText: '<i class="remove icon"></i>',
 
   projection: undefined,
@@ -52,7 +55,8 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
   /**
    * Value for autocomplete control.
-   * If model's value changes, autocompleteValue is changed too. autocompleteValue may be changed independely, but it won't be applied to model automatically.
+   * If model's value changes, autocompleteValue is changed too.
+   * This property may be changed independently, but it won't be applied to model automatically.
    *
    * @property autocompleteValue
    * @type String
@@ -135,7 +139,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       relationName: this.get('relationName'),
       title: this.get('title'),
       limitFunction: this.get('limitFunction'),
-      modelToLookup: undefined
+      modelToLookup: this.get('relatedModel')
     };
   }),
 
@@ -148,7 +152,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   removeData: Ember.computed('relationName', function() {
     return {
       relationName: this.get('relationName'),
-      modelToLookup: undefined
+      modelToLookup: this.get('relatedModel')
     };
   }),
 
@@ -201,6 +205,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
     let autocompleteUrl = this.get('autocompleteUrl')(relationName);
     let limitFunction = this.get('limitFunction');
+    let modelToLookup = this.get('relatedModel');
 
     this.set('autocompleteValue', this.get('value'));
     let _this = this;
@@ -234,7 +239,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
           'autocompleteUpdateAction',
           {
             relationName: relationName,
-            modelToLookup: undefined,
+            modelToLookup: modelToLookup,
             newRelationValue: result
           });
       }

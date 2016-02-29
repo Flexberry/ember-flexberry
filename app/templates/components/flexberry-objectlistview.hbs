@@ -3,7 +3,11 @@
   modelName = modelName
   createNewButton = createNewButton
   refreshButton = refreshButton
+  deleteButton = deleteButton
+  componentName = componentName
   modelController = currentController
+  customButtonAction = 'customButtonAction'
+  customButtonsClosureEvent=(action (if this.attrs.customButtons this.attrs.customButtons 'customButtons'))
 }}
 {{object-list-view
   class = 'bottom attached'
@@ -12,11 +16,12 @@
   sorting = sorting
   rowClickable=rowClickable
   headerClickable=orderable
-  showCheckBoxInRow=_showCheckBoxInRow
+  showCheckBoxInRow=showCheckBoxInRow
   showDeleteButtonInRow=_showDeleteButtonInRow
   sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
   action=action
+  componentName = componentName
 }}
 <div class="ui secondary menu">
   <div class="ui basic buttons">

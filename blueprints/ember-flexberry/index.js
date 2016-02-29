@@ -7,8 +7,12 @@ module.exports = {
       { name: 'blueimp-file-upload', target: '9.11.2' },
       { name: 'jquery-file-download', target: '1.4.4' }
     ]).then(function() {
-      // TODO: Since ember-cli 1.13.10 use addAddonsToProject.
-      return _this.addAddonToProject({ name: 'semantic-ui-ember', target: '0.9.3' });
+      return _this.addAddonsToProject({
+        packages: [
+          { name: 'semantic-ui-ember', target: '0.9.3' },
+          { name: 'ember-moment', target: '6.0.0' }
+        ]
+      });
     });
   },
 

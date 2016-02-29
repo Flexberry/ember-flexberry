@@ -2,86 +2,94 @@
 
 {{#if errorMessages}}
   {{#each errorMessages as |currentError|}}
-	{{ui-message
-	  type = 'error'
-	  closeable = true
-	  visible = true
-	  title = "Error occurred"
-	  message = currentError
-	}}
+  {{ui-message
+    type='error'
+    closeable=true
+    visible=true
+    title='Error occurred'
+    message=currentError
+  }}
   {{/each}}
 {{/if}}
-<form class="ui form" role="form">
+<form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
-    <div>
-	  {{#unless readonly}}
-        <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        <button type="submit" class="ui positive button" {{action 'save'}}>Save</button>
         {{#unless model.isNew}}
-        <button type="submit" class="ui primary button" {{action 'delete'}}>Delete</button>
+          <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui primary button" {{action 'close'}}>Close</button>
+      <button type="submit" class="ui button" {{action 'close'}}>Close</button>
     </div>
   </div>
-  <div class="ui grid {{if model.errors.firstName 'error' ''}}">
-	<div class="ui two wide column right aligned middle aligned content">
-		<label>FirstName</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.firstName}}</span>
-    {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.firstName}}
-	</div>
-  </div>
-  <div class="ui grid {{if model.errors.lastName 'error' ''}}">
-	<div class="ui two wide column right aligned  middle aligned content">
-		<label>LastName</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.lastName}}</span>
-    {{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.lastName}}
-	</div>
-  </div>
-  <div class="ui grid {{if model.errors.birthDate 'error' ''}}">
-	<div class="ui two wide column right aligned  middle aligned content">
-		<label>BirthDate</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.birthDate}}</span>
-		{{flexberry-datepicker placeholder="(no value)" readonly=readonly value=model.birthDate class="fluid"}}
-	</div>
-  </div>
-  <div class="ui grid {{if model.errors.reportsTo 'error' ''}}">
-	<div class="ui two wide column right aligned middle aligned content">
-		<label>Reports to</label>
-	</div>
-    <div class="ten wide column">
-		<span style="color:red">{{model.errors.reportsTo}}</span>
-      {{flexberry-lookup
-        choose='showLookupDialog'
-        remove='removeLookupValue'
-        value=model.employee1.firstName
-        relationName='employee1'
-        projection='EmployeeL'
-        title='Employees'
+  <div class="field">
+    <label>Name</label>
+    <div class="two fields">      
+      {{#if model.errors.firstName}}
+          <span style="color:red">{{model.errors.firstName}}</span>
+      {{/if}}
+      {{flexberry-field
+        placeholder='First Name'
         readonly=readonly
-        limitFunction=lookupLimitFunction
+        required=true
+        value=model.firstName
+        class=(if model.errors.firstName 'error' '')
+      }}
+      {{#if model.errors.lastName}}
+          <span style="color:red">{{model.errors.lastName}}</span>
+      {{/if}}
+      {{flexberry-field
+        placeholder='Last Name'
+        readonly=readonly
+        required=true
+        value=model.lastName
+        class=(if model.errors.lastName 'error' '')
       }}
     </div>
   </div>
-  <div class="form-group field {{if model.errors.orders 'error' ''}}">
-	<div class="ui two wide column right aligned  middle aligned content">
-		<label>Orders</label>
-	</div>
-    <div>
-	  {{flexberry-groupedit
-        componentName="ordersGroupEdit"
-        class="attached"
-        modelProjection=modelProjection.attributes.orders
-        content=model.orders
-        cellComponent=getCellComponent
-        readonly=readonly
-        orderable=false
-	  }}
-    </div>
+  <div class="field">
+    <label>BirthDate</label>
+    {{#if model.errors.birthDate}}
+      <span style="color:red">{{model.errors.birthDate}}</span>
+    {{/if}}
+    {{flexberry-datepicker
+      placeholder='(no value)'
+      readonly=readonly
+      value=model.birthDate
+      class=(if model.errors.birthDate 'error' '')
+    }}
+  </div>
+  <div class="field">
+    <label>Reports to</label>
+    {{#if model.errors.reportsTo}}
+      <span style="color:red">{{model.errors.reportsTo}}</span>
+    {{/if}}
+    {{flexberry-lookup
+      choose='showLookupDialog'
+      remove='removeLookupValue'
+      value=model.employee1.firstName
+      relationName='employee1'
+      projection='EmployeeL'
+      title='Employees'
+      readonly=readonly
+      limitFunction=lookupLimitFunction
+      class=(if model.errors.reportsTo 'error' '')
+    }}
+  </div>
+  <div class="field">
+    <label>Orders</label>
+    {{#if model.errors.orders}}
+      <span style="color:red">{{model.errors.orders}}</span>
+    {{/if}}
+    {{flexberry-groupedit
+      componentName="ordersGroupEdit"
+      class="attached"
+      modelProjection=modelProjection.attributes.orders
+      content=model.orders
+      readonly=readonly
+      orderable=false
+      class=(if model.errors.orders 'error' '')
+    }}
   </div>
 </form>

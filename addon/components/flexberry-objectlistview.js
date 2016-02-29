@@ -30,7 +30,7 @@ export default FlexberryBaseComponent.extend({
   modelName: null,
 
   /**
-   * Flag to use creation button at toolbal.
+   * Flag to use creation button at toolbar.
    *
    * @property createNewButton
    * @type Boolean
@@ -39,13 +39,22 @@ export default FlexberryBaseComponent.extend({
   createNewButton: false,
 
   /**
-   * Flag to use refresh button at toolbal.
+   * Flag to use refresh button at toolbar.
    *
    * @property refreshButton
    * @type Boolean
    * @default false
    */
   refreshButton: false,
+
+  /**
+   * Flag to use delete button at toolbar.
+   *
+   * @property deleteButton
+   * @type Boolean
+   * @default false
+   */
+  deleteButton: false,
 
   /**
    * Projection for detail object's model.
@@ -144,7 +153,7 @@ export default FlexberryBaseComponent.extend({
    * @type Boolean
    * @default false
    */
-  _showCheckBoxInRow: false,
+  showCheckBoxInRow: false,
 
   /**
    * Flag to show delete button in row.
@@ -217,6 +226,29 @@ export default FlexberryBaseComponent.extend({
     gotoPage: function(pageNumber) {
       throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
+    },
+
+    /**
+     * A stub for call of custom user buttons. Used when no handler is defined.
+     *
+     * @method customButtons
+	 * @return {Array} Returns only 'undefined' (because is's a stub).
+     */
+    customButtons: function() {
+      return undefined;
+    },
+
+    /**
+     * Handler to get user button's actions and send action to corresponding controllers's handler.
+     *
+     * @method customButtonAction
+     */
+    customButtonAction: function(actionName) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-objectlistview toolbar was found.');
+      }
+
+      this.sendAction(actionName);
     }
   }
 });

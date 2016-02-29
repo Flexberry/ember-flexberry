@@ -97,35 +97,6 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   lookupController: Ember.inject.controller('lookup-dialog'),
 
   /**
-   * Model change handler.
-   * TODO: refactor
-   */
-  modelChange: Ember.observer('model', function() {
-    // Unsubscribe from previous model 'preSave' event.
-    var onModelPreSave = this.get('_onModelPreSave');
-    if (!(Ember.isNone(onModelPreSave) || Ember.isNone(this._previousModel) || Ember.isNone(this._previousModel.off))) {
-      this._previousModel.off('preSave', onModelPreSave);
-    }
-
-    // Remember new model as previous.
-    var model = this.get('model');
-    if (model !== this._previousModel) {
-      this._previousModel = model;
-    }
-
-    if (!(Ember.isNone(model) || Ember.isNone(model.on))) {
-      // Trigger 'modelPreSave' event on controller, to allow components to handle model's 'preSave' event.
-      onModelPreSave = function(e) {
-        e.model = model;
-        this.trigger('modelPreSave', e);
-      }.bind(this);
-
-      model.on('preSave', onModelPreSave);
-      this.set('_onModelPreSave', onModelPreSave);
-    }
-  }),
-
-  /**
    * Actions handlers.
    */
   actions: {
@@ -205,32 +176,45 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     }
 
     var modelAttr = !Ember.isNone(modelClass) ? Ember.get(modelClass, 'attributes').get(bindingPath) : null;
-    if (attr.kind === 'attr' && modelAttr && modelAttr.type) {
-      switch (modelAttr.type) {
-        case 'boolean':
-          cellComponent.componentName = 'flexberry-checkbox';
-          break;
-        case 'date':
-          cellComponent.componentName = 'flexberry-datepicker';
-          break;
-        case 'file':
-          cellComponent.componentName = 'flexberry-file';
-          break;
-        default:
+    if (!(attr.kind === 'attr' && modelAttr && modelAttr.type)) {
+      return cellComponent;
+    }
 
-          // Current cell type is possibly custom transform.
-          var modelAttrType = getOwner(this)._lookupFactory('transform:' + modelAttr.type);
+    var modelAttrOptions = Ember.get(modelAttr, 'options');
 
-          // Handle enums (extended from transforms/enum-base.js).
-          if (modelAttrType && modelAttrType.isEnum) {
-            cellComponent.componentName = 'flexberry-dropdown';
-            cellComponent.componentProperties = {
-              items: modelAttrType.create().getAvailableValuesArray()
-            };
-          }
+    // Handle order attributes (they must be readonly).
+    if (modelAttrOptions && modelAttrOptions.isOrderAttribute) {
+      cellComponent.componentName = 'object-list-view-cell';
+    }
 
-          break;
-      }
+    switch (modelAttr.type) {
+      case 'string':
+      case 'number':
+        break;
+      case 'boolean':
+        cellComponent.componentName = 'flexberry-checkbox';
+        break;
+      case 'date':
+        cellComponent.componentName = 'flexberry-datepicker';
+        break;
+      case 'file':
+        cellComponent.componentName = 'flexberry-file';
+        break;
+      default:
+
+        // Current cell type is possibly custom transform.
+        var transformInstance = getOwner(this).lookup('transform:' + modelAttr.type);
+        var transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
+
+        // Handle enums (extended from transforms/enum-base.js).
+        if (transformClass && transformClass.isEnum) {
+          cellComponent.componentName = 'flexberry-dropdown';
+          cellComponent.componentProperties = {
+            items: transformInstance.getAvailableValuesArray()
+          };
+        }
+
+        break;
     }
 
     return cellComponent;
@@ -301,14 +285,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   },
 
   _onSaveActionFulfilled: function() {
-    alert('Saved.');
+    alert(this.get('i18n').t('edit-form.saved-message'));
   },
 
   /**
    * On save model fail handler.
    */
   _onSaveActionRejected: function(errorData) {
-    this.rejectError(errorData, 'Save failed.');
+    this.rejectError(errorData, this.get('i18n').t('save-failed-message'));
   },
 
   /**
@@ -322,11 +306,6 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    * On delete model fail handler.
    */
   _onDeleteActionRejected: function(errorData) {
-    this.rejectError(errorData, 'Delete failed.');
-  },
-
-  /**
-   * On model 'preSave' event handler.
-   */
-  _onModelPreSave: null
+    this.rejectError(errorData, this.get('i18n').t('delete-failed-message'));
+  }
 });

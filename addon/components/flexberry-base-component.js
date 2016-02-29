@@ -53,6 +53,15 @@ export default Ember.Component.extend({
   dynamicProperties: null,
 
   /**
+   * Model to which current component's value is related.
+   *
+   * @property relatedModel
+   * @type DS.Model
+   * @default null
+   */
+  relatedModel: null,
+
+  /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
    *
    * @property appConfigSettingsPath
@@ -96,6 +105,13 @@ export default Ember.Component.extend({
       return targetObject instanceof Ember.Controller;
     });
     this.set('currentController', currentController);
+
+    // Set related model.
+    var relatedModel = this.get('relatedModel');
+    if (Ember.isNone(relatedModel) && !Ember.isNone(currentController)) {
+      relatedModel = currentController.get('model');
+      this.set('relatedModel', relatedModel);
+    }
 
     // Import application config\environment.
     var appConfig = getOwner(this)._lookupFactory('config:environment');

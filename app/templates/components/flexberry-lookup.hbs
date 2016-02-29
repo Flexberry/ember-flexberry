@@ -1,10 +1,10 @@
 {{#if (and (not readonly) autocomplete)}}
   {{#ui-search}}
     {{input 
-	  type="text"
+      type="text"
       class="prompt form-control form-control-trunc lookup-field"
       placeholder=placeholder
-	  value=autocompleteValue
+      value=autocompleteValue
     }}
     <div class="results"></div>
   {{/ui-search}}
@@ -18,5 +18,5 @@
   }}
 {{/if}}
 
-<button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'choose' chooseData}}>{{{chooseText}}}</button>
-<button class={{if readonly 'ui disabled primary button' 'ui primary button'}} {{action 'remove' removeData}}>{{{removeText}}}</button>
+<button class={{if readonly 'ui disabled button' 'ui button'}} {{action 'choose' chooseData}}>{{{chooseText}}}</button>
+<button class={{if readonly 'ui disabled button' 'ui button'}} {{action 'remove' removeData}}>{{{removeText}}}</button>

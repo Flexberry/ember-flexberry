@@ -43,10 +43,6 @@ table.object-list-view tbody tr td.object-list-view-operations .object-list-view
   font-size: x-small;
 }
 
-table.object-list-view tbody tr td.object-list-view-operations .object-list-view-asterisk.hidden {
-  display: none !important;
-}
-
 table.object-list-view tbody tr td:first-child button i {
   margin: 0 !important;
 }
@@ -70,7 +66,7 @@ table {
 
 // Common styles
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .no-padding {

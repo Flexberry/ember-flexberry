@@ -148,7 +148,7 @@ export default FlexberryBaseComponent.extend({
   removeButtonTitle: undefined,
 
   /**
-   * Flag: indicates whether to upload file on 'currentController' 'modelPreSave' event.
+   * Flag: indicates whether to upload file on 'relatedModel' 'preSave' event.
    */
   uploadOnModelPreSave: undefined,
 
@@ -377,7 +377,7 @@ export default FlexberryBaseComponent.extend({
       add: onFileAdd
     });
 
-    // Subscribe on controller's 'modelPreSave'event.
+    // Subscribe on 'relatedModel' 'preSave'event.
     _this.subscribeOnModelPreSaveEvent();
   },
 
@@ -387,7 +387,7 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement: function() {
     this._super(...arguments);
 
-    // Unsubscribe from controller's 'modelPreSave'event.
+    // Unsubscribe from 'relatedModel' 'preSave'event.
     this.unsubscribeFromModelPresaveEvent();
 
     var fileInput = this.$('.flexberry-file-file-input');
@@ -528,22 +528,23 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Controllers 'modelPreSave' event handler.
+   * Related model's 'preSave' event handler.
    */
   onModelPresave: null,
 
   /**
-   * Method to subscribe on controller's 'modelPreSave' event.
+   * Method to subscribe on 'relatedModel' 'preSave' event.
    */
   subscribeOnModelPreSaveEvent: function() {
     var uploadOnModelPreSave = this.get('uploadOnModelPreSave');
-    var currentController = this.get('currentController');
-    if (!Ember.isNone(uploadOnModelPreSave) || Ember.isNone(currentController) || Ember.isNone(currentController.on)) {
+    var relatedModel = this.get('relatedModel');
+    if (!uploadOnModelPreSave || Ember.isNone(relatedModel) || Ember.isNone(relatedModel.on)) {
       return;
     }
 
-    // If upload 'modelPreSave' is allowed, call uploadFile method on controllers 'modelPreSave' event,
-    // and return upload RSVP.Promise to controller.
+    // If upload on 'relatedModel' 'preSave' event is allowed,
+    // component should call 'uploadFile' method when event will be triggered,
+    // and it should push upload RSVP.Promise to events object's 'promises' array.
     var onModelPreSave = function(e) {
       var uploadFilePromise = this.uploadFile();
 
@@ -552,20 +553,20 @@ export default FlexberryBaseComponent.extend({
       }
     }.bind(this);
 
-    currentController.on('modelPreSave', onModelPreSave);
+    relatedModel.on('preSave', onModelPreSave);
     this.set('onModelPresave', onModelPreSave);
   },
 
   /**
-   * Method to unsubscribe from controller's 'modelPreSave' event.
+   * Method to unsubscribe from 'relatedModel' 'preSave' event.
    */
   unsubscribeFromModelPresaveEvent: function() {
-    var currentController = this.get('currentController');
+    var relatedModel = this.get('relatedModel');
     var onModelPresave = this.get('onModelPresave');
-    if (Ember.isNone(currentController) || Ember.isNone(currentController.off) || Ember.isNone(onModelPresave)) {
+    if (Ember.isNone(relatedModel) || Ember.isNone(relatedModel.off) || Ember.isNone(relatedModel)) {
       return;
     }
 
-    currentController.off('modelPreSave', onModelPresave);
+    relatedModel.off('preSave', onModelPresave);
   }
 });

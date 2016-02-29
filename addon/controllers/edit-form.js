@@ -88,35 +88,6 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   lookupController: Ember.inject.controller('lookup-dialog'),
 
   /**
-   * Model change handler.
-   * TODO: refactor
-   */
-  modelChange: Ember.observer('model', function() {
-    // Unsubscribe from previous model 'preSave' event.
-    var onModelPreSave = this.get('_onModelPreSave');
-    if (!(Ember.isNone(onModelPreSave) || Ember.isNone(this._previousModel) || Ember.isNone(this._previousModel.off))) {
-      this._previousModel.off('preSave', onModelPreSave);
-    }
-
-    // Remember new model as previous.
-    var model = this.get('model');
-    if (model !== this._previousModel) {
-      this._previousModel = model;
-    }
-
-    if (!(Ember.isNone(model) || Ember.isNone(model.on))) {
-      // Trigger 'modelPreSave' event on controller, to allow components to handle model's 'preSave' event.
-      onModelPreSave = function(e) {
-        e.model = model;
-        this.trigger('modelPreSave', e);
-      }.bind(this);
-
-      model.on('preSave', onModelPreSave);
-      this.set('_onModelPreSave', onModelPreSave);
-    }
-  }),
-
-  /**
    * Actions handlers.
    */
   actions: {
@@ -302,10 +273,5 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    */
   _onDeleteActionRejected: function(errorData) {
     this.rejectError(errorData, this.get('i18n').t('delete-failed-message'));
-  },
-
-  /**
-   * On model 'preSave' event handler.
-   */
-  _onModelPreSave: null
+  }
 });

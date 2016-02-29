@@ -55,7 +55,8 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
   /**
    * Value for autocomplete control.
-   * If model's value changes, autocompleteValue is changed too. autocompleteValue may be changed independely, but it won't be applied to model automatically.
+   * If model's value changes, autocompleteValue is changed too.
+   * This property may be changed independently, but it won't be applied to model automatically.
    *
    * @property autocompleteValue
    * @type String
@@ -138,7 +139,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       relationName: this.get('relationName'),
       title: this.get('title'),
       limitFunction: this.get('limitFunction'),
-      modelToLookup: this.get('relatedRecord')
+      modelToLookup: this.get('relatedModel')
     };
   }),
 
@@ -151,7 +152,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   removeData: Ember.computed('relationName', function() {
     return {
       relationName: this.get('relationName'),
-      modelToLookup: this.get('relatedRecord')
+      modelToLookup: this.get('relatedModel')
     };
   }),
 
@@ -204,7 +205,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
     let autocompleteUrl = this.get('autocompleteUrl')(relationName);
     let limitFunction = this.get('limitFunction');
-    let modelToLookup = this.get('relatedRecord');
+    let modelToLookup = this.get('relatedModel');
 
     this.set('autocompleteValue', this.get('value'));
     let _this = this;

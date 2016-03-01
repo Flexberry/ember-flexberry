@@ -125,7 +125,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   modelAgregatorId: undefined,
 
   /**
-   * Selected detail. 
+   * Selected detail (this parameter is used only for not saved details).
    * Its selection triggered transition to detail's route.
    *
    * @property modelSelectedDetail
@@ -133,6 +133,15 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    * @default undefined
    */
   modelSelectedDetail: undefined,
+
+  /**
+   * Current detail's agregator (this parameter is used only for not saved agregators).
+   *
+   * @property modelAgregatorObject
+   * @type Object
+   * @default undefined
+   */
+  modelAgregatorObject: undefined,
 
   /**
    * Actions handlers.
@@ -204,7 +213,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       if (modelAgregatorId) {
         this.transitionToRoute(modelAgregatorRoute, modelAgregatorId);
       } else {
-        this.transitionToRoute(modelAgregatorRoute);
+        let currentModel = this.get('model');
+        let modelAgregatorName = currentModel.constructor.modelAgregator;
+        this.set('modelAgregatorObject', currentModel.get(modelAgregatorName));
+        this.transitionToRoute(modelAgregatorRoute, { queryParams: { returnFromDetailName: currentModel.constructor.modelName } });
       }
     } else {
       let routeName = this.get('parentRoute') || Ember.String.pluralize(this.get('model.constructor.modelName'));

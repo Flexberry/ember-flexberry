@@ -3,8 +3,9 @@
  */
 
 import Ember from 'ember';
+import FlexberryBaseComponent from './flexberry-base-component';
 
-export default Ember.Component.extend({
+export default FlexberryBaseComponent.extend({
   modelName: null,
   modelController:null,
 
@@ -26,6 +27,15 @@ export default Ember.Component.extend({
   createNewButton: false,
 
   /**
+   * The flag to specify whether the create button is enabled.
+   *
+   * @property createNewButton
+   * @type Boolean
+   * @default true
+   */
+  enableCreateNewButton: true,
+
+  /**
    * Flag to use refresh button at toolbar.
    *
    * @property refreshButton
@@ -42,6 +52,15 @@ export default Ember.Component.extend({
    * @default false
    */
   deleteButton: false,
+
+  /**
+   * The flag to specify whether the delete button is enabled.
+   *
+   * @property deleteButton
+   * @type Boolean
+   * @default true
+   */
+  enableDeleteButton: true,
 
   /**
    * Name of action to send out, action triggered by click on user button.
@@ -146,7 +165,7 @@ export default Ember.Component.extend({
    */
   _rowSelected: function(componentName, record, count) {
     if (componentName === this.get('componentName')) {
-      this.set('isDeleteButtonEnabled', count > 0);
+      this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
   }
 });

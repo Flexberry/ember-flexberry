@@ -3,8 +3,8 @@
   display: inline-block;
 }
 
-table.object-list-view tbody,
-table.object-list-view thead {
+table.object-list-view.selectable tbody,
+table.object-list-view.selectable thead {
   cursor: pointer;
 }
 

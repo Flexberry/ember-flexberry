@@ -42,7 +42,7 @@
         <td {{action 'rowClick' record.key record.data preventDefault=false}}>
           {{component column.cellComponent.componentName
             dynamicProperties=column.cellComponent.componentProperties
-            relatedRecord=record.data
+            relatedModel=record.data
             value=(mut (get record.data column.propName))
             readonly=readonly
             required=required

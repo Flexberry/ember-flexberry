@@ -68,23 +68,21 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
       return;
     }
 
-    var model = controller.get('model');
-    this._rollbackDetails(model);
+    controller.rollbackHasManyRelationships();
+    let model = controller.get('model');
     if (model && model.get('hasDirtyAttributes')) {
       model.rollbackAttributes();
     }
   },
 
   setupController: function(controller, model) {
-    // Call _super for default behavior.
-    this._super(controller, model);
+    this._super(...arguments);
 
     // Define 'modelProjection' for controller instance.
     let modelClass = model.constructor;
     let modelProjName = this.get('modelProjection');
     let proj = modelClass.projections.get(modelProjName);
     controller.set('modelProjection', proj);
-    controller.set('modelProjectionName', modelProjName);
 
     // Get model's agregator.
     let modelAgregatorName = model.get('modelAgregator');
@@ -145,35 +143,5 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
       this._super(transition);
       this.controller.send('routeWillTransition');
     }
-  },
-
-  _rollbackDetails: function(model) {
-    var modelClass = model.constructor;
-    var modelProjName = this.get('modelProjection');
-    var projection = modelClass.projections.get(modelProjName);
-    var attributes = projection.attributes;
-    for (var attrName in attributes) {
-      if (!attributes.hasOwnProperty(attrName)) {
-        continue;
-      }
-
-      var attr = attributes[attrName];
-      if (attr.kind === 'hasMany') {
-        var detailModels = model.get(attrName);
-        for (var i = 0; i < detailModels.get('length'); i++) {
-          if (detailModels.objectAt(i).get('hasDirtyAttributes')) {
-            detailModels.objectAt(i).rollbackAttributes();
-          }
-        }
-      }
-    }
-
-    var _this = this;
-    this.get('deletedRecords').forEach(function(deletedRecord) {
-      _this.store.findRecord(deletedRecord.model, deletedRecord.id, { reload: false }).then(function(record) {
-        record.rollbackAttributes();
-      });
-    });
-    this.get('deletedRecords').clear();
   }
 });

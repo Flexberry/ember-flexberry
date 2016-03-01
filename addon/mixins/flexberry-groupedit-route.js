@@ -8,7 +8,6 @@ export default Ember.Mixin.create({
    * @type Service
    */
   groupEditEventsService: Ember.inject.service('objectlistview-events'),
-  deletedRecords: null,
 
   activate() {
     this._super(...arguments);
@@ -16,12 +15,6 @@ export default Ember.Mixin.create({
     this.get('groupEditEventsService').on('olvRowAdded', this, this._rowAdded);
     this.get('groupEditEventsService').on('olvRowDeleted', this, this._rowDeleted);
     this.get('groupEditEventsService').on('olvRowsChanged', this, this._rowChanged);
-
-    if (!this.get('deletedRecords')) {
-      this.set('deletedRecords', Ember.A());
-    } else {
-      this.get('deletedRecords').clear();
-    }
   },
 
   deactivate() {
@@ -88,13 +81,6 @@ export default Ember.Mixin.create({
    * @param {DS.Model} record The model corresponding to deleted row in groupedit.
    */
   _rowDeleted: function(componentName, record) {
-    if (record.get('id')) {
-      this.get('deletedRecords').pushObject({
-        model: record.constructor.modelName,
-        id: record.get('id')
-      });
-    }
-
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
   },

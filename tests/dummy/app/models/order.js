@@ -6,7 +6,10 @@ var Model = BaseModel.extend({
   shipName: DS.attr('string'),
   shipCountry: DS.attr('string'),
   orderDate: DS.attr('date'),
+
+  // Inversed relationship for employee.orders. It's not a property for Lookup component.
   employee: DS.belongsTo('employee', { inverse: 'orders', async: false }),
+
   customer: DS.belongsTo('customer', { inverse: null, async: false }),
 
   // Validation rules.

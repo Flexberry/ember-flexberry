@@ -61,6 +61,9 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     this._super.apply(this, arguments);
 
     controller.send('dismissErrorMessages');
+    controller.set('modelAgregatorRoute', undefined);
+    controller.set('modelAgregatorId', undefined);
+    controller.set('modelSelectedDetail', undefined);
 
     // If flag 'modelNoRollBack' is set, leave current model as is and remove flag.
     if (controller.get('modelNoRollBack') === true) {
@@ -85,7 +88,7 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     controller.set('modelProjection', proj);
 
     // Get model's agregator.
-    let modelAgregatorName = model.get('modelAgregator');
+    let modelAgregatorName = model.constructor.modelAgregator;
     let returnToAgregatorRoute = this.get('returnToAgregatorRoute');
 
     if (!returnToAgregatorRoute || !modelAgregatorName) {
@@ -112,7 +115,15 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
 
     if (parentModel) {
       if (modelIsNew) {
-        model.set(modelAgregatorName, parentModel);
+        let currentParent = model.get(modelAgregatorName);
+        if (currentParent) {
+          // Agregator is already set. This detail has been visited already but has not been saved yet.
+          parentModel = currentParent;
+        } else {
+          // This detail is viseted at first time.
+          model.set(modelAgregatorName, parentModel);
+        }
+
         let parentModelId = parentModel.get('id');
         if (parentModelId) {
           controller.set('modelAgregatorId', parentModel.get('id'));

@@ -125,6 +125,16 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   modelAgregatorId: undefined,
 
   /**
+   * Selected detail. 
+   * Its selection triggered transition to detail's route.
+   *
+   * @property modelSelectedDetail
+   * @type Object
+   * @default undefined
+   */
+  modelSelectedDetail: undefined,
+
+  /**
    * Actions handlers.
    */
   actions: {

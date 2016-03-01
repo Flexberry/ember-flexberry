@@ -20,7 +20,10 @@ var Model = BaseModel.extend({
     shipName: { presence: { message: '*' } },
     shipCountry: { presence: { message: 'ship country must be set' } },
     customer: { presence: { message: 'you should choose order customer' } }
-  },
+  }
+});
+
+Model.reopenClass({
   modelAgregator: 'employee'
 });
 

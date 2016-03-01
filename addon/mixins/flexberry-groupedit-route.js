@@ -52,6 +52,7 @@ export default Ember.Mixin.create({
         this.transitionTo(modelName, record.get('id'));
       } else {
         let newModelPath = this.newRoutePath(modelName);
+        this.controller.set('modelSelectedDetail', record);
         this.transitionTo(newModelPath);
       }
     }

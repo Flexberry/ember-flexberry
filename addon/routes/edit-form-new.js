@@ -16,16 +16,5 @@ export default EditFormRoute.extend({
       model: model,
       controller
     });
-  },
-
-  deactivate: function() {
-    var model = this.get('controller').get('model');
-    model.rollbackAttributes();
-
-    if (model.get('isNew')) {
-      model.deleteRecord();
-    }
-
-    this._super(...arguments);
   }
 });

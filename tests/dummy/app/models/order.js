@@ -6,7 +6,7 @@ var Model = BaseModel.extend({
   shipName: DS.attr('string'),
   shipCountry: DS.attr('string'),
   orderDate: DS.attr('date'),
-  employee: DS.belongsTo('employee', { inverse: null, async: false }),
+  employee: DS.belongsTo('employee', { inverse: 'orders', async: false }),
   customer: DS.belongsTo('customer', { inverse: null, async: false }),
 
   // Validation rules.
@@ -17,7 +17,8 @@ var Model = BaseModel.extend({
     shipName: { presence: { message: '*' } },
     shipCountry: { presence: { message: 'ship country must be set' } },
     customer: { presence: { message: 'you should choose order customer' } }
-  }
+  },
+  modelAgregator: 'employee'
 });
 
 Model.defineProjection('OrderE', 'order', {

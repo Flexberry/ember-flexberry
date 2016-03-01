@@ -88,6 +88,34 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   lookupController: Ember.inject.controller('lookup-dialog'),
 
   /**
+   * Flag to cancel rollback of model on controller resetting.
+   * Flag is set for interaction of agregator's and detail's routes.
+   *
+   * @property modelNoRollBack
+   * @type Boolean
+   * @default false
+   */
+  modelNoRollBack: false,
+
+  /**
+   * Route to return to after leaving current route.
+   *
+   * @property modelAgregatorRoute
+   * @type String
+   * @default undefined
+   */
+  modelAgregatorRoute: undefined,
+
+  /**
+   * Identifier of parent's record.
+   *
+   * @property modelAgregatorId
+   * @type String
+   * @default undefined
+   */
+  modelAgregatorId: undefined,
+
+  /**
    * Model change handler.
    * TODO: refactor
    */
@@ -121,16 +149,23 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    */
   actions: {
     save: function() {
-      this.send('dismissErrorMessages');
+      let modelAgregatorRoute = this.get('modelAgregatorRoute');
+      if (modelAgregatorRoute) {
+        // If parent's route is defined, save on parent's route.
+        this.transitionToParentRoute();
+      } else {
+        this.send('dismissErrorMessages');
 
-      this.save().then(() => {
-        this._onSaveActionFulfilled();
-      }).catch((errorData) => {
-        this._onSaveActionRejected(errorData);
-      });
+        this.save().then(() => {
+          this._onSaveActionFulfilled();
+        }).catch((errorData) => {
+          this._onSaveActionRejected(errorData);
+        });
+      }
     },
 
     delete: function() {
+      // TODO: with agregator.
       if (confirm('Are you sure you want to delete that record?')) {
         this.send('dismissErrorMessages');
 
@@ -158,13 +193,27 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
   /**
    * Method to transit to parent's route (previous route).
+   * If `modelAgregatorRoute` is set, transition to defined path and set flag 'modelNoRollBack' to `true` on controller to prevent rollback of model.
+   * Then if `parentRoute` is set, transition to defined path.
+   * Otherwise transition to corresponding list.
    */
   transitionToParentRoute: function() {
     // TODO: нужно учитывать пэйджинг.
     // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
     // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-    let routeName = this.get('parentRoute') || Ember.String.pluralize(this.get('model.constructor.modelName'));
-    this.transitionToRoute(routeName);
+    let modelAgregatorRoute = this.get('modelAgregatorRoute');
+    if (modelAgregatorRoute) {
+      let modelAgregatorId = this.get('modelAgregatorId');
+      this.set('modelNoRollBack', true);
+      if (modelAgregatorId) {
+        this.transitionToRoute(modelAgregatorRoute, modelAgregatorId);
+      } else {
+        this.transitionToRoute(modelAgregatorRoute);
+      }
+    } else {
+      let routeName = this.get('parentRoute') || Ember.String.pluralize(this.get('model.constructor.modelName'));
+      this.transitionToRoute(routeName);
+    }
   },
 
   /**

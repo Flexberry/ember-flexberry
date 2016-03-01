@@ -7,7 +7,7 @@ var Model = BaseModel.extend({
   lastName: DS.attr('string'),
   birthDate: DS.attr('date'),
   employee1: DS.belongsTo('employee', { inverse: null, async: false }),
-  orders: DS.hasMany('order', { inverse: null, async: false }),
+  orders: DS.hasMany('order', { inverse: 'employee', async: false }),
 
   // Validation rules.
   validations: {

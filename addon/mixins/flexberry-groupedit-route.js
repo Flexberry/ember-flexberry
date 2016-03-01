@@ -33,6 +33,38 @@ export default Ember.Mixin.create({
   },
 
   /**
+   * It forms path for new model's route.
+   *
+   * @method newRoutePath
+   *
+   * @param {String} ordinalPath The path to model's route.
+   * @return {String} The path to new model's route.
+   */
+  newRoutePath: function(ordinalPath) {
+    return ordinalPath + '.new';
+  },
+
+  actions: {
+    /**
+     * Table row click handler.
+	 * It sets `modelNoRollBack` to `true` at current controller and redirects to detail's route.
+     *
+     * @param {Ember.Object} record Record related to clicked table row.
+     */
+    rowClick: function(record) {
+      let recordId = record.get('id');
+      let modelName = record.constructor.modelName;
+      this.controller.set('modelNoRollBack', true);
+      if (recordId) {
+        this.transitionTo(modelName, record.get('id'));
+      } else {
+        let newModelPath = this.newRoutePath(modelName);
+        this.transitionTo(newModelPath);
+      }
+    }
+  },
+
+  /**
    * Event handler for "row has been selected" event in groupedit.
    *
    * @method _rowAdded

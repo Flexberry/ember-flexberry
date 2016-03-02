@@ -1,6 +1,8 @@
 {{#ui-dropdown
   class=(concat "flexberry-dropdown " type " selection" (if readonly " disabled" ""))
-  onChange=(action 'valueChange')
+  onChange=(action 'onChange')
+  onHide=(action 'onShowHide')
+  onShow=(action 'onShowHide')
 }}
     <i class="dropdown icon"></i>
     {{#if showDefaultText}}

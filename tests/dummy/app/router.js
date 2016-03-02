@@ -27,8 +27,8 @@ Router.map(function() {
   // /employees/new
   this.route('order.new', { path: 'orders/new' });
 
-  // /group-edit-test
-  this.route('group-edit-test');
+  // /test-flexberry-groupedit-embedding-components
+  this.route('test-flexberry-groupedit');
 });
 
 export default Router;

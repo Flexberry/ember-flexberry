@@ -3,17 +3,21 @@ import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-projections';
 
 var Model = BaseModel.extend({
-  details: DS.hasMany('group-edit-test-detail', { inverse: null, async: false })
+  enumeration: DS.attr('test-enumeration'),
+
+  // This property for GroupEdit component.
+  // Inverse relationship is necessary here.
+  details: DS.hasMany('test-detail', { inverse: 'aggregator', async: false })
 });
 
-Model.defineProjection('GroupEditTestE', 'group-edit-test', {
-  details: Proj.hasMany('group-edit-test-detail', 'Details', {
+Model.defineProjection('TestAggregatorE', 'test-aggregator', {
+  details: Proj.hasMany('test-detail', 'Details', {
     flag: Proj.attr('Flag'),
     text: Proj.attr('Text'),
     date: Proj.attr('Date'),
     enumeration: Proj.attr('Enumeration'),
     file: Proj.attr('File'),
-    master: Proj.belongsTo('group-edit-test-detail-master', 'Master', {
+    master: Proj.belongsTo('test-master', 'Master', {
       text: Proj.attr('Text', { hidden: true })
     }, {
       displayMemberPath: 'text'

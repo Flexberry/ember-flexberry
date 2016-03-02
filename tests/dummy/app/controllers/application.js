@@ -19,6 +19,18 @@ export default Ember.Controller.extend({
         title: 'Orders',
         children: null
       }]
+    }, {
+      link: null,
+      title: 'Components',
+      children: [{
+        link: null,
+        title: 'flexberry-groupedit',
+        children: [{
+          link: 'test-flexberry-groupedit',
+          title: 'Simple',
+          children: null
+        }]
+      }]
     }]
   }
 });

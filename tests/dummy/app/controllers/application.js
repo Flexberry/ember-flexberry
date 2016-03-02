@@ -24,6 +24,14 @@ export default Ember.Controller.extend({
       title: 'Components',
       children: [{
         link: null,
+        title: 'flexberry-dropdown',
+        children: [{
+          link: 'test-flexberry-dropdown',
+          title: 'Simple',
+          children: null
+        }]
+      }, {
+        link: null,
         title: 'flexberry-groupedit',
         children: [{
           link: 'test-flexberry-groupedit',

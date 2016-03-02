@@ -27,6 +27,9 @@ Router.map(function() {
   // /employees/new
   this.route('order.new', { path: 'orders/new' });
 
+  // /test-flexberry-dropdown
+  this.route('test-flexberry-dropdown');
+
   // /test-flexberry-groupedit-embedding-components
   this.route('test-flexberry-groupedit');
 });

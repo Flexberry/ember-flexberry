@@ -30,6 +30,9 @@ Router.map(function() {
   // /test-flexberry-dropdown
   this.route('test-flexberry-dropdown');
 
+  // /test-flexberry-dropdown-conditional-render
+  this.route('test-flexberry-dropdown-conditional-render');
+
   // /test-flexberry-groupedit-embedding-components
   this.route('test-flexberry-groupedit');
 });

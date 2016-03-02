@@ -29,6 +29,10 @@ export default Ember.Controller.extend({
           link: 'test-flexberry-dropdown',
           title: 'Simple',
           children: null
+        }, {
+          link: 'test-flexberry-dropdown-conditional-render',
+          title: 'Conditionally rendered',
+          children: null
         }]
       }, {
         link: null,

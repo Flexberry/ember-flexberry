@@ -106,7 +106,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
    * Flag: indicates whether 'willDestroyElement' hook has been already called.
-   * 
+   *
    * @property destroyHasBeenCalled
    * @type Boolean
    * @default false

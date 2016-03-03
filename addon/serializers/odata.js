@@ -80,7 +80,7 @@ export default DS.RESTSerializer.extend({
    * @returns {string} Key for a given relationship.
    */
   keyForRelationship: function(key, relationship) {
-    return Ember.String.capitalize(key);
+    return Ember.String.capitalize(key) + '@odata.bind';
   },
 
   /**

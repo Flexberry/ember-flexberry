@@ -6,7 +6,7 @@ var Model = BaseModel.extend({
   text: DS.attr('string')
 });
 
-Model.defineProjection('GroupEditTestDetailMasterE', 'group-edit-test-detail-master', {
+Model.defineProjection('TestMasterE', 'test-master', {
   text: Proj.attr('Text')
 });
 

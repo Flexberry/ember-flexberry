@@ -11,10 +11,12 @@
 
 Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework powered by Ember.js.
 
-## Installation
+## Installation or Upgrading
 
 * Latest release: `ember install ember-flexberry`
 * Specific version: `ember install ember-flexberry@x.x.x`
+* Latest commit from a branch: `ember install flexberry/ember-flexberry#<BRANCH_NAME>`
+* Specific commit: `ember install flexberry/ember-flexberry#<COMMIT_SHA>`
 
 ## Documentation
 

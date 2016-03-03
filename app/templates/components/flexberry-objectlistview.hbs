@@ -2,8 +2,10 @@
   class = 'ui secondary menu container'
   modelName = modelName
   createNewButton = createNewButton
+  enableCreateNewButton = (not readonly)
   refreshButton = refreshButton
   deleteButton = deleteButton
+  enableDeleteButton = (not readonly)
   componentName = componentName
   modelController = currentController
   customButtonAction = 'customButtonAction'
@@ -14,10 +16,11 @@
   modelProjection = modelProjection
   content = content
   sorting = sorting
-  rowClickable=rowClickable
+  readonly = readonly
+  rowClickable=(and (not readonly) rowClickable)
   headerClickable=orderable
-  showCheckBoxInRow=showCheckBoxInRow
-  showDeleteButtonInRow=_showDeleteButtonInRow
+  showCheckBoxInRow=(and (not readonly) showCheckBoxInRow)
+  showDeleteButtonInRow=(and (not readonly) showDeleteButtonInRow)
   sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
   action=action

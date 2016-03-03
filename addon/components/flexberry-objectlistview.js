@@ -162,7 +162,7 @@ export default FlexberryBaseComponent.extend({
    * @type Boolean
    * @default false
    */
-  _showDeleteButtonInRow: false,
+  showDeleteButtonInRow: false,
 
   actions: {
     /**
@@ -232,7 +232,7 @@ export default FlexberryBaseComponent.extend({
      * A stub for call of custom user buttons. Used when no handler is defined.
      *
      * @method customButtons
-	 * @return {Array} Returns only 'undefined' (because is's a stub).
+	   * @return {Array} Returns only 'undefined' (because is's a stub).
      */
     customButtons: function() {
       return undefined;

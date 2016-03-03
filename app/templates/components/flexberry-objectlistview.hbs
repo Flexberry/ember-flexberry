@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class = 'ui secondary menu'
+  class = 'ui secondary menu container'
   modelName = modelName
   createNewButton = createNewButton
   refreshButton = refreshButton
@@ -23,7 +23,7 @@
   action=action
   componentName = componentName
 }}
-<div class="ui secondary menu">
+<div class="ui secondary menu container">
   <div class="ui basic buttons">
 	<button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
 	{{#each pages as |page|}}

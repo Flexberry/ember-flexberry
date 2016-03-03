@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import EditFormRoute from './edit-form';
 
 export default EditFormRoute.extend({
@@ -7,40 +6,18 @@ export default EditFormRoute.extend({
   },
 
   model: function(params, transition) {
-    if (transition && transition.queryParams && transition.queryParams.returnFromDetailName) {
-      let returnFromDetailName = transition.queryParams.returnFromDetailName;
-      let childController = this.controllerFor(this.newRoutePath(returnFromDetailName));
-      if (childController) {
-        let currentAgregatorRecord = childController.get('modelAgregatorObject');
-        if (currentAgregatorRecord) {
-          childController.set('modelAgregatorObject', undefined);
-          return currentAgregatorRecord;
-        }
-      }
+    let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
+    let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
+    let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
+    flexberryDetailInteractionService.set('modelCurrentNotSaved', undefined);
+    flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
+
+    if (modelCurrentNotSaved) {
+      return modelCurrentNotSaved;
     }
 
-    // Get model's agregator.
-    let modelConstructor = this.store.modelFor(this.modelName);
-    let modelAgregatorName = modelConstructor.modelAgregator;
-
-    if (modelAgregatorName) {
-      // Check if there is relation with stated name.
-      let relationshipsByName = Ember.get(modelConstructor, 'relationshipsByName');
-      var modelAgregator = relationshipsByName.get(modelAgregatorName);
-      if (!modelAgregator) {
-        throw new Error(`No agregator with '${modelAgregatorName}' name defined in '${modelConstructor.modelName}' model.`);
-      }
-
-      let modelAgregatorType = modelAgregator.type;
-      let parentController = this.controllerFor(modelAgregatorType);
-      if (parentController) {
-        // TODO: may be from .new.
-        let selectedDetailRecord = parentController.get('modelSelectedDetail');
-        if (selectedDetailRecord) {
-          parentController.set('modelSelectedDetail', undefined);
-          return selectedDetailRecord;
-        }
-      }
+    if (modelSelectedDetail) {
+      return modelSelectedDetail;
     }
 
     // NOTE: record.id is null.

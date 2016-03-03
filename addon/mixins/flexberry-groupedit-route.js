@@ -9,6 +9,14 @@ export default Ember.Mixin.create({
    */
   groupEditEventsService: Ember.inject.service('objectlistview-events'),
 
+  /**
+   * Service that lets interact between agregator's and detail's form.
+   *
+   * @property flexberryDetailInteractionService
+   * @type Service
+   */
+  flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
+
   activate() {
     this._super(...arguments);
 
@@ -48,11 +56,18 @@ export default Ember.Mixin.create({
       let recordId = record.get('id');
       let modelName = record.constructor.modelName;
       this.controller.set('modelNoRollBack', true);
+      let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
+      flexberryDetailInteractionService.set('modelCurrentAgregatorPath', this.get('router.url'));
       if (recordId) {
         this.transitionTo(modelName, record.get('id'));
       } else {
         let newModelPath = this.newRoutePath(modelName);
-        this.controller.set('modelSelectedDetail', record);
+        flexberryDetailInteractionService.set('modelSelectedDetail', record);
+        let currentModel = this.controller.get('model');
+        if (!currentModel.get('id')) {
+          flexberryDetailInteractionService.set('modelCurrentAgregator', currentModel);
+        }
+
         this.transitionTo(newModelPath);
       }
     }

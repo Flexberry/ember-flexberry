@@ -45,6 +45,15 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   queryParams: ['readonly'],
 
   /**
+   * Flag to enable return to agregator's path if possible.
+   *
+   * @property returnToAgregatorRoute
+   * @type Boolean
+   * @default false
+   */
+  returnToAgregatorRoute: false,
+
+  /**
    * Indicates whether the current form is opened only for reading.
    *
    * @property readonly
@@ -107,43 +116,6 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   modelNoRollBack: false,
 
   /**
-   * Route to return to after leaving current route.
-   *
-   * @property modelAgregatorRoute
-   * @type String
-   * @default undefined
-   */
-  modelAgregatorRoute: undefined,
-
-  /**
-   * Identifier of parent's record.
-   *
-   * @property modelAgregatorId
-   * @type String
-   * @default undefined
-   */
-  modelAgregatorId: undefined,
-
-  /**
-   * Selected detail (this parameter is used only for not saved details).
-   * Its selection triggered transition to detail's route.
-   *
-   * @property modelSelectedDetail
-   * @type Object
-   * @default undefined
-   */
-  modelSelectedDetail: undefined,
-
-  /**
-   * Current detail's agregator (this parameter is used only for not saved agregators).
-   *
-   * @property modelAgregatorObject
-   * @type Object
-   * @default undefined
-   */
-  modelAgregatorObject: undefined,
-
-  /**
    * Actions handlers.
    */
   actions: {
@@ -198,30 +170,17 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
   /**
    * Method to transit to parent's route (previous route).
-   * If `modelAgregatorRoute` is set, transition to defined path and set flag 'modelNoRollBack' to `true` on controller to prevent rollback of model.
-   * Then if `parentRoute` is set, transition to defined path.
+   * If `parentRoute` is set, transition to defined path.
    * Otherwise transition to corresponding list.
+   *
+   * @method transitionToParentRoute.
    */
   transitionToParentRoute: function() {
     // TODO: нужно учитывать пэйджинг.
     // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
     // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-    let modelAgregatorRoute = this.get('modelAgregatorRoute');
-    if (modelAgregatorRoute) {
-      let modelAgregatorId = this.get('modelAgregatorId');
-      this.set('modelNoRollBack', true);
-      if (modelAgregatorId) {
-        this.transitionToRoute(modelAgregatorRoute, modelAgregatorId);
-      } else {
-        let currentModel = this.get('model');
-        let modelAgregatorName = currentModel.constructor.modelAgregator;
-        this.set('modelAgregatorObject', currentModel.get(modelAgregatorName));
-        this.transitionToRoute(modelAgregatorRoute, { queryParams: { returnFromDetailName: currentModel.constructor.modelName } });
-      }
-    } else {
-      let routeName = this.get('parentRoute') || Ember.String.pluralize(this.get('model.constructor.modelName'));
-      this.transitionToRoute(routeName);
-    }
+    let routeName = this.get('parentRoute') || Ember.String.pluralize(this.get('model.constructor.modelName'));
+    this.transitionToRoute(routeName);
   },
 
   /**

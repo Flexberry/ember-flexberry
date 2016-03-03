@@ -78,14 +78,22 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPath');
     let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregator');
+    let modelLastUpdatedDetail = flexberryDetailInteractionService.get('modelLastUpdatedDetail');
 
     flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
     flexberryDetailInteractionService.set('modelCurrentAgregator', undefined);
     flexberryDetailInteractionService.set('modelCurrentAgregatorPath', undefined);
     flexberryDetailInteractionService.set('modelCurrentNotSaved', undefined);
+    flexberryDetailInteractionService.set('modelLastUpdatedDetail', undefined);
+
+    if (modelLastUpdatedDetail &&
+          ((modelLastUpdatedDetail.get('isDeleted') && modelLastUpdatedDetail.get('id')) ||
+              modelLastUpdatedDetail.get('hasDirtyAttributes'))) {
+      // If detail changed, agregator has to be marked as changed.
+      model.makeDirty();
+    }
 
     let returnToAgregatorRoute = controller.get('returnToAgregatorRoute');
-
     if (!returnToAgregatorRoute) {
       // There is no need to set parameters to return to agregator.
       return;

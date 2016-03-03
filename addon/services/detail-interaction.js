@@ -56,4 +56,15 @@ export default Ember.Service.extend({
    * @default undefined
    */
   modelCurrentNotSaved: undefined,
+
+  /**
+   * Last updated detail.
+   * This parameter is initialized on detail's form after triggerring return to agregator's form.
+   * This parameter is used only on agregator's form in order to undestand updated detail state.
+   *
+   * @property modelLastUpdatedDetail
+   * @type Object
+   * @default undefined
+   */
+  modelLastUpdatedDetail: undefined
 });

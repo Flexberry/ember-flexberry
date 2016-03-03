@@ -65,6 +65,13 @@ export default EditFormController.extend({
    * Actions handlers.
    */
   actions: {
+    /**
+     * Handler for button 'save' click.
+	 * If return path is determined, no rollback happens and user is redirected to agregator's form.
+	 * Otherwise base logic is executed.
+     *
+     * @method save
+     */
     save: function() {
       let modelAgregatorRoute = this.get('modelCurrentAgregatorPath');
       if (modelAgregatorRoute) {
@@ -75,13 +82,43 @@ export default EditFormController.extend({
       }
     },
 
+    /**
+     * Handler for button 'delete' click.
+	 * If return path is determined and current model is saved, record marks as deleted and user is redirected to agregator's form.
+	 * Otherwise base logic is executed.
+     *
+     * @method delete
+     */
     delete: function() {
-      // TODO: interract with agregator.
+      let modelAgregatorRoute = this.get('modelCurrentAgregatorPath');
+      if (this.get('model').get('id') && modelAgregatorRoute) {
+        if (confirm('Are you sure you want to delete that record?')) {
+          this.get('model').deleteRecord();
+          this.transitionToParentRoute();
+        }
+      } else {
+        this._super.apply(this, arguments);
+      }
     },
 
+    /**
+     * Handler for button 'close' click.
+	 * If return path is determined, an error is thrown because this action should not be triggered.
+	 * Otherwise base logic is executed.
+     *
+     * @method delete
+     */
     close: function() {
-      // TODO: close should be without saving.
-      this.transitionToParentRoute();
+      let modelAgregatorRoute = this.get('modelCurrentAgregatorPath');
+      if (modelAgregatorRoute) {
+        throw new Error('Execution of close action on linked with agregator detail\'s form should be forbidden.' +
+          'Use at template somethong like: ' +
+          '{{#unless (and (not modelCurrentAgregatorPath) model.isNew)}} ' +
+          '<button type=\'submit\' class=\'ui negative button\' {{action \'delete\'}}>Delete</button>' +
+          '{{/unless}}');
+      } else {
+        this._super.apply(this, arguments);
+      }
     }
   },
 
@@ -97,7 +134,13 @@ export default EditFormController.extend({
     let modelAgregatorRoute = this.get('modelCurrentAgregatorPath');
     if (modelAgregatorRoute) {
       this.set('modelNoRollBack', true);
-      this.get('flexberryDetailInteractionService').set('modelCurrentNotSaved', this.get('modelCurrentAgregator'));
+      let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
+      let modelCurrentAgregator = this.get('modelCurrentAgregator');
+      flexberryDetailInteractionService.set('modelLastUpdatedDetail', this.get('model'));
+      if (modelCurrentAgregator && !modelCurrentAgregator.get('id')) {
+        flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);
+      }
+
       this.transitionToRoute(modelAgregatorRoute);
     } else {
       this._super.apply(this, arguments);

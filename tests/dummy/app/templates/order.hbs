@@ -16,11 +16,13 @@
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         <button type="submit" class="ui positive button" {{action 'save'}}>Save</button>
-        {{#unless model.isNew}}
+        {{#unless (and (not modelCurrentAgregatorPath) model.isNew)}}
           <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>Close</button>
+	  {{#unless modelCurrentAgregatorPath}}
+        <button type="submit" class="ui button" {{action 'close'}}>Close</button>
+	  {{/unless}}
     </div>
   </div>
   <div class="inline fields">

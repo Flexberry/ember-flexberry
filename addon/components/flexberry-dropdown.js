@@ -10,7 +10,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
  */
 export default FlexberryBaseComponent.extend({
   actions: {
-    valueChange: function(component, id, newValue) {
+    onChange: function(component, id, newValue) {
       var oldValue = this.get('value') || null;
       newValue = newValue || null;
 
@@ -21,8 +21,23 @@ export default FlexberryBaseComponent.extend({
       // Semantic ui-dropdown component has only one way binding,
       // so we have to set selected value manually.
       this.set('value', newValue);
-      this.sendAction('valueChange', newValue);
-    }
+      this.sendAction('onChange', newValue);
+    },
+
+    onShowHide: function() {
+      // If this callback returns false, show/hide animation for semantic ui-dropdown will not be called.
+      // Its is necessary in situations when route's template changes on model change:
+      // ...
+      // {{#if model.enum}}
+      //   <span>{{model.enum}}<span>
+      // {{else}}
+      //   {{flexberry-dropdown items=enumAvailableValues value=model.enum}}
+      // {{/if}}
+      // ...
+      // In such situation, without this callback, semantic-ui will throw an error:
+      // 'Transition: Element is no longer attached to DOM. Unable to animate'.
+      return !this.get('destroyHasBeenCalled');
+    },
   },
 
   /**
@@ -90,6 +105,15 @@ export default FlexberryBaseComponent.extend({
   dropdownDomElement: null,
 
   /**
+   * Flag: indicates whether 'willDestroyElement' hook has been already called.
+   *
+   * @property destroyHasBeenCalled
+   * @type Boolean
+   * @default false
+   */
+  destroyHasBeenCalled: false,
+
+  /**
    * Flag: indicates whether to show default dropdown text or not.
    *
    * @property showDefaultText
@@ -118,14 +142,19 @@ export default FlexberryBaseComponent.extend({
    * Handles changes in available items & selected item (including changes on component initialization).
    */
   itemsOrValueDidChange: Ember.on('init', Ember.observer('items.[]', 'value', function() {
+    var destroyHasBeenCalled = this.get('destroyHasBeenCalled');
+    if (destroyHasBeenCalled) {
+      return;
+    }
+
     var items = this.get('items');
     if (!Ember.isArray(items)) {
-      throw new Error(`Wrong type of flexberry-dropdown \`items\` propery: actual type is ${Ember.typeOf(items)}, but array is expected.`);
+      Ember.Logger.error(`Wrong type of flexberry-dropdown \`items\` propery: actual type is ${Ember.typeOf(items)}, but array is expected.`);
     }
 
     var value = this.get('value') || null;
     if (!Ember.isNone(value) && items.indexOf(value) < 0) {
-      throw new Error(`Wrong value of flexberry-dropdown \`value\` propery: \`${value}\`. Allowed values are: [\`${items.join(`\`, \``)}\`].`);
+      Ember.Logger.error(`Wrong value of flexberry-dropdown \`value\` propery: \`${value}\`. Allowed values are: [\`${items.join(`\`, \``)}\`].`);
     }
 
     var dropdownDomElement = this.get('dropdownDomElement');
@@ -170,5 +199,14 @@ export default FlexberryBaseComponent.extend({
 
     var dropdownDomElement = !Ember.isNone(dropdownView) ? dropdownView.$() : null;
     this.set('dropdownDomElement', dropdownDomElement);
+  },
+
+  /**
+   * Cleanup DOM-related component stuff.
+   */
+  willDestroyElement: function() {
+    this.set('destroyHasBeenCalled', true);
+
+    this._super(...arguments);
   }
 });

@@ -48,7 +48,7 @@ export default Ember.Mixin.create({
   actions: {
     /**
      * Table row click handler.
-	 * It sets `modelNoRollBack` to `true` at current controller and redirects to detail's route.
+	 * It sets `modelNoRollBack` to `true` at current controller, redirects to detail's route, save necessary data to service.
      *
      * @param {Ember.Object} record Record related to clicked table row.
      */
@@ -56,18 +56,18 @@ export default Ember.Mixin.create({
       let recordId = record.get('id');
       let modelName = record.constructor.modelName;
       this.controller.set('modelNoRollBack', true);
+
       let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
-      flexberryDetailInteractionService.set('modelCurrentAgregatorPath', this.get('router.url'));
+      flexberryDetailInteractionService.pushValue(
+        'modelCurrentAgregatorPathes', this.controller.get('modelCurrentAgregatorPathes'), this.get('router.url'));
+      flexberryDetailInteractionService.set('modelSelectedDetail', record);
+      flexberryDetailInteractionService.pushValue(
+        'modelCurrentAgregators', this.controller.get('modelCurrentAgregators'), this.controller.get('model'));
+
       if (recordId) {
         this.transitionTo(modelName, record.get('id'));
       } else {
         let newModelPath = this.newRoutePath(modelName);
-        flexberryDetailInteractionService.set('modelSelectedDetail', record);
-        let currentModel = this.controller.get('model');
-        if (!currentModel.get('id')) {
-          flexberryDetailInteractionService.set('modelCurrentAgregator', currentModel);
-        }
-
         this.transitionTo(newModelPath);
       }
     }

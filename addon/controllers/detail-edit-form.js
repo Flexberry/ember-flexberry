@@ -44,22 +44,22 @@ export default EditFormController.extend({
   flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
 
   /**
-   * Route to return to after leaving current route.
+   * Pathes to return to after leaving current route.
    *
-   * @property modelCurrentAgregatorPath
+   * @property modelCurrentAgregatorPathes
    * @type String
    * @default undefined
    */
-  modelCurrentAgregatorPath: undefined,
+  modelCurrentAgregatorPathes: undefined,
 
   /**
-   * Current detail's agregator (this parameter is used only for not saved agregators).
+   * Current detail's agregators.
    *
-   * @property modelCurrentAgregator
+   * @property modelCurrentAgregators
    * @type Object
    * @default undefined
    */
-  modelCurrentAgregator: undefined,
+  modelCurrentAgregators: undefined,
 
   /**
    * Actions handlers.
@@ -73,8 +73,7 @@ export default EditFormController.extend({
      * @method save
      */
     save: function() {
-      let modelAgregatorRoute = this.get('modelCurrentAgregatorPath');
-      if (modelAgregatorRoute) {
+      if (this._needReturnToAgregator()) {
         // If parent's route is defined, save on parent's route.
         this.transitionToParentRoute();
       } else {
@@ -90,8 +89,7 @@ export default EditFormController.extend({
      * @method delete
      */
     delete: function() {
-      let modelAgregatorRoute = this.get('modelCurrentAgregatorPath');
-      if (this.get('model').get('id') && modelAgregatorRoute) {
+      if (this.get('model').get('id') && this._needReturnToAgregator()) {
         if (confirm('Are you sure you want to delete that record?')) {
           this.get('model').deleteRecord();
           this.transitionToParentRoute();
@@ -109,8 +107,7 @@ export default EditFormController.extend({
      * @method delete
      */
     close: function() {
-      let modelAgregatorRoute = this.get('modelCurrentAgregatorPath');
-      if (modelAgregatorRoute) {
+      if (this._needReturnToAgregator()) {
         throw new Error('Execution of close action on linked with agregator detail\'s form should be forbidden.' +
           'Use at template somethong like: ' +
           '{{#unless (and (not modelCurrentAgregatorPath) model.isNew)}} ' +
@@ -131,11 +128,17 @@ export default EditFormController.extend({
    * @method transitionToParentRoute.
    */
   transitionToParentRoute: function() {
-    let modelAgregatorRoute = this.get('modelCurrentAgregatorPath');
-    if (modelAgregatorRoute) {
+    if (this._needReturnToAgregator()) {
       this.set('modelNoRollBack', true);
+
+      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
+      let modelAgregatorRoute = modelAgregatorRoutes.pop();
+      let modelCurrentAgregators = this.get('modelCurrentAgregators');
+      let modelCurrentAgregator = modelCurrentAgregators.pop();
+
       let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
-      let modelCurrentAgregator = this.get('modelCurrentAgregator');
+      flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
+      flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
       flexberryDetailInteractionService.set('modelLastUpdatedDetail', this.get('model'));
       if (modelCurrentAgregator && !modelCurrentAgregator.get('id')) {
         flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);
@@ -145,5 +148,17 @@ export default EditFormController.extend({
     } else {
       this._super.apply(this, arguments);
     }
+  },
+
+  /**
+   * Returns a logic value showing if there is return path from current form.
+   *
+   * @method _needReturnToAgregator
+   * @private
+   *
+   * @return {Boolean} Logic value showing if there is return path from current form.
+   */
+  _needReturnToAgregator: function () {
+    return this.get('flexberryDetailInteractionService').hasValues(this.get('modelCurrentAgregatorPathes'));
   }
 });

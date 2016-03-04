@@ -13,6 +13,59 @@ import Ember from 'ember';
  */
 export default Ember.Service.extend({
   /**
+   * Returns a logic value showing if givven value is array and has values.
+   *
+   * @method hasValues
+   * @public
+   *
+   * @param {Array} currentArray Value to check if it is array and has values.
+   * @return {Boolean} Logic value showing if givven value is array and has values..
+   */
+  hasValues: function (currentArray) {
+    return currentArray && Ember.isArray(currentArray) && currentArray.length > 0;
+  },
+
+  /**
+   * Pushes givven value to givven array and saves this array to givven property.
+   *
+   * @method pushValue
+   * @public
+   *
+   * @param {String} propertyName Name of property to save result array to.
+   * @param {Array} currentArray Array to add value to. If it is not array, new array will be created.
+   * @param {Object} value A value to add to array.
+   */
+  pushValue: function (propertyName, currentArray, value) {
+    let currentPropertyValue;
+    if (this.hasValues(currentArray)) {
+      currentPropertyValue.push(value);
+    } else {
+      currentPropertyValue = [value];
+    }
+
+    this.set(propertyName, currentPropertyValue);
+  },
+
+  /**
+   * Returns the last value of array (or `undefined` if array contains no values).
+   * Array is kept at givven property.
+   *
+   * @method getLastValue
+   * @public
+   *
+   * @param {String} propertyName The name of property where array is kept.
+   * @return {Object} The last value of array (or `undefined` if array contains no values).
+   */
+  getLastValue: function(propertyName) {
+    let currentPropertyValue = this.get(propertyName);
+    if (!this.hasValues(currentPropertyValue)) {
+      return undefined;
+    }
+
+    return currentPropertyValue.objectAt(currentPropertyValue.length - 1);
+  },
+
+  /**
    * Selected detail.
    * Its selection triggered transition to detail's route.
    * This parameter is initialized on agregator's form after click on not saved details.
@@ -25,26 +78,26 @@ export default Ember.Service.extend({
   modelSelectedDetail: undefined,
 
   /**
-   * Current detail's agregator.
-   * This parameter is initialized on agregator's form after click on detail when agregator is not saved.
-   * This parameter is used only on detail's form in order to return to proper agregator not saved object.
+   * Current detail's agregators (stack of previous agregators in order to support detail of N-level).
+   * This parameter is initialized on agregator's form after click on detail.
+   * This parameter is used only on detail's form in order to return to proper agregator.
    *
-   * @property modelCurrentAgregator
+   * @property modelCurrentAgregators
    * @type Object
    * @default undefined
    */
-  modelCurrentAgregator: undefined,
+  modelCurrentAgregators: undefined,
 
   /**
-   * Path to detail's agregator.
+   * Pathes to detail's agregators (stack of previous pathes in order to support detail of N-level).
    * This parameter is initialized on agregator's form after click on detail.
    * This parameter is used only on detail's form in order to get return url.
    *
-   * @property modelCurrentAgregatorPath
+   * @property modelCurrentAgregatorPathes
    * @type Object
    * @default undefined
    */
-  modelCurrentAgregatorPath: undefined,
+  modelCurrentAgregatorPathes: undefined,
 
   /**
    * Current not saved model.

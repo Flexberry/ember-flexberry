@@ -51,7 +51,8 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     this._super.apply(this, arguments);
 
     controller.send('dismissErrorMessages');
-    controller.set('modelCurrentAgregatorPath', undefined);
+    controller.set('modelCurrentAgregatorPathes', undefined);
+    controller.set('modelCurrentAgregators', undefined);
 
     // If flag 'modelNoRollBack' is set, leave current model as is and remove flag.
     if (controller.get('modelNoRollBack') === true) {
@@ -76,13 +77,14 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     controller.set('modelProjection', proj);
 
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
-    let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPath');
-    let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregator');
+    let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
+    let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');
     let modelLastUpdatedDetail = flexberryDetailInteractionService.get('modelLastUpdatedDetail');
 
     flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
-    flexberryDetailInteractionService.set('modelCurrentAgregator', undefined);
-    flexberryDetailInteractionService.set('modelCurrentAgregatorPath', undefined);
+    flexberryDetailInteractionService.set('modelCurrentAgregators', undefined);
+    flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', undefined);
+
     flexberryDetailInteractionService.set('modelCurrentNotSaved', undefined);
     flexberryDetailInteractionService.set('modelLastUpdatedDetail', undefined);
 
@@ -99,9 +101,9 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
       return;
     }
 
-    if (modelCurrentAgregatorPath) {
-      controller.set('modelCurrentAgregatorPath', modelCurrentAgregatorPath);
-      controller.set('modelCurrentAgregator', modelCurrentAgregator);
+    if (flexberryDetailInteractionService.hasValues(modelCurrentAgregatorPath)) {
+      controller.set('modelCurrentAgregatorPathes', modelCurrentAgregatorPath);
+      controller.set('modelCurrentAgregators', modelCurrentAgregator);
     }
   },
 

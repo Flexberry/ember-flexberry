@@ -109,7 +109,7 @@ export default EditFormController.extend({
     close: function() {
       if (this._needReturnToAgregator()) {
         throw new Error('Execution of close action on linked with agregator detail\'s form should be forbidden.' +
-          'Use at template somethong like: ' +
+          'Use at template something like: ' +
           '{{#unless (and (not modelCurrentAgregatorPath) model.isNew)}} ' +
           '<button type=\'submit\' class=\'ui negative button\' {{action \'delete\'}}>Delete</button>' +
           '{{/unless}}');

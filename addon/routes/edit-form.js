@@ -49,6 +49,7 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
 
   resetController: function(controller, isExisting, transition) {
     this._super.apply(this, arguments);
+    let keptAgregators = controller.get('modelCurrentAgregators');
 
     controller.send('dismissErrorMessages');
     controller.set('modelCurrentAgregatorPathes', undefined);
@@ -60,11 +61,24 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
       return;
     }
 
-    controller.rollbackHasManyRelationships();
+    // If flag 'modelNoRollBack' is not set, we have to roll back this model and its agregators.
+    let modelsToRollBack;
     let model = controller.get('model');
-    if (model && model.get('hasDirtyAttributes')) {
-      model.rollbackAttributes();
+    if (this.get('flexberryDetailInteractionService').hasValues(keptAgregators)) {
+      keptAgregators.push(model);
+      keptAgregators.reverse();
+      modelsToRollBack = keptAgregators;
+    } else {
+      modelsToRollBack = [model];
     }
+
+    // Roll back all found agregators and its has-many relations.
+    modelsToRollBack.forEach(function(processedModel) {
+      controller.rollbackHasManyRelationships(processedModel);
+      if (processedModel) {
+        processedModel.rollbackAttributes();
+      }
+    });
   },
 
   setupController: function(controller, model) {

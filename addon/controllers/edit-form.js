@@ -278,9 +278,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    * This method invokes by `resetController` in the `edit-form` route.
    *
    * @method rollbackHasManyRelationships
+   * @public
+   *
+   * @param {DS.Model} processedModel Model to rollback its relations (controller's model will be used if undefined).
    */
-  rollbackHasManyRelationships: function() {
-    let model = this.get('model');
+  rollbackHasManyRelationships: function(processedModel) {
+    let model = processedModel ? processedModel : this.get('model');
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {

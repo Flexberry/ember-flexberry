@@ -62,6 +62,17 @@ export default EditFormController.extend({
   modelCurrentAgregators: undefined,
 
   /**
+   * A logic value showing if current route has parent one.
+   *
+   * @property hasParentRoute
+   * @type Boolean
+   * @default undefined
+   */
+  hasParentRoute: Ember.computed('modelCurrentAgregatorPathes', function() {
+    return this.get('flexberryDetailInteractionService').hasValues(this.get('modelCurrentAgregatorPathes'));
+  }),
+
+  /**
    * Actions handlers.
    */
   actions: {
@@ -73,7 +84,7 @@ export default EditFormController.extend({
      * @method save
      */
     save: function() {
-      if (this._needReturnToAgregator()) {
+      if (this.get('hasParentRoute')) {
         // If parent's route is defined, save on parent's route.
         this.transitionToParentRoute();
       } else {
@@ -89,7 +100,7 @@ export default EditFormController.extend({
      * @method delete
      */
     delete: function() {
-      if (this.get('model').get('id') && this._needReturnToAgregator()) {
+      if (this.get('model').get('id') && this.get('hasParentRoute')) {
         if (confirm('Are you sure you want to delete that record?')) {
           this.get('model').deleteRecord();
           this.transitionToParentRoute();
@@ -107,10 +118,10 @@ export default EditFormController.extend({
      * @method delete
      */
     close: function() {
-      if (this._needReturnToAgregator()) {
+      if (this.get('hasParentRoute')) {
         throw new Error('Execution of close action on linked with agregator detail\'s form should be forbidden.' +
           'Use at template something like: ' +
-          '{{#unless (and (not modelCurrentAgregatorPath) model.isNew)}} ' +
+          '{{#unless (and (not hasParentRoute) model.isNew)}} ' +
           '<button type=\'submit\' class=\'ui negative button\' {{action \'delete\'}}>Delete</button>' +
           '{{/unless}}');
       } else {
@@ -128,7 +139,7 @@ export default EditFormController.extend({
    * @method transitionToParentRoute.
    */
   transitionToParentRoute: function() {
-    if (this._needReturnToAgregator()) {
+    if (this.get('hasParentRoute')) {
       this.set('modelNoRollBack', true);
 
       let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
@@ -148,17 +159,5 @@ export default EditFormController.extend({
     } else {
       this._super.apply(this, arguments);
     }
-  },
-
-  /**
-   * Returns a logic value showing if there is return path from current form.
-   *
-   * @method _needReturnToAgregator
-   * @private
-   *
-   * @return {Boolean} Logic value showing if there is return path from current form.
-   */
-  _needReturnToAgregator: function () {
-    return this.get('flexberryDetailInteractionService').hasValues(this.get('modelCurrentAgregatorPathes'));
   }
 });

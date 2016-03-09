@@ -16,11 +16,11 @@
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         <button type="submit" class="ui positive button" {{action 'save'}}>Save</button>
-        {{#unless (and (not modelCurrentAgregatorPath) model.isNew)}}
+        {{#unless (and (not hasParentRoute) model.isNew)}}
           <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
         {{/unless}}
       {{/unless}}
-	  {{#unless modelCurrentAgregatorPath}}
+	  {{#unless hasParentRoute}}
         <button type="submit" class="ui button" {{action 'close'}}>Close</button>
 	  {{/unless}}
     </div>

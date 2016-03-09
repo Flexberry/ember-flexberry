@@ -21,6 +21,15 @@ export default FlexberryBaseComponent.extend({
   modelProjection: null,
 
   /**
+   * Flag shows if detail should be edited on separate route.
+   *
+   * @property editOnSeparateRoute
+   * @type Object
+   * @default false
+   */
+  editOnSeparateRoute: false,
+
+  /**
    * Array of models for detail objects.
    *
    * @property content

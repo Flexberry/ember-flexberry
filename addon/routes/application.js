@@ -17,6 +17,6 @@ export default Ember.Route.extend({
   beforeModel: function() {
     var locale = this._getLocale();
     this.set('i18n.locale', locale);
-    Moment.lang(locale);
+    Moment.locale(locale);
   }
 });

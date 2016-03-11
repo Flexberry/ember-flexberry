@@ -79,6 +79,10 @@ module.exports = function(environment) {
     'connect-src': "'self' " + ENV.APP.backendUrls.root
   };
 
+  ENV.i18n = {
+    defaultLocale: 'en'
+  };
+
   if (environment === 'test') {
     // Testem prefers this...
     ENV.baseURL = '/';

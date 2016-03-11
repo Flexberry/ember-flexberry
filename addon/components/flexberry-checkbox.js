@@ -7,7 +7,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 /**
  * Checkbox component for Semantic UI.
  *
- * @class FlexberrCheckbox
+ * @class FlexberrCheckboxComponent
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
@@ -49,7 +49,7 @@ export default FlexberryBaseComponent.extend({
   label: undefined,
 
   /**
-   * Initializes file-control component.
+   * Initializes checkbox component.
    */
   init: function() {
     this._super(...arguments);

@@ -92,3 +92,30 @@ table {
     text-align: right;
   }
 }
+
+// Menu items icons are right-floated.
+.flexberry-menu > .item > i.icon {
+  float: right !important;
+  margin: 0em 0em 0em 0.5em !important;
+}
+
+// First child menu items icons are left-floated.
+.flexberry-menu > .item > i.icon:first-child {
+  float: left !important;
+  margin: 0em 0.5em 0em 0em !important;
+}
+
+// Submenu items icons are right-floated.
+.flexberry-menu .ui.dropdown .menu > .item > i.icon {
+  margin: 0em 0em 0em 0.5em !important;
+}
+
+// First child submenu items icons are left-floated.
+.flexberry-menu .ui.dropdown .menu > .item > i.icon:first-child {
+  margin: 0em 0.5em 0em 0em !important;
+}
+
+// Submenus are sticjed to their parent items.
+.flexberry-menu .ui.dropdown .menu {
+  margin: 0em !important;
+}

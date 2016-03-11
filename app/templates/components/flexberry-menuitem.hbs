@@ -1,0 +1,17 @@
+{{#if (and content.titleIsBeforeIcon content.title)}}
+  <span>{{content.title}}</span>
+{{/if}}
+{{#if content.icon}}
+  <i class="{{content.icon}}"></i>
+{{/if}}
+{{#if (and (not content.titleIsBeforeIcon) content.title)}}
+  <span>{{content.title}}</span>
+{{/if}}
+{{#if hasSubitems}}
+  <div class="menu">
+    {{#each content.items as |item|}}   
+      {{flexberry-menuitem content=item}}
+    {{/each}}
+  </div>
+{{/if}}
+{{yield}}

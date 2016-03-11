@@ -35,6 +35,9 @@ Router.map(function() {
 
   // /test-flexberry-groupedit-embedding-components
   this.route('test-flexberry-groupedit');
+
+  // /test-flexberry-menu
+  this.route('test-flexberry-menu');
 });
 
 export default Router;

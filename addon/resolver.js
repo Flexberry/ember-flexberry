@@ -20,7 +20,7 @@ export default EmberResolver.extend({
   },
 
   /**
-   * Checks if resource with given parsed name is known and could be resolved.
+   * Checks if template or classs with given full name is known and could be resolved.
    */
   isKnown: function(fullName) {
     var type = fullName.split(':')[0];
@@ -29,14 +29,16 @@ export default EmberResolver.extend({
   },
 
   /**
-    This method is called via the container's resolver method.
-    It parses the provided `fullName` and then looks up and
-    returns the appropriate template or class.
-    @method resolve
-    @param {String} fullName the lookup string
-    @return {Object} the resolved factory
-    @public
-  */
+   * This method is called via the container's resolver method.
+   * It parses the provided full name and then looks up and returns the appropriate template or class.
+   * First of all it tries to find appropriate template or class in device-related subfolder, if it is possible,
+   * otherwise it looks up in default folder related to template or class type.
+   * 
+   * @method resolve
+   * @param {String} fullName The lookup string.
+   * @return {Object} The resolved factory.
+   * @public
+   */
   resolve: function(fullName) {
     var device = this.get('device');
 

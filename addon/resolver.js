@@ -33,7 +33,7 @@ export default EmberResolver.extend({
    * It parses the provided full name and then looks up and returns the appropriate template or class.
    * First of all it tries to find appropriate template or class in device-related subfolder, if it is possible,
    * otherwise it looks up in default folder related to template or class type.
-   * 
+   *
    * @method resolve
    * @param {String} fullName The lookup string.
    * @return {Object} The resolved factory.

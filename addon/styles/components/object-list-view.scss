@@ -1,0 +1,31 @@
+/**
+ * Styles for object-list-view component.
+ */
+
+table.object-list-view.selectable tbody,
+table.object-list-view.selectable thead {
+  cursor: pointer;
+}
+
+table.object-list-view tbody tr td:first-child button {
+  padding: 9px 7px;
+  margin: 0 !important;
+}
+
+table.object-list-view thead tr th.object-list-view-operations {
+  min-width: 80px;
+  width: 80px;
+}
+
+table.object-list-view tbody tr td.object-list-view-operations .object-list-view-asterisk {
+  padding-left: 5px !important;
+  padding-right: 0 !important;
+}
+
+table.object-list-view tbody tr td.object-list-view-operations .object-list-view-asterisk i {
+  font-size: x-small;
+}
+
+table.object-list-view tbody tr td:first-child button i {
+  margin: 0 !important;
+}

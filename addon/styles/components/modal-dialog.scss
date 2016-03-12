@@ -1,0 +1,16 @@
+/**
+ * Styles for modal-dialog component.
+ */
+
+ /**
+  * Show scroll for big inner content of modal dialog.
+  */
+.ui.modal > .content {
+  overflow: auto;
+}
+
+.ui.modal > .actions {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}

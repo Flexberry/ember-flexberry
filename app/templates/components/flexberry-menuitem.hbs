@@ -8,7 +8,7 @@
   <span>{{content.title}}</span>
 {{/if}}
 {{#if hasSubitems}}
-  <div class="menu">
+  <div class="{{if content.itemsAlignment content.itemsAlignment}} menu">
     {{#each content.items as |item|}}   
       {{flexberry-menuitem content=item}}
     {{/each}}

@@ -17,20 +17,6 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-menu', 'ui', 'menu'],
 
   /**
-   * Class names bindings for component's wrapping element.
-   */
-  classNameBindings: ['type'],
-
-  /**
-   * Menu type from Semantic UI ('vertical', 'fluid', 'compact', 'icon', 'labled', ...).
-   * Types can be combined ('fluid icon labled vertical' or 'compact vertical', ...).
-   * @property type
-   * @type String
-   * @default ''
-   */
-  type: '',
-
-  /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
    *
    * @property appConfigSettingsPath

@@ -15,19 +15,12 @@ export default FlexberryBaseComponent.extend({
   /**
    * Override component's wrapping element tag.
    */
-  tagName: Ember.computed('hasSubitems', function() {
-    return this.get('hasSubitems') ? 'div' : 'a';
-  }),
+  tagName: 'a',
 
   /**
-   * Class names for component wrapping element.
+   * Class names for component's wrapping element.
    */
   classNames: ['flexberry-menuitem', 'item'],
-
-  /**
-   * Class names bindings for component's wrapping element.
-   */
-  classNameBindings: ['hasSubitems:ui', 'hasSubitems:simple', 'hasSubitems:dropdown'],
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -60,9 +53,17 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Initializes file-control component.
+   * Initializes component.
    */
   init: function() {
     this._super(...arguments);
+
+    // Override component's wrapping element for simple menu items.
+    if (this.get('hasSubitems')) {
+      this.set('tagName', 'div');
+
+      var classNames = this.get('classNames');
+      classNames.push(...['ui', 'simple', 'dropdown']);
+    }
   }
 });

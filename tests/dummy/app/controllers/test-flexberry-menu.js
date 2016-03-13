@@ -1,6 +1,31 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  actions: {
+    onMenuItemClick: function(e) {
+      var clickedMenuItem = Ember.$(e.currentTarget);
+      clickedMenuItem.popup({
+        content: 'This menu item has been clicked',
+        position: 'top right',
+        delay: {
+          show: 0,
+          hide: 200
+        },
+        on: 'manual',
+        onHidden: function(e) {
+          var owner = Ember.$(e);
+          owner.popup('destroy');
+        }
+      });
+
+      clickedMenuItem.popup('show');
+
+      window.setTimeout((function() {
+        clickedMenuItem.popup('hide');
+      }).bind(this), 1000);
+    }
+  },
+
   title: 'Test flexberry-menu',
 
   items: null,

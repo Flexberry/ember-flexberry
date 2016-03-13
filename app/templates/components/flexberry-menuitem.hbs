@@ -1,16 +1,19 @@
-{{#if (and content.titleIsBeforeIcon content.title)}}
-  <span>{{content.title}}</span>
+{{#if (and item.titleIsBeforeIcon item.title)}}
+  <span>{{item.title}}</span>
 {{/if}}
-{{#if content.icon}}
-  <i class="{{content.icon}}"></i>
+{{#if item.icon}}
+  <i class="{{item.icon}}"></i>
 {{/if}}
-{{#if (and (not content.titleIsBeforeIcon) content.title)}}
-  <span>{{content.title}}</span>
+{{#if (and (not item.titleIsBeforeIcon) item.title)}}
+  <span>{{item.title}}</span>
 {{/if}}
 {{#if hasSubitems}}
-  <div class="{{if content.itemsAlignment content.itemsAlignment}} menu">
-    {{#each content.items as |item|}}   
-      {{flexberry-menuitem content=item}}
+  <div class="{{if item.itemsAlignment item.itemsAlignment}} menu">
+    {{#each item.items as |item|}}   
+      {{flexberry-menuitem
+        item=item
+        relatedModel=relatedModel
+      }}
     {{/each}}
   </div>
 {{/if}}

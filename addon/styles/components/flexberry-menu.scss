@@ -5,7 +5,7 @@
 /** 
  * Menu items icons are right-floated by default.
  */
-.flexberry-menu > .item > i.icon {
+.flexberry-menu:not(.icon) > .item > i.icon {
   float: right !important;
   margin: 0em 0em 0em 0.5em !important;
 }
@@ -13,7 +13,7 @@
 /**
  * Menu items icons are left-floated if they are first child elements.
  */
-.flexberry-menu > .item > i.icon:first-child {
+.flexberry-menu:not(.icon) > .item > i.icon:first-child {
   float: left !important;
   margin: 0em 0.5em 0em 0em !important;
 }

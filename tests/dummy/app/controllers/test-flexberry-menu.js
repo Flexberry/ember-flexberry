@@ -54,7 +54,7 @@ export default Ember.Controller.extend({
     for (var i = 0; i < 5; i++) {
       var subMenu = currentMenuSectionItems[2];
       subMenu.items = Ember.copy(oneMenuSectionItems, true);
-      subMenu.itemsAlignment = i % 2 === 0 ? 'left' : 'right';
+      subMenu.itemsAlignment = i % 2 === 0 ? 'right' : 'left';
 
       currentMenuSectionItems = subMenu.items;
     }

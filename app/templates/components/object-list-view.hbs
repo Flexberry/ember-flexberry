@@ -4,6 +4,9 @@
     {{#each columns as |column|}}
       {{component headerCellComponent column=column}}
     {{/each}}
+    {{#if (or showEditMenuItemInRow showDeleteMenuItemInRow menuInRowHasAdditionalItems)}}
+      <th class="object-list-view-menu"></th>
+    {{/if}}
   </tr>
 </thead>
 <tbody>
@@ -49,6 +52,16 @@
           }}
         </td>
       {{/each}}
+      {{#if (or showEditMenuItemInRow showDeleteMenuItemInRow menuInRowHasAdditionalItems)}}
+        <td class="object-list-view-menu">
+          {{flexberry-menu
+            class='icon vertical'
+            items=menuInRowItems
+            onItemClick=(action 'menuInRowItemClick' record.key record.data)
+            relatedModel=record.data
+          }}
+        </td>
+      {{/if}}
     </tr>
   {{/each}}
 </tbody>

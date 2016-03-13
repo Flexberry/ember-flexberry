@@ -50,6 +50,13 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   headerClickable: true,
   showCheckBoxInRow: false,
   showDeleteButtonInRow: false,
+  showMenuInRow: false,
+  menuInRowItems: null,
+  menuInRowAdditionalItems: null,
+  menuInRowHasAdditionalItems: Ember.computed('menuInRowItems', 'menuInRowItems.[]', function() {
+    var menuInRowAdditionalItems = this.get('menuInRowAdditionalItems');
+    return Ember.isArray(menuInRowAdditionalItems) && menuInRowAdditionalItems.length > 0;
+  }),
   store: Ember.inject.service(),
   noDataMessage: null,
 
@@ -104,6 +111,17 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
       var componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, record, selectedRecords.length);
+    },
+    menuInRowItemClick: function(key, record, e) {
+      if (e.item.isDeleteItem) {
+        this.send('deleteRow', key, record);
+        return;
+      }
+
+      if (e.item.isEditItem) {
+        this.send('rowClick', key, record);
+        return;
+      }
     }
   },
 
@@ -114,6 +132,36 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.set('contentWithKeys', Ember.A());
+
+    var menuInRowSubItems = [];
+    if (this.get('showEditMenuItemInRow')) {
+      menuInRowSubItems.push({
+        icon: 'edit icon',
+        title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
+        isEditItem: true
+      });
+    }
+
+    if (this.get('showDeleteMenuItemInRow')) {
+      menuInRowSubItems.push({
+        icon: 'trash icon',
+        title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
+        isDeleteItem: true
+      });
+    }
+
+    if (this.get('menuInRowHasAdditionalItems')) {
+      menuInRowSubItems.push(...this.get('menuInRowAdditionalItems'));
+    }
+
+    var menuInRowItems = [{
+      icon: 'list layout icon',
+      itemsAlignment: 'left',
+      items: menuInRowSubItems
+    }];
+
+    this.set('menuInRowItems', menuInRowItems);
+
     if (!this.get('noDataMessage')) {
       this.set('noDataMessage', this.get('i18n').t('object-list-view.no-data-text'));
     }

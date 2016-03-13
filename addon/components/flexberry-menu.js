@@ -39,5 +39,5 @@ export default FlexberryBaseComponent.extend({
    */
   init: function() {
     this._super(...arguments);
-  },
+  }
 });

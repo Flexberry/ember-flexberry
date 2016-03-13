@@ -1,10 +1,10 @@
-{{#if (and item.titleIsBeforeIcon item.title)}}
+{{#if (and titleIsBeforeIcon item.title)}}
   <span>{{item.title}}</span>
 {{/if}}
 {{#if item.icon}}
   <i class="{{item.icon}}"></i>
 {{/if}}
-{{#if (and (not item.titleIsBeforeIcon) item.title)}}
+{{#if (and (not titleIsBeforeIcon) item.title)}}
   <span>{{item.title}}</span>
 {{/if}}
 {{#if hasSubitems}}

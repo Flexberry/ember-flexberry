@@ -54,6 +54,22 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+   * Flag: indicates whether menu item's title should be placed before it's icon.
+   *
+   * @property titleIsBeforeIcon
+   * @type Boolean
+   * @readonly
+   */
+  titleIsBeforeIcon: Ember.computed('item.iconAlignment', function() {
+    var iconAlignment = this.get('item.iconAlignment');
+    if (Ember.typeOf(iconAlignment) === 'string') {
+      iconAlignment = iconAlignment.trim();
+    }
+
+    return iconAlignment === 'right' || iconAlignment === 'top';
+  }),
+
+  /**
    * Initializes component.
    */
   init: function() {

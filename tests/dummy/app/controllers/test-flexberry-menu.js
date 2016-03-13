@@ -35,12 +35,12 @@ export default Ember.Controller.extend({
 
     var oneMenuSectionItems = [{
       icon: 'search icon',
-      title: 'Item title after icon',
+      title: 'Left side aligned icon',
       items: null
     }, {
       icon: 'setting icon',
-      title: 'Item title before icon',
-      titleIsBeforeIcon: true,
+      iconAlignment: 'right',
+      title: 'Right side aligned icon',
       items: null
     }, {
       icon: 'list layout icon',

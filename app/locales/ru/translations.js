@@ -59,6 +59,7 @@ export default {
   
   'olv-toolbar': {
     'add-button-text': 'Добавить',
-    'refresh-button-text': 'Обновить'
+    'refresh-button-text': 'Обновить',
+    'filter-by-any-match-placeholder': 'Поиск...'
   }
 };

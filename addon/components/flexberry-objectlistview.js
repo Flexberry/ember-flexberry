@@ -55,6 +55,15 @@ export default FlexberryBaseComponent.extend({
    * @default false
    */
   deleteButton: false,
+  
+  /**
+   * Flag to use filter button at toolbar.
+   *
+   * @property filterButton
+   * @type Boolean
+   * @default false
+   */
+  filterButton: false,
 
   /**
    * Projection for detail object's model.
@@ -226,6 +235,17 @@ export default FlexberryBaseComponent.extend({
     gotoPage: function(pageNumber) {
       throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
+    },
+
+    /**
+     * Handles action from object-list-view when no handler for this component is defined.
+     *
+     * @method filterByAnyMatch
+     * @param {pattern} The pattern to filter objects.
+     */
+    filterByAnyMatch: function(pattern) {
+      throw new Error('No handler for filterByAnyMatch action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action "filterByAnyMatch")}}.');
     },
 
     /**

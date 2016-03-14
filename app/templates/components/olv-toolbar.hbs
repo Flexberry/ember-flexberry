@@ -7,6 +7,14 @@
 {{#if deleteButton}}
   <button class='ui {{if isDeleteButtonEnabled '' 'disabled'}} button' {{action "delete"}}>Delete</button>
 {{/if}}
+{{#if filterButton}}
+  <div class="ui action input">
+    {{input type="text" placeholder=(t "olv-toolbar.filter-by-any-match-placeholder") value=filterByAnyMatchText action="filterByAnyMatch" on="enter"}}
+    <button class="ui icon button" {{action "filterByAnyMatch"}}>
+      <i class="search icon"></i>
+    </button>
+  </div>
+{{/if}}
 {{#each customButtonsArray as |customButton|}}
   <button class="ui button {{ if customButton.buttonClasses customButton.buttonClasses ''}}" {{action 'customButtonAction' customButton.buttonAction}}>{{ if customButton.buttonName customButton.buttonName 'UserButton'}}</button>
 {{/each}}

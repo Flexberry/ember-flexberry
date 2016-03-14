@@ -151,7 +151,7 @@ export default EditFormController.extend({
       flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
       flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
       flexberryDetailInteractionService.set('modelLastUpdatedDetail', this.get('model'));
-      if (modelCurrentAgregator && !modelCurrentAgregator.get('id')) {
+      if (modelCurrentAgregator) {
         flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);
       }
 

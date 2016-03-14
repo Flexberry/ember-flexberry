@@ -194,7 +194,12 @@ export default FlexberryBaseComponent.extend({
     // "You cannot access this.$() on a component with tagName: ''.".
     // So we have to search our element in 'childViews' collection.
     var dropdownView = this.get('childViews').find(function(view) {
-      return !Ember.isEmpty(view.get('tagName')) && view.$().hasClass('flexberry-dropdown');
+      var tagName = view.get('tagName');
+      if (Ember.typeOf(tagName) === 'string') {
+        tagName = tagName.trim();
+      }
+
+      return tagName !== '' && view.$().hasClass('flexberry-dropdown');
     });
 
     var dropdownDomElement = !Ember.isNone(dropdownView) ? dropdownView.$() : null;

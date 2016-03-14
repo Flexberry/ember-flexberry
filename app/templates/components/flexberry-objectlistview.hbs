@@ -1,5 +1,5 @@
 {{olv-toolbar
-  class = 'ui secondary menu'
+  class = 'ui secondary menu no-margin'
   modelName = modelName
   createNewButton = createNewButton
   enableCreateNewButton = (not readonly)
@@ -12,7 +12,6 @@
   customButtonsClosureEvent=(action (if this.attrs.customButtons this.attrs.customButtons 'customButtons'))
 }}
 {{object-list-view
-  class = 'bottom attached'
   modelProjection = modelProjection
   content = content
   sorting = sorting
@@ -26,7 +25,7 @@
   action='rowClick'
   componentName = componentName
 }}
-<div class="ui secondary menu">
+<div class="ui secondary stackable menu no-margin">
   <div class="ui basic buttons">
 	<button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
 	{{#each pages as |page|}}

@@ -1,11 +1,22 @@
 import Ember from 'ember';
-import ModalApplicationRouteMixin from '../mixins/modal-application-route';
 import Moment from 'moment';
 
-export default Ember.Route.extend(ModalApplicationRouteMixin, {
+export default Ember.Route.extend({
+
+  /**
+   * Returns a locale name for the application.
+   *
+   * @method _getLocale
+   * @protected
+   * @return {String} Locale name
+   */
+  _getLocale: function() {
+    return navigator.language || navigator.userLanguage || 'en';
+  },
+
   beforeModel: function() {
-    var language = navigator.language || navigator.userLanguage || 'en';
-    this.set('i18n.locale', language);
-    Moment.lang(language);
+    var locale = this._getLocale();
+    this.set('i18n.locale', locale);
+    Moment.lang(locale);
   }
 });

@@ -57,6 +57,7 @@
           {{flexberry-menu
             class='icon vertical'
             items=menuInRowItems
+            callItemsOnClickCallbacks=false
             onItemClick=(action 'menuInRowItemClick' record.key record.data)
             relatedModel=record.data
           }}

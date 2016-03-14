@@ -50,7 +50,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   headerClickable: true,
   showCheckBoxInRow: false,
   showDeleteButtonInRow: false,
-  showMenuInRow: false,
+  showEditMenuItemInRow: false,
+  showDeleteMenuItemInRow: false,
   menuInRowItems: null,
   menuInRowAdditionalItems: null,
   menuInRowHasAdditionalItems: Ember.computed('menuInRowItems', 'menuInRowItems.[]', function() {
@@ -121,6 +122,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (e.item.isEditItem) {
         this.send('rowClick', key, record);
         return;
+      }
+
+      // Call onClick handler if it is specified in the given menu item.
+      if (e.item && Ember.typeOf(e.item.onClick) === 'function') {
+        e.modelKey = key;
+        e.model = record;
+
+        e.item.onClick.call(e.currentTarget, e);
       }
     }
   },

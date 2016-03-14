@@ -3,7 +3,6 @@
  */
 
 import Ember from 'ember';
-import FlexberryMenuComponent from './flexberry-menu';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -82,12 +81,6 @@ export default FlexberryBaseComponent.extend({
       var classNames = this.get('classNames');
       classNames.push(...['ui', 'simple', 'dropdown']);
     }
-
-    // Find and remember root 'flexberry-menu' component (which contains this menu item).
-    var rootMenuComponent = this.getTargetObjectByCondition(function(targetObject) {
-      return targetObject instanceof FlexberryMenuComponent;
-    });
-    this.set('_rootMenuComponent', rootMenuComponent);
   },
 
   /**
@@ -96,12 +89,10 @@ export default FlexberryBaseComponent.extend({
   didInsertElement: function() {
     this._super(...arguments);
 
-    // Bind right context to click event handler.
-    var onClickHandler = this.get('_onClickHandler').bind(this);
-    this.set('_onClickHandler', onClickHandler);
-
-    // Attach click event handler.
-    this.$().on('click', onClickHandler);
+    // Store item object in DOM-element data attribute.
+    // It will be used in root 'flexberry-menu' component to handle click on this 'flexberry-menuitem'.
+    var item = this.get('item');
+    this.$().data('flexberry-menuitem.item', item);
   },
 
   /**
@@ -110,50 +101,7 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement: function() {
     this._super(...arguments);
 
-    // Remove click event handler.
-    var onClickHandler = this.get('_onClickHandler');
-    this.$().off('click', onClickHandler);
-  },
-
-  /**
-   * Root flexberry-menu component (which contains this menu item).
-   *
-   * @property _rootMenuComponent
-   * @type FlexberryMenuComponent
-   * @private
-   */
-  _rootMenuComponent: null,
-
-  /**
-   * Menu item click handler.
-   * @method _onClickHandler
-   * @param e Click event object.
-   * @private
-   */
-  _onClickHandler: function(e) {
-    // Stop event bubbling.
-    e.stopPropagation();
-
-    // Add clicked item's content to click event object.
-    var item = this.get('item');
-    e.item = item;
-
-    // // Add clicked item's related model to click event object.
-    var model = this.get('relatedModel');
-    e.model = model;
-
-    // Call onClick handler if it is specified in the given menu item.
-    if (item && Ember.typeOf(item.onClick) === 'function') {
-      item.onClick.call(e.currentTarget, e);
-    }
-
-    // Send 'onClick' action on clicked 'flexberry-menuitem' component.
-    this.sendAction('onClick', e);
-
-    // Send 'onItemClick' action on root 'flexberry-menu' component.
-    var rootMenuComponent = this.get('_rootMenuComponent');
-    if (rootMenuComponent && rootMenuComponent.sendAction) {
-      rootMenuComponent.sendAction('onItemClick', e);
-    }
+    // Remove stored item object from DOM-element data attribute.
+    this.$().removeData('flexberry-menuitem.item');
   }
 });

@@ -10,9 +10,7 @@
 {{#if hasSubitems}}
   <div class="{{if item.itemsAlignment item.itemsAlignment}} menu">
     {{#each item.items as |item|}}   
-      {{flexberry-menuitem
-        item=item
-      }}
+      {{flexberry-menuitem item=item}}
     {{/each}}
   </div>
 {{/if}}

@@ -2,6 +2,7 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -47,6 +48,23 @@ export default FlexberryBaseComponent.extend({
    * @default undefined
    */
   label: undefined,
+
+  /**
+   * DOM-element representing checkbox input.
+   *
+   * @property checkboxInput
+   * @type Object
+   */
+  checkboxInput: null,
+
+  /**
+   * Checkbox value's observer.
+   */
+  valueDidChange: Ember.observer('value', function() {
+    this.sendAction('onChange', {
+      checked: this.get('value')
+    });
+  }),
 
   /**
    * Initializes checkbox component.

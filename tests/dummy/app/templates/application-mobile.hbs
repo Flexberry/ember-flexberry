@@ -1,4 +1,4 @@
-<div id="example">
+<div id="example-mobile">
   {{#ui-sidebar class="inverted vertical menu"}}
     <div class="header item">
       <a class="brand" href="#">Flexberry prototype written in Ember.js</a>
@@ -17,7 +17,7 @@
       <div class="ui top attached">
         <div class="ui attached menu">
           <div class="ui container">
-            <a {{ action 'toggleSidebar' }} title="Menu" class="launch icon item"><i class="sidebar icon"></i></a>            
+            <a {{ action 'toggleSidebar' }} class="launch icon item"><i class="sidebar icon"></i></a>            
             <div class="right menu">              
               {{#if session.isAuthenticated}}
                 <div class="item">
@@ -39,22 +39,6 @@
           <div class="stackable grid container">
               {{outlet}}
               {{outlet 'modal'}}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="ui vertical footer segment">
-      <div class="ui container">
-        <div class="ui text menu">
-        <a class="brand item" href="#">Flexberry prototype written in Ember.js</a>
-          <div class="right menu">
-            <a {{action 'openDevCommit'}}
-             id="app-version"
-             class="item"
-             title="It is version of ember-flexberry addon, which uses in this dummy application (npm version + commit sha). Click to open commit on GitHub."
-             target="_blank">
-            {{app-version}}
-            </a>
           </div>
         </div>
       </div>

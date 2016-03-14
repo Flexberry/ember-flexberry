@@ -92,3 +92,47 @@ table {
     text-align: right;
   }
 }
+
+// Expamles application template
+#example-with-sybmenu {
+  padding-top: 40px;
+
+  .flexberry-submenu .item {
+    padding-right: 0;    
+    > .menu {
+      margin-right: -2px;
+    }
+  }
+
+  .flexberry-content {
+    position: relative;
+    padding: 0;
+
+    &.segment {
+      box-shadow: none;
+      border: none;
+    }
+  }
+}
+
+#example {
+  .flexberry-content {
+    padding: 3em 0;
+  }
+}
+
+#example-mobile {
+  .flexberry-content {
+    padding: 3em 0;
+    border-bottom: none;
+  }
+}
+
+// Style for responsive
+@media only screen and (max-width: 767px) {
+  .ui.menu.container {
+      margin-right: 0 !important;
+      margin-left: 0 !important;
+  }
+}
+

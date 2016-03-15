@@ -55,6 +55,7 @@ export default {
 
   'object-list-view': {
     'no-data-text': 'There is no data',
+    'single-column-header-title': 'Model properties',
     'menu-in-row': {
       'edit-menu-item-title': 'Edit record',
       'delete-menu-item-title': 'Delete record'

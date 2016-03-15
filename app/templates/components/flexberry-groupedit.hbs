@@ -1,17 +1,27 @@
 {{groupedit-toolbar
-  componentName=componentName
-  readonly=readonly
- }}
+  componentName = componentName
+  readonly = readonly
+}}
 {{object-list-view
-  componentName=componentName
-  class=class
-  modelProjection=modelProjection
-  content=content
-  readonly=readonly
-  rowClickable=_rowClickable
-  headerClickable=orderable
-  showCheckBoxInRow=_showCheckBoxInRow
-  showDeleteButtonInRow=_showDeleteButtonInRow
-  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn "sortByColumn"))
-  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting "addColumnToSorting"))
+  class = class
+  readonly = readonly
+  headerCellComponent = headerCellComponent
+  cellComponent = cellComponent
+  singleColumnCellComponent = singleColumnCellComponent
+  useSingleColumn = useSingleColumn
+  singleColumnHeaderTitle = singleColumnHeaderTitle
+  showAsteriskInRow = showAsteriskInRow
+  showCheckBoxInRow = showCheckBoxInRow
+  showDeleteButtonInRow = showDeleteButtonInRow
+  showEditMenuItemInRow = showEditMenuItemInRow
+  showDeleteMenuItemInRow = showDeleteMenuItemInRow
+  menuInRowAdditionalItems = menuInRowAdditionalItems
+  rowClickable = rowClickable
+  headerClickable = orderable
+  sorting = sorting
+  modelProjection = modelProjection
+  content = content
+  sortByColumn = (action (if this.attrs.sortByColumn this.attrs.sortByColumn "sortByColumn"))
+  addColumnToSorting = (action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting "addColumnToSorting"))
+  componentName = componentName
 }}

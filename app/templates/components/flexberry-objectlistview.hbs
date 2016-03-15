@@ -13,20 +13,26 @@
 }}
 {{object-list-view
   class = 'bottom attached'
+  readonly = readonly
+  headerCellComponent = headerCellComponent
+  cellComponent = cellComponent
+  singleColumnCellComponent = singleColumnCellComponent
+  useSingleColumn = useSingleColumn
+  singleColumnHeaderTitle = singleColumnHeaderTitle
+  showAsteriskInRow = (and (not readonly) showAsteriskInRow)
+  showCheckBoxInRow = (and (not readonly) showCheckBoxInRow)
+  showDeleteButtonInRow = (and (not readonly) showDeleteButtonInRow)
+  showEditMenuItemInRow = (and (not readonly) showEditMenuItemInRow)
+  showDeleteMenuItemInRow = (and (not readonly) showDeleteMenuItemInRow)
+  menuInRowAdditionalItems = menuInRowAdditionalItems
+  rowClickable = (and (not readonly) rowClickable)
+  headerClickable = orderable
+  sorting = sorting
   modelProjection = modelProjection
   content = content
-  sorting = sorting
-  readonly = readonly
-  rowClickable=(and (not readonly) rowClickable)
-  headerClickable=orderable
-  showCheckBoxInRow=(and (not readonly) showCheckBoxInRow)
-  showDeleteButtonInRow=(and (not readonly) showDeleteButtonInRow)
-  showEditMenuItemInRow=(and (not readonly) showEditMenuItemInRow)
-  showDeleteMenuItemInRow=(and (not readonly) showDeleteMenuItemInRow)
-  menuInRowAdditionalItems=menuInRowAdditionalItems
-  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
-  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
-  action=action
+  sortByColumn = (action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
+  addColumnToSorting = (action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  action = action
   componentName = componentName
 }}
 <div class="ui secondary menu">

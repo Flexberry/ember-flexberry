@@ -11,46 +11,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
-  /**
-   * Projection for detail object's model.
-   *
-   * @property modelProjection
-   * @type Object
-   * @default null
-   */
-  modelProjection: null,
-
-  /**
-   * Array of models for detail objects.
-   *
-   * @property content
-   * @type ManyArray
-   * @default null
-   */
-  content: null,
-
-  /**
-   * Function to get names of components to use for display
-   * attributes of detail object's model.
-   *
-   * @property cellComponent
-   * @type Function
-   * @default null
-   */
-  cellComponent: null,
-
-  /**
-   * Setting to true enables row ordering by clicking on column headers.
-   *
-   * @property orderable
-   * @type Boolean
-   * @default false
-   */
-  orderable: false,
-  _showCheckBoxInRow: true,
-  _showDeleteButtonInRow: true,
-  _rowClickable: false,
-
   actions: {
     /**
      * Handles action from object-list-view when no handler for this component is defined.
@@ -73,5 +33,156 @@ export default FlexberryBaseComponent.extend({
       throw new Error('No handler for addColumnToSorting action set for flexberry-groupedit. ' +
                       'Set handler like {{flexberry-groupedit ... addColumnToSorting=(action "addColumnToSorting")}}.');
     }
-  }
+  },
+
+  /**
+   * Default cell component that will be used to display values in columns headers.
+   *
+   * @property {Object} headerCellComponent
+   * @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
+   * @property {String} [headerCellComponent.componentProperties=null]
+   */
+  headerCellComponent: {
+    componentName: 'object-list-view-header-cell',
+    componentProperties: null
+  },
+
+  /**
+   * Default cell component that will be used to display values in columns cells.
+   *
+   * @property {Object} cellComponent
+   * @property {String} [cellComponent.componentName='object-list-view-cell']
+   * @property {String} [cellComponent.componentProperties=null]
+   */
+  cellComponent: {
+    componentName: 'object-list-view-cell',
+    componentProperties: null
+  },
+
+  /**
+   * Default cell component that will be used to display values in single column.
+   *
+   * @property {Object} singleColumnCellComponent
+   * @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
+   * @property {String} [singleColumnCellComponent.componentProperties=null]
+   */
+  singleColumnCellComponent: {
+    componentName: 'object-list-view-single-column-cell',
+    componentProperties: null
+  },
+
+  /**
+   * Flag: indicates whether to use single column to display all model properties or not.
+   *
+   * @property useSingleColumn
+   * @type Boolean
+   * @default false
+   */
+  useSingleColumn: false,
+
+  /**
+   * Header title of single column.
+   *
+   * @property singleColumnHeaderTitle
+   * @type String
+   */
+  singleColumnHeaderTitle: undefined,
+
+  /**
+   * Flag: indicates whether to show asterisk icon in first column of every changed row.
+   *
+   * @property showAsteriskInRow
+   * @type Boolean
+   * @default true
+   */
+  showAsteriskInRow: true,
+
+  /**
+   * Flag: indicates whether to show checkbox in first column of every row.
+   *
+   * @property showCheckBoxInRow
+   * @type Boolean
+   * @default true
+   */
+  showCheckBoxInRow: true,
+
+  /**
+   * Flag: indicates whether to show delete button in first column of every row.
+   *
+   * @property showDeleteButtonInRow
+   * @type Boolean
+   * @default true
+   */
+  showDeleteButtonInRow: true,
+
+  /**
+   * Flag: indicates whether to show dropdown menu with edit menu item, in last column of every row.
+   *
+   * @property showEditMenuItemInRow
+   * @type Boolean
+   * @default false
+   */
+  showEditMenuItemInRow: false,
+
+  /**
+   * Flag: indicates whether to show dropdown menu with delete menu item, in last column of every row.
+   *
+   * @property showDeleteMenuItemInRow
+   * @type Boolean
+   * @default false
+   */
+  showDeleteMenuItemInRow: false,
+
+  /**
+   * Additional menu items for dropdown menu in last column of every row.
+   *
+   * @property menuInRowAdditionalItems
+   * @type boolean
+   * @default null
+   */
+  menuInRowAdditionalItems: null,
+
+  /**
+   * Flag: indicates whether table rows are clickable.
+   *
+   * @property rowClickable
+   * @type Boolean
+   * @default true
+   */
+  rowClickable: false,
+
+  /**
+   * Flag: indicates whether ordering by clicking on column headers is allowed.
+   *
+   * @property headerClickable
+   * @type Boolean
+   * @default false
+   */
+  orderable: false,
+
+  /**
+   * Dictionary with sorting data related to columns.
+   *
+   * @property sorting
+   * @type Object
+   */
+  sorting: null,
+
+  /**
+   * Model projection which should be used to display given content.
+   *
+   * @property modelProjection
+   * @type Object
+   * @default null
+   */
+  modelProjection: null,
+
+  /**
+   * Content to be displayed (models collection).
+   *
+   * @property content
+   * @type ManyArray
+   * @default null
+   */
+  content: null
 });

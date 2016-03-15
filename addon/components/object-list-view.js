@@ -7,70 +7,12 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 
 /**
- * @class FlexberryObjectListView
+ * Object list view component.
+ *
+ * @class ObjectListView
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, {
-  tagName: 'table',
-  classNames: [
-    'object-list-view',
-
-    // Semantic UI styles.
-    'ui',
-    'celled',
-    'table'
-  ],
-
-  /**
-   * Path to component's settings in application configuration (JSON from ./config/environment.js).
-   *
-   * @property appConfigSettingsPath
-   * @type String
-   * @default 'APP.components.flexberryBaseComponent'
-   */
-  appConfigSettingsPath: 'APP.components.objectListView',
-
-  modelProjection: null,
-  content: null,
-  sorting: null,
-  selectedRecord: null,
-  selectedRecords: null,
-  customColumnAttributes: null,
-
-  headerCellComponent: 'object-list-view-header-cell',
-  cellComponent: {
-    componentName: 'object-list-view-cell',
-    componentProperties: null
-  },
-
-  action: 'rowClick',
-  addColumnToSorting: 'addColumnToSorting',
-  sortByColumn: 'sortByColumn',
-  rowClickable: true,
-  headerClickable: true,
-  showCheckBoxInRow: false,
-  showDeleteButtonInRow: false,
-  showEditMenuItemInRow: false,
-  showDeleteMenuItemInRow: false,
-  menuInRowItems: null,
-  menuInRowAdditionalItems: null,
-  menuInRowHasAdditionalItems: Ember.computed('menuInRowItems', 'menuInRowItems.[]', function() {
-    var menuInRowAdditionalItems = this.get('menuInRowAdditionalItems');
-    return Ember.isArray(menuInRowAdditionalItems) && menuInRowAdditionalItems.length > 0;
-  }),
-  store: Ember.inject.service(),
-  noDataMessage: null,
-
-  /**
-   * Service that triggers objectlistview events.
-   *
-   * @property objectlistviewEventsService
-   * @type Service
-   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
-
-  contentWithKeys: null,
-
   actions: {
     rowClick: function(key, record) {
       if (this.rowClickable) {
@@ -79,22 +21,27 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         this.sendAction('action', record);
       }
     },
+
     headerCellClick: function(column, event) {
-      if (this.headerClickable) {
-        var action = event.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
-        this.sendAction(action, column);
+      if (!this.headerClickable || column.sortable === false) {
+        return;
       }
+
+      var action = event.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
+      this.sendAction(action, column);
     },
+
     deleteRow: function(key, record) {
       if (confirm('Do you really want to delete this record?')) {
         this._deleteRecord(record);
       }
     },
-    selectRow: function(key, record) {
+
+    selectRow: function(key, record, e) {
       var selectedRecords = this.get('selectedRecords');
       var selectedRow = this._getRowByKey(key);
-      var checkBoxChecked = selectedRow.find('input[type=checkbox]').prop('checked');
-      if (checkBoxChecked) {
+
+      if (e.checked) {
         if (!selectedRow.hasClass('active')) {
           selectedRow.addClass('active');
         }
@@ -113,6 +60,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       var componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, record, selectedRecords.length);
     },
+
     menuInRowItemClick: function(key, record, e) {
       if (e.item.isDeleteItem) {
         this.send('deleteRow', key, record);
@@ -134,63 +82,453 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     }
   },
 
+  /**
+   * Table row click action name.
+   *
+   * @property action
+   * @type String
+   * @default 'rowClick'
+   * @readonly
+   */
+  action: 'rowClick',
+
+  /**
+   * Table add column to sorting action name.
+   *
+   * @property addColumnToSorting
+   * @type String
+   * @default 'addColumnToSorting'
+   * @readonly
+   */
+  addColumnToSorting: 'addColumnToSorting',
+
+  /**
+   * Table sort by column action name.
+   *
+   * @property sortByColumn
+   * @type String
+   * @default 'sortByColumn'
+   * @readonly
+   */
+  sortByColumn: 'sortByColumn',
+
+  /**
+   * Override wrapping element's tag.
+   */
+  tagName: 'table',
+
+  /**
+   * Component's CSS classes.
+   */
+  classNames: ['object-list-view', 'ui', 'celled', 'table'],
+
+  /**
+   * Component's CSS classes bindings.
+   */
+  classNameBindings: ['rowClickable:selectable', 'readonly:readonly'],
+
+  /**
+   * Path to component's settings in application configuration (JSON from ./config/environment.js).
+   *
+   * @property appConfigSettingsPath
+   * @type String
+   * @default 'APP.components.flexberryBaseComponent'
+   */
+  appConfigSettingsPath: 'APP.components.objectListView',
+
+  /**
+   * Default cell component that will be used to display values in columns headers.
+   *
+   * @property {Object} headerCellComponent
+   * @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
+   * @property {String} [headerCellComponent.componentProperties=null]
+   */
+  headerCellComponent: {
+    componentName: 'object-list-view-header-cell',
+    componentProperties: null
+  },
+
+  /**
+   * Default cell component that will be used to display values in columns cells.
+   *
+   * @property {Object} cellComponent
+   * @property {String} [cellComponent.componentName='object-list-view-cell']
+   * @property {String} [cellComponent.componentProperties=null]
+   */
+  cellComponent: {
+    componentName: 'object-list-view-cell',
+    componentProperties: null
+  },
+
+  /**
+   * Default cell component that will be used to display values in single column.
+   *
+   * @property {Object} singleColumnCellComponent
+   * @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
+   * @property {String} [singleColumnCellComponent.componentProperties=null]
+   */
+  singleColumnCellComponent: {
+    componentName: 'object-list-view-single-column-cell',
+    componentProperties: null
+  },
+
+  /**
+   * Flag: indicates whether to use single column to display all model properties or not.
+   *
+   * @property useSingleColumn
+   * @type Boolean
+   * @default false
+   */
+  useSingleColumn: false,
+
+  /**
+   * Header title of single column.
+   *
+   * @property singleColumnHeaderTitle
+   * @type String
+   */
+  singleColumnHeaderTitle: undefined,
+
+  /**
+   * Flag: indicates whether to show asterisk icon in first column of every changed row.
+   *
+   * @property showAsteriskInRow
+   * @type Boolean
+   * @default false
+   */
+  showAsteriskInRow: false,
+
+  /**
+   * Flag: indicates whether to show checkbox in first column of every row.
+   *
+   * @property showCheckBoxInRow
+   * @type Boolean
+   * @default false
+   */
+  showCheckBoxInRow: false,
+
+  /**
+   * Flag: indicates whether to show delete button in first column of every row.
+   *
+   * @property showDeleteButtonInRow
+   * @type Boolean
+   * @default false
+   */
+  showDeleteButtonInRow: false,
+
+  /**
+   * Flag: indicates whether to show helper column or not.
+   *
+   * @property showHelperColumn
+   * @type Boolean
+   * @readonly
+   */
+  showHelperColumn: Ember.computed('showAsteriskInRow', 'showCheckBoxInRow', 'showDeleteButtonInRow', function() {
+    return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+  }),
+
+  /**
+   * Flag: indicates whether to show dropdown menu with edit menu item, in last column of every row.
+   *
+   * @property showEditMenuItemInRow
+   * @type Boolean
+   * @default false
+   */
+  showEditMenuItemInRow: false,
+
+  /**
+   * Flag: indicates whether to show dropdown menu with delete menu item, in last column of every row.
+   *
+   * @property showDeleteMenuItemInRow
+   * @type Boolean
+   * @default false
+   */
+  showDeleteMenuItemInRow: false,
+
+  /**
+   * Additional menu items for dropdown menu in last column of every row.
+   *
+   * @property menuInRowAdditionalItems
+   * @type boolean
+   * @default null
+   */
+  menuInRowAdditionalItems: null,
+
+  /**
+   * Flag: indicates whether additional menu items for dropdown menu in last column of every row are defined.
+   *
+   * @property menuInRowHasAdditionalItems
+   * @type Boolean
+   * @readonly
+   */
+  menuInRowHasAdditionalItems: Ember.computed('menuInRowAdditionalItems.[]', function() {
+    var menuInRowAdditionalItems = this.get('menuInRowAdditionalItems');
+    return Ember.isArray(menuInRowAdditionalItems) && menuInRowAdditionalItems.length > 0;
+  }),
+
+  /**
+   * Flag: indicates whether to show menu column or not.
+   *
+   * @property showMenuColumn
+   * @type Boolean
+   * @readonly
+   */
+  showMenuColumn: Ember.computed(
+    'showEditMenuItemInRow',
+    'showDeleteMenuItemInRow',
+    'menuInRowHasAdditionalItems',
+    function() {
+      return this.get('showEditMenuItemInRow') || this.get('showDeleteMenuItemInRow') || this.get('menuInRowHasAdditionalItems');
+    }
+  ),
+
+  /**
+   * Menu items for dropdown menu in last column of every row.
+   *
+   * @property menuInRowItems
+   * @type Object[]
+   * @readonly
+   */
+  menuInRowItems: Ember.computed(
+    'showEditMenuItemInRow',
+    'showEditMenuItemInRow',
+    'menuInRowHasAdditionalItems',
+    function() {
+      var menuInRowSubItems = [];
+      if (this.get('showEditMenuItemInRow')) {
+        menuInRowSubItems.push({
+          icon: 'edit icon',
+          title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
+          isEditItem: true
+        });
+      }
+
+      if (this.get('showDeleteMenuItemInRow')) {
+        menuInRowSubItems.push({
+          icon: 'trash icon',
+          title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
+          isDeleteItem: true
+        });
+      }
+
+      if (this.get('menuInRowHasAdditionalItems')) {
+        menuInRowSubItems.push(...this.get('menuInRowAdditionalItems'));
+      }
+
+      return [{
+        icon: 'list layout icon',
+        itemsAlignment: 'left',
+        items: menuInRowSubItems
+      }];
+    }
+  ),
+
+  /**
+   * Model projection which should be used to display given content.
+   *
+   * @property modelProjection
+   * @type Object
+   * @default null
+   */
+  modelProjection: null,
+
+  /**
+   * Table columns related to current model projection.
+   *
+   * @property columns
+   * @type Object[]
+   * @readonly
+   */
+  columns: Ember.computed('modelProjection', function() {
+    var projection = this.get('modelProjection');
+    if (!projection) {
+      throw new Error('No projection was defined.');
+    }
+
+    let cols = this._generateColumns(projection.attributes);
+    return cols;
+  }),
+
+  /**
+   * Total columns count (including additional columns).
+   *
+   * @property columnsCount
+   * @type Number
+   * @readonly
+   */
+  colspan: Ember.computed('columns.length', 'useSingleColumn', 'showHelperColumn', 'showMenuColumn', function() {
+    var columnsCount = 0;
+    if (this.get('showHelperColumn')) {
+      columnsCount += 1;
+    }
+
+    if (this.get('showMenuColumn')) {
+      columnsCount += 1;
+    }
+
+    if (this.get('useSingleColumn')) {
+      columnsCount += 1;
+    } else {
+      var columns = this.get('columns');
+      columnsCount += Ember.isArray(columns) ? columns.length : 0;
+    }
+
+    return columnsCount;
+  }),
+
+  /**
+   * Flag: indicates whether some column contains editable component instead of default cellComponent.
+   * @property hasEditableValues
+   * @type Boolean
+   * @readonly
+   */
+  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent.componentName', function() {
+    var columns = this.get('columns');
+    if (!Ember.isArray(columns)) {
+      return true;
+    }
+
+    var defaultCellCompoinentName = this.get('cellComponent.componentName');
+    return columns.filter(function(column) {
+      return column.cellComponent.componentName !== defaultCellCompoinentName;
+    }).length > 0;
+  }),
+
+  /**
+   * Content to be displayed (models collection).
+   *
+   * @property content
+   * @type ManyArray
+   * @default null
+   */
+  content: null,
+
+  /**
+   * Array of models from content collection with some synthetic keys related to them.
+   *
+   * @property contentWithKeys
+   * @type Object[]
+   * @default null
+   */
+  contentWithKeys: null,
+
+  /**
+   * Flag indicates whether content is defined.
+   *
+   * @property hasContent
+   * @type Boolean
+   * @readonly
+   */
+  hasContent: Ember.computed('contentWithKeys.length', function() {
+    return this.get('contentWithKeys.length') > 0;
+  }),
+
+  /**
+   * Message to be displayed in table body, if content is not defined or empty.
+   *
+   * @property noDataMessage
+   * @type String
+   */
+  noDataMessage: undefined,
+
+  /**
+   * Flag: indicates whether table rows are clickable.
+   *
+   * @property rowClickable
+   * @type Boolean
+   * @default true
+   */
+  rowClickable: true,
+
+  /**
+   * Flag: indicates whether table headers are clickable.
+   *
+   * @property headerClickable
+   * @type Boolean
+   * @default false
+   */
+  headerClickable: false,
+
+  /**
+   * Dictionary with sorting data related to columns.
+   *
+   * @property sorting
+   * @type Object
+   */
+  sorting: null,
+
+  /**
+   * Last selected record.
+   *
+   * @property selectedRecord
+   * @type DS.Model
+   */
+  selectedRecord: null,
+
+  /**
+   * All selected records.
+   *
+   * @property selectedRecords
+   * @type DS.Model[]
+   */
+  selectedRecords: null,
+
+  /**
+   * Custom attributes which will be added to each generated column.
+   *
+   * @property customColumnAttributes
+   * @type Object
+   */
+  customColumnAttributes: null,
+
+  /**
+   * Ember data store.
+   *
+   * @property store
+   * @type Service
+   */
+  store: Ember.inject.service('store'),
+
+  /**
+   * Service that triggers objectlistview events.
+   *
+   * @property objectlistviewEventsService
+   * @type Service
+   */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
+   * Initializes component.
+   */
   init: function() {
     this._super(...arguments);
 
     this.set('selectedRecords', Ember.A());
-    this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
-    this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.set('contentWithKeys', Ember.A());
 
-    var menuInRowSubItems = [];
-    if (this.get('showEditMenuItemInRow')) {
-      menuInRowSubItems.push({
-        icon: 'edit icon',
-        title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
-        isEditItem: true
-      });
-    }
+    this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
+    this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
 
-    if (this.get('showDeleteMenuItemInRow')) {
-      menuInRowSubItems.push({
-        icon: 'trash icon',
-        title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
-        isDeleteItem: true
-      });
-    }
+    this.initProperty({
+      propertyName: 'noDataMessage',
+      defaultValue: this.get('i18n').t('object-list-view.no-data-text') || 'No data'
+    });
 
-    if (this.get('menuInRowHasAdditionalItems')) {
-      menuInRowSubItems.push(...this.get('menuInRowAdditionalItems'));
-    }
+    this.initProperty({
+      propertyName: 'singleColumnHeaderTitle',
+      defaultValue: this.get('i18n').t('object-list-view.single-column-header-title') || 'Model properties'
+    });
 
-    var menuInRowItems = [{
-      icon: 'list layout icon',
-      itemsAlignment: 'left',
-      items: menuInRowSubItems
-    }];
-
-    this.set('menuInRowItems', menuInRowItems);
-
-    if (!this.get('noDataMessage')) {
-      this.set('noDataMessage', this.get('i18n').t('object-list-view.no-data-text'));
-    }
-
-    if (this.get('rowClickable')) {
-      this.get('classNames').push('selectable');
-    }
-
-    if (this.get('readonly')) {
-      this.get('classNames').push('readonly');
-    }
-
-    var _this = this;
     if (this.get('content')) {
-      this.get('content').forEach(function(item, index, enumerable) {
-        _this._addModel(item);
+      this.get('content').forEach((item, index, enumerable) => {
+        this._addModel(item);
       });
     }
   },
 
+  /**
+   * Destroys component.
+   */
   willDestroy: function() {
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
@@ -198,6 +536,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this._super(...arguments);
   },
 
+  /**
+   * Initializes component's DOM-related logic.
+   */
   didInsertElement: function() {
     this._super(...arguments);
 
@@ -214,19 +555,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     }
   },
 
+  /**
+   * Destroys component's DOM-related logic.
+   */
   willDestroyElement: function() {
     this._super(...arguments);
   },
-
-  columns: Ember.computed('modelProjection', function() {
-    var projection = this.get('modelProjection');
-    if (!projection) {
-      throw new Error('No projection was defined.');
-    }
-
-    let cols = this._generateColumns(projection.attributes);
-    return cols;
-  }),
 
   _generateColumns: function(attributes, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];
@@ -404,12 +738,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     selectedRow.addClass('active');
   },
 
-  _colCount: Ember.computed('columns.length', 'showCheckBoxInRow', 'showDeleteButtonInRow', function() {
-    var numOfAdditionalColumns = (this.showCheckBoxInRow || this.showDeleteButtonInRow) ? 1 : 0;
-    return this.get('columns').length + numOfAdditionalColumns;
-  }),
-
-  _detailChanged: Ember.observer('content.@each.hasDirtyAttributes', function() {
+  _rowsChanged: Ember.observer('content.@each.hasDirtyAttributes', function() {
     var componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
   })

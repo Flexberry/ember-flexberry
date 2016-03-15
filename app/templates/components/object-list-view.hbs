@@ -1,39 +1,51 @@
 <thead>
   <tr>
-    <th class="object-list-view-operations {{if (not (or showCheckBoxInRow showDeleteButtonInRow)) 'hidden'}}"></th>
-    {{#each columns as |column|}}
-      {{component headerCellComponent column=column}}
-    {{/each}}
-    {{#if (or showEditMenuItemInRow showDeleteMenuItemInRow menuInRowHasAdditionalItems)}}
-      <th class="object-list-view-menu"></th>
+    <th class="object-list-view-operations collapsing {{if (not showHelperColumn) 'hidden'}}"></th>
+    {{#if useSingleColumn}}
+      {{component headerCellComponent.componentName
+        column=(hash header=singleColumnHeaderTitle sortable=false)
+        dynamicProperties=headerCellComponent.componentProperties
+      }}
+    {{else}}
+      {{#each columns as |column|}}
+        {{component headerCellComponent.componentName
+          column=column
+          dynamicProperties=headerCellComponent.componentProperties
+        }}
+      {{/each}}
+    {{/if}}
+    {{#if showMenuColumn}}
+      <th class="object-list-view-menu collapsing"></th>
     {{/if}}
   </tr>
 </thead>
 <tbody>
-  {{#if (eq contentWithKeys.length 0)}}
+  {{#if (not hasContent)}}
     <tr>
-      <td colspan="{{_colCount}}" style="text-align:center;">{{noDataMessage}}</td>
+      <td colspan="{{colspan}}" style="text-align:center;">{{noDataMessage}}</td>
     </tr>
   {{/if}}
   {{#each contentWithKeys key="key" as |record|}}
     <tr>
-      <td class="object-list-view-operations {{if (not (or showCheckBoxInRow showDeleteButtonInRow)) 'hidden'}}">
+      <td class="object-list-view-helper-column {{if (not showHelperColumn) 'hidden'}}">
         <div style="display: none">{{record.key}}
         </div>
-        <div class="ui middle aligned grid">
-          <div class="column object-list-view-asterisk {{if (not record.data.hasDirtyAttributes) 'hidden'}}">
-            <i class="asterisk small red icon"></i>
-          </div>
+        <div class="object-list-view-helper-column-cell">
+          {{#if showAsteriskInRow}}
+            <div class="cell">
+              <i class="asterisk small red icon {{if (not record.data.hasDirtyAttributes) 'transparent'}}"></i>
+            </div>
+          {{/if}}
           {{#if showCheckBoxInRow}}
-            <div class="column">
-              <div class="ui checkbox {{if readonly 'disabled'}}">
-                <input type="checkbox" disabled={{readonly}} {{action 'selectRow' record.key record.data preventDefault=false}}>
-  			         <label></label>
-  			       </div>
+            <div class="cell">
+              {{flexberry-checkbox
+                readonly=reanonly
+                onChange=(action 'selectRow' record.key record.data)
+              }}
             </div>
           {{/if}}
           {{#if showDeleteButtonInRow}}
-            <div class="column">
+            <div class="cell">
               <button class="ui primary button {{if readonly 'disabled'}}" {{action 'deleteRow' record.key record.data}}>
                 <i class="minus icon"></i>
               </button>
@@ -41,25 +53,35 @@
           {{/if}}
         </div>
       </td>
-      {{#each columns as |column|}}
+      {{#if useSingleColumn}}
         <td {{action 'rowClick' record.key record.data preventDefault=false}}>
-          {{component column.cellComponent.componentName
-            dynamicProperties=column.cellComponent.componentProperties
-            relatedModel=record.data
-            value=(mut (get record.data column.propName))
-            readonly=readonly
-            required=required
+          {{component singleColumnCellComponent.componentName
+            model=record.data
+            columns=columns
+            hasEditableValues=hasEditableValues
+            dynamicProperties=singleColumnCellComponent.componentProperties
           }}
         </td>
-      {{/each}}
-      {{#if (or showEditMenuItemInRow showDeleteMenuItemInRow menuInRowHasAdditionalItems)}}
+      {{else}}
+        {{#each columns as |column|}}
+          <td {{action 'rowClick' record.key record.data preventDefault=false}}>
+            {{component column.cellComponent.componentName
+              dynamicProperties=column.cellComponent.componentProperties
+              relatedModel=record.data
+              value=(mut (get record.data column.propName))
+              readonly=readonly
+              required=required
+            }}
+          </td>
+        {{/each}}
+      {{/if}}
+      {{#if showMenuColumn}}
         <td class="object-list-view-menu">
           {{flexberry-menu
             class='icon vertical'
             items=menuInRowItems
             callItemsOnClickCallbacks=false
             onItemClick=(action 'menuInRowItemClick' record.key record.data)
-            relatedModel=record.data
           }}
         </td>
       {{/if}}

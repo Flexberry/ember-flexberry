@@ -12,18 +12,27 @@ table.object-list-view tbody tr td:first-child button {
   margin: 0 !important;
 }
 
-table.object-list-view thead tr th.object-list-view-operations {
-  min-width: 80px;
-  width: 80px;
+table.object-list-view tbody tr td .object-list-view-helper-column-cell {
+  display: table !important;
 }
 
-table.object-list-view tbody tr td.object-list-view-operations .object-list-view-asterisk {
-  padding-left: 5px !important;
-  padding-right: 0 !important;
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell {
+  display: table-cell !important;
+  vertical-align: middle !important;
+  padding: 0 0 0 5px !important;
 }
 
-table.object-list-view tbody tr td.object-list-view-operations .object-list-view-asterisk i {
-  font-size: x-small;
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell:first-child {
+  padding: 0 !important;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell i.asterisk {
+  font-size: x-small !important;
+  margin: 0;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell i.asterisk.transparent {
+  opacity: 0 !important;
 }
 
 table.object-list-view tbody tr td:first-child button i {

@@ -55,6 +55,7 @@ export default {
 
   'object-list-view': {
     'no-data-text': 'Нет данных',
+    'single-column-header-title': 'Свойства модели',
     'menu-in-row': {
       'edit-menu-item-title': 'Редактировать запись',
       'delete-menu-item-title': 'Удалить запись'

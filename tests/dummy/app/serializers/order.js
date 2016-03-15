@@ -1,10 +1,10 @@
 import DS from 'ember-data';
 import ApplicationSerializer from './application';
 
-export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
+export default ApplicationSerializer.extend({
   attrs: {
-    employee: { serialize: 'id', deserialize: 'records' },
-    customer: { serialize: 'id', deserialize: 'records' }
+    employee: { serialize: 'odata-id', deserialize: 'records' },
+    customer: { serialize: 'odata-id', deserialize: 'records' }
   },
 
   primaryKey: 'OrderID'

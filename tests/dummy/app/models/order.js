@@ -23,10 +23,6 @@ var Model = BaseModel.extend({
   }
 });
 
-Model.reopenClass({
-  modelAgregator: 'employee'
-});
-
 Model.defineProjection('OrderE', 'order', {
   shipName: Proj.attr('Ship Name'),
   shipCountry: Proj.attr('Ship Country'),

@@ -300,14 +300,19 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
   /**
    * Adds detail model to current model, generates unique key for detail model.
+   * If record is deleted then `undefined` is returned and record isn't added to list.
    *
    * @method _addModel
    * @private
    *
    * @param {DS.Model} record Detail model to add to current model.
-   * @return {String} Unique key for added record.
+   * @return {String} Unique key for added record or `undefined` if record is deleted.
    */
   _addModel: function(record) {
+    if (record.get('isDeleted')) {
+      return undefined;
+    }
+
     var modelWithKey = Ember.Object.create({});
     var key = Ember.guidFor(record);
     modelWithKey.set('key', key);

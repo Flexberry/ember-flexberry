@@ -120,19 +120,13 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    */
   actions: {
     save: function() {
-      let modelAgregatorRoute = this.get('modelAgregatorRoute');
-      if (modelAgregatorRoute) {
-        // If parent's route is defined, save on parent's route.
-        this.transitionToParentRoute();
-      } else {
-        this.send('dismissErrorMessages');
+      this.send('dismissErrorMessages');
 
-        this.save().then(() => {
-          this._onSaveActionFulfilled();
-        }).catch((errorData) => {
-          this._onSaveActionRejected(errorData);
-        });
-      }
+      this.save().then(() => {
+        this._onSaveActionFulfilled();
+      }).catch((errorData) => {
+        this._onSaveActionRejected(errorData);
+      });
     },
 
     delete: function() {

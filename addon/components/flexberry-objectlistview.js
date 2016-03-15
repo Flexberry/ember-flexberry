@@ -55,7 +55,7 @@ export default FlexberryBaseComponent.extend({
    * @default false
    */
   deleteButton: false,
-  
+
   /**
    * Flag to use filter button at toolbar.
    *
@@ -64,6 +64,15 @@ export default FlexberryBaseComponent.extend({
    * @default false
    */
   filterButton: false,
+
+  /**
+   * Used to specify 'filter by any match' field value.
+   *
+   * @property filterText
+   * @type String
+   * @default null
+   */
+  filterText: null,
 
   /**
    * Projection for detail object's model.

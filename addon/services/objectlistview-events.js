@@ -51,7 +51,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
   /**
    * Trigger for "filter by any match" event in objectlistview.
-   * 
+   *
    * @method filterByAnyMatchTrigger
    *
    * @param {String} componentName The name of objectlistview component.

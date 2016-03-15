@@ -3,25 +3,29 @@
 <div class="row">
   {{flexberry-objectlistview
     modelName = "employee"
-	modelProjection = modelProjection
-	content = model
+    modelProjection = modelProjection
+    content = model
 
     createNewButton = true
     refreshButton = true
+    
+    filterButton = true
+    filterText = filter
+    filterByAnyMatch = (action 'filterByAnyMatch')
 
-	sorting = computedSorting
-	orderable = true
-	sortByColumn = (action "sortByColumn")
-	addColumnToSorting = (action "addColumnToSorting")
-	action = "rowClick"
+	  sorting = computedSorting
+	  orderable = true
+	  sortByColumn = (action "sortByColumn")
+    addColumnToSorting = (action "addColumnToSorting")
+    action = "rowClick"
 
-	pages = pages
-	perPageValue = perPageValue
-	perPageValues = perPageValues
-	hasPreviousPage = hasPreviousPage
-	hasNextPage = hasNextPage
-	previousPage = (action "previousPage")
-	gotoPage = (action "gotoPage")
-	nextPage = (action "nextPage")
+    pages = pages
+    perPageValue = perPageValue
+    perPageValues = perPageValues
+    hasPreviousPage = hasPreviousPage
+    hasNextPage = hasNextPage
+    previousPage = (action "previousPage")
+    gotoPage = (action "gotoPage")
+    nextPage = (action "nextPage")
   }}
 </div>

@@ -345,13 +345,13 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
   /**
    * The handler for "filter by any match" event triggered in objectlistview events service.
-   * 
+   *
    * @method _filterByAnyMatch
    * @private
-   * 
+   *
    * @param {String} pattern The pattern to filter objects.
    */
-  _filterByAnyMatch: function(componentName, pattern) {  
+  _filterByAnyMatch: function(componentName, pattern) {
     this.sendAction('filterByAnyMatch', pattern);
   },
 

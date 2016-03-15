@@ -7,7 +7,7 @@ export default Ember.Mixin.create({
   },
 
   lf: null,
-  
+
   filter: null,
 
   /**
@@ -29,29 +29,29 @@ export default Ember.Mixin.create({
 
   /**
    * Returns the filter string for data loading.
-   * 
+   *
    * @method getFilterString
    * @param {String} modelProjection A projection used for data retrieving.
    * @param {Object} params The route URL parameters.
    */
   getFilterString: function(modelProjection, params) {
     var attrToFilterNames = [];
-      var projAttrs = modelProjection.attributes;
-      for(var attrName in projAttrs) {
-        if (projAttrs[attrName].kind === 'attr') {
-          attrToFilterNames.push(attrName);
-        }
+    var projAttrs = modelProjection.attributes;
+    for (var attrName in projAttrs) {
+      if (projAttrs[attrName].kind === 'attr') {
+        attrToFilterNames.push(attrName);
       }
-      
-      var finalString = params.lf;
-      var filter = params.filter;
-      
-      if(typeof filter === 'string' && filter.length > 0) {
-        var adapter = this.store.adapterFor(modelProjection.modelName);
-        finalString = adapter.combineFilterWithFilterByAnyMatch(
-          this.store, finalString, filter, modelProjection.modelName, attrToFilterNames);
-      }
+    }
 
-      return finalString;
+    var finalString = params.lf;
+    var filter = params.filter;
+
+    if (typeof filter === 'string' && filter.length > 0) {
+      var adapter = this.store.adapterFor(modelProjection.modelName);
+      finalString = adapter.combineFilterWithFilterByAnyMatch(
+        this.store, finalString, filter, modelProjection.modelName, attrToFilterNames);
+    }
+
+    return finalString;
   }
 });

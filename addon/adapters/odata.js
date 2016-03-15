@@ -107,7 +107,7 @@ export default DS.RESTAdapter.extend({
   /**
    * Combines the provided filter string with filter expression to match those objects
    * which have attributes containing the provided pattern;
-   * 
+   *
    * @method combineFilterWithFilterByAnyMatch
    * @param {Object} store The store to retrieve a serializer for model.
    * @param {String} currentFilter Current filter string to be combined with created expression.
@@ -124,10 +124,10 @@ export default DS.RESTAdapter.extend({
       var backendFieldName = store.serializerFor(modelName).keyForAttribute(fieldName);
       return 'contains(' + backendFieldName + ', \'' + matchPattern + '\')';
     });
-    
-    var newExpression = containsExpressions.join(" and ");
-    if(typeof currentFilter === 'string' && currentFilter.length > 0) {
-      newExpression = "(" + currentFilter + ") and (" + newExpression + ")";
+
+    var newExpression = containsExpressions.join(' and ');
+    if (typeof currentFilter === 'string' && currentFilter.length > 0) {
+      newExpression = '(' + currentFilter + ') and (' + newExpression + ')';
     }
 
     return newExpression;

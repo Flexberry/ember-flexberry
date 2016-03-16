@@ -5,3 +5,6 @@ OData serializer:
 
 Component Flexberry Objectlistview:
 1) Added support of delete button in row of flexberry-objectlistview.
+
+Component Flexberry Groupedit:
+1) Added opprtunity to edit detail on separate route.

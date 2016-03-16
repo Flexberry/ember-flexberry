@@ -32,8 +32,29 @@ export default FlexberryBaseComponent.extend({
     addColumnToSorting: function(column) {
       throw new Error('No handler for addColumnToSorting action set for flexberry-groupedit. ' +
                       'Set handler like {{flexberry-groupedit ... addColumnToSorting=(action "addColumnToSorting")}}.');
+    },
+
+    /**
+     * Handles click on row of objectlistview.
+     * Sends action out of component.
+     *
+     * @method rowClick
+     * @param {Object} record Clicked record.
+     */
+    rowClick: function(record) {
+      this.sendAction('rowClick', record);
     }
   },
+
+  /**
+   * Name of action to handle row click.
+   * Action will be send out of the component.
+   *
+   * @property rowClick
+   * @type String
+   * @default 'rowClick'
+   */
+  rowClick: 'rowClick',
 
   /**
    * Default cell component that will be used to display values in columns headers.
@@ -184,5 +205,23 @@ export default FlexberryBaseComponent.extend({
    * @type ManyArray
    * @default null
    */
-  content: null
+  content: null,
+
+  /**
+   * Flag: indicates whether DELETE request should be immediately sended to server (on each deleted record) or not.
+   *
+   * @property immediateDelete
+   * @type Boolean
+   * @default false
+   */
+  immediateDelete: false,
+
+  /**
+   * Flag: indicates whether records should be edited on separate route.
+   *
+   * @property editOnSeparateRoute
+   * @type Object
+   * @default false
+   */
+  editOnSeparateRoute: false,
 });

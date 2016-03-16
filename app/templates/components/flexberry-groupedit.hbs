@@ -18,10 +18,12 @@
   menuInRowAdditionalItems = menuInRowAdditionalItems
   rowClickable = rowClickable
   headerClickable = orderable
+ editOnSeparateRoute = editOnSeparateRoute
   sorting = sorting
   modelProjection = modelProjection
   content = content
-  sortByColumn = (action (if this.attrs.sortByColumn this.attrs.sortByColumn "sortByColumn"))
-  addColumnToSorting = (action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting "addColumnToSorting"))
+  sortByColumn = (action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
+  addColumnToSorting = (action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  action = 'rowClick'
   componentName = componentName
 }}

@@ -16,8 +16,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   actions: {
     rowClick: function(key, record) {
       if (this.rowClickable) {
-        this.set('selectedRecord', record);
-        this._setActiveRecord(key);
+        if (this.get('editOnSeparateRoute') !== true) {
+          // It is necessary only when we will not go to other route on click.
+          this.set('selectedRecord', record);
+          this._setActiveRecord(key);
+        }
+
         this.sendAction('action', record);
       }
     },
@@ -500,6 +504,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   immediateDelete: false,
 
   /**
+   * Flag: indicates whether records should be edited on separate route.
+   *
+   * @property editOnSeparateRoute
+   * @type Object
+   * @default false
+   */
+  editOnSeparateRoute: false,
+
+  /**
    * Ember data store.
    *
    * @property store
@@ -640,7 +653,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
     let cellComponent = this.get('cellComponent');
 
-    if (Ember.typeOf(getCellComponent) === 'function') {
+    if (this.get('editOnSeparateRoute') !== true && Ember.typeOf(getCellComponent) === 'function') {
       let recordModel =  (this.get('content') || {}).type || null;
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
@@ -695,21 +708,52 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     }
   },
 
+  /**
+   * Adds detail model to current model, generates unique key for detail model.
+   * If record is deleted then `undefined` is returned and record isn't added to list.
+   *
+   * @method _addModel
+   * @private
+   *
+   * @param {DS.Model} record Detail model to add to current model.
+   * @return {String} Unique key for added record or `undefined` if record is deleted.
+   */
   _addModel: function(record) {
+    if (record.get('isDeleted')) {
+      return undefined;
+    }
+
     var modelWithKey = Ember.Object.create({});
     var key = Ember.guidFor(record);
+
     modelWithKey.set('key', key);
     modelWithKey.set('data', record);
     this.get('contentWithKeys').pushObject(modelWithKey);
+
+    return key;
   },
 
+  /**
+   * Adds row to component and calls click on row action if detail is edited on separate route.
+   * This method is triggered on toolbar's add batton click.
+   *
+   * @method _addRow
+   * @private
+   *
+   * @param {String} componentName The name of triggered component.
+   */
   _addRow: function(componentName) {
     if (componentName === this.get('componentName')) {
       var modelName = this.get('modelProjection').modelName;
       var modelToAdd = this.get('store').createRecord(modelName, {});
       this.get('content').addObject(modelToAdd);
-      this._addModel(modelToAdd);
+
+      var key = this._addModel(modelToAdd);
       this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
+
+      if (this.get('editOnSeparateRoute') === true) {
+        this.send(this.get('action'), key, modelToAdd);
+      }
     }
   },
 

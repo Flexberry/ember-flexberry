@@ -45,6 +45,15 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   queryParams: ['readonly'],
 
   /**
+   * Flag to enable return to agregator's path if possible.
+   *
+   * @property returnToAgregatorRoute
+   * @type Boolean
+   * @default false
+   */
+  returnToAgregatorRoute: false,
+
+  /**
    * Indicates whether the current form is opened only for reading.
    *
    * @property readonly
@@ -97,6 +106,16 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   lookupController: Ember.inject.controller('lookup-dialog'),
 
   /**
+   * Flag to cancel rollback of model on controller resetting.
+   * Flag is set for interaction of agregator's and detail's routes.
+   *
+   * @property modelNoRollBack
+   * @type Boolean
+   * @default false
+   */
+  modelNoRollBack: false,
+
+  /**
    * Actions handlers.
    */
   actions: {
@@ -111,6 +130,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     },
 
     delete: function() {
+      // TODO: with agregator.
       if (confirm('Are you sure you want to delete that record?')) {
         this.send('dismissErrorMessages');
 
@@ -144,6 +164,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
   /**
    * Method to transit to parent's route (previous route).
+   * If `parentRoute` is set, transition to defined path.
+   * Otherwise transition to corresponding list.
+   *
+   * @method transitionToParentRoute.
    */
   transitionToParentRoute: function() {
     // TODO: нужно учитывать пэйджинг.
@@ -248,9 +272,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    * This method invokes by `resetController` in the `edit-form` route.
    *
    * @method rollbackHasManyRelationships
+   * @public
+   *
+   * @param {DS.Model} processedModel Model to rollback its relations (controller's model will be used if undefined).
    */
-  rollbackHasManyRelationships: function() {
-    let model = this.get('model');
+  rollbackHasManyRelationships: function(processedModel) {
+    let model = processedModel ? processedModel : this.get('model');
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {

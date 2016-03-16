@@ -55,6 +55,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   action: 'rowClick',
   addColumnToSorting: 'addColumnToSorting',
   sortByColumn: 'sortByColumn',
+  filterByAnyMatch: 'filterByAnyMatch',
   rowClickable: true,
   headerClickable: true,
   showCheckBoxInRow: false,
@@ -69,6 +70,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @type Service
    */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
+   * Flag shows if deleted records should be immediately saved to server after delete.
+   *
+   * @property immediateDelete
+   * @type Boolean
+   * @default false
+   */
+  immediateDelete: false,
 
   contentWithKeys: null,
 
@@ -92,7 +102,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     },
     deleteRow: function(key, record) {
       if (confirm('Do you really want to delete this record?')) {
-        this._deleteRecord(record);
+        this._deleteRecord(record, this.get('immediateDelete'));
       }
     },
     selectRow: function(key, record) {
@@ -126,6 +136,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.set('selectedRecords', Ember.A());
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.set('contentWithKeys', Ember.A());
     if (!this.get('noDataMessage')) {
       this.set('noDataMessage', this.get('i18n').t('object-list-view.no-data-text'));
@@ -379,6 +390,18 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     var componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
+  },
+
+  /**
+   * The handler for "filter by any match" event triggered in objectlistview events service.
+   *
+   * @method _filterByAnyMatch
+   * @private
+   *
+   * @param {String} pattern The pattern to filter objects.
+   */
+  _filterByAnyMatch: function(componentName, pattern) {
+    this.sendAction('filterByAnyMatch', pattern);
   },
 
   _setActiveRecord: function(key) {

@@ -66,9 +66,14 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     let adapter = store.adapterFor(modelName);
 
     let pageQuery = adapter.getPaginationQuery(page, perPage);
+
     let sorting = this.deserializeSortingParam(params.sort);
     let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
-    let limitFunctionQuery = adapter.getLimitFunctionQuery(params.lf);
+
+    let modelClass = this.store.modelFor(this.get('modelName'));
+    let proj = modelClass.projections.get(this.get('modelProjection'));
+    let filterString = this.getFilterString(proj, params);
+    let limitFunctionQuery = adapter.getLimitFunctionQuery(filterString);
 
     let query = {};
     Ember.merge(query, pageQuery);

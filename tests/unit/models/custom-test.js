@@ -24,15 +24,15 @@ test('it loads details', function(assert) {
   // Create custom model.
   CustomModel = DS.Model.extend({
     firstName: DS.attr('string'),
-    employee1: DS.belongsTo('custom', { inverse: null, async: false }),
-    tmpChildren: DS.hasMany('custom', { inverse: null, async: false })
+    employee1: DS.belongsTo('custom', { inverse: 'tmpChildren', async: false }),
+    tmpChildren: DS.hasMany('custom', { inverse: 'employee1', async: false })
   });
 
   // Create serializer for custom model.
-  CustomSerializer = ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
+  CustomSerializer = ApplicationSerializer.extend({
     attrs: {
-      employee1: { serialize: 'id', deserialize: 'records' },
-      tmpChildren: { serialize: 'ids', deserialize: 'records' }
+      employee1: { serialize: 'odata-id', deserialize: 'records' },
+      tmpChildren: { serialize: null, deserialize: 'records' }
     },
 
     primaryKey: 'CustomID'

@@ -22,6 +22,18 @@ export default Ember.Component.extend({
   readonly: false,
 
   /**
+   * Readonly HTML attribute following to the `readonly` query param. According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
+   *
+   * @property readonlyAttr
+   * @type String|undefined
+   * @default undefined
+   * @readOnly
+   */
+  readonlyAttr: Ember.computed('readonly', function() {
+    return this.get('readonly') ? 'readonly' : undefined;
+  }),
+
+  /**
    * Flag: indicates whether component is required.
    *
    * @property required

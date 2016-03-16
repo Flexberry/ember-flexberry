@@ -40,23 +40,53 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let modelName = this.get('modelName');
     let modelProjName = this.get('modelProjection');
 
+    // Get data from service in order to decide if it is necessary to reload data or not.
+    // If already visited detail's route is observed or it is come back to agregators's route,
+    // it is not necessary (otherwise data merge with loaded data can occur occasionally).
+    let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
+    let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
+    let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
+    let needReload = !(modelCurrentNotSaved || (modelSelectedDetail && modelSelectedDetail.get('hasDirtyAttributes')));
+
+    // TODO: now 'findRecord' at ember-flexberry-projection not support 'reload: false' flag.
+    let findRecordParameters = needReload ? { reload: needReload, projection: modelProjName } : undefined;
+
     // :id param defined in router.js
-    return this.store.findRecord(modelName, params.id, {
-      reload: true,
-      projection: modelProjName
-    });
+    return this.store.findRecord(modelName, params.id, findRecordParameters);
   },
 
   resetController: function(controller, isExisting, transition) {
     this._super.apply(this, arguments);
+    let keptAgregators = controller.get('modelCurrentAgregators');
 
     controller.send('dismissErrorMessages');
+    controller.set('modelCurrentAgregatorPathes', undefined);
+    controller.set('modelCurrentAgregators', undefined);
 
-    controller.rollbackHasManyRelationships();
-    let model = controller.get('model');
-    if (model && model.get('hasDirtyAttributes')) {
-      model.rollbackAttributes();
+    // If flag 'modelNoRollBack' is set, leave current model as is and remove flag.
+    if (controller.get('modelNoRollBack') === true) {
+      controller.set('modelNoRollBack', false);
+      return;
     }
+
+    // If flag 'modelNoRollBack' is not set, we have to roll back this model and its agregators.
+    let modelsToRollBack;
+    let model = controller.get('model');
+    if (this.get('flexberryDetailInteractionService').hasValues(keptAgregators)) {
+      keptAgregators.push(model);
+      keptAgregators.reverse();
+      modelsToRollBack = keptAgregators;
+    } else {
+      modelsToRollBack = [model];
+    }
+
+    // Roll back all found agregators and its has-many relations.
+    modelsToRollBack.forEach(function(processedModel) {
+      controller.rollbackHasManyRelationships(processedModel);
+      if (processedModel) {
+        processedModel.rollbackAttributes();
+      }
+    });
   },
 
   setupController: function(controller, model) {
@@ -67,6 +97,36 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let modelProjName = this.get('modelProjection');
     let proj = modelClass.projections.get(modelProjName);
     controller.set('modelProjection', proj);
+
+    let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
+    let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
+    let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');
+    let modelLastUpdatedDetail = flexberryDetailInteractionService.get('modelLastUpdatedDetail');
+
+    flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
+    flexberryDetailInteractionService.set('modelCurrentAgregators', undefined);
+    flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', undefined);
+
+    flexberryDetailInteractionService.set('modelCurrentNotSaved', undefined);
+    flexberryDetailInteractionService.set('modelLastUpdatedDetail', undefined);
+
+    if (modelLastUpdatedDetail &&
+          ((modelLastUpdatedDetail.get('isDeleted') && modelLastUpdatedDetail.get('id')) ||
+              modelLastUpdatedDetail.get('hasDirtyAttributes'))) {
+      // If detail changed, agregator has to be marked as changed.
+      model.makeDirty();
+    }
+
+    let returnToAgregatorRoute = controller.get('returnToAgregatorRoute');
+    if (!returnToAgregatorRoute) {
+      // There is no need to set parameters to return to agregator.
+      return;
+    }
+
+    if (flexberryDetailInteractionService.hasValues(modelCurrentAgregatorPath)) {
+      controller.set('modelCurrentAgregatorPathes', modelCurrentAgregatorPath);
+      controller.set('modelCurrentAgregators', modelCurrentAgregator);
+    }
   },
 
   actions: {

@@ -21,6 +21,15 @@ export default FlexberryBaseComponent.extend({
   modelProjection: null,
 
   /**
+   * Flag shows if detail should be edited on separate route.
+   *
+   * @property editOnSeparateRoute
+   * @type Object
+   * @default false
+   */
+  editOnSeparateRoute: false,
+
+  /**
    * Array of models for detail objects.
    *
    * @property content
@@ -40,6 +49,25 @@ export default FlexberryBaseComponent.extend({
   cellComponent: null,
 
   /**
+   * Flag to allow row click.
+   *
+   * @property rowClickable
+   * @type Boolean
+   * @default false
+   */
+  rowClickable: false,
+
+  /**
+   * Name of action to handle row click.
+   * Action will be send out of the component.
+   *
+   * @property rowClick
+   * @type String
+   * @default 'rowClick'
+   */
+  rowClick: 'rowClick',
+
+  /**
    * Setting to true enables row ordering by clicking on column headers.
    *
    * @property orderable
@@ -49,7 +77,6 @@ export default FlexberryBaseComponent.extend({
   orderable: false,
   _showCheckBoxInRow: true,
   _showDeleteButtonInRow: true,
-  _rowClickable: false,
 
   actions: {
     /**
@@ -72,6 +99,17 @@ export default FlexberryBaseComponent.extend({
     addColumnToSorting: function(column) {
       throw new Error('No handler for addColumnToSorting action set for flexberry-groupedit. ' +
                       'Set handler like {{flexberry-groupedit ... addColumnToSorting=(action "addColumnToSorting")}}.');
+    },
+
+    /**
+     * Handles click on row of objectlistview.
+	 * Sends action out of component.
+     *
+     * @method rowClick
+     * @param {Object} record Clicked record.
+     */
+    rowClick: function(record) {
+      this.sendAction('rowClick', record);
     }
   }
 });

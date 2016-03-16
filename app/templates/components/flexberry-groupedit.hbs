@@ -8,10 +8,12 @@
   modelProjection=modelProjection
   content=content
   readonly=readonly
-  rowClickable=_rowClickable
+  action='rowClick'
+  rowClickable=rowClickable
   headerClickable=orderable
   showCheckBoxInRow=_showCheckBoxInRow
   showDeleteButtonInRow=_showDeleteButtonInRow
-  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn "sortByColumn"))
-  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting "addColumnToSorting"))
+  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
+  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  editOnSeparateRoute=editOnSeparateRoute
 }}

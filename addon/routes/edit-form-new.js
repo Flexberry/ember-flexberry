@@ -5,7 +5,7 @@ export default EditFormRoute.extend({
     this._super(...arguments);
   },
 
-  model: function(params, transition) {
+  model: function() {
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
     let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');

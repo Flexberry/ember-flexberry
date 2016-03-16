@@ -48,7 +48,7 @@ export default Ember.Mixin.create({
   actions: {
     /**
      * Table row click handler.
-	 * It sets `modelNoRollBack` to `true` at current controller, redirects to detail's route, save necessary data to service.
+     * It sets `modelNoRollBack` to `true` at current controller, redirects to detail's route, save necessary data to service.
      *
      * @param {Ember.Object} record Record related to clicked table row.
      */

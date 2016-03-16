@@ -70,6 +70,15 @@ export default FlexberryBaseComponent.extend({
   uploadData: null,
 
   /**
+   * Flag: indicates whether to show preview element for images or not.
+   *
+   * @property showPreview
+   * @type Boolean
+   * @default false
+   */
+  showPreview: false,
+
+  /**
    * Current file selected for upload.
    */
   selectedFile: Ember.computed('uploadData', function() {
@@ -90,6 +99,15 @@ export default FlexberryBaseComponent.extend({
       };
 
       this.set('value', JSON.stringify(jsonValue));
+      if (this.get('showPreview')) {
+        let _this = this;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          _this.$('.flexberry-file-image-preview').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+      }
     }
   }),
 

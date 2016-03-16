@@ -104,6 +104,35 @@ export default DS.RESTAdapter.extend({
     return query;
   },
 
+  /**
+   * Combines the provided filter string with filter expression to match those objects
+   * which have attributes containing the provided pattern;
+   *
+   * @method combineFilterWithFilterByAnyMatch
+   * @param {Object} store The store to retrieve a serializer for model.
+   * @param {String} currentFilter Current filter string to be combined with created expression.
+   * @param {String} matchPattern The substring to match objects' attributes.
+   * @param {String} modelName The name of the filtered model.
+   * @param {Array} modelFields The array of strings containing names of model attributes to use in matching.
+   *
+   * ToDo: It's the temporary solution made to move backend-specific logic to adapter. It's needed
+   * to use any abstract query language and create filters in Ember objects with it, then convert
+   * these filters to backend-specific filter expressions by an utitility method in each adapter.
+   */
+  combineFilterWithFilterByAnyMatch: function(store, currentFilter, matchPattern, modelName, modelFields) {
+    var containsExpressions = modelFields.map(function(fieldName) {
+      var backendFieldName = store.serializerFor(modelName).keyForAttribute(fieldName);
+      return 'contains(' + backendFieldName + ', \'' + matchPattern + '\')';
+    });
+
+    var newExpression = containsExpressions.join(' and ');
+    if (typeof currentFilter === 'string' && currentFilter.length > 0) {
+      newExpression = '(' + currentFilter + ') and (' + newExpression + ')';
+    }
+
+    return newExpression;
+  },
+
   pathForType: function(type) {
     var camelized = Ember.String.camelize(type);
     var capitalized = Ember.String.capitalize(camelized);

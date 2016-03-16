@@ -33,7 +33,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     deleteRow: function(key, record) {
       if (confirm('Do you really want to delete this record?')) {
-        this._deleteRecord(record);
+        this._deleteRecord(record, this.get('immediateDelete'));
       }
     },
 
@@ -482,6 +482,24 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   customColumnAttributes: null,
 
   /**
+   * Filter setting.
+   *
+   * @property filterByAnyMatch
+   * @type String
+   * @default 'filterByAnyMatch'
+   */
+  filterByAnyMatch: 'filterByAnyMatch',
+
+  /**
+   * Flag: indicates whether DELETE request should be immediately sended to server (on each deleted record) or not.
+   *
+   * @property immediateDelete
+   * @type Boolean
+   * @default false
+   */
+  immediateDelete: false,
+
+  /**
    * Ember data store.
    *
    * @property store
@@ -508,6 +526,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
 
     this.initProperty({
       propertyName: 'noDataMessage',
@@ -730,6 +749,18 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     var componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
+  },
+
+  /**
+   * The handler for "filter by any match" event triggered in objectlistview events service.
+   *
+   * @method _filterByAnyMatch
+   * @private
+   *
+   * @param {String} pattern The pattern to filter objects.
+   */
+  _filterByAnyMatch: function(componentName, pattern) {
+    this.sendAction('filterByAnyMatch', pattern);
   },
 
   _setActiveRecord: function(key) {

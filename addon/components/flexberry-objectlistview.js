@@ -96,6 +96,17 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction(actionName);
+    },
+
+    /**
+     * Handles action from object-list-view when no handler for this component is defined.
+     *
+     * @method filterByAnyMatch
+     * @param {pattern} The pattern to filter objects.
+     */
+    filterByAnyMatch: function(pattern) {
+      throw new Error('No handler for filterByAnyMatch action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action "filterByAnyMatch")}}.');
     }
   },
 
@@ -294,6 +305,24 @@ export default FlexberryBaseComponent.extend({
    * @default false
    */
   deleteButton: false,
+
+  /**
+   * Flag: indicates whether to show filter button at toolbar.
+   *
+   * @property filterButton
+   * @type Boolean
+   * @default false
+   */
+  filterButton: false,
+
+  /**
+   * Used to specify 'filter by any match' field value.
+   *
+   * @property filterText
+   * @type String
+   * @default null
+   */
+  filterText: null,
 
   /**
    * Array of pages to show.

@@ -1,10 +1,12 @@
 {{olv-toolbar
-  class = 'ui secondary menu'
+  class = 'ui secondary menu no-margin'
   modelName = modelName
   createNewButton = createNewButton
   enableCreateNewButton = (not readonly)
   refreshButton = refreshButton
   deleteButton = deleteButton
+  filterButton = filterButton
+  filterText = filterText
   enableDeleteButton = (not readonly)
   componentName = componentName
   modelController = currentController
@@ -12,7 +14,6 @@
   customButtonsClosureEvent=(action (if this.attrs.customButtons this.attrs.customButtons 'customButtons'))
 }}
 {{object-list-view
-  class = 'bottom attached'
   readonly = readonly
   headerCellComponent = headerCellComponent
   cellComponent = cellComponent
@@ -28,14 +29,16 @@
   rowClickable = (and (not readonly) rowClickable)
   headerClickable = orderable
   sorting = sorting
+  immediateDelete = true
   modelProjection = modelProjection
   content = content
   sortByColumn = (action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
   addColumnToSorting = (action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   action = action
   componentName = componentName
 }}
-<div class="ui secondary menu">
+<div class="ui secondary stackable menu no-margin">
   <div class="ui basic buttons">
 	<button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
 	{{#each pages as |page|}}

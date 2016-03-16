@@ -64,6 +64,7 @@ export default {
 
   'olv-toolbar': {
     'add-button-text': 'Add',
-    'refresh-button-text': 'Refresh'
+    'refresh-button-text': 'Refresh',
+    'filter-by-any-match-placeholder': 'Search...'
   }
 };

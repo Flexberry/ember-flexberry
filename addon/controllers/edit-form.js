@@ -129,6 +129,17 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       });
     },
 
+    saveAndClose: function() {
+      this.send('dismissErrorMessages');
+
+      this.save().then(() => {
+        this._onSaveActionFulfilled();
+        this.send('close');
+      }).catch((errorData) => {
+        this._onSaveActionRejected(errorData);
+      });
+    },
+
     delete: function() {
       // TODO: with agregator.
       if (confirm('Are you sure you want to delete that record?')) {

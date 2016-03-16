@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
+let BaseSerializer = DS.RESTSerializer.extend({
   /**
    * Flag: indicates whether to use new {@link http://jsonapi.org|JSON API} serialization.
    */
@@ -29,35 +29,6 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
     this._moveMeta(payload, payload[typeClass.modelName], true);
 
     return this._super(store, typeClass, payload, id);
-  },
-
-  /**
-   `serializeBelongsTo` can be used to customize how `DS.belongsTo` properties are serialized.
-   If there is set option `odata-id` at serializer and `DS.belongsTo` property is not null,
-   then property will be serialized like:
-   '''
-   RelationName@odata.bind': RelationType(RelatedObjectId)
-   '''
-
-   @method serializeBelongsTo
-   @param {DS.Snapshot} snapshot
-   @param {Object} json
-   @param {Object} relationship
-  */
-  serializeBelongsTo(snapshot, json, relationship) {
-    var option = this.attrsOption(relationship.key);
-    if (!option || option.serialize !== 'odata-id') {
-      this._super(snapshot, json, relationship);
-      return;
-    }
-
-    var belongsToId = snapshot.belongsTo(key, { id: true });
-    var key = this.keyForRelationship(relationship.key, relationship.kind, 'serialize');
-    if (Ember.isNone(belongsToId)) {
-      json[key] = null;
-    } else {
-      json[key] = Ember.String.pluralize(Ember.String.capitalize(relationship.type)) + '(' + belongsToId + ')';
-    }
   },
 
   /**
@@ -148,3 +119,37 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
     }
   }
 });
+
+let ODataSerializer = BaseSerializer.extend(DS.EmbeddedRecordsMixin, {
+  /**
+   `serializeBelongsTo` can be used to customize how `DS.belongsTo` properties are serialized.
+   If there is set option `odata-id` at serializer and `DS.belongsTo` property is not null,
+   then property will be serialized like:
+   '''
+   RelationName@odata.bind': RelationType(RelatedObjectId)
+   '''
+
+   @method serializeBelongsTo
+   @param {DS.Snapshot} snapshot
+   @param {Object} json
+   @param {Object} relationship
+  */
+  serializeBelongsTo(snapshot, json, relationship) {
+    var option = this.attrsOption(relationship.key);
+    if (!option || option.serialize !== 'odata-id') {
+      this._super(snapshot, json, relationship);
+      return;
+    }
+
+    var key = relationship.key;
+    var belongsToId = snapshot.belongsTo(key, { id: true });
+    var payloadKey = this.keyForRelationship(key, relationship.kind, 'serialize');
+    if (Ember.isNone(belongsToId)) {
+      json[payloadKey] = null;
+    } else {
+      json[payloadKey] = Ember.String.pluralize(Ember.String.capitalize(relationship.type)) + '(' + belongsToId + ')';
+    }
+  }
+});
+
+export default ODataSerializer;

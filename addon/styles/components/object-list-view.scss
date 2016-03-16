@@ -2,6 +2,10 @@
  * Styles for object-list-view component.
  */
 
+.object-list-view-container {
+  margin: 1em 0;
+}
+
 table.object-list-view.selectable tbody,
 table.object-list-view.selectable thead {
   cursor: pointer;

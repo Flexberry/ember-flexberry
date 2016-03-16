@@ -54,9 +54,9 @@ export default Ember.Component.extend({
 
   /**
    * Component dynamic properties ({ componentPropertyName: value }).
-   * Used when component renderes dynamicly with ember {{component}} helper:
+   * Used when component renders dynamically with ember {{component}} helper:
    * {{component 'my-component' value=value dynamicProperties=myConponentProperties}}.
-   * In the end of component initializetion its properties values will be replaced with values from this object.
+   * In the end of component initialization its properties values will be replaced with values from this object.
    *
    * @property dynamicProperties
    * @type Object

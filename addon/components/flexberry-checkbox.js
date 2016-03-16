@@ -2,12 +2,13 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
  * Checkbox component for Semantic UI.
  *
- * @class FlexberrCheckbox
+ * @class FlexberrCheckboxComponent
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
@@ -49,7 +50,24 @@ export default FlexberryBaseComponent.extend({
   label: undefined,
 
   /**
-   * Initializes file-control component.
+   * DOM-element representing checkbox input.
+   *
+   * @property checkboxInput
+   * @type Object
+   */
+  checkboxInput: null,
+
+  /**
+   * Checkbox value's observer.
+   */
+  valueDidChange: Ember.observer('value', function() {
+    this.sendAction('onChange', {
+      checked: this.get('value')
+    });
+  }),
+
+  /**
+   * Initializes checkbox component.
    */
   init: function() {
     this._super(...arguments);

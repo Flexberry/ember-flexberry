@@ -42,6 +42,14 @@ export default Ember.Controller.extend({
           title: 'Simple',
           children: null
         }]
+      }, {
+        link: null,
+        title: 'flexberry-menu',
+        children: [{
+          link: 'test-flexberry-menu',
+          title: 'Simple',
+          children: null
+        }]
       }]
     }]
   },

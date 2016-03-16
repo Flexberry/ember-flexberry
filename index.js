@@ -44,6 +44,11 @@ module.exports = {
       production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.css'
     });
 
+    app.import({
+      development: 'bower_components/devicejs/lib/device.js',
+      production:  'bower_components/devicejs/lib/device.min.js'
+    });
+
     // Custom script which fixes some jQuery 1.10.x+ AJAX bugs with code from newer jQuery.3.0.0-alpha1+compat version.
     app.import('vendor/jquery.3.0.0-alpha1+compat/jquery.ajaxreplacement.js');
   }

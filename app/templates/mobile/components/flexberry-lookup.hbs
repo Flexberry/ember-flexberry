@@ -1,0 +1,14 @@
+<div {{action 'choose' chooseData}} class="fluid">
+  <span class="lookup-field">
+    {{#if value}}
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{value}}
+      {{/if}}
+    {{else}}
+      {{placeholder}}
+    {{/if}}
+  </span>
+  <i class="chevron right icon"></i>
+</div>

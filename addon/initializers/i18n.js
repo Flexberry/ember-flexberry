@@ -1,3 +1,7 @@
+/**
+ * @module ember-flexberry
+ */
+
 export function initialize() {
   // Support older and newer style initializer calls.
   const application = arguments[1] || arguments[0];

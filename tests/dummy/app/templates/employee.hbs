@@ -25,7 +25,7 @@
   </div>
   <div class="field">
     <label>Name</label>
-    <div class="two fields">      
+    <div class="two fields">
       {{#if model.errors.firstName}}
           <span style="color:red">{{model.errors.firstName}}</span>
       {{/if}}
@@ -65,7 +65,7 @@
     {{#if model.errors.reportsTo}}
       <span style="color:red">{{model.errors.reportsTo}}</span>
     {{/if}}
-    {{flexberry-lookup
+    {{#flexberry-lookup
       choose='showLookupDialog'
       remove='removeLookupValue'
       value=model.employee1.firstName
@@ -76,6 +76,9 @@
       limitFunction=lookupLimitFunction
       class=(if model.errors.reportsTo 'error' '')
     }}
+      {{model.employee1.firstName}}<br />
+      {{model.employee1.lastName}}
+    {{/flexberry-lookup}}
   </div>
   <div class="field">
     <label>Orders</label>

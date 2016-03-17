@@ -784,16 +784,39 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   _deleteRecord: function(record, immediately) {
     var key = this._getModelKey(record);
     this._removeModelWithKey(key);
-    record.deleteRecord();
-    if (immediately === true) {
-      record.save().catch((reason) => {
-        this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
-        record.rollbackAttributes();
-      });
-    }
+
+    this._deleteHasManyRelationships(record, immediately).then(() => {
+      return immediately ? record.destroyRecord() : record.deleteRecord();
+    }).catch((reason) => {
+      this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
+      record.rollbackAttributes();
+    });
 
     var componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
+  },
+
+  /**
+   * Delete all hasMany relationships in the `record`.
+   *
+   * @method _deleteHasManyRelationships
+   * @private
+   *
+   * @param {DS.Model} record A record with relationships to delete.
+   * @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save).
+   * @return {Promise} A promise that will be resolved when relationships have been deleted.
+   */
+  _deleteHasManyRelationships: function(record, immediately) {
+    let promises = Ember.A();
+    record.eachRelationship((name, desc) => {
+      if (desc.kind === 'hasMany') {
+        record.get(name).forEach((relRecord) => {
+          promises.pushObject(immediately ? relRecord.destroyRecord() : relRecord.deleteRecord());
+        });
+      }
+    });
+
+    return Ember.RSVP.all(promises);
   },
 
   /**

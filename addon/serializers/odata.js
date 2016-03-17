@@ -147,7 +147,7 @@ let ODataSerializer = BaseSerializer.extend(DS.EmbeddedRecordsMixin, {
     if (Ember.isNone(belongsToId)) {
       json[payloadKey] = null;
     } else {
-      json[payloadKey] = Ember.String.pluralize(Ember.String.capitalize(relationship.type)) + '(' + belongsToId + ')';
+      json[payloadKey] = Ember.String.pluralize(Ember.String.capitalize(Ember.String.camelize(relationship.type))) + '(' + belongsToId + ')';
     }
   }
 });

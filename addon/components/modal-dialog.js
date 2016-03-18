@@ -5,6 +5,33 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  /**
+   * Flag indicates whether to show apply button or not.
+   *
+   * @property useOkButton
+   * @type Boolean
+   * @default true
+   */
+  useOkButton: true,
+
+  /**
+   * Flag indicates whether to show close button or not.
+   *
+   * @property useCloseButton
+   * @type Boolean
+   * @default true
+   */
+  useCloseButton: true,
+
+  /**
+   * Flag indicates whether an image content is viewed at modal dialog or not.
+   *
+   * @property viewImageContent
+   * @type Boolean
+   * @default false
+   */
+  viewImageContent: false,
+
   modalWindowHeight: undefined,
   modalWindowWidth: undefined,
   modalWindowContentHeight: 400,

@@ -3,13 +3,23 @@
   <div class="header">
     {{title}}
   </div>
-  <div class="content" style="height:{{modalWindowContentHeightComputed}}px;">
-    <div class="description">
-      {{yield}}
-    </div>
+  <div class=" {{if viewImageContent 'image' ''}} content" style="height:{{modalWindowContentHeightComputed}}px;">
+    {{#if viewImageContent}}
+      <div class="centered" style='height:100%; width:100%;'>
+        {{yield}}
+      </div>
+    {{else}}
+      <div class="description" >
+        {{yield}}
+      </div>
+    {{/if}}
   </div>
   <div class="actions">
-    <button type="button" class="ui cancel button" data-dismiss="modal">{{t "modal-dialog.close-button-text"}}</button>
-    <button type="button" class="ui positive button">{{t "modal-dialog.ok-button-text"}}</button>
+    {{#if useOkButton}}
+      <button type="button" class="ui cancel button" data-dismiss="modal">{{t "modal-dialog.close-button-text"}}</button>
+    {{/if}}
+    {{#if useCloseButton}}
+      <button type="button" class="ui positive button">{{t "modal-dialog.ok-button-text"}}</button>
+    {{/if}}
   </div>
 </div>

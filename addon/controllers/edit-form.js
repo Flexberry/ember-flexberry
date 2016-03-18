@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-mixin';
+import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
 
 const { getOwner } = Ember;
 
@@ -37,8 +38,10 @@ const { getOwner } = Ember;
  * @uses Ember.Evented
  * @uses FlexberryLookupMixin
  * @uses ErrorableControllerMixin
+ * @uses FlexberryFileControllerMixin
  */
-export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, {
+export default Ember.Controller.extend(
+  Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, FlexberryFileControllerMixin, {
   /**
    * Query parameters.
    */

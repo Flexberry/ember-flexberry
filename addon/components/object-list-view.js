@@ -75,9 +75,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     },
 
     menuInRowItemClick: function(key, record, e) {
-     if (this.get('readonly')) {
-       return;
-     }
+      if (this.get('readonly')) {
+        return;
+      }
 
       if (e.item.isDeleteItem) {
         this.send('deleteRow', key, record);

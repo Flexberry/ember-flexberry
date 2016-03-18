@@ -38,7 +38,8 @@ export default Ember.Service.extend({
   pushValue: function (propertyName, currentArray, value) {
     let currentPropertyValue;
     if (this.hasValues(currentArray)) {
-      currentPropertyValue.push(value);
+      currentArray.push(value);
+      currentPropertyValue = currentArray;
     } else {
       currentPropertyValue = [value];
     }

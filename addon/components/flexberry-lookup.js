@@ -156,8 +156,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     };
   }),
 
-  readonly:  false,
-
   init() {
     this._super();
     if (this.cssClass !== undefined) {

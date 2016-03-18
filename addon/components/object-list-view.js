@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
+import ErrorableMixin from '../mixins/errorable-controller';
 
 /**
  * Object list view component.
@@ -12,7 +13,7 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
  * @class ObjectListView
  * @extends FlexberryBaseComponent
  */
-export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, {
+export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, ErrorableMixin, {
   actions: {
     rowClick: function(key, record) {
       if (this.rowClickable) {
@@ -119,17 +120,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   /**
    * Override wrapping element's tag.
    */
-  tagName: 'table',
+  tagName: 'div',
 
   /**
    * Component's CSS classes.
    */
-  classNames: ['object-list-view', 'ui', 'celled', 'table'],
-
-  /**
-   * Component's CSS classes bindings.
-   */
-  classNameBindings: ['rowClickable:selectable', 'readonly:readonly'],
+  classNames: ['object-list-view-container'],
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -768,6 +764,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   _deleteRows: function(componentName, immediately) {
     if (componentName === this.get('componentName')) {
       if (confirm('Do you really want to delete selected records?')) {
+        this.send('dismissErrorMessages');
+
         var _this = this;
         var selectedRecords = this.get('selectedRecords');
         var count = selectedRecords.length;
@@ -786,13 +784,39 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   _deleteRecord: function(record, immediately) {
     var key = this._getModelKey(record);
     this._removeModelWithKey(key);
-    record.deleteRecord();
-    if (immediately === true) {
-      record.save();
-    }
+
+    this._deleteHasManyRelationships(record, immediately).then(() => {
+      return immediately ? record.destroyRecord() : record.deleteRecord();
+    }).catch((reason) => {
+      this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
+      record.rollbackAttributes();
+    });
 
     var componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
+  },
+
+  /**
+   * Delete all hasMany relationships in the `record`.
+   *
+   * @method _deleteHasManyRelationships
+   * @private
+   *
+   * @param {DS.Model} record A record with relationships to delete.
+   * @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save).
+   * @return {Promise} A promise that will be resolved when relationships have been deleted.
+   */
+  _deleteHasManyRelationships: function(record, immediately) {
+    let promises = Ember.A();
+    record.eachRelationship((name, desc) => {
+      if (desc.kind === 'hasMany') {
+        record.get(name).forEach((relRecord) => {
+          promises.pushObject(immediately ? relRecord.destroyRecord() : relRecord.deleteRecord());
+        });
+      }
+    });
+
+    return Ember.RSVP.all(promises);
   },
 
   /**

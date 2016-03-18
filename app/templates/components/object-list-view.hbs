@@ -1,90 +1,103 @@
-<thead>
-  <tr>
-    <th class="object-list-view-operations collapsing {{if (not showHelperColumn) 'hidden'}}"></th>
-    {{#if useSingleColumn}}
-      {{component headerCellComponent.componentName
-        column=(hash header=singleColumnHeaderTitle sortable=false)
-        dynamicProperties=headerCellComponent.componentProperties
-      }}
-    {{else}}
-      {{#each columns as |column|}}
+{{#if errorMessages}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type='error'
+      closeable=true
+      visible=true
+      title='Error occurred'
+      message=currentError
+    }}
+  {{/each}}
+{{/if}}
+<table class="object-list-view ui celled table {{if rowClickable 'selectable'}} {{if readonly 'readonly'}}">
+  <thead>
+    <tr>
+      <th class="object-list-view-operations collapsing {{if (not showHelperColumn) 'hidden'}}"></th>
+      {{#if useSingleColumn}}
         {{component headerCellComponent.componentName
-          column=column
+          column=(hash header=singleColumnHeaderTitle sortable=false)
           dynamicProperties=headerCellComponent.componentProperties
         }}
-      {{/each}}
-    {{/if}}
-    {{#if showMenuColumn}}
-      <th class="object-list-view-menu collapsing"></th>
-    {{/if}}
-  </tr>
-</thead>
-<tbody>
-  {{#if (not hasContent)}}
-    <tr>
-      <td colspan="{{colspan}}" style="text-align:center;">{{noDataMessage}}</td>
-    </tr>
-  {{/if}}
-  {{#each contentWithKeys key="key" as |record|}}
-    <tr>
-      <td class="object-list-view-helper-column {{if (not showHelperColumn) 'hidden'}}">
-        <div style="display: none">{{record.key}}
-        </div>
-        <div class="object-list-view-helper-column-cell">
-          {{#if showAsteriskInRow}}
-            <div class="cell">
-              <i class="asterisk small red icon {{if (not record.data.hasDirtyAttributes) 'transparent'}}"></i>
-            </div>
-          {{/if}}
-          {{#if showCheckBoxInRow}}
-            <div class="cell">
-              {{flexberry-checkbox
-                readonly=reanonly
-                onChange=(action 'selectRow' record.key record.data)
-              }}
-            </div>
-          {{/if}}
-          {{#if showDeleteButtonInRow}}
-            <div class="cell">
-              <button class="ui primary button {{if readonly 'disabled'}}" {{action 'deleteRow' record.key record.data}}>
-                <i class="minus icon"></i>
-              </button>
-            </div>
-          {{/if}}
-        </div>
-      </td>
-      {{#if useSingleColumn}}
-        <td {{action 'rowClick' record.key record.data preventDefault=false}}>
-          {{component singleColumnCellComponent.componentName
-            model=record.data
-            columns=columns
-            hasEditableValues=hasEditableValues
-            dynamicProperties=singleColumnCellComponent.componentProperties
-          }}
-        </td>
       {{else}}
         {{#each columns as |column|}}
-          <td {{action 'rowClick' record.key record.data preventDefault=false}}>
-            {{component column.cellComponent.componentName
-              dynamicProperties=column.cellComponent.componentProperties
-              relatedModel=record.data
-              value=(mut (get record.data column.propName))
-              readonly=readonly
-              required=required
-            }}
-          </td>
+          {{component headerCellComponent.componentName
+            column=column
+            dynamicProperties=headerCellComponent.componentProperties
+          }}
         {{/each}}
       {{/if}}
       {{#if showMenuColumn}}
-        <td class="object-list-view-menu">
-          {{flexberry-menu
-            class='icon vertical'
-            items=menuInRowItems
-            callItemsOnClickCallbacks=false
-            onItemClick=(action 'menuInRowItemClick' record.key record.data)
-          }}
-        </td>
+        <th class="object-list-view-menu collapsing"></th>
       {{/if}}
     </tr>
-  {{/each}}
-</tbody>
+  </thead>
+  <tbody>
+    {{#if (not hasContent)}}
+      <tr>
+        <td colspan="{{colspan}}" style="text-align:center;">{{noDataMessage}}</td>
+      </tr>
+    {{/if}}
+    {{#each contentWithKeys key="key" as |record|}}
+      <tr>
+        <td class="object-list-view-helper-column {{if (not showHelperColumn) 'hidden'}}">
+          <div style="display: none">{{record.key}}
+          </div>
+          <div class="object-list-view-helper-column-cell">
+            {{#if showAsteriskInRow}}
+              <div class="cell">
+                <i class="asterisk small red icon {{if (not record.data.hasDirtyAttributes) 'transparent'}}"></i>
+              </div>
+            {{/if}}
+            {{#if showCheckBoxInRow}}
+              <div class="cell">
+                {{flexberry-checkbox
+                  readonly=reanonly
+                  onChange=(action 'selectRow' record.key record.data)
+                }}
+              </div>
+            {{/if}}
+            {{#if showDeleteButtonInRow}}
+              <div class="cell">
+                <button class="ui primary button {{if readonly 'disabled'}}" {{action 'deleteRow' record.key record.data}}>
+                  <i class="minus icon"></i>
+                </button>
+              </div>
+            {{/if}}
+          </div>
+        </td>
+        {{#if useSingleColumn}}
+          <td {{action 'rowClick' record.key record.data preventDefault=false}}>
+            {{component singleColumnCellComponent.componentName
+              model=record.data
+              columns=columns
+              hasEditableValues=hasEditableValues
+              dynamicProperties=singleColumnCellComponent.componentProperties
+            }}
+          </td>
+        {{else}}
+          {{#each columns as |column|}}
+            <td {{action 'rowClick' record.key record.data preventDefault=false}}>
+              {{component column.cellComponent.componentName
+                dynamicProperties=column.cellComponent.componentProperties
+                relatedModel=record.data
+                value=(mut (get record.data column.propName))
+                readonly=readonly
+                required=required
+              }}
+            </td>
+          {{/each}}
+        {{/if}}
+        {{#if showMenuColumn}}
+          <td class="object-list-view-menu">
+            {{flexberry-menu
+              class='icon vertical'
+              items=menuInRowItems
+              callItemsOnClickCallbacks=false
+              onItemClick=(action 'menuInRowItemClick' record.key record.data)
+            }}
+          </td>
+        {{/if}}
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -156,8 +156,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     };
   }),
 
-  readonly:  false,
-
   init() {
     this._super();
     if (this.cssClass !== undefined) {
@@ -255,9 +253,17 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
   actions: {
     choose: function(chooseData) {
+      if (this.get('readonly')) {
+        return;
+      }
+
       this.sendAction('choose', chooseData);
     },
     remove: function(removeData) {
+      if (this.get('readonly')) {
+        return;
+      }
+
       this.sendAction('remove', removeData);
     }
   }

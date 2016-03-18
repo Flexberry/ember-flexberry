@@ -1,3 +1,10 @@
-{{#modal-dialog title=title modalWindowHeight=modalWindowHeight modalWindowWidth=modalWindowWidth ok='saveLookupDialog' close='removeModalDialog' created='createdModalDialog'}}
+{{#modal-dialog
+title=title
+modalWindowHeight=modalWindowHeight
+modalWindowWidth=modalWindowWidth
+close='removeModalDialog'
+created='createdModalDialog'
+useOkButton=false
+useCloseButton=false}}
   {{outlet 'modal-content'}}
 {{/modal-dialog}}

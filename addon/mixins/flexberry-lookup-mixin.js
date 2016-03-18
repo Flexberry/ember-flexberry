@@ -128,8 +128,6 @@ export default Ember.Mixin.create({
           }
         });
 
-        controller.setCurrentRow();
-
         this.send('showModalDialog', lookupSettings.contentTemplate, {
           controller: controller,
           model: data

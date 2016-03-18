@@ -70,6 +70,15 @@ export default FlexberryBaseComponent.extend({
   uploadData: null,
 
   /**
+   * Flag: indicates whether to show preview element for images or not.
+   *
+   * @property showPreview
+   * @type Boolean
+   * @default false
+   */
+  showPreview: false,
+
+  /**
    * Current file selected for upload.
    */
   selectedFile: Ember.computed('uploadData', function() {
@@ -90,8 +99,53 @@ export default FlexberryBaseComponent.extend({
       };
 
       this.set('value', JSON.stringify(jsonValue));
+      if (this.get('showPreview')) {
+        let _this = this;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          let selectedFileSrc = e.target.result;
+          _this._updateSelectedFileSrc(_this, selectedFileSrc);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    } else {
+      this._updateSelectedFileSrc(this, '');
     }
   }),
+
+  /**
+   * Name of action. This action will be send outside after click on selected image preview.
+   *
+   * @property viewImageAction
+   * @type String
+   * @default `flexberryFileViewImageAction`
+   */
+  viewImageAction: 'flexberryFileViewImageAction',
+
+  /**
+   * Selected file content. It can be used as source for image tag in order to view preview.
+   *
+   * @property _selectedFileSrc
+   * @private
+   * @type String
+   * @default ``
+   */
+  _selectedFileSrc: '',
+
+  /**
+   * It sets selected file content as source for image tag in order to view preview.
+   *
+   * @method _updateSelectedFileSrc
+   * @private
+   *
+   * @param {DS.Component} currentContext Current context to execute operations.
+   * @param {String} selectedFileSrc Selected file content to set as source for image tag in order to view preview.
+   */
+  _updateSelectedFileSrc: function(currentContext, selectedFileSrc) {
+    currentContext.$('.flexberry-file-image-preview').attr('src', selectedFileSrc);
+    currentContext.set('_selectedFileSrc', selectedFileSrc);
+  },
 
   /**
    * Flag: indicates whether file upload is in progress now.
@@ -568,5 +622,25 @@ export default FlexberryBaseComponent.extend({
     }
 
     relatedModel.off('preSave', onModelPresave);
+  },
+
+  actions: {
+    /**
+     * It handles click on selected image preview and sends action with data outside component
+     * in order to view selected image at modal window.
+     *
+     * @method viewLoadedImage
+     * @public
+     */
+    viewLoadedImage: function() {
+      let file = this.get('selectedFile');
+      let selectedFileSrc = this.get('_selectedFileSrc');
+      if (!Ember.isNone(file) && !Ember.isNone(selectedFileSrc)) {
+        this.sendAction('viewImageAction', {
+          fileSrc: selectedFileSrc,
+          fileName: file.name
+        });
+      }
+    }
   }
 });

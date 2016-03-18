@@ -849,8 +849,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     selectedRow.addClass('active');
   },
 
-  _rowsChanged: Ember.observer('content.@each.hasDirtyAttributes', function() {
-    var componentName = this.get('componentName');
-    this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
+  // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
+  _rowsChanged: Ember.observer('content.@each.dirtyType', function() {
+    let content = this.get('content');
+    if (content && content.isAny('dirtyType', 'updated')) {
+      var componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
+    }
   })
 });

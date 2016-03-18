@@ -1,4 +1,5 @@
-<div class="ui modal" style="width:{{modalWindowWidthComputed}}px; min-width:{{modalWindowWidthComputed}}px; height:{{modalWindowHeightComputed}}px; min-height:{{modalWindowHeightComputed}}px;">
+<div class="ui modal"
+     style="width:{{modalWindowWidthComputed}}px; min-width:{{modalWindowWidthComputed}}px; height:{{modalWindowHeightComputed}}px; min-height:{{modalWindowHeightComputed}}px;">
   <i class="close icon"></i>
   <div class="header">
     {{title}}
@@ -9,17 +10,19 @@
         {{yield}}
       </div>
     {{else}}
-      <div class="description" >
+      <div class="description">
         {{yield}}
       </div>
     {{/if}}
   </div>
-  <div class="actions">
-    {{#if useOkButton}}
-      <button type="button" class="ui cancel button" data-dismiss="modal">{{t "modal-dialog.close-button-text"}}</button>
-    {{/if}}
-    {{#if useCloseButton}}
-      <button type="button" class="ui positive button">{{t "modal-dialog.ok-button-text"}}</button>
-    {{/if}}
-  </div>
+  {{#if toolbarVisible}}
+    <div class="actions">
+      {{#if useCloseButton}}
+        <button type="button" class="ui cancel button" data-dismiss="modal">{{t "modal-dialog.close-button-text"}}</button>
+      {{/if}}
+      {{#if useOkButton}}
+        <button type="button" class="ui positive button">{{t "modal-dialog.ok-button-text"}}</button>
+      {{/if}}
+    </div>
+  {{/if}}
 </div>

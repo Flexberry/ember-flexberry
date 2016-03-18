@@ -4,6 +4,12 @@
 
 import Ember from 'ember';
 
+/**
+ * ModalDialog component for SemanticUI
+ *
+ * @class ModalDialog
+ * @extends Ember.Component
+ */
 export default Ember.Component.extend({
   /**
    * Flag indicates whether to show apply button or not.
@@ -32,10 +38,36 @@ export default Ember.Component.extend({
    */
   viewImageContent: false,
 
+  /**
+   * Flag: indicates buttons toolbar visibility
+   * true if at least one of buttons is visible
+   *
+   * @property toolbarVisible
+   * @type Boolean
+   * @default true
+   * @readonly
+   */
+  toolbarVisible: Ember.computed('useOkButton', 'useCloseButton', function () {
+    return this.get('useOkButton') || this.get('useCloseButton');
+  }),
+
+  /**
+   * Semantic-UI Modal settings,
+   * more info at http://semantic-ui.com/modules/modal.html#settings
+   *
+   * @property settings,
+   * @type Object
+   * @default {}
+   */
+  settings: {},
+
   modalWindowHeight: undefined,
+
   modalWindowWidth: undefined,
+
   modalWindowContentHeight: 400,
-  modalWindowHeightComputed: Ember.computed('modalWindowHeight', function() {
+
+  modalWindowHeightComputed: Ember.computed('modalWindowHeight', function () {
     var height = this.get('modalWindowHeight');
     if (height && typeof height === 'number') {
       return height;
@@ -43,7 +75,8 @@ export default Ember.Component.extend({
 
     return 600;
   }),
-  modalWindowWidthComputed: Ember.computed('modalWindowWidth', function() {
+
+  modalWindowWidthComputed: Ember.computed('modalWindowWidth', function () {
     var width = this.get('modalWindowWidth');
     if (width && typeof width === 'number') {
       return width;
@@ -51,7 +84,8 @@ export default Ember.Component.extend({
 
     return 750;
   }),
-  modalWindowContentHeightComputed: Ember.computed('modalWindowContentHeight', function() {
+
+  modalWindowContentHeightComputed: Ember.computed('modalWindowContentHeight', function () {
     var height = this.get('modalWindowContentHeight');
     if (height && typeof height === 'number') {
       return height;
@@ -59,20 +93,21 @@ export default Ember.Component.extend({
 
     return 400;
   }),
-  didInsertElement: function() {
-      var _this = this;
-      this.$('.ui.modal').modal('setting', {
-        onApprove: function() {
+
+  didInsertElement: function () {
+    let _this = this;
+    let modalSettings = Ember.$.extend({
+        onApprove: function () {
           _this.sendAction('ok');
         },
-        onDeny: function() {
+        onDeny: function () {
           _this.sendAction('close');
         },
-        onHidden: function() {
+        onHidden: function () {
           _this.sendAction('close');
           this.remove();
         },
-        onVisible: function() {
+        onVisible: function () {
           var wholeHeight = Ember.$(this).outerHeight();
           var headHeight = Ember.$('.header', this).outerHeight();
           var actionsHeight = Ember.$('.actions', this).outerHeight();
@@ -80,6 +115,9 @@ export default Ember.Component.extend({
           _this.set('modalWindowContentHeight', result);
           _this.sendAction('created', Ember.$(this));
         }
-      }).modal('show');
-    }
+      },
+      _this.get('settings'));
+
+    this.$('.ui.modal').modal(modalSettings).modal('show');
+  }
 });

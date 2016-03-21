@@ -4,38 +4,49 @@ import wait from 'ember-test-helpers/wait';
 import Ember from 'ember';
 
 moduleForComponent('modal-dialog', 'Integration | Component | modal dialog', {
-  integration: true
-});
+  integration: true,
 
-test('it renders', function (assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });"
-  this.set('settings',
-    {
+  setup: function () {
+    // detachable need for jquery can do select child components
+    this.set('settings', {
       detachable: false
     });
 
-  let created = false;
+    this.set('created', false);
+    this.set('createdConsumer', () => {
+      this.set('created', true);
+    });
 
-  this.set('createdConsumer', () => {
-    created = true;
-  });
+    Ember.Test.registerWaiter(this, () => {
+      return this.get('created');
+    });
+  },
 
-  let waiter = function () {
-    return created;
-  };
+  teardown: function() {
+    this.$().modal('hide dimmer');
+  }
+});
 
-  Ember.Test.registerWaiter(this, waiter);
-
+test('it renders', function (assert) {
   this.render(hbs`
-    {{#modal-dialog settings=settings created=(action createdConsumer)}}
+    {{#modal-dialog settings=settings created=createdConsumer}}
       template block text
     {{/modal-dialog}}
   `);
 
   return wait().then(() => {
     assert.equal(this.$('.description').text().trim(), 'template block text');
-    this.$().modal('hide dimmer');
-    Ember.Test.unregisterWaiter(waiter);
+  });
+});
+
+test('it should not show actions div if no buttons visible', function(assert) {
+  this.render(hbs`
+    {{#modal-dialog settings=settings created=createdConsumer useOkButton=false useCloseButton=false}}
+      template block text
+    {{/modal-dialog}}
+  `);
+
+  return wait().then(() => {
+    assert.equal(this.$('.actions').length, 0);
   });
 });

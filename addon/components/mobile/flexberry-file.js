@@ -70,15 +70,16 @@ export default FlexberryFile.extend({
         menuSubItems.push({
           icon: 'zoom icon',
           title: this.get('i18n').t('flexberry-file.menu-for-file.zoom-image-item-title') || 'Zoom image',
-          isEditItem: true
+          isZoomItem: true
         });
 
-        menuSubItems.push({
-          icon: 'file outline icon',
-          title: this.get('i18n').t('flexberry-file.menu-for-file.replace-file-item-title') || 'Replace file',
-          isEditItem: true
-        });
-
+        if (this.get('addButtonIsVisible')) {
+          menuSubItems.push({
+            icon: 'file outline icon',
+            title: this.get('i18n').t('flexberry-file.menu-for-file.replace-file-item-title') || 'Replace file',
+            isReplaceItem: true
+          });
+        }
         menuSubItems.push({
           icon: 'trash icon',
           title: this.get('i18n').t('flexberry-file.menu-for-file.delete-file-item-title') || 'Delete file',
@@ -92,5 +93,42 @@ export default FlexberryFile.extend({
         items: menuSubItems
       }];
     }
-  )
+  ),
+
+  actions: {
+  /**
+   * This method handles click on menu item of selected file.
+   *
+   * @method menuForFileItemClick
+   * @public
+   *
+   * @param {Object} e Information about selected menu item.
+   * @param {Object} [e.data] Data of selected menu item.
+   */
+    menuForFileItemClick: function(e) {
+      if (this.get('readonly')) {
+        return;
+      }
+
+      if (e.item.isZoomItem) {
+        this.send('viewLoadedImage');
+        return;
+      }
+
+      if (e.item.isReplaceItem) {
+        let addButton = this.$('.flexberry-file-add-button');
+        if (!addButton || addButton.length === 0) {
+          throw new Error('Add file button not found.');
+        }
+
+        addButton.click();
+        return;
+      }
+
+      if (e.item.isDeleteItem) {
+        this.removeFile.call(this, null)
+        return;
+      }
+    }
+  }
 });

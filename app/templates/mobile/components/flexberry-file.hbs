@@ -1,34 +1,32 @@
 <div class="flexberry-file-grid ui grid">
-  {{#if (not hasSelectedFile)}}
-    <div class="row">
-      <input type="file" name="files[]" class="flexberry-file-file-input" style="display:none" />
-      {{input
-        type = "hidden"
-        class = "flexberry-file-filename-input"
-        readonly = "readonly"
-        placeholder = placeholder
-        required = required
-        value = fileName
-      }}
-      {{#unless readonly}}
-        {{#if addButtonIsVisible}}
-          <label class="flexberry-file-add-button ui icon primary {{unless addButtonIsEnabled "disabled"}} button"
-          title={{addButtonTitle}}>
-          {{addButtonText}}
-          </label>
-        {{/if}}
-      {{/unless}}
-    </div>
-  {{/if}}
+  <div class="row">
+    <input type="file" name="files[]" class="flexberry-file-file-input" style="display:none" />
+    {{input
+      type = "hidden"
+      class = "flexberry-file-filename-input"
+      readonly = "readonly"
+      placeholder = placeholder
+      required = required
+      value = fileName
+    }}
+    {{#unless readonly}}
+      {{#if addButtonIsVisible}}
+        <label class="flexberry-file-add-button ui icon primary {{unless addButtonIsEnabled "disabled"}} button"
+        title={{addButtonTitle}} style="{{if hasSelectedFile 'display:none' ''}}">
+        {{addButtonText}}
+        </label>
+      {{/if}}
+    {{/unless}}
+  </div>
   {{#if showPreview}}
     <div class="row flexberry-file-image-preview-wrapper">
-      {{#if hasSelectedFile}}
+      {{#if (and hasSelectedFile (not readonly))}}
         <div class="flexberry-file-image-preview-menu-mobile">
           {{flexberry-menu
             class='icon vertical'
             items=menuForFileItems
             callItemsOnClickCallbacks=false
-            onItemClick=''
+            onItemClick=(action 'menuForFileItemClick')
           }}
         </div>
       {{/if}}

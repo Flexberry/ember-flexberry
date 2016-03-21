@@ -41,5 +41,44 @@ export default FlexberryFile.extend({
     }
 
     this.set('classNames', currentClasses);
-  }
+  },
+
+  /**
+   * Menu items for dropdown menu for selected image.
+   *
+   * @property menuForFileItems
+   * @type Object[]
+   * @readonly
+   */
+  menuForFileItems: Ember.computed(
+    'showPreview',
+    function() {
+      var menuSubItems = [];
+      if (this.get('showPreview')) {
+        menuSubItems.push({
+          icon: 'zoom icon',
+          title: this.get('i18n').t('flexberry-file.menu-for-file.zoom-image-item-title') || 'Zoom image',
+          isEditItem: true
+        });
+
+        menuSubItems.push({
+          icon: 'file outline icon',
+          title: this.get('i18n').t('flexberry-file.menu-for-file.replace-file-item-title') || 'Replace file',
+          isEditItem: true
+        });
+
+        menuSubItems.push({
+          icon: 'trash icon',
+          title: this.get('i18n').t('flexberry-file.menu-for-file.delete-file-item-title') || 'Delete file',
+          isDeleteItem: true
+        });
+      }
+
+      return [{
+        icon: 'list layout icon',
+        itemsAlignment: 'left',
+        items: menuSubItems
+      }];
+    }
+  )
 });

@@ -1,5 +1,5 @@
-<div class="flexberry-file-grid ui one column grid">
-    <div class="column">
+<div class="flexberry-file-grid ui grid">
+  <div class="row">
     <input type="file" name="files[]" class="flexberry-file-file-input" style="display:none" />
     {{input
       type = "hidden"
@@ -35,10 +35,20 @@
       </div>
       </div>
     </div>
-    </div>
-  {{#if showPreview}}
-  <div class="column flexberry-file-image-preview-wrapper" {{action 'viewLoadedImage'}}>
-    <img class="ui centered image flexberry-file-image-preview" src="" alt="LoadedImage"/>
   </div>
+  {{#if showPreview}}
+    <div class="row flexberry-file-image-preview-wrapper">
+      <div class="flexberry-file-image-preview-menu-mobile">
+        {{flexberry-menu
+          class='icon vertical'
+          items=menuForFileItems
+          callItemsOnClickCallbacks=false
+          onItemClick=''
+        }}
+      </div>
+      <div class="flexberry-file-image-preview-wrapper-mobile" {{action 'viewLoadedImage'}}>
+        <img class="ui centered image flexberry-file-image-preview" src="" alt="LoadedImage"/>
+      </div>
+    </div>
   {{/if}}
 </div>

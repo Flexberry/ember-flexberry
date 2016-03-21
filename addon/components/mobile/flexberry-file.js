@@ -80,6 +80,7 @@ export default FlexberryFile.extend({
             isReplaceItem: true
           });
         }
+
         menuSubItems.push({
           icon: 'trash icon',
           title: this.get('i18n').t('flexberry-file.menu-for-file.delete-file-item-title') || 'Delete file',
@@ -96,15 +97,15 @@ export default FlexberryFile.extend({
   ),
 
   actions: {
-  /**
-   * This method handles click on menu item of selected file.
-   *
-   * @method menuForFileItemClick
-   * @public
-   *
-   * @param {Object} e Information about selected menu item.
-   * @param {Object} [e.data] Data of selected menu item.
-   */
+    /**
+     * This method handles click on menu item of selected file.
+     *
+     * @method menuForFileItemClick
+     * @public
+     *
+     * @param {Object} e Information about selected menu item.
+     * @param {Object} [e.data] Data of selected menu item.
+     */
     menuForFileItemClick: function(e) {
       if (this.get('readonly')) {
         return;
@@ -126,7 +127,7 @@ export default FlexberryFile.extend({
       }
 
       if (e.item.isDeleteItem) {
-        this.removeFile.call(this, null)
+        this.removeFile.call(this, null);
         return;
       }
     }

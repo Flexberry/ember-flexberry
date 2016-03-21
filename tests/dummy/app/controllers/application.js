@@ -55,7 +55,7 @@ export default Ember.Controller.extend({
   },
   actions: {
     toggleSidebar: function(direction) {
-      $('.ui.sidebar').sidebar('toggle');
+      Ember.$('.ui.sidebar').sidebar('toggle');
     }
   }
 });

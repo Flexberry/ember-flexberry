@@ -10,3 +10,38 @@
   text-align: center;
   color: #aaa;
 }
+
+// Expamles application template
+#example-with-submenu {
+  padding-top: 40px;
+
+  .flexberry-submenu .item {
+    padding-right: 0;    
+    > .menu {
+      margin-right: -2px;
+    }
+  }
+
+  .flexberry-content {
+    position: relative;
+    padding: 0;
+
+    &.segment {
+      box-shadow: none;
+      border: none;
+    }
+  }
+}
+
+#example {
+  .flexberry-content {
+    padding: 3em 0;
+  }
+}
+
+#example-mobile {
+  .flexberry-content {
+    padding: 4em 10px 2em 10px;
+    border-bottom: none;
+  }
+}

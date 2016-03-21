@@ -19,6 +19,18 @@ export default FlexberryFile.extend({
   addButtonText: '',
 
   /**
+   * Computed property indicates if file is selected.
+   *
+   * @property hasSelectedFile
+   * @type Boolean
+   * @default false
+   */
+  hasSelectedFile: Ember.computed('selectedFile', function() {
+    var selectedFile = this.get('selectedFile');
+    return !!(selectedFile);
+  }),
+
+  /**
    * Init control, set current text for add file button.
    *
    * @method init

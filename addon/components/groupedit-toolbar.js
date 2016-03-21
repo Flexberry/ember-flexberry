@@ -88,12 +88,20 @@ export default FlexberryBaseComponent.extend({
   actions: {
     // Add record click button handler
     addRow: function() {
+      if (this.get('readonly')) {
+        return;
+      }
+
       var componentName = this.get('componentName');
       this.get('groupEditEventsService').addRowTrigger(componentName);
     },
 
     // Delete records click button handler
     deleteRows: function() {
+      if (this.get('readonly')) {
+        return;
+      }
+
       var componentName = this.get('componentName');
       this.get('groupEditEventsService').deleteRowsTrigger(componentName);
     }

@@ -1,8 +1,6 @@
 import ListFormController from '../controllers/list-form';
 
 export default ListFormController.extend({
-  _currentRow: undefined,
-
   /**
    * Current opened modal window.
    *
@@ -17,22 +15,16 @@ export default ListFormController.extend({
   modalWindowWidth: undefined,
 
   actions: {
-
-    // Save the currentRow on rowClicked.
-    rowClick: function(record) {
-      this.set('_currentRow', record);
-    },
-
-    saveLookupDialog: function() {
-      var saveTo = this.get('saveTo');
-      if (!saveTo) {
-        throw new Error('Don\'t know where to save - no saveTo data defined.');
-      }
-
-      saveTo.model.set(saveTo.propName, this.get('_currentRow'));
-
-      // Manually make record dirty, because ember-data does not do it when relationship changes.
-      saveTo.model.makeDirty();
+    /**
+     * Handles olv row clicked.
+     * Save selected row to object master property and close modal window
+     *
+     * @method rowClick
+     * @param {Ember.Object} record Row record
+     */
+    rowClick: function (record) {
+      this.selectMaster(record);
+      this.closeModalDialog();
     },
 
     /**
@@ -53,26 +45,45 @@ export default ListFormController.extend({
      * @method routeWillTransition
      */
     routeWillTransition: function() {
-      let openedDialog = this.get('_openedModalDialog');
-      if (openedDialog) {
-        openedDialog.modal('hide');
-        this.set('_openedModalDialog', undefined);
-      }
+      this.closeModalDialog();
+    }
+  },
+
+  /**
+   * Set master to corresponding property of editing object
+   *
+   * @method selectMaster
+   * @param {Ember.Object} master Selected master for editing property
+   */
+  selectMaster: function (master) {
+    var saveTo = this.get('saveTo');
+    if (!saveTo) {
+      throw new Error('Don\'t know where to save - no saveTo data defined.');
+    }
+
+    saveTo.model.set(saveTo.propName, master);
+
+    // Manually make record dirty, because ember-data does not do it when relationship changes.
+    saveTo.model.makeDirty();
+  },
+
+  /**
+   * Close current modal window if it exists
+   *
+   * @method closeModalDialog
+   */
+  closeModalDialog: function () {
+    let openedDialog = this.get('_openedModalDialog');
+    if (openedDialog) {
+      openedDialog.modal('hide');
+      this.set('_openedModalDialog', undefined);
     }
   },
 
   clear: function() {
-    this.set('_currentRow', undefined);
     this.set('_openedModalDialog', undefined);
     this.set('saveTo', undefined);
     this.set('modelProjection', undefined);
-    return this;
-  },
-
-  setCurrentRow: function() {
-    var saveTo = this.get('saveTo');
-    var currentRowVal = saveTo.model.get(saveTo.propName);
-    this.set('_currentRow', currentRowVal);
     return this;
   }
 });

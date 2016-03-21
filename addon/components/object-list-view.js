@@ -16,6 +16,10 @@ import ErrorableMixin from '../mixins/errorable-controller';
 export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, ErrorableMixin, {
   actions: {
     rowClick: function(key, record) {
+      if (this.get('readonly')) {
+        return;
+      }
+
       if (this.rowClickable) {
         if (this.get('editOnSeparateRoute') !== true) {
           // It is necessary only when we will not go to other route on click.
@@ -37,6 +41,10 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     },
 
     deleteRow: function(key, record) {
+      if (this.get('readonly')) {
+        return;
+      }
+
       if (confirm('Do you really want to delete this record?')) {
         this._deleteRecord(record, this.get('immediateDelete'));
       }
@@ -67,6 +75,10 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     },
 
     menuInRowItemClick: function(key, record, e) {
+      if (this.get('readonly')) {
+        return;
+      }
+
       if (e.item.isDeleteItem) {
         this.send('deleteRow', key, record);
         return;
@@ -837,8 +849,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     selectedRow.addClass('active');
   },
 
-  _rowsChanged: Ember.observer('content.@each.hasDirtyAttributes', function() {
-    var componentName = this.get('componentName');
-    this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
+  // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
+  _rowsChanged: Ember.observer('content.@each.dirtyType', function() {
+    let content = this.get('content');
+    if (content && content.isAny('dirtyType', 'updated')) {
+      var componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
+    }
   })
 });

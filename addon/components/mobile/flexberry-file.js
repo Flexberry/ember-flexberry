@@ -56,6 +56,22 @@ export default FlexberryFile.extend({
   },
 
   /**
+   * This method handles end of rerender.
+   * Dropdown part of menu is initialized here in order to get dropdown behavior,
+   * when menu disappeares after item selecting.
+   *
+   * @method didRender
+   * @public
+   */
+  didRender() {
+    this._super(...arguments);
+    let dropdownElement = this.$('.flexberry-file-image-preview-menu-mobile .dropdown');
+    if (dropdownElement && dropdownElement.length > 0) {
+      dropdownElement.dropdown();
+    }
+  },
+
+  /**
    * Menu items for dropdown menu for selected image.
    *
    * @property menuForFileItems
@@ -90,7 +106,7 @@ export default FlexberryFile.extend({
 
       return [{
         icon: 'list layout icon',
-        itemsAlignment: 'left',
+        itemsAlignment: undefined,
         items: menuSubItems
       }];
     }
@@ -113,6 +129,7 @@ export default FlexberryFile.extend({
 
       if (e.item.isZoomItem) {
         this.send('viewLoadedImage');
+        this._collapseMenu();
         return;
       }
 
@@ -123,13 +140,28 @@ export default FlexberryFile.extend({
         }
 
         addButton.click();
+        this._collapseMenu();
         return;
       }
 
       if (e.item.isDeleteItem) {
         this.removeFile.call(this, null);
+        this._collapseMenu();
         return;
       }
+    }
+  },
+
+  /**
+   * This method collapses and clears menu after item selection.
+   *
+   * @method _collapseMenu
+   * @private
+   */
+  _collapseMenu: function() {
+    let dropdownElement = this.$('.flexberry-file-image-preview-menu-mobile .dropdown');
+    if (dropdownElement && dropdownElement.length > 0) {
+      dropdownElement.dropdown('clear');
     }
   }
 });

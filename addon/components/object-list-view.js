@@ -303,7 +303,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    */
   menuInRowItems: Ember.computed(
     'showEditMenuItemInRow',
-    'showEditMenuItemInRow',
+    'showDeleteMenuItemInRow',
     'menuInRowHasAdditionalItems',
     function() {
       var menuInRowSubItems = [];

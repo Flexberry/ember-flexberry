@@ -76,9 +76,7 @@ export default Ember.Mixin.create({
   }),
 
   recordsTotalCount: Ember.computed('model', function() {
-    let model = this.get('model');
-    let metadata = model.store.typeMapFor(model.type).metadata;
-    return metadata.count;
+    return this.get('model.meta.count');
   }),
 
   hasPreviousPage: Ember.computed('page', function() {

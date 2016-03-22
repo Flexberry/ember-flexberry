@@ -125,9 +125,9 @@ let ODataSerializer = BaseSerializer.extend(DS.EmbeddedRecordsMixin, {
    `serializeBelongsTo` can be used to customize how `DS.belongsTo` properties are serialized.
    If there is set option `odata-id` at serializer and `DS.belongsTo` property is not null,
    then property will be serialized like:
-   '''
+   ```
    RelationName@odata.bind': RelationType(RelatedObjectId)
-   '''
+   ```
 
    @method serializeBelongsTo
    @param {DS.Snapshot} snapshot

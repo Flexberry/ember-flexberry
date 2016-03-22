@@ -50,7 +50,7 @@ export default ListFormController.extend({
   },
 
   /**
-   * Set master to corresponding property of editing object
+   * Set master to corresponding property of editing object.
    *
    * @method selectMaster
    * @param {Ember.Object} master Selected master for editing property
@@ -68,7 +68,7 @@ export default ListFormController.extend({
   },
 
   /**
-   * Close current modal window if it exists
+   * Close current modal window if it exists.
    *
    * @method closeModalDialog
    */

@@ -77,9 +77,50 @@ export default FlexberryBaseComponent.extend({
 
     /**
      * A stub for call of custom user buttons. Used when no handler is defined.
-     *
+       When not stab is used (closure action is defined), structured info about custom buttons is returned.
+       Closure action has to return an array of structures:
+
+       ```
+       {
+      	buttonName: '...', // Button displayed name.
+      	buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+      	buttonClasses: '...' // Css classes for button.
+       }
+       ```
+
+      Example of how to add user buttons:
+       1) it has to be defined special method (it will be used as closure action) at corresponding controller (name is not fixed).
+       ```
+       actions: {
+        getCustomButtons: function() {
+          return [{
+          	buttonName: 'UserButton',
+          	buttonAction: 'userButtonActionTest',
+          	buttonClasses: 'my-test-user-button test-click-button'
+          }];
+        }
+       }
+       ```
+
+       2) it has to be defined set as 'buttonAction' methods.
+       ```
+       actions: {
+        userButtonActionTest: function() {
+          this.set('header', this.get('header') + ' clicked');
+        }
+       }
+       ```
+
+       3) defined methods have to be registered at conponent.
+       ```
+       {{flexberry-objectlistview
+        ...
+        customButtons = (action "getCustomButtons")
+        userButtonActionTest = 'userButtonActionTest'
+       }}
+       ```
      * @method customButtons
-     * @return {Array} Returns only 'undefined' (because is's a stub).
+     * @return Returns only `undefined` (because it's a stub).
      */
     customButtons: function() {
       return undefined;

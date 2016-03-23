@@ -19,6 +19,11 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-file', 'ui', 'fluid', 'action', 'input'],
 
   /**
+   * Css class for buttons.
+   */
+  classButton: undefined,
+
+  /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
    *
    * @property appConfigSettingsPath

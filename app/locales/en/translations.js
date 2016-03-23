@@ -30,7 +30,12 @@ export default {
     'upload-file-error-message': 'Upload {{fileName}} failed. {{errorText}}',
 
     'download-file-error-title': 'File download error',
-    'download-file-error-message': 'Download {{fileName}} failed. {{errorText}}'
+    'download-file-error-message': 'Download {{fileName}} failed. {{errorText}}',
+    'menu-for-file': {
+      'zoom-image-item-title': 'Zoom image',
+      'replace-file-item-title': 'Replace file',
+      'delete-file-item-title': 'Delete file'
+    }
   },
 
   'flexberry-lookup': {

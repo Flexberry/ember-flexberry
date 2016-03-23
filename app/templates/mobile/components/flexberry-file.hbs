@@ -1,0 +1,57 @@
+<div class="flexberry-file-grid ui grid">
+  <div class="row">
+    <input type="file" name="files[]" class="flexberry-file-file-input" style="display:none" />
+    {{input
+      type = "hidden"
+      class = "flexberry-file-filename-input"
+      readonly = "readonly"
+      placeholder = placeholder
+      required = required
+      value = fileName
+    }}
+    {{#unless readonly}}
+      {{#if addButtonIsVisible}}
+        <label class="flexberry-file-add-button ui icon primary {{unless addButtonIsEnabled "disabled"}} button"
+        title={{addButtonTitle}} style="{{if hasSelectedFile 'display:none' ''}}">
+        {{addButtonText}}
+        </label>
+      {{/if}}
+    {{/unless}}
+  </div>
+  {{#if showPreview}}
+    <div class="row flexberry-file-image-preview-wrapper">
+      {{#if (and hasSelectedFile (not readonly))}}
+        <div class="flexberry-file-image-preview-menu-mobile">
+          {{flexberry-menu
+            class='icon vertical'
+            items=menuForFileItems
+            callItemsOnClickCallbacks=false
+            onItemClick=(action 'menuForFileItemClick')
+          }}
+        </div>
+      {{/if}}
+      <div class="flexberry-file-image-preview-wrapper-mobile" {{action 'viewLoadedImage'}}>
+        <img class="ui centered image flexberry-file-image-preview" src="" alt="LoadedImage"/>
+        <div class="ui {{if downloadIsInProgress 'active' ''}} loader"></div>
+      </div>
+    </div>
+  {{/if}}
+</div>
+<div class="flexberry-file-error-modal-dialog ui small basic modal">
+  <div class="ui icon header">
+    {{errorModalDialogTitle}}
+  </div>
+  <div class="content">
+  <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
+    {{errorModalDialogContent}}
+  </div>
+  </div>
+  <div class="center aligned ui grid">
+  <div class="actions">
+    <div class="flexberry-file-error-modal-dialog-ok-button ui approve green inverted button">
+      <i class="checkmark icon"></i>
+      {{t "flexberry-file.error-dialog-ok-btn-text"}}
+    </div>
+  </div>
+  </div>
+</div>

@@ -30,7 +30,12 @@ export default {
     'upload-file-error-message': 'Отправка файла {{fileName}} не удалась. {{errorText}}',
 
     'download-file-error-title': 'Ошибка загрузки файла',
-    'download-file-error-message': 'Загрузка файла {{fileName}} не удалась. {{errorText}}'
+    'download-file-error-message': 'Загрузка файла {{fileName}} не удалась. {{errorText}}',
+    'menu-for-file': {
+      'zoom-image-item-title': 'Увеличить',
+      'replace-file-item-title': 'Заменить',
+      'delete-file-item-title': 'Удалить'
+    }
   },
 
   'flexberry-lookup': {

@@ -1,0 +1,38 @@
+/**
+ * Styles for mobile flexberry-file component.
+ */
+
+ .flexberry-file.mobile .flexberry-file-add-button  {
+   max-width: 100%;
+   width: 100%;
+ }
+
+ .flexberry-file.mobile .flexberry-file-image-preview-wrapper {
+   height: 200px;
+ }
+
+
+ .flexberry-file.mobile .flexberry-file-image-preview {
+   max-width: 100%;
+   max-height: 100%;
+ }
+
+ .flexberry-file.mobile .flexberry-file-image-preview-wrapper-mobile {
+   width: 100%;
+   height: 100%;
+ }
+
+.flexberry-file.mobile img.flexberry-file-image-preview[src=""] {
+  display: none;
+ }
+
+.flexberry-file.mobile .flexberry-file-grid {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.flexberry-file.mobile .flexberry-file-image-preview-menu-mobile {
+  position: absolute;
+  z-index: 1000;
+}

@@ -33,6 +33,10 @@ FlexberryMenuComponent
 FlexberryCheckboxComponent
 * Add 'onChange' action;
 
+FlexberryFileComponent
+* Add mobile version.
+* Add selected image preview (need flag 'showPreview' and property 'viewImageAction="flexberryFileViewImageAction"').
+
 ### Bug fixes
 Moment:
 * Add 'defaultFormat' initialization (now ENV.moment.defaultFormat will take an effect to both JS & HTMLBars-helpers);

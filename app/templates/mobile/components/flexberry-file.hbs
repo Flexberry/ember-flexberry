@@ -2,16 +2,16 @@
   <div class="row">
     <input type="file" name="files[]" class="flexberry-file-file-input" style="display:none" />
     {{input
-      type = "hidden"
-      class = "flexberry-file-filename-input"
-      readonly = "readonly"
-      placeholder = placeholder
-      required = required
-      value = fileName
+      type="hidden"
+      class="flexberry-file-filename-input"
+      readonly="readonly"
+      placeholder=placeholder
+      required=required
+      value=fileName
     }}
     {{#unless readonly}}
       {{#if addButtonIsVisible}}
-        <label class="flexberry-file-add-button ui icon primary {{unless addButtonIsEnabled "disabled"}} button"
+        <label class="flexberry-file-add-button ui icon {{classButton}} {{unless addButtonIsEnabled "disabled"}} button"
         title={{addButtonTitle}} style="{{if hasSelectedFile 'display:none' ''}}">
         {{addButtonText}}
         </label>

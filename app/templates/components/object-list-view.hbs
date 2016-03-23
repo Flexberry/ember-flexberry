@@ -58,7 +58,7 @@
             {{/if}}
             {{#if showDeleteButtonInRow}}
               <div class="cell">
-                <button class="ui primary button {{if readonly 'disabled'}}" {{action 'deleteRow' record.key record.data}}>
+                <button class="ui {{classButton}} {{if readonly 'disabled'}} button" {{action 'deleteRow' record.key record.data}}>
                   <i class="minus icon"></i>
                 </button>
               </div>

@@ -29,8 +29,8 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   // ToDo: Use 'flexberry-lookup.remove-button-text' from locale.
   removeText: '<i class="remove icon"></i>',
 
-  cssClassChoose: undefined,
-  cssClassRemove: undefined,
+  classChoose: undefined,
+  classRemove: undefined,
 
   projection: undefined,
   value: undefined,

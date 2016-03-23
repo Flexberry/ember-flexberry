@@ -75,8 +75,8 @@
       readonly=readonly
       limitFunction=lookupLimitFunction
       class=(if model.errors.reportsTo 'error' '')
-      cssClassChoose='primary'
-      cssClassRemove='primary'
+      classChoose='primary'
+      classRemove='primary'
     }}
       {{model.employee1.firstName}}<br />
       {{model.employee1.lastName}}
@@ -89,12 +89,12 @@
     {{/if}}
     {{flexberry-groupedit
       componentName="ordersGroupEdit"
-      class="attached"
+      classButton='grey'
       modelProjection=modelProjection.attributes.orders
       content=model.orders
       readonly=readonly
       orderable=false
-      class=(if model.errors.orders 'error' '')
+      class=(concat 'attached ' (if model.errors.orders 'error' ''))
       rowClickable=true
       rowClick='rowClick'
       editOnSeparateRoute=true

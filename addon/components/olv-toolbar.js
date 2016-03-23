@@ -7,7 +7,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
 export default FlexberryBaseComponent.extend({
   modelName: null,
-  modelController:null,
+  modelController: null,
 
   /**
    * Service that triggers objectlistview events.

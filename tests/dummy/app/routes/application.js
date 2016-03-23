@@ -12,6 +12,11 @@ export default Ember.Route.extend(ModalApplicationRouteMixin, AuthApplicationRou
       let version = $el[0].innerText.trim();
       let commitSha = version.split('+')[1];
       window.location.href = 'https://github.com/Flexberry/ember-flexberry/commit/' + commitSha;
+    },
+    willTransition: function() {
+      Ember.run('afterRender', () => {
+        Ember.$('.ui.sidebar').sidebar('hide');
+      });
     }
   }
 });

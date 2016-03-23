@@ -2,26 +2,27 @@
 
 <div class="row">
   {{flexberry-objectlistview
-    modelName = "order"
-	modelProjection = modelProjection
-	content = model
+    modelName="order"
+	modelProjection=modelProjection
+	content=model
 
-    createNewButton = true
-    refreshButton = true
+    createNewButton=true
+    refreshButton=true
+    classButton='primary'
 
-	sorting = computedSorting
-	orderable = true
-	sortByColumn = (action "sortByColumn")
-	addColumnToSorting = (action "addColumnToSorting")
-	action = "rowClick"
+	sorting=computedSorting
+	orderable=true
+	sortByColumn=(action "sortByColumn")
+	addColumnToSorting=(action "addColumnToSorting")
+	action="rowClick"
 
-	pages = pages
-	perPageValue = perPageValue
-	perPageValues = perPageValues
-	hasPreviousPage = hasPreviousPage
-	hasNextPage = hasNextPage
-	previousPage = (action "previousPage")
-	gotoPage = (action "gotoPage")
-	nextPage = (action "nextPage")
+	pages=pages
+	perPageValue=perPageValue
+	perPageValues=perPageValues
+	hasPreviousPage=hasPreviousPage
+	hasNextPage=hasNextPage
+	previousPage=(action "previousPage")
+	gotoPage=(action "gotoPage")
+	nextPage=(action "nextPage")
   }}
 </div>

@@ -19,15 +19,24 @@ export default FlexberryFile.extend({
   addButtonText: '',
 
   /**
-   * Computed property indicates if file is selected.
+   * Flag: indicates whether to show preview element for images or not.
+   *
+   * @property showPreview
+   * @type Boolean
+   * @default true
+   */
+  showPreview: true,
+
+  /**
+   * Computed property indicates if there is info about selected file to preview it.
    *
    * @property hasSelectedFile
    * @type Boolean
    * @default false
    */
-  hasSelectedFile: Ember.computed('selectedFile', function() {
-    var selectedFile = this.get('selectedFile');
-    return !!(selectedFile);
+  hasSelectedFile: Ember.computed('_selectedFileSrc', function() {
+    var selectedFileSrc = this.get('_selectedFileSrc');
+    return selectedFileSrc && selectedFileSrc !== '';
   }),
 
   /**

@@ -51,14 +51,14 @@
             {{#if showCheckBoxInRow}}
               <div class="cell">
                 {{flexberry-checkbox
-                  readonly=readonly
+                  readonly=(or readonly (not record.config.canBeSelected))
                   onChange=(action 'selectRow' record.key record.data)
                 }}
               </div>
             {{/if}}
             {{#if showDeleteButtonInRow}}
               <div class="cell">
-                <button class="ui {{classButton}} {{if readonly 'disabled'}} button" {{action 'deleteRow' record.key record.data}}>
+                <button class="ui {{classButton}} {{if (or readonly (not record.config.canBeDeleted)) 'disabled'}} button" {{action 'deleteRow' record}}>
                   <i class="minus icon"></i>
                 </button>
               </div>

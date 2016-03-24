@@ -13,7 +13,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   /**
    * Component's CSS class names.
    */
-  classNames: ['object-list-view-single-column-cell', 'ui', 'grid'],
+  classNames: ['object-list-view-single-column-cell', 'ui', 'form'],
 
   /**
    * Displaying model.

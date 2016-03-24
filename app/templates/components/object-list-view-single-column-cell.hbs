@@ -1,9 +1,9 @@
 {{#each columns as |column|}}
-  <div class="row {{if (not hasEditableValues) 'readonly'}}">
-    <div class="four wide column">
+  <div class="inline fields no-margin {{if (not hasEditableValues) 'readonly'}}">
+    <div class="field">
       <b>{{column.header}}</b>:
     </div>
-    <div class="twelve wide column">
+    <div class="field">
       {{component column.cellComponent.componentName
         dynamicProperties=column.cellComponent.componentProperties
         relatedModel=model

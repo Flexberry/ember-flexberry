@@ -51,8 +51,44 @@ export default Ember.Mixin.create({
      * It sets `modelNoRollBack` to `true` at current controller, redirects to detail's route, save necessary data to service.
      *
      * @param {Ember.Object} record Record related to clicked table row.
+     * @param {Object} options Record related to clicked table row.
+     * @param {Boolean} [options.saveBeforeRouteLeave] Flag: indicates whether to save current model before going to the detail's route.
+     * @param {Boolean} [options.editOnSeparateRoute] Flag: indicates whether to edit detail on separate route.
+     * @param {String} [options.modelName] Clicked detail model name (used to create record if record is undefined).
+     * @param {Array} [options.datailArray] Current detail array (used to add record to if record is undefined).
      */
-    rowClick: function(record) {
+    rowClick: function(record, options) {
+      let methodOptions = {
+        saveBeforeRouteLeave: false,
+        editOnSeparateRoute: false,
+        modelName: undefined,
+        datailArray: undefined
+      };
+      methodOptions = Ember.merge(methodOptions, options);
+      let editOnSeparateRoute = methodOptions.editOnSeparateRoute;
+      let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
+
+      if (!editOnSeparateRoute) {
+        return;
+      }
+
+      if (saveBeforeRouteLeave) {
+        this.controller.send('save');
+      }
+
+      if (!record)
+      {
+        let modelName = methodOptions.modelName;
+        if (!modelName) {
+          throw new Error('Detail\'s model name is undefined.');
+        }
+
+        let datailArray = methodOptions.datailArray;
+        var modelToAdd = this.store.createRecord(modelName, {});
+        datailArray.addObject(modelToAdd);
+        record = modelToAdd;
+      }
+
       let recordId = record.get('id');
       let modelName = record.constructor.modelName;
       this.controller.set('modelNoRollBack', true);
@@ -61,6 +97,7 @@ export default Ember.Mixin.create({
       flexberryDetailInteractionService.pushValue(
         'modelCurrentAgregatorPathes', this.controller.get('modelCurrentAgregatorPathes'), this.get('router.url'));
       flexberryDetailInteractionService.set('modelSelectedDetail', record);
+      flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
       flexberryDetailInteractionService.pushValue(
         'modelCurrentAgregators', this.controller.get('modelCurrentAgregators'), this.controller.get('model'));
 

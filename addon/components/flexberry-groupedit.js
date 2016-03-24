@@ -40,9 +40,10 @@ export default FlexberryBaseComponent.extend({
      *
      * @method rowClick
      * @param {Object} record Clicked record.
+     * @param {Object} options Different parameters to handle action.
      */
-    rowClick: function(record) {
-      this.sendAction('rowClick', record);
+    rowClick: function(record, options) {
+      this.sendAction('rowClick', record, options);
     }
   },
 
@@ -220,8 +221,17 @@ export default FlexberryBaseComponent.extend({
    * Flag: indicates whether records should be edited on separate route.
    *
    * @property editOnSeparateRoute
-   * @type Object
+   * @type Boolean
    * @default false
    */
   editOnSeparateRoute: false,
+
+  /**
+   * Flag: indicates whether to save current model before going to the detail's route.
+   *
+   * @property saveBeforeRouteLeave
+   * @type Boolean
+   * @default false
+   */
+  saveBeforeRouteLeave: false
 });

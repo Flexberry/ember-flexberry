@@ -21,13 +21,19 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       }
 
       if (this.rowClickable) {
-        if (this.get('editOnSeparateRoute') !== true) {
+        let editOnSeparateRoute = this.get('editOnSeparateRoute');
+        if (editOnSeparateRoute !== true) {
           // It is necessary only when we will not go to other route on click.
           this.set('selectedRecord', record);
           this._setActiveRecord(key);
         }
 
-        this.sendAction('action', record);
+        this.sendAction('action', record, {
+          saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
+          editOnSeparateRoute: editOnSeparateRoute,
+          modelName: this.get('modelProjection').modelName,
+          datailArray: this.get('content')
+        });
       }
     },
 
@@ -521,6 +527,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   editOnSeparateRoute: false,
 
   /**
+   * Flag: indicates whether to save current model before going to the detail's route.
+   *
+   * @property saveBeforeRouteLeave
+   * @type Boolean
+   * @default false
+   */
+  saveBeforeRouteLeave: false,
+
+  /**
    * Ember data store.
    *
    * @property store
@@ -752,15 +767,16 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    */
   _addRow: function(componentName) {
     if (componentName === this.get('componentName')) {
-      var modelName = this.get('modelProjection').modelName;
-      var modelToAdd = this.get('store').createRecord(modelName, {});
-      this.get('content').addObject(modelToAdd);
+      if (this.get('editOnSeparateRoute')) {
+        // Depending on settings current model has to be saved before adding detail.
+        this.send(this.get('action'), undefined, undefined);
+      } else {
+        var modelName = this.get('modelProjection').modelName;
+        var modelToAdd = this.get('store').createRecord(modelName, {});
+        this.get('content').addObject(modelToAdd);
 
-      var key = this._addModel(modelToAdd);
-      this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
-
-      if (this.get('editOnSeparateRoute') === true) {
-        this.send(this.get('action'), key, modelToAdd);
+        this._addModel(modelToAdd);
+        this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
       }
     }
   },

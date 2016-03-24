@@ -120,5 +120,14 @@ export default Ember.Service.extend({
    * @type Object
    * @default undefined
    */
-  modelLastUpdatedDetail: undefined
+  modelLastUpdatedDetail: undefined,
+
+  /**
+   * Flag: indicates whether to save current model before going to agregator's route.
+   *
+   * @property saveBeforeRouteLeave
+   * @type Boolean
+   * @default false
+   */
+  saveBeforeRouteLeave: undefined
 });

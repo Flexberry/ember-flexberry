@@ -40,13 +40,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       this.sendAction(action, column);
     },
 
-    deleteRow: function(key, record) {
-      if (this.get('readonly')) {
+    // TODO: rename recordWithKey. rename record in the template, where it is actually recordWithKey.
+    deleteRow: function(recordWithKey) {
+      if (this.get('readonly') || !recordWithKey.config.canBeDeleted) {
         return;
       }
 
       if (confirm('Do you really want to delete this record?')) {
-        this._deleteRecord(record, this.get('immediateDelete'));
+        this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
       }
     },
 
@@ -503,6 +504,52 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   filterByAnyMatch: 'filterByAnyMatch',
 
   /**
+   * Hook for configurate rows.
+   *
+    Example:
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
+    {{flexberry-objectlistview
+      ...
+      configurateRow=(action 'configurateRow')
+      ...
+    }}
+    ```
+
+    ```js
+    // app/controllers/employees.js
+    import ListFormController from './list-form';
+
+    export default ListFormController.extend({
+      actions: {
+        configurateRow: function(rowConfig, record) {
+          rowConfig.canBeDeleted = false;
+        }
+      }
+    });
+    ```
+   * @method configurateRow
+   * @param {Object} config Settings for row.
+                            See {{#crossLink "ObjectListView/defaultRowConfig:property"}}{{/crossLink}}
+                            property for details.
+   * @param {DS.Model} record The record in row.
+   */
+  configurateRow: undefined,
+
+  /**
+   * Default settings for rows.
+   *
+   * @property defaultRowConfig
+   * @type Object
+   * @param {Boolean} [canBeDeleted=true] The row can be deleted.
+   * @param {Boolean} [canBeSelected=true] The row can be selected via checkbox.
+   */
+  defaultRowConfig: {
+    canBeDeleted: true,
+    canBeSelected: true
+  },
+
+  /**
    * Flag: indicates whether DELETE request should be immediately sended to server (on each deleted record) or not.
    *
    * @property immediateDelete
@@ -736,6 +783,16 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     modelWithKey.set('key', key);
     modelWithKey.set('data', record);
+
+    let rowConfig = Ember.copy(this.get('defaultRowConfig'));
+    modelWithKey.set('config', rowConfig);
+
+    let configurateRow = this.get('configurateRow');
+    if (configurateRow) {
+      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
+      configurateRow(rowConfig, record);
+    }
+
     this.get('contentWithKeys').pushObject(modelWithKey);
 
     return key;

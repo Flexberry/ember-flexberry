@@ -30,8 +30,8 @@
           }}
         </div>
       {{/if}}
-      <div class="flexberry-file-image-preview-wrapper-mobile" {{action 'viewLoadedImage'}}>
-        <img class="ui centered image flexberry-file-image-preview" src="" alt="LoadedImage"/>
+      <div class="ui small image" {{action 'viewLoadedImage'}}>
+        <img class="flexberry-file-image-preview" src="" alt="LoadedImage"/>
         <div class="ui {{if downloadIsInProgress 'active' ''}} loader"></div>
       </div>
     </div>

@@ -94,7 +94,7 @@ export default EditFormController.extend({
      * @method save
      */
     save: function() {
-      if (this.get('hasParentRoute') || this.get('saveBeforeRouteLeave')) {
+      if (this.get('hasParentRoute') || !this.get('saveBeforeRouteLeave')) {
         throw new Error('\'Save\' operation is not accessible due to current settings.');
       }
 
@@ -117,7 +117,7 @@ export default EditFormController.extend({
      * @method delete
      */
     delete: function() {
-      if (this.get('model').get('id') && this.get('hasParentRoute')) {
+      if (this.get('model').get('id') && this.get('hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         if (confirm('Are you sure you want to delete that record?')) {
           this.get('model').deleteRecord();
           this.transitionToParentRoute();
@@ -135,7 +135,11 @@ export default EditFormController.extend({
      * @method delete
      */
     close: function() {
-      this._super.apply(this, arguments);
+      if (this.get('hasParentRoute')) {
+        this.transitionToParentRoute(this.get('saveBeforeRouteLeave'));
+      } else {
+        this._super.apply(this, arguments);
+      }
     }
   },
 
@@ -146,10 +150,14 @@ export default EditFormController.extend({
    * Otherwise transition to corresponding list.
    *
    * @method transitionToParentRoute.
+   *
+   * @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
    */
-  transitionToParentRoute: function() {
+  transitionToParentRoute: function(rollBackModel) {
     if (this.get('hasParentRoute')) {
-      this.set('modelNoRollBack', true);
+      if (rollBackModel) {
+        this.set('modelNoRollBack', true);
+      }
 
       let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
       let modelAgregatorRoute = modelAgregatorRoutes.pop();

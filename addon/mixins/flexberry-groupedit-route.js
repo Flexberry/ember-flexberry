@@ -72,40 +72,49 @@ export default Ember.Mixin.create({
         return;
       }
 
-      if (saveBeforeRouteLeave) {
-        this.controller.send('save');
-      }
+      let _this = this;
+      let goToOtherRouteFunction = function() {
+        if (!record)
+        {
+          let modelName = methodOptions.modelName;
+          if (!modelName) {
+            throw new Error('Detail\'s model name is undefined.');
+          }
 
-      if (!record)
-      {
-        let modelName = methodOptions.modelName;
-        if (!modelName) {
-          throw new Error('Detail\'s model name is undefined.');
+          let datailArray = methodOptions.datailArray;
+          var modelToAdd = _this.store.createRecord(modelName, {});
+          datailArray.addObject(modelToAdd);
+          record = modelToAdd;
         }
 
-        let datailArray = methodOptions.datailArray;
-        var modelToAdd = this.store.createRecord(modelName, {});
-        datailArray.addObject(modelToAdd);
-        record = modelToAdd;
-      }
+        let recordId = record.get('id');
+        let modelName = record.constructor.modelName;
+        _this.controller.set('modelNoRollBack', true);
 
-      let recordId = record.get('id');
-      let modelName = record.constructor.modelName;
-      this.controller.set('modelNoRollBack', true);
+        let flexberryDetailInteractionService = _this.get('flexberryDetailInteractionService');
+        flexberryDetailInteractionService.pushValue(
+          'modelCurrentAgregatorPathes', _this.controller.get('modelCurrentAgregatorPathes'), _this.get('router.url'));
+        flexberryDetailInteractionService.set('modelSelectedDetail', record);
+        flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
+        flexberryDetailInteractionService.pushValue(
+          'modelCurrentAgregators', _this.controller.get('modelCurrentAgregators'), _this.controller.get('model'));
 
-      let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
-      flexberryDetailInteractionService.pushValue(
-        'modelCurrentAgregatorPathes', this.controller.get('modelCurrentAgregatorPathes'), this.get('router.url'));
-      flexberryDetailInteractionService.set('modelSelectedDetail', record);
-      flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
-      flexberryDetailInteractionService.pushValue(
-        'modelCurrentAgregators', this.controller.get('modelCurrentAgregators'), this.controller.get('model'));
+        if (recordId) {
+          _this.transitionTo(modelName, record.get('id'));
+        } else {
+          let newModelPath = _this.newRoutePath(modelName);
+          _this.transitionTo(newModelPath);
+        }
+      };
 
-      if (recordId) {
-        this.transitionTo(modelName, record.get('id'));
+      if (saveBeforeRouteLeave) {
+        this.controller.save().then(() => {
+          goToOtherRouteFunction();
+        }).catch((errorData) => {
+          this.rejectError(errorData, this.get('i18n').t('edit-form.save-failed-message'));
+        });
       } else {
-        let newModelPath = this.newRoutePath(modelName);
-        this.transitionTo(newModelPath);
+        goToOtherRouteFunction();
       }
     }
   },

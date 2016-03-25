@@ -1,0 +1,18 @@
+<div class="field">
+  <label><%=caption%></label>
+  {{#if model.errors.<%=name%>}}
+    <span style="color:red">{{model.errors.<%=name%>}}</span>
+  {{/if}}
+      {{
+    flexberry-lookup
+    choose='showLookupDialog'
+    remove='removeLookupValue'
+    <%if(lookupValueField){%>value=model.<%=name%>.<%=lookupValueField%><%}else{%>value=null<%}%>
+    relationName='<%=name%>'
+    projection='<%=projection%>'
+    title='<%=caption%>'
+    readonly=readonly
+    limitFunction=null
+    class=(if model.errors.<%=name%> 'error' '')
+}}
+</div>

@@ -4,11 +4,11 @@
 ## 2016-03-25
 ### Added
 FlexberryObjectlistviewComponent:
-* Add support custom route for edit model (property: editFormRoute)
+* Add support castom route for edit model (property: editFormRoute)
 
 ### Breaking changes
 FlexberryGroupeditComponent
-* Add support custom route for edit model (property: editFormRoute).
+* Add support castom route for edit model (property: editFormRoute).
   If your FlexberryGroupeditComponent use 'editOnSeparateRoute', you should define 'editFormRoute'
 
 ##

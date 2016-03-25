@@ -32,7 +32,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
           editOnSeparateRoute: editOnSeparateRoute,
           modelName: this.get('modelProjection').modelName,
-          datailArray: this.get('content')
+          detailArray: this.get('content')
         });
       }
     },

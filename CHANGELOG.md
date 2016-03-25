@@ -1,5 +1,18 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
+
+## 2016-03-25
+### Added
+FlexberryObjectlistviewComponent:
+* Add support custom route for edit model (property: editFormRoute)
+
+### Breaking changes
+FlexberryGroupeditComponent
+* Add support custom route for edit model (property: editFormRoute).
+  If your FlexberryGroupeditComponent use 'editOnSeparateRoute', you should define 'editFormRoute'
+
+##
+
 i18n:
 * Move initialization from application route into application initializer;
 

@@ -5,6 +5,15 @@ export default EditFormController.extend({
   // Caption of this particular edit form.
   title: 'Employee',
 
+  /**
+   * Route edit order for group edit
+   *
+   * @property routeForEditOrder
+   * @type String
+   * @default 'order'
+   */
+  routeForEditOrder: 'order',
+
   getCellComponent: function(attr, bindingPath, model) {
     var cellComponent = this._super(...arguments);
 

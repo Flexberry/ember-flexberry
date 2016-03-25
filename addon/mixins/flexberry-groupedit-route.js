@@ -55,14 +55,16 @@ export default Ember.Mixin.create({
      * @param {Boolean} [options.saveBeforeRouteLeave] Flag: indicates whether to save current model before going to the detail's route.
      * @param {Boolean} [options.editOnSeparateRoute] Flag: indicates whether to edit detail on separate route.
      * @param {String} [options.modelName] Clicked detail model name (used to create record if record is undefined).
-     * @param {Array} [options.datailArray] Current detail array (used to add record to if record is undefined).
+     * @param {Array} [options.detailArray] Current detail array (used to add record to if record is undefined).
+     * @param {Boolean} [options.editFormRoute] Path to detail's form.
      */
     rowClick: function(record, options) {
       let methodOptions = {
         saveBeforeRouteLeave: false,
         editOnSeparateRoute: false,
         modelName: undefined,
-        datailArray: undefined
+        detailArray: undefined,
+        editFormRoute: undefined
       };
       methodOptions = Ember.merge(methodOptions, options);
       let editOnSeparateRoute = methodOptions.editOnSeparateRoute;
@@ -73,6 +75,11 @@ export default Ember.Mixin.create({
       }
 
       let _this = this;
+      let editFormRoute = methodOptions.editFormRoute;
+      if (!editFormRoute) {
+        throw new Error('Detail\'s edit form route is undefined.');
+      }
+
       let goToOtherRouteFunction = function() {
         if (!record)
         {
@@ -81,14 +88,13 @@ export default Ember.Mixin.create({
             throw new Error('Detail\'s model name is undefined.');
           }
 
-          let datailArray = methodOptions.datailArray;
+          let detailArray = methodOptions.detailArray;
           var modelToAdd = _this.store.createRecord(modelName, {});
-          datailArray.addObject(modelToAdd);
+          detailArray.addObject(modelToAdd);
           record = modelToAdd;
         }
 
         let recordId = record.get('id');
-        let modelName = record.constructor.modelName;
         _this.controller.set('modelNoRollBack', true);
 
         let flexberryDetailInteractionService = _this.get('flexberryDetailInteractionService');
@@ -100,9 +106,9 @@ export default Ember.Mixin.create({
           'modelCurrentAgregators', _this.controller.get('modelCurrentAgregators'), _this.controller.get('model'));
 
         if (recordId) {
-          _this.transitionTo(modelName, record.get('id'));
+          _this.transitionTo(editFormRoute, record.get('id'));
         } else {
-          let newModelPath = _this.newRoutePath(modelName);
+          let newModelPath = _this.newRoutePath(editFormRoute);
           _this.transitionTo(newModelPath);
         }
       };

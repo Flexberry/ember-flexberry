@@ -2,6 +2,7 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -11,6 +12,13 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
+  init: function() {
+    this._super(...arguments);
+    if (!this.get('editFormRoute')) {
+      this.set('editFormRoute', this.get('modelName'));
+    }
+  },
+
   actions: {
     /**
      * Handles action from object-list-view when no handler for this component is defined.
@@ -41,7 +49,9 @@ export default FlexberryBaseComponent.extend({
      * @param {Object} record Clicked record.
      */
     rowClick: function(record) {
-      this.sendAction('action', record);
+      let editFormRoute = this.get('editFormRoute');
+      Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
+      this.sendAction('action', record, editFormRoute);
     },
 
     /**
@@ -150,6 +160,15 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action "filterByAnyMatch")}}.');
     }
   },
+
+  /**
+   * Route for edit form by click row
+   *
+   * @property editFormRoute
+   * @type String
+   * @default 'this.modelName'
+   */
+  editFormRoute: undefined,
 
   /**
    * Primary action for row click.

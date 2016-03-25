@@ -16,6 +16,8 @@ ODataSerializer:
 * Move Mixin DS.EmbeddedRecordsMixin into ember-flexberry addon (relation 'odata-id' now is used for belongsTo relations);
 
 FlexberryObjectlistviewComponent:
+* Implement [beforeDeleteRecord](http://flexberry.github.io/Documentation/develop/classes/ObjectListView.html#method_beforeDeleteRecord) hook with cancel flag in ObjectListView ([74a22e5](https://github.com/Flexberry/ember-flexberry/commit/74a22e5b1c40784f8855d35d9a61170f2b37d91d));
+* Implement [hook](http://flexberry.github.io/Documentation/develop/classes/ObjectListView.html#method_configurateRow) in ObjectListView for configuring rows ([6f9d480](https://github.com/Flexberry/ember-flexberry/commit/6f9d480723c474d8eda929148818e3229f831c8e));
 * Add support of delete button in row of flexberry-objectlistview;
 * Add mobile version of the component;
 * Add optional column with dropdown menu;

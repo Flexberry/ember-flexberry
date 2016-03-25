@@ -45,8 +45,8 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
      *
      * @param {Ember.Object} record Record related to clicked table row.
      */
-    rowClick: function(record) {
-      this.transitionTo(record.constructor.modelName, record.get('id'));
+    rowClick: function(record, editFormRoute) {
+      this.transitionTo(editFormRoute, record.get('id'));
     },
 
     refreshList: function() {

@@ -1,35 +1,35 @@
 <input type="file" name="files[]" class="flexberry-file-file-input" style="display:none" />
 {{input
-	type = "text"
-	class = "flexberry-file-filename-input"
-	readonly = "readonly"
-	placeholder = placeholder
-	required = required
-	value = fileName
+  type="text"
+  class="flexberry-file-filename-input"
+  readonly="readonly"
+  placeholder=placeholder
+  required=required
+  value=fileName
 }}
 {{#unless readonly}}
-	{{#if addButtonIsVisible}}
-		<label class="flexberry-file-add-button ui icon primary {{unless addButtonIsEnabled "disabled"}} button"
-			   title={{addButtonTitle}}>
-			<i class="add outline square icon"></i>
-		</label>
-	{{/if}}
-	{{#if removeButtonIsVisible}}
-		<label class="flexberry-file-remove-button ui icon primary {{unless removeButtonIsEnabled "disabled"}} button"
-			   title={{removeButtonTitle}}>
-			<i class="trash outline icon"></i>
-		</label>
-	{{/if}}
-	{{#if uploadButtonIsVisible}}
-		<label class="flexberry-file-upload-button ui icon primary {{unless uploadButtonIsEnabled "disabled"}} {{if uploadIsInProgress "loading"}} button"
-			   title={{uploadButtonTitle}}>
-			<i class="upload outline icon"></i>
-		</label>
-	{{/if}}
+  {{#if addButtonIsVisible}}
+    <label class="flexberry-file-add-button ui icon {{classButton}} {{unless addButtonIsEnabled "disabled"}} button"
+         title={{addButtonTitle}}>
+      <i class="add outline square icon"></i>
+    </label>
+  {{/if}}
+  {{#if removeButtonIsVisible}}
+    <label class="flexberry-file-remove-button ui icon {{classButton}} {{unless removeButtonIsEnabled "disabled"}} button"
+         title={{removeButtonTitle}}>
+      <i class="trash outline icon"></i>
+    </label>
+  {{/if}}
+  {{#if uploadButtonIsVisible}}
+    <label class="flexberry-file-upload-button ui icon {{classButton}} {{unless uploadButtonIsEnabled "disabled"}} {{if uploadIsInProgress "loading"}} button"
+         title={{uploadButtonTitle}}>
+      <i class="upload outline icon"></i>
+    </label>
+  {{/if}}
 {{/unless}}
 {{#if downloadButtonIsVisible}}
-<label class="flexberry-file-download-button ui icon primary {{unless downloadButtonIsEnabled "disabled"}} {{if downloadIsInProgress "loading"}} button"
-	 title={{downloadButtonTitle}}>
+<label class="flexberry-file-download-button ui icon {{classButton}} {{unless downloadButtonIsEnabled "disabled"}} {{if downloadIsInProgress "loading"}} button"
+   title={{downloadButtonTitle}}>
   <i class="download outline icon"></i>
 </label>
 {{/if}}
@@ -39,17 +39,17 @@
     {{errorModalDialogTitle}}
   </div>
   <div class="content">
-	  <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
-		  {{errorModalDialogContent}}
-	  </div>
+    <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
+      {{errorModalDialogContent}}
+    </div>
   </div>
   <div class="center aligned ui grid">
-	<div class="actions">
-		<div class="flexberry-file-error-modal-dialog-ok-button ui approve green inverted button">
-			<i class="checkmark icon"></i>
-			{{t "flexberry-file.error-dialog-ok-btn-text"}}
-		</div>
-	</div>
+  <div class="actions">
+    <div class="flexberry-file-error-modal-dialog-ok-button ui approve green inverted button">
+      <i class="checkmark icon"></i>
+      {{t "flexberry-file.error-dialog-ok-btn-text"}}
+    </div>
+  </div>
   </div>
 </div>
 {{#if showPreview}}

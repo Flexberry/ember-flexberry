@@ -8,7 +8,7 @@ import Ember from 'ember';
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support
  * opening current selected image at flexberry-file at modal window.
  *
- * @class Controller
+ * @class FlexberryFileController
  * @extends Ember.Mixin
  * @public
  */

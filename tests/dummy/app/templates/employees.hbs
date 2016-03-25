@@ -3,6 +3,7 @@
 <div class="row">
   {{flexberry-objectlistview
     modelName="employee"
+    editFormRoute = editFormRoute
     modelProjection=modelProjection
     content=model
 
@@ -10,7 +11,7 @@
     refreshButton=true
 	showDeleteButtonInRow=true
     classButton='grey'
-    
+
     filterButton=true
     filterText=filter
     filterByAnyMatch=(action 'filterByAnyMatch')

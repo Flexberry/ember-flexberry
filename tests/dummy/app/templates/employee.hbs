@@ -77,11 +77,22 @@
       class=(if model.errors.reportsTo 'error' '')
       classChoose='primary'
       classRemove='primary'
+      useOkButton=true
     }}
       {{model.employee1.firstName}}<br />
       {{model.employee1.lastName}}
     {{/flexberry-lookup}}
   </div>
+  <div class="field">
+    <label>Прикрепить фото замечания</label>
+  {{
+    flexberry-file
+    placeholder='(файл не выбран)'
+    readonly=readonly
+    required=true
+    label='Фото замечания'
+  }}
+</div>
   <div class="field">
     <label>Orders</label>
     {{#if model.errors.orders}}

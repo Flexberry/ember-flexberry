@@ -1,4 +1,4 @@
-<div class="ui modal"
+<!-- <div class="ui modal"
      style="width:{{modalWindowWidthComputed}}px; min-width:{{modalWindowWidthComputed}}px; height:{{modalWindowHeightComputed}}px; min-height:{{modalWindowHeightComputed}}px;">
   <i class="close icon"></i>
   <div class="header">
@@ -25,4 +25,32 @@
       {{/if}}
     </div>
   {{/if}}
-</div>
+</div> -->
+
+{{#ui-modal class="flexberry-modal small"}}
+  <i class="close icon"></i>
+  <div class="header">
+    {{title}}
+  </div>
+  <div class="{{if viewImageContent 'image' ''}} content">
+    {{#if viewImageContent}}
+      <div class="ui centered image">
+        {{yield}}
+      </div>
+    {{else}}
+      <div class="description">
+        {{yield}}
+      </div>
+    {{/if}}
+  </div>
+  {{!-- {{#if toolbarVisible}} --}}
+    <div class="actions">
+      {{#if useCloseButton}}
+        <button type="button" class="ui cancel button" data-dismiss="modal">{{t "modal-dialog.close-button-text"}}</button>
+      {{/if}}
+      {{#if useOkButton}}
+        <button type="button" class="ui positive button">{{t "modal-dialog.ok-button-text"}}</button>
+      {{/if}}
+    </div>
+  {{!-- {{/if}} --}}
+{{/ui-modal}}

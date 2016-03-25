@@ -31,23 +31,23 @@ export default Ember.Mixin.create({
    */
   flexberryFileModalTemplateName: 'flexberry-file-view-dialog',
 
-  /**
-   * Width of modal window.
-   *
-   * @property flexberryFileModalWindowWidth
-   * @type Number
-   * @default 750
-   */
-  flexberryFileModalWindowWidth: 750,
+  // /**
+  //  * Width of modal window.
+  //  *
+  //  * @property flexberryFileModalWindowWidth
+  //  * @type Number
+  //  * @default 750
+  //  */
+  // flexberryFileModalWindowWidth: 750,
 
-  /**
-   * Height of modal window.
-   *
-   * @property flexberryFileModalWindowHeight
-   * @type Number
-   * @default 600
-   */
-  flexberryFileModalWindowHeight: 600,
+  // /**
+  //  * Height of modal window.
+  //  *
+  //  * @property flexberryFileModalWindowHeight
+  //  * @type Number
+  //  * @default 600
+  //  */
+  // flexberryFileModalWindowHeight: 600,
 
   actions: {
     /**
@@ -80,8 +80,8 @@ export default Ember.Mixin.create({
       let controller = this.get('flexberryFileModalController');
       controller.setProperties({
         title: fileName,
-        modalWindowHeight: this.get('flexberryFileModalWindowWidth'),
-        modalWindowWidth: this.get('flexberryFileModalWindowHeight'),
+        // modalWindowHeight: this.get('flexberryFileModalWindowWidth'),
+        // modalWindowWidth: this.get('flexberryFileModalWindowHeight'),
         imageSrc: fileSrc
       });
 

@@ -21,7 +21,7 @@
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
           <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>Save and close</button>
         {{/unless}}
-        {{#unless (and model.isNew (and (not hasParentRoute) (not saveBeforeRouteLeave)))}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
           <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
         {{/unless}}
       {{/unless}}

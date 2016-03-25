@@ -94,7 +94,7 @@ export default EditFormController.extend({
      * @method save
      */
     save: function() {
-      if (this.get('hasParentRoute') || !this.get('saveBeforeRouteLeave')) {
+      if (this.get('hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         throw new Error('\'Save\' operation is not accessible due to current settings.');
       }
 
@@ -155,7 +155,7 @@ export default EditFormController.extend({
    */
   transitionToParentRoute: function(rollBackModel) {
     if (this.get('hasParentRoute')) {
-      if (rollBackModel) {
+      if (!rollBackModel) {
         this.set('modelNoRollBack', true);
       }
 

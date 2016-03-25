@@ -11,7 +11,7 @@ export default EditFormRoute.extend(AuthenticatedRouteMixin, {
     var store = this.store;
 
     var enumeration = getOwner(this).lookup('transform:test-enumeration');
-    var enumerationAvailableValues = enumeration.getAvailableValuesArray();
+    var enumerationAvailableValues = enumeration.get('transformMap').captions;
 
     var aggregator = store.createRecord('test-aggregator', {});
     aggregator.enumerationAvailableValues = enumerationAvailableValues;

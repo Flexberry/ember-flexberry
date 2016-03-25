@@ -244,11 +244,11 @@ export default Ember.Controller.extend(
         var transformInstance = getOwner(this).lookup('transform:' + modelAttr.type);
         var transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
 
-        // Handle enums (extended from transforms/enum-base.js).
+        // Handle enums (extended from transforms/flexberry-enum.js).
         if (transformClass && transformClass.isEnum) {
           cellComponent.componentName = 'flexberry-dropdown';
           cellComponent.componentProperties = {
-            items: transformInstance.getAvailableValuesArray()
+            items: transformInstance.get('transformMap').captions
           };
         }
 

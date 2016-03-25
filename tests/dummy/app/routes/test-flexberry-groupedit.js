@@ -1,6 +1,6 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import testEnum from '../enums/test-enumeration';
+import TestEnumeration from '../enums/test-enumeration';
 
 export default EditFormRoute.extend(AuthenticatedRouteMixin, {
   modelProjection: 'TestAggregatorE',
@@ -11,7 +11,7 @@ export default EditFormRoute.extend(AuthenticatedRouteMixin, {
       flag: true,
       text: 'Detail\'s text',
       date: new Date(),
-      enumeration: testEnum.Value2,
+      enumeration: TestEnumeration.Value2,
       file: null,
       master: store.createRecord('test-master', {
         text: 'Detail\'s master text'

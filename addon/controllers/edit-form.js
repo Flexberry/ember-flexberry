@@ -248,7 +248,7 @@ export default Ember.Controller.extend(
         if (transformClass && transformClass.isEnum) {
           cellComponent.componentName = 'flexberry-dropdown';
           cellComponent.componentProperties = {
-            items: transformInstance.get('transformMap').captions
+            items: transformInstance.get('captions')
           };
         }
 

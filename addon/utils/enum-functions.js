@@ -8,11 +8,18 @@ import Ember from 'ember';
  * Returns friezed object without prototype with own properties of parameter
  *
  * @function createEnum
- * @param {Object} dictionary
+ * @param {Object|Array} dictionary
  * @returns {Object}
  */
 export function createEnum(dictionary) {
-  return Object.freeze(Ember.merge(Object.create(null), dictionary));
+  let local = {};
+  if (Ember.isArray(dictionary)) {
+    dictionary.forEach(element => local[element] = element);
+  } else {
+    local = dictionary;
+  }
+
+  return Object.freeze(Ember.merge(Object.create(null), local));
 }
 
 /**

@@ -54,21 +54,27 @@ export default Proj.Model.extend(EmberValidations, Ember.Evented, {
    * Triggers model's 'preSave' event & allows to execute some additional async logic before model will be saved.
    *
    * @method beforeSave
+   * @param {Object} [options] Method options.
+   * @param {Boolean} [options.softSave = false] Flag: indicates whether following 'save' will be soft
+   * (without sending a request to server) or not.
+   * @param {Promise[]} [options.promises] Array to which 'preSave' event handlers could add some asynchronous operations promises.
    * @return {Promise} A promise that will be resolved after all 'preSave' event handlers promises will be resolved.
    */
-  beforeSave: function() {
+  beforeSave: function(options) {
+    options = Ember.merge({ softSave: false, promises: [] }, options || {});
+
     return new Ember.RSVP.Promise((resolve, reject) => {
-      // Trigger 'preSave' event, and  give its handlers possibility to add async operations promises.
-      var preSaveEventArgs = { promises: [] };
-      this.trigger('preSave', preSaveEventArgs);
+      // Trigger 'preSave' event, and  give its handlers possibility to run some 'preSave' asynchronous logic,
+      // by adding it's promises to options.promises array.
+      this.trigger('preSave', options);
 
       // Promises array could be totally changed in 'preSave' event handlers, we should prevent possible errors.
-      preSaveEventArgs.promises = Ember.isArray(preSaveEventArgs.promises) ? preSaveEventArgs.promises : [];
-      preSaveEventArgs.promises = preSaveEventArgs.promises.filter(function(item, index, array) {
+      options.promises = Ember.isArray(options.promises) ? options.promises : [];
+      options.promises = options.promises.filter(function(item, index, array) {
         return item instanceof Ember.RSVP.Promise;
       });
 
-      Ember.RSVP.all(preSaveEventArgs.promises).then((values) => {
+      Ember.RSVP.all(options.promises).then((values) => {
         resolve(values);
       }).catch((reason) => {
         reject(reason);
@@ -80,22 +86,27 @@ export default Proj.Model.extend(EmberValidations, Ember.Evented, {
    * Validates model, triggers 'preSave' event, and finally saves model.
    *
    * @method save
+   * @param {Object} [options] Method options.
+   * @param {Boolean} [options.softSave = false] Flag: indicates whether following 'save' will be soft
+   * (without sending a request to server) or not.
    * @return {Promise} A promise that will be resolved after model will be successfully saved.
    */
-  save: function() {
-    var saveArguments = arguments;
+  save: function(options) {
+    options = Ember.merge({ softSave: false }, options || {});
 
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.validate({
         validateDeleted: false
       }).then(() => {
-        return this.beforeSave();
+        return this.beforeSave(options);
       }).then(() => {
         // Call to base class 'save' method with right context.
         // The problem is that call to current save method will be already finished,
         // and traditional _this._super will point to something else, but not to Proj.Model 'save' method,
         // so there is no other way, except to call it through the base class prototype.
-        return Proj.Model.prototype.save.apply(this, saveArguments);
+        if (!options.softSave) {
+          return Proj.Model.prototype.save.call(this, options);
+        }
       }).then((value) => {
         // Model validation was successful (model is valid or deleted),
         // all 'preSave' event promises has been successfully resolved,

@@ -132,14 +132,32 @@ export default EditFormController.extend({
      * If return path is determined, an error is thrown because this action should not be triggered.
      * Otherwise base logic is executed.
      *
-     * @method delete
+     * @method close
      */
     close: function() {
-      if (this.get('hasParentRoute')) {
-        this.transitionToParentRoute(this.get('saveBeforeRouteLeave'));
-      } else {
+      if (!this.get('hasParentRoute')) {
         this._super.apply(this, arguments);
+        return;
       }
+
+      if (this.get('saveBeforeRouteLeave')) {
+        this.transitionToParentRoute(true);
+        return;
+      }
+
+      // If 'saveBeforeRouteLeave' == false & 'close' button has been pressed,
+      // before transition to parent route we should validate model and then upload files
+      // (if some file components are present on current detail rout),
+      // because after transition, all components correspondent to current detail route (including file components)
+      // gonna be destroyed, and files won't be uploaded at all.
+      var model = this.get('model');
+      model.validate().then(() => {
+        return model.beforeSave({ softSave: true });
+      }).then(() => {
+        this.transitionToParentRoute(false);
+      }, (reason) => {
+        this.rejectError(reason);
+      });
     }
   },
 

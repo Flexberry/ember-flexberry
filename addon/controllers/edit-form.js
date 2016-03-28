@@ -161,8 +161,8 @@ export default Ember.Controller.extend(
   },
 
   save: function() {
-    return this.get('model').save().then(() => {
-      return this.saveHasManyRelationships();
+    return this.get('model').save().then((model) => {
+      return this.saveHasManyRelationships(model);
     });
   },
 
@@ -263,10 +263,10 @@ export default Ember.Controller.extend(
    * This method invokes by `save` method.
    *
    * @method saveHasManyRelationships
-   * @return {DS.Model} Current `model`.
+   * @param {DS.Model} model Record with hasMany relationships.
+   * @return {Promise} A promise that will be resolved to array of saved records.
    */
-  saveHasManyRelationships: function() {
-    let model = this.get('model');
+  saveHasManyRelationships: function(model) {
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
@@ -276,9 +276,7 @@ export default Ember.Controller.extend(
       }
     });
 
-    return Ember.RSVP.all(promises).then((savedRecords) => {
-      return model;
-    });
+    return Ember.RSVP.all(promises);
   },
 
   /**

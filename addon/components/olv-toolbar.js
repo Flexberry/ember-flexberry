@@ -6,7 +6,6 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 export default FlexberryBaseComponent.extend({
-  modelName: null,
   modelController: null,
 
   /**
@@ -14,7 +13,7 @@ export default FlexberryBaseComponent.extend({
    *
    * @property editFormRoute
    * @type String
-   * @default 'this.modelName'
+   * @default undefined
    */
   editFormRoute: undefined,
 
@@ -153,7 +152,6 @@ export default FlexberryBaseComponent.extend({
     createNew: function() {
       let editFormRoute = this.get('editFormRoute');
       let modelController = this.get('modelController');
-      let modelName = this.get('modelName');
       modelController.transitionToRoute(editFormRoute + '.new');
     },
 

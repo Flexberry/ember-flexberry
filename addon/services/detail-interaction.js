@@ -127,7 +127,7 @@ export default Ember.Service.extend({
    *
    * @property saveBeforeRouteLeave
    * @type Boolean
-   * @default false
+   * @default undefined
    */
   saveBeforeRouteLeave: undefined
 });

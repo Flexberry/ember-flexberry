@@ -22,7 +22,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
       if (this.rowClickable) {
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
-        if (editOnSeparateRoute !== true) {
+        if (!editOnSeparateRoute) {
           // It is necessary only when we will not go to other route on click.
           this.set('selectedRecord', record);
           this._setActiveRecord(key);
@@ -723,7 +723,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
     let cellComponent = this.get('cellComponent');
 
-    if (this.get('editOnSeparateRoute') !== true && Ember.typeOf(getCellComponent) === 'function') {
+    if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
       let recordModel =  (this.get('content') || {}).type || null;
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }

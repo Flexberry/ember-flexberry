@@ -52,9 +52,8 @@ export default Ember.Mixin.create({
      *
      * @param {Ember.Object} record Record related to clicked table row.
      */
-    rowClick: function(record) {
+    rowClick: function(record, editFormRoute) {
       let recordId = record.get('id');
-      let modelName = record.constructor.modelName;
       this.controller.set('modelNoRollBack', true);
 
       let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
@@ -65,9 +64,9 @@ export default Ember.Mixin.create({
         'modelCurrentAgregators', this.controller.get('modelCurrentAgregators'), this.controller.get('model'));
 
       if (recordId) {
-        this.transitionTo(modelName, record.get('id'));
+        this.transitionTo(editFormRoute, recordId);
       } else {
-        let newModelPath = this.newRoutePath(modelName);
+        let newModelPath = this.newRoutePath(editFormRoute);
         this.transitionTo(newModelPath);
       }
     }

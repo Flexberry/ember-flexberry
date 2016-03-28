@@ -2,6 +2,7 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -42,9 +43,24 @@ export default FlexberryBaseComponent.extend({
      * @param {Object} record Clicked record.
      */
     rowClick: function(record) {
+      if (this.get('editOnSeparateRoute')) {
+        let editFormRoute = this.get('editFormRoute');
+        Ember.assert('Edit form route must be defined for flexberry-groupedit', editFormRoute);
+        this.sendAction('rowClick', record, editFormRoute);
+      }
+
       this.sendAction('rowClick', record);
     }
   },
+
+  /**
+   * Route for edit form by click row
+   *
+   * @property editFormRoute
+   * @type String
+   * @default 'this.modelName'
+   */
+  editFormRoute: undefined,
 
   /**
    * Name of action to handle row click.

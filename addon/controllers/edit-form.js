@@ -167,12 +167,13 @@ export default Ember.Controller.extend(
   },
 
   delete: function() {
+    var model = this.get('model');
     if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
-      return this.destroyHasManyRelationships().then(() => {
-        return this.get('model').destroyRecord();
+      return this.destroyHasManyRelationships(model).then(() => {
+        return model.destroyRecord();
       });
     } else {
-      return this.get('model').destroyRecord();
+      return model.destroyRecord();
     }
   },
 
@@ -301,10 +302,10 @@ export default Ember.Controller.extend(
    * This method invokes by `delete` method.
    *
    * @method destroyHasManyRelationships
-   * @return {DS.Model} Current `model`.
+   * @param {DS.Model} model Record with hasMany relationships.
+   * @return {Promise} A promise that will be resolved to array of destroyed records.
    */
-  destroyHasManyRelationships: function() {
-    let model = this.get('model');
+  destroyHasManyRelationships: function(model) {
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
@@ -314,9 +315,7 @@ export default Ember.Controller.extend(
       }
     });
 
-    return Ember.RSVP.all(promises).then((destroyedRecords) => {
-      return model;
-    });
+    return Ember.RSVP.all(promises);
   },
 
   _onSaveActionFulfilled: function() {

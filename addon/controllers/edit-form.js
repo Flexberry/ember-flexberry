@@ -284,17 +284,13 @@ export default Ember.Controller.extend(
    * This method invokes by `resetController` in the `edit-form` route.
    *
    * @method rollbackHasManyRelationships
-   * @public
-   *
-   * @param {DS.Model} processedModel Model to rollback its relations (controller's model will be used if undefined).
+   * @param {DS.Model} model Record with hasMany relationships.
    */
-  rollbackHasManyRelationships: function(processedModel) {
-    let model = processedModel ? processedModel : this.get('model');
-    let promises = Ember.A();
+  rollbackHasManyRelationships: function(model) {
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
-          promises.pushObject(record.rollbackAttributes());
+          record.rollbackAttributes();
         });
       }
     });

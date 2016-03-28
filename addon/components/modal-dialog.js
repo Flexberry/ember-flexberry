@@ -40,7 +40,7 @@ export default Ember.Component.extend({
 
   /**
    * Flag: indicates buttons toolbar visibility,
-   * true if at least one of buttons is visible.
+   * `true` if at least one of buttons is visible.
    *
    * @property toolbarVisible
    * @type Boolean

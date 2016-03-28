@@ -22,24 +22,6 @@ export default Ember.Controller.extend({
   title: undefined,
 
   /**
-   * Height of modal window.
-   *
-   * @property modalWindowHeight
-   * @type Number
-   * @default undefined
-   */
-  modalWindowHeight: undefined,
-
-  /**
-   * Width of modal window.
-   *
-   * @property modalWindowWidth
-   * @type Number
-   * @default undefined
-   */
-  modalWindowWidth: undefined,
-
-  /**
    * Content of image to view at modal window.
    *
    * @property imageSrc

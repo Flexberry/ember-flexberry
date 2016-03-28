@@ -11,9 +11,7 @@ export default Ember.Mixin.create({
     controllerName: undefined,
     template: undefined,
     contentTemplate: undefined,
-    loaderTemplate: undefined,
-    modalWindowWidth: undefined,
-    modalWindowHeight:undefined
+    loaderTemplate: undefined
   },
 
   /**
@@ -120,8 +118,6 @@ export default Ember.Mixin.create({
         controller.setProperties({
           modelProjection: projection,
           title: title,
-          modalWindowHeight: lookupSettings.modalWindowHeight,
-          modalWindowWidth: lookupSettings.modalWindowWidth,
           saveTo: {
             model: model,
             propName: relationName

@@ -1,12 +1,11 @@
-<div class="ui modal"
-     style="width:{{modalWindowWidthComputed}}px; min-width:{{modalWindowWidthComputed}}px; height:{{modalWindowHeightComputed}}px; min-height:{{modalWindowHeightComputed}}px;">
+{{#ui-modal class="flexberry-modal small"}}
   <i class="close icon"></i>
   <div class="header">
     {{title}}
   </div>
-  <div class=" {{if viewImageContent 'image' ''}} content" style="height:{{modalWindowContentHeightComputed}}px;">
+  <div class="{{if viewImageContent 'image' ''}} content">
     {{#if viewImageContent}}
-      <div class="centered" style='height:100%; width:100%;'>
+      <div class="ui centered image">
         {{yield}}
       </div>
     {{else}}
@@ -25,4 +24,4 @@
       {{/if}}
     </div>
   {{/if}}
-</div>
+{{/ui-modal}}

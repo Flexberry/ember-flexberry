@@ -18,6 +18,20 @@ test('it should throw exception if no enum property set', function(assert) {
   });
 });
 
+test('it should throw exception if enum not contains value for deserialize', function(assert) {
+  let transform = this.subject({ enum: stringEnum });
+  assert.throws(() => {
+    transform.deserialize('notExistEnumValue');
+  });
+});
+
+test('it should throw exception if enum not contains property to serialize', function(assert) {
+  let transform = this.subject({ enum: stringEnum });
+  assert.throws(() => {
+    transform.serialize('Value for string enum property that not exists');
+  });
+});
+
 test('it should deserialize enum value for string enums', function(assert) {
   let transform = this.subject({ enum: stringEnum });
 

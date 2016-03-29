@@ -2,12 +2,13 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import DS from 'ember-data';
 import { inverseEnum, enumCaptions } from '../utils/enum-functions';
 
 /**
  * Base transform class that implements an enumeration type.
- * During serialization and deserialization it converts values to captions and vise versa.
+ * During serialization\deserialization it converts values to captions and vise versa.
  *
  * @class FlexberryEnumTransform
  * @public
@@ -28,7 +29,7 @@ let FlexberryEnum = DS.Transform.extend({
    * export default createEnum({
    *   Paid: 'Paid',
    *   InProcess: 'In process',
-   *   Sended: 'Sended',
+   *   Sent: 'Sent',
    *   Arrived: 'Arrived',
    *   NotArrived: 'Not arrived',
    *   Unknown: 'Unknown'
@@ -87,7 +88,13 @@ let FlexberryEnum = DS.Transform.extend({
       return serialized;
     }
 
-    return this.get('enum')[serialized];
+    let deserialize = this.get('enum')[serialized];
+
+    if (Ember.isNone(deserialize)) {
+      throw new Error(`Unable to find serialized enumeration field: '${serialized}'.`);
+    }
+
+    return deserialize;
   },
 
   /**
@@ -105,12 +112,17 @@ let FlexberryEnum = DS.Transform.extend({
       return deserialized;
     }
 
-    return this.get('inverse')[deserialized];
+    let serialized = this.get('inverse')[deserialized];
+    if (Ember.isNone(serialized)) {
+      throw new Error(`Unable to find deserialized enumeration field: '${deserialized}.'`);
+    }
+
+    return serialized;
   },
 
   init() {
     let enumDictionary = this.get('enum');
-    if (!enumDictionary) {
+    if (Ember.isNone(enumDictionary)) {
       throw new Error('Enum property is undefined');
     }
 

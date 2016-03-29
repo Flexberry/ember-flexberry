@@ -161,18 +161,19 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   },
 
   save: function() {
-    return this.get('model').save().then(() => {
-      return this.saveHasManyRelationships();
+    return this.get('model').save().then((model) => {
+      return this.saveHasManyRelationships(model);
     });
   },
 
   delete: function() {
+    var model = this.get('model');
     if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
-      return this.destroyHasManyRelationships().then(() => {
-        return this.get('model').destroyRecord();
+      return this.destroyHasManyRelationships(model).then(() => {
+        return model.destroyRecord();
       });
     } else {
-      return this.get('model').destroyRecord();
+      return model.destroyRecord();
     }
   },
 
@@ -259,70 +260,73 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   },
 
   /**
-   * Save dirty hasMany relationships in the `model`.
+   * Save dirty hasMany relationships in the `model` recursively.
    * This method invokes by `save` method.
    *
    * @method saveHasManyRelationships
-   * @return {DS.Model} Current `model`.
+   * @param {DS.Model} model Record with hasMany relationships.
+   * @return {Promise} A promise that will be resolved to array of saved records.
    */
-  saveHasManyRelationships: function() {
-    let model = this.get('model');
+  saveHasManyRelationships: function(model) {
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
-          promises.pushObject(record.save());
+          let promise = record.save().then((record) => {
+            return this.saveHasManyRelationships(record).then(() => {
+              return record;
+            });
+          });
+
+          promises.pushObject(promise);
         });
       }
     });
 
-    return Ember.RSVP.all(promises).then((savedRecords) => {
-      return model;
-    });
+    return Ember.RSVP.all(promises);
   },
 
   /**
-   * Rollback dirty hasMany relationships in the `model`.
+   * Rollback dirty hasMany relationships in the `model` recursively.
    * This method invokes by `resetController` in the `edit-form` route.
    *
    * @method rollbackHasManyRelationships
-   * @public
-   *
-   * @param {DS.Model} processedModel Model to rollback its relations (controller's model will be used if undefined).
+   * @param {DS.Model} model Record with hasMany relationships.
    */
-  rollbackHasManyRelationships: function(processedModel) {
-    let model = processedModel ? processedModel : this.get('model');
-    let promises = Ember.A();
+  rollbackHasManyRelationships: function(model) {
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
-          promises.pushObject(record.rollbackAttributes());
+          this.rollbackHasManyRelationships(record);
+          record.rollbackAttributes();
         });
       }
     });
   },
 
   /**
-   * Destroy (delete and save) all hasMany relationships in the `model`.
+   * Destroy (delete and save) all hasMany relationships in the `model` recursively.
    * This method invokes by `delete` method.
    *
    * @method destroyHasManyRelationships
-   * @return {DS.Model} Current `model`.
+   * @param {DS.Model} model Record with hasMany relationships.
+   * @return {Promise} A promise that will be resolved to array of destroyed records.
    */
-  destroyHasManyRelationships: function() {
-    let model = this.get('model');
+  destroyHasManyRelationships: function(model) {
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).forEach((record) => {
-          promises.pushObject(record.destroyRecord());
+          let promise = this.destroyHasManyRelationships(record).then(() => {
+            return record.destroyRecord();
+          });
+
+          promises.pushObject(promise);
         });
       }
     });
 
-    return Ember.RSVP.all(promises).then((destroyedRecords) => {
-      return model;
-    });
+    return Ember.RSVP.all(promises);
   },
 
   _onSaveActionFulfilled: function() {

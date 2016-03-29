@@ -260,7 +260,7 @@ export default Ember.Controller.extend(
   },
 
   /**
-   * Save dirty hasMany relationships in the `model`.
+   * Save dirty hasMany relationships in the `model` recursively.
    * This method invokes by `save` method.
    *
    * @method saveHasManyRelationships
@@ -272,7 +272,13 @@ export default Ember.Controller.extend(
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
-          promises.pushObject(record.save());
+          let promise = record.save().then((record) => {
+            return this.saveHasManyRelationships(record).then(() => {
+              return record;
+            });
+          });
+
+          promises.pushObject(promise);
         });
       }
     });
@@ -281,7 +287,7 @@ export default Ember.Controller.extend(
   },
 
   /**
-   * Rollback dirty hasMany relationships in the `model`.
+   * Rollback dirty hasMany relationships in the `model` recursively.
    * This method invokes by `resetController` in the `edit-form` route.
    *
    * @method rollbackHasManyRelationships
@@ -291,6 +297,7 @@ export default Ember.Controller.extend(
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
+          this.rollbackHasManyRelationships(record);
           record.rollbackAttributes();
         });
       }
@@ -298,7 +305,7 @@ export default Ember.Controller.extend(
   },
 
   /**
-   * Destroy (delete and save) all hasMany relationships in the `model`.
+   * Destroy (delete and save) all hasMany relationships in the `model` recursively.
    * This method invokes by `delete` method.
    *
    * @method destroyHasManyRelationships
@@ -310,7 +317,11 @@ export default Ember.Controller.extend(
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).forEach((record) => {
-          promises.pushObject(record.destroyRecord());
+          let promise = this.destroyHasManyRelationships(record).then(() => {
+            return record.destroyRecord();
+          });
+
+          promises.pushObject(promise);
         });
       }
     });

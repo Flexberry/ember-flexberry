@@ -9,7 +9,7 @@
         <span>{{model.enumeration}}</span>
       {{else}}
         {{flexberry-dropdown
-          items=model.enumerationAvailableValues
+          items=(enum-captions 'test-enumeration')
           value=model.enumeration
         }}
       {{/if}}

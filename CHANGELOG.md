@@ -1,6 +1,12 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-03-29
+### Breaking changes
+FlexberryEnum
+* Add new enum support functions and classes: initializer, transform and helper
+* Remove old enum transform classes (enum-base, enum-string, enum-number)
+
 ## 2016-03-25
 ### Added
 FlexberryObjectlistviewComponent:

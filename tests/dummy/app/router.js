@@ -12,6 +12,10 @@ Router.map(function() {
   // /employees
   this.route('employees');
 
+  // /employee-edit - route for test custom edit form route in f-olv
+  this.route('employee-edit', { path: 'employee-edit/:id' });
+  this.route('employee-edit.new', { path: 'employee-edit/new' });
+
   // /employees/2 - render into outlet in application template
   this.route('employee', { path: 'employees/:id' });
 

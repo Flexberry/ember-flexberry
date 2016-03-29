@@ -70,6 +70,8 @@ export default {
   'olv-toolbar': {
     'add-button-text': 'Добавить',
     'refresh-button-text': 'Обновить',
+    'delete-button-text': 'Удалить',
+    'custom-button-text': 'Пользовательская кнопка',
     'filter-by-any-match-placeholder': 'Поиск...'
   }
 };

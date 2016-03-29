@@ -40,8 +40,7 @@ const { getOwner } = Ember;
  * @uses ErrorableControllerMixin
  * @uses FlexberryFileControllerMixin
  */
-export default Ember.Controller.extend(
-  Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, FlexberryFileControllerMixin, {
+export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, FlexberryFileControllerMixin, {
   /**
    * Query parameters.
    */
@@ -67,7 +66,8 @@ export default Ember.Controller.extend(
 
   // TODO: add unit test.
   /**
-   * Readonly attribute for HTML components following to the `readonly` query param. According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
+   * Readonly attribute for HTML components following to the `readonly` query param.
+   * According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
    *
    * @property readonlyAttr
    * @type String|undefined

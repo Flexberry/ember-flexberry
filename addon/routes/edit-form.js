@@ -102,10 +102,12 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');
     let modelLastUpdatedDetail = flexberryDetailInteractionService.get('modelLastUpdatedDetail');
+    let saveBeforeRouteLeave = flexberryDetailInteractionService.get('saveBeforeRouteLeave');
 
     flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
     flexberryDetailInteractionService.set('modelCurrentAgregators', undefined);
     flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', undefined);
+    flexberryDetailInteractionService.set('saveBeforeRouteLeave', undefined);
 
     flexberryDetailInteractionService.set('modelCurrentNotSaved', undefined);
     flexberryDetailInteractionService.set('modelLastUpdatedDetail', undefined);
@@ -126,6 +128,7 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     if (flexberryDetailInteractionService.hasValues(modelCurrentAgregatorPath)) {
       controller.set('modelCurrentAgregatorPathes', modelCurrentAgregatorPath);
       controller.set('modelCurrentAgregators', modelCurrentAgregator);
+      controller.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
     }
   },
 

@@ -51,24 +51,76 @@ export default Ember.Mixin.create({
      * It sets `modelNoRollBack` to `true` at current controller, redirects to detail's route, save necessary data to service.
      *
      * @param {Ember.Object} record Record related to clicked table row.
+     * @param {Object} options Record related to clicked table row.
+     * @param {Boolean} [options.saveBeforeRouteLeave] Flag: indicates whether to save current model before going to the detail's route.
+     * @param {Boolean} [options.editOnSeparateRoute] Flag: indicates whether to edit detail on separate route.
+     * @param {String} [options.modelName] Clicked detail model name (used to create record if record is undefined).
+     * @param {Array} [options.detailArray] Current detail array (used to add record to if record is undefined).
+     * @param {Boolean} [options.editFormRoute] Path to detail's form.
      */
-    rowClick: function(record) {
-      let recordId = record.get('id');
-      let modelName = record.constructor.modelName;
-      this.controller.set('modelNoRollBack', true);
+    rowClick: function(record, options) {
+      let methodOptions = {
+        saveBeforeRouteLeave: false,
+        editOnSeparateRoute: false,
+        modelName: undefined,
+        detailArray: undefined,
+        editFormRoute: undefined
+      };
+      methodOptions = Ember.merge(methodOptions, options);
+      let editOnSeparateRoute = methodOptions.editOnSeparateRoute;
+      let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
 
-      let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
-      flexberryDetailInteractionService.pushValue(
-        'modelCurrentAgregatorPathes', this.controller.get('modelCurrentAgregatorPathes'), this.get('router.url'));
-      flexberryDetailInteractionService.set('modelSelectedDetail', record);
-      flexberryDetailInteractionService.pushValue(
-        'modelCurrentAgregators', this.controller.get('modelCurrentAgregators'), this.controller.get('model'));
+      if (!editOnSeparateRoute) {
+        return;
+      }
 
-      if (recordId) {
-        this.transitionTo(modelName, record.get('id'));
+      let _this = this;
+      let editFormRoute = methodOptions.editFormRoute;
+      if (!editFormRoute) {
+        throw new Error('Detail\'s edit form route is undefined.');
+      }
+
+      let goToOtherRouteFunction = function() {
+        if (!record)
+        {
+          let modelName = methodOptions.modelName;
+          if (!modelName) {
+            throw new Error('Detail\'s model name is undefined.');
+          }
+
+          let detailArray = methodOptions.detailArray;
+          var modelToAdd = _this.store.createRecord(modelName, {});
+          detailArray.addObject(modelToAdd);
+          record = modelToAdd;
+        }
+
+        let recordId = record.get('id');
+        _this.controller.set('modelNoRollBack', true);
+
+        let flexberryDetailInteractionService = _this.get('flexberryDetailInteractionService');
+        flexberryDetailInteractionService.pushValue(
+          'modelCurrentAgregatorPathes', _this.controller.get('modelCurrentAgregatorPathes'), _this.get('router.url'));
+        flexberryDetailInteractionService.set('modelSelectedDetail', record);
+        flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
+        flexberryDetailInteractionService.pushValue(
+          'modelCurrentAgregators', _this.controller.get('modelCurrentAgregators'), _this.controller.get('model'));
+
+        if (recordId) {
+          _this.transitionTo(editFormRoute, record.get('id'));
+        } else {
+          let newModelPath = _this.newRoutePath(editFormRoute);
+          _this.transitionTo(newModelPath);
+        }
+      };
+
+      if (saveBeforeRouteLeave) {
+        this.controller.save().then(() => {
+          goToOtherRouteFunction();
+        }).catch((errorData) => {
+          this.rejectError(errorData, this.get('i18n').t('edit-form.save-failed-message'));
+        });
       } else {
-        let newModelPath = this.newRoutePath(modelName);
-        this.transitionTo(newModelPath);
+        goToOtherRouteFunction();
       }
     }
   },

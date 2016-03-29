@@ -78,7 +78,7 @@
       classChoose='primary'
       classRemove='primary'
     }}
-      {{model.employee1.firstName}}<br />
+      {{model.employee1.firstName}}<br>
       {{model.employee1.lastName}}
     {{/flexberry-lookup}}
   </div>
@@ -97,7 +97,8 @@
       class=(concat 'attached ' (if model.errors.orders 'error' ''))
       rowClickable=true
       rowClick='rowClick'
-      editOnSeparateRoute=true
+      editOnSeparateRoute = true
+      editFormRoute = routeForEditOrder
     }}
   </div>
 </form>

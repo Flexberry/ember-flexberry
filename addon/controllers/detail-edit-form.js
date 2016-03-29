@@ -47,7 +47,7 @@ export default EditFormController.extend({
    * Pathes to return to after leaving current route.
    *
    * @property modelCurrentAgregatorPathes
-   * @type String
+   * @type Array
    * @default undefined
    */
   modelCurrentAgregatorPathes: undefined,
@@ -56,10 +56,20 @@ export default EditFormController.extend({
    * Current detail's agregators.
    *
    * @property modelCurrentAgregators
-   * @type Object
+   * @type Array
    * @default undefined
    */
   modelCurrentAgregators: undefined,
+
+  /**
+   * Flag: indicates whether to save current model before going to the detail's route.
+   * This flag is set to `true` when this form is opened from agregator's form.
+   *
+   * @property saveBeforeRouteLeave
+   * @type Boolean
+   * @default false
+   */
+  saveBeforeRouteLeave: false,
 
   /**
    * A logic value showing if current route has parent one.
@@ -78,29 +88,36 @@ export default EditFormController.extend({
   actions: {
     /**
      * Handler for button 'save' click.
-	 * If return path is determined, no rollback happens and user is redirected to agregator's form.
-	 * Otherwise base logic is executed.
+     * If return path is determined, no rollback happens and user is redirected to agregator's form.
+     * Otherwise base logic is executed.
      *
      * @method save
      */
     save: function() {
-      if (this.get('hasParentRoute')) {
-        // If parent's route is defined, save on parent's route.
-        this.transitionToParentRoute();
-      } else {
-        this._super.apply(this, arguments);
+      if (this.get('hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
+        throw new Error('\'Save\' operation is not accessible due to current settings.');
       }
+
+      this._super.apply(this, arguments);
+    },
+
+    saveAndClose: function() {
+      if (this.get('hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
+        throw new Error('\'Save and close\' operation is not accessible due to current settings.');
+      }
+
+      this._super.apply(this, arguments);
     },
 
     /**
      * Handler for button 'delete' click.
-	 * If return path is determined and current model is saved, record marks as deleted and user is redirected to agregator's form.
-	 * Otherwise base logic is executed.
+     * If return path is determined and current model is saved, record marks as deleted and user is redirected to agregator's form.
+     * Otherwise base logic is executed.
      *
      * @method delete
      */
     delete: function() {
-      if (this.get('model').get('id') && this.get('hasParentRoute')) {
+      if (this.get('model').get('id') && this.get('hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         if (confirm('Are you sure you want to delete that record?')) {
           this.get('model').deleteRecord();
           this.transitionToParentRoute();
@@ -112,21 +129,35 @@ export default EditFormController.extend({
 
     /**
      * Handler for button 'close' click.
-	 * If return path is determined, an error is thrown because this action should not be triggered.
-	 * Otherwise base logic is executed.
+     * If return path is determined, an error is thrown because this action should not be triggered.
+     * Otherwise base logic is executed.
      *
-     * @method delete
+     * @method close
      */
     close: function() {
-      if (this.get('hasParentRoute')) {
-        throw new Error('Execution of close action on linked with agregator detail\'s form should be forbidden.' +
-          'Use at template something like: ' +
-          '{{#unless (and (not hasParentRoute) model.isNew)}} ' +
-          '<button type=\'submit\' class=\'ui negative button\' {{action \'delete\'}}>Delete</button>' +
-          '{{/unless}}');
-      } else {
+      if (!this.get('hasParentRoute')) {
         this._super.apply(this, arguments);
+        return;
       }
+
+      if (this.get('saveBeforeRouteLeave')) {
+        this.transitionToParentRoute(true);
+        return;
+      }
+
+      // If 'saveBeforeRouteLeave' == false & 'close' button has been pressed,
+      // before transition to parent route we should validate model and then upload files
+      // (if some file components are present on current detail rout),
+      // because after transition, all components correspondent to current detail route (including file components)
+      // gonna be destroyed, and files won't be uploaded at all.
+      var model = this.get('model');
+      model.validate().then(() => {
+        return model.beforeSave({ softSave: true });
+      }).then(() => {
+        this.transitionToParentRoute(false);
+      }, (reason) => {
+        this.rejectError(reason);
+      });
     }
   },
 
@@ -137,10 +168,14 @@ export default EditFormController.extend({
    * Otherwise transition to corresponding list.
    *
    * @method transitionToParentRoute.
+   *
+   * @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
    */
-  transitionToParentRoute: function() {
+  transitionToParentRoute: function(rollBackModel) {
     if (this.get('hasParentRoute')) {
-      this.set('modelNoRollBack', true);
+      if (!rollBackModel) {
+        this.set('modelNoRollBack', true);
+      }
 
       let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
       let modelAgregatorRoute = modelAgregatorRoutes.pop();

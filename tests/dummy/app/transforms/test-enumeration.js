@@ -1,5 +1,6 @@
-import EnumStringTransform from 'ember-flexberry/transforms/enum-string';
+import FlexberryEnum from 'ember-flexberry/transforms/flexberry-enum';
+import TestEnum from '../enums/test-enumeration';
 
-export default EnumStringTransform.extend({
-  values: ['Enum value №1', 'Enum value №2', 'Enum value №3']
+export default FlexberryEnum.extend({
+  enum: TestEnum
 });

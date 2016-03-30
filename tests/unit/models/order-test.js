@@ -56,21 +56,23 @@ test('it returns fields', function(assert) {
 test('it validates', function(assert) {
   var model = this.subject();
   var store = this.store();
-  assert.expect(4);
+  assert.expect(6);
 
   Ember.run(function() {
-    assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
+    assert.ok(!model.get('isValid'), 'Empty model is invalid. Check validation rules.');
 
-    model.save().then(null, function(errorData) {
-      assert.ok(errorData instanceof Ember.Object);
-      assert.ok(errorData.anyErrors);
+    model.save().catch(function(errorData) {
+      assert.ok(errorData.get('orderDate').length > 0);
+      assert.ok(errorData.get('shipName').length > 0);
+      assert.ok(errorData.get('shipCountry').length > 0);
+      assert.ok(errorData.get('customer').length > 0);
+
+      model.set('orderDate', '1933-10-30T00:00:00Z');
+      model.set('shipName', 'bag');
+      model.set('shipCountry', 'earth');
+      model.set('customer', store.createRecord('customer', { contactName: 'John Smith' }));
+      assert.ok(model.get('isValid'), 'All required fields were set, model is valid.');
     });
-
-    model.set('orderDate', '1933-10-30T00:00:00Z');
-    model.set('shipName', 'bag');
-    model.set('shipCountry', 'earth');
-    model.set('customer', store.createRecord('customer', { contactName: 'John Smith' }));
-    assert.ok(model.get('isValid'), 'All required fields were set but model is invalid. Check validation rules.');
   });
 });
 

@@ -333,10 +333,10 @@ export default FlexberryBaseComponent.extend({
 
     // Remember initial value.
     var value = this.get('value');
-    var i18n = this.get('i18n');
     this.set('initialValue', Ember.copy(value, true));
 
     // Initialize properties which defaults could be defined in application configuration.
+    var i18n = this.get('i18n');
     this.initProperty({ propertyName: 'uploadUrl', defaultValue: null });
     this.initProperty({ propertyName: 'downloadUrl', defaultValue: null });
     this.initProperty({ propertyName: 'maxUploadFileSize', defaultValue: null });
@@ -349,6 +349,10 @@ export default FlexberryBaseComponent.extend({
     this.initProperty({ propertyName: 'removeButtonTitle', defaultValue: i18n.t('flexberry-file.remove-btn-text') });
     this.initProperty({ propertyName: 'uploadButtonTitle', defaultValue: i18n.t('flexberry-file.upload-btn-text') });
     this.initProperty({ propertyName: 'downloadButtonTitle', defaultValue: i18n.t('flexberry-file.download-btn-text') });
+
+    // Bind related model's 'preSave' event handler's context & subscribe on related model's 'preSave'event.
+    this.set('_onRelatedModelPreSave', this.get('_onRelatedModelPreSave').bind(this));
+    this._subscribeOnRelatedModelPreSaveEvent();
 
     if (value && this.get('showPreview')) {
       // Download file preview.
@@ -449,9 +453,6 @@ export default FlexberryBaseComponent.extend({
       // File add handler.
       add: onFileAdd
     });
-
-    // Subscribe on 'relatedModel' 'preSave'event.
-    _this.subscribeOnModelPreSaveEvent();
   },
 
   /**
@@ -460,11 +461,11 @@ export default FlexberryBaseComponent.extend({
   willDestroyElement: function() {
     this._super(...arguments);
 
-    // Unsubscribe from 'relatedModel' 'preSave'event.
-    this.unsubscribeFromModelPresaveEvent();
-
     var fileInput = this.$('.flexberry-file-file-input');
     fileInput.fileupload('destroy');
+
+    // Unsubscribe from related model's 'preSave'event.
+    this._unsubscribeFromRelatedModelPresaveEvent();
   },
 
   /**
@@ -594,44 +595,46 @@ export default FlexberryBaseComponent.extend({
   /**
    * Related model's 'preSave' event handler.
    */
-  onModelPresave: null,
+  _onRelatedModelPreSave: function(e) {
+    // Remove uploaded file from server, if related model is deleted, otherwise upload selected file to server.
+    var fileOperationPromise = this.get('relatedModel.isDeleted') ? null : this.uploadFile();
 
-  /**
-   * Method to subscribe on 'relatedModel' 'preSave' event.
-   */
-  subscribeOnModelPreSaveEvent: function() {
-    var uploadOnModelPreSave = this.get('uploadOnModelPreSave');
-    var relatedModel = this.get('relatedModel');
-    if (!uploadOnModelPreSave || Ember.isNone(relatedModel) || Ember.isNone(relatedModel.on)) {
-      return;
+    // Push file operation promise to events object's 'promises' array
+    // (to keep model waiting until operation will be finished).
+    if (!Ember.isNone(fileOperationPromise) && !Ember.isNone(e) && Ember.isArray(e.promises)) {
+      e.promises.push(fileOperationPromise);
     }
-
-    // If upload on 'relatedModel' 'preSave' event is allowed,
-    // component should call 'uploadFile' method when event will be triggered,
-    // and it should push upload RSVP.Promise to events object's 'promises' array.
-    var onModelPreSave = function(e) {
-      var uploadFilePromise = this.uploadFile();
-
-      if (!Ember.isNone(uploadFilePromise) && !Ember.isNone(e) && Ember.isArray(e.promises)) {
-        e.promises.push(uploadFilePromise);
-      }
-    }.bind(this);
-
-    relatedModel.on('preSave', onModelPreSave);
-    this.set('onModelPresave', onModelPreSave);
   },
 
   /**
-   * Method to unsubscribe from 'relatedModel' 'preSave' event.
+   * Method to subscribe on related model's 'preSave' event.
    */
-  unsubscribeFromModelPresaveEvent: function() {
-    var relatedModel = this.get('relatedModel');
-    var onModelPresave = this.get('onModelPresave');
-    if (Ember.isNone(relatedModel) || Ember.isNone(relatedModel.off) || Ember.isNone(relatedModel)) {
+  _subscribeOnRelatedModelPreSaveEvent: function() {
+    var uploadOnModelPreSave = this.get('uploadOnModelPreSave');
+    if (!uploadOnModelPreSave) {
       return;
     }
 
-    relatedModel.off('preSave', onModelPresave);
+    var relatedModelOnPropertyType = Ember.typeOf(this.get('relatedModel.on'));
+    if (relatedModelOnPropertyType !== 'function') {
+      Ember.Logger.error(`Wrong type of \`relatedModel.on\` propery: actual type is ${relatedModelOnPropertyType}, but function is expected.`);
+    }
+
+    var relatedModel = this.get('relatedModel');
+    relatedModel.on('preSave', this.get('_onRelatedModelPreSave'));
+  },
+
+  /**
+   * Method to unsubscribe from related model's 'preSave' event.
+   */
+  _unsubscribeFromRelatedModelPresaveEvent: function() {
+    var relatedModelOffPropertyType = Ember.typeOf(this.get('relatedModel.off'));
+    if (relatedModelOffPropertyType !== 'function') {
+      Ember.Logger.error(`Wrong type of \`relatedModel.off\` propery: actual type is ${relatedModelOffPropertyType}, but function is expected.`);
+    }
+
+    var relatedModel = this.get('relatedModel');
+    relatedModel.off('preSave', this.get('_onRelatedModelPreSave'));
   },
 
   /**

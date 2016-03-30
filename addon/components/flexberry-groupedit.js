@@ -41,15 +41,16 @@ export default FlexberryBaseComponent.extend({
      *
      * @method rowClick
      * @param {Object} record Clicked record.
+     * @param {Object} options Different parameters to handle action.
      */
-    rowClick: function(record) {
+    rowClick: function(record, options) {
       if (this.get('editOnSeparateRoute')) {
         let editFormRoute = this.get('editFormRoute');
         Ember.assert('Edit form route must be defined for flexberry-groupedit', editFormRoute);
-        this.sendAction('rowClick', record, editFormRoute);
+        options = Ember.merge(options, { editFormRoute: editFormRoute });
       }
 
-      this.sendAction('rowClick', record);
+      this.sendAction('rowClick', record, options);
     }
   },
 
@@ -236,8 +237,17 @@ export default FlexberryBaseComponent.extend({
    * Flag: indicates whether records should be edited on separate route.
    *
    * @property editOnSeparateRoute
-   * @type Object
+   * @type Boolean
    * @default false
    */
   editOnSeparateRoute: false,
+
+  /**
+   * Flag: indicates whether to save current model before going to the detail's route.
+   *
+   * @property saveBeforeRouteLeave
+   * @type Boolean
+   * @default false
+   */
+  saveBeforeRouteLeave: false
 });

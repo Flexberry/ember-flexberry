@@ -64,7 +64,6 @@ export default Ember.Mixin.create({
         title: fileName,
         imageSrc: fileSrc
       });
-
       this.send('showModalDialog', flexberryFileModalTemplateName, { controller: controller });
     },
 

@@ -22,6 +22,16 @@ export default Ember.Controller.extend({
   title: undefined,
 
   /**
+   * Size of Semantic-UI modal.
+   * Possible variants: small, large, fullscreen.
+   *
+   * @property sizeClass
+   * @type String
+   * @default small
+   */
+  sizeClass: 'small',
+
+  /**
    * Content of image to view at modal window.
    *
    * @property imageSrc

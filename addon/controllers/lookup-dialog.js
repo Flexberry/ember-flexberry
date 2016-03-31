@@ -11,9 +11,17 @@ export default ListFormController.extend({
   _openedModalDialog: undefined,
 
   title: undefined,
-  modalWindowHeight: undefined,
-  modalWindowWidth: undefined,
 
+  /**
+   * Size of Semantic-UI modal.
+   * Possible variants: small, large, fullscreen.
+   *
+   * @property sizeClass
+   * @type String
+   * @default small
+   */
+  sizeClass: 'small',
+  
   actions: {
     /**
      * Handles olv row clicked.

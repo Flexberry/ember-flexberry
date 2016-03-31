@@ -36,13 +36,15 @@ export default Ember.Mixin.create({
         relationName: undefined,
         title: undefined,
         limitFunction: undefined,
-        modelToLookup: undefined
+        modelToLookup: undefined,
+        sizeClass: undefined
       }, chooseData);
       let projectionName = options.projection;
       let relationName = options.relationName;
       let title = options.title;
       let limitFunction = options.limitFunction;
       let modelToLookup = options.modelToLookup;
+      let sizeClass = options.sizeClass;
 
       if (!projectionName) {
         throw new Error('ProjectionName is undefined.');
@@ -94,14 +96,6 @@ export default Ember.Mixin.create({
         throw new Error('Lookup loader template is undefined.');
       }
 
-      if (!lookupSettings.modalWindowWidth) {
-        throw new Error('Lookup modal window width is undefined.');
-      }
-
-      if (!lookupSettings.modalWindowHeight) {
-        throw new Error('Lookup modal window height is undefined.');
-      }
-
       this.send('showModalDialog', lookupSettings.template);
       var loadingParams = {
         view: lookupSettings.template,
@@ -118,6 +112,7 @@ export default Ember.Mixin.create({
         controller.setProperties({
           modelProjection: projection,
           title: title,
+          sizeClass: sizeClass,
           saveTo: {
             model: model,
             propName: relationName

@@ -39,6 +39,16 @@ export default Ember.Component.extend({
   viewImageContent: false,
 
   /**
+   * Size of Semantic-UI modal.
+   * Possible variants: small, large, fullscreen.
+   *
+   * @property sizeClass
+   * @type String
+   * @default small
+   */
+  sizeClass: 'small',
+
+  /**
    * Flag: indicates buttons toolbar visibility,
    * `true` if at least one of buttons is visible.
    *

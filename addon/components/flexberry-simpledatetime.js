@@ -12,7 +12,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
    in all browsers: http://caniuse.com/#feat=input-datetime.
 
    Example:
-   ```js
+   ```handlebars
    {{flexberry-simpledatetime type='datetime-local' value=model.orderDate min=model.orderDateMin readonly=readonly}}
    ```
 

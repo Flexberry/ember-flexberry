@@ -22,22 +22,14 @@ export default Ember.Controller.extend({
   title: undefined,
 
   /**
-   * Height of modal window.
+   * Size of Semantic-UI modal.
+   * Possible variants: small, large, fullscreen.
    *
-   * @property modalWindowHeight
-   * @type Number
-   * @default undefined
+   * @property sizeClass
+   * @type String
+   * @default small
    */
-  modalWindowHeight: undefined,
-
-  /**
-   * Width of modal window.
-   *
-   * @property modalWindowWidth
-   * @type Number
-   * @default undefined
-   */
-  modalWindowWidth: undefined,
+  sizeClass: 'small',
 
   /**
    * Content of image to view at modal window.

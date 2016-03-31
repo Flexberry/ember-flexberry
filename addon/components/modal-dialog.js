@@ -39,6 +39,16 @@ export default Ember.Component.extend({
   viewImageContent: false,
 
   /**
+   * Size of Semantic-UI modal.
+   * Possible variants: small, large, fullscreen.
+   *
+   * @property sizeClass
+   * @type String
+   * @default small
+   */
+  sizeClass: 'small',
+
+  /**
    * Flag: indicates buttons toolbar visibility,
    * `true` if at least one of buttons is visible.
    *
@@ -61,42 +71,13 @@ export default Ember.Component.extend({
    */
   settings: {},
 
-  modalWindowHeight: undefined,
-
-  modalWindowWidth: undefined,
-
-  modalWindowContentHeight: 400,
-
-  modalWindowHeightComputed: Ember.computed('modalWindowHeight', function () {
-    var height = this.get('modalWindowHeight');
-    if (height && typeof height === 'number') {
-      return height;
-    }
-
-    return 600;
-  }),
-
-  modalWindowWidthComputed: Ember.computed('modalWindowWidth', function () {
-    var width = this.get('modalWindowWidth');
-    if (width && typeof width === 'number') {
-      return width;
-    }
-
-    return 750;
-  }),
-
-  modalWindowContentHeightComputed: Ember.computed('modalWindowContentHeight', function () {
-    var height = this.get('modalWindowContentHeight');
-    if (height && typeof height === 'number') {
-      return height;
-    }
-
-    return 400;
-  }),
-
   didInsertElement: function () {
     let _this = this;
     let modalSettings = Ember.$.extend({
+        observeChanges: true,
+        detachable: false,
+        allowMultiple: true,
+
         onApprove: function () {
           _this.sendAction('ok');
         },
@@ -109,11 +90,6 @@ export default Ember.Component.extend({
         },
         onVisible: function () {
           Ember.run(() => {
-            var wholeHeight = Ember.$(this).outerHeight();
-            var headHeight = Ember.$('.header', this).outerHeight();
-            var actionsHeight = Ember.$('.actions', this).outerHeight();
-            var result = wholeHeight - headHeight - actionsHeight;
-            _this.set('modalWindowContentHeight', result);
             _this.sendAction('created', Ember.$(this));
           });
         }

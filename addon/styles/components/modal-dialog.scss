@@ -7,10 +7,5 @@
   */
 .ui.modal > .content {
   overflow: auto;
-}
-
-.ui.modal > .actions {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
+  max-height: 400px;
 }

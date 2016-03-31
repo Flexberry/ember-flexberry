@@ -85,9 +85,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     controllerName: 'lookup-dialog',
     template: 'lookup-dialog',
     contentTemplate: 'lookup-dialog-content',
-    loaderTemplate: 'loading',
-    modalWindowWidth: 750,
-    modalWindowHeight: 600
+    loaderTemplate: 'loading'
   },
 
   /**

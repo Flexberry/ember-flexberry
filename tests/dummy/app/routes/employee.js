@@ -1,7 +1,7 @@
-import EditFormRoute from './edit-form';
+import EditFormAggregatorRoute from './edit-form-aggregator';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default EditFormRoute.extend(AuthenticatedRouteMixin, {
+export default EditFormAggregatorRoute.extend(AuthenticatedRouteMixin, {
   modelProjection: 'EmployeeE',
   modelName: 'employee'
 });

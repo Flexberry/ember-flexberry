@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import EditFormController from './edit-form';
+import EditFormAggregatorController from './edit-form-aggregator';
 
-export default EditFormController.extend({
+export default EditFormAggregatorController.extend({
   // Caption of this particular edit form.
   title: 'Employee',
 
@@ -12,7 +12,7 @@ export default EditFormController.extend({
    * @type String
    * @default 'order'
    */
-  routeForEditOrder: 'order',
+  routeForEditOrder: 'employee.order',
 
   getCellComponent: function(attr, bindingPath, model) {
     var cellComponent = this._super(...arguments);

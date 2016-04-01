@@ -74,53 +74,19 @@ export default Ember.Mixin.create({
         return;
       }
 
-      let _this = this;
       let editFormRoute = methodOptions.editFormRoute;
       if (!editFormRoute) {
         throw new Error('Detail\'s edit form route is undefined.');
       }
 
-      let goToOtherRouteFunction = function() {
-        if (!record)
-        {
-          let modelName = methodOptions.modelName;
-          if (!modelName) {
-            throw new Error('Detail\'s model name is undefined.');
-          }
-
-          let detailArray = methodOptions.detailArray;
-          var modelToAdd = _this.store.createRecord(modelName, {});
-          detailArray.addObject(modelToAdd);
-          record = modelToAdd;
-        }
-
-        let recordId = record.get('id');
-        _this.controller.set('modelNoRollBack', true);
-
-        let flexberryDetailInteractionService = _this.get('flexberryDetailInteractionService');
-        flexberryDetailInteractionService.pushValue(
-          'modelCurrentAgregatorPathes', _this.controller.get('modelCurrentAgregatorPathes'), _this.get('router.url'));
-        flexberryDetailInteractionService.set('modelSelectedDetail', record);
-        flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
-        flexberryDetailInteractionService.pushValue(
-          'modelCurrentAgregators', _this.controller.get('modelCurrentAgregators'), _this.controller.get('model'));
-
-        if (recordId) {
-          _this.transitionTo(editFormRoute, record.get('id'));
-        } else {
-          let newModelPath = _this.newRoutePath(editFormRoute);
-          _this.transitionTo(newModelPath);
-        }
-      };
-
       if (saveBeforeRouteLeave) {
         this.controller.save().then(() => {
-          goToOtherRouteFunction();
+          this.transitionTo(editFormRoute, record);
         }).catch((errorData) => {
           this.rejectError(errorData, this.get('i18n').t('edit-form.save-failed-message'));
         });
       } else {
-        goToOtherRouteFunction();
+        this.transitionTo(editFormRoute, record);
       }
     }
   },

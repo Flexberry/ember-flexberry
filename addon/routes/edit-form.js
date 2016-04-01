@@ -30,6 +30,7 @@ import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
  ```
 
  * @class EditFormRoute
+ * @protected
  * @extends ProjectedModelFormRoute
  * @uses FlexberryGroupeditRouteMixin
  */

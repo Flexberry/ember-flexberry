@@ -16,9 +16,10 @@ import ErrorableMixin from '../mixins/errorable-controller';
 export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, ErrorableMixin, {
   actions: {
     rowClick: function(key, record) {
-      if (this.get('readonly')) {
-        return;
-      }
+      // If readonly, then detail will be opened in readonly state too.
+      // if (this.get('readonly')) {
+      //   return;
+      // }
 
       if (this.rowClickable) {
         let editOnSeparateRoute = this.get('editOnSeparateRoute');

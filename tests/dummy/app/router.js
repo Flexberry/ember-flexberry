@@ -16,8 +16,15 @@ Router.map(function() {
   this.route('employee-edit', { path: 'employee-edit/:id' });
   this.route('employee-edit.new', { path: 'employee-edit/new' });
 
+  // TODO: move route employee into route employees and specify renderTemplate for employee: outlet: 'main', into: 'application'.
   // /employees/2 - render into outlet in application template
-  this.route('employee', { path: 'employees/:id' });
+  this.route('employee', { path: 'employees/:id' }, function() {
+    // For details editing via group-edit component.
+    this.route('order', { path: 'orders/:employeeOrder_id' });
+
+    // TODO: also implement lookup via nested orders route.
+    // this.route('orders');
+  });
 
   // /employees/new
   this.route('employee.new', { path: 'employees/new' });

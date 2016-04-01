@@ -34,6 +34,7 @@ const { getOwner } = Ember;
     ```
 
  * @class EditFormController
+ * @protected
  * @extends Ember.Controller
  * @uses Ember.Evented
  * @uses FlexberryLookupMixin
@@ -41,11 +42,6 @@ const { getOwner } = Ember;
  * @uses FlexberryFileControllerMixin
  */
 export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, FlexberryFileControllerMixin, {
-  /**
-   * Query parameters.
-   */
-  queryParams: ['readonly'],
-
   /**
    * Flag to enable return to agregator's path if possible.
    *
@@ -185,7 +181,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    * @method transitionToParentRoute.
    */
   transitionToParentRoute: function() {
-    // TODO: нужно учитывать пэйджинг.
+    // TODO: нужно учитывать пэйджинг, если редирект идет на списковую форму.
     // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
     // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
     let routeName = this.get('parentRoute') || Ember.String.pluralize(this.get('model.constructor.modelName'));

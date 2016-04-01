@@ -21,7 +21,7 @@ export default ListFormController.extend({
    * @default small
    */
   sizeClass: 'small',
-  
+
   actions: {
     /**
      * Handles olv row clicked.

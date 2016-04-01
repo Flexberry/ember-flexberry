@@ -117,6 +117,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   action: 'rowClick',
 
   /**
+   * Flag: indicates wether allow to resize columns (if `true`) or not (if `false`).
+   *
+   * @property allowColumnResize
+   * @type Boolean
+   * @default true
+   */
+  allowColumnResize: true,
+
+  /**
    * Table add column to sorting action name.
    *
    * @property addColumnToSorting
@@ -654,6 +663,35 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (key) {
         this._setActiveRecord(key);
       }
+    }
+  },
+
+  /**
+   * This hook is called during both render and re-render after the template has rendered and the DOM updated.
+   *  Plugins (such as plugin for column resize) are initialized here.
+   *
+   * @method didRender
+   */
+  didRender: function() {
+    this._super(...arguments);
+    if (this.get('allowColumnResize')) {
+      let currentTable = this.$('table.object-list-view');
+
+      // The first column has semantic class "collapsing"
+      // so the column has 1px width and plugin has problems.
+      // A real width is reset in order to keep computed by semantic width.
+      Ember.$.each(this.$('th', currentTable), function (key, item) {
+        let curWidth = Ember.$(item).width();
+        Ember.$(item).width(curWidth);
+      });
+
+      // Disable plugin and then init it again.
+      currentTable.colResizable({ disable: true });
+      currentTable.colResizable({
+        onResize: function(e,d,f) {
+          alert('22');
+        }
+      });
     }
   },
 

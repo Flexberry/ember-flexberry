@@ -146,6 +146,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       title: this.get('title'),
       limitFunction: this.get('limitFunction'),
       modelToLookup: this.get('relatedModel'),
+
       //TODO: move to modal settings.
       sizeClass: this.get('sizeClass')
     };

@@ -49,7 +49,7 @@ export default FlexberryObjectlistview.extend({
    *
    * @property showEditMenuItemInRow
    * @type Boolean
-   * @default false
+   * @default true
    */
   showEditMenuItemInRow: true,
 
@@ -60,7 +60,7 @@ export default FlexberryObjectlistview.extend({
    * @type Boolean
    * @default false
    */
-  showDeleteMenuItemInRow: true,
+  showDeleteMenuItemInRow: false,
 
   /**
    * Flag: indicates whether table rows are clickable.

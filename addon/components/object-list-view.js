@@ -208,6 +208,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    */
   singleColumnHeaderTitle: undefined,
 
+  emptyMobileHeader: Ember.computed('singleColumnHeaderTitle', function() {
+    let singleColumnHeaderTitle = this.get('singleColumnHeaderTitle');
+    return Ember.isEmpty(singleColumnHeaderTitle);
+  }),
+
   /**
    * Flag: indicates whether to show asterisk icon in first column of every changed row.
    *
@@ -614,11 +619,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.initProperty({
       propertyName: 'noDataMessage',
       defaultValue: this.get('i18n').t('object-list-view.no-data-text') || 'No data'
-    });
-
-    this.initProperty({
-      propertyName: 'singleColumnHeaderTitle',
-      defaultValue: this.get('i18n').t('object-list-view.single-column-header-title') || 'Model properties'
     });
 
     if (this.get('content')) {

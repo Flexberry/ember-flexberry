@@ -288,18 +288,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   menuInRowAdditionalItems: null,
 
   /**
-   * Name of property for column with in-stroke operations.
-   * It is used for saving user settings.
-   *
-   * @property _toolbarColumnPropertyName
-   * @private
-   *
-   * @type String
-   * @default `OlvMiniToolbar`
-   */
-  _toolbarColumnPropertyName: 'OlvMiniToolbar',
-
-  /**
    * Name of user setting name for column widths.
    *
    * @property _columnWidthsUserSettingName
@@ -697,6 +685,20 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         this._setActiveRecord(key);
       }
     }
+
+    // TODO: add projectionName to projection.
+    let projection = this.get('modelProjection');
+    let projectionName = undefined;
+    let userSetting = {
+      moduleName: projectionName,
+      settingName: this.get('_columnWidthsUserSettingName')
+    };
+
+    let getSettingPromise = this.get('_userSettingsService').getUserSetting(userSetting);
+    let _this = this;
+    getSettingPromise.done(function(data, textStatus, jqXHR) {
+      _this._setColumnWidths(_this, data);
+    });
   },
 
   /**
@@ -738,6 +740,49 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   },
 
   /**
+   * It handles the end of getting user setting with column widths.
+   *
+   * @method _setColumnWidths
+   * @private
+   *
+   * @param {ObjectListView} currentContext Current context of execution.
+   * @param {Array} userSetting User setting to apply to control.
+   */
+  _setColumnWidths: function(currentContext, userSetting) {
+    if (!Ember.isArray(userSetting)) {
+      return;
+    }
+
+    let hashedUserSetting = {};
+    userSetting.forEach(function(item) {
+      let userColumnInfo = Ember.merge({
+        propertyName: undefined,
+        width: undefined
+      }, item);
+
+      let propertyName = userColumnInfo.propertyName;
+      let width = userColumnInfo.width;
+
+      Ember.assert('Property name is not defined at saved user setting.', propertyName);
+      Ember.assert('Column width is not defined at saved user setting.', width);
+
+      hashedUserSetting[propertyName] = width;
+    });
+
+    let columns = currentContext.$('table.object-list-view').find('th');
+    Ember.$.each(columns, function (key, item) {
+      let currentItem = currentContext.$(item);
+      let currentPropertyName = currentContext._getColumnPropertyName(currentContext, currentItem);
+      Ember.assert('Column property name is not defined', currentPropertyName);
+
+      let savedColumnWidth = hashedUserSetting[currentPropertyName];
+      if (savedColumnWidth) {
+        currentItem.width(savedColumnWidth);
+      }
+    });
+  },
+
+  /**
    * It handles the end of column resize.
    * New column widths are send to user settings service for saving.
    *
@@ -753,15 +798,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     let columns = currentContext.$(eventParams.currentTarget).find('th');
     Ember.$.each(columns, function (key, item) {
       let currentItem = currentContext.$(item);
-      let currentPropertyName =
-        currentItem.find('*[data-olv-header-property-name]').attr('data-olv-header-property-name');
-      if (!currentPropertyName) {
-        currentPropertyName = currentContext.get('_toolbarColumnPropertyName');
-      }
-
-      let currentColumnWidth = currentItem.width();
+      let currentPropertyName = currentContext._getColumnPropertyName(currentContext, currentItem);
+      Ember.assert('Column property name is not defined', currentPropertyName);
 
       // There can be fractional values potentially.
+      let currentColumnWidth = currentItem.width();
       currentColumnWidth = Math.round(currentColumnWidth);
 
       userWidthSettings.push({
@@ -780,6 +821,30 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     };
 
     this.get('_userSettingsService').saveUserSetting(userSetting);
+  },
+
+  /**
+   * This method returns property name for column.
+   * Property name is got from atribute `data-olv-header-property-name` of column header.
+   * If property name won't be found, exeption will be thrown.
+   *
+   * @method _getColumnPropertyName
+   * @private
+   *
+   * @param {ObjectListView} currentContext Current context of execution.
+   * @param {Object} currentItem Current column header to get property name from.
+   * @return {String} Corresponding property name for column.
+   */
+  _getColumnPropertyName: function(currentContext, currentItem) {
+    let currentPropertyName = currentItem.attr('data-olv-header-property-name');
+    if (!currentPropertyName) {
+      currentPropertyName =
+        currentItem.find('*[data-olv-header-property-name]').attr('data-olv-header-property-name');
+    }
+
+    Ember.assert(
+      'There is no tag with attribute \'data-olv-header-property-name\' at column header.', currentPropertyName);
+    return currentPropertyName;
   },
 
   /**

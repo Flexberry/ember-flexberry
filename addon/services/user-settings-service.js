@@ -30,8 +30,8 @@ export default Ember.Service.extend({
    *
    * @param {Object} [options] Options.
    * @param {String} options.moduleName Name of module for what setting is saved.
-   * @param {String} options.userSetting Projection name.
-   * @param {String} options.settingName Projection name.
+   * @param {String} options.userSetting User setting data to save.
+   * @param {String} options.settingName Setting name to save as.
    */
   saveUserSetting: function(options) {
     let methodOptions = Ember.merge({
@@ -59,7 +59,45 @@ export default Ember.Service.extend({
     Ember.$.ajax(userSettingServiceUrl + '?' + Ember.$.param(ajaxCallParameter))
     .fail(function(jqXHR, textStatus, errorThrown) {
       Ember.Logger.error(
-        `There was an error during user setting saving for module '${moduleName}': '${errorThrown}'.`);
+        `There was an error during saving user setting '${settingName}' for module '${moduleName}': '${errorThrown}'.`);
     });
+  },
+
+  /**
+   * It gets user setting from server by setting's and module's names.
+   *
+   * @method getUserSetting
+   *
+   * @param {Object} [options] Parameters for user setting getting.
+   * @param {String} options.moduleName Name of module to search by.
+   * @param {String} options.settingName Setting name to search by.
+   * @return {Promise} A promise. It will be resoled when a result from server will be returned.
+   */
+  getUserSetting: function(options) {
+    let methodOptions = Ember.merge({
+      moduleName: undefined,
+      settingName: undefined
+    }, options);
+
+    let userSettingServiceUrl = this.get('userSettingServiceUrl');
+    let moduleName = methodOptions.moduleName;
+    let settingName = methodOptions.settingName;
+
+    Ember.assert('Url of user settings service is not defined.', userSettingServiceUrl);
+    Ember.assert('Module name is not defined for user setting getting.', moduleName);
+    Ember.assert('Setting name is not defined for user setting getting.', settingName);
+
+    let ajaxCallParameter = {
+      moduleName: moduleName,
+      settingName: settingName
+    };
+
+    let ajaxPromise = Ember.$.ajax(userSettingServiceUrl + '?' + Ember.$.param(ajaxCallParameter))
+    .fail(function(jqXHR, textStatus, errorThrown) {
+      Ember.Logger.error(
+        `There was an error during getting user setting '${settingName}' for module '${moduleName}': '${errorThrown}'.`);
+    });
+
+    return ajaxPromise;
   }
 });

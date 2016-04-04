@@ -1,11 +1,23 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+
+## 2016-04-01
+### Changes
+Flexberry-groupedit
+* showDeleteButtonInRow change default value on false
+
+Mobile Flexberry-objectlistview
+* showDeleteMenuItemInRow change default value on false
+###
+##
+
 ## 2016-03-29
 ### Breaking changes
 FlexberryEnum
 * Add new enum support functions and classes: initializer, transform and helper
 * Remove old enum transform classes (enum-base, enum-string, enum-number)
+
 
 ## 2016-03-25
 ### Added

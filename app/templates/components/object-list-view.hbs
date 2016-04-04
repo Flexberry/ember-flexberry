@@ -11,25 +11,27 @@
 {{/if}}
 <table class="object-list-view ui unstackable celled table {{if rowClickable 'selectable'}} {{if readonly 'readonly'}}">
   <thead>
-    <tr>
-      <th class="object-list-view-operations collapsing {{if (not showHelperColumn) 'hidden'}}"></th>
-      {{#if useSingleColumn}}
-        {{component headerCellComponent.componentName
-          column=(hash header=singleColumnHeaderTitle sortable=false)
-          dynamicProperties=headerCellComponent.componentProperties
-        }}
-      {{else}}
-        {{#each columns as |column|}}
+    {{#unless (and useSingleColumn emptyMobileHeader) }}
+      <tr>
+        <th class="object-list-view-operations collapsing {{if (not showHelperColumn) 'hidden'}}"></th>
+        {{#if useSingleColumn}}
           {{component headerCellComponent.componentName
-            column=column
+            column=(hash header=singleColumnHeaderTitle sortable=false)
             dynamicProperties=headerCellComponent.componentProperties
           }}
-        {{/each}}
-      {{/if}}
-      {{#if showMenuColumn}}
-        <th class="object-list-view-menu collapsing"></th>
-      {{/if}}
-    </tr>
+        {{else}}
+          {{#each columns as |column|}}
+            {{component headerCellComponent.componentName
+              column=column
+              dynamicProperties=headerCellComponent.componentProperties
+            }}
+          {{/each}}
+        {{/if}}
+        {{#if showMenuColumn}}
+          <th class="object-list-view-menu collapsing"></th>
+        {{/if}}
+      </tr>
+    {{/unless}}
   </thead>
   <tbody>
     {{#if (not hasContent)}}

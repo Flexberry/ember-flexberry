@@ -283,6 +283,39 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   menuInRowAdditionalItems: null,
 
   /**
+   * Name of property for column with in-stroke operations.
+   * It is used for saving user settings.
+   *
+   * @property _toolbarColumnPropertyName
+   * @private
+   *
+   * @type String
+   * @default `OlvMiniToolbar`
+   */
+  _toolbarColumnPropertyName: 'OlvMiniToolbar',
+
+  /**
+   * Name of user setting name for column widths.
+   *
+   * @property _columnWidthsUserSettingName
+   * @private
+   *
+   * @type String
+   * @default `OlvColumnWidths`
+   */
+  _columnWidthsUserSettingName: 'OlvColumnWidths',
+
+  /**
+   * Service to work with user settings on server.
+   *
+   * @property _userSettingsService
+   * @private
+   *
+   * @type Service
+   */
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+
+  /**
    * Flag: indicates whether additional menu items for dropdown menu in last column of every row are defined.
    *
    * @property menuInRowHasAdditionalItems
@@ -668,13 +701,19 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
   /**
    * This hook is called during both render and re-render after the template has rendered and the DOM updated.
-   *  Plugins (such as plugin for column resize) are initialized here.
+   * Plugins (such as plugin for column resize) are initialized here.
    *
    * @method didRender
    */
   didRender: function() {
     this._super(...arguments);
     if (this.get('allowColumnResize')) {
+      if (this.get('useSingleColumn')) {
+        throw new Error(
+          'Flags of object-list-view \'allowColumnResize\' and \'useSingleColumn\' ' +
+          'can\'t be enabled at the same time.');
+      }
+
       let currentTable = this.$('table.object-list-view');
 
       // The first column has semantic class "collapsing"
@@ -687,12 +726,60 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
       // Disable plugin and then init it again.
       currentTable.colResizable({ disable: true });
+
+      let _this = this;
       currentTable.colResizable({
-        onResize: function(e,d,f) {
-          alert('22');
+        onResize: function(e) {
+          // Save column width as user setting on resize.
+          _this._afterColumnResize(_this, e);
         }
       });
     }
+  },
+
+  /**
+   * It handles the end of column resize.
+   * New column widths are send to user settings service for saving.
+   *
+   * @method _afterColumnResize
+   * @private
+   *
+   * @param {ObjectListView} currentContext Current context of execution.
+   * @param {Object} eventParams Parameters of the end of column resizing.
+   */
+  _afterColumnResize: function(currentContext, eventParams) {
+    // Send info to service with user settings.
+    let userWidthSettings = [];
+    let columns = currentContext.$(eventParams.currentTarget).find('th');
+    Ember.$.each(columns, function (key, item) {
+      let currentItem = currentContext.$(item);
+      let currentPropertyName =
+        currentItem.find('*[data-olv-header-property-name]').attr('data-olv-header-property-name');
+      if (!currentPropertyName) {
+        currentPropertyName = currentContext.get('_toolbarColumnPropertyName');
+      }
+
+      let currentColumnWidth = currentItem.width();
+
+      // There can be fractional values potentially.
+      currentColumnWidth = Math.round(currentColumnWidth);
+
+      userWidthSettings.push({
+        propertyName: currentPropertyName,
+        width: currentColumnWidth
+      });
+    });
+
+    // TODO: add projectionName to projection.
+    let projection = currentContext.get('modelProjection');
+    let projectionName = undefined;
+    let userSetting = {
+      moduleName: projectionName,
+      userSetting: userWidthSettings,
+      settingName: this.get('_columnWidthsUserSettingName')
+    };
+
+    this.get('_userSettingsService').saveUserSetting(userSetting);
   },
 
   /**

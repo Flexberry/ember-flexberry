@@ -1,22 +1,14 @@
-{{#if (and (not readonly) autocomplete)}}
-  {{#ui-search}}
-    {{input 
-      type="text"
-      class="prompt form-control form-control-trunc lookup-field"
-      placeholder=placeholder
-      value=autocompleteValue
-    }}
-    <div class="results"></div>
-  {{/ui-search}}
-{{else}}
-  {{input
-    type="text"
-    class="form-control form-control-trunc lookup-field"
+<div class="ui fluid action input">
+  {{input 
+    type='text'
+    class=(concat 'lookup-field ' (if autocomplete 'prompt'))
     placeholder=placeholder
-    readonly='readonly'
-    value=value
+    value=(if autocomplete autocompleteValue value)
+    readonly=(if readonly 'readonly')
   }}
+  <button class="ui {{if readonly 'disabled'}} {{classChoose}} button" {{action 'choose' chooseData}}>{{{chooseText}}}</button>
+  <button class="ui {{if readonly 'disabled'}} {{classRemove}} button" {{action 'remove' removeData}}>{{{removeText}}}</button>
+</div>
+{{#if (and (not readonly) autocomplete)}}
+  <div class="results"></div>
 {{/if}}
-
-<button class="ui {{if readonly 'disabled'}} {{classChoose}} button" {{action 'choose' chooseData}}>{{{chooseText}}}</button>
-<button class="ui {{if readonly 'disabled'}} {{classRemove}} button" {{action 'remove' removeData}}>{{{removeText}}}</button>

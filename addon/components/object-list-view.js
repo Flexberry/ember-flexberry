@@ -686,11 +686,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       }
     }
 
-    // TODO: add projectionName to projection.
-    let projection = this.get('modelProjection');
-    let projectionName = undefined;
+    let moduleName = this._getModuleName();
     let userSetting = {
-      moduleName: projectionName,
+      moduleName: moduleName,
       settingName: this.get('_columnWidthsUserSettingName')
     };
 
@@ -745,10 +743,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @method _setColumnWidths
    * @private
    *
-   * @param {ObjectListView} currentContext Current context of execution.
    * @param {Array} userSetting User setting to apply to control.
    */
-  _setColumnWidths: function(currentContext, userSetting) {
+  _setColumnWidths: function(userSetting) {
     if (!Ember.isArray(userSetting)) {
       return;
     }
@@ -769,10 +766,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       hashedUserSetting[propertyName] = width;
     });
 
-    let columns = currentContext.$('table.object-list-view').find('th');
+    let _this = this;
+    let columns = this.$('table.object-list-view').find('th');
     Ember.$.each(columns, function (key, item) {
-      let currentItem = currentContext.$(item);
-      let currentPropertyName = currentContext._getColumnPropertyName(currentContext, currentItem);
+      let currentItem = _this.$(item);
+      let currentPropertyName = _this._getColumnPropertyName(currentItem);
       Ember.assert('Column property name is not defined', currentPropertyName);
 
       let savedColumnWidth = hashedUserSetting[currentPropertyName];
@@ -789,16 +787,16 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @method _afterColumnResize
    * @private
    *
-   * @param {ObjectListView} currentContext Current context of execution.
    * @param {Object} eventParams Parameters of the end of column resizing.
    */
-  _afterColumnResize: function(currentContext, eventParams) {
+  _afterColumnResize: function(eventParams) {
     // Send info to service with user settings.
+    let _this = this;
     let userWidthSettings = [];
-    let columns = currentContext.$(eventParams.currentTarget).find('th');
+    let columns = this.$(eventParams.currentTarget).find('th');
     Ember.$.each(columns, function (key, item) {
-      let currentItem = currentContext.$(item);
-      let currentPropertyName = currentContext._getColumnPropertyName(currentContext, currentItem);
+      let currentItem = _this.$(item);
+      let currentPropertyName = _this._getColumnPropertyName(currentItem);
       Ember.assert('Column property name is not defined', currentPropertyName);
 
       // There can be fractional values potentially.
@@ -811,11 +809,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       });
     });
 
-    // TODO: add projectionName to projection.
-    let projection = currentContext.get('modelProjection');
-    let projectionName = undefined;
+    let moduleName = this._getModuleName();
     let userSetting = {
-      moduleName: projectionName,
+      moduleName: moduleName,
       userSetting: userWidthSettings,
       settingName: this.get('_columnWidthsUserSettingName')
     };
@@ -831,11 +827,10 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @method _getColumnPropertyName
    * @private
    *
-   * @param {ObjectListView} currentContext Current context of execution.
    * @param {Object} currentItem Current column header to get property name from.
    * @return {String} Corresponding property name for column.
    */
-  _getColumnPropertyName: function(currentContext, currentItem) {
+  _getColumnPropertyName: function(currentItem) {
     let currentPropertyName = currentItem.attr('data-olv-header-property-name');
     if (!currentPropertyName) {
       currentPropertyName =
@@ -845,6 +840,23 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     Ember.assert(
       'There is no tag with attribute \'data-olv-header-property-name\' at column header.', currentPropertyName);
     return currentPropertyName;
+  },
+
+  /**
+   * This method forms unique name for component.
+   * This unique name can be used as module name for user settings service.
+   *
+   * @method _getModuleName
+   * @private
+   *
+   * @return {String} Unique name for component.
+   */
+  _getModuleName: function() {
+    let modelName = this.get('modelProjection').modelName;
+    let currentRoute = this.get('currentController').get('target').currentRouteName;
+    Ember.assert('Error while module name determing.', modelName && currentRoute);
+
+    return modelName + '__' + currentRoute;
   },
 
   /**

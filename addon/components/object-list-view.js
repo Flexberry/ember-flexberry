@@ -694,8 +694,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     let getSettingPromise = this.get('_userSettingsService').getUserSetting(userSetting);
     let _this = this;
-    getSettingPromise.done(function(data, textStatus, jqXHR) {
-      _this._setColumnWidths(_this, data);
+    getSettingPromise.then(function(data) {
+      _this._setColumnWidths(data);
     });
   },
 
@@ -731,7 +731,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       currentTable.colResizable({
         onResize: function(e) {
           // Save column width as user setting on resize.
-          _this._afterColumnResize(_this, e);
+          _this._afterColumnResize(e);
         }
       });
     }

@@ -37,7 +37,7 @@ export default Ember.Mixin.create({
     }
   },
 
-  perPageValues: [2, 3, 4, 5, 10, 20, 50],
+  perPageValues: [5, 10, 20, 50],
 
   perPageValue: Ember.computed('perPage', {
     get(key) {

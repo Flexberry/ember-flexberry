@@ -12,7 +12,24 @@ import Ember from 'ember';
  * @public
  */
 export default Ember.Service.extend({
+  /**
+   * Current store to request records.
+   *
+   * @property store
+   * @public
+   * @type DS.Store
+   */
   store: Ember.inject.service('store'),
+
+  /**
+   * Flag: indicates wether to use user settings service (if `true`) or not (if `false`).
+   *
+   * @property isUserSettingsServiceEnabled
+   * @public
+   * @type Boolean
+   * @default false
+   */
+  isUserSettingsServiceEnabled: false,
 
   /**
    * It saves user settings.
@@ -26,6 +43,10 @@ export default Ember.Service.extend({
    * @param {String} options.settingName Setting name to save as.
    */
   saveUserSetting: function(options) {
+    if (!this.get('isUserSettingsServiceEnabled')) {
+      return;
+    }
+
     let methodOptions = Ember.merge({
       moduleName: undefined,
       userSetting: undefined,
@@ -66,6 +87,12 @@ export default Ember.Service.extend({
    * @return {Promise} A promise. It returns found result or `undefined` if there is no such setting.
    */
   getUserSetting: function(options) {
+    if (!this.get('isUserSettingsServiceEnabled')) {
+      return new Ember.RSVP.Promise(function(resolve){
+        resolve(undefined);
+      });
+    }
+
     let methodOptions = Ember.merge({
       moduleName: undefined,
       settingName: undefined

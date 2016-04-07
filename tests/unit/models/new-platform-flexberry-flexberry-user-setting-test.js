@@ -1,6 +1,6 @@
 import { test, moduleForModel } from 'ember-qunit';
 
-moduleForModel('flexberry-user-setting', 'Unit | Model | flexberry-user-setting', {
+moduleForModel('new-platform-flexberry-flexberry-user-setting', 'Unit | Model | new-platform-flexberry-flexberry-user-setting', {
   // Specify the other units that are required for this test.
   needs: []
 });

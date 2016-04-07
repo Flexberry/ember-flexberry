@@ -13,7 +13,7 @@ var Model = BaseModel.extend({
   txtVal: DS.attr('string')
 });
 
-Model.defineProjection('FlexberryUserSettingE', 'employee', {
+Model.defineProjection('FlexberryUserSettingE', 'new-platform-flexberry-flexberry-user-setting', {
   userName: Proj.attr(),
   moduleName: Proj.attr(),
   settName: Proj.attr(),

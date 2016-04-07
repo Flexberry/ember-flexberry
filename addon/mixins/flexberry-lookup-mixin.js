@@ -4,16 +4,14 @@
 
 import Ember from 'ember';
 
+// TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
-
   // Lookup settings.
   lookupSettings: {
     controllerName: undefined,
     template: undefined,
     contentTemplate: undefined,
-    loaderTemplate: undefined,
-    modalWindowWidth: undefined,
-    modalWindowHeight:undefined
+    loaderTemplate: undefined
   },
 
   /**
@@ -24,37 +22,6 @@ export default Ember.Mixin.create({
    * @default undefined
    */
   lookupController: undefined,
-
-  /**
-   * Forms url to get all availible entities of certain relation.
-   *
-   * @method getLookupAutocompleteUrl
-   * @param {String} relationName Elements for this relation will be searched.
-   * @return {Object} Formed url.
-   * @throws {Error} Throws error if relation was not found at model.
-   */
-  getLookupAutocompleteUrl: function(relationName) {
-    let model = this.get('model');
-
-    // Get ember static function to get relation by name.
-    var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
-
-    // Get relation property from model.
-    var relation = relationshipsByName.get(relationName);
-    if (!relation) {
-      throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
-    }
-
-    // Get property type name.
-    var relatedToType = relation.type;
-    let url = this.store.adapterFor(relatedToType).getUrlForTypeQuery(relatedToType);
-    return url;
-  },
-
-  getLookupItems: function(chooseData) {
-    // Load Data in select
-    return ["Edit", "Remove", "Hide"];
-  },
 
   actions: {
     /**
@@ -69,13 +36,15 @@ export default Ember.Mixin.create({
         relationName: undefined,
         title: undefined,
         limitFunction: undefined,
-        modelToLookup: undefined
+        modelToLookup: undefined,
+        sizeClass: undefined
       }, chooseData);
       let projectionName = options.projection;
       let relationName = options.relationName;
       let title = options.title;
       let limitFunction = options.limitFunction;
       let modelToLookup = options.modelToLookup;
+      let sizeClass = options.sizeClass;
 
       if (!projectionName) {
         throw new Error('ProjectionName is undefined.');
@@ -110,6 +79,7 @@ export default Ember.Mixin.create({
         throw new Error('Lookup settings are undefined.');
       }
 
+      // TODO: maybe default params or Ember.assert\warn?
       if (!lookupSettings.template) {
         throw new Error('Lookup template is undefined.');
       }
@@ -126,14 +96,6 @@ export default Ember.Mixin.create({
         throw new Error('Lookup loader template is undefined.');
       }
 
-      if (!lookupSettings.modalWindowWidth) {
-        throw new Error('Lookup modal window width is undefined.');
-      }
-
-      if (!lookupSettings.modalWindowHeight) {
-        throw new Error('Lookup modal window height is undefined.');
-      }
-
       this.send('showModalDialog', lookupSettings.template);
       var loadingParams = {
         view: lookupSettings.template,
@@ -144,17 +106,18 @@ export default Ember.Mixin.create({
       let query = this.store.adapterFor(relatedToType).getLimitFunctionQuery(limitFunction, projectionName);
       this.store.query(relatedToType, query).then(data => {
         this.send('removeModalDialog', loadingParams);
-        var controller = this.controllerFor(lookupSettings.controllerName)
-          .clear()
-          .set('modelProjection', projection)
-          .set('title', title)
-          .set('modalWindowHeight', lookupSettings.modalWindowHeight)
-          .set('modalWindowWidth', lookupSettings.modalWindowWidth)
-          .set('saveTo', {
+
+        let controller = this.get('lookupController');
+        controller.clear();
+        controller.setProperties({
+          modelProjection: projection,
+          title: title,
+          sizeClass: sizeClass,
+          saveTo: {
             model: model,
             propName: relationName
-          })
-          .setCurrentRow();
+          }
+        });
 
         this.send('showModalDialog', lookupSettings.contentTemplate, {
           controller: controller,
@@ -190,9 +153,8 @@ export default Ember.Mixin.create({
       let model = modelToLookup ? modelToLookup : this.get('model');
       model.set(relationName, undefined);
 
-      // manually set isDirty flag, because its not working now when change relation props
-      // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
-      model.send('becomeDirty');
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      model.makeDirty();
     },
 
     /**
@@ -200,7 +162,6 @@ export default Ember.Mixin.create({
      *
      * @method updateLookupValue
      * @param {Object} updateData Lookup parameters to update data at model (projection name, etc).
-     * @throws {Error} Throws error if relation was not found at model.
      */
     updateLookupValue: function(updateData) {
       let options = Ember.$.extend(true, {
@@ -212,17 +173,7 @@ export default Ember.Mixin.create({
       let newRelationValue = options.newRelationValue;
       let modelToLookup = options.modelToLookup;
       let model = modelToLookup ? modelToLookup : this.get('model');
-
-      // Get ember static function to get relation by name.
-      var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
-
-      // Get relation property from model.
-      var relation = relationshipsByName.get(relationName);
-      if (!relation) {
-        throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
-      }
-
-      let relationType = relation.type;
+      let relationType = this._getRelationType(model, relationName);
       var payload = {};
       payload[relationType + 's'] = [newRelationValue];
       this.store.pushPayload(relationType, payload);
@@ -230,9 +181,67 @@ export default Ember.Mixin.create({
 
       model.set(relationName, realRelationValue);
 
-      // manually set isDirty flag, because its not working now when change relation props
-      // no check for 'old' and 'new' lookup data equality, because ember will do it automatically after bug fix
-      model.send('becomeDirty');
+      // Manually make record dirty, because ember-data does not do it when relationship changes.
+      model.makeDirty();
+    },
+
+    /**
+     * Forms url to get all availible entities of certain relation.
+     *
+     * @method getLookupAutocompleteUrl
+     * @param {String} relationName Elements for this relation will be searched.
+     * @return {Object} Formed url.
+     */
+    getLookupAutocompleteUrl: function(relationName) {
+      var relatedToType = this._getRelationType(this.get('model'), relationName);
+      let url = this.store.adapterFor(relatedToType).getUrlForTypeQuery(relatedToType);
+      return url;
+    },
+
+    /**
+     * Forms query parameters by lookup autocomplete parameters.
+     *
+     * @method getAutocompleteLookupQueryOptions
+     * @param {Object} lookupParameters Lookup autocomplete parameters (current limit function, etc).
+     * @return {Object} Formed query parameters.
+     */
+    getAutocompleteLookupQueryOptions: function(lookupParameters) {
+      let options = Ember.$.extend(true, {
+        relationName: undefined
+      }, lookupParameters);
+
+      let relationName = options.relationName;
+      let relationType = this._getRelationType(this.get('model'), relationName);
+      let queryOptions = this.store.adapterFor(relationType).getQueryOptionsForAutocompleteLookup(lookupParameters);
+      return queryOptions;
+    },
+
+    getLookupItems: function(chooseData) {
+      // Load Data in select
+      return ["Edit", "Remove", "Hide"];
     }
+  },
+
+  /**
+   * Gets related object type by relation name from specified model.
+   *
+   * @method _getRelationType
+   * @param {String} model Specified model to get relation from.
+   * @param {String} relationName Relation name.
+   * @return {String} Related object type.
+   * @throws {Error} Throws error if relation was not found at model.
+   */
+  _getRelationType: function(model, relationName) {
+    // Get ember static function to get relation by name.
+    var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+
+    // Get relation property from model.
+    var relation = relationshipsByName.get(relationName);
+    if (!relation) {
+      throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
+    }
+
+    let relationType = relation.type;
+    return relationType;
   }
 });

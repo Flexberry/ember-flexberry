@@ -52,16 +52,16 @@ test('it validates', function(assert) {
 
   Ember.run(function() {
     model.set('firstName', 'Qwerty');
-    assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
+    assert.ok(!model.get('isValid'), 'Empty model is invalid. Check validation rules.');
 
-    model.save().then(null, function(errorData) {
-      assert.ok(errorData instanceof Ember.Object);
-      assert.ok(errorData.anyErrors);
+    model.save().catch(function(errorData) {
+      assert.ok(errorData.get('lastName').length > 0);
+      assert.ok(errorData.get('birthDate').length > 0);
+
+      model.set('lastName', 'Qwerty');
+      model.set('birthDate', '1933-10-30T00:00:00Z');
+      assert.ok(model.get('isValid'), 'Data was set, model is invalid.');
     });
-
-    model.set('lastName', 'Qwerty');
-    model.set('birthDate', '1933-10-30T00:00:00Z');
-    assert.ok(model.get('isValid'), 'Data was set but model is invalid. Check validation rules.');
   });
 });
 
@@ -101,4 +101,47 @@ test('it loads fields', function(assert) {
     // waiting for async operations to finish
     wait();
   });
+});
+
+test('makeDirty for loaded unchanged model makes model dirty', function(assert) {
+  assert.expect(3);
+
+  var store = App.__container__.lookup('service:store');
+  Ember.run(() => {
+    Ember.$.mockjax({
+      url: '*Employees(99)',
+      responseText: {
+        EmployeeID: 99,
+        FirstName: 'Ivan',
+        LastName: 'Ivanov',
+        BirthDate: '1933-10-30T00:00:00Z',
+        Employee1: {
+          EmployeeID: 98,
+          FirstName: 'Sidor',
+          LastName: 'Sidorov',
+          BirthDate: '1946-10-30T00:00:00Z',
+          Employee1: null
+        }
+      }
+    });
+
+    store.findRecord('employee', 99).then(function(record) {
+      assert.ok(record instanceof DS.Model);
+      assert.equal(record.get('dirtyType'), undefined);
+
+      record.makeDirty();
+      assert.equal(record.get('dirtyType'), 'updated');
+    });
+
+    wait();
+  });
+});
+
+test('makeDirty for created model does nothing', function(assert) {
+  assert.expect(2);
+
+  var record = this.subject();
+  assert.equal(record.get('dirtyType'), 'created');
+  record.makeDirty();
+  assert.equal(record.get('dirtyType'), 'created');
 });

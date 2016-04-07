@@ -1,9 +1,34 @@
 import Ember from 'ember';
-import EditFormController from 'ember-flexberry/controllers/edit-form';
+import EditFormController from './edit-form';
 
 export default EditFormController.extend({
   // Caption of this particular edit form.
   title: 'Employee',
+
+  /**
+   * Route edit order for group edit
+   *
+   * @property routeForEditOrder
+   * @type String
+   * @default 'order'
+   */
+  routeForEditOrder: 'order',
+
+  getCellComponent: function(attr, bindingPath, model) {
+    var cellComponent = this._super(...arguments);
+
+    if (attr.kind === 'belongsTo' && attr.modelName === 'customer') {
+      cellComponent.componentProperties = {
+        choose: 'showLookupDialog',
+        remove: 'removeLookupValue',
+        relationName: 'customer',
+        projection: 'CustomerL',
+        title: 'Customer'
+      };
+    }
+
+    return cellComponent;
+  },
 
   /**
    * Current function to limit accessible values of model employee1.
@@ -20,15 +45,5 @@ export default EditFormController.extend({
     }
 
     return undefined;
-  }),
-
-  /**
-   * Url to get all availible entities of relation 'employee1'.
-   *
-   * @property autoCompleteEmployeeLookupUrl
-   * @type String
-   */
-  autoCompleteEmployeeLookupUrl: Ember.computed(function() {
-    return this.getLookupAutocompleteUrl('employee1');
   })
 });

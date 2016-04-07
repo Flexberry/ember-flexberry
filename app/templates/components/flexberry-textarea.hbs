@@ -1,1 +1,6 @@
-{{textarea readonly=readonly value=value}}
+{{textarea
+  value=value
+  readonly=(if readonly "readonly")
+  required=required
+  placeholder=placeholder
+}}

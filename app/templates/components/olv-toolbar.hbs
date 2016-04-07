@@ -1,12 +1,32 @@
 {{#if refreshButton}}
-  <button class="ui button" {{action "clickRefreshButton"}}>Refresh</button>
+  <button class="ui {{classButton}} button" {{action "refresh"}}>
+    {{t "olv-toolbar.refresh-button-text"}}
+  </button>
 {{/if}}
 {{#if createNewButton}}
-  <div class = "ui button">
-    {{#link-to createNewPath}}
-      <div class="ui middle aligned content">
-        <p class="ui small">Add</p>
-      </div>
-    {{/link-to}}
+  <button class="ui {{classButton}} {{if enableCreateNewButton '' 'disabled'}} button" {{action "createNew"}}>
+    {{t "olv-toolbar.add-button-text"}}
+  </button>
+{{/if}}
+{{#if deleteButton}}
+  <button class="ui {{classButton}} {{if isDeleteButtonEnabled '' 'disabled'}} button" {{action "delete"}}>
+    {{t "olv-toolbar.delete-button-text"}}
+  </button>
+{{/if}}
+{{#if filterButton}}
+  <div class="ui action input">
+    {{input
+      type="text"
+      placeholder=(t "olv-toolbar.filter-by-any-match-placeholder")
+      value=filterByAnyMatchText enter="filterByAnyMatch"
+    }}
+    <button class="ui {{classButton}} icon button" {{action "filterByAnyMatch"}}>
+      <i class="search icon"></i>
+    </button>
   </div>
 {{/if}}
+{{#each customButtonsArray as |customButton|}}
+  <button class="ui {{if customButton.buttonClasses customButton.buttonClasses ''}} button" {{action 'customButtonAction' customButton.buttonAction}}>
+    {{if customButton.buttonName customButton.buttonName (t "olv-toolbar.custom-button-text")}}
+  </button>
+{{/each}}

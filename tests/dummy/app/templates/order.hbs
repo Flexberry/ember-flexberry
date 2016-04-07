@@ -2,70 +2,114 @@
 
 {{#if errorMessages}}
   {{#each errorMessages as |currentError|}}
-	{{ui-message
-	  type = 'error'
-	  closeable = true
-	  visible = true
-	  title = "Error occurred"
-	  message = currentError
-	}}
+    {{ui-message
+    type='error'
+    closeable=true
+    visible=true
+    title='Error occurred'
+    message=currentError
+    }}
   {{/each}}
 {{/if}}
-<form class="ui form" role="form">
+<form class="ui form flexberry-horizontal-form" role="form">
   <div class="field">
-    <div>
+    <div class="flexberry-edit-panel">
       {{#unless readonly}}
-        <button type="submit" class="ui primary button" {{action 'save'}}>Save</button>
-        {{#unless model.isNew}}
-        <button type="submit" class="ui primary button" {{action 'delete'}}>Delete</button>
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action 'save'}}>Save</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>Save and close</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui primary button" {{action 'close'}}>Close</button>
+      <button type="submit" class="ui button" {{action 'close'}}>Close</button>
     </div>
   </div>
-  <div class="ui grid {{if model.errors.shipName 'error' ''}}">
-	<div class="ui two wide column right aligned middle aligned content">
-		<label>ShipName</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.shipName}}</span>
-		{{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.shipName}}
-	</div>
+  <div class="inline fields">
+    {{flexberry-field
+      placeholder='(no value)'
+      readonly=readonly
+      required=true
+      value=model.shipName
+      label='ShipName'
+      class=(concat 'sixteen wide ' (if model.errors.shipName 'error' ''))
+    }}
+    {{flexberry-validationmessage error=model.errors.shipName pointing='left pointing'}}
   </div>
-  <div class="ui grid {{if model.errors.shipCountry 'error' ''}}">
-	<div class="ui two wide column right aligned middle aligned content">
-		<label>ShipCountry</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.shipCountry}}</span>
-		{{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.shipCountry}}
-	</div>
+  <div class="inline fields">
+    {{flexberry-field
+      placeholder='(no value)'
+      readonly=readonly
+      required=true
+      value=model.shipCountry
+      label='ShipCountry'
+      class=(concat 'sixteen wide ' (if model.errors.shipCountry 'error' ''))
+    }}
+    {{flexberry-validationmessage error=model.errors.shipCountry pointing='left pointing'}}
   </div>
-  <div class="ui grid {{if model.errors.orderDate 'error' ''}}">
-	<div class="ui two wide column right aligned middle aligned content">
-		<label>OrderDate</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.orderDate}}</span>
-		{{flexberry-datepicker placeholder="(no value)" readonly=readonly hasTimePicker=true value=model.orderDate class="fluid"}}
-	</div>
+  <div class="inline fields">
+    <div class="field no-padding">
+      <label>OrderDate</label>
+    </div>
+    <div class="field">
+      {{flexberry-datepicker
+        placeholder='(no value)'
+        readonly=readonly
+        hasTimePicker=true
+        value=model.orderDate
+        class=(if model.errors.orderDate 'error' '')
+      }}
+      {{flexberry-validationmessage error=model.errors.orderDate pointing='left pointing'}}
+    </div>
   </div>
-  <div class="ui grid {{if model.errors.employee.firstName 'error' ''}}">
-	<div class="ui two wide column right aligned middle aligned content">
-		<label>Employee FirstName</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.employee.firstName}}</span>
-		{{flexberry-textbox placeholder="(no value)" readonly=readonly required=true value=model.employee.firstName}}
-	</div>
+  <div class="inline fields">
+    {{#if model.errors.firstName}}
+      <span style="color:red">{{model.errors.firstName}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder='(no value)'
+      readonly=readonly
+      required=true
+      value=model.employee.firstName
+      label='Employee FirstName'
+      class=(concat 'sixteen wide ' (if model.errors.firstName 'error' ''))
+    }}
   </div>
-  <div class="ui grid {{if model.errors.employee.lastName 'error' ''}}">
-	<div class="ui two wide column right aligned middle aligned content">
-		<label>Employee LastName</label>
-	</div>
-	<div class="ten wide column">
-		<span style="color:red">{{model.errors.employee.lastName}}</span>
-		{{flexberry-textbox placeholder="(no value)" required=true readonly=readonly value=model.employee.lastName}}
-	</div>
+  <div class="inline fields">
+    {{flexberry-field
+      placeholder='(no value)'
+      readonly=readonly
+      required=true
+      value=model.employee.lastName
+      label='Employee LastName'
+      class=(concat 'sixteen wide ' (if model.errors.lastName 'error' ''))
+    }}
+  </div>
+  <div class="inline fields">
+    <div class="field no-padding">
+      <label>Customer</label>
+    </div>
+    <div class="field sixteen wide">
+      {{flexberry-lookup
+        choose='showLookupDialog'
+        remove='removeLookupValue'
+        value=model.customer.contactName
+        relationName='customer'
+        projection='CustomerL'
+        title='Customer'
+        readonly=readonly
+        limitFunction=lookupLimitFunction
+        class=(concat 'sixteen wide ' (if model.errors.customer 'error' ''))
+      }}
+      {{flexberry-validationmessage error=model.errors.customer}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
   </div>
 </form>

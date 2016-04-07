@@ -5,12 +5,10 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
-const ComponentClass = 'flexberry-checkbox';
-
 /**
  * Checkbox component for Semantic UI.
  *
- * @class FlexberrCheckbox
+ * @class FlexberrCheckboxComponent
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
@@ -25,32 +23,53 @@ export default FlexberryBaseComponent.extend({
   tagName: '',
 
   /**
+   * Path to component's settings in application configuration (JSON from ./config/environment.js).
+   *
+   * @property appConfigSettingsPath
+   * @type String
+   * @default 'APP.components.flexberryCheckbox'
+   */
+  appConfigSettingsPath: 'APP.components.flexberryCheckbox',
+
+  /**
    * Current checked value.
    *
-   * @property checked
+   * @property value
    * @type Boolean
    * @default false
    */
-  checked: false,
+  value: false,
 
   /**
    * Label for the checkbox.
    *
    * @property label
    * @type String
-   * @default ''
+   * @default undefined
    */
-  label: '',
+  label: undefined,
 
   /**
-   * Additional classes for Semantic UI checkbox.
-   * Adds special Semantic UI class ('read-only') when component is readonly.
+   * DOM-element representing checkbox input.
    *
-   * @property _classComputed
-   * @private
-   * @type String
+   * @property checkboxInput
+   * @type Object
    */
-  _classComputed: Ember.computed('readonly', function() {
-    return ComponentClass + (this.get('readonly') ? ' read-only' : '');
-  })
+  checkboxInput: null,
+
+  /**
+   * Checkbox value's observer.
+   */
+  valueDidChange: Ember.observer('value', function() {
+    this.sendAction('onChange', {
+      checked: this.get('value')
+    });
+  }),
+
+  /**
+   * Initializes checkbox component.
+   */
+  init: function() {
+    this._super(...arguments);
+  }
 });

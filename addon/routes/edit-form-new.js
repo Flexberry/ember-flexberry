@@ -6,6 +6,20 @@ export default EditFormRoute.extend({
   },
 
   model: function() {
+    let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
+    let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
+    let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
+    flexberryDetailInteractionService.set('modelCurrentNotSaved', undefined);
+    flexberryDetailInteractionService.set('modelSelectedDetail', undefined);
+
+    if (modelCurrentNotSaved) {
+      return modelCurrentNotSaved;
+    }
+
+    if (modelSelectedDetail) {
+      return modelSelectedDetail;
+    }
+
     // NOTE: record.id is null.
     var record = this.store.createRecord(this.modelName);
     return record;
@@ -16,16 +30,5 @@ export default EditFormRoute.extend({
       model: model,
       controller
     });
-  },
-
-  deactivate: function() {
-    var model = this.get('controller').get('model');
-    model.rollback();
-
-    if (model.get('isNew')) {
-      model.deleteRecord();
-    }
-
-    this._super(...arguments);
   }
 });

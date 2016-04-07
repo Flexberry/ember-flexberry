@@ -1,7 +1,11 @@
-import { test } from 'ember-qunit';
-import ListFormPageRoute from 'ember-flexberry/routes/list-form';
+import { moduleFor, test } from 'ember-qunit';
+
+moduleFor('route:list-form', 'Unit | Route | list form', {
+  // Specify the other units that are required for this test.
+  // needs: ['controller:foo']
+});
 
 test('it exists', function(assert) {
-  var route = ListFormPageRoute.create();
+  let route = this.subject();
   assert.ok(route);
 });

@@ -19,7 +19,7 @@ export default FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['groupedit-toolbar', 'ui', 'middle', 'aligned', 'grid'],
+  classNames: ['groupedit-toolbar'],
 
   /**
    * Service that triggers groupedit events.
@@ -27,7 +27,7 @@ export default FlexberryBaseComponent.extend({
    * @property groupEditEventsService
    * @type Service
    */
-  groupEditEventsService: Ember.inject.service('groupedit-events'),
+  groupEditEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
    * Boolean property to show or hide add button in toolbar.
@@ -62,8 +62,8 @@ export default FlexberryBaseComponent.extend({
       throw new Error('Name of flexberry-groupedit component was not defined.');
     }
 
-    this.get('groupEditEventsService').on('groupEditRowSelected', this, this._rowSelected);
-    this.get('groupEditEventsService').on('groupEditRowsDeleted', this, this._rowsDeleted);
+    this.get('groupEditEventsService').on('olvRowSelected', this, this._rowSelected);
+    this.get('groupEditEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
   },
 
   /**
@@ -72,8 +72,8 @@ export default FlexberryBaseComponent.extend({
    * @method willDestroy
    */
   willDestroy() {
-    this.get('groupEditEventsService').off('groupEditRowSelected', this, this._rowSelected);
-    this.get('groupEditEventsService').off('groupEditRowsDeleted', this, this._rowsDeleted);
+    this.get('groupEditEventsService').off('olvRowSelected', this, this._rowSelected);
+    this.get('groupEditEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
     this._super(...arguments);
   },
 
@@ -88,12 +88,20 @@ export default FlexberryBaseComponent.extend({
   actions: {
     // Add record click button handler
     addRow: function() {
+      if (this.get('readonly')) {
+        return;
+      }
+
       var componentName = this.get('componentName');
       this.get('groupEditEventsService').addRowTrigger(componentName);
     },
 
     // Delete records click button handler
     deleteRows: function() {
+      if (this.get('readonly')) {
+        return;
+      }
+
       var componentName = this.get('componentName');
       this.get('groupEditEventsService').deleteRowsTrigger(componentName);
     }

@@ -6,13 +6,20 @@ var Model = BaseModel.extend({
   shipName: DS.attr('string'),
   shipCountry: DS.attr('string'),
   orderDate: DS.attr('date'),
-  employee: DS.belongsTo('employee', { inverse: null, async: false }),
+
+  // Inversed relationship for employee.orders. It's not a property for Lookup component.
+  employee: DS.belongsTo('employee', { inverse: 'orders', async: false }),
+
+  customer: DS.belongsTo('customer', { inverse: null, async: false }),
 
   // Validation rules.
   validations: {
     orderDate: {
       datetime: { allowBlank: false, messages: { blank: 'order date can\'t be blank', invalid: 'please input valid date' } }
-    }
+    },
+    shipName: { presence: { message: '*' } },
+    shipCountry: { presence: { message: 'ship country must be set' } },
+    customer: { presence: { message: 'you should choose order customer' } }
   }
 });
 
@@ -23,7 +30,10 @@ Model.defineProjection('OrderE', 'order', {
   employee: Proj.belongsTo('employee', 'Employee', {
     firstName: Proj.attr('Employee First Name'),
     lastName: Proj.attr('Employee Last Name')
-  }, { hidden: true })
+  }, { hidden: true }),
+  customer: Proj.belongsTo('customer', 'Customer', {
+    contactName: Proj.attr('Contact Name', { hidden: true })
+  }, { displayMemberPath: 'contactName' })
 });
 
 Model.defineProjection('OrderL', 'order', {

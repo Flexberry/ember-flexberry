@@ -21,22 +21,13 @@ var FlexberryField = FlexberryBaseComponent.extend({
   classNames: ['flexberry-field', 'field'],
 
   /**
-   * Flag to make control required.
+   * Path to component's settings in application configuration (JSON from ./config/environment.js).
    *
-   * @property required
-   * @type Boolean
-   * @default false
-   */
-  required: false,
-
-  /**
-   * Label value.
-   *
-   * @property label
+   * @property appConfigSettingsPath
    * @type String
-   * @default ''
+   * @default 'APP.components.flexberryField'
    */
-  label: '',
+  appConfigSettingsPath: 'APP.components.flexberryField',
 
   /**
    * Input value.
@@ -45,7 +36,35 @@ var FlexberryField = FlexberryBaseComponent.extend({
    * @type String
    * @default undefined
    */
-  value: undefined
+  value: undefined,
+
+  /**
+   * Text to be displayed instead of file name, if file has not been selected.
+   *
+   * @property placeholder
+   * @type string
+   * @default undefined
+   */
+  placeholder: undefined,
+
+  /**
+   * Label value.
+   *
+   * @property label
+   * @type String
+   * @default ''
+   */
+  label: undefined,
+
+  /**
+   * Initializes component.
+   */
+  init: function() {
+    this._super(...arguments);
+
+    // Initialize properties which defaults could be defined in application configuration.
+    this.initProperty({ propertyName: 'placeholder', defaultValue: null });
+  }
 });
 
 export default FlexberryField;

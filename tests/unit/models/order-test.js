@@ -9,6 +9,7 @@ var App;
 moduleForModel('order', {
   // Specify the other units that are required for this test.
   needs: ['model:employee',
+          'model:customer',
           'service:validations',
           'ember-validations@validator:local/presence',
           'ember-validations@validator:local/length',
@@ -39,28 +40,39 @@ test('it returns fields', function(assert) {
     model.set('orderDate', date);
     assert.equal(model.get('orderDate'), date);
     model.set('employee', store.createRecord('employee', { firstName: 'Sidorov', lastName: 'Sidor' }));
+    model.set('customer', store.createRecord('customer', { contactName: 'Jack' }));
   });
 
   var reportsToEmployee = model.get('employee');
   assert.ok(reportsToEmployee);
   assert.equal(reportsToEmployee.get('firstName'), 'Sidorov');
   assert.equal(reportsToEmployee.get('lastName'), 'Sidor');
+
+  var relatedCustomer = model.get('customer');
+  assert.ok(relatedCustomer);
+  assert.equal(relatedCustomer.get('contactName'), 'Jack');
 });
 
 test('it validates', function(assert) {
   var model = this.subject();
-  assert.expect(4);
+  var store = this.store();
+  assert.expect(6);
 
   Ember.run(function() {
-    assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
+    assert.ok(!model.get('isValid'), 'Empty model is invalid. Check validation rules.');
 
-    model.save().then(null, function(errorData) {
-      assert.ok(errorData instanceof Ember.Object);
-      assert.ok(errorData.anyErrors);
+    model.save().catch(function(errorData) {
+      assert.ok(errorData.get('orderDate').length > 0);
+      assert.ok(errorData.get('shipName').length > 0);
+      assert.ok(errorData.get('shipCountry').length > 0);
+      assert.ok(errorData.get('customer').length > 0);
+
+      model.set('orderDate', '1933-10-30T00:00:00Z');
+      model.set('shipName', 'bag');
+      model.set('shipCountry', 'earth');
+      model.set('customer', store.createRecord('customer', { contactName: 'John Smith' }));
+      assert.ok(model.get('isValid'), 'All required fields were set, model is valid.');
     });
-
-    model.set('orderDate', '1933-10-30T00:00:00Z');
-    assert.ok(model.get('isValid'), 'Data was set but model is invalid. Check validation rules.');
   });
 });
 
@@ -78,6 +90,10 @@ test('it loads fields', function(assert) {
           LastName: 'Sidorov',
           BirthDate: '1946-10-30T00:00:00Z',
           Employee1: null
+        },
+        Customer: {
+          CustomerID: 'ABCDE',
+          ContactName: 'Jack'
         }
       }
     });
@@ -89,11 +105,16 @@ test('it loads fields', function(assert) {
       var orderDate = record.get('orderDate');
       assert.ok(String(orderDate).indexOf('1933') > -1);
 
-      let masterRecord = record.get('employee');
-      assert.ok(masterRecord);
-      assert.ok(masterRecord instanceof DS.Model);
-      assert.equal(masterRecord.get('firstName'), 'Sidor');
-      assert.equal(masterRecord.get('lastName'), 'Sidorov');
+      var relatedEmployee = record.get('employee');
+      assert.ok(relatedEmployee);
+      assert.ok(relatedEmployee instanceof DS.Model);
+      assert.equal(relatedEmployee.get('firstName'), 'Sidor');
+      assert.equal(relatedEmployee.get('lastName'), 'Sidorov');
+
+      var relatedCustomer = record.get('customer');
+      assert.ok(relatedCustomer);
+      assert.ok(relatedCustomer instanceof DS.Model);
+      assert.equal(relatedCustomer.get('contactName'), 'Jack');
     });
 
     // waiting for async operations to finish

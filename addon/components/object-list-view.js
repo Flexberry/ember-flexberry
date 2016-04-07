@@ -686,7 +686,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       }
     }
 
-    let moduleName = this._getModuleName();
+    let moduleName = this.get('_moduleName');
     let userSetting = {
       moduleName: moduleName,
       settingName: this.get('_columnWidthsUserSettingName')
@@ -809,7 +809,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       });
     });
 
-    let moduleName = this._getModuleName();
+    let moduleName = this.get('_moduleName');
     let userSetting = {
       moduleName: moduleName,
       userSetting: userWidthSettings,
@@ -843,21 +843,21 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   },
 
   /**
-   * This method forms unique name for component.
+   * Computed property forms unique name for component from model name and current route.
    * This unique name can be used as module name for user settings service.
    *
-   * @method _getModuleName
+   * @property _moduleName
    * @private
-   *
-   * @return {String} Unique name for component.
+   * @type String
    */
-  _getModuleName: function() {
+  _moduleName: Ember.computed('modelProjection', function() {
     let modelName = this.get('modelProjection').modelName;
-    let currentRoute = this.get('currentController').get('target').currentRouteName;
+    let currentController = this.get('currentController');
+    let currentRoute = currentController ? this.get('currentController').get('target').currentRouteName : 'application';
     Ember.assert('Error while module name determing.', modelName && currentRoute);
 
     return modelName + '__' + currentRoute;
-  },
+  }),
 
   /**
    * Destroys component's DOM-related logic.

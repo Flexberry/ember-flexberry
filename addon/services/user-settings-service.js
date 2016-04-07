@@ -62,12 +62,15 @@ export default Ember.Service.extend({
     Ember.assert('Setting name is not defined for user setting saving.', settingName);
 
     let store = this.get('store');
+    let _this = this;
     this._getExistingRecord(moduleName, settingName).then(
       function(foundRecord) {
         if (!foundRecord) {
-          foundRecord = store.createRecord('flexberry-user-setting');
+          let currentUserName = _this.getCurrentUser();
+          foundRecord = store.createRecord('new-platform-flexberry-flexberry-user-setting');
           foundRecord.set('moduleName', moduleName);
           foundRecord.set('settName', settingName);
+          foundRecord.set('userName', currentUserName);
         }
 
         foundRecord.set('txtVal', JSON.stringify(userSetting));
@@ -131,7 +134,8 @@ export default Ember.Service.extend({
   _getExistingRecord: function(moduleName, settingName) {
     // TODO: add search by username.
     let store = this.get('store');
-    let modelName = 'flexberry-user-setting';
+    let modelName = 'new-platform-flexberry-flexberry-user-setting';
+    let currentUserName = this.getCurrentUser();
     let adapter = store.adapterFor(modelName);
     let filterString = adapter.getLimitFunction({
       operation: 'and',
@@ -141,8 +145,15 @@ export default Ember.Service.extend({
           arguments: ['moduleName', moduleName]
         },
         {
-          operation: '=',
-          arguments: ['settName', settingName]
+          operation: 'and',
+          arguments: [{
+            operation: '=',
+            arguments: ['settName', settingName]
+          },
+          {
+            operation: '=',
+            arguments: ['userName', currentUserName]
+          }]
         }
       ]
     });
@@ -167,5 +178,19 @@ export default Ember.Service.extend({
 
       return undefined;
     });
+  },
+
+  /**
+   * It returns the name of current user.
+   * It has to be overriden if some authentication is used.
+   *
+   * @method getCurrentUser
+   * @public
+   *
+   * @return {String} Current user name.
+   */
+  getCurrentUser: function() {
+    // TODO: add mechanism to return current user.
+    return '';
   }
 });

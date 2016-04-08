@@ -724,17 +724,29 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         Ember.$(item).width(curWidth);
       });
 
-      // Disable plugin and then init it again.
-      currentTable.colResizable({ disable: true });
-
-      let _this = this;
-      currentTable.colResizable({
-        onResize: function(e) {
-          // Save column width as user setting on resize.
-          _this._afterColumnResize(e);
-        }
-      });
+      this._reinitResizablePlugin();
     }
+  },
+
+  /**
+   * It reinits plugin for column resize.
+   * Reinit is important for proper position of resize elements.
+   *
+   * @method _reinitResizablePlugin
+   * @private
+   */
+  _reinitResizablePlugin: function() {
+    let currentTable = this.$('table.object-list-view');
+    // Disable plugin and then init it again.
+    currentTable.colResizable({ disable: true });
+
+    let _this = this;
+    currentTable.colResizable({
+      onResize: function(e) {
+        // Save column width as user setting on resize.
+        _this._afterColumnResize(e);
+      }
+    });
   },
 
   /**
@@ -778,6 +790,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         currentItem.width(savedColumnWidth);
       }
     });
+
+    this._reinitResizablePlugin();
   },
 
   /**

@@ -168,7 +168,7 @@ export default Ember.Service.extend({
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
           if (foundRecords.length === 1) {
-            return foundRecords[0];
+            return foundRecords[0].record;
           }
 
           throw new Error(

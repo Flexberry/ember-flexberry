@@ -724,6 +724,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         Ember.$(item).width(curWidth);
       });
 
+      currentTable.addClass('fixed');
+
       this._reinitResizablePlugin();
     }
   },

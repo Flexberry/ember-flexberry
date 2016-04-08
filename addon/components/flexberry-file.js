@@ -100,7 +100,8 @@ export default FlexberryBaseComponent.extend({
     if (!Ember.isNone(file)) {
       var jsonValue = {
         fileName: file.name,
-        fileSize: file.size
+        fileSize: file.size,
+        fileMimeType: file.type
       };
 
       this.set('value', JSON.stringify(jsonValue));
@@ -280,12 +281,6 @@ export default FlexberryBaseComponent.extend({
   uploadUrl: undefined,
 
   /**
-   * File download URL.
-   * If null or undefined, then APP.components.file.downloadUrl from application config\environment will be used.
-   */
-  downloadUrl: undefined,
-
-  /**
    * Flag: indicates whether to show modal dialog on upload errors or not.
    */
   showModalDialogOnUploadError: undefined,
@@ -338,7 +333,6 @@ export default FlexberryBaseComponent.extend({
     // Initialize properties which defaults could be defined in application configuration.
     var i18n = this.get('i18n');
     this.initProperty({ propertyName: 'uploadUrl', defaultValue: null });
-    this.initProperty({ propertyName: 'downloadUrl', defaultValue: null });
     this.initProperty({ propertyName: 'maxUploadFileSize', defaultValue: null });
     this.initProperty({ propertyName: 'placeholder', defaultValue: i18n.t('flexberry-file.placeholder') });
     this.initProperty({ propertyName: 'uploadOnModelPreSave', defaultValue: true });
@@ -354,19 +348,17 @@ export default FlexberryBaseComponent.extend({
     this.set('_onRelatedModelPreSave', this.get('_onRelatedModelPreSave').bind(this));
     this._subscribeOnRelatedModelPreSaveEvent();
 
-    if (value && this.get('showPreview')) {
+    var previewUrl = this.get('jsonInitialValue.previewUrl');
+    if (!Ember.isBlank(previewUrl) && this.get('showPreview')) {
       // Download file preview.
       this.set('downloadIsInProgress', true);
-      var jsonInitialValue = this.get('jsonInitialValue');
-      let _this = this;
-      Ember.$.ajax(this.get('downloadUrl') + '?getPreview=true&' + Ember.$.param(jsonInitialValue))
-      .done(function(data, textStatus, jqXHR) {
-        _this._updateSelectedFileSrc(_this, data);
-        _this.set('downloadIsInProgress', false);
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
-        _this._showModalDialogOnDownloadErrorFunction(_this, errorThrown);
-        _this.set('downloadIsInProgress', false);
+
+      Ember.$.ajax(previewUrl).done((data, textStatus, jqXHR) => {
+        this._updateSelectedFileSrc(this, data);
+      }).fail((jqXHR, textStatus, errorThrown) => {
+        this._showModalDialogOnDownloadErrorFunction(this, errorThrown);
+      }).always(() => {
+        this.set('downloadIsInProgress', false);
       });
     }
   },
@@ -380,7 +372,7 @@ export default FlexberryBaseComponent.extend({
     var _this = this;
     var i18n = _this.get('i18n');
 
-    var fileInputId = _this.get('elementId') + 'FlexberryFile';
+    var fileInputId = 'flexberry-file-' + _this.get('elementId');
     var fileInput = _this.$('.flexberry-file-file-input');
     fileInput.attr('id', fileInputId);
 
@@ -544,35 +536,35 @@ export default FlexberryBaseComponent.extend({
    */
   downloadFile: function() {
     var jsonInitialValue = this.get('jsonInitialValue');
-    if (Ember.isNone(jsonInitialValue)) {
+    var fileUrl = this.get('jsonInitialValue.fileUrl');
+    if (Ember.isBlank(fileUrl)) {
       return null;
     }
 
-    var _this = this;
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      _this.set('downloadIsInProgress', true);
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      this.set('downloadIsInProgress', true);
 
       // Use jQuery fileDownload plugin (https://github.com/johnculviner/jquery.fileDownload).
       // Warning! It uses iframe to send file download request, so there is no way to set request authorization header.
-      Ember.$.fileDownload(_this.get('downloadUrl') + '?getPreview=false&' + Ember.$.param(jsonInitialValue), {
-        successCallback: function(url) {
-          _this.sendAction('downloadSuccess', {
+      Ember.$.fileDownload(fileUrl, {
+        successCallback: (url) => {
+          this.sendAction('downloadSuccess', {
             downloadData: jsonInitialValue,
             response: 'success',
-            value: _this.get('value')
+            value: this.get('value')
           });
           resolve(jsonInitialValue);
-          _this.set('downloadIsInProgress', false);
+          this.set('downloadIsInProgress', false);
         },
-        failCallback: function(errorText, url) {
-          _this._showModalDialogOnDownloadErrorFunction(_this, errorText);
-          _this.sendAction('downloadFail', {
+        failCallback: (errorText, url) => {
+          this._showModalDialogOnDownloadErrorFunction(this, errorText);
+          this.sendAction('downloadFail', {
             downloadData: jsonInitialValue,
             response: errorText,
-            value: _this.get('value')
+            value: this.get('value')
           });
           reject(new Error(errorText));
-          _this.set('downloadIsInProgress', false);
+          this.set('downloadIsInProgress', false);
         }
       });
     });
@@ -667,8 +659,8 @@ export default FlexberryBaseComponent.extend({
      * @public
      */
     viewLoadedImage: function() {
-      let fileName = this.get('fileName');
-      let selectedFileSrc = this.get('_selectedFileSrc');
+      var fileName = this.get('fileName');
+      var selectedFileSrc = this.get('_selectedFileSrc');
       if (!Ember.isNone(fileName) && !Ember.isNone(selectedFileSrc)) {
         this.sendAction('viewImageAction', {
           fileSrc: selectedFileSrc,

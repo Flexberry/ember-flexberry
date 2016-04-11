@@ -54,7 +54,7 @@
               <div class="cell">
                 {{flexberry-checkbox
                   readonly=(or readonly (not record.config.canBeSelected))
-                  onChange=(action 'selectRow' record.key record.data)
+                  onChange=(action 'selectRow' record)
                 }}
               </div>
             {{/if}}
@@ -68,7 +68,7 @@
           </div>
         </td>
         {{#if useSingleColumn}}
-          <td {{action 'rowClick' record.key record.data preventDefault=false}}>
+          <td {{action 'rowClick' record preventDefault=false}}>
             {{component singleColumnCellComponent.componentName
               model=record.data
               columns=columns
@@ -78,7 +78,7 @@
           </td>
         {{else}}
           {{#each columns as |column|}}
-            <td {{action 'rowClick' record.key record.data preventDefault=false}}>
+            <td {{action 'rowClick' record preventDefault=false}}>
               {{component column.cellComponent.componentName
                 dynamicProperties=column.cellComponent.componentProperties
                 relatedModel=record.data
@@ -93,9 +93,9 @@
           <td class="object-list-view-menu">
             {{flexberry-menu
               class='icon vertical'
-              items=menuInRowItems
               callItemsOnClickCallbacks=false
-              onItemClick=(action 'menuInRowItemClick' record.key record.data)
+              configurateItems=(action 'menuInRowConfigurateItems' record)
+              onItemClick=(action 'menuInRowItemClick' record)
             }}
           </td>
         {{/if}}

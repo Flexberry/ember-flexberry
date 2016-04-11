@@ -15,7 +15,7 @@ import ErrorableMixin from '../mixins/errorable-controller';
  */
 export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, ErrorableMixin, {
   actions: {
-    rowClick: function(key, record) {
+    rowClick: function(recordWithKey, e) {
       if (this.get('readonly')) {
         return;
       }
@@ -24,11 +24,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
         if (!editOnSeparateRoute) {
           // It is necessary only when we will not go to other route on click.
-          this.set('selectedRecord', record);
-          this._setActiveRecord(key);
+          this.set('selectedRecord', recordWithKey.data);
+          this._setActiveRecord(recordWithKey.key);
         }
 
-        this.sendAction('action', record, {
+        this.sendAction('action', recordWithKey.data, {
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
           editOnSeparateRoute: editOnSeparateRoute,
           modelName: this.get('modelProjection').modelName,
@@ -37,7 +37,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       }
     },
 
-    headerCellClick: function(column, event) {
+    headerCellClick: function(column, e) {
       if (!this.headerClickable || column.sortable === false) {
         return;
       }
@@ -47,7 +47,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     },
 
     // TODO: rename recordWithKey. rename record in the template, where it is actually recordWithKey.
-    deleteRow: function(recordWithKey) {
+    deleteRow: function(recordWithKey, e) {
       if (this.get('readonly') || !recordWithKey.config.canBeDeleted) {
         return;
       }
@@ -57,49 +57,78 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       }
     },
 
-    selectRow: function(key, record, e) {
+    selectRow: function(recordWithKey, e) {
       var selectedRecords = this.get('selectedRecords');
-      var selectedRow = this._getRowByKey(key);
+      var selectedRow = this._getRowByKey(recordWithKey.key);
 
       if (e.checked) {
         if (!selectedRow.hasClass('active')) {
           selectedRow.addClass('active');
         }
 
-        if (selectedRecords.indexOf(record) === -1) {
-          selectedRecords.pushObject(record);
+        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+          selectedRecords.pushObject(recordWithKey.data);
         }
       } else {
         if (selectedRow.hasClass('active')) {
           selectedRow.removeClass('active');
         }
 
-        selectedRecords.removeObject(record);
+        selectedRecords.removeObject(recordWithKey.data);
       }
 
       var componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, record, selectedRecords.length);
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length);
     },
 
-    menuInRowItemClick: function(key, record, e) {
+    menuInRowConfigurateItems: function(recordWithKey, menuItems) {
+      var menuInRowSubItems = [];
+      if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
+        menuInRowSubItems.push({
+          icon: 'edit icon',
+          title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
+          isEditItem: true
+        });
+      }
+
+      if (this.get('showDeleteMenuItemInRow') && recordWithKey.config.canBeDeleted) {
+        menuInRowSubItems.push({
+          icon: 'trash icon',
+          title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
+          isDeleteItem: true
+        });
+      }
+
+      if (this.get('menuInRowHasAdditionalItems')) {
+        menuInRowSubItems.push(...this.get('menuInRowAdditionalItems'));
+      }
+
+      menuItems.push({
+        icon: 'list layout icon',
+        itemsAlignment: 'left',
+        items: menuInRowSubItems
+      });
+    },
+
+    menuInRowItemClick: function(recordWithKey, e) {
       if (this.get('readonly')) {
         return;
       }
 
       if (e.item.isDeleteItem) {
-        this.send('deleteRow', key, record);
+        this.send('deleteRow', recordWithKey);
         return;
       }
 
       if (e.item.isEditItem) {
-        this.send('rowClick', key, record);
+        this.send('rowClick', recordWithKey);
         return;
       }
 
       // Call onClick handler if it is specified in the given menu item.
       if (e.item && Ember.typeOf(e.item.onClick) === 'function') {
-        e.modelKey = key;
-        e.model = record;
+        e.modelKey = recordWithKey.key;
+        e.model = recordWithKey.data;
 
         e.item.onClick.call(e.currentTarget, e);
       }
@@ -115,6 +144,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @readonly
    */
   action: 'rowClick',
+
+  /**
+   * Flag: indicates wether allow to resize columns (if `true`) or not (if `false`).
+   *
+   * @property allowColumnResize
+   * @type Boolean
+   * @default true
+   */
+  allowColumnResize: true,
 
   /**
    * Table add column to sorting action name.
@@ -279,6 +317,27 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   menuInRowAdditionalItems: null,
 
   /**
+   * Name of user setting name for column widths.
+   *
+   * @property _columnWidthsUserSettingName
+   * @private
+   *
+   * @type String
+   * @default `OlvColumnWidths`
+   */
+  _columnWidthsUserSettingName: 'OlvColumnWidths',
+
+  /**
+   * Service to work with user settings on server.
+   *
+   * @property _userSettingsService
+   * @private
+   *
+   * @type Service
+   */
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+
+  /**
    * Flag: indicates whether additional menu items for dropdown menu in last column of every row are defined.
    *
    * @property menuInRowHasAdditionalItems
@@ -303,47 +362,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     'menuInRowHasAdditionalItems',
     function() {
       return this.get('showEditMenuItemInRow') || this.get('showDeleteMenuItemInRow') || this.get('menuInRowHasAdditionalItems');
-    }
-  ),
-
-  /**
-   * Menu items for dropdown menu in last column of every row.
-   *
-   * @property menuInRowItems
-   * @type Object[]
-   * @readonly
-   */
-  menuInRowItems: Ember.computed(
-    'showEditMenuItemInRow',
-    'showDeleteMenuItemInRow',
-    'menuInRowHasAdditionalItems',
-    function() {
-      var menuInRowSubItems = [];
-      if (this.get('showEditMenuItemInRow')) {
-        menuInRowSubItems.push({
-          icon: 'edit icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
-          isEditItem: true
-        });
-      }
-
-      if (this.get('showDeleteMenuItemInRow')) {
-        menuInRowSubItems.push({
-          icon: 'trash icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
-          isDeleteItem: true
-        });
-      }
-
-      if (this.get('menuInRowHasAdditionalItems')) {
-        menuInRowSubItems.push(...this.get('menuInRowAdditionalItems'));
-      }
-
-      return [{
-        icon: 'list layout icon',
-        itemsAlignment: 'left',
-        items: menuInRowSubItems
-      }];
     }
   ),
 
@@ -655,7 +673,196 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         this._setActiveRecord(key);
       }
     }
+
+    let moduleName = this.get('_moduleName');
+    let userSetting = {
+      moduleName: moduleName,
+      settingName: this.get('_columnWidthsUserSettingName')
+    };
+
+    let getSettingPromise = this.get('_userSettingsService').getUserSetting(userSetting);
+    let _this = this;
+    getSettingPromise.then(function(data) {
+      _this._setColumnWidths(data);
+    });
   },
+
+  /**
+   * This hook is called during both render and re-render after the template has rendered and the DOM updated.
+   * Plugins (such as plugin for column resize) are initialized here.
+   *
+   * @method didRender
+   */
+  didRender: function() {
+    this._super(...arguments);
+    if (this.get('allowColumnResize')) {
+      if (this.get('useSingleColumn')) {
+        throw new Error(
+          'Flags of object-list-view \'allowColumnResize\' and \'useSingleColumn\' ' +
+          'can\'t be enabled at the same time.');
+      }
+
+      let currentTable = this.$('table.object-list-view');
+
+      // The first column has semantic class "collapsing"
+      // so the column has 1px width and plugin has problems.
+      // A real width is reset in order to keep computed by semantic width.
+      Ember.$.each(this.$('th', currentTable), function (key, item) {
+        let curWidth = Ember.$(item).width();
+        Ember.$(item).width(curWidth);
+      });
+
+      currentTable.addClass('fixed');
+
+      this._reinitResizablePlugin();
+    }
+  },
+
+  /**
+   * It reinits plugin for column resize.
+   * Reinit is important for proper position of resize elements.
+   *
+   * @method _reinitResizablePlugin
+   * @private
+   */
+  _reinitResizablePlugin: function() {
+    let currentTable = this.$('table.object-list-view');
+
+    // Disable plugin and then init it again.
+    currentTable.colResizable({ disable: true });
+
+    let _this = this;
+    currentTable.colResizable({
+      onResize: function(e) {
+        // Save column width as user setting on resize.
+        _this._afterColumnResize(e);
+      }
+    });
+  },
+
+  /**
+   * It handles the end of getting user setting with column widths.
+   *
+   * @method _setColumnWidths
+   * @private
+   *
+   * @param {Array} userSetting User setting to apply to control.
+   */
+  _setColumnWidths: function(userSetting) {
+    if (!Ember.isArray(userSetting)) {
+      return;
+    }
+
+    let hashedUserSetting = {};
+    userSetting.forEach(function(item) {
+      let userColumnInfo = Ember.merge({
+        propertyName: undefined,
+        width: undefined
+      }, item);
+
+      let propertyName = userColumnInfo.propertyName;
+      let width = userColumnInfo.width;
+
+      Ember.assert('Property name is not defined at saved user setting.', propertyName);
+      Ember.assert('Column width is not defined at saved user setting.', width);
+
+      hashedUserSetting[propertyName] = width;
+    });
+
+    let _this = this;
+    let columns = this.$('table.object-list-view').find('th');
+    Ember.$.each(columns, function (key, item) {
+      let currentItem = _this.$(item);
+      let currentPropertyName = _this._getColumnPropertyName(currentItem);
+      Ember.assert('Column property name is not defined', currentPropertyName);
+
+      let savedColumnWidth = hashedUserSetting[currentPropertyName];
+      if (savedColumnWidth) {
+        currentItem.width(savedColumnWidth);
+      }
+    });
+
+    this._reinitResizablePlugin();
+  },
+
+  /**
+   * It handles the end of column resize.
+   * New column widths are send to user settings service for saving.
+   *
+   * @method _afterColumnResize
+   * @private
+   *
+   * @param {Object} eventParams Parameters of the end of column resizing.
+   */
+  _afterColumnResize: function(eventParams) {
+    // Send info to service with user settings.
+    let _this = this;
+    let userWidthSettings = [];
+    let columns = this.$(eventParams.currentTarget).find('th');
+    Ember.$.each(columns, function (key, item) {
+      let currentItem = _this.$(item);
+      let currentPropertyName = _this._getColumnPropertyName(currentItem);
+      Ember.assert('Column property name is not defined', currentPropertyName);
+
+      // There can be fractional values potentially.
+      let currentColumnWidth = currentItem.width();
+      currentColumnWidth = Math.round(currentColumnWidth);
+
+      userWidthSettings.push({
+        propertyName: currentPropertyName,
+        width: currentColumnWidth
+      });
+    });
+
+    let moduleName = this.get('_moduleName');
+    let userSetting = {
+      moduleName: moduleName,
+      userSetting: userWidthSettings,
+      settingName: this.get('_columnWidthsUserSettingName')
+    };
+
+    this.get('_userSettingsService').saveUserSetting(userSetting);
+  },
+
+  /**
+   * This method returns property name for column.
+   * Property name is got from atribute `data-olv-header-property-name` of column header.
+   * If property name won't be found, exeption will be thrown.
+   *
+   * @method _getColumnPropertyName
+   * @private
+   *
+   * @param {Object} currentItem Current column header to get property name from.
+   * @return {String} Corresponding property name for column.
+   */
+  _getColumnPropertyName: function(currentItem) {
+    let currentPropertyName = currentItem.attr('data-olv-header-property-name');
+    if (!currentPropertyName) {
+      currentPropertyName =
+        currentItem.find('*[data-olv-header-property-name]').attr('data-olv-header-property-name');
+    }
+
+    Ember.assert(
+      'There is no tag with attribute \'data-olv-header-property-name\' at column header.', currentPropertyName);
+    return currentPropertyName;
+  },
+
+  /**
+   * Computed property forms unique name for component from model name and current route.
+   * This unique name can be used as module name for user settings service.
+   *
+   * @property _moduleName
+   * @private
+   * @type String
+   */
+  _moduleName: Ember.computed('modelProjection', function() {
+    let modelName = this.get('modelProjection').modelName;
+    let currentController = this.get('currentController');
+    let currentRoute = currentController ? this.get('currentController').get('target').currentRouteName : 'application';
+    Ember.assert('Error while module name determing.', modelName && currentRoute);
+
+    return modelName + '__' + currentRoute;
+  }),
 
   /**
    * Destroys component's DOM-related logic.

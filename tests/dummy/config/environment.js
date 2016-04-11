@@ -32,9 +32,6 @@ module.exports = function(environment) {
           // URL of file upload controller.
           uploadUrl: backendRootUrl + '/api/File',
 
-          // URL of file download controller.
-          downloadUrl: backendRootUrl + '/api/File',
-
           // Max file size in bytes for uploading files.
           maxUploadFileSize: null,
 

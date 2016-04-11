@@ -51,5 +51,8 @@ module.exports = {
 
     // Custom script which fixes some jQuery 1.10.x+ AJAX bugs with code from newer jQuery.3.0.0-alpha1+compat version.
     app.import('vendor/jquery.3.0.0-alpha1+compat/jquery.ajaxreplacement.js');
+
+    // Script for column resize.
+    app.import('vendor/jquery.colResizable/colResizable-1.5.min.js');
   }
 };

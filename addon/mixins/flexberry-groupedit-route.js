@@ -51,12 +51,12 @@ export default Ember.Mixin.create({
      * It sets `modelNoRollBack` to `true` at current controller, redirects to detail's route, save necessary data to service.
      *
      * @param {Ember.Object} record Record related to clicked table row.
-     * @param {Object} options Record related to clicked table row.
-     * @param {Boolean} [options.saveBeforeRouteLeave] Flag: indicates whether to save current model before going to the detail's route.
-     * @param {Boolean} [options.editOnSeparateRoute] Flag: indicates whether to edit detail on separate route.
-     * @param {String} [options.modelName] Clicked detail model name (used to create record if record is undefined).
-     * @param {Array} [options.detailArray] Current detail array (used to add record to if record is undefined).
-     * @param {Boolean} [options.editFormRoute] Path to detail's form.
+     * @param {Object} [options] Record related to clicked table row.
+     * @param {Boolean} options.saveBeforeRouteLeave Flag: indicates whether to save current model before going to the detail's route.
+     * @param {Boolean} options.editOnSeparateRoute Flag: indicates whether to edit detail on separate route.
+     * @param {String} options.modelName Clicked detail model name (used to create record if record is undefined).
+     * @param {Array} options.detailArray Current detail array (used to add record to if record is undefined).
+     * @param {Boolean} options.editFormRoute Path to detail's form.
      */
     rowClick: function(record, options) {
       let methodOptions = {

@@ -33,7 +33,42 @@ export default FlexberryBaseComponent.extend({
    * @type Array[]
    * @default null
    */
-  items: [],
+  items: null,
+
+  /**
+   * Hook which will be called to configure menu items.
+   *
+    Example:
+    ```handlebars
+    <!-- app/templates/menu.hbs -->
+    {{flexberry-menu
+      ...
+      configurateItems=(action 'configurateItems')
+      ...
+    }}
+    ```
+
+    ```js
+    // app/controllers/menu.js
+
+    export default Ember.Controller.extend({
+      actions: {
+        configurateItems: function(menuItems) {
+          menuItems.push({
+            icon: 'edit icon',
+            title: 'Edit'
+          }, {
+            icon: 'trash icon',
+            title: 'Delete'
+          });
+        }
+      }
+    });
+    ```
+   * @method configurateItems
+   * @param {Array} items Menu items array.
+   */
+  configurateItems: undefined,
 
   /**
    * Flag: indicates whether to call 'items.[].onClick' callbacks or not.
@@ -49,6 +84,30 @@ export default FlexberryBaseComponent.extend({
    */
   init: function() {
     this._super(...arguments);
+
+    // Component properties will be defined in class prototype,
+    // so complex properties like object or arrays, will be shared between all class instances,
+    // that's why such properties should be initialized manually in 'init' method.
+    var items = this.get('items');
+    if (Ember.isNone(items)) {
+      items = [];
+    }
+
+    // Call to 'configurateItems' hook.
+    var configurateItems = this.get('configurateItems');
+    var configurateItemsType = Ember.typeOf(configurateItems);
+
+    if (configurateItemsType === 'function') {
+      configurateItems(items);
+    } else {
+      Ember.Logger.error(
+        'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
+        'actual type is \'' +
+        configurateItemsType +
+        '\', but \'function\' is expected.');
+    }
+
+    this.set('items', items);
   },
 
   /**

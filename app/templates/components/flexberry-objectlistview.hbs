@@ -43,7 +43,7 @@
   componentName=componentName
   allowColumnResize=allowColumnResize
 }}
-<div class="ui secondary stackable menu no-margin">
+<div class="ui secondary menu no-margin">
   <div class="ui basic buttons">
 	<button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
 	{{#each pages as |page|}}

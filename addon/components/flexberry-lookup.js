@@ -21,7 +21,16 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['flexberry-lookup', 'ui', 'fluid', 'action', 'input'],
+  classNames: ['flexberry-lookup'],
+
+  /**
+   * Classes by properties of the component.
+   *
+   * @property classNameBindings
+   * @type Array
+   * @readOnly
+   */
+  classNameBindings: ['autocompleteClass'],
 
   placeholder: t('flexberry-lookup.placeholder'),
   chooseText: t('flexberry-lookup.choose-button-text'),
@@ -30,9 +39,21 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   removeText: '<i class="remove icon"></i>',
 
   /**
-   * Css class for buttons.
+   * Classes for choose button.
+   *
+   * @property classChoose
+   * @type String
+   * @default undefined
    */
   classChoose: undefined,
+
+  /**
+   * Classes for remove button.
+   *
+   * @property classRemove
+   * @type String
+   * @default undefined
+   */
   classRemove: undefined,
 
   projection: undefined,
@@ -49,6 +70,15 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @default false
    */
   autocomplete: false,
+
+  /**
+   * Classes by property of autocomplete.
+   */
+  autocompleteClass: Ember.computed(function() {
+    if (this.get('autocomplete')) {
+      return 'ui search';
+    }
+  }),
 
   /**
    * Observes changes to value. Set it to autocompleteValue.
@@ -216,7 +246,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
     this.set('autocompleteValue', this.get('value'));
     let _this = this;
-    this.$('.ui.search').search({
+    this.$().search({
       apiSettings: {
         url: autocompleteUrl,
         beforeSend: function(settings) {

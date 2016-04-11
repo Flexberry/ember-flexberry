@@ -37,7 +37,7 @@ export default Ember.Mixin.create({
     }
   },
 
-  perPageValues: [2, 3, 4, 5, 10, 20, 50],
+  perPageValues: [5, 10, 20, 50],
 
   perPageValue: Ember.computed('perPage', {
     get(key) {
@@ -96,7 +96,7 @@ export default Ember.Mixin.create({
     // Pages are shown via list like [1] [2] … [10] {11} [12] … [18] [19], initial and final pages are shown always,
     // and nearest neighbors are and displayed for the current page. In case, when the current page is located in close to the beginning or end
     // list of page is shown accordingly [1] [2] [3] {4} [5] … [18] [19] or [1] [2] … [15] {16} [17] [18] [19].
-    const visiblePageCount = 7;
+    const visiblePageCount = 5;
     const visibleEndPageCount = 2;
     let arr = [];
 
@@ -124,7 +124,7 @@ export default Ember.Mixin.create({
         this._addPageNumberIntoArray(arr, i, false);
       }
 
-      // Add left ellipsis if needed
+      // Add left ellipsis if needed.
       if (page > visibleEndPageCount + visibleMidlePageHalfCount + 1) {
         this._addPageNumberIntoArray(arr, 0, true);
       }

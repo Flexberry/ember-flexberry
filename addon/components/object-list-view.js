@@ -739,6 +739,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    */
   _reinitResizablePlugin: function() {
     let currentTable = this.$('table.object-list-view');
+
     // Disable plugin and then init it again.
     currentTable.colResizable({ disable: true });
 

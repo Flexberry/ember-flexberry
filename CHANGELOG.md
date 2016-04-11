@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-04-11
+### Added
+FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
+* Add opportunity to resize columns.
+* Add stubbed opportunity to save settings to user settings service (now there is odata problem with 'eq').
 
 ## 2016-04-01
 ### Changes
@@ -22,11 +27,11 @@ FlexberryEnum
 ## 2016-03-25
 ### Added
 FlexberryObjectlistviewComponent:
-* Add support castom route for edit model (property: editFormRoute)
+* Add support custom route for edit model (property: editFormRoute)
 
 ### Breaking changes
 FlexberryGroupeditComponent
-* Add support castom route for edit model (property: editFormRoute).
+* Add support custom route for edit model (property: editFormRoute).
   If your FlexberryGroupeditComponent use 'editOnSeparateRoute', you should define 'editFormRoute'
 
 ##

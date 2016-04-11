@@ -162,6 +162,15 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+   * Flag: indicates wether allow to resize columns (if `true`) or not (if `false`).
+   *
+   * @property allowColumnResize
+   * @type Boolean
+   * @default true
+   */
+  allowColumnResize: true,
+
+  /**
    * Route for edit form by click row
    *
    * @property editFormRoute

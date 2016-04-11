@@ -117,6 +117,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   action: 'rowClick',
 
   /**
+   * Flag: indicates wether allow to resize columns (if `true`) or not (if `false`).
+   *
+   * @property allowColumnResize
+   * @type Boolean
+   * @default true
+   */
+  allowColumnResize: true,
+
+  /**
    * Table add column to sorting action name.
    *
    * @property addColumnToSorting
@@ -277,6 +286,27 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @default null
    */
   menuInRowAdditionalItems: null,
+
+  /**
+   * Name of user setting name for column widths.
+   *
+   * @property _columnWidthsUserSettingName
+   * @private
+   *
+   * @type String
+   * @default `OlvColumnWidths`
+   */
+  _columnWidthsUserSettingName: 'OlvColumnWidths',
+
+  /**
+   * Service to work with user settings on server.
+   *
+   * @property _userSettingsService
+   * @private
+   *
+   * @type Service
+   */
+  _userSettingsService: Ember.inject.service('user-settings-service'),
 
   /**
    * Flag: indicates whether additional menu items for dropdown menu in last column of every row are defined.
@@ -655,7 +685,195 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         this._setActiveRecord(key);
       }
     }
+
+    let moduleName = this.get('_moduleName');
+    let userSetting = {
+      moduleName: moduleName,
+      settingName: this.get('_columnWidthsUserSettingName')
+    };
+
+    let getSettingPromise = this.get('_userSettingsService').getUserSetting(userSetting);
+    let _this = this;
+    getSettingPromise.then(function(data) {
+      _this._setColumnWidths(data);
+    });
   },
+
+  /**
+   * This hook is called during both render and re-render after the template has rendered and the DOM updated.
+   * Plugins (such as plugin for column resize) are initialized here.
+   *
+   * @method didRender
+   */
+  didRender: function() {
+    this._super(...arguments);
+    if (this.get('allowColumnResize')) {
+      if (this.get('useSingleColumn')) {
+        throw new Error(
+          'Flags of object-list-view \'allowColumnResize\' and \'useSingleColumn\' ' +
+          'can\'t be enabled at the same time.');
+      }
+
+      let currentTable = this.$('table.object-list-view');
+
+      // The first column has semantic class "collapsing"
+      // so the column has 1px width and plugin has problems.
+      // A real width is reset in order to keep computed by semantic width.
+      Ember.$.each(this.$('th', currentTable), function (key, item) {
+        let curWidth = Ember.$(item).width();
+        Ember.$(item).width(curWidth);
+      });
+
+      currentTable.addClass('fixed');
+
+      this._reinitResizablePlugin();
+    }
+  },
+
+  /**
+   * It reinits plugin for column resize.
+   * Reinit is important for proper position of resize elements.
+   *
+   * @method _reinitResizablePlugin
+   * @private
+   */
+  _reinitResizablePlugin: function() {
+    let currentTable = this.$('table.object-list-view');
+    // Disable plugin and then init it again.
+    currentTable.colResizable({ disable: true });
+
+    let _this = this;
+    currentTable.colResizable({
+      onResize: function(e) {
+        // Save column width as user setting on resize.
+        _this._afterColumnResize(e);
+      }
+    });
+  },
+
+  /**
+   * It handles the end of getting user setting with column widths.
+   *
+   * @method _setColumnWidths
+   * @private
+   *
+   * @param {Array} userSetting User setting to apply to control.
+   */
+  _setColumnWidths: function(userSetting) {
+    if (!Ember.isArray(userSetting)) {
+      return;
+    }
+
+    let hashedUserSetting = {};
+    userSetting.forEach(function(item) {
+      let userColumnInfo = Ember.merge({
+        propertyName: undefined,
+        width: undefined
+      }, item);
+
+      let propertyName = userColumnInfo.propertyName;
+      let width = userColumnInfo.width;
+
+      Ember.assert('Property name is not defined at saved user setting.', propertyName);
+      Ember.assert('Column width is not defined at saved user setting.', width);
+
+      hashedUserSetting[propertyName] = width;
+    });
+
+    let _this = this;
+    let columns = this.$('table.object-list-view').find('th');
+    Ember.$.each(columns, function (key, item) {
+      let currentItem = _this.$(item);
+      let currentPropertyName = _this._getColumnPropertyName(currentItem);
+      Ember.assert('Column property name is not defined', currentPropertyName);
+
+      let savedColumnWidth = hashedUserSetting[currentPropertyName];
+      if (savedColumnWidth) {
+        currentItem.width(savedColumnWidth);
+      }
+    });
+
+    this._reinitResizablePlugin();
+  },
+
+  /**
+   * It handles the end of column resize.
+   * New column widths are send to user settings service for saving.
+   *
+   * @method _afterColumnResize
+   * @private
+   *
+   * @param {Object} eventParams Parameters of the end of column resizing.
+   */
+  _afterColumnResize: function(eventParams) {
+    // Send info to service with user settings.
+    let _this = this;
+    let userWidthSettings = [];
+    let columns = this.$(eventParams.currentTarget).find('th');
+    Ember.$.each(columns, function (key, item) {
+      let currentItem = _this.$(item);
+      let currentPropertyName = _this._getColumnPropertyName(currentItem);
+      Ember.assert('Column property name is not defined', currentPropertyName);
+
+      // There can be fractional values potentially.
+      let currentColumnWidth = currentItem.width();
+      currentColumnWidth = Math.round(currentColumnWidth);
+
+      userWidthSettings.push({
+        propertyName: currentPropertyName,
+        width: currentColumnWidth
+      });
+    });
+
+    let moduleName = this.get('_moduleName');
+    let userSetting = {
+      moduleName: moduleName,
+      userSetting: userWidthSettings,
+      settingName: this.get('_columnWidthsUserSettingName')
+    };
+
+    this.get('_userSettingsService').saveUserSetting(userSetting);
+  },
+
+  /**
+   * This method returns property name for column.
+   * Property name is got from atribute `data-olv-header-property-name` of column header.
+   * If property name won't be found, exeption will be thrown.
+   *
+   * @method _getColumnPropertyName
+   * @private
+   *
+   * @param {Object} currentItem Current column header to get property name from.
+   * @return {String} Corresponding property name for column.
+   */
+  _getColumnPropertyName: function(currentItem) {
+    let currentPropertyName = currentItem.attr('data-olv-header-property-name');
+    if (!currentPropertyName) {
+      currentPropertyName =
+        currentItem.find('*[data-olv-header-property-name]').attr('data-olv-header-property-name');
+    }
+
+    Ember.assert(
+      'There is no tag with attribute \'data-olv-header-property-name\' at column header.', currentPropertyName);
+    return currentPropertyName;
+  },
+
+  /**
+   * Computed property forms unique name for component from model name and current route.
+   * This unique name can be used as module name for user settings service.
+   *
+   * @property _moduleName
+   * @private
+   * @type String
+   */
+  _moduleName: Ember.computed('modelProjection', function() {
+    let modelName = this.get('modelProjection').modelName;
+    let currentController = this.get('currentController');
+    let currentRoute = currentController ? this.get('currentController').get('target').currentRouteName : 'application';
+    Ember.assert('Error while module name determing.', modelName && currentRoute);
+
+    return modelName + '__' + currentRoute;
+  }),
 
   /**
    * Destroys component's DOM-related logic.

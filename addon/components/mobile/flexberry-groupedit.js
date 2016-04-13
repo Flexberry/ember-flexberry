@@ -81,7 +81,7 @@ export default FlexberryGroupedit.extend({
   orderable: false,
 
   /**
-   * Flag: indicates wether allow to resize columns (if `true`) or not (if `false`).
+   * Flag: indicates whether allow to resize columns (if `true`) or not (if `false`).
    *
    * @property allowColumnResize
    * @type Boolean

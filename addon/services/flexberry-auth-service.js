@@ -25,12 +25,23 @@ import Ember from 'ember';
    initialize
  };
  ```
- *
+
  * @class FlexberryAuthService
  * @extends Ember.Service
  * @public
  */
 export default Ember.Service.extend({
+  /**
+   * Flag: indicates whether to use flexberry auth service (if `true`) or not (if `false`).
+   * This flag is readed from config setting `APP.flexberryAuthService` and can be changed programatically later.
+   *
+   * @property isFlexberryAuthServiceEnabled
+   * @public
+   * @type Boolean
+   * @default false
+   */
+  isFlexberryAuthServiceEnabled: false,
+
   /**
    * Service to call auth methods.
    * If this service is not defined, stub is executed.
@@ -52,7 +63,7 @@ export default Ember.Service.extend({
    */
   authCustomRequest: function(options) {
     let currentAuthService = this.get('currentAuthService');
-    if (!currentAuthService) {
+    if (!this.get('isFlexberryAuthServiceEnabled') || !currentAuthService) {
       return options;
     }
 

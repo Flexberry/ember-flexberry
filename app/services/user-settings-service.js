@@ -3,8 +3,8 @@ import config from '../config/environment';
 
 UserSettingsService.reopen({
   /**
-   * Flag: indicates wether to use user settings service (if `true`) or not (if `false`).
-   * It reads value from config.
+   * Flag: indicates whether to use user settings service (if `true`) or not (if `false`).
+   * This flag is readed from config setting `APP.useUserSettingsService` and can be changed programatically later.
    *
    * @property isUserSettingsServiceEnabled
    * @public

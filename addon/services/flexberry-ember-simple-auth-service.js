@@ -13,7 +13,7 @@ import Ember from 'ember';
  */
 export default Ember.Service.extend({
   /**
-   * Store to get adapter, where auth elements are placed.
+   * Store to get adapter where auth elements are placed.
    *
    * @property _store
    * @type Service
@@ -21,10 +21,10 @@ export default Ember.Service.extend({
   _store: Ember.inject.service('store'),
 
   /**
-   * Adapter, where auth elements are placed.
+   * Adapter where auth elements are placed.
    *
    * @property _store
-   * @type Service
+   * @type DS.Adapter
    */
   _adapter: Ember.computed('_store', function() {
     return this.get('_store').adapterFor('application');

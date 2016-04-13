@@ -22,7 +22,8 @@ export default Ember.Service.extend({
   store: Ember.inject.service('store'),
 
   /**
-   * Flag: indicates wether to use user settings service (if `true`) or not (if `false`).
+   * Flag: indicates whether to use user settings service (if `true`) or not (if `false`).
+   * This flag is readed from config setting `APP.useUserSettingsService` and can be changed programatically later.
    *
    * @property isUserSettingsServiceEnabled
    * @public

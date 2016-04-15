@@ -128,6 +128,16 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   autocompleteUpdateAction: 'updateLookupValue',
 
   /**
+   * Action's name to update xhr before autocomplete request.
+   * It is used to add necessary auth headers to request.
+   *
+   * @property autocompleteUpdateXhrAction
+   * @type String
+   * @default 'updateAutocompleteLookupXhr'
+   */
+  autocompleteUpdateXhrAction: 'updateAutocompleteLookupXhr',
+
+  /**
    * Min characters count necessary to call autocomplete.
    *
    * @property autocompleteMinCharacters
@@ -260,6 +270,16 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
             });
           Ember.merge(settings.data, urlOptions);
           return settings;
+        },
+        beforeXHR: function(xhr) {
+          // Set necessary auth headers.
+          _this.sendAction(
+            'autocompleteUpdateXhrAction',
+            {
+              xhr: xhr,
+              element: _this
+            }
+          );
         }
       },
       fields: {

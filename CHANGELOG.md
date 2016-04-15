@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-04-15
+### Fixed
+Lookup with autocomplete:
+* Add opportunity to set authentication headers to autocomplete request.
+
 ## 2016-04-11
 ### Added
 FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:

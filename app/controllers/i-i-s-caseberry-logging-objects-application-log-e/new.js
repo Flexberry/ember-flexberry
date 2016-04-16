@@ -1,0 +1,4 @@
+import IISCaseberryLoggingObjectsApplicationLogEController from '../i-i-s-caseberry-logging-objects-application-log';
+
+var IISCaseberryLoggingObjectsApplicationLogENewController = IISCaseberryLoggingObjectsApplicationLogEController;
+export default IISCaseberryLoggingObjectsApplicationLogENewController;

@@ -1,4 +1,1 @@
-import ListFormController from 'ember-flexberry/controllers/list-form';
-
-var IISCaseberryLoggingObjectsApplicationLogLController = ListFormController;
-export default IISCaseberryLoggingObjectsApplicationLogLController; 
+export { default } from 'ember-flexberry/controllers/i-i-s-caseberry-logging-objects-application-log-l';

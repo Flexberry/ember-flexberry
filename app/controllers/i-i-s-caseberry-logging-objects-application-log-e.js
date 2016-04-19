@@ -1,7 +1,2 @@
-import EditFormController from 'ember-flexberry/controllers/edit-form';
+export { default } from 'ember-flexberry/controllers/i-i-s-caseberry-logging-objects-application-log-e';
 
-export default EditFormController.extend({
-    // Caption of this particular edit form.
-    title: 'Application log'
-
-}); 

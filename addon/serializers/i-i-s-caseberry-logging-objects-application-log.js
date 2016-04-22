@@ -1,3 +1,6 @@
+/**
+ * @module ember-flexberry
+ */
 import ApplicationSerializer from './application';
 
 // TODO: ODataSerializer.extend

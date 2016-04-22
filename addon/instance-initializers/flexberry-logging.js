@@ -1,11 +1,13 @@
+/**
+* @module ember-flexberry
+*/
 import Ember from 'ember';
 
 export function initialize(applicationInstance) {
   /**
   *  LogLevel pointed in configuration file config/environment.js
   */
-  var applicationConfig = applicationInstance.resolveRegistration('config:environment');
-  var flexberryLogLevel = applicationConfig.APP.flexberryLogLevel;
+  var flexberryLogLevel = applicationInstance.resolveRegistration('config:environment').APP.flexberryLogLevel;
 
   if (flexberryLogLevel === undefined) {	//if not set
     flexberryLogLevel = 0;	//switch off Logging

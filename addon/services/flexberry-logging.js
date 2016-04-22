@@ -1,3 +1,6 @@
+/**
+ * @module ember-flexberry
+ */
 import Ember from 'ember';
 const { getOwner } = Ember;
 

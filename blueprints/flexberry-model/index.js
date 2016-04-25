@@ -31,6 +31,8 @@ module.exports = {
         var model = JSON.parse(content);
 
         return {
+            parentModelName: model.parentModelName,// for use in files\__root__\models\__name__.js
+            parentClasslName: model.parentClasslName,// for use in files\__root__\models\__name__.js
             model: getJSForModel(model),// for use in files\__root__\models\__name__.js
             projections: getJSForProjections(model, modelsDir),// for use in files\__root__\models\__name__.js
             serializerAttrs: getSerializerAttrs(model)// for use in files\__root__\serializers\__name__.js

@@ -57,6 +57,10 @@ function EditFormBlueprint(blueprint, options) {
     }
     this.loadSnippet = function (model, attrName) {
         var modelAttr = find(model.attrs, function (attr) { return attr.name === attrName; });
+        if (!modelAttr) {
+            model = this.loadModel(model.parentModelName);
+            return this.loadSnippet(model, attrName);
+        }
         var component = find(componentMaps, function (map) { return indexOf(map.types, modelAttr.type) !== -1; });
         if (!component) {
             return this.readHbsSnippetFile("flexberry-dropdown");

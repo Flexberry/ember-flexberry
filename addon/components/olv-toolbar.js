@@ -180,7 +180,15 @@ export default FlexberryBaseComponent.extend({
     },
 
     showColsConfig: function() {
-      alert('colsConfig');
+      let colNames=[];
+      let projectionAttributes=this.modelController.modelProjection.attributes;
+      for (let prop in projectionAttributes) {
+        if (projectionAttributes[prop].kind!='attr') {
+          continue;
+        }
+        colNames[colNames.length]=projectionAttributes[prop].caption;
+      }
+      alert('colsConfig: projectionAttributes='+projectionAttributes + 'colNames='+colNames);
     }
   },
 

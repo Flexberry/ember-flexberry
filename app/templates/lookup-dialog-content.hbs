@@ -1,8 +1,9 @@
 <div id="lookup-list" class="list-group">
-  {{object-list-view
-    class = "ui bottom attached"
-    modelProjection = modelProjection
-    content = model
-    selectedRecord = _currentRow
+  {{flexberry-objectlistview
+    class="ui bottom attached"
+    modelProjection=modelProjection
+    content=model
+    selectedRecord=_currentRow
+    componentMode='lookupform'
   }}
 </div>

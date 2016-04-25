@@ -457,5 +457,14 @@ export default FlexberryBaseComponent.extend({
    * @type Function
    * @default null
    */
-  hasNextPage: null
+  hasNextPage: null,
+
+  /**
+   * Current selected record of list.
+   *
+   * @property selectedRecord
+   * @type DS.Model
+   * @default undefined
+   */
+  selectedRecord: undefined
 });

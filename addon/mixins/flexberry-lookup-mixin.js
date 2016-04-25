@@ -125,7 +125,8 @@ export default Ember.Mixin.create({
           saveTo: {
             model: model,
             propName: relationName
-          }
+          },
+          currentLookupRow: model.get(relationName)
         });
 
         this.send('showModalDialog', lookupSettings.contentTemplate, {

@@ -22,6 +22,16 @@ export default ListFormController.extend({
    */
   sizeClass: 'small',
 
+  /**
+   * Current lookup selected record.
+   * It is used to highlight selected record.
+   *
+   * @property currentLookupRow
+   * @type DS.Model
+   * @default undefined
+   */
+  currentLookupRow: undefined,
+
   actions: {
     /**
      * Handles olv row clicked.
@@ -88,10 +98,18 @@ export default ListFormController.extend({
     }
   },
 
+  /**
+   * It clears current controller.
+   * It has to be done before each use.
+   *
+   * @method clear
+   * @public
+   */
   clear: function() {
     this.set('_openedModalDialog', undefined);
     this.set('saveTo', undefined);
     this.set('modelProjection', undefined);
+    this.set('currentLookupRow', undefined);
     return this;
   }
 });

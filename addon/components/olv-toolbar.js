@@ -177,6 +177,10 @@ export default FlexberryBaseComponent.extend({
 
     customButtonAction: function(actionName) {
       this.sendAction('customButtonAction', actionName);
+    },
+
+    showColsConfig: function() {
+      alert('colsConfig');
     }
   },
 

@@ -14,7 +14,9 @@
     "semantic-ui": "git://github.com/Flexberry/Semantic-UI.git#fixed-abort",
     "blueimp-file-upload": "9.11.2",
     "jquery-file-download": "1.4.4",
-    "devicejs": "0.2.7"
+    "devicejs": "0.2.7",
+    "pretender": "~0.12.0",
+    "Faker": "~3.0.0"
   },
   "resolutions": {
     "ember": "2.2.0"

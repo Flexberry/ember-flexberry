@@ -1,25 +1,32 @@
 export default function() {
 
-  // These comments are here to help you get started. Feel free to delete them.
+  this.urlPrefix = 'https://northwindodata.azurewebsites.net';
+  this.namespace = 'odata';
 
-  /*
-    Config (with defaults).
+  this.passthrough('https://northwindodata.azurewebsites.net/Token');
 
-    Note: these only affect routes defined *after* them!
-  */
+  this.get('/Employees', ({employee}, request) => {
+    var response = {
+      value: []
+    };
 
-  // this.urlPrefix = '';    // make this `http://localhost:8080`, for example, if your API is on a different server
-  // this.namespace = '';    // make this `api`, for example, if your API is namespaced
-  // this.timing = 400;      // delay for each request, automatically set to 0 during testing
+    if (request.queryParams.hasOwnProperty("$count") && request.queryParams.$count === "true") {
+      response["@odata.count"] = employee.all().length;
+    }
 
-  /*
-    Shorthand cheatsheet:
+    if (request.queryParams.hasOwnProperty("$skip") || request.queryParams.hasOwnProperty("$top")) {
+      var skip = !isNaN(request.queryParams.$skip) ? request.queryParams.$skip : 0;
+      var top = !isNaN(request.queryParams.$top) ? request.queryParams.$top : 5;
+      for (var i = 0; i < employee.all().length; i++) {
+        if (i >= skip && response.value.length < top) {
+          response.value.push(employee.all()[i].attrs);
+        }
+      }
+    }
 
-    this.get('/posts');
-    this.post('/posts');
-    this.get('/posts/:id');
-    this.put('/posts/:id'); // or this.patch
-    this.del('/posts/:id');
-  */
+    return response;
+  });
+
+  this.passthrough();
 
 }

@@ -22,6 +22,13 @@ export default function() {
       }
     }
 
+    if (request.queryParams.hasOwnProperty("$filter")) {
+      var search = request.queryParams.$filter.match(/\'(.*?)\'/)[1].toLowerCase();
+      db = db.filter((item) => {
+        return item.FirstName.toLowerCase().indexOf(search) !== -1 & item.LastName.toLowerCase().indexOf(search) !== -1;
+      });
+    }
+
     if (request.queryParams.hasOwnProperty("$count") && request.queryParams.$count === "true") {
       response["@odata.count"] = db.length;
     }

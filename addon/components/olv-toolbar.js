@@ -180,15 +180,175 @@ export default FlexberryBaseComponent.extend({
     },
 
     showColsConfig: function() {
-      let colNames=[];
-      let projectionAttributes=this.modelController.modelProjection.attributes;
-      for (let prop in projectionAttributes) {
-        if (projectionAttributes[prop].kind!='attr') {
-          continue;
-        }
-        colNames[colNames.length]=projectionAttributes[prop].caption;
+      let setOrderScript=`
+      var tr=this.parentNode.parentNode;
+      var tbody=tr.parentNode;
+      var value=this.options.item(this.selectedIndex).value;
+      var input=$(tr).find('input').get(0);
+      var inputs=$('input.priority:enabled',tbody);
+      var max,priority;
+      if (value=='-') {
+        input.value='';
+        input.disabled=true;
+        input.style.display='none';
+      } else {
+        if (!input.disabled) return;
+        input.value=inputs.length+1;
+        input.prevValue=inputs.length+1;
+        input.disabled=false;
+        input.style.display='';
       }
-      alert('colsConfig: projectionAttributes='+projectionAttributes + 'colNames='+colNames);
+`;
+
+      let setHideUnhideScript=`
+      var td=this.parentNode;
+      var tr=td.parentNode;
+      if (/unhide/.exec(this.className)) {
+        this.className='large hide icon';
+        $(this).parent().siblings('TD').addClass('disabled');
+      } else {
+        this.className='large unhide icon';
+        $(this).parent().siblings('TD').removeClass('disabled');
+      }
+`;
+
+      let setPriorityScript=`
+     var newValue=parseInt(this.value);
+     var prevValue=this.prevValue;
+     var tr=this.parentNode.parentNode;
+     var tbody=tr.parentNode;
+     var input,inputValue,inputs=$('input.priority:enabled',tbody);
+     if (isNaN(newValue) || newValue<=0) {
+       newValue=inputs.length;
+     }
+     if (prevValue==newValue) return;
+     this.value=newValue;
+     this.prevValue=newValue;
+     var from,to,delta;
+     if (prevValue < newValue) {
+       from=prevValue;
+       to=newValue+1;
+       delta= -1;
+     } else {
+       from=newValue-1;
+       to=prevValue;
+       delta=1;
+     }
+//      alert(from+'-'+to + ' +='+delta);
+     for (var i=0;i<inputs.length;i++) {
+       input=inputs.get(i);
+       inputValue=parseInt(input.value);
+       if (input!==this && inputValue > from && inputValue < to) {
+         inputValue+=delta;
+         input.value=inputValue;
+         input.prevValue=inputValue;
+       }
+     }
+`;
+
+    let rowUpScript=`
+      var newTr,tr=this.parentNode.parentNode.parentNode;
+     var tbody=tr.parentNode;
+     var prevTr=tr.previousSibling;
+//      alert(tr.id+ ' ' + tbody.tagName + ' before=' + prevTr.id);
+     if (prevTr) {
+       newTr=tr.cloneNode(true);
+       tbody.removeChild(tr);
+       tbody.insertBefore(newTr,prevTr);
+     }
+//     alert('up');
+     `;
+
+    let rowDownScript=`
+     var newTr,tr=this.parentNode.parentNode.parentNode;
+     var tbody=tr.parentNode;
+     var nextTr=tr.nextSibling;
+     //      alert(tr.id+ ' ' + tbody.tagName + ' before=' + nextTr.id);
+     if (nextTr) {
+       newTr=tr.cloneNode(true);
+       tbody.removeChild(tr);
+       if (nextTr.nextSibling) {
+         tbody.insertBefore(newTr,nextTr.nextSibling);
+       } else {
+         tbody.appendChild(newTr);
+       }
+     }
+     //     alert('up');
+     `;
+
+     let okScript=`
+     var modalDiv=$('#ColsConfig').get(0);
+     modalDiv.parentNode.removeChild(modalDiv);
+     `;
+
+     let saveScript=`
+     alert('save');
+     `;
+
+      let modelController = this.get('modelController');
+      let projectionAttributes=modelController.modelProjection.attributes;
+      var modalDiv=document.createElement('div');
+      modalDiv.id="ColsConfig";
+      modalDiv.className='flexberry-modal  ember-view ui modal active';
+      modalDiv.style.marginTop=' -169px';
+      modalDiv.style.display='block !important';
+      var content='<i class="close icon"></i><div class="header">Настроить отображение столбцов</div>';
+      content+=`
+<div class=" content">
+  <div class="description">
+    <div class="list-group">
+      <table class="ui selectable celled table"
+        ><thead
+          ><tr
+          ><th style="width:24px;align:right">№</th
+          ><th style="width:36px;align:center"><i class='large hide icon' title='Не отображать столбцы'></i></th
+          ><th>Направление сортировки</th
+          ><th>Приоритет при сортировке</th
+          ><th>Название столбца</th
+          ><th style="width:72px;text-align:center"><i class='large sort icon' title='Установить порядок по умолчанию'></i></th
+          ></tr
+        ></thead
+        ><tbody
+        `;
+      let n=0;
+      for (let prop in projectionAttributes) {
+        let colName=projectionAttributes[prop].caption;
+          if (projectionAttributes[prop].kind=='belongsTo') {
+            colName=colName  + '@' + projectionAttributes[prop].modelName;
+          }
+          n++;
+          content+=`
+          ><tr id='colsConfigTR[`+colName+`]'
+            ><td>`+n+`</td
+            ><td><i class='large unhide icon' colsConfigHidden=false onClick="`+setHideUnhideScript+`"></i></td
+            ><td><select name="order[`+colName+`]" onChange="`+setOrderScript+`"><option>-</option><option value='asc'>↑</option><option value='desc'>↓</option></select></td
+            ><td><input class='priority' type='input' name='priority[`+colName+`]' onChange="`+setPriorityScript+`" disabled style='display:none' /></td
+            ><td>`+colName+`</td
+            ><td><nobr><button onClick="`+rowUpScript+`">↑</button><button onClick="`+rowDownScript+`">↓</button></nobr></td
+          ></tr`;
+      }
+      content+=`
+        ></tbody
+        ><tfoot class="full-width"
+          ><tr
+          ><td colspan='6'
+          ><div class="ui right floated button" onClick="`+okScript+`">OK</div
+            ><div class="ui"
+              >Название настройки <input type='input' name='configName' placeholder='Введите название настройки'
+              /><div class="ui small button" onClick="`+saveScript+`">Сохранить</div
+            ></div
+          ></td
+          ></tr
+        ></tfoot
+      ></table>
+    </div>`;
+      content+=`
+  </div>
+</div>`;
+
+
+      modalDiv.innerHTML=content;
+      this.element.appendChild(modalDiv);
     }
   },
 

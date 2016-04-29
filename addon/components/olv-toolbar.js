@@ -179,6 +179,10 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('customButtonAction', actionName);
     },
 
+    showConfigDialog: function() {
+      alert('showConfigDialog');
+    },
+
     showColsConfig: function() {
       let setOrderScript=`
       var tr=this.parentNode.parentNode;

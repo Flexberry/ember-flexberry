@@ -27,6 +27,7 @@
 {{/if}}
 {{!-- #if colsConfigButton --}}
   <button class="ui button" {{action "showColsConfig"}}><i class="large setting icon" title="customize column views"></i></button>
+  {{olv-setconfigdialogbutton choose=(action "showConfigDialog")}}
 {{!-- /if --}}
 {{#each customButtonsArray as |customButton|}}
   <button class="ui {{if customButton.buttonClasses customButton.buttonClasses ''}} button" {{action 'customButtonAction' customButton.buttonAction}}>

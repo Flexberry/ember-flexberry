@@ -2,14 +2,14 @@
 
 <div class="row">
   {{flexberry-objectlistview
-    modelName="employee"
+    modelName='employee'
     editFormRoute=editFormRoute
     modelProjection=modelProjection
     content=model
 
     createNewButton=true
     refreshButton=true
-	  showDeleteButtonInRow=true
+	showDeleteButtonInRow=true
     showDeleteMenuItemInRow=true
     classButton='grey'
 
@@ -19,8 +19,8 @@
 
     sorting=computedSorting
     orderable=true
-    sortByColumn=(action "sortByColumn")
-    addColumnToSorting=(action "addColumnToSorting")
+    sortByColumn=(action 'sortByColumn')
+    addColumnToSorting=(action 'addColumnToSorting')
     action="rowClick"
 
     pages=pages
@@ -28,10 +28,10 @@
     perPageValues=perPageValues
     hasPreviousPage=hasPreviousPage
     hasNextPage=hasNextPage
-    previousPage=(action "previousPage")
-    gotoPage=(action "gotoPage")
-    nextPage=(action "nextPage")
+    previousPage=(action 'previousPage')
+    gotoPage=(action 'gotoPage')
+    nextPage=(action 'nextPage')
 
-    singleColumnHeaderTitle="Mobile title for component"
+    singleColumnHeaderTitle='Mobile title for component'
   }}
 </div>

@@ -27,7 +27,7 @@ export default Ember.Mixin.create({
         model[n]=record;
         n+=1;
       }
-      alert(JSON.stringify(model));
+//       alert(JSON.stringify(model));
       let controller = this.get('colsconfigController');
       var loadingParams = {
         view: 'application',

@@ -23,6 +23,15 @@ export default Ember.Mixin.create({
    */
   lookupController: undefined,
 
+  /**
+   * Service for auth matters.
+   * FlexberryAuthService is injected here by default.
+   *
+   * @property currentAuthService
+   * @type Service
+   */
+  currentAuthService: Ember.inject.service('flexberry-auth-service'),
+
   actions: {
     /**
      * Handles action from lookup choose action.
@@ -216,9 +225,18 @@ export default Ember.Mixin.create({
       return queryOptions;
     },
 
-    getLookupItems: function(chooseData) {
-      // Load Data in select
-      return ["Edit", "Remove", "Hide"];
+    /**
+     * It updates autocomplete lookup xhr before send in order to add necessary auth information.
+     *
+     * @method updateAutocompleteLookupXhr
+     * @param {Object} [options] Lookup autocomplete parameters.
+     * @param {Object} options.xhr Autocomplete lookup xhr to send.
+     * @param {Object} options.element Current autocomplete lookup.
+     * @return {Object} Updated method parameters.
+     */
+    updateAutocompleteLookupXhr: function(options) {
+      this.get('currentAuthService').authCustomRequest(options);
+      return options;
     }
   },
 

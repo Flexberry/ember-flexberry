@@ -47,7 +47,10 @@ module.exports = function(environment) {
           // Flag: indicates whether to show modal dialog on download errors or not.
           showModalDialogOnDownloadError: true,
         }
-      }
+      },
+
+      // Enable flexberryAuthService.
+      flexberryAuthService: true
     }
   };
 

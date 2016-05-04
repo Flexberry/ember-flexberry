@@ -15,14 +15,22 @@
             ></tr
           ></thead
           ><tbody>
-{{#each model as |col|}}
+{{#each model as |col n|}}
+  {{#with col}}
             <tr
               ><td><i class='large unhide icon' colsConfigHidden=false onClick=""></i></td
-              ><td><select name="order[{{col.Name}}]" onChange=""><option>-</option><option value='asc'>↑</option><option value='desc'>↓</option></select></td
+              ><td
+                ><select name="order[{{name}}]" onChange=""
+                  ><option>-</option
+                  ><option  value='asc'>↑</option
+                  ><option  value='desc'>↓</option
+                ></select
+              ></td
               ><td><input class='priority' type='input' name='priority[{{col.Name}}]' onChange="" disabled style='display:none' /></td
-              ><td>{{col.Name}}</td
+              ><td>{{name}}</td
               ><td><nobr><button onClick="">↑</button><button onClick="">↓</button></nobr></td
             ></tr>
+  {{/with}}
 {{/each}}
           </tbody
           ><tfoot class="full-width"

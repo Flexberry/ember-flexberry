@@ -1,0 +1,43 @@
+<div class="flexberry-modal  ember-view ui modal transition visible active" style="margin-top: -51.5px; display: block !important;">
+  <i class="close icon"></i>
+  <div class="header">Настроить отображение столбцов</div>
+  <div class=" content">
+    <div class="description">
+      <div class="list-group">
+        <table class="ui selectable celled table"
+          ><thead
+            ><tr
+              ><th style="width:36px;align:center"><i class='large hide icon' title='Не отображать столбцы'></i></th
+              ><th>Направление сортировки</th
+              ><th>Приоритет при сортировке</th
+              ><th>Название столбца</th
+              ><th style="width:72px;text-align:center"><i class='large sort icon' title='Установить порядок по умолчанию'></i></th
+            ></tr
+          ></thead
+          ><tbody>
+{{#each model as |col|}}
+            <tr
+              ><td><i class='large unhide icon' colsConfigHidden=false onClick=""></i></td
+              ><td><select name="order[{{col.Name}}]" onChange=""><option>-</option><option value='asc'>↑</option><option value='desc'>↓</option></select></td
+              ><td><input class='priority' type='input' name='priority[{{col.Name}}]' onChange="" disabled style='display:none' /></td
+              ><td>{{col.Name}}</td
+              ><td><nobr><button onClick="">↑</button><button onClick="">↓</button></nobr></td
+            ></tr>
+{{/each}}
+          </tbody
+          ><tfoot class="full-width"
+            ><tr
+            ><td colspan='6'
+            ><div class="ui right floated button" onClick="">OK</div
+              ><div class="ui"
+                >Название настройки <input type='input' name='configName' placeholder='Введите название настройки'
+                /><div class="ui small button" onClick="">Сохранить</div
+              ></div
+            ></td
+            ></tr
+        ></tfoot
+        ></table>
+      </div>
+    </div>
+  </div>
+</div>

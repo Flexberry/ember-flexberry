@@ -10,13 +10,13 @@ export default Ember.Mixin.create({
       };
       let projectionAttributes=this.modelProjection.attributes;
       let controller = this.get('colsconfigController');
-
-
       var loadingParams = {
         view: 'application',
         outlet: 'modal'
       };
-      this.send('showModalDialog', "lookup-dialog",
+//       this.send('showModalDialog', "lookup-dialog",{controller: controller},loadingParams);
+//       loadingParams.outlet='modal-content';
+      this.send('showModalDialog', "colsconfig-dialog-content",
                 {controller: controller,model:{}},
                 loadingParams);
     }

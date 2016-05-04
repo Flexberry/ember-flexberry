@@ -40,4 +40,12 @@ import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-mixin';
  * @uses LimitedControllerMixin
  */
 export default Ember.Controller.extend(PaginatedControllerMixin, SortableControllerMixin, LimitedControllerMixin, FlexberryOlvToolbarMixin, {
+    /**
+     * Controller to show colsconfig modal window.
+   *
+   * @property lookupController
+   * @type Ember.InjectedProperty
+   * @default undefined
+   */
+    colsconfigController: Ember.inject.controller('colsconfig-dialog'),
 });

@@ -4,15 +4,21 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
   actions: {
     showConfigDialog: function() {
-      alert('showConfigDialog');
+//       alert('showConfigDialog');
       var colsConfigSettings={
-        controllerName: "colsconfig-dialog", template: "colsconfig-dialog", contentTemplate: "colsconfig-dialog-content",
+        controllerName: "lookup-dialog", template: "lookup-dialog", contentTemplate: "colsconfig-dialog-content",
       };
+      let projectionAttributes=this.modelProjection.attributes;
+      let controller = this.get('colsconfigController');
+
+
       var loadingParams = {
-        view: colsConfigSettings.template,
-        outlet: 'modal-content'
+        view: 'application',
+        outlet: 'modal'
       };
-      this.send('showModalDialog', "colsconfig-dialog", null, loadingParams);
+      this.send('showModalDialog', "lookup-dialog",
+                {controller: controller,model:{}},
+                loadingParams);
     }
   }
 });

@@ -180,7 +180,7 @@ export default FlexberryBaseComponent.extend({
     },
 
     showConfigDialog: function() {
-      alert('showConfigDialog');
+      this.get('modelController').send('showConfigDialog');
     },
 
     showColsConfig: function() {

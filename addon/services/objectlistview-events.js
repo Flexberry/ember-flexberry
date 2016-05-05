@@ -111,9 +111,10 @@ export default Ember.Service.extend(Ember.Evented, {
    * @param {String} componentName The name of objectlistview component.
    * @param {Model} record The model corresponding to selected row in objectlistview.
    * @param {Integer} count Count of selected rows in objectlistview.
+   * @param {Boolean} checked Current state of row in objectlistview (checked or not).
    */
-  rowSelectedTrigger(componentName, record, count) {
-    this.trigger('olvRowSelected', componentName, record, count);
+  rowSelectedTrigger(componentName, record, count, checked) {
+    this.trigger('olvRowSelected', componentName, record, count, checked);
   },
 
   /**

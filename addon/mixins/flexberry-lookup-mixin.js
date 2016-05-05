@@ -225,6 +225,11 @@ export default Ember.Mixin.create({
       return queryOptions;
     },
 
+    getLookupItems: function(chooseData) {
+      // Load Data in select
+      return ["Edit", "Remove", "Hide"];
+    },
+
     /**
      * It updates autocomplete lookup xhr before send in order to add necessary auth information.
      *

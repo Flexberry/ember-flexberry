@@ -63,6 +63,8 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   cssClass: undefined,
   items: [],
 
+  getDropdownItems: undefined,
+
   /**
    * Flag to show that lookup is at autocomplete mode.
    *
@@ -239,10 +241,11 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     let _this = this;
 
     // for mode dropdown
-    this.$('.flexberry-dropdown').on('click', function(chooseData) {
-      let getDropdownItems = _this.get('getDropdownItems'); // this.attrs['getDropdownItems']
-      let items = getDropdownItems(chooseData);
-      _this.set('items', items);
+    this.$('.flexberry-dropdown').on('click', () => {
+      Ember.assert('getDropdownItems action is required', typeof this.getDropdownItems === 'function');
+      let chooseData = this.get('chooseData');
+      let items = this.getDropdownItems(chooseData);
+      this.set('items', items);
     });
 
     if (this.get('readonly') || !this.get('autocomplete')) {

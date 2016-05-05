@@ -343,11 +343,69 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       });
     },
     onDropdown: function () {
-      this.$('.flexberry-dropdown').on('click', () => {
-        Ember.assert('getDropdownItems action is required', typeof this.getDropdownItems === 'function');
-        let chooseData = this.get('chooseData');
-        let items = this.getDropdownItems(chooseData);
-        this.set('items', items);
+      // this.$('.flexberry-dropdown').on('click', () => {
+      //   Ember.assert('getDropdownItems action is required', typeof this.getDropdownItems === 'function');
+      //   let chooseData = this.get('chooseData');
+      //   let items = this.getDropdownItems(chooseData);
+      //   this.set('items', items);
+      // });
+      var autocompleteProperty = this.get('autocompleteProperty');
+      var autocompleteMinCharacters = this.get('autocompleteMinCharacters');
+      var autocompleteMaxResults = this.get('autocompleteMaxResults');
+      var relationName = this.get('relationName');
+      let autocompleteUrl = this.get('autocompleteUrl')(relationName);
+      let limitFunction = this.get('limitFunction');
+      let modelToLookup = this.get('relatedModel');
+
+      this.set('autocompleteValue', this.get('value'));
+
+      let _this = this;
+
+      this.$('.flexberry-dropdown').dropdown({
+        debug: true,
+        apiSettings: {
+          url: autocompleteUrl,
+          beforeSend: function(settings) {
+            let urlOptions = _this.get('autocompleteQueryOptions')(
+              {
+                relationName: relationName,
+                lookupLimitFunction: limitFunction,
+                top: autocompleteMaxResults,
+                limitField: autocompleteProperty,
+                limitValue: settings.urlData.query
+              });
+            Ember.merge(settings.data, urlOptions);
+            return settings;
+          },
+          beforeXHR: function(xhr) {
+            // Set necessary auth headers.
+            _this.sendAction(
+              'autocompleteUpdateXhrAction',
+              {
+                xhr: xhr,
+                element: _this
+              }
+            );
+          }
+        },
+        fields: {
+          results: 'value',
+          title: autocompleteProperty
+        },
+        minCharacters: autocompleteMinCharacters,
+        searchFields: [autocompleteProperty],
+        cache: false,
+        maxResults: autocompleteMaxResults,
+        searchFullText: false,
+        onSelect: function(result, response) {
+          _this.sendAction(
+            'autocompleteUpdateAction',
+            {
+              relationName: relationName,
+              modelToLookup: modelToLookup,
+              newRelationValue: result
+            });
+          }
       });
     },
     choose: function(chooseData) {

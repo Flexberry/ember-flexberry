@@ -78,7 +78,11 @@
       classChoose='primary'
       classRemove='primary'
       dropdown=true
-      getDropdownItems=(action 'getLookupItems')
+      autocompleteUpdateAction='updateLookupValue'
+      autocompleteUpdateXhrAction='updateAutocompleteLookupXhr'
+      autocompleteProperty='FirstName'
+      autocompleteUrl=(action 'getLookupAutocompleteUrl')
+      autocompleteQueryOptions=(action 'getAutocompleteLookupQueryOptions')
     }}
       {{model.employee1.firstName}}<br>
       {{model.employee1.lastName}}

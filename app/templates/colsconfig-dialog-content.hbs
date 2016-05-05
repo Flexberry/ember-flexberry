@@ -16,21 +16,19 @@
           ></thead
           ><tbody>
 {{#each model as |col n|}}
-  {{#with col}}
             <tr
               ><td><i class='large unhide icon' colsConfigHidden=false onClick=""></i></td
               ><td
-                ><select name="order[{{name}}]" onChange=""
-                  ><option>-</option
-                  ><option  value='asc'>↑</option
-                  ><option  value='desc'>↓</option
+                ><select name="order[{{col.name}}]" onChange="">
+                  {{#if col.ordernot}}<option selected>-</option>{{else}}<option>-</option>{{/if}}
+                  {{#if col.orderasc}}<option selected value='asc'>↑</option>{{else}}<option value='asc'>↑</option>{{/if}}
+                  {{#if col.orderdesc}}<option selected value='desc'>↓</option>{{else}}<option value='desc'>↓</option>{{/if}}
                 ></select
               ></td
               ><td><input class='priority' type='input' name='priority[{{col.Name}}]' onChange="" disabled style='display:none' /></td
-              ><td>{{name}}</td
+              ><td>{{col.name}}</td
               ><td><nobr><button onClick="">↑</button><button onClick="">↓</button></nobr></td
             ></tr>
-  {{/with}}
 {{/each}}
           </tbody
           ><tfoot class="full-width"

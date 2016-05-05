@@ -61,9 +61,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   relationName: undefined,
   title: undefined,
   cssClass: undefined,
-  items: [],
-
-  getDropdownItems: undefined,
 
   /**
    * Flag to show that lookup is at autocomplete mode.
@@ -186,6 +183,24 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   dropdown: false,
 
   /**
+   * Available items for mode dropdown.
+   *
+   * @property items
+   * @type Array
+   * @default []
+   */
+  items: [],
+
+  /**
+   * Method to get items for drodown.
+   *
+   * @property getDropdownItems
+   * @type Action
+   * @default undefined
+   */
+  getDropdownItems: undefined,
+
+  /**
    * Object with lookup properties to send on choose action.
    *
    * @property chooseData
@@ -238,101 +253,110 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   didInsertElement: function() {
     this._super();
 
-    let _this = this;
-
-    // for mode dropdown
-    this.$('.flexberry-dropdown').on('click', () => {
-      Ember.assert('getDropdownItems action is required', typeof this.getDropdownItems === 'function');
-      let chooseData = this.get('chooseData');
-      let items = this.getDropdownItems(chooseData);
-      this.set('items', items);
-    });
-
-    if (this.get('readonly') || !this.get('autocomplete')) {
+    if (this.get('readonly')) {
       return;
     }
 
-    var autocompleteProperty = this.get('autocompleteProperty');
-    if (!autocompleteProperty) {
-      throw new Error('autocompleteProperty is undefined.');
+    if (this.get('autocomplete')) {
+      this.send('onAutocomplete');
     }
-
-    var autocompleteMinCharacters = this.get('autocompleteMinCharacters');
-    if (!autocompleteMinCharacters || typeof (autocompleteMinCharacters) !== 'number' || autocompleteMinCharacters <= 0) {
-      throw new Error('autocompleteMinCharacters has wrong value.');
+    else if (this.get('dropdown')) {
+      this.send('onDropdown');
     }
+  },
+  actions: {
+    onAutocomplete: function() {
+      var autocompleteProperty = this.get('autocompleteProperty');
+      if (!autocompleteProperty) {
+        throw new Error('autocompleteProperty is undefined.');
+      }
 
-    var autocompleteMaxResults = this.get('autocompleteMaxResults');
-    if (!autocompleteMaxResults || typeof (autocompleteMaxResults) !== 'number' || autocompleteMaxResults <= 0) {
-      throw new Error('autocompleteMaxResults has wrong value.');
-    }
+      var autocompleteMinCharacters = this.get('autocompleteMinCharacters');
+      if (!autocompleteMinCharacters || typeof (autocompleteMinCharacters) !== 'number' || autocompleteMinCharacters <= 0) {
+        throw new Error('autocompleteMinCharacters has wrong value.');
+      }
 
-    var relationName = this.get('relationName');
-    if (!relationName) {
-      throw new Error('relationName is not defined.');
-    }
+      var autocompleteMaxResults = this.get('autocompleteMaxResults');
+      if (!autocompleteMaxResults || typeof (autocompleteMaxResults) !== 'number' || autocompleteMaxResults <= 0) {
+        throw new Error('autocompleteMaxResults has wrong value.');
+      }
 
-    let autocompleteUrl = this.get('autocompleteUrl')(relationName);
-    let limitFunction = this.get('limitFunction');
-    let modelToLookup = this.get('relatedModel');
+      var relationName = this.get('relationName');
+      if (!relationName) {
+        throw new Error('relationName is not defined.');
+      }
 
-    this.set('autocompleteValue', this.get('value'));
+      let autocompleteUrl = this.get('autocompleteUrl')(relationName);
+      let limitFunction = this.get('limitFunction');
+      let modelToLookup = this.get('relatedModel');
 
-    this.$().search({
-      apiSettings: {
-        url: autocompleteUrl,
-        beforeSend: function(settings) {
-          let urlOptions = _this.get('autocompleteQueryOptions')(
+      this.set('autocompleteValue', this.get('value'));
+
+      let _this = this;
+
+      this.$().search({
+        apiSettings: {
+          url: autocompleteUrl,
+          beforeSend: function(settings) {
+            let urlOptions = _this.get('autocompleteQueryOptions')(
+              {
+                relationName: relationName,
+                lookupLimitFunction: limitFunction,
+                top: autocompleteMaxResults,
+                limitField: autocompleteProperty,
+                limitValue: settings.urlData.query
+              });
+            Ember.merge(settings.data, urlOptions);
+            return settings;
+          },
+          beforeXHR: function(xhr) {
+            // Set necessary auth headers.
+            _this.sendAction(
+              'autocompleteUpdateXhrAction',
+              {
+                xhr: xhr,
+                element: _this
+              }
+            );
+          }
+        },
+        fields: {
+          results: 'value',
+          title: autocompleteProperty
+        },
+        minCharacters: autocompleteMinCharacters,
+        searchFields: [autocompleteProperty],
+        cache: false,
+        maxResults: autocompleteMaxResults,
+        searchFullText: false,
+        onSelect: function(result, response) {
+          _this.sendAction(
+            'autocompleteUpdateAction',
             {
               relationName: relationName,
-              lookupLimitFunction: limitFunction,
-              top: autocompleteMaxResults,
-              limitField: autocompleteProperty,
-              limitValue: settings.urlData.query
+              modelToLookup: modelToLookup,
+              newRelationValue: result
             });
-          Ember.merge(settings.data, urlOptions);
-          return settings;
-        },
-        beforeXHR: function(xhr) {
-          // Set necessary auth headers.
-          _this.sendAction(
-            'autocompleteUpdateXhrAction',
-            {
-              xhr: xhr,
-              element: _this
-            }
-          );
         }
-      },
-      fields: {
-        results: 'value',
-        title: autocompleteProperty
-      },
-      minCharacters: autocompleteMinCharacters,
-      searchFields: [autocompleteProperty],
-      cache: false,
-      maxResults: autocompleteMaxResults,
-      searchFullText: false,
-      onSelect: function(result, response) {
-        _this.sendAction(
-          'autocompleteUpdateAction',
-          {
-            relationName: relationName,
-            modelToLookup: modelToLookup,
-            newRelationValue: result
-          });
-      }
-    });
+      });
 
-    // TODO: find proper way to restore selected value.
-    this.$('.prompt').blur(function() {
-      if (!_this.$('.ui.search').hasClass('focus')) {
-        _this.set('autocompleteValue', _this.get('value'));
-      }
-    });
-  },
+      // TODO: find proper way to restore selected value.
+      this.$('.prompt').blur(function() {
+        if (!_this.$('.ui.search').hasClass('focus')) {
+          _this.set('autocompleteValue', _this.get('value'));
+        }
+      });
+    },
 
-  actions: {
+    onDropdown: function () {
+      this.$('.flexberry-dropdown').on('click', () => {
+        Ember.assert('getDropdownItems action is required', typeof this.getDropdownItems === 'function');
+        let chooseData = this.get('chooseData');
+        let items = this.getDropdownItems(chooseData);
+        this.set('items', items);
+      });
+    },
+
     choose: function(chooseData) {
       if (this.get('readonly')) {
         return;

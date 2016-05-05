@@ -350,6 +350,10 @@ export default FlexberryBaseComponent.extend({
 
   /**
    * Css class for buttons.
+   *
+   * @property classButton
+   * @type String
+   * @default undefined
    */
   classButton: undefined,
 

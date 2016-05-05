@@ -12,12 +12,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
-  init: function() {
-    this._super(...arguments);
-    if (!this.get('editFormRoute')) {
-      this.set('editFormRoute', this.get('modelName'));
-    }
-  },
 
   actions: {
     /**
@@ -175,7 +169,6 @@ export default FlexberryBaseComponent.extend({
    *
    * @property editFormRoute
    * @type String
-   * @default 'this.modelName'
    */
   editFormRoute: undefined,
 

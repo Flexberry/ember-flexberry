@@ -1,9 +1,10 @@
-{{#colsconfig-dialog-content
+{{#modal-dialog
   title=title
-  sizeClass=sizeClass
+  sizeClass='small'
   close='removeModalDialog'
   created='createdModalDialog'
-  useOkButton=true
-  useCloseButton=true}}
+  useOkButton=false
+  useCloseButton=false
+}}
   {{outlet 'modal-content'}}
-{{/colsconfig-dialog-content}}
+{{/modal-dialog}}

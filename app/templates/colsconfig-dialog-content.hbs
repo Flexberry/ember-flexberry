@@ -1,49 +1,47 @@
-<div class="flexberry-modal  ember-view ui modal transition visible active" style="margin-top: -51.5px; display: block !important;">
-  <i class="close icon"></i>
-  <div class="header">Настроить отображение столбцов</div>
-  <div class=" content">
-    <div class="description">
-      <div class="list-group">
-        <table class="ui selectable celled table"
-          ><thead
-            ><tr
-              ><th style="width:36px;align:center"><i class='large hide icon' title='Не отображать столбцы'></i></th
-              ><th>Направление сортировки</th
-              ><th>Приоритет при сортировке</th
-              ><th>Название столбца</th
-              ><th style="width:72px;text-align:center"><i class='large sort icon' title='Установить порядок по умолчанию'></i></th
-            ></tr
-          ></thead
-          ><tbody>
-{{#each model as |col n|}}
-            <tr
-              ><td><i class='large unhide icon' colsConfigHidden=false onClick=""></i></td
-              ><td
-                ><select name="order[{{col.name}}]" onChange="">
-                  {{#if col.ordernot}}<option selected>-</option>{{else}}<option>-</option>{{/if}}
-                  {{#if col.orderasc}}<option selected value='asc'>↑</option>{{else}}<option value='asc'>↑</option>{{/if}}
-                  {{#if col.orderdesc}}<option selected value='desc'>↓</option>{{else}}<option value='desc'>↓</option>{{/if}}
-                ></select
-              ></td
-              ><td><input class='priority' type='input' name='priority[{{col.Name}}]' onChange="" disabled style='display:none' /></td
-              ><td>{{col.name}}</td
-              ><td><nobr><button onClick="">↑</button><button onClick="">↓</button></nobr></td
-            ></tr>
-{{/each}}
-          </tbody
-          ><tfoot class="full-width"
-            ><tr
-            ><td colspan='6'
-            ><div class="ui right floated button" onClick="">OK</div
-              ><div class="ui"
-                >Название настройки <input type='input' name='configName' placeholder='Введите название настройки'
-                /><div class="ui small button" onClick="">Сохранить</div
-              ></div
+<div class=" content">
+  <!--div class="description">
+    <div class="list-group"-->
+      <table class="ui selectable celled table"
+        ><thead
+          ><tr
+            ><th style="width:36px;align:center"><i class='large hide icon' title='Не отображать столбцы'></i></th
+            ><th>Направление сортировки</th
+            ><th>Приоритет при сортировке</th
+            ><th>Название столбца</th
+            ><th style="width:72px;text-align:center"><i class='large sort icon' title='Установить порядок по умолчанию'></i></th
+          ></tr
+        ></thead
+        ><tbody>
+{{#each model as |colDesc n|}}
+{{!--log 'name='colDesc.name ' ordernot='colDesc.ordernot ' orderasc='colDesc.orderasc ' orderdesc='colDesc.orderdesc--}}
+          <tr
+          ><td><i class='large {{colDesc.hideClass}} icon' colsConfigHidden=false onClick=""></i></td
+            ><td
+              ><select name="order[{{colDesc.name}}]" onChange="">
+                <option selected='{{colDesc.ordernot}}'>-</option>
+                <option selected='{{colDesc.orderasc}}' value='asc'>↑</option>
+                <option selected='{{colDesc.orderdesc}}' value='desc'>↓</option>
+              </select
             ></td
-            ></tr
-        ></tfoot
-        ></table>
-      </div>
-    </div>
-  </div>
+            ><td><input class='priority' type='input' name='priority[{{colDesc.name}}]' onChange="" disabled style='display:none' /></td
+            ><td>{{colDesc.name}}</td
+            ><td><nobr><button onClick="">↑</button><button onClick="">↓</button></nobr></td
+          ></tr>
+{{/each}}
+        </tbody
+        ><tfoot class="full-width"
+          ><tr
+          ><td colspan='6'
+          ><div class="ui right floated button" onClick="">OK</div
+            ><div class="ui"
+              >Название настройки <input type='input' name='configName' placeholder='Введите название настройки'
+              /><div class="ui small button" onClick="">Сохранить</div
+            ></div
+          ></td
+          ></tr
+      ></tfoot
+      ></table>
+    <!--/div>
+  </div-->
 </div>
+

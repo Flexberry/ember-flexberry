@@ -60,7 +60,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   value: undefined,
   relationName: undefined,
   title: undefined,
-  cssClass: undefined,
 
   /**
    * Flag to show that lookup is at autocomplete mode.
@@ -201,6 +200,15 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   getDropdownItems: undefined,
 
   /**
+  * Multimple select.
+  *
+  * @property allowAdditions
+  * @type Boolean
+  * @default false
+  */
+  allowAdditions: false,
+
+  /**
    * Object with lookup properties to send on choose action.
    *
    * @property chooseData
@@ -234,19 +242,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
   init() {
     this._super();
-    if (this.cssClass !== undefined) {
-      var classes = this.cssClass.split(' ');
-      for (var i = 0; i < classes.length; i++) {
-        var classNameToSet = classes[i].trim();
-        if (classNameToSet !== '') {
-          if (this.classNames === undefined) {
-            this.classNames = [];
-          }
-
-          this.classNames.push(classNameToSet);
-        }
-      }
-    }
   },
 
   // Init component when DOM is ready.
@@ -259,11 +254,11 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
     if (this.get('autocomplete')) {
       this.send('onAutocomplete');
-    }
-    else if (this.get('dropdown')) {
+    } else if (this.get('dropdown')) {
       this.send('onDropdown');
     }
   },
+
   actions: {
     onAutocomplete: function() {
       var autocompleteProperty = this.get('autocompleteProperty');
@@ -347,7 +342,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
         }
       });
     },
-
     onDropdown: function () {
       this.$('.flexberry-dropdown').on('click', () => {
         Ember.assert('getDropdownItems action is required', typeof this.getDropdownItems === 'function');
@@ -356,7 +350,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
         this.set('items', items);
       });
     },
-
     choose: function(chooseData) {
       if (this.get('readonly')) {
         return;

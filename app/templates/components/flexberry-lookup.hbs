@@ -2,7 +2,19 @@
   {{flexberry-dropdown
     placeholder=placeholder
     items=items
+    class='search'
   }}
+  {{!-- {{#ui-dropdown class="selection search"}}
+    <div class="default text">Select an item</div>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+    {{#each itemActions as |action|}}
+      <div class="item" data-id="{{action}}">
+        {{action}}
+      </div>
+    {{/each}}
+    </div>
+  {{/ui-dropdown}} --}}
 {{else}}
 <div class="ui fluid action input">
   {{input 

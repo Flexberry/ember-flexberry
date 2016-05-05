@@ -5,20 +5,11 @@ export default Ember.Mixin.create({
   actions: {
     showConfigDialog: function() {
 //       alert('showConfigDialog');
-//       var colsConfigSettings={
-//         controllerName: "lookup-dialog", template: "lookup-dialog", contentTemplate: "colsconfig-dialog-content",
-//       };
       let orderList=['ordernot','orderasc','orderdesc'];
       let colDesc,model=[];
       let projectionAttributes=this.modelProjection.attributes;
       let order,priority=0,n=0;
-//       var loadingParams = {
-//         view: 'application',
-//         outlet: 'modal'
-//       };
-//       this.send('showModalDialog', "colsconfig-dialog",
-//                 null,
-//                 loadingParams);
+
       for (let prop in projectionAttributes) {
         let colName=projectionAttributes[prop].caption;
         if (projectionAttributes[prop].kind=='belongsTo') {
@@ -26,7 +17,7 @@ export default Ember.Mixin.create({
         }
         order=(n%3);
         colDesc={name:colName};
-        colDesc.hideClass=(n%2?'unhide':'hide');
+        colDesc.hide=(n%2?false:true);
         switch (order) {
           case 0:
             colDesc.orderasc='selected';

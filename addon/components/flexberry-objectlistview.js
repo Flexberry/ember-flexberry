@@ -342,9 +342,13 @@ export default FlexberryBaseComponent.extend({
   modelName: null,
 
   /**
-   * Css class for buttons.
+   * Classes for buttons.
+   *
+   * @property buttonClass
+   * @type String
+   * @default undefined
    */
-  classButton: undefined,
+  buttonClass: undefined,
 
   /**
    * Flag: indicates whether to show creation button at toolbar.

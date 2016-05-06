@@ -9,26 +9,26 @@
 }}
 {{#unless readonly}}
   {{#if addButtonIsVisible}}
-    <label class="flexberry-file-add-button ui icon {{classButton}} {{unless addButtonIsEnabled "disabled"}} button"
+    <label class="flexberry-file-add-button ui icon {{buttonClass}} {{unless addButtonIsEnabled "disabled"}} button"
          title={{addButtonTitle}}>
       <i class="add outline square icon"></i>
     </label>
   {{/if}}
   {{#if removeButtonIsVisible}}
-    <label class="flexberry-file-remove-button ui icon {{classButton}} {{unless removeButtonIsEnabled "disabled"}} button"
+    <label class="flexberry-file-remove-button ui icon {{buttonClass}} {{unless removeButtonIsEnabled "disabled"}} button"
          title={{removeButtonTitle}}>
       <i class="trash outline icon"></i>
     </label>
   {{/if}}
   {{#if uploadButtonIsVisible}}
-    <label class="flexberry-file-upload-button ui icon {{classButton}} {{unless uploadButtonIsEnabled "disabled"}} {{if uploadIsInProgress "loading"}} button"
+    <label class="flexberry-file-upload-button ui icon {{buttonClass}} {{unless uploadButtonIsEnabled "disabled"}} {{if uploadIsInProgress "loading"}} button"
          title={{uploadButtonTitle}}>
       <i class="upload outline icon"></i>
     </label>
   {{/if}}
 {{/unless}}
 {{#if downloadButtonIsVisible}}
-<label class="flexberry-file-download-button ui icon {{classButton}} {{unless downloadButtonIsEnabled "disabled"}} {{if downloadIsInProgress "loading"}} button"
+<label class="flexberry-file-download-button ui icon {{buttonClass}} {{unless downloadButtonIsEnabled "disabled"}} {{if downloadIsInProgress "loading"}} button"
    title={{downloadButtonTitle}}>
   <i class="download outline icon"></i>
 </label>

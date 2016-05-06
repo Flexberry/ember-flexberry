@@ -1,6 +1,6 @@
 {{#if createNewButton}}
-  <button class="ui {{classButton}} button" {{action 'addRow'}} disabled={{readonly}}><i class="plus icon"></i></button>
+  <button class="ui {{buttonClass}} button" {{action 'addRow'}} disabled={{readonly}}><i class="plus icon"></i></button>
 {{/if}}
 {{#if deleteButton}}
-  <button class="ui {{if isDeleteRowsEnabled '' 'disabled'}} {{classButton}} button" disabled={{readonly}} {{action 'deleteRows'}}><i class="minus icon"></i></button>
+  <button class="ui {{if isDeleteRowsEnabled '' 'disabled'}} {{buttonClass}} button" disabled={{readonly}} {{action 'deleteRows'}}><i class="minus icon"></i></button>
 {{/if}}

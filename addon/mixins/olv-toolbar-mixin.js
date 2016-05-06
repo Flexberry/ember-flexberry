@@ -15,29 +15,30 @@ export default Ember.Mixin.create({
         if (projectionAttributes[prop].kind=='belongsTo') {
           colName=colName  + '@' + projectionAttributes[prop].modelName;
         }
-        order=(n%3);
         colDesc={name:colName};
         colDesc.hide=(n%2?false:true);
-        switch (order) {
-          case 0:
-            colDesc.orderasc='selected';
-            break;
-          case 1:
-            colDesc.ordernot='selected';
-            break;
-          case 2:
-            colDesc.orderdesc='selected';
-            break;
-        }
+        order=(n%3)-1;
+        colDesc.sortOrder=order;
+//         switch (order) {
+//           case 0:
+//             colDesc.orderasc='selected';
+//             break;
+//           case 1:
+//             colDesc.ordernot='selected';
+//             break;
+//           case 2:
+//             colDesc.orderdesc='selected';
+//             break;
+//         }
 //         colDesc[orderList[order]]=true;
-        if (order!=1) {
+        if (order!=0) {
           priority+=1;
           colDesc['priority']=priority;
         }
         model[n]=colDesc;
         n+=1;
       }
-//       alert(JSON.stringify(model));
+      alert(JSON.stringify(model));
       let controller = this.get('colsconfigController');
 
       var loadingParams = {

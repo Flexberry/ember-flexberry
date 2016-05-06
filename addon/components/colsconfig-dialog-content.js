@@ -5,8 +5,25 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
 export default FlexberryBaseComponent.extend({
 
+  modelForDOM:[],
+
   init: function() {
     this._super(...arguments);
+    for (let i=0;i<this.model.length;i++) {
+      let colDesc=this.model[i];
+      let sortOrder=colDesc.sortOrder;
+      if (sortOrder<0) {
+        colDesc.orderdesc='selected';
+      } else {
+        if (sortOrder>0) {
+          colDesc.orderasc='selected';
+        } else {
+          colDesc.orderdnot='selected';
+        }
+      }
+      this.modelForDOM[i]=colDesc;
+    }
+    alert(JSON.stringify(this.modelForDOM));
   },
 
   actions: {

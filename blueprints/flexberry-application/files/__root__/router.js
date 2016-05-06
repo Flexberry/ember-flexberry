@@ -2,15 +2,15 @@ import Ember from 'ember';
 import config from './config/environment';
 
 const Router = Ember.Router.extend({
-    location: config.locationType
+  location: config.locationType
 });
 
 Router.map(function () {
-// /login
-this.route('login');
+  // /login
+  this.route('login');
 
 <%=routes%>
 
 });
 
-export default Router; 
+export default Router;

@@ -1,5 +1,4 @@
 <h3 class="ui header">{{title}} - edit form</h3>
-
 {{#if errorMessages}}
 {{#each errorMessages as |currentError|}}
 {{
@@ -24,5 +23,5 @@ message=currentError
       <button type="submit" class="ui button" {{action 'close'}}>Close</button>
     </div>
   </div>
-<%=flexberryComponents%>
+  <%=flexberryComponents%>
 </form>

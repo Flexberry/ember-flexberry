@@ -15,4 +15,4 @@ Resolver
 
 loadInitializers(App, config.modulePrefix);
 
-export default App; 
+export default App;

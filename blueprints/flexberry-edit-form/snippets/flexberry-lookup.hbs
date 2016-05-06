@@ -1,9 +1,9 @@
 <div class="field">
   <label><%=caption%></label>
   {{#if model.errors.<%=name%>}}
-    <span style="color:red">{{model.errors.<%=name%>}}</span>
+  <span style="color:red">{{model.errors.<%=name%>}}</span>
   {{/if}}
-      {{
+  {{
     flexberry-lookup
     choose='showLookupDialog'
     remove='removeLookupValue'
@@ -14,5 +14,5 @@
     readonly=readonly
     limitFunction=null
     class=(if model.errors.<%=name%> 'error' '')
-}}
+  }}
 </div>

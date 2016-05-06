@@ -5,10 +5,9 @@ export default Ember.Mixin.create({
   actions: {
     showConfigDialog: function() {
 //       alert('showConfigDialog');
-      let orderList=['ordernot','orderasc','orderdesc'];
       let colDesc,model=[];
       let projectionAttributes=this.modelProjection.attributes;
-      let order,priority=0,n=0;
+      let sortOrder,sortPriority=0,n=0;
 
       for (let prop in projectionAttributes) {
         let colName=projectionAttributes[prop].caption;
@@ -17,28 +16,16 @@ export default Ember.Mixin.create({
         }
         colDesc={name:colName};
         colDesc.hide=(n%2?false:true);
-        order=(n%3)-1;
-        colDesc.sortOrder=order;
-//         switch (order) {
-//           case 0:
-//             colDesc.orderasc='selected';
-//             break;
-//           case 1:
-//             colDesc.ordernot='selected';
-//             break;
-//           case 2:
-//             colDesc.orderdesc='selected';
-//             break;
-//         }
-//         colDesc[orderList[order]]=true;
-        if (order!=0) {
-          priority+=1;
-          colDesc['priority']=priority;
+        sortOrder=(n%3)-1;
+        colDesc.sortOrder=sortOrder;
+        if (sortOrder!=0) {
+          sortPriority+=1;
+          colDesc['sortPriority']=sortPriority;
         }
         model[n]=colDesc;
         n+=1;
       }
-      alert(JSON.stringify(model));
+//       alert(JSON.stringify(model));
       let controller = this.get('colsconfigController');
 
       var loadingParams = {

@@ -41,20 +41,20 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   /**
    * Classes for choose button.
    *
-   * @property classChoose
+   * @property chooseButtonClass
    * @type String
    * @default undefined
    */
-  classChoose: undefined,
+  chooseButtonClass: undefined,
 
   /**
    * Classes for remove button.
    *
-   * @property classRemove
+   * @property removeButtonClass
    * @type String
    * @default undefined
    */
-  classRemove: undefined,
+  removeButtonClass: undefined,
 
   projection: undefined,
   value: undefined,
@@ -72,8 +72,12 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
   /**
    * Classes by property of autocomplete.
+   *
+   * @property autocompleteClass
+   * @type String
+   * @readOnly
    */
-  autocompleteClass: Ember.computed(function() {
+  autocompleteClass: Ember.computed('autocomplete', function() {
     if (this.get('autocomplete')) {
       return 'ui search';
     }

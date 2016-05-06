@@ -75,8 +75,8 @@
       readonly=readonly
       limitFunction=lookupLimitFunction
       class=(if model.errors.reportsTo 'error' '')
-      classChoose='primary'
-      classRemove='primary'
+      chooseButtonClass='primary'
+      removeButtonClass='primary'
       dropdown=true
       autocompleteUpdateAction='updateLookupValue'
       autocompleteUpdateXhrAction='updateAutocompleteLookupXhr'
@@ -94,8 +94,8 @@
       <span style="color:red">{{model.errors.orders}}</span>
     {{/if}}
     {{flexberry-groupedit
-      componentName="ordersGroupEdit"
-      classButton='grey'
+      componentName='ordersGroupEdit'
+      buttonClass='primary'
       modelProjection=modelProjection.attributes.orders
       content=model.orders
       readonly=readonly
@@ -103,12 +103,12 @@
       class=(concat 'attached ' (if model.errors.orders 'error' ''))
       rowClickable=true
       rowClick='rowClick'
-      editOnSeparateRoute = true
-      editFormRoute = routeForEditOrder
+      editOnSeparateRoute=true
+      editFormRoute=routeForEditOrder
       showEditMenuItemInRow=true
-      showDeleteMenuItemInRow= true
-      showDeleteButtonInRow= true
-      singleColumnHeaderTitle = "Mobile title for component"
+      showDeleteMenuItemInRow=true
+      showDeleteButtonInRow=true
+      singleColumnHeaderTitle='Mobile title for component'
     }}
   </div>
 </form>

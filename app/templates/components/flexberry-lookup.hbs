@@ -13,8 +13,8 @@
     value=(if autocomplete autocompleteValue value)
     readonly=(if readonly 'readonly')
   }}
-  <button class="ui {{if readonly 'disabled'}} {{classChoose}} button" {{action 'choose' chooseData}}>{{{chooseText}}}</button>
-  <button class="ui {{if readonly 'disabled'}} {{classRemove}} button" {{action 'remove' removeData}}>{{{removeText}}}</button>
+  <button class="ui {{if readonly 'disabled'}} {{chooseButtonClass}} button" {{action 'choose' chooseData}}>{{{chooseText}}}</button>
+  <button class="ui {{if readonly 'disabled'}} {{removeButtonClass}} button" {{action 'remove' removeData}}>{{{removeText}}}</button>
 </div>
 {{/if}}
 {{#if (and (not readonly) autocomplete)}}

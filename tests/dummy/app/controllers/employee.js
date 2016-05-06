@@ -14,6 +14,15 @@ export default EditFormController.extend({
    */
   routeForEditOrder: 'order',
 
+  /**
+   * Route name for transition on flexberry-objectlistview
+   *
+   * @property parentRoute
+   * @type String
+   * @default 'employees'
+   */
+  parentRoute: 'employees',
+
   getCellComponent: function(attr, bindingPath, model) {
     var cellComponent = this._super(...arguments);
 

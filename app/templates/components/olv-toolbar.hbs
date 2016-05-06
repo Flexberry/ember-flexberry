@@ -1,15 +1,15 @@
 {{#if refreshButton}}
-  <button class="ui {{classButton}} button" {{action "refresh"}}>
+  <button class="ui {{buttonClass}} button" {{action "refresh"}}>
     {{t "olv-toolbar.refresh-button-text"}}
   </button>
 {{/if}}
 {{#if createNewButton}}
-  <button class="ui {{classButton}} {{if enableCreateNewButton '' 'disabled'}} button" {{action "createNew"}}>
+  <button class="ui {{buttonClass}} {{if enableCreateNewButton '' 'disabled'}} button" {{action "createNew"}}>
     {{t "olv-toolbar.add-button-text"}}
   </button>
 {{/if}}
 {{#if deleteButton}}
-  <button class="ui {{classButton}} {{if isDeleteButtonEnabled '' 'disabled'}} button" {{action "delete"}}>
+  <button class="ui {{buttonClass}} {{if isDeleteButtonEnabled '' 'disabled'}} button" {{action "delete"}}>
     {{t "olv-toolbar.delete-button-text"}}
   </button>
 {{/if}}
@@ -20,7 +20,7 @@
       placeholder=(t "olv-toolbar.filter-by-any-match-placeholder")
       value=filterByAnyMatchText enter="filterByAnyMatch"
     }}
-    <button class="ui {{classButton}} icon button" {{action "filterByAnyMatch"}}>
+    <button class="ui {{buttonClass}} icon button" {{action "filterByAnyMatch"}}>
       <i class="search icon"></i>
     </button>
   </div>

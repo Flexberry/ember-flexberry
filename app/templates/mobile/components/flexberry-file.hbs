@@ -11,7 +11,7 @@
     }}
     {{#unless readonly}}
       {{#if addButtonIsVisible}}
-        <label class="flexberry-file-add-button ui icon {{classButton}} {{unless addButtonIsEnabled "disabled"}} button"
+        <label class="flexberry-file-add-button ui icon {{buttonClass}} {{unless addButtonIsEnabled "disabled"}} button"
         title={{addButtonTitle}} style="{{if hasSelectedFile 'display:none' ''}}">
         {{addButtonText}}
         </label>

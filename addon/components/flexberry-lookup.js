@@ -104,68 +104,68 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   autocompleteValue: undefined,
 
   /**
-   * Method to get url to request autocomplete items.
+   * Method to get url for a request.
    *
-   * @property autocompleteUrl
+   * @property url
    * @type Action
    * @default undefined
    */
-  autocompleteUrl: undefined,
+  url: undefined,
 
   /**
-   * Method to get query options to request autocomplete items.
+   * Method to get query options for a request.
    *
-   * @property autocompleteQueryOptions
+   * @property queryOptions
    * @type Action
    * @default undefined
    */
-  autocompleteQueryOptions: undefined,
+  queryOptions: undefined,
 
   /**
    * Action's name to update model's relation value.
    *
-   * @property autocompleteUpdate
+   * @property updateLookupValue
    * @type String
    * @default 'updateLookupValue'
    */
-  autocompleteUpdateAction: 'updateLookupValue',
+  updateLookupAction: 'updateLookupValue',
 
   /**
-   * Action's name to update xhr before autocomplete request.
+   * Action's name to update xhr before request.
    * It is used to add necessary auth headers to request.
    *
-   * @property autocompleteUpdateXhrAction
+   * @property updateXhrAction
    * @type String
-   * @default 'updateAutocompleteLookupXhr'
+   * @default 'updateLookupXhr'
    */
-  autocompleteUpdateXhrAction: 'updateAutocompleteLookupXhr',
+  updateXhrAction: 'updateLookupXhr',
 
   /**
    * Min characters count necessary to call autocomplete.
    *
-   * @property autocompleteMinCharacters
+   * @property minCharacters
    * @type Number
    * @default 1
    */
-  autocompleteMinCharacters: 1,
+  minCharacters: 1,
 
   /**
-   * Maximum number of results to show on autocomplete.
+   * Maximum number of results to display on autocomplete or dropdown.
    *
-   * @property autocompleteMaxResults
+   * @property maxResults
    * @type Number
    * @default 10
    */
-  autocompleteMaxResults: 10,
+  maxResults: 10,
 
   /**
-   * Server-side property name of autocomplete property.
+   * Server-side property name.
    *
-   * @property autocompleteProperty
+   * @property nameProperty
    * @type String
    * @default undefined
    */
-  autocompleteProperty: undefined,
+  nameProperty: undefined,
 
   /**
    * Function to limit accessible values.
@@ -186,31 +186,13 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   dropdown: false,
 
   /**
-   * Available items for mode dropdown.
-   *
-   * @property items
-   * @type Array
-   * @default []
-   */
-  items: [],
-
-  /**
-   * Method to get items for drodown.
-   *
-   * @property getDropdownItems
-   * @type Action
-   * @default undefined
-   */
-  getDropdownItems: undefined,
-
-  /**
   * Multimple select.
   *
-  * @property allowAdditions
+  * @property multiselect
   * @type Boolean
   * @default false
   */
-  allowAdditions: false,
+  multiselect: false,
 
   /**
    * Object with lookup properties to send on choose action.
@@ -228,6 +210,31 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
       //TODO: move to modal settings.
       sizeClass: this.get('sizeClass')
+    };
+  }),
+
+  /**
+   * Object with lookup properties for a request remote data.
+   *
+   * @property chooseRemoteData
+   * @type Object
+   */
+  chooseRemoteData: Ember.computed(
+    'relationName',
+    'relatedModel',
+    'limitFunction',
+    'url',
+    'nameProperty',
+    'minCharacters',
+    'maxResults', function() {
+    return {
+      relationName: this.get('relationName'),
+      modelToLookup: this.get('relatedModel'),
+      limitFunction: this.get('limitFunction'),
+      url: this.get('url')(this.get('relationName')),
+      nameProperty: this.get('nameProperty'),
+      minCharacters: this.get('minCharacters'),
+      maxResults: this.get('maxResults')
     };
   }),
 
@@ -265,44 +272,37 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
   actions: {
     onAutocomplete: function() {
-      var autocompleteProperty = this.get('autocompleteProperty');
-      if (!autocompleteProperty) {
-        throw new Error('autocompleteProperty is undefined.');
+      let chooseRemoteData = this.get('chooseRemoteData');
+      let _this = this;
+
+      if (!chooseRemoteData.nameProperty) {
+        throw new Error('nameProperty is undefined.');
       }
 
-      var autocompleteMinCharacters = this.get('autocompleteMinCharacters');
-      if (!autocompleteMinCharacters || typeof (autocompleteMinCharacters) !== 'number' || autocompleteMinCharacters <= 0) {
-        throw new Error('autocompleteMinCharacters has wrong value.');
+      if (!chooseRemoteData.minCharacters || typeof (chooseRemoteData.minCharacters) !== 'number' || chooseRemoteData.minCharacters <= 0) {
+        throw new Error('minCharacters has wrong value.');
       }
 
-      var autocompleteMaxResults = this.get('autocompleteMaxResults');
-      if (!autocompleteMaxResults || typeof (autocompleteMaxResults) !== 'number' || autocompleteMaxResults <= 0) {
-        throw new Error('autocompleteMaxResults has wrong value.');
+      if (!chooseRemoteData.maxResults || typeof (chooseRemoteData.maxResults) !== 'number' || chooseRemoteData.maxResults <= 0) {
+        throw new Error('maxResults has wrong value.');
       }
 
-      var relationName = this.get('relationName');
-      if (!relationName) {
+      if (!chooseRemoteData.relationName) {
         throw new Error('relationName is not defined.');
       }
 
-      let autocompleteUrl = this.get('autocompleteUrl')(relationName);
-      let limitFunction = this.get('limitFunction');
-      let modelToLookup = this.get('relatedModel');
-
       this.set('autocompleteValue', this.get('value'));
-
-      let _this = this;
 
       this.$().search({
         apiSettings: {
-          url: autocompleteUrl,
+          url: chooseRemoteData.url,
           beforeSend: function(settings) {
-            let urlOptions = _this.get('autocompleteQueryOptions')(
+            let urlOptions = _this.get('queryOptions')(
               {
-                relationName: relationName,
-                lookupLimitFunction: limitFunction,
-                top: autocompleteMaxResults,
-                limitField: autocompleteProperty,
+                relationName: chooseRemoteData.relationName,
+                lookupLimitFunction: chooseRemoteData.limitFunction,
+                top: chooseRemoteData.maxResults,
+                limitField: chooseRemoteData.nameProperty,
                 limitValue: settings.urlData.query
               });
             Ember.merge(settings.data, urlOptions);
@@ -311,7 +311,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
           beforeXHR: function(xhr) {
             // Set necessary auth headers.
             _this.sendAction(
-              'autocompleteUpdateXhrAction',
+              'updateXhrAction',
               {
                 xhr: xhr,
                 element: _this
@@ -321,19 +321,18 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
         },
         fields: {
           results: 'value',
-          title: autocompleteProperty
+          title: chooseRemoteData.nameProperty
         },
-        minCharacters: autocompleteMinCharacters,
-        searchFields: [autocompleteProperty],
+        minCharacters: chooseRemoteData.minCharacters,
         cache: false,
-        maxResults: autocompleteMaxResults,
-        searchFullText: false,
+        maxResults: chooseRemoteData.maxResults,
+        fullTextSearch: false,
         onSelect: function(result, response) {
           _this.sendAction(
-            'autocompleteUpdateAction',
+            'updateLookupAction',
             {
-              relationName: relationName,
-              modelToLookup: modelToLookup,
+              relationName: chooseRemoteData.relationName,
+              modelToLookup: chooseRemoteData.modelToLookup,
               newRelationValue: result
             });
         }
@@ -347,35 +346,19 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       });
     },
     onDropdown: function () {
-      // this.$('.flexberry-dropdown').on('click', () => {
-      //   Ember.assert('getDropdownItems action is required', typeof this.getDropdownItems === 'function');
-      //   let chooseData = this.get('chooseData');
-      //   let items = this.getDropdownItems(chooseData);
-      //   this.set('items', items);
-      // });
-      var autocompleteProperty = this.get('autocompleteProperty');
-      var autocompleteMinCharacters = this.get('autocompleteMinCharacters');
-      var autocompleteMaxResults = this.get('autocompleteMaxResults');
-      var relationName = this.get('relationName');
-      let autocompleteUrl = this.get('autocompleteUrl')(relationName);
-      let limitFunction = this.get('limitFunction');
-      let modelToLookup = this.get('relatedModel');
-
-      this.set('autocompleteValue', this.get('value'));
-
       let _this = this;
+      let chooseRemoteData = this.get('chooseRemoteData');
 
       this.$('.flexberry-dropdown').dropdown({
-        debug: true,
         apiSettings: {
-          url: autocompleteUrl,
+          url: chooseRemoteData.url,
           beforeSend: function(settings) {
-            let urlOptions = _this.get('autocompleteQueryOptions')(
+            let urlOptions = _this.get('queryOptions')(
               {
-                relationName: relationName,
-                lookupLimitFunction: limitFunction,
-                top: autocompleteMaxResults,
-                limitField: autocompleteProperty,
+                relationName: chooseRemoteData.relationName,
+                lookupLimitFunction: chooseRemoteData.limitFunction,
+                top: chooseRemoteData.maxResults,
+                limitField: chooseRemoteData.nameProperty,
                 limitValue: settings.urlData.query
               });
             Ember.merge(settings.data, urlOptions);
@@ -384,7 +367,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
           beforeXHR: function(xhr) {
             // Set necessary auth headers.
             _this.sendAction(
-              'autocompleteUpdateXhrAction',
+              'updateXhrAction',
               {
                 xhr: xhr,
                 element: _this
@@ -393,23 +376,23 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
           }
         },
         fields: {
-          results: 'value',
-          title: autocompleteProperty
+          remoteValues: 'value',
+          name: chooseRemoteData.nameProperty,
+          value: chooseRemoteData.nameProperty
         },
-        minCharacters: autocompleteMinCharacters,
-        searchFields: [autocompleteProperty],
+        minCharacters: chooseRemoteData.minCharacters,
         cache: false,
-        maxResults: autocompleteMaxResults,
-        searchFullText: false,
-        onSelect: function(result, response) {
-          _this.sendAction(
-            'autocompleteUpdateAction',
+        fullTextSearch: false,
+        allowAdditions: this.get('multiselect'),
+        onChange: function(value, text, $choice) {
+          this.sendAction(
+            'updateLookupAction',
             {
-              relationName: relationName,
-              modelToLookup: modelToLookup,
-              newRelationValue: result
+              relationName: chooseRemoteData.relationName,
+              modelToLookup: chooseRemoteData.modelToLookup,
+              newRelationValue: value
             });
-          }
+        }
       });
     },
     choose: function(chooseData) {

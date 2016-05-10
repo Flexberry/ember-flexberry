@@ -77,12 +77,6 @@
       class=(if model.errors.reportsTo 'error' '')
       chooseButtonClass='primary'
       removeButtonClass='primary'
-      dropdown=true
-      autocompleteUpdateAction='updateLookupValue'
-      autocompleteUpdateXhrAction='updateAutocompleteLookupXhr'
-      autocompleteProperty='FirstName'
-      autocompleteUrl=(action 'getLookupAutocompleteUrl')
-      autocompleteQueryOptions=(action 'getAutocompleteLookupQueryOptions')
     }}
       {{model.employee1.firstName}}<br>
       {{model.employee1.lastName}}

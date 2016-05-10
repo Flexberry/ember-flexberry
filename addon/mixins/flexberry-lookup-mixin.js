@@ -62,28 +62,28 @@ export default Ember.Mixin.create({
       let model = modelToLookup ? modelToLookup : this.get('model');
 
       // Get ember static function to get relation by name.
-      var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+      let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
 
       // Get relation property from model.
-      var relation = relationshipsByName.get(relationName);
+      let relation = relationshipsByName.get(relationName);
       if (!relation) {
         throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
       }
 
       // Get property type name.
-      var relatedToType = relation.type;
+      let relatedToType = relation.type;
 
       // Get property type constructor by type name.
-      var relatedTypeConstructor = this.store.modelFor(relatedToType);
+      let relatedTypeConstructor = this.store.modelFor(relatedToType);
 
       // Get a projection from related type model.
-      var projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
+      let projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
       if (!projection) {
         throw new Error(`No projection with '${projectionName}' name defined in '${relatedToType}' model. `);
       }
 
       // Lookup
-      var lookupSettings = this.get('lookupSettings');
+      let lookupSettings = this.get('lookupSettings');
       if (!lookupSettings) {
         throw new Error('Lookup settings are undefined.');
       }
@@ -106,7 +106,7 @@ export default Ember.Mixin.create({
       }
 
       this.send('showModalDialog', lookupSettings.template);
-      var loadingParams = {
+      let loadingParams = {
         view: lookupSettings.template,
         outlet: 'modal-content'
       };
@@ -183,7 +183,7 @@ export default Ember.Mixin.create({
       let modelToLookup = options.modelToLookup;
       let model = modelToLookup ? modelToLookup : this.get('model');
       let relationType = this._getRelationType(model, relationName);
-      var payload = {};
+      let payload = {};
       payload[relationType + 's'] = [newRelationValue];
       this.store.pushPayload(relationType, payload);
       let realRelationValue = this.store.peekRecord(relationType, newRelationValue[this.store.serializerFor(relationType).get('primaryKey')]);
@@ -197,24 +197,24 @@ export default Ember.Mixin.create({
     /**
      * Forms url to get all availible entities of certain relation.
      *
-     * @method getLookupAutocompleteUrl
+     * @method getLookupUrl
      * @param {String} relationName Elements for this relation will be searched.
      * @return {Object} Formed url.
      */
-    getLookupAutocompleteUrl: function(relationName) {
-      var relatedToType = this._getRelationType(this.get('model'), relationName);
+    getLookupUrl: function(relationName) {
+      let relatedToType = this._getRelationType(this.get('model'), relationName);
       let url = this.store.adapterFor(relatedToType).getUrlForTypeQuery(relatedToType);
       return url;
     },
 
     /**
-     * Forms query parameters by lookup autocomplete parameters.
+     * Forms query parameters by lookup.
      *
-     * @method getAutocompleteLookupQueryOptions
-     * @param {Object} lookupParameters Lookup autocomplete parameters (current limit function, etc).
+     * @method getLookupQueryOptions
+     * @param {Object} lookupParameters (current limit function, etc).
      * @return {Object} Formed query parameters.
      */
-    getAutocompleteLookupQueryOptions: function(lookupParameters) {
+    getLookupQueryOptions: function(lookupParameters) {
       let options = Ember.$.extend(true, {
         relationName: undefined
       }, lookupParameters);
@@ -225,21 +225,16 @@ export default Ember.Mixin.create({
       return queryOptions;
     },
 
-    getLookupItems: function(chooseData) {
-      // Load Data in select
-      return ["Edit", "Remove", "Hide"];
-    },
-
     /**
-     * It updates autocomplete lookup xhr before send in order to add necessary auth information.
+     * It updates lookup xhr before send in order to add necessary auth information.
      *
-     * @method updateAutocompleteLookupXhr
-     * @param {Object} [options] Lookup autocomplete parameters.
-     * @param {Object} options.xhr Autocomplete lookup xhr to send.
-     * @param {Object} options.element Current autocomplete lookup.
+     * @method updateLookupXhr
+     * @param {Object} [options] Lookup parameters.
+     * @param {Object} options.xhr Lookup xhr to send.
+     * @param {Object} options.element Current lookup.
      * @return {Object} Updated method parameters.
      */
-    updateAutocompleteLookupXhr: function(options) {
+    updateLookupXhr: function(options) {
       this.get('currentAuthService').authCustomRequest(options);
       return options;
     }

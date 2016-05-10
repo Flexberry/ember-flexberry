@@ -19,6 +19,11 @@ nodes: [
 ]
 }
 ]
+},
+actions: {
+toggleSidebar: function () {
+  Ember.$('.ui.sidebar').sidebar('toggle');
+}
 }
 }
 );

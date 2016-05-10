@@ -25,6 +25,16 @@ module.exports = {
     { name: 'metadata-dir', type: String }
   ],
 
+  /**
+   * Blueprint Hook locals.
+   * Use locals to add custom template variables. The method receives one argument: options.
+   *
+   * @method locals
+   * @public
+   *
+   * @param {Object} options Options is an object containing general and entity-specific options.
+   * @return {Object} Сustom template variables.
+   */
   locals: function (options) {
     if (!options.file) {
       options.file = options.entity.name + ".json";

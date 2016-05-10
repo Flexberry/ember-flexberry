@@ -1,9 +1,12 @@
-/*jshint node:true*/
-var fs = require("fs");
-var stripBom = require("strip-bom");
-var template = require('lodash/template');
-var find = require('lodash/find');
-var path = require('path');
+/// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/lodash/index.d.ts' />
+
+let stripBom = require("strip-bom");
+import fs = require("fs");
+import path = require('path');
+import lodash = require('lodash');
+let template = lodash.template;
+let find = lodash.find;
 
 var templateProjAttr = template("<%=name%>: Proj.attr('<%=caption%>'<%=hiddenStr%>)");
 var templateProjBelongsTo = template("<%=name%>: Proj.belongsTo('<%=relatedTo%>', '<%=caption%>', { \n<%=indentStr%><%=attrsStr%> \n<%=indentStr%>}<%=hiddenStr%>)");
@@ -21,16 +24,6 @@ module.exports = {
 
 
 
-  /**
-   * Blueprint Hook locals.
-   * Use locals to add custom template variables. The method receives one argument: options.
-   *
-   * @method locals
-   * @public
-   *
-   * @param {Object} options Options is an object containing general and entity-specific options.
-   * @return {Object} Сustom template variables.
-   */
   locals: function (options) {
     var modelsDir = path.join(options.metadataDir, "models");
     if (!options.file) {
@@ -49,6 +42,23 @@ module.exports = {
     };
   }
 };
+
+
+class ModelBlueprint {
+  model: any;
+  serializerAttrs: any;
+  constructor(blueprint, options) {
+    var modelsDir = path.join(options.metadataDir, "models");
+    if (!options.file) {
+      options.file = options.entity.name + ".json";
+    }
+    var modelFile = path.join(modelsDir, options.file);
+    var content = stripBom(fs.readFileSync(modelFile, "utf8"));
+    var model = JSON.parse(content);
+  }
+}
+
+
 
 function getSerializerAttrs(model) {
   var attrs = [];

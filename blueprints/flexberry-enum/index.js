@@ -14,6 +14,16 @@ module.exports = {
 
 
 
+  /**
+   * Blueprint Hook locals.
+   * Use locals to add custom template variables. The method receives one argument: options.
+   *
+   * @method locals
+   * @public
+   *
+   * @param {Object} options Options is an object containing general and entity-specific options.
+   * @return {Object} Сustom template variables.
+   */
   locals: function (options) {
     var enumsDir = path.join(options.metadataDir, "enums");
     if (!options.file) {

@@ -53,7 +53,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Classes for component wrapper.
    *
-   * @property classNames
+   * @property class
    * @type String
    * @default ''
    */
@@ -190,7 +190,6 @@ export default FlexberryBaseComponent.extend({
 
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'defaultText', defaultValue: null });
-
   },
 
   /**

@@ -119,7 +119,7 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
-      
+
       let builder = new QueryBuilder(this.store)
         .from(relatedToType)
         .selectByProjection(projectionName);

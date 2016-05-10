@@ -124,7 +124,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   /**
    * Action's name to update model's relation value.
    *
-   * @property updateLookupValue
+   * @property updateLookupAction
    * @type String
    * @default 'updateLookupValue'
    */

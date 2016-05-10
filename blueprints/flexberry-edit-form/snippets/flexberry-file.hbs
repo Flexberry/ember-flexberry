@@ -1,0 +1,16 @@
+<div class="field">
+  {{#if model.errors.<%=name%>.file}}
+  <span style="color:red">
+    {{model.errors.<%=name%>.file}}
+  </span>
+  {{/if}}
+  <label><%=caption%></label>
+  {{
+    flexberry-file
+    placeholder='(файл не выбран)'
+    readonly=readonly
+    value=model.<%=name%>
+    class=(if model.errors.<%=name%> 'error' '')
+    label='<%=caption%>'
+  }}
+</div>

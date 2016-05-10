@@ -15,8 +15,11 @@
 /libpeerconnection.log
 npm-debug.log
 testem.log
+/blueprints/flexberry-application/index.js.map
+/blueprints/flexberry-list-form/index.js.map
 
 # ide and code editor files
 /.idea
 .tern-port
 .dir-locals.el
+/blueprints/.vscode

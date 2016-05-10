@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+const { getOwner } = Ember;
 
 
 export default FlexberryBaseComponent.extend({
@@ -53,7 +54,8 @@ export default FlexberryBaseComponent.extend({
       let value=select.options.item(select.selectedIndex).value;
       let input=$(tr).find('input').get(0);
       let inputs=$('input.sortPriority:enabled',tbody);
-      if (value=='-') {
+      let SortPriority=0;
+      if (value=='0') {
         input.value='';
         input.disabled=true;
         input.style.display='none';
@@ -62,10 +64,14 @@ export default FlexberryBaseComponent.extend({
         input.disabled=false;
         input.style.display='';
         if (input.value<=0) {
-          input.value=inputs.length+1;
-          input.prevValue=inputs.length+1;
+          SortPriority=inputs.length+1;
+          input.value=SortPriority;
+          input.prevValue=SortPriority;
         }
       }
+      let index=this._getIndexFromId(input.id);
+      Ember.set(this.model[index],'sortPriority',SortPriority);
+      Ember.set(this.model[n],'sortOrder',parseInt(value));
     },
 
     setSortPriority: function(n) {
@@ -78,6 +84,8 @@ export default FlexberryBaseComponent.extend({
       if (isNaN(newValue) || newValue<=0) {
         newValue=inputs.length;
       }
+      let index=this._getIndexFromId(eventInput.id);
+      Ember.set(this.model[index],'sortPriority',newValue);
       if (prevValue==newValue) return;
       eventInput.value=newValue;
       eventInput.setAttribute("prevValue",newValue);
@@ -99,6 +107,8 @@ export default FlexberryBaseComponent.extend({
           inputValue+=delta;
           input.value=inputValue;
           input.prevValue=inputValue;
+          index=this._getIndexFromId(input.id);
+          Ember.set(this.model[index],'sortPriority',inputValue);
         }
       }
     },
@@ -106,18 +116,24 @@ export default FlexberryBaseComponent.extend({
     rowUp: function(n) {
       let eventButton=this._getEventElement('RowUp',n);
       let newTr,tr=eventButton.parentNode.parentNode.parentNode;
+      let select=$(tr).find('SELECT').get(0);
+      let selectedIndex=select.selectedIndex;
       let tbody=tr.parentNode;
       let prevTr=$(tr).prev('TR').get(0);
       if (prevTr) {
         newTr=tr.cloneNode(true);
         tbody.removeChild(tr);
-        tbody.insertBefore(newTr,prevTr);
+        newTr=tbody.insertBefore(newTr,prevTr);
+        select=$(newTr).find('SELECT').get(0);
+        select.selectedIndex=selectedIndex;
       }
     },
 
     rowDown: function(n) {
       let eventButton=this._getEventElement('RowUp',n);
       var newTr,tr=eventButton.parentNode.parentNode.parentNode;
+      let select=$(tr).find('SELECT').get(0);
+      let selectedIndex=select.selectedIndex;
       var tbody=tr.parentNode;
       var nextTr=$(tr).next('TR').get(0);
       //      alert(tr.id+ ' ' + tbody.tagName + ' before=' + nextTr.id);
@@ -125,12 +141,37 @@ export default FlexberryBaseComponent.extend({
         newTr=tr.cloneNode(true);
         tbody.removeChild(tr);
         if (nextTr.nextSibling) {
-          tbody.insertBefore(newTr,nextTr.nextSibling);
+          newTr=tbody.insertBefore(newTr,nextTr.nextSibling);
         } else {
-          tbody.appendChild(newTr);
+          newTr=tbody.appendChild(newTr);
         }
+        select=$(newTr).find('SELECT').get(0);
+        select.selectedIndex=selectedIndex;
+      }
+    },
+    apply: function() {
+//       alert('apply');
+      let currentRoute=getOwner(this).lookup("router:main").get('currentRouteName');
+      let trs=$('#colsConfigtableRows').children('TR');
+      let colsConfig=[];
+      for (let i=0;i<trs.length;i++) {
+        let tr=trs[i];
+        let index=this._getIndexFromId(tr.id);
+        let model=this.model[index];
+        colsConfig[i]={
+          name:model.name,
+          propName:model.propName,
+          hide:model.hide,
+          sortOrder:model.sortOrder,
+          sortPriority:model.sortPriority
+        };
       }
     }
+  },
+
+  _getIndexFromId: function(id) {
+    let ret=id.substr(id.lastIndexOf('_')+1);
+    return parseInt(ret);
   },
 
 

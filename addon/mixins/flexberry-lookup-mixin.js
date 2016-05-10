@@ -4,6 +4,9 @@
 
 import Ember from 'ember';
 
+import QueryBuilder from 'ember-flexberry-projections/query/builder';
+import { StringPredicate } from 'ember-flexberry-projections/query/predicate';
+
 // TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
   // Lookup settings.
@@ -45,13 +48,18 @@ export default Ember.Mixin.create({
         relationName: undefined,
         title: undefined,
         limitFunction: undefined,
+        predicate: undefined,
         modelToLookup: undefined,
         sizeClass: undefined
       }, chooseData);
+
+      // TODO: remove later
+      let limitFunction = options.limitFunction;
+      Ember.assert(`Parameter 'limitFunction' has been removed. Use 'predicate' to specify limits.`, !limitFunction);
+
       let projectionName = options.projection;
       let relationName = options.relationName;
       let title = options.title;
-      let limitFunction = options.limitFunction;
       let modelToLookup = options.modelToLookup;
       let sizeClass = options.sizeClass;
 
@@ -111,9 +119,16 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
+      
+      let builder = new QueryBuilder(this.store)
+        .from(relatedToType)
+        .selectByProjection(projectionName);
 
-      let query = this.store.adapterFor(relatedToType).getLimitFunctionQuery(limitFunction, projectionName);
-      this.store.query(relatedToType, query).then(data => {
+      if (options.predicate) {
+        builder.where(options.predicate);
+      }
+
+      this.store.query(relatedToType, builder.build()).then(data => {
         this.send('removeModalDialog', loadingParams);
 
         let controller = this.get('lookupController');
@@ -201,28 +216,33 @@ export default Ember.Mixin.create({
      * @param {String} relationName Elements for this relation will be searched.
      * @return {Object} Formed url.
      */
-    getLookupAutocompleteUrl: function(relationName) {
+    getLookupAutocompleteUrl(relationName) {
       var relatedToType = this._getRelationType(this.get('model'), relationName);
-      let url = this.store.adapterFor(relatedToType).getUrlForTypeQuery(relatedToType);
-      return url;
+      return this.urlForFindAll(relatedToType);
     },
 
     /**
-     * Forms query parameters by lookup autocomplete parameters.
+     * Forms query by lookup autocomplete parameters.
      *
      * @method getAutocompleteLookupQueryOptions
      * @param {Object} lookupParameters Lookup autocomplete parameters (current limit function, etc).
-     * @return {Object} Formed query parameters.
+     * @return {Object} Formed query.
      */
-    getAutocompleteLookupQueryOptions: function(lookupParameters) {
+    getAutocompleteLookupQueryOptions(lookupParameters) {
       let options = Ember.$.extend(true, {
         relationName: undefined
       }, lookupParameters);
 
       let relationName = options.relationName;
       let relationType = this._getRelationType(this.get('model'), relationName);
-      let queryOptions = this.store.adapterFor(relationType).getQueryOptionsForAutocompleteLookup(lookupParameters);
-      return queryOptions;
+
+      // TODO: Projections?
+      let builder = new QueryBuilder(this.store)
+        .from(relationType)
+        .where(new StringPredicate(options.limitField).contains(options.limitValue))
+        .top(options.top);
+
+      return builder.build();
     },
 
     /**

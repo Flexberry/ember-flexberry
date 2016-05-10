@@ -47,11 +47,23 @@ export default Ember.Mixin.create({
     var filter = params.filter;
 
     if (typeof filter === 'string' && filter.length > 0) {
-      var adapter = this.store.adapterFor(modelProjection.modelName);
-      finalString = adapter.combineFilterWithFilterByAnyMatch(
-        this.store, finalString, filter, modelProjection.modelName, attrToFilterNames);
+      finalString = combineFilterWithFilterByAnyMatch(this.store, finalString, filter, modelProjection.modelName, attrToFilterNames);
     }
 
     return finalString;
   }
 });
+
+function combineFilterWithFilterByAnyMatch(store, currentFilter, matchPattern, modelName, modelFields) {
+  var containsExpressions = modelFields.map(function(fieldName) {
+    var backendFieldName = store.serializerFor(modelName).keyForAttribute(fieldName);
+    return 'contains(' + backendFieldName + ', \'' + matchPattern + '\')';
+  });
+
+  var newExpression = containsExpressions.join(' and ');
+  if (typeof currentFilter === 'string' && currentFilter.length > 0) {
+    newExpression = '(' + currentFilter + ') and (' + newExpression + ')';
+  }
+
+  return newExpression;
+}

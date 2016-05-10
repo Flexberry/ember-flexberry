@@ -4,6 +4,9 @@
 
 import Ember from 'ember';
 
+import QueryBuilder from 'ember-flexberry-projections/query/builder';
+import { SimplePredicate } from 'ember-flexberry-projections/query/predicate';
+
 /**
  * Service to work with user settings on server.
  *
@@ -134,37 +137,20 @@ export default Ember.Service.extend({
    */
   _getExistingRecord: function(moduleName, settingName) {
     // TODO: add search by username.
+    let currentUserName = this.getCurrentUser();
+    let p = new SimplePredicate('moduleName', 'eq', moduleName)
+      .and('settName', 'eq', settingName)
+      .and('userName', 'eq', currentUserName);
+
     let store = this.get('store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
-    let currentUserName = this.getCurrentUser();
-    let adapter = store.adapterFor(modelName);
-    let filterString = adapter.getLimitFunction({
-      operation: 'and',
-      arguments: [
-        {
-          operation: '=',
-          arguments: ['moduleName', moduleName]
-        },
-        {
-          operation: 'and',
-          arguments: [{
-            operation: '=',
-            arguments: ['settName', settingName]
-          },
-          {
-            operation: '=',
-            arguments: ['userName', currentUserName]
-          }]
-        }
-      ]
-    });
-    let limitFunctionQuery = adapter.getLimitFunctionQuery(filterString, 'FlexberryUserSettingE');
+    let builder = new QueryBuilder(store)
+      .from(modelName)
+      .selectByProjection('FlexberryUserSettingE')
+      .top(2)
+      .where(p);
 
-    let query = {};
-    Ember.merge(query, limitFunctionQuery);
-    Ember.merge(query, { $top: 2 });
-
-    return store.query(modelName, query).then(function(result) {
+    return store.query(modelName, builder.build()).then(function(result) {
       if (result) {
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {

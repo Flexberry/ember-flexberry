@@ -53,7 +53,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
     "ember-cli-sass": "^5.2.0",
-    "ember-flexberry-projections": "Flexberry/ember-flexberry-projections#496a4af",
+    "ember-flexberry-projections": "Flexberry/ember-flexberry-projections#feature-query",
     "ember-i18n": "4.2.0",
     "ember-local-storage": "0.0.10",
     "ember-simple-auth": "1.0.1",

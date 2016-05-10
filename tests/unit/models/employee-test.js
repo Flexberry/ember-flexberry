@@ -52,16 +52,16 @@ test('it validates', function(assert) {
 
   Ember.run(function() {
     model.set('firstName', 'Qwerty');
-    assert.ok(!model.get('isValid'), 'Empty model is valid. Check validation rules.');
+    assert.ok(!model.get('isValid'), 'Empty model is invalid. Check validation rules.');
 
-    model.save().then(null, function(errorData) {
-      assert.ok(errorData instanceof Ember.Object);
-      assert.ok(errorData.anyErrors);
+    model.save().catch(function(errorData) {
+      assert.ok(errorData.get('lastName').length > 0);
+      assert.ok(errorData.get('birthDate').length > 0);
+
+      model.set('lastName', 'Qwerty');
+      model.set('birthDate', '1933-10-30T00:00:00Z');
+      assert.ok(model.get('isValid'), 'Data was set, model is invalid.');
     });
-
-    model.set('lastName', 'Qwerty');
-    model.set('birthDate', '1933-10-30T00:00:00Z');
-    assert.ok(model.get('isValid'), 'Data was set but model is invalid. Check validation rules.');
   });
 });
 

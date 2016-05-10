@@ -1,0 +1,44 @@
+/**
+ * Styles for object-list-view component.
+ */
+
+.object-list-view-container {
+  margin: 1em 0;
+}
+
+table.object-list-view.selectable tbody,
+table.object-list-view.selectable thead {
+  cursor: pointer;
+}
+
+table.object-list-view tbody tr td:first-child button {
+  padding: 9px 7px;
+  margin: 0 !important;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell {
+  display: table !important;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell {
+  display: table-cell !important;
+  vertical-align: middle !important;
+  padding: 0 0 0 5px !important;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell:first-child {
+  padding: 0 !important;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell i.asterisk {
+  font-size: x-small !important;
+  margin: 0;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell i.asterisk.transparent {
+  opacity: 0 !important;
+}
+
+table.object-list-view tbody tr td:first-child button i {
+  margin: 0 !important;
+}

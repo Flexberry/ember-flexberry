@@ -6,8 +6,12 @@ var Model = BaseModel.extend({
   firstName: DS.attr('string'),
   lastName: DS.attr('string'),
   birthDate: DS.attr('date'),
+
+  // This property for Lookup component. No inverse relationship here.
   employee1: DS.belongsTo('employee', { inverse: null, async: false }),
-  orders: DS.hasMany('order', { inverse: null, async: false }),
+
+  // This property for GroupEdit component.
+  orders: DS.hasMany('order', { inverse: 'employee', async: false }),
 
   // Validation rules.
   validations: {
@@ -36,7 +40,10 @@ Model.defineProjection('EmployeeE', 'employee', {
   orders: Proj.hasMany('order', 'Orders', {
     shipName: Proj.attr('Ship Name'),
     shipCountry: Proj.attr('Ship Country'),
-    orderDate: Proj.attr('Order Date')
+    orderDate: Proj.attr('Order Date'),
+    customer: Proj.belongsTo('customer', 'Customer', {
+      contactName: Proj.attr('Contact Name', { hidden: true })
+    }, { displayMemberPath: 'contactName' })
   })
 });
 

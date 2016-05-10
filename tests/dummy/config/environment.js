@@ -32,14 +32,8 @@ module.exports = function(environment) {
           // URL of file upload controller.
           uploadUrl: backendRootUrl + '/api/File',
 
-          // URL of file download controller.
-          downloadUrl: backendRootUrl + '/api/File',
-
           // Max file size in bytes for uploading files.
           maxUploadFileSize: null,
-
-          // Text to be displayed instead of file name, if file has not been selected.
-          placeholder: '(no file)',
 
           // Flag: indicates whether to upload file on controllers modelPreSave event.
           uploadOnModelPreSave: true,
@@ -52,20 +46,11 @@ module.exports = function(environment) {
 
           // Flag: indicates whether to show modal dialog on download errors or not.
           showModalDialogOnDownloadError: true,
-
-          // Add button title.
-          addButtonTitle: 'Add file',
-
-          // Remove button title.
-          removeButtonTitle: 'Remove file',
-
-          // Upload button title.
-          uploadButtonTitle: 'Upload file',
-
-          // Download button title.
-          downloadButtonTitle: 'Download file'
         }
-      }
+      },
+
+      // Enable flexberryAuthService.
+      flexberryAuthService: true
     }
   };
 
@@ -77,6 +62,19 @@ module.exports = function(environment) {
     'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com",
     'font-src': "'self' data: https://fonts.gstatic.com",
     'connect-src': "'self' " + ENV.APP.backendUrls.root
+  };
+
+  // Read more about ember-i18n: https://github.com/jamesarosen/ember-i18n.
+  ENV.i18n = {
+    // Should be defined to avoid ember-i18n deprecations.
+    // Locale will be changed then to navigator current locale (in instance initializer).
+    defaultLocale: 'en'
+  };
+
+  // Read more about ember-moment: https://github.com/stefanpenner/ember-moment.
+  // Locale will be changed then to same as ember-i18n locale (and will be changed every time when i18n locale changes).
+  ENV.moment = {
+    outputFormat: 'L'
   };
 
   if (environment === 'test') {

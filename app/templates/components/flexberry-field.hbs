@@ -1,7 +1,10 @@
+{{#if label }}
 <label>{{label}}</label>
+{{/if}}
 {{input
   type="text"
-  placeholder=placeholder
-  readonly='readonly'
   value=value
+  readonly=(if readonly "readonly")
+  required=required
+  placeholder=placeholder
 }}

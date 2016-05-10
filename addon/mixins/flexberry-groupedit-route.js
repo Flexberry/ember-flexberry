@@ -7,29 +7,122 @@ export default Ember.Mixin.create({
    * @property groupEditEventsService
    * @type Service
    */
-  groupEditEventsService: Ember.inject.service('groupedit-events'),
-  deletedRecords: null,
+  groupEditEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
+   * Service that lets interact between agregator's and detail's form.
+   *
+   * @property flexberryDetailInteractionService
+   * @type Service
+   */
+  flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
 
   activate() {
     this._super(...arguments);
 
-    this.get('groupEditEventsService').on('groupEditRowAdded', this, this._rowAdded);
-    this.get('groupEditEventsService').on('groupEditRowDeleted', this, this._rowDeleted);
-    this.get('groupEditEventsService').on('groupEditRowsChanged', this, this._rowChanged);
-
-    if (!this.get('deletedRecords')) {
-      this.set('deletedRecords', Ember.A());
-    } else {
-      this.get('deletedRecords').clear();
-    }
+    this.get('groupEditEventsService').on('olvRowAdded', this, this._rowAdded);
+    this.get('groupEditEventsService').on('olvRowDeleted', this, this._rowDeleted);
+    this.get('groupEditEventsService').on('olvRowsChanged', this, this._rowChanged);
   },
 
   deactivate() {
     this._super(...arguments);
 
-    this.get('groupEditEventsService').off('groupEditRowAdded', this, this._rowAdded);
-    this.get('groupEditEventsService').off('groupEditRowDeleted', this, this._rowDeleted);
-    this.get('groupEditEventsService').off('groupEditRowsChanged', this, this._rowChanged);
+    this.get('groupEditEventsService').off('olvRowAdded', this, this._rowAdded);
+    this.get('groupEditEventsService').off('olvRowDeleted', this, this._rowDeleted);
+    this.get('groupEditEventsService').off('olvRowsChanged', this, this._rowChanged);
+  },
+
+  /**
+   * It forms path for new model's route.
+   *
+   * @method newRoutePath
+   *
+   * @param {String} ordinalPath The path to model's route.
+   * @return {String} The path to new model's route.
+   */
+  newRoutePath: function(ordinalPath) {
+    return ordinalPath + '.new';
+  },
+
+  actions: {
+    /**
+     * Table row click handler.
+     * It sets `modelNoRollBack` to `true` at current controller, redirects to detail's route, save necessary data to service.
+     *
+     * @param {Ember.Object} record Record related to clicked table row.
+     * @param {Object} [options] Record related to clicked table row.
+     * @param {Boolean} options.saveBeforeRouteLeave Flag: indicates whether to save current model before going to the detail's route.
+     * @param {Boolean} options.editOnSeparateRoute Flag: indicates whether to edit detail on separate route.
+     * @param {String} options.modelName Clicked detail model name (used to create record if record is undefined).
+     * @param {Array} options.detailArray Current detail array (used to add record to if record is undefined).
+     * @param {Boolean} options.editFormRoute Path to detail's form.
+     */
+    rowClick: function(record, options) {
+      let methodOptions = {
+        saveBeforeRouteLeave: false,
+        editOnSeparateRoute: false,
+        modelName: undefined,
+        detailArray: undefined,
+        editFormRoute: undefined
+      };
+      methodOptions = Ember.merge(methodOptions, options);
+      let editOnSeparateRoute = methodOptions.editOnSeparateRoute;
+      let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
+
+      if (!editOnSeparateRoute) {
+        return;
+      }
+
+      let _this = this;
+      let editFormRoute = methodOptions.editFormRoute;
+      if (!editFormRoute) {
+        throw new Error('Detail\'s edit form route is undefined.');
+      }
+
+      let goToOtherRouteFunction = function() {
+        if (!record)
+        {
+          let modelName = methodOptions.modelName;
+          if (!modelName) {
+            throw new Error('Detail\'s model name is undefined.');
+          }
+
+          let detailArray = methodOptions.detailArray;
+          var modelToAdd = _this.store.createRecord(modelName, {});
+          detailArray.addObject(modelToAdd);
+          record = modelToAdd;
+        }
+
+        let recordId = record.get('id');
+        _this.controller.set('modelNoRollBack', true);
+
+        let flexberryDetailInteractionService = _this.get('flexberryDetailInteractionService');
+        flexberryDetailInteractionService.pushValue(
+          'modelCurrentAgregatorPathes', _this.controller.get('modelCurrentAgregatorPathes'), _this.get('router.url'));
+        flexberryDetailInteractionService.set('modelSelectedDetail', record);
+        flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
+        flexberryDetailInteractionService.pushValue(
+          'modelCurrentAgregators', _this.controller.get('modelCurrentAgregators'), _this.controller.get('model'));
+
+        if (recordId) {
+          _this.transitionTo(editFormRoute, record.get('id'));
+        } else {
+          let newModelPath = _this.newRoutePath(editFormRoute);
+          _this.transitionTo(newModelPath);
+        }
+      };
+
+      if (saveBeforeRouteLeave) {
+        this.controller.save().then(() => {
+          goToOtherRouteFunction();
+        }).catch((errorData) => {
+          this.rejectError(errorData, this.get('i18n').t('edit-form.save-failed-message'));
+        });
+      } else {
+        goToOtherRouteFunction();
+      }
+    }
   },
 
   /**
@@ -56,13 +149,6 @@ export default Ember.Mixin.create({
    * @param {DS.Model} record The model corresponding to deleted row in groupedit.
    */
   _rowDeleted: function(componentName, record) {
-    if (record.get('id')) {
-      this.get('deletedRecords').pushObject({
-        model: record.constructor.modelName,
-        id: record.get('id')
-      });
-    }
-
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
   },

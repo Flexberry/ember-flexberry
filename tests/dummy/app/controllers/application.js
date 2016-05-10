@@ -19,6 +19,43 @@ export default Ember.Controller.extend({
         title: 'Orders',
         children: null
       }]
+    }, {
+      link: null,
+      title: 'Components',
+      children: [{
+        link: null,
+        title: 'flexberry-dropdown',
+        children: [{
+          link: 'test-flexberry-dropdown',
+          title: 'Simple',
+          children: null
+        }, {
+          link: 'test-flexberry-dropdown-conditional-render',
+          title: 'Conditionally rendered',
+          children: null
+        }]
+      }, {
+        link: null,
+        title: 'flexberry-groupedit',
+        children: [{
+          link: 'test-flexberry-groupedit',
+          title: 'Simple',
+          children: null
+        }]
+      }, {
+        link: null,
+        title: 'flexberry-menu',
+        children: [{
+          link: 'test-flexberry-menu',
+          title: 'Simple',
+          children: null
+        }]
+      }]
     }]
+  },
+  actions: {
+    toggleSidebar: function(direction) {
+      Ember.$('.ui.sidebar').sidebar('toggle');
+    }
   }
 });

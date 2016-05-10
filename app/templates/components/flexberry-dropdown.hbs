@@ -1,7 +1,18 @@
-<select id="{{if id id}}" class="{{if cssClass cssClass}}" {{action 'dropDown_onSelectedItemChanged' on='change'}}>
-  {{#each items as |item|}}
-      <option value="{{item}}">
-        {{item}}
-      </option>
-  {{/each}}
-</select>
+{{#ui-dropdown
+  class=(concat "flexberry-dropdown " type " selection" (if readonly " disabled" ""))
+  onChange=(action 'onChange')
+  onHide=(action 'onShowHide')
+  onShow=(action 'onShowHide')
+}}
+    <i class="dropdown icon"></i>
+    {{#if showDefaultText}}
+      <div class="default text">{{defaultText}}</div>
+    {{else}}
+      <div class="text">{{text}}</div>
+    {{/if}}
+    <div class="menu">
+      {{#each items as |item|}}
+        <div class="item" data-value="{{item}}">{{item}}</div>
+      {{/each}}
+    </div>
+{{/ui-dropdown}}

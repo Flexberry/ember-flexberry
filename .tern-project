@@ -1,0 +1,29 @@
+{
+  "libs": [
+    "browser",
+    "jquery"
+  ],
+  "loadEagerly": [
+    "bower_components/ember/ember.js"
+  ],
+  "dontLoad":[
+    "node_modules",
+    "dist",
+    "tmp",
+    "vendor"
+  ],
+  "exclude": [
+    "node_modules/**",
+    ".git/**",
+    "*.min.js",
+    "*.prod.js",
+    "*.debug.js",
+    "tmp",
+    "vendor"
+  ],
+  "plugins": {
+    "node": {},
+    "complete_strings": {},
+    "es_modules": {}
+  }
+}

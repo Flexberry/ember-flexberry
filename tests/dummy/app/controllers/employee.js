@@ -1,9 +1,43 @@
 import Ember from 'ember';
-import EditFormController from 'ember-flexberry/controllers/edit-form';
+import EditFormController from './edit-form';
 
 export default EditFormController.extend({
   // Caption of this particular edit form.
   title: 'Employee',
+
+  /**
+   * Route edit order for group edit
+   *
+   * @property routeForEditOrder
+   * @type String
+   * @default 'order'
+   */
+  routeForEditOrder: 'order',
+
+  /**
+   * Route name for transition on flexberry-objectlistview
+   *
+   * @property parentRoute
+   * @type String
+   * @default 'employees'
+   */
+  parentRoute: 'employees',
+
+  getCellComponent: function(attr, bindingPath, model) {
+    var cellComponent = this._super(...arguments);
+
+    if (attr.kind === 'belongsTo' && attr.modelName === 'customer') {
+      cellComponent.componentProperties = {
+        choose: 'showLookupDialog',
+        remove: 'removeLookupValue',
+        relationName: 'customer',
+        projection: 'CustomerL',
+        title: 'Customer'
+      };
+    }
+
+    return cellComponent;
+  },
 
   /**
    * Current function to limit accessible values of model employee1.

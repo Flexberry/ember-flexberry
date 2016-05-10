@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Lookup component for Semantic UI.
@@ -20,11 +21,40 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['flexberry-lookup', 'ui', 'fluid', 'action', 'input'],
+  classNames: ['flexberry-lookup'],
 
-  placeholder: '(no value)',
-  chooseText: 'Choose',
+  /**
+   * Classes by properties of the component.
+   *
+   * @property classNameBindings
+   * @type Array
+   * @readOnly
+   */
+  classNameBindings: ['autocompleteClass'],
+
+  placeholder: t('flexberry-lookup.placeholder'),
+  chooseText: t('flexberry-lookup.choose-button-text'),
+
+  // ToDo: Use 'flexberry-lookup.remove-button-text' from locale.
   removeText: '<i class="remove icon"></i>',
+
+  /**
+   * Classes for choose button.
+   *
+   * @property chooseButtonClass
+   * @type String
+   * @default undefined
+   */
+  chooseButtonClass: undefined,
+
+  /**
+   * Classes for remove button.
+   *
+   * @property removeButtonClass
+   * @type String
+   * @default undefined
+   */
+  removeButtonClass: undefined,
 
   projection: undefined,
   value: undefined,
@@ -42,6 +72,19 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   autocomplete: false,
 
   /**
+   * Classes by property of autocomplete.
+   *
+   * @property autocompleteClass
+   * @type String
+   * @readOnly
+   */
+  autocompleteClass: Ember.computed('autocomplete', function() {
+    if (this.get('autocomplete')) {
+      return 'ui search';
+    }
+  }),
+
+  /**
    * Observes changes to value. Set it to autocompleteValue.
    *
    * @method valueChanged
@@ -52,7 +95,8 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
   /**
    * Value for autocomplete control.
-   * If model's value changes, autocompleteValue is changed too. autocompleteValue may be changed independely, but it won't be applied to model automatically.
+   * If model's value changes, autocompleteValue is changed too.
+   * This property may be changed independently, but it won't be applied to model automatically.
    *
    * @property autocompleteValue
    * @type String
@@ -86,6 +130,16 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @default 'updateLookupValue'
    */
   autocompleteUpdateAction: 'updateLookupValue',
+
+  /**
+   * Action's name to update xhr before autocomplete request.
+   * It is used to add necessary auth headers to request.
+   *
+   * @property autocompleteUpdateXhrAction
+   * @type String
+   * @default 'updateAutocompleteLookupXhr'
+   */
+  autocompleteUpdateXhrAction: 'updateAutocompleteLookupXhr',
 
   /**
    * Min characters count necessary to call autocomplete.
@@ -135,7 +189,10 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       relationName: this.get('relationName'),
       title: this.get('title'),
       limitFunction: this.get('limitFunction'),
-      modelToLookup: undefined
+      modelToLookup: this.get('relatedModel'),
+
+      //TODO: move to modal settings.
+      sizeClass: this.get('sizeClass')
     };
   }),
 
@@ -148,11 +205,9 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   removeData: Ember.computed('relationName', function() {
     return {
       relationName: this.get('relationName'),
-      modelToLookup: undefined
+      modelToLookup: this.get('relatedModel')
     };
   }),
-
-  readonly:  false,
 
   init() {
     this._super();
@@ -201,10 +256,11 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
     let autocompleteUrl = this.get('autocompleteUrl')(relationName);
     let limitFunction = this.get('limitFunction');
+    let modelToLookup = this.get('relatedModel');
 
     this.set('autocompleteValue', this.get('value'));
     let _this = this;
-    this.$('.ui.search').search({
+    this.$().search({
       apiSettings: {
         url: autocompleteUrl,
         beforeSend: function(settings) {
@@ -218,6 +274,16 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
             });
           Ember.merge(settings.data, urlOptions);
           return settings;
+        },
+        beforeXHR: function(xhr) {
+          // Set necessary auth headers.
+          _this.sendAction(
+            'autocompleteUpdateXhrAction',
+            {
+              xhr: xhr,
+              element: _this
+            }
+          );
         }
       },
       fields: {
@@ -234,7 +300,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
           'autocompleteUpdateAction',
           {
             relationName: relationName,
-            modelToLookup: undefined,
+            modelToLookup: modelToLookup,
             newRelationValue: result
           });
       }
@@ -250,9 +316,17 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
   actions: {
     choose: function(chooseData) {
+      if (this.get('readonly')) {
+        return;
+      }
+
       this.sendAction('choose', chooseData);
     },
     remove: function(removeData) {
+      if (this.get('readonly')) {
+        return;
+      }
+
       this.sendAction('remove', removeData);
     }
   }

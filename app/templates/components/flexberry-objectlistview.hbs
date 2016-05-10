@@ -1,0 +1,73 @@
+{{olv-toolbar
+  class='ui secondary menu no-margin'
+  createNewButton=createNewButton
+  enableCreateNewButton=(not readonly)
+  refreshButton=refreshButton
+  deleteButton=deleteButton
+  filterButton=filterButton
+  filterText=filterText
+  buttonClass=buttonClass
+  enableDeleteButton=(not readonly)
+  componentName=componentName
+  modelController=currentController
+  customButtonAction='customButtonAction'
+  customButtonsClosureEvent=(action (if this.attrs.customButtons this.attrs.customButtons 'customButtons'))
+  editFormRoute=editFormRoute
+}}
+{{object-list-view
+  readonly=readonly
+  buttonClass=buttonClass
+  headerCellComponent=headerCellComponent
+  cellComponent=cellComponent
+  singleColumnCellComponent=singleColumnCellComponent
+  useSingleColumn=useSingleColumn
+  singleColumnHeaderTitle=singleColumnHeaderTitle
+  showAsteriskInRow=(and (not readonly) showAsteriskInRow)
+  showCheckBoxInRow=(and (not readonly) showCheckBoxInRow)
+  showDeleteButtonInRow=(and (not readonly) showDeleteButtonInRow)
+  showEditMenuItemInRow=(and (not readonly) showEditMenuItemInRow)
+  showDeleteMenuItemInRow=(and (not readonly) showDeleteMenuItemInRow)
+  menuInRowAdditionalItems=menuInRowAdditionalItems
+  rowClickable=(and (not readonly) rowClickable)
+  headerClickable=orderable
+  sorting=sorting
+  immediateDelete=true
+  modelProjection=modelProjection
+  content=content
+  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
+  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
+  configurateRow=this.attrs.configurateRow
+  beforeDeleteRecord=this.attrs.beforeDeleteRecord
+  action='rowClick'
+  componentName=componentName
+  allowColumnResize=allowColumnResize
+}}
+<div class="ui secondary menu no-margin">
+  <div class="ui basic buttons">
+	<button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
+	{{#each pages as |page|}}
+	  {{#if page.isEllipsis}}
+		  <button class="ui button">...</button>
+	  {{else}}
+		{{#if page.isCurrent}}
+			<button class="ui active button">{{page.number}}</button>
+		{{else}}
+			<button class="ui button" {{action (if this.attrs.gotoPage this.attrs.gotoPage 'gotoPage') page.number}}>{{page.number}}</button>
+		{{/if}}
+	  {{/if}}
+	{{/each}}
+	<button class="ui {{unless hasNextPage 'disabled'}} button" {{action (if this.attrs.nextPage this.attrs.nextPage 'nextPage')}}>&raquo;</button>
+  </div>
+  <div class="right menu">
+	{{#ui-dropdown value=perPageValue class="compact selection"}}
+		<i class="dropdown icon"></i>
+		<div class="text">{{perPageValue}}</div>
+		<div class="menu">
+		  {{#each perPageValues as |perPageValue|}}
+			  <div class="item" data-value={{perPageValue}}>{{perPageValue}}</div>
+		  {{/each}}
+		</div>
+	{{/ui-dropdown}}
+  </div>
+</div>

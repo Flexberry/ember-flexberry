@@ -12,6 +12,10 @@ Router.map(function() {
   // /employees
   this.route('employees');
 
+  // /employee-edit - route for test custom edit form route in f-olv
+  this.route('employee-edit', { path: 'employee-edit/:id' });
+  this.route('employee-edit.new', { path: 'employee-edit/new' });
+
   // /employees/2 - render into outlet in application template
   this.route('employee', { path: 'employees/:id' });
 
@@ -26,6 +30,18 @@ Router.map(function() {
 
   // /employees/new
   this.route('order.new', { path: 'orders/new' });
+
+  // /test-flexberry-dropdown
+  this.route('test-flexberry-dropdown');
+
+  // /test-flexberry-dropdown-conditional-render
+  this.route('test-flexberry-dropdown-conditional-render');
+
+  // /test-flexberry-groupedit-embedding-components
+  this.route('test-flexberry-groupedit');
+
+  // /test-flexberry-menu
+  this.route('test-flexberry-menu');
 });
 
 export default Router;

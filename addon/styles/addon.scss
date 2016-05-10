@@ -1,74 +1,57 @@
-.form-control-trunc {
-  width: auto;
-  display: inline-block;
-}
+/**
+ * All ember-flexberry addon styles.
+ */
 
-table.object-list-view tbody,
-table.object-list-view thead {
-  cursor: pointer;
-}
+@import './components/object-list-view';
+@import './components/object-list-view-single-column-cell';
+@import './components/groupedit-toolbar';
+@import './components/modal-dialog';
+@import './components/flexberry-lookup';
+@import './components/flexberry-menu';
+@import './components/flexberry-file';
 
-.flexberry-lookup .ui.button > .icon {
-  margin: 0;
-}
-
-// Show scroll for big inner content of modal dialog
-.ui.modal > .content {
-  overflow: auto;
-}
-
-.ui.modal > .actions {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-}
-
-// Styles for GroupEdit component
-table.object-list-view tbody tr td:first-child button {
-  padding: 9px 7px;
-  margin: 0 !important;
-}
-
-table.object-list-view thead tr th.object-list-view-operations {
-  min-width: 80px;
-  width: 80px;
-}
-
-table.object-list-view tbody tr td.object-list-view-operations .object-list-view-asterisk {
-  padding-left: 5px !important;
-  padding-right: 0 !important;
-}
-
-table.object-list-view tbody tr td.object-list-view-operations .object-list-view-asterisk i {
-  font-size: x-small;
-}
-
-table.object-list-view tbody tr td.object-list-view-operations .object-list-view-asterisk.hidden {
+/**
+ * Common styles.
+ */
+.hidden {
   display: none !important;
 }
 
-table.object-list-view tbody tr td:first-child button i {
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-margin {
   margin: 0 !important;
 }
 
-.groupedit-toolbar {
-  margin-bottom: 1px !important;
-}
-
-.groupedit-toolbar button {
-  padding: 9px !important;
-}
-
-.groupedit-toolbar button i {
-  margin: 0 !important;
-}
-
-// Styles for all tables
 table {
   border-collapse: collapse !important;
 }
 
-// Common styles
-.hidden {
-  display: none;
+/**
+ * Flexberry form.
+ */
+.ui.form.flexberry-horizontal-form {
+  .flexberry-field.field label {
+    width: 150px !important;
+  }
+
+  .field label {
+    width: 122px !important;
+    margin-right: 0.85714286em !important;
+  }
+
+  label {
+    text-align: right;
+  }
 }
+
+// Style for responsive
+@media only screen and (max-width: 767px) {
+  .ui.menu.container {
+      margin-right: 0 !important;
+      margin-left: 0 !important;
+  }
+}
+

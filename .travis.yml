@@ -29,9 +29,10 @@ before_install:
 
 install:
   - npm install -g bower
-  - npm install
-  - bower install
   - npm install -g firebase-tools
+  - npm install
+  - npm rebuild node-sass
+  - bower install
 
 script:
   - ember try $EMBER_TRY_SCENARIO test

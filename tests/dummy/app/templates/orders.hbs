@@ -3,12 +3,13 @@
 <div class="row">
   {{flexberry-objectlistview
     modelName="order"
+    editFormRoute=editFormRoute
 	modelProjection=modelProjection
 	content=model
 
     createNewButton=true
     refreshButton=true
-    classButton='primary'
+    buttonClass='primary'
 
 	sorting=computedSorting
 	orderable=true

@@ -35,7 +35,16 @@ export default Ember.Mixin.create({
   actions: {
     /**
      * Handles action from lookup choose action.
-     *
+       It opens modal window where availible values are shown.
+
+       In order to customize content of all lookup modal window there is such a way:
+       1) create template with necessary content and set unique name for it (for example 'customlookupform.hbs');
+       2) override lookup setting `lookupSettings.contentTemplate` on controller level (for example 'customlookupform');
+       3) if there has to be specific logic or properties on controller for template,
+          current lookup controller can be overriden (it is 'lookup-dialog' for edit forms)
+          and new name can be set on lookup setting `lookupSettings.controllerName`
+          (if the controller was extended and not reopened).
+
      * @method showLookupDialog
      * @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
      */
@@ -46,13 +55,15 @@ export default Ember.Mixin.create({
         title: undefined,
         limitFunction: undefined,
         modelToLookup: undefined,
-        sizeClass: undefined
+        sizeClass: undefined,
+        lookupWindowCustomPropertiesData: undefined
       }, chooseData);
       let projectionName = options.projection;
       let relationName = options.relationName;
       let title = options.title;
       let limitFunction = options.limitFunction;
       let modelToLookup = options.modelToLookup;
+      let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
       let sizeClass = options.sizeClass;
 
       if (!projectionName) {
@@ -126,7 +137,8 @@ export default Ember.Mixin.create({
             model: model,
             propName: relationName
           },
-          currentLookupRow: model.get(relationName)
+          currentLookupRow: model.get(relationName),
+          customPropertiesData: lookupWindowCustomPropertiesData
         });
 
         this.send('showModalDialog', lookupSettings.contentTemplate, {

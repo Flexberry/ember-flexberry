@@ -652,6 +652,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   willDestroy: function() {
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
 
     this._super(...arguments);
   },
@@ -1173,7 +1174,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @param {String} pattern The pattern to filter objects.
    */
   _filterByAnyMatch: function(componentName, pattern) {
-    this.sendAction('filterByAnyMatch', pattern);
+    if (componentName === this.get('componentName')) {
+      this.sendAction('filterByAnyMatch', pattern);
+    }
   },
 
   _setActiveRecord: function(key) {

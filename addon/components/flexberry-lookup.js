@@ -174,23 +174,59 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   limitFunction: undefined,
 
   /**
+   * This computed property forms a set of properties to send to lookup window.
+
+     Closure action `lookupWindowCustomProperties` is called here if defined,
+     otherwise `undefined` is returned.
+
+   * @property _lookupWindowCustomPropertiesData
+   * @private
+   * @type Object
+   * @default undefined
+   */
+  _lookupWindowCustomPropertiesData: Ember.computed(
+    'projection',
+    'relationName',
+    'attrs.lookupWindowCustomProperties',
+    function() {
+      let lookupWindowCustomProperties = this.attrs.lookupWindowCustomProperties;
+      if (lookupWindowCustomProperties) {
+        let result = lookupWindowCustomProperties({
+          relationName: this.get('relationName'),
+          projection: this.get('projection')
+        });
+
+        return result;
+      }
+
+      return undefined;
+    }),
+
+  /**
    * Object with lookup properties to send on choose action.
    *
    * @property chooseData
    * @type Object
    */
-  chooseData: Ember.computed('projection', 'relationName', 'title', 'limitFunction', function() {
-    return {
-      projection: this.get('projection'),
-      relationName: this.get('relationName'),
-      title: this.get('title'),
-      limitFunction: this.get('limitFunction'),
-      modelToLookup: this.get('relatedModel'),
+  chooseData: Ember.computed(
+    'projection',
+    'relationName',
+    'title',
+    'limitFunction',
+    '_lookupWindowCustomPropertiesData',
+    function() {
+      return {
+        projection: this.get('projection'),
+        relationName: this.get('relationName'),
+        title: this.get('title'),
+        limitFunction: this.get('limitFunction'),
+        modelToLookup: this.get('relatedModel'),
+        lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
 
-      //TODO: move to modal settings.
-      sizeClass: this.get('sizeClass')
-    };
-  }),
+        //TODO: move to modal settings.
+        sizeClass: this.get('sizeClass')
+      };
+    }),
 
   /**
    * Object with lookup properties to send on remove action.

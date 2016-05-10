@@ -17,6 +17,12 @@ export default FlexberryBaseComponent.extend({
     if (!this.get('editFormRoute')) {
       this.set('editFormRoute', this.get('modelName'));
     }
+
+    let customProperties = this.get('customProperties');
+    if (this.get('componentMode') === 'lookupform' && customProperties && typeof customProperties === 'object') {
+      // For lookup mode we allow to set properties.
+      this.setProperties(customProperties);
+    }
   },
 
   actions: {
@@ -466,5 +472,14 @@ export default FlexberryBaseComponent.extend({
    * @type DS.Model
    * @default undefined
    */
-  selectedRecord: undefined
+  selectedRecord: undefined,
+
+  /**
+   * Set of properties to set for commponent (when it is used on lookup window).
+   *
+   * @property customProperties
+   * @type Object
+   * @default undefined
+   */
+  customProperties: undefined
 });

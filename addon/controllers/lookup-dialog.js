@@ -32,6 +32,15 @@ export default ListFormController.extend({
    */
   currentLookupRow: undefined,
 
+  /**
+   * Set of properties to set for list commponent.
+   *
+   * @property customPropertiesData
+   * @type Object
+   * @default undefined
+   */
+  customPropertiesData: undefined,
+
   actions: {
     /**
      * Handles olv row clicked.
@@ -110,6 +119,7 @@ export default ListFormController.extend({
     this.set('saveTo', undefined);
     this.set('modelProjection', undefined);
     this.set('currentLookupRow', undefined);
+    this.set('customPropertiesData', undefined);
     return this;
   }
 });

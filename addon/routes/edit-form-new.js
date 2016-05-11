@@ -24,11 +24,4 @@ export default EditFormRoute.extend({
     var record = this.store.createRecord(this.modelName);
     return record;
   },
-
-  renderTemplate: function(controller, model) {
-    this.render(this.modelName, {
-      model: model,
-      controller
-    });
-  }
 });

@@ -27,7 +27,7 @@ export default Ember.Mixin.create({
 
       var loadingParams = {
         view: 'application',
-        outlet: 'modal'
+        outlet: 'modal',
       };
       this.send('showModalDialog', "colsconfig-dialog");
 
@@ -35,8 +35,6 @@ export default Ember.Mixin.create({
         view: 'colsconfig-dialog',
         outlet: 'modal-content'
       };
-//       this.send('showModalDialog', "colsconfig-dialog-content", null, loadingParams);
-//       this.send('removeModalDialog', loadingParams);
       this.send('showModalDialog', "colsconfig-dialog-content",
                 {controller: controller,model:model},
                 loadingParams);

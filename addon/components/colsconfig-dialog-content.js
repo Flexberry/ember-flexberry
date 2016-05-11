@@ -166,6 +166,8 @@ export default FlexberryBaseComponent.extend({
           sortPriority:model.sortPriority
         };
       }
+      alert(JSON.stringify(colsConfig));
+      this.sendAction('sortByColumnsConfig',colsConfig);
     }
   },
 

@@ -40,6 +40,16 @@ export default Ember.Mixin.create({
   },
 
   actions: {
+    sortByColumnsConfig: function (colsConfig) {
+      let newSorting;
+      let columnsConfig=colsConfig.slice(o);  //Clone array bafore sorting
+      columnsConfig.sort(function (a,b) {
+        return a.sortPriority - b.sortPriority;
+      }
+      );
+      alert(LSON.stringify(columnsConfig));
+    },
+
     sortByColumn: function(column) {
       var propName = column.propName;
       var oldSorting = this.get('model.sorting');

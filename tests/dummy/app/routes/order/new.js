@@ -3,5 +3,6 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 export default EditFormNewRoute.extend(AuthenticatedRouteMixin, {
   modelProjection: 'OrderE',
-  modelName: 'order'
+  modelName: 'order',
+  templateName: 'order',
 });

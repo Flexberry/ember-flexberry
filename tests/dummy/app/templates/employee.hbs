@@ -77,6 +77,10 @@
       class=(if model.errors.reportsTo 'error' '')
       chooseButtonClass='primary'
       removeButtonClass='primary'
+      dropdown=true
+      nameProperty='FirstName'
+      url=(action 'getLookupUrl')
+      queryOptions=(action 'getLookupQueryOptions')
     }}
       {{model.employee1.firstName}}<br>
       {{model.employee1.lastName}}

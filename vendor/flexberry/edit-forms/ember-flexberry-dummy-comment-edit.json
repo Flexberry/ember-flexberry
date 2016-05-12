@@ -1,0 +1,12 @@
+﻿{
+  "propertyLookup": [],
+  "caption": "Comment edit",
+  "name": "EmberFlexberryDummyCommentEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-comment",
+      "modelProjection": "CommentE"
+    }
+  ]
+}

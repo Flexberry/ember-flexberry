@@ -1,9 +1,9 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
-  var backendUrl = 'https://northwindodata.azurewebsites.net';
+  var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
   var ENV = {
-    modulePrefix: 'ember-app',
+    modulePrefix: 'dummy',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',

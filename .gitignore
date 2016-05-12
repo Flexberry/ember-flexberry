@@ -23,3 +23,7 @@ testem.log
 .tern-port
 .dir-locals.el
 /blueprints/.vscode
+
+.vscodeignore
+jsconfig.json
+typings/ember/ember.d.ts

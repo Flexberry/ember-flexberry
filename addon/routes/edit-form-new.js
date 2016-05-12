@@ -26,11 +26,12 @@ export default EditFormRoute.extend({
     return record;
   },
 
-  renderTemplate: function(controller, model){
-    Ember.assert('Template name must be defined.', this.templateName);
-    this.render(this.templateName, {
-      model: model,
-      controller: controller,
+  renderTemplate: function(controller, model) {
+    var templateName = this.get('templateName');
+    Ember.assert('Template name must be defined.', templateName);
+    this.render(templateName, {
+      model,
+      controller,
     });
   }
 });

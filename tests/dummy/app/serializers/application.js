@@ -1,4 +1,4 @@
-import ODataSerializer from 'ember-flexberry/serializers/odata';
+import ODataSerializer from 'ember-flexberry-projections/serializers/odata';
 
 export default ODataSerializer.extend({
 });

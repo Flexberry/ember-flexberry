@@ -42,3 +42,7 @@ table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell i.
 table.object-list-view tbody tr td:first-child button i {
   margin: 0 !important;
 }
+
+.ui.table.object-list-view td.object-list-view-menu {
+  overflow: inherit;
+}

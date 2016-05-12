@@ -1,13 +1,13 @@
 import DS from 'ember-data';
-import BaseModel from './base';
+import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-projections';
 
 var Model = BaseModel.extend({
     order: DS.attr('number'),
     file: DS.attr('file'),
     suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', { inverse: 'files', async: false }),
-    validations: { 
- 
+    validations: {
+
  }
 });
 

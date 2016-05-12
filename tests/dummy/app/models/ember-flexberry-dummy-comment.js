@@ -1,5 +1,5 @@
 import DS from 'ember-data';
-import BaseModel from './base';
+import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-projections';
 
 var Model = BaseModel.extend({
@@ -9,8 +9,8 @@ var Model = BaseModel.extend({
     author: DS.belongsTo('ember-flexberry-dummy-application-user', { inverse: null, async: false }),
     suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', { inverse: 'comments', async: false }),
     userVotes: DS.hasMany('ember-flexberry-dummy-comment-vote', { inverse: 'comment', async: false }),
-    validations: { 
- 
+    validations: {
+
  }
 });
 
@@ -18,13 +18,13 @@ Model.defineProjection('CommentD', 'ember-flexberry-dummy-comment', {
 text: Proj.attr('Text'),
     votes: Proj.attr('Votes'),
     moderated: Proj.attr('Moderated'),
-    author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', { 
-    name: Proj.attr('Name', { hidden: true }) 
+    author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Proj.attr('Name', { hidden: true })
     }),
     userVotes: Proj.hasMany('ember-flexberry-dummy-comment-vote', 'User votes', {
 voteType: Proj.attr('Vote type'),
-    applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', { 
-        name: Proj.attr('Name', { hidden: true }) 
+    applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+        name: Proj.attr('Name', { hidden: true })
         })
 })
 });
@@ -32,16 +32,16 @@ voteType: Proj.attr('Vote type'),
 text: Proj.attr('Text'),
     votes: Proj.attr('Votes'),
     moderated: Proj.attr('Moderated'),
-    suggestion: Proj.belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', { 
-    address: Proj.attr('', { hidden: true }) 
+    suggestion: Proj.belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', {
+    address: Proj.attr('', { hidden: true })
     }),
-    author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', { 
-    name: Proj.attr('Name', { hidden: true }) 
+    author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Proj.attr('Name', { hidden: true })
     }),
     userVotes: Proj.hasMany('ember-flexberry-dummy-comment-vote', 'User votes', {
 voteType: Proj.attr('Vote type'),
-    applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', { 
-        name: Proj.attr('Name', { hidden: true }) 
+    applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+        name: Proj.attr('Name', { hidden: true })
         })
 })
 });
@@ -49,16 +49,16 @@ voteType: Proj.attr('Vote type'),
 text: Proj.attr('Text'),
     votes: Proj.attr('Votes'),
     moderated: Proj.attr('Moderated'),
-    suggestion: Proj.belongsTo('ember-flexberry-dummy-suggestion', 'Address', { 
-    address: Proj.attr('Address') 
+    suggestion: Proj.belongsTo('ember-flexberry-dummy-suggestion', 'Address', {
+    address: Proj.attr('Address')
     }),
-    author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Name', { 
-    name: Proj.attr('Name') 
+    author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Name', {
+    name: Proj.attr('Name')
     }),
     userVotes: Proj.hasMany('ember-flexberry-dummy-comment-vote', 'User votes', {
 voteType: Proj.attr('Vote type'),
-    applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', { 
-        name: Proj.attr('Name', { hidden: true }) 
+    applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+        name: Proj.attr('Name', { hidden: true })
         })
 })
 });

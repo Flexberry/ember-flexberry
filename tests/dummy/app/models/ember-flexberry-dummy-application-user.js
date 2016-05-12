@@ -1,5 +1,5 @@
 import DS from 'ember-data';
-import BaseModel from './base';
+import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-projections';
 
 var Model = BaseModel.extend({
@@ -16,7 +16,7 @@ var Model = BaseModel.extend({
     gender: DS.attr('ember-flexberry-dummy-gender'),
     vip: DS.attr('boolean'),
     karma: DS.attr('number'),
-    validations: { 
+    validations: {
  name: { presence: true },
  eMail: { presence: true }
  }

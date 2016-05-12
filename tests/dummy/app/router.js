@@ -9,27 +9,21 @@ Router.map(function() {
   // /login
   this.route('login');
 
-  // /employees
-  this.route('employees');
-
-  // /employee-edit - route for test custom edit form route in f-olv
-  this.route('employee-edit', { path: 'employee-edit/:id' });
-  this.route('employee-edit.new', { path: 'employee-edit/new' });
-
-  // /employees/2 - render into outlet in application template
-  this.route('employee', { path: 'employees/:id' });
-
-  // /employees/new
-  this.route('employee.new', { path: 'employees/new' });
-
-  // /orders
-  this.route('orders');
-
-  // /orders/2 - render into outlet in application template
-  this.route('order', { path: 'orders/:id' });
-
-  // /employees/new
-  this.route('order.new', { path: 'orders/new' });
+	this.route('ember-flexberry-dummy-application-user-list');
+	this.route('ember-flexberry-dummy-application-user-edit', { path: 'ember-flexberry-dummy-application-user-edit/:id' });
+	this.route('ember-flexberry-dummy-application-user-edit.new', { path: 'ember-flexberry-dummy-application-user-edit/new' });
+	this.route('ember-flexberry-dummy-comment-list');
+	this.route('ember-flexberry-dummy-comment-edit', { path: 'ember-flexberry-dummy-comment-edit/:id' });
+	this.route('ember-flexberry-dummy-comment-edit.new', { path: 'ember-flexberry-dummy-comment-edit/new' });
+	this.route('ember-flexberry-dummy-localization-list');
+	this.route('ember-flexberry-dummy-localization-edit', { path: 'ember-flexberry-dummy-localization-edit/:id' });
+	this.route('ember-flexberry-dummy-localization-edit.new', { path: 'ember-flexberry-dummy-localization-edit/new' });
+	this.route('ember-flexberry-dummy-suggestion-list');
+	this.route('ember-flexberry-dummy-suggestion-edit', { path: 'ember-flexberry-dummy-suggestion-edit/:id' });
+	this.route('ember-flexberry-dummy-suggestion-edit.new', { path: 'ember-flexberry-dummy-suggestion-edit/new' });
+	this.route('ember-flexberry-dummy-suggestion-type-list');
+	this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
+	this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
   // /test-flexberry-dropdown
   this.route('test-flexberry-dropdown');

@@ -7,3 +7,5 @@ export default ODataAdapter.extend(AuthDataAdapterMixin, Proj.Adapter, {
   host: config.APP.backendUrls.api,
   authorizer: 'authorizer:custom'
 });
+
+

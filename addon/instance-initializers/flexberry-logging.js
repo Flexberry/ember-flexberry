@@ -5,7 +5,12 @@ import Ember from 'ember';
 
 export function initialize(applicationInstance) {
   /**
-  *  LogLevel pointed in configuration file config/environment.js
+  * LogLevel defined in configuration file config/environment.js
+  * Possible values see in logLevelEnums
+  *
+  * @property flexberryLogLevel
+  * @type integer
+  * @default 0
   */
   var flexberryLogLevel = applicationInstance.resolveRegistration('config:environment').APP.flexberryLogLevel;
 
@@ -19,11 +24,18 @@ export function initialize(applicationInstance) {
 
   /**
   *  flexberry-logging service for transmit error/warning/log/info/debug/deprecation messages to  store and save its on server as i-i-s-caseberry-logging-objects-application-log object
+  *
+  * @property flexberryLogging
+  * @type Object Ember.Service
+  * @default service:flexberry-logging
   */
   var flexberryLogging = applicationInstance.lookup('service:flexberry-logging');
 
   /**
   * Log level enumarator
+  *
+  * @property logLevelEnums
+  * @type Object
   */
   var logLevelEnums = {
     ERROR:1,	// Log only errors

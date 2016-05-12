@@ -84,12 +84,18 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Observes changes to value. Set it to autocompleteValue.
+   * Observes changes to value.
    *
    * @method valueChanged
    */
   valueChanged: Ember.observer('value', function() {
-    this.set('autocompleteValue', this.get('value'));
+    let value = this.get('value');
+    this.set('autocompleteValue', value);
+    if ((value === '') || (value === null)) {
+      this.set('placeholder', '');
+    } else {
+      this.set('placeholder', t('flexberry-lookup.placeholder'));
+    }
   }),
 
   /**

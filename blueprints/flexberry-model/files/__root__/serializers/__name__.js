@@ -1,7 +1,6 @@
-import ApplicationSerializer from './application';
+import <%if(parentModelName) {%><%=parentClasslName%>Serializer from './<%=parentModelName%>';<%}else{%>__ApplicationSerializer from './application';<%}%>
 
-// TODO: ODataSerializer.extend
-export default ApplicationSerializer.extend({
+export default <%if(parentModelName) {%><%=parentClasslName%>Serializer<%}else{%>__ApplicationSerializer<%}%>.extend({
 attrs: {
 <%= serializerAttrs %>
 },

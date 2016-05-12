@@ -1,4 +1,5 @@
 /// <reference path='../typings/node/node.d.ts' />
+"use strict";
 var fs = require("fs");
 var path = require('path');
 var stripBom = require("strip-bom");
@@ -8,6 +9,16 @@ module.exports = {
         { name: 'file', type: String },
         { name: 'metadata-dir', type: String }
     ],
+    /**
+     * Blueprint Hook locals.
+     * Use locals to add custom template variables. The method receives one argument: options.
+     *
+     * @method locals
+     * @public
+     *
+     * @param {Object} options Options is an object containing general and entity-specific options.
+     * @return {Object} Сustom template variables.
+     */
     locals: function (options) {
         var listFormBlueprint = new ListFormBlueprint(this, options);
         return {
@@ -30,5 +41,5 @@ var ListFormBlueprint = (function () {
         this.listForm = JSON.parse(content);
     }
     return ListFormBlueprint;
-})();
+}());
 //# sourceMappingURL=index.js.map

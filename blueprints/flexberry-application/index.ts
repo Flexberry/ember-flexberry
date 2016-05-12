@@ -4,9 +4,6 @@
 let stripBom = require("strip-bom");
 import fs = require("fs");
 import path = require('path');
-import lodash = require('lodash');
-let template = lodash.template;
-
 
 module.exports = {
   description: 'Generates an ember application for flexberry.',
@@ -35,6 +32,7 @@ module.exports = {
 };
 
 class ApplicationBlueprint {
+
   children: any;
   routes: any;
   constructor(blueprint, options) {

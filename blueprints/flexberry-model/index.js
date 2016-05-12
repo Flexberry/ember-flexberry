@@ -1,186 +1,183 @@
-/*jshint node:true*/
-var fs = require("fs");
+/// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/lodash/index.d.ts' />
+"use strict";
 var stripBom = require("strip-bom");
-var template = require('lodash/template');
-var find = require('lodash/find');
+var fs = require("fs");
 var path = require('path');
-
-var templateProjAttr = template("<%=name%>: Proj.attr('<%=caption%>'<%=hiddenStr%>)");
-var templateProjBelongsTo = template("<%=name%>: Proj.belongsTo('<%=relatedTo%>', '<%=caption%>', { \n<%=indentStr%><%=attrsStr%> \n<%=indentStr%>}<%=hiddenStr%>)");
-var templateProjHasMany = template("<%=name%>: Proj.hasMany('<%=relatedTo%>', '<%=caption%>', {\n<%=attrsStr%>\n})");
+var lodash = require('lodash');
 var TAB = "  ";
-
 module.exports = {
-
-  description: 'Generates an ember-data model for flexberry.',
-
-  availableOptions: [
-    { name: 'file', type: String },
-    { name: 'metadata-dir', type: String }
-  ],
-
-
-
-  /**
-   * Blueprint Hook locals.
-   * Use locals to add custom template variables. The method receives one argument: options.
-   *
-   * @method locals
-   * @public
-   *
-   * @param {Object} options Options is an object containing general and entity-specific options.
-   * @return {Object} Сustom template variables.
-   */
-  locals: function (options) {
-    var modelsDir = path.join(options.metadataDir, "models");
-    if (!options.file) {
-      options.file = options.entity.name + ".json";
+    description: 'Generates an ember-data model for flexberry.',
+    availableOptions: [
+        { name: 'file', type: String },
+        { name: 'metadata-dir', type: String }
+    ],
+    /**
+     * Blueprint Hook locals.
+     * Use locals to add custom template variables. The method receives one argument: options.
+     *
+     * @method locals
+     * @public
+     *
+     * @param {Object} options Options is an object containing general and entity-specific options.
+     * @return {Object} Custom template variables.
+     */
+    locals: function (options) {
+        var modelBlueprint = new ModelBlueprint(this, options);
+        return {
+            parentModelName: modelBlueprint.parentModelName,
+            parentClasslName: modelBlueprint.parentClasslName,
+            model: modelBlueprint.model,
+            projections: modelBlueprint.projections,
+            serializerAttrs: modelBlueprint.serializerAttrs // for use in files\__root__\serializers\__name__.js
+        };
     }
-    var modelFile = path.join(modelsDir, options.file);
-    var content = stripBom(fs.readFileSync(modelFile, "utf8"));
-    var model = JSON.parse(content);
-
-    return {
-      parentModelName: model.parentModelName,// for use in files\__root__\models\__name__.js
-      parentClasslName: model.parentClasslName,// for use in files\__root__\models\__name__.js
-      model: getJSForModel(model),// for use in files\__root__\models\__name__.js
-      projections: getJSForProjections(model, modelsDir),// for use in files\__root__\models\__name__.js
-      serializerAttrs: getSerializerAttrs(model)// for use in files\__root__\serializers\__name__.js
-    };
-  }
 };
-
-function getSerializerAttrs(model) {
-  var attrs = [];
-  var idx, attr;
-  for (idx in model.belongsTo) {
-    attrs.push(model.belongsTo[idx].name + ": { serialize: 'odata-id', deserialize: 'records' }");
-  }
-  for (idx in model.hasMany) {
-    attrs.push(model.hasMany[idx].name + ": { serialize: false, deserialize: 'records' }");
-  }
-  return attrs.join(",\n");
-}
-
-function getJSForProjections(model, modelsDir) {
-  var projections = [];
-  var idx, idx2, idx4;
-  var templateDefineProjection = template("Model.defineProjection('<%=name%>', '<%=modelName%>', {\n<%=attrs%>\n});");
-  for (idx in model.projections) {
-    var proj = model.projections[idx];
-    var projAttrs = [];
-    for (idx2 in proj.attrs) {
-      projAttrs.push(declareProjAttr(proj.attrs[idx2]));
-    }
-    for (idx2 in proj.belongsTo) {
-      projAttrs.push(joinProjBelongsTo(proj.belongsTo[idx2], 1));
-    }
-    for (idx2 in proj.hasMany) {
-      var hasMany = proj.hasMany[idx2];
-      var hasManyAttrs = [];
-      var modelFile = path.join(modelsDir, hasMany.relatedTo + ".json");
-      var detailModel = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
-      var detailProj = find(detailModel.projections, function (pr) { return pr.name === hasMany.projectionName; });
-      if (detailProj) {
-        for (idx4 in detailProj.attrs) {
-          hasManyAttrs.push(declareProjAttr(detailProj.attrs[idx4]));
+var ModelBlueprint = (function () {
+    function ModelBlueprint(blueprint, options) {
+        var modelsDir = path.join(options.metadataDir, "models");
+        if (!options.file) {
+            options.file = options.entity.name + ".json";
         }
-        for (idx4 in detailProj.belongsTo) {
-          hasManyAttrs.push(joinProjBelongsTo(detailProj.belongsTo[idx4], 2));
+        var modelFile = path.join(modelsDir, options.file);
+        var content = stripBom(fs.readFileSync(modelFile, "utf8"));
+        var model = JSON.parse(content);
+        this.parentModelName = model.parentModelName;
+        this.parentClasslName = model.parentClasslName;
+        this.serializerAttrs = this.getSerializerAttrs(model);
+        this.projections = this.getJSForProjections(model, modelsDir);
+        this.model = this.getJSForModel(model);
+    }
+    ModelBlueprint.prototype.getSerializerAttrs = function (model) {
+        var attrs = [];
+        for (var _i = 0, _a = model.belongsTo; _i < _a.length; _i++) {
+            var belongsTo = _a[_i];
+            attrs.push(belongsTo.name + ": { serialize: 'odata-id', deserialize: 'records' }");
         }
-
-        for (idx4 in detailProj.hasMany) {
-          hasManyAttrs.push(joinProjHasMany(detailProj.hasMany[idx4], modelsDir));
+        for (var _b = 0, _c = model.hasMany; _b < _c.length; _b++) {
+            var hasMany = _c[_b];
+            attrs.push(hasMany.name + ": { serialize: false, deserialize: 'records' }");
         }
-      }
-      hasMany.attrsStr = hasManyAttrs.join(",\n" + TAB);
-      projAttrs.push(templateProjHasMany(hasMany));
-    }
-    proj.attrs = projAttrs.join(",\n" + TAB);
-    projections.push(templateDefineProjection(proj));
-  }
-  return projections.join("\n" + TAB);
-}
-
-
-function getJSForModel(model) {
-  var attrs = [], validations = [];
-  var idx, attr;
-  var templateAttr = template("<%=name%>: DS.attr('<%=type%>')");
-  var templateBelongsTo = template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
-  var templateHasMany = template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
-  for (idx in model.attrs) {
-    attr = model.attrs[idx];
-    attrs.push(templateAttr(attr));
-    if (attr.notNull) {
-      if (attr.type === "date") {
-        validations.push(attr.name + ": { datetime: true }");
-      } else {
-        validations.push(attr.name + ": { presence: true }");
-      }
-    }
-  }
-  for (idx in model.belongsTo) {
-    attrs.push(templateBelongsTo(model.belongsTo[idx]));
-  }
-  for (idx in model.hasMany) {
-    attrs.push(templateHasMany(model.hasMany[idx]));
-  }
-  attrs.push("validations: { \n " + validations.join(",\n ") + "\n }");
-
-  return "var Model = BaseModel.extend({\n" + TAB + attrs.join(",\n" + TAB) + "\n});";
-}
-
-
-function declareProjAttr(attr) {
-  attr.hiddenStr = "";
-  if (attr.hidden) {
-    attr.hiddenStr = ", { hidden: true }";
-  }
-  return templateProjAttr(attr);
-}
-
-function joinProjHasMany(detailHasMany, modelsDir) {
-  var hasManyAttrs = [];
-  var idx3;
-
-  var modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
-  var hasManyModel = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
-  var hasManyProj = find(hasManyModel.projections, function (pr) { return pr.name === detailHasMany.projectionName; });
-  var idx5;
-  if (hasManyProj) {
-    for (idx3 in hasManyProj.attrs) {
-      hasManyAttrs.push(declareProjAttr(hasManyProj.attrs[idx3]));
-    }
-    for (idx3 in hasManyProj.belongsTo) {
-      hasManyAttrs.push(joinProjBelongsTo(hasManyProj.belongsTo[idx3]));
-    }
-    detailHasMany.attrsStr = hasManyAttrs.join(",\n ");
-    return templateProjHasMany(detailHasMany);
-  }
-  return "";
-}
-
-
-function joinProjBelongsTo(belongsTo, level) {
-  var belongsToAttrs = [];
-  var idx3;
-  for (idx3 in belongsTo.attrs) {
-    belongsToAttrs.push(declareProjAttr(belongsTo.attrs[idx3]));
-  }
-  for (idx3 in belongsTo.belongsTo) {
-    belongsToAttrs.push(joinProjBelongsTo(belongsTo.belongsTo[idx3], level + 1));
-  }
-  belongsTo.hiddenStr = "";
-  if (belongsTo.hidden) {
-    belongsTo.hiddenStr = ", { hidden: true }";
-  }
-  var indent = [];
-  for (var i = 0; i < level; i++) {
-    indent.push(TAB);
-  }
-  belongsTo.indentStr = indent.join("");
-  belongsTo.attrsStr = belongsToAttrs.join(",\n" + belongsTo.indentStr);
-  return templateProjBelongsTo(belongsTo);
-}
-
+        return attrs.join(",\n");
+    };
+    ModelBlueprint.prototype.getJSForModel = function (model) {
+        var attrs = [], validations = [];
+        var templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
+        var templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
+        for (var _i = 0, _a = model.attrs; _i < _a.length; _i++) {
+            var attr = _a[_i];
+            attrs.push(attr.name + ": DS.attr('" + attr.type + "')");
+            if (attr.notNull) {
+                if (attr.type === "date") {
+                    validations.push(attr.name + ": { datetime: true }");
+                }
+                else {
+                    validations.push(attr.name + ": { presence: true }");
+                }
+            }
+        }
+        for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
+            var belongsTo = _c[_b];
+            attrs.push(templateBelongsTo(belongsTo));
+        }
+        for (var _d = 0, _e = model.hasMany; _d < _e.length; _d++) {
+            var hasMany = _e[_d];
+            attrs.push(templateHasMany(hasMany));
+        }
+        attrs.push("validations: { \n " + validations.join(",\n ") + "\n }");
+        return "({\n" + TAB + attrs.join(",\n" + TAB) + "\n});";
+    };
+    ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir) {
+        var hasManyAttrs = [];
+        var modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
+        var hasManyModel = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+        var hasManyProj = lodash.find(hasManyModel.projections, function (pr) { return pr.name === detailHasMany.projectionName; });
+        if (hasManyProj) {
+            for (var _i = 0, _a = hasManyProj.attrs; _i < _a.length; _i++) {
+                var attr = _a[_i];
+                hasManyAttrs.push(this.declareProjAttr(attr));
+            }
+            for (var _b = 0, _c = hasManyProj.belongsTo; _b < _c.length; _b++) {
+                var belongsTo = _c[_b];
+                hasManyAttrs.push(this.joinProjBelongsTo(belongsTo, 1));
+            }
+            var attrsStr = hasManyAttrs.join(",\n ");
+            return detailHasMany.name + ": Proj.hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + attrsStr + "\n})";
+        }
+        return "";
+    };
+    ModelBlueprint.prototype.joinProjBelongsTo = function (belongsTo, level) {
+        var belongsToAttrs = [];
+        for (var _i = 0, _a = belongsTo.attrs; _i < _a.length; _i++) {
+            var attr = _a[_i];
+            belongsToAttrs.push(this.declareProjAttr(attr));
+        }
+        for (var _b = 0, _c = belongsTo.belongsTo; _b < _c.length; _b++) {
+            var belongsTo2 = _c[_b];
+            belongsToAttrs.push(this.joinProjBelongsTo(belongsTo2, level + 1));
+        }
+        var hiddenStr = "";
+        if (belongsTo.hidden) {
+            hiddenStr = ", { hidden: true }";
+        }
+        var indent = [];
+        for (var i = 0; i < level; i++) {
+            indent.push(TAB);
+        }
+        var indentStr = indent.join("");
+        var attrsStr = belongsToAttrs.join(",\n" + indentStr);
+        return belongsTo.name + ": Proj.belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', { \n" + indentStr + attrsStr + " \n" + indentStr + "}" + hiddenStr + ")";
+    };
+    ModelBlueprint.prototype.declareProjAttr = function (attr) {
+        var hiddenStr = "";
+        if (attr.hidden) {
+            hiddenStr = ", { hidden: true }";
+        }
+        return attr.name + ": Proj.attr('" + attr.caption + "'" + hiddenStr + ")";
+    };
+    ModelBlueprint.prototype.getJSForProjections = function (model, modelsDir) {
+        var projections = [];
+        var projName;
+        for (var _i = 0, _a = model.projections; _i < _a.length; _i++) {
+            var proj = _a[_i];
+            var projAttrs = [];
+            for (var _b = 0, _c = proj.attrs; _b < _c.length; _b++) {
+                var attr = _c[_b];
+                projAttrs.push(this.declareProjAttr(attr));
+            }
+            for (var _d = 0, _e = proj.belongsTo; _d < _e.length; _d++) {
+                var belongsTo = _e[_d];
+                projAttrs.push(this.joinProjBelongsTo(belongsTo, 1));
+            }
+            for (var _f = 0, _g = proj.hasMany; _f < _g.length; _f++) {
+                var hasMany = _g[_f];
+                var hasManyAttrs = [];
+                var modelFile = path.join(modelsDir, hasMany.relatedTo + ".json");
+                var detailModel = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+                projName = hasMany.projectionName;
+                var detailProj = lodash.find(detailModel.projections, function (pr) { return pr.name === projName; });
+                if (detailProj) {
+                    for (var _h = 0, _j = detailProj.attrs; _h < _j.length; _h++) {
+                        var detailAttr = _j[_h];
+                        hasManyAttrs.push(this.declareProjAttr(detailAttr));
+                    }
+                    for (var _k = 0, _l = detailProj.belongsTo; _k < _l.length; _k++) {
+                        var detailBelongsTo = _l[_k];
+                        hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 2));
+                    }
+                    for (var _m = 0, _o = detailProj.hasMany; _m < _o.length; _m++) {
+                        var detailHasMany = _o[_m];
+                        hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir));
+                    }
+                }
+                var attrsStr_1 = hasManyAttrs.join(",\n" + TAB);
+                projAttrs.push(hasMany.name + ": Proj.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n" + attrsStr_1 + "\n})");
+            }
+            var attrsStr = projAttrs.join(",\n" + TAB);
+            projections.push("Model.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n" + attrsStr + "\n});");
+        }
+        return projections.join("\n" + TAB);
+    };
+    return ModelBlueprint;
+}());
+//# sourceMappingURL=index.js.map

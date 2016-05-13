@@ -655,7 +655,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    *
    * @method confirmDeleteRow.
    * @param {Object} row Row.
-   * @return {Boolean} If `true` then delete else cancel.
+   * @return {Boolean} If `true` then delete row else cancel delete.
    */
   confirmDeleteRow: null,
 
@@ -691,7 +691,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    *
    * @method confirmDeleteRows.
    * @param {Array} selectedRows Selected rows.
-   * @return {Boolean} If `true` then delete else cancel.
+   * @return {Boolean} If `true` then delete selected rows else cancel delete.
    */
   confirmDeleteRows: null,
 

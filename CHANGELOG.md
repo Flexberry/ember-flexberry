@@ -1,6 +1,14 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-06
+### Breaking changes
+Fleberry-lookup:
+* Rename classChoose in chooseButtonClass.
+* Rename classRemove in removeButtonClass.
+Flexberry-file, Flexberry-objectlistview, Flexberry-groupedit:
+* Rename classButton in buttonClass.
+
 ## 2016-04-15
 ### Fixed
 Lookup with autocomplete:

@@ -270,137 +270,149 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     }
 
     if (this.get('autocomplete')) {
-      this.send('onAutocomplete');
+      this.onAutocomplete();
     } else if (this.get('dropdown')) {
-      this.send('onDropdown');
+      this.onDropdown();
     }
   },
 
-  actions: {
-    onAutocomplete: function() {
-      let chooseRemoteData = this.get('chooseRemoteData');
-      let _this = this;
+  /**
+   * Init component with mode autocomplete.
+   *
+   * @method onAutocomplete
+   * @private
+   */
+  onAutocomplete: function() {
+    let chooseRemoteData = this.get('chooseRemoteData');
+    let _this = this;
 
-      if (!chooseRemoteData.nameProperty) {
-        throw new Error('nameProperty is undefined.');
-      }
+    if (!chooseRemoteData.nameProperty) {
+      throw new Error('nameProperty is undefined.');
+    }
 
-      if (!chooseRemoteData.minCharacters || typeof (chooseRemoteData.minCharacters) !== 'number' || chooseRemoteData.minCharacters <= 0) {
-        throw new Error('minCharacters has wrong value.');
-      }
+    if (!chooseRemoteData.minCharacters || typeof (chooseRemoteData.minCharacters) !== 'number' || chooseRemoteData.minCharacters <= 0) {
+      throw new Error('minCharacters has wrong value.');
+    }
 
-      if (!chooseRemoteData.maxResults || typeof (chooseRemoteData.maxResults) !== 'number' || chooseRemoteData.maxResults <= 0) {
-        throw new Error('maxResults has wrong value.');
-      }
+    if (!chooseRemoteData.maxResults || typeof (chooseRemoteData.maxResults) !== 'number' || chooseRemoteData.maxResults <= 0) {
+      throw new Error('maxResults has wrong value.');
+    }
 
-      if (!chooseRemoteData.relationName) {
-        throw new Error('relationName is not defined.');
-      }
+    if (!chooseRemoteData.relationName) {
+      throw new Error('relationName is not defined.');
+    }
 
-      this.set('autocompleteValue', this.get('value'));
+    this.set('autocompleteValue', this.get('value'));
 
-      this.$().search({
-        apiSettings: {
-          url: chooseRemoteData.url,
-          beforeSend: function(settings) {
-            let urlOptions = _this.get('queryOptions')(
-              {
-                relationName: chooseRemoteData.relationName,
-                lookupLimitFunction: chooseRemoteData.limitFunction,
-                top: chooseRemoteData.maxResults,
-                limitField: chooseRemoteData.nameProperty,
-                limitValue: settings.urlData.query
-              });
-            Ember.merge(settings.data, urlOptions);
-            return settings;
-          },
-          beforeXHR: function(xhr) {
-            // Set necessary auth headers.
-            _this.sendAction(
-              'updateXhrAction',
-              {
-                xhr: xhr,
-                element: _this
-              }
-            );
-          }
+    this.$().search({
+      apiSettings: {
+        url: chooseRemoteData.url,
+        beforeSend: function(settings) {
+          let urlOptions = _this.get('queryOptions')(
+            {
+              relationName: chooseRemoteData.relationName,
+              lookupLimitFunction: chooseRemoteData.limitFunction,
+              top: chooseRemoteData.maxResults,
+              limitField: chooseRemoteData.nameProperty,
+              limitValue: settings.urlData.query
+            });
+          Ember.merge(settings.data, urlOptions);
+          return settings;
         },
-        fields: {
-          results: 'value',
-          title: chooseRemoteData.nameProperty
-        },
-        minCharacters: chooseRemoteData.minCharacters,
-        cache: false,
-        maxResults: chooseRemoteData.maxResults,
-        fullTextSearch: false,
-        onSelect: function(result, response) {
+        beforeXHR: function(xhr) {
+          // Set necessary auth headers.
           _this.sendAction(
-            'updateLookupAction',
+            'updateXhrAction',
+            {
+              xhr: xhr,
+              element: _this
+            }
+          );
+        }
+      },
+      fields: {
+        results: 'value',
+        title: chooseRemoteData.nameProperty
+      },
+      minCharacters: chooseRemoteData.minCharacters,
+      cache: false,
+      maxResults: chooseRemoteData.maxResults,
+      fullTextSearch: false,
+      onSelect: function(result, response) {
+        _this.sendAction(
+          'updateLookupAction',
+          {
+            relationName: chooseRemoteData.relationName,
+            modelToLookup: chooseRemoteData.modelToLookup,
+            newRelationValue: result
+          });
+      }
+    });
+
+    // TODO: find proper way to restore selected value.
+    this.$('.prompt').blur(function() {
+      if (!_this.$('.ui.search').hasClass('focus')) {
+        _this.set('autocompleteValue', _this.get('value'));
+      }
+    });
+  },
+  /**
+   * Init component with mode dropdown.
+   *
+   * @method onAutocomplete
+   * @private
+   */
+  onDropdown: function() {
+    let _this = this;
+    let chooseRemoteData = this.get('chooseRemoteData');
+
+    this.$('.flexberry-dropdown').dropdown({
+      apiSettings: {
+        url: chooseRemoteData.url,
+        beforeSend: function(settings) {
+          let urlOptions = _this.get('queryOptions')(
             {
               relationName: chooseRemoteData.relationName,
-              modelToLookup: chooseRemoteData.modelToLookup,
-              newRelationValue: result
+              lookupLimitFunction: chooseRemoteData.limitFunction,
+              top: chooseRemoteData.maxResults,
+              limitField: chooseRemoteData.nameProperty,
+              limitValue: settings.urlData.query
             });
-        }
-      });
-
-      // TODO: find proper way to restore selected value.
-      this.$('.prompt').blur(function() {
-        if (!_this.$('.ui.search').hasClass('focus')) {
-          _this.set('autocompleteValue', _this.get('value'));
-        }
-      });
-    },
-    onDropdown: function () {
-      let _this = this;
-      let chooseRemoteData = this.get('chooseRemoteData');
-
-      this.$('.flexberry-dropdown').dropdown({
-        apiSettings: {
-          url: chooseRemoteData.url,
-          beforeSend: function(settings) {
-            let urlOptions = _this.get('queryOptions')(
-              {
-                relationName: chooseRemoteData.relationName,
-                lookupLimitFunction: chooseRemoteData.limitFunction,
-                top: chooseRemoteData.maxResults,
-                limitField: chooseRemoteData.nameProperty,
-                limitValue: settings.urlData.query
-              });
-            Ember.merge(settings.data, urlOptions);
-            return settings;
-          },
-          beforeXHR: function(xhr) {
-            // Set necessary auth headers.
-            _this.sendAction(
-              'updateXhrAction',
-              {
-                xhr: xhr,
-                element: _this
-              }
-            );
-          }
+          Ember.merge(settings.data, urlOptions);
+          return settings;
         },
-        fields: {
-          remoteValues: 'value',
-          name: chooseRemoteData.nameProperty,
-          value: chooseRemoteData.nameProperty
-        },
-        minCharacters: chooseRemoteData.minCharacters,
-        cache: false,
-        fullTextSearch: false,
-        allowAdditions: this.get('multiselect'),
-        onChange: function(value, text, $choice) {
-          this.sendAction(
-            'updateLookupAction',
+        beforeXHR: function(xhr) {
+          // Set necessary auth headers.
+          _this.sendAction(
+            'updateXhrAction',
             {
-              relationName: chooseRemoteData.relationName,
-              modelToLookup: chooseRemoteData.modelToLookup,
-              newRelationValue: value
-            });
+              xhr: xhr,
+              element: _this
+            }
+          );
         }
-      });
-    },
+      },
+      fields: {
+        remoteValues: 'value',
+        name: chooseRemoteData.nameProperty,
+        value: chooseRemoteData.nameProperty
+      },
+      minCharacters: chooseRemoteData.minCharacters,
+      cache: false,
+      fullTextSearch: false,
+      allowAdditions: this.get('multiselect'),
+      onChange: function(value, text, $choice) {
+        this.sendAction(
+          'updateLookupAction',
+          {
+            relationName: chooseRemoteData.relationName,
+            modelToLookup: chooseRemoteData.modelToLookup,
+            newRelationValue: value
+          });
+      }
+    });
+  },
+  actions: {
     choose: function(chooseData) {
       if (this.get('readonly')) {
         return;

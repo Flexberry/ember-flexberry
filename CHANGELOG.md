@@ -1,6 +1,21 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-10
+### Breaking changes
+Fleberry-lookup:
+* Add mode dropdown.
+* Rename autocompleteUpdateAction in updateAction.
+* Rename autocompleteUpdateXhrAction in updateXhrAction.
+* Rename autocompleteUrl in url.
+* Rename autocompleteProperty in nameProperty.
+* Rename autocompleteQueryOptions in queryOptions.
+* Rename updateAutocompleteLookupXhr in updateLookupXhr.
+* Rename getLookupAutocompleteUrl in getLookupUrl.
+* Rename getAutocompleteLookupQueryOptions in getLookupQueryOptions.
+* Rename autocompleteMinCharacters in minCharacters.
+* Rename autocompleteMaxResults in maxResults.
+
 ## 2016-04-15
 ### Fixed
 Lookup with autocomplete:

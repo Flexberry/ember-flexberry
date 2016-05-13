@@ -52,9 +52,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         return;
       }
 
-      if (confirm('Do you really want to delete this record?')) {
-        this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      let confirmDeleteRow = this.get('confirmDeleteRow');
+      if (confirmDeleteRow) {
+        Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
+        if (!confirmDeleteRow(recordWithKey.data)) {
+          return;
+        }
       }
+
+      this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 
     selectRow: function(recordWithKey, e) {
@@ -622,6 +628,74 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
+   * Hook that can be used to confirm delete row.
+   *
+   * Example:
+   * ```handlebars
+   * <!-- app/templates/your-template.hbs -->
+   * {{flexberry-objectlistview
+   *   ...
+   *   confirmDeleteRow=(action 'confirmDeleteRow')
+   *   ...
+   * }}
+   * ```
+   *
+   * ```js
+   * // app/controllers/your-controller.js
+   * ...
+   * actions: {
+   *   ...
+   *   confirmDeleteRow(row) {
+   *     return confirm('You sure?');
+   *   }
+   *   ...
+   * }
+   * ...
+   * ```
+   *
+   * @method confirmDeleteRow.
+   * @param {Object} row Row.
+   * @return {Boolean} If `true` then delete else cancel.
+   */
+  confirmDeleteRow: null,
+
+  /**
+   * Hook that can be used to confirm delete rows.
+   *
+   * Example:
+   * ```handlebars
+   * <!-- app/templates/your-template.hbs -->
+   * {{flexberry-objectlistview
+   *   ...
+   *   confirmDeleteRows=(action 'confirmDeleteRows')
+   *   ...
+   * }}
+   * ```
+   *
+   * ```js
+   * // app/controllers/your-controller.js
+   * ...
+   * actions: {
+   *   ...
+   *   confirmDeleteRows(selectedRows) {
+   *     if (selectedRows.length < 5) {
+   *       return confirm('You sure?');
+   *     } else {
+   *       return true;
+   *     }
+   *   }
+   *   ...
+   * }
+   * ...
+   * ```
+   *
+   * @method confirmDeleteRows.
+   * @param {Array} selectedRows Selected rows.
+   * @return {Boolean} If `true` then delete else cancel.
+   */
+  confirmDeleteRows: null,
+
+  /**
    * Initializes component.
    */
   init: function() {
@@ -1055,21 +1129,26 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    */
   _deleteRows: function(componentName, immediately) {
     if (componentName === this.get('componentName')) {
-      if (confirm('Do you really want to delete selected records?')) {
-        this.send('dismissErrorMessages');
-
-        var _this = this;
-        var selectedRecords = this.get('selectedRecords');
-        var count = selectedRecords.length;
-        selectedRecords.forEach(function(item, index, enumerable) {
-          Ember.run.once(this, function() {
-            _this._deleteRecord(item, immediately);
-          });
-        }, this);
-
-        selectedRecords.clear();
-        this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
+      var selectedRecords = this.get('selectedRecords');
+      let confirmDeleteRows = this.get('confirmDeleteRows');
+      if (confirmDeleteRows) {
+        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        if (!confirmDeleteRows(selectedRecords)) {
+          return;
+        }
       }
+
+      var _this = this;
+      var count = selectedRecords.length;
+      this.send('dismissErrorMessages');
+      selectedRecords.forEach(function(item, index, enumerable) {
+        Ember.run.once(this, function() {
+          _this._deleteRecord(item, immediately);
+        });
+      }, this);
+
+      selectedRecords.clear();
+      this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
     }
   },
 

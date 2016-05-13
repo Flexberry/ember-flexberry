@@ -15,11 +15,11 @@ var Model = BaseModel.extend({
   birthday: DS.attr('date'),
   gender: DS.attr('ember-flexberry-dummy-gender'),
   vip: DS.attr('boolean'),
-    karma: DS.attr('number'),
-    validations: {
-  name: { presence: true },
-  eMail: { presence: true }
- }
+  karma: DS.attr('number'),
+  validations: {
+    name: { presence: true },
+    eMail: { presence: true }
+  }
 });
 
 Model.defineProjection('ApplicationUserE', 'ember-flexberry-dummy-application-user', {

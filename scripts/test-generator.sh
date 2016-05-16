@@ -3,7 +3,7 @@
 # Prerequisites:
 #   - ember-cli
 
-set -e
+set -ev
 
 # Create temp directory for new ember app.
 ADDON_DIR="$PWD"

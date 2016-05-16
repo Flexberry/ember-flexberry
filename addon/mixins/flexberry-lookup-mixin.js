@@ -138,15 +138,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
       // Get property type name.
       var relatedToType = relation.type;
 
-      // Get property type constructor by type name.
-      var relatedTypeConstructor = this.store.modelFor(relatedToType);
-
-      // Get a projection from related type model.
-      var projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
-      if (!projection) {
-        throw new Error(`No projection with '${projectionName}' name defined in '${relatedToType}' model. `);
-      }
-
       // Lookup
       var lookupSettings = this.get('lookupSettings');
       Ember.assert('Lookup settings are undefined.', lookupSettings);
@@ -157,7 +148,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let reloadData = {
         relatedToType: relatedToType,
         projectionName: projectionName,
-        projection: projection,
 
         perPage: 10, // TODO: get default values.
         page: 1,
@@ -303,7 +293,17 @@ export default Ember.Mixin.create(ReloadListMixin, {
    *
    * @param {String} currentContext Current execution context of this method.
    * @param {Object} options Parameters to load proper data and to tune modal lookup window outlook.
-   * @param {String} [options.id] ID of a record.
+   * @param {String} [options.relatedToType] Type of records to load.
+   * @param {String} [options.projectionName] Projection name to load data by.
+   * @param {String} [options.perPage] Number of records to display on page.
+   * @param {String} [options.page] Current page to display on lookup window.
+   * @param {String} [options.sorting] Current sorting.
+   * @param {String} [options.filter] Current filter.
+   * @param {String} [options.title] Title of modal lookup window.
+   * @param {String} [options.sizeClass] Size of modal lookup window.
+   * @param {String} [options.saveTo] Options to save selected lookup value.
+   * @param {String} [options.currentLookupRow] Current lookup value.
+   * @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
    */
   _reloadModalData: function(currentContext, options) {
     var lookupSettings = currentContext.get('lookupSettings');
@@ -315,7 +315,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
     let reloadData = Ember.merge({
       relatedToType: undefined,
       projectionName: undefined,
-      projection: undefined,
 
       perPage: undefined,
       page: undefined,
@@ -335,6 +334,13 @@ export default Ember.Mixin.create(ReloadListMixin, {
       reloadData.projection ||
       reloadData.saveTo);
 
+    let modelConstructor = currentContext.store.modelFor(reloadData.relatedToType);
+    let projection = Ember.get(modelConstructor, 'projections')[reloadData.projectionName];
+    if (!projection) {
+      throw new Error(
+        `No projection with '${reloadData.projectionName}' name defined in '${reloadData.relatedToType}' model.`);
+    }
+
     var loadingParams = {
       view: lookupSettings.template,
       outlet: 'modal-content'
@@ -344,7 +350,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
     let queryParameters = {
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
-      projection: reloadData.projection,
       perPage: reloadData.perPage ? reloadData.perPage : 10, // TODO: get default values.
       page: reloadData.page ? reloadData.page : 1, // TODO: get default values.
       sorting: [], // TODO: get current value.
@@ -357,13 +362,12 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let controller = currentContext.get('lookupController');
       controller.clear();
       controller.setProperties({
-        modelProjection: reloadData.projection,
+        modelProjection: projection,
         title: reloadData.title,
         sizeClass: reloadData.sizeClass,
         saveTo: reloadData.saveTo,
         currentLookupRow: reloadData.currentLookupRow,
         customPropertiesData: reloadData.customPropertiesData,
-        reloadDataHandler: currentContext._reloadModalData,
 
         perPage: queryParameters.perPage,
         page: queryParameters.page,
@@ -372,8 +376,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
         modelType: reloadData.relatedToType,
         projectionName: reloadData.projectionName,
-        projection: reloadData.projection,
         reloadContext: currentContext
+        reloadDataHandler: currentContext._reloadModalData,
       });
 
       controller.set('reloadObserverIsActive', true);

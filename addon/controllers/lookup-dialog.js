@@ -47,8 +47,6 @@ export default ListFormController.extend({
 
   projectionName: undefined,
 
-  projection: undefined,
-
   reloadDataHandler: undefined,
 
   reloadContext: undefined,
@@ -68,7 +66,6 @@ export default ListFormController.extend({
     let reloadData = {
       relatedToType: this.get('modelType'),
       projectionName: this.get('projectionName'),
-      projection: this.get('modelProjection'),
 
       perPage: this.get('perPage'),
       page: this.get('page'),
@@ -170,7 +167,6 @@ export default ListFormController.extend({
     this.set('sort', undefined);
     this.set('modelType', undefined);
     this.set('projectionName', undefined);
-    this.set('projection', undefined);
     this.set('reloadContext', undefined);
     this.set('reloadObserverIsActive', false);
     return this;

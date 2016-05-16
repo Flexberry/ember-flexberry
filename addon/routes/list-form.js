@@ -61,16 +61,10 @@ export default ProjectedModelFormRoute.extend(
 
     let projectionName = this.get('modelProjection');
     let relatedToType = this.get('modelName');
-    let relatedTypeConstructor = this.store.modelFor(relatedToType);
-    let projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
-    if (!projection) {
-      throw new Error(`No projection with '${projectionName}' name defined in '${relatedToType}' model.`);
-    }
 
     let queryParameters = {
       modelName: relatedToType,
       projectionName: projectionName,
-      projection: projection,
       perPage: params.perPage,
       page: params.page,
       sorting: sorting,

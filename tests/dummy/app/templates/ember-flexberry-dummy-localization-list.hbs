@@ -1,12 +1,13 @@
 <h3>Localization - list form</h3>
 <div class="row">
-    {{
-    flexberry-objectlistview
-    modelName = "ember-flexberry-dummy-localization"
+{{
+  flexberry-objectlistview
+  editFormRoute=editFormRoute
+  modelName = "ember-flexberry-dummy-localization"
 	modelProjection = modelProjection
 	content = model
-    createNewButton = true
-    refreshButton = true
+  createNewButton = true
+  refreshButton = true
 	sorting = computedSorting
 	orderable = true
 	sortByColumn = (action "sortByColumn")

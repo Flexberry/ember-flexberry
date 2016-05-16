@@ -1,12 +1,13 @@
 <h3>Suggestion types - list form</h3>
 <div class="row">
-    {{
-    flexberry-objectlistview
-    modelName = "ember-flexberry-dummy-suggestion-type"
+{{
+  flexberry-objectlistview
+  editFormRoute=editFormRoute
+  modelName = "ember-flexberry-dummy-suggestion-type"
 	modelProjection = modelProjection
 	content = model
-    createNewButton = true
-    refreshButton = true
+  createNewButton = true
+  refreshButton = true
 	sorting = computedSorting
 	orderable = true
 	sortByColumn = (action "sortByColumn")
@@ -21,4 +22,4 @@
 	gotoPage = (action "gotoPage")
 	nextPage = (action "nextPage")
 }}
-</div> 
+</div>

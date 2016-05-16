@@ -1,4 +1,6 @@
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
-var EmberFlexberryDummySuggestionTypeListController = ListFormController;
-export default EmberFlexberryDummySuggestionTypeListController;
+let EmberFlexberryDummySuggestionListController = ListFormController;
+export default EmberFlexberryDummySuggestionListController.extend({
+  editFormRoute: 'ember-flexberry-dummy-suggestion-type-edit'
+});

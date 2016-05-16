@@ -1,7 +1,7 @@
 ﻿{
   "modelName": "ember-flexberry-dummy-comment",
   "parentModelName": null,
-  "parentClasslName": null,
+  "parentClassName": null,
   "attrs": [
     {
       "name": "text",
@@ -27,13 +27,11 @@
   ],
   "belongsTo": [
     {
-      "startMultiplicity": null,
       "name": "author",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     },
     {
-      "startMultiplicity": null,
       "name": "suggestion",
       "relatedTo": "ember-flexberry-dummy-suggestion",
       "inverse": "comments"

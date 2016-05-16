@@ -12,7 +12,10 @@ TMP_DIR=`mktemp -d`
 pushd "$TMPDIR"
 
 # Initialize new ember app and install addon from the build.
+# EmberCLI asks whether it needs to overwrite existing files,
+# so we need to remove them for non-interactive build.
 ember init
+rm .editorconfig
 ember install "${ADDON_DIR}"
 
 # Generate components using Dummy metamodel and test them.

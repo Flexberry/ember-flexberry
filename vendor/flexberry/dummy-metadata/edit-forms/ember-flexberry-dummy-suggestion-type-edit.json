@@ -1,0 +1,21 @@
+﻿{
+  "propertyLookup": [
+    {
+      "relationName": "Parent",
+      "projection": "SuggestionTypeL"
+    },
+    {
+      "relationName": "LocalizedTypes.Localization",
+      "projection": "LocalizationL"
+    }
+  ],
+  "caption": "Suggestion type",
+  "name": "EmberFlexberryDummySuggestionTypeEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-suggestion-type",
+      "modelProjection": "SuggestionTypeE"
+    }
+  ]
+}

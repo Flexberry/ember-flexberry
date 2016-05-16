@@ -2,7 +2,12 @@ export default {
   'edit-form': {
     'saved-message': 'Saved.',
     'save-failed-message': 'Save failed.',
-    'delete-failed-message': 'Delete failed'
+    'delete-failed-message': 'Delete failed',
+
+    'save-button-text': 'Save',
+    'saveAndClose-button-text': 'Save and close',
+    'delete-button-text': 'Delete',
+    'close-button-text': 'Close'
   },
 
   'flexberry-datepicker': {

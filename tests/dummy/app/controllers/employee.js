@@ -15,7 +15,7 @@ export default EditFormController.extend({
   routeForEditOrder: 'order',
 
   /**
-   * Route name for transition on flexberry-objectlistview
+   * Route name for transition after close edit form.
    *
    * @property parentRoute
    * @type String

@@ -1,0 +1,13 @@
+﻿{
+  "newForm": "ember-flexberry-dummy-suggestion-type-edit",
+  "editForm": "ember-flexberry-dummy-suggestion-type-edit",
+  "caption": "Suggestion types",
+  "name": "EmberFlexberryDummySuggestionTypeList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-suggestion-type",
+      "modelProjection": "SuggestionTypeL"
+    }
+  ]
+}

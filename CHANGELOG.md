@@ -3,10 +3,10 @@
 
 ## 2016-05-06
 ### Breaking changes
-Fleberry-lookup:
+FlexberryLookupComponent:
 * Rename classChoose in chooseButtonClass.
 * Rename classRemove in removeButtonClass.
-Flexberry-file, Flexberry-objectlistview, Flexberry-groupedit:
+FlexberryFileComponent, FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
 * Rename classButton in buttonClass.
 
 ## 2016-04-15

@@ -1,0 +1,13 @@
+﻿{
+  "newForm": "ember-flexberry-dummy-comment-edit",
+  "editForm": "ember-flexberry-dummy-comment-edit",
+  "caption": "Comment list",
+  "name": "EmberFlexberryDummyCommentList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-comment",
+      "modelProjection": "CommentL"
+    }
+  ]
+}

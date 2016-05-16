@@ -16,16 +16,24 @@
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui positive button" {{action 'save'}}>Save</button>
+          <button type="submit" class="ui positive button" {{action 'save'}}>
+          {{t "edit-form.save-button-text"}}
+        </button>
         {{/unless}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>Save and close</button>
+          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>
+            {{t "edit-form.saveAndClose-button-text"}}
+          </button>
         {{/unless}}
         {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
-          <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
+          <button type="submit" class="ui negative button" {{action 'delete'}}>
+            {{t "edit-form.delete-button-text"}}
+          </button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>Close</button>
+      <button type="submit" class="ui button" {{action 'close'}}>
+        {{t "edit-form.close-button-text"}}
+      </button>
     </div>
   </div>
   <div class="inline fields">

@@ -1,0 +1,13 @@
+﻿{
+  "newForm": "ember-flexberry-dummy-localization-edit",
+  "editForm": "ember-flexberry-dummy-localization-edit",
+  "caption": "Localization",
+  "name": "EmberFlexberryDummyLocalizationList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-localization",
+      "modelProjection": "LocalizationL"
+    }
+  ]
+}

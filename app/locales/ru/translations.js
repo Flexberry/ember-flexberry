@@ -1,8 +1,13 @@
 export default {
   'edit-form': {
     'saved-message': 'Форма сохранена.',
-    'save-failed-message': 'Ошибка сохранения.',
-    'delete-failed-message': 'Ошибка удаления.'
+    'save-failed-message': 'Ошибка сохранения.',    
+    'delete-failed-message': 'Ошибка удаления.',
+
+    'save-button-text': 'Сохранить',
+    'saveAndClose-button-text': 'Сохранить и закрыть',
+    'delete-button-text': 'Удалить',
+    'close-button-text': 'Закрыть'
   },
 
   'flexberry-datepicker': {

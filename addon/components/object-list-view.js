@@ -553,7 +553,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       actions: {
         configurateRow: function(rowConfig, record) {
           rowConfig.canBeDeleted = false;
-          if (record.isMyFavoriteRecord) {
+          if (record.get('isMyFavoriteRecord')) {
             rowConfig.customClass += 'my-fav-record';
           }
         }

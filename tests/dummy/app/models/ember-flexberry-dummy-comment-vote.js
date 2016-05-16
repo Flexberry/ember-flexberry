@@ -8,13 +8,13 @@ var Model = BaseModel.extend({
   comment: DS.belongsTo('ember-flexberry-dummy-comment', { inverse: 'userVotes', async: false }),
   validations: {
 
- }
+  }
 });
 
 Model.defineProjection('CommentVoteE', 'ember-flexberry-dummy-comment-vote', {
   voteType: Proj.attr('Vote type'),
   applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
-  name: Proj.attr('Name', { hidden: true })
+    name: Proj.attr('Name', { hidden: true })
   })
 });
 

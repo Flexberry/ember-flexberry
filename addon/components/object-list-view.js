@@ -553,6 +553,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       actions: {
         configurateRow: function(rowConfig, record) {
           rowConfig.canBeDeleted = false;
+          if (record.isMyFavoriteRecord) {
+            rowConfig.customClass += 'my-fav-record';
+          }
         }
       }
     });
@@ -572,10 +575,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @type Object
    * @param {Boolean} [canBeDeleted=true] The row can be deleted.
    * @param {Boolean} [canBeSelected=true] The row can be selected via checkbox.
+   * @param {String} [customClass=''] The row can has a custon css classes.
    */
   defaultRowConfig: {
     canBeDeleted: true,
-    canBeSelected: true
+    canBeSelected: true,
+    customClass: ''
   },
 
   /**

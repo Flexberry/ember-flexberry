@@ -7,13 +7,60 @@ import Ember from 'ember';
 import QueryBuilder from 'ember-flexberry-projections/query/builder';
 import { StringPredicate } from 'ember-flexberry-projections/query/predicate';
 
-// TODO: rename file, add 'controller' word into filename.
-export default Ember.Mixin.create({
-  // Lookup settings.
+import ReloadListMixin from '../mixins/reload-list-mixin';
+
+/**
+ * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.
+ *
+ * @class FlexberryLookupMixin
+ * @extends Ember.Mixin
+ * @uses ReloadListMixin
+ * @public
+ */
+export default Ember.Mixin.create(ReloadListMixin, {
+  /**
+   * Lookup settings for modal window.
+   * It has to be overriden on controller where this mixin is used.
+   *
+   * @property lookupSettings
+   * @type Object
+   */
   lookupSettings: {
+    /**
+     * Name of controller that handles modal window.
+     * Controller with the same name has to be injected to property `lookupController`.
+     *
+     * @property controllerName
+     * @type String
+     * @default undefined
+     */
     controllerName: undefined,
+
+    /**
+     * Name of template for modal window itself (not content of modal window).
+     *
+     * @property template
+     * @type String
+     * @default undefined
+     */
     template: undefined,
+
+    /**
+     * Name of template for content of modal window.
+     *
+     * @property contentTemplate
+     * @type String
+     * @default undefined
+     */
     contentTemplate: undefined,
+
+    /**
+     * Name of template for content of loading modal window.
+     *
+     * @property loaderTemplate
+     * @type String
+     * @default undefined
+     */
     loaderTemplate: undefined
   },
 
@@ -44,8 +91,9 @@ export default Ember.Mixin.create({
        1) create template with necessary content and set unique name for it (for example 'customlookupform.hbs');
        2) override lookup setting `lookupSettings.contentTemplate` on controller level (for example 'customlookupform');
        3) if there has to be specific logic or properties on controller for template,
-          current lookup controller can be overriden (it is 'lookup-dialog' for edit forms)
-          and new name can be set on lookup setting `lookupSettings.controllerName`
+          current lookup controller can be overriden (it is 'lookup-dialog' for edit forms),
+          new name can be set on lookup setting `lookupSettings.controllerName`
+          and new controller can be injected as `lookupController`
           (if the controller was extended and not reopened).
 
      * @method showLookupDialog
@@ -68,15 +116,13 @@ export default Ember.Mixin.create({
       Ember.assert(`Parameter 'limitFunction' has been removed. Use 'predicate' to specify limits.`, !limitFunction);
 
       let projectionName = options.projection;
+      Ember.assert('ProjectionName is undefined.', projectionName);
+
       let relationName = options.relationName;
       let title = options.title;
       let modelToLookup = options.modelToLookup;
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
       let sizeClass = options.sizeClass;
-
-      if (!projectionName) {
-        throw new Error('ProjectionName is undefined.');
-      }
 
       let model = modelToLookup ? modelToLookup : this.get('model');
 
@@ -103,64 +149,32 @@ export default Ember.Mixin.create({
 
       // Lookup
       var lookupSettings = this.get('lookupSettings');
-      if (!lookupSettings) {
-        throw new Error('Lookup settings are undefined.');
-      }
-
-      // TODO: maybe default params or Ember.assert\warn?
-      if (!lookupSettings.template) {
-        throw new Error('Lookup template is undefined.');
-      }
-
-      if (!lookupSettings.controllerName) {
-        throw new Error('Lookup controller name is undefined.');
-      }
-
-      if (!lookupSettings.contentTemplate) {
-        throw new Error('Lookup content template is undefined.');
-      }
-
-      if (!lookupSettings.loaderTemplate) {
-        throw new Error('Lookup loader template is undefined.');
-      }
+      Ember.assert('Lookup settings are undefined.', lookupSettings);
+      Ember.assert('Lookup template is undefined.', lookupSettings.template);
 
       this.send('showModalDialog', lookupSettings.template);
-      var loadingParams = {
-        view: lookupSettings.template,
-        outlet: 'modal-content'
+
+      let reloadData = {
+        relatedToType: relatedToType,
+        projectionName: projectionName,
+        projection: projection,
+
+        perPage: 10, // TODO: get default values.
+        page: 1,
+        sorting: [],
+        filter: undefined,
+
+        title: title,
+        sizeClass: sizeClass,
+        saveTo: {
+          model: model,
+          propName: relationName
+        },
+        currentLookupRow: model.get(relationName),
+        customPropertiesData: lookupWindowCustomPropertiesData
       };
-      this.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
 
-      let builder = new QueryBuilder(this.store)
-        .from(relatedToType)
-        .selectByProjection(projectionName);
-
-      if (options.predicate) {
-        builder.where(options.predicate);
-      }
-
-      this.store.query(relatedToType, builder.build()).then(data => {
-        this.send('removeModalDialog', loadingParams);
-
-        let controller = this.get('lookupController');
-        controller.clear();
-        controller.setProperties({
-          modelProjection: projection,
-          title: title,
-          sizeClass: sizeClass,
-          saveTo: {
-            model: model,
-            propName: relationName
-          },
-          currentLookupRow: model.get(relationName),
-          customPropertiesData: lookupWindowCustomPropertiesData
-        });
-
-        this.send('showModalDialog', lookupSettings.contentTemplate, {
-          controller: controller,
-          model: data
-        }, loadingParams);
-      });
+      this._reloadModalData(this, reloadData);
     },
 
     /**
@@ -271,6 +285,104 @@ export default Ember.Mixin.create({
       this.get('currentAuthService').authCustomRequest(options);
       return options;
     }
+  },
+
+  /**
+   * This method refreshes displayed data on lookup modal window.
+
+     It reloads current lookup modal window in order to show loading image.
+     Then proper request to load data is formed (it considers current page, filter, etc).
+     After the data loading data are displayed on lookup modal window.
+
+     This method is called during the first data loading
+     and after each change of request parameters (current page, filter, etc) on lookup modal window controller
+     (it is implemented by sending handler on this method to lookup modal window controller).
+
+   * @method _reloadModalData
+   * @private
+   *
+   * @param {String} currentContext Current execution context of this method.
+   * @param {Object} options Parameters to load proper data and to tune modal lookup window outlook.
+   * @param {String} [options.id] ID of a record.
+   */
+  _reloadModalData: function(currentContext, options) {
+    var lookupSettings = currentContext.get('lookupSettings');
+    Ember.assert('Lookup settings are undefined.', lookupSettings);
+    Ember.assert('Lookup template is undefined.', lookupSettings.template);
+    Ember.assert('Lookup content template is undefined.', lookupSettings.contentTemplate);
+    Ember.assert('Lookup loader template is undefined.', lookupSettings.loaderTemplate);
+
+    let reloadData = Ember.merge({
+      relatedToType: undefined,
+      projectionName: undefined,
+      projection: undefined,
+
+      perPage: undefined,
+      page: undefined,
+      sorting: undefined,
+      filter: undefined,
+
+      title: undefined,
+      sizeClass: undefined,
+      saveTo: undefined,
+      currentLookupRow: undefined,
+      customPropertiesData: undefined
+    }, options);
+
+    Ember.assert('Reload data are not defined fully.',
+      reloadData.relatedToType ||
+      reloadData.projectionName ||
+      reloadData.projection ||
+      reloadData.saveTo);
+
+    var loadingParams = {
+      view: lookupSettings.template,
+      outlet: 'modal-content'
+    };
+    currentContext.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
+
+    let queryParameters = {
+      modelName: reloadData.relatedToType,
+      projectionName: reloadData.projectionName,
+      projection: reloadData.projection,
+      perPage: reloadData.perPage ? reloadData.perPage : 10, // TODO: get default values.
+      page: reloadData.page ? reloadData.page : 1, // TODO: get default values.
+      sorting: [], // TODO: get current value.
+      filter: reloadData.filter // TODO: get current value.
+    };
+
+    currentContext.reloadList(queryParameters).then(data => {
+      currentContext.send('removeModalDialog', loadingParams);
+
+      let controller = currentContext.get('lookupController');
+      controller.clear();
+      controller.setProperties({
+        modelProjection: reloadData.projection,
+        title: reloadData.title,
+        sizeClass: reloadData.sizeClass,
+        saveTo: reloadData.saveTo,
+        currentLookupRow: reloadData.currentLookupRow,
+        customPropertiesData: reloadData.customPropertiesData,
+        reloadDataHandler: currentContext._reloadModalData,
+
+        perPage: queryParameters.perPage,
+        page: queryParameters.page,
+        sort: undefined, // TODO: set data.
+        filter: reloadData.filter,
+
+        modelType: reloadData.relatedToType,
+        projectionName: reloadData.projectionName,
+        projection: reloadData.projection,
+        reloadContext: currentContext
+      });
+
+      controller.set('reloadObserverIsActive', true);
+
+      currentContext.send('showModalDialog', lookupSettings.contentTemplate, {
+        controller: controller,
+        model: data
+      }, loadingParams);
+    });
   },
 
   /**

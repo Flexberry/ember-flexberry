@@ -6,8 +6,8 @@ import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
+import ReloadListMixin from '../mixins/reload-list-mixin';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
-import QueryBuilder from 'ember-flexberry-projections/query/builder';
 
 /**
  * Base route for the List Forms.
@@ -37,8 +37,10 @@ import QueryBuilder from 'ember-flexberry-projections/query/builder';
  * @uses PaginatedRouteMixin
  * @uses SortableRouteMixin
  * @uses LimitedRouteMixin
+ * @uses ReloadListMixin
  */
-export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, {
+export default ProjectedModelFormRoute.extend(
+  PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, ReloadListMixin, {
   actions: {
     /**
      * Table row click handler.
@@ -55,36 +57,32 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
   },
 
   model: function(params, transition) {
-    let page = parseInt(params.page, 10);
-    let perPage = parseInt(params.perPage, 10);
-
-    Ember.assert('page must be greater than zero.', page > 0);
-    Ember.assert('perPage must be greater than zero.', perPage > 0);
-
-    let modelName = this.get('modelName');
-    let projectionName = this.get('modelProjection');
-    let serializer = this.store.serializerFor(modelName);
     let sorting = this.deserializeSortingParam(params.sort);
 
-    let builder = new QueryBuilder(this.store)
-      .from(modelName)
-      .selectByProjection(projectionName)
-      .top(perPage)
-      .skip((page - 1) * perPage)
-      .count()
-      .orderBy(
-        sorting
-          .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
-          .join(',')
-      );
+    let projectionName = this.get('modelProjection');
+    let relatedToType = this.get('modelName');
+    let relatedTypeConstructor = this.store.modelFor(relatedToType);
+    let projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
+    if (!projection) {
+      throw new Error(`No projection with '${projectionName}' name defined in '${relatedToType}' model.`);
+    }
+
+    let queryParameters = {
+      modelName: relatedToType,
+      projectionName: projectionName,
+      projection: projection,
+      perPage: params.perPage,
+      page: params.page,
+      sorting: sorting,
+      filter: params.filter
+    };
 
     // find by query is always fetching.
     // TODO: support getting from cache with "store.all->filterByProjection".
-    return this.store.query(modelName, builder.build())
-      .then((records) => {
-        // TODO: move to setupController mixins?
-        return this.includeSorting(records, sorting);
-      });
+    return this.reloadList(queryParameters).then((records) => {
+      // TODO: move to setupController mixins?
+      return this.includeSorting(records, sorting);
+    });
   },
 
   setupController: function(controller, model) {

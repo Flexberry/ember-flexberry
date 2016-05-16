@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 import ListFormController from '../controllers/list-form';
 
 export default ListFormController.extend({
@@ -40,6 +42,48 @@ export default ListFormController.extend({
    * @default undefined
    */
   customPropertiesData: undefined,
+
+  modelType: undefined,
+
+  projectionName: undefined,
+
+  projection: undefined,
+
+  reloadDataHandler: undefined,
+
+  reloadContext: undefined,
+
+  reloadObserverIsActive: false,
+
+  queryParametersChanged: Ember.observer('filter', function() {
+    if (!this.get('reloadObserverIsActive')) {
+      return;
+    }
+
+    let reloadDataHandler = this.get('reloadDataHandler');
+    if (!reloadDataHandler) {
+      throw new Error('No reload handler was defined.');
+    }
+
+    let reloadData = {
+      relatedToType: this.get('modelType'),
+      projectionName: this.get('projectionName'),
+      projection: this.get('modelProjection'),
+
+      perPage: this.get('perPage'),
+      page: this.get('page'),
+      sorting: [], // TODO: need value.
+      filter: this.get('filter'), // TODO: need value.
+
+      title: this.get('title'),
+      sizeClass: this.get('sizeClass'),
+      saveTo: this.get('saveTo'),
+      currentLookupRow: this.get('currentLookupRow'),
+      customPropertiesData: this.get('customPropertiesData')
+    };
+
+    reloadDataHandler(this.get('reloadContext'), reloadData);
+  }),
 
   actions: {
     /**
@@ -120,6 +164,15 @@ export default ListFormController.extend({
     this.set('modelProjection', undefined);
     this.set('currentLookupRow', undefined);
     this.set('customPropertiesData', undefined);
+    this.set('reloadDataHandler', undefined);
+    this.set('perPage', undefined);
+    this.set('page', undefined);
+    this.set('sort', undefined);
+    this.set('modelType', undefined);
+    this.set('projectionName', undefined);
+    this.set('projection', undefined);
+    this.set('reloadContext', undefined);
+    this.set('reloadObserverIsActive', false);
     return this;
   }
 });

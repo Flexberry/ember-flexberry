@@ -207,56 +207,6 @@ export default Ember.Mixin.create({
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
-    },
-
-    /**
-     * Forms url to get all availible entities of certain relation.
-     *
-     * @method getLookupUrl
-     * @param {String} relationName Elements for this relation will be searched.
-     * @return {Object} Formed url.
-     */
-    getLookupUrl(relationName) {
-      let relatedToType = this._getRelationType(this.get('model'), relationName);
-      return this.urlForFindAll(relatedToType);
-    },
-
-    /**
-     * Forms query by lookup parameters.
-     *
-     * @method getAutocompleteLookupQueryOptions
-     * @param {Object} lookupParameters Lookup parameters (current limit function, etc).
-     * @return {Object} Formed query.
-     */
-    getLookupQueryOptions(lookupParameters) {
-      let options = Ember.$.extend(true, {
-        relationName: undefined
-      }, lookupParameters);
-
-      let relationName = options.relationName;
-      let relationType = this._getRelationType(this.get('model'), relationName);
-
-      // TODO: Projections?
-      let builder = new QueryBuilder(this.store)
-        .from(relationType)
-        .where(new StringPredicate(options.limitField).contains(options.limitValue))
-        .top(options.top);
-
-      return builder.build();
-    },
-
-    /**
-     * It updates lookup xhr before send in order to add necessary auth information.
-     *
-     * @method updateLookupXhr
-     * @param {Object} [options] Lookup parameters.
-     * @param {Object} options.xhr Lookup xhr to send.
-     * @param {Object} options.element Current lookup.
-     * @return {Object} Updated method parameters.
-     */
-    updateLookupXhr: function(options) {
-      this.get('currentAuthService').authCustomRequest(options);
-      return options;
     }
   },
 

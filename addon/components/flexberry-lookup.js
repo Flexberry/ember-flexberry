@@ -3,8 +3,12 @@
  */
 
 import Ember from 'ember';
-import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+
+import QueryBuilder from 'ember-flexberry-projections/query/builder';
+import { StringPredicate } from 'ember-flexberry-projections/query/predicate';
+
+import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
  * Lookup component for Semantic UI.
@@ -13,6 +17,7 @@ import { translationMacro as t } from 'ember-i18n';
  * @extends FlexberryBaseComponent
  */
 var FlexberryLookup = FlexberryBaseComponent.extend({
+  store: Ember.inject.service('store'),
 
   /**
    * Default classes for component wrapper.
@@ -110,15 +115,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   autocompleteValue: undefined,
 
   /**
-   * Method to get url for a request.
-   *
-   * @property url
-   * @type Action
-   * @default undefined
-   */
-  url: undefined,
-
-  /**
    * Method to get query options for a request.
    *
    * @property queryOptions
@@ -174,15 +170,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   nameProperty: undefined,
 
   /**
-   * Function to limit accessible values.
-   *
-   * @property limitFunction
-   * @type String
-   * @default undefined
-   */
-  limitFunction: undefined,
-
-  /**
    * Flag to show that lookup is at dropdown mode.
    *
    * @property dropdown
@@ -229,7 +216,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     'relationName',
     'relatedModel',
     'limitFunction',
-    'url',
     'nameProperty',
     'minCharacters',
     'maxResults', function() {
@@ -237,7 +223,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       relationName: this.get('relationName'),
       modelToLookup: this.get('relatedModel'),
       limitFunction: this.get('limitFunction'),
-      url: this.get('url')(this.get('relationName')),
       nameProperty: this.get('nameProperty'),
       minCharacters: this.get('minCharacters'),
       maxResults: this.get('maxResults')
@@ -305,40 +290,11 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     this.set('autocompleteValue', this.get('value'));
 
     this.$().search({
-      apiSettings: {
-        url: chooseRemoteData.url,
-        beforeSend: function(settings) {
-          let urlOptions = _this.get('queryOptions')(
-            {
-              relationName: chooseRemoteData.relationName,
-              lookupLimitFunction: chooseRemoteData.limitFunction,
-              top: chooseRemoteData.maxResults,
-              limitField: chooseRemoteData.nameProperty,
-              limitValue: settings.urlData.query
-            });
-          Ember.merge(settings.data, urlOptions);
-          return settings;
-        },
-        beforeXHR: function(xhr) {
-          // Set necessary auth headers.
-          _this.sendAction(
-            'updateXhrAction',
-            {
-              xhr: xhr,
-              element: _this
-            }
-          );
-        }
-      },
-      fields: {
-        results: 'value',
-        title: chooseRemoteData.nameProperty
-      },
       minCharacters: chooseRemoteData.minCharacters,
-      cache: false,
       maxResults: chooseRemoteData.maxResults,
+      cache: false,
       fullTextSearch: false,
-      onSelect: function(result, response) {
+      onSelect(result, response) {
         _this.sendAction(
           'updateLookupAction',
           {
@@ -356,6 +312,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       }
     });
   },
+
   /**
    * Init component with mode dropdown.
    *
@@ -363,52 +320,37 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @private
    */
   _onDropdown: function() {
-    let _this = this;
+    let store = this.get('store');
     let chooseRemoteData = this.get('chooseRemoteData');
+    let modelName = chooseRemoteData.modelToLookup.constructor.modelName;
 
     this.$('.flexberry-dropdown').dropdown({
-      apiSettings: {
-        url: chooseRemoteData.url,
-        beforeSend: function(settings) {
-          let urlOptions = _this.get('queryOptions')(
-            {
-              relationName: chooseRemoteData.relationName,
-              lookupLimitFunction: chooseRemoteData.limitFunction,
-              top: chooseRemoteData.maxResults,
-              limitField: chooseRemoteData.nameProperty,
-              limitValue: settings.urlData.query
-            });
-          Ember.merge(settings.data, urlOptions);
-          return settings;
-        },
-        beforeXHR: function(xhr) {
-          // Set necessary auth headers.
-          _this.sendAction(
-            'updateXhrAction',
-            {
-              xhr: xhr,
-              element: _this
-            }
-          );
-        }
-      },
-      fields: {
-        remoteValues: 'value',
-        name: chooseRemoteData.nameProperty,
-        value: chooseRemoteData.nameProperty
-      },
       minCharacters: chooseRemoteData.minCharacters,
+      allowAdditions: this.get('multiselect'),
       cache: false,
       fullTextSearch: false,
-      allowAdditions: this.get('multiselect'),
-      onChange: function(value, text, $choice) {
-        this.sendAction(
-          'updateLookupAction',
-          {
-            relationName: chooseRemoteData.relationName,
-            modelToLookup: chooseRemoteData.modelToLookup,
-            newRelationValue: value
+      apiSettings: {
+        responseAsync(settings, callback) {
+          let builder = new QueryBuilder(store, modelName);
+
+          if (settings.urlData.query) {
+            builder.where(new StringPredicate('FirstName').contains(settings.urlData.query));
+          }
+
+          store.query(modelName, builder.build()).then((records) => {
+            callback({
+              success: true,
+              results: records.map(i => {
+                return {
+                  name: i.get('firstName'),
+                  value: i.id
+                };
+              })
+            });
+          }, () => {
+            callback({ success: false });
           });
+        }
       }
     });
   },

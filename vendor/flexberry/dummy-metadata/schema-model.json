@@ -48,12 +48,6 @@
         "null"
       ],
       "properties": {
-        "startMultiplicity": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "name": {
           "type": [
             "string",
@@ -74,7 +68,6 @@
         }
       },
       "required": [
-        "startMultiplicity",
         "name",
         "relatedTo",
         "inverse"
@@ -344,7 +337,7 @@
         "null"
       ]
     },
-    "parentClasslName": {
+    "parentClassName": {
       "type": [
         "string",
         "null"
@@ -390,7 +383,7 @@
   "required": [
     "modelName",
     "parentModelName",
-    "parentClasslName",
+    "parentClassName",
     "attrs",
     "belongsTo",
     "hasMany",

@@ -1,6 +1,7 @@
 ﻿{
-  "values": [
-    "Like",
-    "Dislike"
-  ]
+  "className": "VoteType",
+  "enumObjects": {
+    "Like": null,
+    "Dislike": null
+  }
 }

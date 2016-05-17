@@ -1,7 +1,7 @@
 ﻿{
   "modelName": "ember-flexberry-dummy-localized-suggestion-type",
   "parentModelName": null,
-  "parentClasslName": null,
+  "parentClassName": null,
   "attrs": [
     {
       "name": "name",
@@ -13,13 +13,11 @@
   ],
   "belongsTo": [
     {
-      "startMultiplicity": null,
       "name": "localization",
       "relatedTo": "ember-flexberry-dummy-localization",
       "inverse": null
     },
     {
-      "startMultiplicity": null,
       "name": "suggestionType",
       "relatedTo": "ember-flexberry-dummy-suggestion-type",
       "inverse": "localizedTypes"

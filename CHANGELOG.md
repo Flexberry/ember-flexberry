@@ -4,7 +4,7 @@
 
 ## 2016-05-10
 ### Breaking changes
-Fleberry-lookup:
+FlexberryLookupComponent:
 * Add mode dropdown.
 * Rename autocompleteUpdateAction in updateAction.
 * Rename autocompleteUpdateXhrAction in updateXhrAction.

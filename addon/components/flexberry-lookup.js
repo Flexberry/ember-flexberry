@@ -270,9 +270,9 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     }
 
     if (this.get('autocomplete')) {
-      this.onAutocomplete();
+      this._onAutocomplete();
     } else if (this.get('dropdown')) {
-      this.onDropdown();
+      this._onDropdown();
     }
   },
 
@@ -282,7 +282,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @method onAutocomplete
    * @private
    */
-  onAutocomplete: function() {
+  _onAutocomplete: function() {
     let chooseRemoteData = this.get('chooseRemoteData');
     let _this = this;
 
@@ -362,7 +362,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @method onAutocomplete
    * @private
    */
-  onDropdown: function() {
+  _onDropdown: function() {
     let _this = this;
     let chooseRemoteData = this.get('chooseRemoteData');
 

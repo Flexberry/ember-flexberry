@@ -6,7 +6,7 @@ import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
-import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route'
+import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
 import QueryBuilder from 'ember-flexberry-projections/query/builder';
 
@@ -45,7 +45,6 @@ export default ProjectedModelFormRoute.extend(
   SortableRouteMixin,
   LimitedRouteMixin,
   FlexberryObjectlistviewRouteMixin, {
-
   model: function(params, transition) {
     let page = parseInt(params.page, 10);
     let perPage = parseInt(params.perPage, 10);

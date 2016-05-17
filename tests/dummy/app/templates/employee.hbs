@@ -79,11 +79,10 @@
       projection='EmployeeL'
       title='Employees'
       readonly=readonly
-      limitFunction=lookupLimitFunction
       class=(if model.errors.reportsTo 'error' '')
       chooseButtonClass='primary'
       removeButtonClass='primary'
-      dropdown=true
+      autocomplete=true
       nameProperty='FirstName'
     }}
       {{model.employee1.firstName}}<br>

@@ -47,15 +47,10 @@ export default Ember.Mixin.create({
         projection: undefined,
         relationName: undefined,
         title: undefined,
-        limitFunction: undefined,
         predicate: undefined,
         modelToLookup: undefined,
         sizeClass: undefined
       }, chooseData);
-
-      // TODO: remove later
-      let limitFunction = options.limitFunction;
-      Ember.assert(`Parameter 'limitFunction' has been removed. Use 'predicate' to specify limits.`, !limitFunction);
 
       let projectionName = options.projection;
       let relationName = options.relationName;

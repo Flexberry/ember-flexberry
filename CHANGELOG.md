@@ -6,24 +6,19 @@
 ### Breaking changes
 FlexberryLookupComponent:
 * Add mode dropdown.
-* Rename autocompleteUpdateAction in updateAction.
-* Rename autocompleteUpdateXhrAction in updateXhrAction.
-* Rename autocompleteUrl in url.
-* Rename autocompleteProperty in nameProperty.
-* Rename autocompleteQueryOptions in queryOptions.
-* Rename updateAutocompleteLookupXhr in updateLookupXhr.
-* Rename getLookupAutocompleteUrl in getLookupUrl.
-* Rename getAutocompleteLookupQueryOptions in getLookupQueryOptions.
-* Rename autocompleteMinCharacters in minCharacters.
-* Rename autocompleteMaxResults in maxResults.
+* Rename autocompleteUpdateAction to updateLookupAction.
+* Rename autocompleteProperty to nameProperty.
+* Rename autocompleteMinCharacters to minCharacters.
+* Rename autocompleteMaxResults to maxResults.
+* Remove autocompleteUpdateXhrAction, updateAutocompleteLookupXhr, getLookupAutocompleteUrl, getAutocompleteLookupQueryOptions, limitFunction, autocompleteUrl, autocompleteQueryOptions.
 
 ## 2016-05-06
 ### Breaking changes
 FlexberryLookupComponent:
-* Rename classChoose in chooseButtonClass.
-* Rename classRemove in removeButtonClass.
+* Rename classChoose to chooseButtonClass.
+* Rename classRemove to removeButtonClass.
 FlexberryFileComponent, FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
-* Rename classButton in buttonClass.
+* Rename classButton to buttonClass.
 
 ## 2016-04-15
 ### Fixed

@@ -115,15 +115,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   autocompleteValue: undefined,
 
   /**
-   * Method to get query options for a request.
-   *
-   * @property queryOptions
-   * @type Action
-   * @default undefined
-   */
-  queryOptions: undefined,
-
-  /**
    * Action's name to update model's relation value.
    *
    * @property updateLookupAction
@@ -131,16 +122,6 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @default 'updateLookupValue'
    */
   updateLookupAction: 'updateLookupValue',
-
-  /**
-   * Action's name to update xhr before request.
-   * It is used to add necessary auth headers to request.
-   *
-   * @property updateXhrAction
-   * @type String
-   * @default 'updateLookupXhr'
-   */
-  updateXhrAction: 'updateLookupXhr',
 
   /**
    * Min characters count necessary to call autocomplete.
@@ -193,12 +174,11 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @property chooseData
    * @type Object
    */
-  chooseData: Ember.computed('projection', 'relationName', 'title', 'limitFunction', function() {
+  chooseData: Ember.computed('projection', 'relationName', 'title', function() {
     return {
       projection: this.get('projection'),
       relationName: this.get('relationName'),
       title: this.get('title'),
-      limitFunction: this.get('limitFunction'),
       modelToLookup: this.get('relatedModel'),
 
       //TODO: move to modal settings.
@@ -215,14 +195,12 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   chooseRemoteData: Ember.computed(
     'relationName',
     'relatedModel',
-    'limitFunction',
     'nameProperty',
     'minCharacters',
     'maxResults', function() {
     return {
       relationName: this.get('relationName'),
       modelToLookup: this.get('relatedModel'),
-      limitFunction: this.get('limitFunction'),
       nameProperty: this.get('nameProperty'),
       minCharacters: this.get('minCharacters'),
       maxResults: this.get('maxResults')

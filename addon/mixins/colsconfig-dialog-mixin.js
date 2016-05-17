@@ -1,6 +1,8 @@
-import ColsconfigDialogController from '../mixins/colsconfig-dialog-mixin';
+import Ember from 'ember';
 
-export default Ember.Controller.extend(ColsconfigDialogController,{
+export default Ember.Mixin.create({
+  queryParams: ['sort'],
+
   /**
    * Current opened modal window.
    *
@@ -20,8 +22,18 @@ export default Ember.Controller.extend(ColsconfigDialogController,{
      */
     createdModalDialog: function(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
+    },
+
+    sortByColumnsConfig: function (colsConfig) {
+      alert(JSON.stringify('Mixin colsConfig='+colsConfig));
+      let newSorting;
+      let columnsConfig=colsConfig.slice(o);  //Clone array before sorting
+      columnsConfig.sort(function (a,b) {
+        return a.sortPriority - b.sortPriority;
+      }
+      );
     }
-   },
+  },
 
   /**
    * Close current modal window if it exists.
@@ -35,7 +47,6 @@ export default Ember.Controller.extend(ColsconfigDialogController,{
       this.set('_openedModalDialog', undefined);
     }
   },
-
   clear: function() {
     this.set('_openedModalDialog', undefined);
     return this;

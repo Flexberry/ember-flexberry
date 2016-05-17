@@ -16,7 +16,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Class names for component wrapping <div>.
    */
-  classNames: ['flexberry-file', 'ui', 'fluid', 'action', 'input'],
+  classNames: ['flexberry-file'],
 
   /**
    * Classes for buttons.

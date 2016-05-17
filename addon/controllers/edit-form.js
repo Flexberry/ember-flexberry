@@ -474,7 +474,6 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    * @method onSaveActionFulfilled.
    */
   onSaveActionFulfilled() {
-    Ember.Logger.info(this.get('i18n').t('edit-form.saved-message'));
   },
 
   /**

@@ -1,0 +1,20 @@
+﻿{
+  "type": "object",
+  "properties": {
+    "values": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    }
+  },
+  "required": [
+    "values"
+  ]
+}

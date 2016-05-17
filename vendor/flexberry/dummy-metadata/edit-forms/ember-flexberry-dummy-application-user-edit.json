@@ -1,0 +1,12 @@
+﻿{
+  "propertyLookup": [],
+  "caption": "Application user",
+  "name": "EmberFlexberryDummyApplicationUserEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-application-user",
+      "modelProjection": "ApplicationUserE"
+    }
+  ]
+}

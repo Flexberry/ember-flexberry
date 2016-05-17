@@ -1,8 +1,8 @@
 import DS from 'ember-data';
-import <%if(parentModelName) {%><%=parentClasslName%> from './<%=parentModelName%>';<%}else{%>BaseModel from 'ember-flexberry/models/base';<%}%>
+import <%if(parentModelName) {%><%= parentClasslName %>Model from './<%= parentModelName %>';<%}else{%>__BaseModel from './base';<%}%>
 import Proj from 'ember-flexberry-projections';
 
-<%= model %>
+let Model = <%if(parentModelName) {%><%= parentClasslName %>Model.extend<%}else{%>__BaseModel.extend<%}%><%= model %>
 
 <%= projections %>
 

@@ -1,10 +1,9 @@
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
+"use strict";
 var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require('path');
-var lodash = require('lodash');
-var template = lodash.template;
 module.exports = {
     description: 'Generates an ember application for flexberry.',
     availableOptions: [
@@ -34,8 +33,8 @@ var ApplicationBlueprint = (function () {
         var listForms = fs.readdirSync(listFormsDir);
         var children = [];
         var routes = [];
-        for (var _i = 0; _i < listForms.length; _i++) {
-            var form = listForms[_i];
+        for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
+            var form = listForms_1[_i];
             var listFormFile = path.join(listFormsDir, form);
             var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
             var listForm = JSON.parse(content);
@@ -49,5 +48,5 @@ var ApplicationBlueprint = (function () {
         this.routes = routes.join("\n");
     }
     return ApplicationBlueprint;
-})();
+}());
 //# sourceMappingURL=index.js.map

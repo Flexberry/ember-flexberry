@@ -40,7 +40,7 @@
       </tr>
     {{/if}}
     {{#each contentWithKeys key="key" as |record|}}
-      <tr>
+      <tr class="{{record.config.customClass}}">
         <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
           <div style="display: none">{{record.key}}
           </div>

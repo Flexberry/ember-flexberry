@@ -575,7 +575,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @type Object
    * @param {Boolean} [canBeDeleted=true] The row can be deleted.
    * @param {Boolean} [canBeSelected=true] The row can be selected via checkbox.
-   * @param {String} [customClass=''] The row can has a custon css classes.
+   * @param {String} [customClass=''] Custom css classes for the row.
    */
   defaultRowConfig: {
     canBeDeleted: true,

@@ -1,5 +1,6 @@
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
+/// <reference path='../typings/MetadataClasses.d.ts' />
 "use strict";
 var stripBom = require("strip-bom");
 var fs = require("fs");
@@ -26,7 +27,7 @@ module.exports = {
         var modelBlueprint = new ModelBlueprint(this, options);
         return {
             parentModelName: modelBlueprint.parentModelName,
-            parentClasslName: modelBlueprint.parentClasslName,
+            parentClassName: modelBlueprint.parentClassName,
             model: modelBlueprint.model,
             projections: modelBlueprint.projections,
             serializerAttrs: modelBlueprint.serializerAttrs // for use in files\__root__\serializers\__name__.js
@@ -43,7 +44,7 @@ var ModelBlueprint = (function () {
         var content = stripBom(fs.readFileSync(modelFile, "utf8"));
         var model = JSON.parse(content);
         this.parentModelName = model.parentModelName;
-        this.parentClasslName = model.parentClasslName;
+        this.parentClassName = model.parentClassName;
         this.serializerAttrs = this.getSerializerAttrs(model);
         this.projections = this.getJSForProjections(model, modelsDir);
         this.model = this.getJSForModel(model);
@@ -58,7 +59,10 @@ var ModelBlueprint = (function () {
             var hasMany = _c[_b];
             attrs.push(hasMany.name + ": { serialize: false, deserialize: 'records' }");
         }
-        return attrs.join(",\n");
+        if (attrs.length === 0) {
+            return "";
+        }
+        return "    " + attrs.join(",\n    ");
     };
     ModelBlueprint.prototype.getJSForModel = function (model) {
         var attrs = [], validations = [];
@@ -84,7 +88,11 @@ var ModelBlueprint = (function () {
             var hasMany = _e[_d];
             attrs.push(templateHasMany(hasMany));
         }
-        attrs.push("validations: { \n " + validations.join(",\n ") + "\n }");
+        var validationsStr = "    " + validations.join(",\n    ");
+        if (validations.length === 0) {
+            validationsStr = "";
+        }
+        attrs.push("validations: {\n" + validationsStr + "\n  }");
         return "({\n" + TAB + attrs.join(",\n" + TAB) + "\n});";
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir) {
@@ -125,8 +133,14 @@ var ModelBlueprint = (function () {
             indent.push(TAB);
         }
         var indentStr = indent.join("");
+        indent.pop();
+        var indentStr2 = indent.join("");
         var attrsStr = belongsToAttrs.join(",\n" + indentStr);
-        return belongsTo.name + ": Proj.belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', { \n" + indentStr + attrsStr + " \n" + indentStr + "}" + hiddenStr + ")";
+        if (belongsToAttrs.length === 0) {
+            attrsStr = "";
+            indentStr = "";
+        }
+        return belongsTo.name + ": Proj.belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}" + hiddenStr + ")";
     };
     ModelBlueprint.prototype.declareProjAttr = function (attr) {
         var hiddenStr = "";
@@ -138,6 +152,9 @@ var ModelBlueprint = (function () {
     ModelBlueprint.prototype.getJSForProjections = function (model, modelsDir) {
         var projections = [];
         var projName;
+        if (model.projections.length === 0) {
+            return null;
+        }
         for (var _i = 0, _a = model.projections; _i < _a.length; _i++) {
             var proj = _a[_i];
             var projAttrs = [];
@@ -147,7 +164,7 @@ var ModelBlueprint = (function () {
             }
             for (var _d = 0, _e = proj.belongsTo; _d < _e.length; _d++) {
                 var belongsTo = _e[_d];
-                projAttrs.push(this.joinProjBelongsTo(belongsTo, 1));
+                projAttrs.push(this.joinProjBelongsTo(belongsTo, 2));
             }
             for (var _f = 0, _g = proj.hasMany; _f < _g.length; _f++) {
                 var hasMany = _g[_f];
@@ -170,13 +187,13 @@ var ModelBlueprint = (function () {
                         hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir));
                     }
                 }
-                var attrsStr_1 = hasManyAttrs.join(",\n" + TAB);
-                projAttrs.push(hasMany.name + ": Proj.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n" + attrsStr_1 + "\n})");
+                var attrsStr_1 = hasManyAttrs.join(",\n    ");
+                projAttrs.push(hasMany.name + ": Proj.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n    " + attrsStr_1 + "\n  })");
             }
             var attrsStr = projAttrs.join(",\n" + TAB);
-            projections.push("Model.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n" + attrsStr + "\n});");
+            projections.push("Model.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n  " + attrsStr + "\n});");
         }
-        return projections.join("\n" + TAB);
+        return projections.join("\n");
     };
     return ModelBlueprint;
 }());

@@ -242,7 +242,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   /**
    * Init component with mode autocomplete.
    *
-   * @method onAutocomplete
+   * @method _onAutocomplete
    * @private
    */
   _onAutocomplete: function() {
@@ -294,7 +294,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   /**
    * Init component with mode dropdown.
    *
-   * @method onAutocomplete
+   * @method _onDropdown
    * @private
    */
   _onDropdown: function() {

@@ -1,6 +1,14 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-17
+### Breaking changes
+FlexberryObjectlistviewComponent:
+* Remove actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
+* Rename action 'rowClick' to 'objectListViewRowClick'.
+FlexberryGroupeditComponent:
+* Rename action 'rowClick' to 'groupEditRowClick'.
+* Rename property 'rowClick' to 'action'.
 
 ## 2016-05-10
 ### Breaking changes

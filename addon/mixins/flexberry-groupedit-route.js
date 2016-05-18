@@ -58,7 +58,7 @@ export default Ember.Mixin.create({
      * @param {Array} options.detailArray Current detail array (used to add record to if record is undefined).
      * @param {Boolean} options.editFormRoute Path to detail's form.
      */
-    rowClick: function(record, options) {
+    groupEditRowClick: function(record, options) {
       let methodOptions = {
         saveBeforeRouteLeave: false,
         editOnSeparateRoute: false,

@@ -11,7 +11,7 @@
     class=(concat 'lookup-field ' (if autocomplete 'prompt'))
     placeholder=placeholder
     value=displayValue
-    readonly=(if readonly 'readonly')
+    readonly=(if (or readonly (and (not autocomplete) (not dropdown))) 'readonly')
   }}
   <button class="ui {{if readonly 'disabled'}} {{chooseButtonClass}} button" {{action 'choose' chooseData}}>{{{chooseText}}}</button>
   <button class="ui {{if readonly 'disabled'}} {{removeButtonClass}} button" {{action 'remove' removeData}}>{{{removeText}}}</button>

@@ -202,7 +202,7 @@ export default FlexberryBaseComponent.extend({
    * Additional observer of value changings.
    * Updates displayValue.
    */
-  _valueObserver : Ember.observer('value', function() {
+  _valueObserver: Ember.observer('value', function() {
     this.set('displayValue', this.buildDisplayValue());
   }),
 
@@ -353,7 +353,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Init component with mode dropdown.
+   * Init component with dropdown mode.
    *
    * @method _onDropdown
    * @private

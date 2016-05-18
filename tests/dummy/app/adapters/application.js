@@ -1,5 +1,5 @@
-import ODataAdapter from 'ember-flexberry-projections/adapters/odata';
-import Proj from 'ember-flexberry-projections';
+import ODataAdapter from 'ember-flexberry-data/adapters/odata';
+import Proj from 'ember-flexberry-data';
 import config from '../config/environment';
 import AuthDataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
 

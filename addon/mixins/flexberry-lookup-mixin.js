@@ -4,8 +4,8 @@
 
 import Ember from 'ember';
 
-import QueryBuilder from 'ember-flexberry-projections/query/builder';
-import { StringPredicate } from 'ember-flexberry-projections/query/predicate';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 // TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({

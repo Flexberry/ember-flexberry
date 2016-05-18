@@ -1,12 +1,18 @@
 ﻿{
   "type": "object",
   "properties": {
-    "values": {
+    "className": {
       "type": [
-        "array",
+        "string",
+        "null"
+      ]
+    },
+    "enumObjects": {
+      "type": [
+        "object",
         "null"
       ],
-      "items": {
+      "additionalProperties": {
         "type": [
           "string",
           "null"
@@ -15,6 +21,7 @@
     }
   },
   "required": [
-    "values"
+    "className",
+    "enumObjects"
   ]
 }

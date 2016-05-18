@@ -1,7 +1,7 @@
 ﻿{
   "modelName": "ember-flexberry-dummy-suggestion",
   "parentModelName": null,
-  "parentClasslName": null,
+  "parentClassName": null,
   "attrs": [
     {
       "name": "address",
@@ -41,19 +41,16 @@
   ],
   "belongsTo": [
     {
-      "startMultiplicity": null,
       "name": "editor",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     },
     {
-      "startMultiplicity": null,
       "name": "type",
       "relatedTo": "ember-flexberry-dummy-suggestion-type",
       "inverse": null
     },
     {
-      "startMultiplicity": null,
       "name": "author",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null

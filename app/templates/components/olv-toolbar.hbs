@@ -23,6 +23,9 @@
     <button class="ui {{buttonClass}} icon button" {{action "filterByAnyMatch"}}>
       <i class="search icon"></i>
     </button>
+    <button class="ui {{buttonClass}} icon button" {{action "removeFilter"}}>
+      <i class="remove icon"></i>
+    </button>
   </div>
 {{/if}}
 {{#each customButtonsArray as |customButton|}}

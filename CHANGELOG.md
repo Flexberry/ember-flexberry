@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-18
+### Added
+FlexberryObjectlistviewComponent:
+* Add action removeFilter.
+
 ## 2016-05-17
 ### Breaking changes
 FlexberryObjectlistviewComponent:

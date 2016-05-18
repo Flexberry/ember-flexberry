@@ -1,4 +1,5 @@
 import Ember from 'ember';
+
 import ODataAdapter from './application';
 
 export default ODataAdapter.extend({
@@ -21,6 +22,6 @@ export default ODataAdapter.extend({
   },
 
   deleteRecord(store, type, snapshot) {
-    return { EmployeeID : this.get('db').deleteRecord(type.modelName, snapshot.id) };
+    return { EmployeeID: this.get('db').deleteRecord(type.modelName, snapshot.id) };
   },
 });

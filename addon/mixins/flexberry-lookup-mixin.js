@@ -187,43 +187,14 @@ export default Ember.Mixin.create({
         newRelationValue: undefined,
         modelToLookup: undefined
       }, updateData);
-      let relationName = options.relationName;
-      let newRelationValue = options.newRelationValue;
       let modelToLookup = options.modelToLookup;
       let model = modelToLookup ? modelToLookup : this.get('model');
-      let relationType = this._getRelationType(model, relationName);
-      let payload = {};
-      payload[relationType + 's'] = [newRelationValue];
-      this.store.pushPayload(relationType, payload);
-      let realRelationValue = this.store.peekRecord(relationType, newRelationValue[this.store.serializerFor(relationType).get('primaryKey')]);
 
-      model.set(relationName, realRelationValue);
+      Ember.Logger.debug(`Flexberry Lookup::updateLookupValue ${options.relationName}`);
+      model.set(options.relationName, options.newRelationValue);
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
     }
-  },
-
-  /**
-   * Gets related object type by relation name from specified model.
-   *
-   * @method _getRelationType
-   * @param {String} model Specified model to get relation from.
-   * @param {String} relationName Relation name.
-   * @return {String} Related object type.
-   * @throws {Error} Throws error if relation was not found at model.
-   */
-  _getRelationType: function(model, relationName) {
-    // Get ember static function to get relation by name.
-    let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
-
-    // Get relation property from model.
-    let relation = relationshipsByName.get(relationName);
-    if (!relation) {
-      throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
-    }
-
-    let relationType = relation.type;
-    return relationType;
   }
 });

@@ -5,8 +5,8 @@
 import Ember from 'ember';
 import { translationMacro as t } from 'ember-i18n';
 
-import QueryBuilder from 'ember-flexberry-projections/query/builder';
-import { StringPredicate } from 'ember-flexberry-projections/query/predicate';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 import FlexberryBaseComponent from './flexberry-base-component';
 
@@ -16,7 +16,16 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @class FlexberryLookup
  * @extends FlexberryBaseComponent
  */
-var FlexberryLookup = FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend({
+  /**
+   * Current store.
+   * Used for loading data for autocomplete and for dropdown.
+   *
+   * @property store
+   * @type DS.Store
+   * @protected
+   * @readOnly
+   */
   store: Ember.inject.service('store'),
 
   /**
@@ -246,8 +255,10 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @private
    */
   _onAutocomplete: function() {
-    let chooseRemoteData = this.get('chooseRemoteData');
     let _this = this;
+    let chooseRemoteData = this.get('chooseRemoteData');
+    let store = this.get('store');
+    let modelName = chooseRemoteData.modelToLookup.constructor.modelName;
 
     if (!chooseRemoteData.nameProperty) {
       throw new Error('nameProperty is undefined.');
@@ -271,14 +282,36 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       minCharacters: chooseRemoteData.minCharacters,
       maxResults: chooseRemoteData.maxResults,
       cache: false,
-      fullTextSearch: false,
-      onSelect(result, response) {
+      apiSettings: {
+        responseAsync(settings, callback) {
+          let builder = new QueryBuilder(store, modelName);
+
+          if (settings.urlData.query) {
+            builder.where(new StringPredicate(chooseRemoteData.nameProperty).contains(settings.urlData.query));
+          }
+
+          store.query(modelName, builder.build()).then((records) => {
+            callback({
+              success: true,
+              results: records.map(i => {
+                return {
+                  title: i.get(chooseRemoteData.nameProperty),
+                  model: i
+                };
+              })
+            });
+          }, () => {
+            callback({ success: false });
+          });
+        }
+      },
+      onSelect(result) {
         _this.sendAction(
           'updateLookupAction',
           {
             relationName: chooseRemoteData.relationName,
             modelToLookup: chooseRemoteData.modelToLookup,
-            newRelationValue: result
+            newRelationValue: result.model
           });
       }
     });
@@ -298,6 +331,7 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @private
    */
   _onDropdown: function() {
+    let _this = this;
     let store = this.get('store');
     let chooseRemoteData = this.get('chooseRemoteData');
     let modelName = chooseRemoteData.modelToLookup.constructor.modelName;
@@ -306,13 +340,12 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
       minCharacters: chooseRemoteData.minCharacters,
       allowAdditions: this.get('multiselect'),
       cache: false,
-      fullTextSearch: false,
       apiSettings: {
         responseAsync(settings, callback) {
           let builder = new QueryBuilder(store, modelName);
 
           if (settings.urlData.query) {
-            builder.where(new StringPredicate('FirstName').contains(settings.urlData.query));
+            builder.where(new StringPredicate(chooseRemoteData.nameProperty).contains(settings.urlData.query));
           }
 
           store.query(modelName, builder.build()).then((records) => {
@@ -320,8 +353,8 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
               success: true,
               results: records.map(i => {
                 return {
-                  name: i.get('firstName'),
-                  value: i.id
+                  name: i.get(chooseRemoteData.nameProperty),
+                  value: i
                 };
               })
             });
@@ -329,6 +362,15 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
             callback({ success: false });
           });
         }
+      },
+      onChange(value) {
+        _this.sendAction(
+          'updateLookupAction',
+          {
+            relationName: chooseRemoteData.relationName,
+            modelToLookup: chooseRemoteData.modelToLookup,
+            newRelationValue: value
+          });
       }
     });
   },
@@ -349,5 +391,3 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     }
   }
 });
-
-export default FlexberryLookup;

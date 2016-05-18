@@ -190,7 +190,7 @@ export default Ember.Mixin.create({
       let modelToLookup = options.modelToLookup;
       let model = modelToLookup ? modelToLookup : this.get('model');
 
-      Ember.Logger.debug(`Flexberry Lookup::updateLookupValue ${options.relationName}`);
+      Ember.Logger.debug(`Flexberry Lookup Mixin::updateLookupValue ${options.relationName}`);
       model.set(options.relationName, options.newRelationValue);
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.

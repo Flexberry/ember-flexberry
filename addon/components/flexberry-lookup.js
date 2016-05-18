@@ -18,17 +18,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Current store.
-   * Used for loading data for autocomplete and for dropdown.
-   *
-   * @property store
-   * @type DS.Store
-   * @protected
-   * @readOnly
-   */
-  store: Ember.inject.service('store'),
-
-  /**
    * Default classes for component wrapper.
    *
    * @property classNames
@@ -71,18 +60,29 @@ export default FlexberryBaseComponent.extend({
   removeButtonClass: undefined,
 
   projection: undefined,
-  value: undefined,
+
   relationName: undefined,
   title: undefined,
 
   /**
-   * Flag to show that lookup is at autocomplete mode.
+   * Flag to show that lookup is in autocomplete mode.
    *
    * @property autocomplete
    * @type Boolean
    * @default false
+   * @public
    */
   autocomplete: false,
+
+  /**
+   * Flag to show that lookup is in dropdown mode.
+   *
+   * @property dropdown
+   * @type Boolean
+   * @default false
+   * @public
+   */
+  dropdown: false,
 
   /**
    * Classes by property of autocomplete.
@@ -98,37 +98,12 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Observes changes to value.
-   *
-   * @method valueChanged
-   */
-  valueChanged: Ember.observer('value', function() {
-    let value = this.get('value');
-    this.set('autocompleteValue', value);
-    if ((value === '') || (value === null)) {
-      this.set('placeholder', '');
-    } else {
-      this.set('placeholder', t('flexberry-lookup.placeholder'));
-    }
-  }),
-
-  /**
-   * Value for autocomplete control.
-   * If model's value changes, autocompleteValue is changed too.
-   * This property may be changed independently, but it won't be applied to model automatically.
-   *
-   * @property autocompleteValue
-   * @type String
-   * @default undefined
-   */
-  autocompleteValue: undefined,
-
-  /**
    * Action's name to update model's relation value.
    *
    * @property updateLookupAction
    * @type String
    * @default 'updateLookupValue'
+   * @public
    */
   updateLookupAction: 'updateLookupValue',
 
@@ -138,6 +113,7 @@ export default FlexberryBaseComponent.extend({
    * @property minCharacters
    * @type Number
    * @default 1
+   * @public
    */
   minCharacters: 1,
 
@@ -147,34 +123,18 @@ export default FlexberryBaseComponent.extend({
    * @property maxResults
    * @type Number
    * @default 10
+   * @public
    */
   maxResults: 10,
 
   /**
-   * Server-side property name.
+   * Multimple select.
    *
-   * @property nameProperty
-   * @type String
-   * @default undefined
-   */
-  nameProperty: undefined,
-
-  /**
-   * Flag to show that lookup is at dropdown mode.
-   *
-   * @property dropdown
+   * @property multiselect
    * @type Boolean
    * @default false
+   * @public
    */
-  dropdown: false,
-
-  /**
-  * Multimple select.
-  *
-  * @property multiselect
-  * @type Boolean
-  * @default false
-  */
   multiselect: false,
 
   /**
@@ -196,27 +156,6 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Object with lookup properties for a request remote data.
-   *
-   * @property chooseRemoteData
-   * @type Object
-   */
-  chooseRemoteData: Ember.computed(
-    'relationName',
-    'relatedModel',
-    'nameProperty',
-    'minCharacters',
-    'maxResults', function() {
-    return {
-      relationName: this.get('relationName'),
-      modelToLookup: this.get('relatedModel'),
-      nameProperty: this.get('nameProperty'),
-      minCharacters: this.get('minCharacters'),
-      maxResults: this.get('maxResults')
-    };
-  }),
-
-  /**
    * Object with lookup properties to send on remove action.
    *
    * @property removeData
@@ -227,6 +166,49 @@ export default FlexberryBaseComponent.extend({
       relationName: this.get('relationName'),
       modelToLookup: this.get('relatedModel')
     };
+  }),
+
+  /**
+   * Current store.
+   * Used for loading data for autocomplete and for dropdown.
+   *
+   * @property store
+   * @type DS.Store
+   * @protected
+   * @readOnly
+   */
+  store: Ember.inject.service('store'),
+
+  /**
+   * Name of the attribute of the model to diplay for the user.
+   *
+   * @property displayAttributeName
+   * @type String
+   * @default null
+   * @protected
+   */
+  displayAttributeName: null,
+
+  /**
+   * Currently selected instance of the model.
+   *
+   * @property value
+   * @type Object
+   * @protected
+   */
+  value: undefined,
+
+  /**
+   * Text that displayed for the user as representation of currently selected value.
+   * This property is binded to the view and can be changed by user (it won't be
+   * applied to model automatically).
+   *
+   * @property displayValue
+   * @type String
+   * @protected
+   */
+  displayValue: Ember.computed('value', function() {
+    return this.buildDisplayValue();
   }),
 
   init() {
@@ -249,45 +231,55 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Init component with mode autocomplete.
+   * Init component with autocomplete mode.
    *
    * @method _onAutocomplete
    * @private
    */
   _onAutocomplete: function() {
     let _this = this;
-    let chooseRemoteData = this.get('chooseRemoteData');
     let store = this.get('store');
-    let modelName = chooseRemoteData.modelToLookup.constructor.modelName;
+    let relatedModel = this.get('relatedModel');
+      let modelName = relatedModel.constructor.modelName;
 
-    if (!chooseRemoteData.nameProperty) {
-      throw new Error('nameProperty is undefined.');
+    let displayAttributeName = _this.get('displayAttributeName');
+    if (!displayAttributeName) {
+      throw new Error('Required property "displayAttributeName" is not defined.');
     }
 
-    if (!chooseRemoteData.minCharacters || typeof (chooseRemoteData.minCharacters) !== 'number' || chooseRemoteData.minCharacters <= 0) {
+    let minCharacters = this.get('minCharacters');
+    if (!minCharacters || typeof (minCharacters) !== 'number' || minCharacters <= 0) {
       throw new Error('minCharacters has wrong value.');
     }
 
-    if (!chooseRemoteData.maxResults || typeof (chooseRemoteData.maxResults) !== 'number' || chooseRemoteData.maxResults <= 0) {
+    let maxResults = this.get('maxResults');
+      if (!maxResults || typeof (maxResults) !== 'number' || maxResults <= 0) {
       throw new Error('maxResults has wrong value.');
     }
 
-    if (!chooseRemoteData.relationName) {
+    let relationName = this.get('relationName');
+      if (!relationName) {
       throw new Error('relationName is not defined.');
     }
 
-    this.set('autocompleteValue', this.get('value'));
-
+    var state;
     this.$().search({
-      minCharacters: chooseRemoteData.minCharacters,
-      maxResults: chooseRemoteData.maxResults,
+      minCharacters: minCharacters,
+      maxResults: maxResults,
       cache: false,
       apiSettings: {
+        /**
+         * Mocks call to the data source,
+         * Uses query language and store for loading data explicitly.
+         *
+         * @param {Object} settings
+         * @param {Function} callback
+         */
         responseAsync(settings, callback) {
           let builder = new QueryBuilder(store, modelName);
 
           if (settings.urlData.query) {
-            builder.where(new StringPredicate(chooseRemoteData.nameProperty).contains(settings.urlData.query));
+            builder.where(new StringPredicate(displayAttributeName).contains(settings.urlData.query));
           }
 
           store.query(modelName, builder.build()).then((records) => {
@@ -295,8 +287,8 @@ export default FlexberryBaseComponent.extend({
               success: true,
               results: records.map(i => {
                 return {
-                  title: i.get(chooseRemoteData.nameProperty),
-                  model: i
+                  title: i.get(displayAttributeName),
+                  instance: i
                 };
               })
             });
@@ -305,21 +297,49 @@ export default FlexberryBaseComponent.extend({
           });
         }
       },
+
+      /**
+       * Handles opening of the autocomplete list.
+       * Sets current state (taht autocomplete list is opened) for future purposes.
+       */
+      onResultsOpen() {
+        state = 'opened';
+        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+      },
+
+      /**
+       * Handles selection of item from the autocomplete list.
+       * Saves selected model and notifies the controller.
+       *
+       * @param {Object} result Item from array of objects, built in `responseAsync`.
+       */
       onSelect(result) {
+        state = 'selected';
+        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+
+        _this.set('value', result.instance);
         _this.sendAction(
           'updateLookupAction',
           {
-            relationName: chooseRemoteData.relationName,
-            modelToLookup: chooseRemoteData.modelToLookup,
-            newRelationValue: result.model
+            relationName: relationName,
+            modelToLookup: relatedModel,
+            newRelationValue: result.instance
           });
-      }
-    });
+      },
 
-    // TODO: find proper way to restore selected value.
-    this.$('.prompt').blur(function() {
-      if (!_this.$('.ui.search').hasClass('focus')) {
-        _this.set('autocompleteValue', _this.get('value'));
+      /**
+       * Handles closing of the autocomplete list.
+       * Restores display text if nothing has been selected.
+       */
+      onResultsClose() {
+        // Set displayValue directly because value hasn'been changes
+        // and Ember won't change computed property.
+        if (state !== 'selected') {
+          _this.set('displayValue', _this.buildDisplayValue());
+        }
+
+        state = 'closed';
+        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
       }
     });
   },
@@ -333,27 +353,31 @@ export default FlexberryBaseComponent.extend({
   _onDropdown: function() {
     let _this = this;
     let store = this.get('store');
-    let chooseRemoteData = this.get('chooseRemoteData');
-    let modelName = chooseRemoteData.modelToLookup.constructor.modelName;
+    let modelName = this.get('relatedModel').constructor.modelName;
+    let minCharacters = this.get('minCharacters');
+    let multiselect = this.get('multiselect');
+    let displayAttributeName = _this.get('displayAttributeName');
+    let relationName = this.get('relationName');
+    let relatedModel = this.get('relatedModel');
 
     this.$('.flexberry-dropdown').dropdown({
-      minCharacters: chooseRemoteData.minCharacters,
-      allowAdditions: this.get('multiselect'),
+      minCharacters: minCharacters,
       cache: false,
       apiSettings: {
         responseAsync(settings, callback) {
+          console.log('load');
           let builder = new QueryBuilder(store, modelName);
 
           if (settings.urlData.query) {
-            builder.where(new StringPredicate(chooseRemoteData.nameProperty).contains(settings.urlData.query));
+            builder.where(new StringPredicate(displayAttributeName).contains(settings.urlData.query));
           }
 
           store.query(modelName, builder.build()).then((records) => {
             callback({
               success: true,
               results: records.map(i => {
-                return {
-                  name: i.get(chooseRemoteData.nameProperty),
+                  return {
+                  name: i.get(displayAttributeName),
                   value: i
                 };
               })
@@ -367,13 +391,14 @@ export default FlexberryBaseComponent.extend({
         _this.sendAction(
           'updateLookupAction',
           {
-            relationName: chooseRemoteData.relationName,
-            modelToLookup: chooseRemoteData.modelToLookup,
+            relationName: relationName,
+            modelToLookup: relatedModel,
             newRelationValue: value
           });
       }
-    });
+    }).dropdown('set text', _this.get('displayValue'));
   },
+
   actions: {
     choose: function(chooseData) {
       if (this.get('readonly')) {
@@ -389,5 +414,21 @@ export default FlexberryBaseComponent.extend({
 
       this.sendAction('remove', removeData);
     }
+  },
+
+  /**
+   * Builds display text by selected model.
+   *
+   * @method buildDisplayValue
+   * @returns {String}
+   * @protected
+   */
+  buildDisplayValue() {
+    let selectedModel = this.get('value');
+    if (!selectedModel) {
+      return '';
+    }
+
+    return selectedModel.get(this.get('displayAttributeName'));
   }
 });

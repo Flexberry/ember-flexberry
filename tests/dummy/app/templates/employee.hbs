@@ -74,7 +74,7 @@
     {{#flexberry-lookup
       choose='showLookupDialog'
       remove='removeLookupValue'
-      value=model.employee1.firstName
+      value=model.employee1
       relationName='employee1'
       projection='EmployeeL'
       title='Employees'
@@ -82,8 +82,8 @@
       class=(if model.errors.reportsTo 'error' '')
       chooseButtonClass='primary'
       removeButtonClass='primary'
-      autocomplete=true
-      nameProperty='firstName'
+      dropdown=true
+      displayAttributeName='firstName'
     }}
       {{model.employee1.firstName}}<br>
       {{model.employee1.lastName}}

@@ -1,10 +1,15 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-18
+### Added
+FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
+* Add tableStriped, customTableClass, tableClass properties.
+
 ## 2016-05-17
 ### Breaking changes
 FlexberryObjectlistviewComponent:
-* Remove actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
+* Move actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
 * Rename action 'rowClick' to 'objectListViewRowClick'.
 FlexberryGroupeditComponent:
 * Rename action 'rowClick' to 'groupEditRowClick'.

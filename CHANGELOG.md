@@ -5,18 +5,18 @@
 ### Breaking changes
 FlexberryObjectlistviewComponent:
 * Remove actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
-* Rename method 'rowClick' in 'objectListViewRowClick'.
+* Rename action 'rowClick' to 'objectListViewRowClick'.
 FlexberryGroupeditComponent:
-* Rename method 'rowClick' in 'groupEditRowClick'.
-* Rename property 'rowClick' in 'action'.
+* Rename action 'rowClick' to 'groupEditRowClick'.
+* Rename property 'rowClick' to 'action'.
 
 ## 2016-05-06
 ### Breaking changes
 FlexberryLookupComponent:
-* Rename classChoose in chooseButtonClass.
-* Rename classRemove in removeButtonClass.
+* Rename classChoose to chooseButtonClass.
+* Rename classRemove to removeButtonClass.
 FlexberryFileComponent, FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
-* Rename classButton in buttonClass.
+* Rename classButton to buttonClass.
 
 ## 2016-04-15
 ### Fixed

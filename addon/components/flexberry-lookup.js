@@ -240,7 +240,7 @@ export default FlexberryBaseComponent.extend({
     let _this = this;
     let store = this.get('store');
     let relatedModel = this.get('relatedModel');
-      let modelName = relatedModel.constructor.modelName;
+    let modelName = relatedModel.constructor.modelName;
 
     let displayAttributeName = _this.get('displayAttributeName');
     if (!displayAttributeName) {
@@ -253,12 +253,12 @@ export default FlexberryBaseComponent.extend({
     }
 
     let maxResults = this.get('maxResults');
-      if (!maxResults || typeof (maxResults) !== 'number' || maxResults <= 0) {
+    if (!maxResults || typeof (maxResults) !== 'number' || maxResults <= 0) {
       throw new Error('maxResults has wrong value.');
     }
 
     let relationName = this.get('relationName');
-      if (!relationName) {
+    if (!relationName) {
       throw new Error('relationName is not defined.');
     }
 
@@ -362,6 +362,7 @@ export default FlexberryBaseComponent.extend({
 
     this.$('.flexberry-dropdown').dropdown({
       minCharacters: minCharacters,
+      allowAdditions: multiselect,
       cache: false,
       apiSettings: {
         responseAsync(settings, callback) {
@@ -376,7 +377,7 @@ export default FlexberryBaseComponent.extend({
             callback({
               success: true,
               results: records.map(i => {
-                  return {
+                return {
                   name: i.get(displayAttributeName),
                   value: i
                 };

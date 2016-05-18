@@ -15,7 +15,7 @@ FlexberryGroupeditComponent:
 FlexberryLookupComponent:
 * Add mode dropdown.
 * Rename autocompleteUpdateAction to updateLookupAction.
-* Rename autocompleteProperty to nameProperty.
+* Rename autocompleteProperty to displayAttributeName.
 * Rename autocompleteMinCharacters to minCharacters.
 * Rename autocompleteMaxResults to maxResults.
 * Remove autocompleteUpdateXhrAction, updateAutocompleteLookupXhr, getLookupAutocompleteUrl, getAutocompleteLookupQueryOptions, limitFunction, autocompleteUrl, autocompleteQueryOptions.

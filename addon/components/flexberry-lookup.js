@@ -199,6 +199,14 @@ export default FlexberryBaseComponent.extend({
   value: undefined,
 
   /**
+   * Additional observer of value changings.
+   * Updates displayValue.
+   */
+  _valueObserver : Ember.observer('value', function() {
+    this.set('displayValue', this.buildDisplayValue());
+  }),
+
+  /**
    * Text that displayed for the user as representation of currently selected value.
    * This property is binded to the view and can be changed by user (it won't be
    * applied to model automatically).

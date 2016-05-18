@@ -4,7 +4,7 @@
 
 import DS from 'ember-data';
 import BaseModel from './base';
-import Proj from 'ember-flexberry-projections';
+import Proj from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   userName: DS.attr('string'),

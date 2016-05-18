@@ -7,7 +7,7 @@ import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
-import QueryBuilder from 'ember-flexberry-projections/query/builder';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
 
 /**
  * Base route for the List Forms.

@@ -58,7 +58,6 @@
     "ember-cli-sass": "^5.2.0",
     "ember-flexberry-data": "Flexberry/ember-flexberry-data#develop",
     "ember-i18n": "4.2.0",
-    "ember-local-storage": "0.0.10",
     "ember-truth-helpers": "1.2.0",
     "ember-validations": "~2.0.0-alpha.4",
     "lodash": "^4.4.0",

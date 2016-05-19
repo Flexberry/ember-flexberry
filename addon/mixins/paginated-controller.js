@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Settings from '../models/settings';
 
 export default Ember.Mixin.create({
   queryParams: ['page', 'perPage'],
@@ -57,8 +56,8 @@ export default Ember.Mixin.create({
       let perPage = parseInt(value, 10);
 
       // Save setting.
-      let settings = Settings.create();
-      settings.set('perPage', perPage);
+      //let settings = Settings.create();
+      //settings.set('perPage', perPage);
 
       // Changing perPage value reloads route automatically.
       this.set('perPage', perPage);

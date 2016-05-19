@@ -103,7 +103,7 @@ class ModelBlueprint {
     return "({\n" + TAB + attrs.join(",\n" + TAB) + "\n});";
   }
 
-  joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string): string {
+  joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string, level: number): string {
     let hasManyAttrs: string[] = [];
     let modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
     let hasManyModel: metadata.Model = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
@@ -113,10 +113,21 @@ class ModelBlueprint {
         hasManyAttrs.push(this.declareProjAttr(attr));
       }
       for (let belongsTo of hasManyProj.belongsTo) {
-        hasManyAttrs.push(this.joinProjBelongsTo(belongsTo, 1));
+        hasManyAttrs.push(this.joinProjBelongsTo(belongsTo, level + 1));
       }
-      let attrsStr = hasManyAttrs.join(",\n ");
-      return `${detailHasMany.name}: Proj.hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${attrsStr}\n})`;
+      let indent: string[] = [];
+      for (let i = 0; i < level; i++) {
+        indent.push(TAB);
+      }
+      let indentStr = indent.join("");
+      indent.pop();
+      let indentStr2 = indent.join("");
+      let attrsStr = hasManyAttrs.join(",\n" + indentStr);
+      if(hasManyAttrs.length===0){
+        attrsStr = "";
+        indentStr = "";
+      }
+      return `${detailHasMany.name}: Proj.hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}})`;
     }
     return "";
   }
@@ -181,11 +192,11 @@ class ModelBlueprint {
             hasManyAttrs.push(this.declareProjAttr(detailAttr));
           }
           for (let detailBelongsTo of detailProj.belongsTo) {
-            hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 2));
+            hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 3));
           }
 
           for (let detailHasMany of detailProj.hasMany) {
-            hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir));
+            hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 3));
           }
         }
         let attrsStr = hasManyAttrs.join(",\n    ");

@@ -1,11 +1,4 @@
-import {
-  moduleFor,
-  test
-} from 'ember-qunit';
-
-moduleFor('route:application', {
-  needs: ['service:session']
-});
+import { test } from 'ember-qunit';
 
 test('it exists', function(assert) {
   var route = this.subject();

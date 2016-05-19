@@ -109,7 +109,6 @@
         projection='CustomerL'
         title='Customer'
         readonly=readonly
-        limitFunction=lookupLimitFunction
         class=(concat 'sixteen wide ' (if model.errors.customer 'error' ''))
       }}
       {{flexberry-validationmessage error=model.errors.customer}}

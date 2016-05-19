@@ -4,7 +4,7 @@
 
 import Ember from 'ember';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
-import FlexberryLookupMixin from '../mixins/flexberry-lookup-mixin';
+import FlexberryLookupMixin from '../mixins/flexberry-lookup';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
 
 const { getOwner } = Ember;

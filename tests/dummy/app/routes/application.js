@@ -1,12 +1,8 @@
 import Ember from 'ember';
-import AuthApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import ModalApplicationRouteMixin from 'ember-flexberry/mixins/modal-application-route';
 
-export default Ember.Route.extend(ModalApplicationRouteMixin, AuthApplicationRouteMixin, {
+export default Ember.Route.extend(ModalApplicationRouteMixin, {
   actions: {
-    invalidateSession: function() {
-      this.get('session').invalidate();
-    },
     openDevCommit: function() {
       let $el = Ember.$('#app-version');
       let version = $el[0].innerText.trim();

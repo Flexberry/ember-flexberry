@@ -6,9 +6,6 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  // /login
-  this.route('login');
-
   this.route('ember-flexberry-dummy-application-user-list');
   this.route('ember-flexberry-dummy-application-user-edit', { path: 'ember-flexberry-dummy-application-user-edit/:id' });
   this.route('ember-flexberry-dummy-application-user-edit.new', { path: 'ember-flexberry-dummy-application-user-edit/new' });

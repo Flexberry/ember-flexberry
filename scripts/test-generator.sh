@@ -23,9 +23,9 @@ rm -r app/*
 mv index.html app
 ember install "${ADDON_DIR}"
 rm -f ./ember-cli-build.js
-cp vendor/flexberry/ember-cli-build.js .
+cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
 rm -f ./.jscsrc
-cp vendor/flexberry/.jscsrc .
+cp "${ADDON_DIR}vendor/flexberry/.jscsrc" .
 
 # Generate components using Dummy metamodel and test them.
 ember generate route-test ember-flexberry-dummy-comment-list

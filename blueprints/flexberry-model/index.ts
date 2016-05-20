@@ -35,7 +35,10 @@ module.exports = {
       parentClassName: modelBlueprint.parentClassName,// for use in files\__root__\models\__name__.js
       model: modelBlueprint.model,// for use in files\__root__\models\__name__.js
       projections: modelBlueprint.projections,// for use in files\__root__\models\__name__.js
-      serializerAttrs: modelBlueprint.serializerAttrs// for use in files\__root__\serializers\__name__.js
+      serializerAttrs: modelBlueprint.serializerAttrs,// for use in files\__root__\serializers\__name__.js
+      name: modelBlueprint.name,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
+      needsAllModels: modelBlueprint.needsAllModels,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
+      needsAllEnums: modelBlueprint.needsAllEnums// for use in files\tests\unit\serializers\__name__.js
     };
   }
 };
@@ -46,6 +49,9 @@ class ModelBlueprint {
   parentModelName: string;
   parentClassName: string;
   projections: string;
+  name: string;
+  needsAllModels: string;
+  needsAllEnums: string;
   constructor(blueprint, options) {
     let modelsDir = path.join(options.metadataDir, "models");
     if (!options.file) {
@@ -59,7 +65,29 @@ class ModelBlueprint {
     this.serializerAttrs = this.getSerializerAttrs(model);
     this.projections = this.getJSForProjections(model, modelsDir);
     this.model = this.getJSForModel(model);
+    this.name = options.entity.name;
+    this.needsAllModels = this.getNeedsAllModels(modelsDir);
+    this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
   }
+
+  getNeedsAllEnums(enumsDir: string): string {
+    let listEnums = fs.readdirSync(enumsDir);
+    let enums: string[] = [];
+    for (let e of listEnums) {
+      enums.push(`    'transform:${path.parse(e).name}'`);
+    }
+    return enums.join(",\n");
+  }
+
+  getNeedsAllModels(modelsDir: string): string {
+    let listModels = fs.readdirSync(modelsDir);
+    let models: string[] = [];
+    for (let model of listModels) {
+      models.push(`    'model:${path.parse(model).name}'`);
+    }
+    return models.join(",\n");
+  }
+
 
   getSerializerAttrs(model: metadata.Model): string {
     let attrs: string[] = [];

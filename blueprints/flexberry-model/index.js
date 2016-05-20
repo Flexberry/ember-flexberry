@@ -30,7 +30,10 @@ module.exports = {
             parentClassName: modelBlueprint.parentClassName,
             model: modelBlueprint.model,
             projections: modelBlueprint.projections,
-            serializerAttrs: modelBlueprint.serializerAttrs // for use in files\__root__\serializers\__name__.js
+            serializerAttrs: modelBlueprint.serializerAttrs,
+            name: modelBlueprint.name,
+            needsAllModels: modelBlueprint.needsAllModels,
+            needsAllEnums: modelBlueprint.needsAllEnums // for use in files\tests\unit\serializers\__name__.js
         };
     }
 };
@@ -48,7 +51,28 @@ var ModelBlueprint = (function () {
         this.serializerAttrs = this.getSerializerAttrs(model);
         this.projections = this.getJSForProjections(model, modelsDir);
         this.model = this.getJSForModel(model);
+        this.name = options.entity.name;
+        this.needsAllModels = this.getNeedsAllModels(modelsDir);
+        this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
     }
+    ModelBlueprint.prototype.getNeedsAllEnums = function (enumsDir) {
+        var listEnums = fs.readdirSync(enumsDir);
+        var enums = [];
+        for (var _i = 0, listEnums_1 = listEnums; _i < listEnums_1.length; _i++) {
+            var e = listEnums_1[_i];
+            enums.push("    'transform:" + path.parse(e).name + "'");
+        }
+        return enums.join(",\n");
+    };
+    ModelBlueprint.prototype.getNeedsAllModels = function (modelsDir) {
+        var listModels = fs.readdirSync(modelsDir);
+        var models = [];
+        for (var _i = 0, listModels_1 = listModels; _i < listModels_1.length; _i++) {
+            var model = listModels_1[_i];
+            models.push("    'model:" + path.parse(model).name + "'");
+        }
+        return models.join(",\n");
+    };
     ModelBlueprint.prototype.getSerializerAttrs = function (model) {
         var attrs = [];
         for (var _i = 0, _a = model.belongsTo; _i < _a.length; _i++) {

@@ -1,8 +1,7 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import TestEnumeration from '../enums/test-enumeration';
 
-export default EditFormRoute.extend(AuthenticatedRouteMixin, {
+export default EditFormRoute.extend({
   modelProjection: 'TestAggregatorE',
   modelName: 'test-aggregator',
   model: function(params) {

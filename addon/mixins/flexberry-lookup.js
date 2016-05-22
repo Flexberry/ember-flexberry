@@ -4,8 +4,7 @@
 
 import Ember from 'ember';
 
-import QueryBuilder from 'ember-flexberry-projections/query/builder';
-import { StringPredicate } from 'ember-flexberry-projections/query/predicate';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
 
 // TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
@@ -47,15 +46,10 @@ export default Ember.Mixin.create({
         projection: undefined,
         relationName: undefined,
         title: undefined,
-        limitFunction: undefined,
         predicate: undefined,
         modelToLookup: undefined,
         sizeClass: undefined
       }, chooseData);
-
-      // TODO: remove later
-      let limitFunction = options.limitFunction;
-      Ember.assert(`Parameter 'limitFunction' has been removed. Use 'predicate' to specify limits.`, !limitFunction);
 
       let projectionName = options.projection;
       let relationName = options.relationName;
@@ -70,28 +64,28 @@ export default Ember.Mixin.create({
       let model = modelToLookup ? modelToLookup : this.get('model');
 
       // Get ember static function to get relation by name.
-      var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+      let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
 
       // Get relation property from model.
-      var relation = relationshipsByName.get(relationName);
+      let relation = relationshipsByName.get(relationName);
       if (!relation) {
         throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
       }
 
       // Get property type name.
-      var relatedToType = relation.type;
+      let relatedToType = relation.type;
 
       // Get property type constructor by type name.
-      var relatedTypeConstructor = this.store.modelFor(relatedToType);
+      let relatedTypeConstructor = this.store.modelFor(relatedToType);
 
       // Get a projection from related type model.
-      var projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
+      let projection = Ember.get(relatedTypeConstructor, 'projections')[projectionName];
       if (!projection) {
         throw new Error(`No projection with '${projectionName}' name defined in '${relatedToType}' model. `);
       }
 
       // Lookup
-      var lookupSettings = this.get('lookupSettings');
+      let lookupSettings = this.get('lookupSettings');
       if (!lookupSettings) {
         throw new Error('Lookup settings are undefined.');
       }
@@ -114,7 +108,7 @@ export default Ember.Mixin.create({
       }
 
       this.send('showModalDialog', lookupSettings.template);
-      var loadingParams = {
+      let loadingParams = {
         view: lookupSettings.template,
         outlet: 'modal-content'
       };
@@ -193,93 +187,14 @@ export default Ember.Mixin.create({
         newRelationValue: undefined,
         modelToLookup: undefined
       }, updateData);
-      let relationName = options.relationName;
-      let newRelationValue = options.newRelationValue;
       let modelToLookup = options.modelToLookup;
       let model = modelToLookup ? modelToLookup : this.get('model');
-      let relationType = this._getRelationType(model, relationName);
-      var payload = {};
-      payload[relationType + 's'] = [newRelationValue];
-      this.store.pushPayload(relationType, payload);
-      let realRelationValue = this.store.peekRecord(relationType, newRelationValue[this.store.serializerFor(relationType).get('primaryKey')]);
 
-      model.set(relationName, realRelationValue);
+      Ember.Logger.debug(`Flexberry Lookup Mixin::updateLookupValue ${options.relationName}`);
+      model.set(options.relationName, options.newRelationValue);
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
-    },
-
-    /**
-     * Forms url to get all availible entities of certain relation.
-     *
-     * @method getLookupAutocompleteUrl
-     * @param {String} relationName Elements for this relation will be searched.
-     * @return {Object} Formed url.
-     */
-    getLookupAutocompleteUrl(relationName) {
-      var relatedToType = this._getRelationType(this.get('model'), relationName);
-      return this.urlForFindAll(relatedToType);
-    },
-
-    /**
-     * Forms query by lookup autocomplete parameters.
-     *
-     * @method getAutocompleteLookupQueryOptions
-     * @param {Object} lookupParameters Lookup autocomplete parameters (current limit function, etc).
-     * @return {Object} Formed query.
-     */
-    getAutocompleteLookupQueryOptions(lookupParameters) {
-      let options = Ember.$.extend(true, {
-        relationName: undefined
-      }, lookupParameters);
-
-      let relationName = options.relationName;
-      let relationType = this._getRelationType(this.get('model'), relationName);
-
-      // TODO: Projections?
-      let builder = new QueryBuilder(this.store)
-        .from(relationType)
-        .where(new StringPredicate(options.limitField).contains(options.limitValue))
-        .top(options.top);
-
-      return builder.build();
-    },
-
-    /**
-     * It updates autocomplete lookup xhr before send in order to add necessary auth information.
-     *
-     * @method updateAutocompleteLookupXhr
-     * @param {Object} [options] Lookup autocomplete parameters.
-     * @param {Object} options.xhr Autocomplete lookup xhr to send.
-     * @param {Object} options.element Current autocomplete lookup.
-     * @return {Object} Updated method parameters.
-     */
-    updateAutocompleteLookupXhr: function(options) {
-      this.get('currentAuthService').authCustomRequest(options);
-      return options;
     }
-  },
-
-  /**
-   * Gets related object type by relation name from specified model.
-   *
-   * @method _getRelationType
-   * @param {String} model Specified model to get relation from.
-   * @param {String} relationName Relation name.
-   * @return {String} Related object type.
-   * @throws {Error} Throws error if relation was not found at model.
-   */
-  _getRelationType: function(model, relationName) {
-    // Get ember static function to get relation by name.
-    var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
-
-    // Get relation property from model.
-    var relation = relationshipsByName.get(relationName);
-    if (!relation) {
-      throw new Error(`No relation with '${relationName}' name defined in '${model.constructor.modelName}' model.`);
-    }
-
-    let relationType = relation.type;
-    return relationType;
   }
 });

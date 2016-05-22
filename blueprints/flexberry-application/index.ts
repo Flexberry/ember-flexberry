@@ -1,9 +1,11 @@
 ﻿/// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
+/// <reference path='../typings/MetadataClasses.d.ts' />
 
 let stripBom = require("strip-bom");
 import fs = require("fs");
 import path = require('path');
+import metadata = require('MetadataClasses');
 
 module.exports = {
   description: 'Generates an ember application for flexberry.',
@@ -33,8 +35,8 @@ module.exports = {
 
 class ApplicationBlueprint {
 
-  children: any;
-  routes: any;
+  children: string;
+  routes: string;
   constructor(blueprint, options) {
     let listFormsDir = path.join(options.metadataDir, "list-forms");
     let listForms = fs.readdirSync(listFormsDir);
@@ -43,12 +45,12 @@ class ApplicationBlueprint {
     for (let form of listForms) {
       let listFormFile = path.join(listFormsDir, form);
       let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
-      let listForm = JSON.parse(content);
+      let listForm: metadata.ListForm = JSON.parse(content);
       let listFormName = path.parse(form).name;
-      children.push(`  {\n  link: '${listFormName}',\n  title: '${listForm.caption}',\n  children: null\n  }`);
-      routes.push(`this.route('${listFormName}');`);
-      routes.push(`this.route('${listForm.editForm}', { path: '${listForm.editForm}/:id' });`);
-      routes.push(`this.route('${listForm.newForm}.new', { path: '${listForm.newForm}/new' });`);
+      children.push(`      {\n        link: '${listFormName}',\n        title: '${listForm.caption}',\n        children: null\n      }`);
+      routes.push(`  this.route('${listFormName}');`);
+      routes.push(`  this.route('${listForm.editForm}', { path: '${listForm.editForm}/:id' });`);
+      routes.push(`  this.route('${listForm.newForm}.new', { path: '${listForm.newForm}/new' });`);
     }
     this.children = children.join(",\n");
     this.routes = routes.join("\n");

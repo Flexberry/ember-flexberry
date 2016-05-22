@@ -1,13 +1,32 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-17
+### Breaking changes
+FlexberryObjectlistviewComponent:
+* Remove actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
+* Rename action 'rowClick' to 'objectListViewRowClick'.
+FlexberryGroupeditComponent:
+* Rename action 'rowClick' to 'groupEditRowClick'.
+* Rename property 'rowClick' to 'action'.
+
+## 2016-05-10
+### Breaking changes
+FlexberryLookupComponent:
+* Add mode dropdown.
+* Rename autocompleteUpdateAction to updateLookupAction.
+* Rename autocompleteProperty to displayAttributeName.
+* Rename autocompleteMinCharacters to minCharacters.
+* Rename autocompleteMaxResults to maxResults.
+* Remove autocompleteUpdateXhrAction, updateAutocompleteLookupXhr, getLookupAutocompleteUrl, getAutocompleteLookupQueryOptions, limitFunction, autocompleteUrl, autocompleteQueryOptions.
+
 ## 2016-05-06
 ### Breaking changes
 FlexberryLookupComponent:
-* Rename classChoose in chooseButtonClass.
-* Rename classRemove in removeButtonClass.
+* Rename classChoose to chooseButtonClass.
+* Rename classRemove to removeButtonClass.
 FlexberryFileComponent, FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
-* Rename classButton in buttonClass.
+* Rename classButton to buttonClass.
 
 ## 2016-04-15
 ### Fixed

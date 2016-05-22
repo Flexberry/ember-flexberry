@@ -1,5 +1,6 @@
-import EnumTransform from 'ember-flexberry/transforms/enum-string';
+import FlexberryEnum from 'ember-flexberry/transforms/flexberry-enum';
+import <%= className %>Enum from '../enums/<%= name %>';
 
-export default EnumTransform.extend({
-values: [<%= values %>]
+export default FlexberryEnum.extend({
+  enum: <%= className %>Enum
 });

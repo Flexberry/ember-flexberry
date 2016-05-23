@@ -1,9 +1,9 @@
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 "use strict";
-const fs = require("fs");
-const path = require('path');
-const stripBom = require("strip-bom");
+var fs = require("fs");
+var path = require('path');
+var stripBom = require("strip-bom");
 module.exports = {
     description: 'Generates an ember list-form for flexberry.',
     availableOptions: [
@@ -21,7 +21,7 @@ module.exports = {
      * @return {Object} Сustom template variables.
      */
     locals: function (options) {
-        let listFormBlueprint = new ListFormBlueprint(this, options);
+        var listFormBlueprint = new ListFormBlueprint(this, options);
         return {
             editForm: listFormBlueprint.listForm.editForm,
             formName: listFormBlueprint.listForm.name,
@@ -31,15 +31,16 @@ module.exports = {
         };
     }
 };
-class ListFormBlueprint {
-    constructor(blueprint, options) {
-        let listFormsDir = path.join(options.metadataDir, "list-forms");
+var ListFormBlueprint = (function () {
+    function ListFormBlueprint(blueprint, options) {
+        var listFormsDir = path.join(options.metadataDir, "list-forms");
         if (!options.file) {
             options.file = options.entity.name + ".json";
         }
-        let listFormFile = path.join(listFormsDir, options.file);
-        let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
+        var listFormFile = path.join(listFormsDir, options.file);
+        var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
         this.listForm = JSON.parse(content);
     }
-}
+    return ListFormBlueprint;
+}());
 //# sourceMappingURL=index.js.map

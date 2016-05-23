@@ -1,140 +1,142 @@
-/*jshint node:true*/
-var fs = require("fs");
-var stripBom = require("strip-bom");
-var path = require('path');
-var template = require('lodash/template');
-var find = require('lodash/find');
-var indexOf = require('lodash/indexOf');
-var sortBy = require('lodash/sortBy');
-var map = require('lodash/map');
-var concat = require('lodash/concat');
-
-var componentMaps = [
-  { name: "flexberry-file", types: ["file"] },
-  { name: "flexberry-checkbox", types: ["boolean"] },
-  { name: "flexberry-datepicker", types: ["date"] },
-  { name: "flexberry-field", types: ["string", "number"] }
+/// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/lodash/index.d.ts' />
+/// <reference path='../typings/MetadataClasses.d.ts' />
+"use strict";
+const stripBom = require("strip-bom");
+const fs = require("fs");
+const path = require('path');
+const lodash = require('lodash');
+const componentMaps = [
+    { name: "flexberry-file", types: ["file"] },
+    { name: "flexberry-checkbox", types: ["boolean"] },
+    { name: "flexberry-datepicker", types: ["date"] },
+    { name: "flexberry-field", types: ["string", "number"] }
 ];
-
-
 module.exports = {
-  description: 'Generates an ember edit-form for flexberry.',
-
-  availableOptions: [
-    { name: 'file', type: String },
-    { name: 'metadata-dir', type: String }
-  ],
-
-  /**
-   * Blueprint Hook locals.
-   * Use locals to add custom template variables. The method receives one argument: options.
-   *
-   * @method locals
-   * @public
-   *
-   * @param {Object} options Options is an object containing general and entity-specific options.
-   * @return {Object} Сustom template variables.
-   */
-  locals: function (options) {
-    if (!options.file) {
-      options.file = options.entity.name + ".json";
-    }
-
-    var editFormBlueprint = new EditFormBlueprint(this, options);
-    editFormBlueprint.process();
-
-    return {
-      modelName: editFormBlueprint.editForm.projections[0].modelName,// for use in files\__root__\routes\__name__.js, files\__root__\routes\__name__\new.js
-      modelProjection: editFormBlueprint.editForm.projections[0].modelProjection,// for use in files\__root__\routes\__name__.js, files\__root__\routes\__name__\new.js
-      formName: editFormBlueprint.editForm.name,// for use in files\__root__\controllers\__name__\new.js
-      entityName: options.entity.name,// for use in files\__root__\controllers\__name__\new.js
-      caption: editFormBlueprint.editForm.caption,// for use in files\__root__\controllers\__name__.js
-      flexberryComponents: editFormBlueprint.snippetsResult.join("\n")// for use in files\__root__\templates\__name__.hbs
-    };
-  }
-};
-
-function EditFormBlueprint(blueprint, options) {
-  this._tmpSnippetsResult = [];
-  this.snippetsResult = [];
-  this.editForm = {};
-  this.modelsDir = path.join(options.metadataDir, "models");
-  this.readSnippetFile = function (fileName, fileExt) {
-    return stripBom(fs.readFileSync(path.join(blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));
-  }
-  this.readHbsSnippetFile = function (componentName) {
-    return this.readSnippetFile(componentName, "hbs");
-  }
-  this.loadSnippet = function (model, attrName) {
-    var modelAttr = find(model.attrs, function (attr) { return attr.name === attrName; });
-    if (!modelAttr) {
-      model = this.loadModel(model.parentModelName);
-      return this.loadSnippet(model, attrName);
-    }
-    var component = find(componentMaps, function (map) { return indexOf(map.types, modelAttr.type) !== -1; });
-    if (!component) {
-      return this.readHbsSnippetFile("flexberry-dropdown");
-    }
-    return this.readHbsSnippetFile(component.name);
-  };
-  this.fillBelongsToAttrs = function (belongsToArray, parentPath) {
-    for (var idx in belongsToArray) {
-      var belongsTo = belongsToArray[idx];
-      var currentPath = concat(parentPath, belongsTo.name);
-      for (var idx2 in belongsTo.attrs) {
-        var belongsToAttr = belongsTo.attrs[idx2];
-        if (belongsToAttr.hidden || belongsToAttr.index === -1) {
-          continue;
+    description: 'Generates an ember edit-form for flexberry.',
+    availableOptions: [
+        { name: 'file', type: String },
+        { name: 'metadata-dir', type: String }
+    ],
+    /**
+     * Blueprint Hook locals.
+     * Use locals to add custom template variables. The method receives one argument: options.
+     *
+     * @method locals
+     * @public
+     *
+     * @param {Object} options Options is an object containing general and entity-specific options.
+     * @return {Object} Сustom template variables.
+     */
+    locals: function (options) {
+        if (!options.file) {
+            options.file = options.entity.name + ".json";
         }
-        var model = this.loadModel(belongsTo.relatedTo);
-        var snippet = this.loadSnippet(model, belongsToAttr.name);
-        belongsToAttr.name = concat(currentPath, belongsToAttr.name).join(".");
-        this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: template(snippet)(belongsToAttr) });
-      }
-      this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
+        var editFormBlueprint = new EditFormBlueprint(this, options);
+        return {
+            modelName: editFormBlueprint.editForm.projections[0].modelName,
+            modelProjection: editFormBlueprint.editForm.projections[0].modelProjection,
+            formName: editFormBlueprint.editForm.name,
+            entityName: options.entity.name,
+            caption: editFormBlueprint.editForm.caption,
+            flexberryComponents: editFormBlueprint.flexberryComponents // for use in files\__root__\templates\__name__.hbs
+        };
     }
-  };
-  this.process = function () {
-    var idx, projAttr;
-    var editFormsDir = path.join(options.metadataDir, "edit-forms");
-    var editFormsFile = path.join(editFormsDir, options.file);
-    var content = stripBom(fs.readFileSync(editFormsFile, "utf8"));
-    this.editForm = JSON.parse(content);
-    var linkProj = this.editForm.projections[0];
-    var model = this.loadModel(linkProj.modelName);
-    var proj = find(model.projections, function (pr) { return pr.name === linkProj.modelProjection; });
-    for (idx in proj.attrs) {
-      projAttr = proj.attrs[idx];
-      if (projAttr.hidden || projAttr.index === -1) {
-        continue;
-      }
-      var snippet = this.loadSnippet(model, projAttr.name);
-      this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: template(snippet)(projAttr) });
+};
+class EditFormBlueprint {
+    constructor(blueprint, options) {
+        this.snippetsResult = [];
+        this._tmpSnippetsResult = [];
+        this.blueprint = blueprint;
+        this.options = options;
+        this.modelsDir = path.join(options.metadataDir, "models");
+        this.process();
+        this.flexberryComponents = this.snippetsResult.join("\n");
     }
-    this.fillBelongsToAttrs(proj.belongsTo, []);
-    for (idx in proj.belongsTo) {
-      var belongsTo = proj.belongsTo[idx];
-      if (belongsTo.hidden || belongsTo.index === -1) {
-        continue;
-      }
-      var propertyLookup = find(this.editForm.propertyLookup, function (propLookup) { return propLookup.relationName === belongsTo.relationName; });
-      if (propertyLookup) {
-        belongsTo.projection = propertyLookup.projection;
-        this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
-      }
+    readSnippetFile(fileName, fileExt) {
+        return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));
     }
-    this._tmpSnippetsResult = sortBy(this._tmpSnippetsResult, ["index"]);
-    this.snippetsResult = map(this._tmpSnippetsResult, "snippetResult");
-    for (idx in proj.hasMany) {
-      var hasMany = proj.hasMany[idx];
-      this.snippetsResult.push(template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
+    readHbsSnippetFile(componentName) {
+        return this.readSnippetFile(componentName, "hbs");
     }
-
-  };
-  this.loadModel = function (modelName) {
-    var modelFile = path.join(this.modelsDir, modelName + ".json");
-    var content = stripBom(fs.readFileSync(modelFile, "utf8"));
-    var model = JSON.parse(content);
-    return model;
-  };
+    loadModel(modelName) {
+        let modelFile = path.join(this.modelsDir, modelName + ".json");
+        let content = stripBom(fs.readFileSync(modelFile, "utf8"));
+        let model = JSON.parse(content);
+        return model;
+    }
+    findAttr(model, attrName) {
+        return lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
+    }
+    loadSnippet(model, attrName) {
+        let modelAttr = this.findAttr(model, attrName);
+        if (!modelAttr) {
+            model = this.loadModel(model.parentModelName);
+            return this.loadSnippet(model, attrName);
+        }
+        let component = lodash.find(componentMaps, function (map) { return lodash.indexOf(map.types, modelAttr.type) !== -1; });
+        if (!component) {
+            return this.readHbsSnippetFile("flexberry-dropdown");
+        }
+        return this.readHbsSnippetFile(component.name);
+    }
+    process() {
+        let editFormsDir = path.join(this.options.metadataDir, "edit-forms");
+        let editFormsFile = path.join(editFormsDir, this.options.file);
+        let content = stripBom(fs.readFileSync(editFormsFile, "utf8"));
+        this.editForm = JSON.parse(content);
+        let linkProj = this.editForm.projections[0];
+        let model = this.loadModel(linkProj.modelName);
+        let proj = lodash.find(model.projections, function (pr) { return pr.name === linkProj.modelProjection; });
+        let projAttr;
+        for (projAttr of proj.attrs) {
+            if (projAttr.hidden || projAttr.index === -1) {
+                continue;
+            }
+            let snippet = this.loadSnippet(model, projAttr.name);
+            let attr = this.findAttr(model, projAttr.name);
+            projAttr.readonly = "readonly";
+            projAttr.type = attr.type;
+            this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
+        }
+        this.fillBelongsToAttrs(proj.belongsTo, []);
+        let belongsTo, hasMany;
+        for (belongsTo of proj.belongsTo) {
+            if (belongsTo.hidden || belongsTo.index === -1) {
+                continue;
+            }
+            var propertyLookup = lodash.find(this.editForm.propertyLookup, function (propLookup) { return propLookup.relationName === belongsTo.relationName; });
+            if (propertyLookup) {
+                belongsTo.projection = propertyLookup.projection;
+                belongsTo.readonly = "readonly";
+                this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
+            }
+        }
+        this._tmpSnippetsResult = lodash.sortBy(this._tmpSnippetsResult, ["index"]);
+        this.snippetsResult = lodash.map(this._tmpSnippetsResult, "snippetResult");
+        for (hasMany of proj.hasMany) {
+            hasMany.readonly = "readonly";
+            this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
+        }
+    }
+    fillBelongsToAttrs(belongsToArray, parentPath) {
+        for (let belongsTo of belongsToArray) {
+            let currentPath = lodash.concat(parentPath, belongsTo.name);
+            let belongsToAttr;
+            for (belongsToAttr of belongsTo.attrs) {
+                if (belongsToAttr.hidden || belongsToAttr.index === -1) {
+                    continue;
+                }
+                let model = this.loadModel(belongsTo.relatedTo);
+                let snippet = this.loadSnippet(model, belongsToAttr.name);
+                let attr = this.findAttr(model, belongsToAttr.name);
+                belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
+                belongsToAttr.readonly = "true";
+                belongsToAttr.type = attr.type;
+                this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
+            }
+            this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
+        }
+    }
 }
+//# sourceMappingURL=index.js.map

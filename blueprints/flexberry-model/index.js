@@ -30,7 +30,10 @@ module.exports = {
             parentClassName: modelBlueprint.parentClassName,
             model: modelBlueprint.model,
             projections: modelBlueprint.projections,
-            serializerAttrs: modelBlueprint.serializerAttrs // for use in files\__root__\serializers\__name__.js
+            serializerAttrs: modelBlueprint.serializerAttrs,
+            name: modelBlueprint.name,
+            needsAllModels: modelBlueprint.needsAllModels,
+            needsAllEnums: modelBlueprint.needsAllEnums // for use in files\tests\unit\serializers\__name__.js
         };
     }
 };
@@ -48,7 +51,28 @@ var ModelBlueprint = (function () {
         this.serializerAttrs = this.getSerializerAttrs(model);
         this.projections = this.getJSForProjections(model, modelsDir);
         this.model = this.getJSForModel(model);
+        this.name = options.entity.name;
+        this.needsAllModels = this.getNeedsAllModels(modelsDir);
+        this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
     }
+    ModelBlueprint.prototype.getNeedsAllEnums = function (enumsDir) {
+        var listEnums = fs.readdirSync(enumsDir);
+        var enums = [];
+        for (var _i = 0, listEnums_1 = listEnums; _i < listEnums_1.length; _i++) {
+            var e = listEnums_1[_i];
+            enums.push("    'transform:" + path.parse(e).name + "'");
+        }
+        return enums.join(",\n");
+    };
+    ModelBlueprint.prototype.getNeedsAllModels = function (modelsDir) {
+        var listModels = fs.readdirSync(modelsDir);
+        var models = [];
+        for (var _i = 0, listModels_1 = listModels; _i < listModels_1.length; _i++) {
+            var model = listModels_1[_i];
+            models.push("    'model:" + path.parse(model).name + "'");
+        }
+        return models.join(",\n");
+    };
     ModelBlueprint.prototype.getSerializerAttrs = function (model) {
         var attrs = [];
         for (var _i = 0, _a = model.belongsTo; _i < _a.length; _i++) {
@@ -95,7 +119,7 @@ var ModelBlueprint = (function () {
         attrs.push("validations: {\n" + validationsStr + "\n  }");
         return "({\n" + TAB + attrs.join(",\n" + TAB) + "\n});";
     };
-    ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir) {
+    ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
         var modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
         var hasManyModel = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
@@ -107,10 +131,21 @@ var ModelBlueprint = (function () {
             }
             for (var _b = 0, _c = hasManyProj.belongsTo; _b < _c.length; _b++) {
                 var belongsTo = _c[_b];
-                hasManyAttrs.push(this.joinProjBelongsTo(belongsTo, 1));
+                hasManyAttrs.push(this.joinProjBelongsTo(belongsTo, level + 1));
             }
-            var attrsStr = hasManyAttrs.join(",\n ");
-            return detailHasMany.name + ": Proj.hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + attrsStr + "\n})";
+            var indent = [];
+            for (var i = 0; i < level; i++) {
+                indent.push(TAB);
+            }
+            var indentStr = indent.join("");
+            indent.pop();
+            var indentStr2 = indent.join("");
+            var attrsStr = hasManyAttrs.join(",\n" + indentStr);
+            if (hasManyAttrs.length === 0) {
+                attrsStr = "";
+                indentStr = "";
+            }
+            return detailHasMany.name + ": Proj.hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "})";
         }
         return "";
     };
@@ -180,11 +215,11 @@ var ModelBlueprint = (function () {
                     }
                     for (var _k = 0, _l = detailProj.belongsTo; _k < _l.length; _k++) {
                         var detailBelongsTo = _l[_k];
-                        hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 2));
+                        hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 3));
                     }
                     for (var _m = 0, _o = detailProj.hasMany; _m < _o.length; _m++) {
                         var detailHasMany = _o[_m];
-                        hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir));
+                        hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 3));
                     }
                 }
                 var attrsStr_1 = hasManyAttrs.join(",\n    ");

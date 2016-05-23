@@ -9,7 +9,7 @@ export default EditFormController.extend({
   *
   * @property parentRoute
   * @type String
-  * @default 'ember-flexberry-dummy-application-user-list'
+  * @default 'ember-flexberry-dummy-comment-list'
   */
-  parentRoute: 'ember-flexberry-dummy-application-user-list'
+  parentRoute: 'ember-flexberry-dummy-comment-list'
 });

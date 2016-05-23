@@ -1,0 +1,34 @@
+{{groupedit-toolbar
+  componentName=componentName
+  readonly=readonly
+  buttonClass=buttonClass
+}}
+{{object-list-view
+  readonly=readonly
+  buttonClass=buttonClass
+  headerCellComponent=headerCellComponent
+  cellComponent=cellComponent
+  singleColumnCellComponent=singleColumnCellComponent
+  useSingleColumn=useSingleColumn
+  singleColumnHeaderTitle=singleColumnHeaderTitle
+  showAsteriskInRow=showAsteriskInRow
+  showCheckBoxInRow=showCheckBoxInRow
+  showDeleteButtonInRow=showDeleteButtonInRow
+  showEditMenuItemInRow=showEditMenuItemInRow
+  showDeleteMenuItemInRow=showDeleteMenuItemInRow
+  menuInRowAdditionalItems=menuInRowAdditionalItems
+  rowClickable=rowClickable
+  headerClickable=orderable
+  editOnSeparateRoute=editOnSeparateRoute
+  saveBeforeRouteLeave=saveBeforeRouteLeave
+  sorting=sorting
+  modelProjection=modelProjection
+  content=content
+  sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
+  addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  action='groupEditRowClick'
+  componentName=componentName
+  allowColumnResize=allowColumnResize
+  confirmDeleteRow=this.attrs.confirmDeleteRow
+  confirmDeleteRows=this.attrs.confirmDeleteRows
+}}

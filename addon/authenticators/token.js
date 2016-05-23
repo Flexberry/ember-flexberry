@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import BaseAuthenticator from 'simple-auth/authenticators/base';
+import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
 export default BaseAuthenticator.extend({
   tokenEndpoint: null,
@@ -15,14 +15,14 @@ export default BaseAuthenticator.extend({
   },
 
   // Аутентификация с запросом к серверу и получение соответствующего token.
-  authenticate: function(credentials) {
+  authenticate: function(identification, password) {
     Ember.assert('tokenEndpoint should be defined', this.tokenEndpoint);
 
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.$.ajax({
         url: this.tokenEndpoint,
         type: 'POST',
-        data: `username=${credentials.identification}&password=${credentials.password}&grant_type=password`,
+        data: `username=${identification}&password=${password}&grant_type=password`,
         contentType: 'text/plain'
       }).then(function(response) {
         Ember.run(function() {

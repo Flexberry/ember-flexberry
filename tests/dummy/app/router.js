@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import config from './config/environment';
 
-var Router = Ember.Router.extend({
+const Router = Ember.Router.extend({
   location: config.locationType
 });
 
@@ -9,33 +9,33 @@ Router.map(function() {
   // /login
   this.route('login');
 
-  // /employees
-  this.route('employees', function() {
-    //// /employees/2 - render into outlet in employees template
-    //this.resource('employee', {path: ':id'});
+  this.route('ember-flexberry-dummy-application-user-list');
+  this.route('ember-flexberry-dummy-application-user-edit', { path: 'ember-flexberry-dummy-application-user-edit/:id' });
+  this.route('ember-flexberry-dummy-application-user-edit.new', { path: 'ember-flexberry-dummy-application-user-edit/new' });
+  this.route('ember-flexberry-dummy-comment-list');
+  this.route('ember-flexberry-dummy-comment-edit', { path: 'ember-flexberry-dummy-comment-edit/:id' });
+  this.route('ember-flexberry-dummy-comment-edit.new', { path: 'ember-flexberry-dummy-comment-edit/new' });
+  this.route('ember-flexberry-dummy-localization-list');
+  this.route('ember-flexberry-dummy-localization-edit', { path: 'ember-flexberry-dummy-localization-edit/:id' });
+  this.route('ember-flexberry-dummy-localization-edit.new', { path: 'ember-flexberry-dummy-localization-edit/new' });
+  this.route('ember-flexberry-dummy-suggestion-list');
+  this.route('ember-flexberry-dummy-suggestion-edit', { path: 'ember-flexberry-dummy-suggestion-edit/:id' });
+  this.route('ember-flexberry-dummy-suggestion-edit.new', { path: 'ember-flexberry-dummy-suggestion-edit/new' });
+  this.route('ember-flexberry-dummy-suggestion-type-list');
+  this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
+  this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
-    //// /employees/new
-    //this.route('new');
+  // /test-flexberry-dropdown
+  this.route('test-flexberry-dropdown');
 
-    this.route('page', { path: 'page/:page' });
-  });
+  // /test-flexberry-dropdown-conditional-render
+  this.route('test-flexberry-dropdown-conditional-render');
 
-  // /employees/2 - render into outlet in application template
-  this.route('employee', {path: 'employees/:id'});
+  // /test-flexberry-groupedit-embedding-components
+  this.route('test-flexberry-groupedit');
 
-  // /employees/new
-  this.route('employee.new', { path: 'employees/new' });
-
-  // /orders
-  this.route('orders', function() {
-    this.route('page', { path: 'page/:page' });
-  });
-
-  // /orders/2 - render into outlet in application template
-  this.route('order', {path: 'orders/:id'});
-
-  // /employees/new
-  this.route('order.new', { path: 'orders/new' });
+  // /test-flexberry-menu
+  this.route('test-flexberry-menu');
 });
 
 export default Router;

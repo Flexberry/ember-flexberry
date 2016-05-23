@@ -1,7 +1,8 @@
-import ODataAdapter from 'ember-flexberry/adapters/odata';
-import Proj from 'ember-flexberry-projections';
+import ODataAdapter from 'ember-flexberry-data/adapters/odata';
+import Proj from 'ember-flexberry-data';
 import config from '../config/environment';
 
 export default ODataAdapter.extend(Proj.Adapter, {
-  host: config.APP.backendUrls.api
+  host: config.APP.backendUrls.api,
+  authorizer: 'authorizer:custom'
 });

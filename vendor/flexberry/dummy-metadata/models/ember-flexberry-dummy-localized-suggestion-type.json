@@ -1,0 +1,64 @@
+﻿{
+  "modelName": "ember-flexberry-dummy-localized-suggestion-type",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "name",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": true,
+      "defaultValue": ""
+    }
+  ],
+  "belongsTo": [
+    {
+      "name": "localization",
+      "relatedTo": "ember-flexberry-dummy-localization",
+      "inverse": null
+    },
+    {
+      "name": "suggestionType",
+      "relatedTo": "ember-flexberry-dummy-suggestion-type",
+      "inverse": "localizedTypes"
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "LocalizedSuggestionTypeE",
+      "modelName": "ember-flexberry-dummy-localized-suggestion-type",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "Name",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Name",
+          "lookupValueField": "name",
+          "relationName": "Localization",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "Name",
+              "hidden": true,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "caption": "Localization",
+          "name": "localization",
+          "relatedTo": "ember-flexberry-dummy-localization",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    }
+  ]
+}

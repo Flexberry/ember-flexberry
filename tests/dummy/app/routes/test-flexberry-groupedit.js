@@ -1,0 +1,25 @@
+import EditFormRoute from 'ember-flexberry/routes/edit-form';
+import TestEnumeration from '../enums/test-enumeration';
+
+export default EditFormRoute.extend({
+  modelProjection: 'TestAggregatorE',
+  modelName: 'test-aggregator',
+  model: function(params) {
+    var store = this.store;
+    var detail = store.createRecord('test-detail', {
+      flag: true,
+      text: 'Detail\'s text',
+      date: new Date(),
+      enumeration: TestEnumeration.Value2,
+      file: null,
+      master: store.createRecord('test-master', {
+        text: 'Detail\'s master text'
+      })
+    });
+
+    var aggregator = store.createRecord('test-aggregator', {});
+    aggregator.get('details').pushObject(detail);
+
+    return aggregator;
+  }
+});

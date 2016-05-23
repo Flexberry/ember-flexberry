@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
+  queryParams: {
+    sort: { refreshModel: true }
+  },
+
   /**
    * Десериализовать строку с параметрами сортировки. Ожидается строка следующего вида: '+Имя1-Имя2{...}',
    * где '+' и '-' - направления сортировки, 'ИмяX' - имя свойства для сортировки.
@@ -37,33 +41,8 @@ export default Ember.Mixin.create({
     return nextIndices;
   },
 
-  /**
-   * Производит операцию, обратную методу deserializeSortingParam.
-   *
-   * @param {Object} sorting Объект с параметрами сортировки, который нужно преобразовать в строку.
-   * @returns {String} Результирующая строка.
-   */
-  serializeSortingParam: function(sorting) {
-    return sorting.map(function(element) {
-      return (element.direction === 'asc' ? '+' : '-') + element.propName;
-    }).join('');
-  },
-
   includeSorting: function(model, sorting) {
     model.set('sorting', sorting);
     return model;
-  },
-
-  actions: {
-    applySorting: function(sorting) {
-      var sortingParam = this.serializeSortingParam(sorting);
-      this.transitionTo({
-        queryParams: {
-          sort: sortingParam || undefined
-        }
-      });
-
-      this.refresh();
-    }
   }
 });

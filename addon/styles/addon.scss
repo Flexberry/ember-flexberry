@@ -1,30 +1,35 @@
-.form-control-trunc {
-  width: auto;
-  display: inline-block;
+/**
+ * All ember-flexberry addon styles.
+ */
+
+@import './components/object-list-view';
+@import './components/object-list-view-single-column-cell';
+@import './components/groupedit-toolbar';
+@import './components/modal-dialog';
+@import './components/flexberry-lookup';
+@import './components/flexberry-menu';
+@import './components/flexberry-file';
+
+/**
+ * Common styles.
+ */
+.hidden {
+  display: none !important;
 }
 
-table.object-list-view tbody,
-table.object-list-view thead {
-  cursor: pointer;
+.no-padding {
+  padding: 0 !important;
 }
 
-.lookup-field {
-  width: 235px !important;
-  margin-right: 3px !important;
+.no-margin {
+  margin: 0 !important;
 }
 
-// Redefine DataTables jQuery UI styles for hovered rows
-table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
-  background-color: #ececec !important;
+// Style for responsive
+@media only screen and (max-width: 767px) {
+  .ui.menu.container {
+      margin-right: 0 !important;
+      margin-left: 0 !important;
+  }
 }
 
-// Show scroll for big inner content of modal dialog.
-.ui.modal > .content {
-  overflow: auto;
-}
-
-.ui.modal > .actions {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-}

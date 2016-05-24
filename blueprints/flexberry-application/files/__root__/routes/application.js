@@ -3,9 +3,9 @@ import AuthApplicationRouteMixin from 'ember-simple-auth/mixins/application-rout
 import ModalApplicationRouteMixin from 'ember-flexberry/mixins/modal-application-route';
 
 export default Ember.Route.extend(ModalApplicationRouteMixin, AuthApplicationRouteMixin, {
-actions: {
-  invalidateSession: function () {
-    this.get('session').invalidate();
+  actions: {
+    invalidateSession: function () {
+      this.get('session').invalidate();
+    }
   }
-}
 });

@@ -812,6 +812,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     let _this = this;
     currentTable.colResizable({
+      minWidth: 70,
       onResize: function(e) {
         // Save column width as user setting on resize.
         _this._afterColumnResize(e);

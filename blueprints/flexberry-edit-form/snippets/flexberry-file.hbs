@@ -1,16 +1,16 @@
 <div class="field">
-  {{#if model.errors.<%=name%>.file}}
+  {{#if model.errors.<%= name %>.file}}
   <span style="color:red">
-    {{model.errors.<%=name%>.file}}
+    {{model.errors.<%= name %>.file}}
   </span>
   {{/if}}
-  <label><%=caption%></label>
+  <label><%= caption %></label>
   {{
     flexberry-file
-    placeholder='(τΰιλ νε βϋαπΰν)'
-    readonly=readonly
-    value=model.<%=name%>
-    class=(if model.errors.<%=name%> 'error' '')
-    label='<%=caption%>'
+    placeholder='(Ρ„Π°ΠΉΠ» Π½Πµ Π²Ρ‹Π±Ρ€Π°Π½)'
+    readonly=<%= readonly %>
+    value=model.<%= name %>
+    class=(if model.errors.<%= name %> 'error' '')
+    label='<%= caption %>'
   }}
 </div>

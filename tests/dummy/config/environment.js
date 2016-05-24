@@ -1,7 +1,7 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
-  var backendRootUrl = 'https://northwindodata.azurewebsites.net';
+  var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
   var ENV = {
     modulePrefix: 'dummy',
     environment: environment,
@@ -17,12 +17,12 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+      backendUrl: backendUrl,
 
       // It's a custom property, used to prevent duplicate backend urls in sources.
       backendUrls: {
-        root: backendRootUrl,
-        api: backendRootUrl + '/odata',
-        authToken: backendRootUrl + '/Token'
+        root: backendUrl,
+        api: backendUrl + '/odata'
       },
 
       // Custom property with components settings.
@@ -30,7 +30,7 @@ module.exports = function(environment) {
         // Settings for flexberry-file component.
         flexberryFile: {
           // URL of file upload controller.
-          uploadUrl: backendRootUrl + '/api/File',
+          uploadUrl: backendUrl + '/api/File',
 
           // Max file size in bytes for uploading files.
           maxUploadFileSize: null,
@@ -77,6 +77,14 @@ module.exports = function(environment) {
     outputFormat: 'L'
   };
 
+  if (environment === 'development') {
+    // ENV.APP.LOG_RESOLVER = true;
+    // ENV.APP.LOG_ACTIVE_GENERATION = true;
+    // ENV.APP.LOG_TRANSITIONS = true;
+    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+  }
+
   if (environment === 'test') {
     // Testem prefers this...
     ENV.baseURL = '/';
@@ -89,16 +97,9 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
   }
 
-  /*if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
-  }*/
+  if (environment === 'production') {
 
-  /*if (environment === 'production') {
-  }*/
+  }
 
   return ENV;
 };

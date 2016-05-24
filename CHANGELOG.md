@@ -5,6 +5,8 @@
 ### Added
 FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
 * Add tableStriped, customTableClass, tableClass properties.
+FlexberryObjectlistviewComponent:
+* Add action removeFilter.
 
 ## 2016-05-17
 ### Breaking changes
@@ -14,6 +16,16 @@ FlexberryObjectlistviewComponent:
 FlexberryGroupeditComponent:
 * Rename action 'rowClick' to 'groupEditRowClick'.
 * Rename property 'rowClick' to 'action'.
+
+## 2016-05-10
+### Breaking changes
+FlexberryLookupComponent:
+* Add mode dropdown.
+* Rename autocompleteUpdateAction to updateLookupAction.
+* Rename autocompleteProperty to displayAttributeName.
+* Rename autocompleteMinCharacters to minCharacters.
+* Rename autocompleteMaxResults to maxResults.
+* Remove autocompleteUpdateXhrAction, updateAutocompleteLookupXhr, getLookupAutocompleteUrl, getAutocompleteLookupQueryOptions, limitFunction, autocompleteUrl, autocompleteQueryOptions.
 
 ## 2016-05-06
 ### Breaking changes

@@ -2,7 +2,7 @@
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 
-let stripBom = require("strip-bom");
+const stripBom = require("strip-bom");
 import fs = require("fs");
 import path = require('path');
 import metadata = require('MetadataClasses');

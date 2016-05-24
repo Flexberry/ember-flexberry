@@ -1,7 +1,7 @@
 <div class="field">
-  <label><%=caption%></label>
-  {{#if model.errors.<%=name%>}}
-  <span style="color:red">{{model.errors.<%=name%>}}</span>
+  <label><%= caption %></label>
+  {{#if model.errors.<%= name %>}}
+  <span style="color:red">{{model.errors.<%= name %>}}</span>
   {{/if}}
-  {{flexberry-dropdown items=approvalValues action="setApproval" selectedItem=model.<%=name%> readonly=readonly}}
+  {{flexberry-dropdown items=(enum-captions '<%= type %>') value=model.<%= name %> readonly=<%= readonly %>}}
 </div>

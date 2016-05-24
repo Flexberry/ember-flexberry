@@ -9,7 +9,7 @@
     }}
   {{/each}}
 {{/if}}
-<table class="object-list-view ui unstackable celled table {{if rowClickable 'selectable'}} {{if readonly 'readonly'}}">
+<table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table ">
   <thead>
     {{#unless (and useSingleColumn emptyMobileHeader) }}
       <tr>

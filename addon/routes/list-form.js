@@ -7,6 +7,7 @@ import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
+import ColsConfigDialogRoute from '../mixins/colsconfig-dialog-route';
 
 /**
  * Base route for the List Forms.
@@ -38,7 +39,7 @@ import ProjectedModelFormRoute from '../routes/projected-model-form';
  * @uses SortableRouteMixin
  * @uses LimitedRouteMixin
  */
-export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, {
+export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, ColsConfigDialogRoute, {
   actions: {
     /**
      * Table row click handler.

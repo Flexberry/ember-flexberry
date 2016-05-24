@@ -1,4 +1,4 @@
-import ColsconfigDialogController from '../mixins/colsconfig-dialog-mixin';
+import ColsconfigDialogController from '../mixins/colsconfig-dialog-controller';
 
 export default Ember.Controller.extend(ColsconfigDialogController,{
   /**

@@ -7,6 +7,7 @@ import PaginatedControllerMixin from '../mixins/paginated-controller';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
 import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-mixin';
+import ColsConfigDialogMixin from '../mixins/colsconfig-dialog-controller';
 
 
 /**
@@ -39,7 +40,7 @@ import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-mixin';
  * @uses SortableControllerMixin
  * @uses LimitedControllerMixin
  */
-export default Ember.Controller.extend(PaginatedControllerMixin, SortableControllerMixin, LimitedControllerMixin, FlexberryOlvToolbarMixin, {
+export default Ember.Controller.extend(PaginatedControllerMixin, SortableControllerMixin, LimitedControllerMixin, FlexberryOlvToolbarMixin, ColsConfigDialogMixin, {
     /**
      * Controller to show colsconfig modal window.
    *

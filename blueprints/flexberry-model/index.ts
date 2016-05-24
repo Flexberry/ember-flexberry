@@ -2,7 +2,7 @@
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 
-let stripBom = require("strip-bom");
+const stripBom = require("strip-bom");
 import fs = require("fs");
 import path = require('path');
 import lodash = require('lodash');
@@ -58,7 +58,7 @@ class ModelBlueprint {
       options.file = options.entity.name + ".json";
     }
     let modelFile = path.join(modelsDir, options.file);
-    let content = stripBom(fs.readFileSync(modelFile, "utf8"));
+    let content: string = stripBom(fs.readFileSync(modelFile, "utf8"));
     let model: metadata.Model = JSON.parse(content);
     this.parentModelName = model.parentModelName;
     this.parentClassName = model.parentClassName;

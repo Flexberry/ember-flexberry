@@ -4,7 +4,7 @@ import metadata = require('MetadataClasses');
 
 import fs = require("fs");
 import path = require('path');
-let stripBom = require("strip-bom");
+const stripBom = require("strip-bom");
 
 module.exports = {
 

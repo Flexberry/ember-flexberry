@@ -1,7 +1,7 @@
 <div class="field">
-  <label><%=caption%></label>
-  {{#if model.errors.<%=name%>}}
-  <span style="color:red">{{model.errors.<%=name%>}}</span>
+  <label><%= caption %></label>
+  {{#if model.errors.<%= name %>}}
+  <span style="color:red">{{model.errors.<%= name %>}}</span>
   {{/if}}
-  {{flexberry-checkbox readonly=readonly checked=model.<%=name%>}}
+  {{flexberry-checkbox readonly=<%= readonly %> checked=model.<%= name %>}}
 </div>

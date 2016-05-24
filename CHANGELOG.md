@@ -1,6 +1,12 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-24
+### Breaking changes
+Addon change:
+* Delete dependency from ember-simple-auth.
+* Delete dependency from ember-local-storage.
+
 ## 2016-05-17
 ### Breaking changes
 FlexberryObjectlistviewComponent:

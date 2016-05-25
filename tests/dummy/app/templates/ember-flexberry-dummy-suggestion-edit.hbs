@@ -1,4 +1,4 @@
-<h3 class="ui header">{{title}} - edit form</h3>
+<h3 class="ui header">{{title}}</h3>
 
 {{#if errorMessages}}
 {{#each errorMessages as |currentError|}}
@@ -90,6 +90,7 @@ message=currentError
 </div>
 
 <div class="field">
+  <label>Moderated</label>
   {{#if model.errors.moderated}}
     <span style="color:red">{{model.errors.moderated}}</span>
   {{/if}}

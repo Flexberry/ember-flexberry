@@ -1,4 +1,4 @@
-<h3 class="ui header">{{title}} - edit form</h3>
+<h3 class="ui header">{{title}}</h3>
 
 {{#if errorMessages}}
 {{#each errorMessages as |currentError|}}
@@ -110,6 +110,7 @@ message=currentError
 </div>
 
 <div class="field">
+  <label>Activated</label>
   {{#if model.errors.activated}}
     <span style="color:red">{{model.errors.activated}}</span>
   {{/if}}
@@ -186,10 +187,11 @@ message=currentError
   {{#if model.errors.gender}}
     <span style="color:red">{{model.errors.gender}}</span>
   {{/if}}
-  {{flexberry-dropdown items=(enum-captions 'gender') value=model.gender readonly=readonly}}
+  {{flexberry-dropdown items=(enum-captions 'ember-flexberry-dummy-gender') value=model.gender readonly=readonly}}
 </div>
 
 <div class="field">
+  <label>Vip</label>
   {{#if model.errors.vip}}
     <span style="color:red">{{model.errors.vip}}</span>
   {{/if}}

@@ -28,6 +28,7 @@ rm -f ./.jscsrc
 cp "${ADDON_DIR}/vendor/flexberry/.jscsrc" .
 
 # Generate components using Dummy metamodel and test them.
+ember generate route index
 ember generate route-test ember-flexberry-dummy-comment-list
 ember generate route-test ember-flexberry-dummy-localization-list
 ember generate route-test ember-flexberry-dummy-suggestion-type-list

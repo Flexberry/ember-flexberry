@@ -6,7 +6,7 @@ import Ember from 'ember';
 
 /**
   Returns friezed object without prototype with own properties of parameter.
- 
+
   @function createEnum
   @param {Object|Array} dictionary
   @return {Object}
@@ -24,7 +24,7 @@ export function createEnum(dictionary) {
 
 /**
   Returns friezed inversed object without prototype.
- 
+
   @function inverseEnum
   @param {Object} dictionary
   @return {Object}
@@ -40,7 +40,7 @@ export function inverseEnum(dictionary) {
 
 /**
   Returns array of all property values.
- 
+
   @function enumCaptions
   @param {Object} dictionary
   @return {Array}

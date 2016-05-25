@@ -131,7 +131,7 @@ export default Proj.Model.extend(EmberValidations, Ember.Evented, {
 
     @method makeDirty
   */
-  makeDirty() {    
+  makeDirty() {
     this.send('becomeDirty');
   }
 });

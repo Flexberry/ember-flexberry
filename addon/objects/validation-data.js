@@ -39,7 +39,7 @@ export default Ember.Object.extend({
     @method addError
 
     @param propName
-    @param value 
+    @param value
   */
   addError(propName, value) {
     this.errors[propName] = value;

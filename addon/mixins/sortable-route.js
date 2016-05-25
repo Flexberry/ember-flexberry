@@ -41,8 +41,9 @@ export default Ember.Mixin.create({
     return nextIndices;
   },
 
-  includeSorting: function(model, sorting) {
+  includeSorting: function(model, sorting, userSettings) {
     model.set('sorting', sorting);
+    model.set('userSettings', userSettings);
     return model;
   }
 });

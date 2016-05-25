@@ -40,6 +40,9 @@ import ColsConfigDialogRoute from '../mixins/colsconfig-dialog-route';
  * @uses LimitedRouteMixin
  */
 export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, ColsConfigDialogRoute, {
+
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+
   actions: {
     /**
      * Table row click handler.
@@ -82,13 +85,38 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     Ember.merge(query, limitFunctionQuery);
     Ember.merge(query, { projection: this.get('modelProjection') });
 
+    //At this stage we use routername as modulName for settings
+    let moduleName=transition.targetName;
+    /**
+     * userSettings from user-settings-service'),
+     */
+    let userSettings={};
+    var ret=this.get('_userSettingsService').getUserSetting({moduleName:moduleName,settingName:'DEFAULT'})
+    .then( (_userSettings) => {
+      return _userSettings;
+    })
+    .catch ( (error)=> {
+        alert(error);
+        return {};
+    })
+    .then( _userSettings=> {
+      for (let i=0;i< _userSettings.length;i++) {
+        let propName=_userSettings[i].propName;
+        userSettings[propName]=_userSettings[i];
+      }
+      return store.query(modelName, query)
+    })
+    .then((records) => {
+      return this.includeSorting(records, sorting, userSettings);
+    });
+    return ret;
     // find by query is always fetching.
     // TODO: support getting from cache with "store.all->filterByProjection".
-    return store.query(modelName, query)
-      .then((records) => {
-        // TODO: move to setupController mixins?
-        return this.includeSorting(records, sorting);
-      });
+//     return store.query(modelName, query)
+//       .then((records) => {
+//         // TODO: move to setupController mixins?
+//         return this.includeSorting(records, sorting);
+//       });
   },
 
   setupController: function(controller, model) {

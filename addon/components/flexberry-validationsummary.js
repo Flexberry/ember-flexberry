@@ -1,76 +1,62 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 
 /**
- * ValidationSummary component for Semantic UI.
- *
- * @class FlexberryValidationsummary
- * @extends Ember.Component
- */
+  ValidationSummary component for Semantic UI.
+
+  @class FlexberryValidationsummary
+  @extends Ember.Component
+*/
 export default Ember.Component.extend({
   /**
-   * Class names for component wrapping <div>.
-   *
-   * @property classNames
-   * @type Array
-   */
+    Default classes for component wrapper.
+  */
   classNames: ['ui', 'message'],
 
   /**
-   * Semantic color class name for message text.
-   *
-   * @property color
-   * @type String
-   * @default 'red'
-   */
+    Semantic color class name for message text.
+
+    @property color
+    @type String
+    @default 'red'
+  */
   color: 'red',
 
   /**
-   * Errors object for display messages.
-   *
-   * @property errors
-   * @type Ember.Object
-   * @default undefined
-   */
+    Errors object for display messages.
+
+    @property errors
+    @type Ember.Object
+    @default undefined
+  */
   errors: undefined,
 
   /**
-   * Errors own properties with validation errors messages.
-   *
-   * @private
-   * @property validationProperties
-   * @default undefined
-   */
+    Errors own properties with validation errors messages.
+
+    @private
+    @property validationProperties
+    @default undefined
+  */
   validationProperties: undefined,
 
   /**
-   * Current errors messages
+    Current errors messages
 
-   * @property messages
-   * @type Ember.A
-   * @default undefined
-   */
+    @property messages
+    @type Ember.A
+    @default undefined
+  */
   messages: undefined,
 
   /**
-   * Push validation errors to messages array
-   * and change component visibility if no errors occurred.
-   */
-  changeMessages: function () {
-    let messages = new Ember.A();
-
-    this.get('validationProperties').forEach(property =>
-      messages.addObjects(this.get('errors.' + property))
-    );
-
-    this.set('isVisible', !!messages.length);
-    this.set('messages', messages);
-  },
-
-  init: function () {
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+  */
+  init() {
     this._super(...arguments);
 
     let errors = this.get('errors');
@@ -92,7 +78,26 @@ export default Ember.Component.extend({
     this.changeMessages();
   },
 
-  willDestroy: function () {
+  /**
+    Push validation errors to messages array
+    and change component visibility if no errors occurred.
+  */
+  changeMessages() {
+    let messages = new Ember.A();
+
+    this.get('validationProperties').forEach(property =>
+      messages.addObjects(this.get('errors.' + property))
+    );
+
+    this.set('isVisible', !!messages.length);
+    this.set('messages', messages);
+  },
+
+  /**
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroy() {
     let errors = this.get('errors');
     this.get('validationProperties').forEach(propertyName => errors.removeObserver(propertyName + '.[]', this, 'changeMessages'));
     this._super(...arguments);

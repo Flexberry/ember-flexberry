@@ -1,20 +1,62 @@
 import Ember from 'ember';
 
+/**
+  @class ValidationDataObject
+  @extends <a href="http://emberjs.com/api/classes/Ember.Object.html">Ember.Object</a>
+  @public
+*/
 export default Ember.Object.extend({
+  /**
+    noChanges property.
+
+    @property noChanges
+    @type Boolean
+    @default true
+  */
   noChanges: true,
+
+  /**
+    anyErrors property.
+
+    @property anyErrors
+    @type Boolean
+    @default false
+  */
   anyErrors: false,
+
+  /**
+    Errors object for display messages.
+
+    @property errors
+    @type Ember.Object
+    @default {}
+  */
   errors: {},
 
-  addError: function(propName, value) {
+  /**
+    addError method.
+
+    @method addError
+
+    @param propName
+    @param value 
+  */
+  addError(propName, value) {
     this.errors[propName] = value;
   },
 
-  fillErrorsFromProjectedModel: function(model) {
-    var _this = this;
-    model.eachAttribute(function(name) {
+  /**
+    fillErrorsFromProjectedModel method.
+
+    @method fillErrorsFromProjectedModel
+
+    @param model
+  */
+  fillErrorsFromProjectedModel(model) {
+    model.eachAttribute(name => {
       let propErrors = model.errors.get(name);
       if (propErrors.length > 0) {
-        _this.addError(name, propErrors);
+        this.addError(name, propErrors);
       }
     });
   }

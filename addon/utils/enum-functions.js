@@ -1,16 +1,16 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 
 /**
- * Returns friezed object without prototype with own properties of parameter
- *
- * @function createEnum
- * @param {Object|Array} dictionary
- * @returns {Object}
- */
+  Returns friezed object without prototype with own properties of parameter.
+ 
+  @function createEnum
+  @param {Object|Array} dictionary
+  @return {Object}
+*/
 export function createEnum(dictionary) {
   let local = {};
   if (Ember.isArray(dictionary)) {
@@ -23,14 +23,15 @@ export function createEnum(dictionary) {
 }
 
 /**
- * Returns friezed inversed object without prototype
- *
- * @param {Object} dictionary
- * @returns {Object}
- */
+  Returns friezed inversed object without prototype.
+ 
+  @function inverseEnum
+  @param {Object} dictionary
+  @return {Object}
+*/
 export function inverseEnum(dictionary) {
   let inverse = {};
-  for (var key in dictionary) {
+  for (let key in dictionary) {
     inverse[dictionary[key]] = key;
   }
 
@@ -38,14 +39,15 @@ export function inverseEnum(dictionary) {
 }
 
 /**
- * Returns array of all property values
- *
- * @param dictionary
- * @returns {Array}
- */
+  Returns array of all property values.
+ 
+  @function enumCaptions
+  @param {Object} dictionary
+  @return {Array}
+*/
 export function enumCaptions(dictionary) {
   let captions = [];
-  for (var key in dictionary) {
+  for (let key in dictionary) {
     captions.push(dictionary[key]);
   }
 

@@ -3,11 +3,15 @@ import Ember from 'ember';
 import Base from 'ember-validations/validators/base';
 import Messages from 'ember-validations/messages';
 
-var get = Ember.get;
-var set = Ember.set;
+let get = Ember.get;
+let set = Ember.set;
 
 export default Base.extend({
-  init: function() {
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+  */
+  init() {
     this._super();
     /*jshint expr:true*/
     if (this.options === true) {
@@ -26,7 +30,7 @@ export default Base.extend({
       this.options.messages.invalid = Messages.render('invalid', this.options);
     }
   },
-  call: function() {
+  call() {
     if (Ember.isEmpty(get(this.model, this.property))) {
       if (!this.options.allowBlank) {
         this.errors.pushObject(this.options.messages.blank);

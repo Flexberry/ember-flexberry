@@ -64,7 +64,7 @@ export default DS.RESTAdapter.extend({
     let operation = limit.operation;
     let limitArguments = limit.arguments;
     if (operation === '=' && limitArguments.length === 2) {
-      return '\'' + Ember.String.capitalize(limitArguments[0]) + '\' eq \'' + limitArguments[1] + '\'';
+      return  Ember.String.capitalize(limitArguments[0]) + ' eq \'' + limitArguments[1] + '\'';
     } else if (operation === 'and' && limitArguments.length === 2) {
       return this.getLimitFunction(limitArguments[0]) + ' and ' + this.getLimitFunction(limitArguments[1]);
     }

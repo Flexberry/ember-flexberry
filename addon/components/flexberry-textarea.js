@@ -7,12 +7,37 @@ import FlexberryBaseComponent from './flexberry-base-component';
 /**
  * Textarea component for Semantic UI.
  *
+ * Sample usage:
+ * ```handlebars
+ * {{flexberry-textarea
+ *   value=model.description
+ *   placeholder='Enter description...'
+ * }}
+ * ```
+ *
  * @class FlexberryTextarea
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Default classes for component wrapper.
+   * Input value.
+   *
+   * @property value
+   * @type String
+   */
+  value: undefined,
+
+  /**
+   * Text to be displayed in field, if field has not been filled.
+   *
+   * @property placeholder
+   * @type String
+   */
+  placeholder: undefined,
+
+  /**
+   * Array CSS class names.
+   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
    *
    * @property classNames
    * @type Array
@@ -30,30 +55,12 @@ export default FlexberryBaseComponent.extend({
   appConfigSettingsPath: 'APP.components.flexberryTextarea',
 
   /**
-   * Input value.
-   *
-   * @property value
-   * @type String
-   * @default undefined
-   */
-  value: undefined,
-
-  /**
-   * Text to be displayed instead of file name, if file has not been selected.
-   *
-   * @property placeholder
-   * @type string
-   * @default undefined
-   */
-  placeholder: undefined,
-
-  /**
    * Initializes component.
    */
-  init: function() {
+  init() {
     this._super(...arguments);
 
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'placeholder', defaultValue: null });
-  }
+  },
 });

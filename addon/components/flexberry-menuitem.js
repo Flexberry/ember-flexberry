@@ -8,31 +8,20 @@ import FlexberryBaseComponent from './flexberry-base-component';
 /**
  * Menu item component for Semantic UI menus.
  *
- * @class FlexberryMenuitemComponent
+ * Questions:
+ * - Need {{yield}} in flexberry-menuitem.hbs?
+ *
+ * @class FlexberryMenuitem
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Override component's wrapping element tag.
-   */
-  tagName: 'a',
-
-  /**
-   * Class names for component's wrapping element.
-   */
-  classNames: ['flexberry-menuitem', 'item'],
-
-  /**
-   * Path to component's settings in application configuration (JSON from ./config/environment.js).
-   *
-   * @property appConfigSettingsPath
-   * @type String
-   * @default 'APP.components.flexberryCheckbox'
-   */
-  appConfigSettingsPath: 'APP.components.flexberryMenuitem',
-
-  /**
    * Menu item content.
+   *
+   * item.title
+   * item.icon [More icons](http://semantic-ui.com/elements/icon.html)
+   * item.iconAlignment
+   * item.items
    *
    * @property item
    * @type Object
@@ -48,7 +37,7 @@ export default FlexberryBaseComponent.extend({
    * @readonly
    */
   hasSubitems: Ember.computed('item.items', function() {
-    var subItems = this.get('item.items');
+    let subItems = this.get('item.items');
     return Ember.isArray(subItems) && subItems.length > 0;
   }),
 
@@ -60,7 +49,7 @@ export default FlexberryBaseComponent.extend({
    * @readonly
    */
   titleIsBeforeIcon: Ember.computed('item.iconAlignment', function() {
-    var iconAlignment = this.get('item.iconAlignment');
+    let iconAlignment = this.get('item.iconAlignment');
     if (Ember.typeOf(iconAlignment) === 'string') {
       iconAlignment = iconAlignment.trim();
     }
@@ -69,16 +58,45 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+   * Override component's wrapping element tag.
+   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_tagName)
+   *
+   * @property tagName
+   * @type String
+   * @default 'a'
+   */
+  tagName: 'a',
+
+  /**
+   * Array CSS class names.
+   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+   *
+   * @property classNames
+   * @type Array
+   * @readOnly
+   */
+  classNames: ['flexberry-menuitem', 'item'],
+
+  /**
+   * Path to component's settings in application configuration (JSON from ./config/environment.js).
+   *
+   * @property appConfigSettingsPath
+   * @type String
+   * @default 'APP.components.flexberryMenuItem'
+   */
+  appConfigSettingsPath: 'APP.components.flexberryMenuItem',
+
+  /**
    * Initializes component.
    */
-  init: function() {
+  init() {
     this._super(...arguments);
 
     // Override component's wrapping element for simple menu items.
     if (this.get('hasSubitems')) {
       this.set('tagName', 'div');
 
-      var classNames = this.get('classNames');
+      let classNames = this.get('classNames');
       classNames.push(...['ui', 'simple', 'dropdown']);
     }
   },
@@ -86,22 +104,22 @@ export default FlexberryBaseComponent.extend({
   /**
    * Initializes DOM-related component's logic.
    */
-  didInsertElement: function() {
+  didInsertElement() {
     this._super(...arguments);
 
     // Store item object in DOM-element data attribute.
     // It will be used in root 'flexberry-menu' component to handle click on this 'flexberry-menuitem'.
-    var item = this.get('item');
+    let item = this.get('item');
     this.$().data('flexberry-menuitem.item', item);
   },
 
   /**
    * Cleans up DOM-related component's logic.
    */
-  willDestroyElement: function() {
+  willDestroyElement() {
     this._super(...arguments);
 
     // Remove stored item object from DOM-element data attribute.
     this.$().removeData('flexberry-menuitem.item');
-  }
+  },
 });

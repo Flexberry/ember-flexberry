@@ -7,12 +7,42 @@ import FlexberryBaseComponent from './flexberry-base-component';
 /**
  * Field component for Semantic UI.
  *
+ * Sample usage:
+ * ```handlebars
+ * {{flexberry-field value=model.name label='Name'}}
+ * ```
+ *
  * @class FlexberryField
  * @extends FlexberryBaseComponent
  */
-var FlexberryField = FlexberryBaseComponent.extend({
+export default FlexberryBaseComponent.extend({
   /**
-   * Default classes for component wrapper.
+   * Input value.
+   *
+   * @property value
+   * @type String
+   */
+  value: undefined,
+
+  /**
+   * Text to be displayed in field, if field has not been filled.
+   *
+   * @property placeholder
+   * @type String
+   */
+  placeholder: undefined,
+
+  /**
+   * Label for field.
+   *
+   * @property label
+   * @type String
+   */
+  label: undefined,
+
+  /**
+   * Array CSS class names.
+   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
    *
    * @property classNames
    * @type Array
@@ -30,41 +60,12 @@ var FlexberryField = FlexberryBaseComponent.extend({
   appConfigSettingsPath: 'APP.components.flexberryField',
 
   /**
-   * Input value.
-   *
-   * @property value
-   * @type String
-   * @default undefined
-   */
-  value: undefined,
-
-  /**
-   * Text to be displayed instead of file name, if file has not been selected.
-   *
-   * @property placeholder
-   * @type string
-   * @default undefined
-   */
-  placeholder: undefined,
-
-  /**
-   * Label value.
-   *
-   * @property label
-   * @type String
-   * @default ''
-   */
-  label: undefined,
-
-  /**
    * Initializes component.
    */
-  init: function() {
+  init() {
     this._super(...arguments);
 
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'placeholder', defaultValue: null });
-  }
+  },
 });
-
-export default FlexberryField;

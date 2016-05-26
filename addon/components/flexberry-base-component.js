@@ -10,6 +10,7 @@ const { getOwner } = Ember;
  * Base component for Flexberry Ember UI Components.
  *
  * @class FlexberryBaseComponent
+ * @extends [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html)
  */
 export default Ember.Component.extend({
   /**
@@ -26,7 +27,6 @@ export default Ember.Component.extend({
    *
    * @property readonlyAttr
    * @type String|undefined
-   * @default undefined
    * @readOnly
    */
   readonlyAttr: Ember.computed('readonly', function() {
@@ -48,7 +48,6 @@ export default Ember.Component.extend({
    *
    * @property componentName
    * @type String
-   * @default undefined
    */
   componentName: undefined,
 
@@ -87,6 +86,7 @@ export default Ember.Component.extend({
    *
    * @property appConfig
    * @type Object
+   * @default null
    */
   appConfig: null,
 
@@ -96,6 +96,7 @@ export default Ember.Component.extend({
    *
    * @property appConfigSettings
    * @type Object
+   * @default null
    */
   appConfigSettings: null,
 
@@ -103,74 +104,54 @@ export default Ember.Component.extend({
    * Current controller.
    * @property currentController
    * @type Ember.Controller
+   * @default null
    */
   currentController: null,
 
   /**
    * Initializes component properties.
    */
-  init: function() {
+  init() {
     this._super(...arguments);
 
     // Get and remember current controller.
-    var currentController = this.getTargetObjectByCondition(function(targetObject) {
+    let currentController = this.getTargetObjectByCondition((targetObject) => {
       return targetObject instanceof Ember.Controller;
     });
     this.set('currentController', currentController);
 
     // Set related model.
-    var relatedModel = this.get('relatedModel');
+    let relatedModel = this.get('relatedModel');
     if (Ember.isNone(relatedModel) && !Ember.isNone(currentController)) {
       relatedModel = currentController.get('model');
       this.set('relatedModel', relatedModel);
     }
 
     // Import application config\environment.
-    var appConfig = getOwner(this)._lookupFactory('config:environment');
+    let appConfig = getOwner(this)._lookupFactory('config:environment');
     if (!Ember.isNone(appConfig)) {
       this.set('appConfig', appConfig);
     }
 
-    var appConfigSettingsPath = this.get('appConfigSettingsPath');
+    let appConfigSettingsPath = this.get('appConfigSettingsPath');
     if (Ember.typeOf(appConfigSettingsPath) === 'string') {
-      var appConfigSettings = Ember.get(appConfig, appConfigSettingsPath);
+      let appConfigSettings = Ember.get(appConfig, appConfigSettingsPath);
       if (!Ember.isNone(appConfigSettings)) {
         this.set('appConfigSettings', appConfigSettings);
       }
     }
 
-    var dynamicProperties = this.get('dynamicProperties');
+    let dynamicProperties = this.get('dynamicProperties');
     if (Ember.typeOf(dynamicProperties) !== 'object') {
       return;
     }
 
     // Initialize properties for dynamicly-rendered component.
-    for (var propertyName in dynamicProperties) {
+    for (let propertyName in dynamicProperties) {
       if (dynamicProperties.hasOwnProperty(propertyName)) {
         this.set(propertyName, dynamicProperties[propertyName]);
       }
     }
-  },
-
-  /**
-   * Initializes DOM-related component properties.
-   */
-  didInsertElement: function() {
-    this._super(...arguments);
-  },
-
-  /**
-   * Cleanup component.
-   */
-  willDestroy: function() {
-    this._super(...arguments);
-  },
-
-  /**
-   * Cleanup DOM-related component stuff.
-   */
-  willDestroyElement: function() {
-    this._super(...arguments);
   },
 
   /**
@@ -181,35 +162,43 @@ export default Ember.Component.extend({
    * Note! It is important to be declared as undefined for those component properties, which will be initialized through 'initProperty' call.
    *
    * ```javascript
-   * // Possible ./config/environment.js.
+   * // ./config/environment.js.
    * module.exports = function(environment) {
-   *   APP: {
-   *     components: {
-   *       myComponent: {
-   *         myComponentProperty: 'myComponentProperty config-defined default value'
+   *   var ENV = {
+   *     APP: {
+   *       components: {
+   *         myComponent: {
+   *           myComponentProperty: 'myComponentProperty config-defined default value',
+   *         }
    *       }
    *     }
-   *   }
-   }
-   * });
+   *   };
+   *   return ENV;
+   * };
+   * ```
    *
-   * var myComponent = FlexberryBaseComponent.extend({
+   * ```javascript
+   * // /components/my-component.js
+   * import FlexberryBaseComponent from 'ember-flexberry/flexberry-base-component';
+   *
+   * export default FlexberryBaseComponent.extend({
    *   appConfigSettingsPath: 'APP.components.myComponent',
    *
    *   myComponentProperty: undefined,
    *
-   *   init: function() {
+   *   init() {
    *     this._super.apply(this, arguments);
    *     this.initProperty({ propertyName: 'myComponentProperty', defaultValue: 'myComponentProperty default value' });
    *   }
    * });
    * ```
    *
+   * @method initProperty
    * @param {Object} options Method options.
    * @param {String} options.propertyName Component's property name.
    * @param {*} options.defaultValue Component's property default value (from component defined default's).
    */
-  initProperty: function(options) {
+  initProperty(options) {
     options = options || {};
     if (Ember.typeOf(options.propertyName) !== 'string') {
       return;
@@ -217,15 +206,15 @@ export default Ember.Component.extend({
 
     // If property value is already defined in template,
     // then we should break property initialization.
-    var componentDefinedPropertyValue = this.get(options.propertyName);
+    let componentDefinedPropertyValue = this.get(options.propertyName);
     if (Ember.typeOf(componentDefinedPropertyValue) !== 'undefined') {
       return;
     }
 
     // Property value is not defined in template,
     // then we should set configuration-defined value or default.
-    var configDefinedPropertyValue;
-    var appConfigSettings = this.get('appConfigSettings');
+    let configDefinedPropertyValue;
+    let appConfigSettings = this.get('appConfigSettings');
     if (!Ember.isNone(appConfigSettings)) {
       configDefinedPropertyValue = Ember.get(appConfigSettings, options.propertyName);
     }
@@ -241,28 +230,27 @@ export default Ember.Component.extend({
    * Returns that 'targetObject' (from 'targetObject's hierarchy) which satisfies a given condition.
    *
    * ```javascript
-   * var controller = this.getTargetObjectByCondition(function(targetObject) {
+   * let controller = this.getTargetObjectByCondition((targetObject) => {
    *   return targetObject instanceof Ember.Controller;
    * });
    * ```
    *
    * @method getTargetObjectByCondition.
-   * @param {Function} condition Callback-function, which will be called for each 'targetObject' in 'targetObject's hierarchy,
-   * until callback return true for one of them.
+   * @param {Function} condition Callback-function, which will be called for each 'targetObject' in 'targetObject's hierarchy, until callback return true for one of them.
    * @return {null|Ember.Component|Ember.Controller} Target object which satisfies a given condition or null.
    */
-  getTargetObjectByCondition: function(condition) {
+  getTargetObjectByCondition(condition) {
     if (Ember.typeOf(condition) !== 'function') {
       return null;
     }
 
     // Component's 'targetObject' is parent component or a controller (in the end of components hierarchy).
     // Search until 'targetObject' is none or condition is true.
-    var targetObject = this.get('targetObject');
+    let targetObject = this.get('targetObject');
     while (!(Ember.isNone(targetObject) || condition(targetObject))) {
       targetObject = targetObject.get('targetObject');
     }
 
     return targetObject;
-  }
+  },
 });

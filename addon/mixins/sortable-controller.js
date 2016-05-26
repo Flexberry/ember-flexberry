@@ -11,31 +11,14 @@ export default Ember.Mixin.create({
 
   computedSorting: Ember.computed('model.sorting', function() {
     var sorting = this.get('model.sorting');
-    var userSettings = this.get('model.userSettings');
-
     var result = {};
-
-    if (userSettings) {
-      for (propName in userSettings) {
-        if ( "sortOrder" in userSettings[propName] && userSettings[propName].sortOrder !=0 ) {
-          let sortOrder=userSettings[propName].sortOrder;
-          let sortAscending= sortOrder < 0 ? true : false;
-          var sortDef = {
-            sortAscending:sortAscending,
-            sortNumber:userSettings[propName].sortPriority
-          };
-          result[propName] = sortDef;
-        }
-      }
-    }
 
     if (sorting) {
       for (var i = 0; i < sorting.length; i++) {
         var propName = sorting[i].propName;
-        let sortNumber=(sortNumber in sorting[i]?sorting[i].sortNumber:i+1);
         var sortDef = {
           sortAscending: sorting[i].direction === 'asc' ? true : false,
-          sortNumber: sortNumber
+          sortNumber: i + 1
         };
         result[propName] = sortDef;
       }

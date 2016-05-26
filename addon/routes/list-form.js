@@ -72,7 +72,6 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     let pageQuery = adapter.getPaginationQuery(page, perPage);
 
     let sorting = this.deserializeSortingParam(params.sort);
-    let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
 
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
@@ -81,7 +80,6 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
 
     let query = {};
     Ember.merge(query, pageQuery);
-    Ember.merge(query, sortQuery);
     Ember.merge(query, limitFunctionQuery);
     Ember.merge(query, { projection: this.get('modelProjection') });
 
@@ -100,10 +98,10 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
         return {};
     })
     .then( _userSettings=> {
-      for (let i=0;i< _userSettings.length;i++) {
-        let propName=_userSettings[i].propName;
-        userSettings[propName]=_userSettings[i];
-      }
+      userSettings=_userSettings;
+      sorting=this._appenduserSettingsToSorting(sorting,_userSettings); //Append sorting orders from _userSettings
+      let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
+      Ember.merge(query, sortQuery);
       return store.query(modelName, query)
     })
     .then((records) => {
@@ -127,5 +125,27 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('modelProjection', proj);
+  },
+
+  _appenduserSettingsToSorting: function (sorting,userSettings) {
+    let sortedPropNames={};
+    for (let i=0; i<sorting.length; i++ ) {
+      let propName=sorting[i].propName;
+      sortedPropNames[propName]=true;
+    }
+    let sortSettings=[];
+    for (let i=0; i<userSettings.length; i++ ) {
+      if ('sortPriority' in userSettings[i]) {
+        sortSettings[sortSettings.length]=userSettings[i];
+      }
+    }
+    let sortedUserSettings=sortSettings.sort((a,b) => a.sortPriority-b.sortPriority);
+    for (let i=0; i<sortedUserSettings.length; i++ ) {
+      let propName=sortedUserSettings[i].propName;
+      if (! (propName in sortedPropNames) ) {
+        sorting[sorting.length]= {propName:propName,direction: sortedUserSettings[i].sortOrder < 0 ? 'asc': 'desc'};
+      }
+    }
+    return sorting;
   }
 });

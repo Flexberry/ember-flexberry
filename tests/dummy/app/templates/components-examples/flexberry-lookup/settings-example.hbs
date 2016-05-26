@@ -1,0 +1,17 @@
+<h3 class="ui header">{{title}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-lookup
+      value=model.master
+      projection="MasterL"
+      displayAttributeName="text"
+      title="Master"
+      relatedModel=model
+      relationName="master"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      limitFunction=null
+    }}
+  </div>
+</form>

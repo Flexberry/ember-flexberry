@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import TestAggregator from '../../../models/test-aggregator';
+import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/settings-example/aggregator';
 
 moduleForComponent('object-list-view', 'Integration | Component | object list view', {
   integration: true,
@@ -14,7 +14,7 @@ moduleForComponent('object-list-view', 'Integration | Component | object list vi
 });
 
 test('columns renders', function(assert) {
-  this.set('proj', TestAggregator.projections.get('TestAggregatorE'));
+  this.set('proj', AggregatorModel.projections.get('AggregatorE'));
   this.render(hbs`{{object-list-view modelProjection=proj componentName = "someName"}}`);
   assert.notEqual(this.$('thead tr th').length, 0);
 });

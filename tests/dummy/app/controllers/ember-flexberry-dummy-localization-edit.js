@@ -1,7 +1,13 @@
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
-  // Caption of this particular edit form.
+  /**
+   * Page title.
+   *
+   * @property title
+   * @type String
+   * @default 'Localization'
+   */
   title: 'Localization',
 
   /**

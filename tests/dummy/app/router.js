@@ -9,7 +9,6 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-application-user-list');
   this.route('ember-flexberry-dummy-application-user-edit', { path: 'ember-flexberry-dummy-application-user-edit/:id' });
   this.route('ember-flexberry-dummy-application-user-edit.new', { path: 'ember-flexberry-dummy-application-user-edit/new' });
-  this.route('ember-flexberry-dummy-comment-list');
   this.route('ember-flexberry-dummy-comment-edit', { path: 'ember-flexberry-dummy-comment-edit/:id' });
   this.route('ember-flexberry-dummy-comment-edit.new', { path: 'ember-flexberry-dummy-comment-edit/new' });
   this.route('ember-flexberry-dummy-localization-list');
@@ -22,17 +21,20 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
-  // /test-flexberry-dropdown
-  this.route('test-flexberry-dropdown');
+  // /components-examples/flexberry-dropdown/settings-example.
+  this.route('components-examples/flexberry-dropdown/settings-example');
 
-  // /test-flexberry-dropdown-conditional-render
-  this.route('test-flexberry-dropdown-conditional-render');
+  // /components-examples/flexberry-dropdown/conditional-render-example.
+  this.route('components-examples/flexberry-dropdown/conditional-render-example');
 
-  // /test-flexberry-groupedit-embedding-components
-  this.route('test-flexberry-groupedit');
+  // /components-examples/flexberry-menu/settings-example.
+  this.route('components-examples/flexberry-menu/settings-example');
 
-  // /test-flexberry-menu
-  this.route('test-flexberry-menu');
+  // /components-examples/flexberry-lookup/settings-example.
+  this.route('components-examples/flexberry-lookup/settings-example');
+
+  // /components-examples/flexberry-groupedit/settings-example.
+  this.route('components-examples/flexberry-groupedit/settings-example');
 });
 
 export default Router;

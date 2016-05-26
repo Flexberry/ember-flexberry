@@ -1,0 +1,22 @@
+<h3 class="ui header">{{title}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{ui-message
+      type="info"
+      closeable=false
+      visible=true
+      icon="info circle icon"
+      title="Use case description"
+      message=message
+    }}
+    <br>
+    {{#if model.enumeration}}
+      <span>{{model.enumeration}}</span>
+    {{else}}
+      {{flexberry-dropdown
+        items=(enum-captions "components-examples/flexberry-dropdown/conditional-render-example/enumeration")
+        value=model.enumeration
+      }}
+    {{/if}}
+  </div>
+</form>

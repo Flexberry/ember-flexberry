@@ -8,68 +8,21 @@ import FlexberryBaseComponent from './flexberry-base-component';
 /**
  * Menu component for Semantic UI.
  *
- * @class FlexberryMenuComponent
+ * Questions:
+ * - Need {{yield}} in flexberry-menu.hbs?
+ *
+ * Sample usage:
+ * ```handlebars
+ * {{flexberry-menu
+ *   items=items
+ *   onItemClick=(action 'onMenuItemClick')
+ * }}
+ * ```
+ *
+ * @class FlexberryMenu
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
-  /**
-   * Class names for component wrapping element.
-   */
-  classNames: ['flexberry-menu', 'ui', 'menu'],
-
-  /**
-   * Path to component's settings in application configuration (JSON from ./config/environment.js).
-   *
-   * @property appConfigSettingsPath
-   * @type String
-   * @default 'APP.components.flexberryCheckbox'
-   */
-  appConfigSettingsPath: 'APP.components.flexberryMenu',
-
-  /**
-   * Menu items.
-   *
-   * @property items
-   * @type Array[]
-   * @default null
-   */
-  items: null,
-
-  /**
-   * Hook which will be called to configure menu items.
-   *
-    Example:
-    ```handlebars
-    <!-- app/templates/menu.hbs -->
-    {{flexberry-menu
-      ...
-      configurateItems=(action 'configurateItems')
-      ...
-    }}
-    ```
-
-    ```js
-    // app/controllers/menu.js
-
-    export default Ember.Controller.extend({
-      actions: {
-        configurateItems: function(menuItems) {
-          menuItems.push({
-            icon: 'edit icon',
-            title: 'Edit'
-          }, {
-            icon: 'trash icon',
-            title: 'Delete'
-          });
-        }
-      }
-    });
-    ```
-   * @method configurateItems
-   * @param {Array} items Menu items array.
-   */
-  configurateItems: undefined,
-
   /**
    * Flag: indicates whether to call 'items.[].onClick' callbacks or not.
    *
@@ -80,22 +33,50 @@ export default FlexberryBaseComponent.extend({
   callItemsOnClickCallbacks: true,
 
   /**
+   * Menu items.
+   *
+   * @property items
+   * @type Array
+   * @default null
+   */
+  items: null,
+
+  /**
+   * Array CSS class names.
+   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+   *
+   * @property classNames
+   * @type Array
+   * @readOnly
+   */
+  classNames: ['flexberry-menu', 'ui', 'menu'],
+
+  /**
+   * Path to component's settings in application configuration (JSON from ./config/environment.js).
+   *
+   * @property appConfigSettingsPath
+   * @type String
+   * @default 'APP.components.flexberryMenu'
+   */
+  appConfigSettingsPath: 'APP.components.flexberryMenu',
+
+  /**
    * Initializes component.
    */
-  init: function() {
+  init() {
     this._super(...arguments);
 
     // Component properties will be defined in class prototype,
     // so complex properties like object or arrays, will be shared between all class instances,
     // that's why such properties should be initialized manually in 'init' method.
-    var items = this.get('items');
+    let items = this.get('items');
     if (Ember.isNone(items)) {
       items = [];
     }
 
     // Call to 'configurateItems' hook.
-    var configurateItems = this.get('configurateItems');
-    var configurateItemsType = Ember.typeOf(configurateItems);
+    let configurateItems = this.get('configurateItems');
+    let configurateItemsType = Ember.typeOf(configurateItems);
 
     if (configurateItemsType === 'function') {
       configurateItems(items);
@@ -113,11 +94,11 @@ export default FlexberryBaseComponent.extend({
   /**
    * Initializes DOM-related component's logic.
    */
-  didInsertElement: function() {
+  didInsertElement() {
     this._super(...arguments);
 
     // Bind right context to menu click event handler.
-    var onClickHandler = this.get('_onClickHandler').bind(this);
+    let onClickHandler = this.get('_onClickHandler').bind(this);
     this.set('_onClickHandler', onClickHandler);
 
     // Attach menu click event handler.
@@ -127,25 +108,61 @@ export default FlexberryBaseComponent.extend({
   /**
    * Cleans up DOM-related component's logic.
    */
-  willDestroyElement: function() {
+  willDestroyElement() {
     this._super(...arguments);
 
     // Remove menu item click event handler.
-    var onClickHandler = this.get('_onClickHandler');
+    let onClickHandler = this.get('_onClickHandler');
     this.$().off('click', onClickHandler);
   },
+
+  /**
+   * Hook which will be called to configure menu items.
+   *
+   * Example:
+   * ```handlebars
+   * <!-- app/templates/menu.hbs -->
+   * {{flexberry-menu
+   *   ...
+   *   configurateItems=(action 'configurateItems')
+   *   ...
+   * }}
+   * ```
+   *
+   * ```javascript
+   * // app/controllers/menu.js
+   * export default Ember.Controller.extend({
+   * ...
+   *   actions: {
+   *     ...
+   *     configurateItems(items) {
+   *       items.push({
+   *         icon: 'edit icon',
+   *         title: 'Edit',
+   *       });
+   *     },
+   *     ...
+   *   }
+   * ...
+   * });
+   * ```
+   *
+   * @method configurateItems
+   * @param {Array} items Menu items array.
+   */
+  configurateItems: undefined,
 
   /**
    * Menu click handler.
    * Used to delegate menu items clicks handling.
    *
    * @method _onClickHandler
-   * @param e Click event object.
+   * @param {JQuery.Event} e Click event object.
    * @private
    */
-  _onClickHandler: function(e) {
+  _onClickHandler(e) {
     // Find clicked menu item element.
-    var itemElement = Ember.$(e.target);
+    let itemElement = Ember.$(e.target);
     if (!itemElement.hasClass('flexberry-menuitem')) {
       itemElement = itemElement.parents('.flexberry-menuitem');
     }
@@ -154,7 +171,7 @@ export default FlexberryBaseComponent.extend({
     e.currentTarget = itemElement[0];
 
     // Add clicked item's content to click event object.
-    var item = itemElement.data('flexberry-menuitem.item');
+    let item = itemElement.data('flexberry-menuitem.item');
     e.item = item;
 
     // Call onClick handler if it is specified in the given menu item.
@@ -164,5 +181,5 @@ export default FlexberryBaseComponent.extend({
 
     // Send 'onClick' action on clicked 'flexberry-menuitem' component.
     this.sendAction('onItemClick', e);
-  }
+  },
 });

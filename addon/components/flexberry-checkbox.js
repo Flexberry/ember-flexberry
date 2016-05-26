@@ -8,12 +8,44 @@ import FlexberryBaseComponent from './flexberry-base-component';
 /**
  * Checkbox component for Semantic UI.
  *
- * @class FlexberrCheckboxComponent
+ * Sample usage:
+ * ```handlebars
+ * {{flexberry-checkbox checked=model.enabled label='Enabled'}}
+ * ```
+ *
+ * @class FlexberryCheckbox
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
   /**
+   * Current checked value.
+   *
+   * @property value
+   * @type Boolean
+   * @default false
+   */
+  value: false,
+
+  /**
+   * Label for the checkbox.
+   *
+   * @property label
+   * @type String
+   */
+  label: undefined,
+
+  /**
+   * DOM-element representing checkbox input.
+   *
+   * @property checkboxInput
+   * @type Object
+   * @default null
+   */
+  checkboxInput: null,
+
+  /**
    * Overload wrapper tag name for disabling wrapper.
+   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_tagName)
    *
    * @property tagName
    * @type String
@@ -32,44 +64,11 @@ export default FlexberryBaseComponent.extend({
   appConfigSettingsPath: 'APP.components.flexberryCheckbox',
 
   /**
-   * Current checked value.
-   *
-   * @property value
-   * @type Boolean
-   * @default false
-   */
-  value: false,
-
-  /**
-   * Label for the checkbox.
-   *
-   * @property label
-   * @type String
-   * @default undefined
-   */
-  label: undefined,
-
-  /**
-   * DOM-element representing checkbox input.
-   *
-   * @property checkboxInput
-   * @type Object
-   */
-  checkboxInput: null,
-
-  /**
    * Checkbox value's observer.
    */
-  valueDidChange: Ember.observer('value', function() {
-    this.sendAction('onChange', {
-      checked: this.get('value')
+  _valueDidChange: Ember.observer('value', (self) => {
+    self.sendAction('onChange', {
+      checked: self.get('value'),
     });
   }),
-
-  /**
-   * Initializes checkbox component.
-   */
-  init: function() {
-    this._super(...arguments);
-  }
 });

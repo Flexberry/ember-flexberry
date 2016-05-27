@@ -12,11 +12,44 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * - Need {{yield}} in flexberry-menu.hbs?
  *
  * Sample usage:
+ * ```javascript
+ * // app/controllers/menu.js
+ * ...
+ * items: [{
+ *   icon: 'search icon',
+ *   title: 'Search',
+ * },{
+ *   icon: 'settings icon',
+ *   iconAlignment: 'right',
+ *   title: 'Settings',
+ * },{
+ *   icon: 'list icon',
+ *   title: 'Submenu',
+ *   items: [{
+ *     icon: 'trash icon',
+ *     title: 'Delete',
+ *   }],
+ * }],
+ * ...
+ * actions: {
+ *   ...
+ *   onItemClick(e) {
+ *     let clickedMenuItem = Ember.$(e.currentTarget);
+ *     ...
+ *   },
+ *   ...
+ * },
+ * ...
+ * ```
+ *
  * ```handlebars
+ * <!-- app/templates/menu.hbs -->
+ * ...
  * {{flexberry-menu
  *   items=items
- *   onItemClick=(action 'onMenuItemClick')
+ *   onItemClick=(action 'onItemClick')
  * }}
+ * ...
  * ```
  *
  * @class FlexberryMenu

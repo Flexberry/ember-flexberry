@@ -98,8 +98,9 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
         return {};
     })
     .then( _userSettings=> {
-      userSettings=_userSettings;
-      sorting=this._appenduserSettingsToSorting(sorting,_userSettings); //Append sorting orders from _userSettings
+      userSettings=_userSettings ? _userSettings : {};
+      let userSorting= 'sorting' in userSettings ? userSettings['sorting']: [];
+      sorting=this._appenduserSettingsToSorting(sorting,userSorting); //Append sorting orders from _userSettings
       let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
       Ember.merge(query, sortQuery);
       return store.query(modelName, query)
@@ -127,25 +128,21 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     controller.set('modelProjection', proj);
   },
 
-  _appenduserSettingsToSorting: function (sorting,userSettings) {
+  _appenduserSettingsToSorting: function (sorting,userSorting) {
+    let ret=[];
     let sortedPropNames={};
     for (let i=0; i<sorting.length; i++ ) {
       let propName=sorting[i].propName;
+      if (propName.indexOf('.') >= 0) continue; //Exclude detail sortings
+      ret[ret.length]=sorting[i];
       sortedPropNames[propName]=true;
     }
-    let sortSettings=[];
-    for (let i=0; i<userSettings.length; i++ ) {
-      if ('sortPriority' in userSettings[i]) {
-        sortSettings[sortSettings.length]=userSettings[i];
+    for (let i=0; i<userSorting.length; i++ ) {
+      let propName=userSorting[i].propName;
+      if (! (propName in sortedPropNames) && propName.indexOf('.') < 0) { //Exclude detail sortings
+        ret[ret.length]= {propName:propName,direction: userSorting[i].direction};
       }
     }
-    let sortedUserSettings=sortSettings.sort((a,b) => a.sortPriority-b.sortPriority);
-    for (let i=0; i<sortedUserSettings.length; i++ ) {
-      let propName=sortedUserSettings[i].propName;
-      if (! (propName in sortedPropNames) ) {
-        sorting[sorting.length]= {propName:propName,direction: sortedUserSettings[i].sortOrder < 0 ? 'asc': 'desc'};
-      }
-    }
-    return sorting;
+    return ret;
   }
 });

@@ -6,6 +6,7 @@ const { getOwner } = Ember;
 export default FlexberryBaseComponent.extend({
 
   idPrefix:'ColDesc',
+  _userSettingsService: Ember.inject.service('user-settings-service'),
   modelForDOM:[],
 
   init: function() {
@@ -154,19 +155,27 @@ export default FlexberryBaseComponent.extend({
       let currentRoute=getOwner(this).lookup("router:main").get('currentRouteName');
       let trs=$('#colsConfigtableRows').children('TR');
       let colsConfig=[];
+      let colsOrder=[];
+      let sortSettings=[];
       for (let i=0;i<trs.length;i++) {
         let tr=trs[i];
         let index=this._getIndexFromId(tr.id);
         let model=this.model[index];
-        colsConfig[i]={
-          name:model.name,
-          propName:model.propName,
-          hide:model.hide,
-          sortOrder:model.sortOrder,
-          sortPriority:model.sortPriority
-        };
+        colsOrder[i]={propName:model.propName,hide:model.hide};
+        if ('sortPriority' in model) {
+          sortSettings[sortSettings.length]={propName:model.propName,sortOrder:model.sortOrder,sortPriority:model.sortPriority};
+        }
       }
-      alert(JSON.stringify(colsConfig));
+      let sortedSettings=sortSettings.sort((a,b) => a.sortPriority-b.sortPriority);
+      let sorting=[];
+      for (let i=0;i<sortedSettings.length;i++) {
+        let sortedSetting=sortedSettings[i];
+        sorting[sorting.length]= {propName:sortedSetting.propName,direction: sortedSetting.sortOrder < 0 ? 'asc': 'desc'};
+      }
+      colsConfig={colsOrder:colsOrder,sorting:sorting};
+      alert(' colsConfig=' +JSON.stringify(colsConfig));
+      let moduleName = getOwner(this).lookup('router:main').currentRouteName;
+      this.get('_userSettingsService').saveUserSetting({moduleName:moduleName,settingName:'DEFAULT',userSetting:colsConfig});
       this.sendAction('close',colsConfig);
     }
   },

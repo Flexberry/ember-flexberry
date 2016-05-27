@@ -70,7 +70,7 @@ ember generate flexberry-edit-form ember-flexberry-dummy-localization-edit --fil
 ember generate flexberry-edit-form ember-flexberry-dummy-suggestion-edit --file=ember-flexberry-dummy-suggestion-edit.json --metadata-dir=${META_DIR}
 ember generate flexberry-edit-form ember-flexberry-dummy-suggestion-type-edit --file=ember-flexberry-dummy-suggestion-type-edit.json --metadata-dir=${META_DIR}
 ember generate flexberry-edit-form ember-flexberry-dummy-comment-edit --file=ember-flexberry-dummy-comment-edit.json --metadata-dir=${META_DIR}
-ember generate flexberry-application app --metadata-dir=${META_DIR}
+ember generate flexberry-core app --metadata-dir=${META_DIR}
 #ember build
 ember test
 

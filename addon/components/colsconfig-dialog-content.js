@@ -167,6 +167,7 @@ export default FlexberryBaseComponent.extend({
         }
       }
       let sortedSettings=sortSettings.sort((a,b) => a.sortPriority-b.sortPriority);
+      alert('Model='+ JSON.stringify(this.model) + ' sorting='+JSON.stringify(sorting) + ' sortedSettings='+JSON.stringify(sortedSettings) );
       let sorting=[];
       for (let i=0;i<sortedSettings.length;i++) {
         let sortedSetting=sortedSettings[i];

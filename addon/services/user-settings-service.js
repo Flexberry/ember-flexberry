@@ -66,23 +66,22 @@ export default Ember.Service.extend({
     let _this = this;
     this._getExistingRecord(moduleName, settingName).then(
       function(foundRecord) {
-        if (!foundRecords) {
-          let currentUserName = _this.getCurrentUser();
-          foundRecord = store.createRecord('new-platform-flexberry-flexberry-user-setting');
-          foundRecord.set('moduleName', moduleName);
-          foundRecord.set('settName', settingName);
-          foundRecord.set('userName', currentUserName);
-          foundRecord.set('txtVal', JSON.stringify(userSetting));
-        } else {
+        if (foundRecord) {
           let prevUserSetting=JSON.parse(foundRecord.get('txtVal'));
           if (!prevUserSetting) prevUserSetting={};
           for (let settingName in userSetting) {
             prevUserSetting[settingName]=userSetting[settingName];
           }
           foundRecord.set('txtVal', JSON.stringify(prevUserSetting));
+        } else {
+          let currentUserName = _this.getCurrentUser();
+          foundRecord = store.createRecord('new-platform-flexberry-flexberry-user-setting');
+          foundRecord.set('moduleName', moduleName);
+          foundRecord.set('settName', settingName);
+          foundRecord.set('userName', currentUserName);
+          foundRecord.set('txtVal', JSON.stringify(userSetting));
         }
         foundRecord.save();
-        }
       }
     );
   },
@@ -180,6 +179,7 @@ export default Ember.Service.extend({
           }
           return foundRecords[0].record;
         }
+      }
       return undefined;
     });
   },

@@ -106,16 +106,10 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
       return store.query(modelName, query)
     })
     .then((records) => {
-      return this.includeSorting(records, sorting, userSettings);
+      this.includeSorting(records, sorting, userSettings);
+      return records;
     });
     return ret;
-    // find by query is always fetching.
-    // TODO: support getting from cache with "store.all->filterByProjection".
-//     return store.query(modelName, query)
-//       .then((records) => {
-//         // TODO: move to setupController mixins?
-//         return this.includeSorting(records, sorting);
-//       });
   },
 
   setupController: function(controller, model) {

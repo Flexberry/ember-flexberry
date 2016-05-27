@@ -2,7 +2,7 @@
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 
-let stripBom = require("strip-bom");
+const stripBom = require("strip-bom");
 import fs = require("fs");
 import path = require('path');
 import lodash = require('lodash');
@@ -35,7 +35,10 @@ module.exports = {
       parentClassName: modelBlueprint.parentClassName,// for use in files\__root__\models\__name__.js
       model: modelBlueprint.model,// for use in files\__root__\models\__name__.js
       projections: modelBlueprint.projections,// for use in files\__root__\models\__name__.js
-      serializerAttrs: modelBlueprint.serializerAttrs// for use in files\__root__\serializers\__name__.js
+      serializerAttrs: modelBlueprint.serializerAttrs,// for use in files\__root__\serializers\__name__.js
+      name: modelBlueprint.name,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
+      needsAllModels: modelBlueprint.needsAllModels,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
+      needsAllEnums: modelBlueprint.needsAllEnums// for use in files\tests\unit\serializers\__name__.js
     };
   }
 };
@@ -46,20 +49,45 @@ class ModelBlueprint {
   parentModelName: string;
   parentClassName: string;
   projections: string;
+  name: string;
+  needsAllModels: string;
+  needsAllEnums: string;
   constructor(blueprint, options) {
     let modelsDir = path.join(options.metadataDir, "models");
     if (!options.file) {
       options.file = options.entity.name + ".json";
     }
     let modelFile = path.join(modelsDir, options.file);
-    let content = stripBom(fs.readFileSync(modelFile, "utf8"));
+    let content: string = stripBom(fs.readFileSync(modelFile, "utf8"));
     let model: metadata.Model = JSON.parse(content);
     this.parentModelName = model.parentModelName;
     this.parentClassName = model.parentClassName;
     this.serializerAttrs = this.getSerializerAttrs(model);
     this.projections = this.getJSForProjections(model, modelsDir);
     this.model = this.getJSForModel(model);
+    this.name = options.entity.name;
+    this.needsAllModels = this.getNeedsAllModels(modelsDir);
+    this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
   }
+
+  getNeedsAllEnums(enumsDir: string): string {
+    let listEnums = fs.readdirSync(enumsDir);
+    let enums: string[] = [];
+    for (let e of listEnums) {
+      enums.push(`    'transform:${path.parse(e).name}'`);
+    }
+    return enums.join(",\n");
+  }
+
+  getNeedsAllModels(modelsDir: string): string {
+    let listModels = fs.readdirSync(modelsDir);
+    let models: string[] = [];
+    for (let model of listModels) {
+      models.push(`    'model:${path.parse(model).name}'`);
+    }
+    return models.join(",\n");
+  }
+
 
   getSerializerAttrs(model: metadata.Model): string {
     let attrs: string[] = [];
@@ -103,7 +131,7 @@ class ModelBlueprint {
     return "({\n" + TAB + attrs.join(",\n" + TAB) + "\n});";
   }
 
-  joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string): string {
+  joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string, level: number): string {
     let hasManyAttrs: string[] = [];
     let modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
     let hasManyModel: metadata.Model = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
@@ -113,10 +141,21 @@ class ModelBlueprint {
         hasManyAttrs.push(this.declareProjAttr(attr));
       }
       for (let belongsTo of hasManyProj.belongsTo) {
-        hasManyAttrs.push(this.joinProjBelongsTo(belongsTo, 1));
+        hasManyAttrs.push(this.joinProjBelongsTo(belongsTo, level + 1));
       }
-      let attrsStr = hasManyAttrs.join(",\n ");
-      return `${detailHasMany.name}: Proj.hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${attrsStr}\n})`;
+      let indent: string[] = [];
+      for (let i = 0; i < level; i++) {
+        indent.push(TAB);
+      }
+      let indentStr = indent.join("");
+      indent.pop();
+      let indentStr2 = indent.join("");
+      let attrsStr = hasManyAttrs.join(",\n" + indentStr);
+      if(hasManyAttrs.length===0){
+        attrsStr = "";
+        indentStr = "";
+      }
+      return `${detailHasMany.name}: Proj.hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}})`;
     }
     return "";
   }
@@ -181,11 +220,11 @@ class ModelBlueprint {
             hasManyAttrs.push(this.declareProjAttr(detailAttr));
           }
           for (let detailBelongsTo of detailProj.belongsTo) {
-            hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 2));
+            hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 3));
           }
 
           for (let detailHasMany of detailProj.hasMany) {
-            hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir));
+            hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 3));
           }
         }
         let attrsStr = hasManyAttrs.join(",\n    ");

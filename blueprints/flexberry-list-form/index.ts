@@ -3,7 +3,7 @@
 
 import fs = require("fs");
 import path = require('path');
-let stripBom = require("strip-bom");
+const stripBom = require("strip-bom");
 import metadata = require('MetadataClasses');
 
 module.exports = {

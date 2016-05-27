@@ -20,16 +20,26 @@ Addon change:
 FlexberryLookupComponent:
 * When backend is slow, modal window not closed after select item.
 
+## 2016-05-18
+### Added
+FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
+* Add tableStriped, customTableClass, tableClass properties.
+
+FlexberryObjectlistviewComponent:
+* Add action removeFilter.
+
 ## 2016-05-17
 ### Breaking changes
 FlexberryObjectlistviewComponent:
-* Remove actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
+* Move actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
 * Rename action 'rowClick' to 'objectListViewRowClick'.
 * Added 'confirmDeleteRow' and 'confirmDeleteRows' hooks.
+
 FlexberryGroupeditComponent:
 * Rename action 'rowClick' to 'groupEditRowClick'.
 * Rename property 'rowClick' to 'action'.
 * Added 'confirmDeleteRow' and 'confirmDeleteRows' hooks.
+
 EditFormController:
 * Added overloaded methods 'onSaveActionFulfilled', 'onSaveActionRejected', 'onDeleteActionFulfilled' and 'onDeleteActionRejected'.
 
@@ -42,17 +52,19 @@ EditFormNewRoute:
 ### Breaking changes
 FlexberryLookupComponent:
 * Add mode dropdown.
+* Add displayAttributeName. Name of the attribute of the model to diplay for the user.
+* Now value is instance of the model.
 * Rename autocompleteUpdateAction to updateLookupAction.
-* Rename autocompleteProperty to displayAttributeName.
 * Rename autocompleteMinCharacters to minCharacters.
 * Rename autocompleteMaxResults to maxResults.
-* Remove autocompleteUpdateXhrAction, updateAutocompleteLookupXhr, getLookupAutocompleteUrl, getAutocompleteLookupQueryOptions, limitFunction, autocompleteUrl, autocompleteQueryOptions.
+* Remove autocompleteUpdateXhrAction, updateAutocompleteLookupXhr, getLookupAutocompleteUrl, getAutocompleteLookupQueryOptions, limitFunction, autocompleteUrl, autocompleteQueryOptions, autocompleteProperty.
 
 ## 2016-05-06
 ### Breaking changes
 FlexberryLookupComponent:
 * Rename classChoose to chooseButtonClass.
 * Rename classRemove to removeButtonClass.
+
 FlexberryFileComponent, FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
 * Rename classButton to buttonClass.
 
@@ -81,8 +93,6 @@ Flexberry-groupedit
 
 Mobile Flexberry-objectlistview
 * showDeleteMenuItemInRow change default value on false
-###
-##
 
 ## 2016-03-29
 ### Breaking changes
@@ -100,8 +110,6 @@ FlexberryObjectlistviewComponent:
 FlexberryGroupeditComponent
 * Add support custom route for edit model (property: editFormRoute).
   If your FlexberryGroupeditComponent use 'editOnSeparateRoute', you should define 'editFormRoute'
-
-##
 
 i18n:
 * Move initialization from application route into application initializer;
@@ -145,5 +153,3 @@ FlexberryFileComponent
 ### Bug fixes
 Moment:
 * Add 'defaultFormat' initialization (now ENV.moment.defaultFormat will take an effect to both JS & HTMLBars-helpers);
-
-### Breaking changes

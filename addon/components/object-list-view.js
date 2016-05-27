@@ -186,9 +186,68 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   tagName: 'div',
 
   /**
-   * Component's CSS classes.
+   * Component's CSS classes for wrapper.
    */
   classNames: ['object-list-view-container'],
+
+  /**
+   * Flag: indicates whether table are striped.
+   *
+   * @property tableStriped
+   * @type Boolean
+   * @default true
+   */
+  tableStriped: true,
+
+  /**
+   * Flag: indicates whether table rows are clickable.
+   *
+   * @property rowClickable
+   * @type Boolean
+   * @default true
+   */
+  rowClickable: true,
+
+  /**
+   * Custom classes for table.
+   *
+   Example:
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
+    {{flexberry-objectlistview
+      ...
+      customTableClass='inverted blue'
+      ...
+    }}
+    ```
+   * @property customTableClass
+   * @type String
+   * @default ''
+   */
+  customTableClass: '',
+
+  /**
+   * Classes for table.
+   *
+   * @property tableClass
+   * @type String
+   * @readOnly
+   */
+  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', function() {
+    let tableStriped = this.get('tableStriped');
+    let rowClickable = this.get('rowClickable');
+    let classes = this.get('customTableClass');
+
+    if (tableStriped) {
+      classes += ' striped';
+    }
+
+    if (rowClickable) {
+      classes += ' selectable';
+    }
+
+    return classes;
+  }),
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -478,15 +537,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @type String
    */
   noDataMessage: undefined,
-
-  /**
-   * Flag: indicates whether table rows are clickable.
-   *
-   * @property rowClickable
-   * @type Boolean
-   * @default true
-   */
-  rowClickable: true,
 
   /**
    * Flag: indicates whether table headers are clickable.
@@ -812,6 +862,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     let _this = this;
     currentTable.colResizable({
+      minWidth: 70,
       onResize: function(e) {
         // Save column width as user setting on resize.
         _this._afterColumnResize(e);

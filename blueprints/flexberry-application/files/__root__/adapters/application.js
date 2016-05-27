@@ -1,4 +1,4 @@
-import ODataAdapter from 'ember-flexberry/adapters/odata';
+import ODataAdapter from 'ember-flexberry-data/adapters/odata';
 import Proj from 'ember-flexberry-data';
 import config from '../config/environment';
 

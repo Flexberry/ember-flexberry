@@ -4,17 +4,39 @@
 ## 2016-05-24
 ### Breaking changes
 Addon change:
-* Delete dependency from ember-simple-auth.
-* Delete dependency from ember-local-storage.
+* Delete dependency on ember-simple-auth:
+ * Delete authenticator token
+ * Delete authorizer token
+ * Delete controller login
+ * Delete route login
+ * Delete template login
+ * Delete services:
+  * flexberry-auth-service
+  * flexberry-ember-simple-auth-service
+* Delete dependency on ember-local-storage:
+ * Delete model settings
+ * Update mixin paginated-controller
+### Fixed
+FlexberryLookupComponent:
+* When backend is slow, modal window not closed after select item.
 
 ## 2016-05-17
 ### Breaking changes
 FlexberryObjectlistviewComponent:
 * Remove actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
 * Rename action 'rowClick' to 'objectListViewRowClick'.
+* Added 'confirmDeleteRow' and 'confirmDeleteRows' hooks.
 FlexberryGroupeditComponent:
 * Rename action 'rowClick' to 'groupEditRowClick'.
 * Rename property 'rowClick' to 'action'.
+* Added 'confirmDeleteRow' and 'confirmDeleteRows' hooks.
+EditFormController:
+* Added overloaded methods 'onSaveActionFulfilled', 'onSaveActionRejected', 'onDeleteActionFulfilled' and 'onDeleteActionRejected'.
+
+## 2016-05-11
+### Breaking changes
+EditFormNewRoute:
+* Parameter 'templateName' is required.
 
 ## 2016-05-10
 ### Breaking changes
@@ -33,6 +55,13 @@ FlexberryLookupComponent:
 * Rename classRemove to removeButtonClass.
 FlexberryFileComponent, FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
 * Rename classButton to buttonClass.
+
+## 2016-05-05
+### Breaking changes
+FlexberryObjectlistviewComponent:
+* Parameter 'editFormRoute' is required.
+EditFormController:
+* Parameter 'parentRoute' is required.
 
 ## 2016-04-15
 ### Fixed

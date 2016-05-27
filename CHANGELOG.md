@@ -1,10 +1,17 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-18
+### Added
+FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
+* Add tableStriped, customTableClass, tableClass properties.
+FlexberryObjectlistviewComponent:
+* Add action removeFilter.
+
 ## 2016-05-17
 ### Breaking changes
 FlexberryObjectlistviewComponent:
-* Remove actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
+* Move actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
 * Rename action 'rowClick' to 'objectListViewRowClick'.
 FlexberryGroupeditComponent:
 * Rename action 'rowClick' to 'groupEditRowClick'.
@@ -14,11 +21,12 @@ FlexberryGroupeditComponent:
 ### Breaking changes
 FlexberryLookupComponent:
 * Add mode dropdown.
+* Add displayAttributeName. Name of the attribute of the model to diplay for the user.
+* Now value is instance of the model.
 * Rename autocompleteUpdateAction to updateLookupAction.
-* Rename autocompleteProperty to displayAttributeName.
 * Rename autocompleteMinCharacters to minCharacters.
 * Rename autocompleteMaxResults to maxResults.
-* Remove autocompleteUpdateXhrAction, updateAutocompleteLookupXhr, getLookupAutocompleteUrl, getAutocompleteLookupQueryOptions, limitFunction, autocompleteUrl, autocompleteQueryOptions.
+* Remove autocompleteUpdateXhrAction, updateAutocompleteLookupXhr, getLookupAutocompleteUrl, getAutocompleteLookupQueryOptions, limitFunction, autocompleteUrl, autocompleteQueryOptions, autocompleteProperty.
 
 ## 2016-05-06
 ### Breaking changes

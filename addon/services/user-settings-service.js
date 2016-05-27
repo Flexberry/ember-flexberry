@@ -64,10 +64,8 @@ export default Ember.Service.extend({
 
     let store = this.get('store');
     let _this = this;
-    this._getExistingRecords(moduleName, settingName).then(
-      function(foundRecords) {
-        let foundRecord;
-        let deletedRecords=[];
+    this._getExistingRecord(moduleName, settingName).then(
+      function(foundRecord) {
         if (!foundRecords) {
           let currentUserName = _this.getCurrentUser();
           foundRecord = store.createRecord('new-platform-flexberry-flexberry-user-setting');
@@ -76,8 +74,6 @@ export default Ember.Service.extend({
           foundRecord.set('userName', currentUserName);
           foundRecord.set('txtVal', JSON.stringify(userSetting));
         } else {
-          deletedRecords=foundRecords.slice(1);
-          foundRecord=foundRecords[0].record;
           let prevUserSetting=JSON.parse(foundRecord.get('txtVal'));
           if (!prevUserSetting) prevUserSetting={};
           for (let settingName in userSetting) {
@@ -86,8 +82,6 @@ export default Ember.Service.extend({
           foundRecord.set('txtVal', JSON.stringify(prevUserSetting));
         }
         foundRecord.save();
-        for (let i=0;i<deletedRecords.length;i++){
-          deletedRecords[i].deleteRecord();
         }
       }
     );
@@ -133,6 +127,61 @@ export default Ember.Service.extend({
         return undefined;
       }
     );
+  },
+
+  /**
+   * It looks for already created user settings records.
+   *
+   * @method _getExistingRecord
+   * @private
+   *
+   * @param {Object} moduleName Module name of looked for record.
+   * @param {String} settingName Setting name of looked for record.
+   * @return {Promise} A promise. It returns found record or `undefined` if there is no such setting.
+   */
+  _getExistingRecord: function(moduleName, settingName) {
+    // TODO: add search by username.
+    let store = this.get('store');
+    let modelName = 'new-platform-flexberry-flexberry-user-setting';
+    let currentUserName = this.getCurrentUser();
+    let adapter = store.adapterFor(modelName);
+    let filterString = adapter.getLimitFunction({
+      operation: 'and',
+      arguments: [
+      {
+        operation: '=',
+        arguments: ['moduleName', moduleName]
+      },
+      {
+        operation: 'and',
+        arguments: [{
+          operation: '=',
+          arguments: ['settName', settingName]
+        },
+        {
+          operation: '=',
+          arguments: ['userName', currentUserName]
+        }]
+      }
+      ]
+    });
+    let limitFunctionQuery = adapter.getLimitFunctionQuery(filterString, 'FlexberryUserSettingE');
+
+    let query = {};
+    Ember.merge(query, limitFunctionQuery);
+    Ember.merge(query, { $top: 2 });
+
+    return store.query(modelName, query).then(function(result) {
+      if (result) {
+        let foundRecords = result.get('content');
+        if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
+          for (let i=1;i<foundRecords.length;i++){
+            foundRecords[i].deleteRecord();
+          }
+          return foundRecords[0].record;
+        }
+      return undefined;
+    });
   },
 
 

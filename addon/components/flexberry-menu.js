@@ -1,100 +1,100 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
- * Menu component for Semantic UI.
- *
- * Questions:
- * - Need {{yield}} in flexberry-menu.hbs?
- *
- * Sample usage:
- * ```javascript
- * // app/controllers/menu.js
- * ...
- * items: [{
- *   icon: 'search icon',
- *   title: 'Search',
- * },{
- *   icon: 'settings icon',
- *   iconAlignment: 'right',
- *   title: 'Settings',
- * },{
- *   icon: 'list icon',
- *   title: 'Submenu',
- *   items: [{
- *     icon: 'trash icon',
- *     title: 'Delete',
- *   }],
- * }],
- * ...
- * actions: {
- *   ...
- *   onItemClick(e) {
- *     let clickedMenuItem = Ember.$(e.currentTarget);
- *     ...
- *   },
- *   ...
- * },
- * ...
- * ```
- *
- * ```handlebars
- * <!-- app/templates/menu.hbs -->
- * ...
- * {{flexberry-menu
- *   items=items
- *   onItemClick=(action 'onItemClick')
- * }}
- * ...
- * ```
- *
- * @class FlexberryMenu
- * @extends FlexberryBaseComponent
+  Menu component for Semantic UI.
+
+  Questions:
+  - Need {{yield}} in flexberry-menu.hbs?
+
+  Sample usage:
+  ```javascript
+  // app/controllers/menu.js
+  ...
+  items: [{
+    icon: 'search icon',
+    title: 'Search',
+  },{
+    icon: 'settings icon',
+    iconAlignment: 'right',
+    title: 'Settings',
+  },{
+    icon: 'list icon',
+    title: 'Submenu',
+    items: [{
+      icon: 'trash icon',
+      title: 'Delete',
+    }],
+  }],
+  ...
+  actions: {
+    ...
+    onItemClick(e) {
+      let clickedMenuItem = Ember.$(e.currentTarget);
+      ...
+    },
+    ...
+  },
+  ...
+  ```
+
+  ```handlebars
+  <!-- app/templates/menu.hbs -->
+  ...
+  {{flexberry-menu
+    items=items
+    onItemClick=(action 'onItemClick')
+  }}
+  ...
+  ```
+
+  @class FlexberryMenu
+  @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Flag: indicates whether to call 'items.[].onClick' callbacks or not.
-   *
-   * @property callItemsOnClickCallbacks
-   * @type Boolean
-   * @default true
+    Flag: indicates whether to call 'items.[].onClick' callbacks or not.
+
+    @property callItemsOnClickCallbacks
+    @type Boolean
+    @default true
    */
   callItemsOnClickCallbacks: true,
 
   /**
-   * Menu items.
-   *
-   * @property items
-   * @type Array
-   * @default null
+    Menu items.
+
+    @property items
+    @type Array
+    @default null
    */
   items: null,
 
   /**
-   * Array CSS class names.
-   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
-   *
-   * @property classNames
-   * @type Array
-   * @readOnly
+    Array CSS class names.
+    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+
+    @property classNames
+    @type Array
+    @readOnly
    */
   classNames: ['flexberry-menu', 'ui', 'menu'],
 
   /**
-   * Path to component's settings in application configuration (JSON from ./config/environment.js).
-   *
-   * @property appConfigSettingsPath
-   * @type String
-   * @default 'APP.components.flexberryMenu'
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryMenu'
    */
   appConfigSettingsPath: 'APP.components.flexberryMenu',
 
   /**
-   * Initializes component.
+    Initializes component.
    */
   init() {
     this._super(...arguments);
@@ -125,7 +125,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Initializes DOM-related component's logic.
+    Initializes DOM-related component's logic.
    */
   didInsertElement() {
     this._super(...arguments);
@@ -139,7 +139,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Cleans up DOM-related component's logic.
+    Cleans up DOM-related component's logic.
    */
   willDestroyElement() {
     this._super(...arguments);
@@ -150,48 +150,48 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Hook which will be called to configure menu items.
-   *
-   * Example:
-   * ```handlebars
-   * <!-- app/templates/menu.hbs -->
-   * {{flexberry-menu
-   *   ...
-   *   configurateItems=(action 'configurateItems')
-   *   ...
-   * }}
-   * ```
-   *
-   * ```javascript
-   * // app/controllers/menu.js
-   * export default Ember.Controller.extend({
-   * ...
-   *   actions: {
-   *     ...
-   *     configurateItems(items) {
-   *       items.push({
-   *         icon: 'edit icon',
-   *         title: 'Edit',
-   *       });
-   *     },
-   *     ...
-   *   }
-   * ...
-   * });
-   * ```
-   *
-   * @method configurateItems
-   * @param {Array} items Menu items array.
+    Hook which will be called to configure menu items.
+
+    Example:
+    ```handlebars
+    <!-- app/templates/menu.hbs -->
+    {{flexberry-menu
+      ...
+      configurateItems=(action 'configurateItems')
+      ...
+    }}
+    ```
+
+    ```javascript
+    // app/controllers/menu.js
+    export default Ember.Controller.extend({
+    ...
+      actions: {
+        ...
+        configurateItems(items) {
+          items.push({
+            icon: 'edit icon',
+            title: 'Edit',
+          });
+        },
+        ...
+      }
+    ...
+    });
+    ```
+
+    @method configurateItems
+    @param {Array} items Menu items array.
    */
   configurateItems: undefined,
 
   /**
-   * Menu click handler.
-   * Used to delegate menu items clicks handling.
-   *
-   * @method _onClickHandler
-   * @param {JQuery.Event} e Click event object.
-   * @private
+    Menu click handler.
+    Used to delegate menu items clicks handling.
+
+    @method _onClickHandler
+    @param {JQuery.Event} e Click event object.
+    @private
    */
   _onClickHandler(e) {
     // Find clicked menu item element.

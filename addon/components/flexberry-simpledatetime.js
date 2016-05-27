@@ -1,35 +1,35 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
- * Wrapper for input[type='date/datetime/datetime-local'] component.
- * **Please keep in mind that these input types are not supported in all browsers, [see supported browsers](http://caniuse.com/#feat=input-datetime).**
- *
- * Sample usage:
- * ```handlebars
- * {{flexberry-simpledatetime
- *   type='datetime-local'
- *   value=model.orderDate
- *   min=model.orderDateMin
- *   max=model.orderDateMax
- * }}
- * ```
- *
- * @class FlexberrySimpledatetime
- * @extends FlexberryBaseComponent
+  Wrapper for input[type='date/datetime/datetime-local'] component.
+  **Please keep in mind that these input types are not supported in all browsers, [see supported browsers](http://caniuse.com/#feat=input-datetime).**
+
+  Sample usage:
+  ```handlebars
+  {{flexberry-simpledatetime
+    type='datetime-local'
+    value=model.orderDate
+    min=model.orderDateMin
+    max=model.orderDateMax
+  }}
+  ```
+
+  @class FlexberrySimpledatetime
+  @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Convert date in `value` to appropriate input datatype.
-   * For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.value).
-   *
-   * @property _valueAsString
-   * @type String
-   * @private
+    Convert date in `value` to appropriate input datatype.
+    For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.value).
+
+    @property _valueAsString
+    @type String
+    @private
    */
   _valueAsString: Ember.computed('value', {
     get() {
@@ -45,12 +45,12 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Convert date in `min` to appropriate input datatype.
-   * For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.min).
-   *
-   * @property _minAsString
-   * @type String
-   * @private
+    Convert date in `min` to appropriate input datatype.
+    For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.min).
+
+    @property _minAsString
+    @type String
+    @private
    */
   _minAsString: Ember.computed('min', {
     get() {
@@ -66,12 +66,12 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Convert date in `max` to appropriate input datatype.
-   * For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.max).
-   *
-   * @property _maxAsString
-   * @type String
-   * @private
+    Convert date in `max` to appropriate input datatype.
+    For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.max).
+
+    @property _maxAsString
+    @type String
+    @private
    */
   _maxAsString: Ember.computed('max', {
     get() {
@@ -87,46 +87,46 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Value of date.
-   *
-   * @property value
-   * @type Date
+    Value of date.
+
+    @property value
+    @type Date
    */
   value: undefined,
 
   /**
-   * Minimum value of date.
-   *
-   * @property min
-   * @type Date
+    Minimum value of date.
+
+    @property min
+    @type Date
    */
   min: undefined,
 
   /**
-   * Maximum value of date.
-   *
-   * @property max
-   * @type Date
+    Maximum value of date.
+
+    @property max
+    @type Date
    */
   max: undefined,
 
   /**
-   * Array CSS class names.
-   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
-   *
-   * @property classNames
-   * @type Array
-   * @readOnly
+    Array CSS class names.
+    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+
+    @property classNames
+    @type Array
+    @readOnly
    */
   classNames: ['flexberry-simpledatetime'],
 
   /**
-   * Convert Date object to appropriate string value for input.
-   *
-   * @method _convertDateToString
-   * @param {Date} value Object of Date.
-   * @return {String} Date in string format.
-   * @private
+    Convert Date object to appropriate string value for input.
+
+    @method _convertDateToString
+    @param {Date} value Object of Date.
+    @return {String} Date in string format.
+    @private
    */
   _convertDateToString(value) {
     if (value == null) {
@@ -157,12 +157,12 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Converts string value of input to Date object.
-   *
-   * @method _convertStringToDate
-   * @param {String} value Date in string format.
-   * @return {Date} Object of Date.
-   * @private
+    Converts string value of input to Date object.
+
+    @method _convertStringToDate
+    @param {String} value Date in string format.
+    @return {Date} Object of Date.
+    @private
    */
   _convertStringToDate(value) {
     if (value == null) {

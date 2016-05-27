@@ -1,5 +1,5 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
@@ -7,97 +7,97 @@ import moment from 'moment';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
- * DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
- * # Need refactoring.
- *
- * Sample usage:
- * ```handlebars
- * {{flexberry-datepicker
- *   value=model.birthday
- *   placeholder='(no value)'
- *   hasTimePicker=true
- *   minDate='01.01.2000'
- *   maxDate='31.12.2020'
- * }}
- * ```
- *
- * @class FlexberryDatePicker
- * @extends FlexberryBaseComponent
+  DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
+  # Need refactoring.
+
+  Sample usage:
+  ```handlebars
+  {{flexberry-datepicker
+    value=model.birthday
+    placeholder='(no value)'
+    hasTimePicker=true
+    minDate='01.01.2000'
+    maxDate='31.12.2020'
+  }}
+  ```
+
+  @class FlexberryDatePicker
+  @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Input value.
-   *
-   * @property value
-   * @type Date
+    Input value.
+
+    @property value
+    @type Date
    */
   value: undefined,
 
   /**
-   * Type of input element for render.
-   * In @type not used Markdown, so that [HTMLAttribute](https://www.w3.org/TR/html5/forms.html#attr-input-type).
-   *
-   * @property type
-   * @type HTMLAttribute
-   * @default text
+    Type of input element for render.
+    In @type not used Markdown, so that [HTMLAttribute](https://www.w3.org/TR/html5/forms.html#attr-input-type).
+
+    @property type
+    @type HTMLAttribute
+    @default text
    */
   type: 'text',
 
   /**
-   * Flag: show time in control and time picker inside date picker.
-   *
-   * @property hasTimePicker
-   * @type Boolean
-   * @default false
+    Flag: show time in control and time picker inside date picker.
+
+    @property hasTimePicker
+    @type Boolean
+    @default false
    */
   hasTimePicker: false,
 
   /**
-   * Invalid date for set to model value when needed.
-   *
-   * @property invalidDate
-   * @type Date
-   * @default Invalid Date
+    Invalid date for set to model value when needed.
+
+    @property invalidDate
+    @type Date
+    @default Invalid Date
    */
   invalidDate: new Date('invalid'),
 
   /**
-   * Default display format.
-   *
-   * @property dateTimeFormat
-   * @type String
-   * @default 'DD.MM.YYYY'
+    Default display format.
+
+    @property dateTimeFormat
+    @type String
+    @default 'DD.MM.YYYY'
    */
   dateTimeFormat: 'DD.MM.YYYY',
 
   /**
-   * The earliest date a user may select.
-   *
-   * @property minDate
-   * @type Date
+    The earliest date a user may select.
+
+    @property minDate
+    @type Date
    */
   minDate: undefined,
 
   /**
-   * The latest date a user may select.
-   *
-   * @property maxDate
-   * @type Date
+    The latest date a user may select.
+
+    @property maxDate
+    @type Date
    */
   maxDate: undefined,
 
   /**
-   * Array CSS class names.
-   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
-   *
-   * @property classNames
-   * @type Array
-   * @readOnly
+    Array CSS class names.
+    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+
+    @property classNames
+    @type Array
+    @readOnly
    */
   classNames: ['ui', 'icon', 'input'],
 
   /**
-   * Init component when DOM is ready.
+    Init component when DOM is ready.
    */
   didInsertElement() {
     this.minDate = this.minDate === undefined ? moment('01.01.1900', this.dateTimeFormat) : moment(this.minDate, this.dateTimeFormat);
@@ -186,11 +186,11 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Get JS Date object from Moment object.
-   *
-   * @method _getDateToSet
-   * @param {Moment} dateFromPicker Object of Moment.
-   * @private
+    Get JS Date object from Moment object.
+
+    @method _getDateToSet
+    @param {Moment} dateFromPicker Object of Moment.
+    @private
    */
   _getDateToSet(dateFromPicker) {
     if (!dateFromPicker.isValid()) {
@@ -205,11 +205,11 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Set value.
-   *
-   * @method setValue
-   * @param {Moment} dateFromPicker Object of Moment.
-   * @private
+    Set value.
+
+    @method setValue
+    @param {Moment} dateFromPicker Object of Moment.
+    @private
    */
   _setValue(dateFromPicker) {
     let valueFromInput = this.$('input').val();
@@ -232,10 +232,10 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Set empty value.
-   *
-   * @method _setEmptyValue
-   * @private
+    Set empty value.
+
+    @method _setEmptyValue
+    @private
    */
   _setEmptyValue() {
     let currentValue = this.get('value');
@@ -246,10 +246,10 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Change state of calendar.
-   *
-   * @method _setCalendarEnabledState
-   * @private
+    Change state of calendar.
+
+    @method _setCalendarEnabledState
+    @private
    */
   _setCalendarEnabledState() {
     let dateToSet = this._getDateToSet(this.$('input').data('daterangepicker').endDate);
@@ -262,10 +262,10 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Waiting for end of validation and displaying errors if model is not valid.
-   *
-   * @method _setProperOffsetToCalendar
-   * @private
+    Waiting for end of validation and displaying errors if model is not valid.
+
+    @method _setProperOffsetToCalendar
+    @private
    */
   _setProperOffsetToCalendar() {
     let _this = this;
@@ -273,10 +273,10 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Set proper start date when value changed outside of component.
-   *
-   * @method _valueChanged
-   * @private
+    Set proper start date when value changed outside of component.
+
+    @method _valueChanged
+    @private
    */
   _valueChanged: Ember.observer('value', function() {
     let val = this.get('value');

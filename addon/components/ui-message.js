@@ -1,36 +1,36 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
 
 /**
- * UIMessage component for Semantic UI.
- * # Need refactoring.
- * Questions:
- * - Need {{yield}} in ui-message-content.hbs?
- *
- * Sample usage:
- * ```handlebars
- * {{ui-message
- *   type='info'
- *   size='large'
- *   icon='info icon'
- *   title='Message'
- *   message='Hello, world!'
- *   closeable=true
- * }}
- * ```
- *
- * @class UIMessage
- * @extend [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html)
+  UIMessage component for Semantic UI.
+  # Need refactoring.
+  Questions:
+  - Need {{yield}} in ui-message-content.hbs?
+
+  Sample usage:
+  ```handlebars
+  {{ui-message
+    type='info'
+    size='large'
+    icon='info icon'
+    title='Message'
+    message='Hello, world!'
+    closeable=true
+  }}
+  ```
+
+  @class UIMessage
+  @extend [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html)
  */
 export default Ember.Component.extend({
   /**
-   * Resulting list of CSS classes.
-   *
-   * @property _cssClass
-   * @private
+    Resulting list of CSS classes.
+
+    @property _cssClass
+    @private
    */
   _cssClass: Ember.computed('size', 'type', 'color', 'floating', 'compact', 'attached', 'visible', 'icon', function() {
     let isNonEmptyString = (str) => {
@@ -84,156 +84,156 @@ export default Ember.Component.extend({
   }),
 
   /**
-   * A message can be set to visible to force itself to be shown.
-   *
-   * More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#visible).
-   *
-   * @property visible
-   * @type Boolean
-   * @default true
+    A message can be set to visible to force itself to be shown.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#visible).
+
+    @property visible
+    @type Boolean
+    @default true
    */
   visible: true,
 
   /**
-   * A message can float above content that it is related to content.
-   *
-   * More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#floating).
-   *
-   * @property floating
-   * @type Boolean
-   * @default false
+    A message can float above content that it is related to content.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#floating).
+
+    @property floating
+    @type Boolean
+    @default false
    */
   floating: false,
 
   /**
-   * A message can only take up the width of its content.
-   *
-   * More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#compact).
-   *
-   * @property compact
-   * @type Boolean
-   * @default false
+    A message can only take up the width of its content.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#compact).
+
+    @property compact
+    @type Boolean
+    @default false
    */
   compact: false,
 
   /**
-   * A message can be formatted to attach itself to other content.
-   *
-   * More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#attached).
-   *
-   * @property attached
-   * @type Boolean
-   * @default false
+    A message can be formatted to attach itself to other content.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#attached).
+
+    @property attached
+    @type Boolean
+    @default false
    */
   attached: false,
 
   /**
-   * A message that the user can choose to hide.
-   *
-   * More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#dismissable-block).
-   *
-   * @property closeable
-   * @type Boolean
-   * @default false
+    A message that the user can choose to hide.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#dismissable-block).
+
+    @property closeable
+    @type Boolean
+    @default false
    */
   closeable: false,
 
   /**
-   * Message type.
-   * Possible variants:
-   * - ['warning'](http://semantic-ui.com/collections/message.html#warning)
-   * - ['info'](http://semantic-ui.com/collections/message.html#info)
-   * - ['positive'](http://semantic-ui.com/collections/message.html#positive--success)
-   * - ['success'](http://semantic-ui.com/collections/message.html#positive--success)
-   * - ['negative'](http://semantic-ui.com/collections/message.html#negative--error)
-   * - ['error'](http://semantic-ui.com/collections/message.html#negative--error)
-   *
-   * @property type
-   * @type String
-   * @default null
+    Message type.
+    Possible variants:
+    - ['warning'](http://semantic-ui.com/collections/message.html#warning)
+    - ['info'](http://semantic-ui.com/collections/message.html#info)
+    - ['positive'](http://semantic-ui.com/collections/message.html#positive--success)
+    - ['success'](http://semantic-ui.com/collections/message.html#positive--success)
+    - ['negative'](http://semantic-ui.com/collections/message.html#negative--error)
+    - ['error'](http://semantic-ui.com/collections/message.html#negative--error)
+
+    @property type
+    @type String
+    @default null
    */
   type: null,
 
   /**
-   * A message can be formatted to be different colors.
-   * Possible variants:
-   * - red
-   * - orange
-   * - yellow
-   * - olive
-   * - green
-   * - teal
-   * - blue
-   * - violet
-   * - purple
-   * - pink
-   * - brown
-   * - black
-   *
-   * More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#colored).
-   *
-   * @property color
-   * @type String
-   * @default null
+    A message can be formatted to be different colors.
+    Possible variants:
+    - red
+    - orange
+    - yellow
+    - olive
+    - green
+    - teal
+    - blue
+    - violet
+    - purple
+    - pink
+    - brown
+    - black
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#colored).
+
+    @property color
+    @type String
+    @default null
    */
   color: null,
 
   /**
-   * A message can have different sizes.
-   * Possible variants:
-   * - small
-   * - large
-   * - huge
-   * - massive
-   *
-   * More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#size).
-   *
-   * @property size
-   * @type String
-   * @default null
+    A message can have different sizes.
+    Possible variants:
+    - small
+    - large
+    - huge
+    - massive
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#size).
+
+    @property size
+    @type String
+    @default null
    */
   size: null,
 
   /**
-   * A message can contain an icon.
-   *
-   * More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#icon-message).
-   *
-   * @property icon
-   * @type String
-   * @default null
+    A message can contain an icon.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#icon-message).
+
+    @property icon
+    @type String
+    @default null
    */
   icon: null,
 
   /**
-   * Message title.
-   *
-   * @property title
-   * @type String
-   * @default null
+    Message title.
+
+    @property title
+    @type String
+    @default null
    */
   title: null,
 
   /**
-   * Message body.
-   *
-   * @property message
-   * @type String
-   * @default null
+    Message body.
+
+    @property message
+    @type String
+    @default null
    */
   message: null,
 
   /**
-   * A list of properties of the view to apply as class names.
-   *
-   * @property classNameBindings
-   * @type Array
-   * @readOnly
+    A list of properties of the view to apply as class names.
+
+    @property classNameBindings
+    @type Array
+    @readOnly
    */
   classNameBindings: ['_cssClass'],
 
   /**
-   * Initializes DOM-related component's logic.
+    Initializes DOM-related component's logic.
    */
   didInsertElement() {
     let isCloseable = this.get('closeable');
@@ -247,10 +247,10 @@ export default Ember.Component.extend({
   },
 
   /**
-   * Send 'onShow' action with component itself as an argument.
-   *
-   * @method _show
-   * @private
+    Send 'onShow' action with component itself as an argument.
+
+    @method _show
+    @private
    */
   show() {
     this.set('visible', true);
@@ -259,10 +259,10 @@ export default Ember.Component.extend({
   },
 
   /**
-   * Send 'onHide' action with component itself as an argument.
-   *
-   * @method _hide
-   * @private
+    Send 'onHide' action with component itself as an argument.
+
+    @method _hide
+    @private
    */
   _hide() {
     this.set('visible', false);

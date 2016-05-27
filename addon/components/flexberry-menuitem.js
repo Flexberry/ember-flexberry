@@ -1,40 +1,41 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
- * Menu item component for Semantic UI menus.
- *
- * Questions:
- * - Need {{yield}} in flexberry-menuitem.hbs?
- *
- * @class FlexberryMenuitem
- * @extends FlexberryBaseComponent
+  Menu item component for Semantic UI menus.
+
+  Questions:
+  - Need {{yield}} in flexberry-menuitem.hbs?
+
+  @class FlexberryMenuitem
+  @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Menu item content.
-   *
-   * item.title
-   * item.icon [More icons](http://semantic-ui.com/elements/icon.html)
-   * item.iconAlignment
-   * item.items
-   *
-   * @property item
-   * @type Object
-   * @default null
+    Menu item content.
+
+    Structure object:
+    - **title** - Title item.
+    - **icon** - Icon item, [more icons](http://semantic-ui.com/elements/icon.html).
+    - **iconAlignment** - Possible variants: 'right', 'left'. If not defined: 'left'.
+    - **items** - Submenu array items.
+
+    @property item
+    @type Object
+    @default null
    */
   item: null,
 
   /**
-   * Flag: indicates whether menu item has some nested subitems or not.
-   *
-   * @property hasSubitems
-   * @type Boolean
-   * @readonly
+    Flag: indicates whether menu item has some nested subitems or not.
+
+    @property hasSubitems
+    @type Boolean
+    @readonly
    */
   hasSubitems: Ember.computed('item.items', function() {
     let subItems = this.get('item.items');
@@ -42,11 +43,11 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Flag: indicates whether menu item's title should be placed before it's icon.
-   *
-   * @property titleIsBeforeIcon
-   * @type Boolean
-   * @readonly
+    Flag: indicates whether menu item's title should be placed before it's icon.
+
+    @property titleIsBeforeIcon
+    @type Boolean
+    @readonly
    */
   titleIsBeforeIcon: Ember.computed('item.iconAlignment', function() {
     let iconAlignment = this.get('item.iconAlignment');
@@ -58,36 +59,36 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Override component's wrapping element tag.
-   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_tagName)
-   *
-   * @property tagName
-   * @type String
-   * @default 'a'
+    Override component's wrapping element tag.
+    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_tagName)
+
+    @property tagName
+    @type String
+    @default 'a'
    */
   tagName: 'a',
 
   /**
-   * Array CSS class names.
-   * [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
-   *
-   * @property classNames
-   * @type Array
-   * @readOnly
+    Array CSS class names.
+    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+
+    @property classNames
+    @type Array
+    @readOnly
    */
   classNames: ['flexberry-menuitem', 'item'],
 
   /**
-   * Path to component's settings in application configuration (JSON from ./config/environment.js).
-   *
-   * @property appConfigSettingsPath
-   * @type String
-   * @default 'APP.components.flexberryMenuItem'
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryMenuItem'
    */
   appConfigSettingsPath: 'APP.components.flexberryMenuItem',
 
   /**
-   * Initializes component.
+    Initializes component.
    */
   init() {
     this._super(...arguments);
@@ -102,7 +103,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Initializes DOM-related component's logic.
+    Initializes DOM-related component's logic.
    */
   didInsertElement() {
     this._super(...arguments);
@@ -114,7 +115,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Cleans up DOM-related component's logic.
+    Cleans up DOM-related component's logic.
    */
   willDestroyElement() {
     this._super(...arguments);

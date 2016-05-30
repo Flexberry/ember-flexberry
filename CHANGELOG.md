@@ -1,6 +1,10 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-30
+### Fixed
+FlexberryLookupComponent:
+* When enable autocomplete, impossible to clear lookup value.
 
 ## 2016-05-26
 ### Added

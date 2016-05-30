@@ -5,6 +5,7 @@ export default Ember.Mixin.create({
   actions: {
     showConfigDialog: function() {
 //       alert('showConfigDialog');
+      let userSettings = this.model.userSettings;
       let colDesc,model=[];
       let projectionAttributes=this.modelProjection.attributes;
       let sortOrder,sortPriority=0;

@@ -16,14 +16,60 @@ import ErrorableMixin from '../mixins/errorable-controller';
 export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, ErrorableMixin, {
 
   /**
+    Computed property forms unique name for component from model name and current route.
+    This unique name can be used as module name for user settings service.
+
+    @property _moduleName
+    @private
+    @type String
+  */
+  _moduleName: Ember.computed('modelProjection', function() {
+    let modelName = this.get('modelProjection').modelName;
+    let currentController = this.get('currentController');
+    let currentRoute = currentController ? this.get('currentController').get('target').currentRouteName : 'application';
+    Ember.assert('Error while module name determing.', modelName && currentRoute);
+
+    return modelName + '__' + currentRoute;
+  }),
+
+  /**
+    Name of user setting name for column widths.
+
+    @property _columnWidthsUserSettingName
+    @private
+    @type String
+    @default 'OlvColumnWidths'
+  */
+  _columnWidthsUserSettingName: 'OlvColumnWidths',
+
+  /**
+    Service to work with user settings on server.
+
+    @property _userSettingsService
+    @private
+    @type Service
+  */
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+
+  /**
+    Override wrapping element's tag.
+  */
+  tagName: 'div',
+
+  /**
+    Component's CSS classes for wrapper.
+  */
+  classNames: ['object-list-view-container'],
+
+  /**
     Table row click action name.
 
     @property action
     @type String
-    @default 'rowClick'
+    @default ''
     @readOnly
   */
-  action: 'rowClick',
+  action: '',
 
   /**
     Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
@@ -53,16 +99,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     @readOnly
   */
   sortByColumn: 'sortByColumn',
-
-  /**
-    Override wrapping element's tag.
-  */
-  tagName: 'div',
-
-  /**
-    Component's CSS classes for wrapper.
-  */
-  classNames: ['object-list-view-container'],
 
   /**
     Flag indicates whether table are striped.
@@ -185,6 +221,13 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   */
   singleColumnHeaderTitle: undefined,
 
+  /**
+    Flag indicates whether to show mobile header is empty or not.
+
+    @property emptyMobileHeader
+    @type Boolean
+    @readOnly
+  */
   emptyMobileHeader: Ember.computed('singleColumnHeaderTitle', function() {
     let singleColumnHeaderTitle = this.get('singleColumnHeaderTitle');
     return Ember.isEmpty(singleColumnHeaderTitle);
@@ -254,25 +297,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     @default null
   */
   menuInRowAdditionalItems: null,
-
-  /**
-    Name of user setting name for column widths.
-
-    @property _columnWidthsUserSettingName
-    @type String
-    @default 'OlvColumnWidths'
-    @private
-  */
-  _columnWidthsUserSettingName: 'OlvColumnWidths',
-
-  /**
-    Service to work with user settings on server.
-
-    @property _userSettingsService
-    @type Service
-    @private
-  */
-  _userSettingsService: Ember.inject.service('user-settings-service'),
 
   /**
     Flag indicates whether additional menu items for dropdown menu in last column of every row are defined.
@@ -425,6 +449,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     @property sorting
     @type Object
+    @default null
   */
   sorting: null,
 
@@ -433,6 +458,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     @property selectedRecord
     @type DS.Model
+    @default null
   */
   selectedRecord: null,
 
@@ -441,6 +467,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     @property selectedRecords
     @type DS.Model[]
+    @default null
   */
   selectedRecords: null,
 
@@ -449,6 +476,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     @property customColumnAttributes
     @type Object
+    @default null
   */
   customColumnAttributes: null,
 
@@ -511,7 +539,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   defaultRowConfig: {
     canBeDeleted: true,
     canBeSelected: true,
-    customClass: ''
+    customClass: '',
   },
 
   /**
@@ -626,6 +654,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   confirmDeleteRows: null,
 
   actions: {
+
+    /**
+      This action is called when user click on row.
+
+      @method actions.rowClick
+      @public
+      @param {DS.Model} recordWithKey A record with key
+      @param {jQuery.Event} e jQuery.Event by click on row
+    */
     rowClick(recordWithKey, e) {
       if (this.get('readonly')) {
         return;
@@ -648,6 +685,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       }
     },
 
+    /**
+      This action is called when user click on header.
+
+      @method actions.headerCellClick
+      @public
+      @param {} column
+      @param {jQuery.Event} e jQuery.Event by click on colomn
+    */
     headerCellClick(column, e) {
       if (!this.headerClickable || column.sortable === false) {
         return;
@@ -657,8 +702,17 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       this.sendAction(action, column);
     },
 
-    // TODO: rename recordWithKey. rename record in the template, where it is actually recordWithKey.
+    /**
+      This action is called when user click on menu in row.
+
+      @method actions.deleteRow
+      @public
+      @param {DS.Model} recordWithKey A record with key
+      @param {jQuery.Event} e jQuery.Event by click on row
+    */
     deleteRow(recordWithKey, e) {
+
+      // TODO: rename recordWithKey. rename record in the template, where it is actually recordWithKey.
       if (this.get('readonly') || !recordWithKey.config.canBeDeleted) {
         return;
       }
@@ -674,6 +728,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 
+    /**
+      This action is called when user select the row.
+
+      @method actions.selectRow
+      @public
+      @param {DS.Model} recordWithKey A record with key
+      @param {jQuery.Event} e jQuery.Event by click on row
+    */
     selectRow(recordWithKey, e) {
       let selectedRecords = this.get('selectedRecords');
       let selectedRow = this._getRowByKey(recordWithKey.key);
@@ -698,6 +760,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
     },
 
+    /**
+      Configurate items menu in row.
+
+      @method actions.menuInRowConfigurateItems
+      @public
+      @param {DS.Model} recordWithKey A record with key
+      @param {Object} menuItems Menu items in row
+    */
     menuInRowConfigurateItems(recordWithKey, menuItems) {
       let menuInRowSubItems = [];
       if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
@@ -727,6 +797,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       });
     },
 
+    /**
+      This action is called when user click on item menu.
+
+      @method actions.menuInRowItemClick
+      @public
+      @param {DS.Model} recordWithKey A record with key
+      @param {} e
+    */
     menuInRowItemClick(recordWithKey, e) {
       if (this.get('readonly')) {
         return;
@@ -753,8 +831,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   },
 
   /**
-    Initializes component.
-  */
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+   */
   init() {
     this._super(...arguments);
 
@@ -778,17 +857,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   },
 
   /**
-    Destroys component.
-  */
-  willDestroy() {
-    this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
-    this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
-
-    this._super(...arguments);
-  },
-
-  /**
-    Initializes component's DOM-related logic.
+    Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
+    For more information see [didInsertElement](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   didInsertElement() {
     this._super(...arguments);
@@ -818,10 +888,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   },
 
   /**
-    This hook is called during both render and re-render after the template has rendered and the DOM updated.
-    Plugins (such as plugin for column resize) are initialized here.
-
-    @method didRender
+    Called after a component has been rendered, both on initial render and in subsequent rerenders.
+    For more information see [didRender](http://emberjs.com/api/classes/Ember.Component.html#method_didRender) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   didRender() {
     this._super(...arguments);
@@ -832,24 +900,36 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
           'can\'t be enabled at the same time.');
       }
 
-      let currentTable = this.$('table.object-list-view');
+      let $currentTable = this.$('table.object-list-view');
 
       // The first column has semantic class "collapsing"
       // so the column has 1px width and plugin has problems.
       // A real width is reset in order to keep computed by semantic width.
-      Ember.$.each(this.$('th', currentTable), function (key, item) {
+      Ember.$.each(this.$('th', $currentTable), (key, item) => {
         let curWidth = Ember.$(item).width();
         Ember.$(item).width(curWidth);
       });
 
-      currentTable.addClass('fixed');
+      $currentTable.addClass('fixed');
 
       this._reinitResizablePlugin();
     }
   },
 
   /**
-    Destroys component's DOM-related logic.
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroy() {
+    this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
+    this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
+
+    this._super(...arguments);
+  },
+
+  /**
+    Called when the element of the view is going to be destroyed.
+    For more information see [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   willDestroyElement() {
     this._super(...arguments);
@@ -863,13 +943,13 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     @private
   */
   _reinitResizablePlugin() {
-    let currentTable = this.$('table.object-list-view');
+    let $currentTable = this.$('table.object-list-view');
 
     // Disable plugin and then init it again.
-    currentTable.colResizable({ disable: true });
+    $currentTable.colResizable({ disable: true });
 
     let _this = this;
-    currentTable.colResizable({
+    $currentTable.colResizable({
       minWidth: 70,
       onResize(e) {
         // Save column width as user setting on resize.
@@ -946,15 +1026,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
       userWidthSettings.push({
         propertyName: currentPropertyName,
-        width: currentColumnWidth
+        width: currentColumnWidth,
       });
     });
 
     let moduleName = this.get('_moduleName');
     let userSetting = {
-      moduleName: moduleName,
+      moduleName,
       userSetting: userWidthSettings,
-      settingName: this.get('_columnWidthsUserSettingName')
+      settingName: this.get('_columnWidthsUserSettingName'),
     };
 
     this.get('_userSettingsService').saveUserSetting(userSetting);
@@ -984,22 +1064,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   },
 
   /**
-    Computed property forms unique name for component from model name and current route.
-    This unique name can be used as module name for user settings service.
+    Generate the columns.
 
-    @property _moduleName
+    @method _generateColumns
     @private
-    @type String
   */
-  _moduleName: Ember.computed('modelProjection', function() {
-    let modelName = this.get('modelProjection').modelName;
-    let currentController = this.get('currentController');
-    let currentRoute = currentController ? this.get('currentController').get('target').currentRouteName : 'application';
-    Ember.assert('Error while module name determing.', modelName && currentRoute);
-
-    return modelName + '__' + currentRoute;
-  }),
-
   _generateColumns(attributes, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];
     relationshipPath = relationshipPath || '';
@@ -1050,6 +1119,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     return columnsBuf;
   },
 
+  /**
+    Create the column.
+
+    @method _createColumn
+    @private
+  */
   _createColumn(attr, bindingPath) {
     // We get the 'getCellComponent' function directly from the controller,
     // and do not pass this function as a component attrubute,
@@ -1067,7 +1142,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     let column = {
       header: attr.caption,
       propName: bindingPath, // TODO: rename column.propName
-      cellComponent: cellComponent
+      cellComponent: cellComponent,
     };
 
     let customColumnAttributesFunc = this.get('customColumnAttributes');
@@ -1089,6 +1164,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     return column;
   },
 
+  /**
+    Get the row by key.
+
+    @method _getRowByKey
+    @private
+  */
   _getRowByKey(key) {
     let row = null;
     this.$('tbody tr').each(() => {
@@ -1101,11 +1182,23 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     return row;
   },
 
+  /**
+    Get the key of model.
+
+    @method _getModelKey
+    @private
+  */
   _getModelKey(record) {
     let modelWithKeyItem = this.get('contentWithKeys').findBy('data', record);
     return modelWithKeyItem ? modelWithKeyItem.key : null;
   },
 
+  /**
+    Remove the model with key.
+
+    @method _removeModelWithKey
+    @private
+  */
   _removeModelWithKey(key) {
     let itemToRemove = this.get('contentWithKeys').findBy('key', key);
     if (itemToRemove) {
@@ -1161,7 +1254,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     if (componentName === this.get('componentName')) {
       if (this.get('editOnSeparateRoute')) {
         // Depending on settings current model has to be saved before adding detail.
-        this.send(this.get('action'), undefined, undefined);
+        this.send('rowClick', undefined, undefined);
       } else {
         let modelName = this.get('modelProjection').modelName;
         let modelToAdd = this.get('store').createRecord(modelName, {});
@@ -1243,6 +1336,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   */
   beforeDeleteRecord: null,
 
+  /**
+    Delete the record.
+
+    @method _deleteRecord
+    @private
+
+    @param {DS.Model} record A record to delete
+    @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
+  */
   _deleteRecord(record, immediately) {
     let beforeDeleteRecord = this.get('beforeDeleteRecord');
     if (beforeDeleteRecord) {
@@ -1308,6 +1410,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.sendAction('filterByAnyMatch', pattern);
   },
 
+  /**
+    Set the active record.
+
+    @method _setActiveRecord
+    @private
+
+    @param {String} key The key of record
+  */
   _setActiveRecord(key) {
     let selectedRow = this._getRowByKey(key);
     this.$('tbody tr.active').removeClass('active');

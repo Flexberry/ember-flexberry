@@ -343,7 +343,11 @@ export default FlexberryBaseComponent.extend({
         // Set displayValue directly because value hasn'been changes
         // and Ember won't change computed property.
         if (state !== 'selected') {
-          _this.set('displayValue', _this.buildDisplayValue());
+          if (_this.get('displayValue')) {
+            _this.set('displayValue', _this.buildDisplayValue());
+          } else {
+            _this.sendAction('remove', _this.get('removeData'));
+          }
         }
 
         state = 'closed';

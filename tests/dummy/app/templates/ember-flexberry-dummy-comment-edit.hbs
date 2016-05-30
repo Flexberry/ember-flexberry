@@ -70,16 +70,14 @@ message=currentError
   {{#if model.errors.userVotes}}
     <span style="color:red">{{model.errors.userVotes}}</span>
   {{/if}}
-  {{
-    flexberry-groupedit
+  {{flexberry-groupedit
     componentName="userVotesGroupEdit"
-    class="attached"
     modelProjection=modelProjection.attributes.userVotes
     content=model.userVotes
     readonly=readonly
     orderable=false
     class=(if model.errors.userVotes 'error' '')
-}}
+  }}
 </div>
 
 </form>

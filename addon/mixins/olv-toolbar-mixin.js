@@ -6,24 +6,42 @@ export default Ember.Mixin.create({
     showConfigDialog: function() {
 //       alert('showConfigDialog');
       let userSettings = this.model.userSettings;
-      let colDesc,model=[];
+      let propName,colDesc,model=[];
       let projectionAttributes=this.modelProjection.attributes;
-      let sortOrder,sortPriority=0;
       let colList=this._generateColumns(projectionAttributes);
-
-      for (let n=0; n<colList.length; n++) {
-        let col=colList[n];
-        colDesc={name:col.header,propName:col.propName};
-        colDesc.hide=(n%2?false:true);
-        sortOrder=(n%3)-1;
-        colDesc.sortOrder=sortOrder;
-        if (sortOrder!=0) {
-          sortPriority+=1;
-          colDesc['sortPriority']=sortPriority;
-        }
-        model[n]=colDesc;
+      let namedColList={};
+      for (let i=0; i < colList.length; i++) {
+        colDesc=colList[i];
+        propName=colDesc.propName;
+        namedColList[propName]=colDesc;
       }
-//       alert(JSON.stringify(model));
+      let namedSorting={};
+      let sortPriority=0;
+      for (let i=0; i< userSettings.sorting.length; i++) {
+        colDesc=userSettings.sorting[i];
+        colDesc.sortPriority=++sortPriority;
+        propName=colDesc.propName;
+        namedSorting[propName]=colDesc;
+      }
+      for (let i=0; i<userSettings.colsOrder.length; i++) {
+        let colOrder=userSettings.colsOrder[i];
+        propName=colOrder.propName;
+        let name=namedColList[propName].header;
+        delete namedColList[propName];
+        colDesc={name:name, propName:propName, hide:colOrder.hide};
+        if (propName in namedSorting) {
+          let sortColumn = namedSorting[propName];
+          colDesc.sortOrder = sortColumn.direction=='asc'?-1:1;
+          colDesc.sortPriority = sortColumn.sortPriority;
+        } else {
+          colDesc.sortOrder = 0;
+        }
+        model[i]=colDesc;
+      }
+      for (propName in namedColList) {
+        model[model.length]={propName:propName,hide:false,sortOrder:0};
+      }
+      
       let controller = this.get('colsconfigController');
 
       var loadingParams = {

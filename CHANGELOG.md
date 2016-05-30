@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-05-26
+### Added
+FlexberryGroupeditComponent:
+* Add properties (createNewButton and deleteButton) to customize the toolbar.
+
 ## 2016-05-18
 ### Added
 FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:

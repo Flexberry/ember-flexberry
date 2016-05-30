@@ -15,10 +15,10 @@ export default FlexberryBaseComponent.extend({
       let colDesc=this.model[i];
       let sortOrder=colDesc.sortOrder;
       if (sortOrder<0) {
-        colDesc.sortOrderDesc='selected';
+        colDesc.sortOrderAsc='selected';
       } else {
         if (sortOrder>0) {
-          colDesc.sortOrderAsc='selected';
+          colDesc.sortOrderDesc='selected';
         } else {
           colDesc.sortOrderdNot='selected';
         }
@@ -53,21 +53,22 @@ export default FlexberryBaseComponent.extend({
       let tr=select.parentNode.parentNode;
       let tbody=tr.parentNode;
       let value=select.options.item(select.selectedIndex).value;
-      let input=$(tr).find('input').get(0);
-      let inputs=$('input.sortPriority:enabled',tbody);
-      let SortPriority=0;
+      let input=$(tr).find('input').get(0); //sortPriority field in this row
+      let inputs=$('input.sortPriority:enabled',tbody); // enabled sortPriority fields
+      let SortPriority=1;
       if (value=='0') {
         input.value='';
-        input.disabled=true;
-        input.style.display='none';
+        input.disabled=true;  // Disable sortPriority field in this row
+        input.style.display='none'; // Hide sortPriority field in this row
       } else {
-        if (!input.disabled) return;
-        input.disabled=false;
-        input.style.display='';
-        if (input.value<=0) {
-          SortPriority=inputs.length+1;
-          input.value=SortPriority;
-          input.prevValue=SortPriority;
+        if (input.disabled) {
+          input.disabled=false;
+          input.style.display='';
+          if (input.value<=0) {
+            SortPriority=inputs.length+1;
+            input.value=SortPriority;
+            input.prevValue=SortPriority;
+          }
         }
       }
       let index=this._getIndexFromId(input.id);
@@ -167,7 +168,7 @@ export default FlexberryBaseComponent.extend({
         }
       }
       let sortedSettings=sortSettings.sort((a,b) => a.sortPriority-b.sortPriority);
-      alert('Model='+ JSON.stringify(this.model) + ' sorting='+JSON.stringify(sorting) + ' sortedSettings='+JSON.stringify(sortedSettings) );
+//       alert('Model='+ JSON.stringify(this.model) + ' sorting='+JSON.stringify(sorting) + ' sortedSettings='+JSON.stringify(sortedSettings) );
       let sorting=[];
       for (let i=0;i<sortedSettings.length;i++) {
         let sortedSetting=sortedSettings[i];

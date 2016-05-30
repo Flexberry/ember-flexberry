@@ -42,6 +42,7 @@ import ColsConfigDialogRoute from '../mixins/colsconfig-dialog-route';
 export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, ColsConfigDialogRoute, {
 
   _userSettingsService: Ember.inject.service('user-settings-service'),
+  userSettings:undefined,
 
   actions: {
     /**
@@ -88,7 +89,6 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     /**
      * userSettings from user-settings-service'),
      */
-    let userSettings={};
     var ret=this.get('_userSettingsService').getUserSetting({moduleName:moduleName,settingName:'DEFAULT'})
     .then( (_userSettings) => {
       return _userSettings;
@@ -98,15 +98,17 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
         return {};
     })
     .then( _userSettings=> {
-      userSettings=_userSettings ? _userSettings : {};
-      let userSorting= 'sorting' in userSettings ? userSettings['sorting']: [];
-      sorting=this._appenduserSettingsToSorting(sorting,userSorting); //Append sorting orders from _userSettings
+      if (_userSettings) {
+        this.userSettings= _userSettings;
+        let userSorting= 'sorting' in this.userSettings ? this.userSettings['sorting']: [];
+        sorting=this._appenduserSettingsToSorting(sorting,userSorting); //Append sorting orders from _userSettings
+      }
       let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
       Ember.merge(query, sortQuery);
       return store.query(modelName, query)
     })
     .then((records) => {
-      this.includeSorting(records, sorting, userSettings);
+      this.includeSorting(records, sorting, this.userSettings);
       return records;
     });
     return ret;
@@ -119,8 +121,10 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     // TODO: remove that when list-form controller will be moved to this route.
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
+    controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
   },
+
 
   _appenduserSettingsToSorting: function (sorting,userSorting) {
     let ret=[];

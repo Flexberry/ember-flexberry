@@ -382,13 +382,44 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @readonly
    */
   columns: Ember.computed('modelProjection', function() {
-    var projection = this.get('modelProjection');
+    let ret;
+    let projection = this.get('modelProjection');
     if (!projection) {
       throw new Error('No projection was defined.');
     }
 
     let cols = this._generateColumns(projection.attributes);
-    return cols;
+    var userSettings = this.currentController.userSettings;
+    if (userSettings) {
+      let namedCols={};
+      for (let i=0; i < cols.length; i++) {
+        let col=cols[i];
+        delete col.sorted;
+        delete col.sortNumber;
+        delete col.sortAscending;
+        let propName=col.propName;
+        namedCols[propName] = col;
+      }
+      for (let i=0; i < userSettings.sorting.length; i++) {
+        let sorting=userSettings.sorting[i];
+        let propName=sorting.propName;
+        namedCols[propName].sorted = true;
+        namedCols[propName].sortAscending = sorting.direction === 'asc' ? -1 : 1;
+        namedCols[propName].sortNumber = i+1;
+      }
+      ret=[];
+      for (let i=0; i < userSettings.colsOrder.length; i++) {
+        let userSetting= userSettings.colsOrder[i];
+        if (!userSetting.hide) {
+          let propName=userSetting.propName;
+          let col=namedCols[propName];
+          ret[ret.length]=col;
+        }
+      }
+    } else {
+      ret = cols;
+    }
+    return ret;
   }),
 
   /**

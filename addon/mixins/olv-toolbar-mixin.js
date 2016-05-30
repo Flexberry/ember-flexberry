@@ -15,33 +15,35 @@ export default Ember.Mixin.create({
         propName=colDesc.propName;
         namedColList[propName]=colDesc;
       }
-      let namedSorting={};
-      let sortPriority=0;
-      for (let i=0; i< userSettings.sorting.length; i++) {
-        colDesc=userSettings.sorting[i];
-        colDesc.sortPriority=++sortPriority;
-        propName=colDesc.propName;
-        namedSorting[propName]=colDesc;
-      }
-      for (let i=0; i<userSettings.colsOrder.length; i++) {
-        let colOrder=userSettings.colsOrder[i];
-        propName=colOrder.propName;
-        let name=namedColList[propName].header;
-        delete namedColList[propName];
-        colDesc={name:name, propName:propName, hide:colOrder.hide};
-        if (propName in namedSorting) {
-          let sortColumn = namedSorting[propName];
-          colDesc.sortOrder = sortColumn.direction=='asc'?-1:1;
-          colDesc.sortPriority = sortColumn.sortPriority;
-        } else {
-          colDesc.sortOrder = 0;
+      if (userSettings) {
+        let namedSorting={};
+        let sortPriority=0;
+        for (let i=0; i< userSettings.sorting.length; i++) {
+          colDesc=userSettings.sorting[i];
+          colDesc.sortPriority=++sortPriority;
+          propName=colDesc.propName;
+          namedSorting[propName]=colDesc;
         }
-        model[i]=colDesc;
+        for (let i=0; i<userSettings.colsOrder.length; i++) {
+          let colOrder=userSettings.colsOrder[i];
+          propName=colOrder.propName;
+          let name=namedColList[propName].header;
+          delete namedColList[propName];
+          colDesc={name:name, propName:propName, hide:colOrder.hide};
+          if (propName in namedSorting) {
+            let sortColumn = namedSorting[propName];
+            colDesc.sortOrder = sortColumn.direction=='asc'?-1:1;
+            colDesc.sortPriority = sortColumn.sortPriority;
+          } else {
+            colDesc.sortOrder = 0;
+          }
+          model[i]=colDesc;
+        }
       }
       for (propName in namedColList) {
-        model[model.length]={propName:propName,hide:false,sortOrder:0};
+        model[model.length]={propName:propName,name:namedColList[propName].header,hide:false,sortOrder:0};
       }
-      
+
       let controller = this.get('colsconfigController');
 
       var loadingParams = {

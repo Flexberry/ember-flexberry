@@ -8,7 +8,7 @@ import path = require('path');
 import metadata = require('MetadataClasses');
 
 module.exports = {
-  description: 'Generates an ember application for flexberry.',
+  description: 'Generates core entities for flexberry.',
 
   availableOptions: [
     { name: 'metadata-dir', type: String }
@@ -25,15 +25,15 @@ module.exports = {
    * @return {Object} Сustom template variables.
    */
   locals: function (options) {
-    let applicationBlueprint = new ApplicationBlueprint(this, options);
+    let coreBlueprint = new CoreBlueprint(this, options);
     return {
-      children: applicationBlueprint.children,// for use in files\__root__\controllers\application.js
-      routes: applicationBlueprint.routes// for use in files\__root__\router.js
+      children: coreBlueprint.children,// for use in files\__root__\controllers\application.js
+      routes: coreBlueprint.routes// for use in files\__root__\router.js
     };
   }
 };
 
-class ApplicationBlueprint {
+class CoreBlueprint {
 
   children: string;
   routes: string;

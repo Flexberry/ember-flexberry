@@ -6,7 +6,7 @@ var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require('path');
 module.exports = {
-    description: 'Generates an ember application for flexberry.',
+    description: 'Generates core entities for flexberry.',
     availableOptions: [
         { name: 'metadata-dir', type: String }
     ],
@@ -21,15 +21,15 @@ module.exports = {
      * @return {Object} Сustom template variables.
      */
     locals: function (options) {
-        var applicationBlueprint = new ApplicationBlueprint(this, options);
+        var coreBlueprint = new CoreBlueprint(this, options);
         return {
-            children: applicationBlueprint.children,
-            routes: applicationBlueprint.routes // for use in files\__root__\router.js
+            children: coreBlueprint.children,
+            routes: coreBlueprint.routes // for use in files\__root__\router.js
         };
     }
 };
-var ApplicationBlueprint = (function () {
-    function ApplicationBlueprint(blueprint, options) {
+var CoreBlueprint = (function () {
+    function CoreBlueprint(blueprint, options) {
         var listFormsDir = path.join(options.metadataDir, "list-forms");
         var listForms = fs.readdirSync(listFormsDir);
         var children = [];
@@ -48,6 +48,6 @@ var ApplicationBlueprint = (function () {
         this.children = children.join(",\n");
         this.routes = routes.join("\n");
     }
-    return ApplicationBlueprint;
+    return CoreBlueprint;
 }());
 //# sourceMappingURL=index.js.map

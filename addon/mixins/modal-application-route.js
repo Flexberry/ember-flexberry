@@ -56,7 +56,6 @@ import Ember from 'ember';
   ```
 
   @class ModalApplicationRoute
-  @extend [Ember.Mixin](http://emberjs.com/api/classes/Ember.Mixin.html)
  */
 export default Ember.Mixin.create({
   actions: {

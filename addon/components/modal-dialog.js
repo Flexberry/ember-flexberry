@@ -22,7 +22,7 @@ import Ember from 'ember';
   ```
 
   @class ModalDialog
-  @extends [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html)
+  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
  */
 export default Ember.Component.extend({
   /**

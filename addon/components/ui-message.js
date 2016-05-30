@@ -23,7 +23,7 @@ import Ember from 'ember';
   ```
 
   @class UIMessage
-  @extend [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html)
+  @extend <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
  */
 export default Ember.Component.extend({
   /**

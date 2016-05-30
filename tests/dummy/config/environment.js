@@ -48,9 +48,6 @@ module.exports = function(environment) {
           showModalDialogOnDownloadError: true,
         }
       },
-
-      // Enable flexberryAuthService.
-      flexberryAuthService: true
     }
   };
 

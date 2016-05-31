@@ -1,36 +1,84 @@
+/**
+  @module ember-flexberry
+ */
+
 import Ember from 'ember';
 
+/**
+  Mixin for controller, that pagination support.
+
+  Example:
+  ```javascript
+  // app/controllers/employees.js
+  import Ember from 'ember';
+  import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
+  export default Ember.Controller.extend(PaginatedController, {
+  });
+  ```
+
+  ```javascript
+  // app/routes/employees.js
+  import Ember from 'ember';
+  import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
+  export default Ember.Route.extend(PaginatedRoute, {
+  });
+  ```
+
+  ```handlebars
+  <!-- app/templates/employees.hbs -->
+  ...
+  {{flexberry-objectlistview
+    ...
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    previousPage=(action 'previousPage')
+    gotoPage=(action 'gotoPage')
+    nextPage=(action 'nextPage')
+    ...
+  }}
+  ...
+  ```
+
+  @class PaginatedController
+  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+ */
 export default Ember.Mixin.create({
-  queryParams: ['page', 'perPage'],
+  /**
+    Start page.
+
+    @property page
+    @type Integer
+    @default 1
+   */
   page: 1,
+
+  /**
+    Count records on page.
+
+    @property perPage
+    @type Integer
+    @default 5
+   */
   perPage: 5,
 
-  actions: {
-    gotoPage: function(pageNum) {
-      let num = this._checkPageNumber(pageNum);
-      this.set('page', num);
-    },
-    nextPage: function() {
-      let page = this.get('page');
-      let nextPage = this._checkPageNumber(page + 1);
-      this.set('page', nextPage);
-    },
-    previousPage: function() {
-      let page = this.get('page');
-      let prevPage = this._checkPageNumber(page - 1);
-      this.set('page', prevPage);
-    },
-    lastPage: function() {
-      let lastPage = this._getLastPage();
-      this.set('page', lastPage);
-    },
-    firstPage: function() {
-      this.set('page', 1);
-    }
-  },
+  /**
+    User selectable options values for `perPage`.
 
+    @property perPageValues
+    @type Array
+    @default [5, 10, 20, 50]
+   */
   perPageValues: [5, 10, 20, 50],
 
+  /**
+    Get or set `perPage` value.
+
+    @property perPageValue
+    @type Integer
+   */
   perPageValue: Ember.computed('perPage', {
     get(key) {
       let perPage = this.get('perPage');
@@ -63,20 +111,53 @@ export default Ember.Mixin.create({
     }
   }),
 
+  /**
+    Total count records.
+
+    @property recordsTotalCount
+    @type Integer
+    @readOnly
+   */
   recordsTotalCount: Ember.computed('model', function() {
     return this.get('model.meta.count');
   }),
 
-  hasPreviousPage: Ember.computed('page', function() {
-    return this.get('page') > 1;
-  }),
+  /**
+    If `true` next page exists.
 
+    @property hasNextPage
+    @type Boolean
+    @readOnly
+   */
   hasNextPage: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
     let page = this.get('page');
     let lastPage = this._getLastPage();
     return page < lastPage;
   }),
 
+  /**
+    If `true` previous page exists.
+
+    @property hasPreviousPage
+    @type Boolean
+    @readOnly
+   */
+  hasPreviousPage: Ember.computed('page', function() {
+    return this.get('page') > 1;
+  }),
+
+  /**
+    Array of objects corresponding to list of pages.
+
+    Each page is presented as object with following properties:
+    - **number** - Number of page.
+    - **isCurrent** - Page is current.
+    - **isEllipsis** - If `true` this page not showing in list.
+
+    @property pages
+    @type Array
+    @readOnly
+   */
   pages: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
     let page = this.get('page');
     let lastPage = this._getLastPage();
@@ -138,7 +219,79 @@ export default Ember.Mixin.create({
     return arr;
   }),
 
-  _addPageNumberIntoArray: function(arr, pageNumber, isEllipsis) {
+  /**
+    Defines which query parameters the controller accepts. [More info.](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
+
+    @property queryParams
+    @type Array
+    @default ['page', 'perPage']
+   */
+  queryParams: ['page', 'perPage'],
+
+  actions: {
+    /**
+      Transition to page with number.
+
+      @method actions.gotoPage
+      @param {Integer} pageNum Number of page.
+     */
+    gotoPage(pageNum) {
+      let num = this._checkPageNumber(pageNum);
+      this.set('page', num);
+    },
+
+    /**
+      Transition to next page.
+
+      @method actions.nextPage
+     */
+    nextPage() {
+      let page = this.get('page');
+      let nextPage = this._checkPageNumber(page + 1);
+      this.set('page', nextPage);
+    },
+
+    /**
+      Transition to previous page.
+
+      @method actions.previousPage
+     */
+    previousPage() {
+      let page = this.get('page');
+      let prevPage = this._checkPageNumber(page - 1);
+      this.set('page', prevPage);
+    },
+
+    /**
+      Transition to last page.
+
+      @method actions.lastPage
+     */
+    lastPage() {
+      let lastPage = this._getLastPage();
+      this.set('page', lastPage);
+    },
+
+    /**
+      Transition to first page.
+
+      @method actions.firstPage
+     */
+    firstPage() {
+      this.set('page', 1);
+    },
+  },
+
+  /**
+    Add page number into array.
+
+    @method _addPageNumberIntoArray
+    @param {Array} arr Array pages.
+    @param {Integer} pageNumber Number of page.
+    @param {Boolean} isEllipsis If `true` this page not showing in list.
+    @private
+   */
+  _addPageNumberIntoArray(arr, pageNumber, isEllipsis) {
     let page = this.get('page');
     arr.push({
       number: pageNumber,
@@ -147,11 +300,28 @@ export default Ember.Mixin.create({
     });
   },
 
-  _getLastPage: function(perPage = this.get('perPage'), count = this.get('recordsTotalCount')) {
+  /**
+    Get number last page.
+
+    @method _getLastPage
+    @param {Integer} perPage Count records on page.
+    @param {Integer} count Total count records.
+    @return {Integer} Number last page.
+    @private
+   */
+  _getLastPage(perPage = this.get('perPage'), count = this.get('recordsTotalCount')) {
     return Math.ceil(count / perPage);
   },
 
-  _checkPageNumber: function(pageNum) {
+  /**
+    Check there is a page with this number.
+
+    @method _checkPageNumber
+    @param {Integer} pageNum Number of page.
+    @return {Boolean} If page exists, return `pageNum`, else, return `lastPage`.
+    @private
+   */
+  _checkPageNumber(pageNum) {
     const firstPage = 1;
     let lastPage = this._getLastPage();
     return Math.max(firstPage, Math.min(pageNum, lastPage));

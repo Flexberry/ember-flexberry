@@ -32,7 +32,7 @@ export default Ember.Mixin.create({
           colDesc={name:name, propName:propName, hide:colOrder.hide};
           if (propName in namedSorting) {
             let sortColumn = namedSorting[propName];
-            colDesc.sortOrder = sortColumn.direction=='asc'?-1:1;
+            colDesc.sortOrder = sortColumn.direction=='asc'?1:-1;
             colDesc.sortPriority = sortColumn.sortPriority;
           } else {
             colDesc.sortOrder = 0;

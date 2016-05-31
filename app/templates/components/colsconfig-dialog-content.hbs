@@ -20,10 +20,10 @@
           ><td  class="{{if colDesc.hide 'disabled' ''}}"
             ><select id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n}}>
                 <option selected='{{colDesc.sortOrderNot}}' value='0'>-</option>
-                <option selected='{{colDesc.sortOrderAsc}}' value='1'>↑</option>
-                <option selected='{{colDesc.sortOrderDesc}}' value='-1'>↓</option>
+                <option selected='{{colDesc.sortOrderAsc}}' value='1'>▲</option>
+                <option selected='{{colDesc.sortOrderDesc}}' value='-1'>▼</option>
               </select
-            ></td
+              ></td
             ><td class="{{if colDesc.hide 'disabled' ''}}"
             ><input id="{{colDesc.sortPriorityId}}" class='sortPriority' disabled="{{if colDesc.sortOrder '' 'disabled'}}" value='{{colDesc.sortPriority}}' type='input' style="{{if colDesc.sortOrder '' 'display:none'}}"
             {{action "setSortPriority" n on="focusOut"}} prevValue="{{colDesc.sortPriority}}"

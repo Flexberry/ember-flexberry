@@ -404,7 +404,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         let sorting=userSettings.sorting[i];
         let propName=sorting.propName;
         namedCols[propName].sorted = true;
-        namedCols[propName].sortAscending = sorting.direction === 'asc' ? -1 : 1;
+        namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
         namedCols[propName].sortNumber = i+1;
       }
       ret=[];

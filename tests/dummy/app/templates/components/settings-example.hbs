@@ -1,7 +1,7 @@
 <div class="ui segments">
   <div class="ui segment">
     <div class="ui segment">
-      <h4 class="ui header">{{t "components.settings-example.component-template-header"}}</h4>
+      <h4 class="ui header">{{t "components.settings-example.component-template-caption"}}</h4>
       {{componentTemplateText}}
     </div>
   </div>
@@ -9,13 +9,13 @@
     <div class="ui three column celled grid">
       <div class="row">
         <div class="column">
-          <h4 class="ui header">{{t "components.settings-example.controller-properties-header"}}</h4>
+          <h4 class="ui header">{{t "components.settings-example.controller-properties-caption"}}</h4>
         </div>
         <div class="column">
-          <h4 class="ui header">{{t "components.settings-example.component-current-settings-header"}}</h4>
+          <h4 class="ui header">{{t "components.settings-example.component-current-settings-caption"}}</h4>
         </div>
         <div class="column">
-          <h4 class="ui header">{{t "components.settings-example.component-default-settings-header"}}</h4>
+          <h4 class="ui header">{{t "components.settings-example.component-default-settings-caption"}}</h4>
         </div>
       </div>
       {{#each componentSettingsMetadata as |settingMetadata|}}
@@ -30,7 +30,11 @@
             {{/if}}
           </div>
           <div class="column">
-            {{settingMetadata.settingName}}={{safe-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
+            {{#if (eq settingMetadata.settingType "string")}}
+              {{settingMetadata.settingName}}={{get controllerProperties settingMetadata.bindedControllerPropertieName}}
+            {{else}}
+              {{settingMetadata.settingName}}={{safe-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
+            {{/if}}
           </div>
           <div class="column">
             {{settingMetadata.settingName}}={{settingMetadata.settingDefaultValue}}
@@ -41,7 +45,7 @@
   </div>
   <div class="ui segment">
     <div class="ui segment">
-      <h4 class="ui header">{{t "components.settings-example.component-header"}}</h4>
+      <h4 class="ui header">{{t "components.settings-example.component-with-applied-settings-caption"}}</h4>
       {{yield}}
     </div>
   </div>

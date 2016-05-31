@@ -5,102 +5,167 @@ const translations = {};
 Ember.merge(translations, emberFlexberryTranslations);
 
 Ember.merge(translations, {
-  'home': {
-    'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!'
-  },
+  'application-name': 'Тестовый стенд ember-flexberry',
 
-  'header': {
-    'toolbar': {
-      'menu': {
-        'title': 'Меню'
-      }
-    }
-  },
+  'forms': {
+    'index': {
+      'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!'
+    },
 
-  'site-map': {
-    'brand': {
-      title: 'Тестовый стенд ember-flexberry'
-    },
-    'addon-version': {
-      title: 'Версия аддона {{version}}',
-      'link': {
-        'title': 'Это версия аддона ember-flexberry, которая сейчас используется в этом тестовом приложении ' +
-        '(версия npm-пакета + хэш коммита). ' +
-        'Кликните, чтобы перейти на GitHub.'
-      }
-    },
-    'home': {
-      'title': 'Главная'
-    },
     'application': {
-      'title': 'Приложение'
+      'header': {
+        'menu': {
+          'sitemap-button': {
+            'caption': '',
+            'title': 'Меню'
+          },
+          'language-dropdown': {
+            'default-text': 'Выберете язык'
+          }
+        }
+      },
+
+      'footer': {
+        'application-name': 'Тестовый стенд ember-flexberry',
+        'application-version': {
+          'caption': 'Версия аддона {{version}}',
+          'title': 'Это версия аддона ember-flexberry, которая сейчас используется в этом тестовом приложении ' +
+            '(версия npm-пакета + хэш коммита). ' +
+            'Кликните, чтобы перейти на GitHub.'
+        }
+      },
+
+      'sitemap': {
+        'application-name': {
+          'caption': 'Тестовый стенд ember-flexberry',
+          'title': ''
+        },
+        'application-version': {
+          'caption': 'Версия аддона {{version}}',
+          'title': 'Это версия аддона ember-flexberry, которая сейчас используется в этом тестовом приложении ' +
+            '(версия npm-пакета + хэш коммита). ' +
+            'Кликните, чтобы перейти на GitHub.'
+        },
+        'index': {
+          'caption': 'Главная',
+          'title': ''
+        },
+        'application': {
+          'caption': 'Приложение',
+          'title': '',
+          'application-users': {
+            'caption': 'Пользователи приложения',
+            'title': ''
+          },
+          'localizations': {
+            'caption': 'Локализации',
+            'title': ''
+          },
+          'suggestion-types': {
+            'caption': 'Типы предложений',
+            'title': ''
+          },
+          'suggestions': {
+            'caption': 'Предложения',
+            'title': ''
+          }
+        },
+        'components-examples': {
+          'caption': 'Примеры компонентов',
+          'title': '',
+          'flexberry-checkbox': {
+            'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-dropdown': {
+            'caption': 'flexberry-dropdown',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'conditional-render-example': {
+              'caption': 'Пример условного рендеринга',
+              'title': ''
+            }
+          },
+          'flexberry-menu': {
+            'caption': 'flexberry-menu',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-lookup': {
+            'caption': 'flexberry-lookup',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-groupedit': {
+            'caption': 'flexberry-groupedit',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          }
+        }
+      }
     },
-    'application-users': {
-      'title': 'Пользователи приложения'
-    },
-    'localizations': {
-      'title': 'Локализации'
-    },
-    'suggestion-types': {
-      'title': 'Типы предложений'
-    },
-    'suggestions': {
-      'title': 'Предложения'
-    },
+
     'components-examples': {
-      'title': 'Примеры компонентов',
       'flexberry-checkbox': {
         'settings-example': {
-          title: 'Пример работы с настройками'
+          'caption': 'Components-examples/flexberry-checkbox/settings-example'
         }
       },
       'flexberry-dropdown': {
         'settings-example': {
-          title: 'Пример работы с настройками'
+          'caption': 'Components-examples/flexberry-dropdown/settings-example'
         },
         'conditional-render-example': {
-          'title': 'Пример условного рендеринга'
-        }
-      },
-      'flexberry-menu': {
-        'settings-example': {
-          title: 'Пример работы с настройками'
-        }
-      },
-      'flexberry-lookup': {
-        'settings-example': {
-          title: 'Пример работы с настройками'
+          'caption': 'Components-examples/flexberry-dropdown/conditional-render-example',
+          'message': 'Шаблон страницы выглядит следующим образом:<br>' +
+            '{{pageTemplate}}' +
+            '<br>' +
+            'После того как какое-либо значение будет выбрано, компонент будет заменен на ' +
+            '&lt;span&gt;selected value&lt;/span&gt;,<br>' +
+            'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \"Semantic-UI\" и прочих ошибок.'
         }
       },
       'flexberry-groupedit': {
         'settings-example': {
-          title: 'Пример работы с настройками'
+          'caption': 'Components-examples/flexberry-groupedit/settings-example'
         }
-      }
-    }
-  },
-
-  'footer': {
-    'brand': {
-      title: 'Тестовый стенд ember-flexberry'
-    },
-    'addon-version': {
-      title: 'Версия аддона {{version}}',
-      'link': {
-        'title': 'Это версия аддона ember-flexberry, которая сейчас используется в этом тестовом приложении ' +
-        '(версия npm-пакета + хэш коммита). ' +
-        'Кликните, чтобы перейти на GitHub.'
+      },
+      'flexberry-lookup': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-lookup/settings-example'
+        }
+      },
+      'flexberry-menu': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-menu/settings-example'
+        }
       }
     }
   },
 
   components: {
     'settings-example': {
-      'component-template-header': 'Шаблон компонента',
-      'controller-properties-header': 'Свойства контроллера',
-      'component-current-settings-header': 'Текущие настройки компонента',
-      'component-default-settings-header': 'Настройки компонента по умолчанию',
-      'component-header': 'Компонент с примененными текущими настройками'
+      'component-template-caption': 'Шаблон компонента',
+      'controller-properties-caption': 'Свойства контроллера',
+      'component-current-settings-caption': 'Текущие настройки компонента',
+      'component-default-settings-caption': 'Настройки компонента по умолчанию',
+      'component-with-applied-settings-caption': 'Компонент с примененными текущими настройками'
     }
   }
 });

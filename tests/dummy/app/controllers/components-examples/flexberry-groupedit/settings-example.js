@@ -2,15 +2,6 @@ import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
   /**
-   * Page title.
-   *
-   * @property title
-   * @type String
-   * @default 'Components-examples/flexberry-groupedit/settings-example'
-   */
-  title: 'Components-examples/flexberry-groupedit/settings-example',
-
-  /**
    * Method to get type and attributes of a component,
    * which will be embeded in object-list-view cell.
    *

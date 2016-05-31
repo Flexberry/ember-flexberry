@@ -65,73 +65,91 @@ export default Ember.Controller.extend({
     return {
       nodes: [{
         link: 'index',
-        title: i18n.t('site-map.home.title'),
+        caption: i18n.t('forms.application.sitemap.index.caption'),
+        title: i18n.t('forms.application.sitemap.index.title'),
         children: null
       }, {
         link: null,
-        title: i18n.t('site-map.application.title'),
+        caption: i18n.t('forms.application.sitemap.application.caption'),
+        title: i18n.t('forms.application.sitemap.application.title'),
         children: [{
           link: 'ember-flexberry-dummy-application-user-list',
-          title: i18n.t('site-map.application-users.title'),
+          caption: i18n.t('forms.application.sitemap.application.application-users.caption'),
+          title: i18n.t('forms.application.sitemap.application.application-users.title'),
           children: null
         }, {
           link: 'ember-flexberry-dummy-localization-list',
-          title: i18n.t('site-map.localizations.title'),
+          caption: i18n.t('forms.application.sitemap.application.localizations.caption'),
+          title: i18n.t('forms.application.sitemap.application.localizations.title'),
           children: null
         }, {
           link: 'ember-flexberry-dummy-suggestion-type-list',
-          title: i18n.t('site-map.suggestion-types.title'),
+          caption: i18n.t('forms.application.sitemap.application.suggestion-types.caption'),
+          title: i18n.t('forms.application.sitemap.application.suggestion-types.title'),
           children: null
         }, {
           link: 'ember-flexberry-dummy-suggestion-list',
-          title: i18n.t('site-map.suggestions.title'),
+          caption: i18n.t('forms.application.sitemap.application.suggestions.caption'),
+          title: i18n.t('forms.application.sitemap.application.suggestions.title'),
           children: null
         }]
       }, {
         link: null,
-        title: i18n.t('site-map.components-examples.title'),
+        caption: i18n.t('forms.application.sitemap.components-examples.caption'),
+        title: i18n.t('forms.application.sitemap.components-examples.title'),
         children: [{
           link: null,
-          title: 'flexberry-checkbox',
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.title'),
           children: [{
             link: 'components-examples/flexberry-checkbox/settings-example',
-            title: i18n.t('site-map.components-examples.flexberry-checkbox.settings-example.title'),
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.title'),
             children: null
           }]
         }, {
           link: null,
-          title: 'flexberry-dropdown',
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.title'),
           children: [{
             link: 'components-examples/flexberry-dropdown/settings-example',
-            title: i18n.t('site-map.components-examples.flexberry-dropdown.settings-example.title'),
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.settings-example.title'),
             children: null
           }, {
             link: 'components-examples/flexberry-dropdown/conditional-render-example',
-            title: i18n.t('site-map.components-examples.flexberry-dropdown.conditional-render-example.title'),
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.conditional-render-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.conditional-render-example.title'),
             children: null
           }]
         }, {
           link: null,
-          title: 'flexberry-menu',
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.title'),
           children: [{
             link: 'components-examples/flexberry-menu/settings-example',
-            title: i18n.t('site-map.components-examples.flexberry-menu.settings-example.title'),
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.title'),
             children: null
           }]
         }, {
           link: null,
-          title: 'flexberry-lookup',
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.title'),
           children: [{
             link: 'components-examples/flexberry-lookup/settings-example',
-            title: i18n.t('site-map.components-examples.flexberry-lookup.settings-example.title'),
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.settings-example.title'),
             children: null
           }]
         }, {
           link: null,
-          title: 'flexberry-groupedit',
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.title'),
           children: [{
             link: 'components-examples/flexberry-groupedit/settings-example',
-            title: i18n.t('site-map.components-examples.flexberry-groupedit.settings-example.title'),
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
             children: null
           }]
         }]

@@ -27,15 +27,6 @@ export default Ember.Controller.extend({
   },
 
   /**
-   * Page title.
-   *
-   * @property title
-   * @type String
-   * @default 'Components-examples/flexberry-menu/settings-example'
-   */
-  title: 'Components-examples/flexberry-menu/settings-example',
-
-  /**
    * Menu items for 'flexberry-menu' component.
    *
    * @property items

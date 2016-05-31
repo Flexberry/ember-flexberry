@@ -1,12 +1,17 @@
 {{#ui-sidebar class="inverted vertical menu" dimPage=false}}
   <div class="header item">
-    <a class="brand" href="#">{{t "site-map.brand.title"}}</a>
+    <a class="brand"
+       href="#"
+       title={{t "forms.application.sitemap.application-name.title"}}>
+      {{t "forms.application.sitemap.application-name.caption"}}
+    </a>
   </div>
-  <a href={{addonVersionHref}}
-     class="item"
-     title={{t "site-map.addon-version.link.title"}}
-     target="_blank">
-    {{t "site-map.addon-version.title" version=addonVersion}}
+  <a class="item"
+     href={{addonVersionHref}}
+     target="_blank"
+     title={{t "forms.application.sitemap.application-version.title"}}
+     >
+    {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
   </a>
   {{render "sitemap" sitemap}}
 {{/ui-sidebar}}
@@ -15,14 +20,17 @@
     <div class="ui top attached">
       <div class="ui attached menu">
         <div class="ui container">          
-          <a {{action 'toggleSidebar'}} title={{t "header.toolbar.menu.title"}} class="launch icon item">
+          <a {{action 'toggleSidebar'}}
+             class="launch icon item"
+             title={{t "forms.application.header.menu.sitemap-button.title"}}>
+            {{t "forms.application.header.menu.sitemap-button.caption"}}
             <i class="sidebar icon"></i>
           </a>          
           <div class="right item">
             {{flexberry-dropdown
               items=locales
               value=currentLocale
-              defaultText="Language"
+              defaultText=(t "forms.application.header.menu.language-dropdown.default-text")
               readonly=readonly
               onChange=(action 'onLocaleChange')
             }}
@@ -42,13 +50,16 @@
   <div class="ui vertical footer segment">
     <div class="ui container">
       <div class="ui text menu">
-      <a class="brand item" href="#">{{t "footer.brand.title"}}</a>
+      <a class="brand item" href="#">
+        {{t "forms.application.footer.application-name"}}
+      </a>
         <div class="right menu">
-          <a href={{addonVersionHref}}
-             class="item"
-             title={{t "footer.addon-version.link.title"}}
-             target="_blank">
-            {{t "footer.addon-version.title" version=addonVersion}}
+          <a class="item"
+             href={{addonVersionHref}}
+             target="_blank"
+             title={{t "forms.application.footer.application-version.title"}}
+             >
+            {{t "forms.application.footer.application-version.caption" version=addonVersion}}
           </a>
         </div>
       </div>

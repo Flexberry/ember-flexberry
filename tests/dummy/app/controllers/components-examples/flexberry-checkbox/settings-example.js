@@ -2,15 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   /**
-   * Page title.
-   *
-   * @property title
-   * @type String
-   * @default 'Components-examples/flexberry-checkbox/settings-example'
-   */
-  title: 'Components-examples/flexberry-checkbox/settings-example',
-
-  /**
    * Label for 'flexberry-checkbox' component 'label' property.
    *
    * @property label

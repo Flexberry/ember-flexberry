@@ -5,102 +5,166 @@ const translations = {};
 Ember.merge(translations, emberFlexberryTranslations);
 
 Ember.merge(translations, {
-  'home': {
-    'greeting': 'Welcome to ember-flexberry test stand!'
-  },
+  'application-name': 'Test stand for ember-flexberry',
 
-  'header': {
-    'toolbar': {
-      'menu': {
-        'title': 'Menu'
-      }
-    }
-  },
+  'forms': {
+    'index': {
+      'greeting': 'Welcome to ember-flexberry test stand!'
+    },
 
-  'site-map': {
-    'brand': {
-      title: 'Test stand for ember-flexberry'
-    },
-    'addon-version': {
-      'title': 'Addon version {{version}}',
-      'link': {
-        'title': 'It is version of ember-flexberry addon, which uses in this dummy application ' +
-        '(npm version + commit sha). ' +
-        'Click to open commit on GitHub.'
-      }
-    },
-    'home': {
-      'title': 'Home'
-    },
     'application': {
-      'title': 'Application'
+      'header': {
+        'menu': {
+          'sitemap-button': {
+            'caption': '',
+            'title': 'Menu'
+          },
+          'language-dropdown': {
+            'default-text': 'Choose language'
+          }
+        }
+      },
+
+      'footer': {
+        'application-name': 'Test stand for ember-flexberry',
+        'application-version': {
+          'caption': 'Addon version {{version}}',
+          'title': 'It is version of ember-flexberry addon, which uses in this dummy application ' +
+            '(npm version + commit sha). ' +
+            'Click to open commit on GitHub.'
+        }
+      },
+
+      'sitemap': {
+        'application-name': {
+          'caption': 'Test stand for ember-flexberry',
+          'title': ''
+        },
+        'application-version': {
+          'caption': 'Addon version {{version}}',
+          'title': 'It is version of ember-flexberry addon, which uses in this dummy application ' +
+            '(npm version + commit sha). ' +
+            'Click to open commit on GitHub.'
+        },
+        'index': {
+          'caption': 'Home',
+          'title': ''
+        },
+        'application': {
+          'caption': 'Application',
+          'title': '',
+          'application-users': {
+            'caption': 'Application users',
+            'title': ''
+          },
+          'localizations': {
+            'caption': 'Localizations',
+            'title': ''
+          },
+          'suggestion-types': {
+            'caption': 'Suggestion types',
+            'title': ''
+          },
+          'suggestions': {
+            'caption': 'Suggestions',
+            'title': ''
+          }
+        },
+        'components-examples': {
+          'caption': 'Components examples',
+          'title': '',
+          'flexberry-checkbox': {
+            'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-dropdown': {
+            'caption': 'flexberry-dropdown',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'conditional-render-example': {
+              'caption': 'Conditional render example',
+              'title': ''
+            }
+          },
+          'flexberry-menu': {
+            'caption': 'flexberry-menu',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-lookup': {
+            'caption': 'flexberry-lookup',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-groupedit': {
+            'caption': 'flexberry-groupedit',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          }
+        }
+      }
     },
-    'application-users': {
-      'title': 'Application users'
-    },
-    'localizations': {
-      'title': 'Localizations'
-    },
-    'suggestion-types': {
-      'title': 'Suggestion types'
-    },
-    'suggestions': {
-      'title': 'Suggestions'
-    },
+
     'components-examples': {
-      'title': 'Components examples',
       'flexberry-checkbox': {
         'settings-example': {
-          title: 'Settings example'
+          'caption': 'Components-examples/flexberry-checkbox/settings-example'
         }
       },
       'flexberry-dropdown': {
         'settings-example': {
-          title: 'Settings example'
+          'caption': 'Components-examples/flexberry-dropdown/settings-example'
         },
         'conditional-render-example': {
-          'title': 'Conditional render example'
-        }
-      },
-      'flexberry-menu': {
-        'settings-example': {
-          title: 'Settings example'
-        }
-      },
-      'flexberry-lookup': {
-        'settings-example': {
-          title: 'Settings example'
+          'caption': 'Components-examples/flexberry-dropdown/conditional-render-example',
+          'message': 'The page template looks like following:<br>' +
+            '{{pageTemplate}}' +
+            '<br>' +
+            'So, once the value is selected, the component will be rendered as &lt;span&gt;selected value&lt;/span&gt;,<br>' +
+            'after that check browser\'s console, it must be free from \"Semantic-UI\" and other errors.'
         }
       },
       'flexberry-groupedit': {
         'settings-example': {
-          title: 'Settings example'
+          'caption': 'Components-examples/flexberry-groupedit/settings-example'
         }
-      }
-    }
-  },
-
-  'footer': {
-    'brand': {
-      title: 'Test stand for ember-flexberry'
-    },
-    'addon-version': {
-      'title': 'Addon version {{version}}',
-      'link': {
-        'title': 'It is version of ember-flexberry addon, which uses in this dummy application ' +
-        '(npm version + commit sha). ' +
-        'Click to open commit on GitHub.'
+      },
+      'flexberry-lookup': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-lookup/settings-example'
+        }
+      },
+      'flexberry-menu': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-menu/settings-example'
+        }
       }
     }
   },
 
   components: {
     'settings-example': {
-      'component-template-header': 'Component template',
-      'controller-properties-header': 'Controller properties',
-      'component-current-settings-header': 'Component current settings values',
-      'component-default-settings-header': 'Component default settings values',
-      'component-header': 'Component with it\'s current settings applied'
+      'component-template-caption': 'Component template',
+      'controller-properties-caption': 'Controller properties',
+      'component-current-settings-caption': 'Component current settings values',
+      'component-default-settings-caption': 'Component default settings values',
+      'component-with-applied-settings-caption': 'Component with it\'s current settings applied'
     }
   }
 });

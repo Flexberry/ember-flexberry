@@ -140,7 +140,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method action.refresh
+      @method actions.refresh
       @public
     */
     refresh() {
@@ -150,7 +150,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method action.createNew
+      @method actions.createNew
       @public
     */
     createNew() {
@@ -162,7 +162,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Delete selected rows.
 
-      @method action.delete
+      @method actions.delete
       @public
     */
     delete() {
@@ -173,7 +173,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Filters the content by "Filter by any match" field value.
 
-      @method action.filterByAnyMatch
+      @method actions.filterByAnyMatch
       @public
     */
     filterByAnyMatch() {
@@ -184,7 +184,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Remove filter from url.
 
-      @method action.removeFilter
+      @method actions.removeFilter
       @public
     */
     removeFilter() {
@@ -194,7 +194,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Action for custom button.
 
-      @method action.customButtonAction
+      @method actions.customButtonAction
       @public
       @param {String} actionName The name of action
     */

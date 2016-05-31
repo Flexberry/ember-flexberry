@@ -320,7 +320,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method action.sortByColumn
+      @method actions.sortByColumn
       @public
       @param {Object} column Column to sort by
     */
@@ -332,7 +332,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method action.addColumnToSorting
+      @method actions.addColumnToSorting
       @public
       @param {Object} column Column to add sorting by
     */
@@ -344,7 +344,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from row click (action is handled at route so it can't be closure action now).
 
-      @method action.objectListViewRowClick
+      @method actions.objectListViewRowClick
       @public
       @param {Object} record Clicked record
     */
@@ -357,7 +357,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method action.previousPage
+      @method actions.previousPage
       @public
     */
     previousPage() {
@@ -368,7 +368,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method action.nextPage
+      @method actions.nextPage
       @public
     */
     nextPage() {
@@ -379,7 +379,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method action.gotoPage
+      @method actions.gotoPage
       @public
       @param {Number} pageNumber Number of page to go to
     */
@@ -432,7 +432,7 @@ export default FlexberryBaseComponent.extend({
         userButtonActionTest='userButtonActionTest'
        }}
        ```
-      @method action.customButtons
+      @method actions.customButtons
       @public
       @return Returns only `undefined` (because it's a stub)
     */
@@ -443,7 +443,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handler to get user button's actions and send action to corresponding controllers's handler.
 
-      @method action.customButtonAction
+      @method actions.customButtonAction
       @public
       @param {String} actionName The name of action
     */
@@ -458,7 +458,7 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method action.filterByAnyMatch
+      @method actions.filterByAnyMatch
       @param {String} The pattern to filter objects
     */
     filterByAnyMatch(pattern) {

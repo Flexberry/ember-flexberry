@@ -658,7 +658,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user click on row.
 
-      @method action.rowClick
+      @method actions.rowClick
       @public
       @param {DS.Model} recordWithKey A record with key
       @param {jQuery.Event} e jQuery.Event by click on row
@@ -688,7 +688,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user click on header.
 
-      @method action.headerCellClick
+      @method actions.headerCellClick
       @public
       @param {} column
       @param {jQuery.Event} e jQuery.Event by click on colomn
@@ -705,7 +705,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user click on menu in row.
 
-      @method action.deleteRow
+      @method actions.deleteRow
       @public
       @param {DS.Model} recordWithKey A record with key
       @param {jQuery.Event} e jQuery.Event by click on row
@@ -731,7 +731,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user select the row.
 
-      @method action.selectRow
+      @method actions.selectRow
       @public
       @param {DS.Model} recordWithKey A record with key
       @param {jQuery.Event} e jQuery.Event by click on row
@@ -763,7 +763,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       Configurate items menu in row.
 
-      @method action.menuInRowConfigurateItems
+      @method actions.menuInRowConfigurateItems
       @public
       @param {DS.Model} recordWithKey A record with key
       @param {Object} menuItems Menu items in row
@@ -800,7 +800,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user click on item menu.
 
-      @method action.menuInRowItemClick
+      @method actions.menuInRowItemClick
       @public
       @param {DS.Model} recordWithKey A record with key
       @param {jQuery.Event} e jQuery.Event by click on item menu

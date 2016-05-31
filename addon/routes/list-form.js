@@ -1,51 +1,54 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
+import LimitedRouteMixin from '../mixins/limited-route';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
-import LimitedRouteMixin from '../mixins/limited-route';
-import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
+import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 
 /**
- * Base route for the List Forms.
+  Base route for the List Forms.
 
- This class re-exports to the application as `/routes/list-form`.
- So, you can inherit from `./list-form`, even if file `app/routes/list-form.js`
- is not presented in the application.
+  This class re-exports to the application as `/routes/list-form`.
+  So, you can inherit from `./list-form`, even if file `app/routes/list-form.js` is not presented in the application.
 
- Example:
- ```js
- // app/routes/employees.js
- import ListFormRoute from './list-form';
- export default ListFormRoute.extend({
- });
- ```
- If you want to add some common logic on all List Forms, you can define
- (actually override) `app/routes/list-form.js` as follows:
- ```js
- // app/routes/list-form.js
- import ListFormRoute from 'ember-flexberry/routes/list-form';
- export default ListFormRoute.extend({
- });
- ```
+  Example:
+  ```javascript
+  // app/routes/employees.js
+  import ListFormRoute from './list-form';
+  export default ListFormRoute.extend({
+  });
+  ```
 
- * @class ListFormRoute
- * @extends ProjectedModelFormRoute
- * @uses PaginatedRouteMixin
- * @uses SortableRouteMixin
- * @uses LimitedRouteMixin
- * @uses FlexberryObjectlistviewRouteMixin
+  If you want to add some common logic on all List Forms, you can override `app/routes/list-form.js` as follows:
+  ```javascript
+  // app/routes/list-form.js
+  import ListFormRoute from 'ember-flexberry/routes/list-form';
+  export default ListFormRoute.extend({
+  });
+  ```
+
+  @class ListFormRoute
+  @extends ProjectedModelForm
+  @uses PaginatedRoute
+  @uses SortableRoute
+  @uses LimitedRoute
+  @uses FlexberryObjectlistviewRouteMixin
  */
-export default ProjectedModelFormRoute.extend(
-  PaginatedRouteMixin,
-  SortableRouteMixin,
-  LimitedRouteMixin,
-  FlexberryObjectlistviewRouteMixin, {
-  model: function(params, transition) {
+export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, FlexberryObjectlistviewRouteMixin, {
+  /**
+    A hook you can implement to convert the URL into the model for this route.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+
+    @method model
+    @param {Object} params
+    @param {Object} transition
+   */
+  model(params, transition) {
     let page = parseInt(params.page, 10);
     let perPage = parseInt(params.perPage, 10);
 
@@ -78,7 +81,15 @@ export default ProjectedModelFormRoute.extend(
       });
   },
 
-  setupController: function(controller, model) {
+  /**
+    A hook you can use to setup the controller for the current route.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
+
+    @method setupController
+    @param {Ember.Controller} controller
+    @param {Object} model
+   */
+  setupController(controller, model) {
     this._super(...arguments);
 
     // Define 'modelProjection' for controller instance.
@@ -86,5 +97,5 @@ export default ProjectedModelFormRoute.extend(
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('modelProjection', proj);
-  }
+  },
 });

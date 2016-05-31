@@ -72,6 +72,8 @@ export default FlexberryBaseComponent.extend({
             input.value=SortPriority;
             input.prevValue=SortPriority;
           }
+        } else {
+          SortPriority=input.value;
         }
         Ember.set(this.model[index],'sortPriority',SortPriority);
         Ember.set(this.model[n],'sortOrder',parseInt(value));
@@ -177,7 +179,7 @@ export default FlexberryBaseComponent.extend({
         sorting[sorting.length]= {propName:sortedSetting.propName,direction: sortedSetting.sortOrder > 0 ? 'asc': 'desc'};
       }
       colsConfig={colsOrder:colsOrder,sorting:sorting};
-      alert(' colsConfig=' +JSON.stringify(colsConfig));
+//       alert(' colsConfig=' +JSON.stringify(colsConfig));
       let moduleName = getOwner(this).lookup('router:main').currentRouteName;
       this.get('_userSettingsService').saveUserSetting({moduleName:moduleName,settingName:'DEFAULT',userSetting:colsConfig});
       this.sendAction('close',colsConfig);

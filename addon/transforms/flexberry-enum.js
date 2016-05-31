@@ -45,8 +45,7 @@ let FlexberryEnum = DS.Transform.extend({
     ```
 
     @property enum
-    @type {Object}
-    @default undefined
+    @type Object
     @public
   */
   enum: undefined,
@@ -55,8 +54,7 @@ let FlexberryEnum = DS.Transform.extend({
     Object with inversed enum, value from enum property will be is property here.
 
     @property inverse
-    @type {Object}
-    @default undefined
+    @type Object
     @public
     @readOnly
   */
@@ -66,8 +64,7 @@ let FlexberryEnum = DS.Transform.extend({
     Array that contains all values of enum properties.
 
     @property captions
-    @type {Array}
-    @default undefined
+    @type Array
     @public
     @readOnly
   */

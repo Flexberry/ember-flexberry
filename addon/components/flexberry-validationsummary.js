@@ -30,7 +30,6 @@ export default Ember.Component.extend({
 
     @property errors
     @type Ember.Object
-    @default undefined
   */
   errors: undefined,
 
@@ -39,7 +38,6 @@ export default Ember.Component.extend({
 
     @private
     @property validationProperties
-    @default undefined
   */
   validationProperties: undefined,
 
@@ -48,7 +46,6 @@ export default Ember.Component.extend({
 
     @property messages
     @type Ember.A
-    @default undefined
   */
   messages: undefined,
 

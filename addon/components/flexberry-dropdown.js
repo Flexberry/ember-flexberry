@@ -43,7 +43,6 @@ export default FlexberryBaseComponent.extend({
 
     @property defaultText
     @type String
-    @default undefined
   */
   defaultText: undefined,
 

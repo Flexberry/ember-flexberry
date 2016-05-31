@@ -25,7 +25,6 @@ export default Ember.Component.extend({
 
     @property error
     @type Array|String
-    @default undefined
   */
   error: undefined,
 

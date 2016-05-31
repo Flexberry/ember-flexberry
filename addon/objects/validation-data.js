@@ -49,7 +49,6 @@ export default Ember.Object.extend({
     fillErrorsFromProjectedModel method.
 
     @method fillErrorsFromProjectedModel
-
     @param model
   */
   fillErrorsFromProjectedModel(model) {

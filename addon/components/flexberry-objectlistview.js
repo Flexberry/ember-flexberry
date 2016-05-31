@@ -204,7 +204,7 @@ export default FlexberryBaseComponent.extend({
     Content to be displayed (models collection).
 
     @property content
-    @type ManyArray
+    @type DS.ManyArray
     @default null
   */
   content: null,
@@ -275,7 +275,7 @@ export default FlexberryBaseComponent.extend({
     Array of pages to show.
 
     @property pages
-    @type ManyArray
+    @type DS.ManyArray
     @default null
   */
   pages: null,
@@ -293,7 +293,7 @@ export default FlexberryBaseComponent.extend({
     Array of numbers of records to show on one page.
 
     @property perPageValues
-    @type ManyArray
+    @type DS.ManyArray
     @default null
   */
   perPageValues: null,

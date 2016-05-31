@@ -242,7 +242,7 @@ export default FlexberryBaseComponent.extend({
     @private
 
     @param {String} componentName The name of objectlistview component
-    @param {Model} record The model corresponding to selected row in objectlistview
+    @param {DS.Model} record The model corresponding to selected row in objectlistview
     @param {Number} count Count of selected rows in objectlistview
   */
   _rowSelected(componentName, record, count) {

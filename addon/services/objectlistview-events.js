@@ -69,7 +69,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @method rowAddedTrigger
 
     @param {String} componentName The name of objectlistview component
-    @param {Model} record The model corresponding to added row in objectlistview
+    @param {DS.Model} record The model corresponding to added row in objectlistview
   */
   rowAddedTrigger(componentName, record) {
     this.trigger('olvRowAdded', componentName, record);
@@ -82,7 +82,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @method rowDeletedTrigger
 
     @param {String} componentName The name of objectlistview component
-    @param {Model} record The model corresponding to deleted row in objectlistview
+    @param {DS.Model} record The model corresponding to deleted row in objectlistview
     @param {Boolean} immediately Flag to show if record was deleted immediately
   */
   rowDeletedTrigger(componentName, record, immediately) {
@@ -110,7 +110,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @method rowSelectedTrigger
 
     @param {String} componentName The name of objectlistview component
-    @param {Model} record The model corresponding to selected row in objectlistview
+    @param {DS.Model} record The model corresponding to selected row in objectlistview
     @param {Number} count Count of selected rows in objectlistview
     @param {Boolean} checked Current state of row in objectlistview (checked or not)
   */

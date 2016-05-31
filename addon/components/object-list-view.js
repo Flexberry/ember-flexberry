@@ -402,7 +402,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     Content to be displayed (models collection).
 
     @property content
-    @type ManyArray
+    @type DS.ManyArray
     @default null
   */
   content: null,

@@ -14,10 +14,10 @@ export default FlexberryBaseComponent.extend({
     for (let i=0;i<this.model.length;i++) {
       let colDesc=this.model[i];
       let sortOrder=colDesc.sortOrder;
-      if (sortOrder<0) {
+      if (sortOrder>0) {
         colDesc.sortOrderAsc='selected';
       } else {
-        if (sortOrder>0) {
+        if (sortOrder<0) {
           colDesc.sortOrderDesc='selected';
         } else {
           colDesc.sortOrderdNot='selected';
@@ -56,10 +56,13 @@ export default FlexberryBaseComponent.extend({
       let input=$(tr).find('input').get(0); //sortPriority field in this row
       let inputs=$('input.sortPriority:enabled',tbody); // enabled sortPriority fields
       let SortPriority=1;
+      let index=this._getIndexFromId(input.id);
       if (value=='0') {
         input.value='';
         input.disabled=true;  // Disable sortPriority field in this row
         input.style.display='none'; // Hide sortPriority field in this row
+        Ember.set(this.model[index],'sortPriority',undefined);
+        Ember.set(this.model[n],'sortOrder',undefined);
       } else {
         if (input.disabled) {
           input.disabled=false;
@@ -68,12 +71,11 @@ export default FlexberryBaseComponent.extend({
             SortPriority=inputs.length+1;
             input.value=SortPriority;
             input.prevValue=SortPriority;
-          }
+          }colDesc
         }
+        Ember.set(this.model[index],'sortPriority',SortPriority);
+        Ember.set(this.model[n],'sortOrder',parseInt(value));
       }
-      let index=this._getIndexFromId(input.id);
-      Ember.set(this.model[index],'sortPriority',SortPriority);
-      Ember.set(this.model[n],'sortOrder',parseInt(value));
     },
 
     setSortPriority: function(n) {
@@ -163,7 +165,7 @@ export default FlexberryBaseComponent.extend({
         let index=this._getIndexFromId(tr.id);
         let model=this.model[index];
         colsOrder[i]={propName:model.propName,hide:model.hide};
-        if ('sortPriority' in model) {
+        if (model.sortPriority !== undefined) {
           sortSettings[sortSettings.length]={propName:model.propName,sortOrder:model.sortOrder,sortPriority:model.sortPriority};
         }
       }
@@ -172,7 +174,7 @@ export default FlexberryBaseComponent.extend({
       let sorting=[];
       for (let i=0;i<sortedSettings.length;i++) {
         let sortedSetting=sortedSettings[i];
-        sorting[sorting.length]= {propName:sortedSetting.propName,direction: sortedSetting.sortOrder < 0 ? 'asc': 'desc'};
+        sorting[sorting.length]= {propName:sortedSetting.propName,direction: sortedSetting.sortOrder > 0 ? 'asc': 'desc'};
       }
       colsConfig={colsOrder:colsOrder,sorting:sorting};
       alert(' colsConfig=' +JSON.stringify(colsConfig));

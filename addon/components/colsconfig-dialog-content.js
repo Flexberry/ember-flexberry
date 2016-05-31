@@ -71,7 +71,7 @@ export default FlexberryBaseComponent.extend({
             SortPriority=inputs.length+1;
             input.value=SortPriority;
             input.prevValue=SortPriority;
-          }colDesc
+          }
         }
         Ember.set(this.model[index],'sortPriority',SortPriority);
         Ember.set(this.model[n],'sortOrder',parseInt(value));

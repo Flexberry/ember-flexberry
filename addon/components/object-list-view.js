@@ -390,7 +390,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     let cols = this._generateColumns(projection.attributes);
     var userSettings = this.currentController.userSettings;
-    if (userSettings) {
+    if (userSettings && userSettings.colsOrder!== undefined) {
       let namedCols={};
       for (let i=0; i < cols.length; i++) {
         let col=cols[i];
@@ -400,6 +400,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         let propName=col.propName;
         namedCols[propName] = col;
       }
+      if (userSettings.sorting === undefined) userSettings.sorting=[];
       for (let i=0; i < userSettings.sorting.length; i++) {
         let sorting=userSettings.sorting[i];
         let propName=sorting.propName;

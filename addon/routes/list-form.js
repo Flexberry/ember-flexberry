@@ -42,7 +42,8 @@ import ColsConfigDialogRoute from '../mixins/colsconfig-dialog-route';
 export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, ColsConfigDialogRoute, {
 
   _userSettingsService: Ember.inject.service('user-settings-service'),
-  userSettings:undefined,
+  userSettings:{},
+  sorting:[],
 
   actions: {
     /**
@@ -89,29 +90,36 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     /**
      * userSettings from user-settings-service'),
      */
-    var ret=this.get('_userSettingsService').getUserSetting({moduleName:moduleName,settingName:'DEFAULT'})
-    .then( (_userSettings) => {
-      return _userSettings;
-    })
-    .catch ( (error)=> {
-        alert(error);
-        return {};
-    })
-    .then( _userSettings=> {
-      if (_userSettings) {
-        this.userSettings= _userSettings;
-        let userSorting= 'sorting' in this.userSettings ? this.userSettings['sorting']: [];
-        sorting=this._appenduserSettingsToSorting(sorting,userSorting); //Append sorting orders from _userSettings
-      }
-      let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
-      Ember.merge(query, sortQuery);
-      return store.query(modelName, query)
-    })
+    let sortingPromise;
+    if (sorting.length == 0) {  // no sorting in URL parameters - use sorting from userSettings.sorting
+      sortingPromise=this.get('_userSettingsService').getUserSetting({moduleName:moduleName,settingName:'DEFAULT'})
+      .then( _userSettings=> {
+       let  _sorting=[];
+        if (_userSettings) {
+          this.userSettings= _userSettings;
+          _sorting = 'sorting' in this.userSettings ? this.userSettings['sorting']: [];
+        }
+        return _sorting;
+      });
+    } else {
+      sortingPromise=new Promise((resolve,reject) => {
+        resolve(sorting);
+      });
+    }
+    let ret = sortingPromise
+    .then(
+      sorting => {
+        this.sorting = sorting;
+        let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
+        Ember.merge(query, sortQuery);
+        return store.query(modelName, query)
+      })
     .then((records) => {
-      this.includeSorting(records, sorting, this.userSettings);
+      this.includeSorting(records, this.sorting, this.userSettings);
       return records;
     });
     return ret;
+
   },
 
   setupController: function(controller, model) {
@@ -123,24 +131,5 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
-  },
-
-
-  _appenduserSettingsToSorting: function (sorting,userSorting) {
-    let ret=[];
-    let sortedPropNames={};
-    for (let i=0; i<sorting.length; i++ ) {
-      let propName=sorting[i].propName;
-      if (propName.indexOf('.') >= 0) continue; //Exclude detail sortings
-      ret[ret.length]=sorting[i];
-      sortedPropNames[propName]=true;
-    }
-    for (let i=0; i<userSorting.length; i++ ) {
-      let propName=userSorting[i].propName;
-      if (! (propName in sortedPropNames) && propName.indexOf('.') < 0) { //Exclude detail sortings
-        ret[ret.length]= {propName:propName,direction: userSorting[i].direction};
-      }
-    }
-    return ret;
   }
 });

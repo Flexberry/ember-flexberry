@@ -15,9 +15,10 @@ export default Ember.Mixin.create({
         propName=colDesc.propName;
         namedColList[propName]=colDesc;
       }
-      if (userSettings) {
+      if (userSettings && userSettings.colsOrder !== undefined) {
         let namedSorting={};
         let sortPriority=0;
+        if (userSettings.sorting === undefined) userSettings.sorting = [];
         for (let i=0; i< userSettings.sorting.length; i++) {
           colDesc=userSettings.sorting[i];
           colDesc.sortPriority=++sortPriority;

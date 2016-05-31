@@ -1,7 +1,7 @@
 export default {
   'edit-form': {
     'saved-message': 'Форма сохранена.',
-    'save-failed-message': 'Ошибка сохранения.',    
+    'save-failed-message': 'Ошибка сохранения.',
     'delete-failed-message': 'Ошибка удаления.',
 
     'save-button-text': 'Сохранить',

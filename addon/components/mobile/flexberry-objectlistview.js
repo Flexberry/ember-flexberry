@@ -6,6 +6,9 @@ import FlexberryObjectlistview from './../flexberry-objectlistview';
 
 /**
   Mobile version of flexberry-objectlistview (with mobile-specific defaults).
+
+  @class FlexberryObjectlistview
+  @extends FlexberryObjectlistview
 */
 export default FlexberryObjectlistview.extend({
   /**
@@ -74,7 +77,7 @@ export default FlexberryObjectlistview.extend({
   /**
     Flag indicates whether ordering by clicking on column headers is allowed.
 
-    @property headerClickable
+    @property orderable
     @type Boolean
     @default false
   */

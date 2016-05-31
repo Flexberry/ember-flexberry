@@ -57,7 +57,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   tagName: 'div',
 
   /**
-    Component's CSS classes for wrapper.
+    Default classes for component wrapper.
   */
   classNames: ['object-list-view-container'],
 
@@ -658,7 +658,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user click on row.
 
-      @method actions.rowClick
+      @method action.rowClick
       @public
       @param {DS.Model} recordWithKey A record with key
       @param {jQuery.Event} e jQuery.Event by click on row
@@ -688,7 +688,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user click on header.
 
-      @method actions.headerCellClick
+      @method action.headerCellClick
       @public
       @param {} column
       @param {jQuery.Event} e jQuery.Event by click on colomn
@@ -705,7 +705,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user click on menu in row.
 
-      @method actions.deleteRow
+      @method action.deleteRow
       @public
       @param {DS.Model} recordWithKey A record with key
       @param {jQuery.Event} e jQuery.Event by click on row
@@ -731,7 +731,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user select the row.
 
-      @method actions.selectRow
+      @method action.selectRow
       @public
       @param {DS.Model} recordWithKey A record with key
       @param {jQuery.Event} e jQuery.Event by click on row
@@ -763,7 +763,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       Configurate items menu in row.
 
-      @method actions.menuInRowConfigurateItems
+      @method action.menuInRowConfigurateItems
       @public
       @param {DS.Model} recordWithKey A record with key
       @param {Object} menuItems Menu items in row
@@ -800,10 +800,10 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     /**
       This action is called when user click on item menu.
 
-      @method actions.menuInRowItemClick
+      @method action.menuInRowItemClick
       @public
       @param {DS.Model} recordWithKey A record with key
-      @param {} e
+      @param {jQuery.Event} e jQuery.Event by click on item menu
     */
     menuInRowItemClick(recordWithKey, e) {
       if (this.get('readonly')) {
@@ -1172,11 +1172,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   */
   _getRowByKey(key) {
     let row = null;
-    this.$('tbody tr').each(() => {
-      let currentKey = this.$(this).find('td:eq(0) div:eq(0)').text().trim();
+    this.$('tbody tr').each(function() {
+      let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
       if (currentKey === key) {
-        row = this.$(this);
-        return false;
+        row = Ember.$(this);
+        return;
       }
     });
     return row;

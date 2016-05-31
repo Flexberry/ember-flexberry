@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   tagName: 'th',
 
   /**
-    Component's CSS class names.
+    Default classes for component wrapper.
   */
   classNames: ['dt-head-left'],
 
@@ -43,8 +43,10 @@ export default Ember.Component.extend({
     Header click handler.
 
     @method click
+    @public
+    @param {jQuery.Event} e jQuery.Event by click on header cell
   */
-  click(event) {
-    this.sendAction('action', this.column, event);
+  click(e) {
+    this.sendAction('action', this.column, e);
   }
 });

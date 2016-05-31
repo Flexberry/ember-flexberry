@@ -14,7 +14,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 export default FlexberryBaseComponent.extend({
 
   /**
-    Flag: indicates whether allow to resize columns (if `true`) or not (if `false`).
+    Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
 
     @property allowColumnResize
     @type Boolean
@@ -23,7 +23,7 @@ export default FlexberryBaseComponent.extend({
   allowColumnResize: true,
 
   /**
-    Route for edit form by click row
+    Route for edit form by click row.
 
     @property editFormRoute
     @type String
@@ -141,7 +141,7 @@ export default FlexberryBaseComponent.extend({
     Additional menu items for dropdown menu in last column of every row.
 
     @property menuInRowAdditionalItems
-    @type boolean
+    @type Boolean
     @default null
   */
   menuInRowAdditionalItems: null,
@@ -187,6 +187,7 @@ export default FlexberryBaseComponent.extend({
 
     @property sorting
     @type Object
+    @default null
   */
   sorting: null,
 
@@ -283,7 +284,7 @@ export default FlexberryBaseComponent.extend({
     Current number of records to show per page.
 
     @property perPageValue
-    @type number
+    @type Number
     @default null
   */
   perPageValue: null,
@@ -319,7 +320,8 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method sortByColumn
+      @method action.sortByColumn
+      @public
       @param {Object} column Column to sort by
     */
     sortByColumn(column) {
@@ -330,7 +332,8 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method addColumnToSorting
+      @method action.addColumnToSorting
+      @public
       @param {Object} column Column to add sorting by
     */
     addColumnToSorting(column) {
@@ -341,7 +344,8 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from row click (action is handled at route so it can't be closure action now).
 
-      @method objectListViewRowClick
+      @method action.objectListViewRowClick
+      @public
       @param {Object} record Clicked record
     */
     objectListViewRowClick(record) {
@@ -353,7 +357,8 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method previousPage
+      @method action.previousPage
+      @public
     */
     previousPage() {
       throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
@@ -363,7 +368,8 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method nextPage
+      @method action.nextPage
+      @public
     */
     nextPage() {
       throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
@@ -373,8 +379,9 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method gotoPage
-      @param {number} pageNumber Number of page to go to
+      @method action.gotoPage
+      @public
+      @param {Number} pageNumber Number of page to go to
     */
     gotoPage(pageNumber) {
       throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
@@ -425,8 +432,9 @@ export default FlexberryBaseComponent.extend({
         userButtonActionTest='userButtonActionTest'
        }}
        ```
-      @method customButtons
-      @return Returns only `undefined` (because it's a stub).
+      @method action.customButtons
+      @public
+      @return Returns only `undefined` (because it's a stub)
     */
     customButtons() {
       return undefined;
@@ -435,7 +443,9 @@ export default FlexberryBaseComponent.extend({
     /**
       Handler to get user button's actions and send action to corresponding controllers's handler.
 
-      @method customButtonAction
+      @method action.customButtonAction
+      @public
+      @param {String} actionName The name of action
     */
     customButtonAction(actionName) {
       if (!actionName) {
@@ -448,8 +458,8 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @method filterByAnyMatch
-      @param {pattern} The pattern to filter objects.
+      @method action.filterByAnyMatch
+      @param {String} The pattern to filter objects
     */
     filterByAnyMatch(pattern) {
       throw new Error('No handler for filterByAnyMatch action set for flexberry-objectlistview. ' +

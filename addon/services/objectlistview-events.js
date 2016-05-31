@@ -9,6 +9,7 @@ import Ember from 'ember';
 
   @class ObjectlistviewEvents
   @extends Ember.Service
+  @uses Ember.Evented
   @public
  */
 export default Ember.Service.extend(Ember.Evented, {

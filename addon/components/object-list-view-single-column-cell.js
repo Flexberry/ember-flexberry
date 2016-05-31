@@ -8,10 +8,11 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 /**
   @class ObjectListViewSingleColumnCell
   @extends FlexberryBaseComponent
+  @uses FlexberryLookupCompatibleComponentMixin
 */
 export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, {
   /**
-    Component's CSS class names.
+    Default classes for component wrapper.
   */
   classNames: ['object-list-view-single-column-cell', 'ui', 'form'],
 
@@ -43,8 +44,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   hasEditableValues: false,
 
   /**
-    Initializes component.
-  */
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+   */
   init() {
     this._super(...arguments);
   }

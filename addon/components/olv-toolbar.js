@@ -5,6 +5,10 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
+/**
+  @class OlvToolbar
+  @extends FlexberryBaseComponent
+*/
 export default FlexberryBaseComponent.extend({
   modelController: null,
 
@@ -20,7 +24,7 @@ export default FlexberryBaseComponent.extend({
     Service that triggers objectlistview events.
 
     @property objectlistviewEventsService
-    @type ObjectlistviewEvents
+    @type Service
   */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
@@ -113,6 +117,96 @@ export default FlexberryBaseComponent.extend({
   */
   customButtonsArray: undefined,
 
+  /**
+    Flag shows enable-state of delete button.
+    If there are selected rows button is enabled. Otherwise - not.
+
+    @property isDeleteButtonEnabled
+    @type Boolean
+    @default false
+  */
+  isDeleteButtonEnabled: false,
+
+  /**
+    Stores the text from "Filter by any match" input field.
+
+    @property filterByAnyMatchText
+    @type String
+  */
+  filterByAnyMatchText: Ember.computed.oneWay('filterText'),
+
+  actions: {
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method action.refresh
+      @public
+    */
+    refresh() {
+      this.get('modelController').send('refreshList');
+    },
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method action.createNew
+      @public
+    */
+    createNew() {
+      let editFormRoute = this.get('editFormRoute');
+      let modelController = this.get('modelController');
+      modelController.transitionToRoute(editFormRoute + '.new');
+    },
+
+    /**
+      Delete selected rows.
+
+      @method action.delete
+      @public
+    */
+    delete() {
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+    },
+
+    /**
+      Filters the content by "Filter by any match" field value.
+
+      @method action.filterByAnyMatch
+      @public
+    */
+    filterByAnyMatch() {
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, this.get('filterByAnyMatchText'));
+    },
+
+    /**
+      Remove filter from url.
+
+      @method action.removeFilter
+      @public
+    */
+    removeFilter() {
+      this.set('filterText', null);
+    },
+
+    /**
+      Action for custom button.
+
+      @method action.customButtonAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonAction(actionName) {
+      this.sendAction('customButtonAction', actionName);
+    }
+  },
+
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+   */
   init() {
     this._super(...arguments);
 
@@ -132,79 +226,14 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-    Implementation of component's teardown.
-
-    @method willDestroy
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
     this._super(...arguments);
   },
-
-  actions: {
-    refresh() {
-      this.get('modelController').send('refreshList');
-    },
-    createNew() {
-      let editFormRoute = this.get('editFormRoute');
-      let modelController = this.get('modelController');
-      modelController.transitionToRoute(editFormRoute + '.new');
-    },
-
-    /**
-      Delete selected rows.
-
-      @method delete
-    */
-    delete() {
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
-    },
-
-    /**
-      Filters the content by "Filter by any match" field value.
-
-      @method filterByAnyMatch
-    */
-    filterByAnyMatch() {
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, this.get('filterByAnyMatchText'));
-    },
-
-    /**
-      Remove filter from url.
-
-      @method removeFilter
-      @public
-    */
-    removeFilter() {
-      this.set('filterText', null);
-    },
-
-    customButtonAction(actionName) {
-      this.sendAction('customButtonAction', actionName);
-    }
-  },
-
-  /**
-    Flag shows enable-state of delete button.
-    If there are selected rows button is enabled. Otherwise - not.
-
-    @property isDeleteButtonEnabled
-    @type Boolean
-    @default false
-  */
-  isDeleteButtonEnabled: false,
-
-  /**
-    Stores the text from "Filter by any match" input field.
-
-    @property filterByAnyMatchText
-    @type String
-    @default null
-  */
-  filterByAnyMatchText: Ember.computed.oneWay('filterText'),
 
   /**
     Event handler for "row has been selected" event in objectlistview.

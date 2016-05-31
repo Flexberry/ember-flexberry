@@ -1,0 +1,48 @@
+<div class="ui segments">
+  <div class="ui segment">
+    <div class="ui segment">
+      <h4 class="ui header">{{t "settings-example.component-template-header"}}</h4>
+      {{componentTemplateText}}
+    </div>
+  </div>
+  <div class="ui segment">
+    <div class="ui three column celled grid">
+      <div class="row">
+        <div class="column">
+          <h4 class="ui header">{{t "settings-example.controller-properties-header"}}</h4>
+        </div>
+        <div class="column">
+          <h4 class="ui header">{{t "settings-example.component-current-settings-header"}}</h4>
+        </div>
+        <div class="column">
+          <h4 class="ui header">{{t "settings-example.component-default-settings-header"}}</h4>
+        </div>
+      </div>
+      {{#each componentSettingsMetadata as |settingMetadata|}}
+        <div class="row">
+          <div class="column">
+            {{settingMetadata.bindedControllerPropertieName}}=
+            {{#if (eq settingMetadata.settingType "boolean")}}
+              {{input type="checkbox" checked=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
+            {{/if}}
+            {{#if (eq settingMetadata.settingType "string")}}
+              {{input type="text" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
+            {{/if}}
+          </div>
+          <div class="column">
+            {{settingMetadata.settingName}}={{safe-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
+          </div>
+          <div class="column">
+            {{settingMetadata.settingName}}={{settingMetadata.settingDefaultValue}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="ui segment">
+    <div class="ui segment">
+      <h4 class="ui header">{{t "settings-example.component-header"}}</h4>
+      {{yield}}
+    </div>
+  </div>
+</div>

@@ -21,6 +21,9 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
+  // /components-examples/flexberry-checkbox/settings-example.
+  this.route('components-examples/flexberry-checkbox/settings-example');
+
   // /components-examples/flexberry-dropdown/settings-example.
   this.route('components-examples/flexberry-dropdown/settings-example');
 

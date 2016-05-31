@@ -83,14 +83,14 @@ export default Ember.Controller.extend({
           title: i18n.t('forms.application.sitemap.application.localizations.title'),
           children: null
         }, {
-          link: 'ember-flexberry-dummy-suggestion-type-list',
-          caption: i18n.t('forms.application.sitemap.application.suggestion-types.caption'),
-          title: i18n.t('forms.application.sitemap.application.suggestion-types.title'),
-          children: null
-        }, {
           link: 'ember-flexberry-dummy-suggestion-list',
           caption: i18n.t('forms.application.sitemap.application.suggestions.caption'),
           title: i18n.t('forms.application.sitemap.application.suggestions.title'),
+          children: null
+        }, {
+          link: 'ember-flexberry-dummy-suggestion-type-list',
+          caption: i18n.t('forms.application.sitemap.application.suggestion-types.caption'),
+          title: i18n.t('forms.application.sitemap.application.suggestion-types.title'),
           children: null
         }]
       }, {
@@ -124,12 +124,12 @@ export default Ember.Controller.extend({
           }]
         }, {
           link: null,
-          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.caption'),
-          title: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.title'),
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.title'),
           children: [{
-            link: 'components-examples/flexberry-menu/settings-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.title'),
+            link: 'components-examples/flexberry-groupedit/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
             children: null
           }]
         }, {
@@ -144,12 +144,22 @@ export default Ember.Controller.extend({
           }]
         }, {
           link: null,
-          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.caption'),
-          title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.title'),
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.title'),
           children: [{
-            link: 'components-examples/flexberry-groupedit/settings-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
+            link: 'components-examples/flexberry-menu/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-textbox.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-textbox.title'),
+          children: [{
+            link: 'components-examples/flexberry-textbox/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-textbox.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-textbox.settings-example.title'),
             children: null
           }]
         }]

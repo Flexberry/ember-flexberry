@@ -2,12 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   /**
-    Label for 'flexberry-checkbox' component 'label' property.
+    Placeholder for 'flexberry-textbox' component 'placeholder' property.
 
-    @property label
+    @property placeholder
     @type String
    */
-  label: undefined,
+  placeholder: undefined,
 
   /**
     Flag: indicates whether 'flexberry-checkbox' component is in 'readonly' mode or not.
@@ -24,9 +24,9 @@ export default Ember.Controller.extend({
     @type String
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-checkbox<br>' +
-    '..value=model.flag<br>' +
-    '..label=label<br>' +
+    '{{flexberry-textbox<br>' +
+    '..value=model.text<br>' +
+    '..placeholder=placeholder<br>' +
     '..readonly=readonly<br>' +
     '}}'),
 
@@ -40,15 +40,15 @@ export default Ember.Controller.extend({
     var componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
-      settingType: 'boolean',
-      settingDefaultValue: 'undefined',
-      bindedControllerPropertieName: 'model.flag'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'label',
       settingType: 'string',
       settingDefaultValue: 'undefined',
-      bindedControllerPropertieName: 'label'
+      bindedControllerPropertieName: 'model.text'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'placeholder',
+      settingType: 'string',
+      settingDefaultValue: 'undefined',
+      bindedControllerPropertieName: 'placeholder'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'readonly',

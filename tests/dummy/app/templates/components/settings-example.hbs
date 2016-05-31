@@ -30,14 +30,10 @@
             {{/if}}
           </div>
           <div class="column">
-            {{#if (eq settingMetadata.settingType "string")}}
-              {{settingMetadata.settingName}}={{get controllerProperties settingMetadata.bindedControllerPropertieName}}
-            {{else}}
-              {{settingMetadata.settingName}}={{safe-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
-            {{/if}}
+            {{to-string settingMetadata.settingName}}={{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
           </div>
           <div class="column">
-            {{settingMetadata.settingName}}={{settingMetadata.settingDefaultValue}}
+            {{to-string settingMetadata.settingName}}={{to-string settingMetadata.settingDefaultValue}}
           </div>
         </div>
       {{/each}}

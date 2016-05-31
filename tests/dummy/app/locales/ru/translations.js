@@ -93,8 +93,8 @@ Ember.merge(translations, {
               'title': ''
             }
           },
-          'flexberry-menu': {
-            'caption': 'flexberry-menu',
+          'flexberry-groupedit': {
+            'caption': 'flexberry-groupedit',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -109,8 +109,16 @@ Ember.merge(translations, {
               'title': ''
             }
           },
-          'flexberry-groupedit': {
-            'caption': 'flexberry-groupedit',
+          'flexberry-menu': {
+            'caption': 'flexberry-menu',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-textbox': {
+            'caption': 'flexberry-textbox',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -154,6 +162,11 @@ Ember.merge(translations, {
       'flexberry-menu': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-menu/settings-example'
+        }
+      },
+      'flexberry-textbox': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-textbox/settings-example'
         }
       }
     }

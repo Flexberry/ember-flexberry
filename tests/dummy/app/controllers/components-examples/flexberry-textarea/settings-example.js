@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   /**
-    Placeholder for 'flexberry-textbox' component 'placeholder' property.
+    Placeholder for 'flexberry-textarea' component 'placeholder' property.
 
     @property placeholder
     @type String
@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
     @type String
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-textbox<br>' +
+    '{{flexberry-textarea<br>' +
     '..value=model.text<br>' +
     '..placeholder=placeholder<br>' +
     '..readonly=readonly<br>' +

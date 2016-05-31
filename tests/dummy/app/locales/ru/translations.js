@@ -117,6 +117,14 @@ Ember.merge(translations, {
               'title': ''
             }
           },
+          'flexberry-textarea': {
+            'caption': 'flexberry-textarea',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-textbox': {
             'caption': 'flexberry-textbox',
             'title': '',
@@ -162,6 +170,11 @@ Ember.merge(translations, {
       'flexberry-menu': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-menu/settings-example'
+        }
+      },
+      'flexberry-textarea': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-textarea/settings-example'
         }
       },
       'flexberry-textbox': {

@@ -68,9 +68,16 @@ export default Ember.Controller.extend({
       }]
     }]
   },
+  locales: ['ru', 'en'],
+  currentLocale: Ember.computed('i18n.locale', function() {
+    return this.get('i18n.locale');
+  }),
   actions: {
     toggleSidebar: function(direction) {
       Ember.$('.ui.sidebar').sidebar('toggle');
+    },
+    onLocaleChange(newLocale) {
+      this.get('i18n').set('locale', newLocale);
     }
   }
 });

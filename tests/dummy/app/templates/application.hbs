@@ -18,6 +18,14 @@
         <div class="ui container">
           <a {{ action 'toggleSidebar' }} title="Menu" class="launch icon item"><i class="sidebar icon"></i></a>
           <div class="right menu">
+            <div class="ui dropdown item">
+              <div class="field">
+                {{#if model.errors.local}}
+                  <span style="color:red">{{model.errors.local}}</span>
+                {{/if}}
+                {{flexberry-dropdown items=locales value=currentLocale readonly=readonly defaultText="Language" onChange=(action 'onLocaleChange')}}
+              </div>
+            </div>
           </div>
         </div>
       </div>

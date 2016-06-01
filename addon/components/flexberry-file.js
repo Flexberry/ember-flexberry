@@ -258,7 +258,7 @@ export default FlexberryBaseComponent.extend({
    *
    * @property placeholder
    * @type String
-   * default t('flexberry-file.placeholder')
+   * @default t('flexberry-file.placeholder')
    */
   placeholder: t('flexberry-file.placeholder'),
 

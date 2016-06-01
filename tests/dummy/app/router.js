@@ -36,6 +36,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
+  this.route('components-examples/flexberry-toggler/settings-example');
 });
 
 export default Router;

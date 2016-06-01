@@ -140,6 +140,14 @@ Ember.merge(translations, {
               'caption': 'Пример работы с настройками',
               'title': ''
             }
+          },
+          'flexberry-toggler': {
+            'caption': 'flexberry-toggler',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
           }
         }
       }
@@ -193,6 +201,11 @@ Ember.merge(translations, {
       'flexberry-textbox': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-textbox/settings-example'
+        }
+      },
+      'flexberry-toggler': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-toggler/settings-example'
         }
       }
     }

@@ -63,4 +63,9 @@ Model.defineProjection('SuggestionTypeL', 'ember-flexberry-dummy-suggestion-type
   })
 });
 
+// Projection for lookup example on window customization.
+Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dummy-suggestion-type', {
+  name: Proj.attr('Name')
+});
+
 export default Model;

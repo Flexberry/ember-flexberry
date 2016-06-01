@@ -1,0 +1,18 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.customizing-window-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-lookup
+      value=model.type
+      projection="CustomizeLookupWindowExampleView"
+      displayAttributeName="name"
+      title="Master"
+      relatedModel=model
+      relationName="type"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      limitFunction=null
+      lookupWindowCustomProperties=(action 'getLookupFolvProperties')
+    }}
+  </div>
+</form>

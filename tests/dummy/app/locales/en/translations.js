@@ -115,6 +115,10 @@ Ember.merge(translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'customizing-window-example': {
+              'caption': 'Customizing window example',
+              'title': ''
             }
           },
           'flexberry-textarea': {
@@ -164,6 +168,9 @@ Ember.merge(translations, {
       'flexberry-lookup': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-lookup/settings-example'
+        },
+        'customizing-window-example': {
+          'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
         }
       },
       'flexberry-menu': {

@@ -18,7 +18,7 @@ export default EditFormController.extend({
         relationName: undefined
       }, options);
 
-      if (methodArgs.relationName == 'type') {
+      if (methodArgs.relationName === 'type') {
         return {
           filterButton:true
         };

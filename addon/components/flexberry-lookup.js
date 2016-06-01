@@ -1,95 +1,73 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
-import { translationMacro as t } from 'ember-i18n';
+import FlexberryBaseComponent from './flexberry-base-component';
 
+import { translationMacro as t } from 'ember-i18n';
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
-import FlexberryBaseComponent from './flexberry-base-component';
-
 /**
- * Lookup component for Semantic UI.
- *
- * @class FlexberryLookup
- * @extends FlexberryBaseComponent
+  Lookup component for Semantic UI.
+
+  Example:
+  ```javascript
+  // app/controllers/post.js
+  import EditFormController from './edit-form';
+  export default EditFormController.extend({
+    ...
+  });
+  ```
+
+  ```handlebars
+  <!-- app/templates/post.hbs -->
+  ...
+  {{flexberry-lookup
+    choose="showLookupDialog"
+    remove="removeLookupValue"
+    value=model.author
+    projection="UserL"
+    relationName="author"
+    displayAttributeName="name"
+    title="Author"
+    placeholder="Not select"
+    chooseText="Select"
+    removeText="Clear"
+  }}
+  ...
+  ```
+
+  @class FlexberryLookup
+  @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Default classes for component wrapper.
-   *
-   * @property classNames
-   * @type Array
-   * @readOnly
+    Additional observer of value change, updates `displayValue`.
+
+    @property _valueObserver
+    @private
    */
-  classNames: ['flexberry-lookup'],
+  _valueObserver: Ember.observer('value', function() {
+    this.set('displayValue', this._buildDisplayValue());
+  }),
 
   /**
-   * Classes by properties of the component.
-   *
-   * @property classNameBindings
-   * @type Array
-   * @readOnly
+    Current store. Used for loading data for autocomplete and for dropdown.
+
+    @property store
+    @type DS.Store
+    @readOnly
    */
-  classNameBindings: ['autocompleteClass'],
-
-  placeholder: t('flexberry-lookup.placeholder'),
-  chooseText: t('flexberry-lookup.choose-button-text'),
-
-  // ToDo: Use 'flexberry-lookup.remove-button-text' from locale.
-  removeText: '<i class="remove icon"></i>',
+  store: Ember.inject.service('store'),
 
   /**
-   * Classes for choose button.
-   *
-   * @property chooseButtonClass
-   * @type String
-   * @default undefined
-   */
-  chooseButtonClass: undefined,
+    Classes by property of autocomplete.
 
-  /**
-   * Classes for remove button.
-   *
-   * @property removeButtonClass
-   * @type String
-   * @default undefined
-   */
-  removeButtonClass: undefined,
-
-  projection: undefined,
-
-  relationName: undefined,
-  title: undefined,
-
-  /**
-   * Flag to show that lookup is in autocomplete mode.
-   *
-   * @property autocomplete
-   * @type Boolean
-   * @default false
-   * @public
-   */
-  autocomplete: false,
-
-  /**
-   * Flag to show that lookup is in dropdown mode.
-   *
-   * @property dropdown
-   * @type Boolean
-   * @default false
-   * @public
-   */
-  dropdown: false,
-
-  /**
-   * Classes by property of autocomplete.
-   *
-   * @property autocompleteClass
-   * @type String
-   * @readOnly
+    @property autocompleteClass
+    @type String
+    @readOnly
    */
   autocompleteClass: Ember.computed('autocomplete', function() {
     if (this.get('autocomplete')) {
@@ -98,50 +76,23 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Action's name to update model's relation value.
-   *
-   * @property updateLookupAction
-   * @type String
-   * @default 'updateLookupValue'
-   * @public
+    Text that displayed for the user as representation of currently selected value.
+    This property is binded to the view and can be changed by user (it won't be applied to model automatically).
+
+    @property displayValue
+    @type String
+    @readOnly
    */
-  updateLookupAction: 'updateLookupValue',
+  displayValue: Ember.computed('value', function() {
+    return this._buildDisplayValue();
+  }),
 
   /**
-   * Min characters count necessary to call autocomplete.
-   *
-   * @property minCharacters
-   * @type Number
-   * @default 1
-   * @public
-   */
-  minCharacters: 1,
+    Object with lookup properties to send on choose action.
 
-  /**
-   * Maximum number of results to display on autocomplete or dropdown.
-   *
-   * @property maxResults
-   * @type Number
-   * @default 10
-   * @public
-   */
-  maxResults: 10,
-
-  /**
-   * Multimple select.
-   *
-   * @property multiselect
-   * @type Boolean
-   * @default false
-   * @public
-   */
-  multiselect: false,
-
-  /**
-   * Object with lookup properties to send on choose action.
-   *
-   * @property chooseData
-   * @type Object
+    @property chooseData
+    @type Object
+    @readOnly
    */
   chooseData: Ember.computed('projection', 'relationName', 'title', function() {
     return {
@@ -156,10 +107,11 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Object with lookup properties to send on remove action.
-   *
-   * @property removeData
-   * @type Object
+    Object with lookup properties to send on remove action.
+
+    @property removeData
+    @type Object
+    @readOnly
    */
   removeData: Ember.computed('relationName', function() {
     return {
@@ -169,62 +121,207 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Current store.
-   * Used for loading data for autocomplete and for dropdown.
-   *
-   * @property store
-   * @type DS.Store
-   * @protected
-   * @readOnly
+    Title for modal window.
+
+    @property title
+    @type String
    */
-  store: Ember.inject.service('store'),
+  title: undefined,
 
   /**
-   * Name of the attribute of the model to diplay for the user.
-   *
-   * @property displayAttributeName
-   * @type String
-   * @default null
-   * @protected
+    Text to be displayed in field, if value not selected.
+
+    @property placeholder
+    @type String
+    @default t('flexberry-lookup.placeholder')
    */
-  displayAttributeName: null,
+  placeholder: t('flexberry-lookup.placeholder'),
 
   /**
-   * Currently selected instance of the model.
-   *
-   * @property value
-   * @type Object
-   * @protected
+    Text on button opening a modal window.
+
+    @property chooseText
+    @type String
+    @default t('flexberry-lookup.choose-button-text')
+   */
+  chooseText: t('flexberry-lookup.choose-button-text'),
+
+  /**
+    Text on button clear value.
+
+    TODD: Use 'flexberry-lookup.remove-button-text' from locale.
+
+    @property removeText
+    @type String
+    @default '<i class="remove icon"></i>'
+   */
+  removeText: '<i class="remove icon"></i>',
+
+  /**
+    CSS classes for choose button.
+
+    @property chooseButtonClass
+    @type String
+   */
+  chooseButtonClass: undefined,
+
+  /**
+    CSS classes for remove button.
+
+    @property removeButtonClass
+    @type String
+   */
+  removeButtonClass: undefined,
+
+  /**
+    Flag to show that lookup is in autocomplete mode.
+
+    @property autocomplete
+    @type Boolean
+    @default false
+   */
+  autocomplete: false,
+
+  /**
+    Flag to show that lookup is in dropdown mode.
+
+    @property dropdown
+    @type Boolean
+    @default false
+   */
+  dropdown: false,
+
+  /**
+    Flag enable to multiple select.
+
+    Note! Not working!
+
+    @property multiselect
+    @type Boolean
+    @default false
+   */
+  multiselect: false,
+
+  /**
+    Action's name to update model's relation value.
+
+    @property updateLookupAction
+    @type String
+    @default 'updateLookupValue'
+   */
+  updateLookupAction: 'updateLookupValue',
+
+  /**
+    Min characters count necessary to call autocomplete.
+
+    @property minCharacters
+    @type Integer
+    @default 1
+   */
+  minCharacters: 1,
+
+  /**
+    Maximum number of results to display on autocomplete or dropdown.
+
+    @property maxResults
+    @type Integer
+    @default 10
+   */
+  maxResults: 10,
+
+  /**
+    Current selected instance of the model.
+
+    @property value
+    @type Object
    */
   value: undefined,
 
   /**
-   * Additional observer of value changings.
-   * Updates displayValue.
+    Projection name.
+
+    @property projection
+    @type String
+    @required
    */
-  _valueObserver: Ember.observer('value', function() {
-    this.set('displayValue', this.buildDisplayValue());
-  }),
+  projection: undefined,
 
   /**
-   * Text that displayed for the user as representation of currently selected value.
-   * This property is binded to the view and can be changed by user (it won't be
-   * applied to model automatically).
-   *
-   * @property displayValue
-   * @type String
-   * @protected
-   */
-  displayValue: Ember.computed('value', function() {
-    return this.buildDisplayValue();
-  }),
+    Relation name.
 
-  init() {
-    this._super();
+    @property relationName
+    @type String
+    @required
+   */
+  relationName: undefined,
+
+  /**
+    Name of the attribute of the model to display for the user.
+
+    @property displayAttributeName
+    @type String
+    @default null
+    @required
+   */
+  displayAttributeName: null,
+
+  /**
+    Standard CSS class names to apply to the view's outer element.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNames).
+
+    @property classNames
+    @type Array
+    @readOnly
+   */
+  classNames: ['flexberry-lookup'],
+
+  /**
+    A list of properties of the view to apply as class names.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNameBindings).
+
+    @property classNameBindings
+    @type Array
+    @readOnly
+   */
+  classNameBindings: ['autocompleteClass'],
+
+  actions: {
+    /**
+      Open window for select value.
+
+      @method actions.choose
+      @param {Object} chooseData
+     */
+    choose(chooseData) {
+      if (this.get('readonly')) {
+        return;
+      }
+
+      this.sendAction('choose', chooseData);
+    },
+
+    /**
+      Clear current value.
+
+      @method actions.remove
+      @param {Object} removeData
+     */
+    remove(removeData) {
+      if (this.get('readonly')) {
+        return;
+      }
+
+      this.sendAction('remove', removeData);
+    },
   },
 
-  // Init component when DOM is ready.
-  didInsertElement: function() {
+  /**
+    Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement).
+
+    @method didInsertElement
+   */
+  didInsertElement() {
     this._super();
 
     if (this.get('readonly')) {
@@ -239,12 +336,12 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Init component with autocomplete mode.
-   *
-   * @method _onAutocomplete
-   * @private
+    Initialize component with autocomplete mode.
+
+    @method _onAutocomplete
+    @private
    */
-  _onAutocomplete: function() {
+  _onAutocomplete() {
     let _this = this;
     let store = this.get('store');
     let relatedModel = this.get('relatedModel');
@@ -344,7 +441,7 @@ export default FlexberryBaseComponent.extend({
         // and Ember won't change computed property.
         if (state !== 'selected') {
           if (_this.get('displayValue')) {
-            _this.set('displayValue', _this.buildDisplayValue());
+            _this.set('displayValue', _this._buildDisplayValue());
           } else {
             _this.sendAction('remove', _this.get('removeData'));
           }
@@ -357,12 +454,12 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Init component with dropdown mode.
-   *
-   * @method _onDropdown
-   * @private
+    Initialize component with dropdown mode.
+
+    @method _onDropdown
+    @private
    */
-  _onDropdown: function() {
+  _onDropdown() {
     let _this = this;
     let store = this.get('store');
     let modelName = this.get('relatedModel').constructor.modelName;
@@ -412,31 +509,14 @@ export default FlexberryBaseComponent.extend({
     }).dropdown('set text', _this.get('displayValue'));
   },
 
-  actions: {
-    choose: function(chooseData) {
-      if (this.get('readonly')) {
-        return;
-      }
-
-      this.sendAction('choose', chooseData);
-    },
-    remove: function(removeData) {
-      if (this.get('readonly')) {
-        return;
-      }
-
-      this.sendAction('remove', removeData);
-    }
-  },
-
   /**
-   * Builds display text by selected model.
-   *
-   * @method buildDisplayValue
-   * @returns {String}
-   * @protected
+    Builds display text by selected model.
+
+    @method _buildDisplayValue
+    @returns {String}
+    @private
    */
-  buildDisplayValue() {
+  _buildDisplayValue() {
     let selectedModel = this.get('value');
     if (!selectedModel) {
       this.set('placeholder', t('flexberry-lookup.placeholder'));

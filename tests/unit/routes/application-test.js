@@ -4,7 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('route:application', {
-  needs: ['service:session']
+  needs: []
 });
 
 test('it exists', function(assert) {

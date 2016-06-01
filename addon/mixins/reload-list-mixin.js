@@ -4,9 +4,9 @@
 
 import Ember from 'ember';
 
-import QueryBuilder from 'ember-flexberry-projections/query/builder';
-import Condition from 'ember-flexberry-projections/query/condition';
-import { StringPredicate, ComplexPredicate } from 'ember-flexberry-projections/query/predicate';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import Condition from 'ember-flexberry-data/query/condition';
+import { StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.
@@ -115,7 +115,7 @@ export default Ember.Mixin.create({
       }
     }
 
-    let finalString = undefined;
+    let finalString;
     let filter = params.filter;
     let store = this.store;
 

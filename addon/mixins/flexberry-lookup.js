@@ -4,8 +4,6 @@
 
 import Ember from 'ember';
 
-import QueryBuilder from 'ember-flexberry-data/query/builder';
-
 import ReloadListMixin from '../mixins/reload-list-mixin';
 
 /**
@@ -295,8 +293,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
-      reloadContext: currentContext
-      reloadDataHandler: currentContext._reloadModalData,
+      reloadContext: currentContext,
+      reloadDataHandler: currentContext._reloadModalData
     });
 
     if (reloadData.initialLoad) {

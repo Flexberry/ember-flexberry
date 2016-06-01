@@ -3,9 +3,9 @@ import ReloadListMixin from 'ember-flexberry/mixins/reload-list-mixin';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-projections';
-import ODataSerializer from 'ember-flexberry-projections/serializers/odata';
-import { StringPredicate, ComplexPredicate } from 'ember-flexberry-projections/query/predicate';
+import Proj from 'ember-flexberry-data';
+import ODataSerializer from 'ember-flexberry-data/serializers/odata';
+import { StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 module('Unit | Mixin | reload list mixin');
 
@@ -25,7 +25,7 @@ test('it properly generates simple filter predicate', function(assert) {
   });
 
   let modelSerializer = ODataSerializer.extend({});
-  let projection = Ember.get(Model, 'projections')['EmployeeE'];
+  let projection = Ember.get(Model, 'projections').EmployeeE;
 
   let app = startApp();
 
@@ -71,7 +71,7 @@ test('it properly generates complex filter predicate', function(assert) {
   });
 
   let modelSerializer = ODataSerializer.extend({});
-  let projection = Ember.get(Model, 'projections')['EmployeeE'];
+  let projection = Ember.get(Model, 'projections').EmployeeE;
 
   let app = startApp();
 

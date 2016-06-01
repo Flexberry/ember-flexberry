@@ -277,7 +277,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
     };
 
     let controller = currentContext.get('lookupController');
-    controller.clear();
+    controller.clear(reloadData.initialLoad);
     controller.setProperties({
       modelProjection: projection,
       title: reloadData.title,

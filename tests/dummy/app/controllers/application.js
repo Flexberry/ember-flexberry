@@ -151,6 +151,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/customizing-window-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.title'),
+            children: null
           }]
         }, {
           link: null,

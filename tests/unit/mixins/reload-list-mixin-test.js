@@ -60,12 +60,16 @@ test('it properly generates complex filter predicate', function(assert) {
     masterField: DS.belongsTo('employeeTest', { inverse: null, async: false }),
   });
 
+  let app = startApp();
+
+  app.register('model:employeeTest', Model);
+
   Model.defineProjection('EmployeeE', 'employeeTest', {
     firstName: Proj.attr(),
     lastName: Proj.attr(),
     dateField: Proj.attr(),
     numberField: Proj.attr(),
-    reportsTo: Proj.belongsTo('employee', 'Reports To', {
+    reportsTo: Proj.belongsTo('employeeTest', 'Reports To', {
       firstName: Proj.attr('Reports To - First Name')
     }, { hidden: true })
   });
@@ -73,9 +77,6 @@ test('it properly generates complex filter predicate', function(assert) {
   let modelSerializer = ODataSerializer.extend({});
   let projection = Ember.get(Model, 'projections').EmployeeE;
 
-  let app = startApp();
-
-  app.register('model:employeeTest', Model);
   app.register('serializer:employeeTest', modelSerializer);
   let store = app.__container__.lookup('service:store');
 

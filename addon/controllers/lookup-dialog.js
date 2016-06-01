@@ -43,16 +43,57 @@ export default ListFormController.extend({
    */
   customPropertiesData: undefined,
 
+  /**
+   * Type of current loaded data.
+   *
+   * @property modelType
+   * @type String
+   * @default undefined
+   */
   modelType: undefined,
 
+  /**
+   * Name of projection data were loaded by.
+   *
+   * @property projectionName
+   * @type String
+   * @default undefined
+   */
   projectionName: undefined,
 
+  /**
+   * Handler to call when parameters of loaded data changed (filter, currentPage, etc.).
+   *
+   * @property reloadDataHandler
+   * @type Function
+   * @default undefined
+   */
   reloadDataHandler: undefined,
 
+  /**
+   * Context for handler of data reloading call.
+   *
+   * @property reloadContext
+   * @type Object
+   * @default undefined
+   */
   reloadContext: undefined,
 
+  /**
+   * Flag indicates whether to observe query parameters or they are not still initiated..
+   *
+   * @property reloadObserverIsActive
+   * @type Boolean
+   * @default false
+   */
   reloadObserverIsActive: false,
 
+  /**
+   * It observes filter changing.
+     If filter is changed then displayed data are reloaded.
+
+   * @method queryParametersChanged
+   */
   queryParametersChanged: Ember.observer('filter', function() {
     if (!this.get('reloadObserverIsActive')) {
       return;
@@ -90,7 +131,7 @@ export default ListFormController.extend({
      * @method rowClick
      * @param {Ember.Object} record Row record
      */
-    rowClick: function (record) {
+    objectListViewRowClick: function (record) {
       this.selectMaster(record);
       this.closeModalDialog();
     },
@@ -154,9 +195,14 @@ export default ListFormController.extend({
    *
    * @method clear
    * @public
+   *
+   * @param {Boolean} initialClear Flag indicates whether it is clear on first load or just on reload.
    */
-  clear: function() {
-    this.set('_openedModalDialog', undefined);
+  clear: function(initialClear) {
+    if (initialClear) {
+      this.set('_openedModalDialog', undefined);
+    }
+
     this.set('saveTo', undefined);
     this.set('modelProjection', undefined);
     this.set('currentLookupRow', undefined);

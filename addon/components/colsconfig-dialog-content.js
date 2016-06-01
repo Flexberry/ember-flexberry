@@ -6,8 +6,9 @@ const { getOwner } = Ember;
 export default FlexberryBaseComponent.extend({
 
   idPrefix:'ColDesc',
-  _userSettingsService: Ember.inject.service('user-settings-service'),
   modelForDOM:[],
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+  _routing: Ember.inject.service('-routing'),
 
   init: function() {
     this._super(...arguments);
@@ -181,7 +182,16 @@ export default FlexberryBaseComponent.extend({
       colsConfig={colsOrder:colsOrder,sorting:sorting};
 //       alert(' colsConfig=' +JSON.stringify(colsConfig));
       let moduleName = getOwner(this).lookup('router:main').currentRouteName;
-      this.get('_userSettingsService').saveUserSetting({moduleName:moduleName,settingName:'DEFAULT',userSetting:colsConfig});
+      let savePromise=this.get('_userSettingsService').saveUserSetting({moduleName:moduleName,settingName:'DEFAULT',userSetting:colsConfig});
+      savePromise.then (
+        record => {
+          let router=getOwner(this).lookup("router:main");
+          let currentRoute=router.currentRouteName;
+          router.router.refresh();
+//          this.get('_routing').router.refresh();  //Reload current outer without sort parameters
+//           this.get('_routing').router.transitionTo(currentRoute,{ queryParams : {sort:null}});  //Reload current outer without sort parameters
+        }
+      );
       this.sendAction('close',colsConfig);
     }
   },

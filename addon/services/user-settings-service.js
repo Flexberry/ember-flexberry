@@ -42,6 +42,7 @@ export default Ember.Service.extend({
    * @param {String} options.moduleName Name of module for what setting is saved.
    * @param {String} options.userSetting User setting data to save.
    * @param {String} options.settingName Setting name to save as.
+   * @return {Promise} A promise. It returns saving result
    */
   saveUserSetting: function(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
@@ -64,7 +65,7 @@ export default Ember.Service.extend({
 
     let store = this.get('store');
     let _this = this;
-    this._getExistingRecord(moduleName, settingName).then(
+    let ret = this._getExistingRecord(moduleName, settingName).then(
       function(foundRecord) {
         if (foundRecord) {
           let prevUserSetting=JSON.parse(foundRecord.get('txtVal'));
@@ -81,9 +82,9 @@ export default Ember.Service.extend({
           foundRecord.set('userName', currentUserName);
           foundRecord.set('txtVal', JSON.stringify(userSetting));
         }
-        foundRecord.save();
-      }
-    );
+        return foundRecord.save();
+      });
+    return ret;
   },
 
   /**

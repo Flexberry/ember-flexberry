@@ -42,8 +42,8 @@ export default Ember.Mixin.create({
   },
 
   includeSorting: function(model, sorting, userSettings) {
-    model.set('sorting', sorting);
     model.set('userSettings', userSettings);
+    model.set('sorting', sorting);
     return model;
   }
 });

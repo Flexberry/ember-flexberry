@@ -5,6 +5,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
@@ -20,6 +21,15 @@ export default FlexberryBaseComponent.extend({
 
   // Flag to make control required.
   required: false,
+
+  /**
+   * The placeholder attribute.
+   *
+   * @property placeholder
+   * @type String
+   * @default 't('flexberry-datepicker.placeholder')'
+   */
+  placeholder: t('flexberry-datepicker.placeholder'),
 
   // Flag to show time in control and time picker inside date picker.
   hasTimePicker: false,

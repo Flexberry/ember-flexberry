@@ -6,6 +6,7 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import ErrorableMixin from '../mixins/errorable-controller';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Object list view component.
@@ -535,8 +536,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    *
    * @property noDataMessage
    * @type String
+   * @default 't('object-list-view.no-data-text')'
    */
-  noDataMessage: undefined,
+  noDataMessage: t('object-list-view.no-data-text'),
 
   /**
    * Flag: indicates whether table headers are clickable.
@@ -762,11 +764,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
-
-    this.initProperty({
-      propertyName: 'noDataMessage',
-      defaultValue: this.get('i18n').t('object-list-view.no-data-text') || 'No data'
-    });
 
     if (this.get('content')) {
       this.get('content').forEach((item, index, enumerable) => {
@@ -1166,7 +1163,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     if (componentName === this.get('componentName')) {
       if (this.get('editOnSeparateRoute')) {
         // Depending on settings current model has to be saved before adding detail.
-        this.send(this.get('action'), undefined, undefined);
+        this.send('rowClick', undefined, undefined);
       } else {
         var modelName = this.get('modelProjection').modelName;
         var modelToAdd = this.get('store').createRecord(modelName, {});

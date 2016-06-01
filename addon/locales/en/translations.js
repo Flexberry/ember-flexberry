@@ -10,7 +10,25 @@ export default {
     'close-button-text': 'Close'
   },
 
+  'flexberry-field': {
+    placeholder: '(no value)'
+  },
+
+  'flexberry-textbox': {
+    placeholder: '(no value)'
+  },
+
+  'flexberry-textarea': {
+    placeholder: '(no value)'
+  },
+
+  'flexberry-dropdown': {
+    'default-text': '(no value)'
+  },
+
   'flexberry-datepicker': {
+    placeholder: '(no value)',
+
     // Months and days of week names are taken from moment.js.
     'apply-button-text': 'Apply',
     'cancel-button-text': 'Cancel'
@@ -47,15 +65,6 @@ export default {
     placeholder: '(no value)',
     'choose-button-text': 'Choose',
     'remove-button-text': 'Remove'
-  },
-
-  login: {
-    'login-failed-message': 'Login failed',
-    'login-field-label': 'Login',
-    'login-field-placeholder': 'Enter login',
-    'password-field-label': 'Password',
-    'password-field-placeholder': 'Enter password',
-    'login-button-text': 'Login'
   },
 
   'modal-dialog': {

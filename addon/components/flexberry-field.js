@@ -3,6 +3,7 @@
  */
 
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Field component for Semantic UI.
@@ -42,10 +43,10 @@ var FlexberryField = FlexberryBaseComponent.extend({
    * Text to be displayed instead of file name, if file has not been selected.
    *
    * @property placeholder
-   * @type string
-   * @default undefined
+   * @type String
+   * @default 't('flexberry-field.placeholder')'
    */
-  placeholder: undefined,
+  placeholder: t('flexberry-field.placeholder'),
 
   /**
    * Label value.

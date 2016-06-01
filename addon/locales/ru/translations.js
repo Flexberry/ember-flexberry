@@ -10,7 +10,25 @@ export default {
     'close-button-text': 'Закрыть'
   },
 
+  'flexberry-field': {
+    placeholder: '(нет значения)'
+  },
+
+  'flexberry-textbox': {
+    placeholder: '(нет значения)'
+  },
+
+  'flexberry-textarea': {
+    placeholder: '(нет значения)'
+  },
+
+  'flexberry-dropdown': {
+    'default-text': '(нет значения)'
+  },
+
   'flexberry-datepicker': {
+    placeholder: '(нет значения)',
+
     // Months and days of week names are taken from moment.js.
     'apply-button-text': 'Выбрать',
     'cancel-button-text': 'Отмена'
@@ -47,15 +65,6 @@ export default {
     placeholder: '(нет значения)',
     'choose-button-text': 'Выбрать',
     'remove-button-text': 'Очистить'
-  },
-
-  login: {
-    'login-failed-message': 'Вход не удался',
-    'login-field-label': 'Логин',
-    'login-field-placeholder': 'Введите логин',
-    'password-field-label': 'Пароль',
-    'password-field-placeholder': 'Введите пароль',
-    'login-button-text': 'Войти'
   },
 
   'modal-dialog': {

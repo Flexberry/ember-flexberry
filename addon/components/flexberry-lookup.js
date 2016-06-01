@@ -35,8 +35,8 @@ export default FlexberryBaseComponent.extend({
    */
   classNameBindings: ['autocompleteClass'],
 
-  placeholder: t('flexberry-lookup.placeholder'),
-  chooseText: t('flexberry-lookup.choose-button-text'),
+  placeholder: t('components.flexberry-lookup.placeholder'),
+  chooseText: t('components.flexberry-lookup.choose-button-text'),
 
   // ToDo: Use 'flexberry-lookup.remove-button-text' from locale.
   removeText: '<i class="remove icon"></i>',

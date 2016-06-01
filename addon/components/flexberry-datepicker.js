@@ -27,9 +27,9 @@ export default FlexberryBaseComponent.extend({
    *
    * @property placeholder
    * @type String
-   * @default 't('flexberry-datepicker.placeholder')'
+   * @default 't('components.flexberry-datepicker.placeholder')'
    */
-  placeholder: t('flexberry-datepicker.placeholder'),
+  placeholder: t('components.flexberry-datepicker.placeholder'),
 
   // Flag to show time in control and time picker inside date picker.
   hasTimePicker: false,
@@ -77,8 +77,8 @@ export default FlexberryBaseComponent.extend({
       {
         startDate: startDate,
         locale: {
-          applyLabel: i18n.t('flexberry-datepicker.apply-button-text'),
-          cancelLabel: i18n.t('flexberry-datepicker.cancel-button-text')
+          applyLabel: i18n.t('components.flexberry-datepicker.apply-button-text'),
+          cancelLabel: i18n.t('components.flexberry-datepicker.cancel-button-text')
         },
         singleDatePicker: true,
         showDropdowns: true,

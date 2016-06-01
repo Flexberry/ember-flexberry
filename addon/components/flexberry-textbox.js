@@ -53,9 +53,9 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
    *
    * @property placeholder
    * @type Sring
-   * @default 't('flexberry-textbox.placeholder')'
+   * @default 't('components.flexberry-textbox.placeholder')'
    */
-  placeholder: t('flexberry-textbox.placeholder'),
+  placeholder: t('components.flexberry-textbox.placeholder'),
 
   /**
    * Initializes component.

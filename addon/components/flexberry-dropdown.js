@@ -83,9 +83,9 @@ export default FlexberryBaseComponent.extend({
    *
    * @property defaultText
    * @type String
-   * @default 't('flexberry-dropdown.default-text')'
+   * @default 't('components.flexberry-dropdown.default-text')'
    */
-  defaultText: t('flexberry-dropdown.default-text'),
+  defaultText: t('components.flexberry-dropdown.default-text'),
 
   /**
    * Selected item.

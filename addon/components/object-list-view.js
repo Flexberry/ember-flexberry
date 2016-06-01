@@ -93,7 +93,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
         menuInRowSubItems.push({
           icon: 'edit icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
           isEditItem: true
         });
       }
@@ -101,7 +101,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (this.get('showDeleteMenuItemInRow') && recordWithKey.config.canBeDeleted) {
         menuInRowSubItems.push({
           icon: 'trash icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
           isDeleteItem: true
         });
       }
@@ -536,9 +536,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    *
    * @property noDataMessage
    * @type String
-   * @default 't('object-list-view.no-data-text')'
+   * @default 't('components.object-list-view.no-data-text')'
    */
-  noDataMessage: t('object-list-view.no-data-text'),
+  noDataMessage: t('components.object-list-view.no-data-text'),
 
   /**
    * Flag: indicates whether table headers are clickable.

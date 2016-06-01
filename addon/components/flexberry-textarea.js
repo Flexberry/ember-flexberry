@@ -44,7 +44,6 @@ export default FlexberryBaseComponent.extend({
    *
    * @property value
    * @type String
-   * @default undefined
    */
   value: undefined,
 
@@ -52,10 +51,10 @@ export default FlexberryBaseComponent.extend({
    * The placeholder attribute.
    *
    * @property placeholder
-   * @type string
-   * @default 't('flexberry-textarea.placeholder')'
+   * @type String
+   * @default 't('components.flexberry-textarea.placeholder')'
    */
-  placeholder: t('flexberry-textarea.placeholder'),
+  placeholder: t('components.flexberry-textarea.placeholder'),
 
   /**
    * Initializes component.

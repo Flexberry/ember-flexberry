@@ -44,9 +44,9 @@ var FlexberryField = FlexberryBaseComponent.extend({
    *
    * @property placeholder
    * @type String
-   * @default 't('flexberry-field.placeholder')'
+   * @default 't('components.flexberry-field.placeholder')'
    */
-  placeholder: t('flexberry-field.placeholder'),
+  placeholder: t('components.flexberry-field.placeholder'),
 
   /**
    * Label value.

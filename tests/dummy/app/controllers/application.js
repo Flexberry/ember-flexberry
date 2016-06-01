@@ -124,6 +124,16 @@ export default Ember.Controller.extend({
           }]
         }, {
           link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-field.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-field.title'),
+          children: [{
+            link: 'components-examples/flexberry-field/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-field.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-field.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.title'),
           children: [{
@@ -170,6 +180,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-textbox/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-textbox.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-textbox.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.title'),
+          children: [{
+            link: 'components-examples/flexberry-toggler/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.title'),
             children: null
           }]
         }]

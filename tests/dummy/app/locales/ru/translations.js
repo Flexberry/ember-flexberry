@@ -93,6 +93,14 @@ Ember.merge(translations, {
               'title': ''
             }
           },
+          'flexberry-field': {
+            'caption': 'flexberry-field',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-groupedit': {
             'caption': 'flexberry-groupedit',
             'title': '',
@@ -132,6 +140,14 @@ Ember.merge(translations, {
               'caption': 'Пример работы с настройками',
               'title': ''
             }
+          },
+          'flexberry-toggler': {
+            'caption': 'flexberry-toggler',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
           }
         }
       }
@@ -157,6 +173,11 @@ Ember.merge(translations, {
             'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \"Semantic-UI\" и прочих ошибок.'
         }
       },
+      'flexberry-field': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-field/settings-example'
+        }
+      },
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-groupedit/settings-example'
@@ -180,6 +201,11 @@ Ember.merge(translations, {
       'flexberry-textbox': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-textbox/settings-example'
+        }
+      },
+      'flexberry-toggler': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-toggler/settings-example'
         }
       }
     }

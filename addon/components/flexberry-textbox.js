@@ -19,7 +19,7 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['flexberry-textbox', 'ui', 'input', 'fluid'],
+  classNames: ['flexberry-textbox', 'ui', 'input'],
 
   /**
     Array CSS class names bindings.
@@ -64,7 +64,7 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
     this._super(...arguments);
 
     // Initialize properties which defaults could be defined in application configuration.
-    this.initProperty({ propertyName: 'placeholder', defaultValue: null });
+    this.initProperty({ propertyName: 'placeholder', defaultValue: undefined });
   }
 });
 

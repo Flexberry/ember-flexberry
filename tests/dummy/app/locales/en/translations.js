@@ -93,6 +93,14 @@ Ember.merge(translations, {
               'title': ''
             }
           },
+          'flexberry-field': {
+            'caption': 'flexberry-field',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
           'flexberry-groupedit': {
             'caption': 'flexberry-groupedit',
             'title': '',
@@ -154,6 +162,11 @@ Ember.merge(translations, {
             '<br>' +
             'So, once the value is selected, the component will be rendered as &lt;span&gt;selected value&lt;/span&gt;,<br>' +
             'after that check browser\'s console, it must be free from \"Semantic-UI\" and other errors.'
+        }
+      },
+      'flexberry-field': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-field/settings-example'
         }
       },
       'flexberry-groupedit': {

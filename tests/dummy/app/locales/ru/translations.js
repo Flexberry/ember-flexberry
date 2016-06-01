@@ -93,6 +93,14 @@ Ember.merge(translations, {
               'title': ''
             }
           },
+          'flexberry-field': {
+            'caption': 'flexberry-field',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-groupedit': {
             'caption': 'flexberry-groupedit',
             'title': '',
@@ -155,6 +163,11 @@ Ember.merge(translations, {
             'После того как какое-либо значение будет выбрано, компонент будет заменен на ' +
             '&lt;span&gt;selected value&lt;/span&gt;,<br>' +
             'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \"Semantic-UI\" и прочих ошибок.'
+        }
+      },
+      'flexberry-field': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-field/settings-example'
         }
       },
       'flexberry-groupedit': {

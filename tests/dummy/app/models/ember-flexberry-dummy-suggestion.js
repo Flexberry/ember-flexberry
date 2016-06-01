@@ -7,17 +7,51 @@ var Model = BaseModel.extend({
   text: DS.attr('string'),
   votes: DS.attr('number'),
   moderated: DS.attr('boolean'),
-  editor: DS.belongsTo('ember-flexberry-dummy-application-user', { inverse: null, async: false }),
-  type: DS.belongsTo('ember-flexberry-dummy-suggestion-type', { inverse: null, async: false }),
-  author: DS.belongsTo('ember-flexberry-dummy-application-user', { inverse: null, async: false }),
-  files: DS.hasMany('ember-flexberry-dummy-suggestion-file', { inverse: 'suggestion', async: false }),
-  comments: DS.hasMany('ember-flexberry-dummy-comment', { inverse: 'suggestion', async: false }),
-  userVotes: DS.hasMany('ember-flexberry-dummy-vote', { inverse: 'suggestion', async: false }),
-  validations: {
 
+  // This property is for flexberry-lookup component. No inverse relationship here.
+  type: DS.belongsTo('ember-flexberry-dummy-suggestion-type', {
+    inverse: null,
+    async: false
+  }),
+
+  // This property is for flexberry-lookup component. No inverse relationship here.
+  author: DS.belongsTo('ember-flexberry-dummy-application-user', {
+    inverse: null, async: false
+  }),
+
+  // This property is for flexberry-lookup component. No inverse relationship here.
+  editor: DS.belongsTo('ember-flexberry-dummy-application-user', {
+    inverse: null,
+    async: false
+  }),
+
+  // This property is for flexberry-groupedit component.
+  // Inverse relationship is necessary here.
+  files: DS.hasMany('ember-flexberry-dummy-suggestion-file', {
+    inverse: 'suggestion',
+    async: false
+  }),
+
+  // This property is for flexberry-groupedit component.
+  // Inverse relationship is necessary here.
+  userVotes: DS.hasMany('ember-flexberry-dummy-vote', {
+    inverse: 'suggestion',
+    async: false
+  }),
+
+  // This property is for flexberry-groupedit component.
+  // Inverse relationship is necessary here.
+  comments: DS.hasMany('ember-flexberry-dummy-comment', {
+    inverse: 'suggestion',
+    async: false
+  }),
+
+  // Model validation rules.
+  validations: {
   }
 });
 
+// Edit form projection.
 Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   address: Proj.attr('Address'),
   text: Proj.attr('Text'),
@@ -25,54 +59,81 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   votes: Proj.attr('Votes'),
   moderated: Proj.attr('Moderated'),
   type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Proj.attr('Name', { hidden: true })
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
   }),
   author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Proj.attr('Name', { hidden: true })
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
   }),
   editor: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
-    name: Proj.attr('', { hidden: true })
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
   }),
   files: Proj.hasMany('ember-flexberry-dummy-suggestion-file', 'Files', {
     order: Proj.attr('Order'),
     file: Proj.attr('File')
+  }),
+  userVotes: Proj.hasMany('ember-flexberry-dummy-vote', 'User votes', {
+    voteType: Proj.attr('Vote type'),
+    applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+      name: Proj.attr('Name', {
+        hidden: true
+      })
+    }, {
+      displayMemberPath: 'name'
+    })
   }),
   comments: Proj.hasMany('ember-flexberry-dummy-comment', 'Comments', {
     text: Proj.attr('Text'),
     votes: Proj.attr('Votes'),
     moderated: Proj.attr('Moderated'),
     author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-      name: Proj.attr('Name', { hidden: true })
-    }),
-    userVotes: Proj.hasMany('ember-flexberry-dummy-comment-vote', 'User votes', {
-      voteType: Proj.attr('Vote type'),
-      applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
-        name: Proj.attr('Name', { hidden: true })
+      name: Proj.attr('Name', {
+        hidden: true
       })
-    })
-  }),
-  userVotes: Proj.hasMany('ember-flexberry-dummy-vote', 'User votes', {
-    voteType: Proj.attr('Vote type'),
-    applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
-      name: Proj.attr('Name', { hidden: true })
+    }, {
+      displayMemberPath: 'name'
     })
   })
 });
 
+// List form projection.
 Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
   address: Proj.attr('Address'),
   text: Proj.attr('Text'),
   date: Proj.attr('Date'),
   votes: Proj.attr('Votes'),
   moderated: Proj.attr('Moderated'),
-  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Name', {
-    name: Proj.attr('Name')
+  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
   }),
-  author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Name', {
-    name: Proj.attr('Name')
+  author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
   }),
-  editor: Proj.belongsTo('ember-flexberry-dummy-application-user', '', {
-    name: Proj.attr('')
+  editor: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
   })
 });
 

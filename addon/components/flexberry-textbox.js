@@ -18,7 +18,16 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['flexberry-textbox', 'ui', 'input', 'fluid'],
+  classNames: ['flexberry-textbox', 'ui', 'input'],
+
+  /**
+    Array CSS class names bindings.
+    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNameBindings)
+    @property classNameBindings
+    @type Array
+    @readOnly
+   */
+  classNameBindings: ['readonly:disabled'],
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -54,7 +63,7 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
     this._super(...arguments);
 
     // Initialize properties which defaults could be defined in application configuration.
-    this.initProperty({ propertyName: 'placeholder', defaultValue: null });
+    this.initProperty({ propertyName: 'placeholder', defaultValue: undefined });
   }
 });
 

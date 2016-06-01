@@ -18,7 +18,16 @@ export default FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['flexberry-textarea'],
+  classNames: ['flexberry-textarea', 'ui', 'input'],
+
+  /**
+    Array CSS class names bindings.
+    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNameBindings)
+    @property classNameBindings
+    @type Array
+    @readOnly
+   */
+  classNameBindings: ['readonly:disabled'],
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).

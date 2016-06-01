@@ -1,216 +1,181 @@
-<h3 class="ui header">{{title}} - edit form</h3>
-
+<h3 class="ui header">{{title}}</h3>
 {{#if errorMessages}}
-{{#each errorMessages as |currentError|}}
-{{
-ui-message
-type='error'
-closeable=true
-visible=true
-title='Error occurred'
-message=currentError
-}}
-{{/each}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type="error"
+      closeable=true
+      visible=true
+      title="Error occurred"
+      message=currentError
+    }}
+  {{/each}}
 {{/if}}
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-      <button type="submit" class="ui positive button" {{action 'save'}}>Save</button>
-      {{#unless model.isNew}}
-      <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "save"}}>{{t "edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "edit-form.delete-button-text"}}</button>
+        {{/unless}}
       {{/unless}}
-      {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>Close</button>
+      <button type="submit" class="ui button" {{action 'close'}}>{{t "edit-form.close-button-text"}}</button>
     </div>
   </div>
-<div class="field">
-  {{#if model.errors.name}}
-    <span style ="color:red">
-      {{model.errors.name}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.name
-  class=(if model.errors.name 'error' '')
-  label='Name'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.eMail}}
-    <span style ="color:red">
-      {{model.errors.eMail}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.eMail
-  class=(if model.errors.eMail 'error' '')
-  label='E-mail'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.phone1}}
-    <span style ="color:red">
-      {{model.errors.phone1}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.phone1
-  class=(if model.errors.phone1 'error' '')
-  label='Phone1'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.phone2}}
-    <span style ="color:red">
-      {{model.errors.phone2}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.phone2
-  class=(if model.errors.phone2 'error' '')
-  label='Phone2'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.phone3}}
-    <span style ="color:red">
-      {{model.errors.phone3}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.phone3
-  class=(if model.errors.phone3 'error' '')
-  label='Phone3'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.activated}}
-    <span style="color:red">{{model.errors.activated}}</span>
-  {{/if}}
-  {{flexberry-checkbox readonly=readonly checked=model.activated}}
-</div>
-
-<div class="field">
-  {{#if model.errors.vK}}
-    <span style ="color:red">
-      {{model.errors.vK}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.vK
-  class=(if model.errors.vK 'error' '')
-  label='VK'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.facebook}}
-    <span style ="color:red">
-      {{model.errors.facebook}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.facebook
-  class=(if model.errors.facebook 'error' '')
-  label='Facebook'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.twitter}}
-    <span style ="color:red">
-      {{model.errors.twitter}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.twitter
-  class=(if model.errors.twitter 'error' '')
-  label='Twitter'
-  }}
-</div>
-
-<div class="field">
-  <label>Birthday</label>
-  {{#if model.errors.birthday}}
-    <span style="color:red">{{model.errors.birthday}}</span>
-  {{/if}}
-  {{
-    flexberry-datepicker
-    placeholder='(no value)'
-    readonly=readonly
-    value=model.birthday
-    class=(if model.errors.birthday 'error' '')
-  }}
-</div>
-
-<div class="field">
-  <label>Gender</label>
-  {{#if model.errors.gender}}
-    <span style="color:red">{{model.errors.gender}}</span>
-  {{/if}}
-  {{flexberry-dropdown items=(enum-captions 'gender') value=model.gender readonly=readonly}}
-</div>
-
-<div class="field">
-  {{#if model.errors.vip}}
-    <span style="color:red">{{model.errors.vip}}</span>
-  {{/if}}
-  {{flexberry-checkbox readonly=readonly checked=model.vip}}
-</div>
-
-<div class="field">
-  {{#if model.errors.karma}}
-    <span style ="color:red">
-      {{model.errors.karma}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.karma
-  class=(if model.errors.karma 'error' '')
-  label='Karma'
-  }}
-</div>
-
+  <div class="field">
+    {{#if model.errors.name}}
+      <span style ="color:red">{{model.errors.name}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.name
+      class=(if model.errors.name "error" "")
+      label="Name"
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.eMail}}
+      <span style ="color:red">{{model.errors.eMail}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.eMail
+      class=(if model.errors.eMail "error" "")
+      label="E-mail"
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.phone1}}
+      <span style ="color:red">{{model.errors.phone1}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.phone1
+      class=(if model.errors.phone1 "error" "")
+      label="Phone1"
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.phone2}}
+      <span style ="color:red">{{model.errors.phone2}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.phone2
+      class=(if model.errors.phone2 "error" "")
+      label="Phone2"
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.phone3}}
+      <span style ="color:red">{{model.errors.phone3}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.phone3
+      class=(if model.errors.phone3 "error" "")
+      label="Phone3"
+    }}
+  </div>
+  <div class="field">
+    <label>Activated</label>
+    {{#if model.errors.activated}}
+      <span style="color:red">{{model.errors.activated}}</span>
+    {{/if}}
+    {{flexberry-checkbox readonly=readonly value=model.activated}}
+  </div>
+  <div class="field">
+    {{#if model.errors.vK}}
+      <span style ="color:red">{{model.errors.vK}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.vK
+      class=(if model.errors.vK "error" "")
+      label="VK"
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.facebook}}
+      <span style ="color:red">{{model.errors.facebook}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.facebook
+      class=(if model.errors.facebook "error" "")
+      label="Facebook"
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.twitter}}
+      <span style ="color:red">{{model.errors.twitter}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.twitter
+      class=(if model.errors.twitter "error" "")
+      label="Twitter"
+    }}
+  </div>
+  <div class="field">
+    <label>Birthday</label>
+    {{#if model.errors.birthday}}
+      <span style="color:red">{{model.errors.birthday}}</span>
+    {{/if}}
+    {{flexberry-datepicker
+      placeholder="(no value)"
+      readonly=readonly
+      value=model.birthday
+      class=(if model.errors.birthday "error" "")
+    }}
+  </div>
+  <div class="field">
+    <label>Gender</label>
+    {{#if model.errors.gender}}
+      <span style="color:red">{{model.errors.gender}}</span>
+    {{/if}}
+    {{flexberry-dropdown items=(enum-captions "ember-flexberry-dummy-gender") value=model.gender readonly=readonly}}
+  </div>
+  <div class="field">
+    <label>VIP</label>
+    {{#if model.errors.vip}}
+      <span style="color:red">{{model.errors.vip}}</span>
+    {{/if}}
+    {{flexberry-checkbox readonly=readonly value=model.vip}}
+  </div>
+  <div class="field">
+    {{#if model.errors.karma}}
+      <span style ="color:red">{{model.errors.karma}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.karma
+      class=(if model.errors.karma "error" "")
+      label="Karma"
+    }}
+  </div>
 </form>
+

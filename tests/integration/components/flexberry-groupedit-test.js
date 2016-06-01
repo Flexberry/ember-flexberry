@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import TestAggregator from '../../../models/test-aggregator';
+import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/settings-example/aggregator';
 
 moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry groupedit', {
   integration: true,
@@ -17,7 +17,7 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.set('proj', TestAggregator.projections.get('TestAggregatorE'));
+  this.set('proj', AggregatorModel.projections.get('AggregatorE'));
   this.render(hbs`{{flexberry-groupedit modelProjection=proj componentName='my-group-edit'}}`);
   assert.ok(true);
 });

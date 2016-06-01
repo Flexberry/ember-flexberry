@@ -439,7 +439,7 @@ export default FlexberryBaseComponent.extend({
   buildDisplayValue() {
     let selectedModel = this.get('value');
     if (!selectedModel) {
-      this.set('placeholder', t('flexberry-lookup.placeholder'));
+      this.set('placeholder', t('components.flexberry-lookup.placeholder'));
       return '';
     } else {
       this.set('placeholder', '');

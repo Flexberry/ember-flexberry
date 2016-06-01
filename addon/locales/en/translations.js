@@ -91,5 +91,5 @@ export default {
       'custom-button-text': 'Custom button',
       'filter-by-any-match-placeholder': 'Search...'
     }
-  } 
+  }
 };

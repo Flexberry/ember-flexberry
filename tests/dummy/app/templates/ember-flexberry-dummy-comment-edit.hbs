@@ -32,7 +32,6 @@
       <span style ="color:red">{{model.errors.text}}</span>
     {{/if}}
     {{flexberry-field
-      placeholder="(no value)"
       readonly=readonly
       required=true
       value=model.text
@@ -45,7 +44,6 @@
       <span style ="color:red">{{model.errors.votes}}</span>
     {{/if}}
     {{flexberry-field
-      placeholder="(no value)"
       readonly=readonly
       required=true
       value=model.votes
@@ -67,7 +65,6 @@
     {{/if}}
     {{flexberry-groupedit
       componentName="userVotesGroupEdit"
-      class="attached"
       modelProjection=modelProjection.attributes.userVotes
       content=model.userVotes
       readonly=readonly

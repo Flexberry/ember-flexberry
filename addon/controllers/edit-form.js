@@ -259,7 +259,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   save(close) {
     this.send('dismissErrorMessages');
     return this.get('model').save().then((model) => {
-      this.saveHasManyRelationships(model).then(() => {
+      return this.saveHasManyRelationships(model).then(() => {
         this.onSaveActionFulfilled();
         if (close) {
           this.close();
@@ -280,9 +280,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   delete() {
     this.send('dismissErrorMessages');
     var model = this.get('model');
+
     if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
       return this.destroyHasManyRelationships(model).then(() => {
-        model.destroyRecord().then(() => {
+        return model.destroyRecord().then(() => {
           this.onDeleteActionFulfilled();
         }).catch((errorData) => {
           this.onDeleteActionRejected(errorData);

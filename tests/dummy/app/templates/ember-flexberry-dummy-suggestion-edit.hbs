@@ -40,13 +40,6 @@
       class=(if model.errors.address "error" "")
       label="Address"
       }}
-    {{flexberry-textbox
-      readonly=readonly
-      required=true
-      value=model.address
-      class=(if model.errors.address "error" "")
-      label="Address"
-    }}
   </div>
   <div class="field">
     {{#if model.errors.text}}

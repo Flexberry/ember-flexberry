@@ -25,15 +25,6 @@ export default Ember.Mixin.create({
    */
   lookupController: undefined,
 
-  /**
-   * Service for auth matters.
-   * FlexberryAuthService is injected here by default.
-   *
-   * @property currentAuthService
-   * @type Service
-   */
-  currentAuthService: Ember.inject.service('flexberry-auth-service'),
-
   actions: {
     /**
      * Handles action from lookup choose action.

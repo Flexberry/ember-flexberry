@@ -1,0 +1,9 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-dropdown.settings-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-dropdown
+      items=(enum-captions "components-examples/flexberry-dropdown/settings-example/enumeration")
+      value=model.enumeration
+    }}
+  </div>
+</form>

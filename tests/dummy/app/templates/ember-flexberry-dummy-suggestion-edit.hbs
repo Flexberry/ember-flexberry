@@ -1,188 +1,201 @@
-<h3 class="ui header">{{title}} - edit form</h3>
-
+<h3 class="ui header">{{title}}</h3>
 {{#if errorMessages}}
-{{#each errorMessages as |currentError|}}
-{{
-ui-message
-type='error'
-closeable=true
-visible=true
-title='Error occurred'
-message=currentError
-}}
-{{/each}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type="error"
+      closeable=true
+      visible=true
+      title="Error occurred"
+      message=currentError
+    }}
+  {{/each}}
 {{/if}}
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-      <button type="submit" class="ui positive button" {{action 'save'}}>Save</button>
-      {{#unless model.isNew}}
-      <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "save"}}>{{t "edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "edit-form.delete-button-text"}}</button>
+        {{/unless}}
       {{/unless}}
-      {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>Close</button>
+      <button type="submit" class="ui button" {{action 'close'}}>{{t "edit-form.close-button-text"}}</button>
     </div>
   </div>
-<div class="field">
-  {{#if model.errors.address}}
-    <span style ="color:red">
-      {{model.errors.address}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.address
-  class=(if model.errors.address 'error' '')
-  label='Address'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.text}}
-    <span style ="color:red">
-      {{model.errors.text}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.text
-  class=(if model.errors.text 'error' '')
-  label='Text'
-  }}
-</div>
-
-<div class="field">
-  <label>Date</label>
-  {{#if model.errors.date}}
-    <span style="color:red">{{model.errors.date}}</span>
-  {{/if}}
-  {{
-    flexberry-datepicker
-    placeholder='(no value)'
-    readonly=readonly
-    value=model.date
-    class=(if model.errors.date 'error' '')
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.votes}}
-    <span style ="color:red">
-      {{model.errors.votes}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.votes
-  class=(if model.errors.votes 'error' '')
-  label='Votes'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.moderated}}
-    <span style="color:red">{{model.errors.moderated}}</span>
-  {{/if}}
-  {{flexberry-checkbox readonly=readonly checked=model.moderated}}
-</div>
-
-<div class="field">
-  <label>Type</label>
-  {{#if model.errors.type}}
-    <span style="color:red">{{model.errors.type}}</span>
-  {{/if}}
-      {{
-    flexberry-lookup
-    choose='showLookupDialog'
-    remove='removeLookupValue'
-    value=model.type.name
-    relationName='type'
-    projection='SuggestionTypeL'
-    title='Type'
-    readonly=readonly
-    limitFunction=null
-    class=(if model.errors.type 'error' '')
-}}
-</div>
-
-<div class="field">
-  <label>Author</label>
-  {{#if model.errors.author}}
-    <span style="color:red">{{model.errors.author}}</span>
-  {{/if}}
-      {{
-    flexberry-lookup
-    choose='showLookupDialog'
-    remove='removeLookupValue'
-    value=model.author.name
-    relationName='author'
-    projection='ApplicationUserL'
-    title='Author'
-    readonly=readonly
-    limitFunction=null
-    class=(if model.errors.author 'error' '')
-}}
-</div>
-
-<div class="field">
-  <label>Files</label>
-  {{#if model.errors.files}}
-    <span style="color:red">{{model.errors.files}}</span>
-  {{/if}}
-  {{
-    flexberry-groupedit
-    componentName="filesGroupEdit"
-    class="attached"
-    modelProjection=modelProjection.attributes.files
-    content=model.files
-    readonly=readonly
-    orderable=false
-    class=(if model.errors.files 'error' '')
-}}
-</div>
-
-<div class="field">
-  <label>Comments</label>
-  {{#if model.errors.comments}}
-    <span style="color:red">{{model.errors.comments}}</span>
-  {{/if}}
-  {{
-    flexberry-groupedit
-    componentName="commentsGroupEdit"
-    class="attached"
-    modelProjection=modelProjection.attributes.comments
-    content=model.comments
-    readonly=readonly
-    orderable=false
-    class=(if model.errors.comments 'error' '')
-}}
-</div>
-
-<div class="field">
-  <label>User votes</label>
-  {{#if model.errors.userVotes}}
-    <span style="color:red">{{model.errors.userVotes}}</span>
-  {{/if}}
-  {{
-    flexberry-groupedit
-    componentName="userVotesGroupEdit"
-    class="attached"
-    modelProjection=modelProjection.attributes.userVotes
-    content=model.userVotes
-    readonly=readonly
-    orderable=false
-    class=(if model.errors.userVotes 'error' '')
-}}
-</div>
-
+  <div class="field">
+    {{#if model.errors.address}}
+      <span style ="color:red">
+        {{model.errors.address}}
+      </span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.address
+      class=(if model.errors.address "error" "")
+      label="Address"
+      }}
+  </div>
+  <div class="field">
+    {{#if model.errors.text}}
+      <span style ="color:red">
+        {{model.errors.text}}
+      </span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.text
+      class=(if model.errors.text "error" "")
+      label="Text"
+    }}
+  </div>
+  <div class="field">
+    <label>Date</label>
+    {{#if model.errors.date}}
+      <span style="color:red">{{model.errors.date}}</span>
+    {{/if}}
+    {{flexberry-datepicker
+      placeholder="(no value)"
+      readonly=readonly
+      value=model.date
+      class=(if model.errors.date "error" "")
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.votes}}
+      <span style ="color:red">
+        {{model.errors.votes}}
+      </span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.votes
+      class=(if model.errors.votes "error" "")
+      label="Votes"
+    }}
+  </div>
+  <div class="field">
+    <label>Moderated</label>
+    {{#if model.errors.moderated}}
+      <span style="color:red">{{model.errors.moderated}}</span>
+    {{/if}}
+    {{flexberry-checkbox readonly=readonly value=model.moderated}}
+  </div>
+  <div class="field">
+    <label>Type</label>
+    {{#if model.errors.type}}
+      <span style="color:red">{{model.errors.type}}</span>
+    {{/if}}
+    {{flexberry-lookup
+      value=model.type
+      projection="SuggestionTypeL"
+      displayAttributeName="name"
+      title="Type"
+      relatedModel=model
+      relationName="type"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      limitFunction=null
+      class=(if model.errors.author "error" "")
+    }}
+  </div>
+  <div class="field">
+    <label>Author</label>
+    {{#if model.errors.author}}
+      <span style="color:red">{{model.errors.author}}</span>
+    {{/if}}
+    {{flexberry-lookup
+      value=model.author
+      projection="ApplicationUserL"
+      displayAttributeName="name"
+      title="Author"
+      relatedModel=model
+      relationName="author"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      limitFunction=null
+      class=(if model.errors.author "error" "")
+    }}
+  </div>
+  <div class="field">
+    <label>Editor</label>
+    {{#if model.errors.editor}}
+      <span style="color:red">{{model.errors.editor}}</span>
+    {{/if}}
+    {{flexberry-lookup
+      value=model.editor
+      projection="ApplicationUserL"
+      displayAttributeName="name"
+      title="Editor"
+      relatedModel=model
+      relationName="editor"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      limitFunction=null
+      class=(if model.errors.editor "error" "")
+    }}
+  </div>
+  <div class="field">
+    <label>Files</label>
+    {{#if model.errors.files}}
+      <span style="color:red">{{model.errors.files}}</span>
+    {{/if}}
+    {{flexberry-groupedit
+      componentName="filesGroupEdit"
+      class="attached"
+      modelProjection=modelProjection.attributes.files
+      content=model.files
+      readonly=readonly
+      orderable=false
+      class=(if model.errors.files "error" "")
+    }}
+  </div>
+  <div class="field">
+    <label>User votes</label>
+    {{#if model.errors.userVotes}}
+      <span style="color:red">{{model.errors.userVotes}}</span>
+    {{/if}}
+    {{flexberry-groupedit
+      componentName="userVotesGroupEdit"
+      class="attached"
+      modelProjection=modelProjection.attributes.userVotes
+      content=model.userVotes
+      readonly=readonly
+      orderable=false
+      class=(if model.errors.userVotes "error" "")
+    }}
+  </div>
+  <div class="field">
+    <label>Comments</label>
+    {{#if model.errors.comments}}
+      <span style="color:red">{{model.errors.comments}}</span>
+    {{/if}}
+    {{flexberry-groupedit
+      componentName="commentsGroupEdit"
+      class="attached"
+      modelProjection=modelProjection.attributes.comments
+      content=model.comments
+      readonly=readonly
+      orderable=false
+      rowClickable=true
+      rowClick="rowClick"
+      editOnSeparateRoute=true
+      editFormRoute=commentsEditRoute
+      saveBeforeRouteLeave=true
+      class=(if model.errors.comments "error" "")
+    }}
+  </div>
 </form>

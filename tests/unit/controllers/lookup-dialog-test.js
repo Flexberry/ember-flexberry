@@ -25,7 +25,7 @@ test('it shold set selected record to saveTo.propName of saveTo.model', function
   controller.set('saveTo', saveTo);
 
   sinon.stub(model, 'makeDirty');
-  sinon.stub(controller, 'closeModalDialog');
+  sinon.stub(controller, '_closeModalDialog');
   let master = Ember.Object.create();
 
   controller.send('rowClick', master);

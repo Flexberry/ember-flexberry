@@ -1,69 +1,101 @@
+/**
+  @module ember-flexberry
+ */
+
 import ListFormController from '../controllers/list-form';
 
+/**
+  Controller to support a modal windows in FlexberryLookup component.
+
+  @class LookupDialogController
+  @extends ListFormController
+ */
 export default ListFormController.extend({
   /**
-   * Current opened modal window.
-   *
-   * @property _openedModalDialog
-   * @type JQuery
-   * @default undefined
+    Current open a modal window.
+
+    @property _openedModalDialog
+    @type JQuery
+    @private
    */
   _openedModalDialog: undefined,
 
+  /**
+    Title for modal window.
+
+    @property title
+    @type String
+   */
   title: undefined,
 
   /**
-   * Size of Semantic-UI modal.
-   * Possible variants: 'small', 'large', 'fullscreen'.
-   *
-   * @property sizeClass
-   * @type String
-   * @default 'small'
+    Size of Semantic-UI modal.
+    [More info](http://semantic-ui.com/modules/modal.html#size).
+
+    Possible variants:
+    - **small**
+    - **large**
+    - **fullscreen**
+
+    @property sizeClass
+    @type String
+    @default 'small'
    */
   sizeClass: 'small',
 
   actions: {
     /**
-     * Handles olv row clicked.
-     * Save selected row to object master property and close modal window
-     *
-     * @method rowClick
-     * @param {Ember.Object} record Row record
+      Handlers OLV row click, Save selected row to object master property and close modal window.
+
+      @method actions.rowClick
+      @param {Object} record Selected row.
      */
-    rowClick: function (record) {
-      this.selectMaster(record);
-      this.closeModalDialog();
+    rowClick(record) {
+      this._selectMaster(record);
+      this._closeModalDialog();
     },
 
     /**
-     * Handles create modal window action.
-     * It saves created window to have opportunity to close it later.
-     *
-     * @method createdModalDialog
-     * @param {JQuery} modalDialog Created modal window.
+      Handlers create modal window action. Save created window, to have opportunity to close it later.
+
+      @method actions.createdModalDialog
+      @param {JQuery} modalDialog Created modal window.
      */
-    createdModalDialog: function(modalDialog) {
+    createdModalDialog(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
     },
 
     /**
-     * Handles correcponding route's willTransition action.
-     * It closes modal window if it is opened (if Ember uses hash location type, modal window won't be closed automatically).
-     *
-     * @method routeWillTransition
+      Handlers correcponding route's willTransition action.
+      It closes modal window if it is opened (if Ember uses hash location type, modal window won't be closed automatically).
+
+      @method actions.routeWillTransition
      */
-    routeWillTransition: function() {
-      this.closeModalDialog();
-    }
+    routeWillTransition() {
+      this._closeModalDialog();
+    },
   },
 
   /**
-   * Set master to corresponding property of editing object.
-   *
-   * @method selectMaster
-   * @param {Ember.Object} master Selected master for editing property
+    Reset current state.
+
+    @method clear
    */
-  selectMaster: function (master) {
+  clear() {
+    this.set('_openedModalDialog', undefined);
+    this.set('saveTo', undefined);
+    this.set('modelProjection', undefined);
+    return this;
+  },
+
+  /**
+    Set master to corresponding property of editing object.
+
+    @method _selectMaster
+    @param {Object} master Selected master for editing property.
+    @private
+   */
+  _selectMaster(master) {
     var saveTo = this.get('saveTo');
     if (!saveTo) {
       throw new Error('Don\'t know where to save - no saveTo data defined.');
@@ -76,22 +108,16 @@ export default ListFormController.extend({
   },
 
   /**
-   * Close current modal window if it exists.
-   *
-   * @method closeModalDialog
+    Close current modal window if it exists.
+
+    @method _closeModalDialog
+    @private
    */
-  closeModalDialog: function () {
+  _closeModalDialog() {
     let openedDialog = this.get('_openedModalDialog');
     if (openedDialog) {
       openedDialog.modal('hide');
       this.set('_openedModalDialog', undefined);
     }
   },
-
-  clear: function() {
-    this.set('_openedModalDialog', undefined);
-    this.set('saveTo', undefined);
-    this.set('modelProjection', undefined);
-    return this;
-  }
 });

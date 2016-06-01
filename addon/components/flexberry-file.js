@@ -182,11 +182,6 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Add button title (will be shown on mouse hover).
-   */
-  addButtonTitle: undefined,
-
-  /**
    * Flag: indicates whether remove button is visible now.
    */
   removeButtonIsVisible: Ember.computed('readonly', function() {
@@ -203,11 +198,6 @@ export default FlexberryBaseComponent.extend({
 
     return !(uploadIsInProgress || downloadIsInProgress || Ember.isNone(jsonValue));
   }),
-
-  /**
-   * Remove button title (will be shown on mouse hover).
-   */
-  removeButtonTitle: undefined,
 
   /**
    * Flag: indicates whether to upload file on 'relatedModel' 'preSave' event.
@@ -238,11 +228,6 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Upload button title (will be shown on mouse hover).
-   */
-  uploadButtonTitle: undefined,
-
-  /**
    * Flag: indicates whether download button is visible now.
    */
   downloadButtonIsVisible: Ember.computed('initialValue', function() {
@@ -262,11 +247,6 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Download button title (will be shown on mouse hover).
-   */
-  downloadButtonTitle: undefined,
-
-  /**
    * Maximum file size in bytes for uploading files.
    * It should be greater then 0 and less or equal then APP.components.file.maxUploadFileSize from application config\environment.
    * If null or undefined, then APP.components.file.maxUploadFileSize from application config\environment will be used.
@@ -275,8 +255,12 @@ export default FlexberryBaseComponent.extend({
 
   /**
    * Text to be displayed instead of file name, if file has not been selected.
+   *
+   * @property placeholder
+   * @type String
+   * @default t('flexberry-file.placeholder')
    */
-  placeholder: undefined,
+  placeholder: t('flexberry-file.placeholder'),
 
   /**
    * File upload URL.
@@ -335,18 +319,12 @@ export default FlexberryBaseComponent.extend({
     this.set('initialValue', Ember.copy(value, true));
 
     // Initialize properties which defaults could be defined in application configuration.
-    var i18n = this.get('i18n');
     this.initProperty({ propertyName: 'uploadUrl', defaultValue: null });
     this.initProperty({ propertyName: 'maxUploadFileSize', defaultValue: null });
-    this.initProperty({ propertyName: 'placeholder', defaultValue: i18n.t('flexberry-file.placeholder') });
     this.initProperty({ propertyName: 'uploadOnModelPreSave', defaultValue: true });
     this.initProperty({ propertyName: 'showUploadButton', defaultValue: false });
     this.initProperty({ propertyName: 'showModalDialogOnUploadError', defaultValue: false });
     this.initProperty({ propertyName: 'showModalDialogOnDownloadError', defaultValue: true });
-    this.initProperty({ propertyName: 'addButtonTitle', defaultValue: i18n.t('flexberry-file.add-btn-text') });
-    this.initProperty({ propertyName: 'removeButtonTitle', defaultValue: i18n.t('flexberry-file.remove-btn-text') });
-    this.initProperty({ propertyName: 'uploadButtonTitle', defaultValue: i18n.t('flexberry-file.upload-btn-text') });
-    this.initProperty({ propertyName: 'downloadButtonTitle', defaultValue: i18n.t('flexberry-file.download-btn-text') });
 
     // Bind related model's 'preSave' event handler's context & subscribe on related model's 'preSave'event.
     this.set('_onRelatedModelPreSave', this.get('_onRelatedModelPreSave').bind(this));

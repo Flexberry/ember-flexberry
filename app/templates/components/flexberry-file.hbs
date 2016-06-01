@@ -11,26 +11,26 @@
 {{#unless readonly}}
   {{#if addButtonIsVisible}}
     <label class="flexberry-file-add-button ui icon {{buttonClass}} {{unless addButtonIsEnabled "disabled"}} button"
-         title={{addButtonTitle}}>
+         title={{t "flexberry-file.add-btn-text"}}>
       <i class="add outline square icon"></i>
     </label>
   {{/if}}
   {{#if removeButtonIsVisible}}
     <label class="flexberry-file-remove-button ui icon {{buttonClass}} {{unless removeButtonIsEnabled "disabled"}} button"
-         title={{removeButtonTitle}}>
+         title={{t "flexberry-file.remove-btn-text"}}>
       <i class="trash outline icon"></i>
     </label>
   {{/if}}
   {{#if uploadButtonIsVisible}}
     <label class="flexberry-file-upload-button ui icon {{buttonClass}} {{unless uploadButtonIsEnabled "disabled"}} {{if uploadIsInProgress "loading"}} button"
-         title={{uploadButtonTitle}}>
+         title={{t "flexberry-file.upload-btn-text"}}>
       <i class="upload outline icon"></i>
     </label>
   {{/if}}
 {{/unless}}
 {{#if downloadButtonIsVisible}}
 <label class="flexberry-file-download-button ui icon {{buttonClass}} {{unless downloadButtonIsEnabled "disabled"}} {{if downloadIsInProgress "loading"}} button"
-   title={{downloadButtonTitle}}>
+   title={{t "flexberry-file.download-btn-text"}}>
   <i class="download outline icon"></i>
 </label>
 {{/if}}

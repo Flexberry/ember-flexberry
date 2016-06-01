@@ -44,16 +44,6 @@ import { StringPredicate } from 'ember-flexberry-data/query/predicate';
  */
 export default FlexberryBaseComponent.extend({
   /**
-    Additional observer of value change, updates `displayValue`.
-
-    @property _valueObserver
-    @private
-   */
-  _valueObserver: Ember.observer('value', function() {
-    this.set('displayValue', this._buildDisplayValue());
-  }),
-
-  /**
     Current store. Used for loading data for autocomplete and for dropdown.
 
     @property store
@@ -526,5 +516,15 @@ export default FlexberryBaseComponent.extend({
     }
 
     return selectedModel.get(this.get('displayAttributeName'));
-  }
+  },
+
+  /**
+    Additional observer of value change, updates `displayValue`.
+
+    @method _valueObserver
+    @private
+   */
+  _valueObserver: Ember.observer('value', function() {
+    this.set('displayValue', this._buildDisplayValue());
+  }),
 });

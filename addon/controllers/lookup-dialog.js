@@ -89,12 +89,12 @@ export default ListFormController.extend({
   reloadObserverIsActive: false,
 
   /**
-   * It observes filter changing.
-     If filter is changed then displayed data are reloaded.
+   * It observes query parameters changing.
+     If query parameter (filter, current page, etc.) is changed then displayed data are reloaded.
 
    * @method queryParametersChanged
    */
-  queryParametersChanged: Ember.observer('filter', function() {
+  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', function() {
     if (!this.get('reloadObserverIsActive')) {
       return;
     }
@@ -199,22 +199,25 @@ export default ListFormController.extend({
    * @param {Boolean} initialClear Flag indicates whether it is clear on first load or just on reload.
    */
   clear: function(initialClear) {
+    this.set('reloadObserverIsActive', false);
+
     if (initialClear) {
       this.set('_openedModalDialog', undefined);
+      this.set('modelProjection', undefined);
+      this.set('reloadContext', undefined);
+      this.set('reloadDataHandler', undefined);
+
+      this.set('perPage', undefined);
+      this.set('page', undefined);
+      this.set('sort', undefined);
+      this.set('filter', undefined);
     }
 
     this.set('saveTo', undefined);
-    this.set('modelProjection', undefined);
     this.set('currentLookupRow', undefined);
     this.set('customPropertiesData', undefined);
-    this.set('reloadDataHandler', undefined);
-    this.set('perPage', undefined);
-    this.set('page', undefined);
-    this.set('sort', undefined);
     this.set('modelType', undefined);
     this.set('projectionName', undefined);
-    this.set('reloadContext', undefined);
-    this.set('reloadObserverIsActive', false);
     return this;
   }
 });

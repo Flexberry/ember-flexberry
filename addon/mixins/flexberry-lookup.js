@@ -70,6 +70,15 @@ export default Ember.Mixin.create(ReloadListMixin, {
    */
   lookupController: undefined,
 
+  /**
+   * Default number of records per page on lookup window list.
+   *
+   * @property lookupModalWindowPerPage
+   * @type Number
+   * @default 5
+   */
+  lookupModalWindowPerPage: 5,
+
   actions: {
     /**
      * Handles action from lookup choose action.
@@ -130,7 +139,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         relatedToType: relatedToType,
         projectionName: projectionName,
 
-        perPage: 10, // TODO: get default values.
+        perPage: this.get('lookupModalWindowPerPage'),
         page: 1,
         sorting: [],
         filter: undefined,
@@ -270,8 +279,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
     let queryParameters = {
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
-      perPage: reloadData.perPage ? reloadData.perPage : 10, // TODO: get default values.
-      page: reloadData.page ? reloadData.page : 1, // TODO: get default values.
+      perPage: reloadData.perPage ? reloadData.perPage : this.get('lookupModalWindowPerPage'),
+      page: reloadData.page ? reloadData.page : 1,
       sorting: [], // TODO: get current value.
       filter: reloadData.filter
     };

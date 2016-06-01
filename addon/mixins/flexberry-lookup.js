@@ -1,14 +1,32 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
 
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 
-// TODO: rename file, add 'controller' word into filename.
+/**
+  Mixin for controller, for support FlexberryLookup component.
+
+  TODO: Rename file, add 'controller' word into filename.
+
+  @class FlexberryLookupController
+  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+ */
 export default Ember.Mixin.create({
-  // Lookup settings.
+  /**
+    Settings for modal window.
+
+    Structure object:
+    - **controllerName** - Controller name.
+    - **template** - Template name for show in modal window.
+    - **contentTemplate** - Template name for show data.
+    - **loaderTemplate** - Template name for show while data loading.
+
+    @property lookupSettings
+    @type Object
+   */
   lookupSettings: {
     controllerName: undefined,
     template: undefined,
@@ -17,22 +35,21 @@ export default Ember.Mixin.create({
   },
 
   /**
-   * Controller to show lookup modal window.
-   *
-   * @property lookupController
-   * @type Ember.InjectedProperty
-   * @default undefined
+    Controller to show modal window.
+
+    @property lookupController
+    @type Ember.Controller
    */
   lookupController: undefined,
 
   actions: {
     /**
-     * Handles action from lookup choose action.
-     *
-     * @method showLookupDialog
-     * @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
+      Handlers action from FlexberryLookup choose action.
+
+      @method actions.showLookupDialog
+      @param {Object} chooseData Lookup parameters: { projection, relationName, title, predicate, modelToLookup, sizeClass }.
      */
-    showLookupDialog: function(chooseData) {
+    showLookupDialog(chooseData) {
       let options = Ember.$.extend(true, {
         projection: undefined,
         relationName: undefined,
@@ -135,22 +152,22 @@ export default Ember.Mixin.create({
     },
 
     /**
-     * Handles correcponding route's willTransition action.
-     * It sends message about transition to showing lookup modal window controller.
-     *
-     * @method routeWillTransition
+      Handlers corresponding route's willTransition action.
+      It sends message about transition to showing lookup modal window controller.
+
+      @method actions.routeWillTransition
      */
-    routeWillTransition: function() {
+    routeWillTransition() {
       this.get('lookupController').send('routeWillTransition');
     },
 
     /**
-     * Handles action from lookup remove action.
-     *
-     * @method removeLookupValue
-     * @param {Object} removeData Lookup parameters (projection name, etc).
+      Handlers action from FlexberryLookup remove action.
+
+      @method actions.removeLookupValue
+      @param {Object} removeData Lookup parameters: { relationName, modelToLookup }.
      */
-    removeLookupValue: function(removeData) {
+    removeLookupValue(removeData) {
       let options = Ember.$.extend(true, {
         relationName: undefined,
         modelToLookup: undefined
@@ -166,12 +183,12 @@ export default Ember.Mixin.create({
     },
 
     /**
-     * Update relation value at model.
-     *
-     * @method updateLookupValue
-     * @param {Object} updateData Lookup parameters to update data at model (projection name, etc).
+      Update relation value at model.
+
+      @method actions.updateLookupValue
+      @param {Object} updateData Lookup parameters to update data at model: { relationName, newRelationValue, modelToLookup }.
      */
-    updateLookupValue: function(updateData) {
+    updateLookupValue(updateData) {
       let options = Ember.$.extend(true, {
         relationName: undefined,
         newRelationValue: undefined,
@@ -185,6 +202,6 @@ export default Ember.Mixin.create({
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
-    }
-  }
+    },
+  },
 });

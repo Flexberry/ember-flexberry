@@ -1,8 +1,10 @@
-﻿/// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/MetadataClasses.d.ts' />
 
 import fs = require("fs");
 import path = require('path');
-let stripBom = require("strip-bom");
+const stripBom = require("strip-bom");
+import metadata = require('MetadataClasses');
 
 module.exports = {
   description: 'Generates an ember list-form for flexberry.',
@@ -22,7 +24,7 @@ module.exports = {
    * @param {Object} options Options is an object containing general and entity-specific options.
    * @return {Object} Сustom template variables.
    */
-  locals: function (options) {
+  locals: function(options) {
     let listFormBlueprint = new ListFormBlueprint(this, options);
     return {
       editForm: listFormBlueprint.listForm.editForm,// for use in files\__root__\templates\__name__.hbs
@@ -35,7 +37,7 @@ module.exports = {
 };
 
 class ListFormBlueprint {
-  listForm: any;
+  listForm: metadata.ListForm;
   constructor(blueprint, options) {
     let listFormsDir = path.join(options.metadataDir, "list-forms");
     if (!options.file) {

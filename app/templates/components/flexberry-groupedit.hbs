@@ -2,10 +2,14 @@
   componentName=componentName
   readonly=readonly
   buttonClass=buttonClass
+  createNewButton=createNewButton
+  deleteButton=deleteButton
 }}
 {{object-list-view
   readonly=readonly
   buttonClass=buttonClass
+  tableStriped=tableStriped
+  customTableClass=customTableClass
   headerCellComponent=headerCellComponent
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
@@ -26,7 +30,9 @@
   content=content
   sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
-  action='rowClick'
+  action='groupEditRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
+  confirmDeleteRow=this.attrs.confirmDeleteRow
+  confirmDeleteRows=this.attrs.confirmDeleteRows
 }}

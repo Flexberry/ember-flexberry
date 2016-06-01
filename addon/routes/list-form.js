@@ -6,6 +6,7 @@ import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
+import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
 
@@ -38,24 +39,14 @@ import ProjectedModelFormRoute from '../routes/projected-model-form';
  * @uses SortableRouteMixin
  * @uses LimitedRouteMixin
  * @uses ReloadListMixin
+ * @uses FlexberryObjectlistviewRouteMixin
  */
 export default ProjectedModelFormRoute.extend(
-  PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, ReloadListMixin, {
-  actions: {
-    /**
-     * Table row click handler.
-     *
-     * @param {Ember.Object} record Record related to clicked table row.
-     */
-    rowClick: function(record, editFormRoute) {
-      this.transitionTo(editFormRoute, record.get('id'));
-    },
-
-    refreshList: function() {
-      this.refresh();
-    }
-  },
-
+  PaginatedRouteMixin,
+  SortableRouteMixin,
+  LimitedRouteMixin,
+  ReloadListMixin,
+  FlexberryObjectlistviewRouteMixin, {
   model: function(params, transition) {
     let sorting = this.deserializeSortingParam(params.sort);
 

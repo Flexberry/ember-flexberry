@@ -36,21 +36,21 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-     * Handles click on row of objectlistview.
+     * Handles click on row of groupedit.
      * Sends action out of component.
      *
-     * @method rowClick
+     * @method groupEditRowClick
      * @param {Object} record Clicked record.
      * @param {Object} options Different parameters to handle action.
      */
-    rowClick: function(record, options) {
+    groupEditRowClick: function(record, options) {
       if (this.get('editOnSeparateRoute')) {
         let editFormRoute = this.get('editFormRoute');
         Ember.assert('Edit form route must be defined for flexberry-groupedit', editFormRoute);
         options = Ember.merge(options, { editFormRoute: editFormRoute });
       }
 
-      this.sendAction('rowClick', record, options);
+      this.sendAction('action', record, options);
     }
   },
 
@@ -76,11 +76,11 @@ export default FlexberryBaseComponent.extend({
    * Name of action to handle row click.
    * Action will be send out of the component.
    *
-   * @property rowClick
+   * @property action
    * @type String
-   * @default 'rowClick'
+   * @default 'groupEditRowClick'
    */
-  rowClick: 'rowClick',
+  action: 'groupEditRowClick',
 
   /**
    * Default cell component that will be used to display values in columns headers.
@@ -190,6 +190,15 @@ export default FlexberryBaseComponent.extend({
   menuInRowAdditionalItems: null,
 
   /**
+   * Flag: indicates whether table are striped.
+   *
+   * @property tableStriped
+   * @type Boolean
+   * @default true
+   */
+  tableStriped: true,
+
+  /**
    * Flag: indicates whether table rows are clickable.
    *
    * @property rowClickable
@@ -197,6 +206,42 @@ export default FlexberryBaseComponent.extend({
    * @default true
    */
   rowClickable: false,
+
+  /**
+   * Custom classes for table.
+   *
+   * @property customTableClass
+   * @type String
+   * @default ''
+   */
+  customTableClass: '',
+
+  /**
+   * Classes for buttons.
+   *
+   * @property buttonClass
+   * @type String
+   * @default undefined
+   */
+  buttonClass: undefined,
+
+  /**
+   * Flag: indicates whether to show creation button at toolbar.
+   *
+   * @property createNewButton
+   * @type Boolean
+   * @default false
+   */
+  createNewButton: true,
+
+  /**
+   * Flag: indicates whether to show delete button at toolbar.
+   *
+   * @property deleteButton
+   * @type Boolean
+   * @default false
+   */
+  deleteButton: true,
 
   /**
    * Flag: indicates whether ordering by clicking on column headers is allowed.

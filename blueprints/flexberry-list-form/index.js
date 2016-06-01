@@ -1,4 +1,5 @@
 /// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/MetadataClasses.d.ts' />
 "use strict";
 var fs = require("fs");
 var path = require('path');

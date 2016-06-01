@@ -1,16 +1,21 @@
-﻿/// <reference path='../typings/node/node.d.ts' />
-/// <reference path='../typings/lodash/index.d.ts' />
+/// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/MetadataClasses.d.ts' />
+import metadata = require('MetadataClasses');
 
-let stripBom = require("strip-bom");
 import fs = require("fs");
 import path = require('path');
+import child_process = require('child_process');
+const stripBom = require("strip-bom");
 
 module.exports = {
-  description: 'Generates an ember application for flexberry.',
+
+  description: 'Generates all entities for flexberry.',
 
   availableOptions: [
     { name: 'metadata-dir', type: String }
   ],
+
+
 
   /**
    * Blueprint Hook locals.
@@ -22,35 +27,47 @@ module.exports = {
    * @param {Object} options Options is an object containing general and entity-specific options.
    * @return {Object} Сustom template variables.
    */
-  locals: function (options) {
+  locals: function(options) {
     let applicationBlueprint = new ApplicationBlueprint(this, options);
-    return {
-      children: applicationBlueprint.children,// for use in files\__root__\controllers\application.js
-      routes: applicationBlueprint.routes// for use in files\__root__\router.js
-    };
   }
 };
 
 class ApplicationBlueprint {
-
-  children: any;
-  routes: any;
+  private metadataDir: string;
   constructor(blueprint, options) {
-    let listFormsDir = path.join(options.metadataDir, "list-forms");
-    let listForms = fs.readdirSync(listFormsDir);
-    let children = [];
-    let routes = [];
-    for (let form of listForms) {
-      let listFormFile = path.join(listFormsDir, form);
-      let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
-      let listForm = JSON.parse(content);
-      let listFormName = path.parse(form).name;
-      children.push(`  {\n  link: '${listFormName}',\n  title: '${listForm.caption}',\n  children: null\n  }`);
-      routes.push(`this.route('${listFormName}');`);
-      routes.push(`this.route('${listForm.editForm}', { path: '${listForm.editForm}/:id' });`);
-      routes.push(`this.route('${listForm.newForm}.new', { path: '${listForm.newForm}/new' });`);
-    }
-    this.children = children.join(",\n");
-    this.routes = routes.join("\n");
+    this.metadataDir=options.metadataDir;
+    this.emberGenerateTests("list-forms");
+    this.emberGenerateTests("edit-forms");
+    this.execCommand("ember generate route index");
+    this.emberGenerate("flexberry-model", "models");
+    this.emberGenerate("flexberry-enum", "enums");
+    this.emberGenerate("flexberry-list-form", "list-forms");
+    this.emberGenerate("flexberry-edit-form", "edit-forms");
+    this.execCommand(`ember generate flexberry-core app --metadata-dir=${this.metadataDir}`);
   }
+
+  execCommand(cmd: string){
+    console.log(cmd);
+    return child_process.execSync(cmd, {stdio:["inherit", "inherit", "inherit"]});
+  }
+
+  emberGenerateTests(metadataSubDir: string){
+    metadataSubDir = path.join(this.metadataDir, metadataSubDir);
+    let list = fs.readdirSync(metadataSubDir);
+    for (let file of list) {
+      let name = path.parse(file).name;
+      this.execCommand(`ember generate route-test ${name}`);
+      this.execCommand(`ember generate controller-test ${name}`);
+    }
+  }
+
+  emberGenerate(blueprintName: string, metadataSubDir: string){
+    metadataSubDir = path.join(this.metadataDir, metadataSubDir);
+    let list = fs.readdirSync(metadataSubDir);
+    for (let file of list) {
+      let name = path.parse(file).name;
+      this.execCommand(`ember generate ${blueprintName} ${name} --metadata-dir=${this.metadataDir}`);
+    }
+  }
+
 }

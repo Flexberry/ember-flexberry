@@ -4,8 +4,8 @@
 
 import Ember from 'ember';
 
-import QueryBuilder from 'ember-flexberry-projections/query/builder';
-import { SimplePredicate } from 'ember-flexberry-projections/query/predicate';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
  * Service to work with user settings on server.

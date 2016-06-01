@@ -1,7 +1,7 @@
 ﻿{
   "modelName": "ember-flexberry-dummy-vote",
   "parentModelName": null,
-  "parentClasslName": null,
+  "parentClassName": null,
   "attrs": [
     {
       "name": "voteType",
@@ -13,13 +13,11 @@
   ],
   "belongsTo": [
     {
-      "startMultiplicity": null,
       "name": "applicationUser",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     },
     {
-      "startMultiplicity": null,
       "name": "suggestion",
       "relatedTo": "ember-flexberry-dummy-suggestion",
       "inverse": "userVotes"

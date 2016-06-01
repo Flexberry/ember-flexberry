@@ -48,10 +48,10 @@ export default FlexberryBaseComponent.extend({
     /**
      * Handles action from row click (action is handled at route so it can't be closure action now).
      *
-     * @method rowClick
+     * @method objectListViewRowClick
      * @param {Object} record Clicked record.
      */
-    rowClick: function(record) {
+    objectListViewRowClick: function(record) {
       if (this.get('componentMode') === 'lookupform') {
         this.sendAction('action', record);
       } else {
@@ -132,8 +132,8 @@ export default FlexberryBaseComponent.extend({
        ```
        {{flexberry-objectlistview
         ...
-        customButtons = (action "getCustomButtons")
-        userButtonActionTest = 'userButtonActionTest'
+        customButtons=(action "getCustomButtons")
+        userButtonActionTest='userButtonActionTest'
        }}
        ```
      * @method customButtons
@@ -190,9 +190,9 @@ export default FlexberryBaseComponent.extend({
    *
    * @property action
    * @type String
-   * @default 'rowClick'
+   * @default 'objectListViewRowClick'
    */
-  action: 'rowClick',
+  action: 'objectListViewRowClick',
 
   /**
    * It indicates current component mode.
@@ -314,6 +314,15 @@ export default FlexberryBaseComponent.extend({
   menuInRowAdditionalItems: null,
 
   /**
+   * Flag: indicates whether table are striped.
+   *
+   * @property tableStriped
+   * @type Boolean
+   * @default true
+   */
+  tableStriped: true,
+
+  /**
    * Flag: indicates whether table rows are clickable.
    *
    * @property rowClickable
@@ -321,6 +330,15 @@ export default FlexberryBaseComponent.extend({
    * @default true
    */
   rowClickable: true,
+
+  /**
+   * Custom classes for table.
+   *
+   * @property customTableClass
+   * @type String
+   * @default ''
+   */
+  customTableClass: '',
 
   /**
    * Flag: indicates whether ordering by clicking on column headers is allowed.

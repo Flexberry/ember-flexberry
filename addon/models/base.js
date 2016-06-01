@@ -3,7 +3,7 @@
  */
 
 import Ember from 'ember';
-import Proj from 'ember-flexberry-projections';
+import Proj from 'ember-flexberry-data';
 import EmberValidations from 'ember-validations';
 
 /**

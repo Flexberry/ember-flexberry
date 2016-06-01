@@ -17,6 +17,8 @@
 {{object-list-view
   readonly=readonly
   buttonClass=buttonClass
+  tableStriped=tableStriped
+  customTableClass=customTableClass
   headerCellComponent=headerCellComponent
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
@@ -38,8 +40,10 @@
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   configurateRow=this.attrs.configurateRow
+  confirmDeleteRow=this.attrs.confirmDeleteRow
+  confirmDeleteRows=this.attrs.confirmDeleteRows
   beforeDeleteRecord=this.attrs.beforeDeleteRecord
-  action='rowClick'
+  action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord

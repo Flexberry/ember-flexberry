@@ -1,0 +1,4 @@
+import EmberFlexberryDummySuggestionEditController from '../ember-flexberry-dummy-suggestion-edit';
+
+var EmberFlexberryDummySuggestionEditNewController = EmberFlexberryDummySuggestionEditController;
+export default EmberFlexberryDummySuggestionEditNewController;

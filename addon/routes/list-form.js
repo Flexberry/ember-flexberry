@@ -91,21 +91,15 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
      * userSettings from user-settings-service'),
      */
     let sortingPromise;
-    if (sorting.length == 0) {  // no sorting in URL parameters - use sorting from userSettings.sorting
-      sortingPromise=this.get('_userSettingsService').getUserSetting({moduleName:moduleName,settingName:'DEFAULT'})
-      .then( _userSettings=> {
-       let  _sorting=[];
-        if (_userSettings) {
-          this.userSettings= _userSettings;
-          _sorting = 'sorting' in this.userSettings ? this.userSettings['sorting']: [];
-        }
-        return _sorting;
-      });
-    } else {
-      sortingPromise=new Promise((resolve,reject) => {
-        resolve(sorting);
-      });
-    }
+    sortingPromise=this.get('_userSettingsService').getUserSetting({moduleName:moduleName,settingName:'DEFAULT'})
+    .then( _userSettings=> {
+      let  _sorting=[];
+      if (_userSettings) {
+        this.userSettings= _userSettings;
+        _sorting = 'sorting' in this.userSettings ? this.userSettings['sorting']: [];
+      }
+      return _sorting;
+    });
     let ret = sortingPromise
     .then(
       sorting => {

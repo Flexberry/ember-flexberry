@@ -135,8 +135,7 @@ export default Ember.Mixin.create({
 
     if (typeof filter === 'string' && filter.length > 0) {
       let containsExpressions = attrToFilterNames.map(function(fieldName) {
-        var backendFieldName = store.serializerFor(modelProjection.modelName).keyForAttribute(fieldName);
-        return new StringPredicate(backendFieldName).contains(filter);
+        return new StringPredicate(fieldName).contains(filter);
       });
 
       let newExpression = containsExpressions.length > 1 ? new ComplexPredicate(Condition.Or, ...containsExpressions) : containsExpressions[0];

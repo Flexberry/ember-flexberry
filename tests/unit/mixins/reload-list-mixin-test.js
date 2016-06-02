@@ -52,6 +52,16 @@ test('it properly generates simple filter predicate', function(assert) {
 });
 
 test('it properly generates complex filter predicate', function(assert) {
+  let Model0 = BaseModel.extend({
+    firstName: DS.attr('string'),
+    lastName: DS.attr('string'),
+    dateField: DS.attr('date'),
+    numberField: DS.attr('number'),
+  });
+
+  let app = startApp();
+  app.register('model:employeeTest2', Model0);
+
   let Model = BaseModel.extend({
     firstName: DS.attr('string'),
     lastName: DS.attr('string'),
@@ -60,11 +70,9 @@ test('it properly generates complex filter predicate', function(assert) {
     masterField: DS.belongsTo('employeeTest2', { inverse: null, async: false }),
   });
 
-  let app = startApp();
+  app.register('model:employeeTest', Model);
 
-  app.register('model:employeeTest2', Model);
-
-  Model.defineProjection('EmployeeE', 'employeeTest2', {
+  Model.defineProjection('EmployeeE', 'employeeTest', {
     firstName: Proj.attr(),
     lastName: Proj.attr(),
     dateField: Proj.attr(),
@@ -75,9 +83,11 @@ test('it properly generates complex filter predicate', function(assert) {
   });
 
   let modelSerializer = ODataSerializer.extend({});
+  let modelSerializer0 = ODataSerializer.extend({});
   let projection = Ember.get(Model, 'projections').EmployeeE;
 
-  app.register('serializer:employeeTest2', modelSerializer);
+  app.register('serializer:employeeTest2', modelSerializer0);
+  app.register('serializer:employeeTest', modelSerializer);
   let store = app.__container__.lookup('service:store');
 
   let ReloadListMixinObject = Ember.Object.extend(ReloadListMixin);

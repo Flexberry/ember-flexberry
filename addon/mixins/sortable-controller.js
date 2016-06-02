@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   queryParams: ['sort'],
-  sortDefaultValue: undefined,
+  sortDefaultValue: null,
   _userSettingsService: Ember.inject.service('user-settings-service'),
   sort: Ember.computed.oneWay('sortDefaultValue'),
 
@@ -64,8 +64,8 @@ export default Ember.Mixin.create({
       }
 
       let sortQueryParam = this.serializeSortingParam(newSorting);
-      this.set('sort', sortQueryParam);
       this.userSettings.sorting=newSorting;
+      this.set('sort', sortQueryParam);
     },
 
     addColumnToSorting: function(column) {
@@ -92,9 +92,9 @@ export default Ember.Mixin.create({
       }
 
       let sortQueryParam = this.serializeSortingParam(newSorting);
-      this.set('sort', sortQueryParam);
       this.userSettings.sorting=newSorting;
-      
+      this.set('sort', sortQueryParam);
+
     }
   }
 });

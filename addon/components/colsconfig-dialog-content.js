@@ -8,7 +8,6 @@ export default FlexberryBaseComponent.extend({
   idPrefix:'ColDesc',
   modelForDOM:[],
   _userSettingsService: Ember.inject.service('user-settings-service'),
-  _routing: Ember.inject.service('-routing'),
 
   init: function() {
     this._super(...arguments);
@@ -186,10 +185,11 @@ export default FlexberryBaseComponent.extend({
       savePromise.then (
         record => {
           let router=getOwner(this).lookup("router:main");
-          let currentRoute=router.currentRouteName;
-          router.router.refresh();
-//          this.get('_routing').router.refresh();  //Reload current outer without sort parameters
-//           this.get('_routing').router.transitionTo(currentRoute,{ queryParams : {sort:null}});  //Reload current outer without sort parameters
+          if (router.location.location.hash.indexOf('sort=')>=0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null } });
+          } else {
+            router.router.refresh();  //Reload current page and records (model) list
+          }
         }
       );
       this.sendAction('close',colsConfig);

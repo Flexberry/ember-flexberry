@@ -258,16 +258,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
    */
   save(close) {
     this.send('dismissErrorMessages');
-    return this.get('model').save().then((model) => {
-      return this.saveHasManyRelationships(model).then(() => {
-        this.onSaveActionFulfilled();
-        if (close) {
-          this.close();
-        }
-      }).catch((errorData) => {
-        this.onSaveActionRejected(errorData);
-      });
+    return this.get('model').save().then((model) => this.saveHasManyRelationships(model).then(() => {
+      this.onSaveActionFulfilled();
+      if (close) {
+        this.close();
+      }
     }).catch((errorData) => {
+      this.onSaveActionRejected(errorData);
+    })).catch((errorData) => {
       this.onSaveActionRejected(errorData);
     });
   },
@@ -282,13 +280,11 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     var model = this.get('model');
 
     if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
-      return this.destroyHasManyRelationships(model).then(() => {
-        return model.destroyRecord().then(() => {
-          this.onDeleteActionFulfilled();
-        }).catch((errorData) => {
-          this.onDeleteActionRejected(errorData);
-        });
+      return this.destroyHasManyRelationships(model).then(() => model.destroyRecord().then(() => {
+        this.onDeleteActionFulfilled();
       }).catch((errorData) => {
+        this.onDeleteActionRejected(errorData);
+      })).catch((errorData) => {
         this.onDeleteActionRejected(errorData);
       });
     } else {
@@ -405,11 +401,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
-          let promise = record.save().then((record) => {
-            return this.saveHasManyRelationships(record).then(() => {
-              return record;
-            });
-          });
+          let promise = record.save().then((record) => this.saveHasManyRelationships(record).then(() => record));
 
           promises.pushObject(promise);
         });
@@ -450,9 +442,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).forEach((record) => {
-          let promise = this.destroyHasManyRelationships(record).then(() => {
-            return record.destroyRecord();
-          });
+          let promise = this.destroyHasManyRelationships(record).then(() => record.destroyRecord());
 
           promises.pushObject(promise);
         });

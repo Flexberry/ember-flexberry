@@ -45,6 +45,7 @@ export default Ember.Mixin.create({
 
       return perPage;
     },
+
     set(key, value) {
       let perPage = parseInt(value, 10);
 

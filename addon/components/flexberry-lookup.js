@@ -294,8 +294,9 @@ export default FlexberryBaseComponent.extend({
             callback({
               success: true,
               results: records.map(i => {
+                let attributeName = i.get(displayAttributeName);
                 return {
-                  title: i.get(displayAttributeName),
+                  title: attributeName,
                   instance: i
                 };
               })
@@ -389,8 +390,9 @@ export default FlexberryBaseComponent.extend({
             callback({
               success: true,
               results: records.map(i => {
+                let attributeName = i.get(displayAttributeName);
                 return {
-                  name: i.get(displayAttributeName),
+                  name: attributeName,
                   value: i
                 };
               })

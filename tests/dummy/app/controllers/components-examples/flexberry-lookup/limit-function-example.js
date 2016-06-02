@@ -38,7 +38,7 @@ export default EditFormController.extend({
 
       if (methodArgs.relationName === 'type') {
         return {
-          filterButton:true
+          filterButton: true
         };
       }
 

@@ -12,12 +12,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
-  init: function() {
-    this._super(...arguments);
-    if (!this.get('editFormRoute')) {
-      this.set('editFormRoute', this.get('modelName'));
-    }
-  },
 
   actions: {
     /**
@@ -45,10 +39,10 @@ export default FlexberryBaseComponent.extend({
     /**
      * Handles action from row click (action is handled at route so it can't be closure action now).
      *
-     * @method rowClick
+     * @method objectListViewRowClick
      * @param {Object} record Clicked record.
      */
-    rowClick: function(record) {
+    objectListViewRowClick: function(record) {
       let editFormRoute = this.get('editFormRoute');
       Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
       this.sendAction('action', record, editFormRoute);
@@ -125,8 +119,8 @@ export default FlexberryBaseComponent.extend({
        ```
        {{flexberry-objectlistview
         ...
-        customButtons = (action "getCustomButtons")
-        userButtonActionTest = 'userButtonActionTest'
+        customButtons=(action "getCustomButtons")
+        userButtonActionTest='userButtonActionTest'
        }}
        ```
      * @method customButtons
@@ -175,7 +169,6 @@ export default FlexberryBaseComponent.extend({
    *
    * @property editFormRoute
    * @type String
-   * @default 'this.modelName'
    */
   editFormRoute: undefined,
 
@@ -184,9 +177,9 @@ export default FlexberryBaseComponent.extend({
    *
    * @property action
    * @type String
-   * @default 'rowClick'
+   * @default 'objectListViewRowClick'
    */
-  action: 'rowClick',
+  action: 'objectListViewRowClick',
 
   /**
    * Default cell component that will be used to display values in columns headers.
@@ -296,6 +289,15 @@ export default FlexberryBaseComponent.extend({
   menuInRowAdditionalItems: null,
 
   /**
+   * Flag: indicates whether table are striped.
+   *
+   * @property tableStriped
+   * @type Boolean
+   * @default true
+   */
+  tableStriped: true,
+
+  /**
    * Flag: indicates whether table rows are clickable.
    *
    * @property rowClickable
@@ -303,6 +305,15 @@ export default FlexberryBaseComponent.extend({
    * @default true
    */
   rowClickable: true,
+
+  /**
+   * Custom classes for table.
+   *
+   * @property customTableClass
+   * @type String
+   * @default ''
+   */
+  customTableClass: '',
 
   /**
    * Flag: indicates whether ordering by clicking on column headers is allowed.
@@ -349,9 +360,13 @@ export default FlexberryBaseComponent.extend({
   modelName: null,
 
   /**
-   * Css class for buttons.
+   * Classes for buttons.
+   *
+   * @property buttonClass
+   * @type String
+   * @default undefined
    */
-  classButton: undefined,
+  buttonClass: undefined,
 
   /**
    * Flag: indicates whether to show creation button at toolbar.

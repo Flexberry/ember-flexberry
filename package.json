@@ -4,11 +4,14 @@
   "description": "Ember Flexberry Addon",
   "license": "MIT",
   "author": {
-    "name": "Flexberry",
+    "name": "Flexberry Team",
     "email": "mail@flexberry.net",
-    "url": "http://flexberry.ru/"
+    "url": "http://flexberry.net/"
   },
-  "repository": "Flexberry/ember-flexberry",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Flexberry/ember-flexberry.git"
+  },
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -53,13 +56,13 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
     "ember-cli-sass": "^5.2.0",
-    "ember-flexberry-projections": "Flexberry/ember-flexberry-projections#496a4af",
+    "ember-flexberry-data": "Flexberry/ember-flexberry-data#develop",
     "ember-i18n": "4.2.0",
-    "ember-local-storage": "0.0.10",
-    "ember-simple-auth": "1.0.1",
     "ember-truth-helpers": "1.2.0",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-validations": "~2.0.0-alpha.4"
+    "ember-validations": "~2.0.0-alpha.4",
+    "lodash": "^4.4.0",
+    "strip-bom": "^2.0.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

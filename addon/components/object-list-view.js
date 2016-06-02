@@ -5,6 +5,7 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import ErrorableMixin from '../mixins/errorable-controller';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Object list view component.
@@ -27,7 +28,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
           this._setActiveRecord(recordWithKey.key);
         }
 
-        this.sendAction('action', recordWithKey.data, {
+        this.sendAction('action', recordWithKey ? recordWithKey.data : undefined, {
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
           editOnSeparateRoute: editOnSeparateRoute,
           modelName: this.get('modelProjection').modelName,
@@ -51,9 +52,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         return;
       }
 
-      if (confirm('Do you really want to delete this record?')) {
-        this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+      let confirmDeleteRow = this.get('confirmDeleteRow');
+      if (confirmDeleteRow) {
+        Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
+        if (!confirmDeleteRow(recordWithKey.data)) {
+          return;
+        }
       }
+
+      this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 
     selectRow: function(recordWithKey, e) {
@@ -77,7 +84,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       }
 
       var componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length);
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
     },
 
     menuInRowConfigurateItems: function(recordWithKey, menuItems) {
@@ -85,7 +92,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
         menuInRowSubItems.push({
           icon: 'edit icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
           isEditItem: true
         });
       }
@@ -93,7 +100,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (this.get('showDeleteMenuItemInRow') && recordWithKey.config.canBeDeleted) {
         menuInRowSubItems.push({
           icon: 'trash icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
           isDeleteItem: true
         });
       }
@@ -179,9 +186,68 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   tagName: 'div',
 
   /**
-   * Component's CSS classes.
+   * Component's CSS classes for wrapper.
    */
   classNames: ['object-list-view-container'],
+
+  /**
+   * Flag: indicates whether table are striped.
+   *
+   * @property tableStriped
+   * @type Boolean
+   * @default true
+   */
+  tableStriped: true,
+
+  /**
+   * Flag: indicates whether table rows are clickable.
+   *
+   * @property rowClickable
+   * @type Boolean
+   * @default true
+   */
+  rowClickable: true,
+
+  /**
+   * Custom classes for table.
+   *
+   Example:
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
+    {{flexberry-objectlistview
+      ...
+      customTableClass='inverted blue'
+      ...
+    }}
+    ```
+   * @property customTableClass
+   * @type String
+   * @default ''
+   */
+  customTableClass: '',
+
+  /**
+   * Classes for table.
+   *
+   * @property tableClass
+   * @type String
+   * @readOnly
+   */
+  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', function() {
+    let tableStriped = this.get('tableStriped');
+    let rowClickable = this.get('rowClickable');
+    let classes = this.get('customTableClass');
+
+    if (tableStriped) {
+      classes += ' striped';
+    }
+
+    if (rowClickable) {
+      classes += ' selectable';
+    }
+
+    return classes;
+  }),
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -507,17 +573,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    *
    * @property noDataMessage
    * @type String
+   * @default 't('components.object-list-view.no-data-text')'
    */
-  noDataMessage: undefined,
-
-  /**
-   * Flag: indicates whether table rows are clickable.
-   *
-   * @property rowClickable
-   * @type Boolean
-   * @default true
-   */
-  rowClickable: true,
+  noDataMessage: t('components.object-list-view.no-data-text'),
 
   /**
    * Flag: indicates whether table headers are clickable.
@@ -590,6 +648,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       actions: {
         configurateRow: function(rowConfig, record) {
           rowConfig.canBeDeleted = false;
+          if (record.get('isMyFavoriteRecord')) {
+            rowConfig.customClass += 'my-fav-record';
+          }
         }
       }
     });
@@ -609,10 +670,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @type Object
    * @param {Boolean} [canBeDeleted=true] The row can be deleted.
    * @param {Boolean} [canBeSelected=true] The row can be selected via checkbox.
+   * @param {String} [customClass=''] Custom css classes for the row.
    */
   defaultRowConfig: {
     canBeDeleted: true,
-    canBeSelected: true
+    canBeSelected: true,
+    customClass: ''
   },
 
   /**
@@ -659,6 +722,74 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
+   * Hook that can be used to confirm delete row.
+   *
+   * Example:
+   * ```handlebars
+   * <!-- app/templates/your-template.hbs -->
+   * {{flexberry-objectlistview
+   *   ...
+   *   confirmDeleteRow=(action 'confirmDeleteRow')
+   *   ...
+   * }}
+   * ```
+   *
+   * ```js
+   * // app/controllers/your-controller.js
+   * ...
+   * actions: {
+   *   ...
+   *   confirmDeleteRow(row) {
+   *     return confirm('You sure?');
+   *   }
+   *   ...
+   * }
+   * ...
+   * ```
+   *
+   * @method confirmDeleteRow.
+   * @param {Object} row Row.
+   * @return {Boolean} If `true` then delete row else cancel delete.
+   */
+  confirmDeleteRow: null,
+
+  /**
+   * Hook that can be used to confirm delete rows.
+   *
+   * Example:
+   * ```handlebars
+   * <!-- app/templates/your-template.hbs -->
+   * {{flexberry-objectlistview
+   *   ...
+   *   confirmDeleteRows=(action 'confirmDeleteRows')
+   *   ...
+   * }}
+   * ```
+   *
+   * ```js
+   * // app/controllers/your-controller.js
+   * ...
+   * actions: {
+   *   ...
+   *   confirmDeleteRows(selectedRows) {
+   *     if (selectedRows.length < 5) {
+   *       return confirm('You sure?');
+   *     } else {
+   *       return true;
+   *     }
+   *   }
+   *   ...
+   * }
+   * ...
+   * ```
+   *
+   * @method confirmDeleteRows.
+   * @param {Array} selectedRows Selected rows.
+   * @return {Boolean} If `true` then delete selected rows else cancel delete.
+   */
+  confirmDeleteRows: null,
+
+  /**
    * Initializes component.
    */
   init: function() {
@@ -670,11 +801,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
-
-    this.initProperty({
-      propertyName: 'noDataMessage',
-      defaultValue: this.get('i18n').t('object-list-view.no-data-text') || 'No data'
-    });
 
     if (this.get('content')) {
       this.get('content').forEach((item, index, enumerable) => {
@@ -770,6 +896,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
     let _this = this;
     currentTable.colResizable({
+      minWidth: 70,
       onResize: function(e) {
         // Save column width as user setting on resize.
         _this._afterColumnResize(e);
@@ -926,13 +1053,16 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         case 'belongsTo':
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
-            if (attr.options.displayMemberPath) {
-              bindingPath += '.' + attr.options.displayMemberPath;
-            } else {
-              bindingPath += '.id';
+            let column = this._createColumn(attr, bindingPath);
+
+            if (column.cellComponent.componentName === 'object-list-view-cell') {
+              if (attr.options.displayMemberPath) {
+                column.propName += '.' + attr.options.displayMemberPath;
+              } else {
+                column.propName += '.id';
+              }
             }
 
-            let column = this._createColumn(attr, bindingPath);
             columnsBuf.push(column);
           }
 
@@ -1070,7 +1200,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     if (componentName === this.get('componentName')) {
       if (this.get('editOnSeparateRoute')) {
         // Depending on settings current model has to be saved before adding detail.
-        this.send(this.get('action'), undefined, undefined);
+        this.send('rowClick', undefined, undefined);
       } else {
         var modelName = this.get('modelProjection').modelName;
         var modelToAdd = this.get('store').createRecord(modelName, {});
@@ -1092,21 +1222,26 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    */
   _deleteRows: function(componentName, immediately) {
     if (componentName === this.get('componentName')) {
-      if (confirm('Do you really want to delete selected records?')) {
-        this.send('dismissErrorMessages');
-
-        var _this = this;
-        var selectedRecords = this.get('selectedRecords');
-        var count = selectedRecords.length;
-        selectedRecords.forEach(function(item, index, enumerable) {
-          Ember.run.once(this, function() {
-            _this._deleteRecord(item, immediately);
-          });
-        }, this);
-
-        selectedRecords.clear();
-        this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
+      var selectedRecords = this.get('selectedRecords');
+      let confirmDeleteRows = this.get('confirmDeleteRows');
+      if (confirmDeleteRows) {
+        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        if (!confirmDeleteRows(selectedRecords)) {
+          return;
+        }
       }
+
+      var _this = this;
+      var count = selectedRecords.length;
+      this.send('dismissErrorMessages');
+      selectedRecords.forEach(function(item, index, enumerable) {
+        Ember.run.once(this, function() {
+          _this._deleteRecord(item, immediately);
+        });
+      }, this);
+
+      selectedRecords.clear();
+      this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
     }
   },
 

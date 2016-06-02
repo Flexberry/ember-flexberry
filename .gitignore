@@ -15,8 +15,16 @@
 /libpeerconnection.log
 npm-debug.log
 testem.log
+/blueprints/**/*.map
 
 # ide and code editor files
 /.idea
 .tern-port
 .dir-locals.el
+/blueprints/.vscode
+/blueprints/tsconfig.json
+/blueprints/.editorconfig
+
+.vscodeignore
+jsconfig.json
+typings/ember/ember.d.ts

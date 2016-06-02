@@ -6,7 +6,9 @@ import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
+import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
 
 /**
  * Base route for the List Forms.
@@ -22,7 +24,6 @@ import ProjectedModelFormRoute from '../routes/projected-model-form';
  export default ListFormRoute.extend({
  });
  ```
-
  If you want to add some common logic on all List Forms, you can define
  (actually override) `app/routes/list-form.js` as follows:
  ```js
@@ -37,28 +38,31 @@ import ProjectedModelFormRoute from '../routes/projected-model-form';
  * @uses PaginatedRouteMixin
  * @uses SortableRouteMixin
  * @uses LimitedRouteMixin
+ * @uses FlexberryObjectlistviewRouteMixin
  */
-export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, {
 
-  _userSettingsService: Ember.inject.service('user-settings-service'),
-  userSettings:{},
-  sorting:[],
-
-  actions: {
-    /**
-     * Table row click handler.
-     *
-     * @param {Ember.Object} record Record related to clicked table row.
-     */
-    rowClick: function(record, editFormRoute) {
-      this.transitionTo(editFormRoute, record.get('id'));
-    },
-
-    refreshList: function() {
-      this.refresh();
-    }
-  },
-
+export default ProjectedModelFormRoute.extend(
+  PaginatedRouteMixin,
+  SortableRouteMixin,
+  LimitedRouteMixin,
+  FlexberryObjectlistviewRouteMixin, {
+    _userSettingsService: Ember.inject.service('user-settings-service'),
+    userSettings:{},
+    sorting:[],
+//     actions: {
+//       /**
+//         * Table row click handler.
+//         *
+//         * @param {Ember.Object} record Record related to clicked table row.
+//         */
+//       rowClick: function(record, editFormRoute) {
+//         this.transitionTo(editFormRoute, record.get('id'));
+//       },
+//
+//       refreshList: function() {
+//         this.refresh();
+//       }
+//     },
   model: function(params, transition) {
     let page = parseInt(params.page, 10);
     let perPage = parseInt(params.perPage, 10);
@@ -66,31 +70,12 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     Ember.assert('page must be greater than zero.', page > 0);
     Ember.assert('perPage must be greater than zero.', perPage > 0);
 
-    let store = this.store;
     let modelName = this.get('modelName');
-    let adapter = store.adapterFor(modelName);
-
-    let pageQuery = adapter.getPaginationQuery(page, perPage);
-
-    //let sorting = this.deserializeSortingParam(params.sort);
-
-    let modelClass = this.store.modelFor(this.get('modelName'));
-    let proj = modelClass.projections.get(this.get('modelProjection'));
-    let filterString = this.getFilterString(proj, params);
-    let limitFunctionQuery = adapter.getLimitFunctionQuery(filterString);
-
-    let query = {};
-    Ember.merge(query, pageQuery);
-    Ember.merge(query, limitFunctionQuery);
-    Ember.merge(query, { projection: this.get('modelProjection') });
-
-    //At this stage we use routername as modulName for settings
-    let moduleName = transition.targetName;
-    /**
-     * userSettings from user-settings-service'),
-     */
-    let sortingPromise;
-    sortingPromise = this.get('_userSettingsService').getUserSetting({ moduleName:moduleName, settingName:'DEFAULT' })
+    let moduleName = transition.targetName;    let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
+    let serializer = this.store.serializerFor(modelName);
+    let sorting = this.deserializeSortingParam(params.sort);
+    //get sorting parameters from DEFAULT userSettings
+    let sortingPromise = this.get('_userSettingsService').getUserSetting({ moduleName:moduleName, settingName:'DEFAULT' })
     .then(_userSettings => {
       let  _sorting = [];
       if (_userSettings) {
@@ -100,20 +85,30 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
 
       return _sorting;
     });
+  // find by query is always fetching.
+  // TODO: support getting from cache with "store.all->filterByProjection".
     let ret = sortingPromise
     .then(
       sorting => {
         this.sorting = sorting;
-        let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
-        Ember.merge(query, sortQuery);
-        return store.query(modelName, query);
+        let builder = new QueryBuilder(this.store)
+        .from(modelName)
+        .selectByProjection(projectionName)
+        .top(perPage)
+        .skip((page - 1) * perPage)
+        .count()
+        .orderBy(
+          sorting
+          .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
+          .join(',')
+        );
+        return this.store.query(modelName, builder.build());
       })
     .then((records) => {
       this.includeSorting(records, this.sorting, this.userSettings);
       return records;
     });
     return ret;
-
   },
 
   setupController: function(controller, model) {

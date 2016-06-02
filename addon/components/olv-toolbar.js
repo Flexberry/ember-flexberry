@@ -175,6 +175,16 @@ export default FlexberryBaseComponent.extend({
       this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, this.get('filterByAnyMatchText'));
     },
 
+    /**
+     * Remove filter from url.
+     *
+     * @method removeFilter
+     * @public
+     */
+    removeFilter: function() {
+      this.set('filterText', null);
+    },
+
     customButtonAction: function(actionName) {
       this.sendAction('customButtonAction', actionName);
     },

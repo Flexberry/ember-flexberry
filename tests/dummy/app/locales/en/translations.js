@@ -175,6 +175,7 @@ Ember.$.extend(true, translations, {
       'text-caption':'Text',
       'votes-caption':'Votes',
       'moderated-caption':'Moderated',
+      'author-caption': 'Author',
       'userVotes-caption':'User votes'
     },
 

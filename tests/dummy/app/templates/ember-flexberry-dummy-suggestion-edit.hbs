@@ -131,17 +131,17 @@
       <span style="color:red">{{model.errors.editor}}</span>
     {{/if}}
     {{flexberry-lookup
-      value=model.editor
+      value=model.editor1
       projection="ApplicationUserL"
       displayAttributeName="name"
       title="Editor"
       relatedModel=model
-      relationName="editor"
+      relationName="editor1"
       choose="showLookupDialog"
       remove="removeLookupValue"
       readonly=readonly
       limitFunction=null
-      class=(if model.errors.editor "error" "")
+      class=(if model.errors.editor1 "error" "")
     }}
   </div>
   <div class="field">

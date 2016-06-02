@@ -59,6 +59,25 @@
     {{flexberry-checkbox readonly=readonly value=model.moderated}}
   </div>
   <div class="field">
+    <label>{{t "forms.ember-flexberry-dummy-comment-edit.author-caption"}}</label>
+    {{#if model.errors.author}}
+      <span style="color:red">{{model.errors.author}}</span>
+    {{/if}}
+    {{flexberry-lookup
+      value=model.author
+      projection="ApplicationUserL"
+      displayAttributeName="name"
+      title=(t "forms.ember-flexberry-dummy-comment-edit.author-caption")
+      relatedModel=model
+      relationName="author"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      limitFunction=null
+      class=(if model.errors.author "error" "")
+    }}
+  </div>
+  <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.userVotes-caption"}}</label>
     {{#if model.errors.userVotes}}
       <span style="color:red">{{model.errors.userVotes}}</span>

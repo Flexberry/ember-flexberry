@@ -281,7 +281,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       projectionName: reloadData.projectionName,
       perPage: reloadData.perPage ? reloadData.perPage : this.get('lookupModalWindowPerPage'),
       page: reloadData.page ? reloadData.page : 1,
-      sorting: [], // TODO: get current value.
+      sorting: reloadData.sorting ? reloadData.sorting : [],
       filter: reloadData.filter
     };
 
@@ -297,7 +297,6 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       perPage: queryParameters.perPage,
       page: queryParameters.page,
-      sort: undefined, // TODO: set data.
       filter: reloadData.filter,
 
       modelType: reloadData.relatedToType,
@@ -319,6 +318,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
     currentContext.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
 
     currentContext.reloadList(queryParameters).then(data => {
+      data.set('sorting', queryParameters.sorting);
       currentContext.send('removeModalDialog', loadingParams);
       currentContext.send('showModalDialog', lookupSettings.contentTemplate, {
         controller: controller,

@@ -57,19 +57,19 @@ test('it properly generates complex filter predicate', function(assert) {
     lastName: DS.attr('string'),
     dateField: DS.attr('date'),
     numberField: DS.attr('number'),
-    masterField: DS.belongsTo('employeeTest', { inverse: null, async: false }),
+    masterField: DS.belongsTo('employeeTest2', { inverse: null, async: false }),
   });
 
   let app = startApp();
 
-  app.register('model:employeeTest', Model);
+  app.register('model:employeeTest2', Model);
 
-  Model.defineProjection('EmployeeE', 'employeeTest', {
+  Model.defineProjection('EmployeeE', 'employeeTest2', {
     firstName: Proj.attr(),
     lastName: Proj.attr(),
     dateField: Proj.attr(),
     numberField: Proj.attr(),
-    reportsTo: Proj.belongsTo('employeeTest', 'Reports To', {
+    reportsTo: Proj.belongsTo('employeeTest2', 'Reports To', {
       firstName: Proj.attr('Reports To - First Name')
     }, { hidden: true })
   });
@@ -77,7 +77,7 @@ test('it properly generates complex filter predicate', function(assert) {
   let modelSerializer = ODataSerializer.extend({});
   let projection = Ember.get(Model, 'projections').EmployeeE;
 
-  app.register('serializer:employeeTest', modelSerializer);
+  app.register('serializer:employeeTest2', modelSerializer);
   let store = app.__container__.lookup('service:store');
 
   let ReloadListMixinObject = Ember.Object.extend(ReloadListMixin);

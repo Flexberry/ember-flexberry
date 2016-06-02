@@ -48,15 +48,18 @@ export default Ember.Mixin.create({
     set(key, value) {
       let perPage = parseInt(value, 10);
 
-      // Changing perPage value reloads route automatically.
-      this.set('perPage', perPage);
-
       // Check that the current page number does not exceed the last page number.
       let currentPage = this.get('page');
       let newLastPage = this._getLastPage(perPage);
       if (currentPage > newLastPage) {
-        // Changing page value reloads route automatically.
-        this.set('page', newLastPage);
+        // Changing page or perPage value reloads route automatically.
+        this.setProperties({
+          page: newLastPage,
+          perPage: perPage
+        });
+      } else {
+        // Changing perPage value reloads route automatically.
+        this.set('perPage', perPage);
       }
 
       return perPage;

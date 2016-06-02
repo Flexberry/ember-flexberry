@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
+import SortableRouteMixin from '../mixins/sortable-route';
 import ListFormController from '../controllers/list-form';
 
-export default ListFormController.extend({
+export default ListFormController.extend(SortableRouteMixin, {
   /**
    * Current opened modal window.
    *
@@ -94,7 +95,7 @@ export default ListFormController.extend({
 
    * @method queryParametersChanged
    */
-  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', function() {
+  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function() {
     if (!this.get('reloadObserverIsActive')) {
       return;
     }
@@ -104,14 +105,15 @@ export default ListFormController.extend({
       throw new Error('No reload handler was defined.');
     }
 
+    let sorting = this.deserializeSortingParam(this.get('sort'));
     let reloadData = {
       relatedToType: this.get('modelType'),
       projectionName: this.get('projectionName'),
 
       perPage: this.get('perPage'),
       page: this.get('page'),
-      sorting: [], // TODO: need value.
-      filter: this.get('filter'), // TODO: need value.
+      sorting: sorting,
+      filter: this.get('filter'),
 
       title: this.get('title'),
       sizeClass: this.get('sizeClass'),

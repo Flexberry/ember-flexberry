@@ -99,7 +99,9 @@ test('it properly generates complex filter predicate', function(assert) {
   assert.equal(typeof result, 'object');
   assert.equal(result.constructor, ComplexPredicate);
   assert.equal(result.condition, 'or');
-  assert.equal(result.predicates.length, 4);
+
+  // It counts only string fields.
+  assert.equal(result.predicates.length, 2);
   assert.equal(result.predicates[0].constructor, StringPredicate);
   assert.equal(result.predicates[0].attributeName, 'firstName');
   assert.equal(result.predicates[0].containsValue, 'test');

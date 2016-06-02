@@ -65,12 +65,14 @@ Model.defineProjection('SuggestionTypeL', 'ember-flexberry-dummy-suggestion-type
 
 // Projection for lookup example on window customization.
 Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dummy-suggestion-type', {
-  name: Proj.attr('Name')
+  name: Proj.attr('Name'),
+  moderated: Proj.attr('Moderated')
 });
 
 // Projection for lookup with limit function example.
 Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-dummy-suggestion-type', {
-  name: Proj.attr('Name')
+  name: Proj.attr('Name'),
+  moderated: Proj.attr('Moderated')
 });
 
 export default Model;

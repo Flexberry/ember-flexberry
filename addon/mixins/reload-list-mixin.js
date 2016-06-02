@@ -120,10 +120,15 @@ export default Ember.Mixin.create({
   getFilterPredicate: function(modelProjection, params) {
     Ember.assert('Projection is not defined', modelProjection);
 
+    let store = this.store;
+    let modelConstructor = store.modelFor(modelProjection.modelName);
+
     let attrToFilterNames = [];
     let projAttrs = modelProjection.attributes;
     for (var attrName in projAttrs) {
-      if (projAttrs[attrName].kind === 'attr') {
+      // TODO: it has to work not only with own string attributes.
+      if (projAttrs[attrName].kind === 'attr' &&
+          Ember.get(modelConstructor, 'attributes').get(attrName).type === 'string') {
         attrToFilterNames.push(attrName);
       }
     }

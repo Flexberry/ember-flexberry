@@ -2,13 +2,12 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
+import ReloadListMixin from '../mixins/reload-list-mixin';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
-import QueryBuilder from 'ember-flexberry-data/query/builder';
 
 /**
  * Base route for the List Forms.
@@ -38,41 +37,34 @@ import QueryBuilder from 'ember-flexberry-data/query/builder';
  * @uses PaginatedRouteMixin
  * @uses SortableRouteMixin
  * @uses LimitedRouteMixin
+ * @uses ReloadListMixin
  * @uses FlexberryObjectlistviewRouteMixin
  */
 export default ProjectedModelFormRoute.extend(
   PaginatedRouteMixin,
   SortableRouteMixin,
   LimitedRouteMixin,
+  ReloadListMixin,
   FlexberryObjectlistviewRouteMixin, {
   model: function(params, transition) {
-    let page = parseInt(params.page, 10);
-    let perPage = parseInt(params.perPage, 10);
-
-    Ember.assert('page must be greater than zero.', page > 0);
-    Ember.assert('perPage must be greater than zero.', perPage > 0);
-
-    let modelName = this.get('modelName');
-    let projectionName = this.get('modelProjection');
-    let serializer = this.store.serializerFor(modelName);
     let sorting = this.deserializeSortingParam(params.sort);
 
-    let builder = new QueryBuilder(this.store)
-      .from(modelName)
-      .selectByProjection(projectionName)
-      .top(perPage)
-      .skip((page - 1) * perPage)
-      .count()
-      .orderBy(
-        sorting
-          .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
-          .join(',')
-      );
+    let projectionName = this.get('modelProjection');
+    let relatedToType = this.get('modelName');
+
+    let queryParameters = {
+      modelName: relatedToType,
+      projectionName: projectionName,
+      perPage: params.perPage,
+      page: params.page,
+      sorting: sorting,
+      filter: params.filter
+    };
 
     // find by query is always fetching.
     // TODO: support getting from cache with "store.all->filterByProjection".
     // TODO: move includeSorting to setupController mixins?
-    return this.store.query(modelName, builder.build()).then((records) => this.includeSorting(records, sorting));
+    return this.reloadList(queryParameters).then((records) => this.includeSorting(records, sorting));
   },
 
   setupController: function(controller, model) {

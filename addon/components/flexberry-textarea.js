@@ -3,6 +3,7 @@
  */
 
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Textarea component for Semantic UI.
@@ -43,18 +44,17 @@ export default FlexberryBaseComponent.extend({
    *
    * @property value
    * @type String
-   * @default undefined
    */
   value: undefined,
 
   /**
-   * Text to be displayed instead of file name, if file has not been selected.
+   * The placeholder attribute.
    *
    * @property placeholder
-   * @type string
-   * @default undefined
+   * @type String
+   * @default 't('components.flexberry-textarea.placeholder')'
    */
-  placeholder: undefined,
+  placeholder: t('components.flexberry-textarea.placeholder'),
 
   /**
    * Initializes component.

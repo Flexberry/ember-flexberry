@@ -2,9 +2,9 @@ import Ember from 'ember';
 import emberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
 
 const translations = {};
-Ember.merge(translations, emberFlexberryTranslations);
+Ember.$.extend(true, translations, emberFlexberryTranslations);
 
-Ember.merge(translations, {
+Ember.$.extend(true, translations, {
   'application-name': 'Test stand for ember-flexberry',
 
   'forms': {
@@ -115,6 +115,14 @@ Ember.merge(translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'customizing-window-example': {
+              'caption': 'Window customization',
+              'title': ''
+            },
+            'limit-function-example': {
+              'caption': 'Limit function example',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -122,6 +130,10 @@ Ember.merge(translations, {
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
+              'title': ''
+            },
+            'customizing-window-example': {
+              'caption': 'Customizing window example',
               'title': ''
             }
           },
@@ -185,6 +197,12 @@ Ember.merge(translations, {
       'flexberry-lookup': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-lookup/settings-example'
+        },
+        'customizing-window-example': {
+          'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
+        },
+        'limit-function-example': {
+          'caption': 'Components-examples/flexberry-lookup/limit-function-example'
         }
       },
       'flexberry-menu': {
@@ -210,7 +228,7 @@ Ember.merge(translations, {
     }
   },
 
-  components: {
+  'components': {
     'settings-example': {
       'component-template-caption': 'Component template',
       'controller-properties-caption': 'Controller properties',

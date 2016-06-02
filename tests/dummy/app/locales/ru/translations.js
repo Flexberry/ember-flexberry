@@ -2,9 +2,9 @@ import Ember from 'ember';
 import emberFlexberryTranslations from 'ember-flexberry/locales/ru/translations';
 
 const translations = {};
-Ember.merge(translations, emberFlexberryTranslations);
+Ember.$.extend(true, translations, emberFlexberryTranslations);
 
-Ember.merge(translations, {
+Ember.$.extend(true, translations, {
   'application-name': 'Тестовый стенд ember-flexberry',
 
   'forms': {
@@ -115,6 +115,14 @@ Ember.merge(translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'customizing-window-example': {
+              'caption': 'Настройка окна',
+              'title': ''
+            },
+            'limit-function-example': {
+              'caption': 'Функция ограничения',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -186,6 +194,12 @@ Ember.merge(translations, {
       'flexberry-lookup': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-lookup/settings-example'
+        },
+        'customizing-window-example': {
+          'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
+        },
+        'limit-function-example': {
+          'caption': 'Components-examples/flexberry-lookup/limit-function-example'
         }
       },
       'flexberry-menu': {

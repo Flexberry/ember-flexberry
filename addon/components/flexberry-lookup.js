@@ -6,7 +6,9 @@ import Ember from 'ember';
 import { translationMacro as t } from 'ember-i18n';
 
 import QueryBuilder from 'ember-flexberry-data/query/builder';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import { BasePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import Condition from 'ember-flexberry-data/query/condition';
+import { getRelationType } from '../utils/model-functions';
 
 import FlexberryBaseComponent from './flexberry-base-component';
 
@@ -35,8 +37,8 @@ export default FlexberryBaseComponent.extend({
    */
   classNameBindings: ['autocompleteClass'],
 
-  placeholder: t('flexberry-lookup.placeholder'),
-  chooseText: t('flexberry-lookup.choose-button-text'),
+  placeholder: t('components.flexberry-lookup.placeholder'),
+  chooseText: t('components.flexberry-lookup.choose-button-text'),
 
   // ToDo: Use 'flexberry-lookup.remove-button-text' from locale.
   removeText: '<i class="remove icon"></i>',
@@ -128,7 +130,7 @@ export default FlexberryBaseComponent.extend({
   maxResults: 10,
 
   /**
-   * Multimple select.
+   * Multiple select.
    *
    * @property multiselect
    * @type Boolean
@@ -138,22 +140,70 @@ export default FlexberryBaseComponent.extend({
   multiselect: false,
 
   /**
+   * Limit function on lookup.
+   * It should not be just a string, it has to be predicate function (otherwise an exception will be thrown).
+   *
+   * @property lookupLimitPredicate
+   * @type BasePredicate
+   * @default undefined
+   * @public
+   */
+  lookupLimitPredicate: undefined,
+
+  /**
+   * This computed property forms a set of properties to send to lookup window.
+
+     Closure action `lookupWindowCustomProperties` is called here if defined,
+     otherwise `undefined` is returned.
+
+   * @property _lookupWindowCustomPropertiesData
+   * @private
+   * @type Object
+   * @default undefined
+   */
+  _lookupWindowCustomPropertiesData: Ember.computed(
+    'projection',
+    'relationName',
+    'attrs.lookupWindowCustomProperties',
+    function() {
+      let lookupWindowCustomProperties = this.attrs.lookupWindowCustomProperties;
+      if (lookupWindowCustomProperties) {
+        let result = lookupWindowCustomProperties({
+          relationName: this.get('relationName'),
+          projection: this.get('projection')
+        });
+
+        return result;
+      }
+
+      return undefined;
+    }),
+
+  /**
    * Object with lookup properties to send on choose action.
    *
    * @property chooseData
    * @type Object
    */
-  chooseData: Ember.computed('projection', 'relationName', 'title', function() {
-    return {
-      projection: this.get('projection'),
-      relationName: this.get('relationName'),
-      title: this.get('title'),
-      modelToLookup: this.get('relatedModel'),
+  chooseData: Ember.computed(
+    'projection',
+    'relationName',
+    'title',
+    'lookupLimitPredicate',
+    '_lookupWindowCustomPropertiesData',
+    function() {
+      return {
+        projection: this.get('projection'),
+        relationName: this.get('relationName'),
+        title: this.get('title'),
+        predicate: this.get('lookupLimitPredicate'),
+        modelToLookup: this.get('relatedModel'),
+        lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
 
-      //TODO: move to modal settings.
-      sizeClass: this.get('sizeClass')
-    };
-  }),
+        //TODO: move to modal settings.
+        sizeClass: this.get('sizeClass')
+      };
+    }),
 
   /**
    * Object with lookup properties to send on remove action.
@@ -248,7 +298,13 @@ export default FlexberryBaseComponent.extend({
     let _this = this;
     let store = this.get('store');
     let relatedModel = this.get('relatedModel');
-    let modelName = relatedModel.constructor.modelName;
+
+    let relationName = this.get('relationName');
+    if (!relationName) {
+      throw new Error('relationName is not defined.');
+    }
+
+    let relationModelName = getRelationType(relatedModel, relationName);
 
     let displayAttributeName = _this.get('displayAttributeName');
     if (!displayAttributeName) {
@@ -265,11 +321,6 @@ export default FlexberryBaseComponent.extend({
       throw new Error('maxResults has wrong value.');
     }
 
-    let relationName = this.get('relationName');
-    if (!relationName) {
-      throw new Error('relationName is not defined.');
-    }
-
     var state;
     this.$().search({
       minCharacters: minCharacters,
@@ -284,13 +335,17 @@ export default FlexberryBaseComponent.extend({
          * @param {Function} callback
          */
         responseAsync(settings, callback) {
-          let builder = new QueryBuilder(store, modelName);
+          let builder = new QueryBuilder(store, relationModelName);
 
-          if (settings.urlData.query) {
-            builder.where(new StringPredicate(displayAttributeName).contains(settings.urlData.query));
+          let autocompletePredicate = settings.urlData.query ?
+                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
+                                      undefined;
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          if (resultPredicate) {
+            builder.where(resultPredicate);
           }
 
-          store.query(modelName, builder.build()).then((records) => {
+          store.query(relationModelName, builder.build()).then((records) => {
             callback({
               success: true,
               results: records.map(i => {
@@ -366,12 +421,17 @@ export default FlexberryBaseComponent.extend({
   _onDropdown: function() {
     let _this = this;
     let store = this.get('store');
-    let modelName = this.get('relatedModel').constructor.modelName;
+
+    let relatedModel = this.get('relatedModel');
+    let relationName = this.get('relationName');
+    if (!relationName) {
+      throw new Error('relationName is not defined.');
+    }
+
+    let relationModelName = getRelationType(relatedModel, relationName);
     let minCharacters = this.get('minCharacters');
     let multiselect = this.get('multiselect');
     let displayAttributeName = _this.get('displayAttributeName');
-    let relationName = this.get('relationName');
-    let relatedModel = this.get('relatedModel');
 
     this.$('.flexberry-dropdown').dropdown({
       minCharacters: minCharacters,
@@ -380,13 +440,16 @@ export default FlexberryBaseComponent.extend({
       apiSettings: {
         responseAsync(settings, callback) {
           console.log('load');
-          let builder = new QueryBuilder(store, modelName);
-
-          if (settings.urlData.query) {
-            builder.where(new StringPredicate(displayAttributeName).contains(settings.urlData.query));
+          let builder = new QueryBuilder(store, relationModelName);
+          let autocompletePredicate = settings.urlData.query ?
+                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
+                                      undefined;
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          if (resultPredicate) {
+            builder.where(resultPredicate);
           }
 
-          store.query(modelName, builder.build()).then((records) => {
+          store.query(relationModelName, builder.build()).then((records) => {
             callback({
               success: true,
               results: records.map(i => {
@@ -441,12 +504,40 @@ export default FlexberryBaseComponent.extend({
   buildDisplayValue() {
     let selectedModel = this.get('value');
     if (!selectedModel) {
-      this.set('placeholder', t('flexberry-lookup.placeholder'));
+      this.set('placeholder', t('components.flexberry-lookup.placeholder'));
       return '';
     } else {
       this.set('placeholder', '');
     }
 
     return selectedModel.get(this.get('displayAttributeName'));
+  },
+
+  /**
+   * Concatenates predicates.
+   *
+   * @method _conjuctPredicates
+   * @param {BasePredicate} limitPredicate The first predicate to concatenate.
+   * @param {BasePredicate} autocompletePredicate The second predicate to concatenate.
+   * @return {BasePredicate} Concatenation of two predicates.
+   * @throws {Error} Throws error if any of parameter predicates has wrong type.
+   */
+  _conjuctPredicates: function(limitPredicate, autocompletePredicate) {
+    if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
+      throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+    }
+
+    if (autocompletePredicate && !(autocompletePredicate instanceof BasePredicate)) {
+      throw new Error('Autocomplete predicate is not correct. It has to be instance of BasePredicate.');
+    }
+
+    let resultPredicate = (limitPredicate && autocompletePredicate) ?
+                          new ComplexPredicate(Condition.And, limitPredicate, autocompletePredicate) :
+                          (limitPredicate ?
+                            limitPredicate :
+                            (autocompletePredicate ?
+                              autocompletePredicate :
+                              undefined));
+    return resultPredicate;
   }
 });

@@ -12,6 +12,15 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
+  init: function() {
+    this._super(...arguments);
+
+    let customProperties = this.get('customProperties');
+    if (this.get('componentMode') === 'lookupform' && customProperties && typeof customProperties === 'object') {
+      // For lookup mode we allow to set properties.
+      this.setProperties(customProperties);
+    }
+  },
 
   actions: {
     /**
@@ -43,9 +52,13 @@ export default FlexberryBaseComponent.extend({
      * @param {Object} record Clicked record.
      */
     objectListViewRowClick: function(record) {
-      let editFormRoute = this.get('editFormRoute');
-      Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
-      this.sendAction('action', record, editFormRoute);
+      if (this.get('componentMode') === 'lookupform') {
+        this.sendAction('action', record);
+      } else {
+        let editFormRoute = this.get('editFormRoute');
+        Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
+        this.sendAction('action', record, editFormRoute);
+      }
     },
 
     /**
@@ -180,6 +193,18 @@ export default FlexberryBaseComponent.extend({
    * @default 'objectListViewRowClick'
    */
   action: 'objectListViewRowClick',
+
+  /**
+   * It indicates current component mode.
+     Available values:
+     `listform` - simple list form and after row selection it has to be opened corresponding edit form;
+     `lookupform` - component is placed on lookup form and after row selection current lookup form has to be closed.
+   *
+   * @property componentMode
+   * @type String
+   * @default `listform`
+   */
+  componentMode: 'listform',
 
   /**
    * Default cell component that will be used to display values in columns headers.
@@ -456,5 +481,23 @@ export default FlexberryBaseComponent.extend({
    * @type Function
    * @default null
    */
-  hasNextPage: null
+  hasNextPage: null,
+
+  /**
+   * Current selected record of list.
+   *
+   * @property selectedRecord
+   * @type DS.Model
+   * @default undefined
+   */
+  selectedRecord: undefined,
+
+  /**
+   * Set of properties to set for commponent (when it is used on lookup window).
+   *
+   * @property customProperties
+   * @type Object
+   * @default undefined
+   */
+  customProperties: undefined
 });

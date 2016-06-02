@@ -1,10 +1,12 @@
 import Ember from 'ember';
+const { getOwner } = Ember;
 
 export default Ember.Mixin.create({
   queryParams: ['sort'],
   sortDefaultValue: null,
-  _userSettingsService: Ember.inject.service('user-settings-service'),
   sort: Ember.computed.oneWay('sortDefaultValue'),
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+  _router:undefined,
 
   getNextSortDirection: function(currentDirection) {
     return currentDirection === 'asc' ? 'desc' : 'none';
@@ -65,7 +67,14 @@ export default Ember.Mixin.create({
 
       let sortQueryParam = this.serializeSortingParam(newSorting);
       this.userSettings.sorting=newSorting;
-      this.set('sort', sortQueryParam);
+      let router=getOwner(this).lookup('router:main');
+      let moduleName =  router.currentRouteName;
+      let savePromise=this.get('_userSettingsService').saveUserSetting({moduleName:moduleName,settingName:'DEFAULT',userSetting:{sorting:newSorting}});
+      savePromise.then (
+        record => {
+          this.set('sort', sortQueryParam);
+        }
+      );
     },
 
     addColumnToSorting: function(column) {
@@ -93,7 +102,14 @@ export default Ember.Mixin.create({
 
       let sortQueryParam = this.serializeSortingParam(newSorting);
       this.userSettings.sorting=newSorting;
-      this.set('sort', sortQueryParam);
+      let router=getOwner(this).lookup('router:main');
+      let moduleName =  router.currentRouteName;
+      let savePromise=this.get('_userSettingsService').saveUserSetting({moduleName:moduleName,settingName:'DEFAULT',userSetting:{sorting:newSorting}});
+      savePromise.then (
+        record => {
+          this.set('sort', sortQueryParam);
+        }
+      );
 
     }
   }

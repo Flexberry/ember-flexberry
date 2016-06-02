@@ -1,12 +1,10 @@
 <div class="field">
   <label><%= caption %></label>
   {{#if model.errors.<%= name %>}}
-  <span style="color:red">{{model.errors.<%= name %>}}</span>
+    <span style="color:red">{{model.errors.<%= name %>}}</span>
   {{/if}}
-  {{
-    flexberry-groupedit
+  {{flexberry-groupedit
     componentName="<%= name %>GroupEdit"
-    class="attached"
     modelProjection=modelProjection.attributes.<%= name %>
     content=model.<%= name %>
     readonly=<%= readonly %>

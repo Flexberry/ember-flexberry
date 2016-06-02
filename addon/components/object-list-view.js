@@ -6,6 +6,7 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import ErrorableMixin from '../mixins/errorable-controller';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Object list view component.
@@ -92,7 +93,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
         menuInRowSubItems.push({
           icon: 'edit icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
           isEditItem: true
         });
       }
@@ -100,7 +101,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (this.get('showDeleteMenuItemInRow') && recordWithKey.config.canBeDeleted) {
         menuInRowSubItems.push({
           icon: 'trash icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
           isDeleteItem: true
         });
       }
@@ -535,8 +536,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    *
    * @property noDataMessage
    * @type String
+   * @default 't('components.object-list-view.no-data-text')'
    */
-  noDataMessage: undefined,
+  noDataMessage: t('components.object-list-view.no-data-text'),
 
   /**
    * Flag: indicates whether table headers are clickable.
@@ -762,11 +764,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
-
-    this.initProperty({
-      propertyName: 'noDataMessage',
-      defaultValue: this.get('i18n').t('object-list-view.no-data-text') || 'No data'
-    });
 
     if (this.get('content')) {
       this.get('content').forEach((item, index, enumerable) => {

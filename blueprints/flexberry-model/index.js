@@ -37,6 +37,13 @@ module.exports = {
         };
     }
 };
+var SortedPair = (function () {
+    function SortedPair(index, str) {
+        this.index = index;
+        this.str = str;
+    }
+    return SortedPair;
+}());
 var ModelBlueprint = (function () {
     function ModelBlueprint(blueprint, options) {
         var modelsDir = path.join(options.metadataDir, "models");
@@ -140,17 +147,19 @@ var ModelBlueprint = (function () {
             var indentStr = indent.join("");
             indent.pop();
             var indentStr2 = indent.join("");
-            var attrsStr = hasManyAttrs.join(",\n" + indentStr);
+            hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
+            var attrsStr = lodash.map(hasManyAttrs, "str").join(",\n" + indentStr);
             if (hasManyAttrs.length === 0) {
                 attrsStr = "";
                 indentStr = "";
             }
-            return detailHasMany.name + ": Proj.hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "})";
+            return new SortedPair(Number.MAX_VALUE, detailHasMany.name + ": Proj.hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "})");
         }
-        return "";
+        return new SortedPair(Number.MAX_VALUE, "");
     };
     ModelBlueprint.prototype.joinProjBelongsTo = function (belongsTo, level) {
         var belongsToAttrs = [];
+        var index = Number.MAX_VALUE;
         for (var _i = 0, _a = belongsTo.attrs; _i < _a.length; _i++) {
             var attr = _a[_i];
             belongsToAttrs.push(this.declareProjAttr(attr));
@@ -160,8 +169,12 @@ var ModelBlueprint = (function () {
             belongsToAttrs.push(this.joinProjBelongsTo(belongsTo2, level + 1));
         }
         var hiddenStr = "";
-        if (belongsTo.hidden) {
+        if (belongsTo.hidden || belongsTo.index == -1) {
             hiddenStr = ", { hidden: true }";
+        }
+        else {
+            if (belongsTo.lookupValueField)
+                hiddenStr = ", { displayMemberPath: '" + belongsTo.lookupValueField + "' }";
         }
         var indent = [];
         for (var i = 0; i < level; i++) {
@@ -170,19 +183,25 @@ var ModelBlueprint = (function () {
         var indentStr = indent.join("");
         indent.pop();
         var indentStr2 = indent.join("");
-        var attrsStr = belongsToAttrs.join(",\n" + indentStr);
+        belongsToAttrs = lodash.sortBy(belongsToAttrs, ["index"]);
+        var attrsStr = lodash.map(belongsToAttrs, "str").join(",\n" + indentStr);
         if (belongsToAttrs.length === 0) {
             attrsStr = "";
             indentStr = "";
         }
-        return belongsTo.name + ": Proj.belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}" + hiddenStr + ")";
+        else {
+            index = belongsToAttrs[0].index;
+            if (index == -1)
+                index = Number.MAX_VALUE;
+        }
+        return new SortedPair(index, belongsTo.name + ": Proj.belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}" + hiddenStr + ")");
     };
     ModelBlueprint.prototype.declareProjAttr = function (attr) {
         var hiddenStr = "";
         if (attr.hidden) {
             hiddenStr = ", { hidden: true }";
         }
-        return attr.name + ": Proj.attr('" + attr.caption + "'" + hiddenStr + ")";
+        return new SortedPair(attr.index, attr.name + ": Proj.attr('" + attr.caption + "'" + hiddenStr + ")");
     };
     ModelBlueprint.prototype.getJSForProjections = function (model, modelsDir) {
         var projections = [];
@@ -222,10 +241,12 @@ var ModelBlueprint = (function () {
                         hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 3));
                     }
                 }
-                var attrsStr_1 = hasManyAttrs.join(",\n    ");
-                projAttrs.push(hasMany.name + ": Proj.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n    " + attrsStr_1 + "\n  })");
+                hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
+                var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n    ");
+                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": Proj.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n    " + attrsStr_1 + "\n  })"));
             }
-            var attrsStr = projAttrs.join(",\n" + TAB);
+            projAttrs = lodash.sortBy(projAttrs, ["index"]);
+            var attrsStr = lodash.map(projAttrs, "str").join(",\n" + TAB);
             projections.push("Model.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n  " + attrsStr + "\n});");
         }
         return projections.join("\n");

@@ -26,7 +26,7 @@ export default {
     },
 
     'flexberry-dropdown': {
-      'default-text': '(no value)'
+      'placeholder': '(no value)'
     },
 
     'flexberry-datepicker': {

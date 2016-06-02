@@ -28,9 +28,10 @@
           </a>          
           <div class="right item">
             {{flexberry-dropdown
+              class="compact"
               items=locales
               value=currentLocale
-              defaultText=(t "forms.application.header.menu.language-dropdown.default-text")
+              placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
               readonly=readonly
               onChange=(action 'onLocaleChange')
             }}

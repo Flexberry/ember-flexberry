@@ -23,7 +23,7 @@ Ember.$.extend(true, translations, {
             'title': 'Menu'
           },
           'language-dropdown': {
-            'default-text': 'Choose language'
+            'placeholder': 'Choose language'
           }
         }
       },
@@ -238,7 +238,8 @@ Ember.$.extend(true, translations, {
         },
         'conditional-render-example': {
           'caption': 'Components-examples/flexberry-dropdown/conditional-render-example',
-          'message': 'The page template looks like following:<br>' +
+          'info-caption': 'Use case description',
+          'info-message': 'The page template looks like following:<br>' +
             '{{pageTemplate}}' +
             '<br>' +
             'So, once the value is selected, the component will be rendered as &lt;span&gt;selected value&lt;/span&gt;,<br>' +

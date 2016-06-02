@@ -23,7 +23,7 @@ Ember.$.extend(true, translations, {
             'title': 'Меню'
           },
           'language-dropdown': {
-            'default-text': 'Выберете язык'
+            'placeholder': 'Выберете язык'
           }
         }
       },
@@ -238,7 +238,8 @@ Ember.$.extend(true, translations, {
         },
         'conditional-render-example': {
           'caption': 'Components-examples/flexberry-dropdown/conditional-render-example',
-          'message': 'Шаблон страницы выглядит следующим образом:<br>' +
+          'info-caption': 'Описание варианта использования',
+          'info-message': 'Шаблон страницы выглядит следующим образом:<br>' +
             '{{pageTemplate}}' +
             '<br>' +
             'После того как какое-либо значение будет выбрано, компонент будет заменен на ' +

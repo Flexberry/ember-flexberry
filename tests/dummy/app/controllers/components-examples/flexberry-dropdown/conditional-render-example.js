@@ -5,11 +5,11 @@ export default EditFormController.extend({
   /**
    * Message to be displayed in 'ui-message' component.
    *
-   * @property message
+   * @property infoMessage
    * @type String
    */
-  message: Ember.computed('i18n.locale', function() {
-    var message = this.get('i18n').t('forms.components-examples.flexberry-dropdown.conditional-render-example.message', {
+  infoMessage: Ember.computed('i18n.locale', function() {
+    var message = this.get('i18n').t('forms.components-examples.flexberry-dropdown.conditional-render-example.info-message', {
       pageTemplate: new Ember.Handlebars.SafeString('{{#if model.enumeration}}<br>' +
         '..&lt;span&gt;{{model.enumeration}}&lt;/span&gt;<br>' +
         '{{else}}<br>' +

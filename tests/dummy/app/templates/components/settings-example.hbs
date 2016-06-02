@@ -28,6 +28,16 @@
             {{#if (eq settingMetadata.settingType "string")}}
               {{input type="text" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
             {{/if}}
+            {{#if (eq settingMetadata.settingType "enumeration")}}
+              <select onchange={{action (mut (get controllerProperties settingMetadata.bindedControllerPropertieName)) value="target.value"}}>
+                <option></option>
+                {{#each settingMetadata.settingAvailableItems as |item|}}
+                  <option value={{item}} selected={{eq (get controllerProperties settingMetadata.bindedControllerPropertieName) item}}>
+                    {{item}}
+                  </option>
+                {{/each}}
+              </select>
+            {{/if}}
           </div>
           <div class="column">
             {{to-string settingMetadata.settingName}}={{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}

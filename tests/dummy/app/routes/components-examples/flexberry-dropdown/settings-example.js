@@ -1,15 +1,10 @@
-import EditFormRoute from 'ember-flexberry/routes/edit-form';
-import Enumeration from '../../../enums/components-examples/flexberry-dropdown/settings-example/enumeration';
+import Ember from 'ember';
 
-export default EditFormRoute.extend({
-  modelProjection: 'BaseE',
-  modelName: 'components-examples/flexberry-dropdown/settings-example/base',
+export default Ember.Route.extend({
   model: function(params) {
     var store = this.get('store');
 
-    var base = store.createRecord('components-examples/flexberry-dropdown/settings-example/base', {
-      enumeration: Enumeration.Value1
-    });
+    var base = store.createRecord('components-examples/flexberry-dropdown/settings-example/base', {});
 
     return base;
   }

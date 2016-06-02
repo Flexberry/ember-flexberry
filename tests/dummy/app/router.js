@@ -34,6 +34,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-groupedit/settings-example');
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
+  this.route('components-examples/flexberry-lookup/limit-function-example');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');

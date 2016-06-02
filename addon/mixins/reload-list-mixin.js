@@ -6,7 +6,7 @@ import Ember from 'ember';
 
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import Condition from 'ember-flexberry-data/query/condition';
-import { StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { BasePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.
@@ -32,6 +32,7 @@ export default Ember.Mixin.create({
    * @param {String} [options.page] Current page.
    * @param {String} [options.sorting] Current sorting.
    * @param {String} [options.filter] Current filter.
+   * @param {String} [options.predicate] Predicate to limit records.
    * @return {Promise}  A promise, which is resolved with a set of loaded records once the server returns.
    */
   reloadList: function(options) {
@@ -44,7 +45,8 @@ export default Ember.Mixin.create({
       perPage: undefined,
       page: undefined,
       sorting: undefined,
-      filter: undefined
+      filter: undefined,
+      predicate: undefined
     }, options);
 
     let modelName = reloadOptions.modelName;
@@ -57,6 +59,11 @@ export default Ember.Mixin.create({
     let projection = Ember.get(modelConstructor, 'projections')[projectionName];
     if (!projection) {
       throw new Error(`No projection with '${projectionName}' name defined in '${modelName}' model.`);
+    }
+
+    let limitPredicate = reloadOptions.predicate;
+    if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
+      throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
     }
 
     let perPage = reloadOptions.perPage;
@@ -84,11 +91,18 @@ export default Ember.Mixin.create({
           .join(',')
       );
 
-    if (filter) {
-      let predicate = this.getFilterPredicate(projection, { filter: filter });
-      if (predicate) {
-        builder.where(predicate);
-      }
+
+    let filterPredicate = filter ? this.getFilterPredicate(projection, { filter: filter }) : undefined;
+    let resultPredicate = (limitPredicate && filterPredicate) ?
+                          new ComplexPredicate(Condition.And, limitPredicate, filterPredicate) :
+                          (limitPredicate ?
+                            limitPredicate :
+                            (filterPredicate ?
+                              filterPredicate :
+                              undefined));
+
+    if (resultPredicate) {
+      builder.where(resultPredicate);
     }
 
     return store.query(modelName, builder.build());

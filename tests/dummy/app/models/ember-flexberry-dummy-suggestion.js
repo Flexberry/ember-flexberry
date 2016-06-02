@@ -148,4 +148,15 @@ Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dumm
   })
 });
 
+// Projection for lookup with limit function example.
+Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-dummy-suggestion', {
+  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
 export default Model;

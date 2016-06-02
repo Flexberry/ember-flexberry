@@ -156,6 +156,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/limit-function-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.title'),
+            children: null
           }]
         }, {
           link: null,

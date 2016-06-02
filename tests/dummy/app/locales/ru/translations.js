@@ -119,6 +119,10 @@ Ember.merge(translations, {
             'customizing-window-example': {
               'caption': 'Настройка окна',
               'title': ''
+            },
+            'limit-function-example': {
+              'caption': 'Функция ограничения',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -193,6 +197,9 @@ Ember.merge(translations, {
         },
         'customizing-window-example': {
           'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
+        },
+        'limit-function-example': {
+          'caption': 'Components-examples/flexberry-lookup/limit-function-example'
         }
       },
       'flexberry-menu': {

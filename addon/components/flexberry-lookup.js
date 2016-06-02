@@ -128,7 +128,7 @@ export default FlexberryBaseComponent.extend({
   maxResults: 10,
 
   /**
-   * Multimple select.
+   * Multiple select.
    *
    * @property multiselect
    * @type Boolean
@@ -136,6 +136,17 @@ export default FlexberryBaseComponent.extend({
    * @public
    */
   multiselect: false,
+
+  /**
+   * Limit function on lookup.
+   * It should not be just a string, it has to be predicate function (otherwise an exception will be thrown).
+   *
+   * @property lookupLimitPredicate
+   * @type BasePredicate
+   * @default undefined
+   * @public
+   */
+  lookupLimitPredicate: undefined,
 
   /**
    * This computed property forms a set of properties to send to lookup window.
@@ -176,14 +187,14 @@ export default FlexberryBaseComponent.extend({
     'projection',
     'relationName',
     'title',
-    'limitFunction',
+    'lookupLimitPredicate',
     '_lookupWindowCustomPropertiesData',
     function() {
       return {
         projection: this.get('projection'),
         relationName: this.get('relationName'),
         title: this.get('title'),
-        limitFunction: this.get('limitFunction'),
+        predicate: this.get('lookupLimitPredicate'),
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
 

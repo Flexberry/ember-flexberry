@@ -63,6 +63,15 @@ export default ListFormController.extend(SortableRouteMixin, {
   projectionName: undefined,
 
   /**
+   * Predicate to limit loaded data by.
+   *
+   * @property predicate
+   * @type BasePredicate
+   * @default undefined
+   */
+  predicate: undefined,
+
+  /**
    * Handler to call when parameters of loaded data changed (filter, currentPage, etc.).
    *
    * @property reloadDataHandler
@@ -114,6 +123,7 @@ export default ListFormController.extend(SortableRouteMixin, {
       page: this.get('page'),
       sorting: sorting,
       filter: this.get('filter'),
+      predicate: this.get('predicate'),
 
       title: this.get('title'),
       sizeClass: this.get('sizeClass'),
@@ -213,6 +223,7 @@ export default ListFormController.extend(SortableRouteMixin, {
       this.set('page', undefined);
       this.set('sort', undefined);
       this.set('filter', undefined);
+      this.set('predicate', undefined);
     }
 
     this.set('saveTo', undefined);

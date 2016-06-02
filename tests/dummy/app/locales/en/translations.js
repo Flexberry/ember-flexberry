@@ -115,6 +115,14 @@ Ember.merge(translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'customizing-window-example': {
+              'caption': 'Window customization',
+              'title': ''
+            },
+            'limit-function-example': {
+              'caption': 'Limit function example',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -192,6 +200,9 @@ Ember.merge(translations, {
         },
         'customizing-window-example': {
           'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
+        },
+        'limit-function-example': {
+          'caption': 'Components-examples/flexberry-lookup/limit-function-example'
         }
       },
       'flexberry-menu': {

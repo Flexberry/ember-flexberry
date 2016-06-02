@@ -6,6 +6,8 @@ import Ember from 'ember';
 
 import ReloadListMixin from '../mixins/reload-list-mixin';
 
+import { BasePredicate } from 'ember-flexberry-data/query/predicate';
+
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.
  *
@@ -110,6 +112,11 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let projectionName = options.projection;
       Ember.assert('ProjectionName is undefined.', projectionName);
 
+      let limitPredicate = options.predicate;
+      if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
+        throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+      }
+
       let relationName = options.relationName;
       let title = options.title;
       let modelToLookup = options.modelToLookup;
@@ -143,6 +150,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         page: 1,
         sorting: [],
         filter: undefined,
+        predicate: limitPredicate,
 
         title: title,
         sizeClass: sizeClass,
@@ -233,6 +241,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
    * @param {String} [options.page] Current page to display on lookup window.
    * @param {String} [options.sorting] Current sorting.
    * @param {String} [options.filter] Current filter.
+   * @param {String} [options.predicate] Current limit predicate.
    * @param {String} [options.title] Title of modal lookup window.
    * @param {String} [options.sizeClass] Size of modal lookup window.
    * @param {String} [options.saveTo] Options to save selected lookup value.
@@ -255,6 +264,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       page: undefined,
       sorting: undefined,
       filter: undefined,
+      predicate: undefined,
 
       title: undefined,
       sizeClass: undefined,
@@ -276,13 +286,19 @@ export default Ember.Mixin.create(ReloadListMixin, {
         `No projection with '${reloadData.projectionName}' name defined in '${reloadData.relatedToType}' model.`);
     }
 
+    let limitPredicate = reloadData.predicate;
+    if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
+      throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+    }
+
     let queryParameters = {
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
       perPage: reloadData.perPage ? reloadData.perPage : this.get('lookupModalWindowPerPage'),
       page: reloadData.page ? reloadData.page : 1,
       sorting: reloadData.sorting ? reloadData.sorting : [],
-      filter: reloadData.filter
+      filter: reloadData.filter,
+      predicate: limitPredicate
     };
 
     let controller = currentContext.get('lookupController');
@@ -298,6 +314,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       perPage: queryParameters.perPage,
       page: queryParameters.page,
       filter: reloadData.filter,
+      predicate: limitPredicate,
 
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,

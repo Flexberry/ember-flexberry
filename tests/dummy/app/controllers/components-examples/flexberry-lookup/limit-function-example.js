@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
-import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 export default EditFormController.extend({

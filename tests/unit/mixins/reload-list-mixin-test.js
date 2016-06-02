@@ -44,7 +44,7 @@ test('it properly generates simple filter predicate', function(assert) {
 
   assert.equal(typeof result, 'object');
   assert.equal(result.constructor, StringPredicate);
-  assert.equal(result.attributeName, 'FirstName');
+  assert.equal(result.attributeName, 'firstName');
   assert.equal(result.containsValue, 'test');
 
   assert.equal(resultUndefined, undefined);
@@ -91,6 +91,6 @@ test('it properly generates complex filter predicate', function(assert) {
   assert.equal(result.condition, 'or');
   assert.equal(result.predicates.length, 4);
   assert.equal(result.predicates[0].constructor, StringPredicate);
-  assert.equal(result.predicates[0].attributeName, 'FirstName');
+  assert.equal(result.predicates[0].attributeName, 'firstName');
   assert.equal(result.predicates[0].containsValue, 'test');
 });

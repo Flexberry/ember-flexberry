@@ -91,7 +91,6 @@ export default Ember.Mixin.create({
           .join(',')
       );
 
-
     let filterPredicate = filter ? this.getFilterPredicate(projection, { filter: filter }) : undefined;
     let resultPredicate = (limitPredicate && filterPredicate) ?
                           new ComplexPredicate(Condition.And, limitPredicate, filterPredicate) :
@@ -131,7 +130,6 @@ export default Ember.Mixin.create({
 
     let finalString;
     let filter = params.filter;
-    let store = this.store;
 
     if (typeof filter === 'string' && filter.length > 0) {
       let containsExpressions = attrToFilterNames.map(function(fieldName) {

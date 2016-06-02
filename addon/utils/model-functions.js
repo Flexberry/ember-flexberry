@@ -2,6 +2,8 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
+
 /**
  * Gets related object type by relation name from specified model.
  *

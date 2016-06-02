@@ -1,7 +1,6 @@
 /**
  * @module ember-flexberry
  */
-
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
@@ -389,37 +388,43 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     }
 
     let cols = this._generateColumns(projection.attributes);
-    var userSettings = this.currentController.userSettings;
-    if (userSettings && userSettings.colsOrder!== undefined) {
-      let namedCols={};
-      for (let i=0; i < cols.length; i++) {
-        let col=cols[i];
+    var userSettings = this.currentController ? this.currentController.userSettings : undefined;
+    if (userSettings && userSettings.colsOrder !== undefined) {
+      let namedCols = {};
+      for (let i = 0; i < cols.length; i++) {
+        let col = cols[i];
         delete col.sorted;
         delete col.sortNumber;
         delete col.sortAscending;
-        let propName=col.propName;
+        let propName = col.propName;
         namedCols[propName] = col;
       }
-      if (userSettings.sorting === undefined) userSettings.sorting=[];
-      for (let i=0; i < userSettings.sorting.length; i++) {
-        let sorting=userSettings.sorting[i];
-        let propName=sorting.propName;
+
+      if (userSettings.sorting === undefined) {
+        userSettings.sorting = [];
+      }
+
+      for (let i = 0; i < userSettings.sorting.length; i++) {
+        let sorting = userSettings.sorting[i];
+        let propName = sorting.propName;
         namedCols[propName].sorted = true;
         namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
-        namedCols[propName].sortNumber = i+1;
+        namedCols[propName].sortNumber = i + 1;
       }
-      ret=[];
-      for (let i=0; i < userSettings.colsOrder.length; i++) {
-        let userSetting= userSettings.colsOrder[i];
+
+      ret = [];
+      for (let i = 0; i < userSettings.colsOrder.length; i++) {
+        let userSetting = userSettings.colsOrder[i];
         if (!userSetting.hide) {
-          let propName=userSetting.propName;
-          let col=namedCols[propName];
-          ret[ret.length]=col;
+          let propName = userSetting.propName;
+          let col = namedCols[propName];
+          ret[ret.length] = col;
         }
       }
     } else {
       ret = cols;
     }
+
     return ret;
   }),
 

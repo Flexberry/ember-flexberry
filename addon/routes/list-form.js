@@ -73,7 +73,7 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
 
     let pageQuery = adapter.getPaginationQuery(page, perPage);
 
-    let sorting = this.deserializeSortingParam(params.sort);
+    //let sorting = this.deserializeSortingParam(params.sort);
 
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
@@ -86,18 +86,19 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     Ember.merge(query, { projection: this.get('modelProjection') });
 
     //At this stage we use routername as modulName for settings
-    let moduleName=transition.targetName;
+    let moduleName = transition.targetName;
     /**
      * userSettings from user-settings-service'),
      */
     let sortingPromise;
-    sortingPromise=this.get('_userSettingsService').getUserSetting({moduleName:moduleName,settingName:'DEFAULT'})
-    .then( _userSettings=> {
-      let  _sorting=[];
+    sortingPromise = this.get('_userSettingsService').getUserSetting({ moduleName:moduleName, settingName:'DEFAULT' })
+    .then(_userSettings => {
+      let  _sorting = [];
       if (_userSettings) {
-        this.userSettings= _userSettings;
-        _sorting = 'sorting' in this.userSettings ? this.userSettings['sorting']: [];
+        this.userSettings =  _userSettings;
+        _sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];
       }
+
       return _sorting;
     });
     let ret = sortingPromise
@@ -106,7 +107,7 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
         this.sorting = sorting;
         let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
         Ember.merge(query, sortQuery);
-        return store.query(modelName, query)
+        return store.query(modelName, query);
       })
     .then((records) => {
       this.includeSorting(records, this.sorting, this.userSettings);

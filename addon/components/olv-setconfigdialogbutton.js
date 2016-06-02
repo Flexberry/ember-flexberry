@@ -2,7 +2,6 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 //var FlexberrySetConfogDialog = FlexberryBaseComponent.extend({

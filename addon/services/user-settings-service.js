@@ -68,11 +68,15 @@ export default Ember.Service.extend({
     let ret = this._getExistingRecord(moduleName, settingName).then(
       function(foundRecord) {
         if (foundRecord) {
-          let prevUserSetting=JSON.parse(foundRecord.get('txtVal'));
-          if (!prevUserSetting) prevUserSetting={};
-          for (let settingName in userSetting) {
-            prevUserSetting[settingName]=userSetting[settingName];
+          let prevUserSetting = JSON.parse(foundRecord.get('txtVal'));
+          if (!prevUserSetting) {
+            prevUserSetting = {};
           }
+
+          for (let settingName in userSetting) {
+            prevUserSetting[settingName] = userSetting[settingName];
+          }
+
           foundRecord.set('txtVal', JSON.stringify(prevUserSetting));
         } else {
           let currentUserName = _this.getCurrentUser();
@@ -82,6 +86,7 @@ export default Ember.Service.extend({
           foundRecord.set('userName', currentUserName);
           foundRecord.set('txtVal', JSON.stringify(userSetting));
         }
+
         return foundRecord.save();
       });
     return ret;
@@ -175,17 +180,18 @@ export default Ember.Service.extend({
       if (result) {
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
-          for (let i=1;i<foundRecords.length;i++){
+          for (let i = 1; i < foundRecords.length; i++) {
             foundRecords[i].deleteRecord();
           }
+
           return foundRecords[0].record;
         }
+
       }
+
       return undefined;
     });
   },
-
-
 
   /**
    * It returns the name of current user.

@@ -4,61 +4,70 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
   actions: {
     showConfigDialog: function() {
-//       alert('showConfigDialog');
       let userSettings = this.model.userSettings;
-      let propName,colDesc,model=[];
-      let projectionAttributes=this.modelProjection.attributes;
-      let colList=this._generateColumns(projectionAttributes);
-      let namedColList={};
-      for (let i=0; i < colList.length; i++) {
-        colDesc=colList[i];
-        propName=colDesc.propName;
-        namedColList[propName]=colDesc;
+      let propName;
+      let colDesc;
+      let model = [];
+      let projectionAttributes = this.modelProjection.attributes;
+      let colList = this._generateColumns(projectionAttributes);
+      let namedColList = {};
+      for (let i = 0; i < colList.length; i++) {
+        colDesc = colList[i];
+        propName = colDesc.propName;
+        namedColList[propName] = colDesc;
       }
+
       if (userSettings && userSettings.colsOrder !== undefined) {
-        let namedSorting={};
-        let sortPriority=0;
-        if (userSettings.sorting === undefined) userSettings.sorting = [];
-        for (let i=0; i< userSettings.sorting.length; i++) {
-          colDesc=userSettings.sorting[i];
-          colDesc.sortPriority=++sortPriority;
-          propName=colDesc.propName;
-          namedSorting[propName]=colDesc;
+        let namedSorting = {};
+        let sortPriority = 0;
+        if (userSettings.sorting === undefined) {
+          userSettings.sorting = [];
         }
-        for (let i=0; i<userSettings.colsOrder.length; i++) {
-          let colOrder=userSettings.colsOrder[i];
-          propName=colOrder.propName;
-          let name=namedColList[propName].header;
+
+        for (let i = 0; i < userSettings.sorting.length; i++) {
+          colDesc = userSettings.sorting[i];
+          colDesc.sortPriority = ++sortPriority;
+          propName = colDesc.propName;
+          namedSorting[propName] = colDesc;
+        }
+
+        for (let i = 0; i < userSettings.colsOrder.length; i++) {
+          let colOrder = userSettings.colsOrder[i];
+          propName = colOrder.propName;
+          let name = namedColList[propName].header;
           delete namedColList[propName];
-          colDesc={name:name, propName:propName, hide:colOrder.hide};
+          colDesc = { name:name, propName:propName, hide:colOrder.hide };
           if (propName in namedSorting) {
             let sortColumn = namedSorting[propName];
-            colDesc.sortOrder = sortColumn.direction=='asc'?1:-1;
+            colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
             colDesc.sortPriority = sortColumn.sortPriority;
           } else {
             colDesc.sortOrder = 0;
           }
-          model[i]=colDesc;
+
+          model[i] = colDesc;
         }
+
       }
+
       for (propName in namedColList) {
-        model[model.length]={propName:propName,name:namedColList[propName].header,hide:false,sortOrder:0};
+        model[model.length] = { propName:propName, name:namedColList[propName].header, hide:false, sortOrder:0 };
       }
 
       let controller = this.get('colsconfigController');
 
-      var loadingParams = {
+      let loadingParams = {
         view: 'application',
-        outlet: 'modal',
+        outlet: 'modal'
       };
-      this.send('showModalDialog', "colsconfig-dialog");
+      this.send('showModalDialog', 'colsconfig-dialog');
 
-      var loadingParams = {
+      loadingParams = {
         view: 'colsconfig-dialog',
         outlet: 'modal-content'
       };
-      this.send('showModalDialog', "colsconfig-dialog-content",
-                {controller: controller,model:model},
+      this.send('showModalDialog', 'colsconfig-dialog-content',
+                { controller: controller, model:model },
                 loadingParams);
     }
   },

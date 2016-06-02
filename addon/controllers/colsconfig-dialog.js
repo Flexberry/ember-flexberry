@@ -1,6 +1,11 @@
+/**
+ * @module ember-flexberry
+ */
+
+import Ember from 'ember';
 import ColsconfigDialogController from '../mixins/colsconfig-dialog-controller';
 
-export default Ember.Controller.extend(ColsconfigDialogController,{
+export default Ember.Controller.extend(ColsconfigDialogController, {
   /**
    * Current opened modal window.
    *
@@ -21,7 +26,7 @@ export default Ember.Controller.extend(ColsconfigDialogController,{
     createdModalDialog: function(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
     }
-   },
+  },
 
   /**
    * Close current modal window if it exists.

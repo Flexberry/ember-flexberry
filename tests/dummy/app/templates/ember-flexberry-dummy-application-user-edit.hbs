@@ -1,4 +1,4 @@
-<h3 class="ui header">{{title}}</h3>
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-application-user-edit.caption"}}</h3>
 {{#if errorMessages}}
   {{#each errorMessages as |currentError|}}
     {{ui-message
@@ -37,7 +37,7 @@
       required=true
       value=model.name
       class=(if model.errors.name "error" "")
-      label="Name"
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
     }}
   </div>
   <div class="field">
@@ -50,7 +50,7 @@
       required=true
       value=model.eMail
       class=(if model.errors.eMail "error" "")
-      label="E-mail"
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
     }}
   </div>
   <div class="field">
@@ -63,7 +63,7 @@
       required=true
       value=model.phone1
       class=(if model.errors.phone1 "error" "")
-      label="Phone1"
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.phone1-caption")
     }}
   </div>
   <div class="field">
@@ -76,7 +76,7 @@
       required=true
       value=model.phone2
       class=(if model.errors.phone2 "error" "")
-      label="Phone2"
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.phone2-caption")
     }}
   </div>
   <div class="field">
@@ -89,11 +89,11 @@
       required=true
       value=model.phone3
       class=(if model.errors.phone3 "error" "")
-      label="Phone3"
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.phone3-caption")
     }}
   </div>
   <div class="field">
-    <label>Activated</label>
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.activated-caption"}}</label>
     {{#if model.errors.activated}}
       <span style="color:red">{{model.errors.activated}}</span>
     {{/if}}
@@ -109,7 +109,7 @@
       required=true
       value=model.vK
       class=(if model.errors.vK "error" "")
-      label="VK"
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.vK-caption")
     }}
   </div>
   <div class="field">
@@ -122,7 +122,7 @@
       required=true
       value=model.facebook
       class=(if model.errors.facebook "error" "")
-      label="Facebook"
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.facebook-caption")
     }}
   </div>
   <div class="field">
@@ -135,11 +135,11 @@
       required=true
       value=model.twitter
       class=(if model.errors.twitter "error" "")
-      label="Twitter"
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.twitter-caption")
     }}
   </div>
   <div class="field">
-    <label>Birthday</label>
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
     {{#if model.errors.birthday}}
       <span style="color:red">{{model.errors.birthday}}</span>
     {{/if}}
@@ -151,14 +151,14 @@
     }}
   </div>
   <div class="field">
-    <label>Gender</label>
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
     {{#if model.errors.gender}}
       <span style="color:red">{{model.errors.gender}}</span>
     {{/if}}
     {{flexberry-dropdown items=(enum-captions "ember-flexberry-dummy-gender") value=model.gender readonly=readonly}}
   </div>
   <div class="field">
-    <label>VIP</label>
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.vip-caption"}}</label>
     {{#if model.errors.vip}}
       <span style="color:red">{{model.errors.vip}}</span>
     {{/if}}
@@ -174,7 +174,7 @@
       required=true
       value=model.karma
       class=(if model.errors.karma "error" "")
-      label="Karma"
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.karma-caption")
     }}
   </div>
 </form>

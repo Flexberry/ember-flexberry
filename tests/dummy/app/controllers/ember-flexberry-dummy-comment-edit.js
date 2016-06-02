@@ -2,15 +2,6 @@ import DetailEditFormController from 'ember-flexberry/controllers/detail-edit-fo
 
 export default DetailEditFormController.extend({
   /**
-   * Page title.
-   *
-   * @property title
-   * @type String
-   * @default 'Comment edit'
-   */
-  title: 'Comment edit',
-
-  /**
    * Method to get type and attributes of a component,
    * which will be embeded in object-list-view cell.
    *

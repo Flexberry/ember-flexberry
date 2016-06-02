@@ -1,4 +1,4 @@
-<h3 class="ui header">{{title}}</h3>
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-edit.caption"}}</h3>
 {{#if errorMessages}}
   {{#each errorMessages as |currentError|}}
     {{ui-message
@@ -39,7 +39,7 @@
       required=true
       value=model.address
       class=(if model.errors.address "error" "")
-      label="Address"
+      label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
       }}
   </div>
   <div class="field">
@@ -54,11 +54,11 @@
       required=true
       value=model.text
       class=(if model.errors.text "error" "")
-      label="Text"
+      label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
     }}
   </div>
   <div class="field">
-    <label>Date</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
     {{#if model.errors.date}}
       <span style="color:red">{{model.errors.date}}</span>
     {{/if}}
@@ -81,18 +81,18 @@
       required=true
       value=model.votes
       class=(if model.errors.votes "error" "")
-      label="Votes"
+      label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
     }}
   </div>
   <div class="field">
-    <label>Moderated</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption"}}</label>
     {{#if model.errors.moderated}}
       <span style="color:red">{{model.errors.moderated}}</span>
     {{/if}}
     {{flexberry-checkbox readonly=readonly value=model.moderated}}
   </div>
   <div class="field">
-    <label>Type</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
     {{#if model.errors.type}}
       <span style="color:red">{{model.errors.type}}</span>
     {{/if}}
@@ -111,7 +111,7 @@
     }}
   </div>
   <div class="field">
-    <label>Author</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
     {{#if model.errors.author}}
       <span style="color:red">{{model.errors.author}}</span>
     {{/if}}
@@ -130,7 +130,7 @@
     }}
   </div>
   <div class="field">
-    <label>Editor</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor-caption"}}</label>
     {{#if model.errors.editor}}
       <span style="color:red">{{model.errors.editor}}</span>
     {{/if}}
@@ -149,7 +149,7 @@
     }}
   </div>
   <div class="field">
-    <label>Files</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
     {{#if model.errors.files}}
       <span style="color:red">{{model.errors.files}}</span>
     {{/if}}
@@ -164,7 +164,7 @@
     }}
   </div>
   <div class="field">
-    <label>User votes</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
     {{#if model.errors.userVotes}}
       <span style="color:red">{{model.errors.userVotes}}</span>
     {{/if}}
@@ -179,7 +179,7 @@
     }}
   </div>
   <div class="field">
-    <label>Comments</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
     {{#if model.errors.comments}}
       <span style="color:red">{{model.errors.comments}}</span>
     {{/if}}

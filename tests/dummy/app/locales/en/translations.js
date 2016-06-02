@@ -153,6 +153,75 @@ Ember.merge(translations, {
       }
     },
 
+    'ember-flexberry-dummy-application-user-edit': {
+      'caption':'Application user',
+      'name-caption':'Name',
+      'eMail-caption':'E-Mail',
+      'phone1-caption':'Phone1',
+      'phone2-caption':'Phone2',
+      'phone3-caption':'Phone3',
+      'activated-caption':'Activated',
+      'vK-caption':'VK',
+      'facebook-caption':'Facebook',
+      'twitter-caption':'Twitter',
+      'birthday-caption':'Birthday',
+      'gender-caption':'Gender',
+      'vip-caption':'VIP',
+      'karma-caption':'Karma'
+    },
+
+    'ember-flexberry-dummy-comment-edit':{
+      'caption':'Comment',
+      'text-caption':'Text',
+      'votes-caption':'Votes',
+      'moderated-caption':'Moderated',
+      'userVotes-caption':'User votes'
+    },
+
+    'ember-flexberry-dummy-localization-edit':{
+      'caption':'Localization',
+      'name-caption':'Name'
+    },
+
+    'ember-flexberry-dummy-suggestion-edit':{
+      'caption':'Suggestion',
+      'address-caption':'Address',
+      'text-caption':'Text',
+      'date-caption':'Date',
+      'votes-caption':'Votes',
+      'moderated-caption':'Moderated',
+      'type-caption':'Type',
+      'author-caption':'Author',
+      'editor-caption':'Editor',
+      'files-caption':'Files',
+      'userVotes-caption':'User votes',
+      'comments-caption':'Comments'
+    },
+
+    'ember-flexberry-dummy-suggestion-type-edit':{
+      'caption':'Suggestion type',
+      'name-caption':'Name',
+      'moderated-caption':'Moderated',
+      'parent-caption':'Parent',
+      'localizedTypes-caption':'Localized types'
+    },
+
+    'ember-flexberry-dummy-application-user-list':{
+      'caption':'Application users'
+    },
+
+    'ember-flexberry-dummy-localization-list':{
+      'caption':'Localizations'
+    },
+
+    'ember-flexberry-dummy-suggestion-list':{
+      'caption':'Suggestions'
+    },
+
+    'ember-flexberry-dummy-suggestion-type-list':{
+      'caption':'Suggestion types'
+    },
+
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {

@@ -8,6 +8,7 @@ export default FlexberryBaseComponent.extend({
   idPrefix:'ColDesc',
   modelForDOM:[],
   _userSettingsService: Ember.inject.service('user-settings-service'),
+  _router:undefined,
 
   init: function() {
     this._super(...arguments);
@@ -180,15 +181,15 @@ export default FlexberryBaseComponent.extend({
       }
       colsConfig={colsOrder:colsOrder,sorting:sorting};
 //       alert(' colsConfig=' +JSON.stringify(colsConfig));
-      let moduleName = getOwner(this).lookup('router:main').currentRouteName;
+      this._router=getOwner(this).lookup('router:main');
+      let moduleName =  this._router.currentRouteName;
       let savePromise=this.get('_userSettingsService').saveUserSetting({moduleName:moduleName,settingName:'DEFAULT',userSetting:colsConfig});
       savePromise.then (
         record => {
-          let router=getOwner(this).lookup("router:main");
-          if (router.location.location.hash.indexOf('sort=')>=0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null } });
+          if ( this._router.location.location.hash.indexOf('sort=')>=0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+            this._router.router.transitionTo( this._router.currentRouteName, { queryParams: { sort: null } });
           } else {
-            router.router.refresh();  //Reload current page and records (model) list
+            this._router.router.refresh();  //Reload current page and records (model) list
           }
         }
       );

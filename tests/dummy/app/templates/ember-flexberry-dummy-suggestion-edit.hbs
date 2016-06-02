@@ -15,16 +15,16 @@
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui positive button" {{action "save"}}>{{t "edit-form.save-button-text"}}</button>
+          <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
         {{/unless}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "edit-form.saveAndClose-button-text"}}</button>
+          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
         {{/unless}}
         {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
-          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "edit-form.delete-button-text"}}</button>
+          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>{{t "edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
   <div class="field">
@@ -34,7 +34,6 @@
       </span>
     {{/if}}
     {{flexberry-field
-      placeholder="(no value)"
       readonly=readonly
       required=true
       value=model.address
@@ -49,7 +48,6 @@
       </span>
     {{/if}}
     {{flexberry-field
-      placeholder="(no value)"
       readonly=readonly
       required=true
       value=model.text
@@ -63,7 +61,6 @@
       <span style="color:red">{{model.errors.date}}</span>
     {{/if}}
     {{flexberry-datepicker
-      placeholder="(no value)"
       readonly=readonly
       value=model.date
       class=(if model.errors.date "error" "")
@@ -76,7 +73,6 @@
       </span>
     {{/if}}
     {{flexberry-field
-      placeholder="(no value)"
       readonly=readonly
       required=true
       value=model.votes
@@ -170,7 +166,6 @@
     {{/if}}
     {{flexberry-groupedit
       componentName="userVotesGroupEdit"
-      class="attached"
       modelProjection=modelProjection.attributes.userVotes
       content=model.userVotes
       readonly=readonly
@@ -185,7 +180,6 @@
     {{/if}}
     {{flexberry-groupedit
       componentName="commentsGroupEdit"
-      class="attached"
       modelProjection=modelProjection.attributes.comments
       content=model.comments
       readonly=readonly

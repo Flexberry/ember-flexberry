@@ -258,9 +258,9 @@ export default FlexberryBaseComponent.extend({
    *
    * @property placeholder
    * @type String
-   * @default t('flexberry-file.placeholder')
+   * @default 't('components.flexberry-file.placeholder')'
    */
-  placeholder: t('flexberry-file.placeholder'),
+  placeholder: t('components.flexberry-file.placeholder'),
 
   /**
    * File upload URL.
@@ -281,14 +281,22 @@ export default FlexberryBaseComponent.extend({
   /**
    * Title to be displayed in error modal dialog.
    * It will be displayed only if some error occur.
+   *
+   * @property errorModalDialogTitle
+   * @type String
+   * @default 't('components.flexberry-file.error-dialog-title')'
    */
-  errorModalDialogTitle: t('flexberry-file.error-dialog-title'),
+  errorModalDialogTitle: t('components.flexberry-file.error-dialog-title'),
 
   /**
    * Content to be displayed in error modal dialog.
    * It will be displayed only if some error occur.
+   *
+   * @property errorModalDialogContent
+   * @type String
+   * @default 't('components.flexberry-file.error-dialog-content')'
    */
-  errorModalDialogContent: t('flexberry-file.error-dialog-content'),
+  errorModalDialogContent: t('components.flexberry-file.error-dialog-content'),
 
   /**
    * Selected jQuery object, containing HTML of error modal dialog.
@@ -389,9 +397,9 @@ export default FlexberryBaseComponent.extend({
 
       // Prevent files greater then maxUploadFileSize.
       if (!Ember.isNone(maxUploadFileSize) && selectedFile.size > maxUploadFileSize) {
-        var errorTitle = i18n.t('flexberry-file.add-file-error-title');
+        var errorTitle = i18n.t('components.flexberry-file.add-file-error-title');
         var errorContent = i18n.t(
-          'flexberry-file.file-too-big-message',
+          'components.flexberry-file.file-too-big-message',
           {
             fileName: selectedFile.name,
             maxSize: maxUploadFileSize,
@@ -493,8 +501,8 @@ export default FlexberryBaseComponent.extend({
       }).fail(function(jqXhr, textStatus, errorThrown) {
         var fileName = ' \'' + file.name + '\'';
         var errorText = errorThrown ? ' (' + errorThrown + ')' : '';
-        var errorTitle = i18n.t('flexberry-file.upload-file-error-title');
-        var errorContent = i18n.t('flexberry-file.upload-file-error-message', { fileName: fileName, errorText: errorText });
+        var errorTitle = i18n.t('components.flexberry-file.upload-file-error-title');
+        var errorContent = i18n.t('components.flexberry-file.upload-file-error-message', { fileName: fileName, errorText: errorText });
 
         var showModalDialogOnUploadError = _this.get('showModalDialogOnUploadError');
         if (showModalDialogOnUploadError) {
@@ -626,8 +634,8 @@ export default FlexberryBaseComponent.extend({
       var i18n = currentContext.get('i18n');
       var jsonInitialValue = currentContext.get('jsonInitialValue');
       var fileName = ' \'' + jsonInitialValue.fileName + '\'';
-      var errorTitle = i18n.t('flexberry-file.download-file-error-title');
-      var errorContent = i18n.t('flexberry-file.download-file-error-message', { fileName: fileName, errorText: errorText });
+      var errorTitle = i18n.t('components.flexberry-file.download-file-error-title');
+      var errorContent = i18n.t('components.flexberry-file.download-file-error-message', { fileName: fileName, errorText: errorText });
       currentContext.showErrorModalDialog.call(currentContext, errorTitle, errorContent);
     }
   },

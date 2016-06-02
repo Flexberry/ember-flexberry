@@ -2,9 +2,9 @@ import Ember from 'ember';
 import emberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
 
 const translations = {};
-Ember.merge(translations, emberFlexberryTranslations);
+Ember.$.extend(true, translations, emberFlexberryTranslations);
 
-Ember.merge(translations, {
+Ember.$.extend(true, translations, {
   'application-name': 'Test stand for ember-flexberry',
 
   'forms': {
@@ -210,7 +210,7 @@ Ember.merge(translations, {
     }
   },
 
-  components: {
+  'components': {
     'settings-example': {
       'component-template-caption': 'Component template',
       'controller-properties-caption': 'Controller properties',

@@ -34,7 +34,6 @@
       </span>
     {{/if}}
     {{flexberry-field
-      placeholder="(no value)"
       readonly=readonly
       required=true
       value=model.address
@@ -49,7 +48,6 @@
       </span>
     {{/if}}
     {{flexberry-field
-      placeholder="(no value)"
       readonly=readonly
       required=true
       value=model.text
@@ -63,7 +61,6 @@
       <span style="color:red">{{model.errors.date}}</span>
     {{/if}}
     {{flexberry-datepicker
-      placeholder="(no value)"
       readonly=readonly
       value=model.date
       class=(if model.errors.date "error" "")
@@ -76,7 +73,6 @@
       </span>
     {{/if}}
     {{flexberry-field
-      placeholder="(no value)"
       readonly=readonly
       required=true
       value=model.votes

@@ -4,9 +4,9 @@
 [![Travis develop branch](https://img.shields.io/travis/Flexberry/ember-flexberry/develop.svg?label=develop%20build)](https://travis-ci.org/Flexberry/ember-flexberry/branches)
 [![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)](https://github.com/orangemug/stability-badges#work-in-progress)
 
-[![ember](https://embadge.io/v1/badge.svg?label=ember&range=2.3.0)](https://github.com/emberjs/ember.js/releases)
-[![ember-data](https://embadge.io/v1/badge.svg?label=ember-data&range=^2.3.0)](https://github.com/emberjs/data/releases)
-[![ember-cli](https://embadge.io/v1/badge.svg?label=ember-cli&range=2.3.0-beta.1)](https://github.com/ember-cli/ember-cli/releases)
+[![ember](https://embadge.io/v1/badge.svg?label=ember&range=~2.4.3)](https://github.com/emberjs/ember.js/releases)
+[![ember-data](https://embadge.io/v1/badge.svg?label=ember-data&range=~2.4.2)](https://github.com/emberjs/data/releases)
+[![ember-cli](https://embadge.io/v1/badge.svg?label=ember-cli&range=2.4.3)](https://github.com/ember-cli/ember-cli/releases)
 [![See all badges](https://img.shields.io/badge/all%20badges-visit BADGES.md-blue.svg)](BADGES.md)
 
 Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework powered by Ember.js.

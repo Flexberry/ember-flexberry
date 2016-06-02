@@ -8,6 +8,9 @@ Ember.$.extend(true, translations, {
   'application-name': 'Тестовый стенд ember-flexberry',
 
   'forms': {
+    'loading': {
+      'spinner-caption': 'Данные загружаются, пожалуйста подождите...'
+    },
     'index': {
       'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!'
     },

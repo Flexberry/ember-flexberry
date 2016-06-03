@@ -51,6 +51,7 @@ export default ProjectedModelFormRoute.extend(
 
     let projectionName = this.get('modelProjection');
     let relatedToType = this.get('modelName');
+    let limitPredicate = this.objectListViewLimitPredicate({ modelName: relatedToType, projectionName: projectionName, params: params });
 
     let queryParameters = {
       modelName: relatedToType,
@@ -58,7 +59,8 @@ export default ProjectedModelFormRoute.extend(
       perPage: params.perPage,
       page: params.page,
       sorting: sorting,
-      filter: params.filter
+      filter: params.filter,
+      predicate: limitPredicate
     };
 
     // find by query is always fetching.

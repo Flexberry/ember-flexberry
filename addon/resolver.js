@@ -46,7 +46,8 @@ export default EmberResolver.extend({
       return this._super(fullName);
     }
 
-    var [resolvingType, resolvingPath] = fullName.split(':');
+    var fullNamePartsArray = fullName.split(':');
+    var { resolvingType, resolvingPath } = { resolvingType: fullNamePartsArray[0], resolvingPath: fullNamePartsArray[1] };
     var resolvingPathParts = resolvingPath.split('/');
 
     var pathPrefixes = device.pathPrefixes(true);

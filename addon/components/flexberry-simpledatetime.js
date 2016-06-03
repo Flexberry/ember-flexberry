@@ -60,6 +60,7 @@ export default FlexberryBaseComponent.extend({
       let str = this.convertDateToString(date);
       return str;
     },
+
     set(key, value, oldvalue) {
       let date = this.convertStringToDate(value);
       this.set('value', date);
@@ -81,6 +82,7 @@ export default FlexberryBaseComponent.extend({
       let str = this.convertDateToString(date);
       return str;
     },
+
     set(key, value, oldvalue) {
       let date = this.convertStringToDate(value);
       this.set('min', date);
@@ -102,6 +104,7 @@ export default FlexberryBaseComponent.extend({
       let str = this.convertDateToString(date);
       return str;
     },
+
     set(key, value, oldvalue) {
       let date = this.convertStringToDate(value);
       this.set('max', date);

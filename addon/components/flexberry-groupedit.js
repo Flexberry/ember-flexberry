@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Component for create, edit and delete detail objects.
@@ -53,6 +54,15 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('action', record, options);
     }
   },
+
+  /**
+    Text to be displayed in table body, if content is not defined or empty.
+
+    @property placeholder
+    @type String
+    @default 't('components.flexberry-groupedit.placeholder')'
+   */
+  placeholder: t('components.flexberry-groupedit.placeholder'),
 
   /**
    * Flag: indicates whether allow to resize columns (if `true`) or not (if `false`).

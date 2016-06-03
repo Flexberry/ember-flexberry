@@ -532,13 +532,13 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   }),
 
   /**
-   * Message to be displayed in table body, if content is not defined or empty.
-   *
-   * @property noDataMessage
-   * @type String
-   * @default 't('components.object-list-view.no-data-text')'
+    Text to be displayed in table body, if content is not defined or empty.
+
+    @property placeholder
+    @type String
+    @default 't('components.object-list-view.placeholder')'
    */
-  noDataMessage: t('components.object-list-view.no-data-text'),
+  placeholder: t('components.object-list-view.placeholder'),
 
   /**
    * Flag: indicates whether table headers are clickable.

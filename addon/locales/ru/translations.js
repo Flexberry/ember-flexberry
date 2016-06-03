@@ -70,13 +70,21 @@ export default {
       'remove-button-text': 'Очистить'
     },
 
+    'flexberry-objectlistview': {
+      'placeholder': 'Нет данных'
+    },
+
+    'flexberry-groupedit': {
+      'placeholder': 'Нет данных'
+    },
+
     'modal-dialog': {
       'ok-button-text': 'OK',
       'close-button-text': 'Закрыть'
     },
 
     'object-list-view': {
-      'no-data-text': 'Нет данных',
+      'placeholder': 'Нет данных',
       'single-column-header-title': 'Свойства модели',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',

@@ -70,13 +70,21 @@ export default {
       'remove-button-text': 'Remove'
     },
 
+    'flexberry-objectlistview': {
+      'placeholder': 'There is no data'
+    },
+
+    'flexberry-groupedit': {
+      'placeholder': 'There is no data'
+    },
+
     'modal-dialog': {
       'ok-button-text': 'OK',
       'close-button-text': 'Close'
     },
 
     'object-list-view': {
-      'no-data-text': 'There is no data',
+      'placeholder': 'There is no data',
       'single-column-header-title': 'Model properties',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',

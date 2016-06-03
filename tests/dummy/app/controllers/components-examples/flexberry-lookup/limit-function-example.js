@@ -14,7 +14,7 @@ export default EditFormController.extend({
     let currentLookupValue = this.get('model.type');
     if (currentLookupValue) {
       let currentLookupText = this.get('model.type.name');
-      return new StringPredicate('Name').contains(currentLookupText);
+      return new StringPredicate('name').contains(currentLookupText);
     }
 
     return undefined;

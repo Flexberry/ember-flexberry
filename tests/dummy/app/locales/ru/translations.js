@@ -137,6 +137,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-objectlistview': {
+            'caption': 'flexberry-objectlistview',
+            'title': '',
+            'limit-function-example': {
+              'caption': 'Функция ограничения',
+              'title': ''
+            }
+          },
           'flexberry-textarea': {
             'caption': 'flexberry-textarea',
             'title': '',
@@ -212,6 +220,11 @@ Ember.$.extend(true, translations, {
       'flexberry-menu': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-menu/settings-example'
+        }
+      },
+      'flexberry-objectlistview': {
+        'limit-function-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/limit-function-example'
         }
       },
       'flexberry-textarea': {

@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-06-03
+### Fixed
+FlexberryObjectlistviewComponent
+* Fix adding limit on loaded data (now limit predicates are used and no query parameter displays current limit predicate).
+
 ## 2016-06-02
 ### Added
 FlexberryLookupComponent:

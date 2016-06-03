@@ -179,6 +179,16 @@ export default Ember.Controller.extend({
           }]
         }, {
           link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.title'),
+          children: [{
+            link: 'components-examples/flexberry-objectlistview/limit-function-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-textarea.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-textarea.title'),
           children: [{

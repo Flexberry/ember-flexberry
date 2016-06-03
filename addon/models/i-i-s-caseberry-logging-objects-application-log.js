@@ -3,7 +3,7 @@
  */
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-projections';
+import Proj from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   category: DS.attr('string'),
@@ -21,8 +21,7 @@ var Model = BaseModel.extend({
   message: DS.attr('string'),
   formattedMessage: DS.attr('string'),
   validations: {
-
- }
+  }
 });
 
 Model.defineProjection('ApplicationLogE', 'i-i-s-caseberry-logging-objects-application-log', {

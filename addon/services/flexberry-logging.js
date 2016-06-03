@@ -17,13 +17,13 @@ export default Ember.Service.extend({
    *
    * @property {Object} flexberryStore
    */
-  flexberryStore:null,
+  flexberryStore: null,
   /**
    * Logger switcher on/off true if remote logging service works correctly
    *
    * @property {Boolean} serverLogEnabled
    */
-  serverLogEnabled:true,	//Remote logging service works correctly
+  serverLogEnabled: true,	//Remote logging service works correctly
 
   /**
   * Initializator
@@ -53,20 +53,20 @@ export default Ember.Service.extend({
     let timestamp = new Date();	//current date
     let browser = navigator.userAgent;	//browser info
     let  applicationLog = {
-      category:levelName,
-      eventId:0,
-      priority:10,
-      severity:'',
-      title:'',
-      timestamp:timestamp,
-      machineName: location.hostname,
-      appDomainName:browser,
-      processId:document.location.href,
-      processName:'EMBER-FLEXBERRY',
-      threadName:'',
-      win32ThreadId:'',
-      message:message,
-      formattedMessage:formattedMessage
+      category: levelName,
+      eventId: 0,
+      priority: 10,
+      severity: '',
+      title: '',
+      timestamp: timestamp,
+      machineName:  location.hostname,
+      appDomainName: browser,
+      processId: document.location.href,
+      processName: 'EMBER-FLEXBERRY',
+      threadName: '',
+      win32ThreadId: '',
+      message: message,
+      formattedMessage: formattedMessage
     };
     let logModel = 'i-i-s-caseberry-logging-objects-application-log';	//Model for applicationLog
     if (this.get('flexberryStore').peekAll(logModel).findBy('message', message) !== undefined) {	//This message exists in the store?

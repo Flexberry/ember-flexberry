@@ -41,12 +41,12 @@ export function initialize(applicationInstance) {
   * @type Object
   */
   var logLevelEnums = {
-    ERROR:1,	// Log only errors
-    WARN:2,	// Log warnings and errors
-    LOG:3,	// Log logs, warnings and errors
-    INFO:4,	// Log infos, logs, warnings and errors
-    DEBUG:5,// Log debugs, infos, logs, warnings and errors
-    DEPRECATION:6 // Log deprecations, debugs, infos, logs, warnings and errors
+    ERROR: 1,	// Log only errors
+    WARN: 2,	// Log warnings and errors
+    LOG: 3,	// Log logs, warnings and errors
+    INFO: 4,	// Log infos, logs, warnings and errors
+    DEBUG: 5,// Log debugs, infos, logs, warnings and errors
+    DEPRECATION: 6 // Log deprecations, debugs, infos, logs, warnings and errors
   };
 
   /**

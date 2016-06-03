@@ -216,7 +216,7 @@ export default FlexberryBaseComponent.extend({
 
   _getEventElement:function (prefix, n) {
     let id = '#' + this.idPrefix + prefix + '_' + n;
-    let ret = Ember.$.find(id).get(0);
+    let ret = Ember.$.find(id)[0];
     return ret;
   }
 });

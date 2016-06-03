@@ -3,6 +3,9 @@
 */
 import Ember from 'ember';
 
+/**
+ * Initializator  for logging service
+ */
 export function initialize(applicationInstance) {
   /**
   * LogLevel defined in configuration file config/environment.js
@@ -50,16 +53,14 @@ export function initialize(applicationInstance) {
   * Replacement error handlers on RSVP stage
   * Do nothing. Error is handled by onerror
   */
-  Ember.RSVP.on('error', function(/*error*/) {
-    //alert('RSVP: '+ error);
+  Ember.RSVP.on('error', function() {
   });
 
   /**
   * Replacement error handlers on error stage
   * Do nothing. Error is handled by onerror
   */
-  Ember.Logger.error = function (/*message, cause, stack*/) {
-    //alert('Logger:error: ' + new Error(message), null, { cause: cause, stack: stack });
+  Ember.Logger.error = function () {
   };
 
   /**

@@ -4,35 +4,49 @@
 import Ember from 'ember';
 const { getOwner } = Ember;
 
+/**
+ * Service for logging message to applicationLog store
+ *
+ * @class LoggingService
+ * @extends Ember.Service
+ * @public
+ */
 export default Ember.Service.extend({
   /**
-  * store for transmit messages to server
-  */
+   * store for transmit messages to server
+   *
+   * @property {Object} flexberryStore
+   */
   flexberryStore:null,
-  /*
-  *  true if remote logging service works correctly
-  */
+  /**
+   * Logger switcher on/off true if remote logging service works correctly
+   *
+   * @property {Boolean} serverLogEnabled
+   */
   serverLogEnabled:true,	//Remote logging service works correctly
 
   /**
-  * Initializator (set flexberryStore)
+  * Initializator
+  *
+  * @method init
   */
   init() {
     this._super(...arguments);
-    this.set('flexberryStore', getOwner(this).lookup('service:store'));//alert(this.get('flexberryStore'));
+    this.set('flexberryStore', getOwner(this).lookup('service:store'));
     this.set('serverLogEnabled', true);
   },
 
   /**
-  * Logger message to console, store and server
-  * if serverLogEnabled ===false logs only to console
+  * Logger message to console and store
+  *
+  * @method flexberryLogger
   * @param levelName - category name  - ERROR, WARN, LOG, INFO, DEBUG, DEPRECATION
   * @param message - message content
   * @param formattedMessage - full message content in JSON format
   */
   flexberryLogger(levelName, message, formattedMessage) {
     window.console.log(message);
-    if (!this.get('serverLogEnabled')) { // if serverLogEnabled ===false logs only to console
+    if (!this.get('serverLogEnabled')) { // if serverLogEnabled === false logs only to console
       return;
     }
 
@@ -56,19 +70,15 @@ export default Ember.Service.extend({
     };
     let logModel = 'i-i-s-caseberry-logging-objects-application-log';	//Model for applicationLog
     if (this.get('flexberryStore').peekAll(logModel).findBy('message', message) !== undefined) {	//This message exists in the store?
-      //alert("RepeatedRecord="+message);
       return;	//return to avoid infinity loop when message is genetaried in save/ajax stage
     }
 
-    //alert("SendMessage ="+message);
     let logRecord = this.get('flexberryStore').createRecord(logModel, applicationLog);	//Construct record  in  store
     logRecord.save().then(//Save recotd in server
-      function(/*contents*/) {	//Successfull
-        //alert("SendSuccessfull: "+contents);
+      function() {	//Successfull
       },
-      function(/*contents*/) {	//unsuccesfull transmit message to server
+      function() {	//unsuccesfull transmit message to server
         this.set('serverLogEnabled', false);	//switch off remote logging to avoid infinite loop
-        //alert("Sendfailed: "+contents);
       });
   }
 

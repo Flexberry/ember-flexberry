@@ -3,8 +3,14 @@
  */
 
 import Ember from 'ember';
-import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
+
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import { BasePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import Condition from 'ember-flexberry-data/query/condition';
+import { getRelationType } from '../utils/model-functions';
+
+import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
  * Lookup component for Semantic UI.
@@ -12,8 +18,7 @@ import { translationMacro as t } from 'ember-i18n';
  * @class FlexberryLookup
  * @extends FlexberryBaseComponent
  */
-var FlexberryLookup = FlexberryBaseComponent.extend({
-
+export default FlexberryBaseComponent.extend({
   /**
    * Default classes for component wrapper.
    *
@@ -32,8 +37,8 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    */
   classNameBindings: ['autocompleteClass'],
 
-  placeholder: t('flexberry-lookup.placeholder'),
-  chooseText: t('flexberry-lookup.choose-button-text'),
+  placeholder: t('components.flexberry-lookup.placeholder'),
+  chooseText: t('components.flexberry-lookup.choose-button-text'),
 
   // ToDo: Use 'flexberry-lookup.remove-button-text' from locale.
   removeText: '<i class="remove icon"></i>',
@@ -41,137 +46,138 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
   /**
    * Classes for choose button.
    *
-   * @property classChoose
+   * @property chooseButtonClass
    * @type String
    * @default undefined
    */
-  classChoose: undefined,
+  chooseButtonClass: undefined,
 
   /**
    * Classes for remove button.
    *
-   * @property classRemove
+   * @property removeButtonClass
    * @type String
    * @default undefined
    */
-  classRemove: undefined,
+  removeButtonClass: undefined,
 
   projection: undefined,
-  value: undefined,
+
   relationName: undefined,
   title: undefined,
-  cssClass: undefined,
 
   /**
-   * Flag to show that lookup is at autocomplete mode.
+   * Flag to show that lookup is in autocomplete mode.
    *
    * @property autocomplete
    * @type Boolean
    * @default false
+   * @public
    */
   autocomplete: false,
 
   /**
-   * Classes by property of autocomplete.
+   * Flag to show that lookup is in dropdown mode.
+   *
+   * @property dropdown
+   * @type Boolean
+   * @default false
+   * @public
    */
-  autocompleteClass: Ember.computed(function() {
+  dropdown: false,
+
+  /**
+   * Classes by property of autocomplete.
+   *
+   * @property autocompleteClass
+   * @type String
+   * @readOnly
+   */
+  autocompleteClass: Ember.computed('autocomplete', function() {
     if (this.get('autocomplete')) {
       return 'ui search';
     }
   }),
 
   /**
-   * Observes changes to value. Set it to autocompleteValue.
-   *
-   * @method valueChanged
-   */
-  valueChanged: Ember.observer('value', function() {
-    this.set('autocompleteValue', this.get('value'));
-  }),
-
-  /**
-   * Value for autocomplete control.
-   * If model's value changes, autocompleteValue is changed too.
-   * This property may be changed independently, but it won't be applied to model automatically.
-   *
-   * @property autocompleteValue
-   * @type String
-   * @default undefined
-   */
-  autocompleteValue: undefined,
-
-  /**
-   * Method to get url to request autocomplete items.
-   *
-   * @property autocompleteUrl
-   * @type Action
-   * @default undefined
-   */
-  autocompleteUrl: undefined,
-
-  /**
-   * Method to get query options to request autocomplete items.
-   *
-   * @property autocompleteQueryOptions
-   * @type Action
-   * @default undefined
-   */
-  autocompleteQueryOptions: undefined,
-
-  /**
    * Action's name to update model's relation value.
    *
-   * @property autocompleteUpdate
+   * @property updateLookupAction
    * @type String
    * @default 'updateLookupValue'
+   * @public
    */
-  autocompleteUpdateAction: 'updateLookupValue',
-
-  /**
-   * Action's name to update xhr before autocomplete request.
-   * It is used to add necessary auth headers to request.
-   *
-   * @property autocompleteUpdateXhrAction
-   * @type String
-   * @default 'updateAutocompleteLookupXhr'
-   */
-  autocompleteUpdateXhrAction: 'updateAutocompleteLookupXhr',
+  updateLookupAction: 'updateLookupValue',
 
   /**
    * Min characters count necessary to call autocomplete.
    *
-   * @property autocompleteMinCharacters
+   * @property minCharacters
    * @type Number
    * @default 1
+   * @public
    */
-  autocompleteMinCharacters: 1,
+  minCharacters: 1,
 
   /**
-   * Maximum number of results to show on autocomplete.
+   * Maximum number of results to display on autocomplete or dropdown.
    *
-   * @property autocompleteMaxResults
+   * @property maxResults
    * @type Number
    * @default 10
+   * @public
    */
-  autocompleteMaxResults: 10,
+  maxResults: 10,
 
   /**
-   * Server-side property name of autocomplete property.
+   * Multiple select.
    *
-   * @property autocompleteProperty
-   * @type String
-   * @default undefined
+   * @property multiselect
+   * @type Boolean
+   * @default false
+   * @public
    */
-  autocompleteProperty: undefined,
+  multiselect: false,
 
   /**
-   * Function to limit accessible values.
+   * Limit function on lookup.
+   * It should not be just a string, it has to be predicate function (otherwise an exception will be thrown).
    *
-   * @property limitFunction
-   * @type String
+   * @property lookupLimitPredicate
+   * @type BasePredicate
+   * @default undefined
+   * @public
+   */
+  lookupLimitPredicate: undefined,
+
+  /**
+   * This computed property forms a set of properties to send to lookup window.
+
+     Closure action `lookupWindowCustomProperties` is called here if defined,
+     otherwise `undefined` is returned.
+
+   * @property _lookupWindowCustomPropertiesData
+   * @private
+   * @type Object
    * @default undefined
    */
-  limitFunction: undefined,
+  _lookupWindowCustomPropertiesData: Ember.computed(
+    'projection',
+    'relationName',
+    'attrs.lookupWindowCustomProperties',
+    function() {
+      let lookupWindowCustomProperties = this.attrs.lookupWindowCustomProperties;
+      if (lookupWindowCustomProperties) {
+        let result = lookupWindowCustomProperties({
+          relationName: this.get('relationName'),
+          projection: this.get('projection')
+        });
+
+        return result;
+      }
+
+      return undefined;
+    }),
 
   /**
    * Object with lookup properties to send on choose action.
@@ -179,18 +185,25 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
    * @property chooseData
    * @type Object
    */
-  chooseData: Ember.computed('projection', 'relationName', 'title', 'limitFunction', function() {
-    return {
-      projection: this.get('projection'),
-      relationName: this.get('relationName'),
-      title: this.get('title'),
-      limitFunction: this.get('limitFunction'),
-      modelToLookup: this.get('relatedModel'),
+  chooseData: Ember.computed(
+    'projection',
+    'relationName',
+    'title',
+    'lookupLimitPredicate',
+    '_lookupWindowCustomPropertiesData',
+    function() {
+      return {
+        projection: this.get('projection'),
+        relationName: this.get('relationName'),
+        title: this.get('title'),
+        predicate: this.get('lookupLimitPredicate'),
+        modelToLookup: this.get('relatedModel'),
+        lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
 
-      //TODO: move to modal settings.
-      sizeClass: this.get('sizeClass')
-    };
-  }),
+        //TODO: move to modal settings.
+        sizeClass: this.get('sizeClass')
+      };
+    }),
 
   /**
    * Object with lookup properties to send on remove action.
@@ -205,109 +218,263 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
     };
   }),
 
+  /**
+   * Current store.
+   * Used for loading data for autocomplete and for dropdown.
+   *
+   * @property store
+   * @type DS.Store
+   * @protected
+   * @readOnly
+   */
+  store: Ember.inject.service('store'),
+
+  /**
+   * Name of the attribute of the model to diplay for the user.
+   *
+   * @property displayAttributeName
+   * @type String
+   * @default null
+   * @protected
+   */
+  displayAttributeName: null,
+
+  /**
+   * Currently selected instance of the model.
+   *
+   * @property value
+   * @type Object
+   * @protected
+   */
+  value: undefined,
+
+  /**
+   * Additional observer of value changings.
+   * Updates displayValue.
+   */
+  _valueObserver: Ember.observer('value', function() {
+    this.set('displayValue', this.buildDisplayValue());
+  }),
+
+  /**
+   * Text that displayed for the user as representation of currently selected value.
+   * This property is binded to the view and can be changed by user (it won't be
+   * applied to model automatically).
+   *
+   * @property displayValue
+   * @type String
+   * @protected
+   */
+  displayValue: Ember.computed('value', function() {
+    return this.buildDisplayValue();
+  }),
+
   init() {
     this._super();
-    if (this.cssClass !== undefined) {
-      var classes = this.cssClass.split(' ');
-      for (var i = 0; i < classes.length; i++) {
-        var classNameToSet = classes[i].trim();
-        if (classNameToSet !== '') {
-          if (this.classNames === undefined) {
-            this.classNames = [];
-          }
-
-          this.classNames.push(classNameToSet);
-        }
-      }
-    }
   },
 
   // Init component when DOM is ready.
   didInsertElement: function() {
     this._super();
 
-    if (this.get('readonly') || !this.get('autocomplete')) {
+    if (this.get('readonly')) {
       return;
     }
 
-    var autocompleteProperty = this.get('autocompleteProperty');
-    if (!autocompleteProperty) {
-      throw new Error('autocompleteProperty is undefined.');
+    if (this.get('autocomplete')) {
+      this._onAutocomplete();
+    } else if (this.get('dropdown')) {
+      this._onDropdown();
     }
+  },
 
-    var autocompleteMinCharacters = this.get('autocompleteMinCharacters');
-    if (!autocompleteMinCharacters || typeof (autocompleteMinCharacters) !== 'number' || autocompleteMinCharacters <= 0) {
-      throw new Error('autocompleteMinCharacters has wrong value.');
-    }
+  /**
+   * Init component with autocomplete mode.
+   *
+   * @method _onAutocomplete
+   * @private
+   */
+  _onAutocomplete: function() {
+    let _this = this;
+    let store = this.get('store');
+    let relatedModel = this.get('relatedModel');
 
-    var autocompleteMaxResults = this.get('autocompleteMaxResults');
-    if (!autocompleteMaxResults || typeof (autocompleteMaxResults) !== 'number' || autocompleteMaxResults <= 0) {
-      throw new Error('autocompleteMaxResults has wrong value.');
-    }
-
-    var relationName = this.get('relationName');
+    let relationName = this.get('relationName');
     if (!relationName) {
       throw new Error('relationName is not defined.');
     }
 
-    let autocompleteUrl = this.get('autocompleteUrl')(relationName);
-    let limitFunction = this.get('limitFunction');
-    let modelToLookup = this.get('relatedModel');
+    let relationModelName = getRelationType(relatedModel, relationName);
 
-    this.set('autocompleteValue', this.get('value'));
-    let _this = this;
+    let displayAttributeName = _this.get('displayAttributeName');
+    if (!displayAttributeName) {
+      throw new Error('Required property "displayAttributeName" is not defined.');
+    }
+
+    let minCharacters = this.get('minCharacters');
+    if (!minCharacters || typeof (minCharacters) !== 'number' || minCharacters <= 0) {
+      throw new Error('minCharacters has wrong value.');
+    }
+
+    let maxResults = this.get('maxResults');
+    if (!maxResults || typeof (maxResults) !== 'number' || maxResults <= 0) {
+      throw new Error('maxResults has wrong value.');
+    }
+
+    var state;
     this.$().search({
+      minCharacters: minCharacters,
+      maxResults: maxResults,
+      cache: false,
       apiSettings: {
-        url: autocompleteUrl,
-        beforeSend: function(settings) {
-          let urlOptions = _this.get('autocompleteQueryOptions')(
-            {
-              relationName: relationName,
-              lookupLimitFunction: limitFunction,
-              top: autocompleteMaxResults,
-              limitField: autocompleteProperty,
-              limitValue: settings.urlData.query
+        /**
+         * Mocks call to the data source,
+         * Uses query language and store for loading data explicitly.
+         *
+         * @param {Object} settings
+         * @param {Function} callback
+         */
+        responseAsync(settings, callback) {
+          let builder = new QueryBuilder(store, relationModelName);
+
+          let autocompletePredicate = settings.urlData.query ?
+                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
+                                      undefined;
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          if (resultPredicate) {
+            builder.where(resultPredicate);
+          }
+
+          store.query(relationModelName, builder.build()).then((records) => {
+            callback({
+              success: true,
+              results: records.map(i => {
+                let attributeName = i.get(displayAttributeName);
+                return {
+                  title: attributeName,
+                  instance: i
+                };
+              })
             });
-          Ember.merge(settings.data, urlOptions);
-          return settings;
-        },
-        beforeXHR: function(xhr) {
-          // Set necessary auth headers.
-          _this.sendAction(
-            'autocompleteUpdateXhrAction',
-            {
-              xhr: xhr,
-              element: _this
-            }
-          );
+          }, () => {
+            callback({ success: false });
+          });
         }
       },
-      fields: {
-        results: 'value',
-        title: autocompleteProperty
+
+      /**
+       * Handles opening of the autocomplete list.
+       * Sets current state (taht autocomplete list is opened) for future purposes.
+       */
+      onResultsOpen() {
+        state = 'opened';
+        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
       },
-      minCharacters: autocompleteMinCharacters,
-      searchFields: [autocompleteProperty],
-      cache: false,
-      maxResults: autocompleteMaxResults,
-      searchFullText: false,
-      onSelect: function(result, response) {
+
+      /**
+       * Handles selection of item from the autocomplete list.
+       * Saves selected model and notifies the controller.
+       *
+       * @param {Object} result Item from array of objects, built in `responseAsync`.
+       */
+      onSelect(result) {
+        state = 'selected';
+        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+
+        _this.set('value', result.instance);
         _this.sendAction(
-          'autocompleteUpdateAction',
+          'updateLookupAction',
           {
             relationName: relationName,
-            modelToLookup: modelToLookup,
-            newRelationValue: result
+            modelToLookup: relatedModel,
+            newRelationValue: result.instance
+          });
+      },
+
+      /**
+       * Handles closing of the autocomplete list.
+       * Restores display text if nothing has been selected.
+       */
+      onResultsClose() {
+        // Set displayValue directly because value hasn'been changes
+        // and Ember won't change computed property.
+        if (state !== 'selected') {
+          if (_this.get('displayValue')) {
+            _this.set('displayValue', _this.buildDisplayValue());
+          } else {
+            _this.sendAction('remove', _this.get('removeData'));
+          }
+        }
+
+        state = 'closed';
+        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+      }
+    });
+  },
+
+  /**
+   * Init component with dropdown mode.
+   *
+   * @method _onDropdown
+   * @private
+   */
+  _onDropdown: function() {
+    let _this = this;
+    let store = this.get('store');
+
+    let relatedModel = this.get('relatedModel');
+    let relationName = this.get('relationName');
+    if (!relationName) {
+      throw new Error('relationName is not defined.');
+    }
+
+    let relationModelName = getRelationType(relatedModel, relationName);
+    let minCharacters = this.get('minCharacters');
+    let multiselect = this.get('multiselect');
+    let displayAttributeName = _this.get('displayAttributeName');
+
+    this.$('.flexberry-dropdown').dropdown({
+      minCharacters: minCharacters,
+      allowAdditions: multiselect,
+      cache: false,
+      apiSettings: {
+        responseAsync(settings, callback) {
+          console.log('load');
+          let builder = new QueryBuilder(store, relationModelName);
+          let autocompletePredicate = settings.urlData.query ?
+                                      new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
+                                      undefined;
+          let resultPredicate = _this._conjuctPredicates(_this.get('lookupLimitPredicate'), autocompletePredicate);
+          if (resultPredicate) {
+            builder.where(resultPredicate);
+          }
+
+          store.query(relationModelName, builder.build()).then((records) => {
+            callback({
+              success: true,
+              results: records.map(i => {
+                let attributeName = i.get(displayAttributeName);
+                return {
+                  name: attributeName,
+                  value: i
+                };
+              })
+            });
+          }, () => {
+            callback({ success: false });
+          });
+        }
+      },
+      onChange(value) {
+        _this.sendAction(
+          'updateLookupAction',
+          {
+            relationName: relationName,
+            modelToLookup: relatedModel,
+            newRelationValue: value
           });
       }
-    });
-
-    // TODO: find proper way to restore selected value.
-    this.$('.prompt').blur(function() {
-      if (!_this.$('.ui.search').hasClass('focus')) {
-        _this.set('autocompleteValue', _this.get('value'));
-      }
-    });
+    }).dropdown('set text', _this.get('displayValue'));
   },
 
   actions: {
@@ -325,7 +492,52 @@ var FlexberryLookup = FlexberryBaseComponent.extend({
 
       this.sendAction('remove', removeData);
     }
+  },
+
+  /**
+   * Builds display text by selected model.
+   *
+   * @method buildDisplayValue
+   * @returns {String}
+   * @protected
+   */
+  buildDisplayValue() {
+    let selectedModel = this.get('value');
+    if (!selectedModel) {
+      this.set('placeholder', t('components.flexberry-lookup.placeholder'));
+      return '';
+    } else {
+      this.set('placeholder', '');
+    }
+
+    return selectedModel.get(this.get('displayAttributeName'));
+  },
+
+  /**
+   * Concatenates predicates.
+   *
+   * @method _conjuctPredicates
+   * @param {BasePredicate} limitPredicate The first predicate to concatenate.
+   * @param {BasePredicate} autocompletePredicate The second predicate to concatenate.
+   * @return {BasePredicate} Concatenation of two predicates.
+   * @throws {Error} Throws error if any of parameter predicates has wrong type.
+   */
+  _conjuctPredicates: function(limitPredicate, autocompletePredicate) {
+    if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
+      throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+    }
+
+    if (autocompletePredicate && !(autocompletePredicate instanceof BasePredicate)) {
+      throw new Error('Autocomplete predicate is not correct. It has to be instance of BasePredicate.');
+    }
+
+    let resultPredicate = (limitPredicate && autocompletePredicate) ?
+                          new ComplexPredicate(Condition.And, limitPredicate, autocompletePredicate) :
+                          (limitPredicate ?
+                            limitPredicate :
+                            (autocompletePredicate ?
+                              autocompletePredicate :
+                              undefined));
+    return resultPredicate;
   }
 });
-
-export default FlexberryLookup;

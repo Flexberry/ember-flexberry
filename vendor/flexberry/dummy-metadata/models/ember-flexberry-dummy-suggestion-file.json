@@ -1,0 +1,51 @@
+﻿{
+  "modelName": "ember-flexberry-dummy-suggestion-file",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "order",
+      "type": "number",
+      "flexberryType": "int",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "file",
+      "type": "file",
+      "flexberryType": "WebFile",
+      "notNull": false,
+      "defaultValue": ""
+    }
+  ],
+  "belongsTo": [
+    {
+      "name": "suggestion",
+      "relatedTo": "ember-flexberry-dummy-suggestion",
+      "inverse": "files"
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "SuggestionFileE",
+      "modelName": "ember-flexberry-dummy-suggestion-file",
+      "attrs": [
+        {
+          "name": "order",
+          "caption": "Order",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "file",
+          "caption": "File",
+          "hidden": false,
+          "index": 1
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    }
+  ]
+}

@@ -2,10 +2,11 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
+import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
+import ReloadListMixin from '../mixins/reload-list-mixin';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
 
 /**
@@ -22,7 +23,6 @@ import ProjectedModelFormRoute from '../routes/projected-model-form';
  export default ListFormRoute.extend({
  });
  ```
-
  If you want to add some common logic on all List Forms, you can define
  (actually override) `app/routes/list-form.js` as follows:
  ```js
@@ -37,57 +37,34 @@ import ProjectedModelFormRoute from '../routes/projected-model-form';
  * @uses PaginatedRouteMixin
  * @uses SortableRouteMixin
  * @uses LimitedRouteMixin
+ * @uses ReloadListMixin
+ * @uses FlexberryObjectlistviewRouteMixin
  */
-export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, {
-  actions: {
-    /**
-     * Table row click handler.
-     *
-     * @param {Ember.Object} record Record related to clicked table row.
-     */
-    rowClick: function(record, editFormRoute) {
-      this.transitionTo(editFormRoute, record.get('id'));
-    },
-
-    refreshList: function() {
-      this.refresh();
-    }
-  },
-
+export default ProjectedModelFormRoute.extend(
+  PaginatedRouteMixin,
+  SortableRouteMixin,
+  LimitedRouteMixin,
+  ReloadListMixin,
+  FlexberryObjectlistviewRouteMixin, {
   model: function(params, transition) {
-    let page = parseInt(params.page, 10);
-    let perPage = parseInt(params.perPage, 10);
-
-    Ember.assert('page must be greater than zero.', page > 0);
-    Ember.assert('perPage must be greater than zero.', perPage > 0);
-
-    let store = this.store;
-    let modelName = this.get('modelName');
-    let adapter = store.adapterFor(modelName);
-
-    let pageQuery = adapter.getPaginationQuery(page, perPage);
-
     let sorting = this.deserializeSortingParam(params.sort);
-    let sortQuery = adapter.getSortingQuery(sorting, store.serializerFor(modelName));
 
-    let modelClass = this.store.modelFor(this.get('modelName'));
-    let proj = modelClass.projections.get(this.get('modelProjection'));
-    let filterString = this.getFilterString(proj, params);
-    let limitFunctionQuery = adapter.getLimitFunctionQuery(filterString);
+    let projectionName = this.get('modelProjection');
+    let relatedToType = this.get('modelName');
 
-    let query = {};
-    Ember.merge(query, pageQuery);
-    Ember.merge(query, sortQuery);
-    Ember.merge(query, limitFunctionQuery);
-    Ember.merge(query, { projection: this.get('modelProjection') });
+    let queryParameters = {
+      modelName: relatedToType,
+      projectionName: projectionName,
+      perPage: params.perPage,
+      page: params.page,
+      sorting: sorting,
+      filter: params.filter
+    };
 
     // find by query is always fetching.
     // TODO: support getting from cache with "store.all->filterByProjection".
-    return store.query(modelName, query)
-      .then((records) => {
-        // TODO: move to setupController mixins?
-        return this.includeSorting(records, sorting);
-      });
+    // TODO: move includeSorting to setupController mixins?
+    return this.reloadList(queryParameters).then((records) => this.includeSorting(records, sorting));
   },
 
   setupController: function(controller, model) {

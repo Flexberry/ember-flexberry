@@ -1,0 +1,29 @@
+﻿{
+  "propertyLookup": [
+    {
+      "relationName": "Type",
+      "projection": "SuggestionTypeL"
+    },
+    {
+      "relationName": "Author",
+      "projection": "ApplicationUserL"
+    },
+    {
+      "relationName": "Comments.Author",
+      "projection": "ApplicationUserL"
+    },
+    {
+      "relationName": "UserVotes.ApplicationUser",
+      "projection": "ApplicationUserL"
+    }
+  ],
+  "caption": "Suggestion",
+  "name": "EmberFlexberryDummySuggestionEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-suggestion",
+      "modelProjection": "SuggestionE"
+    }
+  ]
+}

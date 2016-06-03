@@ -94,21 +94,21 @@ export default FlexberryFile.extend({
       if (this.get('showPreview')) {
         menuSubItems.push({
           icon: 'zoom icon',
-          title: this.get('i18n').t('flexberry-file.menu-for-file.zoom-image-item-title') || 'Zoom image',
+          title: this.get('i18n').t('components.flexberry-file.menu-for-file.zoom-image-item-title') || 'Zoom image',
           isZoomItem: true
         });
 
         if (this.get('addButtonIsVisible')) {
           menuSubItems.push({
             icon: 'file outline icon',
-            title: this.get('i18n').t('flexberry-file.menu-for-file.replace-file-item-title') || 'Replace file',
+            title: this.get('i18n').t('components.flexberry-file.menu-for-file.replace-file-item-title') || 'Replace file',
             isReplaceItem: true
           });
         }
 
         menuSubItems.push({
           icon: 'trash icon',
-          title: this.get('i18n').t('flexberry-file.menu-for-file.delete-file-item-title') || 'Delete file',
+          title: this.get('i18n').t('components.flexberry-file.menu-for-file.delete-file-item-title') || 'Delete file',
           isDeleteItem: true
         });
       }

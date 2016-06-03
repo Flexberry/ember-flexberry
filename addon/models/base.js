@@ -3,7 +3,7 @@
  */
 
 import Ember from 'ember';
-import Proj from 'ember-flexberry-projections';
+import Proj from 'ember-flexberry-data';
 import EmberValidations from 'ember-validations';
 
 /**
@@ -97,9 +97,7 @@ export default Proj.Model.extend(EmberValidations, Ember.Evented, {
     return new Ember.RSVP.Promise((resolve, reject) => {
       this.validate({
         validateDeleted: false
-      }).then(() => {
-        return this.beforeSave(options);
-      }).then(() => {
+      }).then(() => this.beforeSave(options)).then(() => {
         // Call to base class 'save' method with right context.
         // The problem is that call to current save method will be already finished,
         // and traditional _this._super will point to something else, but not to Proj.Model 'save' method,

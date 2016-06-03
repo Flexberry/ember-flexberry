@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import EditFormRoute from './edit-form';
 
 export default EditFormRoute.extend({
@@ -26,9 +27,11 @@ export default EditFormRoute.extend({
   },
 
   renderTemplate: function(controller, model) {
-    this.render(this.modelName, {
-      model: model,
-      controller
+    var templateName = this.get('templateName');
+    Ember.assert('Template name must be defined.', templateName);
+    this.render(templateName, {
+      model,
+      controller,
     });
   }
 });

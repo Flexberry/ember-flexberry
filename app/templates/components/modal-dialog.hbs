@@ -17,10 +17,14 @@
   {{#if toolbarVisible}}
     <div class="actions">
       {{#if useCloseButton}}
-        <button type="button" class="ui cancel button" data-dismiss="modal">{{t "modal-dialog.close-button-text"}}</button>
+        <button type="button" class="ui cancel button" data-dismiss="modal">
+          {{t "components.modal-dialog.close-button-text"}}
+        </button>
       {{/if}}
       {{#if useOkButton}}
-        <button type="button" class="ui positive button">{{t "modal-dialog.ok-button-text"}}</button>
+        <button type="button" class="ui positive button">
+          {{t "components.modal-dialog.ok-button-text"}}
+        </button>
       {{/if}}
     </div>
   {{/if}}

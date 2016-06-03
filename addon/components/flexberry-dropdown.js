@@ -3,6 +3,7 @@
  */
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * @class FlexberryDropDown
@@ -51,6 +52,15 @@ export default FlexberryBaseComponent.extend({
   tagName: '',
 
   /**
+   * Classes for component wrapper.
+   *
+   * @property class
+   * @type String
+   * @default ''
+   */
+  class: '',
+
+  /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
    *
    * @property appConfigSettingsPath
@@ -73,9 +83,9 @@ export default FlexberryBaseComponent.extend({
    *
    * @property defaultText
    * @type String
-   * @default null
+   * @default 't('components.flexberry-dropdown.default-text')'
    */
-  defaultText: undefined,
+  defaultText: t('components.flexberry-dropdown.default-text'),
 
   /**
    * Selected item.

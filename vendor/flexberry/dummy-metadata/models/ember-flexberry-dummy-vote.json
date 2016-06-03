@@ -1,0 +1,64 @@
+﻿{
+  "modelName": "ember-flexberry-dummy-vote",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "voteType",
+      "type": "ember-flexberry-dummy-vote-type",
+      "flexberryType": "VoteType",
+      "notNull": false,
+      "defaultValue": ""
+    }
+  ],
+  "belongsTo": [
+    {
+      "name": "applicationUser",
+      "relatedTo": "ember-flexberry-dummy-application-user",
+      "inverse": null
+    },
+    {
+      "name": "suggestion",
+      "relatedTo": "ember-flexberry-dummy-suggestion",
+      "inverse": "userVotes"
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "VoteE",
+      "modelName": "ember-flexberry-dummy-vote",
+      "attrs": [
+        {
+          "name": "voteType",
+          "caption": "Vote type",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Name",
+          "lookupValueField": "name",
+          "relationName": "ApplicationUser",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "Name",
+              "hidden": true,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "caption": "Application user",
+          "name": "applicationUser",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    }
+  ]
+}

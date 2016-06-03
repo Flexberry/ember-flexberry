@@ -16,12 +16,16 @@ export default FlexberryBaseComponent.extend({
   /**
    * Class names for component wrapping <div>.
    */
-  classNames: ['flexberry-file', 'ui', 'fluid', 'action', 'input'],
+  classNames: ['flexberry-file'],
 
   /**
-   * Css class for buttons.
+   * Classes for buttons.
+   *
+   * @property buttonClass
+   * @type String
+   * @default undefined
    */
-  classButton: undefined,
+  buttonClass: undefined,
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -123,7 +127,7 @@ export default FlexberryBaseComponent.extend({
    *
    * @property viewImageAction
    * @type String
-   * @default `flexberryFileViewImageAction`
+   * @default 'flexberryFileViewImageAction'
    */
   viewImageAction: 'flexberryFileViewImageAction',
 
@@ -133,7 +137,7 @@ export default FlexberryBaseComponent.extend({
    * @property _selectedFileSrc
    * @private
    * @type String
-   * @default ``
+   * @default ''
    */
   _selectedFileSrc: '',
 
@@ -178,11 +182,6 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Add button title (will be shown on mouse hover).
-   */
-  addButtonTitle: undefined,
-
-  /**
    * Flag: indicates whether remove button is visible now.
    */
   removeButtonIsVisible: Ember.computed('readonly', function() {
@@ -199,11 +198,6 @@ export default FlexberryBaseComponent.extend({
 
     return !(uploadIsInProgress || downloadIsInProgress || Ember.isNone(jsonValue));
   }),
-
-  /**
-   * Remove button title (will be shown on mouse hover).
-   */
-  removeButtonTitle: undefined,
 
   /**
    * Flag: indicates whether to upload file on 'relatedModel' 'preSave' event.
@@ -234,11 +228,6 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Upload button title (will be shown on mouse hover).
-   */
-  uploadButtonTitle: undefined,
-
-  /**
    * Flag: indicates whether download button is visible now.
    */
   downloadButtonIsVisible: Ember.computed('initialValue', function() {
@@ -258,11 +247,6 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Download button title (will be shown on mouse hover).
-   */
-  downloadButtonTitle: undefined,
-
-  /**
    * Maximum file size in bytes for uploading files.
    * It should be greater then 0 and less or equal then APP.components.file.maxUploadFileSize from application config\environment.
    * If null or undefined, then APP.components.file.maxUploadFileSize from application config\environment will be used.
@@ -271,8 +255,12 @@ export default FlexberryBaseComponent.extend({
 
   /**
    * Text to be displayed instead of file name, if file has not been selected.
+   *
+   * @property placeholder
+   * @type String
+   * @default 't('components.flexberry-file.placeholder')'
    */
-  placeholder: undefined,
+  placeholder: t('components.flexberry-file.placeholder'),
 
   /**
    * File upload URL.
@@ -293,14 +281,22 @@ export default FlexberryBaseComponent.extend({
   /**
    * Title to be displayed in error modal dialog.
    * It will be displayed only if some error occur.
+   *
+   * @property errorModalDialogTitle
+   * @type String
+   * @default 't('components.flexberry-file.error-dialog-title')'
    */
-  errorModalDialogTitle: t('flexberry-file.error-dialog-title'),
+  errorModalDialogTitle: t('components.flexberry-file.error-dialog-title'),
 
   /**
    * Content to be displayed in error modal dialog.
    * It will be displayed only if some error occur.
+   *
+   * @property errorModalDialogContent
+   * @type String
+   * @default 't('components.flexberry-file.error-dialog-content')'
    */
-  errorModalDialogContent: t('flexberry-file.error-dialog-content'),
+  errorModalDialogContent: t('components.flexberry-file.error-dialog-content'),
 
   /**
    * Selected jQuery object, containing HTML of error modal dialog.
@@ -331,18 +327,12 @@ export default FlexberryBaseComponent.extend({
     this.set('initialValue', Ember.copy(value, true));
 
     // Initialize properties which defaults could be defined in application configuration.
-    var i18n = this.get('i18n');
     this.initProperty({ propertyName: 'uploadUrl', defaultValue: null });
     this.initProperty({ propertyName: 'maxUploadFileSize', defaultValue: null });
-    this.initProperty({ propertyName: 'placeholder', defaultValue: i18n.t('flexberry-file.placeholder') });
     this.initProperty({ propertyName: 'uploadOnModelPreSave', defaultValue: true });
     this.initProperty({ propertyName: 'showUploadButton', defaultValue: false });
     this.initProperty({ propertyName: 'showModalDialogOnUploadError', defaultValue: false });
     this.initProperty({ propertyName: 'showModalDialogOnDownloadError', defaultValue: true });
-    this.initProperty({ propertyName: 'addButtonTitle', defaultValue: i18n.t('flexberry-file.add-btn-text') });
-    this.initProperty({ propertyName: 'removeButtonTitle', defaultValue: i18n.t('flexberry-file.remove-btn-text') });
-    this.initProperty({ propertyName: 'uploadButtonTitle', defaultValue: i18n.t('flexberry-file.upload-btn-text') });
-    this.initProperty({ propertyName: 'downloadButtonTitle', defaultValue: i18n.t('flexberry-file.download-btn-text') });
 
     // Bind related model's 'preSave' event handler's context & subscribe on related model's 'preSave'event.
     this.set('_onRelatedModelPreSave', this.get('_onRelatedModelPreSave').bind(this));
@@ -407,9 +397,9 @@ export default FlexberryBaseComponent.extend({
 
       // Prevent files greater then maxUploadFileSize.
       if (!Ember.isNone(maxUploadFileSize) && selectedFile.size > maxUploadFileSize) {
-        var errorTitle = i18n.t('flexberry-file.add-file-error-title');
+        var errorTitle = i18n.t('components.flexberry-file.add-file-error-title');
         var errorContent = i18n.t(
-          'flexberry-file.file-too-big-message',
+          'components.flexberry-file.file-too-big-message',
           {
             fileName: selectedFile.name,
             maxSize: maxUploadFileSize,
@@ -511,8 +501,8 @@ export default FlexberryBaseComponent.extend({
       }).fail(function(jqXhr, textStatus, errorThrown) {
         var fileName = ' \'' + file.name + '\'';
         var errorText = errorThrown ? ' (' + errorThrown + ')' : '';
-        var errorTitle = i18n.t('flexberry-file.upload-file-error-title');
-        var errorContent = i18n.t('flexberry-file.upload-file-error-message', { fileName: fileName, errorText: errorText });
+        var errorTitle = i18n.t('components.flexberry-file.upload-file-error-title');
+        var errorContent = i18n.t('components.flexberry-file.upload-file-error-message', { fileName: fileName, errorText: errorText });
 
         var showModalDialogOnUploadError = _this.get('showModalDialogOnUploadError');
         if (showModalDialogOnUploadError) {
@@ -644,8 +634,8 @@ export default FlexberryBaseComponent.extend({
       var i18n = currentContext.get('i18n');
       var jsonInitialValue = currentContext.get('jsonInitialValue');
       var fileName = ' \'' + jsonInitialValue.fileName + '\'';
-      var errorTitle = i18n.t('flexberry-file.download-file-error-title');
-      var errorContent = i18n.t('flexberry-file.download-file-error-message', { fileName: fileName, errorText: errorText });
+      var errorTitle = i18n.t('components.flexberry-file.download-file-error-title');
+      var errorContent = i18n.t('components.flexberry-file.download-file-error-message', { fileName: fileName, errorText: errorText });
       currentContext.showErrorModalDialog.call(currentContext, errorTitle, errorContent);
     }
   },

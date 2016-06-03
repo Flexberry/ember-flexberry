@@ -1,0 +1,13 @@
+﻿{
+  "newForm": "ember-flexberry-dummy-application-user-edit",
+  "editForm": "ember-flexberry-dummy-application-user-edit",
+  "caption": "Application users",
+  "name": "EmberFlexberryDummyApplicationUserList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-application-user",
+      "modelProjection": "ApplicationUserL"
+    }
+  ]
+}

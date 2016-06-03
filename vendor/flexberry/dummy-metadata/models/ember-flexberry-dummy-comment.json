@@ -1,0 +1,254 @@
+﻿{
+  "modelName": "ember-flexberry-dummy-comment",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "text",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "votes",
+      "type": "number",
+      "flexberryType": "long",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "moderated",
+      "type": "boolean",
+      "flexberryType": "bool",
+      "notNull": false,
+      "defaultValue": ""
+    }
+  ],
+  "belongsTo": [
+    {
+      "name": "author",
+      "relatedTo": "ember-flexberry-dummy-application-user",
+      "inverse": null
+    },
+    {
+      "name": "suggestion",
+      "relatedTo": "ember-flexberry-dummy-suggestion",
+      "inverse": "comments"
+    }
+  ],
+  "hasMany": [
+    {
+      "name": "userVotes",
+      "relatedTo": "ember-flexberry-dummy-comment-vote",
+      "inverse": "comment"
+    }
+  ],
+  "projections": [
+    {
+      "name": "CommentD",
+      "modelName": "ember-flexberry-dummy-comment",
+      "attrs": [
+        {
+          "name": "text",
+          "caption": "Text",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "votes",
+          "caption": "Votes",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "moderated",
+          "caption": "Moderated",
+          "hidden": false,
+          "index": 2
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Name",
+          "lookupValueField": "name",
+          "relationName": "Author",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "Name",
+              "hidden": true,
+              "index": 4
+            }
+          ],
+          "index": 3,
+          "caption": "Author",
+          "name": "author",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        }
+      ],
+      "hasMany": [
+        {
+          "projectionName": "CommentVoteE",
+          "caption": "User votes",
+          "name": "userVotes",
+          "relatedTo": "ember-flexberry-dummy-comment-vote",
+          "inverse": null
+        }
+      ]
+    },
+    {
+      "name": "CommentE",
+      "modelName": "ember-flexberry-dummy-comment",
+      "attrs": [
+        {
+          "name": "text",
+          "caption": "Text",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "votes",
+          "caption": "Votes",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "moderated",
+          "caption": "Moderated",
+          "hidden": false,
+          "index": 2
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Address",
+          "lookupValueField": "address",
+          "relationName": "Suggestion",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "address",
+              "caption": "",
+              "hidden": true,
+              "index": 4
+            }
+          ],
+          "index": 3,
+          "caption": "Suggestion",
+          "name": "suggestion",
+          "relatedTo": "ember-flexberry-dummy-suggestion",
+          "inverse": null
+        },
+        {
+          "lookupValue": "Name",
+          "lookupValueField": "name",
+          "relationName": "Author",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "Name",
+              "hidden": true,
+              "index": 6
+            }
+          ],
+          "index": 5,
+          "caption": "Author",
+          "name": "author",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        }
+      ],
+      "hasMany": [
+        {
+          "projectionName": "CommentVoteE",
+          "caption": "User votes",
+          "name": "userVotes",
+          "relatedTo": "ember-flexberry-dummy-comment-vote",
+          "inverse": null
+        }
+      ]
+    },
+    {
+      "name": "CommentL",
+      "modelName": "ember-flexberry-dummy-comment",
+      "attrs": [
+        {
+          "name": "text",
+          "caption": "Text",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "votes",
+          "caption": "Votes",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "moderated",
+          "caption": "Moderated",
+          "hidden": false,
+          "index": 2
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Suggestion",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "address",
+              "caption": "Address",
+              "hidden": false,
+              "index": 3
+            }
+          ],
+          "index": -1,
+          "caption": "Address",
+          "name": "suggestion",
+          "relatedTo": "ember-flexberry-dummy-suggestion",
+          "inverse": null
+        },
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Author",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "Name",
+              "hidden": false,
+              "index": 4
+            }
+          ],
+          "index": -1,
+          "caption": "Name",
+          "name": "author",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        }
+      ],
+      "hasMany": [
+        {
+          "projectionName": "CommentVoteE",
+          "caption": "User votes",
+          "name": "userVotes",
+          "relatedTo": "ember-flexberry-dummy-comment-vote",
+          "inverse": null
+        }
+      ]
+    }
+  ]
+}

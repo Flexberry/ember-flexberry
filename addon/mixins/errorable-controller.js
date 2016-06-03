@@ -7,7 +7,7 @@ export default Ember.Mixin.create({
     this.set('errorMessages', Ember.A([]));
   },
 
-  actions:{
+  actions: {
     addErrorMessage: function(msg) {
       this.get('errorMessages').pushObject(msg);
     },

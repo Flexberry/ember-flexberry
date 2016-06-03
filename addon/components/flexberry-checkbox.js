@@ -38,7 +38,7 @@ export default FlexberryBaseComponent.extend({
    * @type Boolean
    * @default false
    */
-  value: false,
+  value: undefined,
 
   /**
    * Label for the checkbox.

@@ -5,7 +5,7 @@
 import Ember from 'ember';
 
 import QueryBuilder from 'ember-flexberry-data/query/builder';
-import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
  * Service to work with user settings on server.
@@ -49,7 +49,7 @@ export default Ember.Service.extend({
    */
   saveUserSetting: function(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
-      return;
+      return new Promise((resolve,reject)=>{resolve();});
     }
 
     let methodOptions = Ember.merge({
@@ -150,16 +150,17 @@ export default Ember.Service.extend({
   _getExistingRecord: function(moduleName, settingName) {
     // TODO: add search by username.
     let currentUserName = this.getCurrentUser();
-    let p = new SimplePredicate('moduleName', 'eq', moduleName)
-      .and('settName', 'eq', settingName)
-      .and('userName', 'eq', currentUserName);
+    let p1 = new SimplePredicate('moduleName', 'eq', moduleName);
+    let p2 = new SimplePredicate('settName', 'eq', settingName);
+    let p3 = new SimplePredicate('userName', 'eq', currentUserName);
+    let cp = new ComplexPredicate ('and', p1, p2, p3)
     let store = this.get('store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
     let builder = new QueryBuilder(store)
       .from(modelName)
       .selectByProjection('FlexberryUserSettingE')
       .top(2)
-      .where(p);
+      .where(cp);
 
     return store.query(modelName, builder.build()).then(function(result) {
       if (result) {

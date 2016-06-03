@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
         link: null,
         title: 'Objects',
         children: [
-          <%=children %>
+<%=children%>
         ]
       }
     ]

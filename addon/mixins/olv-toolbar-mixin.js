@@ -2,8 +2,14 @@ import Ember from 'ember';
 
 // TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+
   actions: {
     showConfigDialog: function() {
+      if (!this.get('_userSettingsService').isUserSettingsServiceEnabled) {
+        alert('Реконфигурация отображения столбцов невозможна. Сервис пользовательских настроек выключен.');
+        return;
+      }
       let userSettings = this.model.userSettings;
       let propName;
       let colDesc;

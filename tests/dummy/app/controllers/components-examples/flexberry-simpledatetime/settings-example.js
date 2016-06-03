@@ -25,10 +25,10 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-simpledatetime<br>' +
-    '..value=model.simpledate<br>' +
-    '..readonly=readonlyAttr<br>' +
-    '..min=minStr<br>' +
-    '..max=maxStr<br>' +
+    '..min=min<br>' +
+    '..max=max<br>' +
+    '..value=model.datetime<br>' +
+    '..readonly=readonly<br>' +
     '}}'),
 
   /**
@@ -40,18 +40,6 @@ export default Ember.Controller.extend({
   componentSettingsMetadata: Ember.computed(function() {
     var componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
-      settingName: 'value',
-      settingType: 'datetime',
-      settingDefaultValue: 'undefined',
-      bindedControllerPropertieName: 'model.datetime'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'readonly',
-      settingType: 'boolean',
-      settingDefaultValue: 'false',
-      bindedControllerPropertieName: 'readonlyAttr'
-    });
-    componentSettingsMetadata.pushObject({
       settingName: 'min',
       settingType: 'datetime',
       settingDefaultValue: 'undefined',
@@ -62,6 +50,18 @@ export default Ember.Controller.extend({
       settingType: 'datetime',
       settingDefaultValue: 'undefined',
       bindedControllerPropertieName: 'max'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'value',
+      settingType: 'datetime',
+      settingDefaultValue: 'undefined',
+      bindedControllerPropertieName: 'model.datetime'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'readonly',
+      settingType: 'boolean',
+      settingDefaultValue: 'false',
+      bindedControllerPropertieName: 'readonly'
     });
 
     return componentSettingsMetadata;

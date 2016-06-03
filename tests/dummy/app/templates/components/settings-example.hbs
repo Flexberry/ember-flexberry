@@ -32,7 +32,7 @@
               {{input type="date" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
             {{/if}}
             {{#if (eq settingMetadata.settingType "datetime")}}
-              {{input type="datetime" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
+              {{input type="datetime-local" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
             {{/if}}
             {{#if (eq settingMetadata.settingType "enumeration")}}
               <select onchange={{action (mut (get controllerProperties settingMetadata.bindedControllerPropertieName)) value="target.value"}}>

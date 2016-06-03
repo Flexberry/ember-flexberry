@@ -84,6 +84,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-datepicker': {
+            'caption': 'flexberry-datepicker',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-dropdown': {
             'caption': 'flexberry-dropdown',
             'title': '',
@@ -122,6 +130,14 @@ Ember.$.extend(true, translations, {
           },
           'flexberry-menu': {
             'caption': 'flexberry-menu',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-simpledatetime': {
+            'caption': 'flexberry-simpledatetime',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -232,6 +248,11 @@ Ember.$.extend(true, translations, {
           'caption': 'Components-examples/flexberry-checkbox/settings-example'
         }
       },
+      'flexberry-datepicker': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-datepicker/settings-example'
+        }
+      },
       'flexberry-dropdown': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-dropdown/settings-example'
@@ -265,6 +286,11 @@ Ember.$.extend(true, translations, {
       'flexberry-menu': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-menu/settings-example'
+        }
+      },
+      'flexberry-simpledatetime': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-simpledatetime/settings-example'
         }
       },
       'flexberry-textarea': {

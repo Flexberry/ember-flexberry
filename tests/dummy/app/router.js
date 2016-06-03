@@ -28,12 +28,14 @@ Router.map(function() {
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-checkbox/settings-example');
+  this.route('components-examples/flexberry-datepicker/settings-example');
   this.route('components-examples/flexberry-dropdown/settings-example');
   this.route('components-examples/flexberry-dropdown/conditional-render-example');
   this.route('components-examples/flexberry-field/settings-example');
   this.route('components-examples/flexberry-groupedit/settings-example');
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-menu/settings-example');
+  this.route('components-examples/flexberry-simpledatetime/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');

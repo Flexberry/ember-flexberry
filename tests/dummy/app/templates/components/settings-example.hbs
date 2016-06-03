@@ -28,6 +28,12 @@
             {{#if (eq settingMetadata.settingType "string")}}
               {{input type="text" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
             {{/if}}
+            {{#if (eq settingMetadata.settingType "date")}}
+              {{input type="date" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
+            {{/if}}
+            {{#if (eq settingMetadata.settingType "datetime")}}
+              {{input type="datetime" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
+            {{/if}}
             {{#if (eq settingMetadata.settingType "enumeration")}}
               <select onchange={{action (mut (get controllerProperties settingMetadata.bindedControllerPropertieName)) value="target.value"}}>
                 <option></option>

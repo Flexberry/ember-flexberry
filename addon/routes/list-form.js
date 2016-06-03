@@ -47,78 +47,69 @@ export default ProjectedModelFormRoute.extend(
   LimitedRouteMixin,
   FlexberryObjectlistviewRouteMixin, {
     _userSettingsService: Ember.inject.service('user-settings-service'),
-    userSettings:{},
-    sorting:[],
-//     actions: {
-//       /**
-//         * Table row click handler.
-//         *
-//         * @param {Ember.Object} record Record related to clicked table row.
-//         */
-//       rowClick: function(record, editFormRoute) {
-//         this.transitionTo(editFormRoute, record.get('id'));
-//       },
-//
-//       refreshList: function() {
-//         this.refresh();
-//       }
-//     },
-  model: function(params, transition) {
-    let page = parseInt(params.page, 10);
-    let perPage = parseInt(params.perPage, 10);
+    userSettings: {},
+    sorting: [],
 
-    Ember.assert('page must be greater than zero.', page > 0);
-    Ember.assert('perPage must be greater than zero.', perPage > 0);
+    model: function(params, transition) {
+      let page = parseInt(params.page, 10);
+      let perPage = parseInt(params.perPage, 10);
 
-    let modelName = this.get('modelName');
-    let moduleName = transition.targetName;    let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
-    let serializer = this.store.serializerFor(modelName);
-    let sorting = this.deserializeSortingParam(params.sort);
-    //get sorting parameters from DEFAULT userSettings
-    let sortingPromise = this.get('_userSettingsService').getUserSetting({ moduleName:moduleName, settingName:'DEFAULT' })
-    .then(_userSettings => {
-      let  _sorting = [];
-      if (_userSettings) {
-        this.userSettings =  _userSettings;
-        _sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];
-      }
+      Ember.assert('page must be greater than zero.', page > 0);
+      Ember.assert('perPage must be greater than zero.', perPage > 0);
 
-      return _sorting;
-    });
-  // find by query is always fetching.
-  // TODO: support getting from cache with "store.all->filterByProjection".
-    let ret = sortingPromise
-    .then(
-      sorting => {
-        this.sorting = sorting;
-        let builder = new QueryBuilder(this.store)
-        .from(modelName)
-        .selectByProjection(projectionName)
-        .top(perPage)
-        .skip((page - 1) * perPage)
-        .count()
-        .orderBy(
-          sorting
-          .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
-          .join(',')
-        );
-        return this.store.query(modelName, builder.build());
-      })
-    .then((records) => {
-      this.includeSorting(records, this.sorting, this.userSettings);
-      return records;
-    });
-    return ret;
-  },
+      let modelName = this.get('modelName');
+      let moduleName = transition.targetName;    let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
+      let serializer = this.store.serializerFor(modelName);
 
-  setupController: function(controller, model) {
-    this._super(...arguments);
+      //let sorting = this.deserializeSortingParam(params.sort);
 
-    // Define 'modelProjection' for controller instance.
-    // TODO: remove that when list-form controller will be moved to this route.
-    let modelClass = this.store.modelFor(this.get('modelName'));
-    let proj = modelClass.projections.get(this.get('modelProjection'));
-    controller.set('userSettings', this.userSettings);
-    controller.set('modelProjection', proj);
+      //get sorting parameters from DEFAULT userSettings
+      let sortingPromise = this.get('_userSettingsService').getUserSetting({ moduleName:moduleName, settingName:'DEFAULT' })
+      .then(_userSettings => {
+        let  _sorting = [];
+        if (_userSettings) {
+          this.userSettings =  _userSettings;
+          _sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];
+        }
+
+        return _sorting;
+      });
+
+      // find by query is always fetching.
+      // TODO: support getting from cache with "store.all->filterByProjection".
+      let ret = sortingPromise
+      .then(
+        sorting => {
+          this.sorting = sorting;
+          let builder = new QueryBuilder(this.store)
+          .from(modelName)
+          .selectByProjection(projectionName)
+          .top(perPage)
+          .skip((page - 1) * perPage)
+          .count()
+          .orderBy(
+            sorting
+            .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
+            .join(',')
+          );
+          return this.store.query(modelName, builder.build());
+        })
+      .then((records) => {
+        this.includeSorting(records, this.sorting, this.userSettings);
+        return records;
+      });
+      return ret;
+    },
+
+    setupController: function(controller, model) {
+      this._super(...arguments);
+
+      // Define 'modelProjection' for controller instance.
+      // TODO: remove that when list-form controller will be moved to this route.
+      let modelClass = this.store.modelFor(this.get('modelName'));
+      let proj = modelClass.projections.get(this.get('modelProjection'));
+      controller.set('userSettings', this.userSettings);
+      controller.set('modelProjection', proj);
+    }
   }
-});
+);

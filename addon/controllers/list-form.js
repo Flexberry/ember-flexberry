@@ -9,7 +9,6 @@ import LimitedControllerMixin from '../mixins/limited-controller';
 import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-mixin';
 import ColsConfigDialogMixin from '../mixins/colsconfig-dialog-controller';
 
-
 /**
  * Base controller for the List Forms.
 
@@ -40,7 +39,11 @@ import ColsConfigDialogMixin from '../mixins/colsconfig-dialog-controller';
  * @uses SortableControllerMixin
  * @uses LimitedControllerMixin
  */
-export default Ember.Controller.extend(PaginatedControllerMixin, SortableControllerMixin, LimitedControllerMixin, FlexberryOlvToolbarMixin, ColsConfigDialogMixin, {
+export default Ember.Controller.extend(PaginatedControllerMixin,
+  SortableControllerMixin,
+  LimitedControllerMixin,
+  FlexberryOlvToolbarMixin,
+  ColsConfigDialogMixin, {
     /**
      * Controller to show colsconfig modal window.
    *
@@ -49,4 +52,5 @@ export default Ember.Controller.extend(PaginatedControllerMixin, SortableControl
    * @default undefined
    */
     colsconfigController: Ember.inject.controller('colsconfig-dialog'),
-});
+  }
+);

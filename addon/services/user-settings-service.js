@@ -49,7 +49,7 @@ export default Ember.Service.extend({
    */
   saveUserSetting: function(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
-      return new Promise((resolve,reject)=>{resolve();});
+      return new Ember.RSVP.Promise((resolve, reject) => {resolve();});
     }
 
     let methodOptions = Ember.merge({
@@ -153,7 +153,7 @@ export default Ember.Service.extend({
     let p1 = new SimplePredicate('moduleName', 'eq', moduleName);
     let p2 = new SimplePredicate('settName', 'eq', settingName);
     let p3 = new SimplePredicate('userName', 'eq', currentUserName);
-    let cp = new ComplexPredicate ('and', p1, p2, p3)
+    let cp = new ComplexPredicate('and', p1, p2, p3);
     let store = this.get('store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
     let builder = new QueryBuilder(store)

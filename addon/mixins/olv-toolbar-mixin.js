@@ -10,6 +10,7 @@ export default Ember.Mixin.create({
         alert('Реконфигурация отображения столбцов невозможна. Сервис пользовательских настроек выключен.');
         return;
       }
+
       let userSettings = this.model.userSettings;
       let propName;
       let colDesc;

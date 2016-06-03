@@ -27,8 +27,6 @@ export default Ember.Mixin.create({
 
     sortByColumnsConfig: function (colsConfig) {
       this.closeModalDialog();
-//       alert(JSON.stringify('Mixin colsConfig='+colsConfig));
-
     }
   },
 

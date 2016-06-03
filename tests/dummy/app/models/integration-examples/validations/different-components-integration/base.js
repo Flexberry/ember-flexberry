@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-data';
 
-let Model = BaseModel.extend({  
+let Model = BaseModel.extend({
   votes: DS.attr('number'),
   date: DS.attr('date'),
   text: DS.attr('string'),
@@ -14,7 +14,6 @@ let Model = BaseModel.extend({
     async: false
   }),
   moderated: DS.attr('boolean'),
-
 
   // Model validation rules.
   validations: {

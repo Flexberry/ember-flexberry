@@ -1,16 +1,336 @@
+import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
+import { translationMacro as t } from 'ember-i18n';
 
 export default EditFormController.extend({
   /**
-   * Method to get type and attributes of a component,
-   * which will be embeded in object-list-view cell.
-   *
-   * @method getCellComponent.
-   * @param {Object} attr Attribute of projection property related to current table cell.
-   * @param {String} bindingPath Path to model property related to current table cell.
-   * @param {DS.Model} modelClass Model class of data record related to current table row.
-   * @return {Object} Object containing name & properties of component, which will be used to render current table cell.
-   * { componentName: 'my-component',  componentProperties: { ... } }.
+    Text for 'flexberry-groupedit' component 'placeholder' property.
+
+    @property placeholder
+    @type String
+   */
+  placeholder: t('components.flexberry-groupedit.placeholder'),
+
+  /**
+    Flag: indicates whether 'flexberry-groupedit' component is in 'readonly' mode or not.
+
+    @property readonly
+    @type Boolean
+   */
+  readonly: false,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'tableStriped' property.
+
+    @property tableStriped
+    @type Boolean
+   */
+  tableStriped: true,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'createNewButton' property.
+
+    @property createNewButton
+    @type Boolean
+   */
+  createNewButton: true,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'deleteButton' property.
+
+    @property deleteButton
+    @type Boolean
+   */
+  deleteButton: true,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'allowColumnResize' property.
+
+    @property allowColumnResize
+    @type Boolean
+   */
+  allowColumnResize: true,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'showAsteriskInRow' property.
+
+    @property showAsteriskInRow
+    @type Boolean
+   */
+  showAsteriskInRow: true,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'showCheckBoxInRow' property.
+
+    @property showCheckBoxInRow
+    @type Boolean
+   */
+  showCheckBoxInRow: true,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'showDeleteButtonInRow' property.
+
+    @property showDeleteButtonInRow
+    @type Boolean
+   */
+  showDeleteButtonInRow: false,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'showDeleteButtonInRow' property.
+
+    @property showDeleteButtonInRow
+    @type Boolean
+   */
+  showEditMenuItemInRow: false,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'showDeleteButtonInRow' property.
+
+    @property showDeleteButtonInRow
+    @type Boolean
+   */
+  showDeleteMenuItemInRow: false,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'useSingleColumn' property.
+
+    @property useSingleColumn
+    @type Boolean
+   */
+  useSingleColumn: false,
+
+  /**
+    Text for 'flexberry-groupedit' component 'singleColumnHeader' property.
+
+    @property singleColumnHeader
+    @type Boolean
+   */
+  singleColumnHeader: undefined,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'rowClickable' property.
+
+    @property rowClickable
+    @type Boolean
+   */
+  rowClickable: false,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'immediateDelete' property.
+
+    @property immediateDelete
+    @type Boolean
+   */
+  immediateDelete: false,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'editOnSeperateRoute' property.
+
+    @property editOnSeperateRoute
+    @type Boolean
+   */
+  editOnSeperateRoute: false,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'saveBeforeRoutLeave' property.
+
+    @property saveBeforeRoutLeave
+    @type Boolean
+   */
+  saveBeforeRoutLeave: false,
+
+  /**
+    Route name for 'flexberry-groupedit' component 'editFormRoute' property.
+
+    @property editFormRoute
+    @type Boolean
+   */
+  editFormRoute: undefined,
+
+  /**
+    Template text for 'flexberry-groupedit' component.
+
+    @property componentTemplateText
+    @type String
+   */
+  componentTemplateText: new Ember.Handlebars.SafeString(
+    '{{flexberry-groupedit<br>' +
+    '..componentName=\"aggregatorDetailsGroupedit\"<br>' +
+    '..content=model.details<br>' +
+    '..modelProjection=modelProjection.attributes.files<br>' +
+    '..placeholder=placeholder<br>' +
+    '..readonly=readonly<br>' +
+    '..tableStriped=tableStriped<br>' +
+    '..createNewButton=createNewButton<br>' +
+    '..deleteButton=deleteButton<br>' +
+    '..allowColumnResize=allowColumnResize<br>' +
+    '..showAsteriskInRow=showAsteriskInRow<br>' +
+    '..showCheckBoxInRow=showCheckBoxInRow<br>' +
+    '..showDeleteButtonInRow=showDeleteButtonInRow<br>' +
+    '..showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+    '..showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
+    '..useSingleColumn=useSingleColumn<br>' +
+    '..singleColumnHeader=singleColumnHeader<br>' +
+    '..rowClickable=rowClickable<br>' +
+    '..immediateDelete=immediateDelete<br>' +
+    '..editOnSeperateRoute=editOnSeperateRoute<br>' +
+    '..saveBeforeRoutLeave=saveBeforeRoutLeave<br>' +
+    '..editFormRoute=editFormRoute<br>' +
+    '}}'),
+
+  /**
+    Component settings metadata.
+
+    @property componentSettingsMetadata
+    @type Object[]
+   */
+  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
+    var componentSettingsMetadata = Ember.A();
+    componentSettingsMetadata.pushObject({
+      settingName: 'componentName',
+      settingType: 'string',
+      settingValue: 'aggregatorDetailsGroupedit',
+      settingDefaultValue: undefined,
+      settingIsWithoutUI: true
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'content',
+      settingType: 'hasManyArray',
+      settingValue: this.get('model.details'),
+      settingDefaultValue: null,
+      settingIsWithoutUI: true,
+      bindedControllerPropertieName: 'model.details'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'modelProjection',
+      settingType: 'projection',
+      settingValue: this.get('modelProjection.attributes.details'),
+      settingDefaultValue: null,
+      settingIsWithoutUI: true,
+      bindedControllerPropertieName: 'modelProjection.attributes.details'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'placeholder',
+      settingType: 'string',
+      settingDefaultValue: this.get('i18n').t('components.flexberry-groupedit.placeholder'),
+      bindedControllerPropertieName: 'placeholder'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'readonly',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'readonly'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'tableStriped',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'tableStriped'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'createNewButton',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'createNewButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'deleteButton',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'deleteButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'allowColumnResize',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'allowColumnResize'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showAsteriskInRow',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'showAsteriskInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showCheckBoxInRow',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'showCheckBoxInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showDeleteButtonInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showDeleteButtonInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showEditMenuItemInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showEditMenuItemInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showDeleteMenuItemInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showDeleteMenuItemInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'useSingleColumn',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'useSingleColumn'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'singleColumnHeader',
+      settingType: 'string',
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'singleColumnHeader'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'rowClickable',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'rowClickable'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'immediateDelete',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'immediateDelete'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'editOnSeperateRoute',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'editOnSeperateRoute'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'saveBeforeRoutLeave',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'saveBeforeRoutLeave'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'editFormRoute',
+      settingType: 'string',
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'editFormRoute'
+    });
+
+    return componentSettingsMetadata;
+  }),
+
+  /**
+    Method to get type and attributes of a component,
+    which will be embeded in object-list-view cell.
+
+    @method getCellComponent.
+    @param {Object} attr Attribute of projection property related to current table cell.
+    @param {String} bindingPath Path to model property related to current table cell.
+    @param {DS.Model} modelClass Model class of data record related to current table row.
+    @return {Object} Object containing name & properties of component, which will be used to render current table cell.
+    { componentName: 'my-component',  componentProperties: { ... } }.
    */
   getCellComponent: function(attr, bindingPath, model) {
     var cellComponent = this._super(...arguments);

@@ -39,4 +39,16 @@ Model.defineProjection('DetailE', 'components-examples/flexberry-groupedit/setti
   })
 });
 
+// Edit form short projection.
+Model.defineProjection('DetailShortE', 'components-examples/flexberry-groupedit/settings-example/detail', {
+  flag: Proj.attr('Flag'),
+  text: Proj.attr('Text'),
+  enumeration: Proj.attr('Enumeration'),
+});
+
+// Edit form ultra short projection.
+Model.defineProjection('DetailUltraShortE', 'components-examples/flexberry-groupedit/settings-example/detail', {
+  enumeration: Proj.attr('Enumeration'),
+});
+
 export default Model;

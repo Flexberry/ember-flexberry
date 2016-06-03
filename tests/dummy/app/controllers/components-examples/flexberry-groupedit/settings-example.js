@@ -1,8 +1,68 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
+const { getOwner } = Ember;
 
 export default EditFormController.extend({
+  /**
+    Name of selected detail's model projection.
+
+    @property _detailsProjectionName
+    @type String
+    @private
+   */
+  _detailsProjectionName: 'DetailE',
+
+  /**
+    Array of available detail's model projections.
+
+    @property _detailsProjections
+    @type Object[]
+   */
+  _detailsProjections: Ember.computed('model.details.relationship.belongsToType', function() {
+    let detailsModelName = this.get('model.details.relationship.belongsToType');
+    let detailsClass = getOwner(this)._lookupFactory('model:' + detailsModelName);
+
+    return Ember.get(detailsClass, 'projections');
+  }),
+
+  /**
+    Array of available detail's model projections names.
+
+    @property _detailsProjectionsNames
+    @type String[]
+   */
+  _detailsProjectionsNames: Ember.computed('_detailsProjections.[]', function() {
+    let detailsProjections = this.get('_detailsProjections');
+    if (Ember.isNone(detailsProjections)) {
+      return [];
+    }
+
+    return Object.keys(detailsProjections);
+  }),
+
+  /**
+    Model projection for 'flexberry-groupedit' component 'modelProjection' property.
+
+    @property detailsProjection
+    @type Object
+   */
+  detailsProjection: Ember.computed('_detailsProjections.[]', '_detailsProjectionName', function() {
+    let detailsProjectionName = this.get('_detailsProjectionName');
+    if (Ember.isBlank(detailsProjectionName)) {
+      return null;
+    }
+
+    let detailsModelName = this.get('model.details.relationship.belongsToType');
+    let detailsClass = getOwner(this)._lookupFactory('model:' + detailsModelName);
+    let detailsClassProjections = Ember.get(detailsClass, 'projections');
+    if (Ember.isNone(detailsClassProjections)) {
+      return null;
+    }
+
+    return detailsClassProjections[detailsProjectionName];
+  }),
+
   /**
     Text for 'flexberry-groupedit' component 'placeholder' property.
 
@@ -157,7 +217,7 @@ export default EditFormController.extend({
     '{{flexberry-groupedit<br>' +
     '..componentName=\"aggregatorDetailsGroupedit\"<br>' +
     '..content=model.details<br>' +
-    '..modelProjection=modelProjection.attributes.files<br>' +
+    '..modelProjection=detailsProjection<br>' +
     '..placeholder=placeholder<br>' +
     '..readonly=readonly<br>' +
     '..tableStriped=tableStriped<br>' +
@@ -203,11 +263,11 @@ export default EditFormController.extend({
     });
     componentSettingsMetadata.pushObject({
       settingName: 'modelProjection',
-      settingType: 'projection',
-      settingValue: this.get('modelProjection.attributes.details'),
+      settingType: 'enumeration',
+      settingAvailableItems: this.get('_detailsProjectionsNames'),
       settingDefaultValue: null,
-      settingIsWithoutUI: true,
-      bindedControllerPropertieName: 'modelProjection.attributes.details'
+      bindedControllerPropertieName: '_detailsProjectionName',
+      bindedControllerPropertieDisplayName: 'detailsProjection',
     });
     componentSettingsMetadata.pushObject({
       settingName: 'placeholder',

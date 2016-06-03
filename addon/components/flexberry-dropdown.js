@@ -178,9 +178,6 @@ export default FlexberryBaseComponent.extend({
    */
   init: function() {
     this._super(...arguments);
-
-    // Initialize properties which defaults could be defined in application configuration.
-    this.initProperty({ propertyName: 'defaultText', defaultValue: null });
   },
 
   /**

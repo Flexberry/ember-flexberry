@@ -33,7 +33,7 @@
                 <option></option>
                 {{#each settingMetadata.settingAvailableItems as |item|}}
                   <option value={{item}} selected={{eq (get controllerProperties settingMetadata.bindedControllerPropertieName) item}}>
-                    {{item}}
+                    {{to-string item}}
                   </option>
                 {{/each}}
               </select>

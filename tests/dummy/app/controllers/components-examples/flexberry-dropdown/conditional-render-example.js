@@ -3,10 +3,10 @@ import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
   /**
-   * Message to be displayed in 'ui-message' component.
-   *
-   * @property infoMessage
-   * @type String
+    Message to be displayed in 'ui-message' component.
+
+    @property infoMessage
+    @type String
    */
   infoMessage: Ember.computed('i18n.locale', function() {
     var message = this.get('i18n').t('forms.components-examples.flexberry-dropdown.conditional-render-example.info-message', {

@@ -1,8 +1,9 @@
 import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({
   /**
-    Label for 'flexberry-field' component 'label' property.
+    Text for 'flexberry-field' component 'label' property.
 
     @property label
     @type String
@@ -10,12 +11,12 @@ export default Ember.Controller.extend({
   label: undefined,
 
   /**
-    Placeholder for 'flexberry-field' component 'placeholder' property.
+    Text for 'flexberry-field' component 'placeholder' property.
 
     @property placeholder
     @type String
    */
-  placeholder: undefined,
+  placeholder: t('components.flexberry-field.placeholder'),
 
   /**
     Flag: indicates whether 'flexberry-field' component is in 'readonly' mode or not.
@@ -45,30 +46,30 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed(function() {
+  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
     var componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'string',
-      settingDefaultValue: 'undefined',
+      settingDefaultValue: undefined,
       bindedControllerPropertieName: 'model.text'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'label',
       settingType: 'string',
-      settingDefaultValue: 'undefined',
+      settingDefaultValue: undefined,
       bindedControllerPropertieName: 'label'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'placeholder',
       settingType: 'string',
-      settingDefaultValue: 'undefined',
+      settingDefaultValue: this.get('i18n').t('components.flexberry-field.placeholder'),
       bindedControllerPropertieName: 'placeholder'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'readonly',
       settingType: 'boolean',
-      settingDefaultValue: 'false',
+      settingDefaultValue: false,
       bindedControllerPropertieName: 'readonly'
     });
 

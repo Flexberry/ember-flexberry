@@ -1,13 +1,14 @@
 import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({
   /**
-    Placeholder for 'flexberry-textbox' component 'placeholder' property.
+    Text for 'flexberry-textbox' component 'placeholder' property.
 
     @property placeholder
     @type String
    */
-  placeholder: undefined,
+  placeholder: t('components.flexberry-textbox.placeholder'),
 
   /**
     Flag: indicates whether 'flexberry-textbox' component is in 'readonly' mode or not.
@@ -36,24 +37,24 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed(function() {
+  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
     var componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'string',
-      settingDefaultValue: 'undefined',
+      settingDefaultValue: undefined,
       bindedControllerPropertieName: 'model.text'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'placeholder',
       settingType: 'string',
-      settingDefaultValue: 'undefined',
+      settingDefaultValue: this.get('i18n').t('components.flexberry-textbox.placeholder'),
       bindedControllerPropertieName: 'placeholder'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'readonly',
       settingType: 'boolean',
-      settingDefaultValue: 'false',
+      settingDefaultValue: false,
       bindedControllerPropertieName: 'readonly'
     });
 

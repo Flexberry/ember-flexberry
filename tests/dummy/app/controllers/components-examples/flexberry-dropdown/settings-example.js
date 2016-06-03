@@ -40,7 +40,7 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed(function() {
+  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
     var componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
@@ -52,13 +52,13 @@ export default Ember.Controller.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'placeholder',
       settingType: 'string',
-      settingDefaultValue: this.get('placeholder'),
+      settingDefaultValue: this.get('i18n').t('components.flexberry-dropdown.placeholder'),
       bindedControllerPropertieName: 'placeholder'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'readonly',
       settingType: 'boolean',
-      settingDefaultValue: this.get('readonly'),
+      settingDefaultValue: false,
       bindedControllerPropertieName: 'readonly'
     });
 

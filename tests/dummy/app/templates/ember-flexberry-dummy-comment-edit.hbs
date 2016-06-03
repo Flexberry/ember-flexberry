@@ -1,0 +1,75 @@
+<h3 class="ui header">{{title}}</h3>
+{{#if errorMessages}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type="error"
+      closeable=true
+      visible=true
+      title="Error occurred"
+      message=currentError
+    }}
+  {{/each}}
+{{/if}}
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+    </div>
+  </div>
+  <div class="field">
+    {{#if model.errors.text}}
+      <span style ="color:red">{{model.errors.text}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.text
+      class=(if model.errors.text "error" "")
+      label="Text"
+    }}
+  </div>
+  <div class="field">
+    {{#if model.errors.votes}}
+      <span style ="color:red">{{model.errors.votes}}</span>
+    {{/if}}
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.votes
+      class=(if model.errors.votes "error" "")
+      label="Votes"
+    }}
+  </div>
+  <div class="field">
+    <label>Moderated</label>
+    {{#if model.errors.moderated}}
+      <span style="color:red">{{model.errors.moderated}}</span>
+    {{/if}}
+    {{flexberry-checkbox readonly=readonly value=model.moderated}}
+  </div>
+  <div class="field">
+    <label>User votes</label>
+    {{#if model.errors.userVotes}}
+      <span style="color:red">{{model.errors.userVotes}}</span>
+    {{/if}}
+    {{flexberry-groupedit
+      componentName="userVotesGroupEdit"
+      modelProjection=modelProjection.attributes.userVotes
+      content=model.userVotes
+      readonly=readonly
+      orderable=false
+      class=(if model.errors.userVotes "error" "")
+    }}
+  </div>
+</form>

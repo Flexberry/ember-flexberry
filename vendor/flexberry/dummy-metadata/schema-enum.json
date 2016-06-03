@@ -1,0 +1,27 @@
+﻿{
+  "type": "object",
+  "properties": {
+    "className": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "enumObjects": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    }
+  },
+  "required": [
+    "className",
+    "enumObjects"
+  ]
+}

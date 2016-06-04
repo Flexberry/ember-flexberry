@@ -21,8 +21,7 @@ var Model = BaseModel.extend({
   message: DS.attr('string'),
   formattedMessage: DS.attr('string'),
   validations: {
-
- }
+  }
 });
 
 Model.defineProjection('ApplicationLogE', 'i-i-s-caseberry-logging-objects-application-log', {

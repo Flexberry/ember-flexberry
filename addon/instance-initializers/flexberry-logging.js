@@ -3,6 +3,9 @@
 */
 import Ember from 'ember';
 
+/**
+ * Initializator  for logging service
+ */
 export function initialize(applicationInstance) {
   /**
   * LogLevel defined in configuration file config/environment.js
@@ -38,28 +41,26 @@ export function initialize(applicationInstance) {
   * @type Object
   */
   var logLevelEnums = {
-    ERROR:1,	// Log only errors
-    WARN:2,	// Log warnings and errors
-    LOG:3,	// Log logs, warnings and errors
-    INFO:4,	// Log infos, logs, warnings and errors
-    DEBUG:5,// Log debugs, infos, logs, warnings and errors
-    DEPRECATION:6 // Log deprecations, debugs, infos, logs, warnings and errors
+    ERROR: 1,	// Log only errors
+    WARN: 2,	// Log warnings and errors
+    LOG: 3,	// Log logs, warnings and errors
+    INFO: 4,	// Log infos, logs, warnings and errors
+    DEBUG: 5,// Log debugs, infos, logs, warnings and errors
+    DEPRECATION: 6 // Log deprecations, debugs, infos, logs, warnings and errors
   };
 
   /**
   * Replacement error handlers on RSVP stage
   * Do nothing. Error is handled by onerror
   */
-  Ember.RSVP.on('error', function(/*error*/) {
-    //alert('RSVP: '+ error);
+  Ember.RSVP.on('error', function() {
   });
 
   /**
   * Replacement error handlers on error stage
   * Do nothing. Error is handled by onerror
   */
-  Ember.Logger.error = function (/*message, cause, stack*/) {
-    //alert('Logger:error: ' + new Error(message), null, { cause: cause, stack: stack });
+  Ember.Logger.error = function () {
   };
 
   /**

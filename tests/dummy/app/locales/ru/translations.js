@@ -115,6 +115,14 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'customizing-window-example': {
+              'caption': 'Настройка окна',
+              'title': ''
+            },
+            'limit-function-example': {
+              'caption': 'Функция ограничения',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -186,6 +194,12 @@ Ember.$.extend(true, translations, {
       'flexberry-lookup': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-lookup/settings-example'
+        },
+        'customizing-window-example': {
+          'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
+        },
+        'limit-function-example': {
+          'caption': 'Components-examples/flexberry-lookup/limit-function-example'
         }
       },
       'flexberry-menu': {

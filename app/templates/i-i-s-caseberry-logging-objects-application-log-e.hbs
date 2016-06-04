@@ -1,16 +1,15 @@
 <h3 class="ui header">{{title}} - edit form</h3>
-
 {{#if errorMessages}}
-{{#each errorMessages as |currentError|}}
-{{
-ui-message
-type='error'
-closeable=true
-visible=true
-title='Error occurred'
-message=currentError
-}}
-{{/each}}
+  {{#each errorMessages as |currentError|}}
+    {{
+      ui-message
+      type='error'
+      closeable=true
+      visible=true
+      title='Error occurred'
+      message=currentError
+    }}
+  {{/each}}
 {{/if}}
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
@@ -31,13 +30,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.category
-  class=(if model.errors.category 'error' '')
-  label='Category'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.category
+    class=(if model.errors.category 'error' '')
+    label='Category'
   }}
 </div>
 
@@ -48,13 +47,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.eventId
-  class=(if model.errors.eventId 'error' '')
-  label='Event id'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.eventId
+    class=(if model.errors.eventId 'error' '')
+    label='Event id'
   }}
 </div>
 
@@ -65,13 +64,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.priority
-  class=(if model.errors.priority 'error' '')
-  label='Priority'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.priority
+    class=(if model.errors.priority 'error' '')
+    label='Priority'
   }}
 </div>
 
@@ -82,13 +81,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.severity
-  class=(if model.errors.severity 'error' '')
-  label='Severity'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.severity
+    class=(if model.errors.severity 'error' '')
+    label='Severity'
   }}
 </div>
 
@@ -99,13 +98,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.title
-  class=(if model.errors.title 'error' '')
-  label='Title'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.title
+    class=(if model.errors.title 'error' '')
+    label='Title'
   }}
 </div>
 
@@ -130,13 +129,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.machineName
-  class=(if model.errors.machineName 'error' '')
-  label='Machine name'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.machineName
+    class=(if model.errors.machineName 'error' '')
+    label='Machine name'
   }}
 </div>
 
@@ -147,13 +146,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.appDomainName
-  class=(if model.errors.appDomainName 'error' '')
-  label='App domain name'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.appDomainName
+    class=(if model.errors.appDomainName 'error' '')
+    label='App domain name'
   }}
 </div>
 
@@ -164,13 +163,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.processId
-  class=(if model.errors.processId 'error' '')
-  label='Process id'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.processId
+    class=(if model.errors.processId 'error' '')
+    label='Process id'
   }}
 </div>
 
@@ -181,13 +180,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.processName
-  class=(if model.errors.processName 'error' '')
-  label='Process name'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.processName
+    class=(if model.errors.processName 'error' '')
+    label='Process name'
   }}
 </div>
 
@@ -198,13 +197,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.threadName
-  class=(if model.errors.threadName 'error' '')
-  label='Thread name'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.threadName
+    class=(if model.errors.threadName 'error' '')
+    label='Thread name'
   }}
 </div>
 
@@ -215,13 +214,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.win32ThreadId
-  class=(if model.errors.win32ThreadId 'error' '')
-  label='Win32 thread id'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.win32ThreadId
+    class=(if model.errors.win32ThreadId 'error' '')
+    label='Win32 thread id'
   }}
 </div>
 
@@ -232,13 +231,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.message
-  class=(if model.errors.message 'error' '')
-  label='Message'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.message
+    class=(if model.errors.message 'error' '')
+    label='Message'
   }}
 </div>
 
@@ -249,13 +248,13 @@ message=currentError
     </span>
   {{/if}}
   {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.formattedMessage
-  class=(if model.errors.formattedMessage 'error' '')
-  label='Formatted message'
+    flexberry-field
+    placeholder='(no value)'
+    readonly=readonly
+    required=true
+    value=model.formattedMessage
+    class=(if model.errors.formattedMessage 'error' '')
+    label='Formatted message'
   }}
 </div>
 

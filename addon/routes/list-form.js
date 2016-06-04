@@ -2,13 +2,12 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
+import ReloadListMixin from '../mixins/reload-list-mixin';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
-import QueryBuilder from 'ember-flexberry-data/query/builder';
 
 /**
  * Base route for the List Forms.
@@ -38,6 +37,7 @@ import QueryBuilder from 'ember-flexberry-data/query/builder';
  * @uses PaginatedRouteMixin
  * @uses SortableRouteMixin
  * @uses LimitedRouteMixin
+ * @uses ReloadListMixin
  * @uses FlexberryObjectlistviewRouteMixin
  */
 
@@ -45,6 +45,7 @@ export default ProjectedModelFormRoute.extend(
   PaginatedRouteMixin,
   SortableRouteMixin,
   LimitedRouteMixin,
+  ReloadListMixin,
   FlexberryObjectlistviewRouteMixin, {
     _userSettingsService: Ember.inject.service('user-settings-service'),
     userSettings: {},

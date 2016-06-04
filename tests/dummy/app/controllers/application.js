@@ -95,6 +95,14 @@ export default Ember.Controller.extend({
         }]
       }, {
         link: null,
+        title: 'Логирование',
+        children: [{
+          link: 'i-i-s-caseberry-logging-objects-application-log-l',
+          title: 'Просмотр логов приложения',
+          children: null
+        }]
+      }, {
+        link: null,
         caption: i18n.t('forms.application.sitemap.components-examples.caption'),
         title: i18n.t('forms.application.sitemap.components-examples.title'),
         children: [{
@@ -150,6 +158,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-lookup/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.settings-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/customizing-window-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/limit-function-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.title'),
             children: null
           }]
         }, {

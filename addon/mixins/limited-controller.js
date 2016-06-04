@@ -29,7 +29,10 @@ export default Ember.Mixin.create({
      */
     filterByAnyMatch: function(pattern) {
       if (this.get('filter') !== pattern) {
-        this.set('filter', pattern);
+        this.setProperties({
+          filter: pattern,
+          page: 1
+        });
       }
     }
   }

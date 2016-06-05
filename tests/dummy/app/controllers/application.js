@@ -95,10 +95,12 @@ export default Ember.Controller.extend({
         }]
       }, {
         link: null,
-        title: 'Логирование',
+        caption: i18n.t('forms.application.sitemap.logging.caption'),
+        title: i18n.t('forms.application.sitemap.logging.title'),
         children: [{
           link: 'i-i-s-caseberry-logging-objects-application-log-l',
-          title: 'Просмотр логов приложения',
+          caption: i18n.t('forms.application.sitemap.logging.show.caption'),
+          title: i18n.t('forms.application.sitemap.logging.show.title'),
           children: null
         }]
       }, {

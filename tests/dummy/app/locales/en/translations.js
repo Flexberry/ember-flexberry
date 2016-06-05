@@ -50,6 +50,14 @@ Ember.$.extend(true, translations, {
           'caption': 'Home',
           'title': ''
         },
+        'logging': {
+          'caption': 'Logging',
+          'title': '',
+          'show': {
+            'caption': 'Show logs',
+            'title': ''
+          }
+        },
         'application': {
           'caption': 'Application',
           'title': '',

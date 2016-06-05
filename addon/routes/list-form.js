@@ -61,7 +61,8 @@ export default ProjectedModelFormRoute.extend(
       Ember.assert('perPage must be greater than zero.', perPage > 0);
 
       let modelName = this.get('modelName');
-      let moduleName = transition.targetName;    let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
+      let moduleName = transition.targetName;
+      let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
       let serializer = this.store.serializerFor(modelName);
 
       //let sorting = this.deserializeSortingParam(params.sort);

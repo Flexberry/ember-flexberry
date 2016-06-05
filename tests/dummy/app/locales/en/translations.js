@@ -50,6 +50,14 @@ Ember.$.extend(true, translations, {
           'caption': 'Home',
           'title': ''
         },
+        'logging': {
+          'caption': 'Logging',
+          'title': '',
+          'show': {
+            'caption': 'Show logs',
+            'title': ''
+          }
+        },
         'application': {
           'caption': 'Application',
           'title': '',
@@ -132,6 +140,14 @@ Ember.$.extend(true, translations, {
               'caption': 'Settings example',
               'title': ''
             },
+            'flexberry-objectlistview': {
+              'caption': 'flexberry-objectlistview',
+              'title': '',
+              'limit-function-example': {
+                'caption': 'Limit function example',
+                'title': ''
+              }
+            },
             'customizing-window-example': {
               'caption': 'Customizing window example',
               'title': ''
@@ -208,6 +224,11 @@ Ember.$.extend(true, translations, {
       'flexberry-menu': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-menu/settings-example'
+        }
+      },
+      'flexberry-objectlistview': {
+        'limit-function-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/limit-function-example'
         }
       },
       'flexberry-textarea': {

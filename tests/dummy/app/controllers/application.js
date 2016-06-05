@@ -95,10 +95,14 @@ export default Ember.Controller.extend({
         }]
       }, {
         link: null,
-        title: 'Логирование',
+        caption: i18n.t('forms.application.sitemap.logging.caption'),
+        title: i18n.t('forms.application.sitemap.logging.title'),
         children: [{
           link: 'i-i-s-caseberry-logging-objects-application-log-l',
-          title: 'Просмотр логов приложения',
+          caption: i18n.t('forms.application.sitemap.logging.show.caption'),
+          title: i18n.t('forms.application.sitemap.logging.show.title'),
+//           caption: 'Просмотр логов приложения',
+//           title: 'Просмотр логов приложения',
           children: null
         }]
       }, {
@@ -178,6 +182,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-menu/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.title'),
+          children: [{
+            link: 'components-examples/flexberry-objectlistview/limit-function-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.title'),
             children: null
           }]
         }, {

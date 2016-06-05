@@ -168,6 +168,18 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           }
+        },
+        'integration-examples': {
+          'caption': 'Интеграционные примеры',
+          'title': '',
+          'validations': {
+            'caption': 'Валидации',
+            'title': '',
+            'different-components-integration': {
+              'caption': 'Интеграция разлиных компонентов',
+              'title': ''
+            }
+          }
         }
       }
     },
@@ -195,7 +207,8 @@ Ember.$.extend(true, translations, {
       'votes-caption':'Количество голосов',
       'moderated-caption':'Одобрено',
       'author-caption': 'Автор',
-      'userVotes-caption':'Голоса пользователей'
+      'userVotes-caption':'Голоса пользователей',
+      'date-caption': 'Дата'
     },
 
     'ember-flexberry-dummy-localization-edit':{
@@ -306,6 +319,13 @@ Ember.$.extend(true, translations, {
       'flexberry-toggler': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-toggler/settings-example'
+        }
+      }
+    },
+    'integration-examples': {
+      'validations': {
+        'different-components-integration': {
+          'caption': 'Integration-examples/validations/different-components-integration'
         }
       }
     }

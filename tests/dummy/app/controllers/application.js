@@ -213,6 +213,21 @@ export default Ember.Controller.extend({
             children: null
           }]
         }]
+      }, {
+        link: null,
+        caption: i18n.t('forms.application.sitemap.integration-examples.caption'),
+        title: i18n.t('forms.application.sitemap.integration-examples.title'),
+        children: [{
+          link: null,
+          caption: i18n.t('forms.application.sitemap.integration-examples.validations.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.validations.title'),
+          children: [{
+            link: 'integration-examples/validations/different-components-integration',
+            caption: i18n.t('forms.application.sitemap.integration-examples.validations.different-components-integration.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.validations.different-components-integration.title'),
+            children: null
+          }]
+        }]
       }]
     };
   })

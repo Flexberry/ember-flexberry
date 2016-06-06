@@ -1,5 +1,4 @@
 {
-  "esnext": true,
   "preset": "airbnb",
   "requirePaddingNewLinesAfterBlocks": {
     "allExcept": ["inCallExpressions", "inArrayExpressions", "inProperties"]
@@ -11,5 +10,6 @@
   "maximumLineLength": {
     value: 160,
     allExcept: ["regex", "comments", "urlComments"]
-  }
+  },
+  "disallowQuotedKeysInObjects": false
 }

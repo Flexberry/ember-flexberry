@@ -1,34 +1,39 @@
 {{#ui-sidebar class="inverted vertical menu" dimPage=false}}
   <div class="header item">
-    <a class="brand" href="#">Flexberry prototype written in Ember.js</a>
+    <a class="brand"
+       href="#"
+       title={{t "forms.application.sitemap.application-name.title"}}>
+      {{t "forms.application.sitemap.application-name.caption"}}
+    </a>
   </div>
-  <a {{action 'openDevCommit'}}
-       id="app-version"
-       class="item"
-       title="It is version of ember-flexberry addon, which uses in this dummy application (npm version + commit sha). Click to open commit on GitHub."
-       target="_blank">
-      Версия {{app-version}}
+  <a class="item"
+     href={{addonVersionHref}}
+     target="_blank"
+     title={{t "forms.application.sitemap.application-version.title"}}
+     >
+    {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
   </a>
   {{render "sitemap" sitemap}}
-{{/ui-sidebar}} 
+{{/ui-sidebar}}
 <div id="example" class="pusher">
   <div class="full height">
     <div class="ui top attached">
       <div class="ui attached menu">
-        <div class="ui container">
-          <a {{ action 'toggleSidebar' }} title="Menu" class="launch icon item"><i class="sidebar icon"></i></a>            
-          <div class="right menu">              
-            {{#if session.isAuthenticated}}
-              <div class="item">
-                <i class="user icon"></i>
-                {{session.data.authenticated.userName}}
-              </div>
-              <a {{ action 'invalidateSession' }} class="item">Sign out</a>
-            {{else}}
-              <div class="item">
-                {{#link-to 'login' class="ui primary button"}}Sign in{{/link-to}}
-              </div>
-            {{/if}}
+        <div class="ui container">          
+          <a {{action 'toggleSidebar'}}
+             class="launch icon item"
+             title={{t "forms.application.header.menu.sitemap-button.title"}}>
+            {{t "forms.application.header.menu.sitemap-button.caption"}}
+            <i class="sidebar icon"></i>
+          </a>          
+          <div class="right item">
+            {{flexberry-dropdown
+              items=locales
+              value=currentLocale
+              defaultText=(t "forms.application.header.menu.language-dropdown.default-text")
+              readonly=readonly
+              onChange=(action 'onLocaleChange')
+            }}
           </div>
         </div>
       </div>
@@ -45,14 +50,16 @@
   <div class="ui vertical footer segment">
     <div class="ui container">
       <div class="ui text menu">
-      <a class="brand item" href="#">Flexberry prototype written in Ember.js</a>
+      <a class="brand item" href="#">
+        {{t "forms.application.footer.application-name"}}
+      </a>
         <div class="right menu">
-          <a {{action 'openDevCommit'}}
-           id="app-version"
-           class="item"
-           title="It is version of ember-flexberry addon, which uses in this dummy application (npm version + commit sha). Click to open commit on GitHub."
-           target="_blank">
-          {{app-version}}
+          <a class="item"
+             href={{addonVersionHref}}
+             target="_blank"
+             title={{t "forms.application.footer.application-version.title"}}
+             >
+            {{t "forms.application.footer.application-version.caption" version=addonVersion}}
           </a>
         </div>
       </div>

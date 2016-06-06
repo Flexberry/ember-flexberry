@@ -23,6 +23,7 @@ testem.log
 .dir-locals.el
 /blueprints/.vscode
 /blueprints/tsconfig.json
+/blueprints/.editorconfig
 
 .vscodeignore
 jsconfig.json

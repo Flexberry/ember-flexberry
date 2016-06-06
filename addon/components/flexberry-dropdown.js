@@ -3,6 +3,7 @@
 */
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   @class FlexberryDropDown
@@ -43,8 +44,9 @@ export default FlexberryBaseComponent.extend({
 
     @property defaultText
     @type String
+    @default 't('components.flexberry-dropdown.default-text')'
   */
-  defaultText: undefined,
+  defaultText: t('components.flexberry-dropdown.default-text'),
 
   /**
     Selected item.

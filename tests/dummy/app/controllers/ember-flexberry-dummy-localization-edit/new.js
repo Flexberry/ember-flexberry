@@ -1,4 +1,1 @@
-import EmberFlexberryDummyLocalizationEditController from '../ember-flexberry-dummy-localization-edit';
-
-var EmberFlexberryDummyLocalizationEditNewController = EmberFlexberryDummyLocalizationEditController;
-export default EmberFlexberryDummyLocalizationEditNewController;
+export { default } from '../ember-flexberry-dummy-localization-edit';

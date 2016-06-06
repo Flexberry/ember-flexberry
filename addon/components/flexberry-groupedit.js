@@ -190,6 +190,15 @@ export default FlexberryBaseComponent.extend({
   menuInRowAdditionalItems: null,
 
   /**
+   * Flag: indicates whether table are striped.
+   *
+   * @property tableStriped
+   * @type Boolean
+   * @default true
+   */
+  tableStriped: true,
+
+  /**
    * Flag: indicates whether table rows are clickable.
    *
    * @property rowClickable
@@ -197,6 +206,42 @@ export default FlexberryBaseComponent.extend({
    * @default true
    */
   rowClickable: false,
+
+  /**
+   * Custom classes for table.
+   *
+   * @property customTableClass
+   * @type String
+   * @default ''
+   */
+  customTableClass: '',
+
+  /**
+   * Classes for buttons.
+   *
+   * @property buttonClass
+   * @type String
+   * @default undefined
+   */
+  buttonClass: undefined,
+
+  /**
+   * Flag: indicates whether to show creation button at toolbar.
+   *
+   * @property createNewButton
+   * @type Boolean
+   * @default false
+   */
+  createNewButton: true,
+
+  /**
+   * Flag: indicates whether to show delete button at toolbar.
+   *
+   * @property deleteButton
+   * @type Boolean
+   * @default false
+   */
+  deleteButton: true,
 
   /**
    * Flag: indicates whether ordering by clicking on column headers is allowed.

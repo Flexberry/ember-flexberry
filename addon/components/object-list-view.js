@@ -6,6 +6,7 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import ErrorableMixin from '../mixins/errorable-controller';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Object list view component.
@@ -92,7 +93,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
         menuInRowSubItems.push({
           icon: 'edit icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
           isEditItem: true
         });
       }
@@ -100,7 +101,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       if (this.get('showDeleteMenuItemInRow') && recordWithKey.config.canBeDeleted) {
         menuInRowSubItems.push({
           icon: 'trash icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
           isDeleteItem: true
         });
       }
@@ -186,9 +187,68 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   tagName: 'div',
 
   /**
-   * Component's CSS classes.
+   * Component's CSS classes for wrapper.
    */
   classNames: ['object-list-view-container'],
+
+  /**
+   * Flag: indicates whether table are striped.
+   *
+   * @property tableStriped
+   * @type Boolean
+   * @default true
+   */
+  tableStriped: true,
+
+  /**
+   * Flag: indicates whether table rows are clickable.
+   *
+   * @property rowClickable
+   * @type Boolean
+   * @default true
+   */
+  rowClickable: true,
+
+  /**
+   * Custom classes for table.
+   *
+   Example:
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
+    {{flexberry-objectlistview
+      ...
+      customTableClass='inverted blue'
+      ...
+    }}
+    ```
+   * @property customTableClass
+   * @type String
+   * @default ''
+   */
+  customTableClass: '',
+
+  /**
+   * Classes for table.
+   *
+   * @property tableClass
+   * @type String
+   * @readOnly
+   */
+  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', function() {
+    let tableStriped = this.get('tableStriped');
+    let rowClickable = this.get('rowClickable');
+    let classes = this.get('customTableClass');
+
+    if (tableStriped) {
+      classes += ' striped';
+    }
+
+    if (rowClickable) {
+      classes += ' selectable';
+    }
+
+    return classes;
+  }),
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -425,12 +485,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   }),
 
   /**
-   * Flag: indicates whether some column contains editable component instead of default cellComponent.
-   * @property hasEditableValues
-   * @type Boolean
-   * @readonly
-   */
-  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent.componentName', function() {
+    Flag indicates whether some column contains editable component instead of default cellComponent.
+    Don't work if change `componentName` inside `cellComponent`.
+
+    @property hasEditableValues
+    @type Boolean
+    @readOnly
+  */
+  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent', function() {
     var columns = this.get('columns');
     if (!Ember.isArray(columns)) {
       return true;
@@ -476,17 +538,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    *
    * @property noDataMessage
    * @type String
+   * @default 't('components.object-list-view.no-data-text')'
    */
-  noDataMessage: undefined,
-
-  /**
-   * Flag: indicates whether table rows are clickable.
-   *
-   * @property rowClickable
-   * @type Boolean
-   * @default true
-   */
-  rowClickable: true,
+  noDataMessage: t('components.object-list-view.no-data-text'),
 
   /**
    * Flag: indicates whether table headers are clickable.
@@ -713,11 +767,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
 
-    this.initProperty({
-      propertyName: 'noDataMessage',
-      defaultValue: this.get('i18n').t('object-list-view.no-data-text') || 'No data'
-    });
-
     if (this.get('content')) {
       this.get('content').forEach((item, index, enumerable) => {
         this._addModel(item);
@@ -731,6 +780,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   willDestroy: function() {
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
 
     this._super(...arguments);
   },
@@ -969,13 +1019,16 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         case 'belongsTo':
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
-            if (attr.options.displayMemberPath) {
-              bindingPath += '.' + attr.options.displayMemberPath;
-            } else {
-              bindingPath += '.id';
+            let column = this._createColumn(attr, bindingPath);
+
+            if (column.cellComponent.componentName === 'object-list-view-cell') {
+              if (attr.options.displayMemberPath) {
+                column.propName += '.' + attr.options.displayMemberPath;
+              } else {
+                column.propName += '.id';
+              }
             }
 
-            let column = this._createColumn(attr, bindingPath);
             columnsBuf.push(column);
           }
 
@@ -1113,7 +1166,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     if (componentName === this.get('componentName')) {
       if (this.get('editOnSeparateRoute')) {
         // Depending on settings current model has to be saved before adding detail.
-        this.send(this.get('action'), undefined, undefined);
+        this.send('rowClick', undefined, undefined);
       } else {
         var modelName = this.get('modelProjection').modelName;
         var modelToAdd = this.get('store').createRecord(modelName, {});
@@ -1215,9 +1268,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     var key = this._getModelKey(record);
     this._removeModelWithKey(key);
 
-    this._deleteHasManyRelationships(record, immediately).then(() => {
-      return immediately ? record.destroyRecord() : record.deleteRecord();
-    }).catch((reason) => {
+    this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord() : record.deleteRecord()).catch((reason) => {
       this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
       record.rollbackAttributes();
     });
@@ -1258,7 +1309,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @param {String} pattern The pattern to filter objects.
    */
   _filterByAnyMatch: function(componentName, pattern) {
-    this.sendAction('filterByAnyMatch', pattern);
+    if (componentName === this.get('componentName')) {
+      this.sendAction('filterByAnyMatch', pattern);
+    }
   },
 
   _setActiveRecord: function(key) {

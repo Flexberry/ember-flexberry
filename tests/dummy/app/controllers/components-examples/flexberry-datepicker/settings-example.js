@@ -22,14 +22,14 @@ export default Ember.Controller.extend({
     @property minDate
     @type date
    */
-  minDate: 'DD.MM.YYYY',
+  minDate: undefined,
   /**
     The latest date a user may select.
 
     @property maxDate
     @type date
    */
-  maxDate: 'DD.MM.YYYY',
+  maxDate: undefined,
   /**
     Text for 'flexberry-datepicker' component 'placeholder' property.
 

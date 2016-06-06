@@ -34,7 +34,7 @@ export default Ember.Controller.extend({
     '{{flexberry-simpledatetime<br>' +
     '..min=min<br>' +
     '..max=max<br>' +
-    '..value=model.datetime<br>' +
+    '..value=model.date<br>' +
     '..readonly=readonly<br>' +
     '}}'),
 
@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
       settingName: 'value',
       settingType: 'datetime',
       settingDefaultValue: 'undefined',
-      bindedControllerPropertieName: 'model.datetime'
+      bindedControllerPropertieName: 'model.date'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'readonly',

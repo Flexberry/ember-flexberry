@@ -3,12 +3,12 @@ import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
-  text: DS.attr('datetime')
+  date: DS.attr('date')
 });
 
 // Edit form projection.
 Model.defineProjection('BaseE', 'components-examples/flexberry-flexberry-simpledatetime/settings-example/base', {
-  text: Proj.attr('Datetime')
+  date: Proj.attr('Date')
 });
 
 export default Model;

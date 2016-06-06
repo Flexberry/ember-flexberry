@@ -30,6 +30,7 @@ export default Base.extend({
       this.options.messages.invalid = Messages.render('invalid', this.options);
     }
   },
+
   call() {
     if (Ember.isEmpty(get(this.model, this.property))) {
       if (!this.options.allowBlank) {

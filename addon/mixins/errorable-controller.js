@@ -9,7 +9,7 @@ import ValidationData from '../objects/validation-data';
   @public
 */
 export default Ember.Mixin.create({
-  actions:{
+  actions: {
     /**
       Add error message.
 

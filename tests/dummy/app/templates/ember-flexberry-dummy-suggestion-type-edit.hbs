@@ -1,87 +1,85 @@
-<h3 class="ui header">{{title}} - edit form</h3>
-
+<h3 class="ui header">{{title}}</h3>
 {{#if errorMessages}}
-{{#each errorMessages as |currentError|}}
-{{
-ui-message
-type='error'
-closeable=true
-visible=true
-title='Error occurred'
-message=currentError
-}}
-{{/each}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type="error"
+      closeable=true
+      visible=true
+      title="Error occurred"
+      message=currentError
+    }}
+  {{/each}}
 {{/if}}
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-      <button type="submit" class="ui positive button" {{action 'save'}}>Save</button>
-      {{#unless model.isNew}}
-      <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/unless}}
       {{/unless}}
-      {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>Close</button>
+      <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-<div class="field">
-  {{#if model.errors.name}}
-    <span style ="color:red">
-      {{model.errors.name}}
-    </span>
-  {{/if}}
-  {{
-  flexberry-field
-  placeholder='(no value)'
-  readonly=readonly
-  required=true
-  value=model.name
-  class=(if model.errors.name 'error' '')
-  label='Name'
-  }}
-</div>
-
-<div class="field">
-  {{#if model.errors.moderated}}
-    <span style="color:red">{{model.errors.moderated}}</span>
-  {{/if}}
-  {{flexberry-checkbox readonly=readonly checked=model.moderated}}
-</div>
-
-<div class="field">
-  <label>Parent</label>
-  {{#if model.errors.parent}}
-    <span style="color:red">{{model.errors.parent}}</span>
-  {{/if}}
-      {{
-    flexberry-lookup
-    choose='showLookupDialog'
-    remove='removeLookupValue'
-    value=model.parent.name
-    relationName='parent'
-    projection='SuggestionTypeL'
-    title='Parent'
-    readonly=readonly
-    limitFunction=null
-    class=(if model.errors.parent 'error' '')
-}}
-</div>
-
-<div class="field">
-  <label>Localized types</label>
-  {{#if model.errors.localizedTypes}}
-    <span style="color:red">{{model.errors.localizedTypes}}</span>
-  {{/if}}
-  {{
-    flexberry-groupedit
-    componentName="localizedTypesGroupEdit"
-    class="attached"
-    modelProjection=modelProjection.attributes.localizedTypes
-    content=model.localizedTypes
-    readonly=readonly
-    orderable=false
-    class=(if model.errors.localizedTypes 'error' '')
-}}
-</div>
-
+  <div class="field">
+    {{#if model.errors.name}}
+      <span style ="color:red">{{model.errors.name}}</span>
+    {{/if}}
+    {{flexberry-field
+      placeholder="(no value)"
+      readonly=readonly
+      required=true
+      value=model.name
+      class=(if model.errors.name "error" "")
+      label="Name"
+    }}
+  </div>
+  <div class="field">
+    <label>Moderated</label>
+    {{#if model.errors.moderated}}
+      <span style="color:red">{{model.errors.moderated}}</span>
+    {{/if}}
+    {{flexberry-checkbox readonly=readonly value=model.moderated}}
+  </div>
+  <div class="field">
+    <label>Parent</label>
+    {{#if model.errors.parent}}
+      <span style="color:red">{{model.errors.parent}}</span>
+    {{/if}}
+    {{flexberry-lookup
+      value=model.parent
+      projection="SuggestionTypeL"
+      displayAttributeName="name"
+      title="Parent"
+      relatedModel=model
+      relationName="parent"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      limitFunction=null
+      class=(if model.errors.author "error" "")
+    }}
+  </div>
+  <div class="field">
+    <label>Localized types</label>
+    {{#if model.errors.localizedTypes}}
+      <span style="color:red">{{model.errors.localizedTypes}}</span>
+    {{/if}}
+    {{flexberry-groupedit
+      componentName="localizedTypesGroupEdit"
+      class="attached"
+      modelProjection=modelProjection.attributes.localizedTypes
+      content=model.localizedTypes
+      readonly=readonly
+      orderable=false
+      class=(if model.errors.localizedTypes "error" "")
+    }}
+  </div>
 </form>
+

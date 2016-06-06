@@ -1,17 +1,9 @@
 import Ember from 'ember';
-import Settings from '../models/settings';
 
 export default Ember.Mixin.create({
   queryParams: ['page', 'perPage'],
   page: 1,
   perPage: 5,
-
-  // FIXME: Fix perPage loading from Settings.
-  // perPage: Ember.computed(function() {
-  //   let settings = Settings.create();
-  //   let perPage = settings.get('perPage');
-  //   return perPage;
-  // }),
 
   actions: {
     gotoPage: function(pageNum) {
@@ -53,22 +45,22 @@ export default Ember.Mixin.create({
 
       return perPage;
     },
+
     set(key, value) {
       let perPage = parseInt(value, 10);
-
-      // Save setting.
-      let settings = Settings.create();
-      settings.set('perPage', perPage);
-
-      // Changing perPage value reloads route automatically.
-      this.set('perPage', perPage);
 
       // Check that the current page number does not exceed the last page number.
       let currentPage = this.get('page');
       let newLastPage = this._getLastPage(perPage);
       if (currentPage > newLastPage) {
-        // Changing page value reloads route automatically.
-        this.set('page', newLastPage);
+        // Changing page or perPage value reloads route automatically.
+        this.setProperties({
+          page: newLastPage,
+          perPage: perPage
+        });
+      } else {
+        // Changing perPage value reloads route automatically.
+        this.set('perPage', perPage);
       }
 
       return perPage;

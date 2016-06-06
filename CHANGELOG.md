@@ -1,10 +1,56 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-06-03
+### Fixed
+FlexberryObjectlistviewComponent
+* Fix adding limit on loaded data (now limit predicates are used and no query parameter displays current limit predicate).
+
+## 2016-06-02
+### Added
+FlexberryLookupComponent:
+* Add opportunity to customize FlexberryObjectlistviewComponent on modal window.
+### Fixed
+FlexberryLookupComponent:
+* Fix autocomplete request path.
+* Fix limit functions (predicates) for lookups.
+FlexberryObjectlistviewComponent
+* Fix filters (now it is applied only to string own attributes).
+
+## 2016-05-30
+### Fixed
+FlexberryLookupComponent:
+* When enable autocomplete, impossible to clear lookup value.
+
+## 2016-05-26
+### Added
+FlexberryGroupeditComponent:
+* Add properties (createNewButton and deleteButton) to customize the toolbar.
+
+## 2016-05-24
+### Breaking changes
+Addon change:
+* Delete dependency on ember-simple-auth:
+ * Delete authenticator token
+ * Delete authorizer token
+ * Delete controller login
+ * Delete route login
+ * Delete template login
+ * Delete services:
+  * flexberry-auth-service
+  * flexberry-ember-simple-auth-service
+* Delete dependency on ember-local-storage:
+ * Delete model settings
+ * Update mixin paginated-controller
+### Fixed
+FlexberryLookupComponent:
+* When backend is slow, modal window not closed after select item.
+
 ## 2016-05-18
 ### Added
 FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
 * Add tableStriped, customTableClass, tableClass properties.
+
 FlexberryObjectlistviewComponent:
 * Add action removeFilter.
 
@@ -13,9 +59,20 @@ FlexberryObjectlistviewComponent:
 FlexberryObjectlistviewComponent:
 * Move actions from list-form to mixins FlexberryObjectlistviewRouteMixin.
 * Rename action 'rowClick' to 'objectListViewRowClick'.
+* Added 'confirmDeleteRow' and 'confirmDeleteRows' hooks.
+
 FlexberryGroupeditComponent:
 * Rename action 'rowClick' to 'groupEditRowClick'.
 * Rename property 'rowClick' to 'action'.
+* Added 'confirmDeleteRow' and 'confirmDeleteRows' hooks.
+
+EditFormController:
+* Added overloaded methods 'onSaveActionFulfilled', 'onSaveActionRejected', 'onDeleteActionFulfilled' and 'onDeleteActionRejected'.
+
+## 2016-05-11
+### Breaking changes
+EditFormNewRoute:
+* Parameter 'templateName' is required.
 
 ## 2016-05-10
 ### Breaking changes
@@ -33,8 +90,16 @@ FlexberryLookupComponent:
 FlexberryLookupComponent:
 * Rename classChoose to chooseButtonClass.
 * Rename classRemove to removeButtonClass.
+
 FlexberryFileComponent, FlexberryObjectlistviewComponent, FlexberryGroupeditComponent:
 * Rename classButton to buttonClass.
+
+## 2016-05-05
+### Breaking changes
+FlexberryObjectlistviewComponent:
+* Parameter 'editFormRoute' is required.
+EditFormController:
+* Parameter 'parentRoute' is required.
 
 ## 2016-04-15
 ### Fixed
@@ -54,8 +119,6 @@ Flexberry-groupedit
 
 Mobile Flexberry-objectlistview
 * showDeleteMenuItemInRow change default value on false
-###
-##
 
 ## 2016-03-29
 ### Breaking changes
@@ -73,8 +136,6 @@ FlexberryObjectlistviewComponent:
 FlexberryGroupeditComponent
 * Add support custom route for edit model (property: editFormRoute).
   If your FlexberryGroupeditComponent use 'editOnSeparateRoute', you should define 'editFormRoute'
-
-##
 
 i18n:
 * Move initialization from application route into application initializer;
@@ -118,5 +179,3 @@ FlexberryFileComponent
 ### Bug fixes
 Moment:
 * Add 'defaultFormat' initialization (now ENV.moment.defaultFormat will take an effect to both JS & HTMLBars-helpers);
-
-### Breaking changes

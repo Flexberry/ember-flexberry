@@ -217,6 +217,33 @@ export default FlexberryBaseComponent.extend({
   customTableClass: '',
 
   /**
+   * Classes for buttons.
+   *
+   * @property buttonClass
+   * @type String
+   * @default undefined
+   */
+  buttonClass: undefined,
+
+  /**
+   * Flag: indicates whether to show creation button at toolbar.
+   *
+   * @property createNewButton
+   * @type Boolean
+   * @default false
+   */
+  createNewButton: true,
+
+  /**
+   * Flag: indicates whether to show delete button at toolbar.
+   *
+   * @property deleteButton
+   * @type Boolean
+   * @default false
+   */
+  deleteButton: true,
+
+  /**
    * Flag: indicates whether ordering by clicking on column headers is allowed.
    *
    * @property headerClickable

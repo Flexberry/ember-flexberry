@@ -6,6 +6,7 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import ErrorableMixin from '../mixins/errorable-controller';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   Object list view component.
@@ -381,12 +382,13 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
   /**
     Flag indicates whether some column contains editable component instead of default cellComponent.
+    Don't work if change `componentName` inside `cellComponent`.
 
     @property hasEditableValues
     @type Boolean
     @readOnly
   */
-  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent.componentName', function() {
+  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent', function() {
     let columns = this.get('columns');
     if (!Ember.isArray(columns)) {
       return true;
@@ -428,12 +430,13 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   }),
 
   /**
-    Message to be displayed in table body, if content is not defined or empty.
-
-    @property noDataMessage
-    @type String
-  */
-  noDataMessage: undefined,
+   * Message to be displayed in table body, if content is not defined or empty.
+   *
+   * @property noDataMessage
+   * @type String
+   * @default 't('components.object-list-view.no-data-text')'
+   */
+  noDataMessage: t('components.object-list-view.no-data-text'),
 
   /**
     Flag indicates whether table headers are clickable.
@@ -844,11 +847,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
 
-    this.initProperty({
-      propertyName: 'noDataMessage',
-      defaultValue: this.get('i18n').t('object-list-view.no-data-text') || 'No data'
-    });
-
     if (this.get('content')) {
       this.get('content').forEach((item, index, enumerable) => {
         this._addModel(item);
@@ -923,6 +921,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
 
     this._super(...arguments);
   },
@@ -1087,13 +1086,16 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         case 'belongsTo':
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
-            if (attr.options.displayMemberPath) {
-              bindingPath += '.' + attr.options.displayMemberPath;
-            } else {
-              bindingPath += '.id';
+            let column = this._createColumn(attr, bindingPath);
+
+            if (column.cellComponent.componentName === 'object-list-view-cell') {
+              if (attr.options.displayMemberPath) {
+                column.propName += '.' + attr.options.displayMemberPath;
+              } else {
+                column.propName += '.id';
+              }
             }
 
-            let column = this._createColumn(attr, bindingPath);
             columnsBuf.push(column);
           }
 
@@ -1364,9 +1366,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     let key = this._getModelKey(record);
     this._removeModelWithKey(key);
 
-    this._deleteHasManyRelationships(record, immediately).then(() => {
-      return immediately ? record.destroyRecord() : record.deleteRecord();
-    }).catch((reason) => {
+    this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord() : record.deleteRecord()).catch((reason) => {
       this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
       record.rollbackAttributes();
     });

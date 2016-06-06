@@ -1,0 +1,36 @@
+{{#ui-sidebar class="inverted vertical menu" dimPage=false}}
+  <div class="header item">
+    <a class="brand" href="#">Flexberry Ember Demo</a>
+  </div>
+  {{render "sitemap" sitemap}}
+{{/ui-sidebar}}
+<div id="example" class="pusher">
+  <div class="full height">
+    <div class="ui top attached">
+      <div class="ui attached menu">
+        <div class="ui container">
+          <a {{ action 'toggleSidebar' }} title="Menu" class="launch icon item"><i class="sidebar icon"></i></a>
+          <div class="right menu">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flexberry-content ui attached segment">
+      <div class="ui main container">
+        <div class="stackable grid container">
+            {{outlet}}
+            {{outlet "modal"}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui vertical footer segment">
+    <div class="ui container">
+      <div class="ui text menu">
+      <a class="brand item" href="#">Flexberry Ember Demo</a>
+        <div class="right menu">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

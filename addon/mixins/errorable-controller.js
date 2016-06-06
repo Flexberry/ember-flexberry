@@ -7,7 +7,7 @@ export default Ember.Mixin.create({
     this.set('errorMessages', Ember.A([]));
   },
 
-  actions:{
+  actions: {
     addErrorMessage: function(msg) {
       this.get('errorMessages').pushObject(msg);
     },
@@ -20,35 +20,43 @@ export default Ember.Mixin.create({
   rejectError: function(errorData, message) {
     if (errorData instanceof ValidationData) {
       this._rejectValidationError(errorData, message);
+    } else if (errorData instanceof Error) {
+      this._rejectError(errorData, message);
     } else if (errorData.hasOwnProperty('responseText')) {
       this._rejectAjaxError(errorData, message);
+    } else if (Ember.typeOf(errorData) === 'string') {
+      this._rejectStringError(errorData, message);
     } else {
-      this.send('addErrorMessage', 'Error occured.');
-      throw new Error('Unknown error has been rejected.');
+      this.send('addErrorMessage', 'Unknown error occurred.');
+    }
+  },
+
+  _rejectError: function(errorData, message) {
+    this.send('addErrorMessage', message + ' ' + errorData.message);
+    if (Ember.isArray(errorData.errors) && errorData.errors.length > 0) {
+      var errors = errorData.errors;
+      for (var i = 0, len = errors.length; i < len; i++) {
+        var error = errors[i];
+        this.send('addErrorMessage', error.status + ' - ' + error.title);
+      }
     }
   },
 
   _rejectValidationError: function(validationError, message) {
     if (validationError.anyErrors) {
       // TODO: more detail message about validation errors.
-      this.send('addErrorMessage', 'There are validation errors.');
-      alert(message);
-    } else if (validationError.noChanges) {
-      alert('There are no changes.');
+      this.send('addErrorMessage', message + ' There are validation errors.');
     } else {
-      this.send('addErrorMessage', 'Error occured.');
-      throw new Error('Unknown validation error.');
+      this.send('addErrorMessage', 'Unknown validation error.');
     }
   },
 
-  _rejectAjaxError: function(ajaxError, message) {
-    var respJson = ajaxError.responseJSON;
-    Ember.assert('XMLHttpRequest has responseJSON property', respJson);
+  _rejectAjaxError: function(xhr, message) {
+    var ajaxErrorMessage = Ember.get(xhr, 'responseJSON.error.message') || xhr.statusText;
+    this.send('addErrorMessage', message + ' ' + ajaxErrorMessage);
+  },
 
-    if (respJson.error && respJson.error.message) {
-      this.send('addErrorMessage', respJson.error.message);
-    }
-
-    alert(message);
+  _rejectStringError: function(errorText, message) {
+    this.send('addErrorMessage', message + ' ' + errorText);
   }
 });

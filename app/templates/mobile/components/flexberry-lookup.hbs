@@ -1,0 +1,23 @@
+<div class="ui input">
+  <div {{action 'choose' chooseData}} class="ui transparent icon input">
+    <span class="lookup-field">
+      {{#if value}}
+        {{#if hasBlock}}
+          {{yield}}
+        {{else}}
+          {{displayValue}}
+        {{/if}}
+      {{else}}
+        {{placeholder}}
+      {{/if}}
+    </span>
+    {{#unless readonly}} 
+      <i class="chevron right icon"></i>
+    {{/unless}}
+  </div>
+  {{#unless readonly}} 
+    <button class="ui icon {{removeButtonClass}} button" {{action 'remove' removeData}}>
+      <i class="remove icon" ></i>
+    </button>
+  {{/unless}}
+</div>

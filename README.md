@@ -1,15 +1,22 @@
 # Ember Flexberry
 [![npm](https://img.shields.io/npm/v/ember-flexberry.svg?label=npm%20latest%20version)](https://www.npmjs.com/package/ember-flexberry)
-[![Travis branch](https://img.shields.io/travis/Flexberry/ember-flexberry/master.svg?label=master%20build%20)](https://travis-ci.org/Flexberry/ember-flexberry)
-[![Travis branch](https://img.shields.io/travis/Flexberry/ember-flexberry/develop.svg?label=develop%20build)](https://travis-ci.org/Flexberry/ember-flexberry/branches)
+[![Travis master branch](https://img.shields.io/travis/Flexberry/ember-flexberry/master.svg?label=master%20build%20)](https://travis-ci.org/Flexberry/ember-flexberry)
+[![Travis develop branch](https://img.shields.io/travis/Flexberry/ember-flexberry/develop.svg?label=develop%20build)](https://travis-ci.org/Flexberry/ember-flexberry/branches)
+[![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)](https://github.com/orangemug/stability-badges#work-in-progress)
+
+[![ember](https://embadge.io/v1/badge.svg?label=ember&range=~2.4.3)](https://github.com/emberjs/ember.js/releases)
+[![ember-data](https://embadge.io/v1/badge.svg?label=ember-data&range=~2.4.2)](https://github.com/emberjs/data/releases)
+[![ember-cli](https://embadge.io/v1/badge.svg?label=ember-cli&range=2.4.3)](https://github.com/ember-cli/ember-cli/releases)
 [![See all badges](https://img.shields.io/badge/all%20badges-visit BADGES.md-blue.svg)](BADGES.md)
 
-Ember Flexberry Addon - Flexberry Template written in Ember.js.
+Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework powered by Ember.js.
 
-## Installation
+## Installation or Upgrading
 
 * Latest release: `ember install ember-flexberry`
 * Specific version: `ember install ember-flexberry@x.x.x`
+* Latest commit from a branch: `ember install flexberry/ember-flexberry#<BRANCH_NAME>`
+* Specific commit: `ember install flexberry/ember-flexberry#<COMMIT_SHA>`
 
 ## Documentation
 
@@ -52,6 +59,7 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 
 #### Running Tests
 
+* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 
@@ -86,7 +94,7 @@ Manual deployment on [Firebase](https://www.firebase.com):
 #### Documenting
 
 * Document your code using [YUIDoc Syntax Reference](http://yui.github.io/yuidoc/syntax/index.html). For examples, you can look at the documented code in the ember.js repository.
-* After pushing into master branch, documentation will be automatically generated and updated in [Flexberry/Documentation repository](https://github.com/Flexberry/Documentation), which is available via http://flexberry.github.io/Documentation.
+* After pushing into master or develop branch, documentation will be automatically generated and updated in [Flexberry/Documentation repository](https://github.com/Flexberry/Documentation), which is available via http://flexberry.github.io/Documentation.
 * For testing and generating documentation by hands use [YUIDoc](http://yui.github.io/yuidoc/).
 
 ## Further Reading / Useful Links

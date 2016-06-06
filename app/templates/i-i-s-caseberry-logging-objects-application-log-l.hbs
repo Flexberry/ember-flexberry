@@ -1,0 +1,24 @@
+<h3>Application logs</h3>
+<div class="row">
+  {{
+    flexberry-objectlistview
+    modelName = "i-i-s-caseberry-logging-objects-application-log"
+    modelProjection = modelProjection
+    content = model
+    createNewButton = true
+    refreshButton = true
+    sorting = computedSorting
+    orderable = true
+    sortByColumn = (action "sortByColumn")
+    addColumnToSorting = (action "addColumnToSorting")
+    action = "rowClick"
+    pages = pages
+    perPageValue = perPageValue
+    perPageValues = perPageValues
+    hasPreviousPage = hasPreviousPage
+    hasNextPage = hasNextPage
+    previousPage = (action "previousPage")
+    gotoPage = (action "gotoPage")
+    nextPage = (action "nextPage")
+  }}
+</div>

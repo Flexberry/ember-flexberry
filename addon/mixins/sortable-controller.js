@@ -1,7 +1,12 @@
 import Ember from 'ember';
+const { getOwner } = Ember;
 
 export default Ember.Mixin.create({
   queryParams: ['sort'],
+  sortDefaultValue: null,
+  sort: Ember.computed.oneWay('sortDefaultValue'),
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+  _router: undefined,
 
   getNextSortDirection: function(currentDirection) {
     return currentDirection === 'asc' ? 'desc' : 'none';
@@ -25,7 +30,20 @@ export default Ember.Mixin.create({
     return result;
   }),
 
+  /**
+   * Производит операцию, обратную методу deserializeSortingParam.
+   *
+   * @param {Object} sorting Объект с параметрами сортировки, который нужно преобразовать в строку.
+   * @returns {String} Результирующая строка.
+   */
+  serializeSortingParam: function(sorting) {
+    return sorting.map(function(element) {
+      return (element.direction === 'asc' ? '+' : '-') + element.propName;
+    }).join('') || this.get('sortDefaultValue');
+  },
+
   actions: {
+
     sortByColumn: function(column) {
       var propName = column.propName;
       var oldSorting = this.get('model.sorting');
@@ -47,7 +65,22 @@ export default Ember.Mixin.create({
         newSorting.push({ propName: propName, direction: sortDirection });
       }
 
-      this.send('applySorting', newSorting);
+      let sortQueryParam = this.serializeSortingParam(newSorting);
+      this.userSettings.sorting = newSorting;
+      let router = getOwner(this).lookup('router:main');
+      let moduleName =  router.currentRouteName;
+      let savePromise = this.get('_userSettingsService').
+        saveUserSetting({
+          moduleName: moduleName,
+          settingName: 'DEFAULT',
+          userSetting: { sorting: newSorting }
+        }
+      );
+      savePromise.then(
+        record => {
+          this.set('sort', sortQueryParam);
+        }
+      );
     },
 
     addColumnToSorting: function(column) {
@@ -73,7 +106,23 @@ export default Ember.Mixin.create({
         newSorting.push({ propName: propName, direction: 'asc' });
       }
 
-      this.send('applySorting', newSorting);
+      let sortQueryParam = this.serializeSortingParam(newSorting);
+      this.userSettings.sorting = newSorting;
+      let router = getOwner(this).lookup('router:main');
+      let moduleName =  router.currentRouteName;
+      let savePromise = this.get('_userSettingsService').
+        saveUserSetting({
+          moduleName: moduleName,
+          settingName: 'DEFAULT',
+          userSetting: { sorting: newSorting }
+        }
+      );
+      savePromise.then(
+        record => {
+          this.set('sort', sortQueryParam);
+        }
+      );
+
     }
   }
 });

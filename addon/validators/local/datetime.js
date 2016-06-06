@@ -31,8 +31,7 @@ export default Base.extend({
       if (!this.options.allowBlank) {
         this.errors.pushObject(this.options.messages.blank);
       }
-    }
-    else {
+    } else {
       if (!moment(get(this.model, this.property)).isValid()) {
         this.errors.pushObject(this.options.messages.invalid);
       }

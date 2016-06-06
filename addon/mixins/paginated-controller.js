@@ -1,98 +1,140 @@
 import Ember from 'ember';
-import Settings from '../models/settings';
 
 export default Ember.Mixin.create({
-  perPageValues: ['2', '3', '4', '5', '10', '20', '50'],
+  queryParams: ['page', 'perPage'],
+  page: 1,
+  perPage: 5,
 
-  per_page: Ember.computed('content.pagination.per_page', {
+  actions: {
+    gotoPage: function(pageNum) {
+      let num = this._checkPageNumber(pageNum);
+      this.set('page', num);
+    },
+    nextPage: function() {
+      let page = this.get('page');
+      let nextPage = this._checkPageNumber(page + 1);
+      this.set('page', nextPage);
+    },
+    previousPage: function() {
+      let page = this.get('page');
+      let prevPage = this._checkPageNumber(page - 1);
+      this.set('page', prevPage);
+    },
+    lastPage: function() {
+      let lastPage = this._getLastPage();
+      this.set('page', lastPage);
+    },
+    firstPage: function() {
+      this.set('page', 1);
+    }
+  },
+
+  perPageValues: [5, 10, 20, 50],
+
+  perPageValue: Ember.computed('perPage', {
     get(key) {
-      var val = this.get('content.pagination.per_page');
-      if (this.perPageValues.indexOf(val) === -1) {
-        // Если per_page не будет в perPageValues,
+      let perPage = this.get('perPage');
+      let perPageValues = this.get('perPageValues');
+      if (perPageValues.indexOf(perPage) === -1) {
+        // Если perPage не будет в perPageValues,
         // то в select-е будет выбрано undefined,
-        // => per_page изменится undefined, т.к. на нем биндинг.
-        this.perPageValues.push(val);
-        this.perPageValues.sort();
+        // => perPage изменится undefined, т.к. на нем биндинг.
+        perPageValues.push(perPage);
+        perPageValues.sort((a, b) => a - b);
       }
 
-      return val;
+      return perPage;
     },
-    set(key, value) {
-      // Save setting.
-      let settings = Settings.create();
-      settings.set('perPage', value);
 
-      // Reload current route.
-      this.target.router.refresh();
+    set(key, value) {
+      let perPage = parseInt(value, 10);
+
+      // Check that the current page number does not exceed the last page number.
+      let currentPage = this.get('page');
+      let newLastPage = this._getLastPage(perPage);
+      if (currentPage > newLastPage) {
+        // Changing page or perPage value reloads route automatically.
+        this.setProperties({
+          page: newLastPage,
+          perPage: perPage
+        });
+      } else {
+        // Changing perPage value reloads route automatically.
+        this.set('perPage', perPage);
+      }
+
+      return perPage;
     }
   }),
 
-  hasPreviousPage: Ember.computed('content.pagination', function() {
-    var pagination = this.get('content.pagination');
-    return pagination.page > 1;
+  recordsTotalCount: Ember.computed('model', function() {
+    return this.get('model.meta.count');
   }),
 
-  hasNextPage: Ember.computed('content.pagination', function() {
-    var pagination = this.get('content.pagination');
-    var last = Math.ceil(pagination.count / pagination.per_page);
-    return pagination.page < last;
+  hasPreviousPage: Ember.computed('page', function() {
+    return this.get('page') > 1;
   }),
 
-  pages: Ember.computed('content.pagination', function() {
-    var pagination = this.get('content.pagination');
-    var last = Math.ceil(pagination.count / pagination.per_page);
+  hasNextPage: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
+    let page = this.get('page');
+    let lastPage = this._getLastPage();
+    return page < lastPage;
+  }),
+
+  pages: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
+    let page = this.get('page');
+    let lastPage = this._getLastPage();
 
     // Pages are shown via list like [1] [2] … [10] {11} [12] … [18] [19], initial and final pages are shown always,
     // and nearest neighbors are and displayed for the current page. In case, when the current page is located in close to the beginning or end
     // list of page is shown accordingly [1] [2] [3] {4} [5] … [18] [19] or [1] [2] … [15] {16} [17] [18] [19].
-    var visiblePageCount = 7;
-    var visibleEndPageCount = 2;
-    var i = 0;
-    var arr = [];
+    const visiblePageCount = 5;
+    const visibleEndPageCount = 2;
+    let arr = [];
 
-    if (visiblePageCount >= last) {
+    if (visiblePageCount >= lastPage) {
       // If the total page number do not exceed the number of visible pages.
-      for (i = 1; i <= last; i++) {
+      for (let i = 1; i <= lastPage; i++) {
         this._addPageNumberIntoArray(arr, i, false);
       }
     } else {
       // Number of visible pages near current page.
-      var visibleMidlePageHalfCount =  Math.floor((visiblePageCount - visibleEndPageCount * 2) / 2);
+      let visibleMidlePageHalfCount =  Math.floor((visiblePageCount - visibleEndPageCount * 2) / 2);
 
       // Number of visible pages to the left end.
-      var leftEndPageCount =
-          pagination.page < visibleEndPageCount + visibleMidlePageHalfCount + 1 ?
-            visiblePageCount - visibleEndPageCount : visibleEndPageCount;
+      let leftEndPageCount = page < visibleEndPageCount + visibleMidlePageHalfCount + 1 ?
+            visiblePageCount - visibleEndPageCount
+            : visibleEndPageCount;
 
       // Number of visible pages to the right end.
-      var rightEndPageCount =
-          pagination.page > last - (visibleEndPageCount + visibleMidlePageHalfCount) ?
-            visiblePageCount - visibleEndPageCount : visibleEndPageCount;
+      let rightEndPageCount = page > lastPage - (visibleEndPageCount + visibleMidlePageHalfCount) ?
+            visiblePageCount - visibleEndPageCount
+            : visibleEndPageCount;
 
       // Add pages to the left edge.
-      for (i = 1; i <= Math.min(leftEndPageCount, last); i++) {
+      for (let i = 1; i <= Math.min(leftEndPageCount, lastPage); i++) {
         this._addPageNumberIntoArray(arr, i, false);
       }
 
-      // Add left ellipsis if needed
-      if (pagination.page > visibleEndPageCount + visibleMidlePageHalfCount + 1) {
+      // Add left ellipsis if needed.
+      if (page > visibleEndPageCount + visibleMidlePageHalfCount + 1) {
         this._addPageNumberIntoArray(arr, 0, true);
       }
 
       // Add middle pades including current page.
-      var middleBlockStartPage = Math.max(leftEndPageCount + 1, pagination.page - visibleMidlePageHalfCount);
-      var middleBlockEndPage = Math.min(pagination.page + visibleMidlePageHalfCount, last - rightEndPageCount);
-      for (i = middleBlockStartPage; i <= middleBlockEndPage; i++) {
+      let middleBlockStartPage = Math.max(leftEndPageCount + 1, page - visibleMidlePageHalfCount);
+      let middleBlockEndPage = Math.min(page + visibleMidlePageHalfCount, lastPage - rightEndPageCount);
+      for (let i = middleBlockStartPage; i <= middleBlockEndPage; i++) {
         this._addPageNumberIntoArray(arr, i, false);
       }
 
       // Add right ellipsis if needed.
-      if (pagination.page < last - (visibleEndPageCount + visibleMidlePageHalfCount)) {
+      if (page < lastPage - (visibleEndPageCount + visibleMidlePageHalfCount)) {
         this._addPageNumberIntoArray(arr, 0, true);
       }
 
       // Add pages to the right edge.
-      for (i = last - rightEndPageCount + 1; i <= last; i++) {
+      for (let i = lastPage - rightEndPageCount + 1; i <= lastPage; i++) {
         this._addPageNumberIntoArray(arr, i, false);
       }
     }
@@ -101,11 +143,21 @@ export default Ember.Mixin.create({
   }),
 
   _addPageNumberIntoArray: function(arr, pageNumber, isEllipsis) {
-    var pagination = this.get('content.pagination');
+    let page = this.get('page');
     arr.push({
       number: pageNumber,
-      isCurrent: (pageNumber === pagination.page),
+      isCurrent: (pageNumber === page),
       isEllipsis: isEllipsis
     });
+  },
+
+  _getLastPage: function(perPage = this.get('perPage'), count = this.get('recordsTotalCount')) {
+    return Math.ceil(count / perPage);
+  },
+
+  _checkPageNumber: function(pageNum) {
+    const firstPage = 1;
+    let lastPage = this._getLastPage();
+    return Math.max(firstPage, Math.min(pageNum, lastPage));
   }
 });

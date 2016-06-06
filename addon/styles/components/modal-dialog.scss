@@ -1,0 +1,11 @@
+/**
+ * Styles for modal-dialog component.
+ */
+
+ /**
+  * Show scroll for big inner content of modal dialog.
+  */
+.ui.modal > .content {
+  overflow: auto;
+  max-height: 400px;
+}

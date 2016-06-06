@@ -2,12 +2,19 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   /**
-    Label for 'flexberry-simpledatetime' component 'label' property.
+   Minimum value of this component.
 
-    @property label
-    @type String
+   @property min
+   @type Date
    */
-  label: undefined,
+  min: undefined,
+  /**
+    Maximum value of this component.
+
+   @property max
+   @type Date
+   */
+  max: undefined,
 
   /**
     Flag: indicates whether 'flexberry-simpledatetime' component is in 'readonly' mode or not.

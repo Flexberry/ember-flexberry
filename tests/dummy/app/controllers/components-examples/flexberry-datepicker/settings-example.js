@@ -1,14 +1,42 @@
 import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({
   /**
-    Label for 'flexberry-datepicker' component 'label' property.
+    Default display format.
 
-    @property label
+    @property dateTimeFormat
+    @type string
+   */
+  dateTimeFormat: 'DD.MM.YYYY',
+  /**
+    Flag: show time in control and time picker inside date picker.
+
+    @property hasTimePicker
+    @type boolean
+   */
+  hasTimePicker: true,
+  /**
+    The earliest date a user may select.
+
+    @property minDate
+    @type date
+   */
+  minDate: 'DD.MM.YYYY',
+  /**
+    The latest date a user may select.
+
+    @property maxDate
+    @type date
+   */
+  maxDate: 'DD.MM.YYYY',
+  /**
+    Text for 'flexberry-datepicker' component 'placeholder' property.
+
+    @property placeholder
     @type String
    */
-  label: undefined,
-
+  placeholder: t('components.flexberry-datepicker.placeholder'),
   /**
     Flag: indicates whether 'flexberry-datepicker' component is in 'readonly' mode or not.
 
@@ -25,6 +53,10 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-datepicker<br>' +
+    '..dateTimeFormat=dateTimeFormat<br>' +
+    '..hasTimePicker=hasTimePicker<br>' +
+    '..minDate=minDate<br>' +
+    '..maxDate=maxDate<br>' +
     '..value=model.date<br>' +
     '..placeholder=placeholder<br>' +
     '..readonly=readonly<br>' +
@@ -38,6 +70,30 @@ export default Ember.Controller.extend({
    */
   componentSettingsMetadata: Ember.computed(function() {
     var componentSettingsMetadata = Ember.A();
+    componentSettingsMetadata.pushObject({
+      settingName: 'dateTimeFormat',
+      settingType: 'string',
+      settingDefaultValue: 'DD.MM.YYYY',
+      bindedControllerPropertieName: 'dateTimeFormat'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'hasTimePicker',
+      settingType: 'boolean',
+      settingDefaultValue: 'false',
+      bindedControllerPropertieName: 'hasTimePicker'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'minDate',
+      settingType: 'date',
+      settingDefaultValue: 'undefined',
+      bindedControllerPropertieName: 'minDate'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxDate',
+      settingType: 'date',
+      settingDefaultValue: 'undefined',
+      bindedControllerPropertieName: 'maxDate'
+    });
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'date',

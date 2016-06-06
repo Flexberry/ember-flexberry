@@ -485,12 +485,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   }),
 
   /**
-   * Flag: indicates whether some column contains editable component instead of default cellComponent.
-   * @property hasEditableValues
-   * @type Boolean
-   * @readonly
-   */
-  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent.componentName', function() {
+    Flag indicates whether some column contains editable component instead of default cellComponent.
+    Don't work if change `componentName` inside `cellComponent`.
+
+    @property hasEditableValues
+    @type Boolean
+    @readOnly
+  */
+  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent', function() {
     var columns = this.get('columns');
     if (!Ember.isArray(columns)) {
       return true;

@@ -184,6 +184,15 @@ Ember.$.extend(true, translations, {
       }
     },
 
+    'edit-form': {
+      'save-success-message-caption': 'Сохранение завершилось успешно',
+      'save-success-message': 'Объект сохранен',
+      'save-error-message-caption': 'Ошибка сохранения',
+      'delete-success-message-caption': 'Удаление завершилось успешно',
+      'delete-success-message': 'Объект удален',
+      'delete-error-message-caption': 'Ошибка удаления'
+    },
+
     'ember-flexberry-dummy-application-user-edit': {
       'caption':'Пользователь приложения',
       'name-caption':'Имя',

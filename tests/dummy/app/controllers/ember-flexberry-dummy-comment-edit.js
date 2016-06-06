@@ -1,6 +1,6 @@
-import DetailEditFormController from 'ember-flexberry/controllers/detail-edit-form';
+import BaseEditFormController from './base-edit-form';
 
-export default DetailEditFormController.extend({
+export default BaseEditFormController.extend({
   /**
    * Method to get type and attributes of a component,
    * which will be embeded in object-list-view cell.

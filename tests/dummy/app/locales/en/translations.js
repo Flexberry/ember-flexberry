@@ -184,6 +184,15 @@ Ember.$.extend(true, translations, {
       }
     },
 
+    'edit-form': {
+      'save-success-message-caption': 'Save operation succeed',
+      'save-success-message': 'Object saved',
+      'save-error-message-caption': 'Save operation failed',
+      'delete-success-message-caption': 'Delete operation succeed',
+      'delete-success-message': 'Object deleted',
+      'delete-error-message-caption': 'Delete operation failed'
+    },
+
     'ember-flexberry-dummy-application-user-edit': {
       'caption':'Application user',
       'name-caption':'Name',

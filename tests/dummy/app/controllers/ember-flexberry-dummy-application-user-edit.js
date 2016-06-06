@@ -1,6 +1,6 @@
-import EditFormController from 'ember-flexberry/controllers/edit-form';
+import BaseEditFormController from './base-edit-form';
 
-export default EditFormController.extend({
+export default BaseEditFormController.extend({
   /**
   * Route name for transition after close edit form.
   *

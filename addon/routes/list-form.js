@@ -68,7 +68,7 @@ export default ProjectedModelFormRoute.extend(
       //let sorting = this.deserializeSortingParam(params.sort);
 
       //get sorting parameters from DEFAULT userSettings
-      let sortingPromise = this.get('_userSettingsService').getUserSetting({ moduleName:moduleName, settingName:'DEFAULT' })
+      let sortingPromise = this.get('_userSettingsService').getUserSetting({ moduleName: moduleName, settingName: 'DEFAULT' })
       .then(_userSettings => {
         let  _sorting = [];
         if (_userSettings) {

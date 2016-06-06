@@ -43,7 +43,7 @@ export default Ember.Mixin.create({
           propName = colOrder.propName;
           let name = namedColList[propName].header;
           delete namedColList[propName];
-          colDesc = { name:name, propName:propName, hide:colOrder.hide };
+          colDesc = { name: name, propName: propName, hide: colOrder.hide };
           if (propName in namedSorting) {
             let sortColumn = namedSorting[propName];
             colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
@@ -58,7 +58,7 @@ export default Ember.Mixin.create({
       }
 
       for (propName in namedColList) {
-        model[model.length] = { propName:propName, name:namedColList[propName].header, hide:false, sortOrder:0 };
+        model[model.length] = { propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 };
       }
 
       let controller = this.get('colsconfigController');
@@ -74,7 +74,7 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model:model },
+                { controller: controller, model: model },
                 loadingParams);
     }
   },

@@ -4,10 +4,10 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
 export default FlexberryBaseComponent.extend({
 
-  idPrefix:'ColDesc',
-  modelForDOM:[],
+  idPrefix: 'ColDesc',
+  modelForDOM: [],
   _userSettingsService: Ember.inject.service('user-settings-service'),
-  _router:undefined,
+  _router: undefined,
 
   init: function() {
     this._super(...arguments);
@@ -179,9 +179,9 @@ export default FlexberryBaseComponent.extend({
         let tr = trs[i];
         let index = this._getIndexFromId(tr.id);
         let model = this.model[index];
-        colsOrder[i] = { propName:model.propName, hide:model.hide };
+        colsOrder[i] = { propName: model.propName, hide: model.hide };
         if (model.sortPriority !== undefined) {
-          sortSettings[sortSettings.length] = { propName:model.propName, sortOrder:model.sortOrder, sortPriority:model.sortPriority };
+          sortSettings[sortSettings.length] = { propName: model.propName, sortOrder: model.sortOrder, sortPriority: model.sortPriority };
         }
       }
 
@@ -189,13 +189,13 @@ export default FlexberryBaseComponent.extend({
       let sorting = [];
       for (let i = 0; i < sortedSettings.length; i++) {
         let sortedSetting = sortedSettings[i];
-        sorting[sorting.length] =  { propName:sortedSetting.propName, direction: sortedSetting.sortOrder > 0 ? 'asc' : 'desc' };
+        sorting[sorting.length] =  { propName: sortedSetting.propName, direction:  sortedSetting.sortOrder > 0 ? 'asc' : 'desc' };
       }
 
-      colsConfig = { colsOrder:colsOrder, sorting:sorting };
+      colsConfig = { colsOrder: colsOrder, sorting: sorting };
       this._router = getOwner(this).lookup('router:main');
       let moduleName  =   this._router.currentRouteName;
-      let savePromise = this.get('_userSettingsService').saveUserSetting({ moduleName:moduleName, settingName:'DEFAULT', userSetting:colsConfig });
+      let savePromise = this.get('_userSettingsService').saveUserSetting({ moduleName: moduleName, settingName: 'DEFAULT', userSetting: colsConfig });
       savePromise.then(
         record => {
           if (this._router.location.location.hash.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
@@ -214,7 +214,7 @@ export default FlexberryBaseComponent.extend({
     return parseInt(ret);
   },
 
-  _getEventElement:function (prefix, n) {
+  _getEventElement: function (prefix, n) {
     let id = '#' + this.idPrefix + prefix + '_' + n;
     let ret = Ember.$.find(id)[0];
     return ret;

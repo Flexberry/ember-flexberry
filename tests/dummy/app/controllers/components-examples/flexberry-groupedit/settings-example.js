@@ -12,7 +12,7 @@ export default EditFormController.extend({
    * @return {Object} Object containing name & properties of component, which will be used to render current table cell.
    * { componentName: 'my-component',  componentProperties: { ... } }.
    */
-  getCellComponent: function(attr, bindingPath, model) {
+  getCellComponent: function(attr, bindingPath) {
     var cellComponent = this._super(...arguments);
 
     if (attr.kind === 'belongsTo' && bindingPath === 'master') {

@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
       this.get('i18n').set('locale', newLocale);
     },
 
-    toggleSidebar(direction) {
+    toggleSidebar() {
       Ember.$('.ui.sidebar').sidebar('toggle');
     }
   },
@@ -101,8 +101,6 @@ export default Ember.Controller.extend({
           link: 'i-i-s-caseberry-logging-objects-application-log-l',
           caption: i18n.t('forms.application.sitemap.logging.show.caption'),
           title: i18n.t('forms.application.sitemap.logging.show.title'),
-//           caption: 'Просмотр логов приложения',
-//           title: 'Просмотр логов приложения',
           children: null
         }]
       }, {

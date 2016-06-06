@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed(function() {
+  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
     var componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'min',

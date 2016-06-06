@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
     @property hasTimePicker
     @type boolean
    */
-  hasTimePicker: true,
+  hasTimePicker: false,
   /**
     The earliest date a user may select.
 
@@ -68,7 +68,7 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed(function() {
+  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
     var componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'dateTimeFormat',
@@ -103,7 +103,7 @@ export default Ember.Controller.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'placeholder',
       settingType: 'string',
-      settingDefaultValue: 'undefined',
+      settingDefaultValue: this.get('i18n').t('components.flexberry-datepicker.placeholder'),
       bindedControllerPropertieName: 'placeholder'
     });
     componentSettingsMetadata.pushObject({

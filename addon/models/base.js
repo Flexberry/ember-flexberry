@@ -70,7 +70,7 @@ export default Proj.Model.extend(EmberValidations, Ember.Evented, {
 
       // Promises array could be totally changed in 'preSave' event handlers, we should prevent possible errors.
       options.promises = Ember.isArray(options.promises) ? options.promises : [];
-      options.promises = options.promises.filter((item, index, array) => {
+      options.promises = options.promises.filter(function(item, index, array) {
         return item instanceof Ember.RSVP.Promise;
       });
 

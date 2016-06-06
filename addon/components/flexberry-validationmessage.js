@@ -78,7 +78,7 @@ export default Ember.Component.extend({
         'left pointing',
         'right pointing'];
       if (possiblePointings.indexOf(pointing) === -1) {
-        let messagePointings = possiblePointings.map(item => {
+        let messagePointings = possiblePointings.map(function(item) {
           return `'${item}'`;
         });
         throw new Error(

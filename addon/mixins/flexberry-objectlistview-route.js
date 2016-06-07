@@ -67,7 +67,7 @@ export default Ember.Mixin.create({
   @param {String} [options.params] Current route query parameters.
   @return {BasePredicate} The predicate to limit loaded data.
   */
- objectListViewLimitPredicate: function(options) {
-   return undefined;
- }
+  objectListViewLimitPredicate: function(options) {
+    return undefined;
+  }
 });

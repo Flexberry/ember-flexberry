@@ -39,6 +39,7 @@ module.exports = {
             formName: editFormBlueprint.editForm.name,
             entityName: options.entity.name,
             caption: editFormBlueprint.editForm.caption,
+            parentRoute: editFormBlueprint.parentRoute,
             flexberryComponents: editFormBlueprint.flexberryComponents // for use in files\__root__\templates\__name__.hbs
         };
     }
@@ -52,6 +53,7 @@ var EditFormBlueprint = (function () {
         this.modelsDir = path.join(options.metadataDir, "models");
         this.process();
         this.flexberryComponents = this.snippetsResult.join("\n");
+        this.parentRoute = this.getParentRoute();
     }
     EditFormBlueprint.prototype.readSnippetFile = function (fileName, fileExt) {
         return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));
@@ -143,6 +145,21 @@ var EditFormBlueprint = (function () {
             }
             this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
         }
+    };
+    EditFormBlueprint.prototype.getParentRoute = function () {
+        var parentRoute;
+        var listFormsDir = path.join(this.options.metadataDir, "list-forms");
+        var listForms = fs.readdirSync(listFormsDir);
+        for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
+            var form = listForms_1[_i];
+            var listFormFile = path.join(listFormsDir, form);
+            var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
+            var listForm = JSON.parse(content);
+            if (this.options.entity.name === listForm.editForm) {
+                parentRoute = path.parse(form).name;
+            }
+        }
+        return parentRoute;
     };
     return EditFormBlueprint;
 }());

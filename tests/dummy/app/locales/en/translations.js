@@ -112,6 +112,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-file': {
+            'caption': 'flexberry-file',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
           'flexberry-groupedit': {
             'caption': 'flexberry-groupedit',
             'title': '',
@@ -292,6 +300,11 @@ Ember.$.extend(true, translations, {
       'flexberry-field': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-field/settings-example'
+        }
+      },
+      'flexberry-file': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-file/settings-example'
         }
       },
       'flexberry-groupedit': {

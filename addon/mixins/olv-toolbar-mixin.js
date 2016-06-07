@@ -11,10 +11,11 @@ export default Ember.Mixin.create({
         return;
       }
 
+      let listUserSettings = this.model.listUserSettings;
       let userSettings = this.model.userSettings;
       let propName;
-      let colDesc;
-      let model = [];
+      let colDesc;  //Column description
+      let colDescs = [];  //Columns description
       let projectionAttributes = this.modelProjection.attributes;
       let colList = this._generateColumns(projectionAttributes);
       let namedColList = {};
@@ -52,13 +53,13 @@ export default Ember.Mixin.create({
             colDesc.sortOrder = 0;
           }
 
-          model[i] = colDesc;
+          colDescs[i] = colDesc;
         }
 
       }
 
       for (propName in namedColList) {
-        model[model.length] = { propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 };
+        colDescs[colDescs.length] = { propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 };
       }
 
       let controller = this.get('colsconfigController');
@@ -74,7 +75,7 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: model },
+                { controller: controller, model: { colDescs: colDescs, listUserSettings: listUserSettings} },
                 loadingParams);
     }
   },

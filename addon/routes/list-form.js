@@ -51,6 +51,7 @@ export default ProjectedModelFormRoute.extend(
   FlexberryObjectlistviewRouteMixin, {
     _userSettingsService: Ember.inject.service('user-settings-service'),
     userSettings: {},
+    listUserSettings: {},
     sorting: [],
 
     model: function(params, transition) {
@@ -68,6 +69,48 @@ export default ProjectedModelFormRoute.extend(
       //let sorting = this.deserializeSortingParam(params.sort);
 
       //get sorting parameters from DEFAULT userSettings
+
+      let userSettingPromise = this.get('_userSettingsService').getUserSettings({ moduleName: moduleName })
+      .then(_listUserSettings => {
+        if (_listUserSettings) {
+          this.listUserSettings =  _listUserSettings;
+        }
+
+        return _listUserSettings;
+      });
+
+      let ret = userSettingPromise
+      .then(
+        listUserSettings=> {
+//           alert(JSON.stringify(listUserSettings));
+          this.listUserSettings = listUserSettings;
+          let sorting=[];
+          if ('DEFAULT' in listUserSettings) {
+            this.userSettings = this.listUserSettings.DEFAULT;
+            sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];
+          }
+
+          this.sorting = sorting;
+          let builder = new QueryBuilder(this.store)
+          .from(modelName)
+          .selectByProjection(projectionName)
+          .top(perPage)
+          .skip((page - 1) * perPage)
+          .count()
+          .orderBy(
+            sorting
+            .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
+            .join(',')
+          );
+          return this.store.query(modelName, builder.build());
+        })
+      .then((records) => {
+        this.includeSorting(records, this.sorting);
+        records.set('userSettings', this.userSettings);
+        records.set('listUserSettings', this.listUserSettings);
+        return records;
+      });
+/*      //get sorting parameters from DEFAULT userSettings
       let sortingPromise = this.get('_userSettingsService').getUserSetting({ moduleName: moduleName, settingName: 'DEFAULT' })
       .then(_userSettings => {
         let  _sorting = [];
@@ -102,6 +145,7 @@ export default ProjectedModelFormRoute.extend(
         this.includeSorting(records, this.sorting, this.userSettings);
         return records;
       });
+*/
       return ret;
     },
 

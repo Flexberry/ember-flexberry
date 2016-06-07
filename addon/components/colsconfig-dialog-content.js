@@ -21,15 +21,18 @@ export default FlexberryBaseComponent.extend({
    * @default 'APP.components.flexberryCheckbox'
    */
   modelForDOM: [],
+  settingsList: [],
 
   init: function() {
     this._super(...arguments);
-    if (!this.model) {
+    if (!this.model || !('colDescs' in this.model)) {
       return;
     }
 
-    for (let i = 0; i < this.model.length; i++) {
-      let colDesc = this.model[i];
+    this.settingsList = this.model.listUserSettings;
+    let colDescs = this.model.colDescs;
+    for (let i = 0; i < colDescs.length; i++) {
+      let colDesc = colDescs[i];
       let sortOrder = colDesc.sortOrder;
       if (sortOrder > 0) {
         colDesc.sortOrderAsc = 'selected';
@@ -60,8 +63,8 @@ export default FlexberryBaseComponent.extend({
      */
     invertVisibility: function(n) {
       let element = this._getEventElement('Hide', n); // clicked DOM-element
-      let newHideState = !Ember.get(this.model[n], 'hide'); // Invert Hide/Unhide state from model
-      Ember.set(this.model[n], 'hide', newHideState); // Set new state in model
+      let newHideState = !Ember.get(this.model.colDescs[n], 'hide'); // Invert Hide/Unhide state from model.colDescs
+      Ember.set(this.model.colDescs[n], 'hide', newHideState); // Set new state in model.colDescs
       if (newHideState) { // Hide element
         element.className = element.className.replace('unhide', 'hide');  // Change picture
         Ember.$(element).parent().siblings('TD').removeClass('disabled'); // Disable row
@@ -90,8 +93,8 @@ export default FlexberryBaseComponent.extend({
         input.value = '';
         input.disabled = true;  // Disable sortPriority field in this row
         input.style.display = 'none'; // Hide sortPriority field in this row
-        Ember.set(this.model[index], 'sortPriority', undefined);
-        Ember.set(this.model[n], 'sortOrder', undefined);
+        Ember.set(this.model.colDescs[index], 'sortPriority', undefined);
+        Ember.set(this.model.colDescs[n], 'sortOrder', undefined);
       } else {
         if (input.disabled) { // SortPriority disabled
           input.disabled = false;  // Enable SortPriority field in this row
@@ -105,8 +108,8 @@ export default FlexberryBaseComponent.extend({
           SortPriority = input.value;
         }
 
-        Ember.set(this.model[index], 'sortPriority', SortPriority); // Remember values in model
-        Ember.set(this.model[n], 'sortOrder', parseInt(value));
+        Ember.set(this.model.colDescs[index], 'sortPriority', SortPriority); // Remember values in model.colDescs
+        Ember.set(this.model.colDescs[n], 'sortOrder', parseInt(value));
       }
     },
 
@@ -130,7 +133,7 @@ export default FlexberryBaseComponent.extend({
       }
 
       let index = this._getIndexFromId(eventInput.id);  // get index of initial order  (if  columns order is changed n!=index )
-      Ember.set(this.model[index], 'sortPriority', newValue); // set new sortPriority value
+      Ember.set(this.model.colDescs[index], 'sortPriority', newValue); // set new sortPriority value
       if (prevValue === newValue) { //value not changed
         return;
       }
@@ -160,7 +163,7 @@ export default FlexberryBaseComponent.extend({
           input.value = inputValue; // Decrement/Increment value
           input.prevValue = inputValue; // Remeber previous value
           index = this._getIndexFromId(input.id); // get index of initial order
-          Ember.set(this.model[index], 'sortPriority', inputValue); // Set computed value
+          Ember.set(this.model.colDescs[index], 'sortPriority', inputValue); // Set computed value
         }
       }
     },
@@ -222,34 +225,10 @@ export default FlexberryBaseComponent.extend({
      * @method actions.apply
      */
     apply: function() {
-      let trs = Ember.$('#colsConfigtableRows').children('TR');
-      let colsConfig = [];
-      let colsOrder = [];
-      let sortSettings = [];
+      let colsConfig = this._getSettings();
 
-      //Set sortSettings and colsOrder array
-      for (let i = 0; i < trs.length; i++) {  // Iterate TR list
-        let tr = trs[i];
-        let index = this._getIndexFromId(tr.id);  // get index of initial (model) order
-        let model = this.model[index];  // Model for this tr
-        colsOrder[i] = { propName: model.propName, hide: model.hide };  //Set colsOrder element
-        if (model.sortPriority !== undefined) { // Sort priority defined
-          sortSettings[sortSettings.length] = { propName: model.propName, sortOrder: model.sortOrder, sortPriority: model.sortPriority }; //Add sortSetting element
-        }
-      }
-
-      let sortedSettings = sortSettings.sort((a, b) => a.sortPriority - b.sortPriority);  // Sort sortSettings
-      let sorting = [];
-      for (let i = 0; i < sortedSettings.length; i++) { // produce sorting array
-        let sortedSetting = sortedSettings[i];
-        sorting[sorting.length] =  { propName: sortedSetting.propName, direction:  sortedSetting.sortOrder > 0 ? 'asc' : 'desc' };
-      }
-
-      //Save colsConfig in userSettings
-      colsConfig = { colsOrder: colsOrder, sorting: sorting };  // Set colsConfig Object
-      this._router = getOwner(this).lookup('router:main');
-      let moduleName  =   this._router.currentRouteName;
-      let savePromise = this.get('_userSettingsService').saveUserSetting({ moduleName: moduleName, settingName: 'DEFAULT', userSetting: colsConfig });
+      //Save colsConfig in userSettings as DEFAULT
+      let savePromise = this._getSavePromise('DEFAULT', colsConfig);
       savePromise.then(
         record => {
           if (this._router.location.location.hash.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
@@ -260,7 +239,66 @@ export default FlexberryBaseComponent.extend({
         }
       );
       this.sendAction('close', colsConfig); // close modal window
+    },
+    /**
+     * Save named settings specified in the interface as DEFAULT values
+     *
+     * @method actions.apply
+     */
+    saveColsSetting: function() {
+      alert('saveColsSetting');
+      let input = Ember.$(event.toElement).prev('INPUT').get(0);
+      let settingName = input.value.trim();
+      if (settingName.length <= 0) {
+        alert('Введите название настройки');
+        return;
+      }
+
+      let colsConfig = this._getSettings();
+      let savePromise = this._getSavePromise(settingName, colsConfig);
+      savePromise.then(
+        record => {
+          alert('Настройка сохранена');
+        },
+        error => {
+        }
+      );
     }
+  },
+
+  _getSavePromise: function(settingName, colsConfig) {
+    this._router = getOwner(this).lookup('router:main');
+    let moduleName  =   this._router.currentRouteName;
+    let savePromise = this.get('_userSettingsService').saveUserSetting({ moduleName: moduleName, settingName: settingName, userSetting: colsConfig });
+    return savePromise;
+  },
+
+  _getSettings: function() {
+    let trs = Ember.$('#colsConfigtableRows').children('TR');
+    let colsConfig = [];
+    let colsOrder = [];
+    let sortSettings = [];
+
+    //Set sortSettings and colsOrder array
+    for (let i = 0; i < trs.length; i++) {  // Iterate TR list
+      let tr = trs[i];
+      let index = this._getIndexFromId(tr.id);  // get index of initial (model) order
+      let colDesc = this.model.colDescs[index];  // Model for this tr
+      colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide };  //Set colsOrder element
+      if (colDesc.sortPriority !== undefined) { // Sort priority defined
+        sortSettings[sortSettings.length] = { propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority }; //Add sortSetting element
+      }
+    }
+
+    let sortedSettings = sortSettings.sort((a, b) => a.sortPriority - b.sortPriority);  // Sort sortSettings
+    let sorting = [];
+    for (let i = 0; i < sortedSettings.length; i++) { // produce sorting array
+      let sortedSetting = sortedSettings[i];
+      sorting[sorting.length] =  { propName: sortedSetting.propName, direction:  sortedSetting.sortOrder > 0 ? 'asc' : 'desc' };
+    }
+
+    colsConfig = { colsOrder: colsOrder, sorting: sorting };  // Set colsConfig Object
+    return colsConfig;
   },
 
   _getIndexFromId: function(id) {

@@ -1,3 +1,5 @@
+{{log settingsList}}
+{{log modelForDOM}}
 <div class=" content">
   <!--div class="description">
     <div class="list-group"-->
@@ -12,7 +14,7 @@
           ></tr
         ></thead
         ><tbody id='colsConfigtableRows'>
-{{#each modelForDOM as |colDesc n|}}
+        {{#each modelForDOM as |colDesc n|}}
 {{!--log 'name='colDesc.name ' sortOrderNot='colDesc.sortOrderNot ' sortOrderAsc='colDesc.sortOrderAsc ' sortOrderDesc='colDesc.sortOrderDesc--}}
 {{!--debugger--}}
 <tr id="{{colDesc.trId}}" propName='{{colDesc.propName}}'

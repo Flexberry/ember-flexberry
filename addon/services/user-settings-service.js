@@ -138,7 +138,48 @@ export default Ember.Service.extend({
   },
 
   /**
-   * It looks for already created user settings records.
+   * It gets ALL user setting from server by module's names.
+   *
+   * @method getUserSetting
+   *
+   * @param {Object} [options] Parameters for user setting getting.
+   * @param {String} options.moduleName Name of module to search by.
+   * @return {Promise} A promise. It returns found settings as { <settingname>: < settingValue>}.
+   */
+  getUserSettings: function(options) {
+    if (!this.get('isUserSettingsServiceEnabled')) {
+      return new Ember.RSVP.Promise(function(resolve) {
+        resolve({ });
+      });
+    }
+
+    let methodOptions = Ember.merge({
+      moduleName: undefined,
+    }, options);
+    let moduleName = methodOptions.moduleName;
+    Ember.assert('Module name is not defined for user setting getting.', moduleName);
+    return this._getExistingRecords(moduleName).then(
+      foundRecords => {
+        let ret = {};
+        if (foundRecords) {
+          for (let i = 0; i < foundRecords.length; i++) {
+            let foundRecord = foundRecords[i];
+            let userSettingValue = foundRecord.record.get('txtVal');
+            let settName  = foundRecord.record.get('settName');
+            if (userSettingValue && settName) {
+              ret[settName] = JSON.parse(userSettingValue);
+            }
+          }
+        }
+
+        return ret;
+      }
+
+    );
+  },
+
+  /**
+   * It looks for already created user settings record for this moduleName and settingName.
    *
    * @method _getExistingRecord
    * @private
@@ -150,17 +191,16 @@ export default Ember.Service.extend({
   _getExistingRecord: function(moduleName, settingName) {
     // TODO: add search by username.
     let currentUserName = this.getCurrentUser();
-    let p1 = new SimplePredicate('moduleName', 'eq', moduleName);
-    let p2 = new SimplePredicate('settName', 'eq', settingName);
-    let p3 = new SimplePredicate('userName', 'eq', currentUserName);
+    let p1 = new SimplePredicate('userName', 'eq', currentUserName);
+    let p2 = new SimplePredicate('moduleName', 'eq', moduleName);
+    let p3 = new SimplePredicate('settName', 'eq', settingName);
     let cp = new ComplexPredicate('and', p1, p2, p3);
     let store = this.get('store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
     let builder = new QueryBuilder(store)
-      .from(modelName)
-      .selectByProjection('FlexberryUserSettingE')
-      .top(2)
-      .where(cp);
+    .from(modelName)
+    .selectByProjection('FlexberryUserSettingE')
+    .where(cp);
 
     return store.query(modelName, builder.build()).then(function(result) {
       if (result) {
@@ -176,6 +216,41 @@ export default Ember.Service.extend({
       }
 
       return undefined;
+    });
+  },
+
+  /**
+   * It looks for all created user settings records for this moduleName.
+   *
+   * @method _getExistingRecord
+   * @private
+   *
+   * @param {Object} moduleName Module name of looked for record.
+   * @return {Promise} A promise. It returns found record or `undefined` if there is no such setting.
+   */
+  _getExistingRecords: function(moduleName) {
+    // TODO: add search by username.
+    let currentUserName = this.getCurrentUser();
+    let p1 = new SimplePredicate('userName', 'eq', currentUserName);
+    let p2 = new SimplePredicate('moduleName', 'eq', moduleName);
+    let cp = new ComplexPredicate('and', p1, p2);
+    let store = this.get('store');
+    let modelName = 'new-platform-flexberry-flexberry-user-setting';
+    let builder = new QueryBuilder(store)
+    .from(modelName)
+    .selectByProjection('FlexberryUserSettingE')
+    .where(cp);
+
+    return store.query(modelName, builder.build()).then(function(result) {
+      let foundRecords = [];
+      if (result) {
+        foundRecords = result.get('content');
+        if (!Ember.isArray(foundRecords)) {
+          foundRecords = [];
+        }
+
+        return foundRecords;
+      }
     });
   },
 

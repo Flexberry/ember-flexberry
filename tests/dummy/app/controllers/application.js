@@ -154,6 +154,16 @@ export default Ember.Controller.extend({
           }]
         }, {
           link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.title'),
+          children: [{
+            link: 'components-examples/flexberry-file/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.title'),
           children: [{

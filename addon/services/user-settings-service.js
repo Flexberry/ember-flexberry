@@ -8,45 +8,47 @@ import QueryBuilder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
- * Service to work with user settings on server.
- *
- * @class UserSettingsService
- * @extends Ember.Service
- * @public
+  Service to work with user settings on server.
+
+  @class UserSettingsService
+  @extends Ember.Service
+  @public
  */
 export default Ember.Service.extend({
   /**
-   * Current store to request records.
-   *
-   * @property store
-   * @public
-   * @type DS.Store
+    Current store to request records.
+
+    @private
+    @readonly
+    @property store
+    @type Service
+    @default DS.Store
    */
-  store: Ember.inject.service('store'),
+  _store: Ember.inject.service('store'),
 
   /**
-   * Flag: indicates whether to use user settings service (if `true`) or not (if `false`).
-   * This flag is readed from config setting `APP.useUserSettingsService` and can be changed programatically later.
-   *
-   * @property isUserSettingsServiceEnabled
-   * @public
-   * @type Boolean
-   * @default false
+    Flag: indicates whether to use user settings service (if `true`) or not (if `false`).
+    This flag is readed from config setting `APP.useUserSettingsService` and can be changed programatically later.
+
+    @property isUserSettingsServiceEnabled
+    @public
+    @type Boolean
+    @default false
    */
   isUserSettingsServiceEnabled: false,
 
   /**
-   * It saves user settings.
-   *
-   * @method saveUserSetting
-   * @public
-   *
-   * @param {Object} [options] Options.
-   * @param {String} options.moduleName Name of module for what setting is saved.
-   * @param {String} options.userSetting User setting data to save.
-   * @param {String} options.settingName Setting name to save as.
+    It saves user settings.
+
+    @method saveUserSetting
+    @public
+
+    @param {Object} [options] Options.
+    @param {String} options.moduleName Name of module for what setting is saved.
+    @param {String} options.userSetting User setting data to save.
+    @param {String} options.settingName Setting name to save as.
    */
-  saveUserSetting: function(options) {
+  saveUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
       return;
     }
@@ -65,12 +67,11 @@ export default Ember.Service.extend({
     Ember.assert('User setting data are not defined for user setting saving.', userSetting);
     Ember.assert('Setting name is not defined for user setting saving.', settingName);
 
-    let store = this.get('store');
-    let _this = this;
+    let store = this.get('_store');
     this._getExistingRecord(moduleName, settingName).then(
-      function(foundRecord) {
+      (foundRecord) => {
         if (!foundRecord) {
-          let currentUserName = _this.getCurrentUser();
+          let currentUserName = this.getCurrentUser();
           foundRecord = store.createRecord('new-platform-flexberry-flexberry-user-setting');
           foundRecord.set('moduleName', moduleName);
           foundRecord.set('settName', settingName);
@@ -84,18 +85,18 @@ export default Ember.Service.extend({
   },
 
   /**
-   * It gets user setting from server by setting's and module's names.
-   *
-   * @method getUserSetting
-   *
-   * @param {Object} [options] Parameters for user setting getting.
-   * @param {String} options.moduleName Name of module to search by.
-   * @param {String} options.settingName Setting name to search by.
-   * @return {Promise} A promise. It returns found result or `undefined` if there is no such setting.
+    It gets user setting from server by setting's and module's names.
+
+    @method getUserSetting
+
+    @param {Object} [options] Parameters for user setting getting.
+    @param {String} options.moduleName Name of module to search by.
+    @param {String} options.settingName Setting name to search by.
+    @return {Promise} A promise. It returns found result or `undefined` if there is no such setting.
    */
-  getUserSetting: function(options) {
+  getUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
-      return new Ember.RSVP.Promise(function(resolve) {
+      return new Ember.RSVP.Promise((resolve) => {
         resolve(undefined);
       });
     }
@@ -112,7 +113,7 @@ export default Ember.Service.extend({
     Ember.assert('Setting name is not defined for user setting getting.', settingName);
 
     return this._getExistingRecord(moduleName, settingName).then(
-      function(foundRecord) {
+      (foundRecord) => {
         if (foundRecord) {
           let userSettingValue = foundRecord.get('txtVal');
           if (userSettingValue) {
@@ -126,23 +127,37 @@ export default Ember.Service.extend({
   },
 
   /**
-   * It looks for already created user settings records.
-   *
-   * @method _getExistingRecord
-   * @private
-   *
-   * @param {Object} moduleName Module name of looked for record.
-   * @param {String} settingName Setting name of looked for record.
-   * @return {Promise} A promise. It returns found record or `undefined` if there is no such setting.
+    It returns the name of current user.
+    It has to be overriden if some authentication is used.
+
+    @method getCurrentUser
+    @public
+
+    @return {String} Current user name.
    */
-  _getExistingRecord: function(moduleName, settingName) {
+  getCurrentUser() {
+    // TODO: add mechanism to return current user.
+    return '';
+  },
+
+  /**
+    It looks for already created user settings records.
+
+    @method _getExistingRecord
+    @private
+
+    @param {Object} moduleName Module name of looked for record.
+    @param {String} settingName Setting name of looked for record.
+    @return {Promise} A promise. It returns found record or `undefined` if there is no such setting.
+   */
+  _getExistingRecord(moduleName, settingName) {
     // TODO: add search by username.
     let currentUserName = this.getCurrentUser();
     let p = new SimplePredicate('moduleName', 'eq', moduleName)
       .and('settName', 'eq', settingName)
       .and('userName', 'eq', currentUserName);
 
-    let store = this.get('store');
+    let store = this.get('_store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
     let builder = new QueryBuilder(store)
       .from(modelName)
@@ -150,7 +165,7 @@ export default Ember.Service.extend({
       .top(2)
       .where(p);
 
-    return store.query(modelName, builder.build()).then(function(result) {
+    return store.query(modelName, builder.build()).then((result) => {
       if (result) {
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
@@ -165,19 +180,5 @@ export default Ember.Service.extend({
 
       return undefined;
     });
-  },
-
-  /**
-   * It returns the name of current user.
-   * It has to be overriden if some authentication is used.
-   *
-   * @method getCurrentUser
-   * @public
-   *
-   * @return {String} Current user name.
-   */
-  getCurrentUser: function() {
-    // TODO: add mechanism to return current user.
-    return '';
   }
 });

@@ -76,7 +76,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.addRow
      */
-    addRow: function() {
+    addRow() {
       if (this.get('readonly')) {
         return;
       }
@@ -91,7 +91,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.deleteRows
      */
-    deleteRows: function() {
+    deleteRows() {
       if (this.get('readonly')) {
         return;
       }
@@ -139,7 +139,7 @@ export default FlexberryBaseComponent.extend({
     @param {Model} record The model corresponding to selected row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {Integer} count Count of selected rows in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
    */
-  _rowSelected: function(componentName, record, count) {
+  _rowSelected(componentName, record, count) {
     if (componentName === this.get('componentName')) {
       this.set('_isDeleteRowsEnabled', count > 0);
     }
@@ -154,7 +154,7 @@ export default FlexberryBaseComponent.extend({
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {Integer} count Count of deleted rows in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
    */
-  _rowsDeleted: function(componentName, count) {
+  _rowsDeleted(componentName, count) {
     if (componentName === this.get('componentName')) {
       this.set('_isDeleteRowsEnabled', false);
     }

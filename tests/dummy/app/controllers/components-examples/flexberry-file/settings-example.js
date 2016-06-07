@@ -1,14 +1,79 @@
 import Ember from 'ember';
+import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Controller.extend({
+export default EditFormController.extend({
   /**
-    Text for 'flexberry-textbox' component 'placeholder' property.
+    Text for 'flexberry-file' component 'placeholder' property.
 
     @property placeholder
     @type String
    */
   placeholder: t('components.flexberry-file.placeholder'),
+
+  /**
+    Flag: indicates whether 'flexberry-file' component is in 'readonly' mode or not.
+
+    @property readonly
+    @type Boolean
+   */
+  readonly: false,
+
+  /**
+    File upload URL for 'flexberry-file' component 'uploadUrl' property.
+
+    @property uploadUrl
+    @type String
+   */
+  uploadUrl: null,
+
+  /**
+    Max upload file size (in bytes) for 'flexberry-file' component 'maxUploadFileSize' property.
+
+    @property maxUploadFileSize
+    @type Number
+   */
+  maxUploadFileSize: null,
+
+  /**
+    Flag for 'flexberry-file' component 'showPreview' property.
+
+    @property showPreview
+    @type Boolean
+   */
+  showPreview: false,
+
+  /**
+    Flag for 'flexberry-file' component 'showUploadButton' property.
+
+    @property showUploadButton
+    @type Boolean
+   */
+  showUploadButton: false,
+
+  /**
+    Flag for 'flexberry-file' component 'showDownloadButton' property.
+
+    @property showDownloadButton
+    @type Boolean
+   */
+  showDownloadButton: true,
+
+  /**
+    Flag for 'flexberry-file' component 'showModalDialogOnUploadError' property.
+
+    @property showModalDialogOnUploadError
+    @type Boolean
+   */
+  showModalDialogOnUploadError: false,
+
+  /**
+    Flag for 'flexberry-file' component 'showModalDialogOnDownloadError' property.
+
+    @property showModalDialogOnDownloadError
+    @type Boolean
+   */
+  showModalDialogOnDownloadError: true,
 
   /**
     Template text for 'flexberry-textbox' component.
@@ -19,16 +84,15 @@ export default Ember.Controller.extend({
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-file<br>' +
     '..value=model.file<br>' +
+    '..placeholder=placeholder<br>' +
+    '..readonly=readonly<br>' +
+    '..uploadUrl=uploadUrl<br>' +
+    '..maxUploadFileSize=maxUploadFileSize<br>' +
     '..showPreview=showPreview<br>' +
     '..showUploadButton=showUploadButton<br>' +
     '..showDownloadButton=showDownloadButton<br>' +
-    '..maxUploadFileSize=maxUploadFileSize<br>' +
-    '..placeholder=placeholder<br>' +
-    '..uploadUrl=uploadUrl<br>' +
     '..showModalDialogOnUploadError=showModalDialogOnUploadError<br>' +
     '..showModalDialogOnDownloadError=showModalDialogOnDownloadError<br>' +
-    '..errorModalDialogTitle=errorModalDialogTitle<br>' +
-    '..errorModalDialogContent=errorModalDialogContent<br>' +
     '}}'),
 
   /**
@@ -46,6 +110,30 @@ export default Ember.Controller.extend({
       bindedControllerPropertieName: 'model.file'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'placeholder',
+      settingType: 'string',
+      settingDefaultValue: this.get('i18n').t('components.flexberry-file.placeholder'),
+      bindedControllerPropertieName: 'placeholder'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'readonly',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'readonly'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'uploadUrl',
+      settingType: 'string',
+      settingDefaultValue: null,
+      bindedControllerPropertieName: 'uploadUrl'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxUploadFileSize',
+      settingType: 'string',
+      settingDefaultValue: null,
+      bindedControllerPropertieName: 'maxUploadFileSize'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'showPreview',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -54,56 +142,26 @@ export default Ember.Controller.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'showUploadButton',
       settingType: 'boolean',
-      settingDefaultValue: undefined,
+      settingDefaultValue: false,
       bindedControllerPropertieName: 'showUploadButton'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showDownloadButton',
       settingType: 'boolean',
-      settingDefaultValue: undefined,
+      settingDefaultValue: true,
       bindedControllerPropertieName: 'showDownloadButton'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'maxUploadFileSize',
-      settingType: 'string',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: 'maxUploadFileSize'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'placeholder',
-      settingType: 'string',
-      settingDefaultValue: this.get('i18n').t('components.flexberry-file.placeholder'),
-      bindedControllerPropertieName: 'placeholder'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'uploadUrl',
-      settingType: 'string',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: 'uploadUrl'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showModalDialogOnUploadError',
       settingType: 'boolean',
-      settingDefaultValue: undefined,
+      settingDefaultValue: false,
       bindedControllerPropertieName: 'showModalDialogOnUploadError'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showModalDialogOnDownloadError',
       settingType: 'boolean',
-      settingDefaultValue: undefined,
+      settingDefaultValue: true,
       bindedControllerPropertieName: 'showModalDialogOnDownloadError'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'errorModalDialogTitle',
-      settingType: 'string',
-      settingDefaultValue: this.get('i18n').t('components.flexberry-file.error-dialog-title'),
-      bindedControllerPropertieName: 'errorModalDialogTitle'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'errorModalDialogContent',
-      settingType: 'string',
-      settingDefaultValue: this.get('i18n').t('components.flexberry-file.error-dialog-content'),
-      bindedControllerPropertieName: 'errorModalDialogContent'
     });
 
     return componentSettingsMetadata;

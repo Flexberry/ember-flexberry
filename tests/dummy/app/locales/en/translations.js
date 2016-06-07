@@ -112,6 +112,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-file': {
+            'caption': 'flexberry-file',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
           'flexberry-groupedit': {
             'caption': 'flexberry-groupedit',
             'title': '',
@@ -178,18 +186,23 @@ Ember.$.extend(true, translations, {
             'readonly-mode': {
               'caption': 'Readonly mode',
               'title': ''
-            }
-          },
-          'validations': {
-            'caption': 'Validations',
-            'title': '',
-            'different-components-integration': {
-              'caption': 'Different components integration',
+            },
+            'validation': {
+              'caption': 'Validation',
               'title': ''
             }
           }
         }
       }
+    },
+
+    'edit-form': {
+      'save-success-message-caption': 'Save operation succeed',
+      'save-success-message': 'Object saved',
+      'save-error-message-caption': 'Save operation failed',
+      'delete-success-message-caption': 'Delete operation succeed',
+      'delete-success-message': 'Object deleted',
+      'delete-error-message-caption': 'Delete operation failed'
     },
 
     'ember-flexberry-dummy-application-user-edit': {
@@ -296,6 +309,11 @@ Ember.$.extend(true, translations, {
           'caption': 'Components-examples/flexberry-field/settings-example'
         }
       },
+      'flexberry-file': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-file/settings-example'
+        }
+      },
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-groupedit/settings-example'
@@ -339,11 +357,17 @@ Ember.$.extend(true, translations, {
           'is-readonly': {
             'caption': 'Form is readonly'
           }
-        }
-      },
-      'validations': {
-        'different-components-integration': {
-          'caption': 'Integration-examples/validations/different-components-integration'
+        },
+        'validation': {
+          'caption': 'Integration-examples/edit-form/validation',
+          'flag-caption': 'Flag',
+          'number-caption': 'Number',
+          'text-caption': 'Text',
+          'long-text-caption': 'Long text',
+          'date-caption': 'Date',
+          'enumeration-caption': 'Enumeration',
+          'file-caption': 'File',
+          'master-caption': 'Master'
         }
       }
     }

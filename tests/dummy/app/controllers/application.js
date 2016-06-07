@@ -144,6 +144,16 @@ export default Ember.Controller.extend({
           }]
         }, {
           link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.title'),
+          children: [{
+            link: 'components-examples/flexberry-file/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.title'),
           children: [{
@@ -226,15 +236,10 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.readonly-mode.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.readonly-mode.title'),
             children: null
-          }]
         }, {
-          link: null,
-          caption: i18n.t('forms.application.sitemap.integration-examples.validations.caption'),
-          title: i18n.t('forms.application.sitemap.integration-examples.validations.title'),
-          children: [{
-            link: 'integration-examples/validations/different-components-integration',
-            caption: i18n.t('forms.application.sitemap.integration-examples.validations.different-components-integration.caption'),
-            title: i18n.t('forms.application.sitemap.integration-examples.validations.different-components-integration.title'),
+            link: 'integration-examples/edit-form/validation',
+            caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
             children: null
           }]
         }]

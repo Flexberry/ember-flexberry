@@ -32,6 +32,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-dropdown/settings-example');
   this.route('components-examples/flexberry-dropdown/conditional-render-example');
   this.route('components-examples/flexberry-field/settings-example');
+  this.route('components-examples/flexberry-file/settings-example');
   this.route('components-examples/flexberry-groupedit/settings-example');
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-menu/settings-example');
@@ -41,8 +42,9 @@ Router.map(function() {
   this.route('components-examples/flexberry-toggler/settings-example');
 
   // Integration examples routes
-  this.route('integration-examples/validations/different-components-integration');
   this.route('integration-examples/edit-form/readonly-mode');
+  this.route('integration-examples/edit-form/validation');
+
 });
 
 export default Router;

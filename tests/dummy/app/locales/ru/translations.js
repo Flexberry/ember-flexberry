@@ -112,6 +112,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-file': {
+            'caption': 'flexberry-file',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-groupedit': {
             'caption': 'flexberry-groupedit',
             'title': '',
@@ -170,7 +178,7 @@ Ember.$.extend(true, translations, {
           }
         },
         'integration-examples': {
-          'caption': 'Интеграционные примеры',
+          'caption': 'Integration examples',
           'title': '',
           'edit-form': {
             'caption': 'Форма редактирования',
@@ -178,18 +186,23 @@ Ember.$.extend(true, translations, {
             'readonly-mode': {
               'caption': 'Режим только для чтения',
               'title': ''
-            }
-          },
-          'validations': {
-            'caption': 'Валидации',
-            'title': '',
-            'different-components-integration': {
-              'caption': 'Интеграция разлиных компонентов',
+            },
+            'validation': {
+              'caption': 'Валидация',
               'title': ''
             }
           }
         }
       }
+    },
+
+    'edit-form': {
+      'save-success-message-caption': 'Сохранение завершилось успешно',
+      'save-success-message': 'Объект сохранен',
+      'save-error-message-caption': 'Ошибка сохранения',
+      'delete-success-message-caption': 'Удаление завершилось успешно',
+      'delete-success-message': 'Объект удален',
+      'delete-error-message-caption': 'Ошибка удаления'
     },
 
     'ember-flexberry-dummy-application-user-edit': {
@@ -297,6 +310,11 @@ Ember.$.extend(true, translations, {
           'caption': 'Components-examples/flexberry-field/settings-example'
         }
       },
+      'flexberry-file': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-file/settings-example'
+        }
+      },
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-groupedit/settings-example'
@@ -340,11 +358,17 @@ Ember.$.extend(true, translations, {
           'is-readonly': {
             'caption': 'Форма в режиме только для чтения'
           }
-        }
-      },
-      'validations': {
-        'different-components-integration': {
-          'caption': 'Integration-examples/validations/different-components-integration'
+        },
+        'validation': {
+          'caption': 'Integration-examples/edit-form/validation',
+          'flag-caption': 'Флаг',
+          'number-caption': 'Число',
+          'text-caption': 'Текст',
+          'long-text-caption': 'Длинный текст',
+          'date-caption': 'Дата',
+          'enumeration-caption': 'Перечисление',
+          'file-caption': 'Файл',
+          'master-caption': 'Мастер'
         }
       }
     }

@@ -183,6 +183,10 @@ Ember.$.extend(true, translations, {
           'edit-form': {
             'caption': 'Edit form',
             'title': '',
+            'readonly-mode': {
+              'caption': 'Readonly mode',
+              'title': ''
+            },
             'validation': {
               'caption': 'Validation',
               'title': ''
@@ -224,8 +228,11 @@ Ember.$.extend(true, translations, {
       'votes-caption':'Votes',
       'moderated-caption':'Moderated',
       'author-caption': 'Author',
+      'moderator-caption': 'Moderator',
       'userVotes-caption':'User votes',
-      'date-caption': 'Date'
+      'date-caption': 'Date',
+      'time-caption': 'Time',
+      'files-caption': 'Files'
     },
 
     'ember-flexberry-dummy-localization-edit':{
@@ -345,6 +352,12 @@ Ember.$.extend(true, translations, {
     },
     'integration-examples': {
       'edit-form': {
+        'readonly-mode': {
+          'caption': 'Integration-examples/edit-form/readonly-mode',
+          'is-readonly': {
+            'caption': 'Form is readonly'
+          }
+        },
         'validation': {
           'caption': 'Integration-examples/edit-form/validation',
           'flag-caption': 'Flag',

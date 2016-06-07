@@ -95,6 +95,16 @@ export default Ember.Controller.extend({
         }]
       }, {
         link: null,
+        caption: i18n.t('forms.application.sitemap.logging.caption'),
+        title: i18n.t('forms.application.sitemap.logging.title'),
+        children: [{
+          link: 'i-i-s-caseberry-logging-objects-application-log-l',
+          caption: i18n.t('forms.application.sitemap.logging.show.caption'),
+          title: i18n.t('forms.application.sitemap.logging.show.title'),
+          children: null
+        }]
+      }, {
+        link: null,
         caption: i18n.t('forms.application.sitemap.components-examples.caption'),
         title: i18n.t('forms.application.sitemap.components-examples.title'),
         children: [{
@@ -160,6 +170,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-lookup/limit-function-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/dropdown-mode-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.title'),
             children: null
           }]
         }, {

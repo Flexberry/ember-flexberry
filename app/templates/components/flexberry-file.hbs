@@ -23,7 +23,7 @@
   {{/if}}
   {{#if uploadButtonIsVisible}}
     <label class="flexberry-file-upload-button ui icon {{buttonClass}} {{unless uploadButtonIsEnabled "disabled"}} {{if uploadIsInProgress "loading"}} button"
-         title={{t "flexberry-file.upload-btn-text"}}>
+         title={{t "components.flexberry-file.upload-btn-text"}}>
       <i class="upload outline icon"></i>
     </label>
   {{/if}}
@@ -56,6 +56,6 @@
 </div>
 {{#if showPreview}}
 <div class="ui small image flexberry-file-image-preview-wrapper" {{action 'viewLoadedImage'}}>
-  <img class="flexberry-file-image-preview" src="" alt="LoadedImage"/>
+  <img class="flexberry-file-image-preview" src="" alt={{t "components.flexberry-file.alt-image-text"}}>
 </div>
 {{/if}}

@@ -1,0 +1,113 @@
+<h3 class="ui header">{{t "forms.integration-examples.edit-form.readonly-mode.caption"}}</h3>
+{{#if errorMessages}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type="error"
+      closeable=true
+      visible=true
+      title="Error occurred"
+      message=currentError
+    }}
+  {{/each}}
+{{/if}}
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-checkbox
+      value=readonly
+      label=(t "forms.integration-examples.edit-form.readonly-mode.is-readonly.caption")
+    }}
+  </div>
+  <div class="field">
+    {{flexberry-field
+      readonly=readonly
+      required=true
+      value=model.votes
+      class=(if model.errors.votes "error" "")
+      label=(t "forms.ember-flexberry-dummy-comment-edit.votes-caption")
+    }}
+  </div>
+  <div class="two fields {{if model.errors.date 'error' ''}}">
+    <div class="field">
+      <label>{{t "forms.ember-flexberry-dummy-comment-edit.date-caption"}}</label>
+      {{flexberry-datepicker
+      readonly=readonly
+      hasTimePicker=false
+      value=model.date
+    }}
+    </div>
+    <div class="field">
+      <label>{{t "forms.ember-flexberry-dummy-comment-edit.time-caption"}}</label>
+      {{flexberry-simpledatetime
+        readonly=readonly
+        type="time"
+        value=model.time
+      }}
+    </div>
+  </div>
+  <div class="field {{if model.errors.text 'error' ''}}">
+  <label>{{t "forms.ember-flexberry-dummy-comment-edit.text-caption"}}</label>
+    {{flexberry-textarea
+      readonly=readonly
+      required=true
+      value=model.text
+    }}
+  </div>
+  <div class="field">
+  <label>{{t "forms.ember-flexberry-dummy-comment-edit.files-caption"}}</label>
+    {{flexberry-file
+      readonly=readonly
+      value=model.file
+    }}
+  </div>
+  <div class="field {{if model.errors.author 'error' ''}}">
+    <label>{{t "forms.ember-flexberry-dummy-comment-edit.author-caption"}}</label>
+    {{flexberry-lookup
+      value=model.author
+      projection="MasterL"
+      displayAttributeName="name"
+      title=(t "forms.ember-flexberry-dummy-comment-edit.author-caption")
+      relatedModel=model
+      relationName="author"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+    }}
+  </div>
+  <div class="field {{if model.errors.author 'error' ''}}">
+    <label>{{t "forms.ember-flexberry-dummy-comment-edit.moderator-caption"}}</label>
+    {{flexberry-lookup
+      value=model.moderator
+      projection="MasterDropdownL"
+      displayAttributeName="name"
+      title=(t "forms.ember-flexberry-dummy-comment-edit.moderator-caption")
+      relatedModel=model
+      relationName="moderator"
+      readonly=readonly
+      dropdown=true
+    }}
+  </div>
+  <div class="field {{if model.errors.gender 'error' ''}}">
+    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
+    {{flexberry-dropdown
+      items=(enum-captions "ember-flexberry-dummy-gender")
+      value=model.gender
+      readonly=readonly
+    }}
+  </div>
+  <div class="field {{if model.errors.moderated 'error' ''}}">
+    {{flexberry-checkbox
+      readonly=readonly
+      value=model.moderated
+      label=(t "forms.ember-flexberry-dummy-comment-edit.moderated-caption")
+    }}
+  </div>
+  <div class="field">
+    {{flexberry-groupedit
+      componentName="aggregatorDetailsGroupedit"
+      content=model.details
+      modelProjection=detailsProjection
+      placeholder=placeholder
+      readonly=readonly
+    }}
+  </div>
+</form>

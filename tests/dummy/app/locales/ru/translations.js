@@ -211,6 +211,10 @@ Ember.$.extend(true, translations, {
           'edit-form': {
             'caption': 'Форма редактирования',
             'title': '',
+            'readonly-mode': {
+              'caption': 'Режим только для чтения',
+              'title': ''
+            },
             'validation': {
               'caption': 'Валидация',
               'title': ''
@@ -388,6 +392,12 @@ Ember.$.extend(true, translations, {
     },
     'integration-examples': {
       'edit-form': {
+        'readonly-mode': {
+          'caption': 'Integration-examples/edit-form/readonly-mode',
+          'is-readonly': {
+            'caption': 'Форма в режиме только для чтения'
+          }
+        },
         'validation': {
           'caption': 'Integration-examples/edit-form/validation',
           'flag-caption': 'Флаг',

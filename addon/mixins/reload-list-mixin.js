@@ -141,10 +141,7 @@ export default Ember.Mixin.create({
         return new StringPredicate(fieldName).contains(filter);
       });
 
-      // JSCS causes error when using spread operator in `new ComplexPredicate(Condition.Or, ...containsExpressions)`;
-      let complexPredicateParams = [null, Condition.Or, ...containsExpressions];
-      let ResultCopmlexPredicate = ComplexPredicate.bind.apply(ComplexPredicate, complexPredicateParams);
-      let newExpression = containsExpressions.length > 1 ? new ResultCopmlexPredicate() : containsExpressions[0];
+      let newExpression = containsExpressions.length > 1 ? new ComplexPredicate(Condition.Or, ...containsExpressions) : containsExpressions[0];
 
       // TODO: concat with lf.
       finalString = newExpression;

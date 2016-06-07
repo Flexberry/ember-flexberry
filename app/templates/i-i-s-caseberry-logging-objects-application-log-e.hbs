@@ -1,27 +1,32 @@
-<h3 class="ui header">{{title}} - edit form</h3>
+<h3 class="ui header"></h3>
 {{#if errorMessages}}
   {{#each errorMessages as |currentError|}}
-    {{
-      ui-message
-      type='error'
+    {{ui-message
+      type="error"
       closeable=true
-      visible=true
-      title='Error occurred'
+      title="Error occurred"
       message=currentError
     }}
   {{/each}}
 {{/if}}
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
+    <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-      <button type="submit" class="ui positive button" {{action 'save'}}>Save</button>
-      {{#unless model.isNew}}
-      <button type="submit" class="ui negative button" {{action 'delete'}}>Delete</button>
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui negative button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/unless}}
       {{/unless}}
-      {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>Close</button>
+      <button type="submit" class="ui button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
+  </div>
   </div>
 <div class="field">
   {{#if model.errors.category}}
@@ -29,14 +34,12 @@
       {{model.errors.category}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.category
-    class=(if model.errors.category 'error' '')
-    label='Category'
+    class=(if model.errors.category "error" "")
+    label="Category"
   }}
 </div>
 
@@ -46,31 +49,27 @@
       {{model.errors.eventId}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.eventId
-    class=(if model.errors.eventId 'error' '')
-    label='Event id'
+    class=(if model.errors.eventId "error" "")
+    label="Event id"
   }}
 </div>
 
 <div class="field">
   {{#if model.errors.priority}}
-    <span style ="color:red">
+    <span style="color:red">
       {{model.errors.priority}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.priority
-    class=(if model.errors.priority 'error' '')
-    label='Priority'
+    class=(if model.errors.priority "error" "")
+    label="Priority"
   }}
 </div>
 
@@ -80,13 +79,11 @@
       {{model.errors.severity}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.severity
-    class=(if model.errors.severity 'error' '')
+    class=(if model.errors.severity "error" "")
     label='Severity'
   }}
 </div>
@@ -97,13 +94,11 @@
       {{model.errors.title}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.title
-    class=(if model.errors.title 'error' '')
+    class=(if model.errors.title "error" "")
     label='Title'
   }}
 </div>
@@ -113,12 +108,10 @@
   {{#if model.errors.timestamp}}
     <span style="color:red">{{model.errors.timestamp}}</span>
   {{/if}}
-  {{
-    flexberry-datepicker
-    placeholder='(no value)'
+  {{flexberry-datepicker
     readonly=readonly
     value=model.timestamp
-    class=(if model.errors.timestamp 'error' '')
+    class=(if model.errors.timestamp "error" "")
   }}
 </div>
 
@@ -128,14 +121,12 @@
       {{model.errors.machineName}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.machineName
-    class=(if model.errors.machineName 'error' '')
-    label='Machine name'
+    class=(if model.errors.machineName "error" "")
+    label="Machine name"
   }}
 </div>
 
@@ -145,14 +136,12 @@
       {{model.errors.appDomainName}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.appDomainName
-    class=(if model.errors.appDomainName 'error' '')
-    label='App domain name'
+    class=(if model.errors.appDomainName "error" "")
+    label="App domain name"
   }}
 </div>
 
@@ -162,14 +151,12 @@
       {{model.errors.processId}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.processId
-    class=(if model.errors.processId 'error' '')
-    label='Process id'
+    class=(if model.errors.processId "error" "")
+    label="Process id"
   }}
 </div>
 
@@ -179,14 +166,12 @@
       {{model.errors.processName}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.processName
-    class=(if model.errors.processName 'error' '')
-    label='Process name'
+    class=(if model.errors.processName "error" "")
+    label="Process name"
   }}
 </div>
 
@@ -196,14 +181,12 @@
       {{model.errors.threadName}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.threadName
-    class=(if model.errors.threadName 'error' '')
-    label='Thread name'
+    class=(if model.errors.threadName "error" "")
+    label="Thread name"
   }}
 </div>
 
@@ -213,14 +196,12 @@
       {{model.errors.win32ThreadId}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.win32ThreadId
-    class=(if model.errors.win32ThreadId 'error' '')
-    label='Win32 thread id'
+    class=(if model.errors.win32ThreadId "error" "")
+    label="Win32 thread id"
   }}
 </div>
 
@@ -230,14 +211,12 @@
       {{model.errors.message}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.message
-    class=(if model.errors.message 'error' '')
-    label='Message'
+    class=(if model.errors.message "error" "")
+    label="Message"
   }}
 </div>
 
@@ -247,14 +226,12 @@
       {{model.errors.formattedMessage}}
     </span>
   {{/if}}
-  {{
-    flexberry-field
-    placeholder='(no value)'
+  {{flexberry-field
     readonly=readonly
     required=true
     value=model.formattedMessage
-    class=(if model.errors.formattedMessage 'error' '')
-    label='Formatted message'
+    class=(if model.errors.formattedMessage "error" "")
+    label="Formatted message"
   }}
 </div>
 

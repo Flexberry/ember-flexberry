@@ -53,14 +53,6 @@ Ember.$.extend(true, translations, {
           'caption': 'Home',
           'title': ''
         },
-        'logging': {
-          'caption': 'Logging',
-          'title': '',
-          'show': {
-            'caption': 'Show logs',
-            'title': ''
-          }
-        },
         'application': {
           'caption': 'Application',
           'title': '',
@@ -78,6 +70,14 @@ Ember.$.extend(true, translations, {
           },
           'suggestions': {
             'caption': 'Suggestions',
+            'title': ''
+          }
+        },
+        'logging': {
+          'caption': 'Logging',
+          'title': '',
+          'show': {
+            'caption': 'Application log',
             'title': ''
           }
         },
@@ -154,17 +154,13 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
-            },
-            'flexberry-objectlistview': {
-              'caption': 'flexberry-objectlistview',
-              'title': '',
-              'limit-function-example': {
-                'caption': 'Limit function example',
-                'title': ''
-              }
-            },
-            'customizing-window-example': {
-              'caption': 'Customizing window example',
+            }
+          },
+          'flexberry-objectlistview': {
+            'caption': 'flexberry-objectlistview',
+            'title': '',
+            'limit-function-example': {
+              'caption': 'Limit function example',
               'title': ''
             }
           },
@@ -226,74 +222,74 @@ Ember.$.extend(true, translations, {
     },
 
     'ember-flexberry-dummy-application-user-edit': {
-      'caption':'Application user',
-      'name-caption':'Name',
-      'eMail-caption':'E-Mail',
-      'phone1-caption':'Phone1',
-      'phone2-caption':'Phone2',
-      'phone3-caption':'Phone3',
-      'activated-caption':'Activated',
-      'vK-caption':'VK',
-      'facebook-caption':'Facebook',
-      'twitter-caption':'Twitter',
-      'birthday-caption':'Birthday',
-      'gender-caption':'Gender',
-      'vip-caption':'VIP',
-      'karma-caption':'Karma'
+      'caption': 'Application user',
+      'name-caption': 'Name',
+      'eMail-caption': 'E-Mail',
+      'phone1-caption': 'Phone1',
+      'phone2-caption': 'Phone2',
+      'phone3-caption': 'Phone3',
+      'activated-caption': 'Activated',
+      'vK-caption': 'VK',
+      'facebook-caption': 'Facebook',
+      'twitter-caption': 'Twitter',
+      'birthday-caption': 'Birthday',
+      'gender-caption': 'Gender',
+      'vip-caption': 'VIP',
+      'karma-caption': 'Karma'
     },
 
-    'ember-flexberry-dummy-comment-edit':{
-      'caption':'Comment',
-      'text-caption':'Text',
-      'votes-caption':'Votes',
-      'moderated-caption':'Moderated',
+    'ember-flexberry-dummy-comment-edit': {
+      'caption': 'Comment',
+      'text-caption': 'Text',
+      'votes-caption': 'Votes',
+      'moderated-caption': 'Moderated',
       'author-caption': 'Author',
-      'userVotes-caption':'User votes',
+      'userVotes-caption': 'User votes',
       'date-caption': 'Date'
     },
 
-    'ember-flexberry-dummy-localization-edit':{
-      'caption':'Localization',
-      'name-caption':'Name'
+    'ember-flexberry-dummy-localization-edit': {
+      'caption': 'Localization',
+      'name-caption': 'Name'
     },
 
-    'ember-flexberry-dummy-suggestion-edit':{
-      'caption':'Suggestion',
-      'address-caption':'Address',
-      'text-caption':'Text',
-      'date-caption':'Date',
-      'votes-caption':'Votes',
-      'moderated-caption':'Moderated',
-      'type-caption':'Type',
-      'author-caption':'Author',
-      'editor-caption':'Editor',
-      'files-caption':'Files',
-      'userVotes-caption':'User votes',
-      'comments-caption':'Comments'
+    'ember-flexberry-dummy-suggestion-edit': {
+      'caption': 'Suggestion',
+      'address-caption': 'Address',
+      'text-caption': 'Text',
+      'date-caption': 'Date',
+      'votes-caption': 'Votes',
+      'moderated-caption': 'Moderated',
+      'type-caption': 'Type',
+      'author-caption': 'Author',
+      'editor-caption': 'Editor',
+      'files-caption': 'Files',
+      'userVotes-caption': 'User votes',
+      'comments-caption': 'Comments'
     },
 
-    'ember-flexberry-dummy-suggestion-type-edit':{
-      'caption':'Suggestion type',
-      'name-caption':'Name',
-      'moderated-caption':'Moderated',
-      'parent-caption':'Parent',
-      'localizedTypes-caption':'Localized types'
+    'ember-flexberry-dummy-suggestion-type-edit': {
+      'caption': 'Suggestion type',
+      'name-caption': 'Name',
+      'moderated-caption': 'Moderated',
+      'parent-caption': 'Parent',
+      'localizedTypes-caption': 'Localized types'
     },
 
-    'ember-flexberry-dummy-application-user-list':{
-      'caption':'Application users'
+    'ember-flexberry-dummy-application-user-list': {
+      'caption': 'Application users'
     },
 
-    'ember-flexberry-dummy-localization-list':{
-      'caption':'Localizations'
+    'ember-flexberry-dummy-localization-list': {
+      'caption': 'Localizations'
     },
 
-    'ember-flexberry-dummy-suggestion-list':{
-      'caption':'Suggestions'
+    'ember-flexberry-dummy-suggestion-list': {
+      'caption': 'Suggestions'
     },
 
-    'ember-flexberry-dummy-suggestion-type-list':{
-      'caption':'Suggestion types'
+    'ember-flexberry-dummy-suggestion-type-list': {
+      'caption': 'Suggestion types'
     },
 
     'components-examples': {

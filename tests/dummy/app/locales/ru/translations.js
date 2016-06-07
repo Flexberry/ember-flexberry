@@ -53,14 +53,6 @@ Ember.$.extend(true, translations, {
           'caption': 'Главная',
           'title': ''
         },
-        'logging': {
-          'caption': 'Логирование',
-          'title': '',
-          'show': {
-            'caption': 'Просмотр логов приложения',
-            'title': ''
-          }
-        },
         'application': {
           'caption': 'Приложение',
           'title': '',
@@ -78,6 +70,14 @@ Ember.$.extend(true, translations, {
           },
           'suggestions': {
             'caption': 'Предложения',
+            'title': ''
+          }
+        },
+        'logging': {
+          'caption': 'Логирование',
+          'title': '',
+          'show': {
+            'caption': 'Лог приложения',
             'title': ''
           }
         },
@@ -222,74 +222,74 @@ Ember.$.extend(true, translations, {
     },
 
     'ember-flexberry-dummy-application-user-edit': {
-      'caption':'Пользователь приложения',
-      'name-caption':'Имя',
-      'eMail-caption':'E-mail',
-      'phone1-caption':'Номер телефона 1',
-      'phone2-caption':'Номер телефона 2',
-      'phone3-caption':'Номер телефона 3',
-      'activated-caption':'Учетная запись активирована',
-      'vK-caption':'VK',
-      'facebook-caption':'Facebook',
-      'twitter-caption':'Twitter',
-      'birthday-caption':'Дата рождения',
-      'gender-caption':'Пол',
-      'vip-caption':'VIP',
-      'karma-caption':'Карма'
+      'caption': 'Пользователь приложения',
+      'name-caption': 'Имя',
+      'eMail-caption': 'E-mail',
+      'phone1-caption': 'Номер телефона 1',
+      'phone2-caption': 'Номер телефона 2',
+      'phone3-caption': 'Номер телефона 3',
+      'activated-caption': 'Учетная запись активирована',
+      'vK-caption': 'VK',
+      'facebook-caption': 'Facebook',
+      'twitter-caption': 'Twitter',
+      'birthday-caption': 'Дата рождения',
+      'gender-caption': 'Пол',
+      'vip-caption': 'VIP',
+      'karma-caption': 'Карма'
     },
 
-    'ember-flexberry-dummy-comment-edit':{
-      'caption':'Комментарий',
-      'text-caption':'Текст комментария',
-      'votes-caption':'Количество голосов',
-      'moderated-caption':'Одобрено',
+    'ember-flexberry-dummy-comment-edit': {
+      'caption': 'Комментарий',
+      'text-caption': 'Текст комментария',
+      'votes-caption': 'Количество голосов',
+      'moderated-caption': 'Одобрено',
       'author-caption': 'Автор',
-      'userVotes-caption':'Голоса пользователей',
+      'userVotes-caption': 'Голоса пользователей',
       'date-caption': 'Дата'
     },
 
-    'ember-flexberry-dummy-localization-edit':{
-      'caption':'Локализация',
-      'name-caption':'Наименование'
+    'ember-flexberry-dummy-localization-edit': {
+      'caption': 'Локализация',
+      'name-caption': 'Наименование'
     },
 
-    'ember-flexberry-dummy-suggestion-edit':{
-      'caption':'Предложение',
-      'address-caption':'Адрес',
-      'text-caption':'Описание',
-      'date-caption':'Дата',
-      'votes-caption':'Количество голосов',
-      'moderated-caption':'Одобрено',
-      'type-caption':'Тип предложения',
-      'author-caption':'Автор предложения',
-      'editor-caption':'Редактор предложения',
-      'files-caption':'Прикрепленные файлы',
-      'userVotes-caption':'Голоса пользователей',
-      'comments-caption':'Комментарии'
+    'ember-flexberry-dummy-suggestion-edit': {
+      'caption': 'Предложение',
+      'address-caption': 'Адрес',
+      'text-caption': 'Описание',
+      'date-caption': 'Дата',
+      'votes-caption': 'Количество голосов',
+      'moderated-caption': 'Одобрено',
+      'type-caption': 'Тип предложения',
+      'author-caption': 'Автор предложения',
+      'editor-caption': 'Редактор предложения',
+      'files-caption': 'Прикрепленные файлы',
+      'userVotes-caption': 'Голоса пользователей',
+      'comments-caption': 'Комментарии'
     },
 
-    'ember-flexberry-dummy-suggestion-type-edit':{
-      'caption':'Тип предложения',
-      'name-caption':'Наименование',
-      'moderated-caption':'Одобрено',
-      'parent-caption':'Иерархия',
-      'localizedTypes-caption':'Локализация типа'
+    'ember-flexberry-dummy-suggestion-type-edit': {
+      'caption': 'Тип предложения',
+      'name-caption': 'Наименование',
+      'moderated-caption': 'Одобрено',
+      'parent-caption': 'Иерархия',
+      'localizedTypes-caption': 'Локализация типа'
     },
 
-    'ember-flexberry-dummy-application-user-list':{
-      'caption':'Пользователи приложения'
+    'ember-flexberry-dummy-application-user-list': {
+      'caption': 'Пользователи приложения'
     },
 
-    'ember-flexberry-dummy-localization-list':{
-      'caption':'Локализация'
+    'ember-flexberry-dummy-localization-list': {
+      'caption': 'Локализация'
     },
 
-    'ember-flexberry-dummy-suggestion-list':{
-      'caption':'Предложения'
+    'ember-flexberry-dummy-suggestion-list': {
+      'caption': 'Предложения'
     },
 
-    'ember-flexberry-dummy-suggestion-type-list':{
-      'caption':'Типы предложений'
+    'ember-flexberry-dummy-suggestion-type-list': {
+      'caption': 'Типы предложений'
     },
 
     'components-examples': {

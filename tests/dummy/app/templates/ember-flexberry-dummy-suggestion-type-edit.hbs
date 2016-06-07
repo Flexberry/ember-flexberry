@@ -6,8 +6,8 @@
     visible=showFormSuccessMessage
     caption=formSuccessMessageCaption
     message=formSuccessMessage
-    onShow=(action 'onSuccessMessageShow')
-    onHide=(action 'onSuccessMessageHide')
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
   }}
   {{ui-message
     type="error"
@@ -15,8 +15,8 @@
     visible=showFormErrorMessage
     caption=formErrorMessageCaption
     message=formErrorMessage
-    onShow=(action 'onErrorMessageShow')
-    onHide=(action 'onErrorMessageHide')
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
   }}
   <div class="field">
     <div class="flexberry-edit-panel">
@@ -25,13 +25,13 @@
           <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
         {{/unless}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+          <button type="submit" class="ui positive button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
         {{/unless}}
         {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
-          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "forms.edit-form.delete-button-text"}}</button>
+          <button type="submit" class="ui negative button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
   <div class="field">

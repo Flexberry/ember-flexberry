@@ -3,6 +3,7 @@
   "requirePaddingNewLinesAfterBlocks": {
     "allExcept": ["inCallExpressions", "inArrayExpressions", "inProperties"]
   },
+  "requireShorthandArrowFunctions": false,
   "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
   "requireTrailingComma": null,
   "validateQuoteMarks": { "mark": "'", "escape": true },

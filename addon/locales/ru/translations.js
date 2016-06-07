@@ -9,6 +9,10 @@ export default {
       'saveAndClose-button-text': 'Сохранить и закрыть',
       'delete-button-text': 'Удалить',
       'close-button-text': 'Закрыть'
+    },
+
+    'i-i-s-caseberry-logging-objects-application-log-l': {
+      caption: 'Лог приложения'
     }
   },
 

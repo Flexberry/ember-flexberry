@@ -172,6 +172,14 @@ Ember.$.extend(true, translations, {
         'integration-examples': {
           'caption': 'Интеграционные примеры',
           'title': '',
+          'edit-form': {
+            'caption': 'Форма редактирования',
+            'title': '',
+            'readonly-mode': {
+              'caption': 'Режим только для чтения',
+              'title': ''
+            }
+          },
           'validations': {
             'caption': 'Валидации',
             'title': '',
@@ -207,8 +215,11 @@ Ember.$.extend(true, translations, {
       'votes-caption':'Количество голосов',
       'moderated-caption':'Одобрено',
       'author-caption': 'Автор',
+      'moderator-caption': 'Модератор',
       'userVotes-caption':'Голоса пользователей',
-      'date-caption': 'Дата'
+      'date-caption': 'Дата',
+      'time-caption': 'Время',
+      'files-caption': 'Прикрепленные файлы'
     },
 
     'ember-flexberry-dummy-localization-edit':{
@@ -323,6 +334,14 @@ Ember.$.extend(true, translations, {
       }
     },
     'integration-examples': {
+      'edit-form': {
+        'readonly-mode': {
+          'caption': 'Integration-examples/edit-form/readonly-mode',
+          'is-readonly': {
+            'caption': 'Форма в режиме только для чтения'
+          }
+        }
+      },
       'validations': {
         'different-components-integration': {
           'caption': 'Integration-examples/validations/different-components-integration'

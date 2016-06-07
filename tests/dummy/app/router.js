@@ -42,6 +42,7 @@ Router.map(function() {
 
   // Integration examples routes
   this.route('integration-examples/validations/different-components-integration');
+  this.route('integration-examples/edit-form/readonly-mode');
 });
 
 export default Router;

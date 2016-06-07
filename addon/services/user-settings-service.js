@@ -10,7 +10,7 @@ import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 /**
  * Service to work with user settings on server.
  *
- * @class DetailInterationService
+ * @class UserSettingsService
  * @extends Ember.Service
  * @public
  */

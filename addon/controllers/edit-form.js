@@ -417,11 +417,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
-          let promise = record.save().then((record) => {
-            return this.saveHasManyRelationships(record).then(() => {
-              return record;
-            });
-          });
+          let promise = record.save().then((record) => this.saveHasManyRelationships(record).then(() => record));
 
           promises.pushObject(promise);
         });
@@ -612,3 +608,4 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   onCloseActionStarted() {
   },
 });
+

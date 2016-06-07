@@ -82,15 +82,16 @@ class EditFormBlueprint {
   }
 
   findAttr(model: metadata.Model, attrName: string){
-    return lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
+    let modelAttr = lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
+    if (!modelAttr) {
+      model = this.loadModel(model.parentModelName);
+      return this.findAttr(model, attrName);
+    }
+    return modelAttr;
   }
 
   loadSnippet(model: metadata.Model, attrName: string): string {
     let modelAttr = this.findAttr(model,attrName);
-    if (!modelAttr) {
-      model = this.loadModel(model.parentModelName);
-      return this.loadSnippet(model, attrName);
-    }
     let component = lodash.find(componentMaps, function (map) { return lodash.indexOf(map.types, modelAttr.type) !== -1; });
     if (!component) {
       return this.readHbsSnippetFile("flexberry-dropdown");

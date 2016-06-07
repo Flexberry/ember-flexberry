@@ -137,4 +137,52 @@ Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
   })
 });
 
+// Projection for lookup example on window customization.
+Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dummy-suggestion', {
+  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
+// Projection for lookup with limit function example.
+Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-dummy-suggestion', {
+  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
+// Projection for lookup in dropdown mode example.
+Model.defineProjection('DropDownLookupExampleView', 'ember-flexberry-dummy-suggestion', {
+  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
+// Projection for FlexberryObjectlistviewComponent with limit function example.
+Model.defineProjection('FolvWithLimitFunctionExampleView', 'ember-flexberry-dummy-suggestion', {
+  address: Proj.attr('Address'),
+  text: Proj.attr('Text'),
+  votes: Proj.attr('Votes'),
+  moderated: Proj.attr('Moderated'),
+  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
 export default Model;

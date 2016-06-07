@@ -486,12 +486,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   }),
 
   /**
-   * Flag: indicates whether some column contains editable component instead of default cellComponent.
-   * @property hasEditableValues
-   * @type Boolean
-   * @readonly
-   */
-  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent.componentName', function() {
+    Flag indicates whether some column contains editable component instead of default cellComponent.
+    Don't work if change `componentName` inside `cellComponent`.
+
+    @property hasEditableValues
+    @type Boolean
+    @readOnly
+  */
+  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent', function() {
     var columns = this.get('columns');
     if (!Ember.isArray(columns)) {
       return true;
@@ -779,6 +781,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   willDestroy: function() {
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
 
     this._super(...arguments);
   },
@@ -1267,9 +1270,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     var key = this._getModelKey(record);
     this._removeModelWithKey(key);
 
-    this._deleteHasManyRelationships(record, immediately).then(() => {
-      return immediately ? record.destroyRecord() : record.deleteRecord();
-    }).catch((reason) => {
+    this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord() : record.deleteRecord()).catch((reason) => {
       this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
       record.rollbackAttributes();
     });
@@ -1310,7 +1311,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @param {String} pattern The pattern to filter objects.
    */
   _filterByAnyMatch: function(componentName, pattern) {
-    this.sendAction('filterByAnyMatch', pattern);
+    if (componentName === this.get('componentName')) {
+      this.sendAction('filterByAnyMatch', pattern);
+    }
   },
 
   _setActiveRecord: function(key) {

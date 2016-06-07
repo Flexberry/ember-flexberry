@@ -66,14 +66,15 @@ var EditFormBlueprint = (function () {
         return model;
     };
     EditFormBlueprint.prototype.findAttr = function (model, attrName) {
-        return lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
+        var modelAttr = lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
+        if (!modelAttr) {
+            model = this.loadModel(model.parentModelName);
+            return this.findAttr(model, attrName);
+        }
+        return modelAttr;
     };
     EditFormBlueprint.prototype.loadSnippet = function (model, attrName) {
         var modelAttr = this.findAttr(model, attrName);
-        if (!modelAttr) {
-            model = this.loadModel(model.parentModelName);
-            return this.loadSnippet(model, attrName);
-        }
         var component = lodash.find(componentMaps, function (map) { return lodash.indexOf(map.types, modelAttr.type) !== -1; });
         if (!component) {
             return this.readHbsSnippetFile("flexberry-dropdown");

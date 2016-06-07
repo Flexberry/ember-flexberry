@@ -95,6 +95,16 @@ export default Ember.Controller.extend({
         }]
       }, {
         link: null,
+        caption: i18n.t('forms.application.sitemap.logging.caption'),
+        title: i18n.t('forms.application.sitemap.logging.title'),
+        children: [{
+          link: 'i-i-s-caseberry-logging-objects-application-log-l',
+          caption: i18n.t('forms.application.sitemap.logging.show.caption'),
+          title: i18n.t('forms.application.sitemap.logging.show.title'),
+          children: null
+        }]
+      }, {
+        link: null,
         caption: i18n.t('forms.application.sitemap.components-examples.caption'),
         title: i18n.t('forms.application.sitemap.components-examples.title'),
         children: [{
@@ -161,6 +171,21 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/customizing-window-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.customizing-window-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/limit-function-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/dropdown-mode-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -170,6 +195,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-menu/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-menu.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.title'),
+          children: [{
+            link: 'components-examples/flexberry-objectlistview/limit-function-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.title'),
             children: null
           }]
         }, {

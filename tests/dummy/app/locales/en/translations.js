@@ -53,6 +53,14 @@ Ember.$.extend(true, translations, {
           'caption': 'Home',
           'title': ''
         },
+        'logging': {
+          'caption': 'Logging',
+          'title': '',
+          'show': {
+            'caption': 'Show logs',
+            'title': ''
+          }
+        },
         'application': {
           'caption': 'Application',
           'title': '',
@@ -126,6 +134,18 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'customizing-window-example': {
+              'caption': 'Window customization',
+              'title': ''
+            },
+            'limit-function-example': {
+              'caption': 'Limit function example',
+              'title': ''
+            },
+            'dropdown-mode-example': {
+              'caption': 'Dropdown mode example',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -133,6 +153,18 @@ Ember.$.extend(true, translations, {
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
+              'title': ''
+            },
+            'flexberry-objectlistview': {
+              'caption': 'flexberry-objectlistview',
+              'title': '',
+              'limit-function-example': {
+                'caption': 'Limit function example',
+                'title': ''
+              }
+            },
+            'customizing-window-example': {
+              'caption': 'Customizing window example',
               'title': ''
             }
           },
@@ -302,11 +334,25 @@ Ember.$.extend(true, translations, {
       'flexberry-lookup': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-lookup/settings-example'
+        },
+        'customizing-window-example': {
+          'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
+        },
+        'limit-function-example': {
+          'caption': 'Components-examples/flexberry-lookup/limit-function-example'
+        },
+        'dropdown-mode-example': {
+          'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'
         }
       },
       'flexberry-menu': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-menu/settings-example'
+        }
+      },
+      'flexberry-objectlistview': {
+        'limit-function-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/limit-function-example'
         }
       },
       'flexberry-simpledatetime': {

@@ -1,16 +1,14 @@
 {{#ui-sidebar class="inverted vertical menu" dimPage=false}}
-  <div class="header item">
-    <a class="brand"
-       href="#"
-       title={{t "forms.application.sitemap.application-name.title"}}>
-      {{t "forms.application.sitemap.application-name.caption"}}
-    </a>
-  </div>
+  <a class="item"
+     href="https://github.com/flexberry"
+     target="_blank"
+     title={{t "forms.application.sitemap.application-name.title"}}>
+    <img class="ui centered image" src="assets/images/flexberry-logo.png" />
+  </a>
   <a class="item"
      href={{addonVersionHref}}
      target="_blank"
-     title={{t "forms.application.sitemap.application-version.title"}}
-     >
+     title={{t "forms.application.sitemap.application-version.title"}}>
     {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
   </a>
   {{render "sitemap" sitemap}}

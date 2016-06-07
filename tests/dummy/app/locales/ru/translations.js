@@ -170,13 +170,13 @@ Ember.$.extend(true, translations, {
           }
         },
         'integration-examples': {
-          'caption': 'Интеграционные примеры',
+          'caption': 'Integration examples',
           'title': '',
-          'validations': {
-            'caption': 'Валидации',
+          'edit-form': {
+            'caption': 'Форма редактирования',
             'title': '',
-            'different-components-integration': {
-              'caption': 'Интеграция разлиных компонентов',
+            'validation': {
+              'caption': 'Валидация',
               'title': ''
             }
           }
@@ -332,9 +332,17 @@ Ember.$.extend(true, translations, {
       }
     },
     'integration-examples': {
-      'validations': {
-        'different-components-integration': {
-          'caption': 'Integration-examples/validations/different-components-integration'
+      'edit-form': {
+        'validation': {
+          'caption': 'Integration-examples/edit-form/validation',
+          'flag-caption': 'Флаг',
+          'number-caption': 'Число',
+          'text-caption': 'Текст',
+          'long-text-caption': 'Длинный текст',
+          'date-caption': 'Дата',
+          'enumeration-caption': 'Перечисление',
+          'file-caption': 'Файл',
+          'master-caption': 'Мастер'
         }
       }
     }

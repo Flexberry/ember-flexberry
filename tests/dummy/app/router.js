@@ -41,7 +41,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-toggler/settings-example');
 
   // Integration examples routes
-  this.route('integration-examples/validations/different-components-integration');
+  this.route('integration-examples/edit-form/validation');
 });
 
 export default Router;

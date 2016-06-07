@@ -172,11 +172,11 @@ Ember.$.extend(true, translations, {
         'integration-examples': {
           'caption': 'Integration examples',
           'title': '',
-          'validations': {
-            'caption': 'Validations',
+          'edit-form': {
+            'caption': 'Edit form',
             'title': '',
-            'different-components-integration': {
-              'caption': 'Different components integration',
+            'validation': {
+              'caption': 'Validation',
               'title': ''
             }
           }
@@ -331,9 +331,17 @@ Ember.$.extend(true, translations, {
       }
     },
     'integration-examples': {
-      'validations': {
-        'different-components-integration': {
-          'caption': 'Integration-examples/validations/different-components-integration'
+      'edit-form': {
+        'validation': {
+          'caption': 'Integration-examples/edit-form/validation',
+          'flag-caption': 'Flag',
+          'number-caption': 'Number',
+          'text-caption': 'Text',
+          'long-text-caption': 'Long text',
+          'date-caption': 'Date',
+          'enumeration-caption': 'Enumeration',
+          'file-caption': 'File',
+          'master-caption': 'Master'
         }
       }
     }

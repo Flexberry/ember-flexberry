@@ -219,12 +219,12 @@ export default Ember.Controller.extend({
         title: i18n.t('forms.application.sitemap.integration-examples.title'),
         children: [{
           link: null,
-          caption: i18n.t('forms.application.sitemap.integration-examples.validations.caption'),
-          title: i18n.t('forms.application.sitemap.integration-examples.validations.title'),
+          caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.edit-form.title'),
           children: [{
-            link: 'integration-examples/validations/different-components-integration',
-            caption: i18n.t('forms.application.sitemap.integration-examples.validations.different-components-integration.caption'),
-            title: i18n.t('forms.application.sitemap.integration-examples.validations.different-components-integration.title'),
+            link: 'integration-examples/edit-form/validation',
+            caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
             children: null
           }]
         }]

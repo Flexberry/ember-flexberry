@@ -210,6 +210,11 @@ export default FlexberryBaseComponent.extend({
   showUploadButton: undefined,
 
   /**
+   * Flag: indicates whether to show download button or not.
+   */
+  showDownloadButton: undefined,
+
+  /**
    * Flag: indicates whether upload button is visible now.
    */
   uploadButtonIsVisible: Ember.computed('readonly', 'showUploadButton', function() {
@@ -230,9 +235,9 @@ export default FlexberryBaseComponent.extend({
   /**
    * Flag: indicates whether download button is visible now.
    */
-  downloadButtonIsVisible: Ember.computed('initialValue', function() {
+  downloadButtonIsVisible: Ember.computed('showDownloadButton', function() {
     // Download button is always visible (but disabled if download is not available).
-    return true;
+    return this.get('showDownloadButton');
   }),
 
   /**
@@ -331,6 +336,7 @@ export default FlexberryBaseComponent.extend({
     this.initProperty({ propertyName: 'maxUploadFileSize', defaultValue: null });
     this.initProperty({ propertyName: 'uploadOnModelPreSave', defaultValue: true });
     this.initProperty({ propertyName: 'showUploadButton', defaultValue: false });
+    this.initProperty({ propertyName: 'showDownloadButton', defaultValue: true });
     this.initProperty({ propertyName: 'showModalDialogOnUploadError', defaultValue: false });
     this.initProperty({ propertyName: 'showModalDialogOnDownloadError', defaultValue: true });
 

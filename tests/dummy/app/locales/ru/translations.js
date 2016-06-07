@@ -394,9 +394,19 @@ Ember.$.extend(true, translations, {
       'edit-form': {
         'readonly-mode': {
           'caption': 'Integration-examples/edit-form/readonly-mode',
-          'is-readonly': {
-            'caption': 'Форма в режиме только для чтения'
-          }
+          'readonly-flag-management-segment-caption': 'Управление режимом только для чтения формы',
+          'readonly-flag-value-segment-caption': 'Значения свойства \'readonly\' контроллера',
+          'readonly-flag-caption': 'Форма находится в режиме только для чтения',
+          'flag-caption': 'Флаг',
+          'number-caption': 'Число',
+          'text-caption': 'Текст',
+          'long-text-caption': 'Длинный текст',
+          'date-caption': 'Дата',
+          'time-caption': 'Время',
+          'enumeration-caption': 'Перечисление',
+          'file-caption': 'Файл',
+          'master-caption': 'Мастер',
+          'master-dropdown-caption': 'Мастер в режиме dropdown-а'
         },
         'validation': {
           'caption': 'Integration-examples/edit-form/validation',

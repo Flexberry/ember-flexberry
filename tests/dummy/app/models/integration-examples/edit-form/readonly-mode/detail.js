@@ -13,7 +13,7 @@ let Model = BaseModel.extend({
   flag: DS.attr('boolean'),
   text: DS.attr('string'),
   date: DS.attr('date'),
-  enumeration: DS.attr('integration-examples/edit-form/readonly-mode/detail-enumeration'),
+  enumeration: DS.attr('integration-examples/edit-form/readonly-mode/enumeration'),
   file: DS.attr('file'),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
@@ -31,24 +31,12 @@ Model.defineProjection('DetailE', 'integration-examples/edit-form/readonly-mode/
   enumeration: Proj.attr('Enumeration'),
   file: Proj.attr('File'),
   master: Proj.belongsTo('integration-examples/edit-form/readonly-mode/master', 'Master', {
-    text: Proj.attr('Name', {
+    text: Proj.attr('Text', {
       hidden: true
     })
   }, {
-    displayMemberPath: 'name'
+    displayMemberPath: 'text'
   })
-});
-
-// Edit form short projection.
-Model.defineProjection('DetailShortE', 'integration-examples/edit-form/readonly-mode/detail', {
-  flag: Proj.attr('Flag'),
-  text: Proj.attr('Text'),
-  enumeration: Proj.attr('Enumeration'),
-});
-
-// Edit form ultra short projection.
-Model.defineProjection('DetailUltraShortE', 'integration-examples/edit-form/readonly-mode/detail', {
-  enumeration: Proj.attr('Enumeration'),
 });
 
 export default Model;

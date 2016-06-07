@@ -1,112 +1,115 @@
 <h3 class="ui header">{{t "forms.integration-examples.edit-form.readonly-mode.caption"}}</h3>
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type="error"
-      closeable=true
-      visible=true
-      title="Error occurred"
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
+<div class="ui horizontal segments">
+  <div class="ui segment">
+      <h4 class="ui header">
+        {{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-management-segment-caption"}}
+      </h4>
+      <label>{{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-caption"}}</label>
+      {{input type="checkbox" checked=(mut readonly)}}
+  </div>
+  <div class="ui segment">
+      <h4 class="ui header">
+        {{t "forms.integration-examples.edit-form.readonly-mode.readonly-flag-value-segment-caption"}}
+      </h4>
+      readonly={{to-string readonly}}
+  </div>
+</div>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.flag-caption"}}</label>
     {{flexberry-checkbox
-      value=readonly
-      label=(t "forms.integration-examples.edit-form.readonly-mode.is-readonly.caption")
+      value=model.flag
+      readonly=readonly
     }}
   </div>
   <div class="field">
-    {{flexberry-field
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.number-caption"}}</label>
+    {{flexberry-textbox
+      value=model.number
       readonly=readonly
-      required=true
-      value=model.votes
-      class=(if model.errors.votes "error" "")
-      label=(t "forms.ember-flexberry-dummy-comment-edit.votes-caption")
     }}
   </div>
-  <div class="two fields {{if model.errors.date 'error' ''}}">
-    <div class="field">
-      <label>{{t "forms.ember-flexberry-dummy-comment-edit.date-caption"}}</label>
-      {{flexberry-datepicker
+  <div class="field">
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.text-caption"}}</label>
+    {{flexberry-textbox
+      value=model.text
       readonly=readonly
-      hasTimePicker=false
-      value=model.date
     }}
+  </div>
+  <div class="field">
+  <label>{{t "forms.integration-examples.edit-form.readonly-mode.long-text-caption"}}</label>
+    {{flexberry-textarea
+      value=model.longText
+      readonly=readonly
+    }}
+  </div>
+  <div class="two fields">
+    <div class="field">
+      <label>{{t "forms.integration-examples.edit-form.readonly-mode.date-caption"}}</label>
+      {{flexberry-datepicker
+        value=model.date
+        readonly=readonly
+      }}
     </div>
     <div class="field">
-      <label>{{t "forms.ember-flexberry-dummy-comment-edit.time-caption"}}</label>
+      <label>{{t "forms.integration-examples.edit-form.readonly-mode.time-caption"}}</label>
       {{flexberry-simpledatetime
         readonly=readonly
         type="time"
         value=model.time
+        readonly=readonly
       }}
     </div>
   </div>
-  <div class="field {{if model.errors.text 'error' ''}}">
-  <label>{{t "forms.ember-flexberry-dummy-comment-edit.text-caption"}}</label>
-    {{flexberry-textarea
+  <div class="field">
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.enumeration-caption"}}</label>
+    {{flexberry-dropdown
+      items=(enum-captions "integration-examples/edit-form/readonly-mode/enumeration")
+      value=model.enumeration
       readonly=readonly
-      required=true
-      value=model.text
     }}
   </div>
   <div class="field">
-  <label>{{t "forms.ember-flexberry-dummy-comment-edit.files-caption"}}</label>
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.file-caption"}}</label>
     {{flexberry-file
-      readonly=readonly
       value=model.file
+      readonly=readonly
     }}
   </div>
-  <div class="field {{if model.errors.author 'error' ''}}">
-    <label>{{t "forms.ember-flexberry-dummy-comment-edit.author-caption"}}</label>
+  <div class="field">
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.master-caption"}}</label>
     {{flexberry-lookup
-      value=model.author
+      value=model.master
+      relatedModel=model
+      relationName="master"
       projection="MasterL"
-      displayAttributeName="name"
-      title=(t "forms.ember-flexberry-dummy-comment-edit.author-caption")
-      relatedModel=model
-      relationName="author"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      displayAttributeName="text"
+      title=(t "forms.integration-examples.edit-form.readonly-mode.master-caption")     
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       readonly=readonly
     }}
   </div>
-  <div class="field {{if model.errors.author 'error' ''}}">
-    <label>{{t "forms.ember-flexberry-dummy-comment-edit.moderator-caption"}}</label>
+  <div class="field">
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption"}}</label>
     {{flexberry-lookup
-      value=model.moderator
-      projection="MasterDropdownL"
-      displayAttributeName="name"
-      title=(t "forms.ember-flexberry-dummy-comment-edit.moderator-caption")
+      value=model.masterDropdown
       relatedModel=model
-      relationName="moderator"
-      readonly=readonly
+      relationName="masterDropdown"
+      projection="MasterDropdownL"
+      displayAttributeName="text"
+      title=(t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       dropdown=true
-    }}
-  </div>
-  <div class="field {{if model.errors.gender 'error' ''}}">
-    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
-    {{flexberry-dropdown
-      items=(enum-captions "ember-flexberry-dummy-gender")
-      value=model.gender
       readonly=readonly
-    }}
-  </div>
-  <div class="field {{if model.errors.moderated 'error' ''}}">
-    {{flexberry-checkbox
-      readonly=readonly
-      value=model.moderated
-      label=(t "forms.ember-flexberry-dummy-comment-edit.moderated-caption")
     }}
   </div>
   <div class="field">
     {{flexberry-groupedit
       componentName="aggregatorDetailsGroupedit"
       content=model.details
-      modelProjection=detailsProjection
-      placeholder=placeholder
+      modelProjection=modelProjection.attributes.details
       readonly=readonly
     }}
   </div>

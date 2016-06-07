@@ -393,9 +393,19 @@ Ember.$.extend(true, translations, {
       'edit-form': {
         'readonly-mode': {
           'caption': 'Integration-examples/edit-form/readonly-mode',
-          'is-readonly': {
-            'caption': 'Form is readonly'
-          }
+          'readonly-flag-management-segment-caption': 'Form\'s readonly-mode management',
+          'readonly-flag-value-segment-caption': 'Controller\'s \'readonly\' property value',
+          'readonly-flag-caption': 'Form is in readonly mode',
+          'flag-caption': 'Flag',
+          'number-caption': 'Number',
+          'text-caption': 'Text',
+          'long-text-caption': 'Long text',
+          'date-caption': 'Date',
+          'time-caption': 'Time',
+          'enumeration-caption': 'Enumeration',
+          'file-caption': 'File',
+          'master-caption': 'Master',
+          'master-dropdown-caption': 'Master in dropdown mode'
         },
         'validation': {
           'caption': 'Integration-examples/edit-form/validation',

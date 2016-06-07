@@ -3,24 +3,27 @@ import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-data';
 
 let Model = BaseModel.extend({
-  isReadonly: DS.attr('boolean'),
-  votes: DS.attr('number'),
-  date: DS.attr('date'),
-  time: DS.attr('time'),
+  flag: DS.attr('boolean'),
+  number: DS.attr('number'),
   text: DS.attr('string'),
+  longText: DS.attr('string'),
+  date: DS.attr('date'),
+  time: DS.attr('date'),
+  enumeration: DS.attr('integration-examples/edit-form/validation/enumeration'),
   file: DS.attr('file'),
-  gender: DS.attr('ember-flexberry-dummy-gender'),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
-  author: DS.belongsTo('integration-examples/edit-form/readonly-mode/master', {
+  master: DS.belongsTo('integration-examples/edit-form/validation/master', {
     inverse: null,
     async: false
   }),
-  moderator: DS.belongsTo('integration-examples/edit-form/readonly-mode/master-dropdown', {
+
+  // This property is for flexberry-lookup component (in dropdown-mode). No inverse relationship here.
+  masterDropdown: DS.belongsTo('integration-examples/edit-form/readonly-mode/master-dropdown', {
     inverse: null,
     async: false
   }),
-  moderated: DS.attr('boolean'),
+
   details: DS.hasMany('integration-examples/edit-form/readonly-mode/detail', {
     inverse: 'aggregator',
     async: false
@@ -29,28 +32,28 @@ let Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('AggregatorE', 'integration-examples/edit-form/readonly-mode/aggregator', {
-  isReadonly: Proj.attr('isReadonly'),
-  votes: Proj.attr('Votes'),
+  flag: Proj.attr('Flag'),
+  number: Proj.attr('Number'),
+  text: Proj.attr('Text'),
+  longText: Proj.attr('Long text'),
   date: Proj.attr('Date'),
   time: Proj.attr('Time'),
-  text: Proj.attr('Text'),
+  enumeration: Proj.attr('Enumeration'),
   file: Proj.attr('File'),
-  gender: Proj.attr('Gender'),
-  author: Proj.belongsTo('integration-examples/edit-form/readonly-mode/master', 'Author', {
-    name: Proj.attr('Name', {
+  master: Proj.belongsTo('integration-examples/edit-form/validation/master', 'Master', {
+    text: Proj.attr('Text', {
       hidden: true
     })
   }, {
-    displayMemberPath: 'name'
+    displayMemberPath: 'text'
   }),
-  moderator: Proj.belongsTo('integration-examples/edit-form/readonly-mode/master-dropdown', 'Moderator', {
-    name: Proj.attr('Name', {
+  masterDropdown: Proj.belongsTo('integration-examples/edit-form/validation/master-dropdown', 'Master dropdown', {
+    text: Proj.attr('Text', {
       hidden: true
     })
   }, {
-    displayMemberPath: 'name'
+    displayMemberPath: 'text'
   }),
-  moderated: Proj.attr('Moderated'),
   details: Proj.hasMany('integration-examples/edit-form/readonly-mode/detail', 'Details', {
     flag: Proj.attr('Flag'),
     text: Proj.attr('Text'),

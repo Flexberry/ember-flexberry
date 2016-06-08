@@ -46,8 +46,13 @@ table.object-list-view tbody tr td:first-child button i {
 .ui.table.object-list-view {
   td {
     overflow: inherit;
+
     &.object-list-view-helper-column {
       overflow: hidden;
+    }
+
+    .flexberry-lookup, .flexberry-dropdown {
+      width: 100%;
     }
   }
 }

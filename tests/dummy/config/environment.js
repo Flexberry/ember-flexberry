@@ -24,6 +24,7 @@ module.exports = function(environment) {
         root: backendUrl,
         api: backendUrl + '/odata'
       },
+      useUserSettingsService: true,
 
       // Custom property with components settings.
       components: {

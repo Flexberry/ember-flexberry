@@ -50,7 +50,7 @@ export default FlexberryFile.extend({
     var i18n = this.get('i18n');
     let currentName = this.get('addButtonText');
     if (!currentName) {
-      this.set('addButtonText', i18n.t('flexberry-file.add-btn-text'));
+      this.set('addButtonText', i18n.t('components.flexberry-file.add-btn-text'));
     }
 
     // TODO: move to base mobile component.

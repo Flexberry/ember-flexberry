@@ -1,19 +1,11 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 export default EditFormRoute.extend({
-  modelProjection: 'BaseE',
-  modelName: 'components-examples/flexberry-lookup/settings-example/base',
+  modelProjection: 'SettingLookupExampleView',
+  modelName: 'ember-flexberry-dummy-suggestion',
   model: function(params) {
-    var store = this.get('store');
-
-    var base = store.createRecord('components-examples/flexberry-lookup/settings-example/base', {
-      master: store.createRecord('components-examples/flexberry-lookup/settings-example/master', {
-        flag: false,
-        date: new Date(),
-        text: 'Master\'s text'
-      })
-    });
-
+    let store = this.get('store');
+    let base = store.createRecord('ember-flexberry-dummy-suggestion');
     return base;
   }
 });

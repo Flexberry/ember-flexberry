@@ -137,6 +137,17 @@ Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
   })
 });
 
+// Projection for lookup example on settings example.
+Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-suggestion', {
+  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
 // Projection for lookup example on window customization.
 Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dummy-suggestion', {
   type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {

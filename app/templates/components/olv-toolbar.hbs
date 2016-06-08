@@ -28,13 +28,13 @@
     </button>
   </div>
 {{/if}}
-<button class="ui button" {{action "showConfigDialog"}}><i class="large setting icon" title="customize column views"></i></button>
+<button class="ui button" {{action "showConfigDialog"}}><i class="large table icon" title="customize column views"></i></button>
 <div class="field">
-{{flexberry-menu
+{{!-- flexberry-menu
   class='compact'
   items=colsSettingsItems
   onItemClick=(action 'onMenuItemClick')
-  }}
+  --}}
 </div>
 {{#each customButtonsArray as |customButton|}}
   <button class="ui {{if customButton.buttonClasses customButton.buttonClasses ''}} button" {{action 'customButtonAction' customButton.buttonAction}}>

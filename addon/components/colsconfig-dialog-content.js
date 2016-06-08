@@ -246,7 +246,6 @@ export default FlexberryBaseComponent.extend({
      * @method actions.apply
      */
     saveColsSetting: function() {
-      alert('saveColsSetting');
       let input = Ember.$(event.toElement).prev('INPUT').get(0);
       let settingName = input.value.trim();
       if (settingName.length <= 0) {

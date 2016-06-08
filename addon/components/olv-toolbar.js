@@ -150,23 +150,34 @@ export default FlexberryBaseComponent.extend({
       iconAlignment: 'right',
       title: '',
       items: [{
-        title: 'Создать настройку для отображения столбцов'
+        icon: 'table icon',
+        iconAlignment: 'left',
+        title: 'Создать настройку'
       }]
     }];
+    let items = this.colsSettingsItems[0].items;
     if (listNamedSettings.length > 0) {
-      let menus = [{ name: 'use', title: 'Применить' }, { name: 'edit', title: 'Редактировать' }, { name: 'remove', title: 'Удалить' }];
-      let items = this.colsSettingsItems[0].items;
+      let menus = [
+        { name: 'use', title: 'Применить', icon: 'checkmark box' },
+        { name: 'edit', title: 'Редактировать', icon: 'setting' },
+        { name: 'remove', title: 'Удалить', icon: 'remove' }
+      ];
       for (let menu in menus) {
         let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title, items: [] };
+        let icon = menus[menu].icon + ' icon';
         for (let i = 0; i < listNamedSettings.length; i++) {
-          let subSubmenu = { title: listNamedSettings[i] };
+          let subSubmenu = { title: listNamedSettings[i], icon: icon, iconAlignment: 'left'};
           submenu.items[submenu.items.length] = subSubmenu;
         }
 
         items[items.length] = submenu;
       }
     }
-
+    items[items.length] = {
+        icon: 'remove circle icon',
+        iconAlignment: 'left',
+        title: 'Сбросить настройку'
+      };
   },
 
   /**
@@ -229,6 +240,31 @@ export default FlexberryBaseComponent.extend({
     },
 
     onMenuItemClick: function (e) {
+      let iTags=Ember.$(e.currentTarget).find('I');
+      let namedSetingSpans = Ember.$(e.currentTarget).find('SPAN');
+      if (iTags.length <= 0 || namedSetingSpans.length <= 0) {
+        return;
+      }
+      let className=iTags.get(0).className;
+      let namedSeting=namedSetingSpans.get(0).innerText;
+      switch (className) {
+        case 'table icon':
+          alert('Configure ' + namedSeting);
+          this.sendAction('showConfigDialog', e);
+          break;
+        case 'checkmark box icon':
+          alert('Use ' + namedSeting);
+          break;
+        case 'setting icon':
+          alert('Edit ' + namedSeting);
+          break;
+        case 'remove icon':
+          alert('Remove ' + namedSeting);
+          break;
+        case 'remove circle icon':
+          alert('Remove default');
+          break;
+      }
     }
 
   },

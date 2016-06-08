@@ -43,11 +43,7 @@
                   {{input type="text" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
                 {{/if}}
 
-                {{#if (eq settingMetadata.settingType "date")}}
-                  {{input type="date" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
-                {{/if}}
-
-                {{#if (eq settingMetadata.settingType "datetime")}}
+                {{#if (or (eq settingMetadata.settingType "date") (eq settingMetadata.settingType "datetime"))}}
                   {{input type="datetime-local" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
                 {{/if}}
 

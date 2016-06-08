@@ -75,4 +75,10 @@ Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-du
   moderated: Proj.attr('Moderated')
 });
 
+// Projection for lookup in dropdown mode example.
+Model.defineProjection('DropDownLookupExampleView', 'ember-flexberry-dummy-suggestion-type', {
+  name: Proj.attr('Name'),
+  moderated: Proj.attr('Moderated')
+});
+
 export default Model;

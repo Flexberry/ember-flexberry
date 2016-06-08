@@ -26,6 +26,11 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
+  //Logging
+  this.route('i-i-s-caseberry-logging-objects-application-log-l');
+  this.route('i-i-s-caseberry-logging-objects-application-log-e', { path: 'i-i-s-caseberry-logging-objects-application-log-e/:id' });
+  this.route('i-i-s-caseberry-logging-objects-application-log-e.new', { path: 'i-i-s-caseberry-logging-objects-application-log-e/new' });
+
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-checkbox/settings-example');
   this.route('components-examples/flexberry-dropdown/settings-example');
@@ -35,6 +40,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
   this.route('components-examples/flexberry-lookup/limit-function-example');
+  this.route('components-examples/flexberry-lookup/dropdown-mode-example');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/limit-function-example');
   this.route('components-examples/flexberry-textarea/settings-example');

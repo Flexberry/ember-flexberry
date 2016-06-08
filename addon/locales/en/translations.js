@@ -61,7 +61,8 @@ export default {
         'zoom-image-item-title': 'Zoom image',
         'replace-file-item-title': 'Replace file',
         'delete-file-item-title': 'Delete file'
-      }
+      },
+      'alt-image-text': 'LoadedImage'
     },
 
     'flexberry-lookup': {

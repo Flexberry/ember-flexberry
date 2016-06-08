@@ -326,9 +326,8 @@ Ember.$.extend(true, translations, {
         'conditional-render-example': {
           'caption': 'Components-examples/flexberry-dropdown/conditional-render-example',
           'info-caption': 'Описание варианта использования',
-          'info-message': 'Шаблон страницы выглядит следующим образом:<br>' +
+          'info-message': 'Шаблон страницы выглядит следующим образом:' +
             '{{pageTemplate}}' +
-            '<br>' +
             'После того как какое-либо значение будет выбрано, компонент будет заменен на ' +
             '&lt;span&gt;selected value&lt;/span&gt;,<br>' +
             'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \"Semantic-UI\" и прочих ошибок.'

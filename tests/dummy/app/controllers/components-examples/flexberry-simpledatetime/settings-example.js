@@ -148,11 +148,11 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-simpledatetime<br>' +
-    '..type=\"datetime-local\"<br>' +
-    '..value=model.date<br>' +
-    '..min=min<br>' +
-    '..max=max<br>' +
-    '..readonly=readonly<br>' +
+    '  type=\"datetime-local\"<br>' +
+    '  value=model.date<br>' +
+    '  min=min<br>' +
+    '  max=max<br>' +
+    '  readonly=readonly<br>' +
     '}}'),
 
   /**

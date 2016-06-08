@@ -41,12 +41,12 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{#flexberry-toggler<br>' +
-    '..caption=caption<br>' +
-    '..expandedCaption=expandedCaption<br>' +
-    '..collapsedCaption=collapsedCaption<br>' +
-    '..readonly=readonly<br>' +
+    '  caption=caption<br>' +
+    '  expandedCaption=expandedCaption<br>' +
+    '  collapsedCaption=collapsedCaption<br>' +
+    '  readonly=readonly<br>' +
     '}}<br>' +
-    '..Some expandable/collapsable content<br>' +
+    '  Some expandable/collapsable content<br>' +
     '{{/flexberry-toggler}}'),
 
   /**

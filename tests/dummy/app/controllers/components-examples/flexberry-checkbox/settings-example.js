@@ -25,9 +25,9 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-checkbox<br>' +
-    '..value=model.flag<br>' +
-    '..label=label<br>' +
-    '..readonly=readonly<br>' +
+    '  value=model.flag<br>' +
+    '  label=label<br>' +
+    '  readonly=readonly<br>' +
     '}}'),
 
   /**

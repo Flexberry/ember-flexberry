@@ -28,10 +28,10 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-dropdown<br>' +
-    '..items=(enum-captions \"components-examples/flexberry-dropdown/settings-example/enumeration\")<br>' +
-    '..value=model.enumeration<br>' +
-    '..placeholder=placeholder<br>' +
-    '..readonly=readonly<br>' +
+    '  items=(enum-captions \"components-examples/flexberry-dropdown/settings-example/enumeration\")<br>' +
+    '  value=model.enumeration<br>' +
+    '  placeholder=placeholder<br>' +
+    '  readonly=readonly<br>' +
     '}}'),
 
   /**

@@ -204,38 +204,38 @@ export default ListFormController.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-objectlistview<br>' +
-    '..componentName=\"SuggestionsObjectListView\"<br>' +
-    '..content=model<br>' +
-    '..modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '..editFormRoute=editFormRoute<br>' +
-    '..modelProjection=projection<br>' +
-    '..placeholder=placeholder<br>' +
-    '..readonly=readonly<br>' +
-    '..tableStriped=tableStriped<br>' +
-    '..allowColumnResize=allowColumnResize<br>' +
-    '..createNewButton=createNewButton<br>' +
-    '..deleteButton=deleteButton<br>' +
-    '..refreshButton=refreshButton<br>' +
-    '..filterButton=filterButton<br>' +
-    '..showCheckBoxInRow=showCheckBoxInRow<br>' +
-    '..showDeleteButtonInRow=showDeleteButtonInRow<br>' +
-    '..showEditMenuItemInRow=showEditMenuItemInRow<br>' +
-    '..showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
-    '..rowClickable=rowClickable<br>' +
-    '..orderable=orderable<br>' +
-    '..filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
-    '..filterText=filter<br>' +
-    '..sorting=computedSorting<br>' +
-    '..sortByColumn=(action \"sortByColumn\")<br>' +
-    '..addColumnToSorting=(action \"addColumnToSorting\")<br>' +
-    '..pages=pages<br>' +
-    '..perPageValue=perPageValue<br>' +
-    '..perPageValues=perPageValues<br>' +
-    '..hasPreviousPage=hasPreviousPage<br>' +
-    '..hasNextPage=hasNextPage<br>' +
-    '..previousPage=(action \"previousPage\")<br>' +
-    '..gotoPage=(action \"gotoPage\")<br>' +
-    '..nextPage=(action \"nextPage\")<br>' +
+    '  componentName=\"SuggestionsObjectListView\"<br>' +
+    '  content=model<br>' +
+    '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
+    '  editFormRoute=editFormRoute<br>' +
+    '  modelProjection=projection<br>' +
+    '  placeholder=placeholder<br>' +
+    '  readonly=readonly<br>' +
+    '  tableStriped=tableStriped<br>' +
+    '  allowColumnResize=allowColumnResize<br>' +
+    '  createNewButton=createNewButton<br>' +
+    '  deleteButton=deleteButton<br>' +
+    '  refreshButton=refreshButton<br>' +
+    '  filterButton=filterButton<br>' +
+    '  showCheckBoxInRow=showCheckBoxInRow<br>' +
+    '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
+    '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+    '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
+    '  rowClickable=rowClickable<br>' +
+    '  orderable=orderable<br>' +
+    '  filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
+    '  filterText=filter<br>' +
+    '  sorting=computedSorting<br>' +
+    '  sortByColumn=(action \"sortByColumn\")<br>' +
+    '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
+    '  pages=pages<br>' +
+    '  perPageValue=perPageValue<br>' +
+    '  perPageValues=perPageValues<br>' +
+    '  hasPreviousPage=hasPreviousPage<br>' +
+    '  hasNextPage=hasNextPage<br>' +
+    '  previousPage=(action \"previousPage\")<br>' +
+    '  gotoPage=(action \"gotoPage\")<br>' +
+    '  nextPage=(action \"nextPage\")<br>' +
     '}}'),
 
   /**

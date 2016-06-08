@@ -26,9 +26,9 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-textarea<br>' +
-    '..value=model.text<br>' +
-    '..placeholder=placeholder<br>' +
-    '..readonly=readonly<br>' +
+    '  value=model.text<br>' +
+    '  placeholder=placeholder<br>' +
+    '  readonly=readonly<br>' +
     '}}'),
 
   /**

@@ -34,10 +34,10 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-field<br>' +
-    '..value=model.text<br>' +
-    '..label=label<br>' +
-    '..placeholder=placeholder<br>' +
-    '..readonly=readonly<br>' +
+    '  value=model.text<br>' +
+    '  label=label<br>' +
+    '  placeholder=placeholder<br>' +
+    '  readonly=readonly<br>' +
     '}}'),
 
   /**

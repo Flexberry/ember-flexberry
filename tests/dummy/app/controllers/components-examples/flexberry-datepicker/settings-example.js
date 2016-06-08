@@ -184,13 +184,13 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-datepicker<br>' +
-    '..dateTimeFormat=dateTimeFormat<br>' +
-    '..hasTimePicker=hasTimePicker<br>' +
-    '..minDate=minDate<br>' +
-    '..maxDate=maxDate<br>' +
-    '..value=model.date<br>' +
-    '..placeholder=placeholder<br>' +
-    '..readonly=readonly<br>' +
+    '  dateTimeFormat=dateTimeFormat<br>' +
+    '  hasTimePicker=hasTimePicker<br>' +
+    '  minDate=minDate<br>' +
+    '  maxDate=maxDate<br>' +
+    '  value=model.date<br>' +
+    '  placeholder=placeholder<br>' +
+    '  readonly=readonly<br>' +
     '}}'),
 
   /**

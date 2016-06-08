@@ -91,7 +91,7 @@ export default EditFormController.extend({
     @type String
   */
   componentTemplateText: new Ember.Handlebars.SafeString(
-    '<pre><code>{{flexberry-lookup<br>' +
+    '{{flexberry-lookup<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
     '  value=model.type<br>' +
@@ -108,7 +108,7 @@ export default EditFormController.extend({
     '  removeText=removeText<br>' +
     '  chooseButtonClass=chooseButtonClass<br>' +
     '  removeButtonClass=removeButtonClass<br>' +
-    '}}</code></pre>'),
+    '}}'),
 
   /**
     Component settings metadata.

@@ -215,27 +215,27 @@ export default EditFormController.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-groupedit<br>' +
-    '..componentName=\"aggregatorDetailsGroupedit\"<br>' +
-    '..content=model.details<br>' +
-    '..modelProjection=detailsProjection<br>' +
-    '..placeholder=placeholder<br>' +
-    '..readonly=readonly<br>' +
-    '..tableStriped=tableStriped<br>' +
-    '..createNewButton=createNewButton<br>' +
-    '..deleteButton=deleteButton<br>' +
-    '..allowColumnResize=allowColumnResize<br>' +
-    '..showAsteriskInRow=showAsteriskInRow<br>' +
-    '..showCheckBoxInRow=showCheckBoxInRow<br>' +
-    '..showDeleteButtonInRow=showDeleteButtonInRow<br>' +
-    '..showEditMenuItemInRow=showEditMenuItemInRow<br>' +
-    '..showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
-    '..useSingleColumn=useSingleColumn<br>' +
-    '..singleColumnHeader=singleColumnHeader<br>' +
-    '..rowClickable=rowClickable<br>' +
-    '..immediateDelete=immediateDelete<br>' +
-    '..editOnSeperateRoute=editOnSeperateRoute<br>' +
-    '..saveBeforeRoutLeave=saveBeforeRoutLeave<br>' +
-    '..editFormRoute=editFormRoute<br>' +
+    '  componentName=\"aggregatorDetailsGroupedit\"<br>' +
+    '  content=model.details<br>' +
+    '  modelProjection=detailsProjection<br>' +
+    '  placeholder=placeholder<br>' +
+    '  readonly=readonly<br>' +
+    '  tableStriped=tableStriped<br>' +
+    '  createNewButton=createNewButton<br>' +
+    '  deleteButton=deleteButton<br>' +
+    '  allowColumnResize=allowColumnResize<br>' +
+    '  showAsteriskInRow=showAsteriskInRow<br>' +
+    '  showCheckBoxInRow=showCheckBoxInRow<br>' +
+    '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
+    '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+    '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
+    '  useSingleColumn=useSingleColumn<br>' +
+    '  singleColumnHeader=singleColumnHeader<br>' +
+    '  rowClickable=rowClickable<br>' +
+    '  immediateDelete=immediateDelete<br>' +
+    '  editOnSeperateRoute=editOnSeperateRoute<br>' +
+    '  saveBeforeRoutLeave=saveBeforeRoutLeave<br>' +
+    '  editFormRoute=editFormRoute<br>' +
     '}}'),
 
   /**

@@ -83,16 +83,16 @@ export default EditFormController.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-file<br>' +
-    '..value=model.file<br>' +
-    '..placeholder=placeholder<br>' +
-    '..readonly=readonly<br>' +
-    '..uploadUrl=uploadUrl<br>' +
-    '..maxUploadFileSize=maxUploadFileSize<br>' +
-    '..showPreview=showPreview<br>' +
-    '..showUploadButton=showUploadButton<br>' +
-    '..showDownloadButton=showDownloadButton<br>' +
-    '..showModalDialogOnUploadError=showModalDialogOnUploadError<br>' +
-    '..showModalDialogOnDownloadError=showModalDialogOnDownloadError<br>' +
+    '  value=model.file<br>' +
+    '  placeholder=placeholder<br>' +
+    '  readonly=readonly<br>' +
+    '  uploadUrl=uploadUrl<br>' +
+    '  maxUploadFileSize=maxUploadFileSize<br>' +
+    '  showPreview=showPreview<br>' +
+    '  showUploadButton=showUploadButton<br>' +
+    '  showDownloadButton=showDownloadButton<br>' +
+    '  showModalDialogOnUploadError=showModalDialogOnUploadError<br>' +
+    '  showModalDialogOnDownloadError=showModalDialogOnDownloadError<br>' +
     '}}'),
 
   /**

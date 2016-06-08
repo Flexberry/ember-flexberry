@@ -1,10 +1,17 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
+
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-data';
 
+/**
+  Model for message a application log, used into {{#crossLink "FlexberryLoggingService"}}FlexberryLoggingService{{/crossLink}}.
+
+  @class IISCaseberryLoggingObjectsApplicationLog
+  @extends BaseModel
+ */
 var Model = BaseModel.extend({
   category: DS.attr('string'),
   eventId: DS.attr('number'),

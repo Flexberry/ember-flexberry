@@ -495,7 +495,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   /**
     Hook for configurate rows.
 
-    Example:
+    @example
     ```handlebars
     <!-- app/templates/employees.hbs -->
     {{flexberry-objectlistview
@@ -591,7 +591,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   /**
     Hook that can be used to confirm delete row.
 
-    Example:
+    @example
     ```handlebars
     <!-- app/templates/your-template.hbs -->
     {{flexberry-objectlistview
@@ -623,7 +623,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   /**
     Hook that can be used to confirm delete rows.
 
-    Example:
+    @example
     ```handlebars
     <!-- app/templates/your-template.hbs -->
     {{flexberry-objectlistview
@@ -1303,7 +1303,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   /**
     Hook that executes before deleting the record.
 
-     Example:
+     @example
      ```handlebars
      <!-- app/templates/employees.hbs -->
      {{flexberry-objectlistview

@@ -136,7 +136,6 @@ export default FlexberryBaseComponent.extend({
   filterByAnyMatchText: Ember.computed.oneWay('filterText'),
 
   actions: {
-
     /**
       Handles action from object-list-view when no handler for this component is defined.
 

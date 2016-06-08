@@ -7,7 +7,7 @@ import FlexberryObjectlistview from './../flexberry-objectlistview';
 /**
   Mobile version of flexberry-objectlistview (with mobile-specific defaults).
 
-  @class FlexberryObjectlistview
+  @class Mobile.FlexberryObjectlistview
   @extends FlexberryObjectlistview
 */
 export default FlexberryObjectlistview.extend({

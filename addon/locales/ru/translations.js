@@ -65,7 +65,8 @@ export default {
         'zoom-image-item-title': 'Увеличить',
         'replace-file-item-title': 'Заменить',
         'delete-file-item-title': 'Удалить'
-      }
+      },
+      'alt-image-text': 'Загруженное изображение'
     },
 
     'flexberry-lookup': {

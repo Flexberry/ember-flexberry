@@ -166,7 +166,7 @@ export default FlexberryBaseComponent.extend({
         let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title, items: [] };
         let icon = menus[menu].icon + ' icon';
         for (let i = 0; i < listNamedSettings.length; i++) {
-          let subSubmenu = { title: listNamedSettings[i], icon: icon, iconAlignment: 'left'};
+          let subSubmenu = { title: listNamedSettings[i], icon: icon, iconAlignment: 'left' };
           submenu.items[submenu.items.length] = subSubmenu;
         }
 

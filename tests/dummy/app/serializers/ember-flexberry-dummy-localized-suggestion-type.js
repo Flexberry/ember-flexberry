@@ -6,8 +6,9 @@ export default ApplicationSerializer.extend({
     localization: { serialize: 'odata-id', deserialize: 'records' },
     suggestionType: { serialize: 'odata-id', deserialize: 'records' }
   },
+
   /**
-  * Field name where object identifier is kept.
-  */
+    Property name in which object identifier is kept.
+   */
   primaryKey: '__PrimaryKey'
 });

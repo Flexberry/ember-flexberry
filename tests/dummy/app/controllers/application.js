@@ -15,18 +15,18 @@ export default Ember.Controller.extend({
   },
 
   /**
-   * Currernt addon version.
-   *
-   * @property addonVersion
-   * @type String
+    Currernt addon version.
+
+    @property addonVersion
+    @type String
    */
   addonVersion: version,
 
   /**
-   * Link to GitHub commit related to current addon version.
-   *
-   * @property addonVersionHref
-   * @type String
+    Link to GitHub commit related to current addon version.
+
+    @property addonVersionHref
+    @type String
    */
   addonVersionHref: Ember.computed('addonVersion', function() {
     var addonVersion = this.get('addonVersion');
@@ -36,28 +36,28 @@ export default Ember.Controller.extend({
   }),
 
   /**
-   * Available test application locales.
-   *
-   * @property locales
-   * @type String[]
+    Available test application locales.
+
+    @property locales
+    @type String[]
    */
   locales: ['ru', 'en'],
 
   /**
-   * Current application locale.
-   *
-   * @property currentLocale
-   * @type String
+    Current application locale.
+
+    @property currentLocale
+    @type String
    */
   currentLocale: Ember.computed('i18n.locale', function() {
     return this.get('i18n.locale');
   }),
 
   /**
-   * Application sitemap.
-   *
-   * @property sitemap
-   * @type Object
+    Application sitemap.
+
+    @property sitemap
+    @type Object
    */
   sitemap: Ember.computed('i18n.locale', function() {
     var i18n = this.get('i18n');

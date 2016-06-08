@@ -245,7 +245,8 @@ export default EditFormController.extend({
     @type Object[]
    */
   componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    var componentSettingsMetadata = Ember.A();
+    let componentSettingsMetadata = Ember.A();
+
     componentSettingsMetadata.pushObject({
       settingName: 'componentName',
       settingType: 'string',

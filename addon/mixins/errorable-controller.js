@@ -14,6 +14,7 @@ export default Ember.Mixin.create({
       Add error message.
 
       @method actions.addErrorMessage
+      @public
       @param {String} msg Message
     */
     addErrorMessage(msg) {
@@ -24,6 +25,7 @@ export default Ember.Mixin.create({
       Dismiss error messages.
 
       @method actions.dismissErrorMessages
+      @public
     */
     dismissErrorMessages() {
       this.get('errorMessages').clear();

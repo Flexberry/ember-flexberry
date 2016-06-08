@@ -31,15 +31,6 @@ export default FlexberryBaseComponent.extend({
   appConfigSettingsPath: 'APP.components.flexberryDropdown',
 
   /**
-    Dropdown type from semantic ui ('fluid', 'compact', ...).
-
-    @property type
-    @type String
-    @default 'fluid'
-  */
-  type: 'fluid',
-
-  /**
     Default text (will be displayed if there is no selected item).
 
     @property defaultText
@@ -76,7 +67,7 @@ export default FlexberryBaseComponent.extend({
   dropdownDomElement: null,
 
   /**
-    Flag: indicates whether 'willDestroyElement' hook has been already called.
+    Flag indicates whether 'willDestroyElement' hook has been already called.
 
     @property destroyHasBeenCalled
     @type Boolean
@@ -85,7 +76,7 @@ export default FlexberryBaseComponent.extend({
   destroyHasBeenCalled: false,
 
   /**
-    Flag: indicates whether to show default dropdown text or not.
+    Flag indicates whether to show default dropdown text or not.
 
     @property showDefaultText
     @type Boolean
@@ -171,7 +162,7 @@ export default FlexberryBaseComponent.extend({
       If false is returned, dropdown will not be shown/hidden.
 
       Its is necessary in situations when route's template changes on model change.
-      Example:
+      @example
       ```handlebars
       ...
       {{#if model.enum}}

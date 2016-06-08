@@ -76,6 +76,16 @@ export default Ember.Component.extend({
   },
 
   /**
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroy() {
+    let errors = this.get('errors');
+    this.get('validationProperties').forEach(propertyName => errors.removeObserver(propertyName + '.[]', this, 'changeMessages'));
+    this._super(...arguments);
+  },
+
+  /**
     Push validation errors to messages array
     and change component visibility if no errors occurred.
   */
@@ -88,15 +98,5 @@ export default Ember.Component.extend({
 
     this.set('isVisible', !!messages.length);
     this.set('messages', messages);
-  },
-
-  /**
-    Override to implement teardown.
-    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
-  */
-  willDestroy() {
-    let errors = this.get('errors');
-    this.get('validationProperties').forEach(propertyName => errors.removeObserver(propertyName + '.[]', this, 'changeMessages'));
-    this._super(...arguments);
   }
 });

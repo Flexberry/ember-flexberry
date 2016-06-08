@@ -245,8 +245,8 @@ export default FlexberryBaseComponent.extend({
       if (iTags.length <= 0 || namedSetingSpans.length <= 0) {
         return;
       }
-      let className=iTags.get(0).className;
-      let namedSeting=namedSetingSpans.get(0).innerText;
+      let className = iTags.get(0).className;
+      let namedSeting = namedSetingSpans.get(0).innerText;
       switch (className) {
         case 'table icon':
           alert('Configure ' + namedSeting);

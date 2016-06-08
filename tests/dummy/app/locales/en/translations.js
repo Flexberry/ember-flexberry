@@ -170,6 +170,10 @@ Ember.$.extend(true, translations, {
             'limit-function-example': {
               'caption': 'Limit function example',
               'title': ''
+            },
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -366,6 +370,9 @@ Ember.$.extend(true, translations, {
       'flexberry-objectlistview': {
         'limit-function-example': {
           'caption': 'Components-examples/flexberry-objectlistview/limit-function-example'
+        },
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/settings-example'
         }
       },
       'flexberry-simpledatetime': {

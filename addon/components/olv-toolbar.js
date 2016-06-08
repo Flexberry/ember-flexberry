@@ -173,6 +173,7 @@ export default FlexberryBaseComponent.extend({
         items[items.length] = submenu;
       }
     }
+
     items[items.length] = {
         icon: 'remove circle icon',
         iconAlignment: 'left',
@@ -240,11 +241,12 @@ export default FlexberryBaseComponent.extend({
     },
 
     onMenuItemClick: function (e) {
-      let iTags=Ember.$(e.currentTarget).find('I');
+      let iTags = Ember.$(e.currentTarget).find('I');
       let namedSetingSpans = Ember.$(e.currentTarget).find('SPAN');
       if (iTags.length <= 0 || namedSetingSpans.length <= 0) {
         return;
       }
+
       let className = iTags.get(0).className;
       let namedSeting = namedSetingSpans.get(0).innerText;
       switch (className) {

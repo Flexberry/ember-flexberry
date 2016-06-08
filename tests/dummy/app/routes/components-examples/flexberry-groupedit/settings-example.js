@@ -4,7 +4,7 @@ import DetailEnumeration from '../../../enums/components-examples/flexberry-grou
 export default EditFormRoute.extend({
   modelProjection: 'AggregatorE',
   modelName: 'components-examples/flexberry-groupedit/settings-example/aggregator',
-  model: function(params) {
+  model: function() {
     var store = this.get('store');
     var detail = store.createRecord('components-examples/flexberry-groupedit/settings-example/detail', {
       flag: true,

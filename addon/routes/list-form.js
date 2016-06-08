@@ -2,12 +2,14 @@
  * @module ember-flexberry
  */
 
+import Ember from 'ember';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
-import ReloadListMixin from '../mixins/reload-list-mixin';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import ReloadListMixin from '../mixins/reload-list-mixin';
 
 /**
  * Base route for the List Forms.
@@ -40,42 +42,85 @@ import ProjectedModelFormRoute from '../routes/projected-model-form';
  * @uses ReloadListMixin
  * @uses FlexberryObjectlistviewRouteMixin
  */
+
 export default ProjectedModelFormRoute.extend(
   PaginatedRouteMixin,
   SortableRouteMixin,
   LimitedRouteMixin,
   ReloadListMixin,
   FlexberryObjectlistviewRouteMixin, {
-  model: function(params, transition) {
-    let sorting = this.deserializeSortingParam(params.sort);
+    _userSettingsService: Ember.inject.service('user-settings-service'),
+    userSettings: {},
+    listUserSettings: {},
+    sorting: [],
 
-    let projectionName = this.get('modelProjection');
-    let relatedToType = this.get('modelName');
-    let limitPredicate = this.objectListViewLimitPredicate({ modelName: relatedToType, projectionName: projectionName, params: params });
+    model: function(params, transition) {
+      let page = parseInt(params.page, 10);
+      let perPage = parseInt(params.perPage, 10);
 
-    let queryParameters = {
-      modelName: relatedToType,
-      projectionName: projectionName,
-      perPage: params.perPage,
-      page: params.page,
-      sorting: sorting,
-      filter: params.filter,
-      predicate: limitPredicate
-    };
+      Ember.assert('page must be greater than zero.', page > 0);
+      Ember.assert('perPage must be greater than zero.', perPage > 0);
 
-    // find by query is always fetching.
-    // TODO: support getting from cache with "store.all->filterByProjection".
-    // TODO: move includeSorting to setupController mixins?
-    return this.reloadList(queryParameters).then((records) => this.includeSorting(records, sorting));
-  },
+      let modelName = this.get('modelName');
+      let moduleName = transition.targetName;
+      let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
+      let serializer = this.store.serializerFor(modelName);
 
-  setupController: function(controller, model) {
-    this._super(...arguments);
+      //let sorting = this.deserializeSortingParam(params.sort);
 
-    // Define 'modelProjection' for controller instance.
-    // TODO: remove that when list-form controller will be moved to this route.
-    let modelClass = this.store.modelFor(this.get('modelName'));
-    let proj = modelClass.projections.get(this.get('modelProjection'));
-    controller.set('modelProjection', proj);
+      //get sorting parameters from DEFAULT userSettings
+
+      let userSettingPromise = this.get('_userSettingsService').getUserSettings({ moduleName: moduleName })
+      .then(_listUserSettings => {
+        if (_listUserSettings) {
+          this.listUserSettings =  _listUserSettings;
+        }
+
+        return _listUserSettings;
+      });
+
+      let ret = userSettingPromise
+      .then(
+        listUserSettings=> {
+          this.listUserSettings = listUserSettings;
+          let sorting = [];
+          if ('DEFAULT' in listUserSettings) {
+            this.userSettings = this.listUserSettings.DEFAULT;
+            sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];
+          }
+
+          this.sorting = sorting;
+          let builder = new QueryBuilder(this.store)
+          .from(modelName)
+          .selectByProjection(projectionName)
+          .top(perPage)
+          .skip((page - 1) * perPage)
+          .count()
+          .orderBy(
+            sorting
+            .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
+            .join(',')
+          );
+          return this.store.query(modelName, builder.build());
+        })
+      .then((records) => {
+        this.includeSorting(records, this.sorting);
+        records.set('userSettings', this.userSettings);
+        records.set('listUserSettings', this.listUserSettings);
+        return records;
+      });
+      return ret;
+    },
+
+    setupController: function(controller, model) {
+      this._super(...arguments);
+
+      // Define 'modelProjection' for controller instance.
+      // TODO: remove that when list-form controller will be moved to this route.
+      let modelClass = this.store.modelFor(this.get('modelName'));
+      let proj = modelClass.projections.get(this.get('modelProjection'));
+      controller.set('userSettings', this.userSettings);
+      controller.set('modelProjection', proj);
+    }
   }
-});
+);

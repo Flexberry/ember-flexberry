@@ -29,36 +29,12 @@
   </div>
 {{/if}}
 <button class="ui button" {{action "showConfigDialog"}}><i class="large setting icon" title="customize column views"></i></button>
-<div class="ui dropdown">
-  <div class="text">Settings</div>
-  <i class="dropdown icon"></i>
-  <div class="menu">
-    <div class="item">Создать настройку для отображения столбцов</div>
-    <div class="item">
-      <i class="dropdown icon"></i>
-      Применить
-      <div class="menu">
-        <div class="item">test1</div>
-        <div class="item">test2</div>
-      </div>
-    </div>
-    <div class="item">
-      <i class="dropdown icon"></i>
-      Редактировать
-      <div class="menu">
-        <div class="item">test1</div>
-        <div class="item">test2</div>
-      </div>
-    </div>
-    <div class="item">
-      <i class="dropdown icon"></i>
-      Удалить
-      <div class="menu">
-        <div class="item">test1</div>
-        <div class="item">test2</div>
-      </div>
-    </div>
-  </div>
+<div class="field">
+{{flexberry-menu
+  class='compact'
+  items=colsSettingsItems
+  onItemClick=(action 'onMenuItemClick')
+  }}
 </div>
 {{#each customButtonsArray as |customButton|}}
   <button class="ui {{if customButton.buttonClasses customButton.buttonClasses ''}} button" {{action 'customButtonAction' customButton.buttonAction}}>

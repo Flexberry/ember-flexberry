@@ -78,7 +78,9 @@ export default Ember.Mixin.create({
                 { controller: controller, model: { colDescs: colDescs, listUserSettings: listUserSettings} },
                 loadingParams);
     }
+
   },
+
 
   _generateColumns: function(attributes, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];

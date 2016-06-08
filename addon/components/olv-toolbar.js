@@ -116,6 +116,8 @@ export default FlexberryBaseComponent.extend({
    */
   customButtonsArray: undefined,
 
+  colsSettingsItems: [],
+
   init: function() {
     this._super(...arguments);
 
@@ -132,6 +134,38 @@ export default FlexberryBaseComponent.extend({
       let customButtonsResult = customButton();
       this.set('customButtonsArray', customButtonsResult);
     }
+
+    let listUserSettings = this.modelController.model.listUserSettings;
+    if ('DEFAULT' in listUserSettings) {
+      delete listUserSettings.DEFAULT;
+    }
+
+    let listNamedSettings = [];
+    for (let nameSetting in listUserSettings) {
+      listNamedSettings[listNamedSettings.length] = nameSetting;
+    }
+
+    this.colsSettingsItems = [{
+      icon: 'dropdown icon',
+      iconAlignment: 'right',
+      title: '',
+      items: [{
+        title: 'Создать настройку для отображения столбцов'
+      }]
+    }];
+    if (listNamedSettings.length > 0) {
+      let menus = [{ name: 'use', title: 'Применить' }, { name: 'edit', title: 'Редактировать' }, { name: 'remove', title: 'Удалить' }];
+      let items = this.colsSettingsItems[0].items;
+      for (let menu in menus) {
+        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title , items: [] };
+        for (let i = 0; i < listNamedSettings.length; i++) {
+          let subSubmenu = { title: listNamedSettings[i] };
+          submenu.items[submenu.items.length] = subSubmenu;
+        }
+        items[items.length] = submenu;
+      }
+    }
+
   },
 
   /**
@@ -192,6 +226,9 @@ export default FlexberryBaseComponent.extend({
     showConfigDialog: function() {
       this.get('modelController').send('showConfigDialog');
     },
+
+    onMenuItemClick: function (e) {
+    }
 
   },
 

@@ -157,11 +157,12 @@ export default FlexberryBaseComponent.extend({
       let menus = [{ name: 'use', title: 'Применить' }, { name: 'edit', title: 'Редактировать' }, { name: 'remove', title: 'Удалить' }];
       let items = this.colsSettingsItems[0].items;
       for (let menu in menus) {
-        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title , items: [] };
+        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title, items: [] };
         for (let i = 0; i < listNamedSettings.length; i++) {
           let subSubmenu = { title: listNamedSettings[i] };
           submenu.items[submenu.items.length] = subSubmenu;
         }
+
         items[items.length] = submenu;
       }
     }

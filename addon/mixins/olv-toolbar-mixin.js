@@ -75,12 +75,11 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: { colDescs: colDescs, listUserSettings: listUserSettings} },
+                { controller: controller, model: { colDescs: colDescs, listUserSettings: listUserSettings } },
                 loadingParams);
     }
 
   },
-
 
   _generateColumns: function(attributes, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];

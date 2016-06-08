@@ -1,35 +1,42 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
+
 import Ember from 'ember';
+
 const { getOwner } = Ember;
 
 /**
- * Service for logging message to applicationLog store
- *
- * @class LoggingService
- * @extends Ember.Service
- * @public
+  Service for logging message to applicationLog store.
+
+  @class FlexberryLoggingService
+  @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
  */
 export default Ember.Service.extend({
   /**
-   * store for transmit messages to server
-   *
-   * @property {Object} flexberryStore
+    Store for transmit messages to server.
+
+    @property flexberryStore
+    @type DS.Store
+    @default null
    */
   flexberryStore: null,
+
   /**
-   * Logger switcher on/off true if remote logging service works correctly
-   *
-   * @property {Boolean} serverLogEnabled
+    Logger switcher on/off true if remote logging service works correctly.
+
+    @property serverLogEnabled
+    @type Boolean
+    @default true
    */
   serverLogEnabled: true,	//Remote logging service works correctly
 
   /**
-  * Initializator
-  *
-  * @method init
-  */
+    An overridable method called when objects are instantiated.
+    [More info](http://emberjs.com/api/classes/Ember.Service.html#method_init).
+
+    @method init
+   */
   init() {
     this._super(...arguments);
     this.set('flexberryStore', getOwner(this).lookup('service:store'));
@@ -37,13 +44,13 @@ export default Ember.Service.extend({
   },
 
   /**
-  * Logger message to console and store
-  *
-  * @method flexberryLogger
-  * @param levelName - category name  - ERROR, WARN, LOG, INFO, DEBUG, DEPRECATION
-  * @param message - message content
-  * @param formattedMessage - full message content in JSON format
-  */
+    Logger message to console and store.
+
+    @method flexberryLogger
+    @param {String} levelName Category name  - ERROR, WARN, LOG, INFO, DEBUG, DEPRECATION.
+    @param {String} message Message content.
+    @param {String} formattedMessage Full message content in JSON format.
+   */
   flexberryLogger(levelName, message, formattedMessage) {
     window.console.log(message);
     if (!this.get('serverLogEnabled')) { // if serverLogEnabled === false logs only to console
@@ -80,6 +87,5 @@ export default Ember.Service.extend({
       function() {	//unsuccesfull transmit message to server
         this.set('serverLogEnabled', false);	//switch off remote logging to avoid infinite loop
       });
-  }
-
+  },
 });

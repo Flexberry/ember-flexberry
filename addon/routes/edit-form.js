@@ -93,7 +93,8 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     this._super(...arguments);
 
     // Define 'modelProjection' for controller instance.
-    let modelClass = model.constructor;
+    //let modelClass = model[0].constructor;
+    let modelClass = this.store.modelFor(this.get('modelName'));
     let modelProjName = this.get('modelProjection');
     let proj = modelClass.projections.get(modelProjName);
     controller.set('modelProjection', proj);

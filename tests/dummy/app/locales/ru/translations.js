@@ -211,6 +211,10 @@ Ember.$.extend(true, translations, {
           'edit-form': {
             'caption': 'Форма редактирования',
             'title': '',
+            'edit-form-with-olv': {
+              'caption': 'Форма редактирования с olv',
+              'title': ''
+            },
             'readonly-mode': {
               'caption': 'Режим только для чтения',
               'title': ''
@@ -392,6 +396,19 @@ Ember.$.extend(true, translations, {
     },
     'integration-examples': {
       'edit-form': {
+        'edit-form-with-olv': {
+          'caption': 'Integration-examples/edit-form/edit-form-with-olv',
+          'flag-caption': 'Флаг',
+          'number-caption': 'Число',
+          'text-caption': 'Текст',
+          'long-text-caption': 'Длинный текст',
+          'date-caption': 'Дата',
+          'time-caption': 'Время',
+          'enumeration-caption': 'Перечисление',
+          'file-caption': 'Файл',
+          'master-caption': 'Мастер',
+          'master-dropdown-caption': 'Мастер в режиме dropdown-а'
+        },
         'readonly-mode': {
           'caption': 'Integration-examples/edit-form/readonly-mode',
           'readonly-flag-management-segment-caption': 'Управление режимом только для чтения формы',

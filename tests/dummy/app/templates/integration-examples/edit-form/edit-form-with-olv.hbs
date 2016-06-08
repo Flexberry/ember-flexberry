@@ -1,0 +1,83 @@
+<h3 class="ui header">{{t "forms.integration-examples.edit-form.edit-form-with-olv.caption"}}</h3>
+
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.flag-caption"}}</label>
+    {{flexberry-checkbox
+      value=model.flag
+      readonly=false
+    }}
+  </div>
+  <div class="field">
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.number-caption"}}</label>
+    {{flexberry-textbox
+      value=model.number
+      readonly=false
+    }}
+  </div>
+  <div class="field">
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.text-caption"}}</label>
+    {{flexberry-textbox
+      value=model.text
+      readonly=false
+    }}
+  </div>
+  <div class="field">
+  <label>{{t "forms.integration-examples.edit-form.readonly-mode.long-text-caption"}}</label>
+    {{flexberry-textarea
+      value=model.longText
+      readonly=false
+    }}
+  </div>
+  <div class="two fields">
+    <div class="field">
+      <label>{{t "forms.integration-examples.edit-form.readonly-mode.date-caption"}}</label>
+      {{flexberry-datepicker
+        value=model.date
+        readonly=false
+      }}
+    </div>
+    <div class="field">
+      <label>{{t "forms.integration-examples.edit-form.readonly-mode.time-caption"}}</label>
+      {{flexberry-simpledatetime
+        readonly=readonly
+        type="time"
+        value=model.time
+        readonly=false
+      }}
+    </div>
+  </div>
+
+  <div class="field">
+    <label>{{t "forms.integration-examples.edit-form.readonly-mode.master-caption"}}</label>
+    {{flexberry-lookup
+      value=model.author
+      relatedModel=model
+      relationName="ember-flexberry-dummy-application-user"
+      projection="ApplicationUserE"
+      displayAttributeName="text"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      readonly=false
+    }}
+  </div>
+  <div class="field">
+    {{
+      flexberry-objectlistview
+      content=model
+      readonly=false
+      modelName="ember-flexberry-dummy-suggestion"
+      modelProjection=modelProjection
+      editFormRoute=editFormRoute
+      createNewButton=true
+      refreshButton=true
+      sorting=computedSorting
+      orderable=true
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+    }}
+  </div>
+</form>

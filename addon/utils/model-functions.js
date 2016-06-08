@@ -14,6 +14,10 @@ import Ember from 'ember';
  * @throws {Error} Throws error if relation was not found at model.
  */
 export function getRelationType(model, relationName) {
+  if (Array.isArray(model)) {
+    model = model[0];
+  }
+
   // Get ember static function to get relation by name.
   var relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
 

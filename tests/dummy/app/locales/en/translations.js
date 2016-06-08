@@ -211,6 +211,10 @@ Ember.$.extend(true, translations, {
           'edit-form': {
             'caption': 'Edit form',
             'title': '',
+            'edit-form-with-olv': {
+              'caption': 'Edit form with olv',
+              'title': ''
+            },
             'readonly-mode': {
               'caption': 'Readonly mode',
               'title': ''
@@ -391,6 +395,18 @@ Ember.$.extend(true, translations, {
     },
     'integration-examples': {
       'edit-form': {
+        'edit-form-with-olv': {
+          'caption': 'Integration-examples/edit-form/edit-form-with-olv',
+          'flag-caption': 'Flag',
+          'number-caption': 'Number',
+          'text-caption': 'Text',
+          'long-text-caption': 'Long text',
+          'date-caption': 'Date',
+          'time-caption': 'Time',
+          'enumeration-caption': 'Enumeration',
+          'master-caption': 'Master',
+          'master-dropdown-caption': 'Master in dropdown mode'
+        },
         'readonly-mode': {
           'caption': 'Integration-examples/edit-form/readonly-mode',
           'readonly-flag-management-segment-caption': 'Form\'s readonly-mode management',

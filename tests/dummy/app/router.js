@@ -53,6 +53,7 @@ Router.map(function() {
   // Integration examples routes
   this.route('integration-examples/edit-form/readonly-mode');
   this.route('integration-examples/edit-form/validation');
+  this.route('integration-examples/edit-form/edit-form-with-olv');
 
 });
 

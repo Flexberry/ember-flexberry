@@ -267,6 +267,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.caption'),
           title: i18n.t('forms.application.sitemap.integration-examples.edit-form.title'),
           children: [{
+              link: 'integration-examples/edit-form/edit-form-with-olv',
+              caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.edit-form-with-olv.caption'),
+              title: i18n.t('forms.application.sitemap.integration-examples.edit-form.edit-form-with-olv.title'),
+              children: null
+            }, {
             link: 'integration-examples/edit-form/readonly-mode',
             caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.readonly-mode.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.readonly-mode.title'),

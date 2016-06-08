@@ -97,17 +97,17 @@ export default EditFormController.extend({
     '  value=model.type<br>' +
     '  projection="SettingLookupExampleView"<br>' +
     '  displayAttributeName="name"<br>' +
-    '  title="Master"<br>'+
-    '  relatedModel=model<br>'+
-    '  relationName="type"<br>'+
-    '  choose="showLookupDialog"<br>'+
-    '  remove="removeLookupValue"<br>'+
-    '  autocomplete=autocomplete<br>'+
-    '  dropdown=dropdown<br>'+
-    '  chooseText=chooseText<br>'+
-    '  removeText=removeText<br>'+
-    '  chooseButtonClass=chooseButtonClass<br>'+
-    '  removeButtonClass=removeButtonClass<br>'+
+    '  title="Master"<br>' +
+    '  relatedModel=model<br>' +
+    '  relationName="type"<br>' +
+    '  choose="showLookupDialog"<br>' +
+    '  remove="removeLookupValue"<br>' +
+    '  autocomplete=autocomplete<br>' +
+    '  dropdown=dropdown<br>' +
+    '  chooseText=chooseText<br>' +
+    '  removeText=removeText<br>' +
+    '  chooseButtonClass=chooseButtonClass<br>' +
+    '  removeButtonClass=removeButtonClass<br>' +
     '}}</code></pre>'),
 
   /**

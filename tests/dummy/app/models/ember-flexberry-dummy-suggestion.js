@@ -159,6 +159,17 @@ Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-du
   })
 });
 
+// Projection for lookup in dropdown mode example.
+Model.defineProjection('DropDownLookupExampleView', 'ember-flexberry-dummy-suggestion', {
+  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
 // Projection for FlexberryObjectlistviewComponent with limit function example.
 Model.defineProjection('FolvWithLimitFunctionExampleView', 'ember-flexberry-dummy-suggestion', {
   address: Proj.attr('Address'),

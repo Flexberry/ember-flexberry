@@ -131,6 +131,10 @@ Ember.$.extend(true, translations, {
             'limit-function-example': {
               'caption': 'Limit function example',
               'title': ''
+            },
+            'dropdown-mode-example': {
+              'caption': 'Dropdown mode example',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -219,6 +223,9 @@ Ember.$.extend(true, translations, {
         },
         'limit-function-example': {
           'caption': 'Components-examples/flexberry-lookup/limit-function-example'
+        },
+        'dropdown-mode-example': {
+          'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'
         }
       },
       'flexberry-menu': {

@@ -209,14 +209,14 @@ export default FlexberryBaseComponent.extend({
    */
   orderable: false,
 
- /**
+  /**
    Text to be displayed in table body, if content is not defined or empty.
 
    @property placeholder
    @type String
    @default 't('components.flexberry-groupedit.placeholder')'
   */
- placeholder: t('components.flexberry-groupedit.placeholder'),
+  placeholder: t('components.flexberry-groupedit.placeholder'),
 
   /**
     Flag: indicates whether table rows are clickable (action will be fired after row click).

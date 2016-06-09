@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
       this.get('i18n').set('locale', newLocale);
     },
 
-    toggleSidebar(direction) {
+    toggleSidebar() {
       Ember.$('.ui.sidebar').sidebar('toggle');
     }
   },

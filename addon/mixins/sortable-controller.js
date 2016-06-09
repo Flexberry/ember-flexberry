@@ -1,4 +1,5 @@
 import Ember from 'ember';
+const { getOwner } = Ember;
 
 /**
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support
@@ -10,8 +11,10 @@ import Ember from 'ember';
  */
 export default Ember.Mixin.create({
   queryParams: ['sort'],
-  sortDefaultValue: undefined,
+  sortDefaultValue: null,
   sort: Ember.computed.oneWay('sortDefaultValue'),
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+  _router: undefined,
 
   getNextSortDirection: function(currentDirection) {
     return currentDirection === 'asc' ? 'desc' : 'none';
@@ -54,6 +57,7 @@ export default Ember.Mixin.create({
   },
 
   actions: {
+
     sortByColumn: function(column) {
       var propName = column.propName;
       var oldSorting = this.get('model.sorting');
@@ -76,7 +80,21 @@ export default Ember.Mixin.create({
       }
 
       let sortQueryParam = this.serializeSortingParam(newSorting);
-      this.set('sort', sortQueryParam);
+      this.userSettings.sorting = newSorting;
+      let router = getOwner(this).lookup('router:main');
+      let moduleName =  router.currentRouteName;
+      let savePromise = this.get('_userSettingsService').
+        saveUserSetting({
+          moduleName: moduleName,
+          settingName: 'DEFAULT',
+          userSetting: { sorting: newSorting }
+        }
+      );
+      savePromise.then(
+        record => {
+          this.set('sort', sortQueryParam);
+        }
+      );
     },
 
     addColumnToSorting: function(column) {
@@ -103,7 +121,22 @@ export default Ember.Mixin.create({
       }
 
       let sortQueryParam = this.serializeSortingParam(newSorting);
-      this.set('sort', sortQueryParam);
+      this.userSettings.sorting = newSorting;
+      let router = getOwner(this).lookup('router:main');
+      let moduleName =  router.currentRouteName;
+      let savePromise = this.get('_userSettingsService').
+        saveUserSetting({
+          moduleName: moduleName,
+          settingName: 'DEFAULT',
+          userSetting: { sorting: newSorting }
+        }
+      );
+      savePromise.then(
+        record => {
+          this.set('sort', sortQueryParam);
+        }
+      );
+
     }
   }
 });

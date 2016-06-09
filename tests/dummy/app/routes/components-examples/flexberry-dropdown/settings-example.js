@@ -4,7 +4,7 @@ import Enumeration from '../../../enums/components-examples/flexberry-dropdown/s
 export default EditFormRoute.extend({
   modelProjection: 'BaseE',
   modelName: 'components-examples/flexberry-dropdown/settings-example/base',
-  model: function(params) {
+  model: function() {
     var store = this.get('store');
 
     var base = store.createRecord('components-examples/flexberry-dropdown/settings-example/base', {

@@ -1,16 +1,23 @@
-<h3 class="ui header">{{title}}</h3>
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type="error"
-      closeable=true
-      visible=true
-      title="Error occurred"
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
-<form class="ui form flexberry-vertical-form" role="form">
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-edit.caption"}}</h3>
+<form class="ui {{formState}} form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
@@ -18,10 +25,10 @@
           <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
         {{/unless}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+          <button type="submit" class="ui positive button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
         {{/unless}}
         {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
-          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "forms.edit-form.delete-button-text"}}</button>
+          <button type="submit" class="ui negative button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
       <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
@@ -38,7 +45,7 @@
       required=true
       value=model.address
       class=(if model.errors.address "error" "")
-      label="Address"
+      label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
       }}
   </div>
   <div class="field">
@@ -52,11 +59,11 @@
       required=true
       value=model.text
       class=(if model.errors.text "error" "")
-      label="Text"
+      label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
     }}
   </div>
   <div class="field">
-    <label>Date</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
     {{#if model.errors.date}}
       <span style="color:red">{{model.errors.date}}</span>
     {{/if}}
@@ -77,18 +84,18 @@
       required=true
       value=model.votes
       class=(if model.errors.votes "error" "")
-      label="Votes"
+      label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
     }}
   </div>
   <div class="field">
-    <label>Moderated</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption"}}</label>
     {{#if model.errors.moderated}}
       <span style="color:red">{{model.errors.moderated}}</span>
     {{/if}}
     {{flexberry-checkbox readonly=readonly value=model.moderated}}
   </div>
   <div class="field">
-    <label>Type</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
     {{#if model.errors.type}}
       <span style="color:red">{{model.errors.type}}</span>
     {{/if}}
@@ -107,7 +114,7 @@
     }}
   </div>
   <div class="field">
-    <label>Author</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
     {{#if model.errors.author}}
       <span style="color:red">{{model.errors.author}}</span>
     {{/if}}
@@ -126,26 +133,26 @@
     }}
   </div>
   <div class="field">
-    <label>Editor</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor-caption"}}</label>
     {{#if model.errors.editor}}
       <span style="color:red">{{model.errors.editor}}</span>
     {{/if}}
     {{flexberry-lookup
-      value=model.editor
+      value=model.editor1
       projection="ApplicationUserL"
       displayAttributeName="name"
       title="Editor"
       relatedModel=model
-      relationName="editor"
+      relationName="editor1"
       choose="showLookupDialog"
       remove="removeLookupValue"
       readonly=readonly
       limitFunction=null
-      class=(if model.errors.editor "error" "")
+      class=(if model.errors.editor1 "error" "")
     }}
   </div>
   <div class="field">
-    <label>Files</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
     {{#if model.errors.files}}
       <span style="color:red">{{model.errors.files}}</span>
     {{/if}}
@@ -160,7 +167,7 @@
     }}
   </div>
   <div class="field">
-    <label>User votes</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
     {{#if model.errors.userVotes}}
       <span style="color:red">{{model.errors.userVotes}}</span>
     {{/if}}
@@ -174,7 +181,7 @@
     }}
   </div>
   <div class="field">
-    <label>Comments</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
     {{#if model.errors.comments}}
       <span style="color:red">{{model.errors.comments}}</span>
     {{/if}}

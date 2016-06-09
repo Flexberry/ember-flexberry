@@ -51,6 +51,10 @@
   }
 }
 
+.ui.form .field > .field {
+  margin-bottom: 0;
+}
+
 #example {
   .flexberry-content {
     padding: 3em 0;

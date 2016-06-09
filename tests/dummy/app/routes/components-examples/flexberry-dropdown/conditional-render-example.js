@@ -1,9 +1,12 @@
-import EditFormRoute from 'ember-flexberry/routes/edit-form';
+import Ember from 'ember';
 
-export default EditFormRoute.extend({
-  modelProjection: 'BaseE',
-  modelName: 'components-examples/flexberry-dropdown/conditional-render-example/base',
-  model: function() {
+export default Ember.Route.extend({
+  /**
+    Returns model related to current route.
+
+    @method model
+   */
+  model(params) {
     var store = this.get('store');
 
     var base = store.createRecord('components-examples/flexberry-dropdown/conditional-render-example/base', {

@@ -136,13 +136,15 @@ export default FlexberryBaseComponent.extend({
     }
 
     let listUserSettings = this.modelController.model.listUserSettings;
-    if ('DEFAULT' in listUserSettings) {
+    if (listUserSettings && 'DEFAULT' in listUserSettings) {
       delete listUserSettings.DEFAULT;
     }
 
     let listNamedSettings = [];
-    for (let nameSetting in listUserSettings) {
-      listNamedSettings[listNamedSettings.length] = nameSetting;
+    if (listUserSettings) {
+      for (let nameSetting in listUserSettings) {
+        listNamedSettings[listNamedSettings.length] = nameSetting;
+      }
     }
 
     this.colsSettingsItems = [{

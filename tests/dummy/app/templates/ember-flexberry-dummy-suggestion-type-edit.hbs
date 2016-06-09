@@ -1,16 +1,23 @@
-<h3 class="ui header">{{title}}</h3>
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type="error"
-      closeable=true
-      visible=true
-      title="Error occurred"
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
-<form class="ui form flexberry-vertical-form" role="form">
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-type-edit.caption"}}</h3>
+<form class="ui {{formState}} form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
@@ -18,13 +25,13 @@
           <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
         {{/unless}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+          <button type="submit" class="ui positive button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
         {{/unless}}
         {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
-          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "forms.edit-form.delete-button-text"}}</button>
+          <button type="submit" class="ui negative button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
   <div class="field">
@@ -32,23 +39,22 @@
       <span style ="color:red">{{model.errors.name}}</span>
     {{/if}}
     {{flexberry-field
-      placeholder="(no value)"
       readonly=readonly
       required=true
       value=model.name
       class=(if model.errors.name "error" "")
-      label="Name"
+      label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
     }}
   </div>
   <div class="field">
-    <label>Moderated</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
     {{#if model.errors.moderated}}
       <span style="color:red">{{model.errors.moderated}}</span>
     {{/if}}
     {{flexberry-checkbox readonly=readonly value=model.moderated}}
   </div>
   <div class="field">
-    <label>Parent</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
     {{#if model.errors.parent}}
       <span style="color:red">{{model.errors.parent}}</span>
     {{/if}}
@@ -67,7 +73,7 @@
     }}
   </div>
   <div class="field">
-    <label>Localized types</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localizedTypes-caption"}}</label>
     {{#if model.errors.localizedTypes}}
       <span style="color:red">{{model.errors.localizedTypes}}</span>
     {{/if}}

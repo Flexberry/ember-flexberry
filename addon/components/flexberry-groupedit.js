@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   Component for create, edit and delete detail objects.
@@ -207,6 +208,15 @@ export default FlexberryBaseComponent.extend({
     @default false
    */
   orderable: false,
+
+ /**
+   Text to be displayed in table body, if content is not defined or empty.
+
+   @property placeholder
+   @type String
+   @default 't('components.flexberry-groupedit.placeholder')'
+  */
+ placeholder: t('components.flexberry-groupedit.placeholder'),
 
   /**
     Flag: indicates whether table rows are clickable (action will be fired after row click).

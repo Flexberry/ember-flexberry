@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   /**
-    Caption for 'flexberry-togggler' component 'caption' property.
+    Text for 'flexberry-togggler' component 'caption' property.
 
     @property caption
     @type String
@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
   caption: '',
 
   /**
-    Caption for 'flexberry-togggler' component 'expandedCaption' property.
+    Text for 'flexberry-togggler' component 'expandedCaption' property.
 
     @property expandedCaption
     @type String
@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
   expandedCaption: null,
 
   /**
-    Caption for 'flexberry-togggler' component 'collapsedCaption' property.
+    Text for 'flexberry-togggler' component 'collapsedCaption' property.
 
     @property collapsedCaption
     @type String
@@ -41,12 +41,12 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{#flexberry-toggler<br>' +
-    '..caption=caption<br>' +
-    '..expandedCaption=expandedCaption<br>' +
-    '..collapsedCaption=collapsedCaption<br>' +
-    '..readonly=readonly<br>' +
+    '  caption=caption<br>' +
+    '  expandedCaption=expandedCaption<br>' +
+    '  collapsedCaption=collapsedCaption<br>' +
+    '  readonly=readonly<br>' +
     '}}<br>' +
-    '..Some expandable/collapsable content<br>' +
+    '  Some expandable/collapsable content<br>' +
     '{{/flexberry-toggler}}'),
 
   /**

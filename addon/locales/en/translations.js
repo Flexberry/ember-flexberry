@@ -9,6 +9,10 @@ export default {
       'saveAndClose-button-text': 'Save and close',
       'delete-button-text': 'Delete',
       'close-button-text': 'Close'
+    },
+
+    'i-i-s-caseberry-logging-objects-application-log-l': {
+      caption: 'Application log'
     }
   },
 
@@ -26,7 +30,7 @@ export default {
     },
 
     'flexberry-dropdown': {
-      'default-text': '(no value)'
+      'placeholder': '(no value)'
     },
 
     'flexberry-datepicker': {
@@ -71,13 +75,21 @@ export default {
       'remove-button-text': 'Remove'
     },
 
+    'flexberry-objectlistview': {
+      'placeholder': 'There is no data'
+    },
+
+    'flexberry-groupedit': {
+      'placeholder': 'There is no data'
+    },
+
     'modal-dialog': {
       'ok-button-text': 'OK',
       'close-button-text': 'Close'
     },
 
     'object-list-view': {
-      'no-data-text': 'There is no data',
+      'placeholder': 'There is no data',
       'single-column-header-title': 'Model properties',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',

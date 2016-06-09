@@ -36,7 +36,7 @@
   <tbody>
     {{#if (not hasContent)}}
       <tr>
-        <td colspan="{{colspan}}" style="text-align:center;">{{noDataMessage}}</td>
+        <td colspan="{{colspan}}" style="text-align:center;">{{placeholder}}</td>
       </tr>
     {{/if}}
     {{#each contentWithKeys key="key" as |record|}}

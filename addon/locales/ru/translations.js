@@ -107,14 +107,14 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Настроить отображение столбцов',
-      'dont-show-columns':'Не отображать столбцы',
-      'columns-order':'Определить порядок столбцов',
-      'column-name':'Название столбца',
-      'sort-direction':'Направление сортировки',
-      'sort-priority':'Приоритет столбца при сортировке',
-      'setting-name':'Название настройки',
-      'enter-setting-name':'Введите название настройки',
-      'save':'Сохранить'
+      'dont-show-columns': 'Не отображать столбцы',
+      'columns-order': 'Определить порядок столбцов',
+      'column-name': 'Название столбца',
+      'sort-direction': 'Направление сортировки',
+      'sort-priority': 'Приоритет столбца при сортировке',
+      'setting-name': 'Название настройки',
+      'enter-setting-name': 'Введите название настройки',
+      'save': 'Сохранить'
     }
 
   },

@@ -107,14 +107,14 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Customize the display of colums',
-      'dont-show-columns':'Do not display columns',
-      'columns-order':'Specify the order of the columns',
-      'column-name':'Column name',
-      'sort-direction':'Sorting direction',
-      'sort-priority':'Priority column sorting',
-      'setting-name':'Setting name',
-      'enter-setting-name':'Enter setting name',
-      'save':'Save'
+      'dont-show-columns': 'Do not display columns',
+      'columns-order': 'Specify the order of the columns',
+      'column-name': 'Column name',
+      'sort-direction': 'Sorting direction',
+      'sort-priority': 'Priority column sorting',
+      'setting-name': 'Setting name',
+      'enter-setting-name': 'Enter setting name',
+      'save': 'Save'
     }
   }
 };

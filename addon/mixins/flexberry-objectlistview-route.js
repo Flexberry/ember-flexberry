@@ -34,7 +34,7 @@ export default Ember.Mixin.create({
 
     By default it returns `undefined`.
     In order to set specific limit predicate, this method have to be overriden on applied-specific route.
-    
+
     @example
       ``` js
       // app/routes/limit-function-example.js

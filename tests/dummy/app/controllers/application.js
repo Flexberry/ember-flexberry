@@ -9,24 +9,24 @@ export default Ember.Controller.extend({
       this.get('i18n').set('locale', newLocale);
     },
 
-    toggleSidebar(direction) {
+    toggleSidebar() {
       Ember.$('.ui.sidebar').sidebar('toggle');
     }
   },
 
   /**
-   * Currernt addon version.
-   *
-   * @property addonVersion
-   * @type String
+    Currernt addon version.
+
+    @property addonVersion
+    @type String
    */
   addonVersion: version,
 
   /**
-   * Link to GitHub commit related to current addon version.
-   *
-   * @property addonVersionHref
-   * @type String
+    Link to GitHub commit related to current addon version.
+
+    @property addonVersionHref
+    @type String
    */
   addonVersionHref: Ember.computed('addonVersion', function() {
     var addonVersion = this.get('addonVersion');
@@ -36,28 +36,28 @@ export default Ember.Controller.extend({
   }),
 
   /**
-   * Available test application locales.
-   *
-   * @property locales
-   * @type String[]
+    Available test application locales.
+
+    @property locales
+    @type String[]
    */
   locales: ['ru', 'en'],
 
   /**
-   * Current application locale.
-   *
-   * @property currentLocale
-   * @type String
+    Current application locale.
+
+    @property currentLocale
+    @type String
    */
   currentLocale: Ember.computed('i18n.locale', function() {
     return this.get('i18n.locale');
   }),
 
   /**
-   * Application sitemap.
-   *
-   * @property sitemap
-   * @type Object
+    Application sitemap.
+
+    @property sitemap
+    @type Object
    */
   sitemap: Ember.computed('i18n.locale', function() {
     var i18n = this.get('i18n');
@@ -119,6 +119,16 @@ export default Ember.Controller.extend({
           }]
         }, {
           link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.title'),
+          children: [{
+            link: 'components-examples/flexberry-datepicker/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.title'),
           children: [{
@@ -140,6 +150,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-field/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-field.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-field.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.title'),
+          children: [{
+            link: 'components-examples/flexberry-file/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-file.settings-example.title'),
             children: null
           }]
         }, {
@@ -196,6 +216,21 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.title'),
+          children: [{
+            link: 'components-examples/flexberry-simpledatetime/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.settings-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -225,6 +260,26 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-toggler/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.title'),
+            children: null
+          }]
+        }]
+      }, {
+        link: null,
+        caption: i18n.t('forms.application.sitemap.integration-examples.caption'),
+        title: i18n.t('forms.application.sitemap.integration-examples.title'),
+        children: [{
+          link: null,
+          caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.edit-form.title'),
+          children: [{
+            link: 'integration-examples/edit-form/readonly-mode',
+            caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.readonly-mode.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.edit-form.readonly-mode.title'),
+            children: null
+          }, {
+            link: 'integration-examples/edit-form/validation',
+            caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.caption'),
+            title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
             children: null
           }]
         }]

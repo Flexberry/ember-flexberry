@@ -344,13 +344,52 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     @readOnly
   */
   columns: Ember.computed('modelProjection', function() {
+    let ret;
     let projection = this.get('modelProjection');
     if (!projection) {
-      throw new Error('No projection was defined.');
+      Ember.Logger.error('Property \'modelProjection\' is undefined.');
+      return [];
     }
 
     let cols = this._generateColumns(projection.attributes);
-    return cols;
+    var userSettings = this.currentController ? this.currentController.userSettings : undefined;
+    if (userSettings && userSettings.colsOrder !== undefined) {
+      let namedCols = {};
+      for (let i = 0; i < cols.length; i++) {
+        let col = cols[i];
+        delete col.sorted;
+        delete col.sortNumber;
+        delete col.sortAscending;
+        let propName = col.propName;
+        namedCols[propName] = col;
+      }
+
+      if (userSettings.sorting === undefined) {
+        userSettings.sorting = [];
+      }
+
+      for (let i = 0; i < userSettings.sorting.length; i++) {
+        let sorting = userSettings.sorting[i];
+        let propName = sorting.propName;
+        namedCols[propName].sorted = true;
+        namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
+        namedCols[propName].sortNumber = i + 1;
+      }
+
+      ret = [];
+      for (let i = 0; i < userSettings.colsOrder.length; i++) {
+        let userSetting = userSettings.colsOrder[i];
+        if (!userSetting.hide) {
+          let propName = userSetting.propName;
+          let col = namedCols[propName];
+          ret[ret.length] = col;
+        }
+      }
+    } else {
+      ret = cols;
+    }
+
+    return ret;
   }),
 
   /**
@@ -430,13 +469,13 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   }),
 
   /**
-   * Message to be displayed in table body, if content is not defined or empty.
-   *
-   * @property noDataMessage
-   * @type String
-   * @default 't('components.object-list-view.no-data-text')'
+    Text to be displayed in table body, if content is not defined or empty.
+
+    @property placeholder
+    @type String
+    @default 't('components.object-list-view.placeholder')'
    */
-  noDataMessage: t('components.object-list-view.no-data-text'),
+  placeholder: t('components.object-list-view.placeholder'),
 
   /**
     Flag indicates whether table headers are clickable.
@@ -893,9 +932,10 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this._super(...arguments);
     if (this.get('allowColumnResize')) {
       if (this.get('useSingleColumn')) {
-        throw new Error(
+        Ember.Logger.error(
           'Flags of object-list-view \'allowColumnResize\' and \'useSingleColumn\' ' +
           'can\'t be enabled at the same time.');
+        return;
       }
 
       let $currentTable = this.$('table.object-list-view');
@@ -1114,7 +1154,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
           break;
 
         default:
-          throw new Error(`Unknown kind of projection attribute: ${attr.kind}`);
+          Ember.Logger.error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
 

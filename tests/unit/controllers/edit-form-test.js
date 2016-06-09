@@ -28,7 +28,7 @@ test('save hasMany relationships recursively', function(assert) {
 
   let TestModel = DS.Model.extend({
     save: function() {
-      return new Ember.RSVP.Promise((resolve, reject) => {
+      return new Ember.RSVP.Promise((resolve) => {
         savedRecords.push(this);
         resolve(this);
       });

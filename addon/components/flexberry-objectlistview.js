@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   Component to view list of object.
@@ -14,7 +15,16 @@ import FlexberryBaseComponent from './flexberry-base-component';
 export default FlexberryBaseComponent.extend({
 
   /**
-    Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
+    Text to be displayed in table body, if content is not defined or empty.
+
+    @property placeholder
+    @type String
+    @default 't('components.flexberry-objectlistview.placeholder')'
+  */
+  placeholder: t('components.flexberry-objectlistview.placeholder'),
+
+  /**
+    Flag: indicates whether allow to resize columns (if `true`) or not (if `false`).
 
     @property allowColumnResize
     @type Boolean

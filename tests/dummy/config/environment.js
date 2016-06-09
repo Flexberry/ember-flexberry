@@ -25,6 +25,9 @@ module.exports = function(environment) {
         api: backendUrl + '/odata'
       },
 
+      // Flag: indicates whether to use user settings service or not.
+      useUserSettingsService: true,
+
       // Custom property with components settings.
       components: {
         // Settings for flexberry-file component.

@@ -7,7 +7,7 @@ export default ApplicationSerializer.extend({
   },
 
   /**
-  * Field name where object identifier is kept.
-  */
+    Property name in which object identifier is kept.
+   */
   primaryKey: '__PrimaryKey'
 });

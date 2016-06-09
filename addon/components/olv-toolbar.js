@@ -136,7 +136,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     let listUserSettings = this.modelController.model.listUserSettings;
-    if ('DEFAULT' in listUserSettings) {
+    if (listUserSettings && 'DEFAULT' in listUserSettings) {
       delete listUserSettings.DEFAULT;
     }
 

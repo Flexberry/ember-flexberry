@@ -4,6 +4,7 @@ export default Ember.Controller.extend({
   actions: {
     onMenuItemClick: function(e) {
       var clickedMenuItem = Ember.$(e.currentTarget);
+      this.set('currentItem', clickedMenuItem.data('flexberry-menuitem.item'));
       clickedMenuItem.popup({
         content: 'This menu item has been clicked',
         position: 'top right',
@@ -35,6 +36,14 @@ export default Ember.Controller.extend({
   items: null,
 
   /**
+   * Selected menu item for 'flexberry-menu' component.
+   *
+   * @property currentItem
+   * @type Object
+   */
+  currentItem: null,
+
+  /**
    * Initializes controller.
    * @method init
    */
@@ -58,6 +67,7 @@ export default Ember.Controller.extend({
     }];
 
     var items = Ember.copy(oneMenuSectionItems, true);
+    this.set('currentItem', items[0]);
     var currentMenuSectionItems = items;
     for (var i = 0; i < 5; i++) {
       var subMenu = currentMenuSectionItems[2];
@@ -70,5 +80,41 @@ export default Ember.Controller.extend({
     currentMenuSectionItems.pop();
 
     this.set('items', items);
-  }
+  },
+
+  /**
+    Component settings metadata.
+
+    @property componentSettingsMetadata
+    @type Object[]
+   */
+  componentSettingsMetadata: Ember.computed(function() {
+    var componentSettingsMetadata = Ember.A();
+    componentSettingsMetadata.pushObject({
+      settingName: 'icon',
+      settingType: 'string',
+      settingDefaultValue: 'undefined',
+      bindedControllerPropertieName: 'currentItem.icon'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'iconAlignment',
+      settingType: 'string',
+      settingDefaultValue: 'undefined',
+      bindedControllerPropertieName: 'currentItem.iconAlignment'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'title',
+      settingType: 'string',
+      settingDefaultValue: 'undefined',
+      bindedControllerPropertieName: 'currentItem.title'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'itemsAlignment',
+      settingType: 'string',
+      settingDefaultValue: 'undefined',
+      bindedControllerPropertieName: 'currentItem.itemsAlignment'
+    });
+
+    return componentSettingsMetadata;
+  })
 });

@@ -103,6 +103,20 @@ export default {
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
       'filter-by-any-match-placeholder': 'Поиск...'
+    },
+
+    'colsconfig-dialog-content': {
+      'title': 'Настроить отображение столбцов',
+      'dont-show-columns':'Не отображать столбцы',
+      'columns-order':'Определить порядок столбцов',
+      'column-name':'Название столбца',
+      'sort-direction':'Направление сортировки',
+      'sort-priority':'Приоритет столбца при сортировке',
+      'setting-name':'Название настройки',
+      'enter-setting-name':'Введите название настройки',
+      'save':'Сохранить'
     }
-  }
+
+  },
+
 };

@@ -141,8 +141,10 @@ export default FlexberryBaseComponent.extend({
     }
 
     let listNamedSettings = [];
-    for (let nameSetting in listUserSettings) {
-      listNamedSettings[listNamedSettings.length] = nameSetting;
+    if (listUserSettings) {
+      for (let nameSetting in listUserSettings) {
+        listNamedSettings[listNamedSettings.length] = nameSetting;
+      }
     }
 
     this.colsSettingsItems = [{

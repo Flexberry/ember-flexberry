@@ -27,16 +27,17 @@ export default Ember.Controller.extend({
   },
 
   /**
-   * Menu items for 'flexberry-menu' component.
-   *
-   * @property items
-   * @type Object
+    Menu items for 'flexberry-menu' component.
+
+    @property items
+    @type Object
    */
   items: null,
 
   /**
-   * Initializes controller.
-   * @method init
+    Initializes controller.
+
+    @method init
    */
   init: function() {
     this._super(...arguments);

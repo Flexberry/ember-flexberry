@@ -172,7 +172,10 @@ export default FlexberryBaseComponent.extend({
       return this.invalidDate;
     }
 
-    if (dateFromPicker.isBefore(this.minDate) || dateFromPicker.isAfter(this.maxDate)) {
+    let minDate = this.get('minDate');
+    let maxDate = this.get('maxDate');
+    if (moment.isDate(minDate) && dateFromPicker.isBefore(this.minDate) ||
+      moment.isDate(maxDate) && dateFromPicker.isAfter(this.maxDate)) {
       return this.invalidDate;
     }
 

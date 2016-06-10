@@ -1,25 +1,33 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-import DetailEnumeration from '../../../enums/components-examples/flexberry-groupedit/settings-example/detail-enumeration';
 
 export default EditFormRoute.extend({
+  /**
+    Name of model projection to be used as record's properties limitation.
+
+    @property modelProjection
+    @type String
+    @default 'AggregatorE'
+   */
   modelProjection: 'AggregatorE',
+
+  /**
+    Name of model to be used as form's record type.
+
+    @property modelName
+    @type String
+    @default 'components-examples/flexberry-groupedit/settings-example/aggregator'
+   */
   modelName: 'components-examples/flexberry-groupedit/settings-example/aggregator',
-  model: function() {
+
+  /**
+    Returns model related to current route.
+
+    @method model
+   */
+  model(params) {
     var store = this.get('store');
-    var detail = store.createRecord('components-examples/flexberry-groupedit/settings-example/detail', {
-      flag: true,
-      text: 'Detail\'s text',
-      date: new Date(),
-      enumeration: DetailEnumeration.Value1,
-      file: null,
-      master: store.createRecord('components-examples/flexberry-groupedit/settings-example/master', {
-        text: 'Detail\'s master text'
-      })
-    });
 
-    var aggregator = store.createRecord('components-examples/flexberry-groupedit/settings-example/aggregator', {});
-    aggregator.get('details').pushObject(detail);
-
-    return aggregator;
+    // Empty aggregator without details.
+    return store.createRecord('components-examples/flexberry-groupedit/settings-example/aggregator', {});
   }
 });

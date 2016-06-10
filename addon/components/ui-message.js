@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   color: null,
   size: null,
   icon: null,
-  title: null,
+  caption: null,
   message: null,
   cssClass: Ember.computed('size', 'type', 'color', 'floating', 'compact', 'attached', 'visible', 'icon', function() {
     var isNonEmptyString = function(str) {

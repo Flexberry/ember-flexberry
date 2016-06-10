@@ -1,12 +1,12 @@
 {{#ui-dropdown
-  class=(concat "flexberry-dropdown " type " " class " selection" (if readonly " disabled" ""))
+  class=(concat "flexberry-dropdown " class " selection" (if readonly " disabled" ""))
   onChange=(action 'onChange')
   onHide=(action 'onShowHide')
   onShow=(action 'onShowHide')
 }}
     <i class="dropdown icon"></i>
-    {{#if showDefaultText}}
-      <div class="default text">{{defaultText}}</div>
+    {{#if showPlaceholder}}
+      <div class="default text">{{placeholder}}</div>
     {{else}}
       <div class="text">{{text}}</div>
     {{/if}}

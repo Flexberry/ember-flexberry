@@ -130,6 +130,8 @@ export default FlexberryBaseComponent.extend({
 
   colsSettingsItems: [],
 
+  colsConfigMenu: Ember.inject.service('cols-config-menu'),
+
   init: function() {
     this._super(...arguments);
 
@@ -159,40 +161,7 @@ export default FlexberryBaseComponent.extend({
       }
     }
 
-    this.colsSettingsItems = [{
-      icon: 'dropdown icon',
-      iconAlignment: 'right',
-      title: '',
-      items: [{
-        icon: 'table icon',
-        iconAlignment: 'left',
-        title: 'Создать настройку'
-      }]
-    }];
-    let items = this.colsSettingsItems[0].items;
-    if (listNamedSettings.length > 0) {
-      let menus = [
-        { name: 'use', title: 'Применить', icon: 'checkmark box' },
-        { name: 'edit', title: 'Редактировать', icon: 'setting' },
-        { name: 'remove', title: 'Удалить', icon: 'remove' }
-      ];
-      for (let menu in menus) {
-        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title, items: [] };
-        let icon = menus[menu].icon + ' icon';
-        for (let i = 0; i < listNamedSettings.length; i++) {
-          let subSubmenu = { title: listNamedSettings[i], icon: icon, iconAlignment: 'left' };
-          submenu.items[submenu.items.length] = subSubmenu;
-        }
-
-        items[items.length] = submenu;
-      }
-    }
-
-    items[items.length] = {
-        icon: 'remove circle icon',
-        iconAlignment: 'left',
-        title: 'Сбросить настройку'
-      };
+    this.colsSettingsItems = this.get('colsConfigMenu').reset(listNamedSettings);
   },
 
   /**
@@ -292,6 +261,7 @@ export default FlexberryBaseComponent.extend({
           this.currentController.get('_userSettingsService').
           deleteUserSetting({ moduleName: moduleName, settingName: namedSeting }).then(
             result => {
+              this.get('colsConfigMenu').deleteNamedSetting(namedSeting);
               alert('Настройка ' + namedSeting + ' удалена');
             }
           );
@@ -311,15 +281,6 @@ export default FlexberryBaseComponent.extend({
       }
     }
 
-  },
-
-  _addNamedSetting: function(name) {
-    let items = this.colsSettingsItems[0].items;
-    for (let i = 0; i <= items.length; i++) {
-      if ('items' in items[i] &&  Ember.isArray(items[i].items)) {
-        alert(items[i].title);
-      }
-    }
   },
 
   /**

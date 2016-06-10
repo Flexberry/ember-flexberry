@@ -62,6 +62,15 @@ export default FlexberryBaseComponent.extend({
   deleteButton: false,
 
   /**
+   * Flag to use colsConfigButton button at toolbar.
+   *
+   * @property colsConfigButton
+   * @type Boolean
+   * @default false
+   */
+  colsConfigButton: true,
+
+  /**
    * Flag to use filter button at toolbar.
    *
    * @property filterButton

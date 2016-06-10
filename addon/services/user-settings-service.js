@@ -138,6 +138,35 @@ export default Ember.Service.extend({
   },
 
   /**
+   * It delete user setting from server by setting's and module's names.
+   *
+   * @method deleteUserSetting
+   *
+   * @param {Object} [options] Parameters for user setting getting.
+   * @param {String} options.moduleName Name of module to search by.
+   * @param {String} options.settingName Setting name to search by..
+   */
+  deleteUserSetting: function(options) {
+    if (!this.get('isUserSettingsServiceEnabled')) {
+      return new Ember.RSVP.Promise(function(resolve) {
+        resolve(undefined);
+      });
+    }
+
+    let methodOptions = Ember.merge({
+      moduleName: undefined,
+      settingName: undefined
+    }, options);
+
+    let moduleName = methodOptions.moduleName;
+    let settingName = methodOptions.settingName;
+
+    Ember.assert('Module name is not defined for user setting getting.', moduleName);
+    Ember.assert('Setting name is not defined for user setting getting.', settingName);
+    this._getExistingRecord(moduleName, settingName, true);
+  },
+
+  /**
    * It gets ALL user setting from server by module's names.
    *
    * @method getUserSetting
@@ -186,9 +215,10 @@ export default Ember.Service.extend({
    *
    * @param {Object} moduleName Module name of looked for record.
    * @param {String} settingName Setting name of looked for record.
+   * @param {Boolean} remove. if true - remove all recorfd, if false - remove all after finded
    * @return {Promise} A promise. It returns found record or `undefined` if there is no such setting.
    */
-  _getExistingRecord: function(moduleName, settingName) {
+  _getExistingRecord: function(moduleName, settingName, remove) {
     // TODO: add search by username.
     let currentUserName = this.getCurrentUser();
     let p1 = new SimplePredicate('userName', 'eq', currentUserName);
@@ -206,7 +236,7 @@ export default Ember.Service.extend({
       if (result) {
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
-          for (let i = 1; i < foundRecords.length; i++) {
+          for (let i = remove === undefined ? 1 : 0; i < foundRecords.length; i++) {
             foundRecords[i].deleteRecord();
           }
 

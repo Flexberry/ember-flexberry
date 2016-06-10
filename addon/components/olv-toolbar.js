@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+const { getOwner } = Ember;
 
 export default FlexberryBaseComponent.extend({
   modelController: null,
@@ -125,6 +126,8 @@ export default FlexberryBaseComponent.extend({
    */
   customButtonsArray: undefined,
 
+  listUserSettings: undefined,
+
   colsSettingsItems: [],
 
   init: function() {
@@ -144,14 +147,14 @@ export default FlexberryBaseComponent.extend({
       this.set('customButtonsArray', customButtonsResult);
     }
 
-    let listUserSettings = this.modelController.model.listUserSettings;
-    if (listUserSettings && 'DEFAULT' in listUserSettings) {
-      delete listUserSettings.DEFAULT;
+    this.listUserSettings = this.modelController.model.listUserSettings;
+    if (this.listUserSettings && 'DEFAULT' in this.listUserSettings) {
+      delete this.listUserSettings.DEFAULT;
     }
 
     let listNamedSettings = [];
-    if (listUserSettings) {
-      for (let nameSetting in listUserSettings) {
+    if (this.listUserSettings) {
+      for (let nameSetting in this.listUserSettings) {
         listNamedSettings[listNamedSettings.length] = nameSetting;
       }
     }
@@ -247,8 +250,8 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('customButtonAction', actionName);
     },
 
-    showConfigDialog: function() {
-      this.get('modelController').send('showConfigDialog');
+    showConfigDialog: function(namedSeting) {
+      this.get('modelController').send('showConfigDialog', namedSeting);
     },
 
     onMenuItemClick: function (e) {
@@ -258,21 +261,36 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
+      this._router = getOwner(this).lookup('router:main');
       let className = iTags.get(0).className;
       let namedSeting = namedSetingSpans.get(0).innerText;
+      let moduleName  =   this._router.currentRouteName;
       switch (className) {
         case 'table icon':
-          alert('Configure ' + namedSeting);
-          this.sendAction('showConfigDialog', e);
+          this.send('showConfigDialog');
           break;
         case 'checkmark box icon':
-          alert('Use ' + namedSeting);
+
+          //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
+          let colsConfig = this.listUserSettings[namedSeting];
+          let savePromise = this.currentController.get('_userSettingsService').
+            saveUserSetting({ moduleName: moduleName, settingName: 'DEFAULT', userSetting: colsConfig }); //save as DEFAULT
+          savePromise.then(
+            record => {
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            }
+          );
           break;
         case 'setting icon':
-          alert('Edit ' + namedSeting);
+          this.send('showConfigDialog', namedSeting);
           break;
         case 'remove icon':
           alert('Remove ' + namedSeting);
+          this.currentController.get('_userSettingsService').deleteUserSetting({ moduleName: moduleName, settingName: namedSeting });
           break;
         case 'remove circle icon':
           alert('Remove default');

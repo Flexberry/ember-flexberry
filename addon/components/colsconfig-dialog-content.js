@@ -22,6 +22,8 @@ export default FlexberryBaseComponent.extend({
    */
   modelForDOM: [],
   settingsList: [],
+  settingName: '',
+  colsConfig: [],
 
   init: function() {
     this._super(...arguments);
@@ -30,6 +32,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     this.settingsList = this.model.listUserSettings;
+    this.settingName = this.model.settingName;
     let colDescs = this.model.colDescs;
     for (let i = 0; i < colDescs.length; i++) {
       let colDesc = colDescs[i];
@@ -247,19 +250,22 @@ export default FlexberryBaseComponent.extend({
      */
     saveColsSetting: function() {
       let input = Ember.$(event.toElement).prev('INPUT').get(0);
-      let settingName = input.value.trim();
-      if (settingName.length <= 0) {
+      let settingName =  input.value.trim();
+      Ember.set(this, 'settingName', settingName);
+      if (this.settingName.length <= 0) {
         alert('Введите название настройки');
         return;
       }
 
-      let colsConfig = this._getSettings();
-      let savePromise = this._getSavePromise(settingName, colsConfig);
+      this.colsConfig = this._getSettings();
+      let savePromise = this._getSavePromise(this.settingName, this.colsConfig);
       savePromise.then(
         record => {
+          Ember.set(this.model.listUserSettings, this.settingName, this.colsConfig);
           alert('Настройка сохранена');
         },
         error => {
+          alert("При сохранении настройки возникли ошибки: " + JSON.stringify(error));
         }
       );
     }

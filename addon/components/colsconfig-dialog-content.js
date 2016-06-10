@@ -262,10 +262,10 @@ export default FlexberryBaseComponent.extend({
       savePromise.then(
         record => {
           Ember.set(this.model.listUserSettings, this.settingName, this.colsConfig);
-          alert('Настройка сохранена');
+          alert('Настройка ' + this.settingName + ' сохранена');
         },
         error => {
-          alert("При сохранении настройки возникли ошибки: " + JSON.stringify(error));
+          alert('При сохранении настройки возникли ошибки: ' + JSON.stringify(error));
         }
       );
     }

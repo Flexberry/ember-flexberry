@@ -292,7 +292,7 @@ export default FlexberryBaseComponent.extend({
           this.currentController.get('_userSettingsService').
           deleteUserSetting({ moduleName: moduleName, settingName: namedSeting }).then(
             result => {
-              alert('Записи удалены');
+              alert('Настройка ' + namedSeting + ' удалена');
             }
           );
           break;
@@ -311,6 +311,15 @@ export default FlexberryBaseComponent.extend({
       }
     }
 
+  },
+
+  _addNamedSetting: function(name) {
+    let items = this.colsSettingsItems[0].items;
+    for (let i = 0; i <= items.length; i++) {
+      if ('items' in items[i] &&  Ember.isArray(items[i].items)) {
+        alert(items[i].title);
+      }
+    }
   },
 
   /**

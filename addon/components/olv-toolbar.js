@@ -289,11 +289,24 @@ export default FlexberryBaseComponent.extend({
           this.send('showConfigDialog', namedSeting);
           break;
         case 'remove icon':
-          alert('Remove ' + namedSeting);
-          this.currentController.get('_userSettingsService').deleteUserSetting({ moduleName: moduleName, settingName: namedSeting });
+          this.currentController.get('_userSettingsService').
+          deleteUserSetting({ moduleName: moduleName, settingName: namedSeting }).then(
+            result => {
+              alert('Записи удалены');
+            }
+          );
           break;
         case 'remove circle icon':
-          alert('Remove default');
+          this.currentController.get('_userSettingsService').
+          deleteUserSetting({ moduleName: moduleName, settingName: 'DEFAULT' }).then(
+            record => {
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            }
+          );
           break;
       }
     }

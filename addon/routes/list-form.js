@@ -84,6 +84,7 @@ export default ProjectedModelFormRoute.extend(
         listUserSettings=> {
           this.listUserSettings = listUserSettings;
           let sorting = [];
+          this.userSettings = {};
           if ('DEFAULT' in listUserSettings) {
             this.userSettings = this.listUserSettings.DEFAULT;
             sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];

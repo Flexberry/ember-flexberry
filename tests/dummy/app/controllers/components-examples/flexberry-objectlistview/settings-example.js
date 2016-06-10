@@ -217,7 +217,6 @@ export default ListFormController.extend({
   _configurateRowByAddress: Ember.observer('configurateRowByAddress', function() {
     let rowConfig = { customClass: '' };
 
-
     this.get('records').forEach((record, index, records) => {
       this.send('configurateRow', rowConfig, record);
     });

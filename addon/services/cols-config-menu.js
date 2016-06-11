@@ -71,8 +71,7 @@ export default Ember.Service.extend({
           newSubItems[subItems.length] = { title: namedSeting, icon: icon, iconAlignment: 'left' };
         }
 
-//         this.colsSettingsItems[0].items[i+1].items = newSubItems;
-        Ember.set(this.colsSettingsItems[0].items[i+1], 'items', newSubItems);
+        Ember.set(this.colsSettingsItems[0].items[i + 1], 'items', newSubItems);
       }
 
     },
@@ -80,7 +79,7 @@ export default Ember.Service.extend({
     deleteNamedSetting: function(namedSeting) {
       let menus = this.menus;
       for (let i = 0; i < menus.length; i++) {
-        let subItems = this.colsSettingsItems[0].items[i+1].items;
+        let subItems = this.colsSettingsItems[0].items[i + 1].items;
         let newSubItems = [];
         for (let j = 0; j < subItems.length; j++) {
           if (subItems[j].title !== namedSeting) {
@@ -89,7 +88,7 @@ export default Ember.Service.extend({
 
         }
 
-        Ember.set(this.colsSettingsItems[0].items[i+1], 'items', newSubItems);
+        Ember.set(this.colsSettingsItems[0].items[i + 1], 'items', newSubItems);
       }
 
       this.sort();
@@ -98,7 +97,7 @@ export default Ember.Service.extend({
 
     sort: function() {
       for (let i = 0; i < this.menus.length; i++) {
-        this.colsSettingsItems[0].items[i+1].items.sort((a,b) => a.title > b.title);
+        this.colsSettingsItems[0].items[i + 1].items.sort((a,b) => a.title > b.title);
       }
     }
 

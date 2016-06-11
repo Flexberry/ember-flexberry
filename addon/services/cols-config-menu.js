@@ -56,7 +56,7 @@ export default Ember.Service.extend({
       let menus = this.menus;
       for (let i = 0; i < menus.length; i++) {
         let icon = menus[i].icon + ' icon';
-        let subItems = this.colsSettingsItems[0].items[i+1].items;
+        let subItems = this.colsSettingsItems[0].items[i + 1].items;
         let newSubItems = [];
         let exist = false;
         for (let j = 0; j < subItems.length; j++) {
@@ -97,7 +97,7 @@ export default Ember.Service.extend({
 
     sort: function() {
       for (let i = 0; i < this.menus.length; i++) {
-        this.colsSettingsItems[0].items[i + 1].items.sort((a,b) => a.title > b.title);
+        this.colsSettingsItems[0].items[i + 1].items.sort((a, b) => a.title > b.title);
       }
     }
 

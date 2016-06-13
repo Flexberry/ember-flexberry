@@ -5,7 +5,9 @@ moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
   needs: [
     'serializer:<%= name %>',
     'transform:file',
+<% if (!!needsAllEnums === true) { %>
 <%= needsAllEnums %>,
+<% } %>
 <%= needsAllModels %>
   ]
 });

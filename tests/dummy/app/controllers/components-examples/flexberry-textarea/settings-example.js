@@ -1,16 +1,17 @@
 import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({
   /**
-    Placeholder for 'flexberry-textarea' component 'placeholder' property.
+    Text for 'flexberry-textarea' component 'placeholder' property.
 
     @property placeholder
     @type String
    */
-  placeholder: undefined,
+  placeholder: t('components.flexberry-textarea.placeholder'),
 
   /**
-    Flag: indicates whether 'flexberry-textbox' component is in 'readonly' mode or not.
+    Flag: indicates whether 'flexberry-textarea' component is in 'readonly' mode or not.
 
     @property readonly
     @type Boolean
@@ -18,16 +19,16 @@ export default Ember.Controller.extend({
   readonly: false,
 
   /**
-    Template text for 'flexberry-textbox' component.
+    Template text for 'flexberry-textarea' component.
 
     @property componentTemplateText
     @type String
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-textarea<br>' +
-    '..value=model.text<br>' +
-    '..placeholder=placeholder<br>' +
-    '..readonly=readonly<br>' +
+    '  value=model.text<br>' +
+    '  placeholder=placeholder<br>' +
+    '  readonly=readonly<br>' +
     '}}'),
 
   /**
@@ -36,24 +37,24 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed(function() {
+  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
     var componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'string',
-      settingDefaultValue: 'undefined',
+      settingDefaultValue: undefined,
       bindedControllerPropertieName: 'model.text'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'placeholder',
       settingType: 'string',
-      settingDefaultValue: 'undefined',
+      settingDefaultValue: this.get('i18n').t('components.flexberry-textarea.placeholder'),
       bindedControllerPropertieName: 'placeholder'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'readonly',
       settingType: 'boolean',
-      settingDefaultValue: 'false',
+      settingDefaultValue: false,
       bindedControllerPropertieName: 'readonly'
     });
 

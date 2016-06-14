@@ -9,6 +9,10 @@ export default {
       'saveAndClose-button-text': 'Сохранить и закрыть',
       'delete-button-text': 'Удалить',
       'close-button-text': 'Закрыть'
+    },
+
+    'i-i-s-caseberry-logging-objects-application-log-l': {
+      caption: 'Лог приложения'
     }
   },
 
@@ -26,7 +30,7 @@ export default {
     },
 
     'flexberry-dropdown': {
-      'default-text': '(нет значения)'
+      'placeholder': '(нет значения)'
     },
 
     'flexberry-datepicker': {
@@ -71,13 +75,21 @@ export default {
       'remove-button-text': 'Очистить'
     },
 
+    'flexberry-objectlistview': {
+      'placeholder': 'Нет данных'
+    },
+
+    'flexberry-groupedit': {
+      'placeholder': 'Нет данных'
+    },
+
     'modal-dialog': {
       'ok-button-text': 'OK',
       'close-button-text': 'Закрыть'
     },
 
     'object-list-view': {
-      'no-data-text': 'Нет данных',
+      'placeholder': 'Нет данных',
       'single-column-header-title': 'Свойства модели',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',
@@ -91,6 +103,20 @@ export default {
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
       'filter-by-any-match-placeholder': 'Поиск...'
+    },
+
+    'colsconfig-dialog-content': {
+      'title': 'Настроить отображение столбцов',
+      'dont-show-columns': 'Не отображать столбцы',
+      'columns-order': 'Определить порядок столбцов',
+      'column-name': 'Название столбца',
+      'sort-direction': 'Направление сортировки',
+      'sort-priority': 'Приоритет столбца при сортировке',
+      'setting-name': 'Название настройки',
+      'enter-setting-name': 'Введите название настройки',
+      'save': 'Сохранить'
     }
-  }
+
+  },
+
 };

@@ -62,6 +62,15 @@ export default FlexberryBaseComponent.extend({
   deleteButton: false,
 
   /**
+   * Flag to use colsConfigButton button at toolbar.
+   *
+   * @property colsConfigButton
+   * @type Boolean
+   * @default false
+   */
+  colsConfigButton: true,
+
+  /**
    * Flag to use filter button at toolbar.
    *
    * @property filterButton
@@ -116,6 +125,8 @@ export default FlexberryBaseComponent.extend({
    */
   customButtonsArray: undefined,
 
+  colsSettingsItems: [],
+
   init: function() {
     this._super(...arguments);
 
@@ -132,6 +143,53 @@ export default FlexberryBaseComponent.extend({
       let customButtonsResult = customButton();
       this.set('customButtonsArray', customButtonsResult);
     }
+
+    let listUserSettings = this.modelController.model.listUserSettings;
+    if (listUserSettings && 'DEFAULT' in listUserSettings) {
+      delete listUserSettings.DEFAULT;
+    }
+
+    let listNamedSettings = [];
+    if (listUserSettings) {
+      for (let nameSetting in listUserSettings) {
+        listNamedSettings[listNamedSettings.length] = nameSetting;
+      }
+    }
+
+    this.colsSettingsItems = [{
+      icon: 'dropdown icon',
+      iconAlignment: 'right',
+      title: '',
+      items: [{
+        icon: 'table icon',
+        iconAlignment: 'left',
+        title: 'Создать настройку'
+      }]
+    }];
+    let items = this.colsSettingsItems[0].items;
+    if (listNamedSettings.length > 0) {
+      let menus = [
+        { name: 'use', title: 'Применить', icon: 'checkmark box' },
+        { name: 'edit', title: 'Редактировать', icon: 'setting' },
+        { name: 'remove', title: 'Удалить', icon: 'remove' }
+      ];
+      for (let menu in menus) {
+        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title, items: [] };
+        let icon = menus[menu].icon + ' icon';
+        for (let i = 0; i < listNamedSettings.length; i++) {
+          let subSubmenu = { title: listNamedSettings[i], icon: icon, iconAlignment: 'left' };
+          submenu.items[submenu.items.length] = subSubmenu;
+        }
+
+        items[items.length] = submenu;
+      }
+    }
+
+    items[items.length] = {
+        icon: 'remove circle icon',
+        iconAlignment: 'left',
+        title: 'Сбросить настройку'
+      };
   },
 
   /**
@@ -187,7 +245,41 @@ export default FlexberryBaseComponent.extend({
 
     customButtonAction: function(actionName) {
       this.sendAction('customButtonAction', actionName);
+    },
+
+    showConfigDialog: function() {
+      this.get('modelController').send('showConfigDialog');
+    },
+
+    onMenuItemClick: function (e) {
+      let iTags = Ember.$(e.currentTarget).find('I');
+      let namedSetingSpans = Ember.$(e.currentTarget).find('SPAN');
+      if (iTags.length <= 0 || namedSetingSpans.length <= 0) {
+        return;
+      }
+
+      let className = iTags.get(0).className;
+      let namedSeting = namedSetingSpans.get(0).innerText;
+      switch (className) {
+        case 'table icon':
+          alert('Configure ' + namedSeting);
+          this.sendAction('showConfigDialog', e);
+          break;
+        case 'checkmark box icon':
+          alert('Use ' + namedSeting);
+          break;
+        case 'setting icon':
+          alert('Edit ' + namedSeting);
+          break;
+        case 'remove icon':
+          alert('Remove ' + namedSeting);
+          break;
+        case 'remove circle icon':
+          alert('Remove default');
+          break;
+      }
     }
+
   },
 
   /**

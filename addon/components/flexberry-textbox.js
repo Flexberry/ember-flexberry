@@ -62,9 +62,6 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
    */
   init: function() {
     this._super(...arguments);
-
-    // Initialize properties which defaults could be defined in application configuration.
-    this.initProperty({ propertyName: 'placeholder', defaultValue: undefined });
   }
 });
 

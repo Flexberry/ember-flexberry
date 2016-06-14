@@ -3,7 +3,7 @@
   {{flexberry-objectlistview
     modelName="<%=modelName%>"
     modelProjection=modelProjection
-    editFormRoute=editFormRoute
+    editFormRoute="<%=editForm%>"
     content=model
     createNewButton=true
     refreshButton=true
@@ -19,6 +19,5 @@
     previousPage=(action "previousPage")
     gotoPage=(action "gotoPage")
     nextPage=(action "nextPage")
-    editFormRoute="<%=editForm%>"
   }}
 </div>

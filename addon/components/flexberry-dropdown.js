@@ -31,13 +31,13 @@ export default FlexberryBaseComponent.extend({
   appConfigSettingsPath: 'APP.components.flexberryDropdown',
 
   /**
-    Default text (will be displayed if there is no selected item).
-
-    @property defaultText
-    @type String
-    @default 't('components.flexberry-dropdown.default-text')'
-  */
-  defaultText: t('components.flexberry-dropdown.default-text'),
+   * Placeholder or default text (will be displayed if there is no selected item).
+   *
+   * @property placeholder
+   * @type String
+   * @default 't('components.flexberry-dropdown.placeholder')'
+   */
+  placeholder: t('components.flexberry-dropdown.placeholder'),
 
   /**
     Selected item.
@@ -76,15 +76,15 @@ export default FlexberryBaseComponent.extend({
   destroyHasBeenCalled: false,
 
   /**
-    Flag indicates whether to show default dropdown text or not.
+    Flag indicates whether to show placeholder or not.
 
     @property showDefaultText
     @type Boolean
     @default false
     @readOnly
   */
-  showDefaultText: Ember.computed('defaultText', 'value', function() {
-    return Ember.isNone(this.get('value')) && !Ember.isNone(this.get('defaultText'));
+  showPlaceholder: Ember.computed('placeholder', 'value', function() {
+    return Ember.isBlank(this.get('value')) && !Ember.isBlank(this.get('placeholder'));
   }),
 
   /**
@@ -97,7 +97,7 @@ export default FlexberryBaseComponent.extend({
   */
   text: Ember.computed('value', function() {
     let value = this.get('value');
-    return !Ember.isNone(value) ? value : '';
+    return !Ember.isBlank(value) ? value : '';
   }),
 
   /**
@@ -189,9 +189,6 @@ export default FlexberryBaseComponent.extend({
   */
   init() {
     this._super(...arguments);
-
-    // Initialize properties which defaults could be defined in application configuration.
-    this.initProperty({ propertyName: 'defaultText', defaultValue: null });
   },
 
   /**

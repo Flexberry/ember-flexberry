@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Component to view list of object.
@@ -167,6 +168,15 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action "filterByAnyMatch")}}.');
     }
   },
+
+  /**
+    Text to be displayed in table body, if content is not defined or empty.
+
+    @property placeholder
+    @type String
+    @default 't('components.flexberry-objectlistview.placeholder')'
+   */
+  placeholder: t('components.flexberry-objectlistview.placeholder'),
 
   /**
    * Flag: indicates whether allow to resize columns (if `true`) or not (if `false`).
@@ -419,6 +429,15 @@ export default FlexberryBaseComponent.extend({
    * @default false
    */
   deleteButton: false,
+
+  /**
+   * Flag indicates whether to show colsConfigButton button at toolbar.
+   *
+   * @property colsConfigButton
+   * @type Boolean
+   * @default false
+   */
+  colsConfigButton: true,
 
   /**
    * Flag: indicates whether to show filter button at toolbar.

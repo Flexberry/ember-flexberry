@@ -1,17 +1,29 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
-    {{flexberry-lookup
-      value=model.master
-      projection="MasterL"
-      displayAttributeName="text"
-      title="Master"
-      relatedModel=model
-      relationName="master"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
-      readonly=readonly
-      limitFunction=null
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
     }}
+      {{flexberry-lookup
+        placeholder=placeholder
+        readonly=readonly
+        value=model.type
+        projection="SettingLookupExampleView"
+        displayAttributeName="name"
+        title=title
+        relatedModel=model
+        relationName="type"
+        choose="showLookupDialog"
+        remove="removeLookupValue"
+        autocomplete=autocomplete
+        dropdown=dropdown
+        chooseText=chooseText
+        removeText=removeText
+        chooseButtonClass=chooseButtonClass
+        removeButtonClass=removeButtonClass
+      }}
+    {{/settings-example}}
   </div>
 </form>

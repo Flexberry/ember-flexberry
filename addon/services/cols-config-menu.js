@@ -17,18 +17,21 @@ export default Ember.Service.extend({
       { name: 'remove', title: 'Удалить', icon: 'remove' }
     ],
 
-    colsSettingsItems: [{
-      icon: 'dropdown icon',
-      iconAlignment: 'right',
-      title: '',
-      items: [{
-        icon: 'table icon',
-        iconAlignment: 'left',
-        title: 'Создать настройку'
-      }]
-    }],
+    colsSettingsItems: undefined,
 
     reset: function(listNamedSettings) {
+      this.colsSettingsItems = JSON.parse(`
+        [{
+          "icon": "dropdown icon",
+          "iconAlignment": "right",
+          "title": "",
+          "items": [{
+            "icon": "table icon",
+            "iconAlignment": "left",
+            "title": "Create settings"
+          }]
+        }]`
+      );
       let items = this.colsSettingsItems[0].items;
       if (listNamedSettings.length > 0) {
         let menus = this.menus;

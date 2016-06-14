@@ -94,17 +94,20 @@ export default FlexberryBaseComponent.extend({
     }
 
     // Call to 'configurateItems' hook.
-    var configurateItems = this.get('configurateItems');
-    var configurateItemsType = Ember.typeOf(configurateItems);
+    let configurateItems = this.get('configurateItems');
 
-    if (configurateItemsType === 'function') {
-      configurateItems(items);
-    } else {
-      Ember.Logger.error(
-        'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
-        'actual type is \'' +
-        configurateItemsType +
-        '\', but \'function\' is expected.');
+    if (configurateItems) {
+      let configurateItemsType = Ember.typeOf(configurateItems);
+
+      if (configurateItemsType === 'function') {
+        configurateItems(items);
+      } else {
+        Ember.Logger.error(
+          'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
+          'actual type is \'' +
+          configurateItemsType +
+          '\', but \'function\' is expected.');
+      }
     }
 
     this.set('items', items);

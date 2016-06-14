@@ -17,6 +17,10 @@ FlexberryLookupComponent:
 FlexberryObjectlistviewComponent
 * Fix filters (now it is applied only to string own attributes).
 
+## 2016-06-01
+### Breaking changes
+* Fix locate structure & component.
+
 ## 2016-05-30
 ### Fixed
 FlexberryLookupComponent:

@@ -8,7 +8,6 @@ import PaginatedRouteMixin from '../mixins/paginated-route';
 import LimitedRouteMixin from '../mixins/limited-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
-import QueryBuilder from 'ember-flexberry-data/query/builder';
 import ReloadListMixin from '../mixins/reload-list-mixin';
 
 /**
@@ -55,16 +54,11 @@ export default ProjectedModelFormRoute.extend(
     sorting: [],
 
     model: function(params, transition) {
-      let page = parseInt(params.page, 10);
-      let perPage = parseInt(params.perPage, 10);
-
-      Ember.assert('page must be greater than zero.', page > 0);
-      Ember.assert('perPage must be greater than zero.', perPage > 0);
-
       let modelName = this.get('modelName');
       let moduleName = transition.targetName;
       let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
-      let serializer = this.store.serializerFor(modelName);
+      let limitPredicate =
+        this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
 
       //let sorting = this.deserializeSortingParam(params.sort);
 
@@ -91,18 +85,21 @@ export default ProjectedModelFormRoute.extend(
           }
 
           this.sorting = sorting;
-          let builder = new QueryBuilder(this.store)
-          .from(modelName)
-          .selectByProjection(projectionName)
-          .top(perPage)
-          .skip((page - 1) * perPage)
-          .count()
-          .orderBy(
-            sorting
-            .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
-            .join(',')
-          );
-          return this.store.query(modelName, builder.build());
+
+          let queryParameters = {
+            modelName: modelName,
+            projectionName: projectionName,
+            perPage: params.perPage,
+            page: params.page,
+            sorting: sorting, // TODO: there can be some problems.
+            filter: params.filter,
+            predicate: limitPredicate
+          };
+
+          // Find by query is always fetching.
+          // TODO: support getting from cache with "store.all->filterByProjection".
+          // TODO: move includeSorting to setupController mixins?
+          return this.reloadList(queryParameters);
         })
       .then((records) => {
         this.includeSorting(records, this.sorting);

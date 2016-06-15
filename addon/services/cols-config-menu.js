@@ -10,52 +10,62 @@ import Ember from 'ember';
  * @extends Ember.Service
  * @public
  */
-export default Ember.Service.extend({
+export default Ember.Service.extend(Ember.Evented, {
     menus: [
-      { name: 'use', title: 'Применить', icon: 'checkmark box' },
-      { name: 'edit', title: 'Редактировать', icon: 'setting' },
-      { name: 'remove', title: 'Удалить', icon: 'remove' }
+      { name: 'use', icon: 'checkmark box' },
+      { name: 'edit', icon: 'setting' },
+      { name: 'remove', icon: 'remove' }
     ],
 
     colsSettingsItems: undefined,
 
-    reset: function(listNamedSettings) {
-      this.colsSettingsItems = JSON.parse(`
-        [{
-          "icon": "dropdown icon",
-          "iconAlignment": "right",
-          "title": "",
-          "items": [{
-            "icon": "table icon",
-            "iconAlignment": "left",
-            "title": "Create settings"
-          }]
-        }]`
-      );
-      let items = this.colsSettingsItems[0].items;
-      if (listNamedSettings.length > 0) {
-        let menus = this.menus;
-        for (let menu in menus) {
-          let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title, items: [] };
-          items[items.length] = submenu;
-        }
+    listNamedSettings: undefined,
 
-        for (let i = 0; i < listNamedSettings.length; i++) {
-          this.addNamedSetting(listNamedSettings[i]);
-        }
+    addNamedSettingTrigger: function (namedSeting) {
+      this.trigger('addNamedSetting', namedSeting);
+    },
 
-        this.sort();
+    deleteNamedSettingTrigger: function (namedSeting) {
+      this.trigger('deleteNamedSetting', namedSeting);
+    },
+
+    resetMenu: function(params) {
+      let rootItem = {
+        icon: 'dropdown icon',
+        iconAlignment: 'right',
+        title: '',
+        items:[]
+      };
+      let createSettitingItem = {
+        icon: "table icon",
+        iconAlignment: "left",
+        title: params['createSettitingTitle']
+      };
+      rootItem.items[rootItem.items.length] = createSettitingItem;
+      for (let n in this.menus) {
+        let menu = this.menus[n];
+        let titleName = menu.name + 'SettitingTitle';
+        let title = params[titleName];
+        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: title, items: [] };
+        rootItem.items[rootItem.items.length] = submenu;
       }
 
-      items[items.length] = {
-        icon: 'remove circle icon',
-        iconAlignment: 'left',
-        title: 'Сбросить настройку'
+      let setDefaultItem = {
+        icon: "remove circle icon",
+        iconAlignment: "left",
+        title: params['setDefaultSettitingTitle']
       };
+      rootItem.items[rootItem.items.length] = setDefaultItem;
+      this.colsSettingsItems = [rootItem];
+      this.listNamedSettings = params['listNamedSettings'];
+      for (let namedSetting in this.listNamedSettings) {
+        this._addNamedSetting(namedSetting);
+      }
+      this.sort();
       return this.colsSettingsItems;
     },
 
-    addNamedSetting: function(namedSeting) {
+    _addNamedSetting: function(namedSeting) {
       let menus = this.menus;
       for (let i = 0; i < menus.length; i++) {
         let icon = menus[i].icon + ' icon';
@@ -77,25 +87,7 @@ export default Ember.Service.extend({
         Ember.set(this.colsSettingsItems[0].items[i + 1], 'items', newSubItems);
       }
 
-    },
-
-    deleteNamedSetting: function(namedSeting) {
-      let menus = this.menus;
-      for (let i = 0; i < menus.length; i++) {
-        let subItems = this.colsSettingsItems[0].items[i + 1].items;
-        let newSubItems = [];
-        for (let j = 0; j < subItems.length; j++) {
-          if (subItems[j].title !== namedSeting) {
-            newSubItems[newSubItems.length] = subItems[j];
-          }
-
-        }
-
-        Ember.set(this.colsSettingsItems[0].items[i + 1], 'items', newSubItems);
-      }
-
       this.sort();
-
     },
 
     sort: function() {

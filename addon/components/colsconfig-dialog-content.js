@@ -12,7 +12,7 @@ export default FlexberryBaseComponent.extend({
 
   _idPrefix: 'ColDesc',
   _userSettingsService: Ember.inject.service('user-settings-service'),
-  colsConfigMenu: Ember.inject.service('cols-config-menu'),
+  colsConfigMenu: Ember.inject.service(),
   _router: undefined,
   /**
    * model with
@@ -263,7 +263,7 @@ export default FlexberryBaseComponent.extend({
       savePromise.then(
         record => {
           Ember.set(this.model.listUserSettings, this.settingName, this.colsConfig);
-          this.get('colsConfigMenu').addNamedSetting(this.settingName);
+          this.get('colsConfigMenu').addNamedSettingTrigger(this.settingName);
           alert('Настройка ' + this.settingName + ' сохранена');
         },
         error => {

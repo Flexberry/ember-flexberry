@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 const { getOwner } = Ember;
 
 export default FlexberryBaseComponent.extend({
@@ -128,9 +129,39 @@ export default FlexberryBaseComponent.extend({
 
   listUserSettings: undefined,
 
-  colsSettingsItems: [],
+  createSettitingTitle: t('components.olv-toolbar.create-setting-title'),
 
-  colsConfigMenu: Ember.inject.service('cols-config-menu'),
+  useSettitingTitle: t('components.olv-toolbar.use-setting-title'),
+
+  editSettitingTitle: t('components.olv-toolbar.edit-setting-title'),
+
+  removeSettitingTitle: t('components.olv-toolbar.remove-setting-title'),
+
+  setDefaultSettitingTitle: t('components.olv-toolbar.set-default-setting-title'),
+
+  colsConfigMenu: Ember.inject.service(),
+
+  listNamedSettings: null,
+
+  colsSettingsItems:  Ember.computed(
+    'createSettitingTitle',
+    'setDefaultSettitingTitle',
+    'useSettitingTitle',
+    'editSettitingTitle',
+    'removeSettitingTitle',
+    'listNamedSettings',
+    function() {
+      let params = {
+        createSettitingTitle: this.get('createSettitingTitle'),
+        setDefaultSettitingTitle: this.get('setDefaultSettitingTitle'),
+        useSettitingTitle: this.get('useSettitingTitle'),
+        editSettitingTitle: this.get('editSettitingTitle'),
+        removeSettitingTitle: this.get('removeSettitingTitle'),
+        listNamedSettings: this.get('listNamedSettings'),
+      };
+      return this.get('colsConfigMenu').resetMenu(params);
+    }
+  ),
 
   init: function() {
     this._super(...arguments);
@@ -149,19 +180,35 @@ export default FlexberryBaseComponent.extend({
       this.set('customButtonsArray', customButtonsResult);
     }
 
-    this.listUserSettings = this.modelController.model.listUserSettings;
-    if (this.listUserSettings && 'DEFAULT' in this.listUserSettings) {
-      delete this.listUserSettings.DEFAULT;
+    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
+  },
+
+  _addNamedSetting: function(namedSeting) {
+    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
+    listNamedSettings[namedSeting] = true;
+    Ember.set(this, 'listNamedSettings', listNamedSettings);
+  },
+
+  _deleteNamedSetting: function(namedSeting) {
+    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
+    delete listNamedSettings[namedSeting];
+    Ember.set(this, 'listNamedSettings', listNamedSettings);
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    let listUserSettings = this.modelController.model.listUserSettings;
+    if (listUserSettings && 'DEFAULT' in listUserSettings) {
+      delete listUserSettings.DEFAULT;
     }
 
-    let listNamedSettings = [];
-    if (this.listUserSettings) {
-      for (let nameSetting in this.listUserSettings) {
-        listNamedSettings[listNamedSettings.length] = nameSetting;
+    Ember.set(this, 'listNamedSettings', {});
+    if (listUserSettings) {
+      for (let nameSetting in listUserSettings) {
+        Ember.set(this.listNamedSettings, nameSetting, true);
       }
     }
-
-    this.colsSettingsItems = this.get('colsConfigMenu').reset(listNamedSettings);
   },
 
   /**
@@ -172,6 +219,8 @@ export default FlexberryBaseComponent.extend({
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
     this._super(...arguments);
   },
 
@@ -219,8 +268,8 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('customButtonAction', actionName);
     },
 
-    showConfigDialog: function(namedSeting) {
-      this.get('modelController').send('showConfigDialog', namedSeting);
+    showConfigDialog: function(namedSetting) {
+      this.get('modelController').send('showConfigDialog', namedSetting);
     },
 
     onMenuItemClick: function (e) {
@@ -261,7 +310,7 @@ export default FlexberryBaseComponent.extend({
           this.currentController.get('_userSettingsService').
           deleteUserSetting({ moduleName: moduleName, settingName: namedSeting }).then(
             result => {
-              this.get('colsConfigMenu').deleteNamedSetting(namedSeting);
+              this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSeting);
               alert('Настройка ' + namedSeting + ' удалена');
             }
           );

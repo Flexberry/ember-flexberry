@@ -1,19 +1,21 @@
 <div class="flexberry-file-grid ui grid">
   <div class="row">
-    <input type="file" name="files[]" class="flexberry-file-file-input" style="display:none" />
+    <input type="file" name="files[]" id={{fileInputId}} class="flexberry-file-file-input" style="display:none" />
     {{input
       type="hidden"
       class="flexberry-file-filename-input"
       readonly="readonly"
       placeholder=placeholder
-      required=required
       value=fileName
     }}
     {{#unless readonly}}
       {{#if addButtonIsVisible}}
-        <label class="flexberry-file-add-button ui icon {{buttonClass}} {{unless addButtonIsEnabled "disabled"}} button"
-        title={{t "components.flexberry-file.add-btn-text"}} style="{{if hasSelectedFile 'display:none' ''}}">
-        {{addButtonText}}
+        <label
+          class="flexberry-file-add-button ui icon {{buttonClass}} {{unless addButtonIsEnabled "disabled"}} {{if hasSelectedFile "hidden"}} button"
+          title={{t "components.flexberry-file.add-button-title"}}
+          for={{fileInputId}}
+          {{action "addButtonClick" on="click" preventDefault=false}}>
+        {{t "components.flexberry-file.add-button-caption"}}
         </label>
       {{/if}}
     {{/unless}}
@@ -23,35 +25,35 @@
       {{#if (and hasSelectedFile (not readonly))}}
         <div class="flexberry-file-image-preview-menu-mobile">
           {{flexberry-menu
-            class='icon vertical'
+            class="icon vertical"
             items=menuForFileItems
             callItemsOnClickCallbacks=false
-            onItemClick=(action 'menuForFileItemClick')
+            onItemClick=(action "menuForFileItemClick")
           }}
         </div>
       {{/if}}
-      <div class="ui small image" {{action 'viewLoadedImage'}}>
-        <img class="flexberry-file-image-preview" src="" alt="LoadedImage"/>
-        <div class="ui {{if downloadIsInProgress 'active' ''}} loader"></div>
+      <div class="ui small image" {{action "viewLoadedImage"}}>
+        <img class="flexberry-file-image-preview" src="" alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
+        <div class="ui {{if downloadIsInProgress "active" ""}} loader"></div>
       </div>
     </div>
   {{/if}}
 </div>
 <div class="flexberry-file-error-modal-dialog ui small basic modal">
   <div class="ui icon header">
-    {{errorModalDialogTitle}}
+    {{errorModalDialogCaption}}
   </div>
   <div class="content">
-  <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
-    {{errorModalDialogContent}}
-  </div>
-  </div>
-  <div class="center aligned ui grid">
-  <div class="actions">
-    <div class="flexberry-file-error-modal-dialog-ok-button ui approve green inverted button">
-      <i class="checkmark icon"></i>
-      {{t "components.flexberry-file.error-dialog-ok-btn-text"}}
+    <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
+      {{errorModalDialogContent}}
     </div>
   </div>
+  <div class="center aligned ui grid">
+    <div class="actions">
+      <div class="flexberry-file-error-modal-dialog-ok-button ui approve green inverted button">
+        <i class="checkmark icon"></i>
+        {{t "components.flexberry-file.error-dialog-ok-button-caption"}}
+      </div>
+    </div>
   </div>
 </div>

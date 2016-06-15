@@ -14,6 +14,16 @@ import { translationMacro as t } from 'ember-i18n';
  */
 export default FlexberryBaseComponent.extend({
   /**
+   * Selected file content. It can be used as source for image tag in order to view preview.
+   *
+   * @property _selectedFileSrc
+   * @private
+   * @type String
+   * @default ''
+   */
+  _selectedFileSrc: '',
+
+  /**
    * Class names for component wrapping <div>.
    */
   classNames: ['flexberry-file'],
@@ -35,6 +45,33 @@ export default FlexberryBaseComponent.extend({
    * @default 'APP.components.flexberryBaseComponent'
    */
   appConfigSettingsPath: 'APP.components.flexberryFile',
+
+  /**
+   * Name of action. This action will be send outside after click on selected image preview.
+   *
+   * @property viewImageAction
+   * @type String
+   * @default 'flexberryFileViewImageAction'
+   */
+  viewImageAction: 'flexberryFileViewImageAction',
+
+  /**
+    File input identifier.
+
+    @property fileInputId
+    @type String
+   */
+  fileInputId: Ember.computed('elementId', function() {
+    let fileInputId = 'flexberry-file-file-input-';
+    let elementId = this.get('elementId');
+    if (Ember.isBlank(elementId)) {
+      fileInputId += Ember.uuid();
+    } else {
+      fileInputId += elementId;
+    }
+
+    return fileInputId;
+  }),
 
   /**
    * Copy of value created at initialization moment or after successful upload.
@@ -79,15 +116,6 @@ export default FlexberryBaseComponent.extend({
   uploadData: null,
 
   /**
-   * Flag: indicates whether to show preview element for images or not.
-   *
-   * @property showPreview
-   * @type Boolean
-   * @default false
-   */
-  showPreview: false,
-
-  /**
    * Current file selected for upload.
    */
   selectedFile: Ember.computed('uploadData', function() {
@@ -121,39 +149,6 @@ export default FlexberryBaseComponent.extend({
       }
     }
   }),
-
-  /**
-   * Name of action. This action will be send outside after click on selected image preview.
-   *
-   * @property viewImageAction
-   * @type String
-   * @default 'flexberryFileViewImageAction'
-   */
-  viewImageAction: 'flexberryFileViewImageAction',
-
-  /**
-   * Selected file content. It can be used as source for image tag in order to view preview.
-   *
-   * @property _selectedFileSrc
-   * @private
-   * @type String
-   * @default ''
-   */
-  _selectedFileSrc: '',
-
-  /**
-   * It sets selected file content as source for image tag in order to view preview.
-   *
-   * @method _updateSelectedFileSrc
-   * @private
-   *
-   * @param {DS.Component} currentContext Current context to execute operations.
-   * @param {String} selectedFileSrc Selected file content to set as source for image tag in order to view preview.
-   */
-  _updateSelectedFileSrc: function(currentContext, selectedFileSrc) {
-    currentContext.$('.flexberry-file-image-preview').attr('src', selectedFileSrc);
-    currentContext.set('_selectedFileSrc', selectedFileSrc);
-  },
 
   /**
    * Flag: indicates whether file upload is in progress now.
@@ -203,6 +198,15 @@ export default FlexberryBaseComponent.extend({
    * Flag: indicates whether to upload file on 'relatedModel' 'preSave' event.
    */
   uploadOnModelPreSave: undefined,
+
+  /**
+   * Flag: indicates whether to show preview element for images or not.
+   *
+   * @property showPreview
+   * @type Boolean
+   * @default false
+   */
+  showPreview: false,
 
   /**
    * Flag: indicates whether to show upload button or not.
@@ -284,14 +288,14 @@ export default FlexberryBaseComponent.extend({
   showModalDialogOnDownloadError: undefined,
 
   /**
-   * Title to be displayed in error modal dialog.
+   * Caption to be displayed in error modal dialog.
    * It will be displayed only if some error occur.
    *
-   * @property errorModalDialogTitle
+   * @property errorModalDialogCaption
    * @type String
-   * @default 't('components.flexberry-file.error-dialog-title')'
+   * @default 't('components.flexberry-file.error-dialog-caption')'
    */
-  errorModalDialogTitle: t('components.flexberry-file.error-dialog-title'),
+  errorModalDialogCaption: t('components.flexberry-file.error-dialog-caption'),
 
   /**
    * Content to be displayed in error modal dialog.
@@ -320,6 +324,66 @@ export default FlexberryBaseComponent.extend({
 
     return jsonValue.fileName;
   }),
+
+  actions: {
+    /**
+      Handles click on selected image preview and sends action with data outside component
+      in order to view selected image at modal window.
+
+      @method actions.viewLoadedImage
+      @public
+     */
+    viewLoadedImage() {
+      var fileName = this.get('fileName');
+      var selectedFileSrc = this.get('_selectedFileSrc');
+      if (!Ember.isNone(fileName) && !Ember.isNone(selectedFileSrc)) {
+        this.sendAction('viewImageAction', {
+          fileSrc: selectedFileSrc,
+          fileName: fileName
+        });
+      }
+    },
+
+    /**
+      Handles click on add button.
+
+      @method actions.addButtonClick
+      @public
+     */
+    addButtonClick() {
+
+    },
+
+    /**
+      Handles click on remove button.
+
+      @method actions.removeButtonClick
+      @public
+     */
+    removeButtonClick() {
+      this.removeFile();
+    },
+
+    /**
+      Handles click on upload button.
+
+      @method actions.uploadButtonClick
+      @public
+     */
+    uploadButtonClick() {
+      this.uploadFile();
+    },
+
+    /**
+      Handles click on download button.
+
+      @method actions.downloadButtonClick
+      @public
+     */
+    downloadButtonClick() {
+      this.downloadFile();
+    },
+  },
 
   /**
    * Initializes file-control component.
@@ -368,14 +432,7 @@ export default FlexberryBaseComponent.extend({
     var _this = this;
     var i18n = _this.get('i18n');
 
-    var fileInputId = 'flexberry-file-' + _this.get('elementId');
-    var fileInput = _this.$('.flexberry-file-file-input');
-    fileInput.attr('id', fileInputId);
-
-    var addFileButton = _this.$('.flexberry-file-add-button');
-    addFileButton.attr('for', fileInputId);
-
-    var removeFileButton = _this.$('.flexberry-file-remove-button');
+    /*var removeFileButton = _this.$('.flexberry-file-remove-button');
     removeFileButton.on('click', function() {
       _this.removeFile.call(_this, null);
     });
@@ -388,7 +445,7 @@ export default FlexberryBaseComponent.extend({
     var downloadFileButton = _this.$('.flexberry-file-download-button');
     downloadFileButton.on('click', function() {
       _this.downloadFile.call(_this, null);
-    });
+    });*/
 
     // Initialize SemanticUI modal dialog, and remember it in a component property,
     // because after call to errorModalDialog.modal its html will disappear from DOM.
@@ -403,14 +460,14 @@ export default FlexberryBaseComponent.extend({
 
       // Prevent files greater then maxUploadFileSize.
       if (!Ember.isNone(maxUploadFileSize) && selectedFile.size > maxUploadFileSize) {
-        var errorTitle = i18n.t('components.flexberry-file.add-file-error-title');
+        var errorCaption = i18n.t('components.flexberry-file.add-file-error-caption');
         var errorContent = i18n.t(
           'components.flexberry-file.file-too-big-message',
           {
             fileName: selectedFile.name,
             maxSize: maxUploadFileSize,
             actualSize: selectedFile.size });
-        _this.showErrorModalDialog.call(_this, errorTitle, errorContent);
+        _this.showErrorModalDialog.call(_this, errorCaption, errorContent);
 
         return;
       }
@@ -419,7 +476,7 @@ export default FlexberryBaseComponent.extend({
     };
 
     // Initialize jQuery fileupload plugin (https://github.com/blueimp/jQuery-File-Upload/wiki/API).
-    fileInput.fileupload({
+    _this.$('.flexberry-file-file-input').fileupload({
       // Disable autoUpload.
       autoUpload: false,
 
@@ -506,13 +563,16 @@ export default FlexberryBaseComponent.extend({
         resolve(_this.get('jsonValue'));
       }).fail(function(jqXhr, textStatus, errorThrown) {
         var fileName = ' \'' + file.name + '\'';
-        var errorText = errorThrown ? ' (' + errorThrown + ')' : '';
-        var errorTitle = i18n.t('components.flexberry-file.upload-file-error-title');
-        var errorContent = i18n.t('components.flexberry-file.upload-file-error-message', { fileName: fileName, errorText: errorText });
+        var errorMessage = errorThrown ? ' (' + errorThrown + ')' : '';
+        var errorCaption = i18n.t('components.flexberry-file.upload-file-error-caption');
+        var errorContent = i18n.t('components.flexberry-file.upload-file-error-message', {
+          fileName: fileName,
+          errorMessage: errorMessage
+        });
 
         var showModalDialogOnUploadError = _this.get('showModalDialogOnUploadError');
         if (showModalDialogOnUploadError) {
-          _this.showErrorModalDialog.call(_this, errorTitle, errorContent);
+          _this.showErrorModalDialog.call(_this, errorCaption, errorContent);
         }
 
         _this.sendAction('uploadFail', {
@@ -552,14 +612,14 @@ export default FlexberryBaseComponent.extend({
           resolve(jsonInitialValue);
           this.set('downloadIsInProgress', false);
         },
-        failCallback: (errorText, url) => {
-          this._showModalDialogOnDownloadErrorFunction(this, errorText);
+        failCallback: (errorMessage, url) => {
+          this._showModalDialogOnDownloadErrorFunction(this, errorMessage);
           this.sendAction('downloadFail', {
             downloadData: jsonInitialValue,
-            response: errorText,
+            response: errorMessage,
             value: this.get('value')
           });
-          reject(new Error(errorText));
+          reject(new Error(errorMessage));
           this.set('downloadIsInProgress', false);
         }
       });
@@ -568,13 +628,13 @@ export default FlexberryBaseComponent.extend({
 
   /**
    * Method to show error modal dialog.
-   * @param {String} errorTitle Error title (window header).
+   * @param {String} errorCaption Error caption (window header caption).
    * @param {String} errorContent Error content (error description).
    */
-  showErrorModalDialog: function(errorTitle, errorContent) {
+  showErrorModalDialog: function(errorCaption, errorContent) {
     var errorModalDialog = this.get('errorModalDialog');
     if (errorModalDialog && errorModalDialog.modal) {
-      this.set('errorModalDialogTitle', errorTitle);
+      this.set('errorModalDialogCaption', errorCaption);
       this.set('errorModalDialogContent', errorContent);
       errorModalDialog.modal('show');
     }
@@ -632,37 +692,34 @@ export default FlexberryBaseComponent.extend({
     * @private
     *
     * @param {DS.Component} currentContext Current execution context.
-    * @param {String} errorText Text of error occured during file download.
+    * @param {String} errorMessage Error message about error occured during file download.
     */
-  _showModalDialogOnDownloadErrorFunction: function(currentContext, errorText) {
+  _showModalDialogOnDownloadErrorFunction: function(currentContext, errorMessage) {
     var showModalDialogOnDownloadError = currentContext.get('showModalDialogOnDownloadError');
     if (showModalDialogOnDownloadError) {
       var i18n = currentContext.get('i18n');
       var jsonInitialValue = currentContext.get('jsonInitialValue');
       var fileName = ' \'' + jsonInitialValue.fileName + '\'';
-      var errorTitle = i18n.t('components.flexberry-file.download-file-error-title');
-      var errorContent = i18n.t('components.flexberry-file.download-file-error-message', { fileName: fileName, errorText: errorText });
-      currentContext.showErrorModalDialog.call(currentContext, errorTitle, errorContent);
+      var errorCaption = i18n.t('components.flexberry-file.download-file-error-caption');
+      var errorContent = i18n.t('components.flexberry-file.download-file-error-message', {
+        fileName: fileName,
+        errorMessage: errorMessage
+      });
+      currentContext.showErrorModalDialog.call(currentContext, errorCaption, errorContent);
     }
   },
 
-  actions: {
-    /**
-     * It handles click on selected image preview and sends action with data outside component
-     * in order to view selected image at modal window.
-     *
-     * @method viewLoadedImage
-     * @public
-     */
-    viewLoadedImage: function() {
-      var fileName = this.get('fileName');
-      var selectedFileSrc = this.get('_selectedFileSrc');
-      if (!Ember.isNone(fileName) && !Ember.isNone(selectedFileSrc)) {
-        this.sendAction('viewImageAction', {
-          fileSrc: selectedFileSrc,
-          fileName: fileName
-        });
-      }
-    }
+  /**
+   * It sets selected file content as source for image tag in order to view preview.
+   *
+   * @method _updateSelectedFileSrc
+   * @private
+   *
+   * @param {DS.Component} currentContext Current context to execute operations.
+   * @param {String} selectedFileSrc Selected file content to set as source for image tag in order to view preview.
+   */
+  _updateSelectedFileSrc: function(currentContext, selectedFileSrc) {
+    currentContext.$('.flexberry-file-image-preview').attr('src', selectedFileSrc);
+    currentContext.set('_selectedFileSrc', selectedFileSrc);
   }
 });

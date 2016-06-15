@@ -44,29 +44,32 @@ export default {
     'flexberry-file': {
       placeholder: '(нет файла)',
 
-      'add-btn-text': 'Добавить файл',
-      'remove-btn-text': 'Удалить файл',
-      'upload-btn-text': 'Отправить файл',
-      'download-btn-text': 'Загрузить файл',
+      'add-button-title': 'Добавить файл',
+      'add-button-caption': 'Добавить файл',
+      'remove-button-title': 'Удалить файл',
+      'upload-button-title': 'Отправить файл',
+      'download-button-title': 'Загрузить файл',
+
+      'preview-image-alternative-text': 'Загруженное изображение',
 
       'error-dialog-title': 'Ошибка компонента выбора файла',
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',
-      'error-dialog-ok-btn-text': 'OK',
+      'error-dialog-ok-button-caption': 'OK',
 
-      'add-file-error-title': 'Ошибка добавления файла',
-      'file-too-big-message': 'Размер файла должен быть не больше {{maxSize}} байт. Выбранный файл {{fileName}} имеет размер {{actualSize}} байт.',
+      'add-file-error-caption': 'Ошибка добавления файла',
+      'file-too-big-message': 'Размер файла должен быть не больше {{maxSize}} байт.' +
+        'Выбранный файл {{fileName}} имеет размер {{actualSize}} байт.',
 
-      'upload-file-error-title': 'Ошибка отправки файла',
-      'upload-file-error-message': 'Отправка файла {{fileName}} не удалась. {{errorText}}',
+      'upload-file-error-caption': 'Ошибка отправки файла',
+      'upload-file-error-message': 'Отправка файла {{fileName}} не удалась. {{errorMessage}}',
 
-      'download-file-error-title': 'Ошибка загрузки файла',
-      'download-file-error-message': 'Загрузка файла {{fileName}} не удалась. {{errorText}}',
+      'download-file-error-caption': 'Ошибка загрузки файла',
+      'download-file-error-message': 'Загрузка файла {{fileName}} не удалась. {{errorMessage}}',
       'menu-for-file': {
-        'zoom-image-item-title': 'Увеличить',
-        'replace-file-item-title': 'Заменить',
-        'delete-file-item-title': 'Удалить'
-      },
-      'alt-image-text': 'Загруженное изображение'
+        'zoom-image-item-caption': 'Увеличить',
+        'replace-file-item-caption': 'Заменить',
+        'delete-file-item-caption': 'Удалить'
+      }
     },
 
     'flexberry-lookup': {

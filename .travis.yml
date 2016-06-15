@@ -39,9 +39,9 @@ script:
   - ember try $EMBER_TRY_SCENARIO test
   - bash ./scripts/test-generator.sh
 
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && ember build && firebase deploy --project flexberry-dummy-test --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
+  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_BRANCH == "dummy-test" && ember build && firebase deploy --project flexberry-ember-test --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
 
 after_success:
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy -f flexberry-dummy-dev -m "Travis Build №$TRAVIS_BUILD_NUMBER"
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember build && firebase deploy -f flexberry-dummy -m "Travis Build №$TRAVIS_BUILD_NUMBER"
+  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy --project flexberry-ember-dev --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
+  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember build && firebase deploy --project flexberry-ember --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
   - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop") && bash scripts/update-docs.sh

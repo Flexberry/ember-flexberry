@@ -1,7 +1,8 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
-  var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
+  //var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
+  var backendUrl = 'http://localhost:6500/';
   var ENV = {
     modulePrefix: 'dummy',
     environment: environment,

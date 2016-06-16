@@ -44,6 +44,13 @@
     </label>
   {{/if}}
 </div>
+{{#if showPreview}}
+    <img
+      class="flexberry-file-image-preview ui small centered image"
+      src=""
+      alt={{t "components.flexberry-file.preview-image-alternative-text"}}
+      {{action "viewLoadedImage"}} />
+{{/if}}
 <div class="flexberry-file-error-modal-dialog ui small basic modal">
   <div class="ui icon header">
     <i class="file icon"></i>
@@ -63,8 +70,3 @@
     </div>
   </div>
 </div>
-{{#if showPreview}}
-<div class="ui small image flexberry-file-image-preview-wrapper" {{action "viewLoadedImage"}}>
-  <img class="flexberry-file-image-preview" src="" alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
-</div>
-{{/if}}

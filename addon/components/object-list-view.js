@@ -4,6 +4,7 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
+import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import ErrorableMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -13,7 +14,10 @@ import { translationMacro as t } from 'ember-i18n';
  * @class ObjectListView
  * @extends FlexberryBaseComponent
  */
-export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, ErrorableMixin, {
+export default FlexberryBaseComponent.extend(
+  FlexberryLookupCompatibleComponentMixin,
+  FlexberryFileCompatibleComponentMixin,
+  ErrorableMixin, {
   actions: {
     rowClick: function(recordWithKey, e) {
       if (this.get('readonly')) {

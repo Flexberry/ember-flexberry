@@ -66,6 +66,15 @@ export default FlexberryFile.extend({
   isMobile: true,
 
   /**
+    Flag: indicates whether to show preview element for images or not.
+
+    @property showPreview
+    @type Boolean
+    @default true
+   */
+  showPreview: true,
+
+  /**
     Computed property indicates if there is info about selected file to preview it.
 
     @property hasSelectedFile
@@ -73,8 +82,7 @@ export default FlexberryFile.extend({
     @default false
    */
   hasSelectedFile: Ember.computed('_selectedFileSrc', function() {
-    var selectedFileSrc = this.get('_selectedFileSrc');
-    return selectedFileSrc && !Ember.isBlank(selectedFileSrc);
+    return !Ember.isBlank(this.get('_selectedFileSrc'));
   }),
 
   /**

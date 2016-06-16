@@ -34,7 +34,10 @@
         </div>
       {{/if}}
       <div class="ui small image" {{action "viewLoadedImage"}}>
-        <img class="flexberry-file-image-preview" src="" alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
+        <img
+          class="flexberry-file-image-preview"
+          src=""
+          alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
         <div class="ui {{if downloadIsInProgress "active" ""}} loader"></div>
       </div>
     </div>

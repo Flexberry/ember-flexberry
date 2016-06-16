@@ -4,12 +4,15 @@
 
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
+import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 
 /**
  * @class ObjectListViewSingleColumnCell
  * @extends FlexberryBaseComponent
  */
-export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, {
+export default FlexberryBaseComponent.extend(
+  FlexberryLookupCompatibleComponentMixin,
+  FlexberryFileCompatibleComponentMixin, {
   /**
    * Component's CSS class names.
    */

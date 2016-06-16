@@ -67,14 +67,6 @@
 	<button class="ui {{unless hasNextPage 'disabled'}} button" {{action (if this.attrs.nextPage this.attrs.nextPage 'nextPage')}}>&raquo;</button>
   </div>
   <div class="right menu">
-	{{#ui-dropdown value=perPageValue class="compact selection"}}
-		<i class="dropdown icon"></i>
-		<div class="text">{{perPageValue}}</div>
-		<div class="menu">
-		  {{#each perPageValues as |perPageValue|}}
-			  <div class="item" data-value={{perPageValue}}>{{perPageValue}}</div>
-		  {{/each}}
-		</div>
-	{{/ui-dropdown}}
+    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection"}}
   </div>
 </div>

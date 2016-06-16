@@ -1,4 +1,10 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-edit.caption"}}</h3>
+<div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <p></p>
 <form class="ui {{formState}} form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
@@ -94,11 +100,8 @@
     {{/if}}
     {{flexberry-checkbox readonly=readonly value=model.moderated}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.type "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
-    {{#if model.errors.type}}
-      <span style="color:red">{{model.errors.type}}</span>
-    {{/if}}
     {{flexberry-lookup
       value=model.type
       projection="SuggestionTypeL"
@@ -112,12 +115,10 @@
       limitFunction=null
       class=(if model.errors.author "error" "")
     }}
+    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-suggestion-edit.vtype-caption") pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.author "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
-    {{#if model.errors.author}}
-      <span style="color:red">{{model.errors.author}}</span>
-    {{/if}}
     {{flexberry-lookup
       value=model.author
       projection="ApplicationUserL"
@@ -131,17 +132,15 @@
       limitFunction=null
       class=(if model.errors.author "error" "")
     }}
+    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-suggestion-edit.vauthor-caption") pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.editor1 "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor-caption"}}</label>
-    {{#if model.errors.editor}}
-      <span style="color:red">{{model.errors.editor}}</span>
-    {{/if}}
     {{flexberry-lookup
       value=model.editor1
       projection="ApplicationUserL"
       displayAttributeName="name"
-      title="Editor"
+      title="Editor1"
       relatedModel=model
       relationName="editor1"
       choose="showLookupDialog"
@@ -150,6 +149,7 @@
       limitFunction=null
       class=(if model.errors.editor1 "error" "")
     }}
+    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-suggestion-edit.veditor-caption") pointing="pointing"}}
   </div>
   <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>

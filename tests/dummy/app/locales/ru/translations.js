@@ -251,7 +251,9 @@ Ember.$.extend(true, translations, {
       'birthday-caption': 'Дата рождения',
       'gender-caption': 'Пол',
       'vip-caption': 'VIP',
-      'karma-caption': 'Карма'
+      'karma-caption': 'Карма',
+      'vname-caption': 'Заполните поле "Имя"',
+      'veMail-caption': 'Заполните поле "E-mail"'
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -261,12 +263,14 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Одобрено',
       'author-caption': 'Автор',
       'userVotes-caption': 'Голоса пользователей',
-      'date-caption': 'Дата'
+      'date-caption': 'Дата',
+      'vauthor-caption': 'Заполните поле "Автор"'
     },
 
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Локализация',
-      'name-caption': 'Наименование'
+      'name-caption': 'Наименование',
+      'vname-caption': 'Заполните наименование'
     },
 
     'ember-flexberry-dummy-suggestion-edit': {
@@ -281,7 +285,10 @@ Ember.$.extend(true, translations, {
       'editor-caption': 'Редактор предложения',
       'files-caption': 'Прикрепленные файлы',
       'userVotes-caption': 'Голоса пользователей',
-      'comments-caption': 'Комментарии'
+      'comments-caption': 'Комментарии',
+      'vtype-caption': 'Заполните тип предложения',
+      'vauthor-caption': 'Заполните поле "Автор"',
+      'veditor-caption': 'Заполните поле "Редактор"'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {

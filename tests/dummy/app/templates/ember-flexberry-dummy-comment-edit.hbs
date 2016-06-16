@@ -1,4 +1,10 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-comment-edit.caption"}}</h3>
+<div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <p></p>
 <form class="ui {{formState}} form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
@@ -65,12 +71,9 @@
     {{/if}}
     {{flexberry-checkbox readonly=readonly value=model.moderated}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.author "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.author-caption"}}</label>
-    {{#if model.errors.author}}
-      <span style="color:red">{{model.errors.author}}</span>
-    {{/if}}
-    {{flexberry-lookup
+      {{flexberry-lookup
       value=model.author
       projection="ApplicationUserL"
       displayAttributeName="name"
@@ -83,6 +86,7 @@
       limitFunction=null
       class=(if model.errors.author "error" "")
     }}
+    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-comment-edit.vauthor-caption") pointing="pointing"}}
   </div>
   <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.userVotes-caption"}}</label>

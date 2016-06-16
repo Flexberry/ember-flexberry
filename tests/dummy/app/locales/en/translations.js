@@ -251,7 +251,9 @@ Ember.$.extend(true, translations, {
       'birthday-caption': 'Birthday',
       'gender-caption': 'Gender',
       'vip-caption': 'VIP',
-      'karma-caption': 'Karma'
+      'karma-caption': 'Karma',
+      'vname-caption': 'Name is required',
+      'veMail-caption': 'E-Mail is required'
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -261,12 +263,14 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Moderated',
       'author-caption': 'Author',
       'userVotes-caption': 'User votes',
-      'date-caption': 'Date'
+      'date-caption': 'Date',
+      'vauthor-caption': 'Author is required'
     },
 
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Localization',
-      'name-caption': 'Name'
+      'name-caption': 'Name',
+      'vname-caption': 'Name is required'
     },
 
     'ember-flexberry-dummy-suggestion-edit': {
@@ -281,7 +285,10 @@ Ember.$.extend(true, translations, {
       'editor-caption': 'Editor',
       'files-caption': 'Files',
       'userVotes-caption': 'User votes',
-      'comments-caption': 'Comments'
+      'comments-caption': 'Comments',
+      'vtype-caption': 'Type is required',
+      'vauthor-caption': 'Author is required',
+      'veditor-caption': 'Editor is required'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {

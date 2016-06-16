@@ -1,4 +1,10 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-application-user-edit.caption"}}</h3>
+<div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <p></p>
 <form class="ui {{formState}} form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
@@ -34,10 +40,7 @@
       <button type="submit" class="ui button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field">
-    {{#if model.errors.name}}
-      <span style ="color:red">{{model.errors.name}}</span>
-    {{/if}}
+  <div class="field {{if model.errors.name "error" ""}}">
     {{flexberry-field
       readonly=readonly
       required=true
@@ -45,11 +48,9 @@
       class=(if model.errors.name "error" "")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
     }}
+    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-application-user-edit.vname-caption") pointing="pointing"}}
   </div>
-  <div class="field">
-    {{#if model.errors.eMail}}
-      <span style ="color:red">{{model.errors.eMail}}</span>
-    {{/if}}
+  <div class="field {{if model.errors.eMail "error" ""}}">
     {{flexberry-field
       readonly=readonly
       required=true
@@ -57,6 +58,7 @@
       class=(if model.errors.eMail "error" "")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
     }}
+    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-application-user-edit.veMail-caption") pointing="pointing"}}
   </div>
   <div class="field">
     {{#if model.errors.phone1}}

@@ -19,7 +19,7 @@ var Model = BaseModel.extend({
 
   // Model validation rules.
   validations: {
-  }
+    }
 });
 
 // Edit form projection.

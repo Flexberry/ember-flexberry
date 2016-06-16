@@ -42,7 +42,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         return;
       }
 
-      var action = event.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
+      var action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
     },
 

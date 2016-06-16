@@ -25,6 +25,28 @@
   margin: 0 !important;
 }
 
+/**
+ * Flexberry-colsconfig.
+ */
+
+.flexberry-colsconfig {
+  .show-columns {
+    width: 50px;
+  }
+  .columns-order {
+    width: 90px;
+  }
+  .sort-direction {
+    width: 80px;
+  }
+  .sort-priority {
+    width: 95px;
+  }
+  .ui.table thead th {
+    text-align: center;
+  }
+}
+
 // Style for responsive
 @media only screen and (max-width: 767px) {
   .ui.menu.container {

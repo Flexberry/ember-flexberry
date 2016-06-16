@@ -1,12 +1,13 @@
 <div class="flexberry-file-grid ui grid">
   <div class="row">
     <input type="file" name="files[]" id={{fileInputId}} class="flexberry-file-file-input" style="display:none" />
+    {{!-- value=(get this "fileName") is a way to get one way binding, so input events will not cause value mutation --}}
     {{input
       type="hidden"
       class="flexberry-file-filename-input"
       readonly="readonly"
       placeholder=placeholder
-      value=fileName
+      value=(get this "fileName")
     }}
     {{#unless readonly}}
       {{#if addButtonIsVisible}}

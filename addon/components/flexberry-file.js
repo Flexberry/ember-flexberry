@@ -101,6 +101,19 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+   * File name.
+   * It is binded to component file name input, so every change to fileName will automatically change file name input value.
+   */
+  fileName: Ember.computed('jsonValue.fileName', function() {
+    let fileName = this.get('jsonValue.fileName');
+    if (Ember.isNone(fileName)) {
+      return null;
+    }
+
+    return fileName;
+  }),
+
+  /**
    * Change value handler.
    */
   valueChange: Ember.observer('value', function() {
@@ -311,19 +324,6 @@ export default FlexberryBaseComponent.extend({
    * Selected jQuery object, containing HTML of error modal dialog.
    */
   errorModalDialog: null,
-
-  /**
-   * File name.
-   * It is binded to component file name input, so every change to fileName will automatically change file name input value.
-   */
-  fileName: Ember.computed('value', function() {
-    var jsonValue = this.get('jsonValue');
-    if (Ember.isNone(jsonValue)) {
-      return null;
-    }
-
-    return jsonValue.fileName;
-  }),
 
   actions: {
     /**

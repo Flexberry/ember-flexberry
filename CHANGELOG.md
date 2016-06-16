@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-06-14
+### Fixed
+FlexberryTextboxComponent, FlexberryTextareaComponent:
+* Remove disabled class for wrapper.
+
 ## 2016-06-03
 ### Fixed
 FlexberryObjectlistviewComponent

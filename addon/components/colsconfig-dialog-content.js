@@ -25,6 +25,7 @@ export default FlexberryBaseComponent.extend({
   settingsList: [],
   settingName: '',
   colsConfig: [],
+  changed: false,
 
   init: function() {
     this._super(...arguments);
@@ -76,6 +77,7 @@ export default FlexberryBaseComponent.extend({
         element.className = element.className.replace('hide', 'unhide');  // Change picture
         Ember.$(element).parent().siblings('TD').addClass('disabled');  // Enaable row
       }
+      this._changed();
     },
 
     /**
@@ -115,6 +117,8 @@ export default FlexberryBaseComponent.extend({
         Ember.set(this.model.colDescs[index], 'sortPriority', SortPriority); // Remember values in model.colDescs
         Ember.set(this.model.colDescs[n], 'sortOrder', parseInt(value));
       }
+
+      this._changed();
     },
 
     /**
@@ -170,6 +174,8 @@ export default FlexberryBaseComponent.extend({
           Ember.set(this.model.colDescs[index], 'sortPriority', inputValue); // Set computed value
         }
       }
+
+      this._changed();
     },
 
     /**
@@ -193,6 +199,8 @@ export default FlexberryBaseComponent.extend({
         select = Ember.$(newTr).find('SELECT').get(0);
         select.selectedIndex = selectedIndex; // Reset selected index of sort order
       }
+
+      this._changed();
     },
 
     /**
@@ -221,6 +229,8 @@ export default FlexberryBaseComponent.extend({
         select = Ember.$(newTr).find('SELECT').get(0);
         select.selectedIndex = selectedIndex; // Reset selected index of sort order
       }
+
+      this._changed();
     },
 
     /**
@@ -230,7 +240,10 @@ export default FlexberryBaseComponent.extend({
      */
     apply: function() {
       let colsConfig = this._getSettings();
-
+      let settingName =  $("#columnConfigurtionSettingName")[0].value.trim();
+      if (this.settingName.length > 0 && ! confirm ('Применить данные установки без сохранения в настройке ' + settingName)) {
+        return;
+      }
       //Save colsConfig in userSettings as DEFAULT
       let savePromise = this._getSavePromise('DEFAULT', colsConfig);
       savePromise.then(
@@ -245,13 +258,12 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('close', colsConfig); // close modal window
     },
     /**
-     * Save named settings specified in the interface as DEFAULT values
+     * Save named settings specified in the interface as named values
      *
      * @method actions.apply
      */
     saveColsSetting: function() {
-      let input = Ember.$(event.toElement).prev('INPUT').get(0);
-      let settingName =  input.value.trim();
+      let settingName =  $("#columnConfigurtionSettingName")[0].value.trim();
       Ember.set(this, 'settingName', settingName);
       if (this.settingName.length <= 0) {
         alert('Введите название настройки');
@@ -265,6 +277,8 @@ export default FlexberryBaseComponent.extend({
           Ember.set(this.model.listUserSettings, this.settingName, this.colsConfig);
           this.get('colsConfigMenu').addNamedSettingTrigger(this.settingName);
           alert('Настройка ' + this.settingName + ' сохранена');
+          $("#columnConfigurtionButtonUse")[0].className += " disabled";
+          $("#columnConfigurtionButtonSave")[0].className += " disabled";
         },
         error => {
           alert('При сохранении настройки возникли ошибки: ' + JSON.stringify(error));
@@ -317,5 +331,11 @@ export default FlexberryBaseComponent.extend({
     let id = '#' + this._idPrefix + prefix + '_' + n;
     let ret = Ember.$.find(id)[0];
     return ret;
+  },
+
+  _changed: function() {
+    this.changed = true;
+    $("#columnConfigurtionButtonUse")[0].className = $("#columnConfigurtionButtonUse")[0].className.replace('disabled', '');
+    $("#columnConfigurtionButtonSave")[0].className = $("#columnConfigurtionButtonSave")[0].className.replace('disabled', '');
   }
 });

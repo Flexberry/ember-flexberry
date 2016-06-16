@@ -1,7 +1,7 @@
 <div class=" content">
   <!--div class="description">
     <div class="list-group"-->
-      <table class="ui selectable celled table"
+      <table class="ui selectable celled table" id="columnConfigurtionTable"
         ><thead
           ><tr
           ><th style="width:36px;align:center" title='{{t "components.colsconfig-dialog-content.dont-show-columns"}}'><i class='large hide icon'></i></th
@@ -39,10 +39,10 @@
         ><tfoot class="full-width"
           ><tr
           ><td colspan='6'
-          ><div class="ui right floated button" {{action 'apply'}}>{{t "components.colsconfig-dialog-content.use"}}</div
+          ><div class="ui right floated button disabled" id="columnConfigurtionButtonUse" {{action 'apply'}}>{{t "components.colsconfig-dialog-content.use"}}</div
             ><div class="ui"
-            >{{t "components.colsconfig-dialog-content.setting-name"}} <input type='input' name='configName' placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'
-            /><div class="ui small button" {{action 'saveColsSetting'}}>{{t "components.colsconfig-dialog-content.save"}}</div
+            >{{t "components.colsconfig-dialog-content.setting-name"}} <input type='input' name='configName' id="columnConfigurtionSettingName" placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'
+            /><div class="ui small button disabled" id="columnConfigurtionButtonSave" {{action 'saveColsSetting'}}>{{t "components.colsconfig-dialog-content.save"}}</div
             ></div
           ></td
           ></tr

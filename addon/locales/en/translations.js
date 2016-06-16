@@ -120,6 +120,7 @@ export default {
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',
+      'use-without-save': 'Use this settings without saving in setting ',
       'save': 'Save'
     }
   }

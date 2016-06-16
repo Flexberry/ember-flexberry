@@ -1,47 +1,35 @@
 <div class="flexberry-file-grid ui grid">
+  <input type="file" name="files[]" id={{fileInputId}} class="flexberry-file-file-input" style="display:none" />
   <div class="row">
-    <input type="file" name="files[]" id={{fileInputId}} class="flexberry-file-file-input" style="display:none" />
-    {{!-- value=(get this "fileName") is a way to get one way binding, so input events will not cause value mutation --}}
-    {{input
-      type="hidden"
-      class="flexberry-file-filename-input"
-      readonly="readonly"
-      placeholder=placeholder
-      value=(get this "fileName")
-    }}
-    {{#unless readonly}}
-      {{#if addButtonIsVisible}}
-        <label
-          class="flexberry-file-add-button ui icon {{buttonClass}} {{unless addButtonIsEnabled "disabled"}} {{if hasSelectedFile "hidden"}} button"
-          title={{t "components.flexberry-file.add-button-title"}}
-          for={{fileInputId}}
-          {{action "addButtonClick" on="click" preventDefault=false}}>
-        {{t "components.flexberry-file.add-button-caption"}}
-        </label>
-      {{/if}}
-    {{/unless}}
-  </div>
-  {{#if showPreview}}
-    <div class="row flexberry-file-image-preview-wrapper">
-      {{#if (and hasSelectedFile (not readonly))}}
-        <div class="flexberry-file-image-preview-menu-mobile">
-          {{flexberry-menu
-            class="icon vertical"
-            items=menuForFileItems
-            callItemsOnClickCallbacks=false
-            onItemClick=(action "menuForFileItemClick")
-          }}
+    <label
+      class="flexberry-file-add-button ui icon {{buttonClass}} {{unless addButtonIsEnabled "disabled"}} {{if (or hasFile readonly) "hidden"}} button"
+      title={{t "components.flexberry-file.add-button-title"}}
+      for={{fileInputId}}
+      {{action "addButtonClick" on="click" preventDefault=false}}>
+    {{t "components.flexberry-file.add-button-caption"}}
+    </label>
+    {{#if hasFile}}
+      <div class="flexberry-file-menu">
+        {{flexberry-menu
+          class="icon vertical"
+          items=menuForFileItems
+          callItemsOnClickCallbacks=false
+          onItemClick=(action "menuForFileItemClick")
+        }}
+      </div>
+      {{#if showPreview}}
+        <div class="flexberry-file-image-preview-wrapper ui small image" {{action "viewLoadedImage"}}>
+          {{#unless previewDownloadIsInProgress}}
+            <img
+              class="flexberry-file-image-preview"
+              src={{_previewImageAsBase64String}}
+              alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
+          {{/unless}}
+          <div class="ui {{if previewDownloadIsInProgress "active" ""}} loader"></div>
         </div>
       {{/if}}
-      <div class="ui small image" {{action "viewLoadedImage"}}>
-        <img
-          class="flexberry-file-image-preview"
-          src=""
-          alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
-        <div class="ui {{if downloadIsInProgress "active" ""}} loader"></div>
-      </div>
-    </div>
-  {{/if}}
+    {{/if}}
+  </div>
 </div>
 <div class="flexberry-file-error-modal-dialog ui small basic modal">
   <div class="ui icon header">

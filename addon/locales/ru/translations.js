@@ -57,14 +57,14 @@ export default {
       'error-dialog-ok-button-caption': 'OK',
 
       'add-file-error-caption': 'Ошибка добавления файла',
-      'file-too-big-message': 'Размер файла должен быть не больше {{maxSize}} байт.' +
-        'Выбранный файл {{fileName}} имеет размер {{actualSize}} байт.',
+      'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} байт. ' +
+        'Выбранный файл \'{{fileName}}\' имеет размер {{actualFileSize}} байт.',
 
       'upload-file-error-caption': 'Ошибка отправки файла',
-      'upload-file-error-message': 'Отправка файла {{fileName}} не удалась. {{errorMessage}}',
+      'upload-file-error-message': 'Отправка файла \'{{fileName}}\' не удалась. {{errorMessage}}',
 
       'download-file-error-caption': 'Ошибка загрузки файла',
-      'download-file-error-message': 'Загрузка файла {{fileName}} не удалась. {{errorMessage}}',
+      'download-file-error-message': 'Загрузка файла \'{{fileName}}\' не удалась. {{errorMessage}}',
       'menu-for-file': {
         'zoom-image-item-caption': 'Увеличить',
         'replace-file-item-caption': 'Заменить',

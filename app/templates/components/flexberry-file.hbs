@@ -44,12 +44,16 @@
     </label>
   {{/if}}
 </div>
-{{#if showPreview}}
-    <img
-      class="flexberry-file-image-preview ui small centered image"
-      src=""
-      alt={{t "components.flexberry-file.preview-image-alternative-text"}}
-      {{action "viewLoadedImage"}} />
+{{#if (and showPreview hasFile)}}
+    <div class="flexberry-file-image-preview-wrapper ui segment" {{action "viewLoadedImage"}}>
+      {{#unless previewDownloadIsInProgress}}
+        <img
+          class="flexberry-file-image-preview ui small centered image"
+          src={{_previewImageAsBase64String}}
+          alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
+      {{/unless}}
+      <div class="ui {{if previewDownloadIsInProgress "active" ""}} loader"></div>
+    </div>
 {{/if}}
 <div class="flexberry-file-error-modal-dialog ui small basic modal">
   <div class="ui icon header">

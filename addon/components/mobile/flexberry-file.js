@@ -1,12 +1,15 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
 import FlexberryFile from './../flexberry-file';
 
 /**
-  Mobile version of flexberry-file (with mobile-specific defaults).
+  Mobile version of flexberry-file component (with mobile-specific defaults).
+
+  @class Mobile.FlexberryFileComponent
+  @extends FlexberryFileComponent
  */
 export default FlexberryFile.extend({
   actions: {
@@ -20,15 +23,12 @@ export default FlexberryFile.extend({
       @param {Object} [e.data] Data of selected menu item.
      */
     menuForFileItemClick(e) {
-      if (this.get('readonly')) {
-        return;
-      }
-
       // TODO: Move collapse menu logic into flexberry-menu component,
       // make it available through component setting (for example collapseMenuOnItemClick=true).
+      this._collapseMenu();
+
       if (e.item.isZoomItem) {
         this.send('viewLoadedImage');
-        this._collapseMenu();
 
         return;
       }
@@ -36,14 +36,12 @@ export default FlexberryFile.extend({
       if (e.item.isReplaceItem) {
         let addButton = this.$('.flexberry-file-add-button');
         addButton.click();
-        this._collapseMenu();
 
         return;
       }
 
       if (e.item.isDeleteItem) {
         this.removeFile.call(this, null);
-        this._collapseMenu();
 
         return;
       }
@@ -52,6 +50,10 @@ export default FlexberryFile.extend({
 
   /**
     Components class names bindings.
+
+    @property classNameBindings
+    @type String[]
+    @default ['isMobile:mobile']
    */
   classNameBindings: ['isMobile:mobile'],
 
@@ -75,40 +77,31 @@ export default FlexberryFile.extend({
   showPreview: true,
 
   /**
-    Computed property indicates if there is info about selected file to preview it.
-
-    @property hasSelectedFile
-    @type Boolean
-    @default false
-   */
-  hasSelectedFile: Ember.computed('_selectedFileSrc', function() {
-    return !Ember.isBlank(this.get('_selectedFileSrc'));
-  }),
-
-  /**
     Menu items for dropdown menu for selected image.
 
     @property menuForFileItems
     @type Object[]
     @readonly
    */
-  menuForFileItems: Ember.computed('showPreview', 'i18n.locale', function() {
-    var menuSubItems = [];
+  menuForFileItems: Ember.computed('showPreview', 'readonly', 'i18n.locale', function() {
+    let menuSubItems = [];
     if (this.get('showPreview')) {
       menuSubItems.push({
         icon: 'zoom icon',
         title: this.get('i18n').t('components.flexberry-file.menu-for-file.zoom-image-item-caption'),
         isZoomItem: true
       });
+    }
 
-      if (this.get('addButtonIsVisible')) {
-        menuSubItems.push({
-          icon: 'file outline icon',
-          title: this.get('i18n').t('components.flexberry-file.menu-for-file.replace-file-item-caption'),
-          isReplaceItem: true
-        });
-      }
+    if (!this.get('readonly')) {
+      menuSubItems.push({
+        icon: 'file outline icon',
+        title: this.get('i18n').t('components.flexberry-file.menu-for-file.replace-file-item-caption'),
+        isReplaceItem: true
+      });
+    }
 
+    if (!this.get('readonly')) {
       menuSubItems.push({
         icon: 'trash icon',
         title: this.get('i18n').t('components.flexberry-file.menu-for-file.delete-file-item-caption'),
@@ -124,12 +117,9 @@ export default FlexberryFile.extend({
   }),
 
   /**
-    This method handles end of rerender.
+    Handles end of rerender.
     Dropdown part of menu is initialized here in order to get dropdown behavior,
     when menu disappeares after item selecting.
-
-    @method didRender
-    @public
    */
   didRender() {
     this._super(...arguments);
@@ -137,20 +127,20 @@ export default FlexberryFile.extend({
     // TODO: Move collapse menu logic into flexberry-menu component,
     // make it available through component setting (for example collapseMenuOnItemClick=true),
     // and remove all didRender logic then.
-    let dropdownElement = this.$('.flexberry-file-image-preview-menu-mobile .dropdown');
+    let dropdownElement = this.$('.flexberry-file-menu .dropdown');
     if (dropdownElement && dropdownElement.length > 0) {
       dropdownElement.dropdown();
     }
   },
 
   /**
-    This method collapses and clears menu after item selection.
+    Collapses and clears menu after item selection.
 
     @method _collapseMenu
     @private
    */
   _collapseMenu() {
-    let dropdownMenu = this.$('.flexberry-file-image-preview-menu-mobile .dropdown');
+    let dropdownMenu = this.$('.flexberry-file-menu .dropdown');
     if (dropdownMenu && dropdownMenu.length > 0) {
       dropdownMenu.dropdown('clear');
     }

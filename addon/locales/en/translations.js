@@ -57,14 +57,14 @@ export default {
       'error-dialog-ok-button-caption': 'OK',
 
       'add-file-error-caption': 'Add file error',
-      'file-too-big-message': 'File size must not be greater than {{maxSize}} bytes.' +
-        'Selected file {{fileName}} has size of {{actualSize}} bytes.',
+      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
+        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} bytes.',
 
       'upload-file-error-caption': 'File upload error',
-      'upload-file-error-message': 'Upload {{fileName}} failed. {{errorMessage}}',
+      'upload-file-error-message': 'Upload of \'{{fileName}}\' failed. {{errorMessage}}',
 
       'download-file-error-caption': 'File download error',
-      'download-file-error-message': 'Download {{fileName}} failed. {{errorMessage}}',
+      'download-file-error-message': 'Download of \'{{fileName}}\' failed. {{errorMessage}}',
       'menu-for-file': {
         'zoom-image-item-caption': 'Zoom image',
         'replace-file-item-caption': 'Replace file',

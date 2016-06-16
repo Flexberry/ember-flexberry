@@ -107,12 +107,10 @@
       projection="SuggestionTypeL"
       displayAttributeName="name"
       title="Type"
-      relatedModel=model
       relationName="type"
       choose="showLookupDialog"
       remove="removeLookupValue"
       readonly=readonly
-      limitFunction=null
       class=(if model.errors.author "error" "")
     }}
     {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-suggestion-edit.vtype-caption") pointing="pointing"}}
@@ -124,12 +122,10 @@
       projection="ApplicationUserL"
       displayAttributeName="name"
       title="Author"
-      relatedModel=model
       relationName="author"
       choose="showLookupDialog"
       remove="removeLookupValue"
       readonly=readonly
-      limitFunction=null
       class=(if model.errors.author "error" "")
     }}
     {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-suggestion-edit.vauthor-caption") pointing="pointing"}}
@@ -146,7 +142,6 @@
       choose="showLookupDialog"
       remove="removeLookupValue"
       readonly=readonly
-      limitFunction=null
       class=(if model.errors.editor1 "error" "")
     }}
     {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-suggestion-edit.veditor-caption") pointing="pointing"}}

@@ -296,7 +296,8 @@ Ember.$.extend(true, translations, {
       'name-caption': 'Наименование',
       'moderated-caption': 'Одобрено',
       'parent-caption': 'Иерархия',
-      'localizedTypes-caption': 'Локализация типа'
+      'localizedTypes-caption': 'Локализация типа',
+      'vname-caption': 'Заполните наименование'
     },
 
     'ember-flexberry-dummy-application-user-list': {

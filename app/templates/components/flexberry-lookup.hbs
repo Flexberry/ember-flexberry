@@ -2,7 +2,8 @@
   {{flexberry-dropdown
     placeholder=placeholder
     class='search'
-    value=displayText
+    value=displayValue
+    readonly=(if (or readonly (and (not autocomplete) (not dropdown))) 'readonly')
   }}
 {{else}}
 <div class="ui fluid action input">

@@ -1,7 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-data';
-import { translationMacro as t } from 'ember-i18n';
 
 var Model = BaseModel.extend({
   address: DS.attr('string'),

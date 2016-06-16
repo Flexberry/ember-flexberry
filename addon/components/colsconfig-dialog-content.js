@@ -240,10 +240,11 @@ export default FlexberryBaseComponent.extend({
      */
     apply: function() {
       let colsConfig = this._getSettings();
-      let settingName =  Ember.$("#columnConfigurtionSettingName")[0].value.trim();
-      if (this.settingName.length > 0 && ! confirm ('Применить данные установки без сохранения в настройке ' + settingName)) {
+      let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
+      if (this.settingName.length > 0 && !confirm('Применить данные установки без сохранения в настройке ' + settingName)) {
         return;
       }
+
       //Save colsConfig in userSettings as DEFAULT
       let savePromise = this._getSavePromise('DEFAULT', colsConfig);
       savePromise.then(
@@ -263,7 +264,7 @@ export default FlexberryBaseComponent.extend({
      * @method actions.apply
      */
     saveColsSetting: function() {
-      let settingName =  Ember.$("#columnConfigurtionSettingName")[0].value.trim();
+      let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
       Ember.set(this, 'settingName', settingName);
       if (this.settingName.length <= 0) {
         alert('Введите название настройки');
@@ -277,8 +278,8 @@ export default FlexberryBaseComponent.extend({
           Ember.set(this.model.listUserSettings, this.settingName, this.colsConfig);
           this.get('colsConfigMenu').addNamedSettingTrigger(this.settingName);
           alert('Настройка ' + this.settingName + ' сохранена');
-          Ember.$("#columnConfigurtionButtonUse")[0].className += " disabled";
-          Ember.$("#columnConfigurtionButtonSave")[0].className += " disabled";
+          Ember.$('#columnConfigurtionButtonUse')[0].className += ' disabled';
+          Ember.$('#columnConfigurtionButtonSave')[0].className += ' disabled';
         },
         error => {
           alert('При сохранении настройки возникли ошибки: ' + JSON.stringify(error));
@@ -335,7 +336,7 @@ export default FlexberryBaseComponent.extend({
 
   _changed: function() {
     this.changed = true;
-    Ember.$("#columnConfigurtionButtonUse")[0].className = Ember.$("#columnConfigurtionButtonUse")[0].className.replace('disabled', '');
-    Ember.$("#columnConfigurtionButtonSave")[0].className = Ember.$("#columnConfigurtionButtonSave")[0].className.replace('disabled', '');
+    Ember.$('#columnConfigurtionButtonUse')[0].className = Ember.$('#columnConfigurtionButtonUse')[0].className.replace('disabled', '');
+    Ember.$('#columnConfigurtionButtonSave')[0].className = Ember.$('#columnConfigurtionButtonSave')[0].className.replace('disabled', '');
   }
 });

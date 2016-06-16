@@ -37,9 +37,9 @@ export default Ember.Service.extend(Ember.Evented, {
         items:[]
       };
       let createSettitingItem = {
-        icon: "table icon",
-        iconAlignment: "left",
-        title: params['createSettitingTitle']
+        icon: 'table icon',
+        iconAlignment: 'left',
+        title: params.createSettitingTitle
       };
       rootItem.items[rootItem.items.length] = createSettitingItem;
       for (let n in this.menus) {
@@ -51,9 +51,9 @@ export default Ember.Service.extend(Ember.Evented, {
       }
 
       let setDefaultItem = {
-        icon: "remove circle icon",
-        iconAlignment: "left",
-        title: params['setDefaultSettitingTitle']
+        icon: 'remove circle icon',
+        iconAlignment: 'left',
+        title: params.setDefaultSettitingTitle
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
       this.colsSettingsItems = [rootItem];
@@ -61,6 +61,7 @@ export default Ember.Service.extend(Ember.Evented, {
       for (let namedSetting in this.listNamedSettings) {
         this._addNamedSetting(namedSetting);
       }
+
       this.sort();
       return this.colsSettingsItems;
     },

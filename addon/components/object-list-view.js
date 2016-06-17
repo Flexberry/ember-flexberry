@@ -905,18 +905,18 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @method _reinitResizablePlugin
    * @private
    */
-  _reinitResizablePlugin: function() {
+  _reinitResizablePlugin() {
     let currentTable = this.$('table.object-list-view');
 
     // Disable plugin and then init it again.
     currentTable.colResizable({ disable: true });
 
-    let _this = this;
     currentTable.colResizable({
-      minWidth: 70,
-      onResize: function(e) {
+      minWidth: 90,
+      resizeMode:'flex',
+      onResize: (e)=> {
         // Save column width as user setting on resize.
-        _this._afterColumnResize(e);
+        this._afterColumnResize(e);
       }
     });
   },

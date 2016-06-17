@@ -51,8 +51,13 @@ table.object-list-view tbody tr td:first-child button i {
       overflow: hidden;
     }
 
-    .flexberry-lookup, .flexberry-dropdown {
+    .flexberry-lookup,
+    .ember-text-field {
       width: 100%;
+    }
+
+    .flexberry-lookup, .flexberry-file {
+      overflow: hidden;
     }
   }
 }

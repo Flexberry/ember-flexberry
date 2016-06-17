@@ -29,16 +29,16 @@
   </div>
 {{/if}}
 {{#if colsConfigButton}}
-<button class="ui button" {{action "showConfigDialog"}}>
-  <i class="large table icon"></i>
-</button>
-<div class="field">
-{{flexberry-menu
-  class='compact'
-  items=colsSettingsItems
-  onItemClick=(action 'onMenuItemClick')
-  }}
-</div>
+  <button class="ui icon button" {{action "showConfigDialog"}}>
+    <i class="large table icon"></i>
+  </button>
+  <div class="field">
+  {{flexberry-menu
+    class='compact'
+    items=colsSettingsItems
+    onItemClick=(action 'onMenuItemClick')
+    }}
+  </div>
 {{/if}}
 {{#each customButtonsArray as |customButton|}}
   <button

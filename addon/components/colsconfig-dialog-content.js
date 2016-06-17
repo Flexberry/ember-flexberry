@@ -72,10 +72,10 @@ export default FlexberryBaseComponent.extend({
       Ember.set(this.model.colDescs[n], 'hide', newHideState); // Set new state in model.colDescs
       if (newHideState) { // Hide element
         element.className = element.className.replace('unhide', 'hide');  // Change picture
-        Ember.$(element).parent().siblings('TD').removeClass('disabled'); // Disable row
+        Ember.$(element).parent().siblings('TD').addClass('disabled'); // Disable row
       } else {
         element.className = element.className.replace('hide', 'unhide');  // Change picture
-        Ember.$(element).parent().siblings('TD').addClass('disabled');  // Enaable row
+        Ember.$(element).parent().siblings('TD').removeClass('disabled');  // Enaable row
       }
 
       this._changed();
@@ -188,7 +188,7 @@ export default FlexberryBaseComponent.extend({
     rowUp: function(n) {
       let eventButton = this._getEventElement('RowUp', n);
       let newTr;
-      let tr = eventButton.parentNode.parentNode.parentNode;  // TR DOM-element
+      let tr = eventButton.parentNode.parentNode;  // TR DOM-element
       let select = Ember.$(tr).find('SELECT').get(0);
       let selectedIndex = select.selectedIndex; // selected index of sort order
       let tbody = tr.parentNode;  // TBODY DOM-element
@@ -213,7 +213,7 @@ export default FlexberryBaseComponent.extend({
     rowDown: function(n) {
       let eventButton = this._getEventElement('RowUp', n);
       var newTr;
-      let tr = eventButton.parentNode.parentNode.parentNode;  // TR DOM-element
+      let tr = eventButton.parentNode.parentNode;  // TR DOM-element
       let select = Ember.$(tr).find('SELECT').get(0);
       let selectedIndex = select.selectedIndex; // selected index of sort order
       var tbody = tr.parentNode;   // TBODY DOM-element

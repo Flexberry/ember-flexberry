@@ -350,8 +350,17 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @type Boolean
    * @readonly
    */
-  showHelperColumn: Ember.computed('showAsteriskInRow', 'showCheckBoxInRow', 'showDeleteButtonInRow', function() {
-    return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+  showHelperColumn: Ember.computed(
+    'showAsteriskInRow',
+    'showCheckBoxInRow',
+    'showDeleteButtonInRow',
+    'modelProjection',
+    function() {
+    if (this.get('modelProjection')) {
+      return false;
+    } else {
+      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+    }
   }),
 
   /**

@@ -5,6 +5,7 @@ import Proj from 'ember-flexberry-data';
 var Model = BaseModel.extend({
   address: DS.attr('string'),
   text: DS.attr('string'),
+  date: DS.attr('date'),
   votes: DS.attr('number'),
   moderated: DS.attr('boolean'),
 

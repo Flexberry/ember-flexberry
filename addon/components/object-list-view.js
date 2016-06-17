@@ -502,8 +502,10 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         if (userSettings === undefined) {
           Ember.set(this.currentController, 'userSettings', {});
         }
+
         Ember.set(this.currentController.userSettings, 'colsOrder', cols);
       }
+
       ret = cols;
     }
 

@@ -211,6 +211,7 @@ export default FlexberryBaseComponent.extend({
         if (Ember.$(newTr).prev('TR').length === 0) {  //First row
           Ember.$(newTr).find('BUTTON').eq(0).addClass('disabled');
         }
+        
         if (Ember.$(prevTr).next('TR').length === 0) {  //Last row
           Ember.$(prevTr).find('BUTTON').eq(1).addClass('disabled');
         }

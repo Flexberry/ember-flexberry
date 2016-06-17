@@ -1,5 +1,5 @@
 <div class="flexberry-colsconfig content">
-      <table class="ui fixed selectable celled table"
+      <table class="ui unstackable fixed selectable celled table"
         ><thead
           ><tr
           ><th class="show-columns" title='{{t "components.colsconfig-dialog-content.dont-show-columns"}}'><i class='large hide icon'></i></th
@@ -15,14 +15,14 @@
 {{!--debugger--}}
 <tr id="{{colDesc.trId}}" propName='{{colDesc.propName}}'
           ><td><i id="{{colDesc.hideId}}" class='large {{if colDesc.hide 'hide' 'unhide'}} icon' colsConfigHidden=false {{action 'invertVisibility' n}}></i></td
-          ><td class="{{if colDesc.hide 'disabled' ''}}"><nobr
-            ><button {{action 'rowUp' n}} id="{{colDesc.rowUpId}}" class="ui icon tiny button">
+          ><td class="{{if colDesc.hide 'disabled' ''}}">
+            <button {{action 'rowUp' n}} id="{{colDesc.rowUpId}}" class="ui icon tiny button">
               <i class="chevron up icon"></i>
             </button
-            ><button {{action 'rowDown' n}}  id="{{colDesc.rowDownId}}" class="ui icon tiny button">
+            ><button {{action 'rowDown' n}}  id="{{colDesc.rowDownId}}" class="ui icon tiny button no-margin">
               <i class="chevron down icon"></i>
-            </button></nobr
-          ></td
+            </button>
+          </td
           ><td  class="{{if colDesc.hide 'disabled' ''}}">{{colDesc.name}}</td
           ><td
             ><select class="ui compact dropdown selection icon button {{if colDesc.hide 'disabled' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n}}>

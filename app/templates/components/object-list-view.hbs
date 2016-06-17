@@ -13,7 +13,7 @@
   <thead>
     {{#unless (and useSingleColumn emptyMobileHeader) }}
       <tr>
-        <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+        <th class="object-list-view-operations collapsing {{unless (and showHelperColumn hasContent) 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
         {{#if useSingleColumn}}
           {{component headerCellComponent.componentName
             column=(hash header=singleColumnHeaderTitle sortable=false)

@@ -357,9 +357,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     'modelProjection',
     function() {
     if (this.get('modelProjection')) {
-      return false;
-    } else {
       return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+    } else {
+      return false;
     }
   }),
 
@@ -869,8 +869,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    *
    * @method didRender
    */
-  didRender: function() {
+  didRender() {
     this._super(...arguments);
+
+    let currentTable = this.$('table.object-list-view');
+
     if (this.get('allowColumnResize')) {
       if (this.get('useSingleColumn')) {
         Ember.Logger.error(
@@ -878,8 +881,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
           'can\'t be enabled at the same time.');
         return;
       }
-
-      let currentTable = this.$('table.object-list-view');
 
       // The first column has semantic class "collapsing"
       // so the column has 1px width and plugin has problems.
@@ -892,6 +893,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       currentTable.addClass('fixed');
 
       this._reinitResizablePlugin();
+    } else {
+      currentTable.colResizable({ disable: true });
     }
   },
 

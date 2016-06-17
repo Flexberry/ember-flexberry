@@ -263,7 +263,7 @@ export default FlexberryBaseComponent.extend({
     apply: function() {
       let colsConfig = this._getSettings();
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
-      if (this.settingName.length > 0 && !confirm('Применить данные установки без сохранения в настройке ' + settingName)) {
+      if (settingName.length > 0 && !confirm('Применить данные установки без сохранения в настройке ' + settingName)) {
         return;
       }
 

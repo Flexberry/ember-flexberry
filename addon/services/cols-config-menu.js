@@ -57,7 +57,7 @@ export default Ember.Service.extend(Ember.Evented, {
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
       this.colsSettingsItems = [rootItem];
-      this.listNamedSettings = params['listNamedSettings'];
+      this.listNamedSettings = params.listNamedSettings;
       for (let namedSetting in this.listNamedSettings) {
         this._addNamedSetting(namedSetting);
       }

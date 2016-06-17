@@ -202,6 +202,7 @@ export default FlexberryBaseComponent.extend({
     if (listUserSettings && 'DEFAULT' in listUserSettings) {
       delete listUserSettings.DEFAULT;
     }
+    
     this.listUserSettings = listUserSettings;
     Ember.set(this, 'listNamedSettings', {});
     if (listUserSettings) {

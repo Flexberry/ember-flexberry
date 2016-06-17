@@ -77,6 +77,7 @@ export default FlexberryBaseComponent.extend({
         element.className = element.className.replace('hide', 'unhide');  // Change picture
         Ember.$(element).parent().siblings('TD').addClass('disabled');  // Enaable row
       }
+
       this._changed();
     },
 

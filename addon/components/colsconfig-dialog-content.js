@@ -29,6 +29,7 @@ export default FlexberryBaseComponent.extend({
 
   init: function() {
     this._super(...arguments);
+    this.modelForDOM = [];
     if (!this.model || !('colDescs' in this.model)) {
       return;
     }
@@ -57,6 +58,13 @@ export default FlexberryBaseComponent.extend({
       colDesc.rowDownId = this._idPrefix + 'RowDown_' + i;
       this.modelForDOM[i] = colDesc;
     }
+  },
+
+  didRender: function() {
+    let firstButtonUp = Ember.$('#ColDescRowUp_0');
+    firstButtonUp.addClass('disabled'); // Disable first button up
+    let lastButtondown = Ember.$('#ColDescRowDown_' + (this.modelForDOM.length - 1));
+    lastButtondown.addClass('disabled'); // Disable last button down
   },
 
   actions: {
@@ -194,11 +202,18 @@ export default FlexberryBaseComponent.extend({
       let tbody = tr.parentNode;  // TBODY DOM-element
       let prevTr = Ember.$(tr).prev('TR').get(0); // Previous TR DOM-element
       if (prevTr) { // Previous TR exist
-        newTr = tr.cloneNode(true); // Exchange TR's
-        tbody.removeChild(tr);
+        newTr = tbody.removeChild(tr);
         newTr = tbody.insertBefore(newTr, prevTr);
         select = Ember.$(newTr).find('SELECT').get(0);
         select.selectedIndex = selectedIndex; // Reset selected index of sort order
+        Ember.$(newTr).find('BUTTON').eq(1).removeClass('disabled');
+        Ember.$(prevTr).find('BUTTON').eq(0).removeClass('disabled');
+        if (Ember.$(newTr).prev('TR').length === 0) {  //First row
+          Ember.$(newTr).find('BUTTON').eq(0).addClass('disabled');
+        }
+        if (Ember.$(prevTr).next('TR').length === 0) {  //Last row
+          Ember.$(prevTr).find('BUTTON').eq(1).addClass('disabled');
+        }
       }
 
       this._changed();
@@ -211,7 +226,7 @@ export default FlexberryBaseComponent.extend({
      * @param {Int} n  column number (id suffix)
      */
     rowDown: function(n) {
-      let eventButton = this._getEventElement('RowUp', n);
+      let eventButton = this._getEventElement('RowDown', n);
       var newTr;
       let tr = eventButton.parentNode.parentNode;  // TR DOM-element
       let select = Ember.$(tr).find('SELECT').get(0);
@@ -219,16 +234,22 @@ export default FlexberryBaseComponent.extend({
       var tbody = tr.parentNode;   // TBODY DOM-element
       var nextTr = Ember.$(tr).next('TR').get(0); // Next TR DOM-element
       if (nextTr) { // Next TR exist
-        newTr = tr.cloneNode(true); // Exchange TR's
-        tbody.removeChild(tr);
-        if (nextTr.nextSibling) { // Not last column
-          newTr = tbody.insertBefore(newTr, nextTr.nextSibling);
-        } else {  // last column
+        newTr = tbody.removeChild(tr);  // Exchange TR's
+        if (Ember.$(nextTr).next('TR').length === 0) {  //Last row
           newTr = tbody.appendChild(newTr);
+          Ember.$(newTr).find('BUTTON').eq(1).addClass('disabled');
+        } else {  // last row
+          newTr = tbody.insertBefore(newTr, nextTr.nextSibling);
+        }
+
+        if (Ember.$(nextTr).prev('TR').length === 0) {  //First row
+          Ember.$(nextTr).find('BUTTON').eq(0).addClass('disabled');
         }
 
         select = Ember.$(newTr).find('SELECT').get(0);
         select.selectedIndex = selectedIndex; // Reset selected index of sort order
+        Ember.$(newTr).find('BUTTON').eq(0).removeClass('disabled');
+        Ember.$(nextTr).find('BUTTON').eq(1).removeClass('disabled');
       }
 
       this._changed();

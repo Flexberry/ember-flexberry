@@ -311,13 +311,13 @@ export default FlexberryBaseComponent.extend({
   didDestroyElement() {
     this._super();
 
-    this.removeObserver('i18n.locale', this, this._languageReinit)
+    this.removeObserver('i18n.locale', this, this._languageReinit);
   },
 
   // Init component when DOM is ready.
   didInsertElement: function() {
     this._super();
-    this.addObserver('i18n.locale', this, this._languageReinit)
+    this.addObserver('i18n.locale', this, this._languageReinit);
   },
 
   /**

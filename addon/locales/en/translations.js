@@ -102,7 +102,12 @@ export default {
       'refresh-button-text': 'Refresh',
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
-      'filter-by-any-match-placeholder': 'Search...'
+      'filter-by-any-match-placeholder': 'Search...',
+      'create-setting-title': 'New setting',
+      'use-setting-title': 'Use',
+      'edit-setting-title': 'Edit',
+      'remove-setting-title': 'Remove',
+      'set-default-setting-title': 'Default setting'
     },
 
     'colsconfig-dialog-content': {
@@ -114,6 +119,8 @@ export default {
       'sort-priority': 'Priority column sorting',
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
+      'use': 'Use',
+      'use-without-save': 'Use this settings without saving in setting ',
       'save': 'Save'
     }
   }

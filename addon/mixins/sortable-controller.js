@@ -66,7 +66,7 @@ export default Ember.Mixin.create({
       }
 
       let sortQueryParam = this.serializeSortingParam(newSorting);
-      if ('userSettings' in this) { // NON model window
+      if ('userSettings' in this) { // NON modal window
         this.userSettings.sorting = newSorting;
         let router = getOwner(this).lookup('router:main');
         let moduleName =  router.currentRouteName;

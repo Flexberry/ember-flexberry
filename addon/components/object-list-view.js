@@ -861,6 +861,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     getSettingPromise.then(function(data) {
       _this._setColumnWidths(data);
     });
+
+    // TODO: resolv this problem.
+    this.$('.flexberry-dropdown:last').dropdown({
+      direction: 'upward'
+    });
   },
 
   /**

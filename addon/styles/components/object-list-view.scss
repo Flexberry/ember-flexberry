@@ -2,8 +2,13 @@
  * Styles for object-list-view component.
  */
 
-.object-list-view-container {
-  margin: 1em 0;
+.object-list-view-container {  
+  max-width: 100%;
+  overflow: auto;
+
+  .JCLRgrips {
+    margin: 1em 0;
+  }
 }
 
 table.object-list-view.selectable tbody,

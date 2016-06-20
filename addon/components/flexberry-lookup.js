@@ -308,13 +308,36 @@ export default FlexberryBaseComponent.extend({
     this._super();
   },
 
+  didDestroyElement() {
+    this._super();
+
+    this.removeObserver('i18n.locale', this, this._languageReinit)
+  },
+
+  // Init component when DOM is ready.
+  didInsertElement: function() {
+    this._super();
+    this.addObserver('i18n.locale', this, this._languageReinit)
+  },
+
+  /**
+    Handles changing current locale.
+    It reinits autocomplete or dropdown mode (depending on flag) in order to localize messages.
+
+    @private
+    @method _languageReinit
+   */
+  _languageReinit() {
+    if (this.get('autocomplete')) {
+      this._onAutocomplete();
+    } else if (this.get('dropdown')) {
+      this._onDropdown();
+    }
+  },
+
   // Init component when DOM is ready.
   didRender: function() {
     this._super();
-
-    if (this.get('readonly')) {
-      return;
-    }
 
     let isAutocomplete = this.get('autocomplete');
     let isDropdown = this.get('dropdown');
@@ -482,10 +505,14 @@ export default FlexberryBaseComponent.extend({
     let multiselect = this.get('multiselect');
     let displayAttributeName = _this.get('displayAttributeName');
 
+    var i18n = _this.get('i18n');
     this.$('.flexberry-dropdown').dropdown({
       minCharacters: minCharacters,
       allowAdditions: multiselect,
       cache: false,
+      message: {
+        noResults: i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string
+      },
       apiSettings: {
         responseAsync(settings, callback) {
           console.log('load');

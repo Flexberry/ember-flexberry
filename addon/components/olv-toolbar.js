@@ -161,8 +161,8 @@ export default FlexberryBaseComponent.extend({
         removeSettitingTitle: this.get('removeSettitingTitle'),
         listNamedSettings: this.get('listNamedSettings'),
       };
-      let ret = this.get('_userSettingsService').isUserSettingsServiceEnabled?
-        this.get('colsConfigMenu').resetMenu(params):
+      let ret = this.get('_userSettingsService').isUserSettingsServiceEnabled ?
+        this.get('colsConfigMenu').resetMenu(params) :
         [];
       return ret;
     }

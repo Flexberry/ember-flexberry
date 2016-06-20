@@ -62,8 +62,9 @@ export default ProjectedModelFormRoute.extend(
       let userSettingPromise = this.get('_userSettingsService').getUserSettings({ moduleName: moduleName })  //get sorting parameters from DEFAULT userSettings
       .then(_listUserSettings => {
         if (!_listUserSettings) { //UserSetting  switch off
-          _listUserSettings = {DEFAULT: {sorting: this.deserializeSortingParam(params.sort)}};
+          _listUserSettings = { DEFAULT: { sorting: this.deserializeSortingParam(params.sort) } };
         }
+
         return _listUserSettings;
       });
 

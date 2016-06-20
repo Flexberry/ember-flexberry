@@ -33,6 +33,28 @@ export default FlexberryBaseComponent.extend({
   _cachedDropdownValues: undefined,
 
   /**
+    This property is used in order to cache last value
+    of flag {{#crossLink "FlexberryLookup/autocomplete:property"}}{{/crossLink}}
+    in order to let init this mode afrer re-render only once if flag was enabled.
+
+    @private
+    @property _cachedAutocompleteValue
+    @type Boolean
+   */
+  _cachedAutocompleteValue: undefined,
+
+  /**
+    This property is used in order to cache last value
+    of flag {{#crossLink "FlexberryLookup/dropdown:property"}}{{/crossLink}}
+    in order to let init this mode afrer re-render only once if flag was enabled.
+
+    @private
+    @property _cachedDropdownValue
+    @type Boolean
+   */
+  _cachedDropdownValue: undefined,
+
+  /**
    * Default classes for component wrapper.
    *
    * @property classNames
@@ -287,18 +309,32 @@ export default FlexberryBaseComponent.extend({
   },
 
   // Init component when DOM is ready.
-  didInsertElement: function() {
+  didRender: function() {
     this._super();
 
     if (this.get('readonly')) {
       return;
     }
 
-    if (this.get('autocomplete')) {
+    let isAutocomplete = this.get('autocomplete');
+    let isDropdown = this.get('dropdown');
+    if (isAutocomplete && isDropdown) {
+      Ember.Logger.error(
+        'Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
+      return;
+    }
+
+    let cachedDropdownValue = this.get('_cachedDropdownValue');
+    let cachedAutocompleteValue = this.get('_cachedAutocompleteValue');
+
+    if (isAutocomplete && !cachedAutocompleteValue) {
       this._onAutocomplete();
-    } else if (this.get('dropdown')) {
+    } else if (isDropdown && !cachedDropdownValue) {
       this._onDropdown();
     }
+
+    this.set('_cachedDropdownValue', isDropdown);
+    this.set('_cachedAutocompleteValue', isAutocomplete);
   },
 
   /**

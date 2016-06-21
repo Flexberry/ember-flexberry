@@ -174,6 +174,10 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'toolbar-custom-buttons-example': {
+              'caption': 'Пользовательские кнопки',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -373,6 +377,11 @@ Ember.$.extend(true, translations, {
         },
         'settings-example': {
           'caption': 'Components-examples/flexberry-objectlistview/settings-example'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/toolbar-custom-buttons-example',
+          'custom-message': 'Привет!',
+          'custom-button-name': 'Передать привет'
         }
       },
       'flexberry-simpledatetime': {

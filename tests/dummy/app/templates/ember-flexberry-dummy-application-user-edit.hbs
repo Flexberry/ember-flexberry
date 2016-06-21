@@ -46,7 +46,7 @@
       class=(if model.errors.name "error" "")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
     }}
-    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-application-user-edit.name-validation-message-caption") pointing="pointing"}}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
   </div>
   <div class="field {{if model.errors.eMail "error" ""}}">
     {{flexberry-field
@@ -56,7 +56,7 @@
       class=(if model.errors.eMail "error" "")
       label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
     }}
-    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-validation-message-caption") pointing="pointing"}}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
   </div>
   <div class="field">
     {{#if model.errors.phone1}}

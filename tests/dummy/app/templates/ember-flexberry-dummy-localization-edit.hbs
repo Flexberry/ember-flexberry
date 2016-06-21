@@ -42,6 +42,6 @@
       class=(if model.errors.name "error" "")
       label=(t "forms.ember-flexberry-dummy-localization-edit.name-caption")
     }}
-    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-localization-edit.name-validation-message-caption") pointing="pointing"}}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
   </div>
 </form>

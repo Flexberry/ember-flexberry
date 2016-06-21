@@ -1,6 +1,12 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-06-21
+### Added
+FlexberryObjectlistviewComponent
+* Add support `modelProjection` by name
+* Add support promise for content
+
 ## 2016-06-14
 ### Fixed
 FlexberryTextboxComponent, FlexberryTextareaComponent:

@@ -252,8 +252,8 @@ Ember.$.extend(true, translations, {
       'gender-caption': 'Gender',
       'vip-caption': 'VIP',
       'karma-caption': 'Karma',
-      'vname-caption': 'Name is required',
-      'veMail-caption': 'E-Mail is required'
+      'name-validation-message-caption': 'Name is required',
+      'eMail-validation-message-caption': 'E-Mail is required'
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -264,13 +264,13 @@ Ember.$.extend(true, translations, {
       'author-caption': 'Author',
       'userVotes-caption': 'User votes',
       'date-caption': 'Date',
-      'vauthor-caption': 'Author is required'
+      'author-validation-message-caption': 'Author is required'
     },
 
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Localization',
       'name-caption': 'Name',
-      'vname-caption': 'Name is required'
+      'name-validation-message-caption': 'Name is required'
     },
 
     'ember-flexberry-dummy-suggestion-edit': {
@@ -286,9 +286,9 @@ Ember.$.extend(true, translations, {
       'files-caption': 'Files',
       'userVotes-caption': 'User votes',
       'comments-caption': 'Comments',
-      'vtype-caption': 'Type is required',
-      'vauthor-caption': 'Author is required',
-      'veditor-caption': 'Editor is required'
+      'type-validation-message-caption': 'Type is required',
+      'author-validation-message-caption': 'Author is required',
+      'editor-validation-message-caption': 'Editor is required'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {
@@ -296,8 +296,8 @@ Ember.$.extend(true, translations, {
       'name-caption': 'Name',
       'moderated-caption': 'Moderated',
       'parent-caption': 'Parent',
-      'localizedTypes-caption': 'Localized types',
-      'vname-caption': 'Name is required'
+      'localized-types-caption': 'Localized types',
+      'name-validation-message-caption': 'Name is required'
     },
 
     'ember-flexberry-dummy-application-user-list': {

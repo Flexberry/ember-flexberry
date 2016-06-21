@@ -28,7 +28,7 @@ var Model = BaseModel.extend({
   validations: {
     author: {
       presence: {
-        message: 'Заполните поле "Автор"'
+        message: 'Author is required'
       }
     }
   }

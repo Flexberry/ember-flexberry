@@ -252,8 +252,8 @@ Ember.$.extend(true, translations, {
       'gender-caption': 'Пол',
       'vip-caption': 'VIP',
       'karma-caption': 'Карма',
-      'vname-caption': 'Заполните поле "Имя"',
-      'veMail-caption': 'Заполните поле "E-mail"'
+      'name-validation-message-caption': 'Заполните поле "Имя"',
+      'eMail-validation-message-caption': 'Заполните поле "E-mail"'
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -264,13 +264,13 @@ Ember.$.extend(true, translations, {
       'author-caption': 'Автор',
       'userVotes-caption': 'Голоса пользователей',
       'date-caption': 'Дата',
-      'vauthor-caption': 'Заполните поле "Автор"'
+      'author-validation-message-caption': 'Заполните поле "Автор"'
     },
 
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Локализация',
       'name-caption': 'Наименование',
-      'vname-caption': 'Заполните наименование'
+      'name-validation-message-caption': 'Заполните наименование'
     },
 
     'ember-flexberry-dummy-suggestion-edit': {
@@ -286,9 +286,9 @@ Ember.$.extend(true, translations, {
       'files-caption': 'Прикрепленные файлы',
       'userVotes-caption': 'Голоса пользователей',
       'comments-caption': 'Комментарии',
-      'vtype-caption': 'Заполните тип предложения',
-      'vauthor-caption': 'Заполните поле "Автор"',
-      'veditor-caption': 'Заполните поле "Редактор"'
+      'type-validation-message-caption': 'Заполните тип предложения',
+      'author-validation-message-caption': 'Заполните поле "Автор"',
+      'editor-validation-message-caption': 'Заполните поле "Редактор"'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {
@@ -296,8 +296,8 @@ Ember.$.extend(true, translations, {
       'name-caption': 'Наименование',
       'moderated-caption': 'Одобрено',
       'parent-caption': 'Иерархия',
-      'localizedTypes-caption': 'Локализация типа',
-      'vname-caption': 'Заполните наименование'
+      'localized-types-caption': 'Локализация типа',
+      'name-validation-message-caption': 'Заполните наименование'
     },
 
     'ember-flexberry-dummy-application-user-list': {

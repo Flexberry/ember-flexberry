@@ -42,7 +42,7 @@
       class=(if model.errors.name "error" "")
       label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
     }}
-    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-suggestion-type-edit.vname-caption") pointing="pointing"}}
+    {{flexberry-validationmessage error=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-validation-message-caption") pointing="pointing"}}
   </div>
   <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
@@ -71,7 +71,7 @@
     }}
   </div>
   <div class="field">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localizedTypes-caption"}}</label>
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localized-types-caption"}}</label>
     {{#if model.errors.localizedTypes}}
       <span style="color:red">{{model.errors.localizedTypes}}</span>
     {{/if}}

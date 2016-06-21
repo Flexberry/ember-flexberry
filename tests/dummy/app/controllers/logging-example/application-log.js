@@ -1,13 +1,24 @@
+import Ember from 'ember';
 import ListFormController from 'ember-flexberry/controllers/i-i-s-caseberry-logging-objects-application-log-l';
 
 export default ListFormController.extend({
+  flexberryLoggingervice: Ember.inject.service('flexberry-logging'),
+
   /**
     Available test application locales.
 
     @property settings
     @type String[]
    */
-  settings: ['0', '1', '2', '3', '4', '5', '6'],
+  settings: [
+  '0 - OFF',
+  '1 - ERRORs',
+  '2 - WARNs, ERRORSs',
+  '3 - LOGs, WARNs, ERRORs',
+  '4 - INFOs, LOGs, WARNs, ERRORs',
+  '5 - DEBUGs, INFOs, LOGs, WARNs, ERRORs',
+  '6 - DEPRECATIONs, DEBUGs, INFOs, LOGs, WARNs, ERRORs'
+  ],
 
   /**
 jhghhjlk
@@ -20,12 +31,12 @@ jhghhjlk
         buttonAction: 'assertAction',
         buttonClasses: 'ui orange button'
       }, {
-        buttonName: 'Debag',
-        buttonAction: 'debagAction',
-        buttonClasses: 'ui orange button'
-      }, {
         buttonName: 'Error',
         buttonAction: 'errorAction',
+        buttonClasses: 'ui orange button'
+      }, {
+        buttonName: 'Debug',
+        buttonAction: 'debugAction',
         buttonClasses: 'ui orange button'
       }, {
         buttonName: 'Info',
@@ -40,6 +51,10 @@ jhghhjlk
         buttonAction: 'warnAction',
         buttonClasses: 'ui yellow button'
       }, {
+        buttonName: 'Deprecation',
+        buttonAction: 'deprecationAction',
+        buttonClasses: 'ui yellow button'
+      }, {
         buttonName: 'Throw',
         buttonAction: 'throwAction',
         buttonClasses: 'ui orange button'
@@ -47,19 +62,28 @@ jhghhjlk
     },
 
     /**
-jhghhjlk
+     j hghhjl*k
 
      */
-    assertAction() {
-      alert('Привет!');
+    setLogLevel(choosed) {
+      let logLevel = parseInt(choosed.substr(0, 1));
+      this.get('flexberryLoggingervice').flexberryLogLevel = logLevel;
     },
 
     /**
 jhghhjlk
 
      */
-    debagAction() {
-      alert('Пока!');
+    assertAction() {
+      alert('assertAction!');
+    },
+
+    /**
+jhghhjlk
+
+     */
+    debugAction() {
+      alert('debugAction!');
     },
 
     /**
@@ -67,7 +91,7 @@ jhghhjlk
 
      */
     errorAction() {
-      alert('Пока!');
+      alert('errorAction!');
     },
 
     /**
@@ -75,22 +99,30 @@ jhghhjlk
 
    */
     infoAction() {
-      alert('Пока!');
+      alert('infoAction!');
     },
     /**
 jhghhjlk
 
      */
     logAction() {
-      alert('Пока!');
+      alert('logAction!');
     },
 
     /**
-jhghhjlk
-
+     * jhghhjlk
+     *
      */
     warnAction() {
-      alert('Пока!');
+      alert('warnAction!');
+    },
+
+    /**
+     * jhghhjlk
+     *
+     */
+    deprecationAction() {
+      alert('deprecationAction!');
     },
 
     /**
@@ -98,7 +130,7 @@ jhghhjlk
 
      */
     throwAction() {
-      alert('Пока!');
-    },
+      alert('throwAction!');
+    }
   }
 });

@@ -3,6 +3,7 @@
       {{flexberry-dropdown
         class="ui dropdown"
         items=settings
+        onChange=(action 'setLogLevel')
         placeholder=(t "forms.application-log.placeholder")
         readonly=readonly
       }}
@@ -13,7 +14,7 @@
     modelName="logging-example/application-log"
     modelProjection=modelProjection
     content=model
-    createNewButton=true
+    createNewButton=false
     refreshButton=true
     sorting=computedSorting
     orderable=true
@@ -30,11 +31,12 @@
     nextPage=(action "nextPage")
     customButtons = (action "getCustomButtons")
     assertAction = 'assertAction'
-    debagAction = 'debagAction'
+    debugAction = 'debugAction'
     errorAction = 'errorAction'
     infoAction = 'infoAction'
     logAction = 'logAction'
     warnAction = 'warnAction'
+    deprecationAction = 'deprecationAction'
     throwAction = 'throwAction'
   }}
 </div>

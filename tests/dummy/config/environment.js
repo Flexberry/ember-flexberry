@@ -25,6 +25,9 @@ module.exports = function(environment) {
         api: backendUrl + '/odata'
       },
 
+      // Logging Level 1- ERRORs
+      flexberryLogLevel: 1,
+
       // Flag: indicates whether to use user settings service or not.
       useUserSettingsService: true,
 

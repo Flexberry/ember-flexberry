@@ -26,14 +26,6 @@ export default Ember.Controller.extend({
   collapsedCaption: null,
 
   /**
-    Flag: indicates whether 'flexberry-toggler' component is in 'readonly' mode or not.
-
-    @property readonly
-    @type Boolean
-   */
-  readonly: false,
-
-  /**
     Template text for 'flexberry-textbox' component.
 
     @property componentTemplateText
@@ -44,7 +36,6 @@ export default Ember.Controller.extend({
     '  caption=caption<br>' +
     '  expandedCaption=expandedCaption<br>' +
     '  collapsedCaption=collapsedCaption<br>' +
-    '  readonly=readonly<br>' +
     '}}<br>' +
     '  Some expandable/collapsable content<br>' +
     '{{/flexberry-toggler}}'),
@@ -56,7 +47,7 @@ export default Ember.Controller.extend({
     @type Object[]
    */
   componentSettingsMetadata: Ember.computed(function() {
-    var componentSettingsMetadata = Ember.A();
+    let componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'caption',
       settingType: 'string',
@@ -74,12 +65,6 @@ export default Ember.Controller.extend({
       settingType: 'string',
       settingDefaultValue: null,
       bindedControllerPropertieName: 'collapsedCaption'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'readonly',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'readonly'
     });
 
     return componentSettingsMetadata;

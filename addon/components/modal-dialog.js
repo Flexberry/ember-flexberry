@@ -86,7 +86,9 @@ export default Ember.Component.extend({
         },
         onHidden: function () {
           _this.sendAction('close');
-          this.remove();
+
+          // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
+          Ember.$(this).remove();
         },
         onVisible: function () {
           Ember.run(() => {

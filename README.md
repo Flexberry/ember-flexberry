@@ -26,9 +26,9 @@ Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework p
 
 Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality of the addon.
 
-* Stable version (master branch): https://ember-flexberry.firebaseapp.com
-* Bleeding edge version (develop branch): https://ember-flexberry-dev.firebaseapp.com
-* For temporal testing: https://ember-flexberry-test.firebaseapp.com
+* Stable version (master branch): https://flexberry-ember.firebaseapp.com
+* Bleeding edge version (develop branch): https://flexberry-ember-dev.firebaseapp.com
+* For temporal testing: https://flexberry-ember-test.firebaseapp.com
 
 ## Collaborating / Development
 
@@ -81,8 +81,10 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 
 Automatic deployment on [Firebase](https://www.firebase.com):
 * After a successful [Travis CI build](https://travis-ci.org/Flexberry/ember-flexberry), dummy app deploys on
-  * https://ember-flexberry.firebaseapp.com for master branch
-  * https://ember-flexberry-dev.firebaseapp.com for develop branch
+  * https://flexberry-ember.firebaseapp.com for master branch
+  * https://flexberry-ember-dev.firebaseapp.com for develop branch
+* After update dummy-test branch, dummy app deploy on
+  * https://flexberry-ember-test.firebaseapp.com
 
 Manual deployment on [Firebase](https://www.firebase.com):
 * `npm install -g firebase-tools` (install [Firebase CLI](https://www.firebase.com/docs/hosting/command-line-tool.html))

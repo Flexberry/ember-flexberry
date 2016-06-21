@@ -102,7 +102,28 @@ export default {
       'refresh-button-text': 'Обновить',
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
-      'filter-by-any-match-placeholder': 'Поиск...'
+      'filter-by-any-match-placeholder': 'Поиск...',
+      'create-setting-title': 'Новая настройка',
+      'use-setting-title': 'Применить',
+      'edit-setting-title': 'Редактировать',
+      'remove-setting-title': 'Удалить',
+      'set-default-setting-title': 'Установка по умолчанию'
+    },
+
+    'colsconfig-dialog-content': {
+      'title': 'Настроить отображение столбцов',
+      'dont-show-columns': 'Не отображать столбцы',
+      'columns-order': 'Определить порядок столбцов',
+      'column-name': 'Название столбца',
+      'sort-direction': 'Направление сортировки',
+      'sort-priority': 'Приоритет столбца при сортировке',
+      'setting-name': 'Название настройки',
+      'enter-setting-name': 'Введите название настройки',
+      'use': 'Применить',
+      'use-without-save': 'Применить данные установки без сохранения в настройке ',
+      'save': 'Сохранить'
     }
-  }
+
+  },
+
 };

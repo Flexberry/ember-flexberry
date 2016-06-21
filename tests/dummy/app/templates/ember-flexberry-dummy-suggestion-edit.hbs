@@ -104,12 +104,10 @@
       projection="SuggestionTypeL"
       displayAttributeName="name"
       title="Type"
-      relatedModel=model
       relationName="type"
       choose="showLookupDialog"
       remove="removeLookupValue"
       readonly=readonly
-      limitFunction=null
       class=(if model.errors.author "error" "")
     }}
   </div>
@@ -123,12 +121,10 @@
       projection="ApplicationUserL"
       displayAttributeName="name"
       title="Author"
-      relatedModel=model
       relationName="author"
       choose="showLookupDialog"
       remove="removeLookupValue"
       readonly=readonly
-      limitFunction=null
       class=(if model.errors.author "error" "")
     }}
   </div>
@@ -142,12 +138,10 @@
       projection="ApplicationUserL"
       displayAttributeName="name"
       title="Editor"
-      relatedModel=model
       relationName="editor1"
       choose="showLookupDialog"
       remove="removeLookupValue"
       readonly=readonly
-      limitFunction=null
       class=(if model.errors.editor1 "error" "")
     }}
   </div>

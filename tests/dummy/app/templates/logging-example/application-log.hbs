@@ -1,0 +1,40 @@
+<h3>Пример логирования</h3>
+<div class="right item">
+      {{flexberry-dropdown
+        class="ui dropdown"
+        items=settings
+        placeholder=(t "forms.application-log.placeholder")
+        readonly=readonly
+      }}
+  </div>
+<p></p>
+<div class="row">
+  {{flexberry-objectlistview
+    modelName="logging-example/application-log"
+    modelProjection=modelProjection
+    content=model
+    createNewButton=true
+    refreshButton=true
+    sorting=computedSorting
+    orderable=true
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    action="rowClick"
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    customButtons = (action "getCustomButtons")
+    assertAction = 'assertAction'
+    debagAction = 'debagAction'
+    errorAction = 'errorAction'
+    infoAction = 'infoAction'
+    logAction = 'logAction'
+    warnAction = 'warnAction'
+    throwAction = 'throwAction'
+  }}
+</div>

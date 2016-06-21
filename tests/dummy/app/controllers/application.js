@@ -102,6 +102,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.logging.show.caption'),
           title: i18n.t('forms.application.sitemap.logging.show.title'),
           children: null
+        }, {
+          link: 'logging-example/application-log',
+          caption: i18n.t('forms.application.sitemap.logging.log.caption'),
+          title: i18n.t('forms.application.sitemap.logging.log.title'),
+          children: null
         }]
       }, {
         link: null,

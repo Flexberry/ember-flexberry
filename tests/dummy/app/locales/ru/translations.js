@@ -79,6 +79,10 @@ Ember.$.extend(true, translations, {
           'show': {
             'caption': 'Лог приложения',
             'title': ''
+          },
+          'log': {
+            'caption': 'Пример',
+            'title': ''
           }
         },
         'components-examples': {
@@ -306,6 +310,11 @@ Ember.$.extend(true, translations, {
 
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Типы предложений'
+    },
+
+    'application-log': {
+      'caption': 'Пример регистрации ошибок и сообщений в логах',
+      'placeholder': 'Выбрать настройку записи лога',
     },
 
     'components-examples': {

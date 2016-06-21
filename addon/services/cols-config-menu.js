@@ -30,7 +30,7 @@ export default Ember.Service.extend(Ember.Evented, {
     },
 
     resetMenu: function(params) {
-      let itemsAlignment = innerWidth < 720 ? 'left' : 'right';
+      let itemsAlignment = window.innerWidth < 720 ? 'left' : 'right';
       let rootItem = {
         icon: 'dropdown icon',
         iconAlignment: 'right',

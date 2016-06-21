@@ -13,17 +13,19 @@ const { getOwner } = Ember;
  */
 export default Ember.Service.extend({
   /**
-   * store for transmit messages to server
-   *
-   * @property {Object} flexberryStore
+   store for transmit messages to server
+
+   @property {Object} flexberryStore
    */
   flexberryStore: null,
   /**
-   * Logger switcher on/off true if remote logging service works correctly
-   *
-   * @property {Boolean} serverLogEnabled
+   Logger switcher on/off true if remote logging service works correctly
+
+   @property {Boolean} serverLogEnabled
    */
   serverLogEnabled: true,	//Remote logging service works correctly
+
+  flexberryLogLevel: 0,
 
   /**
   * Initializator

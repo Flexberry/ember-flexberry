@@ -7,6 +7,17 @@ import Ember from 'ember';
  * Initializator  for logging service
  */
 export function initialize(applicationInstance) {
+
+
+  /**
+   *  flexberry-logging service for transmit error/warning/log/info/debug/deprecation messages to  store and save its on server as i-i-s-caseberry-logging-objects-application-log object
+   *
+   * @property flexberryLogging
+   * @type Object Ember.Service
+   * @default service:flexberry-logging
+   */
+  var flexberryLogging = applicationInstance.lookup('service:flexberry-logging');
+
   /**
   * LogLevel defined in configuration file config/environment.js
   * Possible values see in logLevelEnums
@@ -21,18 +32,10 @@ export function initialize(applicationInstance) {
     flexberryLogLevel = 0;	//switch off Logging
   }
 
+  flexberryLogging.flexberryLogLevel = flexberryLogLevel;
   if (flexberryLogLevel === 0) {
     return;	// Do nothing
   }
-
-  /**
-  *  flexberry-logging service for transmit error/warning/log/info/debug/deprecation messages to  store and save its on server as i-i-s-caseberry-logging-objects-application-log object
-  *
-  * @property flexberryLogging
-  * @type Object Ember.Service
-  * @default service:flexberry-logging
-  */
-  var flexberryLogging = applicationInstance.lookup('service:flexberry-logging');
 
   /**
   * Log level enumarator
@@ -140,7 +143,7 @@ export function initialize(applicationInstance) {
   * @param formattedMessage - full message content in JSON format
   */
   function _sendLog(levelName, message, formattedMessage) {
-    if (logLevelEnums[levelName] <= flexberryLogLevel) {	//Meggage category logged (lower or equal high flexberryLogLevel)
+    if (logLevelEnums[levelName] <= flexberryLogging.flexberryLogLevel) {	//Meggage category logged (lower or equal high flexberryLogLevel)
       flexberryLogging.flexberryLogger(levelName, message, formattedMessage);
     }
   }

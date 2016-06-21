@@ -59,15 +59,10 @@ export default ProjectedModelFormRoute.extend(
       let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
       let limitPredicate =
         this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
-
-      //let sorting = this.deserializeSortingParam(params.sort);
-
-      //get sorting parameters from DEFAULT userSettings
-
-      let userSettingPromise = this.get('_userSettingsService').getUserSettings({ moduleName: moduleName })
+      let userSettingPromise = this.get('_userSettingsService').getUserSettings({ moduleName: moduleName })  //get sorting parameters from DEFAULT userSettings
       .then(_listUserSettings => {
-        if (_listUserSettings) {
-          this.listUserSettings =  _listUserSettings;
+        if (!_listUserSettings) { //UserSetting  switch off
+          _listUserSettings = { DEFAULT: { sorting: this.deserializeSortingParam(params.sort) } };
         }
 
         return _listUserSettings;
@@ -78,6 +73,7 @@ export default ProjectedModelFormRoute.extend(
         listUserSettings=> {
           this.listUserSettings = listUserSettings;
           let sorting = [];
+          this.userSettings = {};
           if ('DEFAULT' in listUserSettings) {
             this.userSettings = this.listUserSettings.DEFAULT;
             sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];

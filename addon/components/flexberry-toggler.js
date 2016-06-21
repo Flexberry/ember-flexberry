@@ -3,7 +3,6 @@
  */
 
 import Ember from 'ember';
-import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
   Component for expand / collapse content.
@@ -17,9 +16,9 @@ import FlexberryBaseComponent from './flexberry-base-component';
   {{/flexberry-toggler}}
   ```
   @class FlexberryToggler
-  @extends FlexberryBaseComponent
+  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
  */
-export default FlexberryBaseComponent.extend({
+export default Ember.Component.extend({
   /**
     Current visibility state.
     @property _expanded

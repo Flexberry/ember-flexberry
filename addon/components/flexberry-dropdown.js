@@ -42,6 +42,18 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+  Flag indicates whether to make checks on selected value or not.
+
+  It has `false` value when component loads data by request by semantic processes.
+  It is not recommended to change its value out of addon.
+
+  @property needChecksOnValue
+  @type Boolean
+  @default true
+  */
+  needChecksOnValue: true,
+
+  /**
    * Overload wrapper tag name for disabling wrapper.
    *
    * @property tagName
@@ -147,13 +159,14 @@ export default FlexberryBaseComponent.extend({
       return;
     }
 
-    var items = this.get('items');
-    if (!Ember.isArray(items)) {
+    let items = this.get('items');
+    let needChecksOnValue = this.get('needChecksOnValue');
+    if (needChecksOnValue && !Ember.isArray(items)) {
       Ember.Logger.error(`Wrong type of flexberry-dropdown \`items\` propery: actual type is ${Ember.typeOf(items)}, but array is expected.`);
     }
 
     var value = this.get('value') || null;
-    if (!Ember.isNone(value) && items.indexOf(value) < 0) {
+    if (needChecksOnValue && !Ember.isNone(value) && items.indexOf(value) < 0) {
       Ember.Logger.error(`Wrong value of flexberry-dropdown \`value\` propery: \`${value}\`. Allowed values are: [\`${items.join(`\`, \``)}\`].`);
     }
 

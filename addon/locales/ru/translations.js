@@ -70,9 +70,14 @@ export default {
     },
 
     'flexberry-lookup': {
-      placeholder: '(нет значения)',
+      'placeholder': '(нет значения)',
       'choose-button-text': 'Выбрать',
-      'remove-button-text': 'Очистить'
+      'remove-button-text': 'Очистить',
+      'dropdown': {
+        'messages': {
+          'noResults': 'Значения не найдены.'
+        }
+      }
     },
 
     'flexberry-objectlistview': {
@@ -102,7 +107,12 @@ export default {
       'refresh-button-text': 'Обновить',
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
-      'filter-by-any-match-placeholder': 'Поиск...'
+      'filter-by-any-match-placeholder': 'Поиск...',
+      'create-setting-title': 'Новая настройка',
+      'use-setting-title': 'Применить',
+      'edit-setting-title': 'Редактировать',
+      'remove-setting-title': 'Удалить',
+      'set-default-setting-title': 'Установка по умолчанию'
     },
 
     'colsconfig-dialog-content': {
@@ -114,6 +124,8 @@ export default {
       'sort-priority': 'Приоритет столбца при сортировке',
       'setting-name': 'Название настройки',
       'enter-setting-name': 'Введите название настройки',
+      'use': 'Применить',
+      'use-without-save': 'Применить данные установки без сохранения в настройке ',
       'save': 'Сохранить'
     }
 

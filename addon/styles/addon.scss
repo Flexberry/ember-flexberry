@@ -25,11 +25,46 @@
   margin: 0 !important;
 }
 
+/**
+ * Flexberry-colsconfig.
+ */
+.flexberry-colsconfig {
+  .show-columns {
+    width: 47px;
+  }
+  .columns-order {
+    width: 90px;
+  }
+  .sort-direction {
+    width: 77px;
+  }
+  .sort-priority {
+    width: 70px;
+  }
+  .ui.table thead th {
+    text-align: center;
+  }
+  td>.input {
+    width: 100%;
+  }
+}
+
 // Style for responsive
 @media only screen and (max-width: 767px) {
   .ui.menu.container {
       margin-right: 0 !important;
       margin-left: 0 !important;
+  }
+  .flexberry-colsconfig {
+    .columns-order {
+      width: 50px;
+    }
+    .ui.right.button {
+      margin-top: 5px;
+    }
+    .ui.icon.button {
+      margin-bottom: 3px;
+    }
   }
 }
 

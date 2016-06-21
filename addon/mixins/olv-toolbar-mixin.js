@@ -5,14 +5,14 @@ export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings-service'),
 
   actions: {
-    showConfigDialog: function() {
+    showConfigDialog: function(settingName) {
       if (!this.get('_userSettingsService').isUserSettingsServiceEnabled) {
         alert('Реконфигурация отображения столбцов невозможна. Сервис пользовательских настроек выключен.');
         return;
       }
 
       let listUserSettings = this.model.listUserSettings;
-      let userSettings = this.model.userSettings;
+      let userSettings = settingName !== undefined && settingName in listUserSettings ? listUserSettings[settingName] :  this.model.userSettings;
       let propName;
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
@@ -75,7 +75,7 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: { colDescs: colDescs, listUserSettings: listUserSettings } },
+                { controller: controller, model: { colDescs: colDescs, listUserSettings: listUserSettings, settingName: settingName } },
                 loadingParams);
     }
 

@@ -46,6 +46,8 @@ Router.map(function() {
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/limit-function-example');
+  this.route('components-examples/flexberry-objectlistview/on-edit-form');
+  this.route('components-examples/flexberry-objectlistview/on-edit-form/user', { path: 'components-examples/flexberry-objectlistview/on-edit-form/user/:id' });
   this.route('components-examples/flexberry-simpledatetime/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');

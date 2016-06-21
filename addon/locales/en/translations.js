@@ -70,9 +70,14 @@ export default {
     },
 
     'flexberry-lookup': {
-      placeholder: '(no value)',
+      'placeholder': '(no value)',
       'choose-button-text': 'Choose',
-      'remove-button-text': 'Remove'
+      'remove-button-text': 'Remove',
+      'dropdown': {
+        'messages': {
+          'noResults': 'No results found.'
+        }
+      }
     },
 
     'flexberry-objectlistview': {

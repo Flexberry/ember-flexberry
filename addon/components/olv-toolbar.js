@@ -8,6 +8,8 @@ import { translationMacro as t } from 'ember-i18n';
 const { getOwner } = Ember;
 
 export default FlexberryBaseComponent.extend({
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+
   modelController: null,
 
   /**
@@ -159,7 +161,10 @@ export default FlexberryBaseComponent.extend({
         removeSettitingTitle: this.get('removeSettitingTitle'),
         listNamedSettings: this.get('listNamedSettings'),
       };
-      return this.get('colsConfigMenu').resetMenu(params);
+      let ret = this.get('_userSettingsService').isUserSettingsServiceEnabled ?
+        this.get('colsConfigMenu').resetMenu(params) :
+        [];
+      return ret;
     }
   ),
 

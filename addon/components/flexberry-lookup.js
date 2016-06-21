@@ -490,7 +490,7 @@ export default FlexberryBaseComponent.extend({
     let multiselect = this.get('multiselect');
     let displayAttributeName = _this.get('displayAttributeName');
 
-    var i18n = _this.get('i18n');
+    let i18n = _this.get('i18n');
     this.$('.flexberry-dropdown').dropdown({
       minCharacters: minCharacters,
       allowAdditions: multiselect,

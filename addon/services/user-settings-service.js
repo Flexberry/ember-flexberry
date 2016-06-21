@@ -178,7 +178,7 @@ export default Ember.Service.extend({
   getUserSettings: function(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
       return new Ember.RSVP.Promise(function(resolve) {
-        resolve({ });
+        resolve(undefined);
       });
     }
 

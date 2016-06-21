@@ -20,17 +20,39 @@ import FlexberryBaseComponent from './flexberry-base-component';
  */
 export default FlexberryBaseComponent.extend({
   /**
-    This property is used in order to cache loaded for dropdown mode values.
-    Values are kept as array with master id as key and master object as value.
-    This property is initialized after request to server got dropdown values.
-    This cache is important because semantic ui dropdown component lets use only text values,
-    while for lookup it is necessary to get object values.
+  This property is used in order to cache loaded for dropdown mode values.
+  Values are kept as array with master id as key and master object as value.
+  This property is initialized after request to server got dropdown values.
+  This cache is important because semantic ui dropdown component lets use only text values,
+  while for lookup it is necessary to get object values.
 
-    @private
-    @property _cachedDropdownValues
-    @type Array
-   */
+  @property _cachedDropdownValues
+  @private
+  @type Array
+  */
   _cachedDropdownValues: undefined,
+
+  /**
+  This property is used in order to cache last value
+  of flag {{#crossLink "FlexberryLookup/autocomplete:property"}}{{/crossLink}}
+  in order to let init this mode afrer re-render only once if flag was enabled.
+
+  @property _cachedAutocompleteValue
+  @private
+  @type Boolean
+  */
+  _cachedAutocompleteValue: undefined,
+
+  /**
+  This property is used in order to cache last value
+  of flag {{#crossLink "FlexberryLookup/dropdown:property"}}{{/crossLink}}
+  in order to let init this mode afrer re-render only once if flag was enabled.
+
+  @property _cachedDropdownValue
+  @private
+  @type Boolean
+  */
+  _cachedDropdownValue: undefined,
 
   /**
    * Default classes for component wrapper.
@@ -286,19 +308,41 @@ export default FlexberryBaseComponent.extend({
     this._super();
   },
 
-  // Init component when DOM is ready.
-  didInsertElement: function() {
+  didDestroyElement() {
     this._super();
 
-    if (this.get('readonly')) {
+    this.removeObserver('i18n.locale', this, this._languageReinit);
+  },
+
+  // Init component when DOM is ready.
+  didInsertElement() {
+    this._super();
+    this.addObserver('i18n.locale', this, this._languageReinit);
+  },
+
+  // Init component when DOM is ready.
+  didRender() {
+    this._super();
+
+    let isAutocomplete = this.get('autocomplete');
+    let isDropdown = this.get('dropdown');
+    if (isAutocomplete && isDropdown) {
+      Ember.Logger.error(
+        'Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
       return;
     }
 
-    if (this.get('autocomplete')) {
+    let cachedDropdownValue = this.get('_cachedDropdownValue');
+    let cachedAutocompleteValue = this.get('_cachedAutocompleteValue');
+
+    if (isAutocomplete && !cachedAutocompleteValue) {
       this._onAutocomplete();
-    } else if (this.get('dropdown')) {
+    } else if (isDropdown && !cachedDropdownValue) {
       this._onDropdown();
     }
+
+    this.set('_cachedDropdownValue', isDropdown);
+    this.set('_cachedAutocompleteValue', isAutocomplete);
   },
 
   /**
@@ -319,7 +363,7 @@ export default FlexberryBaseComponent.extend({
 
     let relationModelName = getRelationType(relatedModel, relationName);
 
-    let displayAttributeName = _this.get('displayAttributeName');
+    let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
       throw new Error('Required property "displayAttributeName" is not defined.');
     }
@@ -446,10 +490,14 @@ export default FlexberryBaseComponent.extend({
     let multiselect = this.get('multiselect');
     let displayAttributeName = _this.get('displayAttributeName');
 
+    let i18n = _this.get('i18n');
     this.$('.flexberry-dropdown').dropdown({
       minCharacters: minCharacters,
       allowAdditions: multiselect,
       cache: false,
+      message: {
+        noResults: i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string
+      },
       apiSettings: {
         responseAsync(settings, callback) {
           console.log('load');
@@ -566,5 +614,20 @@ export default FlexberryBaseComponent.extend({
                               autocompletePredicate :
                               undefined));
     return resultPredicate;
+  },
+
+  /**
+  Handles changing current locale.
+  It reinits autocomplete or dropdown mode (depending on flag) in order to localize messages.
+
+  @method _languageReinit
+  @private
+  */
+  _languageReinit() {
+    if (this.get('autocomplete')) {
+      this._onAutocomplete();
+    } else if (this.get('dropdown')) {
+      this._onDropdown();
+    }
   }
 });

@@ -853,10 +853,19 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
 
-    if (this.get('content')) {
-      this.get('content').forEach((item, index, enumerable) => {
-        this._addModel(item);
-      });
+    let content = this.get('content');
+    if (content) {
+      if (content.get('isFulfilled') === false) {
+        content.then((items) => {
+          items.forEach((item) => {
+            this._addModel(item);
+          });
+        });
+      } else {
+        content.forEach((item) => {
+          this._addModel(item);
+        });
+      }
     }
   },
 

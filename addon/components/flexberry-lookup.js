@@ -20,38 +20,38 @@ import FlexberryBaseComponent from './flexberry-base-component';
  */
 export default FlexberryBaseComponent.extend({
   /**
-    This property is used in order to cache loaded for dropdown mode values.
-    Values are kept as array with master id as key and master object as value.
-    This property is initialized after request to server got dropdown values.
-    This cache is important because semantic ui dropdown component lets use only text values,
-    while for lookup it is necessary to get object values.
+  This property is used in order to cache loaded for dropdown mode values.
+  Values are kept as array with master id as key and master object as value.
+  This property is initialized after request to server got dropdown values.
+  This cache is important because semantic ui dropdown component lets use only text values,
+  while for lookup it is necessary to get object values.
 
-    @private
-    @property _cachedDropdownValues
-    @type Array
-   */
+  @property _cachedDropdownValues
+  @private
+  @type Array
+  */
   _cachedDropdownValues: undefined,
 
   /**
-    This property is used in order to cache last value
-    of flag {{#crossLink "FlexberryLookup/autocomplete:property"}}{{/crossLink}}
-    in order to let init this mode afrer re-render only once if flag was enabled.
+  This property is used in order to cache last value
+  of flag {{#crossLink "FlexberryLookup/autocomplete:property"}}{{/crossLink}}
+  in order to let init this mode afrer re-render only once if flag was enabled.
 
-    @private
-    @property _cachedAutocompleteValue
-    @type Boolean
-   */
+  @property _cachedAutocompleteValue
+  @private
+  @type Boolean
+  */
   _cachedAutocompleteValue: undefined,
 
   /**
-    This property is used in order to cache last value
-    of flag {{#crossLink "FlexberryLookup/dropdown:property"}}{{/crossLink}}
-    in order to let init this mode afrer re-render only once if flag was enabled.
+  This property is used in order to cache last value
+  of flag {{#crossLink "FlexberryLookup/dropdown:property"}}{{/crossLink}}
+  in order to let init this mode afrer re-render only once if flag was enabled.
 
-    @private
-    @property _cachedDropdownValue
-    @type Boolean
-   */
+  @property _cachedDropdownValue
+  @private
+  @type Boolean
+  */
   _cachedDropdownValue: undefined,
 
   /**
@@ -315,28 +315,13 @@ export default FlexberryBaseComponent.extend({
   },
 
   // Init component when DOM is ready.
-  didInsertElement: function() {
+  didInsertElement() {
     this._super();
     this.addObserver('i18n.locale', this, this._languageReinit);
   },
 
-  /**
-    Handles changing current locale.
-    It reinits autocomplete or dropdown mode (depending on flag) in order to localize messages.
-
-    @private
-    @method _languageReinit
-   */
-  _languageReinit() {
-    if (this.get('autocomplete')) {
-      this._onAutocomplete();
-    } else if (this.get('dropdown')) {
-      this._onDropdown();
-    }
-  },
-
   // Init component when DOM is ready.
-  didRender: function() {
+  didRender() {
     this._super();
 
     let isAutocomplete = this.get('autocomplete');
@@ -378,7 +363,7 @@ export default FlexberryBaseComponent.extend({
 
     let relationModelName = getRelationType(relatedModel, relationName);
 
-    let displayAttributeName = _this.get('displayAttributeName');
+    let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
       throw new Error('Required property "displayAttributeName" is not defined.');
     }
@@ -629,5 +614,20 @@ export default FlexberryBaseComponent.extend({
                               autocompletePredicate :
                               undefined));
     return resultPredicate;
+  },
+
+  /**
+  Handles changing current locale.
+  It reinits autocomplete or dropdown mode (depending on flag) in order to localize messages.
+
+  @method _languageReinit
+  @private
+  */
+  _languageReinit() {
+    if (this.get('autocomplete')) {
+      this._onAutocomplete();
+    } else if (this.get('dropdown')) {
+      this._onDropdown();
+    }
   }
 });

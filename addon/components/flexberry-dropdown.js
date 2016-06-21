@@ -42,15 +42,15 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-    Flag indicates whether to make checks on selected value or not.
+  Flag indicates whether to make checks on selected value or not.
 
-    It has `false` value when component loads data by request by semantic processes.
-    It is not recommended to change its value out of addon.
+  It has `false` value when component loads data by request by semantic processes.
+  It is not recommended to change its value out of addon.
 
-    @property needChecksOnValue
-    @type Boolean
-    @default true
-   */
+  @property needChecksOnValue
+  @type Boolean
+  @default true
+  */
   needChecksOnValue: true,
 
   /**

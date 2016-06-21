@@ -20,6 +20,19 @@ import FlexberryBaseComponent from './flexberry-base-component';
  */
 export default FlexberryBaseComponent.extend({
   /**
+    This property is used in order to cache loaded for dropdown mode values.
+    Values are kept as array with master id as key and master object as value.
+    This property is initialized after request to server got dropdown values.
+    This cache is important because semantic ui dropdown component lets use only text values,
+    while for lookup it is necessary to get object values.
+
+    @private
+    @property _cachedDropdownValues
+    @type Array
+   */
+  _cachedDropdownValues: undefined,
+
+  /**
    * Default classes for component wrapper.
    *
    * @property classNames
@@ -450,28 +463,42 @@ export default FlexberryBaseComponent.extend({
           }
 
           store.query(relationModelName, builder.build()).then((records) => {
+            // We have to cache data because dropdown component sets text as value and we lose object value.
+            let resultArray = [];
             callback({
               success: true,
               results: records.map(i => {
                 let attributeName = i.get(displayAttributeName);
+                resultArray[i.id] = i;
                 return {
                   name: attributeName,
-                  value: i
+                  value: i.id
                 };
               })
             });
+            _this.set('_cachedDropdownValues', resultArray);
           }, () => {
             callback({ success: false });
           });
         }
       },
       onChange(value) {
+        let newValue = value;
+        if (value) {
+          let cachedValues = _this.get('_cachedDropdownValues');
+          if (!cachedValues || !cachedValues[value]) {
+            Ember.Logger.error('Can\'t find selected dropdown value among cached values.');
+          } else {
+            newValue = cachedValues[value];
+          }
+        }
+
         _this.sendAction(
           'updateLookupAction',
           {
             relationName: relationName,
             modelToLookup: relatedModel,
-            newRelationValue: value
+            newRelationValue: newValue
           });
       }
     }).dropdown('set text', _this.get('displayValue'));

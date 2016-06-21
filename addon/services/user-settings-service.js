@@ -138,6 +138,35 @@ export default Ember.Service.extend({
   },
 
   /**
+   * It delete user setting from server by setting's and module's names.
+   *
+   * @method deleteUserSetting
+   *
+   * @param {Object} [options] Parameters for user setting getting.
+   * @param {String} options.moduleName Name of module to search by.
+   * @param {String} options.settingName Setting name to search by..
+   */
+  deleteUserSetting: function(options) {
+    if (!this.get('isUserSettingsServiceEnabled')) {
+      return new Ember.RSVP.Promise(function(resolve) {
+        resolve(undefined);
+      });
+    }
+
+    let methodOptions = Ember.merge({
+      moduleName: undefined,
+      settingName: undefined
+    }, options);
+
+    let moduleName = methodOptions.moduleName;
+    let settingName = methodOptions.settingName;
+
+    Ember.assert('Module name is not defined for user setting getting.', moduleName);
+    Ember.assert('Setting name is not defined for user setting getting.', settingName);
+    return this._deleteExistingRecord(moduleName, settingName);
+  },
+
+  /**
    * It gets ALL user setting from server by module's names.
    *
    * @method getUserSetting
@@ -207,10 +236,54 @@ export default Ember.Service.extend({
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 1; i < foundRecords.length; i++) {
-            foundRecords[i].deleteRecord();
+            foundRecords[i].record.destroyRecord();
           }
 
           return foundRecords[0].record;
+        }
+
+      }
+
+      return undefined;
+    });
+  },
+
+  /**
+   * It delete  user settings record for this moduleName and settingName.
+   *
+   * @method _deleteExistingRecord
+   * @private
+   *
+   * @param {Object} moduleName Module name of looked for record.
+   * @param {String} settingName Setting name of looked for record.
+   * @return {Promise[]} A promise array
+   */
+  _deleteExistingRecord: function(moduleName, settingName) {
+    // TODO: add search by username.
+    let currentUserName = this.getCurrentUser();
+    let p1 = new SimplePredicate('userName', 'eq', currentUserName);
+    let p2 = new SimplePredicate('moduleName', 'eq', moduleName);
+    let p3 = new SimplePredicate('settName', 'eq', settingName);
+    let cp = new ComplexPredicate('and', p1, p2, p3);
+    let store = this.get('store');
+    let modelName = 'new-platform-flexberry-flexberry-user-setting';
+    let builder = new QueryBuilder(store)
+    .from(modelName)
+    .selectByProjection('FlexberryUserSettingE')
+    .where(cp);
+
+    return store.query(modelName, builder.build()).then(function(result) {
+      if (result) {
+        let delPromises = [];
+        let foundRecords = result.get('content');
+        if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
+          for (let i =  0; i < foundRecords.length; i++) {
+            delPromises[delPromises.length] = foundRecords[i].record.destroyRecord();
+          }
+
+          return Ember.RSVP.Promise.all(delPromises).then(
+            result => {return result;}
+          );
         }
 
       }

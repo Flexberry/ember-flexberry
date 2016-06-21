@@ -2,7 +2,8 @@
   {{flexberry-dropdown
     placeholder=placeholder
     class='search'
-    value=displayText
+    value=displayValue
+    readonly=(if readonly 'readonly')
   }}
 {{else}}
 <div class="ui fluid action input">
@@ -11,7 +12,7 @@
     class=(concat 'lookup-field ' (if autocomplete 'prompt'))
     placeholder=placeholder
     value=displayValue
-    readonly=(if (or readonly (and (not autocomplete) (not dropdown))) 'readonly')
+    readonly=(if (or readonly (not autocomplete)) 'readonly')
   }}
   <button class="ui {{if readonly 'disabled'}} {{chooseButtonClass}} button" {{action 'choose' chooseData}}>{{{chooseText}}}</button>
   <button class="ui {{if readonly 'disabled'}} {{removeButtonClass}} button" {{action 'remove' removeData}}>{{{removeText}}}</button>

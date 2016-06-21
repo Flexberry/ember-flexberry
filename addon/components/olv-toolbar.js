@@ -4,6 +4,8 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
+const { getOwner } = Ember;
 
 export default FlexberryBaseComponent.extend({
   modelController: null,
@@ -62,6 +64,15 @@ export default FlexberryBaseComponent.extend({
   deleteButton: false,
 
   /**
+   * Flag to use colsConfigButton button at toolbar.
+   *
+   * @property colsConfigButton
+   * @type Boolean
+   * @default false
+   */
+  colsConfigButton: true,
+
+  /**
    * Flag to use filter button at toolbar.
    *
    * @property filterButton
@@ -116,7 +127,41 @@ export default FlexberryBaseComponent.extend({
    */
   customButtonsArray: undefined,
 
-  colsSettingsItems: [],
+  listUserSettings: undefined,
+
+  createSettitingTitle: t('components.olv-toolbar.create-setting-title'),
+
+  useSettitingTitle: t('components.olv-toolbar.use-setting-title'),
+
+  editSettitingTitle: t('components.olv-toolbar.edit-setting-title'),
+
+  removeSettitingTitle: t('components.olv-toolbar.remove-setting-title'),
+
+  setDefaultSettitingTitle: t('components.olv-toolbar.set-default-setting-title'),
+
+  colsConfigMenu: Ember.inject.service(),
+
+  listNamedSettings: null,
+
+  colsSettingsItems:  Ember.computed(
+    'createSettitingTitle',
+    'setDefaultSettitingTitle',
+    'useSettitingTitle',
+    'editSettitingTitle',
+    'removeSettitingTitle',
+    'listNamedSettings',
+    function() {
+      let params = {
+        createSettitingTitle: this.get('createSettitingTitle'),
+        setDefaultSettitingTitle: this.get('setDefaultSettitingTitle'),
+        useSettitingTitle: this.get('useSettitingTitle'),
+        editSettitingTitle: this.get('editSettitingTitle'),
+        removeSettitingTitle: this.get('removeSettitingTitle'),
+        listNamedSettings: this.get('listNamedSettings'),
+      };
+      return this.get('colsConfigMenu').resetMenu(params);
+    }
+  ),
 
   init: function() {
     this._super(...arguments);
@@ -135,52 +180,36 @@ export default FlexberryBaseComponent.extend({
       this.set('customButtonsArray', customButtonsResult);
     }
 
+    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
+  },
+
+  _addNamedSetting: function(namedSeting) {
+    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
+    listNamedSettings[namedSeting] = true;
+    Ember.set(this, 'listNamedSettings', listNamedSettings);
+  },
+
+  _deleteNamedSetting: function(namedSeting) {
+    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
+    delete listNamedSettings[namedSeting];
+    Ember.set(this, 'listNamedSettings', listNamedSettings);
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
     let listUserSettings = this.modelController.model.listUserSettings;
     if (listUserSettings && 'DEFAULT' in listUserSettings) {
       delete listUserSettings.DEFAULT;
     }
 
-    let listNamedSettings = [];
+    this.listUserSettings = listUserSettings;
+    Ember.set(this, 'listNamedSettings', {});
     if (listUserSettings) {
       for (let nameSetting in listUserSettings) {
-        listNamedSettings[listNamedSettings.length] = nameSetting;
+        Ember.set(this.listNamedSettings, nameSetting, true);
       }
     }
-
-    this.colsSettingsItems = [{
-      icon: 'dropdown icon',
-      iconAlignment: 'right',
-      title: '',
-      items: [{
-        icon: 'table icon',
-        iconAlignment: 'left',
-        title: 'Создать настройку'
-      }]
-    }];
-    let items = this.colsSettingsItems[0].items;
-    if (listNamedSettings.length > 0) {
-      let menus = [
-        { name: 'use', title: 'Применить', icon: 'checkmark box' },
-        { name: 'edit', title: 'Редактировать', icon: 'setting' },
-        { name: 'remove', title: 'Удалить', icon: 'remove' }
-      ];
-      for (let menu in menus) {
-        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title, items: [] };
-        let icon = menus[menu].icon + ' icon';
-        for (let i = 0; i < listNamedSettings.length; i++) {
-          let subSubmenu = { title: listNamedSettings[i], icon: icon, iconAlignment: 'left' };
-          submenu.items[submenu.items.length] = subSubmenu;
-        }
-
-        items[items.length] = submenu;
-      }
-    }
-
-    items[items.length] = {
-        icon: 'remove circle icon',
-        iconAlignment: 'left',
-        title: 'Сбросить настройку'
-      };
   },
 
   /**
@@ -191,6 +220,8 @@ export default FlexberryBaseComponent.extend({
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
     this._super(...arguments);
   },
 
@@ -238,8 +269,8 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('customButtonAction', actionName);
     },
 
-    showConfigDialog: function() {
-      this.get('modelController').send('showConfigDialog');
+    showConfigDialog: function(namedSetting) {
+      this.get('modelController').send('showConfigDialog', namedSetting);
     },
 
     onMenuItemClick: function (e) {
@@ -249,24 +280,53 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
+      this._router = getOwner(this).lookup('router:main');
       let className = iTags.get(0).className;
       let namedSeting = namedSetingSpans.get(0).innerText;
+      let moduleName  =   this._router.currentRouteName;
       switch (className) {
         case 'table icon':
-          alert('Configure ' + namedSeting);
-          this.sendAction('showConfigDialog', e);
+          this.send('showConfigDialog');
           break;
         case 'checkmark box icon':
-          alert('Use ' + namedSeting);
+
+          //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
+          let colsConfig = this.listUserSettings[namedSeting];
+          let savePromise = this.currentController.get('_userSettingsService').
+            saveUserSetting({ moduleName: moduleName, settingName: 'DEFAULT', userSetting: colsConfig }); //save as DEFAULT
+          savePromise.then(
+            record => {
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            }
+          );
           break;
         case 'setting icon':
-          alert('Edit ' + namedSeting);
+          this.send('showConfigDialog', namedSeting);
           break;
         case 'remove icon':
-          alert('Remove ' + namedSeting);
+          this.currentController.get('_userSettingsService').
+          deleteUserSetting({ moduleName: moduleName, settingName: namedSeting }).then(
+            result => {
+              this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSeting);
+              alert('Настройка ' + namedSeting + ' удалена');
+            }
+          );
           break;
         case 'remove circle icon':
-          alert('Remove default');
+          this.currentController.get('_userSettingsService').
+          deleteUserSetting({ moduleName: moduleName, settingName: 'DEFAULT' }).then(
+            record => {
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            }
+          );
           break;
       }
     }

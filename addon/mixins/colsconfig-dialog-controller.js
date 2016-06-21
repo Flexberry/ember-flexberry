@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Mixin.create({
   queryParams: ['sort'],
@@ -12,7 +13,7 @@ export default Ember.Mixin.create({
    * @default undefined
    */
   _openedModalDialog: undefined,
-  title: 'Настроить отображение столбцов',
+  title: t('components.colsconfig-dialog-content.title'),
   actions: {
     /**
      * Handles create modal window action.

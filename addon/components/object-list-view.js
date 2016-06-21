@@ -42,7 +42,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         return;
       }
 
-      var action = event.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
+      var action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
     },
 
@@ -350,8 +350,17 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    * @type Boolean
    * @readonly
    */
-  showHelperColumn: Ember.computed('showAsteriskInRow', 'showCheckBoxInRow', 'showDeleteButtonInRow', function() {
-    return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+  showHelperColumn: Ember.computed(
+    'showAsteriskInRow',
+    'showCheckBoxInRow',
+    'showDeleteButtonInRow',
+    'modelProjection',
+    function() {
+    if (this.get('modelProjection')) {
+      return false;
+    } else {
+      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+    }
   }),
 
   /**
@@ -489,6 +498,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         }
       }
     } else {
+      if (this.currentController) {
+        if (userSettings === undefined) {
+          Ember.set(this.currentController, 'userSettings', {});
+        }
+
+        Ember.set(this.currentController.userSettings, 'colsOrder', cols);
+      }
+
       ret = cols;
     }
 

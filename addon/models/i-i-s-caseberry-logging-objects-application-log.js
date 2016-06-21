@@ -80,6 +80,7 @@ Model.defineProjection('ShortL', 'i-i-s-caseberry-logging-objects-application-lo
   title: Proj.attr('Событие'),
   eventId: Proj.attr('Код события'),
   message: Proj.attr('Сообщение'),
+  formattedMessage: Proj.attr('Форматированное сообщение'),
   priority: Proj.attr('Приоритет'),
   category: Proj.attr('Категория'),
   severity: Proj.attr('Серьёзность'),

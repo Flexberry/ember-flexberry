@@ -75,6 +75,7 @@ jhghhjlk
 
      */
     assertAction() {
+      Ember.assert('Assert invocation', false);
       alert('assertAction!');
     },
 

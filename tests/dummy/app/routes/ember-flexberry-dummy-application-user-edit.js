@@ -1,4 +1,4 @@
-import BaseEditFormRoute from './base-edit-form';
+import EditFormMixin from './mixins/edit-form-mixin';
 
 export default BaseEditFormRoute.extend({
   /**

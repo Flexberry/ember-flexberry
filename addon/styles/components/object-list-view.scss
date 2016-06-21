@@ -2,13 +2,10 @@
  * Styles for object-list-view component.
  */
 
-.object-list-view-container {  
+.object-list-view-container {
+  margin: 1em 0;
   max-width: 100%;
   overflow: auto;
-
-  .JCLRgrips {
-    margin: 1em 0;
-  }
 }
 
 table.object-list-view.selectable tbody,
@@ -57,7 +54,7 @@ table.object-list-view tbody tr td:first-child button i {
     }
 
     .flexberry-lookup,
-    .ember-text-field {
+    .ui.input > input {
       width: 100%;
     }
 

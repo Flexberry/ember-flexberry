@@ -111,7 +111,7 @@
       readonly=readonly
       class=(if model.errors.author "error" "")
     }}
-    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+    {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
   </div>
   <div class="field {{if model.errors.author "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
@@ -126,7 +126,7 @@
       readonly=readonly
       class=(if model.errors.author "error" "")
     }}
-    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+    {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
   </div>
   <div class="field {{if model.errors.editor1 "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor-caption"}}</label>
@@ -142,7 +142,7 @@
       readonly=readonly
       class=(if model.errors.editor1 "error" "")
     }}
-    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+    {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
   </div>
   <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>

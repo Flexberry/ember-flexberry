@@ -36,12 +36,12 @@
     {{/if}}
   {{/unless}}
   {{#if downloadButtonIsVisible}}
-    <a
+    <label
       class="flexberry-file-download-button ui icon {{buttonClass}} {{unless downloadButtonIsEnabled "disabled"}} button"
-      href={{fileUrl}}
-      title={{t "components.flexberry-file.download-button-title"}}>
+      title={{t "components.flexberry-file.download-button-title"}}
+      {{action "downloadButtonClick" on="click" preventDefault=false}}>
       <i class="download outline icon"></i>
-    </a>
+    </label>
   {{/if}}
 </div>
 {{#if (and showPreview hasFile)}}
@@ -55,6 +55,9 @@
       <div class="ui {{if previewDownloadIsInProgress "active" ""}} loader"></div>
     </div>
 {{/if}}
+<div class="flexberry-file-download-iframes-block" style="display: none;">
+  {{!-- Block to which download iframes will be added --}}
+</div>
 <div class="flexberry-file-error-modal-dialog ui small basic modal">
   <div class="ui icon header">
     <i class="file icon"></i>

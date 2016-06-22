@@ -517,6 +517,16 @@ export default FlexberryBaseComponent.extend({
      */
     uploadButtonClick() {
       this.uploadFile();
+    },
+
+    /**
+      Handles click on download button.
+
+      @method actions.downloadButtonClick
+      @public
+     */
+    downloadButtonClick() {
+      this.downloadFile();
     }
   },
 
@@ -667,6 +677,24 @@ export default FlexberryBaseComponent.extend({
         this.set('uploadIsInProgress', false);
       });
     });
+  },
+
+  /**
+    Method to download previously uploaded file.
+
+    @method downloadFile
+   */
+  downloadFile() {
+    let fileUrl = this.get('fileUrl');
+    if (Ember.isBlank(fileUrl)) {
+      return null;
+    }
+
+    let $iframesBlock = this.$('.flexberry-file-download-iframes-block');
+    Ember.$('<iframe>')
+      .hide()
+      .appendTo($iframesBlock)
+      .prop('src', fileUrl);
   },
 
   /**

@@ -571,11 +571,18 @@ export default FlexberryBaseComponent.extend({
       let selectedFile = uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
       let maxUploadFileSize = this.get('maxUploadFileSize');
 
-      // Prevent files greater then maxUploadFileSize.
-      if (!Ember.isNone(maxUploadFileSize) && selectedFile.size > maxUploadFileSize) {
-        this.showFileSizeErrorModalDialog(selectedFile.name, selectedFile.size, maxUploadFileSize);
+      if (!Ember.isNone(maxUploadFileSize)) {
+        if (Ember.typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0) {
+          // Prevent files greater then maxUploadFileSize.
+          if (selectedFile.size > maxUploadFileSize) {
+            this.showFileSizeErrorModalDialog(selectedFile.name, selectedFile.size, maxUploadFileSize);
 
-        return;
+            // Break file upload.
+            return;
+          }
+        } else {
+          Ember.Logger.error(`Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`. Allowed value is a number >= 0.`);
+        }
       }
 
       this.set('uploadData', uploadData);

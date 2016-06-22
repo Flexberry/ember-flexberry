@@ -18,6 +18,14 @@ export default Ember.Controller.extend({
   readonly: false,
 
   /**
+    Classes for component wrapper.
+
+    @property class
+    @type String
+  */
+  class: 'toggle',
+
+  /**
     Template text for 'flexberry-checkbox' component.
 
     @property componentTemplateText
@@ -28,6 +36,7 @@ export default Ember.Controller.extend({
     '  value=model.flag<br>' +
     '  label=label<br>' +
     '  readonly=readonly<br>' +
+    '  class=class<br>' +
     '}}'),
 
   /**
@@ -55,6 +64,12 @@ export default Ember.Controller.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'readonly'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'class',
+      settingType: 'string',
+      settingDefaultValue: 'toggle',
+      bindedControllerPropertieName: 'class'
     });
 
     return componentSettingsMetadata;

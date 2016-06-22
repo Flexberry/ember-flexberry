@@ -30,11 +30,6 @@ module.exports = {
     });
 
     app.import({
-      development: 'bower_components/jquery-file-download/src/Scripts/jquery.fileDownload.js',
-      production:  'bower_components/jquery-file-download/src/Scripts/jquery.fileDownload.js'
-    });
-
-    app.import({
       development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.js',
       production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.js'
     });

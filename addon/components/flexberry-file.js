@@ -137,6 +137,25 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    File URL.
+    It is binded to component file download button href attribute.
+
+    @property fileUrl
+    @type String
+    @readonly
+   */
+  fileUrl: Ember.computed('jsonInitialValue.fileUrl', function() {
+    let fileUrl = this.get('jsonInitialValue.fileUrl');
+    if (Ember.isNone(fileUrl)) {
+      return null;
+    }
+
+    // For IE encodeURI is necessary.
+    // Without encodeURI IE will return 404 for files with cyrillic names in URL.
+    return encodeURI(fileUrl);
+  }),
+
+  /**
     Flag: indicates whether some file is added now or not.
 
     @property hasFile
@@ -204,15 +223,6 @@ export default FlexberryBaseComponent.extend({
   uploadIsInProgress: false,
 
   /**
-    Flag: indicates whether file download is in progress now.
-
-    @property downloadIsInProgress
-    @type Boolean
-    @default false
-   */
-  downloadIsInProgress: false,
-
-  /**
     Flag: indicates whether file preview download is in progress now.
 
     @property previewDownloadIsInProgress
@@ -239,10 +249,9 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readonly
    */
-  addButtonIsEnabled: Ember.computed('uploadIsInProgress', 'downloadIsInProgress', function() {
+  addButtonIsEnabled: Ember.computed('uploadIsInProgress', function() {
     let uploadIsInProgress = this.get('uploadIsInProgress');
-    let downloadIsInProgress = this.get('downloadIsInProgress');
-    return !(uploadIsInProgress || downloadIsInProgress);
+    return !uploadIsInProgress;
   }),
 
   /**
@@ -263,12 +272,11 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readonly
    */
-  removeButtonIsEnabled: Ember.computed('uploadIsInProgress', 'downloadIsInProgress', 'value', function() {
+  removeButtonIsEnabled: Ember.computed('uploadIsInProgress', 'value', function() {
     let uploadIsInProgress = this.get('uploadIsInProgress');
-    let downloadIsInProgress = this.get('downloadIsInProgress');
     let jsonValue = this.get('jsonValue');
 
-    return !(uploadIsInProgress || downloadIsInProgress || Ember.isNone(jsonValue));
+    return !(uploadIsInProgress || Ember.isNone(jsonValue));
   }),
 
   /**
@@ -361,12 +369,11 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readonly
    */
-  uploadButtonIsEnabled: Ember.computed('uploadIsInProgress', 'downloadIsInProgress', 'uploadData', function() {
+  uploadButtonIsEnabled: Ember.computed('uploadIsInProgress', 'uploadData', function() {
     let uploadIsInProgress = this.get('uploadIsInProgress');
-    let downloadIsInProgress = this.get('downloadIsInProgress');
     let selectedFile = this.get('selectedFile');
 
-    return !(uploadIsInProgress || downloadIsInProgress || Ember.isNone(selectedFile));
+    return !(uploadIsInProgress || Ember.isNone(selectedFile));
   }),
 
   /**
@@ -388,12 +395,11 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readonly
    */
-  downloadButtonIsEnabled: Ember.computed('uploadIsInProgress', 'downloadIsInProgress', 'initialValue', function() {
+  downloadButtonIsEnabled: Ember.computed('uploadIsInProgress', 'initialValue', function() {
     let uploadIsInProgress = this.get('uploadIsInProgress');
-    let downloadIsInProgress = this.get('downloadIsInProgress');
     let jsonInitialValue = this.get('jsonInitialValue');
 
-    return !(uploadIsInProgress || downloadIsInProgress || Ember.isNone(jsonInitialValue));
+    return !(uploadIsInProgress || Ember.isNone(jsonInitialValue));
   }),
 
   /**
@@ -434,15 +440,6 @@ export default FlexberryBaseComponent.extend({
     @default false
    */
   showModalDialogOnUploadError: undefined,
-
-  /**
-    Flag: indicates whether to show modal dialog on download errors or not.
-
-    @property showModalDialogOnDownloadError
-    @type Boolean
-    @default true
-   */
-  showModalDialogOnDownloadError: undefined,
 
   /**
     Caption to be displayed in error modal dialog.
@@ -520,17 +517,7 @@ export default FlexberryBaseComponent.extend({
      */
     uploadButtonClick() {
       this.uploadFile();
-    },
-
-    /**
-      Handles click on download button.
-
-      @method actions.downloadButtonClick
-      @public
-     */
-    downloadButtonClick() {
-      this.downloadFile();
-    },
+    }
   },
 
   /**
@@ -678,48 +665,6 @@ export default FlexberryBaseComponent.extend({
         reject(new Error(errorContent));
       }).always(() => {
         this.set('uploadIsInProgress', false);
-      });
-    });
-  },
-
-  /**
-    Method to download uploaded file.
-
-    @method downloadFile
-   */
-  downloadFile() {
-    let jsonInitialValue = this.get('jsonInitialValue');
-    let fileName = this.get('jsonInitialValue.fileName');
-    let fileUrl = this.get('jsonInitialValue.fileUrl');
-    if (Ember.isBlank(fileUrl)) {
-      return null;
-    }
-
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      this.set('downloadIsInProgress', true);
-
-      // Use jQuery fileDownload plugin (https://github.com/johnculviner/jquery.fileDownload).
-      // Warning! It uses iframe to send file download request, so there is no way to set request authorization header.
-      Ember.$.fileDownload(fileUrl, {
-        successCallback: (url) => {
-          this.sendAction('downloadSuccess', {
-            downloadData: jsonInitialValue,
-            response: 'success',
-            value: this.get('value')
-          });
-          resolve(jsonInitialValue);
-          this.set('downloadIsInProgress', false);
-        },
-        failCallback: (errorMessage, url) => {
-          let errorContent = this.showDownloadErrorModalDialog(fileName, errorMessage);
-          this.sendAction('downloadFail', {
-            downloadData: jsonInitialValue,
-            response: errorMessage,
-            value: this.get('value')
-          });
-          reject(new Error(errorContent));
-          this.set('downloadIsInProgress', false);
-        }
       });
     });
   },

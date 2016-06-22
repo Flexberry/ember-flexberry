@@ -36,12 +36,12 @@
     {{/if}}
   {{/unless}}
   {{#if downloadButtonIsVisible}}
-    <label
-      class="flexberry-file-download-button ui icon {{buttonClass}} {{unless downloadButtonIsEnabled "disabled"}} {{if downloadIsInProgress "loading"}} button"
-      title={{t "components.flexberry-file.download-button-title"}}
-      {{action "downloadButtonClick" on="click" preventDefault=false}}>
+    <a
+      class="flexberry-file-download-button ui icon {{buttonClass}} {{unless downloadButtonIsEnabled "disabled"}} button"
+      href={{fileUrl}}
+      title={{t "components.flexberry-file.download-button-title"}}>
       <i class="download outline icon"></i>
-    </label>
+    </a>
   {{/if}}
 </div>
 {{#if (and showPreview hasFile)}}

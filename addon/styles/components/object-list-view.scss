@@ -6,6 +6,10 @@
   margin: 1em 0;
   max-width: 100%;
   overflow: auto;
+
+  .object-list-view {
+    margin: 0;
+  }
 }
 
 table.object-list-view.selectable tbody,

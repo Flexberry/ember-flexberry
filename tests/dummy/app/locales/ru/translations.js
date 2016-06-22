@@ -282,7 +282,7 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Одобрено',
       'type-caption': 'Тип предложения',
       'author-caption': 'Автор предложения',
-      'editor-caption': 'Редактор предложения',
+      'editor1-caption': 'Редактор предложения',
       'files-caption': 'Прикрепленные файлы',
       'userVotes-caption': 'Голоса пользователей',
       'comments-caption': 'Комментарии',
@@ -437,7 +437,7 @@ Ember.$.extend(true, translations, {
     }
   },
 
-  components: {
+  'components': {
     'settings-example': {
       'component-template-caption': 'Шаблон компонента',
       'controller-properties-caption': 'Свойства контроллера',

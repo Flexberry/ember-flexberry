@@ -19,6 +19,11 @@
     onHide=(action "onErrorMessageHide")
   }}
   <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
@@ -36,11 +41,9 @@
   </div>
   <div class="field {{if model.errors.name "error" ""}}">
     {{flexberry-field
-      readonly=readonly
-      required=true
       value=model.name
-      class=(if model.errors.name "error" "")
       label=(t "forms.ember-flexberry-dummy-localization-edit.name-caption")
+      readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
   </div>

@@ -19,6 +19,11 @@
     onHide=(action "onErrorMessageHide")
   }}
   <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
@@ -36,54 +41,45 @@
   </div>
   <div class="field {{if model.errors.name "error" ""}}">
     {{flexberry-field
-      readonly=readonly
-      required=true
       value=model.name
-      class=(if model.errors.name "error" "")
       label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
+      readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.moderated "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
-    {{#if model.errors.moderated}}
-      <span style="color:red">{{model.errors.moderated}}</span>
-    {{/if}}
-    {{flexberry-checkbox readonly=readonly value=model.moderated}}
+    {{flexberry-checkbox
+      value=model.moderated
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.parent "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
-    {{#if model.errors.parent}}
-      <span style="color:red">{{model.errors.parent}}</span>
-    {{/if}}
     {{flexberry-lookup
       value=model.parent
-      projection="SuggestionTypeL"
-      displayAttributeName="name"
-      title="Parent"
       relatedModel=model
       relationName="parent"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      projection="SuggestionTypeL"
+      displayAttributeName="name"
+      title=(t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       readonly=readonly
-      limitFunction=null
-      class=(if model.errors.author "error" "")
     }}
+    {{flexberry-validationmessage error=model.errors.parent pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.localizedTypes "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localized-types-caption"}}</label>
-    {{#if model.errors.localizedTypes}}
-      <span style="color:red">{{model.errors.localizedTypes}}</span>
-    {{/if}}
     {{flexberry-groupedit
-      componentName="localizedTypesGroupEdit"
-      class="attached"
-      modelProjection=modelProjection.attributes.localizedTypes
+      componentName="suggestionTypeLocalizedTypesGroupEdit"
       content=model.localizedTypes
-      readonly=readonly
+      modelProjection=modelProjection.attributes.localizedTypes
       orderable=false
-      class=(if model.errors.localizedTypes "error" "")
+      readonly=readonly
     }}
+    {{flexberry-validationmessage error=model.errors.localizedTypes pointing="pointing"}}
   </div>
 </form>
 

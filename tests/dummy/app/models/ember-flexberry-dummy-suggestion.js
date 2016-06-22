@@ -50,13 +50,19 @@ var Model = BaseModel.extend({
   // Model validation rules.
   validations: {
     type: {
-      presence: true
+      presence: {
+        message: 'Type is required'
+      }
     },
     author: {
-      presence: true
+      presence: {
+        message: 'Author is required'
+      }
     },
     editor1: {
-      presence: true
+      presence: {
+        message: 'Editor is required'
+      }
     }
   }
 });

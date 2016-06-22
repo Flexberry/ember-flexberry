@@ -282,7 +282,7 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Moderated',
       'type-caption': 'Type',
       'author-caption': 'Author',
-      'editor-caption': 'Editor',
+      'editor1-caption': 'Editor',
       'files-caption': 'Files',
       'userVotes-caption': 'User votes',
       'comments-caption': 'Comments',

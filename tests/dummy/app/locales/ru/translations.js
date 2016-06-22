@@ -314,7 +314,7 @@ Ember.$.extend(true, translations, {
 
     'application-log': {
       'caption': 'Пример регистрации ошибок и сообщений в логах',
-      'placeholder': 'Выбрать настройку записи лога',
+      'placeholder': 'Выбрать уровень логирования',
     },
 
     'components-examples': {

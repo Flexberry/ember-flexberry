@@ -37,20 +37,7 @@ export function initialize(applicationInstance) {
     return;	// Do nothing
   }
 
-  /**
-  * Log level enumarator
-  *
-  * @property logLevelEnums
-  * @type Object
-  */
-  var logLevelEnums = {
-    ERROR: 1,	// Log only errors
-    WARN: 2,	// Log warnings and errors
-    LOG: 3,	// Log logs, warnings and errors
-    INFO: 4,	// Log infos, logs, warnings and errors
-    DEBUG: 5,// Log debugs, infos, logs, warnings and errors
-    DEPRECATION: 6 // Log deprecations, debugs, infos, logs, warnings and errors
-  };
+
 
   /**
   * Replacement error handlers on RSVP stage
@@ -63,7 +50,8 @@ export function initialize(applicationInstance) {
   * Replacement error handlers on error stage
   * Do nothing. Error is handled by onerror
   */
-  Ember.Logger.error = function () {
+  Ember.Logger.error = function (error) {
+    _sendError(error);
   };
 
   /**
@@ -71,18 +59,7 @@ export function initialize(applicationInstance) {
   * @param error - error object
   */
   Ember.onerror = function (error) {
-    var message = error.toString();
-    var formattedMessage = JSON.stringify(
-      {
-        name: error.name,
-        message: error.message,
-        fileName: error.fileName,
-        lineNumber: error.lineNumber,
-        columnNumber: error.columnNumber,
-        stack: error.stack
-      }
-    );
-    _sendLog('ERROR', message, formattedMessage);
+    _sendError(error);
   };
 
   /**
@@ -136,6 +113,21 @@ export function initialize(applicationInstance) {
     return ret;
   }
 
+  function _sendError(error) {
+    var message = error.toString();
+    var formattedMessage = JSON.stringify(
+      {
+        name: error.name,
+        message: error.message,
+        fileName: error.fileName,
+        lineNumber: error.lineNumber,
+        columnNumber: error.columnNumber,
+        stack: error.stack
+      }
+    );
+    _sendLog('ERROR', message, formattedMessage);
+  };
+
   /**
   * Send message to store and server by flexberry-logging service
   * @param levelName - category name  - ERROR, WARN, LOG, INFO, DEBUG, DEPRECATION
@@ -143,8 +135,9 @@ export function initialize(applicationInstance) {
   * @param formattedMessage - full message content in JSON format
   */
   function _sendLog(levelName, message, formattedMessage) {
-    if (logLevelEnums[levelName] <= flexberryLogging.flexberryLogLevel) {	//Meggage category logged (lower or equal high flexberryLogLevel)
-      flexberryLogging.flexberryLogger(levelName, message, formattedMessage);
+    let logLevel = flexberryLogging.logLevelEnums[levelName];
+    if ( logLevel <= flexberryLogging.flexberryLogLevel) {	//Meggage category logged (lower or equal high flexberryLogLevel)
+      flexberryLogging.flexberryLogger(logLevel, levelName, message, formattedMessage);
     }
   }
 

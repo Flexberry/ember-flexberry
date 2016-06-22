@@ -85,7 +85,8 @@ Model.defineProjection('ShortL', 'i-i-s-caseberry-logging-objects-application-lo
   category: Proj.attr('Категория'),
   severity: Proj.attr('Серьёзность'),
   machineName: Proj.attr('Имя машины'),
-  processName: Proj.attr('Имя процесса')
+  processName: Proj.attr('Имя процесса'),
+  processId: Proj.attr('ID процесса'),
 });
 
 export default Model;

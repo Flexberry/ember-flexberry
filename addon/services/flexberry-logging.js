@@ -28,6 +28,22 @@ export default Ember.Service.extend({
   flexberryLogLevel: 0,
 
   /**
+   * Log level enumarator
+   *
+   * @property logLevelEnums
+   * @type Object
+   */
+  logLevelEnums: {
+    ERROR: 1, // Log only errors
+    WARN: 2,  // Log warnings and errors
+    LOG: 3, // Log logs, warnings and errors
+    INFO: 4,  // Log infos, logs, warnings and errors
+    DEBUG: 5,// Log debugs, infos, logs, warnings and errors
+    DEPRECATION: 6 // Log deprecations, debugs, infos, logs, warnings and errors
+  },
+
+  enumsLoglevel: ['NONE'],
+  /**
   * Initializator
   *
   * @method init
@@ -36,17 +52,22 @@ export default Ember.Service.extend({
     this._super(...arguments);
     this.set('flexberryStore', getOwner(this).lookup('service:store'));
     this.set('serverLogEnabled', true);
+    for (let enumName in this.logLevelEnums) {
+      let level = this.logLevelEnums[enumName];
+      this.enumsLoglevel[level] = enumName;
+    }
   },
 
   /**
   * Logger message to console and store
   *
   * @method flexberryLogger
+  * @param priority - priority
   * @param levelName - category name  - ERROR, WARN, LOG, INFO, DEBUG, DEPRECATION
   * @param message - message content
   * @param formattedMessage - full message content in JSON format
   */
-  flexberryLogger(levelName, message, formattedMessage) {
+  flexberryLogger(priority, levelName, message, formattedMessage) {
     window.console.log(message);
     if (!this.get('serverLogEnabled')) { // if serverLogEnabled === false logs only to console
       return;
@@ -57,7 +78,7 @@ export default Ember.Service.extend({
     let  applicationLog = {
       category: levelName,
       eventId: 0,
-      priority: 10,
+      priority: priority,
       severity: '',
       title: '',
       timestamp: timestamp,
@@ -78,6 +99,7 @@ export default Ember.Service.extend({
     let logRecord = this.get('flexberryStore').createRecord(logModel, applicationLog);	//Construct record  in  store
     logRecord.save().then(//Save recotd in server
       function() {	//Successfull
+        return true;
       },
       function() {	//unsuccesfull transmit message to server
         this.set('serverLogEnabled', false);	//switch off remote logging to avoid infinite loop

@@ -307,7 +307,10 @@ Ember.$.extend(true, translations, {
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Suggestion types'
     },
-
+    'application-log': {
+      'caption': 'Logging example',
+      'placeholder': 'Select logging level',
+    },
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {

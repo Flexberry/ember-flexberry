@@ -1,10 +1,12 @@
 <h3>Пример логирования</h3>
 <div class="right item">
+      <span>Уровень логирования сообщений</span>
       {{flexberry-dropdown
         class="ui dropdown"
         items=settings
         onChange=(action 'setLogLevel')
-        placeholder=(t "forms.application-log.placeholder")
+        showPlaceholder=false
+        text=text
         readonly=readonly
       }}
   </div>

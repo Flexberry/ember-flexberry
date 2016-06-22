@@ -8,7 +8,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 /**
  * Checkbox component for Semantic UI.
  *
- * @class FlexberrCheckboxComponent
+ * @class FlexberryCheckboxComponent
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({

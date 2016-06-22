@@ -3,28 +3,40 @@ import ListFormController from 'ember-flexberry/controllers/i-i-s-caseberry-logg
 const { getOwner } = Ember;
 
 export default ListFormController.extend({
-  flexberryLoggingervice: Ember.inject.service('flexberry-logging'),
+  /**
+  Flexberry Logging Service
+
+   @property flexberryLoggingService
+   @type String[]
+   */
+  flexberryLoggingService: Ember.inject.service('flexberry-logging'),
 
   _messageNumber: 0,
 
   logLevel: 0,
 
   /**
-    Available test application locales.
+    Available test application level settings
 
     @property settings
     @type String[]
    */
   settings: [],
 
+  /**
+   Default choise in settings
+
+   @property text
+   @type String[]
+   */
   text: '',
 
   _router: undefined,
 
   init() {
     this._router = getOwner(this).lookup('router:main');
-    this.logLevel = this.get('flexberryLoggingervice').flexberryLogLevel;
-    let enumsLoglevel = this.get('flexberryLoggingervice').enumsLoglevel;
+    this.logLevel = this.get('flexberryLoggingService').flexberryLogLevel;
+    let enumsLoglevel = this.get('flexberryLoggingService').enumsLoglevel;
     this.settings[0] = '0: OFF';
     for (let level =1; level < enumsLoglevel.length; level++) {
       this.settings[level] = level + ': ' + enumsLoglevel.slice(1, level+1).join('s, ') + 's';
@@ -33,10 +45,13 @@ export default ListFormController.extend({
   },
 
   /**
-jhghhjlk
+Supported actions
 
  */
   actions: {
+    /**
+     List buttons describers for Supported actions
+     */
     getCustomButtons() {
       return [{
         buttonName: 'Assert',
@@ -81,7 +96,7 @@ jhghhjlk
      */
     setLogLevel(choosed) {
       this.logLevel = parseInt(choosed.substr(0, 1));
-      this.get('flexberryLoggingervice').flexberryLogLevel = this.logLevel;
+      this.get('flexberryLoggingService').flexberryLogLevel = this.logLevel;
     },
 
     /**

@@ -23,6 +23,11 @@ export default FlexberryBaseComponent.extend({
   tagName: '',
 
   /**
+    Classes for component wrapper.
+  */
+  class: '',
+
+  /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
    *
    * @property appConfigSettingsPath

@@ -218,7 +218,7 @@ jhghhjlk
   },
   _getMessageNumber() {
     this._messageNumber += 1;
-    let ret = "№" + this._messageNumber + ': ';
+    let ret = moment().format('hh:mm:ss a') + ' №' + this._messageNumber + ': ';
     return ret;
   }
 });

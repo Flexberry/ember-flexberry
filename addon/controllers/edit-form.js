@@ -394,7 +394,8 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         if (transformClass && transformClass.isEnum) {
           cellComponent.componentName = 'flexberry-dropdown';
           cellComponent.componentProperties = {
-            items: transformInstance.get('captions')
+            items: transformInstance.get('captions'),
+            class: 'compact fluid'
           };
         }
 

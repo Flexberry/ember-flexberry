@@ -53,6 +53,14 @@ export default Ember.Controller.extend({
     return this.get('i18n.locale');
   }),
 
+  init() {
+    this._super(...arguments);
+    let currentLocale = this.get('currentLocale');
+    if ((currentLocale !== 'en') || (currentLocale !== 'ru')) {
+      this.get('i18n').set('locale', 'en');
+    }
+  },
+
   /**
     Application sitemap.
 

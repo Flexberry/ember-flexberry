@@ -174,6 +174,10 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'on-edit-form': {
+              'caption': 'Размещение на форме редактирования',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -381,6 +385,9 @@ Ember.$.extend(true, translations, {
         },
         'settings-example': {
           'caption': 'Components-examples/flexberry-objectlistview/settings-example'
+        },
+        'on-edit-form': {
+          'caption': 'FlexberryObjectlistview пример произвольных данных'
         }
       },
       'flexberry-simpledatetime': {

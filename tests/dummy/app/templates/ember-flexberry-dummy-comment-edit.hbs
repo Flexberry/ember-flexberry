@@ -19,6 +19,11 @@
     onHide=(action "onErrorMessageHide")
   }}
   <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
@@ -34,68 +39,54 @@
       <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field">
-    {{#if model.errors.text}}
-      <span style ="color:red">{{model.errors.text}}</span>
-    {{/if}}
+  <div class="field {{if model.errors.text "error" ""}}">
     {{flexberry-field
-      readonly=readonly
-      required=true
       value=model.text
-      class=(if model.errors.text "error" "")
       label=(t "forms.ember-flexberry-dummy-comment-edit.text-caption")
-    }}
-  </div>
-  <div class="field">
-    {{#if model.errors.votes}}
-      <span style ="color:red">{{model.errors.votes}}</span>
-    {{/if}}
-    {{flexberry-field
       readonly=readonly
-      required=true
-      value=model.votes
-      class=(if model.errors.votes "error" "")
-      label=(t "forms.ember-flexberry-dummy-comment-edit.votes-caption")
     }}
+    {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.votes "error" ""}}">
+    {{flexberry-field
+      value=model.votes
+      label=(t "forms.ember-flexberry-dummy-comment-edit.votes-caption")
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.votes pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.moderated "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.moderated-caption"}}</label>
-    {{#if model.errors.moderated}}
-      <span style="color:red">{{model.errors.moderated}}</span>
-    {{/if}}
-    {{flexberry-checkbox readonly=readonly value=model.moderated}}
+    {{flexberry-checkbox
+      value=model.moderated
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.author "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.author-caption"}}</label>
-    {{#if model.errors.author}}
-      <span style="color:red">{{model.errors.author}}</span>
-    {{/if}}
     {{flexberry-lookup
       value=model.author
+      relatedModel=model
+      relationName="author"
       projection="ApplicationUserL"
       displayAttributeName="name"
       title=(t "forms.ember-flexberry-dummy-comment-edit.author-caption")
-      relatedModel=model
-      relationName="author"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       readonly=readonly
-      limitFunction=null
-      class=(if model.errors.author "error" "")
     }}
+    {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.userVotes "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.userVotes-caption"}}</label>
-    {{#if model.errors.userVotes}}
-      <span style="color:red">{{model.errors.userVotes}}</span>
-    {{/if}}
     {{flexberry-groupedit
-      componentName="userVotesGroupEdit"
-      modelProjection=modelProjection.attributes.userVotes
+      componentName="commentUserVotesGroupEdit"
       content=model.userVotes
-      readonly=readonly
+      modelProjection=modelProjection.attributes.userVotes
       orderable=false
-      class=(if model.errors.userVotes "error" "")
+      readonly=readonly
     }}
+    {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
   </div>
 </form>

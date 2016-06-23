@@ -19,6 +19,11 @@
     onHide=(action "onErrorMessageHide")
   }}
   <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
@@ -34,163 +39,127 @@
       <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field">
-    {{#if model.errors.address}}
-      <span style ="color:red">
-        {{model.errors.address}}
-      </span>
-    {{/if}}
+  <div class="field {{if model.errors.address "error" ""}}">
     {{flexberry-field
-      readonly=readonly
-      required=true
       value=model.address
-      class=(if model.errors.address "error" "")
       label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
-      }}
-  </div>
-  <div class="field">
-    {{#if model.errors.text}}
-      <span style ="color:red">
-        {{model.errors.text}}
-      </span>
-    {{/if}}
-    {{flexberry-field
       readonly=readonly
-      required=true
+    }}
+    {{flexberry-validationmessage error=model.errors.address pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.text "error" ""}}">
+    {{flexberry-field
       value=model.text
-      class=(if model.errors.text "error" "")
       label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
+      readonly=readonly
     }}
+    {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.date "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
-    {{#if model.errors.date}}
-      <span style="color:red">{{model.errors.date}}</span>
-    {{/if}}
     {{flexberry-datepicker
-      readonly=readonly
       value=model.date
-      class=(if model.errors.date "error" "")
-    }}
-  </div>
-  <div class="field">
-    {{#if model.errors.votes}}
-      <span style ="color:red">
-        {{model.errors.votes}}
-      </span>
-    {{/if}}
-    {{flexberry-field
       readonly=readonly
-      required=true
-      value=model.votes
-      class=(if model.errors.votes "error" "")
-      label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
     }}
+    {{flexberry-validationmessage error=model.errors.date pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.votes "error" ""}}">
+    {{flexberry-field
+      value=model.votes
+      label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.votes pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.moderated "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption"}}</label>
-    {{#if model.errors.moderated}}
-      <span style="color:red">{{model.errors.moderated}}</span>
-    {{/if}}
-    {{flexberry-checkbox readonly=readonly value=model.moderated}}
+    {{flexberry-checkbox
+      value=model.moderated
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.type "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
-    {{#if model.errors.type}}
-      <span style="color:red">{{model.errors.type}}</span>
-    {{/if}}
     {{flexberry-lookup
       value=model.type
+      relatedModel=model
+      relationName="type"
       projection="SuggestionTypeL"
       displayAttributeName="name"
-      title="Type"
-      relationName="type"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      title=(t "forms.ember-flexberry-dummy-suggestion-edit.type-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       readonly=readonly
-      class=(if model.errors.author "error" "")
     }}
+    {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.author "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
-    {{#if model.errors.author}}
-      <span style="color:red">{{model.errors.author}}</span>
-    {{/if}}
     {{flexberry-lookup
       value=model.author
+      relatedModel=model
+      relationName="author"
       projection="ApplicationUserL"
       displayAttributeName="name"
-      title="Author"
-      relationName="author"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      title=(t "forms.ember-flexberry-dummy-suggestion-edit.author-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       readonly=readonly
-      class=(if model.errors.author "error" "")
     }}
+    {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
   </div>
-  <div class="field">
-    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor-caption"}}</label>
-    {{#if model.errors.editor}}
-      <span style="color:red">{{model.errors.editor}}</span>
-    {{/if}}
+  <div class="field {{if model.errors.editor1 "error" ""}}">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
     {{flexberry-lookup
       value=model.editor1
+      relatedModel=model
+      relationName="editor1"
       projection="ApplicationUserL"
       displayAttributeName="name"
-      title="Editor"
-      relationName="editor1"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      title=(t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       readonly=readonly
-      class=(if model.errors.editor1 "error" "")
     }}
+    {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.files "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
-    {{#if model.errors.files}}
-      <span style="color:red">{{model.errors.files}}</span>
-    {{/if}}
     {{flexberry-groupedit
       componentName="filesGroupEdit"
-      class="attached"
-      modelProjection=modelProjection.attributes.files
       content=model.files
-      readonly=readonly
+      modelProjection=modelProjection.attributes.files
       orderable=false
-      class=(if model.errors.files "error" "")
+      readonly=readonly
     }}
+    {{flexberry-validationmessage error=model.errors.files pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.userVotes "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
-    {{#if model.errors.userVotes}}
-      <span style="color:red">{{model.errors.userVotes}}</span>
-    {{/if}}
     {{flexberry-groupedit
-      componentName="userVotesGroupEdit"
-      modelProjection=modelProjection.attributes.userVotes
+      componentName="suggestionUserVotesGroupEdit"
       content=model.userVotes
-      readonly=readonly
+      modelProjection=modelProjection.attributes.userVotes
       orderable=false
-      class=(if model.errors.userVotes "error" "")
+      readonly=readonly
     }}
+    {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
   </div>
-  <div class="field">
+  <div class="field {{if model.errors.comments "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
-    {{#if model.errors.comments}}
-      <span style="color:red">{{model.errors.comments}}</span>
-    {{/if}}
     {{flexberry-groupedit
-      componentName="commentsGroupEdit"
-      modelProjection=modelProjection.attributes.comments
+      componentName="suggestionCommentsGroupEdit"
       content=model.comments
-      readonly=readonly
-      orderable=false
+      modelProjection=modelProjection.attributes.comments
       rowClickable=true
       rowClick="rowClick"
       editOnSeparateRoute=true
       editFormRoute=commentsEditRoute
       saveBeforeRouteLeave=true
-      class=(if model.errors.comments "error" "")
+      orderable=false
+      readonly=readonly
     }}
+    {{flexberry-validationmessage error=model.errors.comments pointing="pointing"}}
   </div>
 </form>

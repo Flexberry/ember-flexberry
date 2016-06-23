@@ -1,9 +1,11 @@
-import EditFormRoute from 'ember-flexberry/routes/edit-form';
+import Ember from 'ember';
 
-/**
-  Base edit form route for dummy application.
- **/
-export default EditFormRoute.extend({
+export default Ember.Mixin.create({
+  /**
+    Сleaning of the changes on edit form.
+
+    @method resetController
+  **/
   resetController: function(controller, isExisting, transition) {
     this._super.apply(this, arguments);
     controller.set('showFormSuccessMessage', false);

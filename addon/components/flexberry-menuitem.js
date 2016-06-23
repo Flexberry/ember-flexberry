@@ -13,11 +13,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
  */
 export default FlexberryBaseComponent.extend({
   /**
-   * Override component's wrapping element tag.
-   */
-  tagName: 'a',
-
-  /**
    * Class names for component's wrapping element.
    */
   classNames: ['flexberry-menuitem', 'item'],
@@ -69,39 +64,28 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-   * Initializes component.
-   */
-  init: function() {
-    this._super(...arguments);
-
-    // Override component's wrapping element for simple menu items.
-    if (this.get('hasSubitems')) {
-      this.set('tagName', 'div');
-
-      var classNames = this.get('classNames');
-      classNames.push(...['ui', 'simple', 'dropdown']);
-    }
-  },
-
-  /**
    * Initializes DOM-related component's logic.
    */
-  didInsertElement: function() {
+  didInsertElement() {
     this._super(...arguments);
 
     // Store item object in DOM-element data attribute.
     // It will be used in root 'flexberry-menu' component to handle click on this 'flexberry-menuitem'.
-    var item = this.get('item');
-    this.$().data('flexberry-menuitem.item', item);
+    let item = this.get('item');
+    if (this.get('tagName')) {
+      this.$().data('flexberry-menuitem.item', item);
+    }
   },
 
   /**
    * Cleans up DOM-related component's logic.
    */
-  willDestroyElement: function() {
+  willDestroyElement() {
     this._super(...arguments);
 
     // Remove stored item object from DOM-element data attribute.
-    this.$().removeData('flexberry-menuitem.item');
+    if (this.get('tagName')) {
+      this.$().removeData('flexberry-menuitem.item');
+    }
   }
 });

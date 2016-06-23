@@ -22,7 +22,9 @@ var Model = BaseModel.extend({
   // Model validation rules.
   validations: {
     name: {
-      presence: true
+      presence: {
+        message: 'Name is required'
+      }
     }
   }
 });

@@ -15,7 +15,7 @@ export default FlexberryBaseComponent.extend({
   /**
    * Class names for component wrapping element.
    */
-  classNames: ['flexberry-menu', 'ui', 'menu'],
+  classNames: ['flexberry-menu', 'ui', 'floating', 'icon', 'dropdown', 'button'],
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -125,6 +125,8 @@ export default FlexberryBaseComponent.extend({
 
     // Attach menu click event handler.
     this.$().on('click', onClickHandler);
+
+    this.$().dropdown();
   },
 
   /**

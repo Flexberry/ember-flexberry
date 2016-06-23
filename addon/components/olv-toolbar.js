@@ -111,23 +111,20 @@ export default FlexberryBaseComponent.extend({
   customButtonAction: 'customButtonAction',
 
   /**
-   * Handler to get custom buttons from controller.
-   * It has to be closure event and return array of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
-   *
-   * @property customButtonsClosureEvent
-   * @type Function
-   * @default undefined
-   */
-  customButtonsClosureEvent: undefined,
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
 
-  /**
-   * Array of custom buttons.
-   *
-   * @property customButtonsArray
-   * @type Array
-   * @default undefined
+    ```
+    {
+      buttonName: '...', // Button displayed name.
+      buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+      buttonClasses: '...' // Css classes for button.
+    }
+    ```
+
+    @property customButtonsArray
+    @type Array
    */
-  customButtonsArray: undefined,
+  customButtons: undefined,
 
   listUserSettings: undefined,
 
@@ -178,12 +175,6 @@ export default FlexberryBaseComponent.extend({
 
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
-
-    let customButton = this.get('customButtonsClosureEvent');
-    if (customButton && typeof (customButton) === 'function') {
-      let customButtonsResult = customButton();
-      this.set('customButtonsArray', customButtonsResult);
-    }
 
     this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);

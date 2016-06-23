@@ -154,7 +154,7 @@ export default FlexberryBaseComponent.extend({
    * Handles changes in available items & selected item (including changes on component initialization).
    */
   itemsOrValueDidChange: Ember.on('init', Ember.observer('items.[]', 'value', function() {
-    var destroyHasBeenCalled = this.get('destroyHasBeenCalled');
+    let destroyHasBeenCalled = this.get('destroyHasBeenCalled');
     if (destroyHasBeenCalled) {
       return;
     }
@@ -165,12 +165,18 @@ export default FlexberryBaseComponent.extend({
       Ember.Logger.error(`Wrong type of flexberry-dropdown \`items\` propery: actual type is ${Ember.typeOf(items)}, but array is expected.`);
     }
 
-    var value = this.get('value') || null;
-    if (needChecksOnValue && !Ember.isNone(value) && items.indexOf(value) < 0) {
+    // Convert 'value' and 'items' to strings because flexberry-dropdown interpret selected value as string commonly.
+    let value = this.get('value') || null;
+    let stringValue = value ? value.toString() : null;
+    let itemsString = items.map(function(item) {
+      return item ? item.toString() : null;
+    });
+
+    if (needChecksOnValue && !Ember.isNone(stringValue) && itemsString.indexOf(stringValue) < 0) {
       Ember.Logger.error(`Wrong value of flexberry-dropdown \`value\` propery: \`${value}\`. Allowed values are: [\`${items.join(`\`, \``)}\`].`);
     }
 
-    var dropdownDomElement = this.get('dropdownDomElement');
+    let dropdownDomElement = this.get('dropdownDomElement');
     if (Ember.isNone(dropdownDomElement)) {
       return;
     }

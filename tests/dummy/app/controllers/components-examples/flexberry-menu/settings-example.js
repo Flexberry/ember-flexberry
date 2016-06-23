@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   actions: {
-    onMenuItemClick: function(e) {
-      var clickedMenuItem = Ember.$(e.currentTarget);
+    onMenuItemClick(e) {
+      let clickedMenuItem = Ember.$(e.currentTarget);
       this.set('currentItem', clickedMenuItem.data('flexberry-menuitem.item'));
       clickedMenuItem.popup({
         content: 'This menu item has been clicked',
@@ -13,8 +13,8 @@ export default Ember.Controller.extend({
           hide: 200
         },
         on: 'manual',
-        onHidden: function(e) {
-          var owner = Ember.$(e);
+        onHidden(e) {
+          let owner = Ember.$(e);
           owner.popup('destroy');
         }
       });
@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
 
     @property items
     @type Object
-   */
+  */
   items: null,
 
   /**
@@ -40,18 +40,32 @@ export default Ember.Controller.extend({
 
     @property currentItem
     @type Object
-   */
+  */
   currentItem: null,
+
+  /**
+    Template text for 'flexberry-menu' component.
+
+    @property componentTemplateText
+    @type String
+  */
+  componentTemplateText: new Ember.Handlebars.SafeString(
+    '{{flexberry-menu<br>' +
+    '  placeholder=placeholder<br>' +
+    '  class="compact"<br>' +
+    '  items=items<br>' +
+    '  onItemClick=(action "onMenuItemClick")<br>' +
+    '}}'),
 
   /**
     Initializes controller.
 
     @method init
-   */
-  init: function() {
+  */
+  init() {
     this._super(...arguments);
 
-    var oneMenuSectionItems = [{
+    let oneMenuSectionItems = [{
       icon: 'search icon',
       title: 'Left side aligned icon',
       items: null
@@ -67,11 +81,11 @@ export default Ember.Controller.extend({
       items: null
     }];
 
-    var items = Ember.copy(oneMenuSectionItems, true);
+    let items = Ember.copy(oneMenuSectionItems, true);
     this.set('currentItem', items[0]);
-    var currentMenuSectionItems = items;
-    for (var i = 0; i < 5; i++) {
-      var subMenu = currentMenuSectionItems[2];
+    let currentMenuSectionItems = items;
+    for (let i = 0; i < 5; i++) {
+      let subMenu = currentMenuSectionItems[2];
       subMenu.items = Ember.copy(oneMenuSectionItems, true);
       subMenu.itemsAlignment = i % 2 === 0 ? 'right' : 'left';
 
@@ -88,9 +102,9 @@ export default Ember.Controller.extend({
 
     @property componentSettingsMetadata
     @type Object[]
-   */
+  */
   componentSettingsMetadata: Ember.computed(function() {
-    var componentSettingsMetadata = Ember.A();
+    let componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'icon',
       settingType: 'string',

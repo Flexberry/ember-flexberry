@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
 
     @property addonVersion
     @type String
-   */
+  */
   addonVersion: version,
 
   /**
@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
 
     @property addonVersionHref
     @type String
-   */
+  */
   addonVersionHref: Ember.computed('addonVersion', function() {
     var addonVersion = this.get('addonVersion');
     var commitSha = addonVersion.split('+')[1];
@@ -36,11 +36,11 @@ export default Ember.Controller.extend({
   }),
 
   /**
-    Available test application locales.
+    Locales supported by application.
 
     @property locales
     @type String[]
-   */
+  */
   locales: ['ru', 'en'],
 
   /**
@@ -49,13 +49,22 @@ export default Ember.Controller.extend({
   init() {
     this._super(...arguments);
 
-    // Force current locale to be one of available,
-    // if browser's current language is not supported by dummy application.
     let i18n = this.get('i18n');
-    let currentLocale = this.get('i18n.locale');
+    if (Ember.isNone(i18n)) {
+      return;
+    }
+
+    // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.
+    let shortCurrentLocale = this.get('i18n.locale').split('-')[0];
     let availableLocales = Ember.A(this.get('locales'));
-    if (!(Ember.isNone(i18n) || availableLocales.contains(currentLocale))) {
+
+    // Force current locale to be one of available,
+    // if browser's current language is not supported by dummy application,
+    // or if browser's current locale is long value like 'ru-RU', 'en-GB', etc.
+    if (!availableLocales.contains(shortCurrentLocale)) {
       i18n.set('locale', 'en');
+    } else {
+      i18n.set('locale', shortCurrentLocale);
     }
   },
 
@@ -64,7 +73,7 @@ export default Ember.Controller.extend({
 
     @property sitemap
     @type Object
-   */
+  */
   sitemap: Ember.computed('i18n.locale', function() {
     var i18n = this.get('i18n');
 

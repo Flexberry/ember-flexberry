@@ -30,8 +30,7 @@
               items=locales
               value=i18n.locale
               placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-              readonly=readonly
-              onChange=(action 'onLocaleChange')
+              onChange=(action "onLocaleChange")
             }}
           </div>
         </div>
@@ -41,7 +40,7 @@
       <div class="ui main container">
         <div class="stackable grid container">
             {{outlet}}
-            {{outlet 'modal'}}
+            {{outlet "modal"}}
         </div>
       </div>
     </div>

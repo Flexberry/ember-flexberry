@@ -52,7 +52,7 @@ export default {
 
       'preview-image-alternative-text': 'Загруженное изображение',
 
-      'error-dialog-title': 'Ошибка компонента выбора файла',
+      'error-dialog-caption': 'Ошибка компонента выбора файла',
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',
       'error-dialog-ok-button-caption': 'OK',
 

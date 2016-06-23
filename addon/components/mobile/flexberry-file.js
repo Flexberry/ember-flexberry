@@ -6,11 +6,11 @@ import Ember from 'ember';
 import FlexberryFile from './../flexberry-file';
 
 /**
-  Mobile version of flexberry-file component (with mobile-specific defaults).
+  Mobile version of {{#crossLink "FlexberryFileComponent"}}flexberry-file{{/crossLink}} component (with mobile-specific defaults).
 
   @class Mobile.FlexberryFileComponent
   @extends FlexberryFileComponent
- */
+*/
 export default FlexberryFile.extend({
   actions: {
     /**
@@ -21,7 +21,7 @@ export default FlexberryFile.extend({
 
       @param {Object} e Information about selected menu item.
       @param {Object} [e.data] Data of selected menu item.
-     */
+    */
     menuForFileItemClick(e) {
       // TODO: Move collapse menu logic into flexberry-menu component,
       // make it available through component setting (for example collapseMenuOnItemClick=true).
@@ -54,7 +54,7 @@ export default FlexberryFile.extend({
     @property classNameBindings
     @type String[]
     @default ['isMobile:mobile']
-   */
+  */
   classNameBindings: ['isMobile:mobile'],
 
   /**
@@ -64,7 +64,8 @@ export default FlexberryFile.extend({
     @property isMobile
     @type Boolean
     @default true
-   */
+    @readonly
+  */
   isMobile: true,
 
   /**
@@ -73,7 +74,7 @@ export default FlexberryFile.extend({
     @property showPreview
     @type Boolean
     @default true
-   */
+  */
   showPreview: true,
 
   /**
@@ -82,7 +83,7 @@ export default FlexberryFile.extend({
     @property menuForFileItems
     @type Object[]
     @readonly
-   */
+  */
   menuForFileItems: Ember.computed('showPreview', 'readonly', 'i18n.locale', function() {
     let menuSubItems = [];
     if (this.get('showPreview')) {
@@ -120,7 +121,7 @@ export default FlexberryFile.extend({
     Handles end of rerender.
     Dropdown part of menu is initialized here in order to get dropdown behavior,
     when menu disappeares after item selecting.
-   */
+  */
   didRender() {
     this._super(...arguments);
 
@@ -138,7 +139,7 @@ export default FlexberryFile.extend({
 
     @method _collapseMenu
     @private
-   */
+  */
   _collapseMenu() {
     let dropdownMenu = this.$('.flexberry-file-menu .dropdown');
     if (dropdownMenu && dropdownMenu.length > 0) {

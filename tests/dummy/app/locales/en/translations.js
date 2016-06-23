@@ -178,6 +178,10 @@ Ember.$.extend(true, translations, {
             'toolbar-custom-buttons-example': {
               'caption': 'Custom buttons on toolbar',
               'title': ''
+            },
+            'on-edit-form': {
+              'caption': 'Placement on edit form',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -255,7 +259,9 @@ Ember.$.extend(true, translations, {
       'birthday-caption': 'Birthday',
       'gender-caption': 'Gender',
       'vip-caption': 'VIP',
-      'karma-caption': 'Karma'
+      'karma-caption': 'Karma',
+      'name-validation-message-caption': 'Name is required',
+      'eMail-validation-message-caption': 'E-Mail is required'
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -265,12 +271,14 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Moderated',
       'author-caption': 'Author',
       'userVotes-caption': 'User votes',
-      'date-caption': 'Date'
+      'date-caption': 'Date',
+      'author-validation-message-caption': 'Author is required'
     },
 
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Localization',
-      'name-caption': 'Name'
+      'name-caption': 'Name',
+      'name-validation-message-caption': 'Name is required'
     },
 
     'ember-flexberry-dummy-suggestion-edit': {
@@ -282,10 +290,13 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Moderated',
       'type-caption': 'Type',
       'author-caption': 'Author',
-      'editor-caption': 'Editor',
+      'editor1-caption': 'Editor',
       'files-caption': 'Files',
       'userVotes-caption': 'User votes',
-      'comments-caption': 'Comments'
+      'comments-caption': 'Comments',
+      'type-validation-message-caption': 'Type is required',
+      'author-validation-message-caption': 'Author is required',
+      'editor-validation-message-caption': 'Editor is required'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {
@@ -293,7 +304,8 @@ Ember.$.extend(true, translations, {
       'name-caption': 'Name',
       'moderated-caption': 'Moderated',
       'parent-caption': 'Parent',
-      'localizedTypes-caption': 'Localized types'
+      'localized-types-caption': 'Localized types',
+      'name-validation-message-caption': 'Name is required'
     },
 
     'ember-flexberry-dummy-application-user-list': {
@@ -381,6 +393,9 @@ Ember.$.extend(true, translations, {
           'caption': 'Components-examples/flexberry-objectlistview/toolbar-custom-buttons-example',
           'custom-message': 'Hello!',
           'custom-button-name': 'Send hello'
+        },
+        'on-edit-form': {
+          'caption': 'FlexberryObjectlistview custom data sample'
         }
       },
       'flexberry-simpledatetime': {

@@ -226,6 +226,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.title'),
             children: null
+          },{
+            link: 'components-examples/flexberry-objectlistview/on-edit-form',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.title'),
+            children: null
           }]
         }, {
           link: null,

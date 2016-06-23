@@ -30,10 +30,12 @@ export default Ember.Service.extend(Ember.Evented, {
     },
 
     resetMenu: function(params) {
+      let itemsAlignment = window.innerWidth < 720 ? 'left' : 'right';
       let rootItem = {
         icon: 'dropdown icon',
         iconAlignment: 'right',
         title: '',
+        itemsAlignment: itemsAlignment,
         items:[]
       };
       let createSettitingItem = {
@@ -46,7 +48,7 @@ export default Ember.Service.extend(Ember.Evented, {
         let menu = this.menus[n];
         let titleName = menu.name + 'SettitingTitle';
         let title = params[titleName];
-        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: title, items: [] };
+        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: title, itemsAlignment:itemsAlignment, items: [] };
         rootItem.items[rootItem.items.length] = submenu;
       }
 

@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import EditFormController from 'ember-flexberry/controllers/edit-form';
 
-export default EditFormController.extend({
+export default Ember.Mixin.create({
   actions: {
     /**
       Handler for success ui-message component 'onShow' action.

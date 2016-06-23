@@ -466,9 +466,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         let modelName = this.get('modelName');
         Ember.assert('For define projection by name, model name is required.', modelName);
         let modelConstructor = this.get('store').modelFor(modelName);
-        Ember.assert(`Not found model with name '${modelName}'.`, modelConstructor);
+        Ember.assert(`Model with name '${modelName}' is not found.`, modelConstructor);
         let projections = Ember.get(modelConstructor, 'projections');
-        Ember.assert(`Not found projection with name '${value}' for model with name '${modelName}'.`, projections[value]);
+        Ember.assert(`Projection with name '${value}' for model with name '${modelName}' is not found.`, projections[value]);
         value = projections[value];
       } else if (typeof value !== 'object') {
         throw new Error(`Property 'modelProjection' should be a string or object.`);

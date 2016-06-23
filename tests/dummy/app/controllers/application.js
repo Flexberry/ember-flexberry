@@ -44,20 +44,18 @@ export default Ember.Controller.extend({
   locales: ['ru', 'en'],
 
   /**
-    Current application locale.
-
-    @property currentLocale
-    @type String
-   */
-  currentLocale: Ember.computed('i18n.locale', function() {
-    return this.get('i18n.locale');
-  }),
-
+    Initializes controller.
+  */
   init() {
     this._super(...arguments);
-    let currentLocale = this.get('currentLocale');
-    if ((currentLocale !== 'en') || (currentLocale !== 'ru')) {
-      this.get('i18n').set('locale', 'en');
+
+    // Force current locale to be one of available,
+    // if browser's current language is not supported by dummy application.
+    let i18n = this.get('i18n');
+    let currentLocale = this.get('i18n.locale');
+    let availableLocales = Ember.A(this.get('locales'));
+    if (!(Ember.isNone(i18n) || availableLocales.contains(currentLocale))) {
+      i18n.set('locale', 'en');
     }
   },
 

@@ -49,5 +49,8 @@ module.exports = {
 
     // Script for column resize.
     app.import('vendor/jquery.colResizable/colResizable-1.5.min.js');
+
+    // JQuery file download plugin with error callbacks support.
+    app.import('vendor/jquery.flexberry.downloadFile/jquery.flexberry.downloadFile.js');
   }
 };

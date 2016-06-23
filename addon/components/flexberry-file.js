@@ -137,25 +137,6 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    File URL.
-    It is binded to component file download button href attribute.
-
-    @property fileUrl
-    @type String
-    @readonly
-   */
-  fileUrl: Ember.computed('jsonInitialValue.fileUrl', function() {
-    let fileUrl = this.get('jsonInitialValue.fileUrl');
-    if (Ember.isNone(fileUrl)) {
-      return null;
-    }
-
-    // For IE encodeURI is necessary.
-    // Without encodeURI IE will return 404 for files with cyrillic names in URL.
-    return encodeURI(fileUrl);
-  }),
-
-  /**
     Flag: indicates whether some file is added now or not.
 
     @property hasFile
@@ -496,7 +477,6 @@ export default FlexberryBaseComponent.extend({
       @public
      */
     addButtonClick() {
-
     },
 
     /**
@@ -692,16 +672,21 @@ export default FlexberryBaseComponent.extend({
     @method downloadFile
    */
   downloadFile() {
-    let fileUrl = this.get('fileUrl');
+    let fileName = this.get('jsonInitialValue.fileName');
+    let fileUrl = this.get('jsonInitialValue.fileUrl');
     if (Ember.isBlank(fileUrl)) {
       return null;
     }
 
-    let $iframesBlock = this.$('.flexberry-file-download-iframes-block');
-    Ember.$('<iframe>')
-      .hide()
-      .appendTo($iframesBlock)
-      .prop('src', fileUrl);
+    Ember.$.flexberry.downloadFile({
+      // For IE encodeURI is necessary.
+      // Without encodeURI IE will return 404 for files with cyrillic names in URL.
+      url: encodeURI(fileUrl),
+      iframeContainer: this.$('.flexberry-file-download-iframes-container'),
+      onError: (errorMessage) => {
+        this.showDownloadErrorModalDialog(fileName, errorMessage);
+      }
+    });
   },
 
   /**

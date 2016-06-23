@@ -3,11 +3,12 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   actions: {
     onMenuItemClick(e) {
-      let clickedMenuItem = Ember.$(e.currentTarget);
-      this.set('currentItem', clickedMenuItem.data('flexberry-menuitem.item'));
+      let clickedMenuItem = Ember.$(e.delegateTarget);
+      this.set('currentItem', clickedMenuItem.data('flexberry-menu'));
       clickedMenuItem.popup({
         content: 'This menu item has been clicked',
         position: 'top right',
+        color: 'teal',
         delay: {
           show: 0,
           hide: 200
@@ -23,7 +24,7 @@ export default Ember.Controller.extend({
 
       window.setTimeout((function() {
         clickedMenuItem.popup('hide');
-      }).bind(this), 1000);
+      }).bind(this), 3000);
     }
   },
 
@@ -65,36 +66,61 @@ export default Ember.Controller.extend({
   init() {
     this._super(...arguments);
 
-    let oneMenuSectionItems = [{
+    let itemsLeft = [{
       icon: 'search icon',
       title: 'Left side aligned icon',
       items: null
-    }, {
+    }];
+
+    let itemsRight = [{
       icon: 'setting icon',
       iconAlignment: 'right',
       title: 'Right side aligned icon',
       items: null
-    }, {
+    }];
+
+    let itemsSubmenu = [{
       icon: 'list layout icon',
       title: 'Submenu',
       itemsAlignment: null,
-      items: null
+      items: [{
+        icon: 'search icon',
+        title: 'Left side aligned icon',
+        items: null
+      }, {
+        icon: 'setting icon',
+        iconAlignment: 'right',
+        title: 'Right side aligned icon',
+        items: null
+      }, {
+        icon: 'list layout icon',
+        title: 'Submenu',
+        itemsAlignment: 'left',
+        items: [{
+          icon: 'search icon',
+          title: 'Left side aligned icon',
+          items: null
+        }, {
+          icon: 'setting icon',
+          iconAlignment: 'right',
+          title: 'Right side aligned icon',
+          items: null
+        }, {
+          icon: 'list layout icon',
+          title: 'Submenu',
+          itemsAlignment: 'right',
+          items: [{
+            icon: 'search icon',
+            title: 'Left side aligned icon',
+            items: null
+          }]
+        }]
+      }]
     }];
 
-    let items = Ember.copy(oneMenuSectionItems, true);
-    this.set('currentItem', items[0]);
-    let currentMenuSectionItems = items;
-    for (let i = 0; i < 5; i++) {
-      let subMenu = currentMenuSectionItems[2];
-      subMenu.items = Ember.copy(oneMenuSectionItems, true);
-      subMenu.itemsAlignment = i % 2 === 0 ? 'right' : 'left';
-
-      currentMenuSectionItems = subMenu.items;
-    }
-
-    currentMenuSectionItems.pop();
-
-    this.set('items', items);
+    this.set('itemsLeft', itemsLeft);
+    this.set('itemsRight', itemsRight);
+    this.set('itemsSubmenu', itemsSubmenu);
   },
 
   /**

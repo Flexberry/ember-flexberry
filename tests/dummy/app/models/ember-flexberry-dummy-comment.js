@@ -26,6 +26,11 @@ var Model = BaseModel.extend({
 
   // Model validation rules.
   validations: {
+    author: {
+      presence: {
+        message: 'Author is required'
+      }
+    }
   }
 });
 

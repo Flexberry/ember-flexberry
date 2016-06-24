@@ -1,7 +1,7 @@
-import BaseEditFormController from 'ember-flexberry/controllers/detail-edit-form';
-import EditFormMixin from '../mixins/base-edit-form-mixin';
+import DetailEditFormController from 'ember-flexberry/controllers/detail-edit-form';
+import EditFormControllerOperationsIndicationMixin from '../mixins/edit-form-controller-operations-indication';
 
-export default BaseEditFormController.extend(EditFormMixin, {
+export default DetailEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
     Method to get type and attributes of a component,
     which will be embeded in object-list-view cell.

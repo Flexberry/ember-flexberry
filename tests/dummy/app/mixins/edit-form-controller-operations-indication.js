@@ -1,5 +1,14 @@
+/**
+  @module ember-flexberry-dummy
+*/
+
 import Ember from 'ember';
 
+/**
+  Edit forms controllers mixin which handles save/delete operations indication.
+
+  @class EditFormControllerOperationsIndicationMixin
+*/
 export default Ember.Mixin.create({
   actions: {
     /**
@@ -270,5 +279,5 @@ export default Ember.Mixin.create({
     this.set('showFormSuccessMessage', undefined);
     this.set('showFormErrorMessage', undefined);
     this.set('latestOperationType', undefined);
-  },
+  }
 });

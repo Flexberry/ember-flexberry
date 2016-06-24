@@ -502,7 +502,9 @@ export default FlexberryBaseComponent.extend(
     }
 
     let cols = this._generateColumns(projection.attributes);
-    if ('caption' in projection) {  //GroupEdit has caption values, dont use userSettings, return basic order
+    if ('caption' in projection) {
+      // If ObjectListView is defined in flexberry-groupedit dont implement userSettings
+      // This can be determined by presence of caption property in modelProjection
       return cols;
     }
 

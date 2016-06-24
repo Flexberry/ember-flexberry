@@ -4,6 +4,12 @@
 
 .object-list-view-container {
   margin: 1em 0;
+  max-width: 100%;
+  overflow: auto;
+
+  .object-list-view {
+    margin: 0;
+  }
 }
 
 table.object-list-view.selectable tbody,
@@ -51,8 +57,13 @@ table.object-list-view tbody tr td:first-child button i {
       overflow: hidden;
     }
 
-    .flexberry-lookup, .flexberry-dropdown {
+    .flexberry-lookup,
+    .ui.input > input {
       width: 100%;
+    }
+
+    .flexberry-lookup, .flexberry-file {
+      overflow: hidden;
     }
   }
 }

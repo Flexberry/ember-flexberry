@@ -20,6 +20,14 @@
         <i class="sidebar icon"></i>
       </a>
       <div class="right menu">
+        {{flexberry-dropdown
+          class="compact"
+          items=locales
+          value=currentLocale
+          placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+          readonly=readonly
+          onChange=(action 'onLocaleChange')
+        }}
       </div>
     </div>
     <div class="flexberry-content ui attached segment">

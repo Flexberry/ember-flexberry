@@ -174,6 +174,14 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'toolbar-custom-buttons-example': {
+              'caption': 'Пользовательские кнопки',
+              'title': ''
+            },
+            'on-edit-form': {
+              'caption': 'Размещение на форме редактирования',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -251,7 +259,9 @@ Ember.$.extend(true, translations, {
       'birthday-caption': 'Дата рождения',
       'gender-caption': 'Пол',
       'vip-caption': 'VIP',
-      'karma-caption': 'Карма'
+      'karma-caption': 'Карма',
+      'name-validation-message-caption': 'Заполните поле "Имя"',
+      'eMail-validation-message-caption': 'Заполните поле "E-mail"'
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -261,12 +271,14 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Одобрено',
       'author-caption': 'Автор',
       'userVotes-caption': 'Голоса пользователей',
-      'date-caption': 'Дата'
+      'date-caption': 'Дата',
+      'author-validation-message-caption': 'Заполните поле "Автор"'
     },
 
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Локализация',
-      'name-caption': 'Наименование'
+      'name-caption': 'Наименование',
+      'name-validation-message-caption': 'Заполните наименование'
     },
 
     'ember-flexberry-dummy-suggestion-edit': {
@@ -278,10 +290,13 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Одобрено',
       'type-caption': 'Тип предложения',
       'author-caption': 'Автор предложения',
-      'editor-caption': 'Редактор предложения',
+      'editor1-caption': 'Редактор предложения',
       'files-caption': 'Прикрепленные файлы',
       'userVotes-caption': 'Голоса пользователей',
-      'comments-caption': 'Комментарии'
+      'comments-caption': 'Комментарии',
+      'type-validation-message-caption': 'Заполните тип предложения',
+      'author-validation-message-caption': 'Заполните поле "Автор"',
+      'editor-validation-message-caption': 'Заполните поле "Редактор"'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {
@@ -289,7 +304,8 @@ Ember.$.extend(true, translations, {
       'name-caption': 'Наименование',
       'moderated-caption': 'Одобрено',
       'parent-caption': 'Иерархия',
-      'localizedTypes-caption': 'Локализация типа'
+      'localized-types-caption': 'Локализация типа',
+      'name-validation-message-caption': 'Заполните наименование'
     },
 
     'ember-flexberry-dummy-application-user-list': {
@@ -373,6 +389,14 @@ Ember.$.extend(true, translations, {
         },
         'settings-example': {
           'caption': 'Components-examples/flexberry-objectlistview/settings-example'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/toolbar-custom-buttons-example',
+          'custom-message': 'Привет!',
+          'custom-button-name': 'Передать привет'
+        },
+        'on-edit-form': {
+          'caption': 'FlexberryObjectlistview пример произвольных данных'
         }
       },
       'flexberry-simpledatetime': {
@@ -429,7 +453,7 @@ Ember.$.extend(true, translations, {
     }
   },
 
-  components: {
+  'components': {
     'settings-example': {
       'component-template-caption': 'Шаблон компонента',
       'controller-properties-caption': 'Свойства контроллера',

@@ -13,7 +13,7 @@
   <thead>
     {{#unless (and useSingleColumn emptyMobileHeader) }}
       <tr>
-        <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+        <th class="object-list-view-operations collapsing {{unless (and showHelperColumn hasContent) 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
         {{#if useSingleColumn}}
           {{component headerCellComponent.componentName
             column=(hash header=singleColumnHeaderTitle sortable=false)
@@ -34,38 +34,40 @@
     {{/unless}}
   </thead>
   <tbody>
-    {{#if (not hasContent)}}
+    {{#unless hasContent}}
       <tr>
         <td colspan="{{colspan}}" style="text-align:center;">{{placeholder}}</td>
       </tr>
-    {{/if}}
+    {{/unless}}
     {{#each contentWithKeys key="key" as |record|}}
       <tr class="{{record.config.customClass}}">
         <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
           <div style="display: none">{{record.key}}
           </div>
-          <div class="object-list-view-helper-column-cell">
-            {{#if showAsteriskInRow}}
-              <div class="cell">
-                <i class="asterisk small red icon {{unless record.data.hasDirtyAttributes 'transparent'}}"></i>
-              </div>
-            {{/if}}
-            {{#if showCheckBoxInRow}}
-              <div class="cell">
-                {{flexberry-checkbox
-                  readonly=(or readonly (not record.config.canBeSelected))
-                  onChange=(action 'selectRow' record)
-                }}
-              </div>
-            {{/if}}
-            {{#if showDeleteButtonInRow}}
-              <div class="cell">
-                <button class="ui {{buttonClass}} {{if (or readonly (not record.config.canBeDeleted)) 'disabled'}} button" {{action 'deleteRow' record}}>
-                  <i class="minus icon"></i>
-                </button>
-              </div>
-            {{/if}}
-          </div>
+          {{#if showHelperColumn}}
+            <div class="object-list-view-helper-column-cell">
+              {{#if showAsteriskInRow}}
+                <div class="cell">
+                  <i class="asterisk small red icon {{unless record.data.hasDirtyAttributes 'transparent'}}"></i>
+                </div>
+              {{/if}}
+              {{#if showCheckBoxInRow}}
+                <div class="cell">
+                  {{flexberry-checkbox
+                    readonly=(or readonly (not record.config.canBeSelected))
+                    onChange=(action 'selectRow' record)
+                  }}
+                </div>
+              {{/if}}
+              {{#if showDeleteButtonInRow}}
+                <div class="cell">
+                  <button class="ui {{buttonClass}} {{if (or readonly (not record.config.canBeDeleted)) 'disabled'}} button" {{action 'deleteRow' record}}>
+                    <i class="minus icon"></i>
+                  </button>
+                </div>
+              {{/if}}
+            </div>
+          {{/if}}
         </td>
         {{#if useSingleColumn}}
           <td {{action 'rowClick' record preventDefault=false}}>
@@ -74,6 +76,7 @@
               columns=columns
               hasEditableValues=hasEditableValues
               dynamicProperties=singleColumnCellComponent.componentProperties
+              readonly=readonly
             }}
           </td>
         {{else}}
@@ -92,7 +95,7 @@
         {{#if showMenuColumn}}
           <td class="object-list-view-menu">
             {{flexberry-menu
-              class='icon vertical'
+              class='basic'
               callItemsOnClickCallbacks=false
               configurateItems=(action 'menuInRowConfigurateItems' record)
               onItemClick=(action 'menuInRowItemClick' record)

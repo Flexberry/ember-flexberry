@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import ListFormController from 'ember-flexberry/controllers/i-i-s-caseberry-logging-objects-application-log-l';
+import { translationMacro as t } from 'ember-i18n';
 const { getOwner } = Ember;
 
 export default ListFormController.extend({
@@ -33,6 +34,26 @@ export default ListFormController.extend({
 
   _router: undefined,
 
+  /**
+   *    Selected jQuery object, containing HTML of confirm modal dialog.
+   *
+   *    @property confirmModalDialog
+   *    @type Object
+   *    @default null
+   */
+  confirmModalDialog: null,
+
+  /**
+   *    Content to be displayed in confirm modal dialog.
+   *    It will be displayed only if some confirm needs.
+   *
+   *    @property confirmModalDialogContent
+   *    @type String
+   *    @default 't('components.flexberry-file.confirm-dialog-content')'
+   */
+  confirmModalDialogContent: t('components.flexberry-file.confirm-dialog-content'),
+
+
   init() {
     this._router = getOwner(this).lookup('router:main');
     this.logLevel = this.get('flexberryLoggingService').flexberryLogLevel;
@@ -45,9 +66,18 @@ export default ListFormController.extend({
     this.text = this.settings[this.logLevel];
   },
 
-  /**
-Supported actions
+  didInsertElement() {
+    this._super(...arguments);
 
+    // Initialize SemanticUI modal dialog, and remember it in a component property,
+    // because after call to errorModalDialog.modal its html will disappear from DOM.
+    let confirmModalDialog = this.$('.flexberry-file-error-modal-dialog');
+    confirmModalDialog.modal('setting', 'closable', false);
+    this.set('confirmModalDialog', confirmModalDialog);
+  },
+
+  /**
+    Supported actions
  */
   actions: {
     /**
@@ -229,9 +259,10 @@ jhghhjlk
      */
     warnAction() {
       if (this.logLevel < 2) {
-        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Warn. Продолжить?')) {
-          return;
-        }
+        showConfirmModalDialog('Warn');
+//         if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Warn. Продолжить?')) {
+//           return;
+//         }
       }
 
       let message = this._getMessageNumber() + 'Warning invocation testing';
@@ -240,6 +271,26 @@ jhghhjlk
     }
 
   },
+
+  /**
+   *    Shows confirm modal dialog.
+   *
+   *    @method showConfirmModalDialog
+   *    @param {String} confirmCaption Confirm caption (window header caption).
+   *    @param {String} confirmContent Confirm content (window body content).
+   *    @returns {String} Confirm content.
+   */
+  showConfirmModalDialog(category) {
+    let confirmModalDialog = this.get('confirmModalDialog');
+    let confirmContent = 'Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории '+ category + '. Продолжить?';
+    if (confirmModalDialog && confirmModalDialog.modal) {
+      this.set('confirmModalDialogContent', confirmContent);
+      confirmModalDialog.modal('show');
+    }
+
+    return confirmContent;
+  },
+
   _getMessageNumber() {
     this._messageNumber += 1;
     let ret =  this.get('moment').moment.format('hh:mm:ss a') + ' №' + this._messageNumber + ': ';

@@ -1,7 +1,15 @@
-import Ember from 'ember';
-import EditFormController from 'ember-flexberry/controllers/edit-form';
+/**
+  @module ember-flexberry-dummy
+*/
 
-export default EditFormController.extend({
+import Ember from 'ember';
+
+/**
+  Edit forms controllers mixin which handles save/delete operations indication.
+
+  @class EditFormControllerOperationsIndicationMixin
+*/
+export default Ember.Mixin.create({
   actions: {
     /**
       Handler for success ui-message component 'onShow' action.
@@ -271,5 +279,5 @@ export default EditFormController.extend({
     this.set('showFormSuccessMessage', undefined);
     this.set('showFormErrorMessage', undefined);
     this.set('latestOperationType', undefined);
-  },
+  }
 });

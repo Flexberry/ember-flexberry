@@ -19,7 +19,7 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-objectlistview.placeholder')'
+    @default t('components.flexberry-objectlistview.placeholder')
   */
   placeholder: t('components.flexberry-objectlistview.placeholder'),
 
@@ -276,6 +276,15 @@ export default FlexberryBaseComponent.extend({
   deleteButton: false,
 
   /**
+   * Flag indicates whether to show colsConfigButton button at toolbar.
+   *
+   * @property colsConfigButton
+   * @type Boolean
+   * @default false
+   */
+  colsConfigButton: true,
+
+  /**
     Flag indicates whether to show filter button at toolbar.
 
     @property filterButton
@@ -431,11 +440,9 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-      A stub for call of custom user buttons. Used when no handler is defined.
-      When not stab is used (closure action is defined), structured info about custom buttons is returned.
-      @example
-        Closure action has to return an array of structures:
+      Array of custom user buttons.
 
+      @example
         ```
         {
           buttonName: '...', // Button displayed name.
@@ -444,41 +451,60 @@ export default FlexberryBaseComponent.extend({
         }
         ```
 
+      @example
         Example of how to add user buttons:
-        1) it has to be defined special method (it will be used as closure action) at corresponding controller (name is not fixed).
+        1) it has to be defined computed property at corresponding controller (name of property is not fixed).
         ```
-        actions: {
-          getCustomButtons() {
+        import Ember from 'ember';
+        import ListFormController from 'ember-flexberry/controllers/list-form';
+
+        export default ListFormController.extend({
+          ...
+          customButtonsMethod: Ember.computed('i18n.locale', function() {
+            let i18n = this.get('i18n');
             return [{
-              buttonName: 'UserButton',
+              buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name'),
               buttonAction: 'userButtonActionTest',
               buttonClasses: 'my-test-user-button test-click-button'
             }];
-          }
-        }
+          })
+        });
         ```
 
         2) it has to be defined set as 'buttonAction' methods.
         ```
-        actions: {
-          userButtonActionTest() {
-            this.set('header', this.get('header') + ' clicked');
+        import Ember from 'ember';
+        import ListFormController from 'ember-flexberry/controllers/list-form';
+
+        export default ListFormController.extend({
+          ...
+          clickCounter: 1,
+          messageForUser: undefined,
+
+          actions: {
+            userButtonActionTest: function() {
+              let i18n = this.get('i18n');
+              let clickCounter = this.get('clickCounter');
+              this.set('clickCounter', clickCounter + 1);
+              this.set('messageForUser',
+                i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-message').string +
+                ' ' + clickCounter);
+            }
           }
-        }
+        });
         ```
 
-        3) defined methods have to be registered at conponent.
+        3) defined methods and computed property have to be registered at component.
         ```
         {{flexberry-objectlistview
           ...
-          customButtons=(action "getCustomButtons")
-          userButtonActionTest='userButtonActionTest"
+          customButtons=customButtonsMethod
+          userButtonActionTest='userButtonActionTest'
         }}
         ```
-      @method actions.customButtons
-      @public
-      @return Returns only `undefined` (because it's a stub)
-    */
+      @property customButtons
+      @type Array
+     */
     customButtons() {
       return undefined;
     },

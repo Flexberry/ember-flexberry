@@ -4,12 +4,16 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
+const { getOwner } = Ember;
 
 /**
   @class OlvToolbar
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+
   modelController: null,
 
   /**
@@ -65,6 +69,15 @@ export default FlexberryBaseComponent.extend({
   deleteButton: false,
 
   /**
+    Flag to use colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default false
+  */
+  colsConfigButton: true,
+
+  /**
     Flag to use filter button at toolbar.
 
     @property filterButton
@@ -101,23 +114,99 @@ export default FlexberryBaseComponent.extend({
   customButtonAction: 'customButtonAction',
 
   /**
-    Handler to get custom buttons from controller.
-    It has to be closure event and return array of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
-
-    @property customButtonsClosureEvent
-    @type Function
-  */
-  customButtonsClosureEvent: undefined,
-
-  /**
-    Array of custom buttons.
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+    
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...' // Css classes for button.
+      }
+      ```
 
     @property customButtonsArray
     @type Array
-  */
-  customButtonsArray: undefined,
+   */
+  customButtons: undefined,
 
-  colsSettingsItems: [],
+  /**
+    @property listUserSettings
+  */
+  listUserSettings: undefined,
+
+  /**
+    @property createSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.create-setting-title')
+  */
+  createSettitingTitle: t('components.olv-toolbar.create-setting-title'),
+
+  /**
+    @property useSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.use-setting-title')
+  */
+  useSettitingTitle: t('components.olv-toolbar.use-setting-title'),
+
+  /**
+    @property editSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.edit-setting-title')
+  */
+  editSettitingTitle: t('components.olv-toolbar.edit-setting-title'),
+
+  /**
+    @property removeSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.remove-setting-title')
+  */
+  removeSettitingTitle: t('components.olv-toolbar.remove-setting-title'),
+
+  /**
+    @property setDefaultSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.set-default-setting-title')
+  */
+  setDefaultSettitingTitle: t('components.olv-toolbar.set-default-setting-title'),
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  /**
+    @property listUserSettings
+  */
+  listNamedSettings: null,
+
+  /**
+    @property colsSettingsItems
+    @readOnly
+  */
+  colsSettingsItems:  Ember.computed(
+    'createSettitingTitle',
+    'setDefaultSettitingTitle',
+    'useSettitingTitle',
+    'editSettitingTitle',
+    'removeSettitingTitle',
+    'listNamedSettings',
+    function() {
+      let params = {
+        createSettitingTitle: this.get('createSettitingTitle'),
+        setDefaultSettitingTitle: this.get('setDefaultSettitingTitle'),
+        useSettitingTitle: this.get('useSettitingTitle'),
+        editSettitingTitle: this.get('editSettitingTitle'),
+        removeSettitingTitle: this.get('removeSettitingTitle'),
+        listNamedSettings: this.get('listNamedSettings'),
+      };
+      let ret = this.get('_userSettingsService').isUserSettingsServiceEnabled ?
+        this.get('colsConfigMenu').resetMenu(params) :
+        [];
+      return ret;
+    }
+  ),
 
   /**
     Flag shows enable-state of delete button.
@@ -203,13 +292,26 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('customButtonAction', actionName);
     },
 
-    showConfigDialog: function() {
+    /**
+      Action to show confis dialog.
+
+      @method actions.showConfigDialog
+      @public
+    */
+    showConfigDialog() {
       this.get('modelController').send('showConfigDialog');
     },
 
-    onMenuItemClick: function (e) {
-      let iTags = Ember.$(e.currentTarget).find('I');
-      let namedSetingSpans = Ember.$(e.currentTarget).find('SPAN');
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onMenuItemClick(e) {
+      let iTags = Ember.$(e.currentTarget).find('i');
+      let namedSetingSpans = Ember.$(e.currentTarget).find('span');
       if (iTags.length <= 0 || namedSetingSpans.length <= 0) {
         return;
       }
@@ -235,7 +337,6 @@ export default FlexberryBaseComponent.extend({
           break;
       }
     }
-
   },
 
   /**
@@ -253,58 +354,24 @@ export default FlexberryBaseComponent.extend({
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
 
-    let customButton = this.get('customButtonsClosureEvent');
-    if (customButton && typeof (customButton) === 'function') {
-      let customButtonsResult = customButton();
-      this.set('customButtonsArray', customButtonsResult);
-    }
+    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
+  },
 
+  didReceiveAttrs() {
+    this._super(...arguments);
     let listUserSettings = this.modelController.model.listUserSettings;
     if (listUserSettings && 'DEFAULT' in listUserSettings) {
       delete listUserSettings.DEFAULT;
     }
 
-    let listNamedSettings = [];
+    this.listUserSettings = listUserSettings;
+    Ember.set(this, 'listNamedSettings', {});
     if (listUserSettings) {
       for (let nameSetting in listUserSettings) {
-        listNamedSettings[listNamedSettings.length] = nameSetting;
+        Ember.set(this.listNamedSettings, nameSetting, true);
       }
     }
-
-    this.colsSettingsItems = [{
-      icon: 'dropdown icon',
-      iconAlignment: 'right',
-      title: '',
-      items: [{
-        icon: 'table icon',
-        iconAlignment: 'left',
-        title: 'Создать настройку'
-      }]
-    }];
-    let items = this.colsSettingsItems[0].items;
-    if (listNamedSettings.length > 0) {
-      let menus = [
-        { name: 'use', title: 'Применить', icon: 'checkmark box' },
-        { name: 'edit', title: 'Редактировать', icon: 'setting' },
-        { name: 'remove', title: 'Удалить', icon: 'remove' }
-      ];
-      for (let menu in menus) {
-        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: menus[menu].title, items: [] };
-        let icon = menus[menu].icon + ' icon';
-        for (let i = 0; i < listNamedSettings.length; i++) {
-          let subSubmenu = { title: listNamedSettings[i], icon: icon, iconAlignment: 'left' };
-          submenu.items[submenu.items.length] = subSubmenu;
-        }
-
-        items[items.length] = submenu;
-      }
-    }
-
-    items[items.length] = {
-        icon: 'remove circle icon',
-        iconAlignment: 'left',
-        title: 'Сбросить настройку'
-      };
   },
 
   /**
@@ -314,6 +381,8 @@ export default FlexberryBaseComponent.extend({
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
     this._super(...arguments);
   },
 
@@ -332,4 +401,16 @@ export default FlexberryBaseComponent.extend({
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
   }
+
+  _addNamedSetting(namedSeting) {
+    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
+    listNamedSettings[namedSeting] = true;
+    Ember.set(this, 'listNamedSettings', listNamedSettings);
+  },
+
+  _deleteNamedSetting(namedSeting) {
+    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
+    delete listNamedSettings[namedSeting];
+    Ember.set(this, 'listNamedSettings', listNamedSettings);
+  },
 });

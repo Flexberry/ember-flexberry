@@ -5,6 +5,7 @@ import Proj from 'ember-flexberry-data';
 var Model = BaseModel.extend({
   address: DS.attr('string'),
   text: DS.attr('string'),
+  date: DS.attr('date'),
   votes: DS.attr('number'),
   moderated: DS.attr('boolean'),
 
@@ -48,6 +49,21 @@ var Model = BaseModel.extend({
 
   // Model validation rules.
   validations: {
+    type: {
+      presence: {
+        message: 'Type is required'
+      }
+    },
+    author: {
+      presence: {
+        message: 'Author is required'
+      }
+    },
+    editor1: {
+      presence: {
+        message: 'Editor is required'
+      }
+    }
   }
 });
 

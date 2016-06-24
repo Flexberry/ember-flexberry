@@ -28,18 +28,19 @@
     </button>
   </div>
 {{/if}}
-<button class="ui button" {{action "showConfigDialog"}}>
-  <i class="large table icon"></i>
-</button>
-<div class="field">
-{{!-- flexberry-menu
-  class='compact'
-  items=colsSettingsItems
-  onItemClick=(action 'onMenuItemClick')
-  --}}
-</div>
-{{#each customButtonsArray as |customButton|}}
-  <button 
+{{#if colsConfigButton}}
+  <div class="ui buttons">
+    <button class="ui icon button" {{action "showConfigDialog"}}>
+      <i class="large table icon"></i>
+    </button>
+    {{flexberry-menu
+      items=colsSettingsItems
+      onItemClick=(action "onMenuItemClick")
+    }}
+  </div>
+{{/if}}
+{{#each customButtons as |customButton|}}
+  <button
     class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
     {{action "customButtonAction" customButton.buttonAction}}>
     {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}

@@ -1,21 +1,26 @@
 /**
   @module ember-flexberry
 */
-
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
-import ErrorableMixin from '../mixins/errorable-controller';
+import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
+import ErrorableControllerMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
   Object list view component.
 
-  @class ObjectListView
+  @class ObjectListViewComponent
   @extends FlexberryBaseComponent
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses ErrorableControllerMixin
 */
-export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, ErrorableMixin, {
-
+export default FlexberryBaseComponent.extend(
+  FlexberryLookupCompatibleComponentMixin,
+  FlexberryFileCompatibleComponentMixin,
+  ErrorableControllerMixin, {
   /**
     Computed property forms unique name for component from model name and current route.
     This unique name can be used as module name for user settings service.
@@ -122,15 +127,15 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   /**
     Custom classes for table.
 
-   Example:
-    ```handlebars
-    <!-- app/templates/employees.hbs -->
-    {{flexberry-objectlistview
-      ...
-      customTableClass="inverted blue"
-      ...
-    }}
-    ```
+    @example
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-objectlistview
+        ...
+        customTableClass="inverted blue"
+        ...
+      }}
+      ```
     @property customTableClass
     @type String
     @default ''
@@ -268,8 +273,17 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     @type Boolean
     @readOnly
   */
-  showHelperColumn: Ember.computed('showAsteriskInRow', 'showCheckBoxInRow', 'showDeleteButtonInRow', function() {
-    return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+  showHelperColumn: Ember.computed(
+    'showAsteriskInRow',
+    'showCheckBoxInRow',
+    'showDeleteButtonInRow',
+    'modelProjection',
+    function() {
+    if (this.get('modelProjection')) {
+      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+    } else {
+      return false;
+    }
   }),
 
   /**
@@ -329,12 +343,33 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
 
   /**
     Model projection which should be used to display given content.
+    Accepts object or name projections.
 
     @property modelProjection
-    @type Object
+    @type Object|String
     @default null
   */
-  modelProjection: null,
+  modelProjection: Ember.computed('_modelProjection', {
+    get(key) {
+      return this.get('_modelProjection');
+    },
+    set(key, value) {
+      if (typeof value === 'string') {
+        let modelName = this.get('modelName');
+        Ember.assert('For define projection by name, model name is required.', modelName);
+        let modelConstructor = this.get('store').modelFor(modelName);
+        Ember.assert(`Model with name '${modelName}' is not found.`, modelConstructor);
+        let projections = Ember.get(modelConstructor, 'projections');
+        Ember.assert(`Projection with name '${value}' for model with name '${modelName}' is not found.`, projections[value]);
+        value = projections[value];
+      } else if (typeof value !== 'object') {
+        throw new Error(`Property 'modelProjection' should be a string or object.`);
+      }
+
+      this.set('_modelProjection', value);
+      return value;
+    },
+  }),
 
   /**
     Table columns related to current model projection.
@@ -386,6 +421,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         }
       }
     } else {
+      if (this.currentController) {
+        if (userSettings === undefined) {
+          Ember.set(this.currentController, 'userSettings', {});
+        }
+
+        Ember.set(this.currentController.userSettings, 'colsOrder', cols);
+      }
+
       ret = cols;
     }
 
@@ -535,30 +578,30 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     Hook for configurate rows.
 
     @example
-    ```handlebars
-    <!-- app/templates/employees.hbs -->
-    {{flexberry-objectlistview
-      ...
-      configurateRow=(action 'configurateRow')
-      ...
-    }}
-    ```
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-objectlistview
+        ...
+        configurateRow=(action 'configurateRow')
+        ...
+      }}
+      ```
 
-    ```js
-    // app/controllers/employees.js
-    import ListFormController from './list-form';
+      ```js
+      // app/controllers/employees.js
+      import ListFormController from './list-form';
 
-    export default ListFormController.extend({
-      actions: {
-        configurateRow(rowConfig, record) {
-          rowConfig.canBeDeleted = false;
-          if (record.get('isMyFavoriteRecord')) {
-            rowConfig.customClass += 'my-fav-record';
+      export default ListFormController.extend({
+        actions: {
+          configurateRow(rowConfig, record) {
+            rowConfig.canBeDeleted = false;
+            if (record.get('isMyFavoriteRecord')) {
+              rowConfig.customClass += 'my-fav-record';
+            }
           }
         }
-      }
-    });
-    ```
+      });
+      ```
     @method configurateRow
 
     @param {Object} config Settings for row.
@@ -631,27 +674,27 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     Hook that can be used to confirm delete row.
 
     @example
-    ```handlebars
-    <!-- app/templates/your-template.hbs -->
-    {{flexberry-objectlistview
-      ...
-      confirmDeleteRow=(action 'confirmDeleteRow')
-      ...
-    }}
-    ```
+      ```handlebars
+      <!-- app/templates/your-template.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRow=(action 'confirmDeleteRow')
+        ...
+      }}
+      ```
 
-    ```js
-    // app/controllers/your-controller.js
-    ...
-    actions: {
+      ```js
+      // app/controllers/your-controller.js
       ...
-      confirmDeleteRow(row) {
-        return confirm('You sure?');
+      actions: {
+        ...
+        confirmDeleteRow(row) {
+          return confirm('You sure?');
+        }
+        ...
       }
       ...
-    }
-    ...
-    ```
+      ```
 
     @method confirmDeleteRow
     @param {Object} row Row
@@ -663,31 +706,31 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     Hook that can be used to confirm delete rows.
 
     @example
-    ```handlebars
-    <!-- app/templates/your-template.hbs -->
-    {{flexberry-objectlistview
-      ...
-      confirmDeleteRows=(action 'confirmDeleteRows')
-      ...
-    }}
-    ```
+      ```handlebars
+      <!-- app/templates/your-template.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRows=(action 'confirmDeleteRows')
+        ...
+      }}
+      ```
 
-    ```js
-    // app/controllers/your-controller.js
-    ...
-    actions: {
+      ```js
+      // app/controllers/your-controller.js
       ...
-      confirmDeleteRows(selectedRows) {
-        if (selectedRows.length < 5) {
-          return confirm('You sure?');
-        } else {
-          return true;
+      actions: {
+        ...
+        confirmDeleteRows(selectedRows) {
+          if (selectedRows.length < 5) {
+            return confirm('You sure?');
+          } else {
+            return true;
+          }
         }
+        ...
       }
       ...
-    }
-    ...
-    ```
+      ```
 
     @method confirmDeleteRows
     @param {Array} selectedRows Selected rows
@@ -696,7 +739,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   confirmDeleteRows: null,
 
   actions: {
-
     /**
       This action is called when user click on row.
 
@@ -886,10 +928,19 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
 
-    if (this.get('content')) {
-      this.get('content').forEach((item, index, enumerable) => {
-        this._addModel(item);
-      });
+    let content = this.get('content');
+    if (content) {
+      if (content.get('isFulfilled') === false) {
+        content.then((items) => {
+          items.forEach((item) => {
+            this._addModel(item);
+          });
+        });
+      } else {
+        content.forEach((item) => {
+          this._addModel(item);
+        });
+      }
     }
   },
 
@@ -922,6 +973,11 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     getSettingPromise.then(data => {
       this._setColumnWidths(data);
     });
+
+    // TODO: resolv this problem.
+    this.$('.flexberry-dropdown:last').dropdown({
+      direction: 'upward'
+    });
   },
 
   /**
@@ -930,6 +986,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   */
   didRender() {
     this._super(...arguments);
+
+    let currentTable = this.$('table.object-list-view');
+
     if (this.get('allowColumnResize')) {
       if (this.get('useSingleColumn')) {
         Ember.Logger.error(
@@ -937,8 +996,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
           'can\'t be enabled at the same time.');
         return;
       }
-
-      let $currentTable = this.$('table.object-list-view');
 
       // The first column has semantic class "collapsing"
       // so the column has 1px width and plugin has problems.
@@ -951,6 +1008,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       $currentTable.addClass('fixed');
 
       this._reinitResizablePlugin();
+    } else {
+      currentTable.colResizable({ disable: true });
     }
   },
 
@@ -987,12 +1046,12 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     // Disable plugin and then init it again.
     $currentTable.colResizable({ disable: true });
 
-    let _this = this;
-    $currentTable.colResizable({
-      minWidth: 70,
-      onResize(e) {
+    currentTable.colResizable({
+      minWidth: 90,
+      resizeMode:'flex',
+      onResize: (e)=> {
         // Save column width as user setting on resize.
-        _this._afterColumnResize(e);
+        this._afterColumnResize(e);
       }
     });
   },
@@ -1344,29 +1403,29 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     Hook that executes before deleting the record.
 
      @example
-     ```handlebars
-     <!-- app/templates/employees.hbs -->
-     {{flexberry-objectlistview
-       ...
-       beforeDeleteRecord=(action 'beforeDeleteRecord')
-       ...
-     }}
-     ```
+       ```handlebars
+       <!-- app/templates/employees.hbs -->
+       {{flexberry-objectlistview
+         ...
+         beforeDeleteRecord=(action 'beforeDeleteRecord')
+         ...
+       }}
+       ```
 
-     ```js
-     // app/controllers/employees.js
-     import ListFormController from './list-form';
+       ```js
+       // app/controllers/employees.js
+       import ListFormController from './list-form';
 
-     export default ListFormController.extend({
-       actions: {
-         beforeDeleteRecord(record, data) {
-           if (record.get('myProperty')) {
-             data.cancel = true;
+       export default ListFormController.extend({
+         actions: {
+           beforeDeleteRecord(record, data) {
+             if (record.get('myProperty')) {
+               data.cancel = true;
+             }
            }
          }
-       }
-     });
-     ```
+       });
+       ```
 
     @method beforeDeleteRecord
 

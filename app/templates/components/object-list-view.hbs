@@ -9,20 +9,20 @@
     }}
   {{/each}}
 {{/if}}
-<table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table ">
+<table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
   <thead>
-      <tr>
-        <th class="object-list-view-operations collapsing {{unless (and showHelperColumn hasContent) 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
-          {{#each columns as |column|}}
-            {{component headerCellComponent.componentName
-              column=column
-              dynamicProperties=headerCellComponent.componentProperties
-            }}
-          {{/each}}
-        {{#if showMenuColumn}}
-          <th class="object-list-view-menu collapsing" data-olv-header-property-name="OlvRowMenu"></th>
-        {{/if}}
-      </tr>
+    <tr>
+      <th class="object-list-view-operations collapsing {{unless (and showHelperColumn hasContent) 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+        {{#each columns as |column|}}
+          {{component headerCellComponent.componentName
+            column=column
+            dynamicProperties=headerCellComponent.componentProperties
+          }}
+        {{/each}}
+      {{#if showMenuColumn}}
+        <th class="object-list-view-menu collapsing" data-olv-header-property-name="OlvRowMenu"></th>
+      {{/if}}
+    </tr>
   </thead>
   <tbody>
     {{#unless hasContent}}
@@ -33,8 +33,7 @@
     {{#each contentWithKeys key="key" as |record|}}
       <tr class="{{record.config.customClass}}">
         <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
-          <div class="hidden">{{record.key}}
-          </div>
+          <div class="hidden">{{record.key}}</div>
           {{#if showHelperColumn}}
             <div class="object-list-view-helper-column-cell">
               {{#if showAsteriskInRow}}
@@ -60,21 +59,21 @@
             </div>
           {{/if}}
         </td>
-          {{#each columns as |column|}}
-            <td {{action 'rowClick' record preventDefault=false}}>
-              {{component column.cellComponent.componentName
-                dynamicProperties=column.cellComponent.componentProperties
-                relatedModel=record.data
-                value=(mut (get record.data column.propName))
-                readonly=readonly
-                required=required
-              }}
-            </td>
-          {{/each}}
+        {{#each columns as |column|}}
+          <td {{action 'rowClick' record preventDefault=false}}>
+            {{component column.cellComponent.componentName
+              dynamicProperties=column.cellComponent.componentProperties
+              relatedModel=record.data
+              value=(mut (get record.data column.propName))
+              readonly=readonly
+              required=required
+            }}
+          </td>
+        {{/each}}
         {{#if showMenuColumn}}
           <td class="object-list-view-menu">
             {{flexberry-menu
-              class='basic'
+              class='basic right pointing'
               callItemsOnClickCallbacks=false
               configurateItems=(action 'menuInRowConfigurateItems' record)
               onItemClick=(action 'menuInRowItemClick' record)

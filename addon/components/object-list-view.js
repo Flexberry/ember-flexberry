@@ -131,6 +131,10 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
         return;
       }
 
+      if (!e.item) {
+        return;
+      }
+
       if (e.item.isDeleteItem) {
         this.send('deleteRow', recordWithKey);
         return;
@@ -875,6 +879,9 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.$('.flexberry-dropdown:last').dropdown({
       direction: 'upward'
     });
+
+    // The last flexberry-menu need will be up.
+    this.$('.flexberry-menu:last').addClass('bottom');
   },
 
   /**

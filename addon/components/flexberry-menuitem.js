@@ -72,7 +72,7 @@ export default FlexberryBaseComponent.extend({
     // Store item object in DOM-element data attribute.
     // It will be used in root 'flexberry-menu' component to handle click on this 'flexberry-menuitem'.
     let item = this.get('item');
-    if (this.get('tagName')) {
+    if (this.get('tagName') !== '') {
       this.$().data('flexberry-menuitem.item', item);
     }
   },
@@ -84,7 +84,7 @@ export default FlexberryBaseComponent.extend({
     this._super(...arguments);
 
     // Remove stored item object from DOM-element data attribute.
-    if (this.get('tagName')) {
+    if (this.get('tagName') !== '') {
       this.$().removeData('flexberry-menuitem.item');
     }
   }

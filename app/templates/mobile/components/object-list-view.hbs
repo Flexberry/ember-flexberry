@@ -1,15 +1,15 @@
 {{#if errorMessages}}
   {{#each errorMessages as |currentError|}}
     {{ui-message
-      type='error'
+      type="error"
       closeable=true
       visible=true
-      title='Error occurred'
+      title="Error occurred"
       message=currentError
     }}
   {{/each}}
 {{/if}}
-<table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table ">
+<table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
   {{#if singleColumnHeaderTitle}}
     <thead>
       <tr>
@@ -46,13 +46,13 @@
                 <div class="cell">
                   {{flexberry-checkbox
                     readonly=(or readonly (not record.config.canBeSelected))
-                    onChange=(action 'selectRow' record)
+                    onChange=(action "selectRow" record)
                   }}
                 </div>
               {{/if}}
               {{#if showDeleteButtonInRow}}
                 <div class="cell">
-                  <button class="ui {{buttonClass}} {{if (or readonly (not record.config.canBeDeleted)) 'disabled'}} button" {{action 'deleteRow' record}}>
+                  <button class="ui {{buttonClass}} {{if (or readonly (not record.config.canBeDeleted)) 'disabled'}} button" {{action "deleteRow" record}}>
                     <i class="minus icon"></i>
                   </button>
                 </div>
@@ -60,7 +60,7 @@
             </div>
           {{/if}}
         </td>
-          <td {{action 'rowClick' record preventDefault=false}}>
+          <td {{action "rowClick" record preventDefault=false}}>
             {{component singleColumnCellComponent.componentName
               model=record.data
               columns=columns
@@ -72,10 +72,10 @@
         {{#if showMenuColumn}}
           <td class="object-list-view-menu">
             {{flexberry-menu
-              class='basic'
+              class="basic right pointing"
               callItemsOnClickCallbacks=false
-              configurateItems=(action 'menuInRowConfigurateItems' record)
-              onItemClick=(action 'menuInRowItemClick' record)
+              configurateItems=(action "menuInRowConfigurateItems" record)
+              onItemClick=(action "menuInRowItemClick" record)
             }}
           </td>
         {{/if}}

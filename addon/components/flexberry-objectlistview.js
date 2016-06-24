@@ -257,35 +257,6 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Default cell component that will be used to display values in single column.
-   *
-   * @property {Object} singleColumnCellComponent
-   * @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
-   * @property {String} [singleColumnCellComponent.componentProperties=null]
-   */
-  singleColumnCellComponent: {
-    componentName: 'object-list-view-single-column-cell',
-    componentProperties: null
-  },
-
-  /**
-   * Flag: indicates whether to use single column to display all model properties or not.
-   *
-   * @property useSingleColumn
-   * @type Boolean
-   * @default false
-   */
-  useSingleColumn: false,
-
-  /**
-   * Header title of single column.
-   *
-   * @property singleColumnHeaderTitle
-   * @type String
-   */
-  singleColumnHeaderTitle: undefined,
-
-  /**
    * Flag: indicates whether to show asterisk icon in first column of every changed row.
    *
    * @property showAsteriskInRow

@@ -509,14 +509,14 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   }),
 
   /**
-   * Total columns count (including additional columns).
-   *
-   * @property columnsCount
-   * @type Number
-   * @readonly
-   */
-  colspan: Ember.computed('columns.length', 'useSingleColumn', 'showHelperColumn', 'showMenuColumn', function() {
-    var columnsCount = 0;
+    Total columns count (including additional columns).
+
+    @property columnsCount
+    @type Number
+    @readOnly
+  */
+  colspan: Ember.computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
+    let columnsCount = 0;
     if (this.get('showHelperColumn')) {
       columnsCount += 1;
     }
@@ -525,12 +525,8 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
       columnsCount += 1;
     }
 
-    if (this.get('useSingleColumn')) {
-      columnsCount += 1;
-    } else {
-      var columns = this.get('columns');
-      columnsCount += Ember.isArray(columns) ? columns.length : 0;
-    }
+    let columns = this.get('columns');
+    columnsCount += Ember.isArray(columns) ? columns.length : 0;
 
     return columnsCount;
   }),

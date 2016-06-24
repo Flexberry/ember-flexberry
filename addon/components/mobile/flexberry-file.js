@@ -12,7 +12,7 @@ export default FlexberryFile.extend({
   /**
    * Flag: indicates whether to use single column to display all model properties or not.
    *
-   * @property useSingleColumn
+   * @property addButtonText
    * @type Boolean
    * @default false
    */

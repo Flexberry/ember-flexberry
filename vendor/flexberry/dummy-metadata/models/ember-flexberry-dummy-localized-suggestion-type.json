@@ -9,15 +9,45 @@
       "flexberryType": "string",
       "notNull": true,
       "defaultValue": ""
+    },
+    {
+      "name": "createTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "creator",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editor",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
     }
   ],
   "belongsTo": [
     {
+      "polymorphic": false,
       "name": "localization",
       "relatedTo": "ember-flexberry-dummy-localization",
       "inverse": null
     },
     {
+      "polymorphic": false,
       "name": "suggestionType",
       "relatedTo": "ember-flexberry-dummy-suggestion-type",
       "inverse": "localizedTypes"
@@ -25,6 +55,41 @@
   ],
   "hasMany": [],
   "projections": [
+    {
+      "name": "AuditView",
+      "modelName": "ember-flexberry-dummy-localized-suggestion-type",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "Name",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Name",
+          "lookupValueField": "name",
+          "relationName": "Localization",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "Name",
+              "hidden": true,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "caption": "Localization",
+          "name": "localization",
+          "relatedTo": "ember-flexberry-dummy-localization",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    },
     {
       "name": "LocalizedSuggestionTypeE",
       "modelName": "ember-flexberry-dummy-localized-suggestion-type",
@@ -55,6 +120,19 @@
           "caption": "Localization",
           "name": "localization",
           "relatedTo": "ember-flexberry-dummy-localization",
+          "inverse": null
+        },
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "SuggestionType",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [],
+          "index": 3,
+          "caption": "",
+          "name": "suggestionType",
+          "relatedTo": "ember-flexberry-dummy-suggestion-type",
           "inverse": null
         }
       ],

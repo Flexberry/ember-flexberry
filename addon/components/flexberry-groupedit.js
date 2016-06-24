@@ -1,6 +1,6 @@
 /**
- * @module ember-flexberry
- */
+ @module ember-flexberry
+*/
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -22,7 +22,7 @@ import { translationMacro as t } from 'ember-i18n';
 
   @class FlexberryGroupeditComponent
   @extends FlexberryBaseComponent
- */
+*/
 export default FlexberryBaseComponent.extend({
   /**
     Name of action to handle row click.
@@ -31,7 +31,7 @@ export default FlexberryBaseComponent.extend({
     @property action
     @type String
     @default 'groupEditRowClick'
-   */
+  */
   action: 'groupEditRowClick',
 
   /**
@@ -42,7 +42,7 @@ export default FlexberryBaseComponent.extend({
     @property allowColumnResize
     @type Boolean
     @default true
-   */
+  */
   allowColumnResize: true,
 
   /**
@@ -50,7 +50,7 @@ export default FlexberryBaseComponent.extend({
 
     @property buttonClass
     @type String
-   */
+  */
   buttonClass: undefined,
 
   /**
@@ -59,7 +59,7 @@ export default FlexberryBaseComponent.extend({
     @property {Object} cellComponent
     @property {String} [cellComponent.componentName='object-list-view-cell']
     @property {String} [cellComponent.componentProperties=null]
-   */
+  */
   cellComponent: {
     componentName: 'object-list-view-cell',
     componentProperties: null
@@ -71,7 +71,7 @@ export default FlexberryBaseComponent.extend({
     @property content
     @type ManyArray
     @default null
-   */
+  */
   content: null,
 
   /**
@@ -80,7 +80,7 @@ export default FlexberryBaseComponent.extend({
     @property createNewButton
     @type Boolean
     @default true
-   */
+  */
   createNewButton: true,
 
   /**
@@ -89,7 +89,7 @@ export default FlexberryBaseComponent.extend({
     @property customTableClass
     @type String
     @default ''
-   */
+  */
   customTableClass: '',
 
   /**
@@ -98,7 +98,7 @@ export default FlexberryBaseComponent.extend({
     @property deleteButton
     @type Boolean
     @default false
-   */
+  */
   deleteButton: true,
 
   /**
@@ -110,7 +110,7 @@ export default FlexberryBaseComponent.extend({
 
     @property editFormRoute
     @type String
-   */
+  */
   editFormRoute: undefined,
 
   /**
@@ -138,7 +138,7 @@ export default FlexberryBaseComponent.extend({
     @property editOnSeparateRoute
     @type Boolean
     @default false
-   */
+  */
   editOnSeparateRoute: false,
 
   /**
@@ -147,7 +147,7 @@ export default FlexberryBaseComponent.extend({
     @property {Object} headerCellComponent
     @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
     @property {String} [headerCellComponent.componentProperties=null]
-   */
+  */
   headerCellComponent: {
     componentName: 'object-list-view-header-cell',
     componentProperties: null
@@ -176,7 +176,7 @@ export default FlexberryBaseComponent.extend({
     @property menuInRowAdditionalItems
     @type Array
     @default null
-   */
+  */
   menuInRowAdditionalItems: null,
 
   /**
@@ -186,7 +186,7 @@ export default FlexberryBaseComponent.extend({
      @property modelProjection
      @type Object
      @default null
-   */
+  */
   modelProjection: null,
 
   /**
@@ -206,7 +206,7 @@ export default FlexberryBaseComponent.extend({
     @property orderable
     @type Boolean
     @default false
-   */
+  */
   orderable: false,
 
   /**
@@ -224,7 +224,7 @@ export default FlexberryBaseComponent.extend({
     @property rowClickable
     @type Boolean
     @default false
-   */
+  */
   rowClickable: false,
 
   /**
@@ -236,7 +236,7 @@ export default FlexberryBaseComponent.extend({
     @property saveBeforeRouteLeave
     @type Boolean
     @default false
-   */
+  */
   saveBeforeRouteLeave: false,
 
   /**
@@ -245,7 +245,7 @@ export default FlexberryBaseComponent.extend({
     @property showAsteriskInRow
     @type Boolean
     @default true
-   */
+  */
   showAsteriskInRow: true,
 
   /**
@@ -254,7 +254,7 @@ export default FlexberryBaseComponent.extend({
     @property showCheckBoxInRow
     @type Boolean
     @default true
-   */
+  */
   showCheckBoxInRow: true,
 
   /**
@@ -263,7 +263,7 @@ export default FlexberryBaseComponent.extend({
     @property showDeleteButtonInRow
     @type Boolean
     @default false
-   */
+  */
   showDeleteButtonInRow: false,
 
   /**
@@ -277,7 +277,7 @@ export default FlexberryBaseComponent.extend({
     @property showDeleteMenuItemInRow
     @type Boolean
     @default false
-   */
+  */
   showDeleteMenuItemInRow: false,
 
   /**
@@ -291,7 +291,7 @@ export default FlexberryBaseComponent.extend({
     @property showEditMenuItemInRow
     @type Boolean
     @default false
-   */
+  */
   showEditMenuItemInRow: false,
 
   /**
@@ -300,7 +300,7 @@ export default FlexberryBaseComponent.extend({
      @property {Object} singleColumnCellComponent
      @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
      @property {String} [singleColumnCellComponent.componentProperties=null]
-   */
+  */
   singleColumnCellComponent: {
     componentName: 'object-list-view-single-column-cell',
     componentProperties: null
@@ -311,7 +311,7 @@ export default FlexberryBaseComponent.extend({
 
      @property singleColumnHeaderTitle
      @type String
-   */
+  */
   singleColumnHeaderTitle: undefined,
 
   /**
@@ -329,7 +329,7 @@ export default FlexberryBaseComponent.extend({
 
     @property sorting
     @type Object
-   */
+  */
   sorting: null,
 
   /**
@@ -338,7 +338,7 @@ export default FlexberryBaseComponent.extend({
     @property tableStriped
     @type Boolean
     @default true
-   */
+  */
   tableStriped: true,
 
   /**
@@ -347,7 +347,7 @@ export default FlexberryBaseComponent.extend({
     @property useSingleColumn
     @type Boolean
     @default false
-   */
+  */
   useSingleColumn: false,
 
   actions: {
@@ -367,7 +367,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.sortByColumn
       @param {Object} column Column to sort by.
-     */
+    */
     sortByColumn(column) {
       throw new Error('No handler for sortByColumn action set for flexberry-groupedit. ' +
                       'Set handler like {{flexberry-groupedit ... sortByColumn=(action "sortByColumn")}}.');
@@ -389,7 +389,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.addColumnToSorting
       @param {Object} column Column to add sorting by.
-     */
+    */
     addColumnToSorting(column) {
       throw new Error('No handler for addColumnToSorting action set for flexberry-groupedit. ' +
                       'Set handler like {{flexberry-groupedit ... addColumnToSorting=(action "addColumnToSorting")}}.');
@@ -402,7 +402,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.groupEditRowClick
       @param {Object} record Clicked record.
       @param {Object} options Different parameters to handle action.
-     */
+    */
     groupEditRowClick(record, options) {
       if (this.get('editOnSeparateRoute')) {
         let editFormRoute = this.get('editFormRoute');

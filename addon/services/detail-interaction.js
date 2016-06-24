@@ -1,6 +1,6 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 
@@ -14,7 +14,7 @@ import Ember from 'ember';
   @class DetailInterationService
   @extends Ember.Service
   @public
- */
+*/
 export default Ember.Service.extend({
   /**
     Selected detail.
@@ -24,7 +24,7 @@ export default Ember.Service.extend({
 
     @property modelSelectedDetail
     @type Object
-   */
+  */
   modelSelectedDetail: undefined,
 
   /**
@@ -34,7 +34,7 @@ export default Ember.Service.extend({
 
     @property modelCurrentAgregators
     @type Object
-   */
+  */
   modelCurrentAgregators: undefined,
 
   /**
@@ -44,7 +44,7 @@ export default Ember.Service.extend({
 
     @property modelCurrentAgregatorPathes
     @type Object
-   */
+  */
   modelCurrentAgregatorPathes: undefined,
 
   /**
@@ -54,7 +54,7 @@ export default Ember.Service.extend({
 
     @property modelCurrentNotSaved
     @type Object
-   */
+  */
   modelCurrentNotSaved: undefined,
 
   /**
@@ -64,7 +64,7 @@ export default Ember.Service.extend({
 
     @property modelLastUpdatedDetail
     @type Object
-   */
+  */
   modelLastUpdatedDetail: undefined,
 
   /**
@@ -72,7 +72,7 @@ export default Ember.Service.extend({
 
     @property saveBeforeRouteLeave
     @type Boolean
-   */
+  */
   saveBeforeRouteLeave: undefined,
 
   /**
@@ -83,7 +83,7 @@ export default Ember.Service.extend({
 
     @param {Array} currentArray Value to check if it is array and has values.
     @return {Boolean} Logic value showing if givven value is array and has values..
-   */
+  */
   hasValues(currentArray) {
     return currentArray && Ember.isArray(currentArray) && currentArray.length > 0;
   },
@@ -97,7 +97,7 @@ export default Ember.Service.extend({
     @param {String} propertyName Name of property to save result array to.
     @param {Array} currentArray Array to add value to. If it is not array, new array will be created.
     @param {Object} value A value to add to array.
-   */
+  */
   pushValue(propertyName, currentArray, value) {
     let currentPropertyValue;
     if (this.hasValues(currentArray)) {
@@ -119,7 +119,7 @@ export default Ember.Service.extend({
 
     @param {String} propertyName The name of property where array is kept.
     @return {Object} The last value of array (or `undefined` if array contains no values).
-   */
+  */
   getLastValue(propertyName) {
     let currentPropertyValue = this.get(propertyName);
     if (!this.hasValues(currentPropertyValue)) {

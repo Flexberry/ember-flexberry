@@ -1,16 +1,16 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
- * Toolbar component for {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
- *
- * @class GroupEditToolbarComponent
- * @extends FlexberryBaseComponent
- */
+  Toolbar component for {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
+
+  @class GroupEditToolbarComponent
+  @extends FlexberryBaseComponent
+*/
 export default FlexberryBaseComponent.extend({
   /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
@@ -18,7 +18,7 @@ export default FlexberryBaseComponent.extend({
     @property _groupEditEventsService
     @type Service
     @private
-   */
+  */
   _groupEditEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
@@ -29,7 +29,7 @@ export default FlexberryBaseComponent.extend({
     @property _isDeleteRowsEnabled
     @type Boolean
     @private
-   */
+  */
   _isDeleteRowsEnabled: undefined,
 
   /**
@@ -38,7 +38,7 @@ export default FlexberryBaseComponent.extend({
     @property classNames
     @type Array
     @readOnly
-   */
+  */
   classNames: ['groupedit-toolbar'],
 
   /**
@@ -48,7 +48,7 @@ export default FlexberryBaseComponent.extend({
     @property createNewButton
     @type Boolean
     @default true
-   */
+  */
   createNewButton: true,
 
   /**
@@ -58,7 +58,7 @@ export default FlexberryBaseComponent.extend({
     @property deleteButton
     @type Boolean
     @default true
-   */
+  */
   deleteButton: true,
 
   /**
@@ -68,14 +68,14 @@ export default FlexberryBaseComponent.extend({
     @property actions
     @type Object
     @readOnly
-   */
+  */
   actions: {
     /**
       Handles add record button click and triggers add record event on
       {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
 
       @method actions.addRow
-     */
+    */
     addRow() {
       if (this.get('readonly')) {
         return;
@@ -90,7 +90,7 @@ export default FlexberryBaseComponent.extend({
       {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
 
       @method actions.deleteRows
-     */
+    */
     deleteRows() {
       if (this.get('readonly')) {
         return;
@@ -106,7 +106,7 @@ export default FlexberryBaseComponent.extend({
 
     @method init
     @throws {Error} An error occurred during the initialization of component.
-   */
+  */
   init() {
     this._super(...arguments);
     var componentName = this.get('componentName');
@@ -122,7 +122,7 @@ export default FlexberryBaseComponent.extend({
     Implementation of component's teardown.
 
     @method willDestroy
-   */
+  */
   willDestroy() {
     this.get('_groupEditEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('_groupEditEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
@@ -138,7 +138,7 @@ export default FlexberryBaseComponent.extend({
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {Model} record The model corresponding to selected row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {Integer} count Count of selected rows in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
-   */
+  */
   _rowSelected(componentName, record, count) {
     if (componentName === this.get('componentName')) {
       this.set('_isDeleteRowsEnabled', count > 0);
@@ -153,7 +153,7 @@ export default FlexberryBaseComponent.extend({
 
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {Integer} count Count of deleted rows in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
-   */
+  */
   _rowsDeleted(componentName, count) {
     if (componentName === this.get('componentName')) {
       this.set('_isDeleteRowsEnabled', false);

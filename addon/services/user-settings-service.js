@@ -1,6 +1,6 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 
@@ -13,7 +13,7 @@ import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/pr
   @class UserSettingsService
   @extends Ember.Service
   @public
- */
+*/
 export default Ember.Service.extend({
   /**
     Current store to request records.
@@ -21,7 +21,7 @@ export default Ember.Service.extend({
     @property _store
     @private
     @type DS.Store
-   */
+  */
   _store: Ember.inject.service('store'),
 
   /**
@@ -32,7 +32,7 @@ export default Ember.Service.extend({
     @public
     @type Boolean
     @default false
-   */
+  */
   isUserSettingsServiceEnabled: false,
 
   /**
@@ -43,25 +43,25 @@ export default Ember.Service.extend({
    @param {Object} [options] Parameters for user setting getting.
    @param {String} options.moduleName Name of module to search by.
    @param {String} options.settingName Setting name to search by..
- */
+  */
   deleteUserSetting(options) {
-   if (!this.get('isUserSettingsServiceEnabled')) {
-     return new Ember.RSVP.Promise(function(resolve) {
-       resolve(undefined);
-     });
-   }
+    if (!this.get('isUserSettingsServiceEnabled')) {
+      return new Ember.RSVP.Promise(function(resolve) {
+        resolve(undefined);
+      });
+    }
 
-   let methodOptions = Ember.merge({
-     moduleName: undefined,
-     settingName: undefined
-   }, options);
+    let methodOptions = Ember.merge({
+      moduleName: undefined,
+      settingName: undefined
+    }, options);
 
-   let moduleName = methodOptions.moduleName;
-   let settingName = methodOptions.settingName;
+    let moduleName = methodOptions.moduleName;
+    let settingName = methodOptions.settingName;
 
-   Ember.assert('Module name is not defined for user setting getting.', moduleName);
-   Ember.assert('Setting name is not defined for user setting getting.', settingName);
-   return this._deleteExistingRecord(moduleName, settingName);
+    Ember.assert('Module name is not defined for user setting getting.', moduleName);
+    Ember.assert('Setting name is not defined for user setting getting.', settingName);
+    return this._deleteExistingRecord(moduleName, settingName);
   },
 
   /**
@@ -75,7 +75,7 @@ export default Ember.Service.extend({
     @param {String} options.userSetting User setting data to save.
     @param {String} options.settingName Setting name to save as.
     @return {Promise} A promise. It returns saving result
-   */
+  */
   saveUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
       return new Ember.RSVP.Promise((resolve, reject) => {resolve();});
@@ -132,7 +132,7 @@ export default Ember.Service.extend({
     @param {String} options.moduleName Name of module to search by.
     @param {String} options.settingName Setting name to search by.
     @return {Promise} A promise. It returns found result or `undefined` if there is no such setting.
-   */
+  */
   getUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
       return new Ember.RSVP.Promise((resolve) => {
@@ -173,7 +173,7 @@ export default Ember.Service.extend({
     @param {Object} [options] Parameters for user setting getting.
     @param {String} options.moduleName Name of module to search by.
     @return {Promise} A promise. It returns found settings as { <settingname>: < settingValue>}.
-   */
+  */
   getUserSettings(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
       return new Ember.RSVP.Promise((resolve) => {
@@ -213,7 +213,7 @@ export default Ember.Service.extend({
     @public
 
     @return {String} Current user name.
-   */
+  */
   getCurrentUser() {
     // TODO: add mechanism to return current user.
     return '';
@@ -271,7 +271,7 @@ export default Ember.Service.extend({
     @param {Object} moduleName Module name of looked for record.
     @param {String} settingName Setting name of looked for record.
     @return {Promise} A promise. It returns found record or `undefined` if there is no such setting.
-   */
+  */
   _getExistingRecord(moduleName, settingName) {
     // TODO: add search by username.
     let currentUserName = this.getCurrentUser();
@@ -310,7 +310,7 @@ export default Ember.Service.extend({
 
     @param {Object} moduleName Module name of looked for record.
     @return {Promise} A promise. It returns found record or `undefined` if there is no such setting.
-   */
+  */
   _getExistingRecords(moduleName) {
     // TODO: add search by username.
     let currentUserName = this.getCurrentUser();

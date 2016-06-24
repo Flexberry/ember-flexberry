@@ -1,6 +1,6 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import FlexberryGroupeditComponent from './../flexberry-groupedit';
 
@@ -10,7 +10,7 @@ import FlexberryGroupeditComponent from './../flexberry-groupedit';
   @class Mobile.FlexberryGroupeditComponent
   @extends FlexberryGroupeditComponent
   @constructor
- */
+*/
 export default FlexberryGroupeditComponent.extend({
   /**
     Flag: indicates whether allow to resize columns (if `true`) or not (if `false`).
@@ -22,7 +22,7 @@ export default FlexberryGroupeditComponent.extend({
     @property allowColumnResize
     @type Boolean
     @default false
-   */
+  */
   allowColumnResize: false,
 
   /**
@@ -35,7 +35,7 @@ export default FlexberryGroupeditComponent.extend({
     @property headerClickable
     @type Boolean
     @default false
-   */
+  */
   orderable: false,
 
   /**
@@ -48,7 +48,7 @@ export default FlexberryGroupeditComponent.extend({
     @property rowClickable
     @type Boolean
     @default false
-   */
+  */
   rowClickable: false,
 
   /**
@@ -61,7 +61,7 @@ export default FlexberryGroupeditComponent.extend({
     @property showAsteriskInRow
     @type Boolean
     @default true
-   */
+  */
   showAsteriskInRow: true,
 
   /**
@@ -74,7 +74,7 @@ export default FlexberryGroupeditComponent.extend({
     @property showCheckBoxInRow
     @type Boolean
     @default true
-   */
+  */
   showCheckBoxInRow: true,
 
   /**
@@ -87,7 +87,7 @@ export default FlexberryGroupeditComponent.extend({
     @property showDeleteButtonInRow
     @type Boolean
     @default true
-   */
+  */
   showDeleteButtonInRow: true,
 
   /**
@@ -100,7 +100,7 @@ export default FlexberryGroupeditComponent.extend({
     @property showDeleteMenuItemInRow
     @type Boolean
     @default false
-   */
+  */
   showDeleteMenuItemInRow: false,
 
   /**
@@ -113,7 +113,7 @@ export default FlexberryGroupeditComponent.extend({
     @property showEditMenuItemInRow
     @type Boolean
     @default false
-   */
+  */
   showEditMenuItemInRow: false,
 
   /**
@@ -126,6 +126,6 @@ export default FlexberryGroupeditComponent.extend({
     @property useSingleColumn
     @type Boolean
     @default true
-   */
+  */
   useSingleColumn: true
 });

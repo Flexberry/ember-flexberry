@@ -7,7 +7,7 @@ import Ember from 'ember';
   @class FlexberryGroupeditRouteMixin
   @extends Ember.Mixin
   @public
- */
+*/
 export default Ember.Mixin.create({
   /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
@@ -17,7 +17,7 @@ export default Ember.Mixin.create({
     @property _groupEditEventsService
     @type Service
     @default ObjectlistviewEventsService
-   */
+  */
   _groupEditEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
@@ -27,7 +27,7 @@ export default Ember.Mixin.create({
     @property flexberryDetailInteractionService
     @type Service
     @default DetailInteractionService
-   */
+  */
   flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
 
   actions: {
@@ -43,7 +43,7 @@ export default Ember.Mixin.create({
       @param {String} options.modelName Clicked detail model name (used to create record if record is undefined).
       @param {Array} options.detailArray Current detail array (used to add record to if record is undefined).
       @param {Boolean} options.editFormRoute Path to detail's form.
-     */
+    */
     groupEditRowClick(record, options) {
       let methodOptions = {
         saveBeforeRouteLeave: false,
@@ -117,7 +117,7 @@ export default Ember.Mixin.create({
     It is used to subscribe on {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 
     @method activate
-   */
+  */
   activate() {
     this._super(...arguments);
 
@@ -132,7 +132,7 @@ export default Ember.Mixin.create({
     It is used to unsubscribe from {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 
     @method deactivate
-   */
+  */
   deactivate() {
     this._super(...arguments);
 
@@ -147,7 +147,7 @@ export default Ember.Mixin.create({
     @method newRoutePath
     @param {String} ordinalPath The path to model's route.
     @return {String} The path to new model's route.
-   */
+  */
   newRoutePath(ordinalPath) {
     return ordinalPath + '.new';
   },
@@ -160,7 +160,7 @@ export default Ember.Mixin.create({
 
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {Model} record The model corresponding to added row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
-   */
+  */
   _rowAdded(componentName, record) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
@@ -174,7 +174,7 @@ export default Ember.Mixin.create({
 
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {DS.Model} record The model corresponding to deleted row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
-   */
+  */
   _rowDeleted(componentName, record) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
@@ -187,7 +187,7 @@ export default Ember.Mixin.create({
     @private
 
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
-   */
+  */
   _rowChanged(componentName) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();

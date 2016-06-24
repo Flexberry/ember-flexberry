@@ -1,6 +1,6 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 import ODataSerializer from 'ember-flexberry-data/serializers/odata';
 
 /**
@@ -8,7 +8,7 @@ import ODataSerializer from 'ember-flexberry-data/serializers/odata';
 
   @class NewPlatformFlexberryFlexberryUserSettingSerializer
   @extends ODataSerializer
- */
+*/
 export default ODataSerializer.extend({
   attrs: { },
 

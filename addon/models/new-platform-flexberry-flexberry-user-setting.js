@@ -1,6 +1,6 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import DS from 'ember-data';
 import BaseModel from './base';
@@ -11,7 +11,7 @@ import Proj from 'ember-flexberry-data';
 
   @class NewPlatformFlexberryFlexberryUserSettingModel
   @extends BaseModel
- */
+*/
 var Model = BaseModel.extend({
   userName: DS.attr('string'),
   moduleName: DS.attr('string'),

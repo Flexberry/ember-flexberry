@@ -8,7 +8,6 @@ import Ember from 'ember';
  */
 export function initialize(applicationInstance) {
 
-
   /**
    *  flexberry-logging service for transmit error/warning/log/info/debug/deprecation messages to  store and save its on server as i-i-s-caseberry-logging-objects-application-log object
    *
@@ -36,8 +35,6 @@ export function initialize(applicationInstance) {
   if (flexberryLogLevel === 0) {
     return;	// Do nothing
   }
-
-
 
   /**
   * Replacement error handlers on RSVP stage
@@ -126,7 +123,7 @@ export function initialize(applicationInstance) {
       }
     );
     _sendLog('ERROR', message, formattedMessage);
-  };
+  }
 
   /**
   * Send message to store and server by flexberry-logging service
@@ -136,7 +133,7 @@ export function initialize(applicationInstance) {
   */
   function _sendLog(levelName, message, formattedMessage) {
     let logLevel = flexberryLogging.logLevelEnums[levelName];
-    if ( logLevel <= flexberryLogging.flexberryLogLevel) {	//Meggage category logged (lower or equal high flexberryLogLevel)
+    if (logLevel <= flexberryLogging.flexberryLogLevel) {	//Meggage category logged (lower or equal high flexberryLogLevel)
       flexberryLogging.flexberryLogger(logLevel, levelName, message, formattedMessage);
     }
   }

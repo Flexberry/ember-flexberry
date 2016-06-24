@@ -38,9 +38,10 @@ export default ListFormController.extend({
     this.logLevel = this.get('flexberryLoggingService').flexberryLogLevel;
     let enumsLoglevel = this.get('flexberryLoggingService').enumsLoglevel;
     this.settings[0] = '0: OFF';
-    for (let level =1; level < enumsLoglevel.length; level++) {
-      this.settings[level] = level + ': ' + enumsLoglevel.slice(1, level+1).join('s, ') + 's';
+    for (let level = 1; level < enumsLoglevel.length; level++) {
+      this.settings[level] = level + ': ' + enumsLoglevel.slice(1, level + 1).join('s, ') + 's';
     }
+
     this.text = this.settings[this.logLevel];
   },
 
@@ -105,10 +106,11 @@ jhghhjlk
      */
     assertAction() {
       if (this.logLevel < 1) {
-        if (!confirm ('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Assert. Продолжить?')) {
+        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Assert. Продолжить?')) {
           return;
         }
       }
+
       let message = this._getMessageNumber() + 'Assert invocation testing';
       try {
         Ember.assert(message, false);
@@ -124,12 +126,13 @@ jhghhjlk
      */
     errorAction() {
       if (this.logLevel < 1) {
-        if (!confirm ('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Error. Продолжить?')) {
+        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Error. Продолжить?')) {
           return;
         }
       }
+
       try {
-        eval ('error_operator');
+        eval('error_operator');
       } catch (e) {
         e.message = this._getMessageNumber() + e.message;
         Ember.Logger.error(e);
@@ -143,10 +146,11 @@ jhghhjlk
      */
     throwAction() {
       if (this.logLevel < 1) {
-        if (!confirm ('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Throw. Продолжить?')) {
+        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Throw. Продолжить?')) {
           return;
         }
       }
+
       try {
         let message = this._getMessageNumber() + 'Throw invocation testing';
         throw new Error(message);
@@ -162,10 +166,11 @@ jhghhjlk
      */
     deprecationAction() {
       if (this.logLevel < 6) {
-        if (!confirm ('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Deprecation. Продолжить?')) {
+        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Deprecation. Продолжить?')) {
           return;
         }
       }
+
       let message = 'DEPRECATION:' + this._getMessageNumber() + 'Deprecation invocation testing';
       Ember.Logger.warn(message);
       this._router.router.refresh();
@@ -177,10 +182,11 @@ jhghhjlk
      */
     debugAction() {
       if (this.logLevel < 5) {
-        if (!confirm ('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Debug. Продолжить?')) {
+        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Debug. Продолжить?')) {
           return;
         }
       }
+
       let message = this._getMessageNumber() + 'Debug invocation testing';
       Ember.Logger.debug(message);
       this._router.router.refresh();
@@ -192,10 +198,11 @@ jhghhjlk
    */
     infoAction() {
       if (this.logLevel < 4) {
-        if (!confirm ('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Info. Продолжить?')) {
+        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Info. Продолжить?')) {
           return;
         }
       }
+
       let message = this._getMessageNumber() + 'Info invocation testing';
       Ember.Logger.info(message);
       this._router.router.refresh();
@@ -206,10 +213,11 @@ jhghhjlk
      */
     logAction() {
       if (this.logLevel < 3) {
-        if (!confirm ('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Log. Продолжить?')) {
+        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Log. Продолжить?')) {
           return;
         }
       }
+
       let message = this._getMessageNumber() + 'Log invocation testing';
       Ember.Logger.log(message);
       this._router.router.refresh();
@@ -221,10 +229,11 @@ jhghhjlk
      */
     warnAction() {
       if (this.logLevel < 2) {
-        if (!confirm ('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Warn. Продолжить?')) {
+        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Warn. Продолжить?')) {
           return;
         }
       }
+
       let message = this._getMessageNumber() + 'Warning invocation testing';
       Ember.Logger.warn(message);
       this._router.router.refresh();
@@ -233,7 +242,7 @@ jhghhjlk
   },
   _getMessageNumber() {
     this._messageNumber += 1;
-    let ret = moment().format('hh:mm:ss a') + ' №' + this._messageNumber + ': ';
+    let ret =  this.get('moment').moment.format('hh:mm:ss a') + ' №' + this._messageNumber + ': ';
     return ret;
   }
 });

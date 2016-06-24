@@ -1,19 +1,36 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
+import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import ErrorableMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
- * Object list view component.
- *
- * @class ObjectListView
- * @extends FlexberryBaseComponent
- */
-export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, ErrorableMixin, {
+  Object list view component.
+
+  @class ObjectListViewComponent
+  @extends FlexberryBaseComponent
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses ErrorableControllerMixin
+*/
+export default FlexberryBaseComponent.extend(
+  FlexberryLookupCompatibleComponentMixin,
+  FlexberryFileCompatibleComponentMixin,
+  ErrorableMixin, {
+  /**
+    Projection set by property `modelProjection`.
+
+    @property _modelProjection
+    @type Object
+    @default null
+    @private
+  */
+  _modelProjection: null,
+
   actions: {
     rowClick: function(recordWithKey, e) {
       if (this.get('readonly')) {
@@ -440,13 +457,34 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   ),
 
   /**
-   * Model projection which should be used to display given content.
-   *
-   * @property modelProjection
-   * @type Object
-   * @default null
+    Model projection which should be used to display given content.
+    Accepts object or name projections.
+
+    @property modelProjection
+    @type Object|String
+    @default null
    */
-  modelProjection: null,
+  modelProjection: Ember.computed('_modelProjection', {
+    get(key) {
+      return this.get('_modelProjection');
+    },
+    set(key, value) {
+      if (typeof value === 'string') {
+        let modelName = this.get('modelName');
+        Ember.assert('For define projection by name, model name is required.', modelName);
+        let modelConstructor = this.get('store').modelFor(modelName);
+        Ember.assert(`Model with name '${modelName}' is not found.`, modelConstructor);
+        let projections = Ember.get(modelConstructor, 'projections');
+        Ember.assert(`Projection with name '${value}' for model with name '${modelName}' is not found.`, projections[value]);
+        value = projections[value];
+      } else if (typeof value !== 'object') {
+        throw new Error(`Property 'modelProjection' should be a string or object.`);
+      }
+
+      this.set('_modelProjection', value);
+      return value;
+    },
+  }),
 
   /**
    * Table columns related to current model projection.
@@ -822,10 +860,19 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
 
-    if (this.get('content')) {
-      this.get('content').forEach((item, index, enumerable) => {
-        this._addModel(item);
-      });
+    let content = this.get('content');
+    if (content) {
+      if (content.get('isFulfilled') === false) {
+        content.then((items) => {
+          items.forEach((item) => {
+            this._addModel(item);
+          });
+        });
+      } else {
+        content.forEach((item) => {
+          this._addModel(item);
+        });
+      }
     }
   },
 

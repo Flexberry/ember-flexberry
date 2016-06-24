@@ -6,11 +6,20 @@
       componentSettingsMetadata=componentSettingsMetadata
       componentTemplateText=componentTemplateText
     }}
-    {{flexberry-menu
-      class='compact'
-      items=items
-      onItemClick=(action 'onMenuItemClick')
-    }}
+    <div class="ui basic buttons">
+      {{flexberry-menu
+        items=itemsLeft
+        onItemClick=(action "onMenuItemClick")
+      }}
+      {{flexberry-menu
+        items=itemsRight
+        onItemClick=(action "onMenuItemClick")
+      }}
+      {{flexberry-menu
+        items=itemsSubmenu
+        onItemClick=(action "onMenuItemClick")
+      }}
+    </div>
     {{/settings-example}}
   </div>
 </form>

@@ -44,29 +44,32 @@ export default {
     'flexberry-file': {
       placeholder: '(no file)',
 
-      'add-btn-text': 'Add File',
-      'remove-btn-text': 'Remove File',
-      'upload-btn-text': 'Upload File',
-      'download-btn-text': 'Download File',
+      'add-button-title': 'Add File',
+      'add-button-caption': 'Add File',
+      'remove-button-title': 'Remove File',
+      'upload-button-title': 'Upload File',
+      'download-button-title': 'Download File',
 
-      'error-dialog-title': 'File component error',
+      'preview-image-alternative-text': 'Loaded image',
+
+      'error-dialog-caption': 'File component error',
       'error-dialog-content': 'File component error occurred',
-      'error-dialog-ok-btn-text': 'OK',
+      'error-dialog-ok-button-caption': 'OK',
 
-      'add-file-error-title': 'Add file error',
-      'file-too-big-message': 'File size must not be greater than {{maxSize}} bytes. Selected file {{fileName}} has size of {{actualSize}} bytes.',
+      'add-file-error-caption': 'Add file error',
+      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
+        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} bytes.',
 
-      'upload-file-error-title': 'File upload error',
-      'upload-file-error-message': 'Upload {{fileName}} failed. {{errorText}}',
+      'upload-file-error-caption': 'File upload error',
+      'upload-file-error-message': 'Upload of \'{{fileName}}\' failed. {{errorMessage}}',
 
-      'download-file-error-title': 'File download error',
-      'download-file-error-message': 'Download {{fileName}} failed. {{errorText}}',
+      'download-file-error-caption': 'File download error',
+      'download-file-error-message': 'Download of \'{{fileName}}\' failed. {{errorMessage}}',
       'menu-for-file': {
-        'zoom-image-item-title': 'Zoom image',
-        'replace-file-item-title': 'Replace file',
-        'delete-file-item-title': 'Delete file'
-      },
-      'alt-image-text': 'LoadedImage'
+        'zoom-image-item-caption': 'Zoom image',
+        'replace-file-item-caption': 'Replace file',
+        'delete-file-item-caption': 'Delete file'
+      }
     },
 
     'flexberry-lookup': {

@@ -44,7 +44,7 @@ test('it properly generates simple filter predicate', function(assert) {
 
   assert.equal(typeof result, 'object');
   assert.equal(result.constructor, StringPredicate);
-  assert.equal(result.attributeName, 'firstName');
+  assert.equal(result.attributePath, 'firstName');
   assert.equal(result.containsValue, 'test');
 
   assert.equal(resultUndefined, undefined);
@@ -103,6 +103,6 @@ test('it properly generates complex filter predicate', function(assert) {
   // It counts only string fields.
   assert.equal(result.predicates.length, 2);
   assert.equal(result.predicates[0].constructor, StringPredicate);
-  assert.equal(result.predicates[0].attributeName, 'firstName');
+  assert.equal(result.predicates[0].attributePath, 'firstName');
   assert.equal(result.predicates[0].containsValue, 'test');
 });

@@ -36,8 +36,8 @@ export default Ember.Component.extend({
   /**
     Errors own properties with validation errors messages.
 
-    @private
     @property validationProperties
+    @private
   */
   validationProperties: undefined,
 

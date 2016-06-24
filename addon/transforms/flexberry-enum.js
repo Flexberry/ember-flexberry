@@ -22,27 +22,28 @@ let FlexberryEnum = DS.Transform.extend({
 
     Should be defined in app/enums/.
 
-    ```js
-    // app/enums/order-status.js
-    import { createEnum } from 'ember-flexberry/utils/enum-functions';
+    @example
+      ```js
+      // app/enums/order-status.js
+      import { createEnum } from 'ember-flexberry/utils/enum-functions';
 
-    export default createEnum({
-      Paid: 'Paid',
-      InProcess: 'In process',
-      Sent: 'Sent',
-      Arrived: 'Arrived',
-      NotArrived: 'Not arrived',
-      Unknown: 'Unknown'
-    });
+      export default createEnum({
+        Paid: 'Paid',
+        InProcess: 'In process',
+        Sent: 'Sent',
+        Arrived: 'Arrived',
+        NotArrived: 'Not arrived',
+        Unknown: 'Unknown'
+      });
 
-    // app/transforms/order-status
-    import FlexberryEnum from 'ember-flexberry/transforms/flexberry-enum';
-    import OrderStatus from '../enums/order-status';
+      // app/transforms/order-status
+      import FlexberryEnum from 'ember-flexberry/transforms/flexberry-enum';
+      import OrderStatus from '../enums/order-status';
 
-    export default FlexberryEnum.extend({
-      enum: OrderStatus
-    });
-    ```
+      export default FlexberryEnum.extend({
+        enum: OrderStatus
+      });
+      ```
 
     @property enum
     @type Object

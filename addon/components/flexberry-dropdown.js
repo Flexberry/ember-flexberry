@@ -38,16 +38,16 @@ export default FlexberryBaseComponent.extend({
 
     @property appConfigSettingsPath
     @type String
-    @default 'APP.components.flexberryBaseComponent'
+    @default APP.components.flexberryDropdown
   */
   appConfigSettingsPath: 'APP.components.flexberryDropdown',
 
   /**
-   * Placeholder or default text (will be displayed if there is no selected item).
-   *
-   * @property placeholder
-   * @type String
-   * @default 't('components.flexberry-dropdown.placeholder')'
+    Placeholder or default text (will be displayed if there is no selected item).
+
+    @property placeholder
+    @type String
+    @default t('components.flexberry-dropdown.placeholder')
    */
   placeholder: t('components.flexberry-dropdown.placeholder'),
 
@@ -79,7 +79,7 @@ export default FlexberryBaseComponent.extend({
   dropdownDomElement: null,
 
   /**
-    Flag indicates whether 'willDestroyElement' hook has been already called.
+    Flag indicates whether `willDestroyElement` hook has been already called.
 
     @property destroyHasBeenCalled
     @type Boolean
@@ -182,15 +182,15 @@ export default FlexberryBaseComponent.extend({
 
       Its is necessary in situations when route's template changes on model change.
       @example
-      ```handlebars
-      ...
-      {{#if model.enum}}
-        <span>{{model.enum}}<span>
-      {{else}}
-        {{flexberry-dropdown items=enumAvailableValues value=model.enum}}
-      {{/if}}
-      ...
-      ```
+        ```handlebars
+        ...
+        {{#if model.enum}}
+          <span>{{model.enum}}<span>
+        {{else}}
+          {{flexberry-dropdown items=enumAvailableValues value=model.enum}}
+        {{/if}}
+        ...
+        ```
       In such situation, without this callback, semantic-ui will throw an error:
       'Transition: Element is no longer attached to DOM. Unable to animate'.
 

@@ -15,8 +15,8 @@ import EmberValidations from 'ember-validations';
   @uses Ember.EventedMixin
 
   @event preSave
-  @param {Object} event Event object.
-  @param {Promise[]} promises Array to which custom 'preSave' promises could be pushed.
+  @param {Object} event Event object
+  @param {Promise[]} promises Array to which custom 'preSave' promises could be pushed
 */
 export default Proj.Model.extend(EmberValidations, Ember.Evented, {
   /**
@@ -32,9 +32,9 @@ export default Proj.Model.extend(EmberValidations, Ember.Evented, {
     Checks that model satisfies validation rules defined in 'validations' property.
 
     @method validate
-    @param {Object} [options] Method options.
-    @param {Boolean} [options.validateDeleted = true] Flag: indicates whether to validate model, if it is deleted, or not.
-    @return {Promise} A promise that will be resolved if model satisfies validation rules defined in 'validations' property.
+    @param {Object} [options] Method options
+    @param {Boolean} [options.validateDeleted = true] Flag: indicates whether to validate model, if it is deleted, or not
+    @return {Promise} A promise that will be resolved if model satisfies validation rules defined in 'validations' property
   */
   validate(options) {
     options = Ember.merge({ validateDeleted: true }, options || {});
@@ -54,11 +54,11 @@ export default Proj.Model.extend(EmberValidations, Ember.Evented, {
 
     @method beforeSave
 
-    @param {Object} [options] Method options.
+    @param {Object} [options] Method options
     @param {Boolean} [options.softSave = false] Flag: indicates whether following 'save' will be soft
-    (without sending a request to server) or not.
-    @param {Promise[]} [options.promises] Array to which 'preSave' event handlers could add some asynchronous operations promises.
-    @return {Promise} A promise that will be resolved after all 'preSave' event handlers promises will be resolved.
+    (without sending a request to server) or not
+    @param {Promise[]} [options.promises] Array to which 'preSave' event handlers could add some asynchronous operations promises
+    @return {Promise} A promise that will be resolved after all 'preSave' event handlers promises will be resolved
   */
   beforeSave(options) {
     options = Ember.merge({ softSave: false, promises: [] }, options || {});
@@ -87,10 +87,10 @@ export default Proj.Model.extend(EmberValidations, Ember.Evented, {
 
     @method save
 
-    @param {Object} [options] Method options.
+    @param {Object} [options] Method options
     @param {Boolean} [options.softSave = false] Flag: indicates whether following 'save' will be soft
-    (without sending a request to server) or not.
-    @return {Promise} A promise that will be resolved after model will be successfully saved.
+    (without sending a request to server) or not
+    @return {Promise} A promise that will be resolved after model will be successfully saved
   */
   save(options) {
     options = Ember.merge({ softSave: false }, options || {});

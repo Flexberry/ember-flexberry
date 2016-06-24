@@ -31,6 +31,18 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
+  /**
+    Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
+
+    If flag enabled component compares current detail array with used on component,
+    removes deleted and marked as deleted on model level records, adds created on model level records.
+
+    @property searchForContentChange
+    @type Boolean
+    @default false
+  */
+  searchForContentChange: false,
+
   actions: {
     rowClick: function(recordWithKey, e) {
       if (this.get('readonly')) {
@@ -1281,9 +1293,9 @@ export default FlexberryBaseComponent.extend(
       } else {
         var modelName = this.get('modelProjection').modelName;
         var modelToAdd = this.get('store').createRecord(modelName, {});
-        this.get('content').addObject(modelToAdd);
 
         this._addModel(modelToAdd);
+        this.get('content').addObject(modelToAdd);
         this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
       }
     }
@@ -1438,5 +1450,64 @@ export default FlexberryBaseComponent.extend(
       var componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
     }
+  }),
+
+  /**
+    It observes changes of model's data that are displayed on component.
+    Property changing displayes automatically.
+    If the record is added or deleted from displayed array, this observer is executed.
+
+    If flag {{#crossLink "ObjectListViewComponent/searchForContentChange:property"}}{{/crossLink}} is enabled
+    then changes won't be applied to control. Otherwise omponent compares current detail array with used on component,
+    removes deleted and marked as deleted on model level records, adds created on model level records.
+
+    @method _contentDidChange
+    @private
+  */
+  _contentDidChange: Ember.observer('content.[]', function() {
+    // Property changing displays automatically.
+    let searchForContentChange = this.get('searchForContentChange');
+    if (!searchForContentChange) {
+      return;
+    }
+
+    let content = this.get('content');
+    let contentWithKeys = this.get('contentWithKeys');
+    let componentName = this.get('componentName');
+    let immediateDelete = this.get('immediateDelete');
+    let selectedRecords = this.get('selectedRecords');
+
+    // Search for added and deleted records.
+    let addedItems = [];
+    let deletedItems = [];
+    content.forEach((item) => {
+      let foundRecord = this._getModelKey(item);
+      let isDeleted = item.get('isDeleted');
+      if (!foundRecord && !isDeleted) {
+        addedItems.push(item);
+      } else if (foundRecord && isDeleted) {
+        deletedItems.push(item);
+      }
+    });
+
+    contentWithKeys.forEach((item) => {
+      let record = item.get('data');
+      if (!content.contains(record)) {
+        deletedItems.push(record);
+      }
+    });
+
+    // Apply changes to component.
+    addedItems.forEach(addedItem => {
+      this._addModel(addedItem);
+      this.get('objectlistviewEventsService').rowAddedTrigger(componentName, addedItem);
+    });
+
+    deletedItems.forEach(deletedItem => {
+      let key = this._getModelKey(deletedItem);
+      this._removeModelWithKey(key);
+      selectedRecords.removeObject(deletedItem);
+      this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, deletedItem, immediateDelete);
+    });
   })
 });

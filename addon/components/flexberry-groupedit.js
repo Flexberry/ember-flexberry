@@ -56,6 +56,18 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
+
+    If flag enabled component compares current detail array with used on component,
+    removes deleted and marked as deleted on model level records, adds created on model level records.
+
+    @property searchForContentChange
+    @type Boolean
+    @default false
+  */
+  searchForContentChange: false,
+
+  /**
     Text to be displayed in table body, if content is not defined or empty.
 
     @property placeholder

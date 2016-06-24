@@ -147,7 +147,7 @@ var EditFormBlueprint = (function () {
         }
     };
     EditFormBlueprint.prototype.getParentRoute = function () {
-        var parentRoute;
+        var parentRoute = '';
         var listFormsDir = path.join(this.options.metadataDir, "list-forms");
         var listForms = fs.readdirSync(listFormsDir);
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {

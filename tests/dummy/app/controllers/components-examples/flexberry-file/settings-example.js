@@ -129,7 +129,7 @@ export default EditFormController.extend({
     });
     componentSettingsMetadata.pushObject({
       settingName: 'maxUploadFileSize',
-      settingType: 'string',
+      settingType: 'number',
       settingDefaultValue: null,
       bindedControllerPropertieName: 'maxUploadFileSize'
     });

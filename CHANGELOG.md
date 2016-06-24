@@ -12,6 +12,11 @@ FlexberryObjectlistviewComponent
 FlexberryCheckboxComponent:
 * Add class property for wrapper component.
 
+## 2016-06-21
+### Breaking changes
+FlexberryObjectlistview:
+* Change of mechanism for adding custom user buttons.
+
 ## 2016-06-14
 ### Fixed
 FlexberryTextboxComponent, FlexberryTextareaComponent:

@@ -175,6 +175,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Settings example',
               'title': ''
             },
+            'toolbar-custom-buttons-example': {
+              'caption': 'Custom buttons on toolbar',
+              'title': ''
+            },
             'on-edit-form': {
               'caption': 'Placement on edit form',
               'title': ''
@@ -384,6 +388,11 @@ Ember.$.extend(true, translations, {
         },
         'settings-example': {
           'caption': 'Components-examples/flexberry-objectlistview/settings-example'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/toolbar-custom-buttons-example',
+          'custom-message': 'Hello!',
+          'custom-button-name': 'Send hello'
         },
         'on-edit-form': {
           'caption': 'FlexberryObjectlistview custom data sample'

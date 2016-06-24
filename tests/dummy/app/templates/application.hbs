@@ -25,12 +25,23 @@
             <i class="sidebar icon"></i>
           </a>          
           <div class="right item">
-            {{flexberry-dropdown
-              class="compact"
-              items=locales
-              value=i18n.locale
-              placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-            }}
+            {{!-- ui-dropdown component used in flexberry-dropdown has some unfixed problems with IE, so we use <select> instead --}}
+            {{#if browserIsInternetExplorer}}
+              <select class="ui dropdown" onchange={{action (mut (get i18n "locale")) value="target.value"}}>
+                {{#each locales as |locale|}}
+                  <option value={{locale}} selected={{eq (get i18n "locale") locale}}>
+                    {{locale}}
+                  </option>
+                {{/each}}
+              </select>
+            {{else}}
+              {{flexberry-dropdown
+                class="compact"
+                items=locales
+                value=i18n.locale
+                placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+              }}
+            {{/if}}
           </div>
         </div>
       </div>

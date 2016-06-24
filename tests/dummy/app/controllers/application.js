@@ -5,6 +5,11 @@ const version = config.APP.version;
 
 export default Ember.Controller.extend({
   actions: {
+    /**
+      Toggles application sitemap's side bar.
+
+      @method actions.toggleSidebar
+    */
     toggleSidebar() {
       Ember.$('.ui.sidebar').sidebar('toggle');
     }
@@ -25,10 +30,22 @@ export default Ember.Controller.extend({
     @type String
   */
   addonVersionHref: Ember.computed('addonVersion', function() {
-    var addonVersion = this.get('addonVersion');
-    var commitSha = addonVersion.split('+')[1];
+    let addonVersion = this.get('addonVersion');
+    let commitSha = addonVersion.split('+')[1];
 
     return 'https://github.com/Flexberry/ember-flexberry/commit/' + commitSha;
+  }),
+
+  /**
+    Flag: indicates whether current browser is internet explorer.
+
+    @property browserIsInternetExplorer
+    @type Boolean
+  */
+  browserIsInternetExplorer: Ember.computed(function() {
+    let userAgent = window.navigator.userAgent;
+
+    return userAgent.indexOf('MSIE ') > 0 || userAgent.indexOf('Trident/') > 0 || userAgent.indexOf('Edge/') > 0;
   }),
 
   /**
@@ -36,6 +53,7 @@ export default Ember.Controller.extend({
 
     @property locales
     @type String[]
+    @default ['ru', 'en']
   */
   locales: ['ru', 'en'],
 
@@ -71,7 +89,7 @@ export default Ember.Controller.extend({
     @type Object
   */
   sitemap: Ember.computed('i18n.locale', function() {
-    var i18n = this.get('i18n');
+    let i18n = this.get('i18n');
 
     return {
       nodes: [{

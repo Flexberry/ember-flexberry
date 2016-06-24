@@ -191,11 +191,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
   sortByColumn: 'sortByColumn',
 
   /**
-   * Override wrapping element's tag.
-   */
-  tagName: 'div',
-
-  /**
    * Component's CSS classes for wrapper.
    */
   classNames: ['object-list-view-container'],
@@ -264,7 +259,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
    *
    * @property appConfigSettingsPath
    * @type String
-   * @default 'APP.components.flexberryBaseComponent'
+   * @default 'APP.components.objectListView'
    */
   appConfigSettingsPath: 'APP.components.objectListView',
 
@@ -291,40 +286,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     componentName: 'object-list-view-cell',
     componentProperties: null
   },
-
-  /**
-   * Default cell component that will be used to display values in single column.
-   *
-   * @property {Object} singleColumnCellComponent
-   * @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
-   * @property {String} [singleColumnCellComponent.componentProperties=null]
-   */
-  singleColumnCellComponent: {
-    componentName: 'object-list-view-single-column-cell',
-    componentProperties: null
-  },
-
-  /**
-   * Flag: indicates whether to use single column to display all model properties or not.
-   *
-   * @property useSingleColumn
-   * @type Boolean
-   * @default false
-   */
-  useSingleColumn: false,
-
-  /**
-   * Header title of single column.
-   *
-   * @property singleColumnHeaderTitle
-   * @type String
-   */
-  singleColumnHeaderTitle: undefined,
-
-  emptyMobileHeader: Ember.computed('singleColumnHeaderTitle', function() {
-    let singleColumnHeaderTitle = this.get('singleColumnHeaderTitle');
-    return Ember.isEmpty(singleColumnHeaderTitle);
-  }),
 
   /**
    * Flag: indicates whether to show asterisk icon in first column of every changed row.
@@ -928,13 +889,6 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     let currentTable = this.$('table.object-list-view');
 
     if (this.get('allowColumnResize')) {
-      if (this.get('useSingleColumn')) {
-        Ember.Logger.error(
-          'Flags of object-list-view \'allowColumnResize\' and \'useSingleColumn\' ' +
-          'can\'t be enabled at the same time.');
-        return;
-      }
-
       // The first column has semantic class "collapsing"
       // so the column has 1px width and plugin has problems.
       // A real width is reset in order to keep computed by semantic width.

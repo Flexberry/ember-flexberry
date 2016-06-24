@@ -97,7 +97,7 @@ var ModelBlueprint = (function () {
     };
     ModelBlueprint.prototype.getJSForModel = function (model) {
         var attrs = [], validations = [];
-        var templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
+        var templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
         var templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
         for (var _i = 0, _a = model.attrs; _i < _a.length; _i++) {
             var attr = _a[_i];

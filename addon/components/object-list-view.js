@@ -502,6 +502,10 @@ export default FlexberryBaseComponent.extend(
     }
 
     let cols = this._generateColumns(projection.attributes);
+    if ('caption' in projection) {  //GroupEdit has caption values, dont use userSettings, return basic order
+      return cols;
+    }
+
     var userSettings = this.currentController ? this.currentController.userSettings : undefined;
     if (userSettings && userSettings.colsOrder !== undefined) {
       let namedCols = {};

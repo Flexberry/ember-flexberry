@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-06-24
+### Added
+FlexberryGroupeditComponent
+* Add opportunity to observe model changing (it needs to enable flag 'searchForContentChange').
+
 ## 2016-06-23
 ### Added
 FlexberryObjectlistviewComponent

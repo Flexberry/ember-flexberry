@@ -44,35 +44,43 @@ export default {
     'flexberry-file': {
       placeholder: '(no file)',
 
-      'add-btn-text': 'Add File',
-      'remove-btn-text': 'Remove File',
-      'upload-btn-text': 'Upload File',
-      'download-btn-text': 'Download File',
+      'add-button-title': 'Add File',
+      'add-button-caption': 'Add File',
+      'remove-button-title': 'Remove File',
+      'upload-button-title': 'Upload File',
+      'download-button-title': 'Download File',
 
-      'error-dialog-title': 'File component error',
+      'preview-image-alternative-text': 'Loaded image',
+
+      'error-dialog-caption': 'File component error',
       'error-dialog-content': 'File component error occurred',
-      'error-dialog-ok-btn-text': 'OK',
+      'error-dialog-ok-button-caption': 'OK',
 
-      'add-file-error-title': 'Add file error',
-      'file-too-big-message': 'File size must not be greater than {{maxSize}} bytes. Selected file {{fileName}} has size of {{actualSize}} bytes.',
+      'add-file-error-caption': 'Add file error',
+      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
+        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} bytes.',
 
-      'upload-file-error-title': 'File upload error',
-      'upload-file-error-message': 'Upload {{fileName}} failed. {{errorText}}',
+      'upload-file-error-caption': 'File upload error',
+      'upload-file-error-message': 'Upload of \'{{fileName}}\' failed. {{errorMessage}}',
 
-      'download-file-error-title': 'File download error',
-      'download-file-error-message': 'Download {{fileName}} failed. {{errorText}}',
+      'download-file-error-caption': 'File download error',
+      'download-file-error-message': 'Download of \'{{fileName}}\' failed. {{errorMessage}}',
       'menu-for-file': {
-        'zoom-image-item-title': 'Zoom image',
-        'replace-file-item-title': 'Replace file',
-        'delete-file-item-title': 'Delete file'
-      },
-      'alt-image-text': 'LoadedImage'
+        'zoom-image-item-caption': 'Zoom image',
+        'replace-file-item-caption': 'Replace file',
+        'delete-file-item-caption': 'Delete file'
+      }
     },
 
     'flexberry-lookup': {
-      placeholder: '(no value)',
+      'placeholder': '(no value)',
       'choose-button-text': 'Choose',
-      'remove-button-text': 'Remove'
+      'remove-button-text': 'Remove',
+      'dropdown': {
+        'messages': {
+          'noResults': 'No results found.'
+        }
+      }
     },
 
     'flexberry-objectlistview': {
@@ -102,7 +110,26 @@ export default {
       'refresh-button-text': 'Refresh',
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
-      'filter-by-any-match-placeholder': 'Search...'
+      'filter-by-any-match-placeholder': 'Search...',
+      'create-setting-title': 'New setting',
+      'use-setting-title': 'Use',
+      'edit-setting-title': 'Edit',
+      'remove-setting-title': 'Remove',
+      'set-default-setting-title': 'Default setting'
+    },
+
+    'colsconfig-dialog-content': {
+      'title': 'Customize the display of colums',
+      'dont-show-columns': 'Do not display columns',
+      'columns-order': 'Specify the order of the columns',
+      'column-name': 'Column name',
+      'sort-direction': 'Sorting direction',
+      'sort-priority': 'Priority column sorting',
+      'setting-name': 'Setting name',
+      'enter-setting-name': 'Enter setting name',
+      'use': 'Use',
+      'use-without-save': 'Use this settings without saving in setting ',
+      'save': 'Save'
     }
   }
 };

@@ -1,10 +1,9 @@
 /**
  * @module ember-flexberry
  */
-import ApplicationSerializer from './application';
+import ODataSerializer from 'ember-flexberry-data/serializers/odata';
 
-// TODO: ODataSerializer.extend
-export default ApplicationSerializer.extend({
+export default ODataSerializer.extend({
   attrs: {
   },
   /**

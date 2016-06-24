@@ -80,21 +80,25 @@ export default Ember.Mixin.create({
       }
 
       let sortQueryParam = this.serializeSortingParam(newSorting);
-      this.userSettings.sorting = newSorting;
-      let router = getOwner(this).lookup('router:main');
-      let moduleName =  router.currentRouteName;
-      let savePromise = this.get('_userSettingsService').
-        saveUserSetting({
-          moduleName: moduleName,
-          settingName: 'DEFAULT',
-          userSetting: { sorting: newSorting }
-        }
-      );
-      savePromise.then(
-        record => {
-          this.set('sort', sortQueryParam);
-        }
-      );
+      if ('userSettings' in this) { // NON modal window
+        this.userSettings.sorting = newSorting;
+        let router = getOwner(this).lookup('router:main');
+        let moduleName =  router.currentRouteName;
+        let savePromise = this.get('_userSettingsService').
+          saveUserSetting({
+            moduleName: moduleName,
+            settingName: 'DEFAULT',
+            userSetting: { sorting: newSorting }
+          }
+        );
+        savePromise.then(
+          record => {
+            this.set('sort', sortQueryParam);
+          }
+        );
+      } else {
+        this.set('sort', sortQueryParam);
+      }
     },
 
     addColumnToSorting: function(column) {
@@ -121,22 +125,25 @@ export default Ember.Mixin.create({
       }
 
       let sortQueryParam = this.serializeSortingParam(newSorting);
-      this.userSettings.sorting = newSorting;
-      let router = getOwner(this).lookup('router:main');
-      let moduleName =  router.currentRouteName;
-      let savePromise = this.get('_userSettingsService').
-        saveUserSetting({
-          moduleName: moduleName,
-          settingName: 'DEFAULT',
-          userSetting: { sorting: newSorting }
-        }
-      );
-      savePromise.then(
-        record => {
-          this.set('sort', sortQueryParam);
-        }
-      );
-
+      if ('userSettings' in this) { // NON model window
+        this.userSettings.sorting = newSorting;
+        let router = getOwner(this).lookup('router:main');
+        let moduleName =  router.currentRouteName;
+        let savePromise = this.get('_userSettingsService').
+          saveUserSetting({
+            moduleName: moduleName,
+            settingName: 'DEFAULT',
+            userSetting: { sorting: newSorting }
+          }
+        );
+        savePromise.then(
+          record => {
+            this.set('sort', sortQueryParam);
+          }
+        );
+      } else {
+        this.set('sort', sortQueryParam);
+      }
     }
   }
 });

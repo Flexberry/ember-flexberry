@@ -6,85 +6,81 @@
     </div>
   </div>
   <div class="ui segment">
-    <div class="ui three column celled grid">
-      <div class="row">
-        <div class="column">
-          <h4 class="ui header">{{t "components.settings-example.controller-properties-caption"}}</h4>
-        </div>
-        <div class="column">
-          <h4 class="ui header">{{t "components.settings-example.component-current-settings-caption"}}</h4>
-        </div>
-        <div class="column">
-          <h4 class="ui header">{{t "components.settings-example.component-default-settings-caption"}}</h4>
-        </div>
-      </div>
-      {{#each componentSettingsMetadata as |settingMetadata|}}
-        <div class="row">
-          <div class="column">
+    <table class="ui celled table flexberry-word-break">
+      <thead>
+        <tr><th>{{t "components.settings-example.controller-properties-caption"}}</th>
+        <th>{{t "components.settings-example.component-current-settings-caption"}}</th>
+        <th>{{t "components.settings-example.component-default-settings-caption"}}</th>
+      </tr></thead>
+      <tbody>
+        {{#each componentSettingsMetadata as |settingMetadata|}}
+        <tr>
+          <td>
             {{#if settingMetadata.bindedControllerPropertieName}}
-              {{! Display controller's setting name }}
-              {{#if settingMetadata.bindedControllerPropertieDisplayName}}
-                {{settingMetadata.bindedControllerPropertieDisplayName}}=
-              {{else}}
-                {{settingMetadata.bindedControllerPropertieName}}=
+                {{! Display controller's setting name }}
+                {{#if settingMetadata.bindedControllerPropertieDisplayName}}
+                  {{settingMetadata.bindedControllerPropertieDisplayName}}=
+                {{else}}
+                  {{settingMetadata.bindedControllerPropertieName}}=
+                {{/if}}
+
+                {{! Display controller's setting value }}
+                {{#if settingMetadata.settingIsWithoutUI}}
+                  {{! Immutable setting without UI }}
+                  {{to-string settingMetadata.settingValue}}
+                {{else}}
+                  {{! Mutable setting with UI }}
+                  {{#if (eq settingMetadata.settingType "boolean")}}
+                    {{input type="checkbox" checked=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
+                  {{/if}}
+
+                  {{#if (eq settingMetadata.settingType "string")}}
+                    {{input type="text" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
+                  {{/if}}
+
+                  {{#if (eq settingMetadata.settingType "number")}}
+                    {{number-input value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
+                  {{/if}}
+
+                  {{#if (or (eq settingMetadata.settingType "date") (eq settingMetadata.settingType "datetime"))}}
+                    {{input type="datetime-local" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
+                  {{/if}}
+
+                  {{#if (eq settingMetadata.settingType "enumeration")}}
+                    <select onchange={{action (mut (get controllerProperties settingMetadata.bindedControllerPropertieName)) value="target.value"}}>
+                      <option></option>
+                      {{#each settingMetadata.settingAvailableItems as |item|}}
+                        <option value={{item}} selected={{eq (get controllerProperties settingMetadata.bindedControllerPropertieName) item}}>
+                          {{to-string item}}
+                        </option>
+                      {{/each}}
+                    </select>
+                  {{/if}}
+
+                  {{#if (eq settingMetadata.settingType "hasManyArray")}}
+                    {{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
+                  {{/if}}
+
+                  {{#if (eq settingMetadata.settingType "model")}}
+                    {{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
+                  {{/if}}
+                {{/if}}
               {{/if}}
-              
-              {{! Display controller's setting value }}
-              {{#if settingMetadata.settingIsWithoutUI}}
-                {{! Immutable setting without UI }}
-                {{to-string settingMetadata.settingValue}}
+            </td>
+            <td>
+              {{#if (or settingMetadata.settingIsWithoutUI (not settingMetadata.bindedControllerPropertieName))}}
+                {{settingMetadata.settingName}}={{to-string settingMetadata.settingValue}}
               {{else}}
-                {{! Mutable setting with UI }}
-                {{#if (eq settingMetadata.settingType "boolean")}}
-                  {{input type="checkbox" checked=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
-                {{/if}}
-
-                {{#if (eq settingMetadata.settingType "string")}}
-                  {{input type="text" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
-                {{/if}}
-
-                {{#if (eq settingMetadata.settingType "number")}}
-                  {{number-input value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
-                {{/if}}
-
-                {{#if (or (eq settingMetadata.settingType "date") (eq settingMetadata.settingType "datetime"))}}
-                  {{input type="datetime-local" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
-                {{/if}}
-
-                {{#if (eq settingMetadata.settingType "enumeration")}}
-                  <select onchange={{action (mut (get controllerProperties settingMetadata.bindedControllerPropertieName)) value="target.value"}}>
-                    <option></option>
-                    {{#each settingMetadata.settingAvailableItems as |item|}}
-                      <option value={{item}} selected={{eq (get controllerProperties settingMetadata.bindedControllerPropertieName) item}}>
-                        {{to-string item}}
-                      </option>
-                    {{/each}}
-                  </select>
-                {{/if}}
-
-                {{#if (eq settingMetadata.settingType "hasManyArray")}}
-                  {{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
-                {{/if}}
-
-                {{#if (eq settingMetadata.settingType "model")}}
-                  {{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
-                {{/if}}
+                {{to-string settingMetadata.settingName}}={{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
               {{/if}}
-            {{/if}}
-          </div>
-          <div class="column">
-            {{#if (or settingMetadata.settingIsWithoutUI (not settingMetadata.bindedControllerPropertieName))}}
-              {{settingMetadata.settingName}}={{to-string settingMetadata.settingValue}}
-            {{else}}
-              {{to-string settingMetadata.settingName}}={{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
-            {{/if}}
-          </div>
-          <div class="column">
-            {{to-string settingMetadata.settingName}}={{to-string settingMetadata.settingDefaultValue}}
-          </div>
-        </div>
-      {{/each}}
-    </div>
+            </td>
+            <td>
+              {{to-string settingMetadata.settingName}}={{to-string settingMetadata.settingDefaultValue}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
   <div class="ui segment">
     <div class="ui segment">

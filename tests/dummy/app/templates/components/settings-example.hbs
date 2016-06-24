@@ -65,15 +65,14 @@
                 {{/if}}
               {{/if}}
             {{/if}}
-</td>
-<td>
+
+
                       {{#if (or settingMetadata.settingIsWithoutUI (not settingMetadata.bindedControllerPropertieName))}}
               {{settingMetadata.settingName}}={{to-string settingMetadata.settingValue}}
             {{else}}
               {{to-string settingMetadata.settingName}}={{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
             {{/if}}
-</td>
-  <td>
+
             {{to-string settingMetadata.settingName}}={{to-string settingMetadata.settingDefaultValue}}
   </td>
         {{/each}}

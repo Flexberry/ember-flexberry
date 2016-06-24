@@ -32,6 +32,46 @@ export default ListFormController.extend({
    */
   text: '',
 
+  /**
+   List buttons describers for Supported actions
+   */
+  customButtons:  [{
+      buttonName: 'Assert',
+      buttonAction: 'assertAction',
+      buttonClasses: 'ui orange button'
+    }, {
+      buttonName: 'Error',
+      buttonAction: 'errorAction',
+      buttonClasses: 'ui orange button'
+    }, {
+      buttonName: 'Throw',
+      buttonAction: 'throwAction',
+      buttonClasses: 'ui orange button'
+    }, {
+      buttonName: 'Warn',
+      buttonAction: 'warnAction',
+      buttonClasses: 'ui teal button'
+
+    }, {
+      buttonName: 'Log',
+      buttonAction: 'logAction',
+      buttonClasses: 'ui teal button'
+    }, {
+      buttonName: 'Info',
+      buttonAction: 'infoAction',
+      buttonClasses: 'ui teal button'
+    }, {
+      buttonName: 'Debug',
+      buttonAction: 'debugAction',
+      buttonClasses: 'ui yellow button'
+
+    }, {
+      buttonName: 'Deprecation',
+      buttonAction: 'deprecationAction',
+      buttonClasses: 'ui yellow button'
+    }],
+
+
   _router: undefined,
 
   /**
@@ -66,61 +106,10 @@ export default ListFormController.extend({
     this.text = this.settings[this.logLevel];
   },
 
-  didInsertElement() {
-    this._super(...arguments);
-
-    // Initialize SemanticUI modal dialog, and remember it in a component property,
-    // because after call to errorModalDialog.modal its html will disappear from DOM.
-    let confirmModalDialog = this.$('.flexberry-file-error-modal-dialog');
-    confirmModalDialog.modal('setting', 'closable', false);
-    this.set('confirmModalDialog', confirmModalDialog);
-  },
-
   /**
     Supported actions
  */
   actions: {
-    /**
-     List buttons describers for Supported actions
-     */
-    getCustomButtons() {
-      return [{
-        buttonName: 'Assert',
-        buttonAction: 'assertAction',
-        buttonClasses: 'ui orange button'
-      }, {
-        buttonName: 'Error',
-        buttonAction: 'errorAction',
-        buttonClasses: 'ui orange button'
-      }, {
-        buttonName: 'Throw',
-        buttonAction: 'throwAction',
-        buttonClasses: 'ui orange button'
-      }, {
-        buttonName: 'Warn',
-        buttonAction: 'warnAction',
-        buttonClasses: 'ui teal button'
-
-      }, {
-        buttonName: 'Log',
-        buttonAction: 'logAction',
-        buttonClasses: 'ui teal button'
-      }, {
-        buttonName: 'Info',
-        buttonAction: 'infoAction',
-        buttonClasses: 'ui teal button'
-      }, {
-        buttonName: 'Debug',
-        buttonAction: 'debugAction',
-        buttonClasses: 'ui yellow button'
-
-      }, {
-        buttonName: 'Deprecation',
-        buttonAction: 'deprecationAction',
-        buttonClasses: 'ui yellow button'
-      }];
-    },
-
     /**
      j hghhjl*k
 
@@ -259,7 +248,7 @@ jhghhjlk
      */
     warnAction() {
       if (this.logLevel < 2) {
-        showConfirmModalDialog('Warn');
+        this.showConfirmModalDialog('Warn');
 //         if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Warn. Продолжить?')) {
 //           return;
 //         }
@@ -281,7 +270,8 @@ jhghhjlk
    *    @returns {String} Confirm content.
    */
   showConfirmModalDialog(category) {
-    let confirmModalDialog = this.get('confirmModalDialog');
+    let confirmModalDialog = Ember.$('.application-log-modal-dialog');
+    confirmModalDialog.modal('setting', 'closable', false);
     let confirmContent = 'Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории '+ category + '. Продолжить?';
     if (confirmModalDialog && confirmModalDialog.modal) {
       this.set('confirmModalDialogContent', confirmContent);

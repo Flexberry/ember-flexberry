@@ -2,19 +2,20 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   actions: {
-    onMenuItemClick: function(e) {
-      var clickedMenuItem = Ember.$(e.currentTarget);
-      this.set('currentItem', clickedMenuItem.data('flexberry-menuitem.item'));
+    onMenuItemClick(e) {
+      let clickedMenuItem = Ember.$(e.delegateTarget);
+      this.set('currentItem', clickedMenuItem.data('flexberry-menu'));
       clickedMenuItem.popup({
         content: 'This menu item has been clicked',
         position: 'top right',
+        color: 'teal',
         delay: {
           show: 0,
           hide: 200
         },
         on: 'manual',
-        onHidden: function(e) {
-          var owner = Ember.$(e);
+        onHidden(e) {
+          let owner = Ember.$(e);
           owner.popup('destroy');
         }
       });
@@ -23,7 +24,7 @@ export default Ember.Controller.extend({
 
       window.setTimeout((function() {
         clickedMenuItem.popup('hide');
-      }).bind(this), 1000);
+      }).bind(this), 3000);
     }
   },
 
@@ -32,7 +33,7 @@ export default Ember.Controller.extend({
 
     @property items
     @type Object
-   */
+  */
   items: null,
 
   /**
@@ -40,47 +41,86 @@ export default Ember.Controller.extend({
 
     @property currentItem
     @type Object
-   */
+  */
   currentItem: null,
+
+  /**
+    Template text for 'flexberry-menu' component.
+
+    @property componentTemplateText
+    @type String
+  */
+  componentTemplateText: new Ember.Handlebars.SafeString(
+    '{{flexberry-menu<br>' +
+    '  placeholder=placeholder<br>' +
+    '  class="compact"<br>' +
+    '  items=items<br>' +
+    '  onItemClick=(action "onMenuItemClick")<br>' +
+    '}}'),
 
   /**
     Initializes controller.
 
     @method init
-   */
-  init: function() {
+  */
+  init() {
     this._super(...arguments);
 
-    var oneMenuSectionItems = [{
+    let itemsLeft = [{
       icon: 'search icon',
       title: 'Left side aligned icon',
       items: null
-    }, {
+    }];
+
+    let itemsRight = [{
       icon: 'setting icon',
       iconAlignment: 'right',
       title: 'Right side aligned icon',
       items: null
-    }, {
+    }];
+
+    let itemsSubmenu = [{
       icon: 'list layout icon',
       title: 'Submenu',
       itemsAlignment: null,
-      items: null
+      items: [{
+        icon: 'search icon',
+        title: 'Left side aligned icon',
+        items: null
+      }, {
+        icon: 'setting icon',
+        iconAlignment: 'right',
+        title: 'Right side aligned icon',
+        items: null
+      }, {
+        icon: 'list layout icon',
+        title: 'Submenu',
+        itemsAlignment: 'left',
+        items: [{
+          icon: 'search icon',
+          title: 'Left side aligned icon',
+          items: null
+        }, {
+          icon: 'setting icon',
+          iconAlignment: 'right',
+          title: 'Right side aligned icon',
+          items: null
+        }, {
+          icon: 'list layout icon',
+          title: 'Submenu',
+          itemsAlignment: 'right',
+          items: [{
+            icon: 'search icon',
+            title: 'Left side aligned icon',
+            items: null
+          }]
+        }]
+      }]
     }];
 
-    var items = Ember.copy(oneMenuSectionItems, true);
-    this.set('currentItem', items[0]);
-    var currentMenuSectionItems = items;
-    for (var i = 0; i < 5; i++) {
-      var subMenu = currentMenuSectionItems[2];
-      subMenu.items = Ember.copy(oneMenuSectionItems, true);
-      subMenu.itemsAlignment = i % 2 === 0 ? 'right' : 'left';
-
-      currentMenuSectionItems = subMenu.items;
-    }
-
-    currentMenuSectionItems.pop();
-
-    this.set('items', items);
+    this.set('itemsLeft', itemsLeft);
+    this.set('itemsRight', itemsRight);
+    this.set('itemsSubmenu', itemsSubmenu);
   },
 
   /**
@@ -88,9 +128,9 @@ export default Ember.Controller.extend({
 
     @property componentSettingsMetadata
     @type Object[]
-   */
+  */
   componentSettingsMetadata: Ember.computed(function() {
-    var componentSettingsMetadata = Ember.A();
+    let componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'icon',
       settingType: 'string',

@@ -39,7 +39,7 @@
     }}
   </div>
 {{/if}}
-{{#each customButtonsArray as |customButton|}}
+{{#each customButtons as |customButton|}}
   <button
     class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
     {{action "customButtonAction" customButton.buttonAction}}>

@@ -1,6 +1,7 @@
-import BaseEditFormController from './base-edit-form';
+import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
+import EditFormControllerOperationsIndicationMixin from '../mixins/edit-form-controller-operations-indication';
 
-export default BaseEditFormController.extend({
+export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
     Route name for transition after close edit form.
 
@@ -40,4 +41,3 @@ export default BaseEditFormController.extend({
     return cellComponent;
   }
 });
-

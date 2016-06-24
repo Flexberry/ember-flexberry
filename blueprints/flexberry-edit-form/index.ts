@@ -163,7 +163,7 @@ class EditFormBlueprint {
   }
 
   getParentRoute() {
-    let parentRoute;
+    let parentRoute = '';
     let listFormsDir = path.join(this.options.metadataDir, "list-forms");
     let listForms = fs.readdirSync(listFormsDir);
     for (let form of listForms) {

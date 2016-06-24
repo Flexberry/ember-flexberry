@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import Ember from 'ember';
 import ObjectListView from './../objectlistview';
 
 /**

@@ -1,19 +1,26 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
+import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import ErrorableMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
- * Object list view component.
- *
- * @class ObjectListView
- * @extends FlexberryBaseComponent
- */
-export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentMixin, ErrorableMixin, {
+  Object list view component.
+
+  @class ObjectListViewComponent
+  @extends FlexberryBaseComponent
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses ErrorableControllerMixin
+*/
+export default FlexberryBaseComponent.extend(
+  FlexberryLookupCompatibleComponentMixin,
+  FlexberryFileCompatibleComponentMixin,
+  ErrorableMixin, {
   /**
     Projection set by property `modelProjection`.
 
@@ -21,7 +28,7 @@ export default FlexberryBaseComponent.extend(FlexberryLookupCompatibleComponentM
     @type Object
     @default null
     @private
-   */
+  */
   _modelProjection: null,
 
   actions: {

@@ -6,29 +6,23 @@
     </div>
   </div>
   <div class="ui segment">
-    <div class="ui three column celled grid">
-      <div class="row">
-        <div class="column">
-          <h4 class="ui header">{{t "components.settings-example.controller-properties-caption"}}</h4>
-        </div>
-        <div class="column">
-          <h4 class="ui header">{{t "components.settings-example.component-current-settings-caption"}}</h4>
-        </div>
-        <div class="column">
-          <h4 class="ui header">{{t "components.settings-example.component-default-settings-caption"}}</h4>
-        </div>
-      </div>
-      {{#each componentSettingsMetadata as |settingMetadata|}}
-        <div class="row">
-          <div class="column">
-            {{#if settingMetadata.bindedControllerPropertieName}}
+    <table class="ui celled table">
+      <thead>
+        <tr><th>{{t "components.settings-example.controller-properties-caption"}}</th>
+        <th>{{t "components.settings-example.component-current-settings-caption"}}</th>
+        <th>{{t "components.settings-example.component-default-settings-caption"}}</th>
+      </tr></thead>
+      <tbody>
+        {{#each componentSettingsMetadata as |settingMetadata|}}
+        <td>
+          {{#if settingMetadata.bindedControllerPropertieName}}
               {{! Display controller's setting name }}
               {{#if settingMetadata.bindedControllerPropertieDisplayName}}
                 {{settingMetadata.bindedControllerPropertieDisplayName}}=
               {{else}}
                 {{settingMetadata.bindedControllerPropertieName}}=
               {{/if}}
-              
+
               {{! Display controller's setting value }}
               {{#if settingMetadata.settingIsWithoutUI}}
                 {{! Immutable setting without UI }}
@@ -67,20 +61,20 @@
                 {{/if}}
               {{/if}}
             {{/if}}
-          </div>
-          <div class="column">
-            {{#if (or settingMetadata.settingIsWithoutUI (not settingMetadata.bindedControllerPropertieName))}}
+</td>
+<td>
+                      {{#if (or settingMetadata.settingIsWithoutUI (not settingMetadata.bindedControllerPropertieName))}}
               {{settingMetadata.settingName}}={{to-string settingMetadata.settingValue}}
             {{else}}
               {{to-string settingMetadata.settingName}}={{to-string (get controllerProperties settingMetadata.bindedControllerPropertieName)}}
             {{/if}}
-          </div>
-          <div class="column">
+</td>
+  <td>
             {{to-string settingMetadata.settingName}}={{to-string settingMetadata.settingDefaultValue}}
-          </div>
-        </div>
-      {{/each}}
-    </div>
+  </td>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
   <div class="ui segment">
     <div class="ui segment">

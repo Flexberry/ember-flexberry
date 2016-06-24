@@ -42,3 +42,27 @@
     throwAction = 'throwAction'
   }}
 </div>
+<div class="application-log-modal-dialog ui small basic modal">
+  <div class="ui icon header">
+    <i class="file icon"></i>
+    {{confirmModalDialogTitle}}
+  </div>
+  <div class="content">
+    <div class="application-log-modal-dialog-content center aligned ui grid">
+      {{confirmModalDialogContent}}
+    </div>
+  </div>
+  <div class="center aligned ui grid">
+  <div class="actions">
+    <div class="application-log-modal-dialog-cancel-button ui approve green inverted button">
+      <i class="checkmark icon"></i>
+      {{t "components.application-log.confirm-dialog-cancel-btn-text"}}
+    </div>
+    <div class="application-log-modal-dialog-ok-button ui approve green inverted button">
+      <i class="checkmark icon"></i>
+      {{t "components.application-log.confirm-dialog-ok-btn-text"}}
+    </div>
+  </div>
+  </div>
+</div>
+

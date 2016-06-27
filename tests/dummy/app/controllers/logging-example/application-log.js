@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import ListFormController from 'ember-flexberry/controllers/i-i-s-caseberry-logging-objects-application-log-l';
-import { translationMacro as t } from 'ember-i18n';
 const { getOwner } = Ember;
 
 export default ListFormController.extend({
@@ -71,7 +70,6 @@ export default ListFormController.extend({
       buttonClasses: 'ui yellow button'
     }],
 
-
   _router: undefined,
 
   /**
@@ -92,7 +90,6 @@ export default ListFormController.extend({
    *    @default 't('components.flexberry-file.confirm-dialog-content')'
    */
   confirmModalDialogContent: '',
-
 
 /**
    *    Category to be passed in action confirm modal dialog.
@@ -261,7 +258,6 @@ jhghhjlk
           this.makeWarn();
           break;
       }
-      return true;
     },
 
     /**
@@ -280,7 +276,6 @@ jhghhjlk
       this.set('confirmModalDialogContent', undefined);
       this.set('confirmModalDialogCategory', undefined);
       this.confirmModalDialog.modal('hide');
-      return true;
     }
 
   },
@@ -361,14 +356,12 @@ jhghhjlk
       this.confirmModalDialog.modal('setting', 'closable', false);
     }
 
-    let confirmContent = 'Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории '+ category + '. Продолжить?';
+    let confirmContent = 'Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории ' + category + '. Продолжить?';
     this.set('confirmModalDialogContent', confirmContent);
     this.set('confirmModalDialogCategory', category);
     this.confirmModalDialog.modal('show');
     return confirmContent;
   },
-
-
 
   _getMessageNumber() {
     this._messageNumber += 1;

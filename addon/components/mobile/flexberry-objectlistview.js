@@ -102,12 +102,12 @@ export default FlexberryObjectlistview.extend({
   deleteButton: false,
 
   /**
-   * Flag: indicates whether allow to resize columns (if `true`) or not (if `false`).
-   *
-   * @property allowColumnResize
-   * @type Boolean
-   * @default false
-   */
+    Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
+
+    @property allowColumnResize
+    @type Boolean
+    @default false
+  */
   allowColumnResize: false,
 
   /**

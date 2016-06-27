@@ -79,6 +79,10 @@ Ember.$.extend(true, translations, {
           'show': {
             'caption': 'Application log',
             'title': ''
+          },
+          'log': {
+            'caption': 'Example',
+            'title': ''
           }
         },
         'components-examples': {

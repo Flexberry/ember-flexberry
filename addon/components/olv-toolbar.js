@@ -115,7 +115,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
-    
+
     @example
       ```
       {
@@ -127,7 +127,7 @@ export default FlexberryBaseComponent.extend({
 
     @property customButtonsArray
     @type Array
-   */
+  */
   customButtons: undefined,
 
   /**
@@ -316,24 +316,53 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
+      this._router = getOwner(this).lookup('router:main');
       let className = iTags.get(0).className;
       let namedSeting = namedSetingSpans.get(0).innerText;
+      let moduleName  =   this._router.currentRouteName;
       switch (className) {
         case 'table icon':
-          alert('Configure ' + namedSeting);
-          this.sendAction('showConfigDialog', e);
+          this.send('showConfigDialog');
           break;
         case 'checkmark box icon':
-          alert('Use ' + namedSeting);
+
+          //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
+          let colsConfig = this.listUserSettings[namedSeting];
+          let savePromise = this.currentController.get('_userSettingsService').
+            saveUserSetting({ moduleName: moduleName, settingName: 'DEFAULT', userSetting: colsConfig }); //save as DEFAULT
+          savePromise.then(
+            record => {
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            }
+          );
           break;
         case 'setting icon':
-          alert('Edit ' + namedSeting);
+          this.send('showConfigDialog', namedSeting);
           break;
         case 'remove icon':
-          alert('Remove ' + namedSeting);
+          this.currentController.get('_userSettingsService').
+          deleteUserSetting({ moduleName: moduleName, settingName: namedSeting }).then(
+            result => {
+              this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSeting);
+              alert('Настройка ' + namedSeting + ' удалена');
+            }
+          );
           break;
         case 'remove circle icon':
-          alert('Remove default');
+          this.currentController.get('_userSettingsService').
+          deleteUserSetting({ moduleName: moduleName, settingName: 'DEFAULT' }).then(
+            record => {
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            }
+          );
           break;
       }
     }
@@ -342,7 +371,7 @@ export default FlexberryBaseComponent.extend({
   /**
     An overridable method called when objects are instantiated.
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
-   */
+  */
   init() {
     this._super(...arguments);
 
@@ -400,7 +429,7 @@ export default FlexberryBaseComponent.extend({
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
-  }
+  },
 
   _addNamedSetting(namedSeting) {
     let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));

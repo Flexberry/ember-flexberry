@@ -993,7 +993,7 @@ export default FlexberryBaseComponent.extend(
   didRender() {
     this._super(...arguments);
 
-    let currentTable = this.$('table.object-list-view');
+    let $currentTable = this.$('table.object-list-view');
 
     if (this.get('allowColumnResize')) {
       if (this.get('useSingleColumn')) {
@@ -1015,7 +1015,7 @@ export default FlexberryBaseComponent.extend(
 
       this._reinitResizablePlugin();
     } else {
-      currentTable.colResizable({ disable: true });
+      $currentTable.colResizable({ disable: true });
     }
   },
 
@@ -1052,7 +1052,7 @@ export default FlexberryBaseComponent.extend(
     // Disable plugin and then init it again.
     $currentTable.colResizable({ disable: true });
 
-    currentTable.colResizable({
+    $currentTable.colResizable({
       minWidth: 90,
       resizeMode:'flex',
       onResize: (e)=> {

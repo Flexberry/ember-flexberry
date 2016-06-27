@@ -13,8 +13,8 @@ export default Ember.Mixin.create({
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 
     @private
-    @readOnly
     @property _groupEditEventsService
+    @readOnly
     @type Service
     @default ObjectlistviewEventsService
   */
@@ -23,8 +23,8 @@ export default Ember.Mixin.create({
   /**
     Service that lets interact between agregator's and detail's form.
 
-    @readOnly
     @property flexberryDetailInteractionService
+    @readOnly
     @type Service
     @default DetailInteractionService
   */
@@ -159,7 +159,7 @@ export default Ember.Mixin.create({
     @private
 
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
-    @param {Model} record The model corresponding to added row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
+    @param {DS.Model} record The model corresponding to added row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
   */
   _rowAdded(componentName, record) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.

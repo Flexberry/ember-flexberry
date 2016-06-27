@@ -32,7 +32,7 @@ export default FlexberryGroupeditComponent.extend({
     {{#crossLink "FlexberryGroupeditComponent/orderable:property"}}{{/crossLink}}
     of base component.
 
-    @property headerClickable
+    @property orderable
     @type Boolean
     @default false
   */

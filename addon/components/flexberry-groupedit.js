@@ -1,5 +1,5 @@
 /**
- @module ember-flexberry
+  @module ember-flexberry
 */
 
 import Ember from 'ember';
@@ -9,7 +9,8 @@ import { translationMacro as t } from 'ember-i18n';
 /**
   Component for create, edit and delete detail objects.
 
-  On order to add component following template can be used:
+  @example
+  In order to add component following template can be used:
   ```handlebars
   {{flexberry-groupedit
    componentName="userVotesGroupEdit"
@@ -69,7 +70,7 @@ export default FlexberryBaseComponent.extend({
     Content to be displayed (models collection).
 
     @property content
-    @type ManyArray
+    @type DS.ManyArray
     @default null
   */
   content: null,
@@ -97,7 +98,7 @@ export default FlexberryBaseComponent.extend({
 
     @property deleteButton
     @type Boolean
-    @default false
+    @default true
   */
   deleteButton: true,
 
@@ -214,7 +215,7 @@ export default FlexberryBaseComponent.extend({
 
    @property placeholder
    @type String
-   @default 't('components.flexberry-groupedit.placeholder')'
+   @default t('components.flexberry-groupedit.placeholder')
   */
   placeholder: t('components.flexberry-groupedit.placeholder'),
 
@@ -295,11 +296,11 @@ export default FlexberryBaseComponent.extend({
   showEditMenuItemInRow: false,
 
   /**
-     Default cell component that will be used to display values in single column.
+    Default cell component that will be used to display values in single column.
 
-     @property {Object} singleColumnCellComponent
-     @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
-     @property {String} [singleColumnCellComponent.componentProperties=null]
+    @property {Object} singleColumnCellComponent
+    @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
+    @property {String} [singleColumnCellComponent.componentProperties=null]
   */
   singleColumnCellComponent: {
     componentName: 'object-list-view-single-column-cell',
@@ -307,10 +308,10 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-     Header title of single column.
+    Header title of single column.
 
-     @property singleColumnHeaderTitle
-     @type String
+    @property singleColumnHeaderTitle
+    @type String
   */
   singleColumnHeaderTitle: undefined,
 
@@ -328,7 +329,7 @@ export default FlexberryBaseComponent.extend({
     where {{#crossLink "SortableControllerMixin/computedSorting:property"}}computedSorting is property of SortableControllerMixin{{/crossLink}}.
 
     @property sorting
-    @type Object
+    @type null
   */
   sorting: null,
 
@@ -358,11 +359,12 @@ export default FlexberryBaseComponent.extend({
       If sorting is used then there has to be declaration:
       ```
       {{flexberry-groupedit
-       ...
-       orderable=true
-       sorting=computedSorting
-       sortByColumn=(action "sortByColumn")
-       addColumnToSorting=(action "addColumnToSorting")}}
+        ...
+        orderable=true
+        sorting=computedSorting
+        sortByColumn=(action "sortByColumn")
+        addColumnToSorting=(action "addColumnToSorting")
+      }}
       ```
 
       @method actions.sortByColumn
@@ -380,11 +382,12 @@ export default FlexberryBaseComponent.extend({
       If sorting is used then there has to be declaration:
       ```
       {{flexberry-groupedit
-       ...
-       orderable=true
-       sorting=computedSorting
-       sortByColumn=(action "sortByColumn")
-       addColumnToSorting=(action "addColumnToSorting")}}
+        ...
+        orderable=true
+        sorting=computedSorting
+        sortByColumn=(action "sortByColumn")
+        addColumnToSorting=(action "addColumnToSorting")
+      }}
       ```
 
       @method actions.addColumnToSorting

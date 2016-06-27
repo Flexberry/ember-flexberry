@@ -61,14 +61,6 @@ export default FlexberryBaseComponent.extend({
   */
   deleteButton: true,
 
-  /**
-    The collection of functions that will be invoked when
-    click on toolbar buttons.
-
-    @property actions
-    @type Object
-    @readOnly
-  */
   actions: {
     /**
       Handles add record button click and triggers add record event on
@@ -81,7 +73,7 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
-      var componentName = this.get('componentName');
+      let componentName = this.get('componentName');
       this.get('_groupEditEventsService').addRowTrigger(componentName);
     },
 
@@ -96,20 +88,22 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
-      var componentName = this.get('componentName');
+      let componentName = this.get('componentName');
       this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
     }
   },
 
   /**
-    The method called when component is instantiated.
+    An overridable method called when objects are instantiated.
+    For more information see {{#crossLink "FlexberryBaseComponent/init:method"}}init method{{/crossLink}}
+    of {{#crossLink "FlexberryBaseComponent"}}{{/crossLink}}.
 
     @method init
     @throws {Error} An error occurred during the initialization of component.
   */
   init() {
     this._super(...arguments);
-    var componentName = this.get('componentName');
+    let componentName = this.get('componentName');
     if (!componentName) {
       throw new Error('Name of flexberry-groupedit component was not defined.');
     }
@@ -119,7 +113,9 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-    Implementation of component's teardown.
+    An overridable method called when objects is teardowned.
+    For more information see {{#crossLink "FlexberryBaseComponent/willDestroy:method"}}willDestroy method{{/crossLink}}
+    of {{#crossLink "FlexberryBaseComponent"}}{{/crossLink}}.
 
     @method willDestroy
   */

@@ -7,12 +7,12 @@ import BaseModel from './base';
 import Proj from 'ember-flexberry-data';
 
 /**
-  Model to work with user settings .
+  Model to work with user settings.
 
   @class NewPlatformFlexberryFlexberryUserSettingModel
   @extends BaseModel
 */
-var Model = BaseModel.extend({
+let Model = BaseModel.extend({
   userName: DS.attr('string'),
   moduleName: DS.attr('string'),
   settName: DS.attr('string'),

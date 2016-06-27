@@ -4,7 +4,8 @@
 import ODataSerializer from 'ember-flexberry-data/serializers/odata';
 
 /**
-  Serializer .
+  Serializer for {{#crossLink "NewPlatformFlexberryFlexberryUserSettingModel"}}model{{/crossLink}}
+  working with user settings.
 
   @class NewPlatformFlexberryFlexberryUserSettingSerializer
   @extends ODataSerializer

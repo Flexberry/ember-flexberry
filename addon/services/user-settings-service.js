@@ -42,7 +42,7 @@ export default Ember.Service.extend({
 
    @param {Object} [options] Parameters for user setting getting.
    @param {String} options.moduleName Name of module to search by.
-   @param {String} options.settingName Setting name to search by..
+   @param {String} options.settingName Setting name to search by.
   */
   deleteUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {

@@ -91,11 +91,7 @@ export default ListFormController.extend({
    */
   confirmModalDialogContent: '',
 
-<<<<<<< HEAD
   /**
-=======
-/**
->>>>>>> 2826c5db4fedf5bc40671c07987bd72ff54e8b88
    *    Category to be passed in action confirm modal dialog.
    *
    *    @property confirmModalDialogCategory

@@ -823,7 +823,7 @@ export default FlexberryBaseComponent.extend(
       if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
         menuInRowSubItems.push({
           icon: 'edit icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
           isEditItem: true,
         });
       }
@@ -831,7 +831,7 @@ export default FlexberryBaseComponent.extend(
       if (this.get('showDeleteMenuItemInRow') && recordWithKey.config.canBeDeleted) {
         menuInRowSubItems.push({
           icon: 'trash icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
           isDeleteItem: true,
         });
       }
@@ -857,6 +857,10 @@ export default FlexberryBaseComponent.extend(
     */
     menuInRowItemClick(recordWithKey, e) {
       if (this.get('readonly')) {
+        return;
+      }
+
+      if (!e.item) {
         return;
       }
 

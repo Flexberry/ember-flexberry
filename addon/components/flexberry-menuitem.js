@@ -66,7 +66,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default 'a'
   */
-  tagName: 'a',
+   tagName: 'a',
 
   /**
     Array CSS class names.
@@ -86,21 +86,6 @@ export default FlexberryBaseComponent.extend({
     @default 'APP.components.flexberryMenuItem'
   */
   appConfigSettingsPath: 'APP.components.flexberryMenuItem',
-
-  /**
-    Initializes component.
-  */
-  init() {
-    this._super(...arguments);
-
-    // Override component's wrapping element for simple menu items.
-    if (this.get('hasSubitems')) {
-      this.set('tagName', 'div');
-
-      let classNames = this.get('classNames');
-      classNames.push(...['ui', 'simple', 'dropdown']);
-    }
-  },
 
   /**
     Initializes DOM-related component's logic.

@@ -81,7 +81,7 @@ export default ListFormController.extend({
    *    @type Object
    *    @default null
    */
-  confirmModalDialog: null,
+  confirmModalDialog: undefined,
 
   /**
    *    Content to be displayed in confirm modal dialog.
@@ -91,8 +91,17 @@ export default ListFormController.extend({
    *    @type String
    *    @default 't('components.flexberry-file.confirm-dialog-content')'
    */
-  confirmModalDialogContent: t('components.flexberry-file.confirm-dialog-content'),
+  confirmModalDialogContent: '',
 
+
+/**
+   *    Category to be passed in action confirm modal dialog.
+   *
+   *    @property confirmModalDialogCategory
+   *    @type String
+   *    @default ''
+   */
+  confirmModalDialogCategory: '',
 
   init() {
     this._router = getOwner(this).lookup('router:main');
@@ -125,18 +134,11 @@ jhghhjlk
      */
     assertAction() {
       if (this.logLevel < 1) {
-        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Assert. Продолжить?')) {
-          return;
-        }
+        this.showConfirmModalDialog('Assert');
+        return;
       }
 
-      let message = this._getMessageNumber() + 'Assert invocation testing';
-      try {
-        Ember.assert(message, false);
-      } catch (e) {
-        Ember.Logger.error(e);
-        this._router.router.refresh();
-      }
+      this.makeAssert();
     },
 
     /**
@@ -145,18 +147,11 @@ jhghhjlk
      */
     errorAction() {
       if (this.logLevel < 1) {
-        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Error. Продолжить?')) {
-          return;
-        }
+        this.showConfirmModalDialog('Error');
+        return;
       }
 
-      try {
-        eval('error_operator');
-      } catch (e) {
-        e.message = this._getMessageNumber() + e.message;
-        Ember.Logger.error(e);
-        this._router.router.refresh();
-      }
+      this.makeError();
     },
 
     /**
@@ -165,18 +160,11 @@ jhghhjlk
      */
     throwAction() {
       if (this.logLevel < 1) {
-        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Throw. Продолжить?')) {
-          return;
-        }
+        this.showConfirmModalDialog('Throw');
+        return;
       }
 
-      try {
-        let message = this._getMessageNumber() + 'Throw invocation testing';
-        throw new Error(message);
-      } catch (e) {
-        Ember.Logger.error(e);
-        this._router.router.refresh();
-      }
+      this.makeThrow();
     },
 
     /**
@@ -185,14 +173,11 @@ jhghhjlk
      */
     deprecationAction() {
       if (this.logLevel < 6) {
-        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Deprecation. Продолжить?')) {
-          return;
-        }
+        this.showConfirmModalDialog('Deprecation');
+        return;
       }
 
-      let message = 'DEPRECATION:' + this._getMessageNumber() + 'Deprecation invocation testing';
-      Ember.Logger.warn(message);
-      this._router.router.refresh();
+      this.makeDeprecation();
     },
 
     /**
@@ -201,30 +186,24 @@ jhghhjlk
      */
     debugAction() {
       if (this.logLevel < 5) {
-        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Debug. Продолжить?')) {
-          return;
-        }
+        this.showConfirmModalDialog('Debug');
+        return;
       }
 
-      let message = this._getMessageNumber() + 'Debug invocation testing';
-      Ember.Logger.debug(message);
-      this._router.router.refresh();
+      this.makeDebug();
     },
 
     /**
 jhghhjlk
 
-   */
+  */
     infoAction() {
       if (this.logLevel < 4) {
-        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Info. Продолжить?')) {
-          return;
-        }
+        this.showConfirmModalDialog('Info');
+        return;
       }
 
-      let message = this._getMessageNumber() + 'Info invocation testing';
-      Ember.Logger.info(message);
-      this._router.router.refresh();
+      this.makeInfo();
     },
     /**
 jhghhjlk
@@ -232,14 +211,11 @@ jhghhjlk
      */
     logAction() {
       if (this.logLevel < 3) {
-        if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Log. Продолжить?')) {
-          return;
-        }
+        this.showConfirmModalDialog('Log');
+        return;
       }
 
-      let message = this._getMessageNumber() + 'Log invocation testing';
-      Ember.Logger.log(message);
-      this._router.router.refresh();
+      this.makeLog();
     },
 
     /**
@@ -249,41 +225,154 @@ jhghhjlk
     warnAction() {
       if (this.logLevel < 2) {
         this.showConfirmModalDialog('Warn');
-//         if (!confirm('Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории Warn. Продолжить?')) {
-//           return;
-//         }
+        return;
       }
 
-      let message = this._getMessageNumber() + 'Warning invocation testing';
-      Ember.Logger.warn(message);
+      this.makeWarn();
+    },
+
+    confirmed(category) {
+      switch (category) {
+        case 'Assert':
+          this.makeAssert();
+          break;
+        case 'Error':
+          this.makeError();
+          break;
+        case 'Throw':
+          this.makeThrow();
+          break;
+        case 'Warn':
+          this.makeWarn();
+          break;
+        case 'Deprecation':
+          this.makeDeprecation();
+          break;
+        case 'Debug':
+          this.makeDebug();
+          break;
+        case 'Info':
+          this.makeInfo();
+          break;
+        case 'Log':
+          this.makeLog();
+          break;
+        case 'Warn':
+          this.makeWarn();
+          break;
+      }
+      return true;
+    },
+
+    /**
+     *    Close confirm modal dialog.
+     *
+     *    @method hideConfirmModalDialog
+     *    @param {String} confirmCaption Confirm caption (window header caption).
+     *    @param {String} confirmContent Confirm content (window body content).
+     *    @returns {String} Confirm content.
+     */
+    closeDialog() {
+      if (this.confirmModalDialog === undefined) {
+        return;
+      }
+
+      this.set('confirmModalDialogContent', undefined);
+      this.set('confirmModalDialogCategory', undefined);
+      this.confirmModalDialog.modal('hide');
+      return true;
+    }
+
+  },
+
+  makeAssert() {
+    let message = this._getMessageNumber() + 'Assert invocation testing';
+    try {
+      Ember.assert(message, false);
+    } catch (e) {
+      Ember.Logger.error(e);
       this._router.router.refresh();
     }
 
+  },
+
+  makeError() {
+    try {
+      eval('error_operator');
+    } catch (e) {
+      e.message = this._getMessageNumber() + e.message;
+      Ember.Logger.error(e);
+      this._router.router.refresh();
+    }
+
+  },
+
+  makeThrow() {
+    try {
+      let message = this._getMessageNumber() + 'Throw invocation testing';
+      throw new Error(message);
+    } catch (e) {
+      Ember.Logger.error(e);
+      this._router.router.refresh();
+    }
+
+  },
+
+  makeDeprecation() {
+    let message = 'DEPRECATION:' + this._getMessageNumber() + 'Deprecation invocation testing';
+    Ember.Logger.warn(message);
+    this._router.router.refresh();
+  },
+
+  makeDebug() {
+    let message = this._getMessageNumber() + 'Debug invocation testing';
+    Ember.Logger.debug(message);
+    this._router.router.refresh();
+  },
+
+  makeInfo() {
+    let message = this._getMessageNumber() + 'Info invocation testing';
+    Ember.Logger.info(message);
+    this._router.router.refresh();
+  },
+
+  makeLog() {
+    let message = this._getMessageNumber() + 'Log invocation testing';
+    Ember.Logger.log(message);
+    this._router.router.refresh();
+  },
+
+  makeWarn() {
+    let message = this._getMessageNumber() + 'Warning invocation testing';
+    Ember.Logger.warn(message);
+    this._router.router.refresh();
   },
 
   /**
    *    Shows confirm modal dialog.
    *
    *    @method showConfirmModalDialog
-   *    @param {String} confirmCaption Confirm caption (window header caption).
-   *    @param {String} confirmContent Confirm content (window body content).
+   *    @param {String} Confirm category
    *    @returns {String} Confirm content.
    */
   showConfirmModalDialog(category) {
-    let confirmModalDialog = Ember.$('.application-log-modal-dialog');
-    confirmModalDialog.modal('setting', 'closable', false);
-    let confirmContent = 'Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории '+ category + '. Продолжить?';
-    if (confirmModalDialog && confirmModalDialog.modal) {
-      this.set('confirmModalDialogContent', confirmContent);
-      confirmModalDialog.modal('show');
+    if (this.confirmModalDialog === undefined) {
+      this.confirmModalDialog = Ember.$('.application-log-modal-dialog');
+      this.confirmModalDialog.modal('setting', 'closable', false);
     }
 
+    let confirmContent = 'Текущий уровень отладки (' + this.logLevel + ') не обеспечивает удаленное логирование сообщений категории '+ category + '. Продолжить?';
+    this.set('confirmModalDialogContent', confirmContent);
+    this.set('confirmModalDialogCategory', category);
+    this.confirmModalDialog.modal('show');
     return confirmContent;
   },
 
+
+
   _getMessageNumber() {
     this._messageNumber += 1;
-    let ret =  this.get('moment').moment.format('hh:mm:ss a') + ' №' + this._messageNumber + ': ';
+    let ret =  this.get('moment').moment().format('hh:mm:ss a') + ' №' + this._messageNumber + ': ';
     return ret;
   }
 });

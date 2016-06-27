@@ -50,11 +50,11 @@
   </div>
   <div class="center aligned ui grid">
   <div class="actions">
-    <div class="application-log-modal-dialog-cancel-button ui approve green inverted button">
+  <div class="application-log-modal-dialog-cancel-button ui approve yellow inverted button" {{action 'closeDialog'}}>
       <i class="checkmark icon"></i>
       Cancel
     </div>
-    <div class="application-log-modal-dialog-ok-button ui approve green inverted button">
+    <div class="application-log-modal-dialog-ok-button ui approve green inverted button" {{action 'confirmed' confirmModalDialogCategory}}>
       <i class="checkmark icon"></i>
       OK
     </div>

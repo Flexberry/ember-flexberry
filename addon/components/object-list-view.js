@@ -22,7 +22,7 @@ export default FlexberryBaseComponent.extend(
   FlexberryFileCompatibleComponentMixin,
   ErrorableControllerMixin, {
   /**
-    Projection set by property `modelProjection`.
+    Projection set by property {{#crossLink "ObjectListViewComponent/modelProjection:property"}}{{/crossLink}}.
 
     @property _modelProjection
     @type Object

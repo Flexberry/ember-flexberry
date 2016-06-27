@@ -3,13 +3,13 @@
 */
 
 import Ember from 'ember';
-import ObjectListViewComponent from '../objectlistview';
+import ObjectListViewComponent from '../object-list-view';
 
 /**
   Mobile version of {{#crossLink "ObjectListViewComponent"}}{{/crossLink}} (with mobile-specific defaults).
 
   @class Mobile.ObjectListViewComponent
-  @extends FlexberryObjectListView
+  @extends ObjectListViewComponent
 */
 export default ObjectListViewComponent.extend({
   /**

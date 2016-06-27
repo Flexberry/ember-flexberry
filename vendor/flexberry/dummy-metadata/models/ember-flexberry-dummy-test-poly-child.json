@@ -13,5 +13,76 @@
   ],
   "belongsTo": [],
   "hasMany": [],
-  "projections": []
+  "projections": [
+    {
+      "name": "TestPolyChildEdit",
+      "modelName": "ember-flexberry-dummy-test-poly-child",
+      "attrs": [
+        {
+          "name": "pole",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Pole",
+          "lookupValueField": "pole",
+          "relationName": "TestPoly",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "pole",
+              "caption": "",
+              "hidden": true,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "caption": "",
+          "name": "testPoly",
+          "relatedTo": "ember-flexberry-dummy-test-poly",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    },
+    {
+      "name": "TestPolyChildList",
+      "modelName": "ember-flexberry-dummy-test-poly-child",
+      "attrs": [
+        {
+          "name": "pole",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Pole",
+          "lookupValueField": "pole",
+          "relationName": "TestPoly",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "pole",
+              "caption": "",
+              "hidden": true,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "caption": "",
+          "name": "testPoly",
+          "relatedTo": "ember-flexberry-dummy-test-poly",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    }
+  ]
 }

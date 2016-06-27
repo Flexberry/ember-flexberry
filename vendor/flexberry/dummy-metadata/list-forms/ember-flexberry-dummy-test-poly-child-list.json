@@ -1,8 +1,13 @@
 ﻿{
-  "newForm": null,
-  "editForm": null,
+  "newForm": "ember-flexberry-dummy-test-poly-child-edit",
+  "editForm": "ember-flexberry-dummy-test-poly-child-edit",
   "caption": null,
   "name": "EmberFlexberryDummyTestPolyChildList",
   "attrs": [],
-  "projections": []
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-test-poly-child",
+      "modelProjection": "TestPolyChildList"
+    }
+  ]
 }

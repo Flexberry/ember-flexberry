@@ -3,5 +3,10 @@
   "caption": null,
   "name": "EmberFlexberryDummyTestPolyChildEdit",
   "attrs": [],
-  "projections": []
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-test-poly-child",
+      "modelProjection": "TestPolyChildEdit"
+    }
+  ]
 }

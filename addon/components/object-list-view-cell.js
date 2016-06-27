@@ -1,44 +1,38 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
- * @class ObjectListViewCell
- * @extends FlexberryBaseComponent
- */
+  @class ObjectListViewCell
+  @extends FlexberryBaseComponent
+*/
 export default FlexberryBaseComponent.extend({
   /**
-   * Overload wrapper tag name for disabling wrapper.
-   *
-   * @property tagName
-   * @type String
-   * @default ''
-   * @readOnly
-   */
+    Overload wrapper tag name for disabling wrapper.
+  */
   tagName: '',
 
   /**
-   * Displaying value.
-   *
-   * @property value
-   * @type String
-   * @default undefined
-   */
+    Displaying value.
+
+    @property value
+    @type String
+  */
   value: undefined,
 
   /**
-   * Formatted displaying value.
-   *
-   * @property formattedValue
-   * @type String
-   * @readonly
-   */
+    Formatted displaying value.
+
+    @property formattedValue
+    @type String
+    @readOnly
+  */
   formattedValue: Ember.computed('value', function() {
-    var value = this.get('value');
-    var valueType = Ember.typeOf(value);
+    let value = this.get('value');
+    let valueType = Ember.typeOf(value);
 
     switch (valueType) {
       case 'date':

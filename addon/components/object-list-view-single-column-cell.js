@@ -1,5 +1,5 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
 */
 
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -10,17 +10,13 @@ import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-comp
   @class ObjectListViewSingleColumnCellComponent
   @extends FlexberryBaseComponent
   @uses FlexberryLookupCompatibleComponentMixin
-  @uses FlexberryLookupCompatibleComponentMixin
+  @uses FlexberryFileCompatibleComponentMixin
 */
 export default FlexberryBaseComponent.extend(
   FlexberryLookupCompatibleComponentMixin,
   FlexberryFileCompatibleComponentMixin, {
   /**
     Component's wrapping <div> CSS-class names.
-
-    @property classNames
-    @type String[]
-    @default ['object-list-view-single-column-cell', 'ui', 'form']
   */
   classNames: ['object-list-view-single-column-cell', 'ui', 'form'],
 
@@ -43,7 +39,7 @@ export default FlexberryBaseComponent.extend(
   columns: null,
 
   /**
-    Flag: indicates whether there are some editable values in cell.
+    Flag indicates whether there are some editable values in cell.
 
     @property hasEditableValues
     @type Boolean
@@ -52,9 +48,11 @@ export default FlexberryBaseComponent.extend(
   hasEditableValues: false,
 
   /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
     Initializes {{#crossLink "ObjectListViewSingleColumnCellComponent"}}object-list-view-single-column-cell{{/crossLink}} component.
-  */
-  init: function() {
+   */
+  init() {
     this._super(...arguments);
   }
 });

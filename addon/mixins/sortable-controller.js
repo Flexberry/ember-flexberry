@@ -1,6 +1,14 @@
 import Ember from 'ember';
 const { getOwner } = Ember;
 
+/**
+  Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support
+  sorting on {{#crossLink "ObjectListView"}}{{/crossLink}}.
+
+  @class SortableControllerMixin
+  @extends Ember.Mixin
+  @public
+ */
 export default Ember.Mixin.create({
   queryParams: ['sort'],
   sortDefaultValue: null,
@@ -12,6 +20,12 @@ export default Ember.Mixin.create({
     return currentDirection === 'asc' ? 'desc' : 'none';
   },
 
+  /**
+    Dictionary with sorting data related to properties.
+
+    @property computedSorting
+    @type Object
+   */
   computedSorting: Ember.computed('model.sorting', function() {
     var sorting = this.get('model.sorting');
     var result = {};

@@ -1,10 +1,16 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
-export function initialize() {
-  // Support older and newer style initializer calls.
-  const application = arguments[1] || arguments[0];
+/**
+  Injects a <a href="https://github.com/jamesarosen/ember-i18n">i18n service</a> into current application
+  components, controllers, models, routes, and views.
+
+  @namespace initializers
+  @method i18n.initialize
+  @param {<a href="http://emberjs.com/api/classes/Ember.Application.html">Ember.Application</a>} application Ember application
+*/
+export function initialize(application) {
   [
     'component',
     'controller',

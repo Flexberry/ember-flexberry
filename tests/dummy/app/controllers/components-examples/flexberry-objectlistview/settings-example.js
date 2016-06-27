@@ -181,14 +181,6 @@ export default ListFormController.extend({
   orderable: true,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in single column mode or not.
-
-    @property useSingleColumn
-    @type Boolean
-   */
-  useSingleColumn: false,
-
-  /**
     ext for 'flexberry-objectlistview' component 'singleColumnHeaderTitle' property.
 
     @property singleColumnHeaderTitle
@@ -393,12 +385,6 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: true,
       bindedControllerPropertieName: 'orderable'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'useSingleColumn',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'useSingleColumn'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'singleColumnHeaderTitle',

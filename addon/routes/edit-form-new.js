@@ -1,12 +1,34 @@
+/**
+  @module ember-flexberry
+ */
+
 import Ember from 'ember';
 import EditFormRoute from './edit-form';
 
-export default EditFormRoute.extend({
-  activate() {
-    this._super(...arguments);
-  },
+/**
+  Base route for the Create Forms.
 
-  model: function() {
+  Example:
+  ```javascript
+  // app/routes/employee/new.js
+  import EditFormNewRoute from 'ember-flexberry/routes/edit-form-new';
+  export default EditFormNewRoute.extend({
+  });
+  ```
+
+  @class EditFormNewRoute
+  @extends EditFormRoute
+ */
+export default EditFormRoute.extend({
+  /**
+    A hook you can implement to convert the URL into the model for this route.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+
+    @method model
+    @param {Object} params
+    @param {Object} transition
+   */
+  model() {
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
     let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
@@ -26,12 +48,20 @@ export default EditFormRoute.extend({
     return record;
   },
 
-  renderTemplate: function(controller, model) {
+  /**
+    A hook you can use to render the template for the current route.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_renderTemplate).
+
+    @method renderTemplate
+    @param {Object} controller
+    @param {Object} model
+   */
+  renderTemplate(controller, model) {
     var templateName = this.get('templateName');
     Ember.assert('Template name must be defined.', templateName);
     this.render(templateName, {
       model,
       controller,
     });
-  }
+  },
 });

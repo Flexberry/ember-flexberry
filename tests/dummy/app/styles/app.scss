@@ -33,24 +33,6 @@
   }
 }
 
-/**
- * Flexberry form.
- */
-.ui.form.flexberry-horizontal-form {
-  .flexberry-field.field label {
-    width: 150px !important;
-  }
-
-  .field label {
-    width: 122px !important;
-    margin-right: 0.85714286em !important;
-  }
-
-  label {
-    text-align: right;
-  }
-}
-
 .ui.form .field > .field {
   margin-bottom: 0;
 }
@@ -66,4 +48,8 @@
     padding: 4em 10px 2em 10px;
     border-bottom: none;
   }
+}
+
+.flexberry-word-break {
+  word-break: break-all !important;
 }

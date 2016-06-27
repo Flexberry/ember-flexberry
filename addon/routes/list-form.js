@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 import LimitedRouteMixin from '../mixins/limited-route';
@@ -8,7 +8,7 @@ import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
-import QueryBuilder from 'ember-flexberry-data/query/builder';
+import ReloadListMixin from '../mixins/reload-list-mixin';
 
 /**
   Base route for the List Forms.
@@ -33,13 +33,18 @@ import QueryBuilder from 'ember-flexberry-data/query/builder';
   ```
 
   @class ListFormRoute
-  @extends ProjectedModelForm
-  @uses PaginatedRoute
-  @uses SortableRoute
-  @uses LimitedRoute
-  @uses FlexberryObjectlistviewRouteMixin
- */
-export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, FlexberryObjectlistviewRouteMixin, {
+  @extends ProjectedModelFormRoute
+  @uses PaginatedRouteMixin
+  @uses SortableRouteMixin
+  @uses LimitedRouteMixin
+  @uses ReloadListMixin
+*/
+export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, ReloadListMixin, FlexberryObjectlistviewRouteMixin, {
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+  userSettings: {},
+  listUserSettings: {},
+  sorting: [],
+
   /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
@@ -47,38 +52,57 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     @method model
     @param {Object} params
     @param {Object} transition
-   */
-  model(params, transition) {
-    let page = parseInt(params.page, 10);
-    let perPage = parseInt(params.perPage, 10);
-
-    Ember.assert('page must be greater than zero.', page > 0);
-    Ember.assert('perPage must be greater than zero.', perPage > 0);
-
+  */
+  model: function(params, transition) {
     let modelName = this.get('modelName');
-    let projectionName = this.get('modelProjection');
-    let serializer = this.store.serializerFor(modelName);
-    let sorting = this.deserializeSortingParam(params.sort);
+    let moduleName = transition.targetName;
+    let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
+    let limitPredicate =
+      this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
+    let userSettingPromise = this.get('_userSettingsService').getUserSettings({ moduleName: moduleName })  //get sorting parameters from DEFAULT userSettings
+    .then(_listUserSettings => {
+      if (!_listUserSettings) { //UserSetting  switch off
+        _listUserSettings = { DEFAULT: { sorting: this.deserializeSortingParam(params.sort) } };
+      }
 
-    let builder = new QueryBuilder(this.store)
-      .from(modelName)
-      .selectByProjection(projectionName)
-      .top(perPage)
-      .skip((page - 1) * perPage)
-      .count()
-      .orderBy(
-        sorting
-          .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
-          .join(',')
-      );
+      return _listUserSettings;
+    });
 
-    // find by query is always fetching.
-    // TODO: support getting from cache with "store.all->filterByProjection".
-    return this.store.query(modelName, builder.build())
-      .then((records) => {
-        // TODO: move to setupController mixins?
-        return this.includeSorting(records, sorting);
-      });
+    let ret = userSettingPromise
+    .then(
+      listUserSettings=> {
+        this.listUserSettings = listUserSettings;
+        let sorting = [];
+        this.userSettings = {};
+        if ('DEFAULT' in listUserSettings) {
+          this.userSettings = this.listUserSettings.DEFAULT;
+          sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];
+        }
+
+        this.sorting = sorting;
+
+        let queryParameters = {
+          modelName: modelName,
+          projectionName: projectionName,
+          perPage: params.perPage,
+          page: params.page,
+          sorting: sorting, // TODO: there can be some problems.
+          filter: params.filter,
+          predicate: limitPredicate
+        };
+
+        // Find by query is always fetching.
+        // TODO: support getting from cache with "store.all->filterByProjection".
+        // TODO: move includeSorting to setupController mixins?
+        return this.reloadList(queryParameters);
+      })
+    .then((records) => {
+      this.includeSorting(records, this.sorting);
+      records.set('userSettings', this.userSettings);
+      records.set('listUserSettings', this.listUserSettings);
+      return records;
+    });
+    return ret;
   },
 
   /**
@@ -88,14 +112,15 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     @method setupController
     @param {Ember.Controller} controller
     @param {Object} model
-   */
-  setupController(controller, model) {
+  */
+  setupController: function(controller, model) {
     this._super(...arguments);
 
     // Define 'modelProjection' for controller instance.
     // TODO: remove that when list-form controller will be moved to this route.
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
+    controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
   },
 });

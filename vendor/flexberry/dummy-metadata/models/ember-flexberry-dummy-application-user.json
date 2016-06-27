@@ -93,6 +93,34 @@
       "flexberryType": "decimal",
       "notNull": false,
       "defaultValue": "100"
+    },
+    {
+      "name": "createTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "creator",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editor",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
     }
   ],
   "belongsTo": [],
@@ -197,6 +225,50 @@
         {
           "name": "eMail",
           "caption": "E-mail",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "activated",
+          "caption": "Activated",
+          "hidden": false,
+          "index": 2
+        },
+        {
+          "name": "birthday",
+          "caption": "Birthday",
+          "hidden": false,
+          "index": 3
+        },
+        {
+          "name": "gender",
+          "caption": "Gender",
+          "hidden": false,
+          "index": 4
+        },
+        {
+          "name": "karma",
+          "caption": "Karma",
+          "hidden": false,
+          "index": 5
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    },
+    {
+      "name": "AuditView",
+      "modelName": "ember-flexberry-dummy-application-user",
+      "attrs": [
+        {
+          "name": "name",
+          "caption": "Name",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "eMail",
+          "caption": "E mail",
           "hidden": false,
           "index": 1
         },

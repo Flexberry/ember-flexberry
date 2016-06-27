@@ -3,6 +3,7 @@
  */
 
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Textbox component for Semantic UI.
@@ -18,7 +19,7 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['flexberry-textbox', 'ui', 'input', 'fluid'],
+  classNames: ['flexberry-textbox', 'ui', 'input'],
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -39,22 +40,19 @@ var FlexberryTextbox = FlexberryBaseComponent.extend({
   value: undefined,
 
   /**
-   * Text to be displayed instead of file name, if file has not been selected.
+   * The placeholder attribute.
    *
    * @property placeholder
-   * @type string
-   * @default undefined
+   * @type Sring
+   * @default 't('components.flexberry-textbox.placeholder')'
    */
-  placeholder: undefined,
+  placeholder: t('components.flexberry-textbox.placeholder'),
 
   /**
    * Initializes component.
    */
   init: function() {
     this._super(...arguments);
-
-    // Initialize properties which defaults could be defined in application configuration.
-    this.initProperty({ propertyName: 'placeholder', defaultValue: null });
   }
 });
 

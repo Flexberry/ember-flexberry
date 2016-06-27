@@ -5,6 +5,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
@@ -20,6 +21,15 @@ export default FlexberryBaseComponent.extend({
 
   // Flag to make control required.
   required: false,
+
+  /**
+   * The placeholder attribute.
+   *
+   * @property placeholder
+   * @type String
+   * @default 't('components.flexberry-datepicker.placeholder')'
+   */
+  placeholder: t('components.flexberry-datepicker.placeholder'),
 
   // Flag to show time in control and time picker inside date picker.
   hasTimePicker: false,
@@ -67,8 +77,8 @@ export default FlexberryBaseComponent.extend({
       {
         startDate: startDate,
         locale: {
-          applyLabel: i18n.t('flexberry-datepicker.apply-button-text'),
-          cancelLabel: i18n.t('flexberry-datepicker.cancel-button-text')
+          applyLabel: i18n.t('components.flexberry-datepicker.apply-button-text'),
+          cancelLabel: i18n.t('components.flexberry-datepicker.cancel-button-text')
         },
         singleDatePicker: true,
         showDropdowns: true,
@@ -162,7 +172,10 @@ export default FlexberryBaseComponent.extend({
       return this.invalidDate;
     }
 
-    if (dateFromPicker.isBefore(this.minDate) || dateFromPicker.isAfter(this.maxDate)) {
+    let minDate = this.get('minDate');
+    let maxDate = this.get('maxDate');
+    if (moment.isDate(minDate) && dateFromPicker.isBefore(this.minDate) ||
+      moment.isDate(maxDate) && dateFromPicker.isAfter(this.maxDate)) {
       return this.invalidDate;
     }
 

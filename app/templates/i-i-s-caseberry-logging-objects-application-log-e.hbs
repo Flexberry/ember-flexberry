@@ -1,0 +1,238 @@
+<h3 class="ui header"></h3>
+{{#if errorMessages}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type="error"
+      closeable=true
+      title="Error occurred"
+      message=currentError
+    }}
+  {{/each}}
+{{/if}}
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui negative button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+    </div>
+  </div>
+  </div>
+<div class="field">
+  {{#if model.errors.category}}
+    <span style ="color:red">
+      {{model.errors.category}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.category
+    class=(if model.errors.category "error" "")
+    label="Category"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.eventId}}
+    <span style ="color:red">
+      {{model.errors.eventId}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.eventId
+    class=(if model.errors.eventId "error" "")
+    label="Event id"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.priority}}
+    <span style="color:red">
+      {{model.errors.priority}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.priority
+    class=(if model.errors.priority "error" "")
+    label="Priority"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.severity}}
+    <span style ="color:red">
+      {{model.errors.severity}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.severity
+    class=(if model.errors.severity "error" "")
+    label='Severity'
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.title}}
+    <span style ="color:red">
+      {{model.errors.title}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.title
+    class=(if model.errors.title "error" "")
+    label='Title'
+  }}
+</div>
+
+<div class="field">
+  <label>Timestamp</label>
+  {{#if model.errors.timestamp}}
+    <span style="color:red">{{model.errors.timestamp}}</span>
+  {{/if}}
+  {{flexberry-datepicker
+    readonly=readonly
+    value=model.timestamp
+    class=(if model.errors.timestamp "error" "")
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.machineName}}
+    <span style ="color:red">
+      {{model.errors.machineName}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.machineName
+    class=(if model.errors.machineName "error" "")
+    label="Machine name"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.appDomainName}}
+    <span style ="color:red">
+      {{model.errors.appDomainName}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.appDomainName
+    class=(if model.errors.appDomainName "error" "")
+    label="App domain name"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.processId}}
+    <span style ="color:red">
+      {{model.errors.processId}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.processId
+    class=(if model.errors.processId "error" "")
+    label="Process id"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.processName}}
+    <span style ="color:red">
+      {{model.errors.processName}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.processName
+    class=(if model.errors.processName "error" "")
+    label="Process name"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.threadName}}
+    <span style ="color:red">
+      {{model.errors.threadName}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.threadName
+    class=(if model.errors.threadName "error" "")
+    label="Thread name"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.win32ThreadId}}
+    <span style ="color:red">
+      {{model.errors.win32ThreadId}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.win32ThreadId
+    class=(if model.errors.win32ThreadId "error" "")
+    label="Win32 thread id"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.message}}
+    <span style ="color:red">
+      {{model.errors.message}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.message
+    class=(if model.errors.message "error" "")
+    label="Message"
+  }}
+</div>
+
+<div class="field">
+  {{#if model.errors.formattedMessage}}
+    <span style ="color:red">
+      {{model.errors.formattedMessage}}
+    </span>
+  {{/if}}
+  {{flexberry-field
+    readonly=readonly
+    required=true
+    value=model.formattedMessage
+    class=(if model.errors.formattedMessage "error" "")
+    label="Formatted message"
+  }}
+</div>
+
+</form>

@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 import EditFormController from './edit-form';
@@ -22,7 +22,7 @@ import EditFormController from './edit-form';
 
   @class DetailEditFormController
   @extends EditFormController
- */
+*/
 export default EditFormController.extend({
   /**
     Service that lets interact between agregator's and detail's form.
@@ -31,7 +31,7 @@ export default EditFormController.extend({
     @type Ember.Service
     @readOnly
     @private
-   */
+  */
   _flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
 
   /**
@@ -41,7 +41,7 @@ export default EditFormController.extend({
     @type Boolean
     @private
     @readOnly
-   */
+  */
   _hasParentRoute: Ember.computed('modelCurrentAgregatorPathes', function() {
     return this.get('_flexberryDetailInteractionService').hasValues(this.get('modelCurrentAgregatorPathes'));
   }),
@@ -53,7 +53,7 @@ export default EditFormController.extend({
     @property returnToAgregatorRoute
     @type Boolean
     @default true
-   */
+  */
   returnToAgregatorRoute: true,
 
   /**
@@ -61,7 +61,7 @@ export default EditFormController.extend({
 
     @property modelCurrentAgregatorPathes
     @type Array
-   */
+  */
   modelCurrentAgregatorPathes: undefined,
 
   /**
@@ -69,7 +69,7 @@ export default EditFormController.extend({
 
     @property modelCurrentAgregators
     @type Array
-   */
+  */
   modelCurrentAgregators: undefined,
 
   /**
@@ -79,7 +79,7 @@ export default EditFormController.extend({
     @property saveBeforeRouteLeave
     @type Boolean
     @default false
-   */
+  */
   saveBeforeRouteLeave: false,
 
   actions: {
@@ -89,7 +89,7 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.save
-     */
+    */
     save() {
       if (this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         throw new Error('\'Save\' operation is not accessible due to current settings.');
@@ -104,7 +104,7 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.saveAndClose
-     */
+    */
     saveAndClose() {
       if (this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         throw new Error('\'Save and close\' operation is not accessible due to current settings.');
@@ -119,7 +119,7 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.delete
-     */
+    */
     delete() {
       if (this.get('model').get('id') && this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         if (confirm('Are you sure you want to delete that record?')) {
@@ -137,7 +137,7 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.close
-     */
+    */
     close() {
       if (!this.get('_hasParentRoute')) {
         this._super.apply(this, arguments);
@@ -155,9 +155,7 @@ export default EditFormController.extend({
       // because after transition, all components correspondent to current detail route (including file components)
       // gonna be destroyed, and files won't be uploaded at all.
       let model = this.get('model');
-      model.validate().then(() => {
-        return model.beforeSave({ softSave: true });
-      }).then(() => {
+      model.validate().then(() => model.beforeSave({ softSave: true })).then(() => {
         this.transitionToParentRoute(false);
       }, (reason) => {
         this.rejectError(reason);
@@ -173,7 +171,7 @@ export default EditFormController.extend({
 
     @method transitionToParentRoute
     @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
-   */
+  */
   transitionToParentRoute(rollBackModel) {
     if (this.get('_hasParentRoute')) {
       if (!rollBackModel) {

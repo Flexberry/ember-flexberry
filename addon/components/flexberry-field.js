@@ -3,6 +3,7 @@
  */
 
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
  * Field component for Semantic UI.
@@ -18,7 +19,7 @@ var FlexberryField = FlexberryBaseComponent.extend({
    * @type Array
    * @readOnly
    */
-  classNames: ['flexberry-field', 'field'],
+  classNames: ['flexberry-field', 'ui', 'field'],
 
   /**
    * Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -42,10 +43,10 @@ var FlexberryField = FlexberryBaseComponent.extend({
    * Text to be displayed instead of file name, if file has not been selected.
    *
    * @property placeholder
-   * @type string
-   * @default undefined
+   * @type String
+   * @default 't('components.flexberry-field.placeholder')'
    */
-  placeholder: undefined,
+  placeholder: t('components.flexberry-field.placeholder'),
 
   /**
    * Label value.
@@ -61,9 +62,6 @@ var FlexberryField = FlexberryBaseComponent.extend({
    */
   init: function() {
     this._super(...arguments);
-
-    // Initialize properties which defaults could be defined in application configuration.
-    this.initProperty({ propertyName: 'placeholder', defaultValue: null });
   }
 });
 

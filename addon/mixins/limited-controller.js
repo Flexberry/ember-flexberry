@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 
@@ -41,16 +41,16 @@ import Ember from 'ember';
 
   @class LimitedController
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
- */
+*/
 export default Ember.Mixin.create({
   /**
-    Function with limits.
+    Defines which query parameters the controller accepts. [More info.](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
 
-    @property lf
-    @type String
-    @default null
+    @property queryParams
+    @type Array
+    @default ['lf', 'filter']
    */
-  lf: null,
+  queryParams: ['filter'],
 
   /**
     String with search query.
@@ -61,15 +61,6 @@ export default Ember.Mixin.create({
    */
   filter: null,
 
-  /**
-    Defines which query parameters the controller accepts. [More info.](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
-
-    @property queryParams
-    @type Array
-    @default ['lf', 'filter']
-   */
-  queryParams: ['lf', 'filter'],
-
   actions: {
     /**
       Changes current pattern for objects filtering.
@@ -77,27 +68,15 @@ export default Ember.Mixin.create({
       @method filterByAnyMatch
       @param {String} pattern A substring that is searched in objects while filtering.
       @deprecated Use Query Language.
-     */
+    */
     filterByAnyMatch(pattern) {
       Ember.Logger.error('Method `filterByAnyMatch` is deprecated, use Query Language.');
       if (this.get('filter') !== pattern) {
-        this.set('filter', pattern);
+        this.setProperties({
+          filter: pattern,
+          page: 1
+        });
       }
     },
-  },
-
-  /**
-    Update current limit function.
-
-    @method updateLimitFunction
-    @param {String} limitFunction New limit function.
-    @deprecated Use Query Language.
-   */
-  updateLimitFunction(limitFunction) {
-    Ember.Logger.error('Method `updateLimitFunction` is deprecated, use Query Language.');
-    if (this.get('lf') !== limitFunction) {
-      // Changing lf value reloads route automatically.
-      this.set('lf', limitFunction);
-    }
   },
 });

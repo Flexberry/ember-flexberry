@@ -1,8 +1,8 @@
 ﻿{
   "className": "Gender",
   "enumObjects": {
-    "Male": null,
-    "Female": null,
-    "Unknown": null
+    "Male": "Male",
+    "Female": "Female",
+    "Unknown": "~"
   }
 }

@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup';
@@ -37,7 +37,7 @@ const { getOwner } = Ember;
   @uses FlexberryLookupMixin
   @uses ErrorableControllerMixin
   @uses FlexberryFileControllerMixin
- */
+*/
 export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, FlexberryFileControllerMixin, {
   /**
     Flag to enable return to agregator's path if possible.
@@ -45,7 +45,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @property returnToAgregatorRoute
     @type Boolean
     @default false
-   */
+  */
   returnToAgregatorRoute: false,
 
   /**
@@ -53,7 +53,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @property parentRoute
     @type String
-   */
+  */
   parentRoute: undefined,
 
   /**
@@ -62,7 +62,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @property readonly
     @type Boolean
     @default false
-   */
+  */
   readonly: false,
 
   /**
@@ -74,7 +74,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @type String|undefined
     @default undefined
     @readOnly
-   */
+  */
   readonlyAttr: Ember.computed('readonly', function() {
     return this.get('readonly') ? 'readonly' : undefined;
   }),
@@ -90,7 +90,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @property lookupSettings
     @type Object
-   */
+  */
   lookupSettings: {
     controllerName: 'lookup-dialog',
     template: 'lookup-dialog',
@@ -104,7 +104,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @property destroyHasManyRelationshipsOnModelDestroy
     @type Boolean
     @default false
-   */
+  */
   destroyHasManyRelationshipsOnModelDestroy: false,
 
   /**
@@ -113,7 +113,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @property lookupController
     @type Ember.Controller
     @default LookupDialog
-   */
+  */
   lookupController: Ember.inject.controller('lookup-dialog'),
 
   /**
@@ -123,7 +123,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @property modelNoRollBack
     @type Boolean
     @default false
-   */
+  */
   modelNoRollBack: false,
 
   /**
@@ -132,7 +132,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @property queryParams
     @type Array
     @default ['readonly']
-   */
+  */
   queryParams: ['readonly'],
 
   actions: {
@@ -165,7 +165,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       ```
 
       @method actions.save
-     */
+    */
     save() {
       this.save();
     },
@@ -199,7 +199,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       ```
 
       @method actions.saveAndClose
-     */
+    */
     saveAndClose() {
       this.save(true);
     },
@@ -234,7 +234,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       ```
 
       @method actions.delete
-     */
+    */
     delete() {
       this.delete();
     },
@@ -260,7 +260,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       ```
 
       @method actions.close
-     */
+    */
     close() {
       this.close();
     },
@@ -270,23 +270,28 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Save object.
 
     @method save
-    @param {boolean} close If `true`, then save and close.
+    @param {Boolean} close If `true`, then save and close.
     @return {Promise}
-   */
+  */
   save(close) {
     this.send('dismissErrorMessages');
-    return this.get('model').save().then((model) => {
-      return this._saveHasManyRelationships(model).then(() => {
+
+    this.onSaveActionStarted();
+
+    let savePromise = this.get('model').save().then((model) => {
+      return this.saveHasManyRelationships(model).then(() => {
         this.onSaveActionFulfilled();
         if (close) {
           this.close();
         }
-      }).catch((errorData) => {
-        this.onSaveActionRejected(errorData);
       });
     }).catch((errorData) => {
       this.onSaveActionRejected(errorData);
+    }).finally((data) => {
+      this.onSaveActionAlways(data);
     });
+
+    return savePromise;
   },
 
   /**
@@ -294,109 +299,188 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @method delete
     @return {Promise}
-   */
+  */
   delete() {
     this.send('dismissErrorMessages');
-    var model = this.get('model');
+
+    this.onDeleteActionStarted();
+
+    let model = this.get('model');
+    let deletePromise = null;
     if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
-      return this._destroyHasManyRelationships(model).then(() => {
+      deletePromise = this.destroyHasManyRelationships(model).then(() => {
         return model.destroyRecord().then(() => {
           this.onDeleteActionFulfilled();
-        }).catch((errorData) => {
-          this.onDeleteActionRejected(errorData);
         });
-      }).catch((errorData) => {
-        this.onDeleteActionRejected(errorData);
       });
     } else {
-      return model.destroyRecord().then(() => {
+      deletePromise = model.destroyRecord().then(() => {
         this.onDeleteActionFulfilled();
-      }).catch((errorData) => {
-        this.onDeleteActionRejected(errorData);
       });
     }
+
+    deletePromise.catch((errorData) => {
+      this.onDeleteActionRejected(errorData);
+    }).finally((data) => {
+      this.onDeleteActionAlways(data);
+    });
+
+    return deletePromise;
   },
 
   /**
     Сlose edit form and transition to parent route.
 
     @method close
-   */
+  */
   close() {
+    this.onCloseActionStarted();
     this.transitionToParentRoute();
   },
 
   /**
-    This method is called after successful save.
-    You can override this method to add actions after save.
+    This method will be invoked before save operation will be called.
+    Override this method to add some custom logic on save operation start.
+
+    ```javascript
+    onSaveActionStarted() {
+      alert('Save operation started!');
+    }
+    ```
+    @method onSaveActionStarted.
+  */
+  onSaveActionStarted() {
+  },
+
+  /**
+    This method will be invoked when save operation successfully completed.
+    Override this method to add some custom logic on save operation success.
 
     ```javascript
     onSaveActionFulfilled() {
-      alert('Save successful!');
+      alert('Save operation succeed!');
     }
     ```
-
     @method onSaveActionFulfilled.
-   */
+  */
   onSaveActionFulfilled() {
   },
 
   /**
-    This method is called if save ended with error.
-    You can override this method to add actions after unsuccessful save.
+    This method will be invoked when save operation completed, but failed.
+    Override this method to add some custom logic on save operation fail.
 
     ```javascript
     onSaveActionRejected() {
-      alert('Save failed!');
+      alert('Save operation failed!');
     }
     ```
-
     @method onSaveActionRejected.
-    @param {Object} errorData Info of error.
-   */
+    @param {Object} errorData Data about save operation fail.
+  */
   onSaveActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('edit-form.save-failed-message'));
+    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
   },
 
   /**
-    This method is called after delete object.
-    You can override this method to add actions after deleted.
+    This method will be invoked always when save operation completed,
+    regardless of save promise's state (was it fulfilled or rejected).
+    Override this method to add some custom logic on save operation completion.
 
-    ```javascript
-    onDeleteActionFulfilled() {
-      alert('Successful delete!');
-      this.close();
+    ```js
+    onSaveActionAlways(data) {
+      alert('Save operation completed!');
     }
     ```
 
+    @method onSaveActionAlways.
+    @param {Object} data Data about completed save operation.
+  */
+  onSaveActionAlways(data) {
+  },
+
+  /**
+    This method will be invoked before delete operation will be called.
+    Override this method to add custom logic on delete operation start.
+
+    ```javascript
+    onDeleteActionStarted() {
+      alert('Delete operation started!');
+    }
+    ```
+    @method onDeleteActionStarted.
+  */
+  onDeleteActionStarted() {
+  },
+
+  /**
+    This method will be invoked when delete operation successfully completed.
+    Override this method to add some custom logic on delete operation success.
+
+    ```javascript
+    onDeleteActionFulfilled() {
+      alert('Delete operation succeed!');
+      this.close();
+    }
+    ```
     @method onDeleteActionFulfilled.
-   */
+  */
   onDeleteActionFulfilled() {
     this.close();
   },
 
   /**
-    This method is called if delete ended with error.
-    You can override this method to add actions after unsuccessful deleted.
+    This method will be invoked when delete operation completed, but failed.
+    Override this method to add some custom logic on delete operation fail.
 
     ```javascript
     onDeleteActionRejected() {
-      alert('Failed delete!');
+      alert('Delete operation failed!');
+    }
+    ```
+    @method onDeleteActionRejected.
+    @param {Object} errorData Data about delete operation fail.
+  */
+  onDeleteActionRejected(errorData) {
+    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.delete-failed-message'));
+  },
+
+  /**
+    This method will be invoked always when delete operation completed,
+    regardless of save promise's state (was it fulfilled or rejected).
+    Override this method to add some custom logic on delete operation completion.
+
+    ```js
+    onDeleteActionAlways(data) {
+      alert('Delete operation completed!');
     }
     ```
 
-    @method onDeleteActionRejected.
-    @param {Object} errorData Info of error.
-   */
-  onDeleteActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('edit-form.delete-failed-message'));
+    @method onSaveActionAlways.
+    @param {Object} data Data about completed save operation.
+  */
+  onDeleteActionAlways(data) {
+  },
+
+  /**
+    This method will be invoked before close method will be called.
+    Override this method to add custom logic on close method start.
+
+    ```javascript
+    onCloseActionStarted() {
+      alert('Form will be closed right now!');
+    }
+    ```
+    @method onDeleteActionStarted.
+  */
+  onCloseActionStarted() {
   },
 
   /**
     Method transition to parent route (corresponding list form).
 
     @method transitionToParentRoute
-   */
+  */
   transitionToParentRoute() {
     // TODO: нужно учитывать пэйджинг.
     // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
@@ -414,7 +498,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @param {String} bindingPath Path to model property related to current table cell.
     @param {DS.Model} modelClass Model class of data record related to current table row.
     @return {Object} Object containing name & properties of component, which will be used to render current table cell ({ componentName: 'my-component',  componentProperties: { ... } }).
-   */
+  */
   getCellComponent(attr, bindingPath, modelClass) {
     let cellComponent = {
       componentName: 'flexberry-textbox',
@@ -461,7 +545,8 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         if (transformClass && transformClass.isEnum) {
           cellComponent.componentName = 'flexberry-dropdown';
           cellComponent.componentProperties = {
-            items: transformInstance.get('captions')
+            items: transformInstance.get('captions'),
+            class: 'compact fluid'
           };
         }
 
@@ -477,7 +562,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @method rollbackHasManyRelationships
     @param {DS.Model} model Record with hasMany relationships.
-   */
+  */
   rollbackHasManyRelationships: function(model) {
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
@@ -497,7 +582,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @param {DS.Model} model Record with hasMany relationships.
     @return {Promise} A promise that will be resolved to array of saved records.
     @private
-   */
+  */
   _saveHasManyRelationships(model) {
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
@@ -524,7 +609,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @method _destroyHasManyRelationships
     @param {DS.Model} model Record with hasMany relationships.
     @return {Promise} A promise that will be resolved to array of destroyed records.
-   */
+  */
   _destroyHasManyRelationships(model) {
     let promises = Ember.A();
     model.eachRelationship((name, desc) => {
@@ -542,3 +627,4 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     return Ember.RSVP.all(promises);
   },
 });
+

@@ -16,12 +16,23 @@ var Model = BaseModel.extend({
   gender: DS.attr('ember-flexberry-dummy-gender'),
   vip: DS.attr('boolean'),
   karma: DS.attr('number'),
+
+  // Model validation rules.
   validations: {
-    name: { presence: true },
-    eMail: { presence: true }
+    name: {
+      presence: {
+        message: 'Name is required'
+      }
+    },
+    eMail: {
+      presence: {
+        message: 'User email is required'
+      }
+    }
   }
 });
 
+// Edit form projection.
 Model.defineProjection('ApplicationUserE', 'ember-flexberry-dummy-application-user', {
   name: Proj.attr('Name'),
   eMail: Proj.attr('E-mail'),
@@ -38,19 +49,13 @@ Model.defineProjection('ApplicationUserE', 'ember-flexberry-dummy-application-us
   karma: Proj.attr('Karma')
 });
 
+// List form projection.
 Model.defineProjection('ApplicationUserL', 'ember-flexberry-dummy-application-user', {
   name: Proj.attr('Name'),
   eMail: Proj.attr('E-mail'),
-  phone1: Proj.attr('Phone1'),
-  phone2: Proj.attr('Phone2'),
-  phone3: Proj.attr('Phone3'),
   activated: Proj.attr('Activated'),
-  vK: Proj.attr('VK'),
-  facebook: Proj.attr('Facebook'),
-  twitter: Proj.attr('Twitter'),
   birthday: Proj.attr('Birthday'),
   gender: Proj.attr('Gender'),
-  vip: Proj.attr('Vip'),
   karma: Proj.attr('Karma')
 });
 

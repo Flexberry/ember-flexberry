@@ -4,9 +4,9 @@
 [![Travis develop branch](https://img.shields.io/travis/Flexberry/ember-flexberry/develop.svg?label=develop%20build)](https://travis-ci.org/Flexberry/ember-flexberry/branches)
 [![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)](https://github.com/orangemug/stability-badges#work-in-progress)
 
-[![ember](https://embadge.io/v1/badge.svg?label=ember&range=2.3.0)](https://github.com/emberjs/ember.js/releases)
-[![ember-data](https://embadge.io/v1/badge.svg?label=ember-data&range=^2.3.0)](https://github.com/emberjs/data/releases)
-[![ember-cli](https://embadge.io/v1/badge.svg?label=ember-cli&range=2.3.0-beta.1)](https://github.com/ember-cli/ember-cli/releases)
+[![ember](https://embadge.io/v1/badge.svg?label=ember&range=~2.4.3)](https://github.com/emberjs/ember.js/releases)
+[![ember-data](https://embadge.io/v1/badge.svg?label=ember-data&range=~2.4.2)](https://github.com/emberjs/data/releases)
+[![ember-cli](https://embadge.io/v1/badge.svg?label=ember-cli&range=2.4.3)](https://github.com/ember-cli/ember-cli/releases)
 [![See all badges](https://img.shields.io/badge/all%20badges-visit BADGES.md-blue.svg)](BADGES.md)
 
 Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework powered by Ember.js.
@@ -26,9 +26,9 @@ Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework p
 
 Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality of the addon.
 
-* Stable version (master branch): https://ember-flexberry.firebaseapp.com
-* Bleeding edge version (develop branch): https://ember-flexberry-dev.firebaseapp.com
-* For temporal testing: https://ember-flexberry-test.firebaseapp.com
+* Stable version (master branch): https://flexberry-ember.firebaseapp.com
+* Bleeding edge version (develop branch): https://flexberry-ember-dev.firebaseapp.com
+* For temporal testing: https://flexberry-ember-test.firebaseapp.com
 
 ## Collaborating / Development
 
@@ -81,8 +81,10 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 
 Automatic deployment on [Firebase](https://www.firebase.com):
 * After a successful [Travis CI build](https://travis-ci.org/Flexberry/ember-flexberry), dummy app deploys on
-  * https://ember-flexberry.firebaseapp.com for master branch
-  * https://ember-flexberry-dev.firebaseapp.com for develop branch
+  * https://flexberry-ember.firebaseapp.com for master branch
+  * https://flexberry-ember-dev.firebaseapp.com for develop branch
+* After update dummy-test branch, dummy app deploy on
+  * https://flexberry-ember-test.firebaseapp.com
 
 Manual deployment on [Firebase](https://www.firebase.com):
 * `npm install -g firebase-tools` (install [Firebase CLI](https://www.firebase.com/docs/hosting/command-line-tool.html))

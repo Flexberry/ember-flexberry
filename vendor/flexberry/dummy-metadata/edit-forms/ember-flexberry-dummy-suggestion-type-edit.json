@@ -2,11 +2,11 @@
   "propertyLookup": [
     {
       "relationName": "Parent",
-      "projection": "SuggestionTypeL"
+      "projection": ""
     },
     {
       "relationName": "LocalizedTypes.Localization",
-      "projection": "LocalizationL"
+      "projection": "LocalizationList"
     }
   ],
   "caption": "Suggestion type",

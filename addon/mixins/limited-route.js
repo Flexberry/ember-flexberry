@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 
@@ -39,18 +39,19 @@ import Ember from 'ember';
   ...
   ```
 
-  @class LimitedRoute
+  @class LimitedRouteMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
- */
+*/
 export default Ember.Mixin.create({
   /**
-    Function with limits.
+    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
 
-    @property lf
-    @type String
-    @default null
-   */
-  lf: null,
+    @property queryParams
+    @type Object
+  */
+  queryParams: {
+    filter: { refreshModel: true }
+  },
 
   /**
     String with search query.
@@ -58,90 +59,6 @@ export default Ember.Mixin.create({
     @property filter
     @type String
     @default null
-   */
+  */
   filter: null,
-
-  /**
-    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
-
-    @property queryParams
-    @type Object
-   */
-  queryParams: {
-    lf: { refreshModel: true },
-    filter: { refreshModel: true },
-  },
-
-  /**
-    Update limit function query parameter and reloads route if needed.
-
-    @param {String} limitFunction New limit function to set.
-    @param {Object} params Route parameters (it is used when limit function changes in beforeModel hook).
-    @deprecated Use Query Language.
-   */
-  updateLimitFunction(limitFunction, params) {
-    Ember.Logger.error('Method `updateLimitFunction` is deprecated, use Query Language.');
-    if (!params) {
-      this.transitionTo({ queryParams: limitFunction });
-    } else {
-      if (params && params.lf !== limitFunction) {
-        params.lf = limitFunction;
-        this.transitionTo({ queryParams: params });
-      }
-    }
-  },
-
-  /**
-    Returns the filter string for data loading.
-
-    @method getFilterString
-    @param {String} modelProjection A projection used for data retrieving.
-    @param {Object} params The route URL parameters.
-    @deprecated Use Query Language.
-   */
-  getFilterString(modelProjection, params) {
-    Ember.Logger.error('Method `getFilterString` is deprecated, use Query Language.');
-    let attrToFilterNames = [];
-    let projAttrs = modelProjection.attributes;
-    for (var attrName in projAttrs) {
-      if (projAttrs[attrName].kind === 'attr') {
-        attrToFilterNames.push(attrName);
-      }
-    }
-
-    let finalString = params.lf;
-    let filter = params.filter;
-
-    if (typeof filter === 'string' && filter.length > 0) {
-      finalString = this._combineFilterWithFilterByAnyMatch(this.store, finalString, filter, modelProjection.modelName, attrToFilterNames);
-    }
-
-    return finalString;
-  },
-
-  /**
-    Combine new filter with current filter.
-
-    @method _combineFilterWithFilterByAnyMatch
-    @param {DS.Store} store
-    @param {String} currentFilter
-    @param {String} matchPattern
-    @param {String} modelName
-    @param {String} modelFields
-    @deprecated Use Query Language.
-   */
-  _combineFilterWithFilterByAnyMatch(store, currentFilter, matchPattern, modelName, modelFields) {
-    Ember.Logger.error('Method `_combineFilterWithFilterByAnyMatch` is deprecated, use Query Language.');
-    let containsExpressions = modelFields.map(function(fieldName) {
-      let backendFieldName = store.serializerFor(modelName).keyForAttribute(fieldName);
-      return 'contains(' + backendFieldName + ', \'' + matchPattern + '\')';
-    });
-
-    let newExpression = containsExpressions.join(' and ');
-    if (typeof currentFilter === 'string' && currentFilter.length > 0) {
-      newExpression = '(' + currentFilter + ') and (' + newExpression + ')';
-    }
-
-    return newExpression;
-  },
 });

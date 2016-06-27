@@ -1341,8 +1341,8 @@ export default FlexberryBaseComponent.extend(
         // Depending on settings current model has to be saved before adding detail.
         this.send('rowClick', undefined, undefined);
       } else {
-        var modelName = this.get('modelProjection').modelName;
-        var modelToAdd = this.get('store').createRecord(modelName, {});
+        let modelName = this.get('modelProjection').modelName;
+        let modelToAdd = this.get('store').createRecord(modelName, {});
 
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
@@ -1574,12 +1574,12 @@ export default FlexberryBaseComponent.extend(
     });
 
     // Apply changes to component.
-    addedItems.forEach(addedItem => {
+    addedItems.forEach((addedItem) => {
       this._addModel(addedItem);
       this.get('objectlistviewEventsService').rowAddedTrigger(componentName, addedItem);
     });
 
-    deletedItems.forEach(deletedItem => {
+    deletedItems.forEach((deletedItem) => {
       let key = this._getModelKey(deletedItem);
       this._removeModelWithKey(key);
       selectedRecords.removeObject(deletedItem);

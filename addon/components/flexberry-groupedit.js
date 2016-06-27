@@ -245,6 +245,7 @@ export default FlexberryBaseComponent.extend({
 
     If flag is enabled component compares current detail array with used on component,
     removes deleted and marked as deleted on model level records, adds created on model level records.
+
     @property searchForContentChange
     @type Boolean
     @default false

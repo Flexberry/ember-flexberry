@@ -1,10 +1,16 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
-## 2016-06-24
+## 2016-06-27
 ### Added
 FlexberryGroupeditComponent
 * Add opportunity to observe model changing (it needs to enable flag 'searchForContentChange').
+
+## 2016-06-24
+### Breaking changes
+ObjectlistviewComponent:
+* Template is split for desktop and mobile phones.
+* Remove properties `useSingleColumn` & `emptyMobileHeader`.
 
 ## 2016-06-23
 ### Added

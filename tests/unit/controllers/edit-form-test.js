@@ -62,7 +62,7 @@ test('save hasMany relationships recursively', function(assert) {
     model22.get('hasManyModel3').pushObjects([model31]);
 
     controller.set('model', record);
-    controller.saveHasManyRelationships(record).then(() => {
+    controller._saveHasManyRelationships(record).then(() => {
       assert.equal(savedRecords[0], model21);
       assert.equal(savedRecords[1], model22);
       assert.equal(savedRecords[2], model31);

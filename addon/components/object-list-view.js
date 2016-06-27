@@ -21,6 +21,14 @@ export default FlexberryBaseComponent.extend(
   FlexberryLookupCompatibleComponentMixin,
   FlexberryFileCompatibleComponentMixin,
   ErrorableControllerMixin, {
+  /**
+    Projection set by property {{#crossLink "ObjectListViewComponent/modelProjection:property"}}{{/crossLink}}.
+
+    @property _modelProjection
+    @type Object
+    @default null
+    @private
+  */
   _modelProjection: null,
 
   /**
@@ -59,9 +67,34 @@ export default FlexberryBaseComponent.extend(
   _userSettingsService: Ember.inject.service('user-settings-service'),
 
   /**
-    Override wrapping element's tag.
+    Model projection which should be used to display given content.
+    Accepts object or name projections.
+
+    @property modelProjection
+    @type Object|String
+    @default null
   */
-  tagName: 'div',
+  modelProjection: Ember.computed('_modelProjection', {
+    get(key) {
+      return this.get('_modelProjection');
+    },
+    set(key, value) {
+      if (typeof value === 'string') {
+        let modelName = this.get('modelName');
+        Ember.assert('For define projection by name, model name is required.', modelName);
+        let modelConstructor = this.get('store').modelFor(modelName);
+        Ember.assert(`Model with name '${modelName}' is not found.`, modelConstructor);
+        let projections = Ember.get(modelConstructor, 'projections');
+        Ember.assert(`Projection with name '${value}' for model with name '${modelName}' is not found.`, projections[value]);
+        value = projections[value];
+      } else if (typeof value !== 'object') {
+        throw new Error(`Property 'modelProjection' should be a string or object.`);
+      }
+
+      this.set('_modelProjection', value);
+      return value;
+    },
+  }),
 
   /**
     Default classes for component wrapper.
@@ -183,7 +216,7 @@ export default FlexberryBaseComponent.extend(
 
     @property appConfigSettingsPath
     @type String
-    @default 'APP.components.flexberryBaseComponent'
+    @default 'APP.components.objectListView'
   */
   appConfigSettingsPath: 'APP.components.objectListView',
 
@@ -212,48 +245,7 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
-    Default cell component that will be used to display values in single column.
-
-    @property {Object} singleColumnCellComponent
-    @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
-    @property {String} [singleColumnCellComponent.componentProperties=null]
-  */
-  singleColumnCellComponent: {
-    componentName: 'object-list-view-single-column-cell',
-    componentProperties: null,
-  },
-
-  /**
-    Flag indicates whether to use single column to display all model properties or not.
-
-    @property useSingleColumn
-    @type Boolean
-    @default false
-  */
-  useSingleColumn: false,
-
-  /**
-    Header title of single column.
-
-    @property singleColumnHeaderTitle
-    @type String
-  */
-  singleColumnHeaderTitle: undefined,
-
-  /**
-    Flag indicates whether to show mobile header is empty or not.
-
-    @property emptyMobileHeader
-    @type Boolean
-    @readOnly
-  */
-  emptyMobileHeader: Ember.computed('singleColumnHeaderTitle', function() {
-    let singleColumnHeaderTitle = this.get('singleColumnHeaderTitle');
-    return Ember.isEmpty(singleColumnHeaderTitle);
-  }),
-
-  /**
-    Flag indicates whether to show asterisk icon in first column of every changed row.
+    Flag: indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
     @type Boolean
@@ -355,36 +347,6 @@ export default FlexberryBaseComponent.extend(
   ),
 
   /**
-    Model projection which should be used to display given content.
-    Accepts object or name projections.
-
-    @property modelProjection
-    @type Object|String
-    @default null
-  */
-  modelProjection: Ember.computed('_modelProjection', {
-    get(key) {
-      return this.get('_modelProjection');
-    },
-    set(key, value) {
-      if (typeof value === 'string') {
-        let modelName = this.get('modelName');
-        Ember.assert('For define projection by name, model name is required.', modelName);
-        let modelConstructor = this.get('store').modelFor(modelName);
-        Ember.assert(`Model with name '${modelName}' is not found.`, modelConstructor);
-        let projections = Ember.get(modelConstructor, 'projections');
-        Ember.assert(`Projection with name '${value}' for model with name '${modelName}' is not found.`, projections[value]);
-        value = projections[value];
-      } else if (typeof value !== 'object') {
-        throw new Error(`Property 'modelProjection' should be a string or object.`);
-      }
-
-      this.set('_modelProjection', value);
-      return value;
-    },
-  }),
-
-  /**
     Table columns related to current model projection.
 
     @property columns
@@ -457,11 +419,11 @@ export default FlexberryBaseComponent.extend(
   /**
     Total columns count (including additional columns).
 
-    @property columnsCount
+    @property colspan
     @type Number
     @readOnly
   */
-  colspan: Ember.computed('columns.length', 'useSingleColumn', 'showHelperColumn', 'showMenuColumn', function() {
+  colspan: Ember.computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
     let columnsCount = 0;
     if (this.get('showHelperColumn')) {
       columnsCount += 1;
@@ -471,12 +433,8 @@ export default FlexberryBaseComponent.extend(
       columnsCount += 1;
     }
 
-    if (this.get('useSingleColumn')) {
-      columnsCount += 1;
-    } else {
-      let columns = this.get('columns');
-      columnsCount += Ember.isArray(columns) ? columns.length : 0;
-    }
+    let columns = this.get('columns');
+    columnsCount += Ember.isArray(columns) ? columns.length : 0;
 
     return columnsCount;
   }),
@@ -876,7 +834,7 @@ export default FlexberryBaseComponent.extend(
       if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
         menuInRowSubItems.push({
           icon: 'edit icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
           isEditItem: true,
         });
       }
@@ -884,7 +842,7 @@ export default FlexberryBaseComponent.extend(
       if (this.get('showDeleteMenuItemInRow') && recordWithKey.config.canBeDeleted) {
         menuInRowSubItems.push({
           icon: 'trash icon',
-          title: this.get('i18n').t('object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
+          title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
           isDeleteItem: true,
         });
       }
@@ -910,6 +868,10 @@ export default FlexberryBaseComponent.extend(
     */
     menuInRowItemClick(recordWithKey, e) {
       if (this.get('readonly')) {
+        return;
+      }
+
+      if (!e.item) {
         return;
       }
 
@@ -1002,6 +964,9 @@ export default FlexberryBaseComponent.extend(
     this.$('.flexberry-dropdown:last').dropdown({
       direction: 'upward'
     });
+
+    // The last flexberry-menu need will be up.
+    this.$('.flexberry-menu:last').addClass('bottom');
   },
 
   /**
@@ -1014,13 +979,6 @@ export default FlexberryBaseComponent.extend(
     let $currentTable = this.$('table.object-list-view');
 
     if (this.get('allowColumnResize')) {
-      if (this.get('useSingleColumn')) {
-        Ember.Logger.error(
-          'Flags of object-list-view \'allowColumnResize\' and \'useSingleColumn\' ' +
-          'can\'t be enabled at the same time.');
-        return;
-      }
-
       // The first column has semantic class "collapsing"
       // so the column has 1px width and plugin has problems.
       // A real width is reset in order to keep computed by semantic width.

@@ -14,7 +14,6 @@ const { getOwner } = Ember;
  */
 export default Ember.Service.extend({
   /**
-<<<<<<< HEAD
    *   Current log level. Set this property to log appropriate interval of log types
    *
    *   @property {Integer} flexberryLogLevel
@@ -52,22 +51,6 @@ export default Ember.Service.extend({
    Logger switcher on/off true if remote logging service works correctly
 
    @property {Boolean} _serverLogEnabled
-=======
-    Store for transmit messages to server.
-
-    @property flexberryStore
-    @type DS.Store
-    @default null
-   */
-  flexberryStore: null,
-
-  /**
-    Logger switcher on/off true if remote logging service works correctly.
-
-    @property serverLogEnabled
-    @type Boolean
-    @default true
->>>>>>> develop
    */
   _serverLogEnabled: true,	//Remote logging service works correctly
 
@@ -88,7 +71,6 @@ export default Ember.Service.extend({
   },
 
   /**
-<<<<<<< HEAD
   * Logger message to console and store
   *
   * @method flexberryLogger
@@ -98,16 +80,6 @@ export default Ember.Service.extend({
   * @param formattedMessage - full message content in JSON format
   */
   flexberryLogger(priority, levelName, message, formattedMessage) {
-=======
-    Logger message to console and store.
-
-    @method flexberryLogger
-    @param {String} levelName Category name  - ERROR, WARN, LOG, INFO, DEBUG, DEPRECATION.
-    @param {String} message Message content.
-    @param {String} formattedMessage Full message content in JSON format.
-   */
-  flexberryLogger(levelName, message, formattedMessage) {
->>>>>>> develop
     window.console.log(message);
     if (!this.get('_serverLogEnabled')) { // if serverLogEnabled === false logs only to console
       return;

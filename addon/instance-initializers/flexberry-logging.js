@@ -1,10 +1,13 @@
 /**
-* @module ember-flexberry
-*/
+  @module ember-flexberry
+ */
 import Ember from 'ember';
 
 /**
- * Initializator  for logging service
+  Override methods handlers of `Ember.Logger` for save message into application log.
+
+  @method initialize
+  @for FlexberryLoggingService
  */
 export function initialize(applicationInstance) {
 
@@ -18,14 +21,14 @@ export function initialize(applicationInstance) {
   var flexberryLogging = applicationInstance.lookup('service:flexberry-logging');
 
   /**
-  * LogLevel defined in configuration file config/environment.js
-  * Possible values see in logLevelEnums
-  *
-  * @property flexberryLogLevel
-  * @type integer
-  * @default 0
-  */
-  var flexberryLogLevel = applicationInstance.resolveRegistration('config:environment').APP.flexberryLogLevel;
+    LogLevel defined in configuration file `config/environment.js`.
+    Possible values see in `logLevelEnums`.
+
+    @property flexberryLogLevel
+    @type integer
+    @default 0
+   */
+  let flexberryLogLevel = applicationInstance.resolveRegistration('config:environment').APP.flexberryLogLevel;
 
   if (flexberryLogLevel === undefined) {	//if not set
     flexberryLogLevel = 0;	//switch off Logging
@@ -52,17 +55,15 @@ export function initialize(applicationInstance) {
   };
 
   /**
-  * Replacement error handler: send error message to server by flexberry-logging service
-  * @param error - error object
-  */
+    Replacement error handler: send error message to server by flexberry-logging service.
+   */
   Ember.onerror = function (error) {
     _sendError(error);
   };
 
   /**
-  * Replacement warn handler: send warning message to server by flexberry-logging service
-  * @param ...arguments
-  */
+    Replacement warn handler: send warning message to server by flexberry-logging service.
+   */
   Ember.Logger.warn = function () {
     var message = _mergeArguments(...arguments);
     if (message.substr(0, 12) === 'DEPRECATION:') {	//deprecation send to log level DEPRECATION
@@ -73,34 +74,34 @@ export function initialize(applicationInstance) {
   };
 
   /**
-  * Replacement log handler: send warning message to server by flexberry-logging service
-  * @param ...arguments
-  */
+    Replacement log handler: send warning message to server by flexberry-logging service.
+   */
   Ember.Logger.log = function () {
     _sendLog('LOG', _mergeArguments(...arguments), '');
   };
 
   /**
-  * Replacement info handler: send warning message to server by flexberry-logging service
-  * @param ...arguments
-  */
+    Replacement info handler: send warning message to server by flexberry-logging service.
+   */
   Ember.Logger.info = function () {
     _sendLog('INFO', _mergeArguments(...arguments), '');
   };
 
   /**
-  * Replacement debug handler: send warning message to server by flexberry-logging service
-  * @param ...arguments
-  */
+    Replacement debug handler: send warning message to server by flexberry-logging service.
+   */
   Ember.Logger.debug = function () {
     _sendLog('DEBUG', _mergeArguments(...arguments), '');
   };
 
   /**
-  * stringify all arguments
-  * @param ...arguments
-  * @return string representation of arguments
-  */
+    Stringify all arguments.
+
+    @method _mergeArguments
+    @param ...arguments
+    @return {String} String representation of arguments.
+    @private
+   */
   function _mergeArguments() {
     var ret = '';
     for (var i = 0; i < arguments.length; i++) {
@@ -126,11 +127,14 @@ export function initialize(applicationInstance) {
   }
 
   /**
-  * Send message to store and server by flexberry-logging service
-  * @param levelName - category name  - ERROR, WARN, LOG, INFO, DEBUG, DEPRECATION
-  * @param message - message content
-  * @param formattedMessage - full message content in JSON format
-  */
+    Send message to store and server by flexberry-logging service.
+
+    @method _sendLog
+    @param {String} levelName Category name - ERROR, WARN, LOG, INFO, DEBUG, DEPRECATION.
+    @param {String} message Message content.
+    @param {String} formattedMessage Full message content in JSON format.
+    @private
+   */
   function _sendLog(levelName, message, formattedMessage) {
     let logLevel = flexberryLogging.logLevelEnums[levelName];
     if (logLevel <= flexberryLogging.flexberryLogLevel) {	//Meggage category logged (lower or equal high flexberryLogLevel)

@@ -6,7 +6,7 @@ var Model = BaseModel.extend({
   text: DS.attr('string')
 });
 
-Model.defineProjection('MasterL', 'components-examples/flexberry-groupedit/settings-example/master', {
+Model.defineProjection('MasterL', 'components-examples/flexberry-groupedit/shared/master', {
   text: Proj.attr('Text')
 });
 

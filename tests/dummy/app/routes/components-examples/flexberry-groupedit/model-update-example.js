@@ -6,9 +6,9 @@ export default EditFormRoute.extend({
 
     @property modelProjection
     @type String
-    @default 'AggregatorE'
+    @default 'ManualModelUpdateView'
    */
-  modelProjection: 'AggregatorE',
+  modelProjection: 'ManualModelUpdateView',
 
   /**
     Name of model to be used as form's record type.
@@ -25,7 +25,7 @@ export default EditFormRoute.extend({
     @method model
    */
   model(params) {
-    var store = this.get('store');
+    let store = this.get('store');
 
     // Empty aggregator without details.
     return store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', {});

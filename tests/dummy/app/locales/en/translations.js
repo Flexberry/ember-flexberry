@@ -134,6 +134,10 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'model-update-example': {
+              'caption': 'Model update example',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -364,6 +368,11 @@ Ember.$.extend(true, translations, {
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-groupedit/settings-example'
+        },
+        'model-update-example': {
+          'caption': 'Components-examples/flexberry-groupedit/model-update-example',
+          'addDetailButton': 'Add detail',
+          'removeDetailButton': 'Remove detail',
         }
       },
       'flexberry-lookup': {

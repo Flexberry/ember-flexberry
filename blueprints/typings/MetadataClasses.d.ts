@@ -68,6 +68,7 @@ declare module "MetadataClasses" {
     export class DSbelongsTo extends Relation {
         
         public polymorphic: boolean;
+        public presence: boolean;
     }
     export class ProjectionForModel {
         

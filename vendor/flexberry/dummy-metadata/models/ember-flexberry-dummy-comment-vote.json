@@ -42,12 +42,14 @@
   "belongsTo": [
     {
       "polymorphic": false,
+      "presence": true,
       "name": "applicationUser",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     },
     {
       "polymorphic": false,
+      "presence": true,
       "name": "comment",
       "relatedTo": "ember-flexberry-dummy-comment",
       "inverse": "userVotes"

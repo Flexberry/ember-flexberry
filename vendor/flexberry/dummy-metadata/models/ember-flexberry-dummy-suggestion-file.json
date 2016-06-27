@@ -49,6 +49,7 @@
   "belongsTo": [
     {
       "polymorphic": false,
+      "presence": true,
       "name": "suggestion",
       "relatedTo": "ember-flexberry-dummy-suggestion",
       "inverse": "files"

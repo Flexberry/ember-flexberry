@@ -13,4 +13,5 @@
     class=(if model.errors.<%= name %> 'error' '')
     label='<%= caption %>'
   }}
+  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
 </div>

@@ -329,7 +329,8 @@ export default FlexberryBaseComponent.extend({
     where {{#crossLink "SortableControllerMixin/computedSorting:property"}}computedSorting is property of SortableControllerMixin{{/crossLink}}.
 
     @property sorting
-    @type null
+    @type Object
+    @default null
   */
   sorting: null,
 

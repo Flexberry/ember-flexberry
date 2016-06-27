@@ -18,7 +18,7 @@ export function initialize(applicationInstance) {
    * @type Object Ember.Service
    * @default service:flexberry-logging
    */
-  var flexberryLogging = applicationInstance.lookup('service:flexberry-logging');
+  let flexberryLogging = applicationInstance.lookup('service:flexberry-logging');
 
   /**
     LogLevel defined in configuration file `config/environment.js`.
@@ -65,7 +65,7 @@ export function initialize(applicationInstance) {
     Replacement warn handler: send warning message to server by flexberry-logging service.
    */
   Ember.Logger.warn = function () {
-    var message = _mergeArguments(...arguments);
+    let message = _mergeArguments(...arguments);
     if (message.substr(0, 12) === 'DEPRECATION:') {	//deprecation send to log level DEPRECATION
       _sendLog('DEPRECATION', message, '');
     } else {
@@ -103,8 +103,8 @@ export function initialize(applicationInstance) {
     @private
    */
   function _mergeArguments() {
-    var ret = '';
-    for (var i = 0; i < arguments.length; i++) {
+    let ret = '';
+    for (let i = 0; i < arguments.length; i++) {
       ret += arguments[i].toString();
     }
 
@@ -112,8 +112,8 @@ export function initialize(applicationInstance) {
   }
 
   function _sendError(error) {
-    var message = error.toString();
-    var formattedMessage = JSON.stringify(
+    let message = error.toString();
+    let formattedMessage = JSON.stringify(
       {
         name: error.name,
         message: error.message,
@@ -137,7 +137,7 @@ export function initialize(applicationInstance) {
    */
   function _sendLog(levelName, message, formattedMessage) {
     let logLevel = flexberryLogging.logLevelEnums[levelName];
-    if (logLevel <= flexberryLogging.flexberryLogLevel) {	//Meggage category logged (lower or equal high flexberryLogLevel)
+    if (logLevel <= flexberryLogging.flexberryLogLevel) {	
       flexberryLogging.flexberryLogger(logLevel, levelName, message, formattedMessage);
     }
   }

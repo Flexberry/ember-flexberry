@@ -251,60 +251,73 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   },
 
   /**
-   * Save object.
-   *
-   * @param {boolean} close If `true`, then save and close.
-   * @method save.
+    Save object.
+
+    @param {boolean} close If `true`, then save and close.
+    @method save.
    */
   save(close) {
     this.send('dismissErrorMessages');
-    this.get('model').save().then((model) => {
-      this.saveHasManyRelationships(model).then(() => {
+
+    this.onSaveActionStarted();
+
+    let savePromise = this.get('model').save().then((model) => {
+      return this.saveHasManyRelationships(model).then(() => {
         this.onSaveActionFulfilled();
         if (close) {
           this.close();
         }
-      }).catch((errorData) => {
-        this.onSaveActionRejected(errorData);
       });
     }).catch((errorData) => {
       this.onSaveActionRejected(errorData);
+    }).finally((data) => {
+      this.onSaveActionAlways(data);
     });
+
+    return savePromise;
   },
 
   /**
-   * Delete object, if successful transition to parent route.
-   *
-   * @method delete.
+    Delete object, if successful transition to parent route.
+
+    @method delete.
    */
   delete() {
     this.send('dismissErrorMessages');
-    var model = this.get('model');
+
+    this.onDeleteActionStarted();
+
+    let model = this.get('model');
+    let deletePromise = null;
     if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
-      this.destroyHasManyRelationships(model).then(() => {
-        model.destroyRecord().then(() => {
+      deletePromise = this.destroyHasManyRelationships(model).then(() => {
+        return model.destroyRecord().then(() => {
           this.onDeleteActionFulfilled();
-        }).catch((errorData) => {
-          this.onDeleteActionRejected(errorData);
         });
-      }).catch((errorData) => {
-        this.onDeleteActionRejected(errorData);
       });
     } else {
-      model.destroyRecord().then(() => {
+      deletePromise = model.destroyRecord().then(() => {
         this.onDeleteActionFulfilled();
-      }).catch((errorData) => {
-        this.onDeleteActionRejected(errorData);
       });
     }
+
+    deletePromise.catch((errorData) => {
+      this.onDeleteActionRejected(errorData);
+    }).finally((data) => {
+      this.onDeleteActionAlways(data);
+    });
+
+    return deletePromise;
   },
 
   /**
-   * Сlose edit form and transition to parent route.
+   * Close edit form and transition to parent route.
    *
    * @method close.
    */
   close() {
+    this.onCloseActionStarted();
+
     this.transitionToParentRoute();
   },
 
@@ -381,7 +394,8 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         if (transformClass && transformClass.isEnum) {
           cellComponent.componentName = 'flexberry-dropdown';
           cellComponent.componentProperties = {
-            items: transformInstance.get('captions')
+            items: transformInstance.get('captions'),
+            class: 'compact fluid'
           };
         }
 
@@ -404,11 +418,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
-          let promise = record.save().then((record) => {
-            return this.saveHasManyRelationships(record).then(() => {
-              return record;
-            });
-          });
+          let promise = record.save().then((record) => this.saveHasManyRelationships(record).then(() => record));
 
           promises.pushObject(promise);
         });
@@ -462,68 +472,141 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   },
 
   /**
-   * This method is called after successful save.
-   * You can override this method to add actions after save.
-   *
-   * ```js
-   * onSaveActionFulfilled() {
-   *   alert('Save successful!');
-   * }
-   * ```
-   *
-   * @method onSaveActionFulfilled.
+    This method will be invoked before save operation will be called.
+    Override this method to add some custom logic on save operation start.
+
+    ```javascript
+    onSaveActionStarted() {
+      alert('Save operation started!');
+    }
+    ```
+    @method onSaveActionStarted.
+   */
+  onSaveActionStarted() {
+  },
+
+  /**
+    This method will be invoked when save operation successfully completed.
+    Override this method to add some custom logic on save operation success.
+
+    ```javascript
+    onSaveActionFulfilled() {
+      alert('Save operation succeed!');
+    }
+    ```
+    @method onSaveActionFulfilled.
    */
   onSaveActionFulfilled() {
   },
 
   /**
-   * This method is called if save ended with error.
-   * You can override this method to add actions after unsuccessful save.
-   *
-   * ```js
-   * onSaveActionRejected() {
-   *   alert('Save failed!');
-   * }
-   * ```
-   *
-   * @method onSaveActionRejected.
-   * @param {Object} errorData Info of error.
+    This method will be invoked when save operation completed, but failed.
+    Override this method to add some custom logic on save operation fail.
+
+    ```javascript
+    onSaveActionRejected() {
+      alert('Save operation failed!');
+    }
+    ```
+    @method onSaveActionRejected.
+    @param {Object} errorData Data about save operation fail.
    */
   onSaveActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('edit-form.save-failed-message'));
+    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
   },
 
   /**
-   * This method is called after delete object.
-   * You can override this method to add actions after deleted.
-   *
-   * ```js
-   * onDeleteActionFulfilled() {
-   *   alert('Successful delete!');
-   *   this.close();
-   * }
-   * ```
-   *
-   * @method onDeleteActionFulfilled.
+    This method will be invoked always when save operation completed,
+    regardless of save promise's state (was it fulfilled or rejected).
+    Override this method to add some custom logic on save operation completion.
+
+    ```js
+    onSaveActionAlways(data) {
+      alert('Save operation completed!');
+    }
+    ```
+
+    @method onSaveActionAlways.
+    @param {Object} data Data about completed save operation.
+   */
+  onSaveActionAlways(data) {
+  },
+
+  /**
+    This method will be invoked before delete operation will be called.
+    Override this method to add custom logic on delete operation start.
+
+    ```javascript
+    onDeleteActionStarted() {
+      alert('Delete operation started!');
+    }
+    ```
+    @method onDeleteActionStarted.
+   */
+  onDeleteActionStarted() {
+  },
+
+  /**
+    This method will be invoked when delete operation successfully completed.
+    Override this method to add some custom logic on delete operation success.
+
+    ```javascript
+    onDeleteActionFulfilled() {
+      alert('Delete operation succeed!');
+      this.close();
+    }
+    ```
+    @method onDeleteActionFulfilled.
    */
   onDeleteActionFulfilled() {
     this.close();
   },
 
   /**
-   * This method is called if delete ended with error.
-   * You can override this method to add actions after unsuccessful deleted.
-   *
-   * ```js
-   * onDeleteActionRejected() {
-   *   alert('Failed delete!');
-   * }
-   * ```
-   *
-   * @method onDeleteActionRejected.
-   * @param {Object} errorData Info of error.
+    This method will be invoked when delete operation completed, but failed.
+    Override this method to add some custom logic on delete operation fail.
+
+    ```javascript
+    onDeleteActionRejected() {
+      alert('Delete operation failed!');
+    }
+    ```
+    @method onDeleteActionRejected.
+    @param {Object} errorData Data about delete operation fail.
    */
   onDeleteActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('edit-form.delete-failed-message'));
+    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.delete-failed-message'));
+  },
+
+  /**
+    This method will be invoked always when delete operation completed,
+    regardless of save promise's state (was it fulfilled or rejected).
+    Override this method to add some custom logic on delete operation completion.
+
+    ```js
+    onDeleteActionAlways(data) {
+      alert('Delete operation completed!');
+    }
+    ```
+
+    @method onSaveActionAlways.
+    @param {Object} data Data about completed save operation.
+   */
+  onDeleteActionAlways(data) {
+  },
+
+  /**
+    This method will be invoked before close method will be called.
+    Override this method to add custom logic on close method start.
+
+    ```javascript
+    onCloseActionStarted() {
+      alert('Form will be closed right now!');
+    }
+    ```
+    @method onDeleteActionStarted.
+   */
+  onCloseActionStarted() {
   },
 });
+

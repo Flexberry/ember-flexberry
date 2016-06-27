@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 
@@ -16,7 +16,7 @@ import Ember from 'ember';
     type='info'
     size='large'
     icon='info icon'
-    title='Message'
+    caption='Message'
     message='Hello, world!'
     closeable=true
   }}
@@ -24,14 +24,19 @@ import Ember from 'ember';
 
   @class UIMessage
   @extend <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
- */
+*/
 export default Ember.Component.extend({
+  /**
+    I can not remember what it is.
+  */
+  module: 'message',
+
   /**
     Resulting list of CSS classes.
 
     @property _cssClass
     @private
-   */
+  */
   _cssClass: Ember.computed('size', 'type', 'color', 'floating', 'compact', 'attached', 'visible', 'icon', function() {
     let isNonEmptyString = (str) => {
       return Ember.typeOf(str) === 'string' && str.trim().length > 0;
@@ -91,7 +96,7 @@ export default Ember.Component.extend({
     @property visible
     @type Boolean
     @default true
-   */
+  */
   visible: true,
 
   /**
@@ -102,7 +107,7 @@ export default Ember.Component.extend({
     @property floating
     @type Boolean
     @default false
-   */
+  */
   floating: false,
 
   /**
@@ -113,7 +118,7 @@ export default Ember.Component.extend({
     @property compact
     @type Boolean
     @default false
-   */
+  */
   compact: false,
 
   /**
@@ -124,7 +129,7 @@ export default Ember.Component.extend({
     @property attached
     @type Boolean
     @default false
-   */
+  */
   attached: false,
 
   /**
@@ -135,7 +140,7 @@ export default Ember.Component.extend({
     @property closeable
     @type Boolean
     @default false
-   */
+  */
   closeable: false,
 
   /**
@@ -151,7 +156,7 @@ export default Ember.Component.extend({
     @property type
     @type String
     @default null
-   */
+  */
   type: null,
 
   /**
@@ -175,7 +180,7 @@ export default Ember.Component.extend({
     @property color
     @type String
     @default null
-   */
+  */
   color: null,
 
   /**
@@ -191,7 +196,7 @@ export default Ember.Component.extend({
     @property size
     @type String
     @default null
-   */
+  */
   size: null,
 
   /**
@@ -202,7 +207,7 @@ export default Ember.Component.extend({
     @property icon
     @type String
     @default null
-   */
+  */
   icon: null,
 
   /**
@@ -211,8 +216,18 @@ export default Ember.Component.extend({
     @property title
     @type String
     @default null
-   */
+    @deprecated Use `caption`.
+  */
   title: null,
+
+  /**
+    Message title.
+
+    @property caption
+    @type String
+    @default null
+  */
+  caption: null,
 
   /**
     Message body.
@@ -220,7 +235,7 @@ export default Ember.Component.extend({
     @property message
     @type String
     @default null
-   */
+  */
   message: null,
 
   /**
@@ -229,12 +244,12 @@ export default Ember.Component.extend({
     @property classNameBindings
     @type Array
     @readOnly
-   */
+  */
   classNameBindings: ['_cssClass'],
 
   /**
     Initializes DOM-related component's logic.
-   */
+  */
   didInsertElement() {
     let isCloseable = this.get('closeable');
     if (isCloseable) {
@@ -251,7 +266,7 @@ export default Ember.Component.extend({
 
     @method _show
     @private
-   */
+  */
   show() {
     this.set('visible', true);
 
@@ -263,7 +278,7 @@ export default Ember.Component.extend({
 
     @method _hide
     @private
-   */
+  */
   _hide() {
     this.set('visible', false);
 

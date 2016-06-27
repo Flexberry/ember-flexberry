@@ -43,6 +43,15 @@ module.exports = {
   }
 };
 
+class SortedPair{
+  constructor(index: number, str: string) {
+    this.index=index;
+    this.str=str;
+  }
+  index: number;
+  str: string;
+}
+
 class ModelBlueprint {
   model: string;
   serializerAttrs: string;
@@ -105,7 +114,7 @@ class ModelBlueprint {
 
   getJSForModel(model: metadata.Model): string {
     let attrs: string[] = [], validations: string[] = [];
-    let templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
+    let templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
     let templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
     for (let attr of model.attrs) {
       attrs.push(`${attr.name}: DS.attr('${attr.type}')`);
@@ -131,8 +140,8 @@ class ModelBlueprint {
     return "({\n" + TAB + attrs.join(",\n" + TAB) + "\n});";
   }
 
-  joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string, level: number): string {
-    let hasManyAttrs: string[] = [];
+  joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string, level: number): SortedPair {
+    let hasManyAttrs: SortedPair[] = [];
     let modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
     let hasManyModel: metadata.Model = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
     let hasManyProj = lodash.find(hasManyModel.projections, function(pr: metadata.ProjectionForModel) { return pr.name === detailHasMany.projectionName; });
@@ -150,18 +159,20 @@ class ModelBlueprint {
       let indentStr = indent.join("");
       indent.pop();
       let indentStr2 = indent.join("");
-      let attrsStr = hasManyAttrs.join(",\n" + indentStr);
+      hasManyAttrs=lodash.sortBy(hasManyAttrs,["index"]);
+      let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n" + indentStr);
       if(hasManyAttrs.length===0){
         attrsStr = "";
         indentStr = "";
       }
-      return `${detailHasMany.name}: Proj.hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}})`;
+      return new SortedPair(Number.MAX_VALUE,`${detailHasMany.name}: Proj.hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}})`);
     }
-    return "";
+    return new SortedPair(Number.MAX_VALUE,"");
   }
 
-  joinProjBelongsTo(belongsTo: metadata.ProjBelongsTo, level: number): string {
-    let belongsToAttrs: string[] = [];
+  joinProjBelongsTo(belongsTo: metadata.ProjBelongsTo, level: number): SortedPair {
+    let belongsToAttrs: SortedPair[] = [];
+    let index=Number.MAX_VALUE;
     for (let attr of belongsTo.attrs) {
       belongsToAttrs.push(this.declareProjAttr(attr));
     }
@@ -169,8 +180,11 @@ class ModelBlueprint {
       belongsToAttrs.push(this.joinProjBelongsTo(belongsTo2, level + 1));
     }
     let hiddenStr = "";
-    if (belongsTo.hidden) {
+    if (belongsTo.hidden || belongsTo.index==-1) {
       hiddenStr = ", { hidden: true }";
+    }else{
+      if(belongsTo.lookupValueField)
+        hiddenStr = `, { displayMemberPath: '${belongsTo.lookupValueField}' }`;
     }
     let indent: string[] = [];
     for (let i = 0; i < level; i++) {
@@ -179,20 +193,25 @@ class ModelBlueprint {
     let indentStr = indent.join("");
     indent.pop();
     let indentStr2 = indent.join("");
-    let attrsStr = belongsToAttrs.join(",\n" + indentStr);
+    belongsToAttrs=lodash.sortBy(belongsToAttrs,["index"]);
+    let attrsStr = lodash.map(belongsToAttrs, "str").join(",\n" + indentStr);
     if(belongsToAttrs.length===0){
       attrsStr = "";
       indentStr = "";
+    }else{
+      index=belongsToAttrs[0].index;
+      if(index==-1)
+        index=Number.MAX_VALUE;
     }
-    return `${belongsTo.name}: Proj.belongsTo('${belongsTo.relatedTo}', '${belongsTo.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}}${hiddenStr})`;
+    return new SortedPair(index,`${belongsTo.name}: Proj.belongsTo('${belongsTo.relatedTo}', '${belongsTo.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}}${hiddenStr})`);
   }
 
-  declareProjAttr(attr: metadata.ProjAttr): string {
+  declareProjAttr(attr: metadata.ProjAttr): SortedPair {
     let hiddenStr = "";
     if (attr.hidden) {
       hiddenStr = ", { hidden: true }";
     }
-    return `${attr.name}: Proj.attr('${attr.caption}'${hiddenStr})`;
+    return new SortedPair(attr.index, `${attr.name}: Proj.attr('${attr.caption}'${hiddenStr})`);
   }
 
   getJSForProjections(model: metadata.Model, modelsDir: string): string {
@@ -202,7 +221,7 @@ class ModelBlueprint {
       return null;
     }
     for (let proj of model.projections) {
-      let projAttrs: string[] = [];
+      let projAttrs: SortedPair[] = [];
       for (let attr of proj.attrs) {
         projAttrs.push(this.declareProjAttr(attr));
       }
@@ -210,7 +229,7 @@ class ModelBlueprint {
         projAttrs.push(this.joinProjBelongsTo(belongsTo, 2));
       }
       for (let hasMany of proj.hasMany) {
-        let hasManyAttrs: string[] = [];
+        let hasManyAttrs: SortedPair[] = [];
         let modelFile = path.join(modelsDir, hasMany.relatedTo + ".json");
         let detailModel: metadata.Model = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
         projName = hasMany.projectionName;
@@ -227,10 +246,13 @@ class ModelBlueprint {
             hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 3));
           }
         }
-        let attrsStr = hasManyAttrs.join(",\n    ");
-        projAttrs.push(`${hasMany.name}: Proj.hasMany('${hasMany.relatedTo}', '${hasMany.caption}', {\n    ${attrsStr}\n  })`);
+        hasManyAttrs=lodash.sortBy(hasManyAttrs,["index"]);
+        let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n    ");
+
+        projAttrs.push(new SortedPair(Number.MAX_VALUE,`${hasMany.name}: Proj.hasMany('${hasMany.relatedTo}', '${hasMany.caption}', {\n    ${attrsStr}\n  })`));
       }
-      let attrsStr = projAttrs.join(",\n" + TAB);
+      projAttrs=lodash.sortBy(projAttrs,["index"]);
+      let attrsStr = lodash.map(projAttrs, "str").join(",\n" + TAB);
       projections.push(`Model.defineProjection('${proj.name}', '${proj.modelName}', {\n  ${attrsStr}\n});`);
     }
     return projections.join("\n");

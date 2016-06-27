@@ -45,6 +45,7 @@ module.exports = {
       formName: editFormBlueprint.editForm.name,// for use in files\__root__\controllers\__name__\new.js
       entityName: options.entity.name,// for use in files\__root__\controllers\__name__\new.js
       caption: editFormBlueprint.editForm.caption,// for use in files\__root__\controllers\__name__.js
+      parentRoute: editFormBlueprint.parentRoute,// for use in files\__root__\controllers\__name__.js
       flexberryComponents: editFormBlueprint.flexberryComponents// for use in files\__root__\templates\__name__.hbs
     };
   }
@@ -52,6 +53,7 @@ module.exports = {
 
 class EditFormBlueprint {
   editForm: metadata.EditForm;
+  parentRoute: string;
   flexberryComponents: string;
   private snippetsResult = [];
   private _tmpSnippetsResult = [];
@@ -64,6 +66,7 @@ class EditFormBlueprint {
     this.modelsDir = path.join(options.metadataDir, "models");
     this.process();
     this.flexberryComponents = this.snippetsResult.join("\n");
+    this.parentRoute = this.getParentRoute();
   }
 
   readSnippetFile(fileName: string, fileExt: string): string {
@@ -82,15 +85,16 @@ class EditFormBlueprint {
   }
 
   findAttr(model: metadata.Model, attrName: string){
-    return lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
+    let modelAttr = lodash.find(model.attrs, function (attr) { return attr.name === attrName; });
+    if (!modelAttr) {
+      model = this.loadModel(model.parentModelName);
+      return this.findAttr(model, attrName);
+    }
+    return modelAttr;
   }
 
   loadSnippet(model: metadata.Model, attrName: string): string {
     let modelAttr = this.findAttr(model,attrName);
-    if (!modelAttr) {
-      model = this.loadModel(model.parentModelName);
-      return this.loadSnippet(model, attrName);
-    }
     let component = lodash.find(componentMaps, function (map) { return lodash.indexOf(map.types, modelAttr.type) !== -1; });
     if (!component) {
       return this.readHbsSnippetFile("flexberry-dropdown");
@@ -156,5 +160,20 @@ class EditFormBlueprint {
       }
       this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
     }
+  }
+
+  getParentRoute() {
+    let parentRoute = '';
+    let listFormsDir = path.join(this.options.metadataDir, "list-forms");
+    let listForms = fs.readdirSync(listFormsDir);
+    for (let form of listForms) {
+      let listFormFile = path.join(listFormsDir, form);
+      let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
+      let listForm: metadata.ListForm = JSON.parse(content);
+      if (this.options.entity.name === listForm.editForm) {
+        parentRoute = path.parse(form).name;
+      }
+    }
+    return parentRoute;
   }
 }

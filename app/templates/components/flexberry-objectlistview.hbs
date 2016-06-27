@@ -4,6 +4,7 @@
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
   deleteButton=deleteButton
+  colsConfigButton=colsConfigButton
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass
@@ -11,10 +12,12 @@
   componentName=componentName
   modelController=currentController
   customButtonAction='customButtonAction'
-  customButtonsClosureEvent=(action (if this.attrs.customButtons this.attrs.customButtons 'customButtons'))
+  customButtons=customButtons
   editFormRoute=editFormRoute
+  showConfigDialog="showConfigDialog"
 }}
 {{object-list-view
+  placeholder=placeholder
   readonly=readonly
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -34,6 +37,7 @@
   headerClickable=orderable
   sorting=sorting
   immediateDelete=true
+  modelName=modelName
   modelProjection=modelProjection
   content=content
   sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
@@ -46,6 +50,7 @@
   action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
+  selectedRecord=selectedRecord
 }}
 <div class="ui secondary menu no-margin">
   <div class="ui basic buttons">
@@ -64,14 +69,6 @@
 	<button class="ui {{unless hasNextPage 'disabled'}} button" {{action (if this.attrs.nextPage this.attrs.nextPage 'nextPage')}}>&raquo;</button>
   </div>
   <div class="right menu">
-	{{#ui-dropdown value=perPageValue class="compact selection"}}
-		<i class="dropdown icon"></i>
-		<div class="text">{{perPageValue}}</div>
-		<div class="menu">
-		  {{#each perPageValues as |perPageValue|}}
-			  <div class="item" data-value={{perPageValue}}>{{perPageValue}}</div>
-		  {{/each}}
-		</div>
-	{{/ui-dropdown}}
+    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection"}}
   </div>
 </div>

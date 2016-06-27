@@ -2,8 +2,11 @@
   componentName=componentName
   readonly=readonly
   buttonClass=buttonClass
+  createNewButton=createNewButton
+  deleteButton=deleteButton
 }}
 {{object-list-view
+  placeholder=placeholder
   readonly=readonly
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -24,6 +27,7 @@
   editOnSeparateRoute=editOnSeparateRoute
   saveBeforeRouteLeave=saveBeforeRouteLeave
   sorting=sorting
+  modelName=modelName
   modelProjection=modelProjection
   content=content
   sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
@@ -33,4 +37,5 @@
   allowColumnResize=allowColumnResize
   confirmDeleteRow=this.attrs.confirmDeleteRow
   confirmDeleteRows=this.attrs.confirmDeleteRows
+  immediateDelete=false
 }}

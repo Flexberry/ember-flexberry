@@ -1,0 +1,18 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-toggler.settings-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
+    }}
+      {{#flexberry-toggler
+        caption=caption
+        expandedCaption=expandedCaption
+        collapsedCaption=collapsedCaption
+      }}
+        Some expandable/collapsable content
+      {{/flexberry-toggler}}
+    {{/settings-example}}
+  </div>
+</form>

@@ -1,7 +1,6 @@
-<h3>Suggestions - list form</h3>
+<h3>{{t "forms.ember-flexberry-dummy-suggestion-list.caption"}}</h3>
 <div class="row">
-{{
-  flexberry-objectlistview
+{{flexberry-objectlistview
   editFormRoute=editFormRoute
   modelName = "ember-flexberry-dummy-suggestion"
   modelProjection = modelProjection
@@ -12,7 +11,6 @@
   orderable = true
   sortByColumn = (action "sortByColumn")
   addColumnToSorting = (action "addColumnToSorting")
-  action = "rowClick"
   pages = pages
   perPageValue = perPageValue
   perPageValues = perPageValues

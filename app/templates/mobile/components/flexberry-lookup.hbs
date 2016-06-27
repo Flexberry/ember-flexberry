@@ -1,11 +1,11 @@
-<div class="ui input">
+<div class="ui action input">
   <div {{action 'choose' chooseData}} class="ui transparent icon input">
     <span class="lookup-field">
       {{#if value}}
         {{#if hasBlock}}
           {{yield}}
         {{else}}
-          {{value}}
+          {{displayValue}}
         {{/if}}
       {{else}}
         {{placeholder}}

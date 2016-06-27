@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -13,9 +13,9 @@ import FlexberryBaseComponent from './flexberry-base-component';
   {{flexberry-checkbox checked=model.enabled label='Enabled'}}
   ```
 
-  @class FlexberryCheckbox
+  @class FlexberryCheckboxComponent
   @extends FlexberryBaseComponent
- */
+*/
 export default FlexberryBaseComponent.extend({
   /**
     Current checked value.
@@ -27,11 +27,16 @@ export default FlexberryBaseComponent.extend({
   value: false,
 
   /**
+    Classes for component wrapper.
+  */
+  class: '',
+
+  /**
     Label for the checkbox.
 
     @property label
     @type String
-   */
+  */
   label: undefined,
 
   /**
@@ -40,18 +45,18 @@ export default FlexberryBaseComponent.extend({
     @property checkboxInput
     @type Object
     @default null
-   */
+  */
   checkboxInput: null,
 
   /**
     Overload wrapper tag name for disabling wrapper.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_tagName)
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
 
     @property tagName
     @type String
     @default ''
     @readOnly
-   */
+  */
   tagName: '',
 
   /**
@@ -60,12 +65,12 @@ export default FlexberryBaseComponent.extend({
     @property appConfigSettingsPath
     @type String
     @default 'APP.components.flexberryCheckbox'
-   */
+  */
   appConfigSettingsPath: 'APP.components.flexberryCheckbox',
 
   /**
     Checkbox value's observer.
-   */
+  */
   _valueDidChange: Ember.observer('value', (self) => {
     self.sendAction('onChange', {
       checked: self.get('value'),

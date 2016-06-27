@@ -1,6 +1,9 @@
+import Ember from 'ember';
+
+import SortableRouteMixin from '../mixins/sortable-route';
 import ListFormController from '../controllers/list-form';
 
-export default ListFormController.extend({
+export default ListFormController.extend(SortableRouteMixin, {
   /**
    * Current opened modal window.
    *
@@ -14,13 +17,123 @@ export default ListFormController.extend({
 
   /**
    * Size of Semantic-UI modal.
-   * Possible variants: small, large, fullscreen.
+   * Possible variants: 'small', 'large', 'fullscreen'.
    *
    * @property sizeClass
    * @type String
-   * @default small
+   * @default 'small'
    */
   sizeClass: 'small',
+
+  /**
+   * Current lookup selected record.
+   * It is used to highlight selected record.
+   *
+   * @property currentLookupRow
+   * @type DS.Model
+   * @default undefined
+   */
+  currentLookupRow: undefined,
+
+  /**
+   * Set of properties to set for list commponent.
+   *
+   * @property customPropertiesData
+   * @type Object
+   * @default undefined
+   */
+  customPropertiesData: undefined,
+
+  /**
+   * Type of current loaded data.
+   *
+   * @property modelType
+   * @type String
+   * @default undefined
+   */
+  modelType: undefined,
+
+  /**
+   * Name of projection data were loaded by.
+   *
+   * @property projectionName
+   * @type String
+   * @default undefined
+   */
+  projectionName: undefined,
+
+  /**
+   * Predicate to limit loaded data by.
+   *
+   * @property predicate
+   * @type BasePredicate
+   * @default undefined
+   */
+  predicate: undefined,
+
+  /**
+   * Handler to call when parameters of loaded data changed (filter, currentPage, etc.).
+   *
+   * @property reloadDataHandler
+   * @type Function
+   * @default undefined
+   */
+  reloadDataHandler: undefined,
+
+  /**
+   * Context for handler of data reloading call.
+   *
+   * @property reloadContext
+   * @type Object
+   * @default undefined
+   */
+  reloadContext: undefined,
+
+  /**
+   * Flag indicates whether to observe query parameters or they are not still initiated..
+   *
+   * @property reloadObserverIsActive
+   * @type Boolean
+   * @default false
+   */
+  reloadObserverIsActive: false,
+
+  /**
+   * It observes query parameters changing.
+     If query parameter (filter, current page, etc.) is changed then displayed data are reloaded.
+
+   * @method queryParametersChanged
+   */
+  queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function() {
+    if (!this.get('reloadObserverIsActive')) {
+      return;
+    }
+
+    let reloadDataHandler = this.get('reloadDataHandler');
+    if (!reloadDataHandler) {
+      throw new Error('No reload handler was defined.');
+    }
+
+    let sorting = this.deserializeSortingParam(this.get('sort'));
+    let reloadData = {
+      relatedToType: this.get('modelType'),
+      projectionName: this.get('projectionName'),
+
+      perPage: this.get('perPage'),
+      page: this.get('page'),
+      sorting: sorting,
+      filter: this.get('filter'),
+      predicate: this.get('predicate'),
+
+      title: this.get('title'),
+      sizeClass: this.get('sizeClass'),
+      saveTo: this.get('saveTo'),
+      currentLookupRow: this.get('currentLookupRow'),
+      customPropertiesData: this.get('customPropertiesData')
+    };
+
+    reloadDataHandler(this.get('reloadContext'), reloadData);
+  }),
 
   actions: {
     /**
@@ -30,7 +143,7 @@ export default ListFormController.extend({
      * @method rowClick
      * @param {Ember.Object} record Row record
      */
-    rowClick: function (record) {
+    objectListViewRowClick: function (record) {
       this.selectMaster(record);
       this.closeModalDialog();
     },
@@ -88,10 +201,36 @@ export default ListFormController.extend({
     }
   },
 
-  clear: function() {
-    this.set('_openedModalDialog', undefined);
+  /**
+   * It clears current controller.
+   * It has to be done before each use.
+   *
+   * @method clear
+   * @public
+   *
+   * @param {Boolean} initialClear Flag indicates whether it is clear on first load or just on reload.
+   */
+  clear: function(initialClear) {
+    this.set('reloadObserverIsActive', false);
+
+    if (initialClear) {
+      this.set('_openedModalDialog', undefined);
+      this.set('modelProjection', undefined);
+      this.set('reloadContext', undefined);
+      this.set('reloadDataHandler', undefined);
+
+      this.set('perPage', undefined);
+      this.set('page', undefined);
+      this.set('sort', undefined);
+      this.set('filter', undefined);
+      this.set('predicate', undefined);
+    }
+
     this.set('saveTo', undefined);
-    this.set('modelProjection', undefined);
+    this.set('currentLookupRow', undefined);
+    this.set('customPropertiesData', undefined);
+    this.set('modelType', undefined);
+    this.set('projectionName', undefined);
     return this;
   }
 });

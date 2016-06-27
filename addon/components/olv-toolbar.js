@@ -1,125 +1,381 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
+const { getOwner } = Ember;
 
+/**
+  @class OlvToolbar
+  @extends FlexberryBaseComponent
+*/
 export default FlexberryBaseComponent.extend({
+  _userSettingsService: Ember.inject.service('user-settings-service'),
+
   modelController: null,
 
   /**
-   * Route for edit form by click row
-   *
-   * @property editFormRoute
-   * @type String
-   * @default undefined
-   */
+    Route for edit form by click row.
+
+    @property editFormRoute
+    @type String
+  */
   editFormRoute: undefined,
 
   /**
-   * Service that triggers objectlistview events.
-   *
-   * @property objectlistviewEventsService
-   * @type ObjectlistviewEvents
-   */
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
-   * Flag to use creation button at toolbar.
-   *
-   * @property createNewButton
-   * @type Boolean
-   * @default false
-   */
+    Flag to use creation button at toolbar.
+
+    @property createNewButton
+    @type Boolean
+    @default false
+  */
   createNewButton: false,
 
   /**
-   * The flag to specify whether the create button is enabled.
-   *
-   * @property createNewButton
-   * @type Boolean
-   * @default true
-   */
+    Flag to specify whether the create button is enabled.
+
+    @property enableCreateNewButton
+    @type Boolean
+    @default true
+  */
   enableCreateNewButton: true,
 
   /**
-   * Flag to use refresh button at toolbar.
-   *
-   * @property refreshButton
-   * @type Boolean
-   * @default false
-   */
+    Flag to use refresh button at toolbar.
+
+    @property refreshButton
+    @type Boolean
+    @default false
+  */
   refreshButton: false,
 
   /**
-   * Flag to use delete button at toolbar.
-   *
-   * @property deleteButton
-   * @type Boolean
-   * @default false
-   */
+    Flag to use delete button at toolbar.
+
+    @property deleteButton
+    @type Boolean
+    @default false
+  */
   deleteButton: false,
 
   /**
-   * Flag to use filter button at toolbar.
-   *
-   * @property filterButton
-   * @type Boolean
-   * @default false
-   */
+    Flag to use colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default false
+  */
+  colsConfigButton: true,
+
+  /**
+    Flag to use filter button at toolbar.
+
+    @property filterButton
+    @type Boolean
+    @default false
+  */
   filterButton: false,
 
   /**
-   * Used to specify default 'filter by any match' field text.
-   *
-   * @property filterText
-   * @type String
-   * @default null
-   */
+    Used to specify default 'filter by any match' field text.
+
+    @property filterText
+    @type String
+    @default null
+  */
   filterText: null,
 
   /**
-   * The flag to specify whether the delete button is enabled.
-   *
-   * @property deleteButton
-   * @type Boolean
-   * @default true
-   */
+    The flag to specify whether the delete button is enabled.
+
+    @property enableDeleteButton
+    @type Boolean
+    @default true
+  */
   enableDeleteButton: true,
 
   /**
-   * Name of action to send out, action triggered by click on user button.
-   *
-   * @property customButtonAction
-   * @type String
-   * @default 'customButtonAction'
-   */
+    Name of action to send out, action triggered by click on user button.
+
+    @property customButtonAction
+    @type String
+    @default 'customButtonAction'
+  */
   customButtonAction: 'customButtonAction',
 
   /**
-   * Handler to get custom buttons from controller.
-   * It has to be closure event and return array of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
-   *
-   * @property customButtonsClosureEvent
-   * @type Function
-   * @default undefined
-   */
-  customButtonsClosureEvent: undefined,
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...' // Css classes for button.
+      }
+      ```
+
+    @property customButtonsArray
+    @type Array
+  */
+  customButtons: undefined,
 
   /**
-   * Array of custom buttons.
-   *
-   * @property customButtonsArray
-   * @type Array
-   * @default undefined
-   */
-  customButtonsArray: undefined,
+    @property listUserSettings
+  */
+  listUserSettings: undefined,
 
-  init: function() {
+  /**
+    @property createSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.create-setting-title')
+  */
+  createSettitingTitle: t('components.olv-toolbar.create-setting-title'),
+
+  /**
+    @property useSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.use-setting-title')
+  */
+  useSettitingTitle: t('components.olv-toolbar.use-setting-title'),
+
+  /**
+    @property editSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.edit-setting-title')
+  */
+  editSettitingTitle: t('components.olv-toolbar.edit-setting-title'),
+
+  /**
+    @property removeSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.remove-setting-title')
+  */
+  removeSettitingTitle: t('components.olv-toolbar.remove-setting-title'),
+
+  /**
+    @property setDefaultSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.set-default-setting-title')
+  */
+  setDefaultSettitingTitle: t('components.olv-toolbar.set-default-setting-title'),
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  /**
+    @property listUserSettings
+  */
+  listNamedSettings: null,
+
+  /**
+    @property colsSettingsItems
+    @readOnly
+  */
+  colsSettingsItems:  Ember.computed(
+    'createSettitingTitle',
+    'setDefaultSettitingTitle',
+    'useSettitingTitle',
+    'editSettitingTitle',
+    'removeSettitingTitle',
+    'listNamedSettings',
+    function() {
+      let params = {
+        createSettitingTitle: this.get('createSettitingTitle'),
+        setDefaultSettitingTitle: this.get('setDefaultSettitingTitle'),
+        useSettitingTitle: this.get('useSettitingTitle'),
+        editSettitingTitle: this.get('editSettitingTitle'),
+        removeSettitingTitle: this.get('removeSettitingTitle'),
+        listNamedSettings: this.get('listNamedSettings'),
+      };
+      let ret = this.get('_userSettingsService').isUserSettingsServiceEnabled ?
+        this.get('colsConfigMenu').resetMenu(params) :
+        [];
+      return ret;
+    }
+  ),
+
+  /**
+    Flag shows enable-state of delete button.
+    If there are selected rows button is enabled. Otherwise - not.
+
+    @property isDeleteButtonEnabled
+    @type Boolean
+    @default false
+  */
+  isDeleteButtonEnabled: false,
+
+  /**
+    Stores the text from "Filter by any match" input field.
+
+    @property filterByAnyMatchText
+    @type String
+  */
+  filterByAnyMatchText: Ember.computed.oneWay('filterText'),
+
+  actions: {
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.refresh
+      @public
+    */
+    refresh() {
+      this.get('modelController').send('refreshList');
+    },
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.createNew
+      @public
+    */
+    createNew() {
+      let editFormRoute = this.get('editFormRoute');
+      let modelController = this.get('modelController');
+      modelController.transitionToRoute(editFormRoute + '.new');
+    },
+
+    /**
+      Delete selected rows.
+
+      @method actions.delete
+      @public
+    */
+    delete() {
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+    },
+
+    /**
+      Filters the content by "Filter by any match" field value.
+
+      @method actions.filterByAnyMatch
+      @public
+    */
+    filterByAnyMatch() {
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, this.get('filterByAnyMatchText'));
+    },
+
+    /**
+      Remove filter from url.
+
+      @method actions.removeFilter
+      @public
+    */
+    removeFilter() {
+      this.set('filterText', null);
+    },
+
+    /**
+      Action for custom button.
+
+      @method actions.customButtonAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonAction(actionName) {
+      this.sendAction('customButtonAction', actionName);
+    },
+
+    /**
+      Action to show confis dialog.
+
+      @method actions.showConfigDialog
+      @public
+    */
+    showConfigDialog() {
+      this.get('modelController').send('showConfigDialog');
+    },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onMenuItemClick(e) {
+      let iTags = Ember.$(e.currentTarget).find('i');
+      let namedSetingSpans = Ember.$(e.currentTarget).find('span');
+      if (iTags.length <= 0 || namedSetingSpans.length <= 0) {
+        return;
+      }
+
+      this._router = getOwner(this).lookup('router:main');
+      let className = iTags.get(0).className;
+      let namedSeting = namedSetingSpans.get(0).innerText;
+      let moduleName  =   this._router.currentRouteName;
+      switch (className) {
+        case 'table icon':
+          this.send('showConfigDialog');
+          break;
+        case 'checkmark box icon':
+
+          //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
+          let colsConfig = this.listUserSettings[namedSeting];
+          let savePromise = this.currentController.get('_userSettingsService').
+            saveUserSetting({ moduleName: moduleName, settingName: 'DEFAULT', userSetting: colsConfig }); //save as DEFAULT
+          savePromise.then(
+            record => {
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            }
+          );
+          break;
+        case 'setting icon':
+          this.send('showConfigDialog', namedSeting);
+          break;
+        case 'remove icon':
+          this.currentController.get('_userSettingsService').
+          deleteUserSetting({ moduleName: moduleName, settingName: namedSeting }).then(
+            result => {
+              this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSeting);
+              alert('Настройка ' + namedSeting + ' удалена');
+            }
+          );
+          break;
+        case 'remove circle icon':
+          this.currentController.get('_userSettingsService').
+          deleteUserSetting({ moduleName: moduleName, settingName: 'DEFAULT' }).then(
+            record => {
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            }
+          );
+          break;
+      }
+    }
+  },
+
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+  */
+  init() {
     this._super(...arguments);
 
-    var componentName = this.get('componentName');
+    let componentName = this.get('componentName');
     if (this.get('deleteButton') === true && !componentName) {
       throw new Error('Name of flexberry-objectlictview component was not defined.');
     }
@@ -127,101 +383,63 @@ export default FlexberryBaseComponent.extend({
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
 
-    let customButton = this.get('customButtonsClosureEvent');
-    if (customButton && typeof (customButton) === 'function') {
-      let customButtonsResult = customButton();
-      this.set('customButtonsArray', customButtonsResult);
+    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    let listUserSettings = this.modelController.model.listUserSettings;
+    if (listUserSettings && 'DEFAULT' in listUserSettings) {
+      delete listUserSettings.DEFAULT;
+    }
+
+    this.listUserSettings = listUserSettings;
+    Ember.set(this, 'listNamedSettings', {});
+    if (listUserSettings) {
+      for (let nameSetting in listUserSettings) {
+        Ember.set(this.listNamedSettings, nameSetting, true);
+      }
     }
   },
 
   /**
-   * Implementation of component's teardown.
-   *
-   * @method willDestroy
-   */
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
     this._super(...arguments);
   },
 
-  actions: {
-    refresh: function() {
-      this.get('modelController').send('refreshList');
-    },
-    createNew: function() {
-      let editFormRoute = this.get('editFormRoute');
-      let modelController = this.get('modelController');
-      modelController.transitionToRoute(editFormRoute + '.new');
-    },
-
-    /**
-     * Delete selected rows.
-     *
-     * @method delete
-     */
-    delete: function() {
-      var componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
-    },
-
-    /**
-     * Filters the content by "Filter by any match" field value.
-     *
-     * @method filterByAnyMatch
-     */
-    filterByAnyMatch: function() {
-      var componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, this.get('filterByAnyMatchText'));
-    },
-
-    /**
-     * Remove filter from url.
-     *
-     * @method removeFilter
-     * @public
-     */
-    removeFilter: function() {
-      this.set('filterText', null);
-    },
-
-    customButtonAction: function(actionName) {
-      this.sendAction('customButtonAction', actionName);
-    }
-  },
-
   /**
-   * Flag shows enable-state of delete button.
-   * If there are selected rows button is enabled. Otherwise - not.
-   *
-   * @property isDeleteButtonEnabled
-   * @type Boolean
-   * @default false
-   */
-  isDeleteButtonEnabled: false,
+    Event handler for "row has been selected" event in objectlistview.
 
-  /**
-   * Stores the text from "Filter by any match" input field.
-   *
-   * @property filterByAnyMatchText
-   * @type String
-   * @default null
-   */
-  filterByAnyMatchText: Ember.computed.oneWay('filterText'),
+    @method _rowSelected
+    @private
 
-  /**
-   * Event handler for "row has been selected" event in objectlistview.
-   *
-   * @method _rowSelected
-   * @private
-   *
-   * @param {String} componentName The name of objectlistview component.
-   * @param {Model} record The model corresponding to selected row in objectlistview.
-   * @param {Integer} count Count of selected rows in objectlistview.
-   */
-  _rowSelected: function(componentName, record, count) {
+    @param {String} componentName The name of objectlistview component
+    @param {DS.Model} record The model corresponding to selected row in objectlistview
+    @param {Number} count Count of selected rows in objectlistview
+  */
+  _rowSelected(componentName, record, count) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
-  }
+  },
+
+  _addNamedSetting(namedSeting) {
+    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
+    listNamedSettings[namedSeting] = true;
+    Ember.set(this, 'listNamedSettings', listNamedSettings);
+  },
+
+  _deleteNamedSetting(namedSeting) {
+    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
+    delete listNamedSettings[namedSeting];
+    Ember.set(this, 'listNamedSettings', listNamedSettings);
+  },
 });

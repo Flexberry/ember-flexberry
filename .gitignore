@@ -23,7 +23,13 @@ testem.log
 .dir-locals.el
 /blueprints/.vscode
 /blueprints/tsconfig.json
+/blueprints/.editorconfig
 
 .vscodeignore
 jsconfig.json
 typings/ember/ember.d.ts
+/blueprints/.vs
+/blueprints/bin
+/blueprints/obj
+/blueprints/ember-flexberry.sln
+/blueprints/ember-flexberry.njsproj

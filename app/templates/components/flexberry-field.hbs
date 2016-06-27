@@ -1,8 +1,7 @@
-{{#if label }}
+{{#if label}}
 <label>{{label}}</label>
 {{/if}}
-{{input
-  type="text"
+{{flexberry-textbox
   value=value
   readonly=(if readonly "readonly")
   required=required

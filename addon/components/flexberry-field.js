@@ -1,8 +1,9 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   Field component for Semantic UI.
@@ -14,14 +15,14 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
   @class FlexberryField
   @extends FlexberryBaseComponent
- */
+*/
 export default FlexberryBaseComponent.extend({
   /**
     Input value.
 
     @property value
     @type String
-   */
+  */
   value: undefined,
 
   /**
@@ -29,15 +30,16 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-   */
-  placeholder: undefined,
+    @default 't('components.flexberry-field.placeholder')'
+  */
+  placeholder: t('components.flexberry-field.placeholder'),
 
   /**
     Label for field.
 
     @property label
     @type String
-   */
+  */
   label: undefined,
 
   /**
@@ -47,8 +49,8 @@ export default FlexberryBaseComponent.extend({
     @property classNames
     @type Array
     @readOnly
-   */
-  classNames: ['flexberry-field', 'field'],
+  */
+  classNames: ['flexberry-field', 'ui', 'field'],
 
   /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -56,12 +58,12 @@ export default FlexberryBaseComponent.extend({
     @property appConfigSettingsPath
     @type String
     @default 'APP.components.flexberryField'
-   */
+  */
   appConfigSettingsPath: 'APP.components.flexberryField',
 
   /**
     Initializes component.
-   */
+  */
   init() {
     this._super(...arguments);
 

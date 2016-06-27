@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -13,7 +13,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
   @class FlexberryMenuitem
   @extends FlexberryBaseComponent
- */
+*/
 export default FlexberryBaseComponent.extend({
   /**
     Menu item content.
@@ -27,7 +27,7 @@ export default FlexberryBaseComponent.extend({
     @property item
     @type Object
     @default null
-   */
+  */
   item: null,
 
   /**
@@ -36,7 +36,7 @@ export default FlexberryBaseComponent.extend({
     @property hasSubitems
     @type Boolean
     @readonly
-   */
+  */
   hasSubitems: Ember.computed('item.items', function() {
     let subItems = this.get('item.items');
     return Ember.isArray(subItems) && subItems.length > 0;
@@ -48,7 +48,7 @@ export default FlexberryBaseComponent.extend({
     @property titleIsBeforeIcon
     @type Boolean
     @readonly
-   */
+  */
   titleIsBeforeIcon: Ember.computed('item.iconAlignment', function() {
     let iconAlignment = this.get('item.iconAlignment');
     if (Ember.typeOf(iconAlignment) === 'string') {
@@ -65,7 +65,7 @@ export default FlexberryBaseComponent.extend({
     @property tagName
     @type String
     @default 'a'
-   */
+  */
   tagName: 'a',
 
   /**
@@ -75,7 +75,7 @@ export default FlexberryBaseComponent.extend({
     @property classNames
     @type Array
     @readOnly
-   */
+  */
   classNames: ['flexberry-menuitem', 'item'],
 
   /**
@@ -84,12 +84,12 @@ export default FlexberryBaseComponent.extend({
     @property appConfigSettingsPath
     @type String
     @default 'APP.components.flexberryMenuItem'
-   */
+  */
   appConfigSettingsPath: 'APP.components.flexberryMenuItem',
 
   /**
     Initializes component.
-   */
+  */
   init() {
     this._super(...arguments);
 
@@ -104,23 +104,27 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Initializes DOM-related component's logic.
-   */
+  */
   didInsertElement() {
     this._super(...arguments);
 
     // Store item object in DOM-element data attribute.
     // It will be used in root 'flexberry-menu' component to handle click on this 'flexberry-menuitem'.
     let item = this.get('item');
-    this.$().data('flexberry-menuitem.item', item);
+    if (this.get('tagName')) {
+      this.$().data('flexberry-menuitem.item', item);
+    }
   },
 
   /**
     Cleans up DOM-related component's logic.
-   */
+  */
   willDestroyElement() {
     this._super(...arguments);
 
     // Remove stored item object from DOM-element data attribute.
-    this.$().removeData('flexberry-menuitem.item');
-  },
+    if (this.get('tagName')) {
+      this.$().removeData('flexberry-menuitem.item');
+    }
+  }
 });

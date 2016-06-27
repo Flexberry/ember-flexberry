@@ -1,4 +1,1 @@
-import EmberFlexberryDummyApplicationUserEditController from '../ember-flexberry-dummy-application-user-edit';
-
-var EmberFlexberryDummyApplicationUserEditNewController = EmberFlexberryDummyApplicationUserEditController;
-export default EmberFlexberryDummyApplicationUserEditNewController;
+export { default } from '../ember-flexberry-dummy-application-user-edit';

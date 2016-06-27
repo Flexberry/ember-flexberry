@@ -1,8 +1,9 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   Textbox component for Semantic UI.
@@ -17,14 +18,14 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
   @class FlexberryTextbox
   @extends FlexberryBaseComponent
- */
+*/
 export default FlexberryBaseComponent.extend({
   /**
     Input value.
 
     @property value
     @type String
-   */
+  */
   value: undefined,
 
   /**
@@ -32,8 +33,9 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-   */
-  placeholder: undefined,
+    @default 't('components.flexberry-textbox.placeholder')'
+  */
+  placeholder: t('components.flexberry-textbox.placeholder'),
 
   /**
     Array CSS class names.
@@ -42,8 +44,8 @@ export default FlexberryBaseComponent.extend({
     @property classNames
     @type Array
     @readOnly
-   */
-  classNames: ['flexberry-textbox', 'ui', 'input', 'fluid'],
+  */
+  classNames: ['flexberry-textbox', 'ui', 'input'],
 
   /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -51,12 +53,12 @@ export default FlexberryBaseComponent.extend({
     @property appConfigSettingsPath
     @type String
     @default 'APP.components.flexberryTextbox'
-   */
+  */
   appConfigSettingsPath: 'APP.components.flexberryTextbox',
 
   /**
     Initializes component.
-   */
+  */
   init() {
     this._super(...arguments);
 

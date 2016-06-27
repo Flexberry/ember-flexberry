@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -21,7 +21,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
   @class FlexberrySimpledatetime
   @extends FlexberryBaseComponent
- */
+*/
 export default FlexberryBaseComponent.extend({
   /**
     Convert date in `value` to appropriate input datatype.
@@ -30,7 +30,7 @@ export default FlexberryBaseComponent.extend({
     @property _valueAsString
     @type String
     @private
-   */
+  */
   _valueAsString: Ember.computed('value', {
     get() {
       let date = this.get('value');
@@ -51,7 +51,7 @@ export default FlexberryBaseComponent.extend({
     @property _minAsString
     @type String
     @private
-   */
+  */
   _minAsString: Ember.computed('min', {
     get() {
       let date = this.get('min');
@@ -72,7 +72,7 @@ export default FlexberryBaseComponent.extend({
     @property _maxAsString
     @type String
     @private
-   */
+  */
   _maxAsString: Ember.computed('max', {
     get() {
       let date = this.get('max');
@@ -91,7 +91,7 @@ export default FlexberryBaseComponent.extend({
 
     @property value
     @type Date
-   */
+  */
   value: undefined,
 
   /**
@@ -99,7 +99,7 @@ export default FlexberryBaseComponent.extend({
 
     @property min
     @type Date
-   */
+  */
   min: undefined,
 
   /**
@@ -107,7 +107,7 @@ export default FlexberryBaseComponent.extend({
 
     @property max
     @type Date
-   */
+  */
   max: undefined,
 
   /**
@@ -117,7 +117,7 @@ export default FlexberryBaseComponent.extend({
     @property classNames
     @type Array
     @readOnly
-   */
+  */
   classNames: ['flexberry-simpledatetime'],
 
   /**
@@ -127,7 +127,7 @@ export default FlexberryBaseComponent.extend({
     @param {Date} value Object of Date.
     @return {String} Date in string format.
     @private
-   */
+  */
   _convertDateToString(value) {
     if (value == null) {
       return value;
@@ -163,7 +163,7 @@ export default FlexberryBaseComponent.extend({
     @param {String} value Date in string format.
     @return {Date} Object of Date.
     @private
-   */
+  */
   _convertStringToDate(value) {
     if (value == null) {
       return value;

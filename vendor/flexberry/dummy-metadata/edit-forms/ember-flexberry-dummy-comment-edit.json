@@ -1,5 +1,14 @@
 ﻿{
-  "propertyLookup": [],
+  "propertyLookup": [
+    {
+      "relationName": "Author",
+      "projection": "ApplicationUserList"
+    },
+    {
+      "relationName": "UserVotes.ApplicationUser",
+      "projection": "ApplicationUserList"
+    }
+  ],
   "caption": "Comment edit",
   "name": "EmberFlexberryDummyCommentEdit",
   "attrs": [],

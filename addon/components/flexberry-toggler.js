@@ -3,7 +3,6 @@
  */
 
 import Ember from 'ember';
-import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
   Component for expand / collapse content.
@@ -19,18 +18,18 @@ import FlexberryBaseComponent from './flexberry-base-component';
   ```
 
   @class FlexberryToggler
-  @extends FlexberryBaseComponent
- */
-export default FlexberryBaseComponent.extend({
+  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+*/
+export default Ember.Component.extend({
   /**
     Current visibility state.
 
     @property _expanded
     @type Boolean
-    @default true
+    @default false
     @private
-   */
-  _expanded: true,
+  */
+  _expanded: false,
 
   /**
     Common caption in the component header.
@@ -40,7 +39,7 @@ export default FlexberryBaseComponent.extend({
     @property caption
     @type String
     @default ''
-   */
+  */
   caption: '',
 
   /**
@@ -50,7 +49,7 @@ export default FlexberryBaseComponent.extend({
     @property expandedCaption
     @type String
     @default null
-   */
+  */
   expandedCaption: null,
 
   /**
@@ -60,7 +59,7 @@ export default FlexberryBaseComponent.extend({
     @property collapsedCaption
     @type String
     @default null
-   */
+  */
   collapsedCaption: null,
 
   /**
@@ -69,7 +68,7 @@ export default FlexberryBaseComponent.extend({
     @property _caption
     @type String
     @readOnly
-   */
+  */
   currentCaption: Ember.computed('caption', 'expandedCaption', 'collapsedCaption', '_expanded', function() {
     let defaultCaption = this.get('caption');
     let caption = this.get('_expanded') ? (this.get('expandedCaption') || defaultCaption) : (this.get('collapsedCaption') || defaultCaption);
@@ -79,27 +78,32 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Array CSS class names.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNames).
 
     @property classNames
     @type Array
     @readOnly
-   */
+  */
   classNames: ['flexberry-toggler', 'ui', 'accordion', 'fluid'],
 
   /**
     Handles the event, when component has been insterted.
     Attaches event handlers for expanding / collapsing content.
-   */
+  */
   didInsertElement() {
-    let _this = this;
-    this.$().accordion({
-      onOpening: function() {
-        _this.set('_expanded', _this.$(this).hasClass('active'));
+    let $accordeonDomElement = this.$();
+
+    // Attach semantic-ui open/close callbacks.
+    $accordeonDomElement.accordion({
+      onOpen: () => {
+        this.set('_expanded', true);
       },
-      onClosing: function() {
-        _this.set('_expanded', _this.$(this).hasClass('active'));
-      }
+      onClose: () => {
+        this.set('_expanded', false);
+      },
     });
+
+    // Initialize right state (call semantic-ui accordion open/close method).
+    $accordeonDomElement.accordion(this.get('_expanded') ? 'open' : 'close');
   },
 });

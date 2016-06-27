@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -54,7 +54,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
   @class FlexberryMenu
   @extends FlexberryBaseComponent
- */
+*/
 export default FlexberryBaseComponent.extend({
   /**
     Flag: indicates whether to call 'items.[].onClick' callbacks or not.
@@ -62,7 +62,7 @@ export default FlexberryBaseComponent.extend({
     @property callItemsOnClickCallbacks
     @type Boolean
     @default true
-   */
+  */
   callItemsOnClickCallbacks: true,
 
   /**
@@ -71,18 +71,18 @@ export default FlexberryBaseComponent.extend({
     @property items
     @type Array
     @default null
-   */
+  */
   items: null,
 
   /**
     Array CSS class names.
-    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#property_classNames).
 
     @property classNames
     @type Array
     @readOnly
-   */
-  classNames: ['flexberry-menu', 'ui', 'menu'],
+  */
+  classNames: ['flexberry-menu', 'ui', 'floating', 'icon', 'dropdown', 'button'],
 
   /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
@@ -90,12 +90,12 @@ export default FlexberryBaseComponent.extend({
     @property appConfigSettingsPath
     @type String
     @default 'APP.components.flexberryMenu'
-   */
+  */
   appConfigSettingsPath: 'APP.components.flexberryMenu',
 
   /**
     Initializes component.
-   */
+  */
   init() {
     this._super(...arguments);
 
@@ -109,16 +109,19 @@ export default FlexberryBaseComponent.extend({
 
     // Call to 'configurateItems' hook.
     let configurateItems = this.get('configurateItems');
-    let configurateItemsType = Ember.typeOf(configurateItems);
 
-    if (configurateItemsType === 'function') {
-      configurateItems(items);
-    } else {
-      Ember.Logger.error(
-        'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
-        'actual type is \'' +
-        configurateItemsType +
-        '\', but \'function\' is expected.');
+    if (configurateItems) {
+      let configurateItemsType = Ember.typeOf(configurateItems);
+
+      if (configurateItemsType === 'function') {
+        configurateItems(items);
+      } else {
+        Ember.Logger.error(
+          'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
+          'actual type is \'' +
+          configurateItemsType +
+          '\', but \'function\' is expected.');
+      }
     }
 
     this.set('items', items);
@@ -126,7 +129,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Initializes DOM-related component's logic.
-   */
+  */
   didInsertElement() {
     this._super(...arguments);
 
@@ -136,11 +139,13 @@ export default FlexberryBaseComponent.extend({
 
     // Attach menu click event handler.
     this.$().on('click', onClickHandler);
+
+    this.$().dropdown();
   },
 
   /**
     Cleans up DOM-related component's logic.
-   */
+  */
   willDestroyElement() {
     this._super(...arguments);
 
@@ -182,7 +187,7 @@ export default FlexberryBaseComponent.extend({
 
     @method configurateItems
     @param {Array} items Menu items array.
-   */
+  */
   configurateItems: undefined,
 
   /**
@@ -192,7 +197,7 @@ export default FlexberryBaseComponent.extend({
     @method _onClickHandler
     @param {JQuery.Event} e Click event object.
     @private
-   */
+  */
   _onClickHandler(e) {
     // Find clicked menu item element.
     let itemElement = Ember.$(e.target);

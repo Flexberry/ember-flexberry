@@ -1,8 +1,34 @@
 <div id="lookup-list" class="list-group">
-  {{object-list-view
-    class = "ui bottom attached"
-    modelProjection = modelProjection
-    content = model
-    selectedRecord = _currentRow
+  {{flexberry-objectlistview
+    class="ui bottom attached"
+    modelProjection=modelProjection
+    content=model
+    selectedRecord=currentLookupRow
+    componentMode='lookupform'
+    componentName='flexberry-objectlistview-at-lookup'
+
+    showEditMenuItemInRow=false
+    createNewButton=false
+    showCheckBoxInRow=false
+    colsConfigButton=false
+
+    filterByAnyMatch=(action 'filterByAnyMatch')
+    filterText=filter
+
+    customProperties=customPropertiesData
+
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+
+    sorting=computedSorting
+    orderable=true
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
   }}
 </div>

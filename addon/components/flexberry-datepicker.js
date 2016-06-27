@@ -1,10 +1,11 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 import moment from 'moment';
 import FlexberryBaseComponent from './flexberry-base-component';
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
@@ -23,15 +24,24 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
   @class FlexberryDatePicker
   @extends FlexberryBaseComponent
- */
+*/
 export default FlexberryBaseComponent.extend({
   /**
     Input value.
 
     @property value
     @type Date
-   */
+  */
   value: undefined,
+
+  /**
+    The placeholder attribute.
+
+    @property placeholder
+    @type String
+    @default 't('components.flexberry-datepicker.placeholder')'
+  */
+  placeholder: t('components.flexberry-datepicker.placeholder'),
 
   /**
     Type of input element for render.
@@ -40,7 +50,7 @@ export default FlexberryBaseComponent.extend({
     @property type
     @type HTMLAttribute
     @default text
-   */
+  */
   type: 'text',
 
   /**
@@ -49,7 +59,7 @@ export default FlexberryBaseComponent.extend({
     @property hasTimePicker
     @type Boolean
     @default false
-   */
+  */
   hasTimePicker: false,
 
   /**
@@ -58,7 +68,7 @@ export default FlexberryBaseComponent.extend({
     @property invalidDate
     @type Date
     @default Invalid Date
-   */
+  */
   invalidDate: new Date('invalid'),
 
   /**
@@ -67,7 +77,7 @@ export default FlexberryBaseComponent.extend({
     @property dateTimeFormat
     @type String
     @default 'DD.MM.YYYY'
-   */
+  */
   dateTimeFormat: 'DD.MM.YYYY',
 
   /**
@@ -75,7 +85,7 @@ export default FlexberryBaseComponent.extend({
 
     @property minDate
     @type Date
-   */
+  */
   minDate: undefined,
 
   /**
@@ -83,7 +93,7 @@ export default FlexberryBaseComponent.extend({
 
     @property maxDate
     @type Date
-   */
+  */
   maxDate: undefined,
 
   /**
@@ -93,12 +103,12 @@ export default FlexberryBaseComponent.extend({
     @property classNames
     @type Array
     @readOnly
-   */
+  */
   classNames: ['ui', 'icon', 'input'],
 
   /**
     Init component when DOM is ready.
-   */
+  */
   didInsertElement() {
     this.minDate = this.minDate === undefined ? moment('01.01.1900', this.dateTimeFormat) : moment(this.minDate, this.dateTimeFormat);
     this.maxDate = this.maxDate === undefined ? moment('31.12.9999', this.dateTimeFormat) : moment(this.maxDate, this.dateTimeFormat);
@@ -123,8 +133,8 @@ export default FlexberryBaseComponent.extend({
       {
         startDate: startDate,
         locale: {
-          applyLabel: i18n.t('flexberry-datepicker.apply-button-text'),
-          cancelLabel: i18n.t('flexberry-datepicker.cancel-button-text')
+          applyLabel: i18n.t('components.flexberry-datepicker.apply-button-text'),
+          cancelLabel: i18n.t('components.flexberry-datepicker.cancel-button-text')
         },
         singleDatePicker: true,
         showDropdowns: true,
@@ -191,7 +201,7 @@ export default FlexberryBaseComponent.extend({
     @method _getDateToSet
     @param {Moment} dateFromPicker Object of Moment.
     @private
-   */
+  */
   _getDateToSet(dateFromPicker) {
     if (!dateFromPicker.isValid()) {
       return this.invalidDate;
@@ -210,7 +220,7 @@ export default FlexberryBaseComponent.extend({
     @method setValue
     @param {Moment} dateFromPicker Object of Moment.
     @private
-   */
+  */
   _setValue(dateFromPicker) {
     let valueFromInput = this.$('input').val();
     if (valueFromInput === '' && !dateFromPicker.isValid()) {
@@ -236,7 +246,7 @@ export default FlexberryBaseComponent.extend({
 
     @method _setEmptyValue
     @private
-   */
+  */
   _setEmptyValue() {
     let currentValue = this.get('value');
     if (currentValue !== null) {
@@ -248,9 +258,24 @@ export default FlexberryBaseComponent.extend({
   /**
     Change state of calendar.
 
+    ```javascript
+    getDateToSet: function(dateFromPicker) {
+      if (!dateFromPicker.isValid()) {
+        return this.invalidDate;
+      }
+
+      let minDate = this.get('minDate');
+      let maxDate = this.get('maxDate');
+      if (moment.isDate(minDate) && dateFromPicker.isBefore(this.minDate) ||
+          moment.isDate(maxDate) && dateFromPicker.isAfter(this.maxDate)) {
+          return this.invalidDate;
+      }
+    }
+    ```
+
     @method _setCalendarEnabledState
     @private
-   */
+  */
   _setCalendarEnabledState() {
     let dateToSet = this._getDateToSet(this.$('input').data('daterangepicker').endDate);
     if ((!dateToSet || dateToSet === this.invalidDate) && this.hasTimePicker) {
@@ -266,7 +291,7 @@ export default FlexberryBaseComponent.extend({
 
     @method _setProperOffsetToCalendar
     @private
-   */
+  */
   _setProperOffsetToCalendar() {
     let _this = this;
     setTimeout(function() { _this.$('input').data('daterangepicker').move(); }, 500);
@@ -277,7 +302,7 @@ export default FlexberryBaseComponent.extend({
 
     @method _valueChanged
     @private
-   */
+  */
   _valueChanged: Ember.observer('value', function() {
     let val = this.get('value');
     let currValueDateTime = moment(this._getDateToSet(moment(val)));

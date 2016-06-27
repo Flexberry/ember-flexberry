@@ -1,14 +1,11 @@
 {{#each columns as |column|}}
-  <div class="inline fields no-margin {{if (not hasEditableValues) 'readonly'}}">
-    <div class="field">
-      <b>{{column.header}}</b>:
-    </div>
-    <div class="field">
-      {{component column.cellComponent.componentName
-        dynamicProperties=column.cellComponent.componentProperties
-        relatedModel=model
-        value=(mut (get model column.propName))
-      }}
-    </div>
+  <div class="inline fields {{if (not hasEditableValues) 'readonly'}}">
+    <label>{{column.header}}:</label>
+    {{component column.cellComponent.componentName
+      dynamicProperties=column.cellComponent.componentProperties
+      relatedModel=model
+      value=(mut (get model column.propName))
+      readonly=readonly
+    }}
   </div>
 {{/each}}

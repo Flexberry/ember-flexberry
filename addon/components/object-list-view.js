@@ -201,12 +201,12 @@ export default FlexberryBaseComponent.extend(
   }),
 
   /**
-   * Path to component's settings in application configuration (JSON from ./config/environment.js).
-   *
-   * @property appConfigSettingsPath
-   * @type String
-   * @default 'APP.components.objectListView'
-   */
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.objectListView'
+  */
   appConfigSettingsPath: 'APP.components.objectListView',
 
   /**

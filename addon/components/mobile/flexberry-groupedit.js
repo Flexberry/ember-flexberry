@@ -117,15 +117,22 @@ export default FlexberryGroupeditComponent.extend({
   showEditMenuItemInRow: false,
 
   /**
-    Flag: indicates whether to use single column to display all model properties or not.
+    Default cell component that will be used to display values in single column.
 
-    It overrides default value of
-    {{#crossLink "FlexberryGroupeditComponent/useSingleColumn:property"}}{{/crossLink}}
-    of base component.
-
-    @property useSingleColumn
-    @type Boolean
-    @default true
+    @property {Object} singleColumnCellComponent
+    @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
+    @property {String} [singleColumnCellComponent.componentProperties=null]
   */
-  useSingleColumn: true
+  singleColumnCellComponent: {
+    componentName: 'object-list-view-single-column-cell',
+    componentProperties: null
+  },
+
+  /**
+    Header title of single column.
+
+    @property singleColumnHeaderTitle
+    @type String
+  */
+  singleColumnHeaderTitle: undefined,
 });

@@ -12,16 +12,7 @@ import FlexberryObjectlistview from './../flexberry-objectlistview';
 */
 export default FlexberryObjectlistview.extend({
   /**
-    Flag indicates whether to use single column to display all model properties or not.
-
-    @property useSingleColumn
-    @type Boolean
-    @default false
-  */
-  useSingleColumn: true,
-
-  /**
-    Flag indicates whether to show asterisk icon in first column of every changed row.
+    Flag: indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
     @type Boolean
@@ -117,5 +108,25 @@ export default FlexberryObjectlistview.extend({
     @type Boolean
     @default false
   */
-  allowColumnResize: false
+  allowColumnResize: false,
+
+  /**
+    Default cell component that will be used to display values in single column.
+
+    @property {Object} singleColumnCellComponent
+    @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
+    @property {String} [singleColumnCellComponent.componentProperties=null]
+  */
+  singleColumnCellComponent: {
+    componentName: 'object-list-view-single-column-cell',
+    componentProperties: null
+  },
+
+  /**
+    Header title of single column.
+
+    @property singleColumnHeaderTitle
+    @type String
+  */
+  singleColumnHeaderTitle: undefined,
 });

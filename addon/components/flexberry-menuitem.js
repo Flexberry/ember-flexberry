@@ -66,7 +66,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default 'a'
   */
-   tagName: 'a',
+  tagName: 'a',
 
   /**
     Array CSS class names.

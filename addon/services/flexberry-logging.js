@@ -13,18 +13,10 @@ const { getOwner } = Ember;
  */
 export default Ember.Service.extend({
   /**
-   store for transmit messages to server
-
-   @property {Object} flexberryStore
+   *   Current log level. Set this property to log appropriate interval of log types
+   *
+   *   @property {Integer} flexberryLogLevel
    */
-  flexberryStore: null,
-  /**
-   Logger switcher on/off true if remote logging service works correctly
-
-   @property {Boolean} serverLogEnabled
-   */
-  serverLogEnabled: true,	//Remote logging service works correctly
-
   flexberryLogLevel: 0,
 
   /**
@@ -41,8 +33,26 @@ export default Ember.Service.extend({
     DEBUG: 5,// Log debugs, infos, logs, warnings and errors
     DEPRECATION: 6 // Log deprecations, debugs, infos, logs, warnings and errors
   },
-
+  /**
+   * Inverted to logLevelEnums array
+   *
+   * @property enumsLoglevel
+   * @type Array
+   */
   enumsLoglevel: ['NONE'],
+  /**
+   store for transmit messages to the server
+
+   @property {Object} _flexberryStore
+   */
+  _flexberryStore: null,
+  /**
+   Logger switcher on/off true if remote logging service works correctly
+
+   @property {Boolean} _serverLogEnabled
+   */
+  _serverLogEnabled: true,	//Remote logging service works correctly
+
   /**
   * Initializator
   *
@@ -50,8 +60,8 @@ export default Ember.Service.extend({
   */
   init() {
     this._super(...arguments);
-    this.set('flexberryStore', getOwner(this).lookup('service:store'));
-    this.set('serverLogEnabled', true);
+    this.set('_flexberryStore', getOwner(this).lookup('service:store'));
+    this.set('_serverLogEnabled', true);
     for (let enumName in this.logLevelEnums) {
       let level = this.logLevelEnums[enumName];
       this.enumsLoglevel[level] = enumName;
@@ -69,7 +79,7 @@ export default Ember.Service.extend({
   */
   flexberryLogger(priority, levelName, message, formattedMessage) {
     window.console.log(message);
-    if (!this.get('serverLogEnabled')) { // if serverLogEnabled === false logs only to console
+    if (!this.get('_serverLogEnabled')) { // if serverLogEnabled === false logs only to console
       return;
     }
 
@@ -92,11 +102,11 @@ export default Ember.Service.extend({
       formattedMessage: formattedMessage
     };
     let logModel = 'i-i-s-caseberry-logging-objects-application-log';	//Model for applicationLog
-    if (this.get('flexberryStore').peekAll(logModel).findBy('message', message) !== undefined) {	//This message exists in the store?
+    if (this.get('_flexberryStore').peekAll(logModel).findBy('message', message) !== undefined) {	//This message exists in the store?
       return;	//return to avoid infinity loop when message is genetaried in save/ajax stage
     }
 
-    let logRecord = this.get('flexberryStore').createRecord(logModel, applicationLog);	//Construct record  in  store
+    let logRecord = this.get('_flexberryStore').createRecord(logModel, applicationLog);	//Construct record  in  store
     logRecord.save().then(//Save recotd in server
       function() {	//Successfull
         return true;

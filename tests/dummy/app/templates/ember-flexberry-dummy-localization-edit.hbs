@@ -1,16 +1,28 @@
-<h3 class="ui header">{{title}}</h3>
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type="error"
-      closeable=true
-      visible=true
-      title="Error occurred"
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
-<<form class="ui form flexberry-vertical-form" role="form">
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-localization-edit.caption"}}</h3>
+<form class="ui {{formState}} form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
@@ -18,26 +30,21 @@
           <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
         {{/unless}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+          <button type="submit" class="ui positive button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
         {{/unless}}
         {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
-          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "forms.edit-form.delete-button-text"}}</button>
+          <button type="submit" class="ui negative button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
       <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field">
-    {{#if model.errors.name}}
-      <span style ="color:red">{{model.errors.name}}</span>
-    {{/if}}
+  <div class="field {{if model.errors.name "error" ""}}">
     {{flexberry-field
-      placeholder="(no value)"
-      readonly=readonly
-      required=true
       value=model.name
-      class=(if model.errors.name "error" "")
-      label="Name"
+      label=(t "forms.ember-flexberry-dummy-localization-edit.name-caption")
+      readonly=readonly
     }}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
   </div>
 </form>

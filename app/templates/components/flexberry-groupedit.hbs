@@ -6,6 +6,7 @@
   deleteButton=deleteButton
 }}
 {{object-list-view
+  placeholder=placeholder
   readonly=readonly
   buttonClass=buttonClass
   tableStriped=tableStriped
@@ -13,7 +14,6 @@
   headerCellComponent=headerCellComponent
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
-  useSingleColumn=useSingleColumn
   singleColumnHeaderTitle=singleColumnHeaderTitle
   showAsteriskInRow=showAsteriskInRow
   showCheckBoxInRow=showCheckBoxInRow
@@ -26,6 +26,7 @@
   editOnSeparateRoute=editOnSeparateRoute
   saveBeforeRouteLeave=saveBeforeRouteLeave
   sorting=sorting
+  modelName=modelName
   modelProjection=modelProjection
   content=content
   sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
@@ -35,4 +36,6 @@
   allowColumnResize=allowColumnResize
   confirmDeleteRow=this.attrs.confirmDeleteRow
   confirmDeleteRows=this.attrs.confirmDeleteRows
+  searchForContentChange=searchForContentChange
+  immediateDelete=false
 }}

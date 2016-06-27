@@ -1,21 +1,13 @@
-import EditFormController from 'ember-flexberry/controllers/edit-form';
+import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
+import EditFormControllerOperationsIndicationMixin from '../mixins/edit-form-controller-operations-indication';
 
-export default EditFormController.extend({
+export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
-   * Page title.
-   *
-   * @property title
-   * @type String
-   * @default 'Localization'
-   */
-  title: 'Localization',
+    Route name for transition after close edit form.
 
-  /**
-  * Route name for transition after close edit form.
-  *
-  * @property parentRoute
-  * @type String
-  * @default 'ember-flexberry-dummy-localization-list'
+    @property parentRoute
+    @type String
+    @default 'ember-flexberry-dummy-localization-list'
   */
   parentRoute: 'ember-flexberry-dummy-localization-list'
 });

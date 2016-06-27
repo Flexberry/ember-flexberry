@@ -1,16 +1,28 @@
-<h3 class="ui header">{{title}}</h3>
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type="error"
-      closeable=true
-      visible=true
-      title="Error occurred"
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
-<form class="ui form flexberry-vertical-form" role="form">
+<h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-type-edit.caption"}}</h3>
+<form class="ui {{formState}} form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
@@ -18,68 +30,56 @@
           <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
         {{/unless}}
         {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
-          <button type="submit" class="ui positive button" {{action 'saveAndClose'}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+          <button type="submit" class="ui positive button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
         {{/unless}}
         {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
-          <button type="submit" class="ui negative button" {{action 'delete'}}>{{t "forms.edit-form.delete-button-text"}}</button>
+          <button type="submit" class="ui negative button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field">
-    {{#if model.errors.name}}
-      <span style ="color:red">{{model.errors.name}}</span>
-    {{/if}}
+  <div class="field {{if model.errors.name "error" ""}}">
     {{flexberry-field
-      placeholder="(no value)"
-      readonly=readonly
-      required=true
       value=model.name
-      class=(if model.errors.name "error" "")
-      label="Name"
+      label=(t "forms.ember-flexberry-dummy-suggestion-type-edit.name-caption")
+      readonly=readonly
     }}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
   </div>
-  <div class="field">
-    <label>Moderated</label>
-    {{#if model.errors.moderated}}
-      <span style="color:red">{{model.errors.moderated}}</span>
-    {{/if}}
-    {{flexberry-checkbox readonly=readonly value=model.moderated}}
+  <div class="field {{if model.errors.moderated "error" ""}}">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.moderated-caption"}}</label>
+    {{flexberry-checkbox
+      value=model.moderated
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
   </div>
-  <div class="field">
-    <label>Parent</label>
-    {{#if model.errors.parent}}
-      <span style="color:red">{{model.errors.parent}}</span>
-    {{/if}}
+  <div class="field {{if model.errors.parent "error" ""}}">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption"}}</label>
     {{flexberry-lookup
       value=model.parent
-      projection="SuggestionTypeL"
-      displayAttributeName="name"
-      title="Parent"
       relatedModel=model
       relationName="parent"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      projection="SuggestionTypeL"
+      displayAttributeName="name"
+      title=(t "forms.ember-flexberry-dummy-suggestion-type-edit.parent-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       readonly=readonly
-      limitFunction=null
-      class=(if model.errors.author "error" "")
     }}
+    {{flexberry-validationmessage error=model.errors.parent pointing="pointing"}}
   </div>
-  <div class="field">
-    <label>Localized types</label>
-    {{#if model.errors.localizedTypes}}
-      <span style="color:red">{{model.errors.localizedTypes}}</span>
-    {{/if}}
+  <div class="field {{if model.errors.localizedTypes "error" ""}}">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localized-types-caption"}}</label>
     {{flexberry-groupedit
-      componentName="localizedTypesGroupEdit"
-      class="attached"
-      modelProjection=modelProjection.attributes.localizedTypes
+      componentName="suggestionTypeLocalizedTypesGroupEdit"
       content=model.localizedTypes
-      readonly=readonly
+      modelProjection=modelProjection.attributes.localizedTypes
       orderable=false
-      class=(if model.errors.localizedTypes "error" "")
+      readonly=readonly
     }}
+    {{flexberry-validationmessage error=model.errors.localizedTypes pointing="pointing"}}
   </div>
 </form>
 

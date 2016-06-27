@@ -1,17 +1,34 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-groupedit.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
-    {{flexberry-groupedit
-      componentName="components-examples/flexberry-groupedit/settings-example/aggregator-details-flexberry-groupedit"
-      class="attached"
-      modelProjection=modelProjection.attributes.details
-      content=model.details
-      readonly=readonly
-      orderable=false
-      rowClickable=false
-      headerClickable=false
-      showCheckBoxInRow=true
-      showDeleteButtonInRow=true
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
     }}
+      {{flexberry-groupedit
+        componentName="aggregatorDetailsGroupedit"
+        content=model.details
+        modelProjection=detailsProjection
+        placeholder=placeholder
+        readonly=readonly
+        tableStriped=tableStriped
+        createNewButton=createNewButton
+        deleteButton=deleteButton
+        allowColumnResize=allowColumnResize
+        showAsteriskInRow=showAsteriskInRow
+        showCheckBoxInRow=showCheckBoxInRow
+        showDeleteButtonInRow=showDeleteButtonInRow
+        showEditMenuItemInRow=showEditMenuItemInRow
+        showDeleteMenuItemInRow=showDeleteMenuItemInRow
+        useSingleColumn=useSingleColumn
+        singleColumnHeaderTitle=singleColumnHeaderTitle
+        rowClickable=rowClickable
+        immediateDelete=immediateDelete
+        editOnSeperateRoute=editOnSeperateRoute
+        saveBeforeRoutLeave=saveBeforeRoutLeave
+        editFormRoute=editFormRoute
+      }}
+    {{/settings-example}}
   </div>
 </form>

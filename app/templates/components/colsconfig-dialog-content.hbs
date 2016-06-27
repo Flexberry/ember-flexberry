@@ -1,0 +1,57 @@
+<div class="flexberry-colsconfig content">
+      <table class="ui unstackable fixed selectable celled table"
+        ><thead
+          ><tr
+          ><th class="show-columns" title='{{t "components.colsconfig-dialog-content.dont-show-columns"}}'><i class='large hide icon'></i></th
+          ><th class="columns-order"><i class='large sort icon' title='{{t "components.colsconfig-dialog-content.columns-order"}}'></i></th
+          ><th title='{{t "components.colsconfig-dialog-content.column-name"}}'>{{t "components.colsconfig-dialog-content.column-name"}}</th
+          ><th class="sort-direction" title='{{t "components.colsconfig-dialog-content.sort-direction"}}'><nobr><i class="large sort content ascending icon"></i><i class="large sort content descending icon"></i></nobr></th
+          ><th class="sort-priority" title="{{t "components.colsconfig-dialog-content.sort-priority"}}"><i class='large ordered list icon'></i></th
+          ></tr
+        ></thead
+        ><tbody id='colsConfigtableRows'>
+        {{#each modelForDOM as |colDesc n|}}
+{{!--log 'name='colDesc.name ' sortOrderNot='colDesc.sortOrderNot ' sortOrderAsc='colDesc.sortOrderAsc ' sortOrderDesc='colDesc.sortOrderDesc--}}
+{{!--debugger--}}
+          <tr id="{{colDesc.trId}}" propName='{{colDesc.propName}}'
+            ><td><i id="{{colDesc.hideId}}" class='large {{if colDesc.hide 'hide' 'unhide'}} icon' colsConfigHidden=false {{action 'invertVisibility' n}}></i></td
+            ><td class="{{if colDesc.hide 'disabled' ''}}">
+              <button {{action 'rowUp' n}} id="{{colDesc.rowUpId}}" class="ui icon tiny button">
+                <i class="chevron up icon"></i>
+              </button
+              ><button {{action 'rowDown' n}}  id="{{colDesc.rowDownId}}" class="ui icon tiny button no-margin">
+                <i class="chevron down icon"></i>
+              </button>
+            </td
+            ><td class="{{if colDesc.hide 'disabled' ''}}">{{colDesc.name}}</td
+            ><td
+              ><select class="ui compact dropdown selection icon button {{if colDesc.hide 'disabled' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n}}>
+                <option selected='{{colDesc.sortOrderNot}}' value='0'>-</option>
+                <option selected='{{colDesc.sortOrderAsc}}' value='1'>▲</option>
+                <option selected='{{colDesc.sortOrderDesc}}' value='-1'>▼</option>
+              </select
+              ></td
+            ><td class="{{if colDesc.hide 'disabled' ''}}">
+              <div class="ui input {{if colDesc.hide 'disabled' ''}}">
+                <input id="{{colDesc.sortPriorityId}}" size='2' class="sortPriority {{if colDesc.sortOrder '' 'hidden'}}" disabled="{{if colDesc.sortOrder '' 'disabled'}}" value='{{colDesc.sortPriority}}' type='input' style=""
+                  {{action "setSortPriority" n on="focusOut"}} prevValue="{{colDesc.sortPriority}}">
+              </div>
+            </td
+          ></tr>
+{{/each}}
+        </tbody
+        ><tfoot class="full-width"
+          ><tr
+          ><th colspan='5'>
+            <div class="ui action input" >
+              <input id="columnConfigurtionSettingName" type='input' name='configName' placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'>
+              <div id="columnConfigurtionButtonSave" class="ui small button disabled" {{action 'saveColsSetting'}}>
+                {{t "components.colsconfig-dialog-content.save"}}
+              </div>
+            </div>
+            <div id="columnConfigurtionButtonUse" class="ui right floated button disabled" {{action 'apply'}}>{{t "components.colsconfig-dialog-content.use"}}</div>
+          </th
+          ></tr
+      ></tfoot
+      ></table>
+</div>

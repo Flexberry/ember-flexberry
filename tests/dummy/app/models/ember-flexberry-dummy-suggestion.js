@@ -5,6 +5,7 @@ import Proj from 'ember-flexberry-data';
 var Model = BaseModel.extend({
   address: DS.attr('string'),
   text: DS.attr('string'),
+  date: DS.attr('date'),
   votes: DS.attr('number'),
   moderated: DS.attr('boolean'),
 
@@ -20,7 +21,7 @@ var Model = BaseModel.extend({
   }),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
-  editor: DS.belongsTo('ember-flexberry-dummy-application-user', {
+  editor1: DS.belongsTo('ember-flexberry-dummy-application-user', {
     inverse: null,
     async: false
   }),
@@ -48,6 +49,21 @@ var Model = BaseModel.extend({
 
   // Model validation rules.
   validations: {
+    type: {
+      presence: {
+        message: 'Type is required'
+      }
+    },
+    author: {
+      presence: {
+        message: 'Author is required'
+      }
+    },
+    editor1: {
+      presence: {
+        message: 'Editor is required'
+      }
+    }
   }
 });
 
@@ -72,7 +88,7 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   }, {
     displayMemberPath: 'name'
   }),
-  editor: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+  editor1: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
     name: Proj.attr('Name', {
       hidden: true
     })
@@ -128,7 +144,18 @@ Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
   }, {
     displayMemberPath: 'name'
   }),
-  editor: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+  editor1: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Proj.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
+// Projection for lookup example on settings example.
+Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-suggestion', {
+  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
     name: Proj.attr('Name', {
       hidden: true
     })

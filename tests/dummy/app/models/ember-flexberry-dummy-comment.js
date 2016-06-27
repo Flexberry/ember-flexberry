@@ -3,8 +3,6 @@ import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
-  // Inversed relationship for ember-flexberry-dummy-suggestion.comments.
-  // It's not a property for flexberry-lookup component.
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
     inverse: 'comments',
     async: false
@@ -28,6 +26,11 @@ var Model = BaseModel.extend({
 
   // Model validation rules.
   validations: {
+    author: {
+      presence: {
+        message: 'Author is required'
+      }
+    }
   }
 });
 
@@ -62,27 +65,6 @@ Model.defineProjection('CommentE', 'ember-flexberry-dummy-comment', {
 
 // Detail's list projection.
 Model.defineProjection('CommentD', 'ember-flexberry-dummy-comment', {
-  text: Proj.attr('Text'),
-  votes: Proj.attr('Votes'),
-  moderated: Proj.attr('Moderated'),
-  author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Proj.attr('Name', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'name'
-  })
-});
-
-// List form projection.
-Model.defineProjection('CommentL', 'ember-flexberry-dummy-comment', {
-  suggestion: Proj.belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion address', {
-    address: Proj.attr('Address', {
-      hidden: true
-    })
-  }, {
-    displayMemberPath: 'address'
-  }),
   text: Proj.attr('Text'),
   votes: Proj.attr('Votes'),
   moderated: Proj.attr('Moderated'),

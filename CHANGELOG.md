@@ -1,6 +1,38 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-06-27
+### Added
+FlexberryGroupeditComponent
+* Add opportunity to observe model changing (it needs to enable flag 'searchForContentChange').
+
+## 2016-06-24
+### Breaking changes
+ObjectlistviewComponent:
+* Template is split for desktop and mobile phones.
+* Remove properties `useSingleColumn` & `emptyMobileHeader`.
+
+## 2016-06-23
+### Added
+FlexberryObjectlistviewComponent
+* Add support `modelProjection` by name
+* Add support promise for content
+
+## 2016-06-22
+### Added
+FlexberryCheckboxComponent:
+* Add class property for wrapper component.
+
+## 2016-06-21
+### Breaking changes
+FlexberryObjectlistview:
+* Change of mechanism for adding custom user buttons.
+
+## 2016-06-14
+### Fixed
+FlexberryTextboxComponent, FlexberryTextareaComponent:
+* Remove disabled class for wrapper.
+
 ## 2016-06-03
 ### Fixed
 FlexberryObjectlistviewComponent
@@ -16,6 +48,10 @@ FlexberryLookupComponent:
 * Fix limit functions (predicates) for lookups.
 FlexberryObjectlistviewComponent
 * Fix filters (now it is applied only to string own attributes).
+
+## 2016-06-01
+### Breaking changes
+* Fix locate structure & component.
 
 ## 2016-05-30
 ### Fixed

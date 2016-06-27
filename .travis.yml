@@ -22,13 +22,21 @@ matrix:
     - env: EMBER_TRY_SCENARIO=ember-beta
     - env: EMBER_TRY_SCENARIO=ember-canary
 
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/6ba4caae2993b5f2945f
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always
+
 before_install:
   - npm config set spin false
   - npm install -g npm@^2
 
 install:
   - npm install -g phantomjs-prebuilt
-  - npm install -g ember-cli
+  - npm install -g ember-cli@2.4.3
   - npm install -g bower
   - npm install -g firebase-tools
   - npm install
@@ -40,6 +48,9 @@ script:
   - bash ./scripts/test-generator.sh
 
 after_success:
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy -f ember-flexberry-dev -m "Travis Build №$TRAVIS_BUILD_NUMBER"
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember build && firebase deploy -f ember-flexberry -m "Travis Build №$TRAVIS_BUILD_NUMBER"
+  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy --project flexberry-ember-dev --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
+  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember build && firebase deploy --project flexberry-ember --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."
   - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop") && bash scripts/update-docs.sh
+
+after_script:
+  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_BRANCH == "dummy-test" && ember build && firebase deploy --project flexberry-ember-test --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."

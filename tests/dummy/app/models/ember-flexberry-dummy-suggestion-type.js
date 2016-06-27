@@ -22,7 +22,9 @@ var Model = BaseModel.extend({
   // Model validation rules.
   validations: {
     name: {
-      presence: true
+      presence: {
+        message: 'Name is required'
+      }
     }
   }
 });
@@ -61,6 +63,12 @@ Model.defineProjection('SuggestionTypeL', 'ember-flexberry-dummy-suggestion-type
   }, {
     displayMemberPath: 'name'
   })
+});
+
+// Projection for lookup example on window customization.
+Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-suggestion-type', {
+  name: Proj.attr('Name'),
+  moderated: Proj.attr('Moderated')
 });
 
 // Projection for lookup example on window customization.

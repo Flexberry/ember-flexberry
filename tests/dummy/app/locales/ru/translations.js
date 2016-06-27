@@ -8,6 +8,9 @@ Ember.$.extend(true, translations, {
   'application-name': 'Тестовый стенд ember-flexberry',
 
   'forms': {
+    'loading': {
+      'spinner-caption': 'Данные загружаются, пожалуйста подождите...'
+    },
     'index': {
       'greeting': 'Добро пожаловать на тестовый стенд ember-flexberry!'
     },
@@ -20,7 +23,7 @@ Ember.$.extend(true, translations, {
             'title': 'Меню'
           },
           'language-dropdown': {
-            'default-text': 'Выберете язык'
+            'placeholder': 'Выберете язык'
           }
         }
       },
@@ -50,14 +53,6 @@ Ember.$.extend(true, translations, {
           'caption': 'Главная',
           'title': ''
         },
-        'logging': {
-          'caption': 'Логирование',
-          'title': '',
-          'show': {
-            'caption': 'Просмотр логов приложения',
-            'title': ''
-          }
-        },
         'application': {
           'caption': 'Приложение',
           'title': '',
@@ -66,7 +61,7 @@ Ember.$.extend(true, translations, {
             'title': ''
           },
           'localizations': {
-            'caption': 'Локализации',
+            'caption': 'Локализация',
             'title': ''
           },
           'suggestion-types': {
@@ -78,11 +73,27 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
+        'logging': {
+          'caption': 'Логирование',
+          'title': '',
+          'show': {
+            'caption': 'Лог приложения',
+            'title': ''
+          }
+        },
         'components-examples': {
           'caption': 'Примеры компонентов',
           'title': '',
           'flexberry-checkbox': {
             'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-datepicker': {
+            'caption': 'flexberry-datepicker',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -109,11 +120,23 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-file': {
+            'caption': 'flexberry-file',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-groupedit': {
             'caption': 'flexberry-groupedit',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'model-update-example': {
+              'caption': 'Обновление модели',
               'title': ''
             }
           },
@@ -151,6 +174,26 @@ Ember.$.extend(true, translations, {
             'limit-function-example': {
               'caption': 'Функция ограничения',
               'title': ''
+            },
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'toolbar-custom-buttons-example': {
+              'caption': 'Пользовательские кнопки',
+              'title': ''
+            },
+            'on-edit-form': {
+              'caption': 'Размещение на форме редактирования',
+              'title': ''
+            }
+          },
+          'flexberry-simpledatetime': {
+            'caption': 'flexberry-simpledatetime',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
             }
           },
           'flexberry-textarea': {
@@ -177,8 +220,112 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           }
+        },
+        'integration-examples': {
+          'caption': 'Integration examples',
+          'title': '',
+          'edit-form': {
+            'caption': 'Форма редактирования',
+            'title': '',
+            'readonly-mode': {
+              'caption': 'Режим только для чтения',
+              'title': ''
+            },
+            'validation': {
+              'caption': 'Валидация',
+              'title': ''
+            }
+          }
         }
       }
+    },
+
+    'edit-form': {
+      'save-success-message-caption': 'Сохранение завершилось успешно',
+      'save-success-message': 'Объект сохранен',
+      'save-error-message-caption': 'Ошибка сохранения',
+      'delete-success-message-caption': 'Удаление завершилось успешно',
+      'delete-success-message': 'Объект удален',
+      'delete-error-message-caption': 'Ошибка удаления'
+    },
+
+    'ember-flexberry-dummy-application-user-edit': {
+      'caption': 'Пользователь приложения',
+      'name-caption': 'Имя',
+      'eMail-caption': 'E-mail',
+      'phone1-caption': 'Номер телефона 1',
+      'phone2-caption': 'Номер телефона 2',
+      'phone3-caption': 'Номер телефона 3',
+      'activated-caption': 'Учетная запись активирована',
+      'vK-caption': 'VK',
+      'facebook-caption': 'Facebook',
+      'twitter-caption': 'Twitter',
+      'birthday-caption': 'Дата рождения',
+      'gender-caption': 'Пол',
+      'vip-caption': 'VIP',
+      'karma-caption': 'Карма',
+      'name-validation-message-caption': 'Заполните поле "Имя"',
+      'eMail-validation-message-caption': 'Заполните поле "E-mail"'
+    },
+
+    'ember-flexberry-dummy-comment-edit': {
+      'caption': 'Комментарий',
+      'text-caption': 'Текст комментария',
+      'votes-caption': 'Количество голосов',
+      'moderated-caption': 'Одобрено',
+      'author-caption': 'Автор',
+      'userVotes-caption': 'Голоса пользователей',
+      'date-caption': 'Дата',
+      'author-validation-message-caption': 'Заполните поле "Автор"'
+    },
+
+    'ember-flexberry-dummy-localization-edit': {
+      'caption': 'Локализация',
+      'name-caption': 'Наименование',
+      'name-validation-message-caption': 'Заполните наименование'
+    },
+
+    'ember-flexberry-dummy-suggestion-edit': {
+      'caption': 'Предложение',
+      'address-caption': 'Адрес',
+      'text-caption': 'Описание',
+      'date-caption': 'Дата',
+      'votes-caption': 'Количество голосов',
+      'moderated-caption': 'Одобрено',
+      'type-caption': 'Тип предложения',
+      'author-caption': 'Автор предложения',
+      'editor1-caption': 'Редактор предложения',
+      'files-caption': 'Прикрепленные файлы',
+      'userVotes-caption': 'Голоса пользователей',
+      'comments-caption': 'Комментарии',
+      'type-validation-message-caption': 'Заполните тип предложения',
+      'author-validation-message-caption': 'Заполните поле "Автор"',
+      'editor-validation-message-caption': 'Заполните поле "Редактор"'
+    },
+
+    'ember-flexberry-dummy-suggestion-type-edit': {
+      'caption': 'Тип предложения',
+      'name-caption': 'Наименование',
+      'moderated-caption': 'Одобрено',
+      'parent-caption': 'Иерархия',
+      'localized-types-caption': 'Локализация типа',
+      'name-validation-message-caption': 'Заполните наименование'
+    },
+
+    'ember-flexberry-dummy-application-user-list': {
+      'caption': 'Пользователи приложения'
+    },
+
+    'ember-flexberry-dummy-localization-list': {
+      'caption': 'Локализация'
+    },
+
+    'ember-flexberry-dummy-suggestion-list': {
+      'caption': 'Предложения'
+    },
+
+    'ember-flexberry-dummy-suggestion-type-list': {
+      'caption': 'Типы предложений'
     },
 
     'components-examples': {
@@ -187,15 +334,20 @@ Ember.$.extend(true, translations, {
           'caption': 'Components-examples/flexberry-checkbox/settings-example'
         }
       },
+      'flexberry-datepicker': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-datepicker/settings-example'
+        }
+      },
       'flexberry-dropdown': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-dropdown/settings-example'
         },
         'conditional-render-example': {
           'caption': 'Components-examples/flexberry-dropdown/conditional-render-example',
-          'message': 'Шаблон страницы выглядит следующим образом:<br>' +
+          'info-caption': 'Описание варианта использования',
+          'info-message': 'Шаблон страницы выглядит следующим образом:' +
             '{{pageTemplate}}' +
-            '<br>' +
             'После того как какое-либо значение будет выбрано, компонент будет заменен на ' +
             '&lt;span&gt;selected value&lt;/span&gt;,<br>' +
             'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \"Semantic-UI\" и прочих ошибок.'
@@ -206,9 +358,19 @@ Ember.$.extend(true, translations, {
           'caption': 'Components-examples/flexberry-field/settings-example'
         }
       },
+      'flexberry-file': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-file/settings-example'
+        }
+      },
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-groupedit/settings-example'
+        },
+        'model-update-example': {
+          'caption': 'Components-examples/flexberry-groupedit/model-update-example',
+          'addDetailButton': 'Добавить детейл',
+          'removeDetailButton': 'Удалить детейл',
         }
       },
       'flexberry-lookup': {
@@ -233,6 +395,22 @@ Ember.$.extend(true, translations, {
       'flexberry-objectlistview': {
         'limit-function-example': {
           'caption': 'Components-examples/flexberry-objectlistview/limit-function-example'
+        },
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/settings-example'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/toolbar-custom-buttons-example',
+          'custom-message': 'Привет!',
+          'custom-button-name': 'Передать привет'
+        },
+        'on-edit-form': {
+          'caption': 'FlexberryObjectlistview пример произвольных данных'
+        }
+      },
+      'flexberry-simpledatetime': {
+        'settings-example': {
+          'caption': 'Components-examples/flexberry-simpledatetime/settings-example'
         }
       },
       'flexberry-textarea': {
@@ -250,10 +428,41 @@ Ember.$.extend(true, translations, {
           'caption': 'Components-examples/flexberry-toggler/settings-example'
         }
       }
+    },
+    'integration-examples': {
+      'edit-form': {
+        'readonly-mode': {
+          'caption': 'Integration-examples/edit-form/readonly-mode',
+          'readonly-flag-management-segment-caption': 'Управление режимом только для чтения формы',
+          'readonly-flag-value-segment-caption': 'Значения свойства \'readonly\' контроллера',
+          'readonly-flag-caption': 'Форма находится в режиме только для чтения',
+          'flag-caption': 'Флаг',
+          'number-caption': 'Число',
+          'text-caption': 'Текст',
+          'long-text-caption': 'Длинный текст',
+          'date-caption': 'Дата',
+          'time-caption': 'Время',
+          'enumeration-caption': 'Перечисление',
+          'file-caption': 'Файл',
+          'master-caption': 'Мастер',
+          'master-dropdown-caption': 'Мастер в режиме dropdown-а'
+        },
+        'validation': {
+          'caption': 'Integration-examples/edit-form/validation',
+          'flag-caption': 'Флаг',
+          'number-caption': 'Число',
+          'text-caption': 'Текст',
+          'long-text-caption': 'Длинный текст',
+          'date-caption': 'Дата',
+          'enumeration-caption': 'Перечисление',
+          'file-caption': 'Файл',
+          'master-caption': 'Мастер'
+        }
+      }
     }
   },
 
-  components: {
+  'components': {
     'settings-example': {
       'component-template-caption': 'Шаблон компонента',
       'controller-properties-caption': 'Свойства контроллера',

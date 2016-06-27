@@ -4,12 +4,12 @@
   </button>
 {{/if}}
 {{#if createNewButton}}
-  <button class="ui {{buttonClass}} {{if enableCreateNewButton '' 'disabled'}} button" {{action "createNew"}}>
+  <button class="ui {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button" {{action "createNew"}}>
     {{t "components.olv-toolbar.add-button-text"}}
   </button>
 {{/if}}
 {{#if deleteButton}}
-  <button class="ui {{buttonClass}} {{if isDeleteButtonEnabled '' 'disabled'}} button" {{action "delete"}}>
+  <button class="ui {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button" {{action "delete"}}>
     {{t "components.olv-toolbar.delete-button-text"}}
   </button>
 {{/if}}
@@ -28,8 +28,21 @@
     </button>
   </div>
 {{/if}}
-{{#each customButtonsArray as |customButton|}}
-  <button class="ui {{if customButton.buttonClasses customButton.buttonClasses ''}} button" {{action 'customButtonAction' customButton.buttonAction}}>
+{{#if colsConfigButton}}
+  <div class="ui buttons">
+    <button class="ui icon button" {{action "showConfigDialog"}}>
+      <i class="large table icon"></i>
+    </button>
+    {{flexberry-menu
+      items=colsSettingsItems
+      onItemClick=(action "onMenuItemClick")
+    }}
+  </div>
+{{/if}}
+{{#each customButtons as |customButton|}}
+  <button
+    class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
+    {{action "customButtonAction" customButton.buttonAction}}>
     {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
   </button>
 {{/each}}

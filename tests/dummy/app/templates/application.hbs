@@ -1,16 +1,14 @@
 {{#ui-sidebar class="inverted vertical menu" dimPage=false}}
-  <div class="header item">
-    <a class="brand"
-       href="#"
-       title={{t "forms.application.sitemap.application-name.title"}}>
-      {{t "forms.application.sitemap.application-name.caption"}}
-    </a>
-  </div>
+  <a class="item"
+     href="https://github.com/flexberry"
+     target="_blank"
+     title={{t "forms.application.sitemap.application-name.title"}}>
+    <img class="ui centered image" src="assets/images/flexberry-logo.png" />
+  </a>
   <a class="item"
      href={{addonVersionHref}}
      target="_blank"
-     title={{t "forms.application.sitemap.application-version.title"}}
-     >
+     title={{t "forms.application.sitemap.application-version.title"}}>
     {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
   </a>
   {{render "sitemap" sitemap}}
@@ -27,13 +25,23 @@
             <i class="sidebar icon"></i>
           </a>          
           <div class="right item">
-            {{flexberry-dropdown
-              items=locales
-              value=currentLocale
-              defaultText=(t "forms.application.header.menu.language-dropdown.default-text")
-              readonly=readonly
-              onChange=(action 'onLocaleChange')
-            }}
+            {{!-- ui-dropdown component used in flexberry-dropdown has some unfixed problems with IE, so we use <select> instead --}}
+            {{#if browserIsInternetExplorer}}
+              <select class="ui dropdown" onchange={{action (mut (get i18n "locale")) value="target.value"}}>
+                {{#each locales as |locale|}}
+                  <option value={{locale}} selected={{eq (get i18n "locale") locale}}>
+                    {{locale}}
+                  </option>
+                {{/each}}
+              </select>
+            {{else}}
+              {{flexberry-dropdown
+                class="compact"
+                items=locales
+                value=i18n.locale
+                placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+              }}
+            {{/if}}
           </div>
         </div>
       </div>
@@ -42,7 +50,7 @@
       <div class="ui main container">
         <div class="stackable grid container">
             {{outlet}}
-            {{outlet 'modal'}}
+            {{outlet "modal"}}
         </div>
       </div>
     </div>

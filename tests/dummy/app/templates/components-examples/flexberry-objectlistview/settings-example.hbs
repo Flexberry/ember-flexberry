@@ -1,0 +1,47 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.settings-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
+    }}
+      {{flexberry-objectlistview
+        componentName="SuggestionsObjectListView"
+        content=model
+        modelName="ember-flexberry-dummy-suggestion"
+        editFormRoute=editFormRoute
+        modelProjection=projection
+        placeholder=placeholder
+        readonly=readonly
+        tableStriped=tableStriped
+        allowColumnResize=allowColumnResize
+        createNewButton=createNewButton
+        deleteButton=deleteButton
+        refreshButton=refreshButton
+        filterButton=filterButton
+        showCheckBoxInRow=showCheckBoxInRow
+        showDeleteButtonInRow=showDeleteButtonInRow
+        showEditMenuItemInRow=showEditMenuItemInRow
+        showDeleteMenuItemInRow=showDeleteMenuItemInRow
+        rowClickable=rowClickable
+        orderable=orderable
+        singleColumnHeaderTitle=singleColumnHeaderTitle
+        filterByAnyMatch=(action "filterByAnyMatch")
+        filterText=filter
+        sorting=computedSorting
+        sortByColumn=(action "sortByColumn")
+        addColumnToSorting=(action "addColumnToSorting")
+        pages=pages
+        perPageValue=perPageValue
+        perPageValues=perPageValues
+        hasPreviousPage=hasPreviousPage
+        hasNextPage=hasNextPage
+        previousPage=(action "previousPage")
+        gotoPage=(action "gotoPage")
+        nextPage=(action "nextPage")
+        configurateRow=(action "configurateRow")
+      }}
+    {{/settings-example}}
+  </div>
+</form>

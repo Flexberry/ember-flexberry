@@ -3,21 +3,21 @@
 */
 
 import Ember from 'ember';
-import ObjectListView from './../objectlistview';
+import ObjectListViewComponent from '../objectlistview';
 
 /**
-  Mobile version of objectlistview (with mobile-specific defaults).
+  Mobile version of {{#crossLink "ObjectListViewComponent"}}{{/crossLink}} (with mobile-specific defaults).
 
-  @class Mobile.ObjectListView
+  @class Mobile.ObjectListViewComponent
   @extends FlexberryObjectListView
 */
-export default ObjectListView.extend({
+export default ObjectListViewComponent.extend({
   /**
     Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
 
     @property allowColumnResize
     @type Boolean
-    @default true
+    @default false
   */
   allowColumnResize: false,
 
@@ -44,7 +44,7 @@ export default ObjectListView.extend({
   /**
     Total columns count (including additional columns).
 
-    @property columnsCount
+    @property colspan
     @type Number
     @readOnly
   */

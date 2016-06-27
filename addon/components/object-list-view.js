@@ -518,7 +518,7 @@ export default FlexberryBaseComponent.extend(
   /**
     Total columns count (including additional columns).
 
-    @property columnsCount
+    @property colspan
     @type Number
     @readOnly
   */

@@ -241,6 +241,18 @@ export default FlexberryBaseComponent.extend({
   saveBeforeRouteLeave: false,
 
   /**
+    Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
+
+    If flag is enabled component compares current detail array with used on component,
+    removes deleted and marked as deleted on model level records, adds created on model level records.
+
+    @property searchForContentChange
+    @type Boolean
+    @default false
+  */
+  searchForContentChange: false,
+
+  /**
     Flag: indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow

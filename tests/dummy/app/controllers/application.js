@@ -196,6 +196,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.title'),
           children: [{
+            link: 'components-examples/flexberry-groupedit/model-update-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.model-update-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.model-update-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-groupedit/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),

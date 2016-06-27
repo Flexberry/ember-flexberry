@@ -17,9 +17,7 @@ moduleForComponent('modal-dialog', 'Integration | Component | modal dialog', {
       this.set('created', true);
     });
 
-    Ember.Test.registerWaiter(this, () => {
-      return this.get('created');
-    });
+    Ember.Test.registerWaiter(this, () => this.get('created'));
   },
 
   teardown: function() {

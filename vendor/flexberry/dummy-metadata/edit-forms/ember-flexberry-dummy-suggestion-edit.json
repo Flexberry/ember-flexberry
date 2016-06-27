@@ -2,19 +2,23 @@
   "propertyLookup": [
     {
       "relationName": "Type",
-      "projection": "SuggestionTypeL"
+      "projection": "SuggestionTypeList"
     },
     {
       "relationName": "Author",
-      "projection": "ApplicationUserL"
+      "projection": "ApplicationUserList"
     },
     {
-      "relationName": "Comments.Author",
-      "projection": "ApplicationUserL"
+      "relationName": "Editor1",
+      "projection": "ApplicationUserList"
     },
     {
       "relationName": "UserVotes.ApplicationUser",
-      "projection": "ApplicationUserL"
+      "projection": "ApplicationUserList"
+    },
+    {
+      "relationName": "Comments.Author",
+      "projection": "ApplicationUserList"
     }
   ],
   "caption": "Suggestion",

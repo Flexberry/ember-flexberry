@@ -28,7 +28,7 @@ test('it shold set selected record to saveTo.propName of saveTo.model', function
   sinon.stub(controller, '_closeModalDialog');
   let master = Ember.Object.create();
 
-  controller.send('rowClick', master);
+  controller.send('objectListViewRowClick', master);
 
   assert.equal(model.get('testProperty'), master);
 });

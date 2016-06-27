@@ -416,4 +416,14 @@ export default ListFormController.extend({
       }
     }
   },
+
+  /**
+    Refresh page by change parameters `showEditMenuItemInRow` or `showDeleteMenuItemInRow`.
+
+    @method _pageRefresh
+    @private
+  */
+  _pageRefresh: Ember.observer('showEditMenuItemInRow', 'showDeleteMenuItemInRow', function() {
+    this.send('refresh');
+  })
 });

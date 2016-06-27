@@ -8,7 +8,7 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @property modelProjection
     @type String
     @default 'SuggestionTypeE'
-   */
+  */
   modelProjection: 'SuggestionTypeE',
 
   /**
@@ -17,17 +17,8 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @property modelName
     @type String
     @default 'ember-flexberry-dummy-suggestion-type'
-   */
+  */
   modelName: 'ember-flexberry-dummy-suggestion-type',
-
-  /**
-    Name of controller to be used.
-
-    @property controllerName
-    @type String
-    @default 'ember-flexberry-dummy-suggestion-type-edit'
-   */
-  controllerName: 'ember-flexberry-dummy-suggestion-type-edit',
 
   /**
     Name of template to be rendered.
@@ -35,6 +26,6 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @property templateName
     @type String
     @default 'ember-flexberry-dummy-suggestion-type-edit'
-   */
+  */
   templateName: 'ember-flexberry-dummy-suggestion-type-edit'
 });

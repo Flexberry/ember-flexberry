@@ -8,7 +8,7 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @property modelProjection
     @type String
     @default 'LocalizationE'
-   */
+  */
   modelProjection: 'LocalizationE',
 
   /**
@@ -17,17 +17,8 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @property modelName
     @type String
     @default 'ember-flexberry-dummy-localization'
-   */
+  */
   modelName: 'ember-flexberry-dummy-localization',
-
-  /**
-    Name of controller to be used.
-
-    @property controllerName
-    @type String
-    @default 'ember-flexberry-dummy-localization-edit'
-   */
-  controllerName: 'ember-flexberry-dummy-localization-edit',
 
   /**
     Name of template to be rendered.
@@ -35,6 +26,6 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @property templateName
     @type String
     @default 'ember-flexberry-dummy-localization-edit'
-   */
+  */
   templateName: 'ember-flexberry-dummy-localization-edit'
 });

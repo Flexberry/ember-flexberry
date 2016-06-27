@@ -30,7 +30,7 @@ export default EditFormController.extend({
       let store = this.get('store');
       let itemsCounter = this.get('_itemsCounter') + 1;
       let detailModel = this.get('model.details');
-      let newRecord = store.createRecord('components-examples/flexberry-groupedit/settings-example/detail',
+      let newRecord = store.createRecord('components-examples/flexberry-groupedit/shared/detail',
       {
         text: itemsCounter
       });
@@ -64,7 +64,7 @@ export default EditFormController.extend({
     { componentName: 'my-component',  componentProperties: { ... } }.
   */
   getCellComponent(attr, bindingPath) {
-    var cellComponent = this._super(...arguments);
+    let cellComponent = this._super(...arguments);
 
     if (attr.kind === 'belongsTo' && bindingPath === 'master') {
       cellComponent.componentProperties = {

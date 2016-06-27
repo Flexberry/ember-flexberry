@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/settings-example/aggregator';
+import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/shared/aggregator';
 import UserSettingService from 'ember-flexberry/services/user-settings-service';
 
 moduleForComponent('object-list-view', 'Integration | Component | object list view', {

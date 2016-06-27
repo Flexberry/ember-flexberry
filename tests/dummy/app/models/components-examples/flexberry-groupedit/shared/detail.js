@@ -5,7 +5,7 @@ import Proj from 'ember-flexberry-data';
 var Model = BaseModel.extend({
   // Inversed relationship for aggregator.details.
   // It's not a property for flexberry-lookup component.
-  aggregator: DS.belongsTo('components-examples/flexberry-groupedit/settings-example/aggregator', {
+  aggregator: DS.belongsTo('components-examples/flexberry-groupedit/shared/aggregator', {
     inverse: 'details',
     async: false
   }),
@@ -13,24 +13,24 @@ var Model = BaseModel.extend({
   flag: DS.attr('boolean'),
   text: DS.attr('string'),
   date: DS.attr('date'),
-  enumeration: DS.attr('components-examples/flexberry-groupedit/settings-example/detail-enumeration'),
+  enumeration: DS.attr('components-examples/flexberry-groupedit/shared/detail-enumeration'),
   file: DS.attr('file'),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
-  master: DS.belongsTo('components-examples/flexberry-groupedit/settings-example/master', {
+  master: DS.belongsTo('components-examples/flexberry-groupedit/shared/master', {
     inverse: null,
     async: false
   })
 });
 
 // Edit form projection.
-Model.defineProjection('DetailE', 'components-examples/flexberry-groupedit/settings-example/detail', {
+Model.defineProjection('DetailE', 'components-examples/flexberry-groupedit/shared/detail', {
   flag: Proj.attr('Flag'),
   text: Proj.attr('Text'),
   date: Proj.attr('Date'),
   enumeration: Proj.attr('Enumeration'),
   file: Proj.attr('File'),
-  master: Proj.belongsTo('components-examples/flexberry-groupedit/settings-example/master', 'Master', {
+  master: Proj.belongsTo('components-examples/flexberry-groupedit/shared/master', 'Master', {
     text: Proj.attr('Text', {
       hidden: true
     })
@@ -40,14 +40,14 @@ Model.defineProjection('DetailE', 'components-examples/flexberry-groupedit/setti
 });
 
 // Edit form short projection.
-Model.defineProjection('DetailShortE', 'components-examples/flexberry-groupedit/settings-example/detail', {
+Model.defineProjection('DetailShortE', 'components-examples/flexberry-groupedit/shared/detail', {
   flag: Proj.attr('Flag'),
   text: Proj.attr('Text'),
   enumeration: Proj.attr('Enumeration'),
 });
 
 // Edit form ultra short projection.
-Model.defineProjection('DetailUltraShortE', 'components-examples/flexberry-groupedit/settings-example/detail', {
+Model.defineProjection('DetailUltraShortE', 'components-examples/flexberry-groupedit/shared/detail', {
   enumeration: Proj.attr('Enumeration'),
 });
 

@@ -4,8 +4,6 @@
 
 import Ember from 'ember';
 
-const { getOwner } = Ember;
-
 /**
   Service for logging message to applicationLog store.
 
@@ -14,9 +12,28 @@ const { getOwner } = Ember;
  */
 export default Ember.Service.extend({
   /**
+   *   Store for transmit messages to the server
+   *
+   *   @property {Object} _flexberryStore
+   *   @private
+   *   @type DS.Store
+   */
+  _flexberryStore: Ember.inject.service('store'),
+  /**
+   *   Logger switcher on/off true if remote logging service works correctly
+   *
+   *   @property {Boolean} _serverLogEnabled
+   *   @private
+   *   @type Boolean
+   *   @default true
+   */
+  _serverLogEnabled: true,
+  /**
    *   Current log level. Set this property to log appropriate interval of log types
    *
    *   @property {Integer} flexberryLogLevel
+   *   @type Integer
+   *   @default 0
    */
   flexberryLogLevel: 0,
 
@@ -25,34 +42,36 @@ export default Ember.Service.extend({
    *
    * @property logLevelEnums
    * @type Object
+   * @@default { ERROR: 1,WARN: 2, LOG: 3, INFO: 4, DEBUG: 5, DEPRECATION: 6 }
    */
   logLevelEnums: {
-    ERROR: 1, // Log only errors
-    WARN: 2,  // Log warnings and errors
-    LOG: 3, // Log logs, warnings and errors
-    INFO: 4,  // Log infos, logs, warnings and errors
-    DEBUG: 5,// Log debugs, infos, logs, warnings and errors
-    DEPRECATION: 6 // Log deprecations, debugs, infos, logs, warnings and errors
+
+    // Log only errors.
+    ERROR: 1,
+
+    // Log warnings and errors.
+    WARN: 2,
+
+    // Log logs, warnings and errors.
+    LOG: 3,
+
+    // Log infos, logs, warnings and errors.
+    INFO: 4,
+
+    // Log debugs, infos, logs, warnings and errors.
+    DEBUG: 5,
+
+    // Log deprecations, debugs, infos, logs, warnings and errors.
+    DEPRECATION: 6
   },
   /**
    * Inverted to logLevelEnums array
    *
    * @property enumsLoglevel
    * @type Array
+   * @default ['NONE','ERROR','WARN','LOG','INFO','DEBUG','DEPRECATION']
    */
   enumsLoglevel: ['NONE'],
-  /**
-   store for transmit messages to the server
-
-   @property {Object} _flexberryStore
-   */
-  _flexberryStore: null,
-  /**
-   Logger switcher on/off true if remote logging service works correctly
-
-   @property {Boolean} _serverLogEnabled
-   */
-  _serverLogEnabled: true,	//Remote logging service works correctly
 
   /**
     An overridable method called when objects are instantiated.
@@ -62,7 +81,6 @@ export default Ember.Service.extend({
    */
   init() {
     this._super(...arguments);
-    this.set('_flexberryStore', getOwner(this).lookup('service:store'));
     this.set('_serverLogEnabled', true);
     for (let enumName in this.logLevelEnums) {
       let level = this.logLevelEnums[enumName];

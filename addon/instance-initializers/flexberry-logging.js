@@ -137,7 +137,7 @@ export function initialize(applicationInstance) {
    */
   function _sendLog(levelName, message, formattedMessage) {
     let logLevel = flexberryLogging.logLevelEnums[levelName];
-    if (logLevel <= flexberryLogging.flexberryLogLevel) {	
+    if (logLevel <= flexberryLogging.flexberryLogLevel) {
       flexberryLogging.flexberryLogger(logLevel, levelName, message, formattedMessage);
     }
   }

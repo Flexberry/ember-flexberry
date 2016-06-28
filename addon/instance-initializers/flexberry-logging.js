@@ -12,11 +12,11 @@ import Ember from 'ember';
 export function initialize(applicationInstance) {
 
   /**
-   *  flexberry-logging service for transmit error/warning/log/info/debug/deprecation messages to  store and save its on server as i-i-s-caseberry-logging-objects-application-log object
-   *
-   * @property flexberryLogging
-   * @type Object Ember.Service
-   * @default service:flexberry-logging
+      flexberry-logging service for transmit error/warning/log/info/debug/deprecation messages to  store and save its on server as i-i-s-caseberry-logging-objects-application-log object
+
+     @property flexberryLogging
+     @type Object Ember.Service
+     @default service:flexberry-logging
    */
   let flexberryLogging = applicationInstance.lookup('service:flexberry-logging');
 
@@ -30,25 +30,25 @@ export function initialize(applicationInstance) {
    */
   let flexberryLogLevel = applicationInstance.resolveRegistration('config:environment').APP.flexberryLogLevel;
 
-  if (flexberryLogLevel === undefined) {	//if not set
-    flexberryLogLevel = 0;	//switch off Logging
+  if (flexberryLogLevel === undefined) {
+    flexberryLogLevel = 0;
   }
 
   flexberryLogging.flexberryLogLevel = flexberryLogLevel;
   if (flexberryLogLevel === 0) {
-    return;	// Do nothing
+    return;
   }
 
   /**
-  * Replacement error handlers on RSVP stage
-  * Do nothing. Error is handled by onerror
+    Replacement error handlers on RSVP stage
+    Do nothing. Error is handled by onerror
   */
   Ember.RSVP.on('error', function() {
   });
 
   /**
-  * Replacement error handlers on error stage
-  * Do nothing. Error is handled by onerror
+    Replacement error handlers on error stage
+    Do nothing. Error is handled by onerror
   */
   Ember.Logger.error = function (error) {
     _sendError(error);
@@ -66,7 +66,7 @@ export function initialize(applicationInstance) {
    */
   Ember.Logger.warn = function () {
     let message = _mergeArguments(...arguments);
-    if (message.substr(0, 12) === 'DEPRECATION:') {	//deprecation send to log level DEPRECATION
+    if (message.substr(0, 12) === 'DEPRECATION:') {
       _sendLog('DEPRECATION', message, '');
     } else {
       _sendLog('WARN', message, '');

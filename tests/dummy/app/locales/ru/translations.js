@@ -335,6 +335,22 @@ Ember.$.extend(true, translations, {
     'application-log': {
       'caption': 'Пример регистрации ошибок и сообщений в логах',
       'placeholder': 'Выбрать уровень логирования',
+      'assert': 'Assert',
+      'error': 'Error',
+      'throw': 'Throw',
+      'warn': 'Warn',
+      'log': 'Log',
+      'info': 'Info',
+      'debug': 'Debug',
+      'deprecation': 'Deprection',
+      'assertMessage': 'Тестирование логирования неуспешного выполнения оператора assert()',
+      'errorMessage': 'Тестирование логирования сообщений об ошибке',
+      'throwMessage': 'Тестирование логирования генерации исключительной ситуации оператором throw',
+      'warnMessage': 'Тестирование логирования сообщений уровня предупреждений (Warn)',
+      'logMessage': 'Тестирование логирования сообщений уровня логов (Log)',
+      'infoMessage': 'Тестирование логирования информационный сообщений (Info)',
+      'debugMessage': 'Тестирование логирования отладочный сообщений (Debug)',
+      'deprecationMessage': 'Тестирование логирования сообщений об устарелости или несоответсвия текущим стандартам (Deprecation)'
     },
 
     'components-examples': {

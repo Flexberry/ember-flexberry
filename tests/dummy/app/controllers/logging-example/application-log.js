@@ -1,8 +1,17 @@
 import Ember from 'ember';
 import ListFormController from 'ember-flexberry/controllers/i-i-s-caseberry-logging-objects-application-log-l';
+import { translationMacro as t } from 'ember-i18n';
 const { getOwner } = Ember;
 
 export default ListFormController.extend({
+  /**
+  Static incremented value to create uniqie message number
+
+   @property flexberryLoggingService
+   @type String[]
+   */
+  _messageNumber: 0,
+
   /**
   Flexberry Logging Service
 
@@ -11,12 +20,17 @@ export default ListFormController.extend({
    */
   flexberryLoggingService: Ember.inject.service('flexberry-logging'),
 
-  _messageNumber: 0,
+  /**
+  Current logging level
 
+  @property logLevel
+  @type Integer
+   */
   logLevel: 0,
 
   /**
-    Available test application level settings
+    List of available test application level settings: [ '0 OFF', 1: 'ERRORs', 2: 'ERRORs, WARNs', ... ].
+    First symbol - number of logging level, followed by list list of logging levels.
 
     @property settings
     @type String[]
@@ -27,101 +41,109 @@ export default ListFormController.extend({
    Default choise in settings
 
    @property text
-   @type String[]
+   @type String
    */
   text: '',
 
   /**
    List buttons describers for Supported actions
+
+   @property customButtons
+   @type Object[]
    */
-  customButtons:  [{
-      buttonName: 'Assert',
+  customButtons:  Ember.computed ('i18n.locale', function() {
+    let ret = [{
+      buttonName: this.get('i18n').t ('forms.application-log.assert'),
       buttonAction: 'assertAction',
       buttonClasses: 'ui orange button'
     }, {
-      buttonName: 'Error',
+      buttonName: this.get('i18n').t ('forms.application-log.error'),
       buttonAction: 'errorAction',
       buttonClasses: 'ui orange button'
     }, {
-      buttonName: 'Throw',
+      buttonName: this.get('i18n').t ('forms.application-log.throw'),
       buttonAction: 'throwAction',
       buttonClasses: 'ui orange button'
     }, {
-      buttonName: 'Warn',
+      buttonName: this.get('i18n').t ('forms.application-log.warn'),
       buttonAction: 'warnAction',
       buttonClasses: 'ui teal button'
 
     }, {
-      buttonName: 'Log',
+      buttonName: this.get('i18n').t ('forms.application-log.log'),
       buttonAction: 'logAction',
       buttonClasses: 'ui teal button'
     }, {
-      buttonName: 'Info',
+      buttonName: this.get('i18n').t ('forms.application-log.info'),
       buttonAction: 'infoAction',
       buttonClasses: 'ui teal button'
     }, {
-      buttonName: 'Debug',
+      buttonName: this.get('i18n').t ('forms.application-log.debug'),
       buttonAction: 'debugAction',
       buttonClasses: 'ui yellow button'
 
     }, {
-      buttonName: 'Deprecation',
+      buttonName: this.get('i18n').t ('forms.application-log.deprecation'),
       buttonAction: 'deprecationAction',
       buttonClasses: 'ui yellow button'
-    }],
+    }];
+    return ret;
+  }),
 
   _router: undefined,
 
   /**
-   *    Selected jQuery object, containing HTML of confirm modal dialog.
-   *
-   *    @property confirmModalDialog
-   *    @type Object
-   *    @default null
-   */
+  Selected jQuery object, containing HTML of confirm modal dialog.
+
+  @property confirmModalDialog
+  @type Object
+  @default undefined
+  */
   confirmModalDialog: undefined,
 
   /**
-   *    Content to be displayed in confirm modal dialog.
-   *    It will be displayed only if some confirm needs.
-   *
-   *    @property confirmModalDialogContent
-   *    @type String
-   *    @default 't('components.flexberry-file.confirm-dialog-content')'
+  Content to be displayed in confirm modal dialog.
+  It will be displayed only if some confirm needs.
+
+  @property confirmModalDialogContent
+  @type String
+  @default ''
    */
   confirmModalDialogContent: '',
 
   /**
-   *    Category to be passed in action confirm modal dialog.
-   *
-   *    @property confirmModalDialogCategory
-   *    @type String
-   *    @default ''
+  Category to be passed in action confirm modal dialog: 'Error', 'Warn', 'Log', 'Info', ...
+
+  @property confirmModalDialogCategory
+  @type String
+  @default ''
    */
   confirmModalDialogCategory: '',
 
   init() {
-    this._router = getOwner(this).lookup('router:main');
-    this.logLevel = this.get('flexberryLoggingService').flexberryLogLevel;
+    this.set('_router', getOwner(this).lookup('router:main'));
+    this.set('logLevel', this.get('flexberryLoggingService').flexberryLogLevel);
     let enumsLoglevel = this.get('flexberryLoggingService').enumsLoglevel;
-    this.settings[0] = '0: OFF';
+    let settings  = ['0: OFF'];
     for (let level = 1; level < enumsLoglevel.length; level++) {
-      this.settings[level] = level + ': ' + enumsLoglevel.slice(1, level + 1).join('s, ') + 's';
+      settings[level] = level + ': ' + enumsLoglevel.slice(1, level + 1).join('s, ') + 's';
     }
 
-    this.text = this.settings[this.logLevel];
+    this.set('settings', settings);
+    this.set('text', this.settings[this.logLevel]);
   },
 
   /**
-    Supported actions
- */
+  Supported actions
+   */
+
   actions: {
     /**
      j hghhjl*k
 
      */
     setLogLevel(choosed) {
-      this.logLevel = parseInt(choosed.substr(0, 1));
+      this.set('logLevel', parseInt(choosed.substr(0, 1)));
       this.get('flexberryLoggingService').flexberryLogLevel = this.logLevel;
     },
 
@@ -165,8 +187,7 @@ jhghhjlk
     },
 
     /**
-     * jhghhjlk
-     *
+       jhghhjlk
      */
     deprecationAction() {
       if (this.logLevel < 6) {
@@ -178,8 +199,7 @@ jhghhjlk
     },
 
     /**
-     * jhghhjlk
-     *
+       jhghhjlk
      */
     debugAction() {
       if (this.logLevel < 5) {
@@ -216,8 +236,7 @@ jhghhjlk
     },
 
     /**
-     * jhghhjlk
-     *
+       jhghhjlk
      */
     warnAction() {
       if (this.logLevel < 2) {
@@ -261,12 +280,9 @@ jhghhjlk
     },
 
     /**
-     *    Close confirm modal dialog.
-     *
-     *    @method hideConfirmModalDialog
-     *    @param {String} confirmCaption Confirm caption (window header caption).
-     *    @param {String} confirmContent Confirm content (window body content).
-     *    @returns {String} Confirm content.
+          Close confirm modal dialog.
+
+          @method closeDialog
      */
     closeDialog() {
       if (this.confirmModalDialog === undefined) {
@@ -281,7 +297,8 @@ jhghhjlk
   },
 
   makeAssert() {
-    let message = this._getMessageNumber() + 'Assert invocation testing';
+    let i18n = this.get('i18n');
+    let message = this._getMessageNumber() + i18n.t('forms.application-log.assertMessage');
     try {
       Ember.assert(message, false);
     } catch (e) {
@@ -295,7 +312,7 @@ jhghhjlk
     try {
       eval('error_operator');
     } catch (e) {
-      e.message = this._getMessageNumber() + e.message;
+      e.message = this._getMessageNumber() + i18n.t('forms.application-log.errortMessage') + e.message;
       Ember.Logger.error(e);
       this._router.router.refresh();
     }
@@ -304,7 +321,7 @@ jhghhjlk
 
   makeThrow() {
     try {
-      let message = this._getMessageNumber() + 'Throw invocation testing';
+      let message = this._getMessageNumber() + i18n.t('forms.application-log.throwMessage');
       throw new Error(message);
     } catch (e) {
       Ember.Logger.error(e);
@@ -314,41 +331,41 @@ jhghhjlk
   },
 
   makeDeprecation() {
-    let message = 'DEPRECATION:' + this._getMessageNumber() + 'Deprecation invocation testing';
+    let message = 'DEPRECATION:' + this._getMessageNumber() +  i18n.t('forms.application-log.deprecationMessage');
     Ember.Logger.warn(message);
     this._router.router.refresh();
   },
 
   makeDebug() {
-    let message = this._getMessageNumber() + 'Debug invocation testing';
+    let message = this._getMessageNumber() +  i18n.t('forms.application-log.debugMessage');
     Ember.Logger.debug(message);
     this._router.router.refresh();
   },
 
   makeInfo() {
-    let message = this._getMessageNumber() + 'Info invocation testing';
+    let message = this._getMessageNumber() +  i18n.t('forms.application-log.infoMessage');
     Ember.Logger.info(message);
     this._router.router.refresh();
   },
 
   makeLog() {
-    let message = this._getMessageNumber() + 'Log invocation testing';
+    let message = this._getMessageNumber() +  i18n.t('forms.application-log.logMessage');
     Ember.Logger.log(message);
     this._router.router.refresh();
   },
 
   makeWarn() {
-    let message = this._getMessageNumber() + 'Warning invocation testing';
+    let message = this._getMessageNumber() +  i18n.t('forms.application-log.warnMessage');
     Ember.Logger.warn(message);
     this._router.router.refresh();
   },
 
   /**
-   *    Shows confirm modal dialog.
-   *
-   *    @method showConfirmModalDialog
-   *    @param {String} Confirm category
-   *    @returns {String} Confirm content.
+        Shows confirm modal dialog.
+
+        @method showConfirmModalDialog
+        @param {String} Confirm category
+        @returns {String} Confirm content.
    */
   showConfirmModalDialog(category) {
     if (this.confirmModalDialog === undefined) {
@@ -368,7 +385,7 @@ jhghhjlk
   },
 
   _getMessageNumber() {
-    this._messageNumber += 1;
+    this.set('_messageNumber', this.get('_messageNumber') + 1);
     let ret =  this.get('moment').moment().format('hh:mm:ss a') + ' №' + this._messageNumber + ': ';
     return ret;
   }

@@ -334,6 +334,22 @@ Ember.$.extend(true, translations, {
     'application-log': {
       'caption': 'Logging example',
       'placeholder': 'Select logging level',
+      'assert': 'Assert',
+      'error': 'Error',
+      'throw': 'Throw',
+      'warn': 'Warn',
+      'log': 'Log',
+      'info': 'Info',
+      'debug': 'Debug',
+      'deprecation': 'Deprection',
+      'assertMessage': 'Testing logging failure of the operator assert()',
+      'errorMessage': 'Testing logging error message',
+      'throwMessage': 'Testing logging exception generation by throw operator',
+      'warnMessage': 'Testing logging warning level message (Warn)',
+      'logMessage': 'Testing logging log level message (Log)',
+      'infoMessage': 'Testing logging info level message (Info)',
+      'debugMessage': 'Testing logging debug level message  (Debug)',
+      'deprecationMessage': 'Testing logging deprecation level message (Deprecation)',
     },
     'components-examples': {
       'flexberry-checkbox': {

@@ -334,6 +334,8 @@ Ember.$.extend(true, translations, {
     'application-log': {
       'caption': 'Logging example',
       'placeholder': 'Select logging level',
+      'cancel': 'Cancel',
+      'ok': 'OK',
       'assert': 'Assert',
       'error': 'Error',
       'throw': 'Throw',
@@ -350,6 +352,9 @@ Ember.$.extend(true, translations, {
       'infoMessage': 'Testing logging info level message (Info)',
       'debugMessage': 'Testing logging debug level message  (Debug)',
       'deprecationMessage': 'Testing logging deprecation level message (Deprecation)',
+      'confirmMessage1': 'Current logging level (',
+      'confirmMessage2': ') does not provide remote logging of message category ',
+      'confirmMessage3': '. Continue?'
     },
     'components-examples': {
       'flexberry-checkbox': {

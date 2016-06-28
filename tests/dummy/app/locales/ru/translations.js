@@ -335,6 +335,8 @@ Ember.$.extend(true, translations, {
     'application-log': {
       'caption': 'Пример регистрации ошибок и сообщений в логах',
       'placeholder': 'Выбрать уровень логирования',
+      'cancel': 'Отменить',
+      'ok': 'Выполнить',
       'assert': 'Assert',
       'error': 'Error',
       'throw': 'Throw',
@@ -350,7 +352,10 @@ Ember.$.extend(true, translations, {
       'logMessage': 'Тестирование логирования сообщений уровня логов (Log)',
       'infoMessage': 'Тестирование логирования информационный сообщений (Info)',
       'debugMessage': 'Тестирование логирования отладочный сообщений (Debug)',
-      'deprecationMessage': 'Тестирование логирования сообщений об устарелости или несоответсвия текущим стандартам (Deprecation)'
+      'deprecationMessage': 'Тестирование логирования сообщений об устарелости или несоответсвия текущим стандартам (Deprecation)',
+      'confirmMessage1': 'Текущий уровень логирования (',
+      'confirmMessage2': ') не обеспечивает удаленное логирование сообщений категории ',
+      'confirmMessage3': '. Продолжить?'
     },
 
     'components-examples': {

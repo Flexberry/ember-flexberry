@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import ListFormController from 'ember-flexberry/controllers/i-i-s-caseberry-logging-objects-application-log-l';
-import { translationMacro as t } from 'ember-i18n';
 const { getOwner } = Ember;
 
 export default ListFormController.extend({
@@ -51,39 +50,39 @@ export default ListFormController.extend({
    @property customButtons
    @type Object[]
    */
-  customButtons:  Ember.computed ('i18n.locale', function() {
+  customButtons:  Ember.computed('i18n.locale', function() {
     let ret = [{
-      buttonName: this.get('i18n').t ('forms.application-log.assert'),
+      buttonName: this.get('i18n').t('forms.application-log.assert'),
       buttonAction: 'assertAction',
       buttonClasses: 'ui orange button'
     }, {
-      buttonName: this.get('i18n').t ('forms.application-log.error'),
+      buttonName: this.get('i18n').t('forms.application-log.error'),
       buttonAction: 'errorAction',
       buttonClasses: 'ui orange button'
     }, {
-      buttonName: this.get('i18n').t ('forms.application-log.throw'),
+      buttonName: this.get('i18n').t('forms.application-log.throw'),
       buttonAction: 'throwAction',
       buttonClasses: 'ui orange button'
     }, {
-      buttonName: this.get('i18n').t ('forms.application-log.warn'),
+      buttonName: this.get('i18n').t('forms.application-log.warn'),
       buttonAction: 'warnAction',
       buttonClasses: 'ui teal button'
 
     }, {
-      buttonName: this.get('i18n').t ('forms.application-log.log'),
+      buttonName: this.get('i18n').t('forms.application-log.log'),
       buttonAction: 'logAction',
       buttonClasses: 'ui teal button'
     }, {
-      buttonName: this.get('i18n').t ('forms.application-log.info'),
+      buttonName: this.get('i18n').t('forms.application-log.info'),
       buttonAction: 'infoAction',
       buttonClasses: 'ui teal button'
     }, {
-      buttonName: this.get('i18n').t ('forms.application-log.debug'),
+      buttonName: this.get('i18n').t('forms.application-log.debug'),
       buttonAction: 'debugAction',
       buttonClasses: 'ui yellow button'
 
     }, {
-      buttonName: this.get('i18n').t ('forms.application-log.deprecation'),
+      buttonName: this.get('i18n').t('forms.application-log.deprecation'),
       buttonAction: 'deprecationAction',
       buttonClasses: 'ui yellow button'
     }];
@@ -120,6 +119,11 @@ export default ListFormController.extend({
    */
   confirmModalDialogCategory: '',
 
+  /**
+    Initialize properties
+
+    @method init
+   */
   init() {
     this.set('_router', getOwner(this).lookup('router:main'));
     this.set('logLevel', this.get('flexberryLoggingService').flexberryLogLevel);
@@ -133,23 +137,23 @@ export default ListFormController.extend({
     this.set('text', this.settings[this.logLevel]);
   },
 
-  /**
-  Supported actions
-   */
-
   actions: {
     /**
-     j hghhjl*k
+      Handler to set current logging level.
 
+      @method actions.setLogLevel
+      @param {String} choosed case string
      */
+
     setLogLevel(choosed) {
       this.set('logLevel', parseInt(choosed.substr(0, 1)));
       this.get('flexberryLoggingService').flexberryLogLevel = this.logLevel;
     },
 
     /**
-jhghhjlk
+     Handler to emulate failure of the operator assert.
 
+      @method actions.assertAction
      */
     assertAction() {
       if (this.logLevel < 1) {
@@ -161,8 +165,9 @@ jhghhjlk
     },
 
     /**
-jhghhjlk
+     Handler to emulate syntax error generation.
 
+      @method actions.errorAction
      */
     errorAction() {
       if (this.logLevel < 1) {
@@ -174,8 +179,9 @@ jhghhjlk
     },
 
     /**
-     j hghh*jlk
+     Handler to emulate exception generation by throw operator.
 
+     @method actions.throwAction
      */
     throwAction() {
       if (this.logLevel < 1) {
@@ -187,8 +193,10 @@ jhghhjlk
     },
 
     /**
-       jhghhjlk
-     */
+     Handler to emulate deprecation level message.
+
+     @method actions.deprecationAction
+    */
     deprecationAction() {
       if (this.logLevel < 6) {
         this.showConfirmModalDialog('Deprecation');
@@ -199,7 +207,9 @@ jhghhjlk
     },
 
     /**
-       jhghhjlk
+     Handler to emulate debug level message.
+
+     @method actions.debugAction
      */
     debugAction() {
       if (this.logLevel < 5) {
@@ -211,8 +221,9 @@ jhghhjlk
     },
 
     /**
-jhghhjlk
+     Handler to emulate info level message.
 
+     @method actions.infoAction
   */
     infoAction() {
       if (this.logLevel < 4) {
@@ -223,8 +234,9 @@ jhghhjlk
       this.makeInfo();
     },
     /**
-jhghhjlk
+     Handler to emulate log level message.
 
+     @method actions.logAction
      */
     logAction() {
       if (this.logLevel < 3) {
@@ -236,7 +248,9 @@ jhghhjlk
     },
 
     /**
-       jhghhjlk
+     Handler to emulate warn level message
+
+     @method actions.warnAction
      */
     warnAction() {
       if (this.logLevel < 2) {
@@ -247,6 +261,12 @@ jhghhjlk
       this.makeWarn();
     },
 
+    /**
+      Handler called on confirmation of insuffience current Logging level.
+
+      @method actions.confirmed
+      @param {String} name of the message level: Assert, Error, Throw, ...
+     */
     confirmed(category) {
       switch (category) {
         case 'Assert':
@@ -280,9 +300,9 @@ jhghhjlk
     },
 
     /**
-          Close confirm modal dialog.
+      Handler to close confirm modal dialog on cancel confirmation.
 
-          @method closeDialog
+      @method actions.closeDialog
      */
     closeDialog() {
       if (this.confirmModalDialog === undefined) {
@@ -296,6 +316,12 @@ jhghhjlk
 
   },
 
+  /**
+     Method to emulate failure of the operator assert.
+     It is called from assertAction or confirmed
+
+     @method makeAssert
+    */
   makeAssert() {
     let i18n = this.get('i18n');
     let message = this._getMessageNumber() + i18n.t('forms.application-log.assertMessage');
@@ -308,7 +334,13 @@ jhghhjlk
 
   },
 
+  /**
+    Method to emulate syntax error generation.
+
+    @method makeError
+    */
   makeError() {
+    let i18n = this.get('i18n');
     try {
       eval('error_operator');
     } catch (e) {
@@ -319,7 +351,13 @@ jhghhjlk
 
   },
 
+  /**
+    Method to emulate exception generation by throw operator.
+
+    @method makeThrow
+    */
   makeThrow() {
+    let i18n = this.get('i18n');
     try {
       let message = this._getMessageNumber() + i18n.t('forms.application-log.throwMessage');
       throw new Error(message);
@@ -330,42 +368,72 @@ jhghhjlk
 
   },
 
+  /**
+    Method to emulate deprecation level message.
+
+    @method makeDeprecation
+   */
   makeDeprecation() {
+    let i18n = this.get('i18n');
     let message = 'DEPRECATION:' + this._getMessageNumber() +  i18n.t('forms.application-log.deprecationMessage');
     Ember.Logger.warn(message);
     this._router.router.refresh();
   },
 
+  /**
+  Method
+
+  @method makeDebug
+  */
   makeDebug() {
+    let i18n = this.get('i18n');
     let message = this._getMessageNumber() +  i18n.t('forms.application-log.debugMessage');
     Ember.Logger.debug(message);
     this._router.router.refresh();
   },
 
+  /**
+    Method
+
+    @method makeInfo
+   */
   makeInfo() {
+    let i18n = this.get('i18n');
     let message = this._getMessageNumber() +  i18n.t('forms.application-log.infoMessage');
     Ember.Logger.info(message);
     this._router.router.refresh();
   },
 
+  /**
+    Method
+
+    @method makeLog
+   */
   makeLog() {
+    let i18n = this.get('i18n');
     let message = this._getMessageNumber() +  i18n.t('forms.application-log.logMessage');
     Ember.Logger.log(message);
     this._router.router.refresh();
   },
 
+  /**
+    Method
+
+    @method makeWarn
+   */
   makeWarn() {
+    let i18n = this.get('i18n');
     let message = this._getMessageNumber() +  i18n.t('forms.application-log.warnMessage');
     Ember.Logger.warn(message);
     this._router.router.refresh();
   },
 
   /**
-        Shows confirm modal dialog.
+    Shows confirm modal dialog.
 
-        @method showConfirmModalDialog
-        @param {String} Confirm category
-        @returns {String} Confirm content.
+    @method showConfirmModalDialog
+    @param {String} Confirm category
+    @returns {String} Confirm content.
    */
   showConfirmModalDialog(category) {
     if (this.confirmModalDialog === undefined) {
@@ -373,20 +441,29 @@ jhghhjlk
       this.confirmModalDialog.modal('setting', 'closable', false);
     }
 
-    let confirmContent = 'Текущий уровень отладки (' +
+    let i18n = this.get('i18n');
+    let confirmContent = i18n.t('forms.application-log.confirmMessage1') +
       this.logLevel +
-      ') не обеспечивает удаленное логирование сообщений категории ' +
-      category +
-      '. Продолжить?';
+      i18n.t('forms.application-log.confirmMessage2') +
+      '`' + category + '`' +
+      i18n.t('forms.application-log.confirmMessage3');
     this.set('confirmModalDialogContent', confirmContent);
     this.set('confirmModalDialogCategory', category);
     this.confirmModalDialog.modal('show');
     return confirmContent;
   },
 
+  /**
+  Form uniq message number to avoid lost same messages.
+  If several message have same content logging service send only first to avoid unterminated circle on error on sending stage.
+  Message number consist of current number and current time.
+
+  @method _getMessageNumber
+  @returns {String} Uniq header.
+  */
   _getMessageNumber() {
     this.set('_messageNumber', this.get('_messageNumber') + 1);
-    let ret =  this.get('moment').moment().format('hh:mm:ss a') + ' №' + this._messageNumber + ': ';
+    let ret =  '№' + this._messageNumber + '@' +  this.get('moment').moment().format('hh:mm:ss a')  + ': ';
     return ret;
   }
 });

@@ -234,8 +234,20 @@ Ember.$.extend(true, translations, {
             'validation': {
               'caption': 'Валидация',
               'title': ''
-            }
-          }
+            },
+          },
+          'polymorphic-example': {
+            'caption': 'Пример полиморфных связей',
+            'title': '',
+            'ember-flexberry-dummy-test-poly-child-list': {
+              'caption': 'Дочерний элемент',
+              'title': ''
+            },
+            'ember-flexberry-dummy-test-poly-list': {
+              'caption': 'Мастер',
+              'title': ''
+            },
+          },
         }
       }
     },

@@ -1,0 +1,23 @@
+<h3></h3>
+<div class="row">
+  {{flexberry-objectlistview
+    modelName="ember-flexberry-dummy-test-poly-child"
+    modelProjection=modelProjection
+    editFormRoute="ember-flexberry-dummy-test-poly-child-edit"
+    content=model
+    createNewButton=true
+    refreshButton=true
+    sorting=computedSorting
+    orderable=true
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+  }}
+</div>

@@ -1,0 +1,73 @@
+<h3 class="ui header">{{title}}</h3>
+
+{{#if errorMessages}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type='error'
+      closeable=true
+      visible=true
+      title='Error occurred'
+      message=currentError
+    }}
+  {{/each}}
+{{/if}}
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        <button type="submit" class="ui positive button" {{action 'save'}}>
+          {{t "forms.edit-form.save-button-text"}}
+        </button>
+        {{#unless model.isNew}}
+          <button type="submit" class="ui negative button" {{action 'delete'}}>
+            {{t "forms.edit-form.delete-button-text"}}
+          </button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button" {{action 'close'}}>
+        {{t "forms.edit-form.close-button-text"}}
+      </button>
+    </div>
+  </div>
+  <div class="field">
+  {{#if model.errors.pole}}
+  <span style="color:red">
+    {{model.errors.pole}}
+  </span>
+  {{/if}}
+  {{
+  flexberry-field
+  placeholder='(no value)'
+  readonly=readonly
+  required=true
+  value=model.pole
+  class=(if model.errors.pole 'error' '')
+  label=''
+  }}
+  {{flexberry-validationmessage error=model.errors.pole pointing="pointing"}}
+</div>
+
+<div class="field">
+  {{#if model.errors.childPole}}
+  <span style="color:red">
+    {{model.errors.childPole}}
+  </span>
+  {{/if}}
+  {{
+  flexberry-field
+  placeholder='(no value)'
+  readonly=readonly
+  required=true
+  value=model.childPole
+  class=(if model.errors.childPole 'error' '')
+  label=''
+  }}
+  {{flexberry-validationmessage error=model.errors.childPole pointing="pointing"}}
+</div>
+
+</form>

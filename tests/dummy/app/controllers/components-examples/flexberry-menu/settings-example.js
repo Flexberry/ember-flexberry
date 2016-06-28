@@ -10,6 +10,7 @@ export default Ember.Controller.extend({
       } else {
         this.set('currentItem', clickedMenu.data('flexberry-menu'));
       }
+
       clickedMenu.popup({
         content: 'This menu item has been clicked',
         position: 'top right',

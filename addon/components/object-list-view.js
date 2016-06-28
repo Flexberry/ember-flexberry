@@ -713,7 +713,7 @@ export default FlexberryBaseComponent.extend(
       let confirmDeleteRow = this.get('confirmDeleteRow');
       if (confirmDeleteRow) {
         Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
-        if (!confirmDeleteRow(recordWithKey.data)) {
+        if (!confirmDeleteRow()) {
           return;
         }
       }

@@ -508,6 +508,68 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Hook that can be used to confirm delete row.
+
+    @example
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRow=(action 'confirmDeleteRow')
+        ...
+      }}
+      ```
+
+      ```javascript
+      // app/controllers/example.js
+      ...
+      actions: {
+        ...
+        confirmDeleteRow() {
+          return confirm('You sure?');
+        }
+        ...
+      }
+      ...
+      ```
+
+    @method confirmDeleteRow
+    @return {Boolean} If `true` then delete row, else cancel.
+  */
+  confirmDeleteRow: undefined,
+
+  /**
+    Hook that can be used to confirm delete rows.
+
+    @example
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRows=(action 'confirmDeleteRows')
+        ...
+      }}
+      ```
+
+      ```javascript
+      // app/controllers/example.js
+      ...
+      actions: {
+        ...
+        confirmDeleteRows() {
+          return confirm('You sure?');
+        }
+        ...
+      }
+      ...
+      ```
+
+    @method confirmDeleteRows
+    @return {Boolean} If `true` then delete selected rows, else cancel.
+  */
+  confirmDeleteRows: undefined,
+
+  /**
     An overridable method called when objects are instantiated.
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
    */

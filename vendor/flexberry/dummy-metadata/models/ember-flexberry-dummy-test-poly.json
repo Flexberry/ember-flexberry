@@ -1,0 +1,46 @@
+﻿{
+  "modelName": "ember-flexberry-dummy-test-poly",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "pole",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    }
+  ],
+  "belongsTo": [],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "TestPolyEdit",
+      "modelName": "ember-flexberry-dummy-test-poly",
+      "attrs": [
+        {
+          "name": "pole",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    },
+    {
+      "name": "TestPolyList",
+      "modelName": "ember-flexberry-dummy-test-poly",
+      "attrs": [
+        {
+          "name": "pole",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    }
+  ]
+}

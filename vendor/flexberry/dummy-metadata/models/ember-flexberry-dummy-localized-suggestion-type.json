@@ -42,12 +42,14 @@
   "belongsTo": [
     {
       "polymorphic": false,
+      "presence": true,
       "name": "localization",
       "relatedTo": "ember-flexberry-dummy-localization",
       "inverse": null
     },
     {
       "polymorphic": false,
+      "presence": true,
       "name": "suggestionType",
       "relatedTo": "ember-flexberry-dummy-suggestion-type",
       "inverse": "localizedTypes"

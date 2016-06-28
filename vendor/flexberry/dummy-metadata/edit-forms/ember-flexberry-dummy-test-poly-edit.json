@@ -1,0 +1,12 @@
+﻿{
+  "propertyLookup": [],
+  "caption": null,
+  "name": "EmberFlexberryDummyTestPolyEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-test-poly",
+      "modelProjection": "TestPolyEdit"
+    }
+  ]
+}

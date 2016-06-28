@@ -70,18 +70,21 @@
   "belongsTo": [
     {
       "polymorphic": false,
+      "presence": true,
       "name": "editor1",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     },
     {
       "polymorphic": false,
+      "presence": true,
       "name": "type",
       "relatedTo": "ember-flexberry-dummy-suggestion-type",
       "inverse": null
     },
     {
       "polymorphic": false,
+      "presence": true,
       "name": "author",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null

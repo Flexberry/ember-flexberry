@@ -4,4 +4,5 @@
   <span style="color:red">{{model.errors.<%= name %>}}</span>
   {{/if}}
   {{flexberry-dropdown items=(enum-captions '<%= type %>') value=model.<%= name %> readonly=<%= readonly %>}}
+  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
 </div>

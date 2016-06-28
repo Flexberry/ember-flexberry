@@ -5,7 +5,11 @@ export default Ember.Controller.extend({
     onMenuItemClick(e) {
       let clickedMenu = Ember.$(e.delegateTarget);
       let clickedMenuItem = Ember.$(e.currentTarget);
-      this.set('currentItem', clickedMenuItem.data('flexberry-menuitem.item'));
+      if (e.currentTarget) {
+        this.set('currentItem', clickedMenuItem.data('flexberry-menuitem.item'));
+      } else {
+        this.set('currentItem', clickedMenu.data('flexberry-menu'));
+      }
       clickedMenu.popup({
         content: 'This menu item has been clicked',
         position: 'top right',

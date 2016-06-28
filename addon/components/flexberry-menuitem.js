@@ -98,6 +98,9 @@ export default FlexberryBaseComponent.extend({
     let item = this.get('item');
     if (this.get('tagName') !== '') {
       this.$().data('flexberry-menuitem.item', item);
+    } else {
+      let parentView = this.get('parentView');
+      parentView.$().data('flexberry-menu', item);
     }
   },
 

@@ -1293,17 +1293,9 @@ export default FlexberryBaseComponent.extend(
   */
   _deleteRows(componentName, immediately) {
     if (componentName === this.get('componentName')) {
-      let selectedRecords = this.get('selectedRecords');
-      let confirmDeleteRows = this.get('confirmDeleteRows');
-      if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows(selectedRecords)) {
-          return;
-        }
-      }
-
-      let count = selectedRecords.length;
       this.send('dismissErrorMessages');
+      let selectedRecords = this.get('selectedRecords');
+      let count = selectedRecords.length;
       selectedRecords.forEach((item, index, enumerable) => {
         Ember.run.once(this, function() {
           this._deleteRecord(item, immediately);

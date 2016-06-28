@@ -3,9 +3,15 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   actions: {
     onMenuItemClick(e) {
-      let clickedMenuItem = Ember.$(e.delegateTarget);
-      this.set('currentItem', clickedMenuItem.data('flexberry-menu'));
-      clickedMenuItem.popup({
+      let clickedMenu = Ember.$(e.delegateTarget);
+      let clickedMenuItem = Ember.$(e.currentTarget);
+      if (e.currentTarget) {
+        this.set('currentItem', clickedMenuItem.data('flexberry-menuitem.item'));
+      } else {
+        this.set('currentItem', clickedMenu.data('flexberry-menu'));
+      }
+
+      clickedMenu.popup({
         content: 'This menu item has been clicked',
         position: 'top right',
         color: 'teal',
@@ -20,10 +26,10 @@ export default Ember.Controller.extend({
         }
       });
 
-      clickedMenuItem.popup('show');
+      clickedMenu.popup('show');
 
       window.setTimeout((function() {
-        clickedMenuItem.popup('hide');
+        clickedMenu.popup('hide');
       }).bind(this), 3000);
     }
   },

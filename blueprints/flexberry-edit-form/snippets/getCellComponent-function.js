@@ -4,5 +4,6 @@
 <%= bodySwitchBindingPath %>
       }
     }
+
     return this._super(...arguments);
   }

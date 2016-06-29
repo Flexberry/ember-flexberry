@@ -14,9 +14,9 @@ export default Ember.Controller.extend({
   /**
     Currently opened modal dialog DOM element.
 
-    @private
     @property _openedModalDialog
     @type <a href="http://api.jquery.com/Types/#jQuery">JQueryObject</a>
+    @private
   */
   _openedModalDialog: undefined,
 
@@ -52,9 +52,9 @@ export default Ember.Controller.extend({
       Handles modal dialog creation.
       It saves reference to created dialog's DOM element to a controllers property (to make it possible to close it later).
 
-      @public
       @method actions.createdModalDialog
       @param {<a href="http://api.jquery.com/Types/#jQuery">JQueryObject</a>} modalDialog Created modal dialog's DOM element.
+      @public
     */
     createdModalDialog(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
@@ -64,8 +64,8 @@ export default Ember.Controller.extend({
       Handles corresponding route's willTransition action.
       It closes modal dialog if it is opened (if Ember uses hash location type, modal dialog won't be closed automatically).
 
-      @public
       @method actions.routeWillTransition
+      @public
     */
     routeWillTransition() {
       let openedDialog = this.get('_openedModalDialog');

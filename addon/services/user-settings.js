@@ -16,9 +16,9 @@ export default Ember.Service.extend({
   /**
     Ember data store.
 
-    @private
     @property _store
     @type DS.Store
+    @private
   */
   _store: Ember.inject.service('store'),
 
@@ -216,11 +216,11 @@ export default Ember.Service.extend({
   /**
     Deletes user settings record.
 
-    @private
     @method _deleteExistingRecord
     @param {Object} moduleName Module name of looked for record.
     @param {String} settingName Setting name of looked for record.
-    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array
+    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array.
+    @private
   */
   _deleteExistingRecord: function(moduleName, settingName) {
     // TODO: add search by username.
@@ -258,12 +258,12 @@ export default Ember.Service.extend({
   /**
     Looks for already created user settings record.
 
-    @private
     @method _getExistingRecord
     @param {Object} moduleName Module name of looked for record.
     @param {String} settingName Setting name of looked for record.
     @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} A promise that returns founded record
     or `undefined` if there is no such setting.
+    @private
   */
   _getExistingRecord(moduleName, settingName) {
     // TODO: add search by username.
@@ -298,10 +298,10 @@ export default Ember.Service.extend({
   /**
     Looks for all created user settings records.
 
-    @private
     @method _getExistingRecord
     @param {Object} moduleName Module name of looked for record.
     @return {Promise} A promise that returns found record or `undefined` if there is no such setting.
+    @private
   */
   _getExistingRecords(moduleName) {
     // TODO: add search by username.

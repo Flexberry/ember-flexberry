@@ -35,7 +35,7 @@ export default EmberResolver.extend({
     Checks if template or class with given full name is known and could be resolved.
 
     @method isKnown
-    @param {String} fillName Resource full name (with path inside type-related directory).
+    @param {String} fullName Resource full name (with path inside type-related directory).
     @return {Boolean} Flag: indicates whether given resource is known by application or not.
   */
   isKnown(fullName) {

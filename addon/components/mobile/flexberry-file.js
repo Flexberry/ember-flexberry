@@ -1,6 +1,6 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import Ember from 'ember';
 import FlexberryFile from './../flexberry-file';
@@ -16,20 +16,20 @@ export default FlexberryFile.extend({
     Flag: whether component is mobile or not.
     Used in base class for class names bindings.
 
-    @private
     @property _isMobile
     @type Boolean
     @default true
+    @private
   */
   _isMobile: true,
 
   /**
     Items for component's menu.
 
-    @private
-    @readonly
+    @readOnly
     @property _menuItems
     @type Object[]
+    @private
   */
   _menuItems: Ember.computed('showPreview', 'readonly', 'i18n.locale', function() {
     let menuSubItems = [];
@@ -69,10 +69,9 @@ export default FlexberryFile.extend({
       Handles click on menu item of selected file.
 
       @method actions.onMenuItemClick
-      @public
-
       @param {Object} e Information about selected menu item.
       @param {Object} [e.data] Data of selected menu item.
+      @public
     */
     onMenuItemClick(e) {
       // TODO: Move collapse menu logic into flexberry-menu component,

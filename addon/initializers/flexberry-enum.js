@@ -6,7 +6,7 @@
   Registers some options for 'enum' type (to force application not to instantiate enums).
 
   @for ApplicationInitializer
-  @method enum.initialize
+  @method flexberryEnum.initialize
   @param {<a href="http://emberjs.com/api/classes/Ember.Application.html">Ember.Application</a>} application Ember application.
 */
 export function initialize(application) {

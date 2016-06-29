@@ -296,11 +296,11 @@ export default Ember.Service.extend({
   /**
     Stores given message to application log.
 
-    @private
     @method _storeToApplicationLog
     @param {String} category Message category: 'ERROR', 'WARN', 'LOG', 'INFO', 'DEBUG', 'DEPRECATION'.
     @param {String} message Message itself.
     @param {String} formattedMessage Full message content in JSON format.
+    @private
   */
   _storeToApplicationLog(category, message, formattedMessage) {
     if (!this.get('enabled') ||

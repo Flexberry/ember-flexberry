@@ -25,6 +25,7 @@ export default Ember.Service.extend(Ember.Evented, {
     (for example 'ipad-landscape', 'ipad', 'tablet-landscape', 'tablet', 'mobile-landscape', 'mobile').
     @property {String[]} _cache.pathPrefixes.portrait  Cached path prefixes for 'portrait' orientation
     (for example 'ipad-portrait', 'ipad', 'tablet-portrait', 'tablet', 'mobile-portrait', 'mobile').
+    @private
   */
   _cache: {
     orientation: null,
@@ -236,8 +237,8 @@ export default Ember.Service.extend(Ember.Evented, {
   /**
     Handles window's 'resize' & 'orientationchange' events.
 
-    @private
     @method _onOrientationChange
+    @private
   */
   _onOrientationChange: function() {
     let previousOrientation = this.get('_cache.orientation');

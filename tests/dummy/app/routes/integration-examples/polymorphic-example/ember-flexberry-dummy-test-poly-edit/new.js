@@ -18,7 +18,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @type String
     @default 'ember-flexberry-dummy-test-poly'
   */
-  modelName: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly',
+  modelName: 'ember-flexberry-dummy-test-poly',
 
   /**
     Name of template to be rendered.
@@ -27,5 +27,5 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @type String
     @default 'ember-flexberry-dummy-test-poly-edit'
   */
-  templateName: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-edit',
+  templateName: 'ember-flexberry-dummy-test-poly-edit',
 });

@@ -15,7 +15,7 @@ export default ListFormRoute.extend({
 
     @property modelName
     @type String
-    @default 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly'
+    @default 'ember-flexberry-dummy-test-poly'
    */
-  modelName: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly'
+  modelName: 'ember-flexberry-dummy-test-poly'
 });

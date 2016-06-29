@@ -1308,44 +1308,6 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
-    Hook that executes before deleting the record.
-
-     @example
-       ```handlebars
-       <!-- app/templates/employees.hbs -->
-       {{flexberry-objectlistview
-         ...
-         beforeDeleteRecord=(action 'beforeDeleteRecord')
-         ...
-       }}
-       ```
-
-       ```js
-       // app/controllers/employees.js
-       import ListFormController from './list-form';
-
-       export default ListFormController.extend({
-         actions: {
-           beforeDeleteRecord(record, data) {
-             if (record.get('myProperty')) {
-               data.cancel = true;
-             }
-           }
-         }
-       });
-       ```
-
-    @method beforeDeleteRecord
-
-    @param {DS.Model} record Deleting record
-    @param {Object} data Metadata
-    @param {Boolean} [data.cancel=false] Flag for canceling deletion
-    @param {Boolean} [data.immediately] See {{#crossLink "ObjectListView/immediateDelete:property"}}{{/crossLink}}
-                                        property for details
-  */
-  beforeDeleteRecord: null,
-
-  /**
     Delete the record.
 
     @method _deleteRecord

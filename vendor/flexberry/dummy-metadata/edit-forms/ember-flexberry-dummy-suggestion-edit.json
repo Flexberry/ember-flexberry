@@ -1,22 +1,51 @@
 ﻿{
   "propertyLookup": [
     {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
       "relationName": "Type",
       "projection": "SuggestionTypeList"
     },
     {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
       "relationName": "Author",
       "projection": "ApplicationUserList"
     },
     {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
       "relationName": "Editor1",
       "projection": "ApplicationUserList"
     },
     {
+      "master": "suggestion",
+      "displayAttributeName": null,
+      "required": true,
+      "relationName": "Files.Suggestion",
+      "projection": "SuggestionList"
+    },
+    {
+      "master": "applicationUser",
+      "displayAttributeName": "name",
+      "required": true,
       "relationName": "UserVotes.ApplicationUser",
       "projection": "ApplicationUserList"
     },
     {
+      "master": "suggestion",
+      "displayAttributeName": null,
+      "required": true,
+      "relationName": "UserVotes.Suggestion",
+      "projection": "SuggestionList"
+    },
+    {
+      "master": "author",
+      "displayAttributeName": "name",
+      "required": true,
       "relationName": "Comments.Author",
       "projection": "ApplicationUserList"
     }

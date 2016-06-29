@@ -11,15 +11,7 @@
       "defaultValue": ""
     }
   ],
-  "belongsTo": [
-    {
-      "polymorphic": false,
-      "presence": true,
-      "name": "testPoly",
-      "relatedTo": "ember-flexberry-dummy-test-poly",
-      "inverse": null
-    }
-  ],
+  "belongsTo": [],
   "hasMany": [],
   "projections": []
 }

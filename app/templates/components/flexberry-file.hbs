@@ -1,58 +1,58 @@
-<div class="ui fluid action input">
-  <input type="file" name="files[]" id={{fileInputId}} class="flexberry-file-file-input" style="display:none" />
-  {{!-- value=(get this "fileName") is a way to get one way binding, so input events will not cause value mutation --}}
+<div class="ui {{class}} action input">
+  <input type="file" name="files[]" id={{_fileInputId}} class="flexberry-file-file-input" style="display:none" />
+  {{!-- value=(get this "_fileName") is a way to get one way binding, so input events will not cause _fileName mutation --}}
   {{input
     type="text"
     class="flexberry-file-filename-input"
     readonly="readonly"
     placeholder=placeholder
-    value=(get this "fileName")
+    value=(get this "_fileName")
   }}
   {{#unless readonly}}
-    {{#if addButtonIsVisible}}
+    {{#if _addButtonIsVisible}}
       <label
-        class="flexberry-file-add-button ui icon {{buttonClass}} {{unless addButtonIsEnabled "disabled"}} button"
+        class="flexberry-file-add-button ui icon {{buttonClass}} {{unless _addButtonIsEnabled "disabled"}} button"
         title={{t "components.flexberry-file.add-button-title"}}
-        for={{fileInputId}}
+        for={{_fileInputId}}
         {{action "addButtonClick" on="click" preventDefault=false}}>
         <i class="add outline square icon"></i>
       </label>
     {{/if}}
-    {{#if removeButtonIsVisible}}
+    {{#if _removeButtonIsVisible}}
       <label
-        class="flexberry-file-remove-button ui icon {{buttonClass}} {{unless removeButtonIsEnabled "disabled"}} button"
+        class="flexberry-file-remove-button ui icon {{buttonClass}} {{unless _removeButtonIsEnabled "disabled"}} button"
         title={{t "components.flexberry-file.remove-button-title"}}
         {{action "removeButtonClick" on="click" preventDefault=false}}>
         <i class="trash outline icon"></i>
       </label>
     {{/if}}
-    {{#if uploadButtonIsVisible}}
+    {{#if _uploadButtonIsVisible}}
       <label
-        class="flexberry-file-upload-button ui icon {{buttonClass}} {{unless uploadButtonIsEnabled "disabled"}} {{if uploadIsInProgress "loading"}} button"
+        class="flexberry-file-upload-button ui icon {{buttonClass}} {{unless _uploadButtonIsEnabled "disabled"}} {{if _uploadIsInProgress "loading"}} button"
         title={{t "components.flexberry-file.upload-button-title"}}
         {{action "uploadButtonClick" on="click" preventDefault=false}}>
         <i class="upload outline icon"></i>
       </label>
     {{/if}}
   {{/unless}}
-  {{#if downloadButtonIsVisible}}
+  {{#if _downloadButtonIsVisible}}
     <label
-      class="flexberry-file-download-button ui icon {{buttonClass}} {{unless downloadButtonIsEnabled "disabled"}} button"
+      class="flexberry-file-download-button ui icon {{buttonClass}} {{unless _downloadButtonIsEnabled "disabled"}} button"
       title={{t "components.flexberry-file.download-button-title"}}
       {{action "downloadButtonClick" on="click" preventDefault=false}}>
       <i class="download outline icon"></i>
     </label>
   {{/if}}
 </div>
-{{#if (and showPreview hasFile)}}
+{{#if (and showPreview _hasFile)}}
     <div class="flexberry-file-image-preview-wrapper ui segment" {{action "viewLoadedImage"}}>
-      {{#unless previewDownloadIsInProgress}}
+      {{#unless _previewDownloadIsInProgress}}
         <img
           class="flexberry-file-image-preview ui small centered image"
           src={{_previewImageAsBase64String}}
           alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
       {{/unless}}
-      <div class="ui {{if previewDownloadIsInProgress "active" ""}} loader"></div>
+      <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
     </div>
 {{/if}}
 <div class="flexberry-file-download-iframes-container" style="display: none;">
@@ -61,11 +61,11 @@
 <div class="flexberry-file-error-modal-dialog ui small basic modal">
   <div class="ui icon header">
     <i class="file icon"></i>
-    {{errorModalDialogCaption}}
+    {{_errorModalDialogCaption}}
   </div>
   <div class="content">
     <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
-      {{errorModalDialogContent}}
+      {{_errorModalDialogContent}}
     </div>
   </div>
   <div class="center aligned ui grid">

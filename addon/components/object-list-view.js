@@ -58,15 +58,6 @@ export default FlexberryBaseComponent.extend(
   _columnWidthsUserSettingName: 'OlvColumnWidths',
 
   /**
-    Service to work with user settings on server.
-
-    @property _userSettingsService
-    @private
-    @type Service
-  */
-  _userSettingsService: Ember.inject.service('user-settings-service'),
-
-  /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
 
@@ -955,12 +946,11 @@ export default FlexberryBaseComponent.extend(
       settingName: this.get('_columnWidthsUserSettingName')
     };
 
-    let getSettingPromise = this.get('_userSettingsService').getUserSetting(userSetting);
-    getSettingPromise.then(data => {
+    this.get('userSettingsService').getUserSetting(userSetting).then(data => {
       this._setColumnWidths(data);
     });
 
-    // TODO: resolv this problem.
+    // TODO: resolve this problem.
     this.$('.flexberry-dropdown:last').dropdown({
       direction: 'upward'
     });
@@ -1119,7 +1109,7 @@ export default FlexberryBaseComponent.extend(
       settingName: this.get('_columnWidthsUserSettingName'),
     };
 
-    this.get('_userSettingsService').saveUserSetting(userSetting);
+    this.get('userSettingsService').saveUserSetting(userSetting);
   },
 
   /**

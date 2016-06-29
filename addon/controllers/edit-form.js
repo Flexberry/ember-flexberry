@@ -279,7 +279,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     this.onSaveActionStarted();
 
     let savePromise = this.get('model').save().then((model) => {
-      return this.saveHasManyRelationships(model).then(() => {
+      return this._saveHasManyRelationships(model).then(() => {
         this.onSaveActionFulfilled();
         if (close) {
           this.close();

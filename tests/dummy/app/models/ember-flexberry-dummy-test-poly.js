@@ -14,15 +14,18 @@ let Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('TestPolyEdit', 'ember-flexberry-dummy-test-poly', {
-  selfPole: Proj.attr(''),
-  relation: Proj.belongsTo('ember-flexberry-dummy-test-poly-base', '', {
-    pole: Proj.attr('')
-  }, { hidden: true })
+  selfPole: Proj.attr('Self Pole'),
+  relation: Proj.belongsTo('ember-flexberry-dummy-test-poly-base', 'Pole', {
+    pole: Proj.attr('Pole')
+  }, { displayMemberPath: 'pole' })
 });
 
 // List form projection.
 Model.defineProjection('TestPolyList', 'ember-flexberry-dummy-test-poly', {
-  selfPole: Proj.attr('')
+  selfPole: Proj.attr('SelfPole'),
+  relation: Proj.belongsTo('ember-flexberry-dummy-test-poly-base', 'Pole', {
+    pole: Proj.attr('Pole')
+  }, { displayMemberPath: 'pole' })
 });
 
 export default Model;

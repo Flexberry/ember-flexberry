@@ -19,8 +19,8 @@ Model.defineProjection('TestPolyChildEdit', 'ember-flexberry-dummy-test-poly-chi
 
 // List form projection.
 Model.defineProjection('TestPolyChildList', 'ember-flexberry-dummy-test-poly-child', {
-  pole: Proj.attr(''),
-  childPole: Proj.attr('')
+  pole: Proj.attr('Pole'),
+  childPole: Proj.attr('ChildPole')
 });
 
 export default Model;

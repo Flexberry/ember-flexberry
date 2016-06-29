@@ -5,6 +5,27 @@ const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
+  'models': {
+    'ember-flexberry-dummy-suggestion': {
+      'projections': {
+        'SuggestionL': {
+          'address': {
+            'caption': 'Адрес'
+          },
+          'text': {
+            'caption': 'Текст'
+          },
+          'date': {
+            'caption': 'Дата'
+          },
+          'votes': {
+            'caption': 'Голоса'
+          }
+        }
+      }
+    }
+  },
+
   'application-name': 'Тестовый стенд ember-flexberry',
 
   'forms': {
@@ -23,7 +44,7 @@ Ember.$.extend(true, translations, {
             'title': 'Меню'
           },
           'language-dropdown': {
-            'placeholder': 'Выберете язык'
+            'placeholder': 'Выберите язык'
           }
         }
       },

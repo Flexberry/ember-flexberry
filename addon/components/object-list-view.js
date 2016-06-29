@@ -7,6 +7,7 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
+import { getProjectionAttrCaption } from '../utils/model-functions';
 
 /**
   Object list view component.
@@ -368,7 +369,7 @@ export default FlexberryBaseComponent.extend(
       return cols;
     }
 
-    var userSettings = this.currentController ? this.currentController.userSettings : undefined;
+    let userSettings = this.currentController ? this.currentController.userSettings : undefined;
     if (userSettings && userSettings.colsOrder !== undefined) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {
@@ -1169,7 +1170,7 @@ export default FlexberryBaseComponent.extend(
         case 'belongsTo':
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
-            let column = this._createColumn(attr, bindingPath);
+            let column = this._createColumn(attr, attrName, bindingPath);
 
             if (column.cellComponent.componentName === 'object-list-view-cell') {
               if (attr.options.displayMemberPath) {
@@ -1192,7 +1193,7 @@ export default FlexberryBaseComponent.extend(
           }
 
           let bindingPath = currentRelationshipPath + attrName;
-          let column = this._createColumn(attr, bindingPath);
+          let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
 
@@ -1210,12 +1211,14 @@ export default FlexberryBaseComponent.extend(
     @method _createColumn
     @private
   */
-  _createColumn(attr, bindingPath) {
+  _createColumn(attr, attrName, bindingPath) {
     // We get the 'getCellComponent' function directly from the controller,
     // and do not pass this function as a component attrubute,
     // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
     // if controller's 'getCellComponent' method call its super method from the base controller.
     let currentController = this.get('currentController');
+    let projection = this.get('modelProjection');
+
     let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
     let cellComponent = this.get('cellComponent');
 
@@ -1225,7 +1228,7 @@ export default FlexberryBaseComponent.extend(
     }
 
     let column = {
-      header: attr.caption,
+      header: getProjectionAttrCaption(this.get('i18n'), projection, attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
     };

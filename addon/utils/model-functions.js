@@ -26,3 +26,25 @@ export function getRelationType(model, relationName) {
   let relationType = relation.type;
   return relationType;
 }
+
+/**
+  Gets the name of caption for projection.
+
+  @method getProjectionAttrCaption
+  @param {Service} i18n i18n service.
+  @param {Object} projection Model projection.
+  @param {String} attrName Name of attribute from projection.
+  @return {String} Name of caption.
+*/
+export function getProjectionAttrCaption(i18n, projection, attrName) {
+  let modelName = projection.modelName;
+  let projectionName = projection.projectionName;
+  let key = 'models.' + modelName + '.projections.' + projectionName + '.' + attrName + '.caption';
+  let nameFromLocales = false;
+
+  if (i18n.exists(key)) {
+    return i18n.t(key);
+  }
+
+  return nameFromLocales || projection.attributes[attrName].caption || Ember.String.capitalize(attrName);
+}

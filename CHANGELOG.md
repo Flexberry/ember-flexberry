@@ -1,6 +1,13 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+##2016-06-29
+### Added
+ObjectlistviewComponent:
+* Add support locales for captions models of projection.
+ModelFunctions:
+* Add `getProjectionAttrCaption` function.
+
 ## 2016-06-27
 ### Added
 FlexberryGroupeditComponent

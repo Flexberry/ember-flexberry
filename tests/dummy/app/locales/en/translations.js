@@ -5,6 +5,27 @@ const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
+  'models': {
+    'ember-flexberry-dummy-suggestion': {
+      'projections': {
+        'SuggestionL': {
+          'address': {
+            'caption': 'Address'
+          },
+          'text': {
+            'caption': 'Text'
+          },
+          'date': {
+            'caption': 'Date'
+          },
+          'votes': {
+            'caption': 'Votes'
+          }
+        }
+      }
+    }
+  },
+
   'application-name': 'Test stand for ember-flexberry',
 
   'forms': {

@@ -4,7 +4,7 @@
   "parentClassName": "TestPolyBase",
   "attrs": [
     {
-      "name": "pole",
+      "name": "childPole",
       "type": "number",
       "flexberryType": "int",
       "notNull": false,
@@ -23,30 +23,15 @@
           "caption": "",
           "hidden": false,
           "index": 0
-        }
-      ],
-      "belongsTo": [
+        },
         {
-          "lookupValue": "Pole",
-          "lookupValueField": "pole",
-          "relationName": "TestPoly",
-          "belongsTo": [],
-          "hidden": false,
-          "attrs": [
-            {
-              "name": "pole",
-              "caption": "",
-              "hidden": true,
-              "index": 2
-            }
-          ],
-          "index": 1,
+          "name": "childPole",
           "caption": "",
-          "name": "testPoly",
-          "relatedTo": "ember-flexberry-dummy-test-poly",
-          "inverse": null
+          "hidden": false,
+          "index": 1
         }
       ],
+      "belongsTo": [],
       "hasMany": []
     },
     {
@@ -58,30 +43,15 @@
           "caption": "",
           "hidden": false,
           "index": 0
-        }
-      ],
-      "belongsTo": [
+        },
         {
-          "lookupValue": "Pole",
-          "lookupValueField": "pole",
-          "relationName": "TestPoly",
-          "belongsTo": [],
-          "hidden": false,
-          "attrs": [
-            {
-              "name": "pole",
-              "caption": "",
-              "hidden": true,
-              "index": 2
-            }
-          ],
-          "index": 1,
+          "name": "childPole",
           "caption": "",
-          "name": "testPoly",
-          "relatedTo": "ember-flexberry-dummy-test-poly",
-          "inverse": null
+          "hidden": false,
+          "index": 1
         }
       ],
+      "belongsTo": [],
       "hasMany": []
     }
   ]

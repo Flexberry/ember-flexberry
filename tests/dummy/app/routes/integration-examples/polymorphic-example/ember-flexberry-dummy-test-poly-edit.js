@@ -16,7 +16,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
 
     @property modelName
     @type String
-    @default 'ember-flexberry-dummy-test-poly'
+    @default 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly'
    */
-  modelName: 'ember-flexberry-dummy-test-poly'
+  modelName: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly'
 });

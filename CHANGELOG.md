@@ -3,7 +3,7 @@
 
 ## 2016-06-29
 ### Added
-FlexberryObjectlistview
+FlexberryObjectlistviewComponent
 * Add property notUseUserSettings to disable userSettings for FlexberryGroupedit and FlexberryLookup
 FlexberryGroupeditComponent
 * Add `beforeDeleteRecord` hook.

@@ -3,24 +3,22 @@
 */
 
 import Ember from 'ember';
-
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
-  Service to work with user settings on server.
+  Service to store/read user settings to/from application storage.
 
   @class UserSettingsService
-  @extends Ember.Service
-  @public
+  @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
 */
 export default Ember.Service.extend({
   /**
-    Current store to request records.
+    Ember data store.
 
     @property _store
-    @private
     @type DS.Store
+    @private
   */
   _store: Ember.inject.service('store'),
 
@@ -29,20 +27,19 @@ export default Ember.Service.extend({
     This flag is readed from config setting `APP.useUserSettingsService` and can be changed programatically later.
 
     @property isUserSettingsServiceEnabled
-    @public
     @type Boolean
     @default false
   */
   isUserSettingsServiceEnabled: false,
 
   /**
-   It deletes user setting from server by setting's and module's names.
+    Deletes given user setting from storage.
 
-   @method deleteUserSetting
-
-   @param {Object} [options] Parameters for user setting getting.
-   @param {String} options.moduleName Name of module to search by.
-   @param {String} options.settingName Setting name to search by.
+    @method deleteUserSetting
+    @param {Object} [options] Parameters for user setting getting.
+    @param {String} options.moduleName Name of module to search by.
+    @param {String} options.settingName Setting name to search by.
+    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array
   */
   deleteUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
@@ -61,20 +58,19 @@ export default Ember.Service.extend({
 
     Ember.assert('Module name is not defined for user setting getting.', moduleName);
     Ember.assert('Setting name is not defined for user setting getting.', settingName);
+
     return this._deleteExistingRecord(moduleName, settingName);
   },
 
   /**
-    It saves user settings.
+    Saves given user setting to storage.
 
     @method saveUserSetting
-    @public
-
     @param {Object} [options] Options.
     @param {String} options.moduleName Name of module for what setting is saved.
     @param {String} options.userSetting User setting data to save.
     @param {String} options.settingName Setting name to save as.
-    @return {Promise} A promise. It returns saving result
+    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} Save operation promise.
   */
   saveUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
@@ -124,14 +120,14 @@ export default Ember.Service.extend({
   },
 
   /**
-    It gets user setting from server by setting's and module's names.
+    Returns user setting from storage.
 
     @method getUserSetting
-
     @param {Object} [options] Parameters for user setting getting.
     @param {String} options.moduleName Name of module to search by.
     @param {String} options.settingName Setting name to search by.
-    @return {Promise} A promise. It returns found result or `undefined` if there is no such setting.
+    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} A promise that returns founded
+    result or `undefined` if there is no such setting.
   */
   getUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
@@ -166,13 +162,13 @@ export default Ember.Service.extend({
   },
 
   /**
-    It gets ALL user setting from server by module's names.
+    Returns all user settings, related to a given module, from storage.
 
-    @method getUserSetting
-
+    @method getUserSettings
     @param {Object} [options] Parameters for user setting getting.
     @param {String} options.moduleName Name of module to search by.
-    @return {Promise} A promise. It returns found settings as { <settingname>: < settingValue>}.
+    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} A promise that returns founded
+    settings as following JSON: { <settingname>: <settingValue> }.
   */
   getUserSettings(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
@@ -206,12 +202,10 @@ export default Ember.Service.extend({
   },
 
   /**
-    It returns the name of current user.
-    It has to be overriden if some authentication is used.
+    Returns current user name.
+    Method must be overridden if application uses some authentication.
 
     @method getCurrentUser
-    @public
-
     @return {String} Current user name.
   */
   getCurrentUser() {
@@ -220,14 +214,13 @@ export default Ember.Service.extend({
   },
 
   /**
-    It deletes user settings record for this moduleName and settingName.
+    Deletes user settings record.
 
     @method _deleteExistingRecord
-    @private
-
     @param {Object} moduleName Module name of looked for record.
     @param {String} settingName Setting name of looked for record.
-    @return {Promise[]} A promise array
+    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array.
+    @private
   */
   _deleteExistingRecord: function(moduleName, settingName) {
     // TODO: add search by username.
@@ -263,14 +256,14 @@ export default Ember.Service.extend({
   },
 
   /**
-    It looks for already created user settings record for this moduleName and settingName.
+    Looks for already created user settings record.
 
     @method _getExistingRecord
-    @private
-
     @param {Object} moduleName Module name of looked for record.
     @param {String} settingName Setting name of looked for record.
-    @return {Promise} A promise. It returns found record or `undefined` if there is no such setting.
+    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} A promise that returns founded record
+    or `undefined` if there is no such setting.
+    @private
   */
   _getExistingRecord(moduleName, settingName) {
     // TODO: add search by username.
@@ -303,13 +296,12 @@ export default Ember.Service.extend({
   },
 
   /**
-    It looks for all created user settings records for this moduleName.
+    Looks for all created user settings records.
 
     @method _getExistingRecord
-    @private
-
     @param {Object} moduleName Module name of looked for record.
-    @return {Promise} A promise. It returns found record or `undefined` if there is no such setting.
+    @return {Promise} A promise that returns found record or `undefined` if there is no such setting.
+    @private
   */
   _getExistingRecords(moduleName) {
     // TODO: add search by username.

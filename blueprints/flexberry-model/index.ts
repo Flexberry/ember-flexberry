@@ -116,7 +116,8 @@ class ModelBlueprint {
     let attrs: string[] = [], validations: string[] = [];
     let templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
     let templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
-    for (let attr of model.attrs) {
+    let attr: metadata.DSattr;
+    for (attr of model.attrs) {
       attrs.push(`${attr.name}: DS.attr('${attr.type}')`);
       if (attr.notNull) {
         if (attr.type === "date") {
@@ -126,7 +127,10 @@ class ModelBlueprint {
         }
       }
     }
-    for (let belongsTo of model.belongsTo) {
+    let belongsTo: metadata.DSbelongsTo;
+    for (belongsTo of model.belongsTo) {
+      if (belongsTo.presence)
+        validations.push(belongsTo.name + ": { presence: true }");
       attrs.push(templateBelongsTo(belongsTo));
     }
     for (let hasMany of model.hasMany) {

@@ -1,0 +1,13 @@
+﻿{
+  "newForm": "ember-flexberry-dummy-test-poly-edit",
+  "editForm": "ember-flexberry-dummy-test-poly-edit",
+  "caption": null,
+  "name": "EmberFlexberryDummyTestPolyList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-test-poly",
+      "modelProjection": "TestPolyList"
+    }
+  ]
+}

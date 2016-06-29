@@ -1,48 +1,47 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 
 /**
- * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support
- * opening current selected image at flexberry-file at modal window.
- *
- * @class FlexberryFileController
- * @extends Ember.Mixin
- * @public
- */
+  Mixin for <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
+  handling {{#crossLink "FlexberryFileComponent"}}flexberry-file{{/crossLink}} actions.
+
+  @class FlexberryFileControllerMixin
+  @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+*/
 export default Ember.Mixin.create({
   /**
-   * Controller for modal window content.
-   *
-   * @property flexberryFileModalController
-   * @type DS.Controller
-   * @default flexberry-file-view-dialog
-   */
+    Controller for modal dialog content.
+
+    @property flexberryFileModalController
+    @type <a href="http://emberjs.com/api/classes/Ember.Controller.html">Controller</a>
+    @default Injected flexberry-file-view-dialog controller.
+  */
   flexberryFileModalController: Ember.inject.controller('flexberry-file-view-dialog'),
 
   /**
-   * Name of template for modal window content.
-   *
-   * @property flexberryFileModalTemplateName
-   * @type String
-   * @default `flexberry-file-view-dialog`
+    Modal dialog content template's name.
+
+    @property flexberryFileModalTemplateName
+    @type String
+    @default 'flexberry-file-view-dialog'
    */
   flexberryFileModalTemplateName: 'flexberry-file-view-dialog',
 
   actions: {
     /**
-     * This method creates modal window to view image preview.
-     *
-     * @method flexberryFileViewImageAction
-     * @public
-     *
-     * @param {Object} selectedFileOptions Information about selected file.
-     * @param {String} [selectedFileOptions.fileSrc] File content to set as source for image tag.
-     * @param {String} [selectedFileOptions.fileName] File name to set as title of modal window.
-     */
-    flexberryFileViewImageAction: function(selectedFileOptions) {
+      Handles {{#crossLink "FlexberryFileComponent"}}flexberry-file{{/crossLink}} viewImageAction:
+      creates modal dialog with selected file preview.
+
+      @public
+      @method actions.flexberryFileViewImageAction
+      @param {Object} selectedFileOptions Information about selected file.
+      @param {String} [selectedFileOptions.fileSrc] File as base64string image data or as URL (to be setted as img tag's 'src' property).
+      @param {String} [selectedFileOptions.fileName] File name to be setted as modal dialog caption.
+    */
+    flexberryFileViewImageAction(selectedFileOptions) {
       let options = Ember.merge({
         fileSrc: undefined,
         fileName: undefined
@@ -67,14 +66,14 @@ export default Ember.Mixin.create({
       this.send('showModalDialog', flexberryFileModalTemplateName, { controller: controller });
     },
 
-    // TODO: try remove this lookup's logic.
     /**
-     * Handles correcponding route's willTransition action.
-     * It sends message about transition to showing lookup modal window controller.
-     *
-     * @method routeWillTransition
-     */
-    routeWillTransition: function() {
+      Handles corresponding route's willTransition action.
+      It sends message about transition to modal dialog's controller.
+
+      @public
+      @method actions.routeWillTransition
+    */
+    routeWillTransition() {
       this.get('flexberryFileModalController').send('routeWillTransition');
     }
   }

@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-06-29
+### Added
+FlexberryGroupeditComponent
+* Add `beforeDeleteRecord` hook.
+
 ## 2016-06-27
 ### Added
 FlexberryGroupeditComponent

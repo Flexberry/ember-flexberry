@@ -77,15 +77,15 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        'logging': {
-          'caption': 'Логирование',
+        'log-service-examples': {
+          'caption': 'Сервис логирования',
           'title': '',
-          'show': {
+          'application-log': {
             'caption': 'Лог приложения',
             'title': ''
           },
-          'log': {
-            'caption': 'Пример',
+          'settings-example': {
+            'caption': 'Пример работы с настройками',
             'title': ''
           }
         },
@@ -336,30 +336,30 @@ Ember.$.extend(true, translations, {
       'caption': 'Типы предложений'
     },
 
-    'application-log': {
-      'caption': 'Пример регистрации ошибок и сообщений в логах',
-      'placeholder': 'Выбрать уровень логирования',
-      'cancel': 'Отменить',
-      'ok': 'Выполнить',
-      'assert': 'Assert',
-      'error': 'Error',
-      'throw': 'Throw',
-      'warn': 'Warn',
-      'log': 'Log',
-      'info': 'Info',
-      'debug': 'Debug',
-      'deprecation': 'Deprection',
-      'assertMessage': 'Тестирование логирования неуспешного выполнения оператора assert()',
-      'errorMessage': 'Тестирование логирования сообщений об ошибке',
-      'throwMessage': 'Тестирование логирования генерации исключительной ситуации оператором throw',
-      'warnMessage': 'Тестирование логирования сообщений уровня предупреждений (Warn)',
-      'logMessage': 'Тестирование логирования сообщений уровня логов (Log)',
-      'infoMessage': 'Тестирование логирования информационный сообщений (Info)',
-      'debugMessage': 'Тестирование логирования отладочный сообщений (Debug)',
-      'deprecationMessage': 'Тестирование логирования сообщений об устарелости или несоответсвия текущим стандартам (Deprecation)',
-      'confirmMessage1': 'Текущий уровень логирования (',
-      'confirmMessage2': ') не обеспечивает удаленное логирование сообщений категории ',
-      'confirmMessage3': '. Продолжить?'
+    'log-service-examples': {
+      'settings-example': {
+        'caption': 'Log-service-examples/settings-example',
+        'setting-column-header-caption': 'Настройка сервиса логирования',
+        'settings-value-column-header-caption': 'Текущее значение настройки',
+        'throw-exception-button-caption': 'Бросить исключение',
+        'reject-rsvp-promise-button-caption': 'Отклонить promise',
+        'ember-assert-button-caption': 'Ember.assert',
+        'ember-logger-error-button-caption': 'Ember.Logger.error',
+        'ember-logger-warn-button-caption': 'Ember.Logger.warn',
+        'ember-deprecate-button-caption': 'Ember.deprecate',
+        'ember-logger-log-button-caption': 'Ember.Logger.log',
+        'ember-logger-info-button-caption': 'Ember.logger.info',
+        'ember-logger-debug-button-caption': 'Ember.Logger.debug',
+        'throw-exception-button-message': 'Брошено исключение',
+        'reject-rsvp-promise-button-message': 'Promise отклонен',
+        'ember-assert-button-message': 'Вызван метод Ember.assert',
+        'ember-logger-error-button-message': 'Вызван метод Ember.Logger.error',
+        'ember-logger-warn-button-message': 'Вызван метод Ember.Logger.warn',
+        'ember-deprecate-button-message': 'Вызван метод Ember.deprecate',
+        'ember-logger-log-button-message': 'Вызван метод Ember.Logger.log',
+        'ember-logger-info-button-message': 'Вызван метод Ember.logger.info',
+        'ember-logger-debug-button-message': 'Вызван метод Ember.Logger.debug'
+      }
     },
 
     'components-examples': {

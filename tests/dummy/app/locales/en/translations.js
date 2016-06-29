@@ -77,15 +77,15 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        'logging': {
-          'caption': 'Logging',
+        'log-service-examples': {
+          'caption': 'Log service',
           'title': '',
-          'show': {
+          'application-log': {
             'caption': 'Application log',
             'title': ''
           },
-          'log': {
-            'caption': 'Example',
+          'settings-example': {
+            'caption': 'Settings example',
             'title': ''
           }
         },
@@ -335,31 +335,33 @@ Ember.$.extend(true, translations, {
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Suggestion types'
     },
-    'application-log': {
-      'caption': 'Logging example',
-      'placeholder': 'Select logging level',
-      'cancel': 'Cancel',
-      'ok': 'OK',
-      'assert': 'Assert',
-      'error': 'Error',
-      'throw': 'Throw',
-      'warn': 'Warn',
-      'log': 'Log',
-      'info': 'Info',
-      'debug': 'Debug',
-      'deprecation': 'Deprection',
-      'assertMessage': 'Testing logging failure of the operator assert()',
-      'errorMessage': 'Testing logging error message',
-      'throwMessage': 'Testing logging exception generation by throw operator',
-      'warnMessage': 'Testing logging warning level message (Warn)',
-      'logMessage': 'Testing logging log level message (Log)',
-      'infoMessage': 'Testing logging info level message (Info)',
-      'debugMessage': 'Testing logging debug level message  (Debug)',
-      'deprecationMessage': 'Testing logging deprecation level message (Deprecation)',
-      'confirmMessage1': 'Current logging level (',
-      'confirmMessage2': ') does not provide remote logging of message category ',
-      'confirmMessage3': '. Continue?'
+
+    'log-service-examples': {
+      'settings-example': {
+        'caption': 'Log-service-examples/settings-example',
+        'setting-column-header-caption': 'Log service setting',
+        'settings-value-column-header-caption': 'Setting current value',
+        'throw-exception-button-caption': 'Throw exception',
+        'reject-rsvp-promise-button-caption': 'Reject promise',
+        'ember-assert-button-caption': 'Ember.assert',
+        'ember-logger-error-button-caption': 'Ember.Logger.error',
+        'ember-logger-warn-button-caption': 'Ember.Logger.warn',
+        'ember-deprecate-button-caption': 'Ember.deprecate',
+        'ember-logger-log-button-caption': 'Ember.Logger.log',
+        'ember-logger-info-button-caption': 'Ember.logger.info',
+        'ember-logger-debug-button-caption': 'Ember.Logger.debug',
+        'throw-exception-button-message': 'Exception thrown',
+        'reject-rsvp-promise-button-message': 'Promise rejected',
+        'ember-assert-button-message': 'Ember.assert called',
+        'ember-logger-error-button-message': 'Ember.Logger.error called',
+        'ember-logger-warn-button-message': 'Ember.Logger.warn called',
+        'ember-deprecate-button-message': 'Ember.deprecate called',
+        'ember-logger-log-button-message': 'Ember.Logger.log called',
+        'ember-logger-info-button-message': 'Ember.logger.info called',
+        'ember-logger-debug-button-message': 'Ember.Logger.debug called'
+      }
     },
+
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {

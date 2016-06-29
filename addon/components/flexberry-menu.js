@@ -82,7 +82,7 @@ export default FlexberryBaseComponent.extend({
     @type Array
     @readOnly
   */
-  classNames: ['flexberry-menu', 'ui', 'floating', 'icon', 'dropdown', 'button'],
+  classNames: ['flexberry-menu', 'ui', 'icon', 'dropdown', 'button'],
 
   /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).

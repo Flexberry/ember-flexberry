@@ -272,6 +272,14 @@ export default FlexberryBaseComponent.extend(
   showDeleteButtonInRow: false,
 
   /**
+    Flag indicates whether to not use userSetting from backend
+    @property notUseUserSettings
+    @type Boolean
+    @default false
+  */
+  notUseUserSettings:false,
+
+  /**
     Flag indicates whether to show helper column or not.
 
     @property showHelperColumn
@@ -362,9 +370,9 @@ export default FlexberryBaseComponent.extend(
     }
 
     let cols = this._generateColumns(projection.attributes);
-    if ('caption' in projection) {
-      // If ObjectListView is defined in flexberry-groupedit dont implement userSettings
-      // This can be determined by presence of caption property in modelProjection
+    if (this.notUseUserSettings === true) {
+      // flexberry-groupedit and lookup-dialog-content set this flag to true and don't use userSettings.
+      // In future release backend can save userSettings for each olv.
       return cols;
     }
 

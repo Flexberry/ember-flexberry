@@ -35,7 +35,7 @@ module.exports = function(environment) {
       },
 
       // Flag: indicates whether to use user settings service or not.
-      useUserSettingsService: false,
+      useUserSettingsService: true,
 
       // Custom property with components settings.
       components: {

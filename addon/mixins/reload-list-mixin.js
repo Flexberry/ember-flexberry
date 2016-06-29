@@ -73,24 +73,19 @@ export default Ember.Mixin.create({
     Ember.assert('page must be greater than zero.', pageNumber > 0);
     Ember.assert('perPage must be greater than zero.', perPageNumber > 0);
 
-    let serializer = store.serializerFor(modelName);
-    Ember.assert(`No serializer defined for model '${modelName}'.`, serializer);
-
-    let sorting = reloadOptions.sorting;
-    let filter = reloadOptions.filter;
-
     let builder = new QueryBuilder(store)
       .from(modelName)
       .selectByProjection(projectionName)
       .top(perPageNumber)
       .skip((pageNumber - 1) * perPageNumber)
-      .count()
-      .orderBy(
-        sorting
-          .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
-          .join(',')
-      );
+      .count();
 
+    let sorting = reloadOptions.sorting.map(i => `${i.propName} ${i.direction}`).join(',');
+    if (sorting) {
+      builder.orderBy(sorting);
+    }
+
+    let filter = reloadOptions.filter;
     let filterPredicate = filter ? this.getFilterPredicate(projection, { filter: filter }) : undefined;
     let resultPredicate = (limitPredicate && filterPredicate) ?
                           new ComplexPredicate(Condition.And, limitPredicate, filterPredicate) :

@@ -12,79 +12,26 @@ import FlexberryFile from './../flexberry-file';
   @extends FlexberryFileComponent
 */
 export default FlexberryFile.extend({
-  actions: {
-    /**
-      Handles click on menu item of selected file.
-
-      @method actions.menuForFileItemClick
-      @public
-
-      @param {Object} e Information about selected menu item.
-      @param {Object} [e.data] Data of selected menu item.
-    */
-    menuForFileItemClick(e) {
-      // TODO: Move collapse menu logic into flexberry-menu component,
-      // make it available through component setting (for example collapseMenuOnItemClick=true).
-      this._collapseMenu();
-
-      if (e.item.isZoomItem) {
-        this.send('viewLoadedImage');
-
-        return;
-      }
-
-      if (e.item.isReplaceItem) {
-        let addButton = this.$('.flexberry-file-add-button');
-        addButton.click();
-
-        return;
-      }
-
-      if (e.item.isDeleteItem) {
-        this.removeFile.call(this, null);
-
-        return;
-      }
-    }
-  },
-
-  /**
-    Components class names bindings.
-
-    @property classNameBindings
-    @type String[]
-    @default ['isMobile:mobile']
-  */
-  classNameBindings: ['isMobile:mobile'],
-
   /**
     Flag: whether component is mobile or not.
     Used in base class for class names bindings.
 
-    @property isMobile
+    @private
+    @property _isMobile
     @type Boolean
     @default true
+  */
+  _isMobile: true,
+
+  /**
+    Items for component's menu.
+
+    @private
     @readonly
-  */
-  isMobile: true,
-
-  /**
-    Flag: indicates whether to show preview element for images or not.
-
-    @property showPreview
-    @type Boolean
-    @default true
-  */
-  showPreview: true,
-
-  /**
-    Menu items for dropdown menu for selected image.
-
-    @property menuForFileItems
+    @property _menuItems
     @type Object[]
-    @readonly
   */
-  menuForFileItems: Ember.computed('showPreview', 'readonly', 'i18n.locale', function() {
+  _menuItems: Ember.computed('showPreview', 'readonly', 'i18n.locale', function() {
     let menuSubItems = [];
     if (this.get('showPreview')) {
       menuSubItems.push({
@@ -116,6 +63,60 @@ export default FlexberryFile.extend({
       items: menuSubItems
     }];
   }),
+
+  actions: {
+    /**
+      Handles click on menu item of selected file.
+
+      @method actions.onMenuItemClick
+      @public
+
+      @param {Object} e Information about selected menu item.
+      @param {Object} [e.data] Data of selected menu item.
+    */
+    onMenuItemClick(e) {
+      // TODO: Move collapse menu logic into flexberry-menu component,
+      // make it available through component setting (for example collapseMenuOnItemClick=true).
+      this._collapseMenu();
+
+      if (e.item.isZoomItem) {
+        this.send('viewLoadedImage');
+
+        return;
+      }
+
+      if (e.item.isReplaceItem) {
+        let addButton = this.$('.flexberry-file-add-button');
+        addButton.click();
+
+        return;
+      }
+
+      if (e.item.isDeleteItem) {
+        this.removeFile();
+
+        return;
+      }
+    }
+  },
+
+  /**
+    Components class names bindings.
+
+    @property classNameBindings
+    @type String[]
+    @default ['isMobile:mobile']
+  */
+  classNameBindings: ['_isMobile:mobile'],
+
+  /**
+    Flag: indicates whether to show preview element for images or not.
+
+    @property showPreview
+    @type Boolean
+    @default true
+  */
+  showPreview: true,
 
   /**
     Handles end of rerender.

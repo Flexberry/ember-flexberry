@@ -9,11 +9,10 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
-
   _idPrefix: 'ColDesc',
-  _userSettingsService: Ember.inject.service('user-settings-service'),
   colsConfigMenu: Ember.inject.service(),
   _router: undefined,
+
   /**
    * model with
    *
@@ -313,9 +312,13 @@ export default FlexberryBaseComponent.extend({
 
   _getSavePromise: function(settingName, colsConfig) {
     this._router = getOwner(this).lookup('router:main');
-    let moduleName  =   this._router.currentRouteName;
-    let savePromise = this.get('_userSettingsService').saveUserSetting({ moduleName: moduleName, settingName: settingName, userSetting: colsConfig });
-    return savePromise;
+    let moduleName  = this._router.currentRouteName;
+
+    return this.get('userSettingsService').saveUserSetting({
+      moduleName: moduleName,
+      settingName: settingName,
+      userSetting: colsConfig
+    });
   },
 
   _getSettings: function() {

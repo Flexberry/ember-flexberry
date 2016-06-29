@@ -1,35 +1,58 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 
 /**
- * Service for devices detection.
- * Uses devicejs with noConflict (see https://github.com/matthewhudson/device.js).
- *
- * @class DeviceService
- * @extends Ember.Service
- * @public
- */
+  Devices detection service.
+  Uses <a href="https://github.com/matthewhudson/device.js">devicejs</a> with noConflict,
+  duplicates all <a href="https://github.com/matthewhudson/device.js">devicejs</a> methods inside service & implements some new methods.
+
+  @class DeviceService
+  @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
+*/
 export default Ember.Service.extend(Ember.Evented, {
   /**
-   * Initializes service.
-   */
-  init: function() {
+    Device service cache.
+
+    @property {Object} _cache
+    @property {String} _cache.orientation Cached orientation ('portrait' or 'landscape').
+    @property {String} _cache.platform Cached platform ('ios', 'windows', 'android', ...).
+    @property {String} _cache.type Cached device type ('desktop', 'phone', 'tablet', or 'tv').
+    @property {Object} _cache.pathPrefixes Cached path prefixes.
+    @property {String[]} _cache.pathPrefixes.landscape  Cached path prefixes for 'landscape' orientation
+    (for example 'ipad-landscape', 'ipad', 'tablet-landscape', 'tablet', 'mobile-landscape', 'mobile').
+    @property {String[]} _cache.pathPrefixes.portrait  Cached path prefixes for 'portrait' orientation
+    (for example 'ipad-portrait', 'ipad', 'tablet-portrait', 'tablet', 'mobile-portrait', 'mobile').
+  */
+  _cache: {
+    orientation: null,
+    platform: null,
+    type: null,
+    pathPrefixes: {
+      landscape: null,
+      portrait: null
+    }
+  },
+
+  /**
+    Initializes service.
+  */
+  init() {
     this._super(...arguments);
 
-    var device = window.device;
+    let device = window.device;
     if (device && device.noConflict) {
       // No conflict devicejs library reference.
-      var devicejs = device.noConflict();
+      let devicejs = device.noConflict();
 
       // Names of devicejs library features.
-      var devicejsPropertiesNames = Object.keys(devicejs);
+      let devicejsPropertiesNames = Object.keys(devicejs);
 
       // Inject devicejs library features into service.
-      for (var i = 0, len = devicejsPropertiesNames.length; i < len; i++) {
-        var propertieName = devicejsPropertiesNames[i];
+      for (let i = 0, len = devicejsPropertiesNames.length; i < len; i++) {
+        let propertieName = devicejsPropertiesNames[i];
         this.set(propertieName, devicejs[propertieName]);
       }
 
@@ -42,23 +65,23 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-   * Destroys service.
-   */
-  willDestroy: function() {
+    Destroys service.
+  */
+  willDestroy() {
     this._super(...arguments);
 
     Ember.$(window).off('resize orientationchange', this._onOrientationChange);
   },
 
   /**
-   * Device orientation.
-   *
-   * @method orientation
-   * @param useCached {Boolean} Flag: indicates whether to use already cached value or not.
-   * @return {String} Returns current device orientation ('landscape' or 'portrait').
-   */
-  orientation: function(useCached) {
-    var orientation;
+    Returns current device orientation.
+
+    @method orientation
+    @param useCached {Boolean} Flag: indicates whether to use already cached value or not.
+    @return {String} Returns current device orientation ('landscape' or 'portrait').
+  */
+  orientation(useCached) {
+    let orientation;
     if (useCached === true && (orientation = this.get('_cache.orientation')) !== null) {
       return orientation;
     }
@@ -70,14 +93,14 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-   * Device platform.
-   *
-   * @method platform
-   * @param useCached {Boolean} Flag: indicates whether to use already cached value or not.
-   * @return {String} Returns device platform ('i-phone', 'i-pad', 'android-phone', 'android-tablet', ...).
-   */
-  platform: function(useCached) {
-    var platform;
+    Returns current device platform.
+
+    @method platform
+    @param useCached {Boolean} Flag: indicates whether to use already cached value or not.
+    @return {String} Returns device platform ('windows', ios', 'android', 'blackberry', 'fxos', 'meego', ...).
+  */
+  platform(useCached) {
+    let platform;
     if (useCached === true && (platform = this.get('_cache.platform')) !== null) {
       return platform;
     }
@@ -104,14 +127,14 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-   * Device type.
-   *
-   * @method type
-   * @param useCached {Boolean} Flag: indicates whether to use already cached value or not.
-   * @return {String} Returns device type ('desktop', 'phone', 'tablet', 'tv', ...).
-   */
-  type: function(useCached) {
-    var type;
+    Returns current device type.
+
+    @method type
+    @param useCached {Boolean} Flag: indicates whether to use already cached value or not.
+    @return {String} Returns device type ('desktop', 'phone', 'tablet', 'tv', ...).
+  */
+  type(useCached) {
+    let type;
     if (useCached === true && (type = this.get('_cache.type')) !== null) {
       return type;
     }
@@ -134,22 +157,24 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-   * Method to get path prefixes for application resources (such as templates, controllers, ...),
-   * related to current platform, device type, and orientation.
-   *
-   * @method pathPrefixes
-   * @param useCached {Boolean} Flag: indicates whether to use already cached value or not.
-   * @return {String[]} Returns path prefixes for application resources (such as templates, components...),
-   * related to current platform, device type, and orientation.
-   */
-  pathPrefixes: function(useCached) {
-    var currentOrientationPathPrefixes;
-    var currentOrientation = this.orientation(useCached);
+    Returns path prefixes for application resources (such as templates, controllers, ...),
+    related to current device platform, type, and orientation.
+
+    @method pathPrefixes
+    @param useCached {Boolean} Flag: indicates whether to use already cached value or not.
+    @return {String[]} Path prefixes for application resources (such as templates, components...),
+    related to current platform, device type, and orientation.
+  */
+  pathPrefixes(useCached) {
+    let currentOrientationPathPrefixes;
+    let currentOrientation = this.orientation(useCached);
+
+    // Return already cached prefixes.
     if (useCached === true && (currentOrientationPathPrefixes = this.get('_cache.pathPrefixes.' + currentOrientation)) !== null) {
       return currentOrientationPathPrefixes;
     }
 
-    var pathPrefixes = { landscape: [], portrait: [] };
+    let pathPrefixes = { landscape: [], portrait: [] };
     if (this.desktop()) {
       // No path prefixes for desktop.
       // Cache and return empty array.
@@ -159,11 +184,11 @@ export default Ember.Service.extend(Ember.Evented, {
       return currentOrientationPathPrefixes;
     }
 
-    var platform = this.platform(useCached);
-    var type = this.type(useCached);
+    let platform = this.platform(useCached);
+    let type = this.type(useCached);
 
     // Path prefix with platform and device type: 'ipad', 'android-tablet', 'windows-phone', etc.
-    var pathPrefixWithPlatformAndType = '';
+    let pathPrefixWithPlatformAndType = '';
     if (this.ios()) {
       pathPrefixWithPlatformAndType = this.ipad() ? 'ipad' : this.ipod() ? 'ipod' : 'iphone';
     } else if (!(Ember.isBlank(platform) || Ember.isBlank(type))) {
@@ -171,17 +196,17 @@ export default Ember.Service.extend(Ember.Evented, {
     }
 
     // Path prefix with device type only: 'tablet', 'phone', 'tv' etc.
-    var pathPrefixWithType = type;
+    let pathPrefixWithType = type;
 
     // Path prefix with common type only: 'mobile' for both tablets and phones etc.
-    var pathPrefixCommon = this.mobile() || this.tablet() ? 'mobile' : '';
+    let pathPrefixCommon = this.mobile() || this.tablet() ? 'mobile' : '';
 
     // Path prefixes without orientation.
-    var pathPrefixesWithoutOrientation = [
+    let pathPrefixesWithoutOrientation = [
         pathPrefixWithPlatformAndType,
         pathPrefixWithType,
         pathPrefixCommon
-    ].filter(function(pathPrefix) {
+    ].filter((pathPrefix) => {
       return !Ember.isBlank(pathPrefix);
     });
 
@@ -190,12 +215,12 @@ export default Ember.Service.extend(Ember.Evented, {
     //   landscape: ['prefix1-landscape', 'prefix1', 'prefix2-landscape', 'prefix2', ...],
     //   portrait: ['prefix1-portrait', 'prefix1', 'prefix2-portrait', 'prefix2', ...]
     // }
-    for (var orientation in pathPrefixes) {
+    for (let orientation in pathPrefixes) {
       if (!pathPrefixes.hasOwnProperty(orientation)) {
         break;
       }
 
-      for (var i = 0, len = pathPrefixesWithoutOrientation.length; i < len; i++) {
+      for (let i = 0, len = pathPrefixesWithoutOrientation.length; i < len; i++) {
         pathPrefixes[orientation].push(pathPrefixesWithoutOrientation[i] + '-' + orientation);
         pathPrefixes[orientation].push(pathPrefixesWithoutOrientation[i]);
       }
@@ -209,36 +234,14 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-   * Device service cache.
-   *
-   * @property {Object} _cache
-   * @property {String} _cache.orientation Cached orientation ('portrait' or 'landscape').
-   * @property {String} _cache.platform Cached platform ('ios', 'windows', 'android', ...).
-   * @property {String} _cache.type Cached device type ('desktop', 'phone', 'tablet', or 'tv').
-   * @property {Object} _cache.pathPrefixes Cached path prefixes.
-   * @property {String[]} _cache.pathPrefixes.landscape  Cached path prefixes for 'landscape' orientation
-   * (for example 'ipad-landscape', 'ipad', 'tablet-landscape', 'tablet', 'mobile-landscape', 'mobile').
-   * @property {String[]} _cache.pathPrefixes.portrait  Cached path prefixes for 'portrait' orientation
-   * (for example 'ipad-portrait', 'ipad', 'tablet-portrait', 'tablet', 'mobile-portrait', 'mobile').
-   */
-  _cache: {
-    orientation: null,
-    platform: null,
-    type: null,
-    pathPrefixes: {
-      landscape: null,
-      portrait: null
-    }
-  },
+    Handles window's 'resize' & 'orientationchange' events.
 
-  /**
-   * Handler for 'resize' & 'orientationchange' events.
-   *
-   * @method _onOrientationChange
-   */
+    @private
+    @method _onOrientationChange
+  */
   _onOrientationChange: function() {
-    var previousOrientation = this.get('_cache.orientation');
-    var currentOrientation = this.orientation(false);
+    let previousOrientation = this.get('_cache.orientation');
+    let currentOrientation = this.orientation(false);
     if (previousOrientation !== currentOrientation) {
       this.trigger('orientationchange', { orientation: currentOrientation });
     }

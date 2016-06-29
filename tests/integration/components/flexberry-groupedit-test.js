@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startApp from '../../helpers/start-app';
 import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/shared/aggregator';
+import UserSettingsService from 'ember-flexberry/services/user-settings';
 
 let App;
 
@@ -12,7 +13,12 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
   beforeEach: function () {
     App = startApp();
     Ember.Component.reopen({
-      i18n: Ember.inject.service('i18n')
+      i18n: Ember.inject.service('i18n'),
+      userSettingsService: Ember.inject.service('user-settings')
+    });
+
+    UserSettingsService.reopen({
+      isUserSettingsServiceEnabled: false
     });
   },
   afterEach: function() {

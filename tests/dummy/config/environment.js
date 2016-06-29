@@ -25,6 +25,15 @@ module.exports = function(environment) {
         api: backendUrl + '/odata'
       },
 
+      // Log service settings.
+      log: {
+        // Flag: indicates whether log service is enabled or not.
+        enabled: true,
+
+        // Flag: indicates whether to store error messages or not.
+        storeErrorMessages: false
+      },
+
       // Flag: indicates whether to use user settings service or not.
       useUserSettingsService: true,
 

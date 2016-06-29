@@ -12,8 +12,6 @@ const { getOwner } = Ember;
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
-  _userSettingsService: Ember.inject.service('user-settings-service'),
-
   modelController: null,
 
   /**
@@ -201,10 +199,10 @@ export default FlexberryBaseComponent.extend({
         removeSettitingTitle: this.get('removeSettitingTitle'),
         listNamedSettings: this.get('listNamedSettings'),
       };
-      let ret = this.get('_userSettingsService').isUserSettingsServiceEnabled ?
+
+      return this.get('userSettingsService').isUserSettingsServiceEnabled ?
         this.get('colsConfigMenu').resetMenu(params) :
         [];
-      return ret;
     }
   ),
 
@@ -256,6 +254,14 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     delete() {
+      let confirmDeleteRows = this.get('confirmDeleteRows');
+      if (confirmDeleteRows) {
+        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        if (!confirmDeleteRows()) {
+          return;
+        }
+      }
+
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
     },
@@ -320,6 +326,8 @@ export default FlexberryBaseComponent.extend({
       let className = iTags.get(0).className;
       let namedSeting = namedSetingSpans.get(0).innerText;
       let moduleName  =   this._router.currentRouteName;
+      let userSettingsService = this.get('userSettingsService');
+
       switch (className) {
         case 'table icon':
           this.send('showConfigDialog');
@@ -328,41 +336,41 @@ export default FlexberryBaseComponent.extend({
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
           let colsConfig = this.listUserSettings[namedSeting];
-          let savePromise = this.currentController.get('_userSettingsService').
-            saveUserSetting({ moduleName: moduleName, settingName: 'DEFAULT', userSetting: colsConfig }); //save as DEFAULT
-          savePromise.then(
-            record => {
-              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
-              } else {
-                this._router.router.refresh();  //Reload current page and records (model) list
-              }
+          userSettingsService.saveUserSetting({
+            moduleName: moduleName,
+            settingName: 'DEFAULT',
+            userSetting: colsConfig
+          }).then(record => {
+            if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+            } else {
+              this._router.router.refresh();  //Reload current page and records (model) list
             }
-          );
+          });
           break;
         case 'setting icon':
           this.send('showConfigDialog', namedSeting);
           break;
         case 'remove icon':
-          this.currentController.get('_userSettingsService').
-          deleteUserSetting({ moduleName: moduleName, settingName: namedSeting }).then(
-            result => {
-              this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSeting);
-              alert('Настройка ' + namedSeting + ' удалена');
-            }
-          );
+          userSettingsService.deleteUserSetting({
+            moduleName: moduleName,
+            settingName: namedSeting
+          }).then(result => {
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSeting);
+            alert('Настройка ' + namedSeting + ' удалена');
+          });
           break;
         case 'remove circle icon':
-          this.currentController.get('_userSettingsService').
-          deleteUserSetting({ moduleName: moduleName, settingName: 'DEFAULT' }).then(
-            record => {
-              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
-              } else {
-                this._router.router.refresh();  //Reload current page and records (model) list
-              }
+          userSettingsService.deleteUserSetting({
+            moduleName: moduleName,
+            settingName: 'DEFAULT'
+          }).then(record => {
+            if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+            } else {
+              this._router.router.refresh();  //Reload current page and records (model) list
             }
-          );
+          });
           break;
       }
     }

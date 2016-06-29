@@ -15,6 +15,7 @@
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
+  confirmDeleteRows=confirmDeleteRows
 }}
 {{object-list-view
   placeholder=placeholder
@@ -43,9 +44,8 @@
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   configurateRow=this.attrs.configurateRow
-  confirmDeleteRow=this.attrs.confirmDeleteRow
-  confirmDeleteRows=this.attrs.confirmDeleteRows
-  beforeDeleteRecord=this.attrs.beforeDeleteRecord
+  confirmDeleteRow=confirmDeleteRow
+  beforeDeleteRecord=beforeDeleteRecord
   action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize

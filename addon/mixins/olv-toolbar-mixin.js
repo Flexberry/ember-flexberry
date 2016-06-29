@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 // TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
-  _userSettingsService: Ember.inject.service('user-settings-service'),
+  _userSettingsService: Ember.inject.service('user-settings'),
 
   actions: {
     showConfigDialog: function(settingName) {

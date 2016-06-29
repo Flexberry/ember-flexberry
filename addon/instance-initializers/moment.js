@@ -1,21 +1,30 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 
-export function initialize(applicationInstance) {
-  var i18n = applicationInstance.lookup('service:i18n');
-  var moment = applicationInstance.lookup('service:moment');
+/**
+  Configures a <a href="https://github.com/stefanpenner/ember-moment">moment service</a> for current application instance.
+  Binds <a href="https://github.com/stefanpenner/ember-moment#globally-set-locale">moment's locale</a>
+  to <a href="https://github.com/jamesarosen/ember-i18n/wiki/Doc:-Setting-the-Locale">i18n.locale</a> property.
 
-  var changeMomentLocale = function() {
-    var locale = i18n.get('locale');
+  @for ApplicationInstanceInitializer
+  @method moment.initialize
+  @param {<a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html">Ember.ApplicationInstance</a>} applicationInstance Ember application instance.
+*/
+export function initialize(applicationInstance) {
+  let i18n = applicationInstance.lookup('service:i18n');
+  let moment = applicationInstance.lookup('service:moment');
+
+  let changeMomentLocale = function() {
+    let locale = i18n.get('locale');
 
     moment.changeLocale(locale);
     window.moment.locale(locale);
   };
 
-  var changeMomentDefaultFormat = function() {
+  let changeMomentDefaultFormat = function() {
     window.moment.defaultFormat = moment.get('defaultFormat');
   };
 

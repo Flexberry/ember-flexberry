@@ -1,5 +1,13 @@
 ﻿{
-  "propertyLookup": [],
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Relation",
+      "projection": ""
+    }
+  ],
   "caption": null,
   "name": "EmberFlexberryDummyTestPolyEdit",
   "attrs": [],

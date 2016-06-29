@@ -6,13 +6,13 @@ import Ember from 'ember';
 
 /**
   Configures a <a href="https://github.com/jamesarosen/ember-i18n">i18n service</a> for current application instance.
+  Sets browser's current locale to <a href="https://github.com/jamesarosen/ember-i18n/wiki/Doc:-Setting-the-Locale">i18n.locale</a> property.
 
-  @namespace instance-initializers
+  @for ApplicationInstanceInitializer
   @method i18n.initialize
-  @param {<a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html">Ember.ApplicationInstance</a>} applicationInstance Ember application instance
+  @param {<a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html">Ember.ApplicationInstance</a>} applicationInstance Ember application instance.
 */
 export function initialize(applicationInstance) {
-  // Set i18n locale to browser's current locale.
   let i18n = applicationInstance.lookup('service:i18n');
   if (Ember.isNone(i18n)) {
     return;

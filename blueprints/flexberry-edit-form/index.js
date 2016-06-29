@@ -69,6 +69,9 @@ var EditFormBlueprint = (function () {
             this.functionGetCellComponent = lodash.template(snippet)({ bodySwitchBindingPath: bodySwitchBindingPath.join("\n") });
             this.functionGetCellComponent = lodash.trimEnd(this.functionGetCellComponent, "\n");
         }
+        else {
+            this.functionGetCellComponent = null;
+        }
     }
     EditFormBlueprint.prototype.readSnippetFile = function (fileName, fileExt) {
         return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));

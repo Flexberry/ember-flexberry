@@ -81,6 +81,8 @@ class EditFormBlueprint {
       let snippet = this.readSnippetFile("getCellComponent-function", "js");
       this.functionGetCellComponent = lodash.template(snippet)({ bodySwitchBindingPath: bodySwitchBindingPath.join("\n") });
       this.functionGetCellComponent = lodash.trimEnd(this.functionGetCellComponent, "\n");
+    } else {
+      this.functionGetCellComponent = null;
     }
   }
 

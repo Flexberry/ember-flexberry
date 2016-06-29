@@ -37,14 +37,13 @@ export function getRelationType(model, relationName) {
   @return {String} Name of caption.
 */
 export function getProjectionAttrCaption(i18n, projection, attrName) {
-  let modelName = projection.modelName;
-  let projectionName = projection.projectionName;
-  let key = 'models.' + modelName + '.projections.' + projectionName + '.' + attrName + '.caption';
-  let nameFromLocales = false;
+  let currentAttr = projection.attributes[attrName];
+  let key = currentAttr.options.locale;
+  let nameFromLocale = false;
 
-  if (i18n.exists(key)) {
-    return i18n.t(key);
+  if (key !== undefined) {
+    nameFromLocale = i18n.t(key);
   }
 
-  return nameFromLocales || projection.attributes[attrName].caption || Ember.String.capitalize(attrName);
+  return nameFromLocale || projection.attributes[attrName].caption || Ember.String.capitalize(attrName);
 }

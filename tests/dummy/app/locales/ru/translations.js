@@ -21,6 +21,19 @@ Ember.$.extend(true, translations, {
           'votes': {
             'caption': 'Голоса'
           }
+        },
+        'SuggestionE': {
+          'address': {
+            'caption': 'Адрес'
+          },
+          'userVotes': {
+            'voteType': {
+              'caption': 'Тип голосования'
+            },
+            'applicationUser': {
+              'caption': 'Пользователь'
+            }
+          }
         }
       }
     }

@@ -1,7 +1,15 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
+/**
+  Injects a <a href="https://github.com/stefanpenner/ember-moment">moment service</a> into current application
+  components, controllers, models, routes, and views.
+
+  @for ApplicationInitializer
+  @method moment.initialize
+  @param {<a href="http://emberjs.com/api/classes/Ember.Application.html">Ember.Application</a>} application Ember application.
+*/
 export function initialize(application) {
   [
     'component',

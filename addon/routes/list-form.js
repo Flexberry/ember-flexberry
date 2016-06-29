@@ -2,7 +2,6 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
 import LimitedRouteMixin from '../mixins/limited-route';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
@@ -38,9 +37,14 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
   @uses SortableRouteMixin
   @uses LimitedRouteMixin
   @uses ReloadListMixin
+  @uses FlexberryObjectlistviewRouteMixin
 */
-export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRouteMixin, LimitedRouteMixin, ReloadListMixin, FlexberryObjectlistviewRouteMixin, {
-  _userSettingsService: Ember.inject.service('user-settings-service'),
+export default ProjectedModelFormRoute.extend(
+  PaginatedRouteMixin,
+  SortableRouteMixin,
+  LimitedRouteMixin,
+  ReloadListMixin,
+  FlexberryObjectlistviewRouteMixin, {
   userSettings: {},
   listUserSettings: {},
   sorting: [],
@@ -59,7 +63,7 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
     let limitPredicate =
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
-    let userSettingPromise = this.get('_userSettingsService').getUserSettings({ moduleName: moduleName })  //get sorting parameters from DEFAULT userSettings
+    let userSettingPromise = this.get('userSettingsService').getUserSettings({ moduleName: moduleName })  //get sorting parameters from DEFAULT userSettings
     .then(_listUserSettings => {
       if (!_listUserSettings) { //UserSetting  switch off
         _listUserSettings = { DEFAULT: { sorting: this.deserializeSortingParam(params.sort) } };
@@ -110,7 +114,7 @@ export default ProjectedModelFormRoute.extend(PaginatedRouteMixin, SortableRoute
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
 
     @method setupController
-    @param {Ember.Controller} controller
+    @param {<a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>} controller
     @param {Object} model
   */
   setupController: function(controller, model) {

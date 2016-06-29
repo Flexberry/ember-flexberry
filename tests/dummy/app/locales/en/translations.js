@@ -22,7 +22,11 @@ Ember.$.extend(true, translations, {
             'caption': '',
             'title': 'Menu'
           },
+          'user-settings-service-checkbox': {
+            'caption': 'Use user settings service'
+          },
           'language-dropdown': {
+            'caption': 'Application language',
             'placeholder': 'Choose language'
           }
         }

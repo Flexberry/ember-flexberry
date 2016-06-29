@@ -68,7 +68,8 @@ export default Ember.Mixin.create({
   */
   sort: Ember.computed.oneWay('sortDefaultValue'),
 
-  _userSettingsService: Ember.inject.service('user-settings-service'),
+  _userSettingsService: Ember.inject.service('user-settings'),
+
   _router: undefined,
 
   /**

@@ -1,6 +1,11 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-06-29
+### Added
+FlexberryObjectlistview
+* Add property notUseUserSettings to disable userSettings for FlexberryGroupedit and FlexberryLookup
+
 ## 2016-06-27
 ### Added
 FlexberryGroupeditComponent

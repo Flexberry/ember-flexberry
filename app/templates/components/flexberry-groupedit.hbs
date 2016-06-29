@@ -4,6 +4,7 @@
   buttonClass=buttonClass
   createNewButton=createNewButton
   deleteButton=deleteButton
+  confirmDeleteRows=confirmDeleteRows
 }}
 {{object-list-view
   placeholder=placeholder
@@ -34,8 +35,8 @@
   action='groupEditRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
-  confirmDeleteRow=this.attrs.confirmDeleteRow
-  confirmDeleteRows=this.attrs.confirmDeleteRows
+  confirmDeleteRow=confirmDeleteRow
+  beforeDeleteRecord=beforeDeleteRecord
   searchForContentChange=searchForContentChange
   immediateDelete=false
 }}

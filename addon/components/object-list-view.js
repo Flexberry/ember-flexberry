@@ -638,74 +638,6 @@ export default FlexberryBaseComponent.extend(
   */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
-  /**
-    Hook that can be used to confirm delete row.
-
-    @example
-      ```handlebars
-      <!-- app/templates/your-template.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRow=(action 'confirmDeleteRow')
-        ...
-      }}
-      ```
-
-      ```js
-      // app/controllers/your-controller.js
-      ...
-      actions: {
-        ...
-        confirmDeleteRow(row) {
-          return confirm('You sure?');
-        }
-        ...
-      }
-      ...
-      ```
-
-    @method confirmDeleteRow
-    @param {Object} row Row
-    @return {Boolean} If `true` then delete row else cancel delete
-  */
-  confirmDeleteRow: null,
-
-  /**
-    Hook that can be used to confirm delete rows.
-
-    @example
-      ```handlebars
-      <!-- app/templates/your-template.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRows=(action 'confirmDeleteRows')
-        ...
-      }}
-      ```
-
-      ```js
-      // app/controllers/your-controller.js
-      ...
-      actions: {
-        ...
-        confirmDeleteRows(selectedRows) {
-          if (selectedRows.length < 5) {
-            return confirm('You sure?');
-          } else {
-            return true;
-          }
-        }
-        ...
-      }
-      ...
-      ```
-
-    @method confirmDeleteRows
-    @param {Array} selectedRows Selected rows
-    @return {Boolean} If `true` then delete selected rows else cancel delete
-  */
-  confirmDeleteRows: null,
-
   actions: {
     /**
       This action is called when user click on row.
@@ -772,7 +704,7 @@ export default FlexberryBaseComponent.extend(
       let confirmDeleteRow = this.get('confirmDeleteRow');
       if (confirmDeleteRow) {
         Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
-        if (!confirmDeleteRow(recordWithKey.data)) {
+        if (!confirmDeleteRow()) {
           return;
         }
       }
@@ -1351,17 +1283,9 @@ export default FlexberryBaseComponent.extend(
   */
   _deleteRows(componentName, immediately) {
     if (componentName === this.get('componentName')) {
-      let selectedRecords = this.get('selectedRecords');
-      let confirmDeleteRows = this.get('confirmDeleteRows');
-      if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows(selectedRecords)) {
-          return;
-        }
-      }
-
-      let count = selectedRecords.length;
       this.send('dismissErrorMessages');
+      let selectedRecords = this.get('selectedRecords');
+      let count = selectedRecords.length;
       selectedRecords.forEach((item, index, enumerable) => {
         Ember.run.once(this, function() {
           this._deleteRecord(item, immediately);
@@ -1372,44 +1296,6 @@ export default FlexberryBaseComponent.extend(
       this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
     }
   },
-
-  /**
-    Hook that executes before deleting the record.
-
-     @example
-       ```handlebars
-       <!-- app/templates/employees.hbs -->
-       {{flexberry-objectlistview
-         ...
-         beforeDeleteRecord=(action 'beforeDeleteRecord')
-         ...
-       }}
-       ```
-
-       ```js
-       // app/controllers/employees.js
-       import ListFormController from './list-form';
-
-       export default ListFormController.extend({
-         actions: {
-           beforeDeleteRecord(record, data) {
-             if (record.get('myProperty')) {
-               data.cancel = true;
-             }
-           }
-         }
-       });
-       ```
-
-    @method beforeDeleteRecord
-
-    @param {DS.Model} record Deleting record
-    @param {Object} data Metadata
-    @param {Boolean} [data.cancel=false] Flag for canceling deletion
-    @param {Boolean} [data.immediately] See {{#crossLink "ObjectListView/immediateDelete:property"}}{{/crossLink}}
-                                        property for details
-  */
-  beforeDeleteRecord: null,
 
   /**
     Delete the record.

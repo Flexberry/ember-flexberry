@@ -42,13 +42,31 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   LimitedControllerMixin,
   FlexberryOlvToolbarMixin,
   ColsConfigDialogMixin, {
-    /**
-     * Controller to show colsconfig modal window.
-   *
-   * @property lookupController
-   * @type Ember.InjectedProperty
-   * @default undefined
-   */
-    colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+  /**
+    Controller to show colsconfig modal window.
+
+    @property lookupController
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('colsconfig-dialog')
+  */
+  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+
+  /**
+    Method to get type and attributes of component, which will be embeded in object-list-view cell.
+
+    @method getCellComponent
+    @param {Object} attr Attribute of projection property related to current table cell.
+    @param {String} bindingPath Path to model property related to current table cell.
+    @param {Object} modelClass Model class of data record related to current table row.
+    @return {Object} Object containing name & properties of component, which will be used to render current table cell
+    ({ componentName: 'my-component',  componentProperties: { ... } }).
+  */
+  getCellComponent(attr, bindingPath, modelClass) {
+    let cellComponent = {
+      componentName: 'object-list-view-cell',
+      componentProperties: null
+    };
+
+    return cellComponent;
   }
-);
+});

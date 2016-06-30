@@ -31,7 +31,7 @@ module.exports = function(environment) {
         enabled: true,
 
         // Flag: indicates whether to store error messages or not.
-        storeErrorMessages: false
+        storeErrorMessages: true
       },
 
       // Flag: indicates whether to use user settings service or not.

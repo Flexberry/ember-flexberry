@@ -59,16 +59,12 @@ Router.map(function() {
   // Integration examples routes
   this.route('integration-examples/edit-form/readonly-mode');
   this.route('integration-examples/edit-form/validation');
-  this.route('integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-child-list');
-  this.route('integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-child-edit', {
-    path: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-child-edit/:id' });
-  this.route('integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-child-edit.new', {
-    path: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-child-edit/new' });
-  this.route('integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-list');
-  this.route('integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-edit', {
-    path: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-edit/:id' });
-  this.route('integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-edit.new', {
-    path: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-edit/new' });
+  this.route('ember-flexberry-dummy-test-poly-child-list');
+  this.route('ember-flexberry-dummy-test-poly-child-edit', { path: 'ember-flexberry-dummy-test-poly-child-edit/:id' });
+  this.route('ember-flexberry-dummy-test-poly-child-edit.new', { path: 'ember-flexberry-dummy-test-poly-child-edit/new' });
+  this.route('ember-flexberry-dummy-test-poly-list');
+  this.route('ember-flexberry-dummy-test-poly-edit', { path: 'ember-flexberry-dummy-test-poly-edit/:id' });
+  this.route('ember-flexberry-dummy-test-poly-edit.new', { path: 'ember-flexberry-dummy-test-poly-edit/new' });
 });
 
 export default Router;

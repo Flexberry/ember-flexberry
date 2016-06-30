@@ -336,12 +336,12 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.integration-examples.polymorphic-example.caption'),
           title: i18n.t('forms.application.sitemap.integration-examples.polymorphic-example.title'),
           children: [{
-            link: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-child-list',
+            link: 'ember-flexberry-dummy-test-poly-child-list',
             caption: i18n.t('forms.application.sitemap.integration-examples.polymorphic-example.ember-flexberry-dummy-test-poly-child-list.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.polymorphic-example.ember-flexberry-dummy-test-poly-child-list.title'),
             children: null
           }, {
-            link: 'integration-examples/polymorphic-example/ember-flexberry-dummy-test-poly-list',
+            link: 'ember-flexberry-dummy-test-poly-list',
             caption: i18n.t('forms.application.sitemap.integration-examples.polymorphic-example.ember-flexberry-dummy-test-poly-list.caption'),
             title: i18n.t('forms.application.sitemap.integration-examples.polymorphic-example.ember-flexberry-dummy-test-poly-list.title'),
             children: null

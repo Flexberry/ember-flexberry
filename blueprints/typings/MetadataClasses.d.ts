@@ -26,6 +26,9 @@ declare module "MetadataClasses" {
     }
     export class PropertyLookup {
         
+        public master: string;
+        public displayAttributeName: string;
+        public required: boolean;
         public relationName: string;
         public projection: string;
     }
@@ -67,6 +70,8 @@ declare module "MetadataClasses" {
     }
     export class DSbelongsTo extends Relation {
         
+        public polymorphic: boolean;
+        public presence: boolean;
     }
     export class ProjectionForModel {
         

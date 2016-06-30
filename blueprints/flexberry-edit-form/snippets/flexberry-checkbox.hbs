@@ -3,5 +3,6 @@
   {{#if model.errors.<%= name %>}}
   <span style="color:red">{{model.errors.<%= name %>}}</span>
   {{/if}}
-  {{flexberry-checkbox readonly=<%= readonly %> checked=model.<%= name %>}}
+  {{flexberry-checkbox readonly=<%= readonly %> value=model.<%= name %>}}
+  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
 </div>

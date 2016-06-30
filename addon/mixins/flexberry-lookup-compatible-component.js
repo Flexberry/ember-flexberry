@@ -1,23 +1,33 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import Ember from 'ember';
 
 /**
- * Mixin for components which need to be flexberry-lookup compatible.
- *
- * @class FlexberryLookupCompatibleComponentMixin
- * @extends Ember.Mixin
+  Mixin for components which need to be FlexberryLookup compatible.
+
+  @class FlexberryLookupCompatibleComponent
+  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
  */
 export default Ember.Mixin.create({
   actions: {
-    showLookupDialog: function() {
+    /**
+      Open modal window for select value.
+
+      @method actions.showLookupDialog
+     */
+    showLookupDialog() {
       this.get('currentController').send('showLookupDialog', ...arguments);
     },
 
-    removeLookupValue: function() {
+    /**
+      Clear selected value.
+
+      @method actions.removeLookupValue
+     */
+    removeLookupValue() {
       this.get('currentController').send('removeLookupValue', ...arguments);
-    }
-  }
+    },
+  },
 });

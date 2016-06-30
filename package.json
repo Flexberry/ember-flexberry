@@ -62,7 +62,6 @@
     "ember-validations": "~2.0.0-alpha.4",
     "ember-cli-htmlbars": "^1.0.1",
     "lodash": "^4.4.0",
-    "ember-cli-htmlbars": "^1.0.1",
     "strip-bom": "^2.0.0"
   },
   "ember-addon": {

@@ -1,18 +1,19 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/settings-example/aggregator';
-import UserSettingService from 'ember-flexberry/services/user-settings-service';
+import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/shared/aggregator';
+import UserSettingsService from 'ember-flexberry/services/user-settings';
 
 moduleForComponent('object-list-view', 'Integration | Component | object list view', {
   integration: true,
 
   beforeEach: function () {
     Ember.Component.reopen({
-      i18n: Ember.inject.service('i18n')
+      i18n: Ember.inject.service('i18n'),
+      userSettingsService: Ember.inject.service('user-settings')
     });
 
-    UserSettingService.reopen({
+    UserSettingsService.reopen({
       isUserSettingsServiceEnabled: false
     });
   }

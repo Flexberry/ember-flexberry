@@ -48,6 +48,12 @@
         "null"
       ],
       "properties": {
+        "polymorphic": {
+          "type": "boolean"
+        },
+        "presence": {
+          "type": "boolean"
+        },
         "name": {
           "type": [
             "string",
@@ -68,6 +74,8 @@
         }
       },
       "required": [
+        "polymorphic",
+        "presence",
         "name",
         "relatedTo",
         "inverse"

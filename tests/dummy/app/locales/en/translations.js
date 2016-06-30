@@ -22,7 +22,11 @@ Ember.$.extend(true, translations, {
             'caption': '',
             'title': 'Menu'
           },
+          'user-settings-service-checkbox': {
+            'caption': 'Use user settings service'
+          },
           'language-dropdown': {
+            'caption': 'Application language',
             'placeholder': 'Choose language'
           }
         }
@@ -73,11 +77,15 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        'logging': {
-          'caption': 'Logging',
+        'log-service-examples': {
+          'caption': 'Log service',
           'title': '',
-          'show': {
+          'application-log': {
             'caption': 'Application log',
+            'title': ''
+          },
+          'settings-example': {
+            'caption': 'Settings example',
             'title': ''
           }
         },
@@ -134,6 +142,10 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'model-update-example': {
+              'caption': 'Model update example',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -173,6 +185,14 @@ Ember.$.extend(true, translations, {
             },
             'settings-example': {
               'caption': 'Settings example',
+              'title': ''
+            },
+            'toolbar-custom-buttons-example': {
+              'caption': 'Custom buttons on toolbar',
+              'title': ''
+            },
+            'on-edit-form': {
+              'caption': 'Placement on edit form',
               'title': ''
             }
           },
@@ -251,7 +271,9 @@ Ember.$.extend(true, translations, {
       'birthday-caption': 'Birthday',
       'gender-caption': 'Gender',
       'vip-caption': 'VIP',
-      'karma-caption': 'Karma'
+      'karma-caption': 'Karma',
+      'name-validation-message-caption': 'Name is required',
+      'eMail-validation-message-caption': 'E-Mail is required'
     },
 
     'ember-flexberry-dummy-comment-edit': {
@@ -261,12 +283,14 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Moderated',
       'author-caption': 'Author',
       'userVotes-caption': 'User votes',
-      'date-caption': 'Date'
+      'date-caption': 'Date',
+      'author-validation-message-caption': 'Author is required'
     },
 
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Localization',
-      'name-caption': 'Name'
+      'name-caption': 'Name',
+      'name-validation-message-caption': 'Name is required'
     },
 
     'ember-flexberry-dummy-suggestion-edit': {
@@ -278,10 +302,13 @@ Ember.$.extend(true, translations, {
       'moderated-caption': 'Moderated',
       'type-caption': 'Type',
       'author-caption': 'Author',
-      'editor-caption': 'Editor',
+      'editor1-caption': 'Editor',
       'files-caption': 'Files',
       'userVotes-caption': 'User votes',
-      'comments-caption': 'Comments'
+      'comments-caption': 'Comments',
+      'type-validation-message-caption': 'Type is required',
+      'author-validation-message-caption': 'Author is required',
+      'editor-validation-message-caption': 'Editor is required'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {
@@ -289,7 +316,8 @@ Ember.$.extend(true, translations, {
       'name-caption': 'Name',
       'moderated-caption': 'Moderated',
       'parent-caption': 'Parent',
-      'localizedTypes-caption': 'Localized types'
+      'localized-types-caption': 'Localized types',
+      'name-validation-message-caption': 'Name is required'
     },
 
     'ember-flexberry-dummy-application-user-list': {
@@ -306,6 +334,32 @@ Ember.$.extend(true, translations, {
 
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Suggestion types'
+    },
+
+    'log-service-examples': {
+      'settings-example': {
+        'caption': 'Log-service-examples/settings-example',
+        'setting-column-header-caption': 'Log service setting',
+        'settings-value-column-header-caption': 'Setting current value',
+        'throw-exception-button-caption': 'Throw exception',
+        'reject-rsvp-promise-button-caption': 'Reject promise',
+        'ember-assert-button-caption': 'Ember.assert',
+        'ember-logger-error-button-caption': 'Ember.Logger.error',
+        'ember-logger-warn-button-caption': 'Ember.Logger.warn',
+        'ember-deprecate-button-caption': 'Ember.deprecate',
+        'ember-logger-log-button-caption': 'Ember.Logger.log',
+        'ember-logger-info-button-caption': 'Ember.logger.info',
+        'ember-logger-debug-button-caption': 'Ember.Logger.debug',
+        'throw-exception-button-message': 'Exception thrown',
+        'reject-rsvp-promise-button-message': 'Promise rejected',
+        'ember-assert-button-message': 'Ember.assert called',
+        'ember-logger-error-button-message': 'Ember.Logger.error called',
+        'ember-logger-warn-button-message': 'Ember.Logger.warn called',
+        'ember-deprecate-button-message': 'Ember.deprecate called',
+        'ember-logger-log-button-message': 'Ember.Logger.log called',
+        'ember-logger-info-button-message': 'Ember.logger.info called',
+        'ember-logger-debug-button-message': 'Ember.Logger.debug called'
+      }
     },
 
     'components-examples': {
@@ -345,6 +399,11 @@ Ember.$.extend(true, translations, {
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Components-examples/flexberry-groupedit/settings-example'
+        },
+        'model-update-example': {
+          'caption': 'Components-examples/flexberry-groupedit/model-update-example',
+          'addDetailButton': 'Add detail',
+          'removeDetailButton': 'Remove detail',
         }
       },
       'flexberry-lookup': {
@@ -372,6 +431,14 @@ Ember.$.extend(true, translations, {
         },
         'settings-example': {
           'caption': 'Components-examples/flexberry-objectlistview/settings-example'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Components-examples/flexberry-objectlistview/toolbar-custom-buttons-example',
+          'custom-message': 'Hello!',
+          'custom-button-name': 'Send hello'
+        },
+        'on-edit-form': {
+          'caption': 'FlexberryObjectlistview custom data sample'
         }
       },
       'flexberry-simpledatetime': {

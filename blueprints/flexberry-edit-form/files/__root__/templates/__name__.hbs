@@ -13,6 +13,11 @@
 {{/if}}
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
         <button type="submit" class="ui positive button" {{action 'save'}}>

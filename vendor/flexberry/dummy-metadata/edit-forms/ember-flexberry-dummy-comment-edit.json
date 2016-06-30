@@ -1,5 +1,34 @@
 ﻿{
-  "propertyLookup": [],
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Suggestion",
+      "projection": "SuggestionList"
+    },
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Author",
+      "projection": "ApplicationUserList"
+    },
+    {
+      "master": "applicationUser",
+      "displayAttributeName": "name",
+      "required": true,
+      "relationName": "UserVotes.ApplicationUser",
+      "projection": "ApplicationUserList"
+    },
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "UserVotes.Comment",
+      "projection": ""
+    }
+  ],
   "caption": "Comment edit",
   "name": "EmberFlexberryDummyCommentEdit",
   "attrs": [],

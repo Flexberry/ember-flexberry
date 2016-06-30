@@ -1,7 +1,15 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
+/**
+  Injects a {{#crossLink "DeviceService"}}device service{{/crossLink}} into current application
+  components, controllers, models, routes, views, inside application router, and into application resolver.
+
+  @for ApplicationInstanceInitializer
+  @method device.initialize
+  @param {<a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html">Ember.ApplicationInstance</a>} applicationInstance Ember application instance.
+*/
 export function initialize(applicationInstance) {
   // Inject device detection service into application parts.
   [

@@ -40,7 +40,8 @@ module.exports = {
             entityName: options.entity.name,
             caption: editFormBlueprint.editForm.caption,
             parentRoute: editFormBlueprint.parentRoute,
-            flexberryComponents: editFormBlueprint.flexberryComponents // for use in files\__root__\templates\__name__.hbs
+            flexberryComponents: editFormBlueprint.flexberryComponents,
+            functionGetCellComponent: editFormBlueprint.functionGetCellComponent // for use in files\__root__\controllers\__name__.js
         };
     }
 };
@@ -54,6 +55,23 @@ var EditFormBlueprint = (function () {
         this.process();
         this.flexberryComponents = this.snippetsResult.join("\n");
         this.parentRoute = this.getParentRoute();
+        var bodySwitchBindingPath = [];
+        var propertyLookup;
+        for (var _i = 0, _a = this.editForm.propertyLookup; _i < _a.length; _i++) {
+            propertyLookup = _a[_i];
+            if (!propertyLookup.master)
+                continue;
+            var snippet = this.readSnippetFile("getCellComponent-flexberry-lookup", "js");
+            bodySwitchBindingPath.push(lodash.template(snippet)(propertyLookup));
+        }
+        if (bodySwitchBindingPath.length > 0) {
+            var snippet = this.readSnippetFile("getCellComponent-function", "js");
+            this.functionGetCellComponent = lodash.template(snippet)({ bodySwitchBindingPath: bodySwitchBindingPath.join("\n") });
+            this.functionGetCellComponent = lodash.trimEnd(this.functionGetCellComponent, "\n");
+        }
+        else {
+            this.functionGetCellComponent = null;
+        }
     }
     EditFormBlueprint.prototype.readSnippetFile = function (fileName, fileExt) {
         return stripBom(fs.readFileSync(path.join(this.blueprint.path, "snippets", fileName + "." + fileExt), "utf8"));
@@ -147,7 +165,7 @@ var EditFormBlueprint = (function () {
         }
     };
     EditFormBlueprint.prototype.getParentRoute = function () {
-        var parentRoute;
+        var parentRoute = '';
         var listFormsDir = path.join(this.options.metadataDir, "list-forms");
         var listForms = fs.readdirSync(listFormsDir);
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {

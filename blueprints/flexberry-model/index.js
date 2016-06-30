@@ -97,10 +97,11 @@ var ModelBlueprint = (function () {
     };
     ModelBlueprint.prototype.getJSForModel = function (model) {
         var attrs = [], validations = [];
-        var templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
+        var templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
         var templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
+        var attr;
         for (var _i = 0, _a = model.attrs; _i < _a.length; _i++) {
-            var attr = _a[_i];
+            attr = _a[_i];
             attrs.push(attr.name + ": DS.attr('" + attr.type + "')");
             if (attr.notNull) {
                 if (attr.type === "date") {
@@ -111,8 +112,11 @@ var ModelBlueprint = (function () {
                 }
             }
         }
+        var belongsTo;
         for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
-            var belongsTo = _c[_b];
+            belongsTo = _c[_b];
+            if (belongsTo.presence)
+                validations.push(belongsTo.name + ": { presence: true }");
             attrs.push(templateBelongsTo(belongsTo));
         }
         for (var _d = 0, _e = model.hasMany; _d < _e.length; _d++) {

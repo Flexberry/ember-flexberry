@@ -5,12 +5,12 @@
 import Ember from 'ember';
 
 const messageCategory = {
-  error: 'ERROR',
-  warn: 'WARN',
-  log: 'LOG',
-  info: 'INFO',
-  debug: 'DEBUG',
-  deprecation: 'DEPRECATION',
+  error: { name: 'ERROR', priority: 1 },
+  warn: { name: 'WARN', priority: 2 },
+  log: { name: 'LOG', priority: 3 },
+  info: { name: 'INFO', priority: 4 },
+  debug: { name: 'DEBUG', priority: 5 },
+  deprecation: { name: 'DEPRECATION', priority: 6 }
 };
 
 const joinArguments = function() {
@@ -94,12 +94,12 @@ export default Ember.Service.extend({
   /**
     Flag: indicates whether log service will store 'WARN' messages to application log or not.
 
-    @property storeWarningMessages
+    @property storeWarnMessages
     @type Boolean
     @default false
     @example
     ```
-    // Log service 'storeWarningMessages' setting could be also defined through application config/environment.js
+    // Log service 'storeWarnMessages' setting could be also defined through application config/environment.js
     module.exports = function(environment) {
       var ENV = {
         ...
@@ -107,7 +107,7 @@ export default Ember.Service.extend({
           ...
           log: {
             enabled: true,
-            storeWarningMessages: true
+            storeWarnMessages: true
           }
           ...
         }
@@ -115,7 +115,7 @@ export default Ember.Service.extend({
     };
     ```
   */
-  storeWarningMessages: false,
+  storeWarnMessages: false,
 
   /**
     Flag: indicates whether log service will store 'LOG' messages to application log or not.
@@ -229,21 +229,31 @@ export default Ember.Service.extend({
     this._super(...arguments);
 
     let _this = this;
-    let onError = function(error) {
-      let message = error.toString();
-      let formattedMessage = JSON.stringify({
-        name: error.name,
-        message: error.message,
-        fileName: error.fileName,
-        lineNumber: error.lineNumber,
-        columnNumber: error.columnNumber,
-        stack: error.stack
-      });
+    let onError = function(error, rethrowError) {
+      let message = error.message || error.toString();
+      let formattedMessage = JSON.stringify(Ember.merge({
+        name: null,
+        message: null,
+        fileName: null,
+        lineNumber: null,
+        columnNumber: null,
+        stack: null
+      }, error));
 
       _this._storeToApplicationLog(messageCategory.error, message, formattedMessage);
+
+      if (rethrowError === false) {
+        // Break execution if rethrowError === false.
+        return;
+      } else {
+        // Rethrow an error, because Ember.onerror handler has no bubbling
+        // and stored error won't appear in browser's console without rethrowing.
+        throw error.stack ? error : (error.message ? error.message : error);
+      }
     };
 
     // Assign Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
+
     Ember.onerror = onError;
     Ember.RSVP.on('error', onError);
 
@@ -252,7 +262,7 @@ export default Ember.Service.extend({
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
-      Ember.onerror(joinArguments(...arguments));
+      onError(joinArguments(...arguments), false);
     };
 
     // Extend Ember.Logger.warn logic.
@@ -264,7 +274,7 @@ export default Ember.Service.extend({
       if (message.indexOf('DEPRECATION') === 0) {
         _this._storeToApplicationLog(messageCategory.deprecation, message, '');
       } else {
-        _this._storeToApplicationLog(messageCategory.war, message, '');
+        _this._storeToApplicationLog(messageCategory.warn, message, '');
       }
     };
 
@@ -304,26 +314,24 @@ export default Ember.Service.extend({
   */
   _storeToApplicationLog(category, message, formattedMessage) {
     if (!this.get('enabled') ||
-      category === messageCategory.error && !this.get('storeErrorMessages') ||
-      category === messageCategory.warn && !this.get('storeWarningMessages') ||
-      category === messageCategory.log && !this.get('storeLogMessages') ||
-      category === messageCategory.info && !this.get('storeInfoMessages') ||
-      category === messageCategory.debug && !this.get('storeDebugMessages') ||
-      category === messageCategory.deprecation && !this.get('storeDeprecationMessages')) {
+      category.name === messageCategory.error.name && !this.get('storeErrorMessages') ||
+      category.name === messageCategory.warn.name && !this.get('storeWarnMessages') ||
+      category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
+      category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
+      category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
+      category.name === messageCategory.deprecation.name && !this.get('storeDeprecationMessages')) {
       return;
     }
 
-    let timestamp = new Date();
-    let browser = navigator.userAgent;
-    let logMessageProperties = {
-      category: category,
+    let applicationLogProperties = {
+      category: category.name,
       eventId: 0,
-      priority: 10,
+      priority: category.priority,
       severity: '',
       title: '',
-      timestamp: timestamp,
+      timestamp: new Date(),
       machineName:  location.hostname,
-      appDomainName: browser,
+      appDomainName: navigator.userAgent,
       processId: document.location.href,
       processName: 'EMBER-FLEXBERRY',
       threadName: '',
@@ -332,15 +340,15 @@ export default Ember.Service.extend({
       formattedMessage: formattedMessage
     };
 
-    let logMessageModelName = 'i-i-s-caseberry-logging-objects-application-log';
+    let applicationLogModelName = 'i-i-s-caseberry-logging-objects-application-log';
     let store = this.get('store');
 
-    // Break if message already exists in store (to avoid infinity loop when message is generated while saving itself).
-    if (store.peekAll(logMessageModelName).findBy('message', message) !== undefined) {
+    // Break if message already exists in store (to avoid infinit loop when message is generated while saving itself).
+    if (store.peekAll(applicationLogModelName).findBy('message', message) !== undefined) {
       return;
     }
 
-    store.createRecord(logMessageModelName, logMessageProperties).save().catch(() => {
+    store.createRecord(applicationLogModelName, applicationLogProperties).save().catch(() => {
       // Switch off remote logging on rejection to avoid infinite loop.
       this.set('enabled', false);
     });

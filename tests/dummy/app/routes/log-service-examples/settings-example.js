@@ -6,7 +6,7 @@ export default ApllicationLogListFormRoute.extend({
 
     @property modelProjection
     @type String
-    @default 'ShortL'
+    @default 'ApplicationLogL'
   */
   modelProjection: 'ApplicationLogL',
 

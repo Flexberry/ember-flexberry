@@ -46,8 +46,8 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     Controller to show colsconfig modal window.
 
     @property lookupController
-    @type Ember.InjectedProperty
-    @default undefined
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('colsconfig-dialog')
   */
   colsconfigController: Ember.inject.controller('colsconfig-dialog'),
 

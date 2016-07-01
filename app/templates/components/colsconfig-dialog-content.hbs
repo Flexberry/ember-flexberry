@@ -34,7 +34,8 @@
             ><td class="{{if colDesc.hide 'disabled' ''}}">
               <div class="ui input {{if colDesc.hide 'disabled' ''}}">
                 <input id="{{colDesc.sortPriorityId}}" size='2' class="sortPriority {{if colDesc.sortOrder '' 'hidden'}}" disabled="{{if colDesc.sortOrder '' 'disabled'}}" value='{{colDesc.sortPriority}}' type='input' style=""
-                  {{action "setSortPriority" n on="focusOut"}} prevValue="{{colDesc.sortPriority}}">
+                  {{action "setSortPriority" n on="focusOut"}}
+                  prevValue="{{colDesc.sortPriority}}" />
               </div>
             </td
           ></tr>
@@ -44,7 +45,10 @@
           ><tr
           ><th colspan='5'>
             <div class="ui action input" >
-              <input id="columnConfigurtionSettingName" type='input' name='configName' placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'>
+              <input id="columnConfigurtionSettingName" type='input' name='configName'
+                placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}'
+                {{action "enableSaveButton" on="focusOut"}}
+                value='{{settingName}}' />
               <div id="columnConfigurtionButtonSave" class="ui small button disabled" {{action 'saveColsSetting'}}>
                 {{t "components.colsconfig-dialog-content.save"}}
               </div>

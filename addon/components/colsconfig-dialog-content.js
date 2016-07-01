@@ -255,6 +255,15 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+     * Enable Save Button
+     *
+     * @method actions.enableSaveButton
+     */
+    enableSaveButton: function() {
+      Ember.$('#columnConfigurtionButtonSave')[0].className = Ember.$('#columnConfigurtionButtonSave')[0].className.replace('disabled', '');
+    },
+
+    /**
      * Apply settings specified in the interface as DEFAULT values
      *
      * @method actions.apply

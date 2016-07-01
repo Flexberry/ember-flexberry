@@ -78,6 +78,10 @@ export default FlexberryFile.extend({
       // make it available through component setting (for example collapseMenuOnItemClick=true).
       this._collapseMenu();
 
+      if (!e.item) {
+        return;
+      }
+
       if (e.item.isZoomItem) {
         this.send('viewLoadedImage');
 

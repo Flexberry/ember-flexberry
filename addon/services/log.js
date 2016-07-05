@@ -229,6 +229,7 @@ export default Ember.Service.extend({
     this._super(...arguments);
 
     let _this = this;
+    let originalEmberLoggerError = Ember.Logger.error;
     let onError = function(error, rethrowError) {
       let message = error.message || error.toString();
       let formattedMessage = JSON.stringify(Ember.merge({
@@ -248,7 +249,8 @@ export default Ember.Service.extend({
       } else {
         // Rethrow an error, because Ember.onerror handler has no bubbling
         // and stored error won't appear in browser's console without rethrowing.
-        throw error.stack ? error : (error.message ? error.message : error);
+        originalEmberLoggerError(...arguments);
+//         throw error.stack ? error : (error.message ? error.message : error);
       }
     };
 
@@ -258,7 +260,6 @@ export default Ember.Service.extend({
     Ember.RSVP.on('error', onError);
 
     // Extend Ember.Logger.log logic.
-    let originalEmberLoggerError = Ember.Logger.error;
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 

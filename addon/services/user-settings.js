@@ -278,7 +278,7 @@ export default Ember.Service.extend({
       .from(modelName)
       .selectByProjection('FlexberryUserSettingE')
       .where(cp);
-
+    let query = builder.build();
     return store.query(modelName, builder.build()).then((result) => {
       if (result) {
         let foundRecords = result.get('content');

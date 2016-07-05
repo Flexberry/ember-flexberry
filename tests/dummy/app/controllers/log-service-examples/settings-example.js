@@ -32,15 +32,15 @@ export default ApplicationLogListFormController.extend({
     }, {
       buttonName: this.get('i18n').t('forms.log-service-examples.settings-example.ember-deprecate-button-caption'),
       buttonAction: 'onEmberDeprecateButtonClick',
-      buttonClasses: 'small orange'
+      buttonClasses: 'small yellow'
     }, {
       buttonName: this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-log-button-caption'),
       buttonAction: 'onEmberLoggerLogButtonClick',
-      buttonClasses: 'small blue'
+      buttonClasses: 'small green'
     }, {
       buttonName: this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-info-button-caption'),
       buttonAction: 'onEmberLoggerInfoButtonClick',
-      buttonClasses: 'small blue'
+      buttonClasses: 'small teal'
     }, {
       buttonName: this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-debug-button-caption'),
       buttonAction: 'onEmberLoggerDebugButtonClick',

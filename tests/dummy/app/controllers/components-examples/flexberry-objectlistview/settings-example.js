@@ -75,6 +75,17 @@ export default ListFormController.extend({
     @type String
    */
   placeholder: t('components.flexberry-objectlistview.placeholder'),
+  /**
+    Handles changes in placeholder.
+
+    @method _placeholderChanged
+    @private
+  **/
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-objectlistview.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-objectlistview.placeholder'));
+    }
+  }),
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'readonly' mode or not.

@@ -216,6 +216,6 @@ export default ApplicationLogListFormController.extend({
     @private
   */
   _generateUniqueMessagePrefix() {
-    return '№' + Ember.generateGuid(null, '-') + ': ';
+    return '№' + Ember.generateGuid(null, '') + ': ';
   }
 });

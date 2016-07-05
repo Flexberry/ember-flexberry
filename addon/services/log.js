@@ -349,9 +349,11 @@ export default Ember.Service.extend({
       return;
     }
 
-    store.createRecord(applicationLogModelName, applicationLogProperties).save().catch(() => {
-      // Switch off remote logging on rejection to avoid infinite loop.
-      this.set('enabled', false);
-    });
+    return store.createRecord(applicationLogModelName, applicationLogProperties).save().
+      then(
+        result => {return result;},
+        // Switch off remote logging on rejection to avoid infinite loop.
+        reason => {this.set('enabled', false);}
+      );
   },
 });

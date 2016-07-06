@@ -1,6 +1,13 @@
 # Ember Flexberry Changelog
 ### New Features & improvements
 
+## 2016-07-26
+### Added
+FlexberryObjectlistviewComponent
+* Add filter by attribute number type
+* Add filter by attribute master type
+* Add `predicateForAttribute` function for customization filter
+
 ## 2016-06-29
 ### Added
 FlexberryObjectlistviewComponent

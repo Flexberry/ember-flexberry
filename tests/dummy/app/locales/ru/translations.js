@@ -163,6 +163,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Функция ограничения',
               'title': ''
             },
+            'lookup-block-form-example': {
+              'caption': 'Лукап в блочной форме',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Режим dropdown',
               'title': ''
@@ -416,6 +420,9 @@ Ember.$.extend(true, translations, {
         },
         'limit-function-example': {
           'caption': 'Components-examples/flexberry-lookup/limit-function-example'
+        },
+        'lookup-block-form-example': {
+          'caption': 'Components-examples/flexberry-lookup/lookup-block-form-example'
         },
         'dropdown-mode-example': {
           'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'

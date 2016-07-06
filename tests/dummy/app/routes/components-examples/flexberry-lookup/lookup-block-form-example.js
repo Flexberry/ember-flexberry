@@ -6,7 +6,7 @@ export default EditFormRoute.extend({
 
     @property modelProjection
     @type String
-    @default 'DropDownLookupExampleView'
+    @default 'LookupInBlockFormView'
    */
   modelProjection: 'LookupInBlockFormView',
 

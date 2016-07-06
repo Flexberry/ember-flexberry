@@ -422,7 +422,11 @@ Ember.$.extend(true, translations, {
           'caption': 'Components-examples/flexberry-lookup/limit-function-example'
         },
         'lookup-block-form-example': {
-          'caption': 'Components-examples/flexberry-lookup/lookup-block-form-example'
+          'caption': 'Components-examples/flexberry-lookup/lookup-block-form-example',
+          'message': 'Данный тест работает только в мобильной версии сайта. Чтобы запустить мобильную версию нужно:',
+          'paragraph1': 'Перейти в режим разработчика (нажать “F12”).',
+          'paragraph2': 'Включить мобильную версию сайта (нажать “Ctrl+Shift+M” в Chrome и Firefox)',
+          'paragraph3': 'Обновить страницу (нажать “F5”)'
         },
         'dropdown-mode-example': {
           'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'

@@ -1,68 +1,59 @@
+/**
+  @module ember-flexberry
+ */
+
 import Ember from 'ember';
 
 /*
- * This can be mixed into a route to provide pagination support.
+  Mixin for route, that pagination support.
+
+  Example:
+  ```javascript
+  // app/controllers/employees.js
+  import Ember from 'ember';
+  import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
+  export default Ember.Controller.extend(PaginatedController, {
+  });
+  ```
+
+  ```javascript
+  // app/routes/employees.js
+  import Ember from 'ember';
+  import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
+  export default Ember.Route.extend(PaginatedRoute, {
+  });
+  ```
+
+  ```handlebars
+  <!-- app/templates/employees.hbs -->
+  ...
+  {{flexberry-objectlistview
+    ...
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    previousPage=(action 'previousPage')
+    gotoPage=(action 'gotoPage')
+    nextPage=(action 'nextPage')
+    ...
+  }}
+  ...
+  ```
+
+  @class PaginatedRoute
+  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
  */
 export default Ember.Mixin.create({
-  // E.g. 'employees.page'.
-  paginationRoute: undefined,
+  /**
+    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
 
-  // This function is for use in a route that calls find() to get a
-  // paginated collection of records.  It takes the pagination metadata
-  // from the store and puts it into the record array.
-  includePagination: function(records, page, perPage) {
-    this.paginationRoute = this.paginationRoute || this.routeName;
-    var metadata = records.store.typeMapFor(records.type).metadata;
-
-    // Put the pagination content directly on the collection.
-    records.set('pagination', {
-      page: page,
-      per_page: perPage,
-      count: metadata.count
-    });
-    return records;
+    @property queryParams
+    @type Object
+   */
+  queryParams: {
+    page: { refreshModel: true },
+    perPage: { refreshModel: true },
   },
-
-  _getCurrent: function(pagination = this.get('controller.content.pagination')) {
-    return pagination.page;
-  },
-
-  _getLast: function(pagination = this.get('controller.content.pagination')) {
-    return Math.ceil(pagination.count / pagination.per_page);
-  },
-
-  _getNum: function(pageNum, pagination = this.get('controller.content.pagination')) {
-    var last = this._getLast(pagination);
-    return Math.max(1, Math.min(pageNum, last));
-  },
-
-  transitionToPageRoute: function(pageNum) {
-    this.transitionTo(this.paginationRoute, pageNum);
-  },
-
-  actions: {
-    gotoPage: function(pageNum) {
-      // this.get('controller.model.pagination') or this.get('controller.content.pagination')
-      // (content is alias for model).
-      var num = this._getNum(pageNum);
-      this.transitionToPageRoute(num);
-    },
-    nextPage: function() {
-      var pagination = this.get('controller.content.pagination');
-      var num = this._getNum(pagination.page + 1, pagination);
-      this.transitionToPageRoute(num);
-    },
-    previousPage: function() {
-      var pagination = this.get('controller.content.pagination');
-      var num = this._getNum(pagination.page - 1, pagination);
-      this.transitionToPageRoute(num);
-    },
-    lastPage: function() {
-      var last = this._getLast();
-      this.transitionToPageRoute(last);
-    },
-    firstPage: function() {
-      this.transitionToPageRoute(1);
-    }
-  }
 });

@@ -1,11 +1,52 @@
+/**
+  @module ember-flexberry
+*/
+
 import Ember from 'ember';
 
+/**
+  Header cell component for ObjectListView.
+
+  @class ObjectListViewHeaderCell
+  @extends FlexberryBaseComponent
+*/
 export default Ember.Component.extend({
+  /**
+    Override wrapping element's tag.
+  */
   tagName: 'th',
+
+  /**
+    Default classes for component wrapper.
+  */
   classNames: ['dt-head-left'],
+
+  /**
+    Column related to header cell.
+
+    @property column
+    @type Object
+    @default null
+  */
   column: null,
+
+  /**
+    Primary action for header click event.
+
+    @property action
+    @type String
+    @default 'headerCellClick'
+  */
   action: 'headerCellClick',
-  click: function(event) {
-    this.sendAction('action', this.column, event);
+
+  /**
+    Header click handler.
+
+    @method click
+    @public
+    @param {jQuery.Event} e jQuery.Event by click on header cell
+  */
+  click(e) {
+    this.sendAction('action', this.column, e);
   }
 });

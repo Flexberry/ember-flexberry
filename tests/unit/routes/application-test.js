@@ -4,8 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleFor('route:application', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: []
 });
 
 test('it exists', function(assert) {

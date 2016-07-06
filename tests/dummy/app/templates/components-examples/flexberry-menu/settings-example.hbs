@@ -1,0 +1,25 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-menu.settings-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
+    }}
+    <div class="ui basic buttons">
+      {{flexberry-menu
+        items=itemsLeft
+        onItemClick=(action "onMenuItemClick")
+      }}
+      {{flexberry-menu
+        items=itemsRight
+        onItemClick=(action "onMenuItemClick")
+      }}
+      {{flexberry-menu
+        items=itemsSubmenu
+        onItemClick=(action "onMenuItemClick")
+      }}
+    </div>
+    {{/settings-example}}
+  </div>
+</form>

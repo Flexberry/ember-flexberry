@@ -1,9 +1,9 @@
 {{#if model.link}}
-  {{#link-to model.link class="item"}}
+  {{#link-to model.link class="item" title=model.title invokeAction=(action 'hideSidebar')}}
     {{partial "sitemap-node-content"}}
   {{/link-to}}
 {{else}}
-  <div class="item">
+  <div class="item" title={{model.title}}>
     {{partial "sitemap-node-content"}}
   </div>
 {{/if}}

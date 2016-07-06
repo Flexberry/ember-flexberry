@@ -1,0 +1,115 @@
+﻿{
+  "modelName": "ember-flexberry-dummy-suggestion-file",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "order",
+      "type": "number",
+      "flexberryType": "int",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "file",
+      "type": "file",
+      "flexberryType": "WebFile",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "createTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "creator",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editor",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    }
+  ],
+  "belongsTo": [
+    {
+      "polymorphic": false,
+      "presence": true,
+      "name": "suggestion",
+      "relatedTo": "ember-flexberry-dummy-suggestion",
+      "inverse": "files"
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "AuditView",
+      "modelName": "ember-flexberry-dummy-suggestion-file",
+      "attrs": [
+        {
+          "name": "order",
+          "caption": "Order",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "file",
+          "caption": "File",
+          "hidden": false,
+          "index": 1
+        }
+      ],
+      "belongsTo": [],
+      "hasMany": []
+    },
+    {
+      "name": "SuggestionFileE",
+      "modelName": "ember-flexberry-dummy-suggestion-file",
+      "attrs": [
+        {
+          "name": "order",
+          "caption": "Order",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "file",
+          "caption": "File",
+          "hidden": false,
+          "index": 1
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Suggestion",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [],
+          "index": 2,
+          "caption": "",
+          "name": "suggestion",
+          "relatedTo": "ember-flexberry-dummy-suggestion",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    }
+  ]
+}

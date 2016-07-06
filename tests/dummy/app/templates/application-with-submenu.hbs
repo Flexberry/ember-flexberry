@@ -1,0 +1,39 @@
+{{#ui-sidebar class="inverted vertical menu"}}
+  <a class="item"
+     href="https://github.com/flexberry"
+     target="_blank"
+     title={{t "forms.application.sitemap.application-name.title"}}>
+    <img class="ui centered image" src="assets/images/flexberry-logo.png" />
+  </a>
+  <a class="item"
+     href={{addonVersionHref}}
+     target="_blank"
+     title={{t "forms.application.sitemap.application-version.title"}}>
+    {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
+  </a>
+  {{render "sitemap" sitemap}}
+{{/ui-sidebar}}
+<div id="example-with-submenu" class="pusher">
+  <div class="full height">
+    <div class="ui fixed main menu">
+      <div class="ui container">
+        <a {{action 'toggleSidebar'}} class="launch icon item">
+          <i class="sidebar icon"></i>
+        </a>
+        <div class="right menu">
+        </div>
+      </div>
+    </div>
+    <div class="ui main container segment flexberry-content">
+      <div class="ui close left rail">
+        <div class="ui sticky transition visible">
+          <div class="flexberry-submenu ui large violet pointing secondary vertical following fluid menu">
+            {{render "sitemap" sitemap}}
+          </div>
+        </div>
+      </div>
+      {{outlet}}
+      {{outlet "modal"}}
+    </div>
+  </div>
+</div>

@@ -1,63 +1,86 @@
+/**
+  @module ember-flexberry
+*/
+
 import Ember from 'ember';
 
+/**
+  UIMessage component for Semantic UI.
+  # Need refactoring.
+  Questions:
+  - Need {{yield}} in ui-message-content.hbs?
+
+  Sample usage:
+  ```handlebars
+  {{ui-message
+    type='info'
+    size='large'
+    icon='info icon'
+    caption='Message'
+    message='Hello, world!'
+    closeable=true
+  }}
+  ```
+
+  @class UIMessage
+  @extend <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+*/
 export default Ember.Component.extend({
+  /**
+    I can not remember what it is.
+  */
   module: 'message',
-  classNameBindings: ['cssClass'],
-  visible: true,
-  floating: false,
-  compact: false,
-  attached: false,
-  closeable: false,
-  type: null,
-  color: null,
-  size: null,
-  icon: null,
-  title: null,
-  message: null,
-  cssClass: Ember.computed('size', 'type', 'color', 'floating', 'compact', 'attached', 'visible', 'icon', function() {
-    var isNonEmptyString = function(str) {
+
+  /**
+    Resulting list of CSS classes.
+
+    @property _cssClass
+    @private
+  */
+  _cssClass: Ember.computed('size', 'type', 'color', 'floating', 'compact', 'attached', 'visible', 'icon', function() {
+    let isNonEmptyString = (str) => {
       return Ember.typeOf(str) === 'string' && str.trim().length > 0;
     };
 
-    var result = 'ui ';
+    let result = 'ui ';
 
     // Message size ('small', 'large', 'huge', 'massive', or some custom size class).
-    var sizeClass = this.get('size');
-    var hasSize = isNonEmptyString(sizeClass);
+    let sizeClass = this.get('size');
+    let hasSize = isNonEmptyString(sizeClass);
     result += hasSize ? sizeClass + ' ' : '';
 
     // Message type ('info', 'positive', 'success', 'negative', 'error', or some custom type class).
-    var typeClass = this.get('type');
-    var hasType = isNonEmptyString(typeClass);
+    let typeClass = this.get('type');
+    let hasType = isNonEmptyString(typeClass);
     result += hasType ? typeClass + ' ' : '';
 
     // Message color ('red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple',
     // 'pink', 'brown', 'black', or some custom color class).
-    var colorClass = this.get('color');
-    var hasColor = isNonEmptyString(colorClass);
+    let colorClass = this.get('color');
+    let hasColor = isNonEmptyString(colorClass);
     result += hasColor ? colorClass + ' ' : '';
 
     // Message block variations.
     // Note! Variations 'ui floating message', 'ui compact message', 'ui attached message' doesn't work
     // with 'icon', 'visible' and 'hidden' subclasses.
     // For example 'ui compact icon message' will be with icon, but not compact.
-    var isFloating = this.get('floating');
+    let isFloating = this.get('floating');
     result += isFloating ? 'floating ' : '';
 
-    var isCompact = this.get('compact');
+    let isCompact = this.get('compact');
     result += isCompact ? 'compact ' : '';
 
-    var isAttached = this.get('attached');
+    let isAttached = this.get('attached');
     result += isAttached ? 'attached ' : '';
 
     // Message block visibility.
     // Note! It is better to use empty string '' instead of 'visible' subclass.
-    var isVisible = this.get('visible');
+    let isVisible = this.get('visible');
     result += isVisible ? '' : 'hidden ';
 
     // Message icon.
-    var iconClass = this.get('icon');
-    var hasIcon = isNonEmptyString(iconClass);
+    let iconClass = this.get('icon');
+    let hasIcon = isNonEmptyString(iconClass);
     result += hasIcon ? 'icon ' : '';
 
     result += 'message';
@@ -65,28 +88,200 @@ export default Ember.Component.extend({
     return result;
   }),
 
-  didInsertElement: function() {
-    var isCloseable = this.get('closeable');
+  /**
+    A message can be set to visible to force itself to be shown.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#visible).
+
+    @property visible
+    @type Boolean
+    @default true
+  */
+  visible: true,
+
+  /**
+    A message can float above content that it is related to content.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#floating).
+
+    @property floating
+    @type Boolean
+    @default false
+  */
+  floating: false,
+
+  /**
+    A message can only take up the width of its content.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#compact).
+
+    @property compact
+    @type Boolean
+    @default false
+  */
+  compact: false,
+
+  /**
+    A message can be formatted to attach itself to other content.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#attached).
+
+    @property attached
+    @type Boolean
+    @default false
+  */
+  attached: false,
+
+  /**
+    A message that the user can choose to hide.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#dismissable-block).
+
+    @property closeable
+    @type Boolean
+    @default false
+  */
+  closeable: false,
+
+  /**
+    Message type.
+    Possible variants:
+    - ['warning'](http://semantic-ui.com/collections/message.html#warning)
+    - ['info'](http://semantic-ui.com/collections/message.html#info)
+    - ['positive'](http://semantic-ui.com/collections/message.html#positive--success)
+    - ['success'](http://semantic-ui.com/collections/message.html#positive--success)
+    - ['negative'](http://semantic-ui.com/collections/message.html#negative--error)
+    - ['error'](http://semantic-ui.com/collections/message.html#negative--error)
+
+    @property type
+    @type String
+    @default null
+  */
+  type: null,
+
+  /**
+    A message can be formatted to be different colors.
+    Possible variants:
+    - red
+    - orange
+    - yellow
+    - olive
+    - green
+    - teal
+    - blue
+    - violet
+    - purple
+    - pink
+    - brown
+    - black
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#colored).
+
+    @property color
+    @type String
+    @default null
+  */
+  color: null,
+
+  /**
+    A message can have different sizes.
+    Possible variants:
+    - small
+    - large
+    - huge
+    - massive
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#size).
+
+    @property size
+    @type String
+    @default null
+  */
+  size: null,
+
+  /**
+    A message can contain an icon.
+
+    More info at [Semantic UI Doc](http://semantic-ui.com/collections/message.html#icon-message).
+
+    @property icon
+    @type String
+    @default null
+  */
+  icon: null,
+
+  /**
+    Message title.
+
+    @property title
+    @type String
+    @default null
+    @deprecated Use `caption`.
+  */
+  title: null,
+
+  /**
+    Message title.
+
+    @property caption
+    @type String
+    @default null
+  */
+  caption: null,
+
+  /**
+    Message body.
+
+    @property message
+    @type String
+    @default null
+  */
+  message: null,
+
+  /**
+    A list of properties of the view to apply as class names.
+
+    @property classNameBindings
+    @type Array
+    @readOnly
+  */
+  classNameBindings: ['_cssClass'],
+
+  /**
+    Initializes DOM-related component's logic.
+  */
+  didInsertElement() {
+    let isCloseable = this.get('closeable');
     if (isCloseable) {
       // Inside 'click'-callback 'this' would refer to a jQuery-object.
-      var _this = this;
+      let _this = this;
       _this.$('.close').on('click', function() {
-        _this.hide();
+        _this._hide();
       });
     }
   },
 
-  show: function() {
+  /**
+    Send 'onShow' action with component itself as an argument.
+
+    @method _show
+    @private
+  */
+  show() {
     this.set('visible', true);
 
-    // Send component 'onShow'-action with component itself as an argument.
     this.sendAction('onShow', this);
   },
 
-  hide: function() {
+  /**
+    Send 'onHide' action with component itself as an argument.
+
+    @method _hide
+    @private
+  */
+  _hide() {
     this.set('visible', false);
 
-    // Send component 'onHide'-action with component itself as an argument.
     this.sendAction('onHide', this);
-  }
+  },
 });

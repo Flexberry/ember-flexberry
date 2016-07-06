@@ -1,0 +1,11 @@
+{{#each columns as |column|}}
+  <div class="inline fields {{if (not hasEditableValues) 'readonly'}}">
+    <label>{{column.header}}:</label>
+    {{component column.cellComponent.componentName
+      dynamicProperties=column.cellComponent.componentProperties
+      relatedModel=model
+      value=(mut (get model column.propName))
+      readonly=readonly
+    }}
+  </div>
+{{/each}}

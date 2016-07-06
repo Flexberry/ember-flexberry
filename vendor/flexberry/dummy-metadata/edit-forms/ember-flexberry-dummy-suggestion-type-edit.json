@@ -1,0 +1,34 @@
+﻿{
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Parent",
+      "projection": ""
+    },
+    {
+      "master": "localization",
+      "displayAttributeName": "name",
+      "required": true,
+      "relationName": "LocalizedTypes.Localization",
+      "projection": "LocalizationList"
+    },
+    {
+      "master": "suggestionType",
+      "displayAttributeName": null,
+      "required": true,
+      "relationName": "LocalizedTypes.SuggestionType",
+      "projection": "SuggestionTypeList"
+    }
+  ],
+  "caption": "Suggestion type",
+  "name": "EmberFlexberryDummySuggestionTypeEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-suggestion-type",
+      "modelProjection": "SuggestionTypeE"
+    }
+  ]
+}

@@ -1,53 +1,120 @@
+/**
+  @module ember-flexberry
+ */
+
 import Ember from 'ember';
 
+/**
+  ModalDialog component for Semantic UI.
+
+  Sample usage:
+  ```handlebars
+  {{#modal-dialog
+    title='Title'
+    sizeClass='large'
+    close='removeModalDialog'
+    created='createdModalDialog'
+    useOkButton=false
+    useCloseButton=false
+  }}
+    {{outlet 'modal-content'}}
+  {{/modal-dialog}}
+  ```
+
+  @class ModalDialog
+  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
+ */
 export default Ember.Component.extend({
-  modalWindowHeight: undefined,
-  modalWindowWidth: undefined,
-  modalWindowContentHeight: 400,
-  modalWindowHeightComputed: Ember.computed('modalWindowHeight', function() {
-    var height = this.get('modalWindowHeight');
-    if (height && typeof height === 'number') {
-      return height;
-    }
+  /**
+    Size of Semantic UI modal.
+    Possible variants:
+    - 'small'
+    - 'large'
+    - 'fullscreen'
 
-    return 600;
-  }),
-  modalWindowWidthComputed: Ember.computed('modalWindowWidth', function() {
-    var width = this.get('modalWindowWidth');
-    if (width && typeof width === 'number') {
-      return width;
-    }
+    @property sizeClass
+    @type String
+    @default 'small'
+   */
+  sizeClass: 'small',
 
-    return 750;
-  }),
-  modalWindowContentHeightComputed: Ember.computed('modalWindowContentHeight', function() {
-    var height = this.get('modalWindowContentHeight');
-    if (height && typeof height === 'number') {
-      return height;
-    }
+  /**
+    Flag: indicates whether an image content is viewed at modal dialog or not.
 
-    return 400;
+    @property viewImageContent
+    @type Boolean
+    @default false
+   */
+  viewImageContent: false,
+
+  /**
+    Flag: indicates whether to show apply button or not.
+
+    @property useOkButton
+    @type Boolean
+    @default true
+   */
+  useOkButton: true,
+
+  /**
+    Flag: indicates whether to show close button or not.
+
+    @property useCloseButton
+    @type Boolean
+    @default true
+   */
+  useCloseButton: true,
+
+  /**
+    Flag: indicates toolbar visibility, `true` if at least one of buttons is visible.
+
+    @property toolbarVisible
+    @type Boolean
+    @readOnly
+   */
+  toolbarVisible: Ember.computed('useOkButton', 'useCloseButton', function () {
+    return this.get('useOkButton') || this.get('useCloseButton');
   }),
-  didInsertElement: function() {
-      var _this = this;
-      this.$('.ui.modal').modal('setting', {
-        onApprove: function() {
+
+  /**
+    Semantic UI Modal settings, [more info here](http://semantic-ui.com/modules/modal.html#settings).
+
+    @property settings
+    @type Object
+    @default {}
+   */
+  settings: {},
+
+  /**
+    Initializes DOM-related component's logic.
+   */
+  didInsertElement() {
+    let _this = this;
+    let modalSettings = Ember.$.extend({
+        observeChanges: true,
+        detachable: false,
+        allowMultiple: true,
+
+        onApprove: function () {
           _this.sendAction('ok');
         },
-        onDeny: function() {
+        onDeny: function () {
           _this.sendAction('close');
         },
-        onHidden: function() {
+        onHidden: function () {
           _this.sendAction('close');
+
+          // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
+          Ember.$(this).remove();
         },
-        onVisible: function() {
-          var wholeHeight = Ember.$(this).height();
-          var headHeight = Ember.$('.header', this).height();
-          var actionsHeight = Ember.$('.actions', this).height();
-          var closeHeight = Ember.$('.close', this).height();
-          var result = wholeHeight - headHeight - actionsHeight - closeHeight - 50;
-          _this.set('modalWindowContentHeight', result);
+        onVisible: function () {
+          Ember.run(() => {
+            _this.sendAction('created', Ember.$(this));
+          });
         }
-      }).modal('show');
-    }
+      },
+      _this.get('settings'));
+
+    this.$('.ui.modal').modal(modalSettings).modal('show');
+  },
 });

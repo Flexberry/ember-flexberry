@@ -1,0 +1,54 @@
+<div class="flexberry-file-grid ui grid">
+  <input type="file" name="files[]" id={{_fileInputId}} class="flexberry-file-file-input" style="display:none" />
+  <div class="row">
+    <label
+      class="flexberry-file-add-button ui icon {{buttonClass}} {{unless _addButtonIsEnabled "disabled"}} {{if (or _hasFile readonly) "hidden"}} button"
+      title={{t "components.flexberry-file.add-button-title"}}
+      for={{_fileInputId}}
+      {{action "addButtonClick" on="click" preventDefault=false}}>
+    {{t "components.flexberry-file.add-button-caption"}}
+    </label>
+    {{#if _hasFile}}
+      <div class="flexberry-file-menu">
+        {{flexberry-menu
+          class="bottom left pointing"
+          items=_menuItems
+          callItemsOnClickCallbacks=false
+          onItemClick=(action "onMenuItemClick")
+        }}
+      </div>
+      {{#if showPreview}}
+        <div class="flexberry-file-image-preview-wrapper ui small image" {{action "viewLoadedImage"}}>
+          {{#unless _previewDownloadIsInProgress}}
+            <img
+              class="flexberry-file-image-preview"
+              src={{_previewImageAsBase64String}}
+              alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
+          {{/unless}}
+          <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
+        </div>
+      {{/if}}
+    {{/if}}
+  </div>
+</div>
+<div class="flexberry-file-download-iframes-container" style="display: none;">
+  {{!-- Block to which download iframes will be added --}}
+</div>
+<div class="flexberry-file-error-modal-dialog ui small basic modal">
+  <div class="ui icon header">
+    {{_errorModalDialogCaption}}
+  </div>
+  <div class="content">
+    <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
+      {{_errorModalDialogContent}}
+    </div>
+  </div>
+  <div class="center aligned ui grid">
+    <div class="actions">
+      <div class="flexberry-file-error-modal-dialog-ok-button ui approve green inverted button">
+        <i class="checkmark icon"></i>
+        {{t "components.flexberry-file.error-dialog-ok-button-caption"}}
+      </div>
+    </div>
+  </div>
+</div>

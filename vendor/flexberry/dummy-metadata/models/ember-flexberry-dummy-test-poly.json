@@ -1,0 +1,96 @@
+﻿{
+  "modelName": "ember-flexberry-dummy-test-poly",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "selfPole",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    }
+  ],
+  "belongsTo": [
+    {
+      "polymorphic": true,
+      "presence": true,
+      "name": "relation",
+      "relatedTo": "ember-flexberry-dummy-test-poly-base",
+      "inverse": null
+    }
+  ],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "TestPolyEdit",
+      "modelName": "ember-flexberry-dummy-test-poly",
+      "attrs": [
+        {
+          "name": "selfPole",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Relation",
+          "belongsTo": [],
+          "hidden": true,
+          "attrs": [
+            {
+              "name": "pole",
+              "caption": "",
+              "hidden": false,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "caption": "",
+          "name": "relation",
+          "relatedTo": "ember-flexberry-dummy-test-poly-base",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    },
+    {
+      "name": "TestPolyList",
+      "modelName": "ember-flexberry-dummy-test-poly",
+      "attrs": [
+        {
+          "name": "selfPole",
+          "caption": "",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Relation",
+          "belongsTo": [],
+          "hidden": true,
+          "attrs": [
+            {
+              "name": "pole",
+              "caption": "",
+              "hidden": false,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "caption": "",
+          "name": "relation",
+          "relatedTo": "ember-flexberry-dummy-test-poly-base",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    }
+  ]
+}

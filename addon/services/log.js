@@ -244,13 +244,14 @@ export default Ember.Service.extend({
       _this._storeToApplicationLog(messageCategory.error, message, formattedMessage);
 
       if (rethrowError === false) {
+
         // Break execution if rethrowError === false.
         return;
       } else {
+
         // Rethrow an error, because Ember.onerror handler has no bubbling
         // and stored error won't appear in browser's console without rethrowing.
         originalEmberLoggerError(...arguments);
-//         throw error.stack ? error : (error.message ? error.message : error);
       }
     };
 
@@ -352,6 +353,7 @@ export default Ember.Service.extend({
     return store.createRecord(applicationLogModelName, applicationLogProperties).save().
       then(
         result => {return result;},
+
         // Switch off remote logging on rejection to avoid infinite loop.
         reason => {this.set('enabled', false);}
       );

@@ -4,6 +4,9 @@
   onHide=(action 'onShowHide')
   onShow=(action 'onShowHide')
 }}
+    {{#if isSearch}}
+      <input class="search">
+    {{/if}}
     <i class="dropdown icon"></i>
     {{#if showPlaceholder}}
       <div class="default text">{{placeholder}}</div>

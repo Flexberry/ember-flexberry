@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [0.2.0] - 2016-07-05
+## [0.2.0] - 2016-07-06
 ### Added
 * New components based on `object-list-view` component to work with lists of models on list forms and edit forms (see more details below):
     * `flexberry-objectlistview` - usually used on list forms to work with list of "base" models loaded in route.

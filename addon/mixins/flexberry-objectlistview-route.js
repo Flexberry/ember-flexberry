@@ -4,6 +4,14 @@
 
 import Ember from 'ember';
 
+/**
+  Mixin for {{#crossLink "DS.Route"}}Route{{/crossLink}}
+  to support work with {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
+
+  @class FlexberryObjectlistviewRouteMixin
+  @extends Ember.Mixin
+  @public
+*/
 export default Ember.Mixin.create({
   actions: {
     /**

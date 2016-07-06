@@ -70,9 +70,9 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 
 #### Releasing
 
-* Merge develop with master branch
+* Merge current release branch with master branch
   * `git checkout master`
-  * `git merge --no-ff develop`
+  * `git merge --no-ff <release-branch>`
   * `git push`
 * `ember release` (for more information visit [ember-cli-release](https://github.com/lytics/ember-cli-release))
 * `npm publish ./` (for more information visit [How to publish packages to NPM](https://gist.github.com/coolaj86/1318304))

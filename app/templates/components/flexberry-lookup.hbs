@@ -3,22 +3,22 @@
     placeholder=placeholder
     class="search"
     value=displayValue
-    readonly=(if readonly 'readonly')
+    readonly=(if readonly "readonly")
     needChecksOnValue=false
     isSearch=true
   }}
 {{else}}
-<div class="ui fluid action input">
-  {{input
-    type='text'
-    class=(concat 'lookup-field ' (if autocomplete 'prompt'))
-    placeholder=placeholder
-    value=displayValue
-    readonly=(if (or readonly (not autocomplete)) 'readonly')
-  }}
-  <button class="ui {{if readonly 'disabled'}} {{chooseButtonClass}} button" {{action 'choose' chooseData}}>{{{chooseText}}}</button>
-  <button class="ui {{if readonly 'disabled'}} {{removeButtonClass}} button" {{action 'remove' removeData}}>{{{removeText}}}</button>
-</div>
+  <div class="ui fluid action input">
+    {{input
+      type="text"
+      class=(concat "lookup-field " (if autocomplete "prompt"))
+      placeholder=placeholder
+      value=displayValue
+      readonly=(if (or readonly (not autocomplete)) "readonly")
+    }}
+    <button class="ui {{if readonly 'disabled'}} {{chooseButtonClass}} button" {{action 'choose' chooseData}}>{{{chooseText}}}</button>
+    <button class="ui {{if readonly 'disabled'}} {{removeButtonClass}} button" {{action 'remove' removeData}}>{{{removeText}}}</button>
+  </div>
 {{/if}}
 {{#if (and (not readonly) autocomplete)}}
   <div class="results"></div>

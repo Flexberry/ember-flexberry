@@ -163,6 +163,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
+            'lookup-block-form-example': {
+              'caption': 'Lookup block form example',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Dropdown mode example',
               'title': ''
@@ -415,6 +419,13 @@ Ember.$.extend(true, translations, {
         },
         'limit-function-example': {
           'caption': 'Components-examples/flexberry-lookup/limit-function-example'
+        },
+        'lookup-block-form-example': {
+          'caption': 'Components-examples/flexberry-lookup/lookup-block-form-example',
+          'message': 'This test only works on the mobile site. To start a mobile version should be:',
+          'paragraph1': 'Go to developer mode (press "F12").',
+          'paragraph2': 'Enable mobile site (press "Ctrl + Shift + M" in Chrome and Firefox)',
+          'paragraph3': 'Refresh page (press "F5")'
         },
         'dropdown-mode-example': {
           'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'

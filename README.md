@@ -75,6 +75,9 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
   * `git merge --no-ff <release-branch>`
   * `git push`
 * `ember release` (for more information visit [ember-cli-release](https://github.com/lytics/ember-cli-release))
+  * To increment patch version run without specifying options.
+  * To increment minor version run with `--minor` option.
+  * To increment major version run with `--major` option.
 * `npm publish ./` (for more information visit [How to publish packages to NPM](https://gist.github.com/coolaj86/1318304))
 
 #### Deploying Dummy Application

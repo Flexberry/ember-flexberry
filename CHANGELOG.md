@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.1] - 2016-07-07
+### Changed
+* Updated information about [release process in README.md](https://github.com/Flexberry/ember-flexberry/blob/master/README.md#releasing)
+
+### Fixed
+* Fixed wrong dependency from [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+* Fixed wrong import of `register-version.js`.
+
 ## [0.2.0] - 2016-07-06
 ### Added
 * New components based on `object-list-view` component to work with lists of models on list forms and edit forms (see more details below):

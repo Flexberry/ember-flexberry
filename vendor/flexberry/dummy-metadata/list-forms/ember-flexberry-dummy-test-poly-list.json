@@ -1,7 +1,7 @@
 ﻿{
   "newForm": "ember-flexberry-dummy-test-poly-edit",
   "editForm": "ember-flexberry-dummy-test-poly-edit",
-  "caption": null,
+  "caption": "Test polymorphic class",
   "name": "EmberFlexberryDummyTestPolyList",
   "attrs": [],
   "projections": [

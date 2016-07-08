@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fixed select from `flexberry-lookup` in dropdown mode.
+
+### Added
+* Added support `flexberry-lookup` in dropdown mode for mobile.
 
 ## [0.2.1] - 2016-07-07
 ### Changed
@@ -136,7 +141,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Formatted message field of log object fills differently in IE11/Safari and Chrome/Firefox.
 * `flexberry-datepicker` eats too much memory, working slowly and slows down the application (especially when using multiple `flexberry-datepicker` components on form).
 * Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working after changing current locale for internationalization to another loanguage and back again.
-* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving userr setting on backend. 
+* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving user setting on backend. 
 * Saving user settings for `flexberry-groupedit` component and for `flexberry-objectlistview` that shows for choosing value for `flexberry-lookup` component doesn't work correctly. It is possible to use `notUseUserSettings` property for `flexberry-objectlistview` component to turn off user settings for these cases as workaround.
 
 ## [0.1.0] - 2015-12-05

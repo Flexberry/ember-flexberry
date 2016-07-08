@@ -1,5 +1,6 @@
 ﻿{
   "modelName": "ember-flexberry-dummy-test-poly-child",
+  "className": "TestPolyChild",
   "parentModelName": "ember-flexberry-dummy-test-poly-base",
   "parentClassName": "TestPolyBase",
   "attrs": [
@@ -40,13 +41,13 @@
       "attrs": [
         {
           "name": "pole",
-          "caption": "",
+          "caption": "Pole",
           "hidden": false,
           "index": 0
         },
         {
           "name": "childPole",
-          "caption": "",
+          "caption": "ChildPole",
           "hidden": false,
           "index": 1
         }

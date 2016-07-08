@@ -7,40 +7,40 @@ import Ember from 'ember';
 /*
   Mixin for route, that pagination support.
 
-  Example:
-  ```javascript
-  // app/controllers/employees.js
-  import Ember from 'ember';
-  import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
-  export default Ember.Controller.extend(PaginatedController, {
-  });
-  ```
+  @example
+    ```javascript
+    // app/controllers/employees.js
+    import Ember from 'ember';
+    import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
+    export default Ember.Controller.extend(PaginatedController, {
+    });
+    ```
 
-  ```javascript
-  // app/routes/employees.js
-  import Ember from 'ember';
-  import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
-  export default Ember.Route.extend(PaginatedRoute, {
-  });
-  ```
+    ```javascript
+    // app/routes/employees.js
+    import Ember from 'ember';
+    import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
+    export default Ember.Route.extend(PaginatedRoute, {
+    });
+    ```
 
-  ```handlebars
-  <!-- app/templates/employees.hbs -->
-  ...
-  {{flexberry-objectlistview
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
     ...
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    previousPage=(action 'previousPage')
-    gotoPage=(action 'gotoPage')
-    nextPage=(action 'nextPage')
+    {{flexberry-objectlistview
+      ...
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      previousPage=(action 'previousPage')
+      gotoPage=(action 'gotoPage')
+      nextPage=(action 'nextPage')
+      ...
+    }}
     ...
-  }}
-  ...
-  ```
+    ```
 
   @class PaginatedRoute
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>

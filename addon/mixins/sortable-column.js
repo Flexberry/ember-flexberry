@@ -28,7 +28,7 @@ export default Ember.Mixin.create({
     Note! Comment: '1-based'.
 
     @property sortNumber
-    @type Integer
+    @type Number
     @default -1
    */
   sortNumber: -1,

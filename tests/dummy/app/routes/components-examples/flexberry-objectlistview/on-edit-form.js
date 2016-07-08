@@ -11,6 +11,15 @@ export default ListFormRoute.extend({
   modelProjection: 'ApplicationUserL',
 
   /**
+   *  componentName to be user for userSettings
+   *
+   *  @property componentName
+   *  @type String
+   *  @default 'FOLVonEditFormObjectListView'
+   */
+  componentName: 'FOLVonEditFormObjectListView',
+
+  /**
     Name of model to be used as list's records types.
 
     @property modelName

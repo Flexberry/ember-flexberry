@@ -2,13 +2,22 @@ import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 export default ListFormRoute.extend({
   /**
-    Name of model projection to be used as record's properties limitation.
+   N ame of model projection to b*e used as record's properties limitation.
 
-    @property modelProjection
-    @type String
-    @default 'SuggestionL'
+   @property modelProjection
+   @type String
+   @default 'SuggestionL'
    */
   modelProjection: 'SuggestionL',
+
+  /**
+  componentName to be user for userSettings
+
+  @property componentName
+  @type String
+  @default 'SuggestionObjectListView'
+  */
+  componentName: 'SuggestionObjectListView',
 
   /**
     Name of model to be used as list's records types.

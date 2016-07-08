@@ -13,6 +13,15 @@ export default ListFormRoute.extend({
   modelProjection: 'FolvWithLimitFunctionExampleView',
 
   /**
+  componentName to be user for userSettings
+
+  @property componentName
+  @type String
+  @default 'FOLVLimitFunctionExampleObjectListView'
+  */
+  componentName: 'FOLVLimitFunctionExampleObjectListView',
+
+  /**
     Name of model to be used as list's records types.
 
     @property modelName

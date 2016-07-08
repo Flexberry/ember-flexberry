@@ -11,13 +11,22 @@ export default ListFormRoute.extend({
   modelProjection: 'FolvWithLimitFunctionExampleView',
 
   /**
-   *  componentName to be user for userSettings
-   *
-   *  @property componentName
-   *  @type String
-   *  @default 'FOLVToolbarCustomButtonsExample'
-   */
-  componentName: 'FOLVToolbarCustomButtonsExample',
+  userSettings.
+  Format:
+  {
+    <componentName>: {
+      colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+      sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
+      colsWidths: [ <colName>:<colWidth>, ... ],
+    },
+  ...
+  }
+
+  @property userSettings
+  @type Object
+  @default {}
+  */
+  userSettings: { FOLVToolbarCustomButtonsExample: { } },
 
   /**
     Name of model to be used as list's records types.

@@ -11,13 +11,22 @@ export default ListFormRoute.extend({
   modelProjection: 'SuggestionL',
 
   /**
-  componentName to be user for userSettings
+  userSettings.
+  Format:
+  {
+    <componentName>: {
+      colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+      sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
+      colsWidths: [ <colName>:<colWidth>, ... ],
+    },
+  ...
+  }
 
-  @property componentName
-  @type String
-  @default 'FOLVSettingExampleObjectListView'
+  @property userSettings
+  @type Object
+  @default {}
   */
-  componentName: 'FOLVSettingExampleObjectListView',
+  userSettings: { FOLVSettingExampleObjectListView: { } },
 
   /**
     Name of model to be used as list's records types.

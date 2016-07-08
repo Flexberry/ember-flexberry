@@ -11,13 +11,23 @@ export default ListFormRoute.extend({
   modelProjection: 'ApplicationUserL',
 
   /**
-  componentName to be user for userSettings
+  /**
+  userSettings.
+  Format:
+  {
+    <componentName>: {
+      colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+      sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
+      colsWidths: [ <colName>:<colWidth>, ... ],
+    },
+  ...
+  }
 
-  @property componentName
-  @type String
-  @default 'applicationUserObjectListView'
+  @property userSettings
+  @type Object
+  @default {}
   */
-  componentName: 'applicationUserObjectListView',
+  userSettings: { applicationUserObjectListView: { } },
 
   /**
     Name of model to be used as list's records types.

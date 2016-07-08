@@ -11,13 +11,22 @@ export default ListFormRoute.extend({
   modelProjection: 'SuggestionTypeL',
 
   /**
-    componentName for userSettings.
+  userSettings.
+  Format:
+  {
+    <componentName>: {
+      colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+      sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
+      colsWidths: [ <colName>:<colWidth>, ... ],
+    },
+  ...
+  }
 
-    @property modelProjection
-    @type String
-    @default 'suggestionTypeObjectListView'
-   */
-  componentName:"suggestionTypeObjectListView"
+  @property userSettings
+  @type Object
+  @default {}
+  */
+  userSettings: { suggestionTypeObjectListView: { } },
 
   /**
     Name of model to be used as list's records types.

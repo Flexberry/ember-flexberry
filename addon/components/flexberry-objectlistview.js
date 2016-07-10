@@ -13,6 +13,15 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    Flag used to display filters.
+
+    @property _showFilters
+    @type Boolean
+    @default false
+    @private
+  */
+  _showFilters: Ember.computed.oneWay('filters'),
 
   /**
     Text to be displayed in table body, if content is not defined or empty.
@@ -256,6 +265,15 @@ export default FlexberryBaseComponent.extend({
   colsConfigButton: true,
 
   /**
+    Flag to use filters in OLV component.
+
+    @property enableFilters
+    @type Boolean
+    @default false
+  */
+  enableFilters: false,
+
+  /**
     Flag indicates whether to show filter button at toolbar.
 
     @property filterButton
@@ -493,6 +511,15 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction(actionName);
+    },
+
+    /**
+      Show/hide filters.
+
+      @method actions.toggleStateFilters
+    */
+    toggleStateFilters() {
+      this.toggleProperty('_showFilters');
     },
 
     /**

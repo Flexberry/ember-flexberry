@@ -13,6 +13,11 @@
     {{t "components.olv-toolbar.delete-button-text"}}
   </button>
 {{/if}}
+{{#if enableFilters}}
+  <button class="ui icon button {{if showFilters "active"}}" {{action toggleStateFilters}}>
+    <i class="filter icon"></i>
+  </button>
+{{/if}}
 {{#if filterButton}}
   <div class="ui action input">
     {{input

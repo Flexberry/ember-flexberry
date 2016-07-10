@@ -1,5 +1,5 @@
 "use strict";
-var ModelBlueprint_1 = require('./ModelBlueprint');
+var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
 module.exports = {
     description: 'Generates an ember-data model for flexberry.',
     availableOptions: [
@@ -19,14 +19,10 @@ module.exports = {
     locals: function (options) {
         var modelBlueprint = new ModelBlueprint_1.default(this, options);
         return {
+            className: modelBlueprint.className,
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,
-            model: modelBlueprint.model,
-            projections: modelBlueprint.projections,
-            serializerAttrs: modelBlueprint.serializerAttrs,
             name: modelBlueprint.name,
-            needsAllModels: modelBlueprint.needsAllModels,
-            needsAllEnums: modelBlueprint.needsAllEnums // for use in files\tests\unit\serializers\__name__.js
         };
     }
 };

@@ -53,6 +53,15 @@ export default Ember.Mixin.create({
   queryParams: ['filter'],
 
   /**
+    Filters filled in OLV component.
+
+    @property filters
+    @type Object
+    @default null
+  */
+  filters: null,
+
+  /**
     String with search query.
 
     @property filter
@@ -62,6 +71,27 @@ export default Ember.Mixin.create({
   filter: null,
 
   actions: {
+    /**
+      Save filters and refresh list.
+
+      @method actions.applyFilters
+      @param {Object} filters
+    */
+    applyFilters(filters) {
+      this.set('filters', filters);
+      this.send('refreshList');
+    },
+
+    /**
+      Reset filters and refresh list.
+
+      @method actions.resetFilters
+    */
+    resetFilters() {
+      this.set('filters', null);
+      this.send('refreshList');
+    },
+
     /**
       Changes current pattern for objects filtering.
 

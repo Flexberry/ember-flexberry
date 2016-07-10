@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.
 
 ## [0.2.1] - 2016-07-07
 ### Changed
@@ -127,7 +129,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Known issues
 * Only one `flexberry-objectlistview` or `flexberry-groupedit` component could be used on particular form.
 * Internationalization is not implemented for captions in model projections.
-* It is not possible to open any route for generated application protptype (in case of generation of whole application prototype) because of wrong generation of internationalization mechanism.
+* It is not possible to open any route for generated application prototype (in case of generation of whole application prototype) because of wrong generation of internationalization mechanism.
 * It is not possible to sort list of models by property of "master" model if property of another "master" model from used projection has the same name.
 * Some items of context menu for rows of `flexberry-objectlistview` component are disappearnig when `showEditMenuItemInRow` or `showDeleteMenuItemInRow` property of component has been dynamically changed.
 * Sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component is not working in Firefox.

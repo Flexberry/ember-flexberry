@@ -7,35 +7,35 @@ import Ember from 'ember';
 /**
   Mixin for route, that sorting on the list form.
 
-  Example:
-  ```javascript
-  // app/controllers/employees.js
-  import Ember from 'ember';
-  import SortableController from 'ember-flexberry/mixins/sortable-controller'
-  export default Ember.Controller.extend(SortableController, {
-  });
-  ```
+  @example
+    ```javascript
+    // app/controllers/employees.js
+    import Ember from 'ember';
+    import SortableController from 'ember-flexberry/mixins/sortable-controller'
+    export default Ember.Controller.extend(SortableController, {
+    });
+    ```
 
-  ```javascript
-  // app/routes/employees.js
-  import Ember from 'ember';
-  import SortableRoute from 'ember-flexberry/mixins/sortable-route'
-  export default Ember.Route.extend(SortableRoute, {
-  });
-  ```
+    ```javascript
+    // app/routes/employees.js
+    import Ember from 'ember';
+    import SortableRoute from 'ember-flexberry/mixins/sortable-route'
+    export default Ember.Route.extend(SortableRoute, {
+    });
+    ```
 
-  ```handlebars
-  <!-- app/templates/employees.hbs -->
-  ...
-  {{flexberry-objectlistview
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
     ...
-    orderable=true
-    sortByColumn=(action 'sortByColumn')
-    addColumnToSorting=(action 'addColumnToSorting')
+    {{flexberry-objectlistview
+      ...
+      orderable=true
+      sortByColumn=(action 'sortByColumn')
+      addColumnToSorting=(action 'addColumnToSorting')
+      ...
+    }}
     ...
-  }}
-  ...
-  ```
+    ```
 
   @class SortableRoute
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
@@ -97,7 +97,7 @@ export default Ember.Mixin.create({
 
     @method _getNextIndeces
     @param {String} paramString
-    @return {Integer}
+    @return {Number}
     @private
    */
   _getNextIndeces(paramString) {

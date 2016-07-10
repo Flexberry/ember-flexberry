@@ -839,6 +839,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
+    this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
 
     let content = this.get('content');
     if (content) {
@@ -935,6 +936,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
+    this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
 
     this._super(...arguments);
   },

@@ -523,6 +523,27 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
+
+      @method actions.applyFilters
+      @param {Array} filters Filters.
+    */
+    applyFilters(filters) {
+      throw new Error('No handler for applyFilters action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... applyFilters=(action "applyFilters")}}.');
+    },
+
+    /**
+      Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
+
+      @method actions.resetFilters
+    */
+    resetFilters() {
+      throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... resetFilters=(action "resetFilters")}}.');
+    },
+
+    /**
       Handles action from object-list-view when no handler for this component is defined.
 
       @method actions.filterByAnyMatch

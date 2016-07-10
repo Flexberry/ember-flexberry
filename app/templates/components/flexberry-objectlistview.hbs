@@ -47,6 +47,9 @@
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
   enableFilters=enableFilters
   showFilters=_showFilters
+  filters=filters
+  applyFilters = (action (if applyFilters applyFilters "applyFilters"))
+  resetFilters = (action (if resetFilters resetFilters "resetFilters"))
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   configurateRow=this.attrs.configurateRow
   confirmDeleteRow=confirmDeleteRow

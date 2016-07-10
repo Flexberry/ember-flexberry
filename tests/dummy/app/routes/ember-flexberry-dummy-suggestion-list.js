@@ -11,7 +11,7 @@ export default ListFormRoute.extend({
   modelProjection: 'SuggestionL',
 
   /**
-  userSettings.
+  developerUserSettings.
   Format:
   {
   settingName: {
@@ -27,11 +27,11 @@ export default ListFormRoute.extend({
   For default userSetting use empty name ('').
   <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
 
-  @property userSettings
+  @property developerUserSettings
   @type Object
   @default {}
   */
-  userSettings: { SuggestionObjectListView: { } },
+  developerUserSettings: { SuggestionObjectListView: { } },
 
   /**
     Name of model to be used as list's records types.

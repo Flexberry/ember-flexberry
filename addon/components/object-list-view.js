@@ -1168,6 +1168,10 @@ export default FlexberryBaseComponent.extend(
       }
     }
 
+    if (this.get('enableFilters')) {
+      this._addFilterForColumn(column, attr, bindingPath);
+    }
+
     let sortDef;
     let sorting = this.get('sorting');
     if (sorting && (sortDef = sorting[bindingPath])) {
@@ -1177,6 +1181,175 @@ export default FlexberryBaseComponent.extend(
     }
 
     return column;
+  },
+
+  /**
+    Add filter parameters for column.
+
+    @method _createFilterForColumn
+    @param {Object} column
+    @param {Object} attr
+    @param {String} bindingPath
+  */
+  _addFilterForColumn(column, attr, bindingPath) {
+    let modelName;
+    let attributeName;
+    let relation = attr.kind !== 'attr';
+    if (relation) {
+      modelName = attr.modelName;
+      attributeName = attr.options.displayMemberPath;
+    } else {
+      attributeName = bindingPath;
+      modelName = this.get('modelName');
+    }
+
+    let model = this.get('store').modelFor(modelName);
+    let attribute = Ember.get(model, 'attributes').get(attributeName);
+
+    let component = this._getFilterComponent(attribute.type, relation);
+    let componentForFilter = this.get('componentForFilter');
+    if (componentForFilter) {
+      Ember.assert(`Need function in 'componentForFilter'.`, typeof filterComponent === 'function');
+      Ember.$.extend(true, component, componentForFilter(attribute.type, relation));
+    }
+
+    let conditions;
+    let conditionsByType = this.get('conditionsByType');
+    if (conditionsByType) {
+      Ember.assert(`Need function in 'componentForFilter'.`, typeof conditionsByType === 'function');
+      conditions = conditionsByType(attribute.type);
+    } else {
+      conditions = this._conditionsByType(attribute.type);
+    }
+
+    let name = relation ? `${bindingPath}.${attribute.name}` : bindingPath;
+    let type = attribute.type;
+    let pattern;
+    let condition;
+
+    let filters = this.get('filters');
+    if (filters && filters.hasOwnProperty(name)) {
+      pattern = filters[name].pattern;
+      condition = filters[name].condition;
+    }
+
+    column.filter = { name, type, pattern, condition, conditions, component };
+  },
+
+  /**
+    Return available conditions for filter.
+
+    @method _conditionsByType
+    @param {String} type
+    @return {Array} Available conditions for filter.
+  */
+  _conditionsByType(type) {
+    switch (type) {
+      case 'file':
+        return null;
+
+      case 'date':
+      case 'number':
+        return ['eq', 'neq', 'le', 'ge'];
+
+      case 'string':
+      case 'boolean':
+        return ['eq', 'neq'];
+
+      default:
+        return ['eq', 'neq'];
+    }
+  },
+
+  /**
+    Return object with parameters for component.
+
+    @method _getFilterComponent
+    @param {String} type
+    @param {Boolean} relation
+    @return {Object} Object with parameters for component.
+  */
+  _getFilterComponent(type, relation) {
+    let component = {
+      name: undefined,
+      properties: undefined,
+    };
+
+    switch (type) {
+      case 'file':
+        break;
+
+      case 'string':
+        component.name = 'flexberry-textbox';
+        component.properties = {
+          class: 'compact fluid',
+        };
+        break;
+
+      case 'number':
+        component.name = 'flexberry-textbox';
+        component.properties = {
+          class: 'compact fluid',
+        };
+        break;
+
+      case 'boolean':
+        component.name = 'flexberry-dropdown';
+        component.properties = {
+          items: ['true', 'false'],
+          class: 'compact fluid',
+        };
+        break;
+
+      case 'date':
+        component.name = 'flexberry-textbox';
+        break;
+
+      default:
+        let transformInstance = Ember.getOwner(this).lookup('transform:' + type);
+        let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
+        if (transformClass && transformClass.isEnum) {
+          component.name = 'flexberry-dropdown';
+          component.properties = {
+            items: transformInstance.get('captions'),
+            class: 'compact fluid',
+          };
+        }
+
+        break;
+    }
+
+    return component;
+  },
+
+  /**
+    Refresh list with the entered filter.
+
+    @method _refreshList
+    @param {String} componentName
+    @private
+  */
+  _refreshList(componentName) {
+    if (this.get('componentName') === componentName) {
+      if (this.get('enableFilters')) {
+        let filters = {};
+        let hasFilters = false;
+        this.get('columns').forEach((column) => {
+          if (column.filter.pattern && column.filter.condition) {
+            hasFilters = true;
+            filters[column.filter.name] = column.filter;
+          }
+        });
+
+        if (hasFilters) {
+          this.sendAction('applyFilters', filters);
+        } else {
+          this.get('currentController').send('refreshList');
+        }
+      } else {
+        this.get('currentController').send('refreshList');
+      }
+    }
   },
 
   /**

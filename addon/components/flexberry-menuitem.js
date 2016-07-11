@@ -100,7 +100,8 @@ export default FlexberryBaseComponent.extend({
       this.$().data('flexberry-menuitem.item', item);
     } else {
       let parentView = this.get('parentView');
-      parentView.$().data('flexberry-menu', item);
+      parentView.$().data('flexberry-menu', item)
+                    .dropdown();
     }
   },
 

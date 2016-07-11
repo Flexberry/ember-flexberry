@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.
 
+### Known issues
+* TransitionAborted error get thrown when adding query params (callback is called once for each query param you set to refreshModel: true).
+
 ## [0.2.1] - 2016-07-07
 ### Changed
 * Updated information about [release process in README.md](https://github.com/Flexberry/ember-flexberry/blob/master/README.md#releasing)

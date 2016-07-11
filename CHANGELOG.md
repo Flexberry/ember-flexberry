@@ -13,6 +13,7 @@ FlexberryObjectlistviewComponent:
 ### Fixed
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.
+* Fixed blueprints dependency for generation of application prototype for hide the sidebar with sitemap after click on sitemap-node.
 * Fixed `flexberry-menu` for configuration of columns settings in `flexberry-objectlistview` component after changing current locale for internationalization to another language and back again.
 
 ### Known issues

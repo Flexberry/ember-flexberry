@@ -33,15 +33,17 @@
     </button>
   </div>
 {{/if}}
-{{#if colsConfigButton}}
+{{#if _colsConfigButton}}
   <div class="ui buttons">
     <button class="ui icon button" {{action "showConfigDialog"}}>
       <i class="large table icon"></i>
     </button>
-    {{flexberry-menu
-      items=colsSettingsItems
-      onItemClick=(action "onMenuItemClick")
-    }}
+    {{#if colsSettingsItems}}
+      {{flexberry-menu
+        items=colsSettingsItems
+        onItemClick=(action "onMenuItemClick")
+      }}
+    {{/if}}
   </div>
 {{/if}}
 {{#each customButtons as |customButton|}}

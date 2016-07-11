@@ -97,10 +97,8 @@ export default Ember.Mixin.create({
 
       @method filterByAnyMatch
       @param {String} pattern A substring that is searched in objects while filtering.
-      @deprecated Use Query Language.
     */
     filterByAnyMatch(pattern) {
-      Ember.Logger.error('Method `filterByAnyMatch` is deprecated, use Query Language.');
       if (this.get('filter') !== pattern) {
         this.setProperties({
           filter: pattern,

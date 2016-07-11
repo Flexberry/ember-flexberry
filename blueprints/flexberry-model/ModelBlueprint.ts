@@ -227,6 +227,6 @@ export default class ModelBlueprint {
       let attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
       projections.push(`  model.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
     }
-    return projections.join("\n");
+    return `\n${projections.join("\n")}\n`;
   }
 }

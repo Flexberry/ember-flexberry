@@ -3,7 +3,5 @@ import <%if(parentModelName) {%><%= parentClassName %>Model from './<%= parentMo
 let Model = <%if(parentModelName) {%><%= parentClassName %>Model.extend<%}else{%>__BaseModel.extend<%}%>(<%= className %>Mixin, {
 
 });
-
 <%if(projections) {%>defineProjections(Model);<%}%>
-
 export default Model;

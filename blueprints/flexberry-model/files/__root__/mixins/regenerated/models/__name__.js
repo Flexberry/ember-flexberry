@@ -5,7 +5,4 @@ export let MixinModel = Ember.Mixin.create({
 <%= model %>,
 
 });
-
-<%if(projections) {%>export let defineProjections = function(model) {<%}%>
-<%= projections %>
-<%if(projections) {%>};<%}%>
+<%if(projections) {%>export let defineProjections = function (model) {<%}%><%= projections %><%if(projections) {%>};<%}%>

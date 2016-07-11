@@ -13,6 +13,7 @@ FlexberryObjectlistviewComponent:
 ### Fixed
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.
+* Fixed blueprints dependency for generation of application prototype for hide the sidebar with sitemap after click on sitemap-node.
 
 ### Known issues
 * TransitionAborted error get thrown when adding query params (callback is called once for each query param you set to refreshModel: true).

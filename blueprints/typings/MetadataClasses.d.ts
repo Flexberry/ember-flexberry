@@ -44,6 +44,7 @@ declare module "MetadataClasses" {
     export class Model {
         
         public modelName: string;
+        public className: string;
         public parentModelName: string;
         public parentClassName: string;
         public attrs: DSattr[];

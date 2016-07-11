@@ -682,10 +682,10 @@ export default FlexberryBaseComponent.extend(
 
       @method actions.headerCellClick
       @public
-      @param {} column
-      @param {jQuery.Event} e jQuery.Event by click on colomn
+      @param {Object} column
+      @param {jQuery.Event} event jQuery.Event by click on column.
     */
-    headerCellClick(column, e) {
+    headerCellClick(column, event) {
       if (!this.headerClickable || column.sortable === false) {
         return;
       }

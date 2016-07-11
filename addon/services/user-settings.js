@@ -44,15 +44,42 @@ export default Ember.Service.extend({
 
   /**
     Set initial userSetting for current page, defined by application developer
-   */
-  setDeveloperUserSettings(page,userSettings) {
-    developerUserSettings[page]=userSettings;
-    if (isUserSettingsServiceEnabled) {
-    } else {
-      currentUserSettings[page]=userSettings;
+    Structure of developerUserSettings:
+    {
+    <componentName>: {
+      <settingName>: {
+          colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+          sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
+          colsWidths: [ <colName>:<colWidth>, ... ],
+        },
+        ...
+      },
+      ...
     }
-  }
+    For default userSetting use empty name ('').
+    <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
 
+    @method setDeveloperUserSettings
+    @param {String} page path.
+    @param {Object} developerUserSettings.
+   */
+  setDeveloperUserSettings(page,developerUserSettings) {
+    if (! (page  in currentUserSettings)) {
+      currentUserSettings[page] = developerUserSettings;
+      developerUserSettings[page] = developerUserSettings;
+    }
+    if (isUserSettingsServiceEnabled) {
+      for (let settingName in developerUserSettings) {
+        if (! (settingName in currentUserSettings)) {
+          let remoteSettings = this.getUserSetting({});
+        }
+
+      }
+  },
+
+
+
+  /* ------------------ OLD FUNCTIONS */
 
   /**
     Deletes given user setting from storage.
@@ -159,6 +186,7 @@ export default Ember.Service.extend({
     }
 
     let methodOptions = Ember.merge({
+      appName: undefined,
       moduleName: undefined,
       settingName: undefined
     }, options);
@@ -178,7 +206,7 @@ export default Ember.Service.extend({
           }
         }
 
-        return undefined;
+        return {};
       }
     );
   },
@@ -290,6 +318,8 @@ export default Ember.Service.extend({
   _getExistingRecord(moduleName, settingName) {
     // TODO: add search by username.
     let currentUserName = this.getCurrentUser();
+    let appName = window.location.pathname;
+    let p1 = new SimplePredicate('appName', 'eq', appName);
     let p1 = new SimplePredicate('userName', 'eq', currentUserName);
     let p2 = new SimplePredicate('moduleName', 'eq', moduleName);
     let p3 = new SimplePredicate('settName', 'eq', settingName);
@@ -349,5 +379,11 @@ export default Ember.Service.extend({
         return foundRecords;
       }
     });
-  }
+  },
+
+  /**
+    Form Appname of userSettins
+
+   */
+
 });

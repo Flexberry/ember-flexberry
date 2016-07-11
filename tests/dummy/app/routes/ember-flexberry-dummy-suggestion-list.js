@@ -14,8 +14,8 @@ export default ListFormRoute.extend({
   developerUserSettings.
   Format:
   {
-  settingName: {
-      <componentName>: {
+  <componentName>: {
+    <settingName>: {
         colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
         sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
         colsWidths: [ <colName>:<colWidth>, ... ],

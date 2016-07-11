@@ -221,7 +221,7 @@ var ModelBlueprint = (function () {
                 projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": Proj.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n      " + attrsStr_1 + "\n    })"));
             }
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
-            var attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
+            var attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
             projections.push("  model.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
         }
         return projections.join("\n");

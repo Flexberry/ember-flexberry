@@ -224,7 +224,7 @@ export default class ModelBlueprint {
         projAttrs.push(new SortedPair(Number.MAX_VALUE, `${hasMany.name}: Proj.hasMany('${hasMany.relatedTo}', '${hasMany.caption}', {\n      ${attrsStr}\n    })`));
       }
       projAttrs=lodash.sortBy(projAttrs,["index"]);
-      let attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
+      let attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
       projections.push(`  model.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
     }
     return projections.join("\n");

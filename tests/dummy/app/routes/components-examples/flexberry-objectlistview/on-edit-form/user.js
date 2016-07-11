@@ -1,6 +1,6 @@
-import BaseEditFormRoute from '../../../base-edit-form';
+import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
-export default BaseEditFormRoute.extend({
+export default EditFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
 

@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+### Added
+FlexberryObjectlistviewComponent:
+* Add filter by attribute number type.
+* Add filter by attribute master type.
+* Add `predicateForAttribute` function for customization filter.
+
 ### Fixed
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.

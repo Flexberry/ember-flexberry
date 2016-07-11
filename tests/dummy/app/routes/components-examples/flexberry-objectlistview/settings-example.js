@@ -17,5 +17,16 @@ export default ListFormRoute.extend({
     @type String
     @default 'ember-flexberry-dummy-suggestion'
    */
-  modelName: 'ember-flexberry-dummy-suggestion'
+  modelName: 'ember-flexberry-dummy-suggestion',
+
+  actions: {
+    /**
+      Refresh page by call [`refresh`](http://emberjs.com/api/classes/Ember.Route.html#method_refresh) method.
+
+      @method actions.refresh
+    */
+    refresh() {
+      this.refresh();
+    },
+  },
 });

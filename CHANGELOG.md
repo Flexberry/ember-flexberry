@@ -13,6 +13,7 @@ FlexberryObjectlistviewComponent:
 ### Fixed
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.
+* Fixed `flexberry-menu` for configuration of columns settings in `flexberry-objectlistview` component after changing current locale for internationalization to another language and back again.
 
 ### Known issues
 * TransitionAborted error get thrown when adding query params (callback is called once for each query param you set to refreshModel: true).
@@ -148,8 +149,8 @@ FlexberryObjectlistviewComponent:
 * Logs for rejected promises are not saving on backend.
 * Formatted message field of log object fills differently in IE11/Safari and Chrome/Firefox.
 * `flexberry-datepicker` eats too much memory, working slowly and slows down the application (especially when using multiple `flexberry-datepicker` components on form).
-* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working after changing current locale for internationalization to another loanguage and back again.
-* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving userr setting on backend. 
+* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working after changing current locale for internationalization to another language and back again.
+* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving user setting on backend. 
 * Saving user settings for `flexberry-groupedit` component and for `flexberry-objectlistview` that shows for choosing value for `flexberry-lookup` component doesn't work correctly. It is possible to use `notUseUserSettings` property for `flexberry-objectlistview` component to turn off user settings for these cases as workaround.
 
 ## [0.1.0] - 2015-12-05

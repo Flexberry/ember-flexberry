@@ -59,21 +59,25 @@ export default ProjectedModelFormRoute.extend(
   */
   model: function(params, transition) {
     let modelName = this.get('modelName');
-    let page = transition.targetName;
+    let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
     let limitPredicate =
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
     let developerUserSettings = this.get('developerUserSettings');
     let userSettingsService = this.get('userSettingsService');
-    if (!userSettingsService.exists(page)) {
-      userSettingsService.set(page, developerUserSettings);
+    userSettingsService.setCurrentWebPage(webPage);
+    if (!userSettingsService.exists()) {
+      userSettingsService.setDeveloperUserSettings(developerUserSettings);
     }
 
-    if (params.sort) {
-      userSettingsService.setCurrentSort(params.sort);
+    if (params) {
+      userSettingsService.setCurrentParems(params);
     }
 
-    this.sorting = userSettingsService.getCurrentSorting();
+    let listComponentNames= userSettingsService.getListComponentNames();
+    Ember.assert('list-form must contain single component', listComponentNames.length == 1);
+    let componentName = listComponentNames[0];
+    this.sorting = userSettingsService.getCurrentSorting(componentName);
     let queryParameters = {
       modelName: modelName,
       projectionName: projectionName,

@@ -212,4 +212,15 @@ Model.defineProjection('FolvWithLimitFunctionExampleView', 'ember-flexberry-dumm
   })
 });
 
+// Projection for lookup in block form.
+Model.defineProjection('LookupInBlockFormView', 'ember-flexberry-dummy-suggestion', {
+  editor1: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Proj.attr('name', { hidden: true }),
+    eMail: Proj.attr('eMail', { hidden: true }),
+    gender: Proj.attr('gender', { hidden: true })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
 export default Model;

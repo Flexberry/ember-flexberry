@@ -193,7 +193,7 @@ var ModelBlueprint = (function () {
             }
             for (var _d = 0, _e = proj.belongsTo; _d < _e.length; _d++) {
                 var belongsTo = _e[_d];
-                projAttrs.push(this.joinProjBelongsTo(belongsTo, 4));
+                projAttrs.push(this.joinProjBelongsTo(belongsTo, 3));
             }
             for (var _f = 0, _g = proj.hasMany; _f < _g.length; _f++) {
                 var hasMany = _g[_f];
@@ -209,20 +209,20 @@ var ModelBlueprint = (function () {
                     }
                     for (var _k = 0, _l = detailProj.belongsTo; _k < _l.length; _k++) {
                         var detailBelongsTo = _l[_k];
-                        hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 5));
+                        hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 4));
                     }
                     for (var _m = 0, _o = detailProj.hasMany; _m < _o.length; _m++) {
                         var detailHasMany = _o[_m];
-                        hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 5));
+                        hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 4));
                     }
                 }
                 hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
-                var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n        ");
-                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": Proj.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n        " + attrsStr_1 + "\n      })"));
+                var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n      ");
+                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": Proj.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n      " + attrsStr_1 + "\n    })"));
             }
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
-            projections.push("    this.constructor.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n      " + attrsStr + "\n    });");
+            projections.push("  model.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
         }
         return projections.join("\n");
     };

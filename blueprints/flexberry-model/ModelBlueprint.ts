@@ -198,7 +198,7 @@ export default class ModelBlueprint {
         projAttrs.push(this.declareProjAttr(attr));
       }
       for (let belongsTo of proj.belongsTo) {
-        projAttrs.push(this.joinProjBelongsTo(belongsTo, 4));
+        projAttrs.push(this.joinProjBelongsTo(belongsTo, 3));
       }
       for (let hasMany of proj.hasMany) {
         let hasManyAttrs: SortedPair[] = [];
@@ -211,21 +211,21 @@ export default class ModelBlueprint {
             hasManyAttrs.push(this.declareProjAttr(detailAttr));
           }
           for (let detailBelongsTo of detailProj.belongsTo) {
-            hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 5));
+            hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 4));
           }
 
           for (let detailHasMany of detailProj.hasMany) {
-            hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 5));
+            hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 4));
           }
         }
         hasManyAttrs=lodash.sortBy(hasManyAttrs,["index"]);
-        let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n        ");
+        let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n      ");
 
-        projAttrs.push(new SortedPair(Number.MAX_VALUE, `${hasMany.name}: Proj.hasMany('${hasMany.relatedTo}', '${hasMany.caption}', {\n        ${attrsStr}\n      })`));
+        projAttrs.push(new SortedPair(Number.MAX_VALUE, `${hasMany.name}: Proj.hasMany('${hasMany.relatedTo}', '${hasMany.caption}', {\n      ${attrsStr}\n    })`));
       }
       projAttrs=lodash.sortBy(projAttrs,["index"]);
       let attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
-      projections.push(`    this.constructor.defineProjection('${proj.name}', '${proj.modelName}', {\n      ${attrsStr}\n    });`);
+      projections.push(`  model.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
     }
     return projections.join("\n");
   }

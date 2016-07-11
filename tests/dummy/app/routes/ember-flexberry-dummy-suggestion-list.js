@@ -31,7 +31,18 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { SuggestionObjectListView: { } },
+  developerUserSettings: {
+    SuggestionObjectListView: {
+      '': {
+        sorting:[
+          {
+            propName:'text',
+            direction:'desc'
+          }
+        ]
+      }
+    }
+  },
 
   /**
     Name of model to be used as list's records types.

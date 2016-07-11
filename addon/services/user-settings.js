@@ -202,8 +202,17 @@ export default Ember.Service.extend({
     @method getCurrentSorting
     @return {String}
    */
-  getCurrentSorting() {
-    return [];
+  getCurrentSorting(componentName) {
+    let ret = [];
+    if (this.currentAppPage in  this.currentUserSettings &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      '' in this.currentUserSettings[this.currentAppPage][componentName] &&
+      'sorting' in this.currentUserSettings[this.currentAppPage][componentName]['']
+    ) {
+      ret = this.currentUserSettings[this.currentAppPage][componentName]['']['sorting'];
+    }
+
+    return ret;
   },
 
 

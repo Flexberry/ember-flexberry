@@ -167,6 +167,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Лукап в блочной форме',
               'title': ''
             },
+            'lookup-in-modal': {
+              'caption': 'Лукап в модальном окне',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Режим dropdown',
               'title': ''
@@ -427,6 +431,14 @@ Ember.$.extend(true, translations, {
           'paragraph1': 'Перейти в режим разработчика (нажать “F12”).',
           'paragraph2': 'Включить мобильную версию сайта (нажать “Ctrl+Shift+M” в Chrome и Firefox)',
           'paragraph3': 'Обновить страницу (нажать “F5”)'
+        },
+        'lookup-in-modal': {
+          'caption': 'Components-examples/flexberry-lookup/lookup-in-modal',
+          'captionModal': 'Кастомное модальное окно №1',
+          'captionModalDouble': 'Кастомное модальное окно №2',
+          'buttonModal': 'Модальное окно №1',
+          'buttonModalDouble': 'Модальное окно №2',
+          'buttonClose': 'Закрыть'
         },
         'dropdown-mode-example': {
           'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'

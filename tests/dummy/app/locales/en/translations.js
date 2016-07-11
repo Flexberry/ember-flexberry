@@ -167,6 +167,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Lookup block form example',
               'title': ''
             },
+            'lookup-in-modal': {
+              'caption': 'Lookup in modal window',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Dropdown mode example',
               'title': ''
@@ -426,6 +430,14 @@ Ember.$.extend(true, translations, {
           'paragraph1': 'Go to developer mode (press "F12").',
           'paragraph2': 'Enable mobile site (press "Ctrl + Shift + M" in Chrome and Firefox)',
           'paragraph3': 'Refresh page (press "F5")'
+        },
+        'lookup-in-modal': {
+          'caption': 'Components-examples/flexberry-lookup/lookup-in-modal',
+          'captionModal': 'Custom modal window №1',
+          'captionModalDouble': 'Custom modal window №2',
+          'buttonModal': 'Modal window №1',
+          'buttonModalDouble': 'Modal window №2',
+          'buttonClose': 'Close'
         },
         'dropdown-mode-example': {
           'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'

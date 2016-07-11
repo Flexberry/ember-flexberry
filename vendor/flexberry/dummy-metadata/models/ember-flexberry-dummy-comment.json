@@ -1,5 +1,6 @@
 ﻿{
   "modelName": "ember-flexberry-dummy-comment",
+  "className": "Comment",
   "parentModelName": null,
   "parentClassName": null,
   "attrs": [

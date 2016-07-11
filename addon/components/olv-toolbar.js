@@ -304,8 +304,8 @@ export default FlexberryBaseComponent.extend({
       @method actions.showConfigDialog
       @public
     */
-    showConfigDialog() {
-      this.get('modelController').send('showConfigDialog');
+    showConfigDialog(settingName) {
+      this.get('modelController').send('showConfigDialog', settingName);
     },
 
     /**
@@ -317,14 +317,14 @@ export default FlexberryBaseComponent.extend({
     */
     onMenuItemClick(e) {
       let iTags = Ember.$(e.currentTarget).find('i');
-      let namedSetingSpans = Ember.$(e.currentTarget).find('span');
-      if (iTags.length <= 0 || namedSetingSpans.length <= 0) {
+      let namedSettingSpans = Ember.$(e.currentTarget).find('span');
+      if (iTags.length <= 0 || namedSettingSpans.length <= 0) {
         return;
       }
 
       this._router = getOwner(this).lookup('router:main');
       let className = iTags.get(0).className;
-      let namedSeting = namedSetingSpans.get(0).innerText;
+      let namedSetting = namedSettingSpans.get(0).innerText;
       let moduleName  =   this._router.currentRouteName;
       let userSettingsService = this.get('userSettingsService');
 
@@ -335,7 +335,7 @@ export default FlexberryBaseComponent.extend({
         case 'checkmark box icon':
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
-          let colsConfig = this.listUserSettings[namedSeting];
+          let colsConfig = this.listUserSettings[namedSetting];
           userSettingsService.saveUserSetting({
             moduleName: moduleName,
             settingName: 'DEFAULT',
@@ -349,15 +349,15 @@ export default FlexberryBaseComponent.extend({
           });
           break;
         case 'setting icon':
-          this.send('showConfigDialog', namedSeting);
+          this.send('showConfigDialog', namedSetting);
           break;
         case 'remove icon':
           userSettingsService.deleteUserSetting({
             moduleName: moduleName,
-            settingName: namedSeting
+            settingName: namedSetting
           }).then(result => {
-            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSeting);
-            alert('Настройка ' + namedSeting + ' удалена');
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
+            alert('Настройка ' + namedSetting + ' удалена');
           });
           break;
         case 'remove circle icon':
@@ -439,15 +439,15 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
-  _addNamedSetting(namedSeting) {
+  _addNamedSetting(namedSetting) {
     let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
-    listNamedSettings[namedSeting] = true;
+    listNamedSettings[namedSetting] = true;
     Ember.set(this, 'listNamedSettings', listNamedSettings);
   },
 
-  _deleteNamedSetting(namedSeting) {
+  _deleteNamedSetting(namedSetting) {
     let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
-    delete listNamedSettings[namedSeting];
+    delete listNamedSettings[namedSetting];
     Ember.set(this, 'listNamedSettings', listNamedSettings);
   },
 });

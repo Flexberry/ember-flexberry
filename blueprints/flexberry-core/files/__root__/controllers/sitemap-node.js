@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   actions: {
-    hideSidebar: function() {
+    hideSidebar() {
       Ember.$('.ui.sidebar').sidebar('hide');
     }
   }

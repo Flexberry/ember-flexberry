@@ -1,23 +1,34 @@
-<div class="ui action input">
-  <div {{action 'choose' chooseData}} class="ui transparent icon input">
-    <span class="lookup-field">
-      {{#if value}}
-        {{#if hasBlock}}
-          {{yield}}
+{{#if dropdown}}
+  {{flexberry-dropdown
+    placeholder=placeholder
+    class="search"
+    value=displayValue
+    readonly=(if readonly "readonly")
+    needChecksOnValue=false
+    isSearch=true
+  }}
+{{else}}
+  <div class="ui action input">
+    <div {{action 'choose' chooseData}} class="ui transparent icon input">
+      <span class="lookup-field">
+        {{#if value}}
+          {{#if hasBlock}}
+            {{yield}}
+          {{else}}
+            {{displayValue}}
+          {{/if}}
         {{else}}
-          {{displayValue}}
+          {{placeholder}}
         {{/if}}
-      {{else}}
-        {{placeholder}}
-      {{/if}}
-    </span>
+      </span>
+      {{#unless readonly}} 
+        <i class="chevron right icon"></i>
+      {{/unless}}
+    </div>
     {{#unless readonly}} 
-      <i class="chevron right icon"></i>
+      <button class="ui icon {{removeButtonClass}} button" {{action 'remove' removeData}}>
+        <i class="remove icon" ></i>
+      </button>
     {{/unless}}
   </div>
-  {{#unless readonly}} 
-    <button class="ui icon {{removeButtonClass}} button" {{action 'remove' removeData}}>
-      <i class="remove icon" ></i>
-    </button>
-  {{/unless}}
-</div>
+{{/if}}

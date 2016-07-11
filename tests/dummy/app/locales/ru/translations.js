@@ -198,6 +198,10 @@ Ember.$.extend(true, translations, {
             'on-edit-form': {
               'caption': 'Размещение на форме редактирования',
               'title': ''
+            },
+            'custom-filter': {
+              'caption': 'Настройка фильтра',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -451,6 +455,9 @@ Ember.$.extend(true, translations, {
         },
         'on-edit-form': {
           'caption': 'FlexberryObjectlistview пример произвольных данных'
+        },
+        'custom-filter': {
+          'caption': 'Components-examples/flexberry-objectlistview/custom-filter'
         }
       },
       'flexberry-simpledatetime': {

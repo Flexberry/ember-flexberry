@@ -274,6 +274,10 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-objectlistview/on-edit-form',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.title'),
+          }, {
+            link: 'components-examples/flexberry-objectlistview/custom-filter',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.title'),
             children: null
           }]
         }, {

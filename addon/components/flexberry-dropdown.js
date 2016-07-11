@@ -10,7 +10,6 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
-
   /**
     Flag indicates whether to make checks on selected value or not.
 
@@ -153,6 +152,15 @@ export default FlexberryBaseComponent.extend({
       dropdownDomElement.dropdown('set selected', value);
     }
   })),
+
+  /**
+    Flag indicates whether to show input with search class.
+
+    @property isSearch
+    @type Boolean
+    @default false
+  */
+  isSearch: false,
 
   actions: {
     /**

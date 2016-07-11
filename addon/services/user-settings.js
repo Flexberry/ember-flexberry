@@ -33,6 +33,28 @@ export default Ember.Service.extend({
   isUserSettingsServiceEnabled: false,
 
   /**
+    User settings for all pages defined by developer
+   */
+  developerUserSettings:{},
+
+  /**
+    Current user settings for all pages
+   */
+  currentUserSettings:{},
+
+  /**
+    Set initial userSetting for current page, defined by application developer
+   */
+  setDeveloperUserSettings(page,userSettings) {
+    developerUserSettings[page]=userSettings;
+    if (isUserSettingsServiceEnabled) {
+    } else {
+      currentUserSettings[page]=userSettings;
+    }
+  }
+
+
+  /**
     Deletes given user setting from storage.
 
     @method deleteUserSetting

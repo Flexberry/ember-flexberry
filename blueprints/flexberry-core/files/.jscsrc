@@ -1,0 +1,15 @@
+{
+  "excludeFiles": ["tests/unit/models/*"],
+  "preset": "airbnb",
+  "requirePaddingNewLinesAfterBlocks": {
+    "allExcept": ["inCallExpressions", "inArrayExpressions", "inProperties"]
+  },
+  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+  "requireTrailingComma": null,
+  "validateQuoteMarks": { "mark": "'", "escape": true },
+  "requireSpacesInAnonymousFunctionExpression": null,
+  "maximumLineLength": {
+    value: 160,
+    allExcept: ["regex", "comments", "urlComments"]
+  }
+}

@@ -9,37 +9,42 @@ import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/pr
 /**
   Mixin for route, that restrictions on the list form.
 
-  Example:
-  ```javascript
-  // app/controllers/employees.js
-  import Ember from 'ember';
-  import LimitedController from 'ember-flexberry/mixins/limited-controller'
-  export default Ember.Controller.extend(LimitedController, {
-    ...
-  });
-  ```
+  @example
+    ```javascript
+    // app/controllers/employees.js
+    import Ember from 'ember';
+    import LimitedController from 'ember-flexberry/mixins/limited-controller'
+    export default Ember.Controller.extend(LimitedController, {
+      ...
+    });
+    ```
 
-  ```javascript
-  // app/routes/employees.js
-  import Ember from 'ember';
-  import LimitedRoute from 'ember-flexberry/mixins/limited-route'
-  export default Ember.Route.extend(LimitedRoute, {
-    ...
-  });
-  ```
+    ```javascript
+    // app/routes/employees.js
+    import Ember from 'ember';
+    import LimitedRoute from 'ember-flexberry/mixins/limited-route'
+    export default Ember.Route.extend(LimitedRoute, {
+      ...
+    });
+    ```
 
-  ```handlebars
-  <!-- app/templates/employees.hbs -->
-  ...
-  {{flexberry-objectlistview
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
     ...
-    filterButton=true
-    filterText=filter
-    filterByAnyMatch=(action 'filterByAnyMatch')
+    {{flexberry-objectlistview
+      ...
+      enableFilters=enableFilters
+      filters=filters
+      applyFilters=(action "applyFilters")
+      resetFilters=(action "resetFilters")
+      ...
+      filterButton=true
+      filterText=filter
+      filterByAnyMatch=(action 'filterByAnyMatch')
+      ...
+    }}
     ...
-  }}
-  ...
-  ```
+    ```
 
   @class LimitedRouteMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>

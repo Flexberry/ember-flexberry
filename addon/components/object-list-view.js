@@ -1211,7 +1211,7 @@ export default FlexberryBaseComponent.extend(
     let component = this._getFilterComponent(attribute.type, relation);
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
-      Ember.assert(`Need function in 'componentForFilter'.`, typeof filterComponent === 'function');
+      Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
       Ember.$.extend(true, component, componentForFilter(attribute.type, relation));
     }
 

@@ -267,7 +267,7 @@ export default FlexberryBaseComponent.extend({
       }
 
       //Save colsConfig in userSettings as DEFAULT
-      let savePromise = this._getSavePromise('DEFAULT', colsConfig);
+      let savePromise = this._getSavePromise(undefined, colsConfig);
       savePromise.then(
         record => {
           if (this._router.location.location.hash.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)

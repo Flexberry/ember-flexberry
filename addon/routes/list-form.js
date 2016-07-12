@@ -67,40 +67,38 @@ export default ProjectedModelFormRoute.extend(
     let developerUserSettings = this.get('developerUserSettings');
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
-    if (!userSettingsService.exists()) {
-      userSettingsService.setDeveloperUserSettings(developerUserSettings);
-    }
+    let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
+    let ret = userSettingPromise
+      .then(currectPageUserSettings => {
+        if (params) {
+          userSettingsService.setCurrentParams(params);
+        }
 
-    if (params) {
-      userSettingsService.setCurrentParems(params);
-    }
+        let listComponentNames = userSettingsService.getListComponentNames();
+        Ember.assert('list-form must contain single component', listComponentNames.length === 1);
+        let componentName = listComponentNames[0];
+        this.sorting = userSettingsService.getCurrentSorting(componentName);
+        let queryParameters = {
+          modelName: modelName,
+          projectionName: projectionName,
+          perPage: params.perPage,
+          page: params.page,
+          sorting: this.sorting,
+          filter: params.filter,
+          predicate: limitPredicate
+        };
 
-    let listComponentNames = userSettingsService.getListComponentNames();
-    Ember.assert('list-form must contain single component', listComponentNames.length === 1);
-    let componentName = listComponentNames[0];
-    this.sorting = userSettingsService.getCurrentSorting(componentName);
-    let queryParameters = {
-      modelName: modelName,
-      projectionName: projectionName,
-      perPage: params.perPage,
-      page: params.page,
-      sorting: this.sorting,
-      filter: params.filter,
-      predicate: limitPredicate
-    };
-
-    // Find by query is always fetching.
-    // TODO: support getting from cache with "store.all->filterByProjection".
-    // TODO: move includeSorting to setupController mixins?
-    let ret = this.reloadList(queryParameters)
-      .then((records) => {
+        // Find by query is always fetching.
+        // TODO: support getting from cache with "store.all->filterByProjection".
+        // TODO: move includeSorting to setupController mixins?
+        return  this.reloadList(queryParameters);
+      }).then((records) => {
         this.includeSorting(records, this.sorting);
-//         records.set('userSettings', this.userSettings);
-//         records.set('listUserSettings', this.listUserSettings);
+        //         records.set('userSettings', this.userSettings);
+        //         records.set('listUserSettings', this.listUserSettings);
         return records;
       });
     return ret;
-
     /*
     let userSettingPromise = userSettingsService.getUserSettings({ moduleName: moduleName })  //get sorting parameters from DEFAULT userSettings
     .then(_listUserSettings => {

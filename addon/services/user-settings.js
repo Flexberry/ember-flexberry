@@ -124,15 +124,17 @@ export default Ember.Service.extend({
       this.currentUserSettings[appPage] = developerUserSettings;
       this.developerUserSettings[appPage] = developerUserSettings;
       if (this.isUserSettingsServiceEnabled) {
-        this.getUserSettings({ }).then(
+        return this.getUserSettings({ }).then(
           appPageUserSettings => {
-            this._setCurrentUserSettings(appPageUserSettings);
+            return this._setCurrentUserSettings(appPageUserSettings);
           }
         );
       }
 
     }
-
+    return new Ember.RSVP.Promise(function(resolve) {
+      resolve(undefined);
+    });
   },
 
   /**
@@ -156,7 +158,7 @@ export default Ember.Service.extend({
   _setCurrentUserSettings(appPageUserSettings) {
     let appPage = this.currentAppPage;
     if (!(appPage in this.developerUserSettings)) {
-      return;
+      return undefined;
     }
     for (let componentName in this.developerUserSettings[appPage]) {
       let namedSettings = this.developerUserSettings[appPage][componentName];
@@ -178,7 +180,7 @@ export default Ember.Service.extend({
     for (let componentName in appPageUserSettings) {
       this.currentUserSettings[appPage][componentName] = appPageUserSettings[componentName];
     }
-
+    return this.currentUserSettings[appPage];
   },
 
   /**
@@ -187,7 +189,7 @@ export default Ember.Service.extend({
    @method setDeveloperUserSettings
    @param {Object} params.
    */
-  setCurrentParems(params) {
+  setCurrentParams(params) {
   },
 
   /**
@@ -381,13 +383,13 @@ export default Ember.Service.extend({
    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} Save operation promise.
    */
   saveUserSetting(componentName, settingName, userSetting) {
-    Ember.assert('Component name is not defined for user setting saving.', componentName);
-    Ember.assert('User setting data are not defined for user setting saving.', userSetting);
-    Ember.assert('Setting name is not defined for user setting saving.', settingName !== undefined);
-
     if (settingName === undefined) {
       settingName = defaultSettingName;
     }
+
+    Ember.assert('Component name is not defined for user setting saving.', componentName);
+    Ember.assert('User setting data are not defined for user setting saving.', userSetting);
+    Ember.assert('Setting name is not defined for user setting saving.', settingName !== undefined);
 
     if (!(this.currentAppPage in this.currentUserSettings)) {
       this.currentUserSettings[this.currentAppPage] = { };

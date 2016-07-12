@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Generation edit-form-mixin.js for routes and extending routes from edit-form-mixin.js.
 ### Fixed
 * Fixed select from `flexberry-lookup` in dropdown mode.
 

@@ -12,7 +12,7 @@
 <table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
   <thead>
     <tr>
-      <th class="object-list-view-operations collapsing {{unless (and showHelperColumn (or hasContent filters)) 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+      <th class="object-list-view-operations collapsing {{unless (and showHelperColumn hasContent) 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
         {{#each columns as |column|}}
           {{component headerCellComponent.componentName
             column=column
@@ -27,13 +27,7 @@
   <tbody>
     {{#if showFilters}}
       <tr>
-        <td rowspan="2" class="{{unless (and showHelperColumn (or hasContent filters)) 'hidden'}}">
-          {{#if filters}}
-            <button class="ui icon button" {{action resetFilters}}>
-              <i class="remove icon"></i>
-            </button>
-          {{/if}}
-        </td>
+        <td rowspan="2" class="{{unless (and showHelperColumn hasContent) 'hidden'}}"></td>
         {{#each columns as |column|}}
           <td>
             {{#if column.filter.conditions}}

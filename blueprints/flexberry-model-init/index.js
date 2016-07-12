@@ -23,6 +23,7 @@ module.exports = {
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,
             name: modelBlueprint.name,
+            projections: modelBlueprint.projections,
         };
     }
 };

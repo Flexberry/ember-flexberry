@@ -169,6 +169,17 @@ export default Ember.Controller.extend({
    */
   placeholder: t('components.flexberry-datepicker.placeholder'),
   /**
+    Handles changes in placeholder.
+
+    @method _placeholderChanged
+    @private
+   */
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-datepicker.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-datepicker.placeholder'));
+    }
+  }),
+  /**
     Flag: indicates whether 'flexberry-datepicker' component is in 'readonly' mode or not.
 
     @property readonly

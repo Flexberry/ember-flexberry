@@ -129,7 +129,8 @@ export default ProjectedModelFormRoute.extend(
           page: params.page,
           sorting: sorting, // TODO: there can be some problems.
           filter: params.filter,
-          predicate: limitPredicate
+          filters: filtersPredicate,
+          predicate: limitPredicate,
         };
 
         // Find by query is always fetching.

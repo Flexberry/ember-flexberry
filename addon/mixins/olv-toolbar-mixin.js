@@ -5,14 +5,15 @@ export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
 
   actions: {
-    showConfigDialog: function(settingName) {
-      if (!this.get('_userSettingsService').isUserSettingsServiceEnabled) {
-        alert('Реконфигурация отображения столбцов невозможна. Сервис пользовательских настроек выключен.');
-        return;
-      }
-
-      let listUserSettings = this.model.listUserSettings;
-      let userSettings = settingName !== undefined && settingName in listUserSettings ? listUserSettings[settingName] :  this.model.userSettings;
+    showConfigDialog: function(componentName, settingName) {
+//       if (!this.get('_userSettingsService').isUserSettingsServiceEnabled) {
+//         alert('Реконфигурация отображения столбцов невозможна. Сервис пользовательских настроек выключен.');
+//         return;
+//       }
+//       let listUserSettings = this.model.listUserSettings;
+//       let userSettings = settingName !== undefined && settingName in listUserSettings ? listUserSettings[settingName] :  this.model.userSettings;
+      let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
+      let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
       let propName;
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
@@ -25,22 +26,22 @@ export default Ember.Mixin.create({
         namedColList[propName] = colDesc;
       }
 
-      if (userSettings && userSettings.colsOrder !== undefined) {
+      if (colsOrder !== undefined) {
         let namedSorting = {};
         let sortPriority = 0;
-        if (userSettings.sorting === undefined) {
-          userSettings.sorting = [];
+        if (sorting === undefined) {
+          sorting = [];
         }
 
-        for (let i = 0; i < userSettings.sorting.length; i++) {
-          colDesc = userSettings.sorting[i];
+        for (let i = 0; i < sorting.length; i++) {
+          colDesc = sorting[i];
           colDesc.sortPriority = ++sortPriority;
           propName = colDesc.propName;
           namedSorting[propName] = colDesc;
         }
 
-        for (let i = 0; i < userSettings.colsOrder.length; i++) {
-          let colOrder = userSettings.colsOrder[i];
+        for (let i = 0; i < colsOrder.length; i++) {
+          let colOrder = colsOrder[i];
           propName = colOrder.propName;
           let name = namedColList[propName].header;
           delete namedColList[propName];
@@ -75,7 +76,7 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: { colDescs: colDescs, listUserSettings: listUserSettings, settingName: settingName } },
+                { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settingName } },
                 loadingParams);
     }
 

@@ -313,7 +313,7 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     showConfigDialog(settingName) {
-      this.get('modelController').send('showConfigDialog', settingName);
+      this.get('modelController').send('showConfigDialog', this.componentName, settingName);
     },
 
     /**
@@ -338,7 +338,7 @@ export default FlexberryBaseComponent.extend({
 
       switch (className) {
         case 'table icon':
-          this.send('showConfigDialog');
+          this.send('showConfigDialog', this.componentName);
           break;
         case 'checkmark box icon':
 
@@ -357,7 +357,7 @@ export default FlexberryBaseComponent.extend({
           });
           break;
         case 'setting icon':
-          this.send('showConfigDialog', namedSetting);
+          this.send('showConfigDialog', this.componentName, namedSetting);
           break;
         case 'remove icon':
           userSettingsService.deleteUserSetting({

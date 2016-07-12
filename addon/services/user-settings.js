@@ -6,6 +6,7 @@ import Ember from 'ember';
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
+const defaultSettingName = 'DEFAULT';
 /**
   Service to store/read user settings to/from application storage.
 
@@ -68,10 +69,10 @@ export default Ember.Service.extend({
   },
 
   /**
-   *   Get current Web Page.
-   *
-   *   @method setCurrentWebPage
-   *   @return {String}
+   Get current Web Page.
+
+   @method setCurrentWebPage
+   @return {String}
    */
   getCurrentWebPage() {
     return this.currentWebPage;
@@ -88,10 +89,10 @@ export default Ember.Service.extend({
   },
 
   /**
-   *   Get current App Name.
-   *
-   *   @method getCurrentAppName
-   *   @return {String}
+   Get current App Name.
+
+   @method getCurrentAppName
+   @return {String}
    */
   getCurrentAppName() {
     return this.currentAppPage;
@@ -135,10 +136,10 @@ export default Ember.Service.extend({
   },
 
   /**
-   *   Get list components Names.
-   *
-   *   @method getListComponentNames
-   *   @return {Array}
+   Get list components Names.
+
+   @method getListComponentNames
+   @return {Array}
    */
   getListComponentNames() {
     let ret = [];
@@ -153,8 +154,11 @@ export default Ember.Service.extend({
 
   _setCurrentUserSettings(appPageUserSettings) {
     let appPage = this.currentAppPage;
-    for (let componentName in this.developerUserSettings) {
-      let namedSettings = this.developerUserSettings[componentName];
+    if (!(appPage in this.developerUserSettings)) {
+      return;
+    }
+    for (let componentName in this.developerUserSettings[appPage]) {
+      let namedSettings = this.developerUserSettings[appPage][componentName];
       let settings = appPageUserSettings[componentName];
       for (let settingName in namedSettings) {
         if (componentName in appPageUserSettings && settingName in settings) {
@@ -197,23 +201,107 @@ export default Ember.Service.extend({
   },
 
   /**
-    Returns current sorting .
+   Returns current sorting .
 
-    @method getCurrentSorting
-    @return {String}
+   @method getCurrentSorting
+   @return {String}
    */
-  getCurrentSorting(componentName) {
+  getCurrentSorting(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
     let ret = [];
     if (this.currentAppPage in  this.currentUserSettings &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
-      '' in this.currentUserSettings[this.currentAppPage][componentName] &&
-      'sorting' in this.currentUserSettings[this.currentAppPage][componentName]['']
+      settingName in this.currentUserSettings[this.currentAppPage][componentName] &&
+      'sorting' in this.currentUserSettings[this.currentAppPage][componentName][settingName]
     ) {
-      ret = this.currentUserSettings[this.currentAppPage][componentName]['']['sorting'];
+      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName]['sorting'];
     }
 
     return ret;
   },
+
+  /**
+   Returns current colsOrder .
+   *
+   @method getCurrentColsOrder
+   @return {String}
+   */
+  getCurrentColsOrder(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let ret = undefined;
+    if (this.currentAppPage in  this.currentUserSettings &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName] &&
+      'colsOrder' in this.currentUserSettings[this.currentAppPage][componentName][settingName]
+    ) {
+      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName]['colsOrder'];
+    }
+
+    return ret;
+  },
+
+  /**
+   *   Returns current columnWidths.
+   *
+   *   @method getCurrentColumnWidths
+   *   @return {String}
+   */
+  getCurrentColumnWidths(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let ret = undefined;
+    if (this.currentAppPage in  this.currentUserSettings &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName] &&
+      'columnWidths' in this.currentUserSettings[this.currentAppPage][componentName][settingName]
+    ) {
+      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName]['columnWidths'];
+    }
+
+    return ret;
+  },
+
+  /**
+   *   Set current columnWidths.
+   *
+   *   @method setCurrentColumnWidths
+   */
+  setCurrentColumnWidths(componentName, settingName, columnWidths) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    if (!(this.currentAppPage in this.currentUserSettings)) {
+      this.currentUserSettings[this.currentAppPage] = { };
+    }
+
+    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
+      this.currentUserSettings[this.currentAppPage][componentName] = { };
+    }
+
+    if (!(settingName in this.currentUserSettings[this.currentAppPage][componentName])) {
+      this.currentUserSettings[this.currentAppPage][componentName][settingName] = { };
+    }
+
+    this.currentUserSettings[this.currentAppPage][componentName][settingName]['columnWidths'] = columnWidths;
+
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting({
+        componentName: componentName ,
+        settingName: settingName,
+        userSetting: this.currentUserSettings[this.currentAppPage][componentName][settingName]}
+      );
+    }
+  },
+
 
 
   /**
@@ -244,8 +332,15 @@ export default Ember.Service.extend({
             let foundRecord = foundRecords[i];
             let userSettingValue = foundRecord.record.get('txtVal');
             let settName  = foundRecord.record.get('settName');
-            if (userSettingValue && settName) {
-              ret[settName] = JSON.parse(userSettingValue);
+            let componentName  = foundRecord.record.get('moduleName');
+            if (!settName) {
+              settName = defaultSettingName;
+            }
+            if (userSettingValue) {
+              if (!(componentName in ret)) {
+                ret[componentName] = {};
+              }
+              ret[componentName][settName] = JSON.parse(userSettingValue);
             }
           }
         }
@@ -257,13 +352,13 @@ export default Ember.Service.extend({
   },
 
   /**
-   *    Deletes given user setting from storage.
-   *
-   *    @method deleteUserSetting
-   *    @param {Object} [options] Parameters for user setting getting.
-   *    @param {String} options.moduleName Name of module to search by.
-   *    @param {String} options.settingName Setting name to search by.
-   *    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array
+   Deletes given user setting from storage.
+
+   @method deleteUserSetting
+   @param {Object} [options] Parameters for user setting getting.
+   @param {String} options.moduleName Name of module to search by.
+   @param {String} options.settingName Setting name to search by.
+   @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array
    */
   deleteUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
@@ -280,21 +375,21 @@ export default Ember.Service.extend({
     let componentName = methodOptions.componentName;
     let settingName = methodOptions.settingName;
 
-    Ember.assert('Component name is not defined for user setting getting.', componentName);
+    Ember.assert('ComponesettNament name is not defined for user setting getting.', componentName);
     Ember.assert('Setting name is not defined for user setting getting.', settingName);
 
     return this._deleteExistingRecord(componentName, settingName);
   },
 
   /**
-   *    Saves given user setting to storage.
-   *
-   *    @method saveUserSetting
-   *    @param {Object} [options] Options.
-   *    @param {String} options.componentName Name of module for what setting is saved.
-   *    @param {String} options.userSetting User setting data to save.
-   *    @param {String} options.settingName Setting name to save as.
-   *    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} Save operation promise.
+   Saves given user setting to storage.
+
+   @method saveUserSetting
+   @param {Object} [options] Options.
+   @param {String} options.componentName Name of module for what setting is saved.
+   @param {String} options.userSetting User setting data to save.
+   @param {String} options.settingName Setting name to save as.
+   @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} Save operation promise.
    */
   saveUserSetting(options) {
     if (!this.get('isUserSettingsServiceEnabled')) {
@@ -313,7 +408,7 @@ export default Ember.Service.extend({
 
     Ember.assert('Component name is not defined for user setting saving.', componentName);
     Ember.assert('User setting data are not defined for user setting saving.', userSetting);
-    Ember.assert('Setting name is not defined for user setting saving.', settingName);
+    Ember.assert('Setting name is not defined for user setting saving.', settingName !== undefined);
 
     let store = this.get('_store');
     let ret = this._getExistingRecord(componentName, settingName).then(
@@ -357,13 +452,13 @@ export default Ember.Service.extend({
   },
 
   /**
-   *    Merge two settings.
-   *
-   *    @method _mergeSettings
-   *    @param {Object} setting1 base settings.
-   *    @param {Object} setting2 additions settings.
-   *    @return {Object} merged settings.
-   *    @private
+   Merge two settings.
+
+   @method _mergeSettings
+   @param {Object} setting1 base settings.
+   @param {Object} setting2 additions settings.
+   @return {Object} merged settings.
+   @private
    */
   _mergeSettings(setting1, setting2) {
     let ret = {};
@@ -383,17 +478,17 @@ export default Ember.Service.extend({
   },
 
   /**
-   *    Deletes user settings record.
-   *
-   *    @method _deleteExistingRecord
-   *    @param {Object} componentName Module name of looked for record.
-   *    @param {String} settingName Setting name of looked for record.
-   *    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array.
-   *    @private
+   Deletes user settings record.
+
+   @method _deleteExistingRecord
+   @param {Object} componentName Module name of looked for record.
+   @param {String} settingName Setting name of looked for record.
+   @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array.
+   @private
    */
   _deleteExistingRecord: function(componentName, settingName) {
     // TODO: add search by username.
-    let cp = this._getSearchPredicate(componentName, settingName);
+    let cp = this._getSearchPredicate({ componentName: componentName, settingName: settingName });
     let store = this.get('_store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
     let builder = new QueryBuilder(store)
@@ -421,18 +516,18 @@ export default Ember.Service.extend({
   },
 
   /**
-   *    Looks for already created user settings record.
-   *
-   *    @method _getExistingRecord
-   *    @param {Object} componentName Module name of looked for record.
-   *    @param {String} settingName Setting name of looked for record.
-   *    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} A promise that returns founded record
-   *    or `undefined` if there is no such setting.
-   *    @private
+   Looks for already created user settings record.
+
+   @method _getExistingRecord
+   @param {Object} componentName Module name of looked for record.
+   @param {String} settingName Setting name of looked for record.
+   @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} A promise that returns founded record
+   or `undefined` if there is no such setting.
+   @private
    */
   _getExistingRecord(componentName, settingName) {
     // TODO: add search by username.
-    let cp = this._getSearchPredicate(componentName, settingName);
+    let cp = this._getSearchPredicate({ componentName: componentName, settingName: settingName });
     let store = this.get('_store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
     let builder = new QueryBuilder(store)
@@ -442,9 +537,10 @@ export default Ember.Service.extend({
     .where(cp);
     return store.query(modelName, builder.build()).then((result) => {
       if (result) {
+        let ret = undefined;
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
-          for (let i = 1; i < foundRecords.length; i++) {
+          for (let i = 0; i < foundRecords.length; i++) {
             foundRecords[i].record.destroyRecord();
           }
 
@@ -457,12 +553,13 @@ export default Ember.Service.extend({
   },
 
   /**
-   *    Looks for all created user settings records.
-   *
-   *    @method _getExistingSettings
-   *    @param {Object} componentName Module name of looked for record.
-   *    @return {Promise} A promise that returns found record or `undefined` if there is no such setting.
-   *    @private
+   Looks for all created user settings records.
+
+   @method _getExistingSettings
+   @param {Object} componentName Component name of looked for record.
+   @param {Object} settingName Setting name of looked for record.
+   @return {Promise} A promise that returns found record or `undefined` if there is no such setting.
+   @private
    */
   _getExistingSettings(methodOptions) {
     // TODO: add search by username.

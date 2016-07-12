@@ -17,6 +17,7 @@ let Model = BaseModel.extend({
   userName: DS.attr('string'),
   moduleName: DS.attr('string'),
   settName: DS.attr('string'),
+  settLastAccessTime: DS.attr('date'),
   txtVal: DS.attr('string')
 });
 
@@ -25,6 +26,7 @@ Model.defineProjection('FlexberryUserSettingE', 'new-platform-flexberry-flexberr
   userName: Proj.attr('User name'),
   moduleName: Proj.attr('Component name'),
   settName: Proj.attr('Setting name'),
+  settLastAccessTime: Proj.attr('Modification time'),
   txtVal: Proj.attr('Text value')
 });
 

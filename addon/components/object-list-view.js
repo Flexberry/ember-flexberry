@@ -880,15 +880,20 @@ export default FlexberryBaseComponent.extend(
       }
     }
 
-    let moduleName = this.get('_moduleName');
-    let userSetting = {
-      moduleName: moduleName,
-      settingName: this.get('_columnWidthsUserSettingName')
-    };
+    let columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+    if (columnWidth !== undefined) {
+      this._setColumnWidths(columnWidth);
+    }
+//     let moduleName = this.get('_moduleName');
+//     let userSetting = {
+//       moduleName: moduleName,
+//       settingName: this.get('_columnWidthsUserSettingName')
+//     };
+//
+//     this.get('userSettingsService').getUserSetting(userSetting).then(data => {
+//       this._setColumnWidths(data);
+//     });
 
-    this.get('userSettingsService').getUserSetting(userSetting).then(data => {
-      this._setColumnWidths(data);
-    });
 
     // TODO: resolve this problem.
     this.$('.flexberry-dropdown:last').dropdown({
@@ -1041,15 +1046,16 @@ export default FlexberryBaseComponent.extend(
         width: currentColumnWidth,
       });
     });
+    this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
 
-    let moduleName = this.get('_moduleName');
-    let userSetting = {
-      moduleName,
-      userSetting: userWidthSettings,
-      settingName: this.get('_columnWidthsUserSettingName'),
-    };
-
-    this.get('userSettingsService').saveUserSetting(userSetting);
+//     let moduleName = this.get('_moduleName');
+//     let userSetting = {
+//       moduleName,
+//       userSetting: userWidthSettings,
+//       settingName: this.get('_columnWidthsUserSettingName'),
+//     };
+//
+//     this.get('userSettingsService').saveUserSetting(userSetting);
   },
 
   /**

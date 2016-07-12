@@ -21,7 +21,7 @@ export default FlexberryBaseComponent.extend({
    * @default 'APP.components.flexberryCheckbox'
    */
   modelForDOM: [],
-  settingsList: [],
+  componentName: '',
   settingName: '',
   colsConfig: [],
   changed: false,
@@ -33,8 +33,9 @@ export default FlexberryBaseComponent.extend({
       return;
     }
 
-    this.settingsList = this.model.listUserSettings;
+//     this.settingsList = this.model.listUserSettings;
     this.settingName = this.model.settingName;
+    this.componentName = this.model.componentName;
     let colDescs = this.model.colDescs;
     for (let i = 0; i < colDescs.length; i++) {
       let colDesc = colDescs[i];

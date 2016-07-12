@@ -4,29 +4,35 @@ import EditFormController from 'ember-flexberry/controllers/edit-form';
 export default EditFormController.extend({
 
   actions: {
-    modalwindow() {
+    modalWindow() {
       let repeatWindow = Ember.$('#repeat-window').modal({
         closable: false,
         autofocus: false,
+        detachable: false,
+        allowMultiple: true,
+        context: '#example',
       });
       this.set('repeatWindow', repeatWindow);
       this.get('repeatWindow').modal('refresh').modal('show');
     },
 
-    modalwindowdouble() {
+    modalWindowDouble() {
       let repeatWindow = Ember.$('#repeat-window-double').modal({
         closable: false,
         autofocus: false,
+        detachable: false,
+        allowMultiple: true,
+        context: '#example',
       });
       this.set('repeatWindowdouble', repeatWindow);
       this.get('repeatWindowdouble').modal('refresh').modal('show');
     },
 
-    logout() {
+    logOut() {
       this.get('repeatWindow').modal('hide');
     },
 
-    logoutdouble() {
+    logOutDouble() {
       this.get('repeatWindowdouble').modal('hide');
     }
   }

@@ -1,9 +1,11 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.caption"}}</h3>
+
 <form class="ui form flexberry-vertical-form" role="form">
-  <button class="ui button" {{action 'modalwindow'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModal"}}</button>
-  <button class="ui button" {{action 'modalwindowdouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModalDouble"}}</button>
+  <button class="ui button" {{action 'modalWindow'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModal"}}</button>
+  <button class="ui button" {{action 'modalWindowDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModalDouble"}}</button>
 </form>
-<div class="ui modal" id="repeat-window">
+
+{{#ui-modal id="repeat-window"}}
   <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.captionModal"}}</div>
   <div class="content">
     <div class="ui form flexberry-vertical-form">
@@ -13,17 +15,18 @@
           relatedModel=model
           relationName="editor1"
           projection="ApplicationUserL"
-          displayAttributeName="Name"
+          displayAttributeName="name"
           readonly=readonly
           choose=(action "showLookupDialog")
           remove=(action "removeLookupValue")
         }}
       </div>
-        <button class="ui button" {{action 'logout'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
+      <button class="ui button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
-</div>
-<div class="ui modal" id="repeat-window-double">
+{{/ui-modal}}
+
+{{#ui-modal id="repeat-window-double" }}
   <div class="header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.captionModalDouble"}}</div>
   <div class="content">
     <div class="ui form flexberry-vertical-form">
@@ -39,7 +42,7 @@
           readonly=readonly
         }}
       </div>
-        <button class="ui button" {{action 'logoutdouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
+      <button class="ui button" {{action 'logOutDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
-</div>
+{{/ui-modal}}

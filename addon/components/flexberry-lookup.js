@@ -263,7 +263,7 @@ export default FlexberryBaseComponent.extend({
     @property chooseData
     @type Object
     @readOnly
-   */
+  */
   chooseData: Ember.computed(
     'projection',
     'relationName',

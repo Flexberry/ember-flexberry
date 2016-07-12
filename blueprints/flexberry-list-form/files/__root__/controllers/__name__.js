@@ -1,4 +1,12 @@
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
-var <%=formName%>Controller = ListFormController;
-export default <%=formName%>Controller;
+export default ListFormController.extend({
+/**
+    Name of related edit form route.
+
+    @property editFormRoute
+    @type String
+    @default '<%= editForm %>'
+   */
+  editFormRoute: '<%= editForm %>'
+});

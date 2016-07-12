@@ -1,9 +1,10 @@
 <h3><%=caption%></h3>
 <div class="row">
-  {{flexberry-objectlistview
+    {{
+flexberry-objectlistview
     modelName="<%=modelName%>"
     modelProjection=modelProjection
-    editFormRoute="<%=editForm%>"
+    editFormRoute=editFormRoute
     content=model
     createNewButton=true
     refreshButton=true

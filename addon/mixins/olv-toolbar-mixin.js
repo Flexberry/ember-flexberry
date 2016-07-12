@@ -26,37 +26,38 @@ export default Ember.Mixin.create({
         namedColList[propName] = colDesc;
       }
 
-      if (colsOrder !== undefined) {
-        let namedSorting = {};
-        let sortPriority = 0;
-        if (sorting === undefined) {
-          sorting = [];
+      if (colsOrder === undefined) {
+        colsOrder = colList;
+      }
+
+      let namedSorting = {};
+      let sortPriority = 0;
+      if (sorting === undefined) {
+        sorting = [];
+      }
+
+      for (let i = 0; i < sorting.length; i++) {
+        colDesc = sorting[i];
+        colDesc.sortPriority = ++sortPriority;
+        propName = colDesc.propName;
+        namedSorting[propName] = colDesc;
+      }
+
+      for (let i = 0; i < colsOrder.length; i++) {
+        let colOrder = colsOrder[i];
+        propName = colOrder.propName;
+        let name = namedColList[propName].header;
+        delete namedColList[propName];
+        colDesc = { name: name, propName: propName, hide: colOrder.hide };
+        if (propName in namedSorting) {
+          let sortColumn = namedSorting[propName];
+          colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
+          colDesc.sortPriority = sortColumn.sortPriority;
+        } else {
+          colDesc.sortOrder = 0;
         }
 
-        for (let i = 0; i < sorting.length; i++) {
-          colDesc = sorting[i];
-          colDesc.sortPriority = ++sortPriority;
-          propName = colDesc.propName;
-          namedSorting[propName] = colDesc;
-        }
-
-        for (let i = 0; i < colsOrder.length; i++) {
-          let colOrder = colsOrder[i];
-          propName = colOrder.propName;
-          let name = namedColList[propName].header;
-          delete namedColList[propName];
-          colDesc = { name: name, propName: propName, hide: colOrder.hide };
-          if (propName in namedSorting) {
-            let sortColumn = namedSorting[propName];
-            colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
-            colDesc.sortPriority = sortColumn.sortPriority;
-          } else {
-            colDesc.sortOrder = 0;
-          }
-
-          colDescs[i] = colDesc;
-        }
-
+        colDescs[i] = colDesc;
       }
 
       for (propName in namedColList) {

@@ -100,6 +100,14 @@ export default FlexberryBaseComponent.extend({
     @default null
   */
   filterText: null,
+  /**
+    Used to link to objectListView with same componentName.
+
+    @property componentName
+    @type String
+    @default ''
+  */
+  componentName: '',
 
   /**
     The flag to specify whether the delete button is enabled.
@@ -344,11 +352,8 @@ export default FlexberryBaseComponent.extend({
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
           let colsConfig = this.listUserSettings[namedSetting];
-          userSettingsService.saveUserSetting({
-            moduleName: moduleName,
-            settingName: 'DEFAULT',
-            userSetting: colsConfig
-          }).then(record => {
+          userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
+            then(record => {
             if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
               this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
             } else {

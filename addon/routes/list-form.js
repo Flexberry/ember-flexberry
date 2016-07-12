@@ -95,8 +95,8 @@ export default ProjectedModelFormRoute.extend(
     let ret = this.reloadList(queryParameters)
       .then((records) => {
         this.includeSorting(records, this.sorting);
-        records.set('userSettings', this.userSettings);
-        records.set('listUserSettings', this.listUserSettings);
+//         records.set('userSettings', this.userSettings);
+//         records.set('listUserSettings', this.listUserSettings);
         return records;
       });
     return ret;

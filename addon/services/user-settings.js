@@ -149,6 +149,7 @@ export default Ember.Service.extend({
         ret[ret.length] = componentName;
       }
     }
+
     return ret;
   },
 
@@ -217,7 +218,7 @@ export default Ember.Service.extend({
       settingName in this.currentUserSettings[this.currentAppPage][componentName] &&
       'sorting' in this.currentUserSettings[this.currentAppPage][componentName][settingName]
     ) {
-      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName]['sorting'];
+      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName].sorting;
     }
 
     return ret;
@@ -234,13 +235,13 @@ export default Ember.Service.extend({
       settingName = defaultSettingName;
     }
 
-    let ret = undefined;
+    let ret;
     if (this.currentAppPage in  this.currentUserSettings &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName] &&
       'colsOrder' in this.currentUserSettings[this.currentAppPage][componentName][settingName]
     ) {
-      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName]['colsOrder'];
+      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName].colsOrder;
     }
 
     return ret;
@@ -257,13 +258,13 @@ export default Ember.Service.extend({
       settingName = defaultSettingName;
     }
 
-    let ret = undefined;
+    let ret;
     if (this.currentAppPage in  this.currentUserSettings &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName] &&
       'columnWidths' in this.currentUserSettings[this.currentAppPage][componentName][settingName]
     ) {
-      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName]['columnWidths'];
+      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName].columnWidths;
     }
 
     return ret;
@@ -275,34 +276,21 @@ export default Ember.Service.extend({
    *   @method setCurrentColumnWidths
    */
   setCurrentColumnWidths(componentName, settingName, columnWidths) {
-    if (settingName === undefined) {
-      settingName = defaultSettingName;
+    let userSetting;
+    if (this.currentAppPage in this.currentUserSettings &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
     }
 
-    if (!(this.currentAppPage in this.currentUserSettings)) {
-      this.currentUserSettings[this.currentAppPage] = { };
-    }
-
-    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
-      this.currentUserSettings[this.currentAppPage][componentName] = { };
-    }
-
-    if (!(settingName in this.currentUserSettings[this.currentAppPage][componentName])) {
-      this.currentUserSettings[this.currentAppPage][componentName][settingName] = { };
-    }
-
-    this.currentUserSettings[this.currentAppPage][componentName][settingName]['columnWidths'] = columnWidths;
-
+    userSetting.columnWidths = columnWidths;
     if (this.isUserSettingsServiceEnabled) {
-      this.saveUserSetting({
-        componentName: componentName ,
-        settingName: settingName,
-        userSetting: this.currentUserSettings[this.currentAppPage][componentName][settingName]}
-      );
+      this.saveUserSetting(componentName, settingName, userSetting);
     }
   },
-
-
 
   /**
     Returns  user setting for current appPage from storage.
@@ -336,10 +324,12 @@ export default Ember.Service.extend({
             if (!settName) {
               settName = defaultSettingName;
             }
+
             if (userSettingValue) {
               if (!(componentName in ret)) {
                 ret[componentName] = {};
               }
+
               ret[componentName][settName] = JSON.parse(userSettingValue);
             }
           }
@@ -385,30 +375,32 @@ export default Ember.Service.extend({
    Saves given user setting to storage.
 
    @method saveUserSetting
-   @param {Object} [options] Options.
-   @param {String} options.componentName Name of module for what setting is saved.
-   @param {String} options.userSetting User setting data to save.
-   @param {String} options.settingName Setting name to save as.
+   @param {String} componentName Name of module for what setting is saved.
+   @param {String} settingName Setting name to save as.
+   @param {String} userSetting User setting data to save.
    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} Save operation promise.
    */
-  saveUserSetting(options) {
-    if (!this.get('isUserSettingsServiceEnabled')) {
-      return new Ember.RSVP.Promise((resolve, reject) => {resolve();});
-    }
-
-    let methodOptions = Ember.merge({
-      componentName: undefined,
-      settingName: undefined,
-      userSetting: undefined
-    }, options);
-
-    let componentName = methodOptions.componentName;
-    let userSetting = methodOptions.userSetting;
-    let settingName = methodOptions.settingName;
-
+  saveUserSetting(componentName, settingName, userSetting) {
     Ember.assert('Component name is not defined for user setting saving.', componentName);
     Ember.assert('User setting data are not defined for user setting saving.', userSetting);
     Ember.assert('Setting name is not defined for user setting saving.', settingName !== undefined);
+
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    if (!(this.currentAppPage in this.currentUserSettings)) {
+      this.currentUserSettings[this.currentAppPage] = { };
+    }
+
+    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
+      this.currentUserSettings[this.currentAppPage][componentName] = { };
+    }
+
+    this.currentUserSettings[this.currentAppPage][componentName][settingName] = userSetting;
+    if (!this.get('isUserSettingsServiceEnabled')) {
+      return new Ember.RSVP.Promise((resolve, reject) => {resolve();});
+    }
 
     let store = this.get('_store');
     let ret = this._getExistingRecord(componentName, settingName).then(
@@ -537,7 +529,6 @@ export default Ember.Service.extend({
     .where(cp);
     return store.query(modelName, builder.build()).then((result) => {
       if (result) {
-        let ret = undefined;
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 0; i < foundRecords.length; i++) {

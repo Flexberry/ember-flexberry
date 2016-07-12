@@ -1,5 +1,4 @@
 import Ember from 'ember';
-const { getOwner } = Ember;
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -311,14 +310,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   _getSavePromise: function(settingName, colsConfig) {
-    this._router = getOwner(this).lookup('router:main');
-    let moduleName  = this._router.currentRouteName;
-
-    return this.get('userSettingsService').saveUserSetting({
-      moduleName: moduleName,
-      settingName: settingName,
-      userSetting: colsConfig
-    });
+    return this.get('userSettingsService').saveUserSetting(this.componentName, settingName, colsConfig);
   },
 
   _getSettings: function() {
@@ -346,6 +338,11 @@ export default FlexberryBaseComponent.extend({
     }
 
     colsConfig = { colsOrder: colsOrder, sorting: sorting };  // Set colsConfig Object
+    let userSettingsService = this.get('userSettingsService');
+    let columnWidth = userSettingsService.getCurrentColumnWidths(this.componentName, this.settingName);
+    if (columnWidth) {
+      colsConfig.columnWidths = columnWidth;
+    }
     return colsConfig;
   },
 

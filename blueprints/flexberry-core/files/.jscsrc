@@ -1,5 +1,6 @@
 {
-  "excludeFiles": ["tests/unit/models/*"],
+  "excludeFiles": [ "tests/unit/models/*" ],
+  "esnext": true,
   "preset": "airbnb",
   "requirePaddingNewLinesAfterBlocks": {
     "allExcept": ["inCallExpressions", "inArrayExpressions", "inProperties"]

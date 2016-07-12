@@ -77,12 +77,11 @@ export default Ember.Mixin.create({
       // app/routes/example.js
       ...
       predicateForFilter(filter) {
-        switch (filter.type) {
-          case 'ember-flexberry-dummy-gender':
-            return new SimplePredicate(filter.name, 'eq', `cast(${filter.pattern},Edm.Enums)`);
-          default:
-            return this._super(...arguments);
+        if (filter.type === 'string' && filter.condition === 'like') {
+          return new StringPredicate(filter.name).contains(filter.pattern);
         }
+
+        return this._super(...arguments);
       },
       ...
       ```

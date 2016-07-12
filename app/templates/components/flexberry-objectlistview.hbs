@@ -5,6 +5,9 @@
   refreshButton=refreshButton
   deleteButton=deleteButton
   colsConfigButton=colsConfigButton
+  enableFilters=enableFilters
+  showFilters=_showFilters
+  toggleStateFilters=(action "toggleStateFilters")
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass
@@ -42,6 +45,13 @@
   content=content
   sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  enableFilters=enableFilters
+  showFilters=_showFilters
+  filters=filters
+  applyFilters = (action (if applyFilters applyFilters "applyFilters"))
+  resetFilters = (action (if resetFilters resetFilters "resetFilters"))
+  componentForFilter=componentForFilter
+  conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   configurateRow=this.attrs.configurateRow
   confirmDeleteRow=confirmDeleteRow

@@ -1,6 +1,6 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
-import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { SimplePredicate, StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 export default ListFormRoute.extend({
   /**
@@ -20,6 +20,14 @@ export default ListFormRoute.extend({
     @default 'ember-flexberry-dummy-application-user'
    */
   modelName: 'ember-flexberry-dummy-application-user',
+
+  predicateForFilter(filter) {
+    if (filter.type === 'string' && filter.condition === 'like') {
+      return new StringPredicate(filter.name).contains(filter.pattern);
+    }
+
+    return this._super(...arguments);
+  },
 
   predicateForAttribute(attribute, filter) {
     switch (attribute.type) {

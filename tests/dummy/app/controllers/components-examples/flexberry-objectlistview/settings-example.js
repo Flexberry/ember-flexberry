@@ -128,6 +128,14 @@ export default ListFormController.extend({
   deleteButton: false,
 
   /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'enableFilters' mode or not.
+
+    @property enableFilters
+    @type Boolean
+   */
+  enableFilters: false,
+
+  /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'filterButton' mode or not.
 
     @property filterButton
@@ -244,6 +252,10 @@ export default ListFormController.extend({
     '  allowColumnResize=allowColumnResize<br>' +
     '  createNewButton=createNewButton<br>' +
     '  deleteButton=deleteButton<br>' +
+    '  enableFilters=enableFilters<br>' +
+    '  filters=filters<br>' +
+    '  applyFilters=(action "applyFilters")<br>' +
+    '  resetFilters=(action "resetFilters")<br>' +
     '  refreshButton=refreshButton<br>' +
     '  filterButton=filterButton<br>' +
     '  showCheckBoxInRow=showCheckBoxInRow<br>' +
@@ -350,6 +362,12 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'deleteButton'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'enableFilters',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'enableFilters'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'filterButton',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -427,4 +445,10 @@ export default ListFormController.extend({
       }
     }
   },
+
+  _enableFilters: Ember.observer('enableFilters', function() {
+    if (this.get('enableFilters')) {
+      this.set('refreshButton', true);
+    }
+  }),
 });

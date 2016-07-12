@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import Ember from 'ember';
 import LimitedRouteMixin from '../mixins/limited-route';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
@@ -74,8 +75,8 @@ export default ProjectedModelFormRoute.extend(
       userSettingsService.setCurrentParems(params);
     }
 
-    let listComponentNames= userSettingsService.getListComponentNames();
-    Ember.assert('list-form must contain single component', listComponentNames.length == 1);
+    let listComponentNames = userSettingsService.getListComponentNames();
+    Ember.assert('list-form must contain single component', listComponentNames.length === 1);
     let componentName = listComponentNames[0];
     this.sorting = userSettingsService.getCurrentSorting(componentName);
     let queryParameters = {

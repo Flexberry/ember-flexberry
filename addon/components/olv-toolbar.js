@@ -145,9 +145,9 @@ export default FlexberryBaseComponent.extend({
   customButtons: undefined,
 
   /**
-    @property listUserSettings
+    @property listNamedUserSettings
   */
-  listUserSettings: undefined,
+  listNamedUserSettings: undefined,
 
   /**
     @property createSettitingTitle
@@ -351,7 +351,7 @@ export default FlexberryBaseComponent.extend({
         case 'checkmark box icon':
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
-          let colsConfig = this.listUserSettings[namedSetting];
+          let colsConfig = this.listNamedUserSettings[namedSetting];
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
               if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
@@ -365,19 +365,15 @@ export default FlexberryBaseComponent.extend({
           this.send('showConfigDialog', namedSetting);
           break;
         case 'remove icon':
-          userSettingsService.deleteUserSetting({
-            componentName: componentName,
-            settingName: namedSetting
-          }).then(result => {
+          userSettingsService.deleteUserSetting(componentName, settingName)
+          .then(result => {
             this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
             alert('Настройка ' + namedSetting + ' удалена');
           });
           break;
         case 'remove circle icon':
-          userSettingsService.deleteUserSetting({
-            componentName: componentName,
-            settingName: undefined
-          }).then(record => {
+          userSettingsService.deleteUserSetting(componentName)
+          .then(record => {
             if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
               this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
             } else {
@@ -410,16 +406,12 @@ export default FlexberryBaseComponent.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-//     let listUserSettings = this.modelController.model.listUserSettings;
-    let listUserSettings = this.get('userSettingsService').getListCurrentUserSetting(this.componentName);
-    if (listUserSettings && 'DEFAULT' in listUserSettings) {
-      delete listUserSettings.DEFAULT;
-    }
+    let listNamedUserSettings = this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName);
 
-    this.listUserSettings = listUserSettings;
+    this.listNamedUserSettings = listNamedUserSettings;
     Ember.set(this, 'listNamedSettings', {});
-    if (listUserSettings) {
-      for (let nameSetting in listUserSettings) {
+    if (listNamedUserSettings) {
+      for (let nameSetting in listNamedUserSettings) {
         Ember.set(this.listNamedSettings, nameSetting, true);
       }
     }

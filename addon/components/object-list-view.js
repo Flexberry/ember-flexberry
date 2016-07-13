@@ -345,13 +345,12 @@ export default FlexberryBaseComponent.extend(
     }
 
     let cols = this._generateColumns(projection.attributes);
-//     if (this.notUseUserSettings === true) {
-//       // flexberry-groupedit and lookup-dialog-content set this flag to true and don't use userSettings.
-//       // In future release backend can save userSettings for each olv.
-//       return cols;
-//     }
+    if (this.notUseUserSettings === true) {
+      // flexberry-groupedit and lookup-dialog-content set this flag to true and don't use userSettings.
+      // In future release backend can save userSettings for each olv.
+      return cols;
+    }
 
-//     var userSettings = this.currentController ? this.currentController.userSettings : undefined;
     let userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     if (userSettings && userSettings.colsOrder !== undefined) {
       let namedCols = {};
@@ -387,7 +386,7 @@ export default FlexberryBaseComponent.extend(
       }
     } else {
       if (this.currentController) {
-        if (userSettings === undefined) {
+        if (this.currentController.userSettings === undefined) {
           Ember.set(this.currentController, 'userSettings', {});
         }
 

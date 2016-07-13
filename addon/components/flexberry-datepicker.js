@@ -11,16 +11,16 @@ import { translationMacro as t } from 'ember-i18n';
   DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
   # Need refactoring.
 
-  Sample usage:
-  ```handlebars
-  {{flexberry-datepicker
-    value=model.birthday
-    placeholder='(no value)'
-    hasTimePicker=true
-    minDate='01.01.2000'
-    maxDate='31.12.2020'
-  }}
-  ```
+  @example
+    ```handlebars
+    {{flexberry-datepicker
+      value=model.birthday
+      placeholder='(no value)'
+      hasTimePicker=true
+      minDate='01.01.2000'
+      maxDate='31.12.2020'
+    }}
+    ```
 
   @class FlexberryDatePicker
   @extends FlexberryBaseComponent
@@ -39,7 +39,7 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-datepicker.placeholder')'
+    @default t('components.flexberry-datepicker.placeholder')
   */
   placeholder: t('components.flexberry-datepicker.placeholder'),
 
@@ -113,21 +113,21 @@ export default FlexberryBaseComponent.extend({
     this.minDate = this.minDate === undefined ? moment('01.01.1900', this.dateTimeFormat) : moment(this.minDate, this.dateTimeFormat);
     this.maxDate = this.maxDate === undefined ? moment('31.12.9999', this.dateTimeFormat) : moment(this.maxDate, this.dateTimeFormat);
 
-    var hasTimePicker = this.get('hasTimePicker');
+    let hasTimePicker = this.get('hasTimePicker');
     if (hasTimePicker) {
       this.dateTimeFormat = 'DD.MM.YYYY HH:mm:ss';
     }
 
-    var val = this.get('value');
-    var startDate = moment(new Date());
+    let val = this.get('value');
+    let startDate = moment(new Date());
     if (val !== undefined && moment(val).isValid()) {
       startDate = moment(val);
       this.$('input').val(startDate.format(this.dateTimeFormat));
     }
 
-    var readonly = this.get('readonly');
-    var _this = this;
-    var i18n = _this.get('i18n');
+    let readonly = this.get('readonly');
+    let _this = this;
+    let i18n = _this.get('i18n');
     if (!readonly) {
       this.$('input').daterangepicker(
       {
@@ -153,8 +153,8 @@ export default FlexberryBaseComponent.extend({
         _this.$('input').trigger('click');
       });
       this.$('input').on('apply.daterangepicker', function(ev, picker) {
-        var currentValue = _this.get('value');
-        var pickerDateString = moment(picker.endDate.toDate()).format(_this.dateTimeFormat);
+        let currentValue = _this.get('value');
+        let pickerDateString = moment(picker.endDate.toDate()).format(_this.dateTimeFormat);
 
         // TODO: refactor
         let tmp = !moment(moment(currentValue).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat));
@@ -163,19 +163,19 @@ export default FlexberryBaseComponent.extend({
         }
       });
       this.$('input').on('cancel.daterangepicker', function(ev, picker) {
-        var currentInputValueString = _this.$('input').val();
-        var pickerDateString = picker.endDate.format(_this.dateTimeFormat);
+        let currentInputValueString = _this.$('input').val();
+        let pickerDateString = picker.endDate.format(_this.dateTimeFormat);
 
         // TODO: refactor
         let tmp = moment(currentInputValueString, _this.dateTimeFormat);
         let tmp2 = !moment(tmp.format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat));
         if (tmp2) {
-          var oldPickerDateString = picker.endDate._i;
+          let oldPickerDateString = picker.endDate._i;
           if (typeof (oldPickerDateString) === 'string' && currentInputValueString !== oldPickerDateString) {
             _this.$('input').val(oldPickerDateString);
           }
 
-          var currentValue = _this.get('value');
+          let currentValue = _this.get('value');
           if (!moment(moment(currentValue).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat))) {
             _this._setValue(picker.endDate);
           }
@@ -189,7 +189,7 @@ export default FlexberryBaseComponent.extend({
         _this._setCalendarEnabledState();
       });
       this.$('input').keyup(function() {
-        var valueFromInput = _this.$(this).val();
+        let valueFromInput = _this.$(this).val();
         _this._setValue(moment(valueFromInput, _this.dateTimeFormat));
       });
     }
@@ -258,20 +258,21 @@ export default FlexberryBaseComponent.extend({
   /**
     Change state of calendar.
 
-    ```javascript
-    getDateToSet: function(dateFromPicker) {
-      if (!dateFromPicker.isValid()) {
-        return this.invalidDate;
-      }
-
-      let minDate = this.get('minDate');
-      let maxDate = this.get('maxDate');
-      if (moment.isDate(minDate) && dateFromPicker.isBefore(this.minDate) ||
-          moment.isDate(maxDate) && dateFromPicker.isAfter(this.maxDate)) {
+    @example
+      ```javascript
+      getDateToSet: function(dateFromPicker) {
+        if (!dateFromPicker.isValid()) {
           return this.invalidDate;
+        }
+
+        let minDate = this.get('minDate');
+        let maxDate = this.get('maxDate');
+        if (moment.isDate(minDate) && dateFromPicker.isBefore(this.minDate) ||
+            moment.isDate(maxDate) && dateFromPicker.isAfter(this.maxDate)) {
+            return this.invalidDate;
+        }
       }
-    }
-    ```
+      ```
 
     @method _setCalendarEnabledState
     @private

@@ -132,6 +132,7 @@ export default Ember.Service.extend({
       }
 
     }
+
     return new Ember.RSVP.Promise(function(resolve) {
       resolve(undefined);
     });
@@ -160,6 +161,7 @@ export default Ember.Service.extend({
     if (!(appPage in this.developerUserSettings)) {
       return undefined;
     }
+
     for (let componentName in this.developerUserSettings[appPage]) {
       let namedSettings = this.developerUserSettings[appPage][componentName];
       let settings = appPageUserSettings[componentName];
@@ -180,6 +182,7 @@ export default Ember.Service.extend({
     for (let componentName in appPageUserSettings) {
       this.currentUserSettings[appPage][componentName] = appPageUserSettings[componentName];
     }
+
     return this.currentUserSettings[appPage];
   },
 
@@ -200,6 +203,46 @@ export default Ember.Service.extend({
    */
   exists() {
     let ret = this.currentAppPage in  this.currentUserSettings;
+    return ret;
+  },
+
+  /**
+   *   Returns current list of userSetting.
+   *
+   *   @method getListCurrentUserSetting
+   *   @return {String}
+   */
+  getListCurrentUserSetting(componentName) {
+    let ret = [];
+    if (this.currentAppPage in  this.currentUserSettings &&
+      componentName in this.currentUserSettings[this.currentAppPage]
+    ) {
+      ret = this.currentUserSettings[this.currentAppPage][componentName];
+    }
+
+    return ret;
+  },
+
+
+  /**
+   *   Returns current userSetting.
+   *
+   *   @method getCurrentSorting
+   *   @return {String}
+   */
+  getCurrentUserSetting(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let ret = undefined;
+    if (this.currentAppPage in  this.currentUserSettings &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      ret = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    }
+
     return ret;
   },
 
@@ -533,7 +576,7 @@ export default Ember.Service.extend({
       if (result) {
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
-          for (let i = 0; i < foundRecords.length; i++) {
+          for (let i = 1; i < foundRecords.length; i++) {
             foundRecords[i].record.destroyRecord();
           }
 

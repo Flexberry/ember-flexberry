@@ -346,7 +346,7 @@ export default FlexberryBaseComponent.extend({
 
       switch (className) {
         case 'table icon':
-          this.send('showConfigDialog', this.componentName);
+          this.send('showConfigDialog');
           break;
         case 'checkmark box icon':
 
@@ -354,15 +354,15 @@ export default FlexberryBaseComponent.extend({
           let colsConfig = this.listUserSettings[namedSetting];
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
-            if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
-            } else {
-              this._router.router.refresh();  //Reload current page and records (model) list
-            }
-          });
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            });
           break;
         case 'setting icon':
-          this.send('showConfigDialog', this.componentName, namedSetting);
+          this.send('showConfigDialog', namedSetting);
           break;
         case 'remove icon':
           userSettingsService.deleteUserSetting({
@@ -410,7 +410,8 @@ export default FlexberryBaseComponent.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-    let listUserSettings = this.modelController.model.listUserSettings;
+//     let listUserSettings = this.modelController.model.listUserSettings;
+    let listUserSettings = this.get('userSettingsService').getListCurrentUserSetting(this.componentName);
     if (listUserSettings && 'DEFAULT' in listUserSettings) {
       delete listUserSettings.DEFAULT;
     }

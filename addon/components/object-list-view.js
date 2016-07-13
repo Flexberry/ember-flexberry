@@ -361,13 +361,14 @@ export default FlexberryBaseComponent.extend(
     }
 
     let cols = this._generateColumns(projection.attributes);
-    if (this.notUseUserSettings === true) {
-      // flexberry-groupedit and lookup-dialog-content set this flag to true and don't use userSettings.
-      // In future release backend can save userSettings for each olv.
-      return cols;
-    }
+//     if (this.notUseUserSettings === true) {
+//       // flexberry-groupedit and lookup-dialog-content set this flag to true and don't use userSettings.
+//       // In future release backend can save userSettings for each olv.
+//       return cols;
+//     }
 
-    var userSettings = this.currentController ? this.currentController.userSettings : undefined;
+//     var userSettings = this.currentController ? this.currentController.userSettings : undefined;
+    let userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     if (userSettings && userSettings.colsOrder !== undefined) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {
@@ -645,6 +646,17 @@ export default FlexberryBaseComponent.extend(
     @type Service
   */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
+    Used to identify objectListView on the page.
+
+    @property componentName
+    @type String
+    @default ''
+  */
+  componentName: '',
+
+
 
   actions: {
     /**

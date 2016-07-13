@@ -91,7 +91,7 @@ export default ProjectedModelFormRoute.extend(
         // Find by query is always fetching.
         // TODO: support getting from cache with "store.all->filterByProjection".
         // TODO: move includeSorting to setupController mixins?
-        return  this.reloadList(queryParameters);
+        return this.reloadList(queryParameters);
       }).then((records) => {
         this.includeSorting(records, this.sorting);
         //         records.set('userSettings', this.userSettings);

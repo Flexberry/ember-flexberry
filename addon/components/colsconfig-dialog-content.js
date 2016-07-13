@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+const { getOwner } = Ember;
 
 /**
  * Columns configuration dialog Content component.
@@ -267,6 +268,7 @@ export default FlexberryBaseComponent.extend({
       }
 
       //Save colsConfig in userSettings as DEFAULT
+      this._router = getOwner(this).lookup('router:main');
       let savePromise = this._getSavePromise(undefined, colsConfig);
       savePromise.then(
         record => {
@@ -282,7 +284,7 @@ export default FlexberryBaseComponent.extend({
     /**
      * Save named settings specified in the interface as named values
      *
-     * @method actions.apply
+     * @method actions.saveColsSetting
      */
     saveColsSetting: function() {
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
@@ -296,7 +298,7 @@ export default FlexberryBaseComponent.extend({
       let savePromise = this._getSavePromise(this.settingName, this.colsConfig);
       savePromise.then(
         record => {
-          Ember.set(this.model.listUserSettings, this.settingName, this.colsConfig);
+//           Ember.set(this.model.listUserSettings, this.settingName, this.colsConfig);
           this.get('colsConfigMenu').addNamedSettingTrigger(this.settingName);
           alert('Настройка ' + this.settingName + ' сохранена');
           Ember.$('#columnConfigurtionButtonUse')[0].className += ' disabled';
@@ -343,6 +345,7 @@ export default FlexberryBaseComponent.extend({
     if (columnWidth) {
       colsConfig.columnWidths = columnWidth;
     }
+
     return colsConfig;
   },
 

@@ -185,6 +185,13 @@ export default FlexberryBaseComponent.extend({
   setDefaultSettitingTitle: t('components.olv-toolbar.set-default-setting-title'),
 
   /**
+    @property setDefaultSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.set-default-setting-title')
+  */
+  showDefaultSettitingTitle: t('components.olv-toolbar.show-default-setting-title'),
+
+  /**
     @property colsConfigMenu
     @type Service
   */
@@ -202,6 +209,7 @@ export default FlexberryBaseComponent.extend({
   colsSettingsItems:  Ember.computed(
     'createSettitingTitle',
     'setDefaultSettitingTitle',
+    'showDefaultSettitingTitle',
     'useSettitingTitle',
     'editSettitingTitle',
     'removeSettitingTitle',
@@ -210,6 +218,7 @@ export default FlexberryBaseComponent.extend({
       let params = {
         createSettitingTitle: this.get('createSettitingTitle'),
         setDefaultSettitingTitle: this.get('setDefaultSettitingTitle'),
+        showDefaultSettitingTitle: this.get('showDefaultSettitingTitle'),
         useSettitingTitle: this.get('useSettitingTitle'),
         editSettitingTitle: this.get('editSettitingTitle'),
         removeSettitingTitle: this.get('removeSettitingTitle'),
@@ -365,7 +374,7 @@ export default FlexberryBaseComponent.extend({
           this.send('showConfigDialog', namedSetting);
           break;
         case 'remove icon':
-          userSettingsService.deleteUserSetting(componentName, settingName)
+          userSettingsService.deleteUserSetting(componentName, namedSetting)
           .then(result => {
             this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
             alert('Настройка ' + namedSetting + ' удалена');
@@ -380,6 +389,10 @@ export default FlexberryBaseComponent.extend({
               this._router.router.refresh();  //Reload current page and records (model) list
             }
           });
+          break;
+        case 'unhide icon':
+          let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
+          confirm(JSON.stringify(currentUserSetting));
           break;
       }
     }

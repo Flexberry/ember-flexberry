@@ -156,7 +156,7 @@ export default Ember.Service.extend({
     return ret;
   },
 
-   /**
+  /**
    Implements current URL-params to currentUserSettings
 
    @method setDeveloperUserSettings
@@ -193,7 +193,7 @@ export default Ember.Service.extend({
     return ret;
   },
 
-    /**
+  /**
    Returns current list of named userSetting.
 
    @method getListCurrentNamedUserSetting
@@ -203,9 +203,10 @@ export default Ember.Service.extend({
     let ret = {};
     let listCurrentUserSetting = this.getListCurrentUserSetting(componentName);
     for (let settingName in listCurrentUserSetting) {
-      if (settingName == defaultSettingName) {
+      if (settingName === defaultSettingName) {
         continue;
       }
+      
       ret[settingName] = listCurrentUserSetting[settingName];
     }
 
@@ -226,7 +227,7 @@ export default Ember.Service.extend({
       settingName = defaultSettingName;
     }
 
-    let ret = undefined;
+    let ret;
     if (this.currentAppPage in  this.currentUserSettings &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName]

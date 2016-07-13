@@ -115,7 +115,8 @@ export default {
       'use-setting-title': 'Use',
       'edit-setting-title': 'Edit',
       'remove-setting-title': 'Remove',
-      'set-default-setting-title': 'Default setting'
+      'set-default-setting-title': 'Default setting',
+      'show-default-setting-title': 'Show settings'
     },
 
     'colsconfig-dialog-content': {

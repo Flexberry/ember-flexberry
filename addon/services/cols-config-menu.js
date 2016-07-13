@@ -56,6 +56,12 @@ export default Ember.Service.extend(Ember.Evented, {
         title: params.setDefaultSettitingTitle
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
+      let showDefaultItem = {
+        icon: 'unhide icon',
+        iconAlignment: 'left',
+        title: params.showDefaultSettitingTitle
+      };
+      rootItem.items[rootItem.items.length] = showDefaultItem;
       this.colsSettingsItems = [rootItem];
       this.listNamedSettings = params.listNamedSettings;
       for (let namedSetting in this.listNamedSettings) {

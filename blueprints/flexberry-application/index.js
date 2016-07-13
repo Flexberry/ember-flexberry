@@ -100,6 +100,8 @@ var ApplicationBlueprint = (function () {
             var name_3 = path.parse(file).name;
             if (!this.fileExists("app/models/" + name_3 + ".js"))
                 this.execCommand("ember generate " + blueprintName + "-init " + name_3 + " --metadata-dir=" + this.metadataDir);
+            if (!this.fileExists("app/serializers/" + name_3 + ".js"))
+                this.execCommand("ember generate flexberry-serializer-init " + name_3 + " --metadata-dir=" + this.metadataDir);
             this.execCommand("ember generate " + blueprintName + " " + name_3 + " --metadata-dir=" + this.metadataDir);
         }
     };

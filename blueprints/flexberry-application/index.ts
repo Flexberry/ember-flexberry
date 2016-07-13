@@ -116,6 +116,8 @@ class ApplicationBlueprint {
       let name = path.parse(file).name;
       if (!this.fileExists(`app/models/${name}.js`))
         this.execCommand(`ember generate ${blueprintName}-init ${name} --metadata-dir=${this.metadataDir}`);
+      if (!this.fileExists(`app/serializers/${name}.js`))
+        this.execCommand(`ember generate flexberry-serializer-init ${name} --metadata-dir=${this.metadataDir}`);
       this.execCommand(`ember generate ${blueprintName} ${name} --metadata-dir=${this.metadataDir}`);
     }
   }

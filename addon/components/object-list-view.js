@@ -31,16 +31,6 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
-   /**
-    Name of user setting name for column widths.
-
-    @property _columnWidthsUserSettingName
-    @private
-    @type String
-    @default 'OlvColumnWidths'
-  */
-  _columnWidthsUserSettingName: 'OlvColumnWidths',
-
   /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
@@ -898,7 +888,6 @@ export default FlexberryBaseComponent.extend(
     this._super(...arguments);
 
     let $currentTable = this.$('table.object-list-view');
-
     if (this.get('allowColumnResize')) {
       // The first column has semantic class "collapsing"
       // so the column has 1px width and plugin has problems.

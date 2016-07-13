@@ -191,7 +191,7 @@ export default FlexberryBaseComponent.extend({
   colsConfigMenu: Ember.inject.service(),
 
   /**
-    @property listUserSettings
+   @ property listNamedSettings*
   */
   listNamedSettings: null,
 
@@ -341,7 +341,7 @@ export default FlexberryBaseComponent.extend({
       this._router = getOwner(this).lookup('router:main');
       let className = iTags.get(0).className;
       let namedSetting = namedSettingSpans.get(0).innerText;
-      let moduleName  =   this._router.currentRouteName;
+      let componentName  =  this.componentName;
       let userSettingsService = this.get('userSettingsService');
 
       switch (className) {
@@ -366,7 +366,7 @@ export default FlexberryBaseComponent.extend({
           break;
         case 'remove icon':
           userSettingsService.deleteUserSetting({
-            moduleName: moduleName,
+            componentName: componentName,
             settingName: namedSetting
           }).then(result => {
             this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
@@ -375,8 +375,8 @@ export default FlexberryBaseComponent.extend({
           break;
         case 'remove circle icon':
           userSettingsService.deleteUserSetting({
-            moduleName: moduleName,
-            settingName: 'DEFAULT'
+            componentName: componentName,
+            settingName: undefined
           }).then(record => {
             if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
               this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters

@@ -99,53 +99,6 @@ export default ProjectedModelFormRoute.extend(
         return records;
       });
     return ret;
-    /*
-    let userSettingPromise = userSettingsService.getUserSettings({ moduleName: moduleName })  //get sorting parameters from DEFAULT userSettings
-    .then(_listUserSettings => {
-      if (!_listUserSettings) { //UserSetting  switch off
-        _listUserSettings = { DEFAULT: { sorting: this.deserializeSortingParam(params.sort) } };
-      }
-
-      return _listUserSettings;
-    });
-
-    let ret = userSettingPromise
-    .then(
-      listUserSettings=> {
-        this.listUserSettings = listUserSettings;
-        let sorting = [];
-        this.userSettings = {};
-        if ('DEFAULT' in listUserSettings) {
-          this.userSettings = this.listUserSettings.DEFAULT;
-          sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];
-        }
-
-        this.sorting = sorting;
-
-        let queryParameters = {
-          modelName: modelName,
-          projectionName: projectionName,
-          perPage: params.perPage,
-          page: params.page,
-          sorting: sorting, // TODO: there can be some problems.
-          filter: params.filter,
-          filters: filtersPredicate,
-          predicate: limitPredicate,
-        };
-
-        // Find by query is always fetching.
-        // TODO: support getting from cache with "store.all->filterByProjection".
-        // TODO: move includeSorting to setupController mixins?
-        return this.reloadList(queryParameters);
-      })
-    .then((records) => {
-      this.includeSorting(records, this.sorting);
-      records.set('userSettings', this.userSettings);
-      records.set('listUserSettings', this.listUserSettings);
-      return records;
-    });
-    return ret;
-    */
   },
 
   /**

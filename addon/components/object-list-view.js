@@ -31,23 +31,7 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
-  /**
-    Computed property forms unique name for component from model name and current route.
-    This unique name can be used as module name for user settings service.
-
-    @property _moduleName
-    @private
-    @type String
-  */
-  _moduleName: Ember.computed('modelProjection', function() {
-    let modelName = this.get('modelProjection').modelName;
-    let currentController = this.get('currentController');
-    let currentRoute = currentController ? this.get('currentController').get('target').currentRouteName : 'application';
-    Ember.assert('Error while module name determing.', modelName && currentRoute);
-    return modelName + '__' + currentRoute;
-  }),
-
-  /**
+   /**
     Name of user setting name for column widths.
 
     @property _columnWidthsUserSettingName
@@ -897,16 +881,6 @@ export default FlexberryBaseComponent.extend(
     if (columnWidth !== undefined) {
       this._setColumnWidths(columnWidth);
     }
-//     let moduleName = this.get('_moduleName');
-//     let userSetting = {
-//       moduleName: moduleName,
-//       settingName: this.get('_columnWidthsUserSettingName')
-//     };
-//
-//     this.get('userSettingsService').getUserSetting(userSetting).then(data => {
-//       this._setColumnWidths(data);
-//     });
-
 
     // TODO: resolve this problem.
     this.$('.flexberry-dropdown:last').dropdown({
@@ -1061,15 +1035,6 @@ export default FlexberryBaseComponent.extend(
       });
     });
     this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
-
-//     let moduleName = this.get('_moduleName');
-//     let userSetting = {
-//       moduleName,
-//       userSetting: userWidthSettings,
-//       settingName: this.get('_columnWidthsUserSettingName'),
-//     };
-//
-//     this.get('userSettingsService').saveUserSetting(userSetting);
   },
 
   /**

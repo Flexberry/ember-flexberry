@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
         }
       ]
     }
-  },
+  }),
   actions: {
     toggleSidebar() {
       Ember.$('.ui.sidebar').sidebar('toggle');

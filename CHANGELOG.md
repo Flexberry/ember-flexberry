@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Custom internationalized captions for boolean type in object-list-view-cell.
 
 ### Fixed
+* Blueprints:
+    * Fixed various generation errors.
 * Fixed select from `flexberry-lookup` in dropdown mode.
 
 ### Added

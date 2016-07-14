@@ -9,7 +9,17 @@ export default Ember.Controller.extend({
     @type String
    */
   placeholder: t('components.flexberry-textbox.placeholder'),
+  /**
+    Handles changes in placeholder.
 
+    @method _placeholderChanged
+    @private
+   */
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-textbox.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-textbox.placeholder'));
+    }
+  }),
   /**
     Flag: indicates whether 'flexberry-textbox' component is in 'readonly' mode or not.
 

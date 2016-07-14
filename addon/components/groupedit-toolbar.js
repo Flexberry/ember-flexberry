@@ -88,6 +88,14 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
+      let confirmDeleteRows = this.get('confirmDeleteRows');
+      if (confirmDeleteRows) {
+        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        if (!confirmDeleteRows()) {
+          return;
+        }
+      }
+
       let componentName = this.get('componentName');
       this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
     }

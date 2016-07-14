@@ -25,6 +25,39 @@
     </tr>
   </thead>
   <tbody>
+    {{#if showFilters}}
+      <tr>
+        <td rowspan="2" class="{{unless (and showHelperColumn hasContent) 'hidden'}}"></td>
+        {{#each columns as |column|}}
+          <td>
+            {{#if column.filter.conditions}}
+              {{component "flexberry-dropdown"
+                value=column.filter.condition
+                items=column.filter.conditions
+                class="compact fluid"
+                placeholder=""
+                needChecksOnValue=false
+              }}
+            {{/if}}
+          </td>
+        {{/each}}
+        {{#if showMenuColumn}}
+          <td rowspan="2"></td>
+        {{/if}}
+      </tr>
+      <tr>
+        {{#each columns as |column|}}
+          <td>
+            {{#if column.filter.component.name}}
+              {{component column.filter.component.name
+                value=column.filter.pattern
+                dynamicProperties=column.filter.component.properties
+              }}
+            {{/if}}
+          </td>
+        {{/each}}
+      </tr>
+    {{/if}}
     {{#unless hasContent}}
       <tr>
         <td colspan="{{colspan}}" style="text-align:center;">{{placeholder}}</td>

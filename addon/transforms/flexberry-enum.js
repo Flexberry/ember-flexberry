@@ -12,7 +12,6 @@ import { inverseEnum, enumCaptions } from '../utils/enum-functions';
 
   @class FlexberryEnumTransform
   @extends <a href="http://emberjs.com/api/data/classes/DS.Transform.html">DS.Transform</a>
-  @public
 */
 let FlexberryEnum = DS.Transform.extend({
 
@@ -47,7 +46,6 @@ let FlexberryEnum = DS.Transform.extend({
 
     @property enum
     @type Object
-    @public
   */
   enum: undefined,
 
@@ -56,7 +54,6 @@ let FlexberryEnum = DS.Transform.extend({
 
     @property inverse
     @type Object
-    @public
     @readOnly
   */
   inverse: undefined,
@@ -66,7 +63,6 @@ let FlexberryEnum = DS.Transform.extend({
 
     @property captions
     @type Array
-    @public
     @readOnly
   */
   captions: undefined,
@@ -90,8 +86,6 @@ let FlexberryEnum = DS.Transform.extend({
     Returns `null` or `undefined` if `serialized` has one of these values.
 
     @method deserialize
-    @public
-
     @param {String|Number} serialized Serialized enumeration field
     @return {String} Deserialized enumeration field
   */
@@ -114,8 +108,6 @@ let FlexberryEnum = DS.Transform.extend({
     Returns `null` or `undefined` if `deserialized` has one of these values.
 
     @method serialize
-    @public
-
     @param {String} deserialized Deserialized enumeration field
     @return {String|Number} Serialized enumeration field
   */
@@ -138,12 +130,11 @@ FlexberryEnum.reopenClass({
     Flag: indicates whether class represents enumeration.
     It is useful in cases when we need to determine that the model attribute type is an enumeration.
 
+    @static
+    @for FlexberryEnumTransform
     @property isEnum
     @type Boolean
     @default true
-    @public
-    @static
-    @class FlexberryEnumTransform
   */
   isEnum: true
 });

@@ -1,23 +1,23 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 /**
-  Route for support edit form {{#crossLink "IISCaseberryLoggingObjectsApplicationLog"}}IISCaseberryLoggingObjectsApplicationLog{{/crossLink}} record.
+  Application log edit form route.
 
   @class IISCaseberryLoggingObjectsApplicationLogERoute
   @extends EditFormRoute
- */
+*/
 export default EditFormRoute.extend({
   /**
-    Projection name.
+    Model projection name.
 
     @property modelProjection
     @type String
     @default 'ApplicationLogE'
-   */
+  */
   modelProjection: 'ApplicationLogE',
 
   /**
@@ -26,6 +26,6 @@ export default EditFormRoute.extend({
     @property modelName
     @type String
     @default 'i-i-s-caseberry-logging-objects-application-log'
-   */
+  */
   modelName: 'i-i-s-caseberry-logging-objects-application-log',
 });

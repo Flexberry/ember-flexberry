@@ -5,19 +5,19 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 /**
-  Route for support list form {{#crossLink "IISCaseberryLoggingObjectsApplicationLog"}}IISCaseberryLoggingObjectsApplicationLog{{/crossLink}} record.
+  Application log list form route.
 
   @class IISCaseberryLoggingObjectsApplicationLogLRoute
   @extends ListFormRoute
- */
+*/
 export default ListFormRoute.extend({
   /**
-    Projection name.
+    Model projection name.
 
     @property modelProjection
     @type String
     @default 'ApplicationLogL'
-   */
+  */
   modelProjection: 'ApplicationLogL',
 
   /**
@@ -26,6 +26,6 @@ export default ListFormRoute.extend({
     @property modelName
     @type String
     @default 'i-i-s-caseberry-logging-objects-application-log'
-   */
+  */
   modelName: 'i-i-s-caseberry-logging-objects-application-log',
 });

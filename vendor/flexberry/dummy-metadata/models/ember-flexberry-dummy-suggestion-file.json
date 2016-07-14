@@ -1,5 +1,6 @@
 ﻿{
   "modelName": "ember-flexberry-dummy-suggestion-file",
+  "className": "SuggestionFile",
   "parentModelName": null,
   "parentClassName": null,
   "attrs": [

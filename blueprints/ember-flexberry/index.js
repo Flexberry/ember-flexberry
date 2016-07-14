@@ -10,7 +10,9 @@ module.exports = {
       return _this.addAddonsToProject({
         packages: [
           { name: 'semantic-ui-ember', target: '0.9.3' },
-          { name: 'ember-moment', target: '6.0.0' }
+          { name: 'ember-moment', target: '6.0.0' },
+          { name: 'ember-link-action', target: '0.0.34' },
+          { name: 'broccoli-jscs', target: '1.2.2' },
         ]
       });
     });

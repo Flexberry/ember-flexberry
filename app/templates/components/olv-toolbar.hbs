@@ -13,6 +13,19 @@
     {{t "components.olv-toolbar.delete-button-text"}}
   </button>
 {{/if}}
+{{#if enableFilters}}
+  <div class="ui icon input buttons">
+    <button class="ui button {{buttonClass}} {{if showFilters "active"}}" {{action toggleStateFilters}}>
+      <i class="filter icon"></i>
+    </button>
+    {{#if filters}}
+      <div class="or" data-text="&bull;"></div>
+      <button class="ui button {{buttonClass}}" {{action resetFilters}}>
+        <i class="remove icon"></i>
+      </button>
+    {{/if}}
+  </div>
+{{/if}}
 {{#if filterButton}}
   <div class="ui action input">
     {{input
@@ -28,15 +41,17 @@
     </button>
   </div>
 {{/if}}
-{{#if colsConfigButton}}
+{{#if _colsConfigButton}}
   <div class="ui buttons">
     <button class="ui icon button" {{action "showConfigDialog"}}>
       <i class="large table icon"></i>
     </button>
-    {{flexberry-menu
-      items=colsSettingsItems
-      onItemClick=(action "onMenuItemClick")
-    }}
+    {{#if colsSettingsItems}}
+      {{flexberry-menu
+        items=colsSettingsItems
+        onItemClick=(action "onMenuItemClick")
+      }}
+    {{/if}}
   </div>
 {{/if}}
 {{#each customButtons as |customButton|}}

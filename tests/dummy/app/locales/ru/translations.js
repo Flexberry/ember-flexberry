@@ -56,7 +56,11 @@ Ember.$.extend(true, translations, {
             'caption': '',
             'title': 'Меню'
           },
+          'user-settings-service-checkbox': {
+            'caption': 'Использовать сервис пользовательских настроек'
+          },
           'language-dropdown': {
+            'caption': 'Язык приложения',
             'placeholder': 'Выберите язык'
           }
         }
@@ -107,11 +111,15 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        'logging': {
-          'caption': 'Логирование',
+        'log-service-examples': {
+          'caption': 'Сервис логирования',
           'title': '',
-          'show': {
+          'application-log': {
             'caption': 'Лог приложения',
+            'title': ''
+          },
+          'settings-example': {
+            'caption': 'Пример работы с настройками',
             'title': ''
           }
         },
@@ -189,6 +197,14 @@ Ember.$.extend(true, translations, {
               'caption': 'Функция ограничения',
               'title': ''
             },
+            'lookup-block-form-example': {
+              'caption': 'Лукап в блочной форме',
+              'title': ''
+            },
+            'lookup-in-modal': {
+              'caption': 'Лукап в модальном окне',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Режим dropdown',
               'title': ''
@@ -219,6 +235,10 @@ Ember.$.extend(true, translations, {
             },
             'on-edit-form': {
               'caption': 'Размещение на форме редактирования',
+              'title': ''
+            },
+            'custom-filter': {
+              'caption': 'Настройка фильтра',
               'title': ''
             }
           },
@@ -362,6 +382,32 @@ Ember.$.extend(true, translations, {
       'caption': 'Типы предложений'
     },
 
+    'log-service-examples': {
+      'settings-example': {
+        'caption': 'Log-service-examples/settings-example',
+        'setting-column-header-caption': 'Настройка сервиса логирования',
+        'settings-value-column-header-caption': 'Текущее значение настройки',
+        'throw-exception-button-caption': 'Бросить исключение',
+        'reject-rsvp-promise-button-caption': 'Отклонить promise',
+        'ember-assert-button-caption': 'Ember.assert',
+        'ember-logger-error-button-caption': 'Ember.Logger.error',
+        'ember-logger-warn-button-caption': 'Ember.Logger.warn',
+        'ember-deprecate-button-caption': 'Ember.deprecate',
+        'ember-logger-log-button-caption': 'Ember.Logger.log',
+        'ember-logger-info-button-caption': 'Ember.logger.info',
+        'ember-logger-debug-button-caption': 'Ember.Logger.debug',
+        'throw-exception-button-message': 'Брошено исключение',
+        'reject-rsvp-promise-button-message': 'Promise отклонен',
+        'ember-assert-button-message': 'Вызван метод Ember.assert',
+        'ember-logger-error-button-message': 'Вызван метод Ember.Logger.error',
+        'ember-logger-warn-button-message': 'Вызван метод Ember.Logger.warn',
+        'ember-deprecate-button-message': 'Вызван метод Ember.deprecate',
+        'ember-logger-log-button-message': 'Вызван метод Ember.Logger.log',
+        'ember-logger-info-button-message': 'Вызван метод Ember.logger.info',
+        'ember-logger-debug-button-message': 'Вызван метод Ember.Logger.debug'
+      }
+    },
+
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {
@@ -417,6 +463,21 @@ Ember.$.extend(true, translations, {
         'limit-function-example': {
           'caption': 'Components-examples/flexberry-lookup/limit-function-example'
         },
+        'lookup-block-form-example': {
+          'caption': 'Components-examples/flexberry-lookup/lookup-block-form-example',
+          'message': 'Данный тест работает только в мобильной версии сайта. Чтобы запустить мобильную версию нужно:',
+          'paragraph1': 'Перейти в режим разработчика (нажать “F12”).',
+          'paragraph2': 'Включить мобильную версию сайта (нажать “Ctrl+Shift+M” в Chrome и Firefox)',
+          'paragraph3': 'Обновить страницу (нажать “F5”)'
+        },
+        'lookup-in-modal': {
+          'caption': 'Components-examples/flexberry-lookup/lookup-in-modal',
+          'captionModal': 'Кастомное модальное окно №1',
+          'captionModalDouble': 'Кастомное модальное окно №2',
+          'buttonModal': 'Модальное окно №1',
+          'buttonModalDouble': 'Модальное окно №2',
+          'buttonClose': 'Закрыть'
+        },
         'dropdown-mode-example': {
           'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'
         }
@@ -440,6 +501,9 @@ Ember.$.extend(true, translations, {
         },
         'on-edit-form': {
           'caption': 'FlexberryObjectlistview пример произвольных данных'
+        },
+        'custom-filter': {
+          'caption': 'Components-examples/flexberry-objectlistview/custom-filter'
         }
       },
       'flexberry-simpledatetime': {

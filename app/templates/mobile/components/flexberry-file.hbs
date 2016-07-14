@@ -1,31 +1,31 @@
 <div class="flexberry-file-grid ui grid">
-  <input type="file" name="files[]" id={{fileInputId}} class="flexberry-file-file-input" style="display:none" />
+  <input type="file" name="files[]" id={{_fileInputId}} class="flexberry-file-file-input" style="display:none" />
   <div class="row">
     <label
-      class="flexberry-file-add-button ui icon {{buttonClass}} {{unless addButtonIsEnabled "disabled"}} {{if (or hasFile readonly) "hidden"}} button"
+      class="flexberry-file-add-button ui icon {{buttonClass}} {{unless _addButtonIsEnabled "disabled"}} {{if (or _hasFile readonly) "hidden"}} button"
       title={{t "components.flexberry-file.add-button-title"}}
-      for={{fileInputId}}
+      for={{_fileInputId}}
       {{action "addButtonClick" on="click" preventDefault=false}}>
     {{t "components.flexberry-file.add-button-caption"}}
     </label>
-    {{#if hasFile}}
+    {{#if _hasFile}}
       <div class="flexberry-file-menu">
         {{flexberry-menu
-          class="icon vertical"
-          items=menuForFileItems
+          class="bottom left pointing"
+          items=_menuItems
           callItemsOnClickCallbacks=false
-          onItemClick=(action "menuForFileItemClick")
+          onItemClick=(action "onMenuItemClick")
         }}
       </div>
       {{#if showPreview}}
         <div class="flexberry-file-image-preview-wrapper ui small image" {{action "viewLoadedImage"}}>
-          {{#unless previewDownloadIsInProgress}}
+          {{#unless _previewDownloadIsInProgress}}
             <img
               class="flexberry-file-image-preview"
               src={{_previewImageAsBase64String}}
               alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
           {{/unless}}
-          <div class="ui {{if previewDownloadIsInProgress "active" ""}} loader"></div>
+          <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
         </div>
       {{/if}}
     {{/if}}
@@ -36,11 +36,11 @@
 </div>
 <div class="flexberry-file-error-modal-dialog ui small basic modal">
   <div class="ui icon header">
-    {{errorModalDialogCaption}}
+    {{_errorModalDialogCaption}}
   </div>
   <div class="content">
     <div class="flexberry-file-error-modal-dialog-content center aligned ui grid">
-      {{errorModalDialogContent}}
+      {{_errorModalDialogContent}}
     </div>
   </div>
   <div class="center aligned ui grid">

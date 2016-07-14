@@ -59,15 +59,6 @@ export default FlexberryBaseComponent.extend(
   _columnWidthsUserSettingName: 'OlvColumnWidths',
 
   /**
-    Service to work with user settings on server.
-
-    @property _userSettingsService
-    @private
-    @type Service
-  */
-  _userSettingsService: Ember.inject.service('user-settings-service'),
-
-  /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
 
@@ -282,6 +273,14 @@ export default FlexberryBaseComponent.extend(
   showDeleteButtonInRow: false,
 
   /**
+    Flag indicates whether to not use userSetting from backend
+    @property notUseUserSettings
+    @type Boolean
+    @default false
+  */
+  notUseUserSettings:false,
+
+  /**
     Flag indicates whether to show helper column or not.
 
     @property showHelperColumn
@@ -363,7 +362,7 @@ export default FlexberryBaseComponent.extend(
     @type Object[]
     @readOnly
   */
-  columns: Ember.computed('modelProjection', function() {
+  columns: Ember.computed('modelProjection', 'enableFilters', function() {
     let ret;
     let projection = this.get('modelProjection');
 
@@ -373,9 +372,9 @@ export default FlexberryBaseComponent.extend(
     }
 
     let cols = this._generateColumns(projection.attributes);
-    if ('caption' in projection) {
-      // If ObjectListView is defined in flexberry-groupedit dont implement userSettings
-      // This can be determined by presence of caption property in modelProjection
+    if (this.notUseUserSettings === true) {
+      // flexberry-groupedit and lookup-dialog-content set this flag to true and don't use userSettings.
+      // In future release backend can save userSettings for each olv.
       return cols;
     }
 
@@ -658,74 +657,6 @@ export default FlexberryBaseComponent.extend(
   */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
-  /**
-    Hook that can be used to confirm delete row.
-
-    @example
-      ```handlebars
-      <!-- app/templates/your-template.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRow=(action 'confirmDeleteRow')
-        ...
-      }}
-      ```
-
-      ```js
-      // app/controllers/your-controller.js
-      ...
-      actions: {
-        ...
-        confirmDeleteRow(row) {
-          return confirm('You sure?');
-        }
-        ...
-      }
-      ...
-      ```
-
-    @method confirmDeleteRow
-    @param {Object} row Row
-    @return {Boolean} If `true` then delete row else cancel delete
-  */
-  confirmDeleteRow: null,
-
-  /**
-    Hook that can be used to confirm delete rows.
-
-    @example
-      ```handlebars
-      <!-- app/templates/your-template.hbs -->
-      {{flexberry-objectlistview
-        ...
-        confirmDeleteRows=(action 'confirmDeleteRows')
-        ...
-      }}
-      ```
-
-      ```js
-      // app/controllers/your-controller.js
-      ...
-      actions: {
-        ...
-        confirmDeleteRows(selectedRows) {
-          if (selectedRows.length < 5) {
-            return confirm('You sure?');
-          } else {
-            return true;
-          }
-        }
-        ...
-      }
-      ...
-      ```
-
-    @method confirmDeleteRows
-    @param {Array} selectedRows Selected rows
-    @return {Boolean} If `true` then delete selected rows else cancel delete
-  */
-  confirmDeleteRows: null,
-
   actions: {
     /**
       This action is called when user click on row.
@@ -763,7 +694,7 @@ export default FlexberryBaseComponent.extend(
       @method actions.headerCellClick
       @public
       @param {Object} column
-      @param {jQuery.Event} e jQuery.Event by click on column
+      @param {jQuery.Event} e jQuery.Event by click on column.
     */
     headerCellClick(column, e) {
       if (!this.headerClickable || column.sortable === false) {
@@ -792,7 +723,7 @@ export default FlexberryBaseComponent.extend(
       let confirmDeleteRow = this.get('confirmDeleteRow');
       if (confirmDeleteRow) {
         Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
-        if (!confirmDeleteRow(recordWithKey.data)) {
+        if (!confirmDeleteRow()) {
           return;
         }
       }
@@ -919,6 +850,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
+    this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
 
     let content = this.get('content');
     if (content) {
@@ -966,12 +898,11 @@ export default FlexberryBaseComponent.extend(
       settingName: this.get('_columnWidthsUserSettingName')
     };
 
-    let getSettingPromise = this.get('_userSettingsService').getUserSetting(userSetting);
-    getSettingPromise.then(data => {
+    this.get('userSettingsService').getUserSetting(userSetting).then(data => {
       this._setColumnWidths(data);
     });
 
-    // TODO: resolv this problem.
+    // TODO: resolve this problem.
     this.$('.flexberry-dropdown:last').dropdown({
       direction: 'upward'
     });
@@ -1016,6 +947,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
+    this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
 
     this._super(...arguments);
   },
@@ -1130,7 +1062,7 @@ export default FlexberryBaseComponent.extend(
       settingName: this.get('_columnWidthsUserSettingName'),
     };
 
-    this.get('_userSettingsService').saveUserSetting(userSetting);
+    this.get('userSettingsService').saveUserSetting(userSetting);
   },
 
   /**
@@ -1280,6 +1212,10 @@ export default FlexberryBaseComponent.extend(
       }
     }
 
+    if (this.get('enableFilters')) {
+      this._addFilterForColumn(column, attr, bindingPath);
+    }
+
     let sortDef;
     let sorting = this.get('sorting');
     if (sorting && (sortDef = sorting[bindingPath])) {
@@ -1289,6 +1225,175 @@ export default FlexberryBaseComponent.extend(
     }
 
     return column;
+  },
+
+  /**
+    Add filter parameters for column.
+
+    @method _createFilterForColumn
+    @param {Object} column
+    @param {Object} attr
+    @param {String} bindingPath
+  */
+  _addFilterForColumn(column, attr, bindingPath) {
+    let modelName;
+    let attributeName;
+    let relation = attr.kind !== 'attr';
+    if (relation) {
+      modelName = attr.modelName;
+      attributeName = attr.options.displayMemberPath;
+    } else {
+      attributeName = bindingPath;
+      modelName = this.get('modelName');
+    }
+
+    let model = this.get('store').modelFor(modelName);
+    let attribute = Ember.get(model, 'attributes').get(attributeName);
+
+    let component = this._getFilterComponent(attribute.type, relation);
+    let componentForFilter = this.get('componentForFilter');
+    if (componentForFilter) {
+      Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
+      Ember.$.extend(true, component, componentForFilter(attribute.type, relation));
+    }
+
+    let conditions;
+    let conditionsByType = this.get('conditionsByType');
+    if (conditionsByType) {
+      Ember.assert(`Need function in 'componentForFilter'.`, typeof conditionsByType === 'function');
+      conditions = conditionsByType(attribute.type);
+    } else {
+      conditions = this._conditionsByType(attribute.type);
+    }
+
+    let name = relation ? `${bindingPath}.${attribute.name}` : bindingPath;
+    let type = attribute.type;
+    let pattern;
+    let condition;
+
+    let filters = this.get('filters');
+    if (filters && filters.hasOwnProperty(name)) {
+      pattern = filters[name].pattern;
+      condition = filters[name].condition;
+    }
+
+    column.filter = { name, type, pattern, condition, conditions, component };
+  },
+
+  /**
+    Return available conditions for filter.
+
+    @method _conditionsByType
+    @param {String} type
+    @return {Array} Available conditions for filter.
+  */
+  _conditionsByType(type) {
+    switch (type) {
+      case 'file':
+        return null;
+
+      case 'date':
+      case 'number':
+        return ['eq', 'neq', 'le', 'ge'];
+
+      case 'string':
+      case 'boolean':
+        return ['eq', 'neq'];
+
+      default:
+        return ['eq', 'neq'];
+    }
+  },
+
+  /**
+    Return object with parameters for component.
+
+    @method _getFilterComponent
+    @param {String} type
+    @param {Boolean} relation
+    @return {Object} Object with parameters for component.
+  */
+  _getFilterComponent(type, relation) {
+    let component = {
+      name: undefined,
+      properties: undefined,
+    };
+
+    switch (type) {
+      case 'file':
+        break;
+
+      case 'string':
+        component.name = 'flexberry-textbox';
+        component.properties = {
+          class: 'compact fluid',
+        };
+        break;
+
+      case 'number':
+        component.name = 'flexberry-textbox';
+        component.properties = {
+          class: 'compact fluid',
+        };
+        break;
+
+      case 'boolean':
+        component.name = 'flexberry-dropdown';
+        component.properties = {
+          items: ['true', 'false'],
+          class: 'compact fluid',
+        };
+        break;
+
+      case 'date':
+        component.name = 'flexberry-textbox';
+        break;
+
+      default:
+        let transformInstance = Ember.getOwner(this).lookup('transform:' + type);
+        let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
+        if (transformClass && transformClass.isEnum) {
+          component.name = 'flexberry-dropdown';
+          component.properties = {
+            items: transformInstance.get('captions'),
+            class: 'compact fluid',
+          };
+        }
+
+        break;
+    }
+
+    return component;
+  },
+
+  /**
+    Refresh list with the entered filter.
+
+    @method _refreshList
+    @param {String} componentName
+    @private
+  */
+  _refreshList(componentName) {
+    if (this.get('componentName') === componentName) {
+      if (this.get('enableFilters')) {
+        let filters = {};
+        let hasFilters = false;
+        this.get('columns').forEach((column) => {
+          if (column.filter.pattern && column.filter.condition) {
+            hasFilters = true;
+            filters[column.filter.name] = column.filter;
+          }
+        });
+
+        if (hasFilters) {
+          this.sendAction('applyFilters', filters);
+        } else {
+          this.get('currentController').send('refreshList');
+        }
+      } else {
+        this.get('currentController').send('refreshList');
+      }
+    }
   },
 
   /**
@@ -1403,17 +1508,9 @@ export default FlexberryBaseComponent.extend(
   */
   _deleteRows(componentName, immediately) {
     if (componentName === this.get('componentName')) {
-      let selectedRecords = this.get('selectedRecords');
-      let confirmDeleteRows = this.get('confirmDeleteRows');
-      if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
-        if (!confirmDeleteRows(selectedRecords)) {
-          return;
-        }
-      }
-
-      let count = selectedRecords.length;
       this.send('dismissErrorMessages');
+      let selectedRecords = this.get('selectedRecords');
+      let count = selectedRecords.length;
       selectedRecords.forEach((item, index, enumerable) => {
         Ember.run.once(this, function() {
           this._deleteRecord(item, immediately);
@@ -1424,44 +1521,6 @@ export default FlexberryBaseComponent.extend(
       this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
     }
   },
-
-  /**
-    Hook that executes before deleting the record.
-
-     @example
-       ```handlebars
-       <!-- app/templates/employees.hbs -->
-       {{flexberry-objectlistview
-         ...
-         beforeDeleteRecord=(action 'beforeDeleteRecord')
-         ...
-       }}
-       ```
-
-       ```js
-       // app/controllers/employees.js
-       import ListFormController from './list-form';
-
-       export default ListFormController.extend({
-         actions: {
-           beforeDeleteRecord(record, data) {
-             if (record.get('myProperty')) {
-               data.cancel = true;
-             }
-           }
-         }
-       });
-       ```
-
-    @method beforeDeleteRecord
-
-    @param {DS.Model} record Deleting record
-    @param {Object} data Metadata
-    @param {Boolean} [data.cancel=false] Flag for canceling deletion
-    @param {Boolean} [data.immediately] See {{#crossLink "ObjectListView/immediateDelete:property"}}{{/crossLink}}
-                                        property for details
-  */
-  beforeDeleteRecord: null,
 
   /**
     Delete the record.

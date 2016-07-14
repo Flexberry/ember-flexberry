@@ -7,37 +7,42 @@ import Ember from 'ember';
 /**
   Mixin for controller, that restrictions on the list form.
 
-  Example:
-  ```javascript
-  // app/controllers/employees.js
-  import Ember from 'ember';
-  import LimitedController from 'ember-flexberry/mixins/limited-controller'
-  export default Ember.Controller.extend(LimitedController, {
-    ...
-  });
-  ```
+  @example
+    ```javascript
+    // app/controllers/employees.js
+    import Ember from 'ember';
+    import LimitedController from 'ember-flexberry/mixins/limited-controller'
+    export default Ember.Controller.extend(LimitedController, {
+      ...
+    });
+    ```
 
-  ```javascript
-  // app/routes/employees.js
-  import Ember from 'ember';
-  import LimitedRoute from 'ember-flexberry/mixins/limited-route'
-  export default Ember.Route.extend(LimitedRoute, {
-    ...
-  });
-  ```
+    ```javascript
+    // app/routes/employees.js
+    import Ember from 'ember';
+    import LimitedRoute from 'ember-flexberry/mixins/limited-route'
+    export default Ember.Route.extend(LimitedRoute, {
+      ...
+    });
+    ```
 
-  ```handlebars
-  <!-- app/templates/employees.hbs -->
-  ...
-  {{flexberry-objectlistview
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
     ...
-    filterButton=true
-    filterText=filter
-    filterByAnyMatch=(action 'filterByAnyMatch')
+    {{flexberry-objectlistview
+      ...
+      enableFilters=enableFilters
+      filters=filters
+      applyFilters=(action "applyFilters")
+      resetFilters=(action "resetFilters")
+      ...
+      filterButton=true
+      filterText=filter
+      filterByAnyMatch=(action 'filterByAnyMatch')
+      ...
+    }}
     ...
-  }}
-  ...
-  ```
+    ```
 
   @class LimitedController
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
@@ -53,6 +58,15 @@ export default Ember.Mixin.create({
   queryParams: ['filter'],
 
   /**
+    Filters filled in OLV component.
+
+    @property filters
+    @type Object
+    @default null
+  */
+  filters: null,
+
+  /**
     String with search query.
 
     @property filter
@@ -63,14 +77,33 @@ export default Ember.Mixin.create({
 
   actions: {
     /**
+      Save filters and refresh list.
+
+      @method actions.applyFilters
+      @param {Object} filters
+    */
+    applyFilters(filters) {
+      this.set('filters', filters);
+      this.send('refreshList');
+    },
+
+    /**
+      Reset filters and refresh list.
+
+      @method actions.resetFilters
+    */
+    resetFilters() {
+      this.set('filters', null);
+      this.send('refreshList');
+    },
+
+    /**
       Changes current pattern for objects filtering.
 
       @method filterByAnyMatch
       @param {String} pattern A substring that is searched in objects while filtering.
-      @deprecated Use Query Language.
     */
     filterByAnyMatch(pattern) {
-      Ember.Logger.error('Method `filterByAnyMatch` is deprecated, use Query Language.');
       if (this.get('filter') !== pattern) {
         this.setProperties({
           filter: pattern,

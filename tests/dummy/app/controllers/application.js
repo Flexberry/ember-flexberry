@@ -124,12 +124,17 @@ export default Ember.Controller.extend({
         }]
       }, {
         link: null,
-        caption: i18n.t('forms.application.sitemap.logging.caption'),
-        title: i18n.t('forms.application.sitemap.logging.title'),
+        caption: i18n.t('forms.application.sitemap.log-service-examples.caption'),
+        title: i18n.t('forms.application.sitemap.log-service-examples.title'),
         children: [{
           link: 'i-i-s-caseberry-logging-objects-application-log-l',
-          caption: i18n.t('forms.application.sitemap.logging.show.caption'),
-          title: i18n.t('forms.application.sitemap.logging.show.title'),
+          caption: i18n.t('forms.application.sitemap.log-service-examples.application-log.caption'),
+          title: i18n.t('forms.application.sitemap.log-service-examples.application-log.title'),
+          children: null
+        }, {
+          link: 'log-service-examples/settings-example',
+          caption: i18n.t('forms.application.sitemap.log-service-examples.settings-example.caption'),
+          title: i18n.t('forms.application.sitemap.log-service-examples.settings-example.title'),
           children: null
         }]
       }, {
@@ -226,6 +231,16 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/lookup-block-form-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-block-form-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-block-form-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/lookup-in-modal',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-in-modal.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/dropdown-mode-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.title'),
@@ -264,6 +279,10 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-objectlistview/on-edit-form',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.title'),
+          }, {
+            link: 'components-examples/flexberry-objectlistview/custom-filter',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.title'),
             children: null
           }]
         }, {

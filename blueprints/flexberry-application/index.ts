@@ -32,18 +32,54 @@ module.exports = {
   }
 };
 
+class ElapsedTime {
+  public caption: string;
+  public elapsedTimeSec: number;
+  private static groups: ElapsedTime[] = [];
+
+  public constructor(caption: string, startTime: number) {
+    this.caption = caption;
+    this.elapsedTimeSec = (Date.now() - startTime) / 1000;
+  }
+
+  public static print() {
+    let formatter = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1});
+    let total: number = 0;
+    console.log("Ellapsed time:");
+    for (let group of ElapsedTime.groups) {
+      console.log(`${group.caption}: ${formatter.format(group.elapsedTimeSec)} sec`);
+      total += group.elapsedTimeSec;
+    }
+    console.log(`Total: ${formatter.format(total)} sec`);
+  }
+
+  public static add(caption: string, startTime: number): number {
+    ElapsedTime.groups.push(new ElapsedTime(caption, startTime));
+    return Date.now();
+  }
+}
+
 class ApplicationBlueprint {
   private metadataDir: string;
   constructor(blueprint, options) {
-    this.metadataDir=options.metadataDir;
+    this.metadataDir = options.metadataDir;
+    let start: number, end: number;
+    start = Date.now();
     this.emberGenerateTests("list-forms");
     this.emberGenerateTests("edit-forms");
-    this.execCommand("ember generate route index");
-    this.emberGenerate("flexberry-model", "models");
+    start = ElapsedTime.add("Tests for list-forms and edit-forms", start);
+    this.emberGenerateFlexberryModel();
+    start = ElapsedTime.add("Models", start);
     this.emberGenerate("flexberry-enum", "enums");
+    start = ElapsedTime.add("Enums", start);
+    this.execCommand("ember generate route index");
     this.emberGenerate("flexberry-list-form", "list-forms");
+    start = ElapsedTime.add("List forms", start);
     this.emberGenerate("flexberry-edit-form", "edit-forms");
+    start = ElapsedTime.add("Edit forms", start);
     this.execCommand(`ember generate flexberry-core app --metadata-dir=${this.metadataDir}`);
+    start = ElapsedTime.add("flexberry-core", start);
+    ElapsedTime.print();
   }
 
   execCommand(cmd: string){
@@ -56,8 +92,10 @@ class ApplicationBlueprint {
     let list = fs.readdirSync(metadataSubDir);
     for (let file of list) {
       let name = path.parse(file).name;
-      this.execCommand(`ember generate route-test ${name}`);
-      this.execCommand(`ember generate controller-test ${name}`);
+      if (!this.fileExists(`tests/unit/controllers/${name}-test.js`))
+        this.execCommand(`ember generate controller-test ${name}`);
+      if (!this.fileExists(`tests/unit/routes/${name}-test.js`))
+        this.execCommand(`ember generate route-test ${name}`);
     }
   }
 
@@ -68,6 +106,28 @@ class ApplicationBlueprint {
       let name = path.parse(file).name;
       this.execCommand(`ember generate ${blueprintName} ${name} --metadata-dir=${this.metadataDir}`);
     }
+  }
+
+  emberGenerateFlexberryModel() {
+    let blueprintName: string = "flexberry-model", metadataSubDir: string = "models";
+    metadataSubDir = path.join(this.metadataDir, metadataSubDir);
+    let list = fs.readdirSync(metadataSubDir);
+    for (let file of list) {
+      let name = path.parse(file).name;
+      if (!this.fileExists(`app/models/${name}.js`))
+        this.execCommand(`ember generate ${blueprintName}-init ${name} --metadata-dir=${this.metadataDir}`);
+      this.execCommand(`ember generate ${blueprintName} ${name} --metadata-dir=${this.metadataDir}`);
+    }
+  }
+
+  fileExists(path: string): boolean {
+    try {
+      fs.statSync(path);
+    } catch (e) {
+      if (e.code === "ENOENT")
+        return false;
+    }
+    return true
   }
 
 }

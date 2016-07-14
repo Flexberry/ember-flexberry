@@ -1,18 +1,18 @@
 /**
   @module ember-flexberry
- */
+*/
 
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
 import Proj from 'ember-flexberry-data';
 
 /**
-  Model for message a application log, used into {{#crossLink "FlexberryLoggingService"}}FlexberryLoggingService{{/crossLink}}.
+  Model of application log, message (used by {{#crossLink "LogService"}}log service{{/crossLink}}).
 
-  @class IISCaseberryLoggingObjectsApplicationLog
+  @class IISCaseberryLoggingObjectsApplicationLogModel
   @extends BaseModel
- */
-var Model = BaseModel.extend({
+*/
+let Model = BaseModel.extend({
   category: DS.attr('string'),
   eventId: DS.attr('number'),
   priority: DS.attr('number'),
@@ -63,35 +63,6 @@ Model.defineProjection('ApplicationLogL', 'i-i-s-caseberry-logging-objects-appli
   win32ThreadId: Proj.attr('Win32 thread id'),
   message: Proj.attr('Message'),
   formattedMessage: Proj.attr('Formatted message')
-});
-
-Model.defineProjection('ApplicationLogRusL', 'i-i-s-caseberry-logging-objects-application-log', {
-  timestamp: Proj.attr('Время'),
-  title: Proj.attr('Заголовок'),
-  message: Proj.attr('Сообщение'),
-  formattedMessage: Proj.attr('Форматированное сообщение'),
-  category: Proj.attr('Категория'),
-  eventId: Proj.attr('ID события'),
-  priority: Proj.attr('Приоритет'),
-  severity: Proj.attr('Серьёзность'),
-  machineName: Proj.attr('Имя машины'),
-  appDomainName: Proj.attr('Домен приложения'),
-  processId: Proj.attr('ID процесса'),
-  processName: Proj.attr('Имя процесса'),
-  threadName: Proj.attr('Имя потока'),
-  win32ThreadId: Proj.attr('ID потока Win32')
-});
-
-Model.defineProjection('ShortL', 'i-i-s-caseberry-logging-objects-application-log', {
-  timestamp: Proj.attr('Время'),
-  title: Proj.attr('Событие'),
-  eventId: Proj.attr('Код события'),
-  message: Proj.attr('Сообщение'),
-  priority: Proj.attr('Приоритет'),
-  category: Proj.attr('Категория'),
-  severity: Proj.attr('Серьёзность'),
-  machineName: Proj.attr('Имя машины'),
-  processName: Proj.attr('Имя процесса')
 });
 
 export default Model;

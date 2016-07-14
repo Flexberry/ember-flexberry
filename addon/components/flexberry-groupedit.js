@@ -408,5 +408,104 @@ export default FlexberryBaseComponent.extend({
 
       this.sendAction('action', record, options);
     }
-  }
+  },
+
+  /**
+    Hook that can be used to confirm delete row.
+
+    @example
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-groupedit
+        ...
+        confirmDeleteRow=(action 'confirmDeleteRow')
+        ...
+      }}
+      ```
+
+      ```javascript
+      // app/controllers/example.js
+      ...
+      actions: {
+        ...
+        confirmDeleteRow() {
+          return confirm('You sure?');
+        }
+        ...
+      }
+      ...
+      ```
+
+    @method confirmDeleteRow
+    @return {Boolean} If `true` then delete row, else cancel.
+  */
+  confirmDeleteRow: undefined,
+
+  /**
+    Hook that can be used to confirm delete rows.
+
+    @example
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-groupedit
+        ...
+        confirmDeleteRows=(action 'confirmDeleteRows')
+        ...
+      }}
+      ```
+
+      ```javascript
+      // app/controllers/example.js
+      ...
+      actions: {
+        ...
+        confirmDeleteRows() {
+          return confirm('You sure?');
+        }
+        ...
+      }
+      ...
+      ```
+
+    @method confirmDeleteRows
+    @return {Boolean} If `true` then delete selected rows, else cancel.
+  */
+  confirmDeleteRows: undefined,
+
+  /**
+    Hook that executes before deleting the record.
+    Not use async functions.
+
+    @example
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-groupedit
+        ...
+        beforeDeleteRecord=(action 'beforeDeleteRecord')
+        ...
+      }}
+      ```
+
+      ```javascript
+      // app/controllers/employees.js
+      import ListFormController from './list-form';
+
+      export default ListFormController.extend({
+        actions: {
+          beforeDeleteRecord(record, data) {
+            if (record.get('myProperty')) {
+              data.cancel = true;
+            }
+          }
+        }
+      });
+      ```
+
+    @method beforeDeleteRecord
+    @param {DS.Model} record Deleting record.
+    @param {Object} data Metadata.
+    @param {Boolean} [data.cancel=false] Flag for canceling deletion.
+    @param {Boolean} [data.immediately] See {{#crossLink "ObjectListView/immediateDelete:property"}}{{/crossLink}} property for details.
+  */
+  beforeDeleteRecord: undefined,
 });

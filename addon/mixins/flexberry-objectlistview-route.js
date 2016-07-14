@@ -4,6 +4,14 @@
 
 import Ember from 'ember';
 
+/**
+  Mixin for {{#crossLink "DS.Route"}}Route{{/crossLink}}
+  to support work with {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
+
+  @class FlexberryObjectlistviewRouteMixin
+  @extends Ember.Mixin
+  @public
+*/
 export default Ember.Mixin.create({
   actions: {
     /**
@@ -77,7 +85,7 @@ export default Ember.Mixin.create({
   @param {String} [options.params] Current route query parameters
   @return {BasePredicate} The predicate to limit loaded data
   */
-  objectListViewLimitPredicate: function(options) {
+  objectListViewLimitPredicate(options) {
     return undefined;
   }
 });

@@ -6,6 +6,21 @@
         "null"
       ],
       "properties": {
+        "master": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "displayAttributeName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
         "relationName": {
           "type": [
             "string",
@@ -20,6 +35,9 @@
         }
       },
       "required": [
+        "master",
+        "displayAttributeName",
+        "required",
         "relationName",
         "projection"
       ]

@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Custom internationalized captions for boolean type in object-list-view-cell.
+
+### Fixed
+* Fixed select from `flexberry-lookup` in dropdown mode.
 
 ### Added
 * Added support `flexberry-lookup` in dropdown mode for mobile.

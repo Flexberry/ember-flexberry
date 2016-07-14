@@ -1,21 +1,27 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  sitemap: {
-    nodes: [
-      {
-        link: 'index',
-        title: 'Home',
-        children: null
-      },
-      {
-        link: null,
-        title: 'Objects',
-        children: [
+  sitemap: Ember.computed('i18n.locale', function () {
+    let i18n = this.get('i18n');
+
+    return {
+      nodes: [
+        {
+          link: 'index',
+          caption: 'Home',
+          title: 'Home',
+          children: null
+        },
+        {
+          link: null,
+          caption: 'Objects',
+          title: 'Objects',
+          children: [
 <%=children%>
-        ]
-      }
-    ]
+          ]
+        }
+      ]
+    }
   },
   actions: {
     toggleSidebar() {

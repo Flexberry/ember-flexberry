@@ -40,7 +40,7 @@ var CoreBlueprint = (function () {
             var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
             var listForm = JSON.parse(content);
             var listFormName = path.parse(form).name;
-            children.push("          {\n            link: '" + listFormName + "',\n            title: '" + listForm.caption + "',\n            children: null\n          }");
+            children.push("            {\n              link: '" + listFormName + "',\n              caption: '" + listForm.caption + "',\n              title: '" + listForm.caption + "',\n              children: null\n            }");
             routes.push("  this.route('" + listFormName + "');");
             routes.push("  this.route('" + listForm.editForm + "', { path: '" + listForm.editForm + "/:id' });");
             routes.push("  this.route('" + listForm.newForm + ".new', { path: '" + listForm.newForm + "/new' });");

@@ -126,6 +126,8 @@ export default {
       'column-name': 'Column name',
       'sort-direction': 'Sorting direction',
       'sort-priority': 'Priority column sorting',
+      'column-width': 'Column width',
+      'save-colwidths': 'Save columns width',
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',

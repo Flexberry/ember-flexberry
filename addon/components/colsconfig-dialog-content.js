@@ -25,6 +25,7 @@ export default FlexberryBaseComponent.extend({
   settingName: '',
   colsConfig: [],
   changed: false,
+  saveColWidthState: false,
 
   init: function() {
     this._super(...arguments);
@@ -33,7 +34,6 @@ export default FlexberryBaseComponent.extend({
       return;
     }
 
-//     this.settingsList = this.model.listUserSettings;
     this.settingName = this.model.settingName;
     this.componentName = this.model.componentName;
     let colDescs = this.model.colDescs;
@@ -50,10 +50,15 @@ export default FlexberryBaseComponent.extend({
         }
       }
 
+      if ('columnWidth' in colDesc) {
+        this.saveColWidthState =true;
+      }
+
       colDesc.trId = this._idPrefix + 'TR_' + i;
       colDesc.hideId = this._idPrefix + 'Hide_' + i;
       colDesc.sortOrderId = this._idPrefix + 'SortOrder_' + i;
       colDesc.sortPriorityId = this._idPrefix + 'SortPriority_' + i;
+      colDesc.columnWidthId = this._idPrefix + 'ColumnWidth_' + i;
       colDesc.rowUpId = this._idPrefix + 'RowUp_' + i;
       colDesc.rowDownId = this._idPrefix + 'RowDown_' + i;
       this.modelForDOM[i] = colDesc;
@@ -308,7 +313,17 @@ export default FlexberryBaseComponent.extend({
           alert('При сохранении настройки возникли ошибки: ' + JSON.stringify(error));
         }
       );
+    },
+
+    /**
+     * Column width is changed
+     *
+     * @method actions.widthChanged
+     */
+    widthChanged: function() {
+      this._changed();
     }
+
   },
 
   _getSavePromise: function(settingName, colsConfig) {
@@ -320,6 +335,7 @@ export default FlexberryBaseComponent.extend({
     let colsConfig = [];
     let colsOrder = [];
     let sortSettings = [];
+    let widthSetting = [];
 
     //Set sortSettings and colsOrder array
     for (let i = 0; i < trs.length; i++) {  // Iterate TR list
@@ -329,6 +345,13 @@ export default FlexberryBaseComponent.extend({
       colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide };  //Set colsOrder element
       if (colDesc.sortPriority !== undefined) { // Sort priority defined
         sortSettings[sortSettings.length] = { propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority }; //Add sortSetting element
+      }
+      if (this.saveColWidthState) {
+        let colWidthElement = this._getEventElement('ColumnWidth',index);
+        let width = parseInt(colWidthElement.value,10);
+        if (width !== isNaN && width >=0) {
+          widthSetting[widthSetting.length] = { propertyName: colDesc.propName, width: width };
+        }
       }
     }
 
@@ -340,12 +363,9 @@ export default FlexberryBaseComponent.extend({
     }
 
     colsConfig = { colsOrder: colsOrder, sorting: sorting };  // Set colsConfig Object
-    let userSettingsService = this.get('userSettingsService');
-    let columnWidth = userSettingsService.getCurrentColumnWidths(this.componentName, this.settingName);
-    if (columnWidth) {
-      colsConfig.columnWidths = columnWidth;
+    if (this.saveColWidthState) {
+      colsConfig.columnWidths = widthSetting;
     }
-
     return colsConfig;
   },
 

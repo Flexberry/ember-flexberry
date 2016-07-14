@@ -206,7 +206,7 @@ export default Ember.Service.extend({
       if (settingName === defaultSettingName) {
         continue;
       }
-      
+
       ret[settingName] = listCurrentUserSetting[settingName];
     }
 
@@ -286,6 +286,10 @@ export default Ember.Service.extend({
    @param {Array} columnWidths List columns width.
    */
   setCurrentColumnWidths(componentName, settingName, columnWidths) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
     let userSetting;
     if (this.currentAppPage in this.currentUserSettings &&
       componentName in this.currentUserSettings[this.currentAppPage] &&

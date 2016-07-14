@@ -126,6 +126,8 @@ export default {
       'column-name': 'Название столбца',
       'sort-direction': 'Направление сортировки',
       'sort-priority': 'Приоритет столбца при сортировке',
+      'column-width': 'Ширина столбца',
+      'save-colwidths': 'Сохранить ширину столбцов',
       'setting-name': 'Название настройки',
       'enter-setting-name': 'Введите название настройки',
       'use': 'Применить',

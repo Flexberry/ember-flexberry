@@ -14,6 +14,7 @@ export default Ember.Mixin.create({
 //       let userSettings = settingName !== undefined && settingName in listUserSettings ? listUserSettings[settingName] :  this.model.userSettings;
       let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
+      let columnWidths = this.get('userSettingsService').getCurrentColumnWidths(componentName, settingName);
       let propName;
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
@@ -43,6 +44,17 @@ export default Ember.Mixin.create({
         namedSorting[propName] = colDesc;
       }
 
+      if (columnWidths === undefined) {
+        columnWidths = [];
+      }
+
+      let namedColWidth = {};
+      for (let i = 0; i < columnWidths.length; i++) {
+        colDesc = columnWidths[i];
+        propName = colDesc.propertyName;
+        namedColWidth[propName] = colDesc.width;
+      }
+
       for (let i = 0; i < colsOrder.length; i++) {
         let colOrder = colsOrder[i];
         propName = colOrder.propName;
@@ -55,6 +67,9 @@ export default Ember.Mixin.create({
           colDesc.sortPriority = sortColumn.sortPriority;
         } else {
           colDesc.sortOrder = 0;
+        }
+        if (propName in namedColWidth) {
+          colDesc.columnWidth = namedColWidth[propName];
         }
 
         colDescs[i] = colDesc;

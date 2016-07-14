@@ -1,5 +1,5 @@
 <h3>{{t "forms.components-examples.flexberry-objectlistview.custom-filter.caption"}}</h3>
-<form class="ui form flexberry-vertical-form" role="form">
+<div class="row">
   {{flexberry-objectlistview
     content=model
     modelName="ember-flexberry-dummy-application-user"
@@ -7,6 +7,12 @@
     editFormRoute=editFormRoute
     createNewButton=false
     refreshButton=true
+    enableFilters=true
+    filters=filters
+    applyFilters=(action "applyFilters")
+    resetFilters=(action "resetFilters")
+    componentForFilter=(action "componentForFilter")
+    conditionsByType=(action "conditionsByType")
     filterButton=true
     filterText=filter
     filterByAnyMatch=(action 'filterByAnyMatch')
@@ -24,4 +30,4 @@
     nextPage=(action "nextPage")
     colsConfigButton=false
   }}
-</form>
+</div>

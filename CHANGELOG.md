@@ -11,14 +11,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * Added support `flexberry-lookup` in dropdown mode for mobile.
-
-### Added
-FlexberryObjectlistviewComponent:
-* Add filter by attribute number type.
-* Add filter by attribute master type.
-* Add `predicateForAttribute` function for customization filter.
+* FlexberryObjectlistview component:
+    * Add filter by attribute number type.
+    * Add filter by attribute master type.
+    * Add `predicateForAttribute` function for customization filter.
+    * Add filter for each columns.
 
 ### Fixed
+* Fixed select from `flexberry-lookup` in dropdown mode.
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.
 * Fixed blueprints dependency for generation of application prototype for hide the sidebar with sitemap after click on sitemap-node.

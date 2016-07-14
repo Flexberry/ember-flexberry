@@ -46,7 +46,8 @@ export default Ember.Mixin.create({
       page: undefined,
       sorting: undefined,
       filter: undefined,
-      predicate: undefined
+      filters: undefined,
+      predicate: undefined,
     }, options);
 
     let modelName = reloadOptions.modelName;
@@ -64,6 +65,15 @@ export default Ember.Mixin.create({
     let limitPredicate = reloadOptions.predicate;
     if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
       throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
+    }
+
+    let filtersPredicate = reloadOptions.filters;
+    if (filtersPredicate && !(filtersPredicate instanceof BasePredicate)) {
+      throw new Error('Incorrect filters. It has to be instance of BasePredicate.');
+    }
+
+    if (filtersPredicate) {
+      limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, filtersPredicate) : filtersPredicate;
     }
 
     let perPage = reloadOptions.perPage;

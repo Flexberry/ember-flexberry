@@ -240,7 +240,7 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     refresh() {
-      this.get('modelController').send('refreshList');
+      this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
     /**

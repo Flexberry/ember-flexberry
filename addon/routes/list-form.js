@@ -61,6 +61,7 @@ export default ProjectedModelFormRoute.extend(
     let modelName = this.get('modelName');
     let moduleName = transition.targetName;
     let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
+    let filtersPredicate = this._filtersPredicate();
     let limitPredicate =
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
     let userSettingPromise = this.get('userSettingsService').getUserSettings({ moduleName: moduleName })  //get sorting parameters from DEFAULT userSettings
@@ -92,7 +93,8 @@ export default ProjectedModelFormRoute.extend(
           page: params.page,
           sorting: sorting, // TODO: there can be some problems.
           filter: params.filter,
-          predicate: limitPredicate
+          filters: filtersPredicate,
+          predicate: limitPredicate,
         };
 
         // Find by query is always fetching.

@@ -11,7 +11,17 @@ export default Ember.Controller.extend({
     @type String
    */
   placeholder: t('components.flexberry-dropdown.placeholder'),
+  /**
+    Handles changes in placeholder.
 
+    @method _placeholderChanged
+    @private
+   */
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-dropdown.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-dropdown.placeholder'));
+    }
+  }),
   /**
     Flag: indicates whether 'flexberry-dropdown' component is in 'readonly' mode or not.
 

@@ -10,6 +10,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed select from `flexberry-lookup` in dropdown mode.
 
 ### Added
+* Blueprints
+    * Add regeneration for models and serializers.
 * Added support `flexberry-lookup` in dropdown mode for mobile.
 * FlexberryObjectlistview component:
     * Add filter by attribute number type.

@@ -28,21 +28,27 @@ var ElapsedTime = (function () {
         this.elapsedTimeSec = (Date.now() - startTime) / 1000;
     }
     ElapsedTime.print = function () {
-        var formatter = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1 });
         var total = 0;
         console.log("Ellapsed time:");
         for (var _i = 0, _a = ElapsedTime.groups; _i < _a.length; _i++) {
             var group = _a[_i];
-            console.log(group.caption + ": " + formatter.format(group.elapsedTimeSec) + " sec");
+            console.log(group.caption + ": " + ElapsedTime.format(group.elapsedTimeSec));
             total += group.elapsedTimeSec;
         }
-        console.log("Total: " + formatter.format(total) + " sec");
+        console.log("Total: " + ElapsedTime.format(total));
+    };
+    ElapsedTime.format = function (sec) {
+        var hours = Math.floor(sec / 3600);
+        var min = Math.floor((sec - hours * 3600) / 60);
+        var sec2 = sec - hours * 3600 - min * 60;
+        return ElapsedTime.formatter.format(hours) + ":" + ElapsedTime.formatter.format(min) + ":" + ElapsedTime.formatter.format(sec2);
     };
     ElapsedTime.add = function (caption, startTime) {
         ElapsedTime.groups.push(new ElapsedTime(caption, startTime));
         return Date.now();
     };
     ElapsedTime.groups = [];
+    ElapsedTime.formatter = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 0 });
     return ElapsedTime;
 }());
 var ApplicationBlueprint = (function () {
@@ -100,6 +106,8 @@ var ApplicationBlueprint = (function () {
             var name_3 = path.parse(file).name;
             if (!this.fileExists("app/models/" + name_3 + ".js"))
                 this.execCommand("ember generate " + blueprintName + "-init " + name_3 + " --metadata-dir=" + this.metadataDir);
+            if (!this.fileExists("app/serializers/" + name_3 + ".js"))
+                this.execCommand("ember generate flexberry-serializer-init " + name_3 + " --metadata-dir=" + this.metadataDir);
             this.execCommand("ember generate " + blueprintName + " " + name_3 + " --metadata-dir=" + this.metadataDir);
         }
     };

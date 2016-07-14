@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   sitemap: Ember.computed('i18n.locale', function () {
-    let i18n = this.get('i18n');
+    // let i18n = this.get('i18n');
 
     return {
       nodes: [
@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
           ]
         }
       ]
-    }
+    };
   }),
   actions: {
     toggleSidebar() {

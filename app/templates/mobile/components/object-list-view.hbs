@@ -28,15 +28,7 @@
     {{#if showFilters}}
       <tr>
         <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
-          <div class="object-list-view-helper-column-cell">
-            {{#if filters}}
-              <div class="cell">
-                <button class="ui icon button" {{action resetFilters}}>
-                  <i class="remove icon"></i>
-                </button>
-              </div>
-            {{/if}}
-          </div>
+          <div class="object-list-view-helper-column-cell"></div>
         </td>
         <td>
           {{#each columns as |column|}}

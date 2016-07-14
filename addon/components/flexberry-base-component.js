@@ -150,7 +150,11 @@ export default Ember.Component.extend({
     // Initialize properties for dynamicly-rendered component.
     for (let propertyName in dynamicProperties) {
       if (dynamicProperties.hasOwnProperty(propertyName)) {
-        this.set(propertyName, dynamicProperties[propertyName]);
+        if (propertyName === 'class' && this.get('tagName') !== '') {
+          this.set('classNames', this.get('classNames').concat(dynamicProperties[propertyName].split(' ')));
+        } else {
+          this.set(propertyName, dynamicProperties[propertyName]);
+        }
       }
     }
   },

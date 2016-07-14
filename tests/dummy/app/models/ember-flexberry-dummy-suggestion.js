@@ -100,9 +100,7 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
     file: Proj.attr('File')
   }),
   userVotes: Proj.hasMany('ember-flexberry-dummy-vote', 'User votes', {
-    voteType: Proj.attr('Vote type', {
-      locale: 'models.ember-flexberry-dummy-suggestion.projections.SuggestionE.userVotes.voteType.caption'
-    }),
+    voteType: Proj.attr('Vote type'),
     applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
       name: Proj.attr('Name', {
         hidden: true
@@ -127,9 +125,7 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
 
 // List form projection.
 Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
-  address: Proj.attr('Address', {
-    locale: 'models.ember-flexberry-dummy-suggestion.projections.SuggestionL.address.caption'
-  }),
+  address: Proj.attr('Address'),
   text: Proj.attr('Text'),
   date: Proj.attr('Date'),
   votes: Proj.attr('Votes'),

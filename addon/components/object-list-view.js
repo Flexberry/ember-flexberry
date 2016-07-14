@@ -98,6 +98,15 @@ export default FlexberryBaseComponent.extend(
   }),
 
   /**
+    Main model projection. Accepts object projections.
+    Needs for support locales of captions.
+
+    @property mainModelProjection
+    @type Object
+  */
+  mainModelProjection: undefined,
+
+  /**
     Default classes for component wrapper.
   */
   classNames: ['object-list-view-container'],
@@ -357,6 +366,7 @@ export default FlexberryBaseComponent.extend(
   columns: Ember.computed('modelProjection', function() {
     let ret;
     let projection = this.get('modelProjection');
+
     if (!projection) {
       Ember.Logger.error('Property \'modelProjection\' is undefined.');
       return [];
@@ -752,15 +762,15 @@ export default FlexberryBaseComponent.extend(
 
       @method actions.headerCellClick
       @public
-      @param {} column
-      @param {jQuery.Event} e jQuery.Event by click on colomn
+      @param {Object} column
+      @param {jQuery.Event} e jQuery.Event by click on column
     */
     headerCellClick(column, e) {
       if (!this.headerClickable || column.sortable === false) {
         return;
       }
 
-      let action = event.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
+      let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
     },
 
@@ -1206,6 +1216,34 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
+    Create the key from locales.
+  */
+  _createKey(attrName) {
+    let projection = this.get('modelProjection');
+    let modelName = projection.modelName;
+    let modelClass = this.get('store').modelFor(modelName);
+    let nameRelationship;
+    let mainModelName;
+    let key;
+
+    modelClass.eachRelationship(function(name, descriptor) {
+      if (descriptor.kind === 'belongsTo' && descriptor.options.inverse) {
+        nameRelationship = descriptor.options.inverse;
+        mainModelName = descriptor.type;
+      }
+    });
+
+    let mainModelProjection = this.get('mainModelProjection');
+    if (mainModelProjection) {
+      key = 'models.' + mainModelName + '.projections.' + mainModelProjection.projectionName + '.' + nameRelationship + '.' + attrName + '.caption';
+    } else {
+      key = 'models.' + modelName + '.projections.' + projection.projectionName + '.' + attrName + '.caption';
+    }
+
+    return key;
+  },
+
+  /**
     Create the column.
 
     @method _createColumn
@@ -1218,7 +1256,6 @@ export default FlexberryBaseComponent.extend(
     // if controller's 'getCellComponent' method call its super method from the base controller.
     let currentController = this.get('currentController');
     let projection = this.get('modelProjection');
-
     let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
     let cellComponent = this.get('cellComponent');
 
@@ -1227,8 +1264,10 @@ export default FlexberryBaseComponent.extend(
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 
+    let key = this._createKey(attrName);
+
     let column = {
-      header: getProjectionAttrCaption(this.get('i18n'), projection, attrName),
+      header: getProjectionAttrCaption(this.get('i18n'), projection, attrName, key),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
     };

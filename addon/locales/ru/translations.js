@@ -116,7 +116,10 @@ export default {
       'edit-setting-title': 'Редактировать',
       'remove-setting-title': 'Удалить',
       'set-default-setting-title': 'Установка по умолчанию',
-      'show-default-setting-title': 'Показать установки'
+      'show-default-setting-title': 'Показать установки',
+      'show-setting-caption': 'Для установки данных настроек по умолчнанию Вы можете их скопировать и инициализировать переменную developerUserSettings в /app/routes/',
+      'close': 'Закрыть',
+      'copy': 'Копировать'
     },
 
     'colsconfig-dialog-content': {

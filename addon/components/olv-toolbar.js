@@ -248,6 +248,67 @@ export default FlexberryBaseComponent.extend({
     @type String
   */
   filterByAnyMatchText: Ember.computed.oneWay('filterText'),
+    /**
+    Caption to be displayed in info modal dialog.
+    It will be displayed only if some info occurs.
+
+    @property _infoModalDialogCaption
+    @type String
+    @default ''
+    @private
+  */
+  _infoModalDialogCaption: '',
+
+  /**
+    Content to be displayed in info modal dialog.
+    It will be displayed only if some info occurs.
+
+    @property _infoModalDialogContent
+    @type String
+    @default ''
+    @private
+  */
+  _infoModalDialogContent: '',
+
+  /**
+    Selected jQuery object, containing HTML of error modal dialog.
+
+    @property _errorModalDialog
+    @type <a href="http://api.jquery.com/Types/#jQuery">JQueryObject</a>
+    @default null
+    @private
+  */
+  _infoModalDialog: null,
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    // Initialize SemanticUI modal dialog, and remember it in a component property,
+    // because after call to infoModalDialog.modal its html will disappear from DOM.
+    let infoModalDialog = this.$('.olv-toolbar-info-modal-dialog');
+    infoModalDialog.modal('setting', 'closable', true);
+    this.set('_infoModalDialog', infoModalDialog);
+  },
+
+  /**
+   * Shows info modal dialog.
+   *
+   * @method showInfoModalDialog
+   * @param {String} infoCaption Info caption (window header caption).
+   * @param {String} infoContent Info content (window body content).
+   * @returns {String} Info content.
+   */
+  showInfoModalDialog(infoCaption, infoContent) {
+    let infoModalDialog = this.get('_infoModalDialog');
+    if (infoModalDialog && infoModalDialog.modal) {
+      this.set('_infoModalDialogCaption', infoCaption);
+      this.set('_infoModalDialogContent', infoContent);
+      infoModalDialog.modal('show');
+    }
+
+    return infoContent;
+  },
+
 
   actions: {
     /**
@@ -392,9 +453,14 @@ export default FlexberryBaseComponent.extend({
           break;
         case 'unhide icon':
           let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
-          confirm(JSON.stringify(currentUserSetting));
+          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
+          this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
           break;
       }
+    },
+
+    copyJSONContent() {
+      alert('Copy');
     }
   },
 

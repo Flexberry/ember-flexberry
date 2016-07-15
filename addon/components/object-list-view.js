@@ -7,6 +7,7 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
+import { getValueFromLocales } from '../utils/model-functions';
 
 /**
   Object list view component.
@@ -86,6 +87,15 @@ export default FlexberryBaseComponent.extend(
       return value;
     },
   }),
+
+  /**
+    Main model projection. Accepts object projections.
+    Needs for support locales of captions.
+
+    @property mainModelProjection
+    @type Object
+  */
+  mainModelProjection: undefined,
 
   /**
     Default classes for component wrapper.
@@ -355,6 +365,7 @@ export default FlexberryBaseComponent.extend(
   columns: Ember.computed('modelProjection', 'enableFilters', function() {
     let ret;
     let projection = this.get('modelProjection');
+
     if (!projection) {
       Ember.Logger.error('Property \'modelProjection\' is undefined.');
       return [];
@@ -367,7 +378,7 @@ export default FlexberryBaseComponent.extend(
       return cols;
     }
 
-    var userSettings = this.currentController ? this.currentController.userSettings : undefined;
+    let userSettings = this.currentController ? this.currentController.userSettings : undefined;
     if (userSettings && userSettings.colsOrder !== undefined) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {
@@ -683,14 +694,14 @@ export default FlexberryBaseComponent.extend(
       @method actions.headerCellClick
       @public
       @param {Object} column
-      @param {jQuery.Event} event jQuery.Event by click on column.
+      @param {jQuery.Event} e jQuery.Event by click on column.
     */
-    headerCellClick(column, event) {
+    headerCellClick(column, e) {
       if (!this.headerClickable || column.sortable === false) {
         return;
       }
 
-      let action = event.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
+      let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
     },
 
@@ -1101,7 +1112,7 @@ export default FlexberryBaseComponent.extend(
         case 'belongsTo':
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
-            let column = this._createColumn(attr, bindingPath);
+            let column = this._createColumn(attr, attrName, bindingPath);
 
             if (column.cellComponent.componentName === 'object-list-view-cell') {
               if (attr.options.displayMemberPath) {
@@ -1124,7 +1135,7 @@ export default FlexberryBaseComponent.extend(
           }
 
           let bindingPath = currentRelationshipPath + attrName;
-          let column = this._createColumn(attr, bindingPath);
+          let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
 
@@ -1137,12 +1148,40 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
+    Create the key from locales.
+  */
+  _createKey(bindingPath) {
+    let projection = this.get('modelProjection');
+    let modelName = projection.modelName;
+    let key;
+
+    let mainModelProjection = this.get('mainModelProjection');
+    if (mainModelProjection) {
+      let modelClass = this.get('store').modelFor(modelName);
+      let nameRelationship;
+      let mainModelName;
+
+      modelClass.eachRelationship(function(name, descriptor) {
+        if (descriptor.kind === 'belongsTo' && descriptor.options.inverse) {
+          nameRelationship = descriptor.options.inverse;
+          mainModelName = descriptor.type;
+        }
+      });
+      key = 'models.' + mainModelName + '.projections.' + mainModelProjection.projectionName + '.' + nameRelationship + '.' + bindingPath + '.caption';
+    } else {
+      key = 'models.' + modelName + '.projections.' + projection.projectionName + '.' + bindingPath + '.caption';
+    }
+
+    return key;
+  },
+
+  /**
     Create the column.
 
     @method _createColumn
     @private
   */
-  _createColumn(attr, bindingPath) {
+  _createColumn(attr, attrName, bindingPath) {
     // We get the 'getCellComponent' function directly from the controller,
     // and do not pass this function as a component attrubute,
     // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
@@ -1156,8 +1195,10 @@ export default FlexberryBaseComponent.extend(
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 
+    let key = this._createKey(bindingPath);
+
     let column = {
-      header: attr.caption,
+      header: getValueFromLocales(this.get('i18n'), key) || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
     };

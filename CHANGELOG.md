@@ -18,6 +18,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add filter by attribute master type.
     * Add `predicateForAttribute` function for customization filter.
     * Add filter for each columns.
+* ObjectlistviewComponent:
+    * Add support locales for captions models of projection.
+* ModelFunctions:
+    * Add `getValueFromLocales` function.
 
 ### Fixed
 * Fixed select from `flexberry-lookup` in dropdown mode.

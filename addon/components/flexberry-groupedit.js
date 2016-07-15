@@ -191,6 +191,15 @@ export default FlexberryBaseComponent.extend({
   modelProjection: null,
 
   /**
+    Main model projection. Accepts object projections.
+    Needs for support locales of captions.
+
+    @property mainModelProjection
+    @type Object
+  */
+  mainModelProjection: undefined,
+
+  /**
     Flag: indicates whether ordering by clicking on column headers is allowed.
 
     @example

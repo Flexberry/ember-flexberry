@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.
 * Fixed blueprints dependency for generation of application prototype for hide the sidebar with sitemap after click on sitemap-node.
 * Fixed `flexberry-menu` for configuration of columns settings in `flexberry-objectlistview` component after changing current locale for internationalization to another language and back again.
+* Now `displayAttributeName` is required for only autocomplete and dropdown modes in `flexberry-lookup`.
 
 ### Known issues
 * TransitionAborted error get thrown when adding query params (callback is called once for each query param you set to refreshModel: true).

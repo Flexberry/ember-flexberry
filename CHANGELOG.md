@@ -17,7 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
       * defined by developer;
       * defined by users and stored in usersetting's backend;
       * temporary settings defined by users specified in the URL-parameters (sort, etc...).
-    * Support user setting service for developer. After adjasting component developer can display current settings and save them in proporty developerUserSettings of app/routes/{{pageRouteName}}.js as default settings.
+    * Support user setting service for developer. After adjasting component developer can display current default and named settings and save them in proporty developerUserSettings of app/routes/{{pageRouteName}}.js as default settings.
 
 ## [Unreleased]
 ### Added

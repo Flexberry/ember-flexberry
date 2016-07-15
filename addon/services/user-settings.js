@@ -78,7 +78,6 @@ export default Ember.Service.extend({
     */
   beforeParamUserSettings:{},
 
-
   /**
     Current user settings for all pages
 
@@ -150,6 +149,19 @@ export default Ember.Service.extend({
     @param {Object} developerUserSettings.
    */
   setDeveloperUserSettings(developerUserSettings) {
+    for (let componentName in developerUserSettings) {
+      let componentSettings = developerUserSettings[componentName];
+      for (let settingName in componentSettings) {
+        if (!('sorting' in componentSettings[settingName])) {
+          componentSettings[settingName].sorting = [];
+        }
+      }
+
+      if (!(defaultSettingName in componentSettings)) {
+        componentSettings[defaultSettingName] = { sorting: [] };
+      }
+    }
+
     let appPage = this.currentAppPage;
     if (!(appPage  in this.currentUserSettings)) {
       this.currentUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
@@ -195,12 +207,15 @@ export default Ember.Service.extend({
    @param {Object} params.
    */
   setCurrentParams(componentName, params) {
+    let appPage = this.currentAppPage;
+    let sorting;
     if ('sort' in params && params.sort) {
-      let sorting = this._deserializeSortingParam(params.sort);
-      this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName].sorting = sorting;
+      sorting = this._deserializeSortingParam(params.sort);
     } else {
-      this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName].sorting = this.beforeParamUserSettings[this.currentAppPage][componentName][defaultSettingName].sorting;
+      sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
     }
+
+    this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
   },
 
   /**
@@ -250,7 +265,6 @@ export default Ember.Service.extend({
 
     return ret;
   },
-
 
   /**
    Returns current userSetting.
@@ -365,7 +379,7 @@ export default Ember.Service.extend({
     if (appPage in this.developerUserSettings &&
       componentName in this.developerUserSettings[appPage] &&
       settingName in this.developerUserSettings[appPage][componentName]) {
-        this.currentUserSettings[appPage][componentName][settingName] = this.developerUserSettings[appPage][componentName][settingName];
+      this.currentUserSettings[appPage][componentName][settingName] = this.developerUserSettings[appPage][componentName][settingName];
     } else {
       if (settingName in this.currentUserSettings[appPage][componentName]) {
         delete this.currentUserSettings[appPage][componentName][settingName];
@@ -529,6 +543,7 @@ export default Ember.Service.extend({
     for (let componentName in appPageUserSettings) {
       this.currentUserSettings[appPage][componentName] = appPageUserSettings[componentName];
     }
+
     this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
     return this.currentUserSettings[appPage];
   },

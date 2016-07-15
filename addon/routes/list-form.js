@@ -73,11 +73,14 @@ export default ProjectedModelFormRoute.extend(
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
+    let listComponentNames = userSettingsService.getListComponentNames();
+    let nComponents = listComponentNames.length;
+    Ember.assert('list-form must contain single component. ' + nComponents + ' defined.' +
+        ' Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js',
+      nComponents === 1);
+    let componentName = listComponentNames[0];
     let ret = userSettingPromise
       .then(currectPageUserSettings => {
-        let listComponentNames = userSettingsService.getListComponentNames();
-        Ember.assert('list-form must contain single component', listComponentNames.length === 1);
-        let componentName = listComponentNames[0];
         if (params) {
           userSettingsService.setCurrentParams(componentName, params);
         }

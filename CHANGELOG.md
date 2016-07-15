@@ -7,17 +7,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Full refactoring user setting service (see more details below):
     * User setting service support in-memory saving the settings of all ObjectListView components for all pages. This allows:
       * maintain user setting service on mode APP.useUserSettingsService: false without saving them to backend;
-      * to store and appy (in future) settings to muptiple components on a page;
-      * store an unlimited number of settings (default and unlimited named) for each ObjectListVire component;
-      * store (define) all the information on defaut or named setting (columns order, sorting order, solumns width) in single object (backend record);
+      * store and appy (in future) settings to muptiple components on a page;
+      * store an unlimited number of settings (default and unlimited named) for each ObjectListView component;
+      * store (define) all the information on defaut or named setting (columns order, sorting order, solumns width) in single object (property, backend record);
       * customize the column widths manually by mouse or by specifying digital values;
       * enable or disable the settings column widths;
-      * avoid repated access to the backends's usersetting service when you return to the already loaded page.
+      * avoid repated access to the backend's usersetting service when you return to the already loaded page.
     * Support three levels of setting:
       * defined by developer;
       * defined by users and stored in usersetting's backend;
-      * temporary settings specified in the URL-parameters (sort, etc...).
-    * Support user setting service for developer. After adjasting component developer can display current settings and save them in proporty developerUserSettings of app/routes/<pageRouteName>.js as default settings.
+      * temporary settings defined by users specified in the URL-parameters (sort, etc...).
+    * Support user setting service for developer. After adjasting component developer can display current settings and save them in proporty developerUserSettings of app/routes/{{pageRouteName}}.js as default settings.
 
 ## [Unreleased]
 ### Added

@@ -629,8 +629,6 @@ export default FlexberryBaseComponent.extend(
   */
   componentName: '',
 
-
-
   actions: {
     /**
       This action is called when user click on row.

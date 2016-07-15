@@ -11,7 +11,7 @@ import Ember from 'ember';
  * @public
  */
 export default Ember.Service.extend(Ember.Evented, {
-      /**
+    /**
     Current application environment.
 
       @property environment

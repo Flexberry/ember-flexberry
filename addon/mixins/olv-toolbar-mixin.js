@@ -6,12 +6,6 @@ export default Ember.Mixin.create({
 
   actions: {
     showConfigDialog: function(componentName, settingName) {
-//       if (!this.get('_userSettingsService').isUserSettingsServiceEnabled) {
-//         alert('Реконфигурация отображения столбцов невозможна. Сервис пользовательских настроек выключен.');
-//         return;
-//       }
-//       let listUserSettings = this.model.listUserSettings;
-//       let userSettings = settingName !== undefined && settingName in listUserSettings ? listUserSettings[settingName] :  this.model.userSettings;
       let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
       let columnWidths = this.get('userSettingsService').getCurrentColumnWidths(componentName, settingName);
@@ -68,6 +62,7 @@ export default Ember.Mixin.create({
         } else {
           colDesc.sortOrder = 0;
         }
+
         if (propName in namedColWidth) {
           colDesc.columnWidth = namedColWidth[propName];
         }

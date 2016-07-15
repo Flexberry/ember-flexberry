@@ -51,7 +51,7 @@ export default Ember.Mixin.create({
       let namedColWidth = {};
       for (let i = 0; i < columnWidths.length; i++) {
         colDesc = columnWidths[i];
-        propName = colDesc.propertyName;
+        propName = colDesc.propName;
         namedColWidth[propName] = colDesc.width;
       }
 

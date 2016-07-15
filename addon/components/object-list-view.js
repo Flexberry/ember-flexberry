@@ -967,17 +967,17 @@ export default FlexberryBaseComponent.extend(
     let hashedUserSetting = {};
     userSetting.forEach(item => {
       let userColumnInfo = Ember.merge({
-        propertyName: undefined,
+        propName: undefined,
         width: undefined
       }, item);
 
-      let propertyName = userColumnInfo.propertyName;
+      let propName = userColumnInfo.propName;
       let width = userColumnInfo.width;
 
-      Ember.assert('Property name is not defined at saved user setting.', propertyName);
+      Ember.assert('Property name is not defined at saved user setting.', propName);
       Ember.assert('Column width is not defined at saved user setting.', width);
 
-      hashedUserSetting[propertyName] = width;
+      hashedUserSetting[propName] = width;
     });
 
     let $columns = this.$('table.object-list-view').find('th');
@@ -1018,7 +1018,7 @@ export default FlexberryBaseComponent.extend(
       currentColumnWidth = Math.round(currentColumnWidth);
 
       userWidthSettings.push({
-        propertyName: currentPropertyName,
+        propName: currentPropertyName,
         width: currentColumnWidth,
       });
     });

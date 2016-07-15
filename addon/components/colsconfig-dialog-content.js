@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 const { getOwner } = Ember;
+const _idPrefix = 'ColDesc';
 
 /**
  * Columns configuration dialog Content component.
@@ -9,22 +10,49 @@ const { getOwner } = Ember;
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
-  _idPrefix: 'ColDesc',
+  /**
+   Columns configiration menu.
+
+   @property colsConfigMenu
+   @type {Class}
+   @default Ember.inject.service()
+   */
   colsConfigMenu: Ember.inject.service(),
-  _router: undefined,
 
   /**
-   * model with
-   *
-   * @property modelForDOM
-   * @type Object[]
-   * @default 'APP.components.flexberryCheckbox'
+   Model with added DOM elements.
+
+   @property modelForDOM
+   @type {Object}
+   @default '[]'
    */
   modelForDOM: [],
+
+  /**
+   *   ObjectListView component name.
+   *
+   *   @property componentName
+   *   @type {String}
+   *   @default ''
+   */
   componentName: '',
+
+  /**
+   *   ObjectListView setting name.
+   *
+   *   @property settingName
+   *   @type {String}
+   *   @default ''
+   */
   settingName: '',
-  colsConfig: [],
-  changed: false,
+
+  /**
+   Flag. If true, store columns width.
+
+   @property saveColWidthState
+   @type {Boolean}
+   @default false
+   */
   saveColWidthState: false,
 
   init: function() {
@@ -54,13 +82,13 @@ export default FlexberryBaseComponent.extend({
         this.saveColWidthState =true;
       }
 
-      colDesc.trId = this._idPrefix + 'TR_' + i;
-      colDesc.hideId = this._idPrefix + 'Hide_' + i;
-      colDesc.sortOrderId = this._idPrefix + 'SortOrder_' + i;
-      colDesc.sortPriorityId = this._idPrefix + 'SortPriority_' + i;
-      colDesc.columnWidthId = this._idPrefix + 'ColumnWidth_' + i;
-      colDesc.rowUpId = this._idPrefix + 'RowUp_' + i;
-      colDesc.rowDownId = this._idPrefix + 'RowDown_' + i;
+      colDesc.trId = _idPrefix + 'TR_' + i;
+      colDesc.hideId = _idPrefix + 'Hide_' + i;
+      colDesc.sortOrderId = _idPrefix + 'SortOrder_' + i;
+      colDesc.sortPriorityId = _idPrefix + 'SortPriority_' + i;
+      colDesc.columnWidthId = _idPrefix + 'ColumnWidth_' + i;
+      colDesc.rowUpId = _idPrefix + 'RowUp_' + i;
+      colDesc.rowDownId = _idPrefix + 'RowDown_' + i;
       this.modelForDOM[i] = colDesc;
     }
   },
@@ -74,10 +102,10 @@ export default FlexberryBaseComponent.extend({
 
   actions: {
     /**
-     * Invert column visibility (On/Off)
-     *
-     * @method actions.invertVisibility
-     * @param {Int} n  column number (id suffix)
+     Invert column visibility (On/Off)
+
+     @method actions.invertVisibility
+     @param {Int} n  column number (id suffix)
      */
     invertVisibility: function(n) {
       let element = this._getEventElement('Hide', n); // clicked DOM-element
@@ -95,10 +123,10 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-     * Set sort order for column: descending ascending, none) and eneble/disable sort priority
-     *
-     * @method actions.setSortOrder
-     * @param {Int} n  column number (id suffix)
+     Set sort order for column: descending ascending, none) and eneble/disable sort priority
+
+     @method actions.setSortOrder
+     @param {Int} n  column number (id suffix)
      */
     setSortOrder: function(n) {
       let select = this._getEventElement('SortOrder', n); // changed select DOM-element
@@ -136,10 +164,10 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-     * Set sort priority for column
-     *
-     * @method actions.setSortPriority
-     * @param {Int} n  column number (id suffix)
+     Set sort priority for column
+
+     @method actions.setSortPriority
+     @param {Int} n  column number (id suffix)
      */
     setSortPriority: function(n) {
       let eventInput = this._getEventElement('SortPriority', n);  // changed input DOM-element
@@ -192,10 +220,10 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-     * Increase column in list (exchange previous column)
-     *
-     * @method actions.rowUp
-     * @param {Int} n  column number (id suffix)
+     Increase column in list (exchange previous column)
+
+     @method actions.rowUp
+     @param {Int} n  column number (id suffix)
      */
     rowUp: function(n) {
       let eventButton = this._getEventElement('RowUp', n);
@@ -225,10 +253,10 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-     * Decrease column in list (exchange  next column)
-     *
-     * @method actions.rowDown
-     * @param {Int} n  column number (id suffix)
+     Decrease column in list (exchange  next column)
+
+     @method actions.rowDown
+     @param {Int} n  column number (id suffix)
      */
     rowDown: function(n) {
       let eventButton = this._getEventElement('RowDown', n);
@@ -261,9 +289,9 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-     * Apply settings specified in the interface as DEFAULT values
-     *
-     * @method actions.apply
+     Apply settings specified in the interface as DEFAULT values
+
+     @method actions.apply
      */
     apply: function() {
       let colsConfig = this._getSettings();
@@ -273,39 +301,37 @@ export default FlexberryBaseComponent.extend({
       }
 
       //Save colsConfig in userSettings as DEFAULT
-      this._router = getOwner(this).lookup('router:main');
+      let router = getOwner(this).lookup('router:main');
       let savePromise = this._getSavePromise(undefined, colsConfig);
       savePromise.then(
         record => {
-          if (this._router.location.location.hash.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+          if (router.location.location.hash.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
           } else {
-            this._router.router.refresh();  //Reload current page and records (model) list
+            router.router.refresh();  //Reload current page and records (model) list
           }
         }
       );
       this.sendAction('close', colsConfig); // close modal window
     },
     /**
-     * Save named settings specified in the interface as named values
-     *
-     * @method actions.saveColsSetting
+     Save named settings specified in the interface as named values
+
+     @method actions.saveColsSetting
      */
     saveColsSetting: function() {
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
-      Ember.set(this, 'settingName', settingName);
-      if (this.settingName.length <= 0) {
+      if (settingName.length <= 0) {
         alert('Введите название настройки');
         return;
       }
 
-      this.colsConfig = this._getSettings();
-      let savePromise = this._getSavePromise(this.settingName, this.colsConfig);
+      let colsConfig = this._getSettings();
+      let savePromise = this._getSavePromise(settingName, colsConfig);
+      this.get('colsConfigMenu').addNamedSettingTrigger(settingName);
       savePromise.then(
         record => {
-//           Ember.set(this.model.listUserSettings, this.settingName, this.colsConfig);
-          this.get('colsConfigMenu').addNamedSettingTrigger(this.settingName);
-          alert('Настройка ' + this.settingName + ' сохранена');
+          alert('Настройка ' + settingName + ' сохранена');
           Ember.$('#columnConfigurtionButtonUse')[0].className += ' disabled';
           Ember.$('#columnConfigurtionButtonSave')[0].className += ' disabled';
         },
@@ -316,9 +342,9 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-     * Column width is changed
-     *
-     * @method actions.widthChanged
+     Column width is changed
+
+     @method actions.widthChanged
      */
     widthChanged: function() {
       this._changed();
@@ -350,7 +376,7 @@ export default FlexberryBaseComponent.extend({
         let colWidthElement = this._getEventElement('ColumnWidth',index);
         let width = parseInt(colWidthElement.value,10);
         if (width !== isNaN && width >=0) {
-          widthSetting[widthSetting.length] = { propertyName: colDesc.propName, width: width };
+          widthSetting[widthSetting.length] = { propName: colDesc.propName, width: width };
         }
       }
     }
@@ -375,13 +401,12 @@ export default FlexberryBaseComponent.extend({
   },
 
   _getEventElement: function (prefix, n) {
-    let id = '#' + this._idPrefix + prefix + '_' + n;
+    let id = '#' + _idPrefix + prefix + '_' + n;
     let ret = Ember.$.find(id)[0];
     return ret;
   },
 
   _changed: function() {
-    this.changed = true;
     Ember.$('#columnConfigurtionButtonUse')[0].className = Ember.$('#columnConfigurtionButtonUse')[0].className.replace('disabled', '');
     Ember.$('#columnConfigurtionButtonSave')[0].className = Ember.$('#columnConfigurtionButtonSave')[0].className.replace('disabled', '');
   }

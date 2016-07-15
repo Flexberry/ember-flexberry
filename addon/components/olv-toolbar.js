@@ -198,11 +198,6 @@ export default FlexberryBaseComponent.extend({
   colsConfigMenu: Ember.inject.service(),
 
   /**
-   @ property listNamedSettings*
-  */
-  listNamedSettings: null,
-
-  /**
     @property colsSettingsItems
     @readOnly
   */
@@ -213,7 +208,7 @@ export default FlexberryBaseComponent.extend({
     'useSettitingTitle',
     'editSettitingTitle',
     'removeSettitingTitle',
-    'listNamedSettings',
+    'listNamedUserSettings',
     function() {
       let params = {
         createSettitingTitle: this.get('createSettitingTitle'),
@@ -222,7 +217,7 @@ export default FlexberryBaseComponent.extend({
         useSettitingTitle: this.get('useSettitingTitle'),
         editSettitingTitle: this.get('editSettitingTitle'),
         removeSettitingTitle: this.get('removeSettitingTitle'),
-        listNamedSettings: this.get('listNamedSettings'),
+        listNamedUserSettings: this.get('listNamedUserSettings'),
       };
 
       return this.get('userSettingsService').isUserSettingsServiceEnabled ?
@@ -291,12 +286,12 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Shows info modal dialog.
-   *
-   * @method showInfoModalDialog
-   * @param {String} infoCaption Info caption (window header caption).
-   * @param {String} infoContent Info content (window body content).
-   * @returns {String} Info content.
+   Shows info modal dialog.
+
+   @method showInfoModalDialog
+   @param {String} infoCaption Info caption (window header caption).
+   @param {String} infoContent Info content (window body content).
+   @returns {String} Info content.
    */
   showInfoModalDialog(infoCaption, infoContent) {
     let infoModalDialog = this.get('_infoModalDialog');
@@ -491,15 +486,7 @@ export default FlexberryBaseComponent.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-    let listNamedUserSettings = this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName);
-
-    this.listNamedUserSettings = listNamedUserSettings;
-    Ember.set(this, 'listNamedSettings', {});
-    if (listNamedUserSettings) {
-      for (let nameSetting in listNamedUserSettings) {
-        Ember.set(this.listNamedSettings, nameSetting, true);
-      }
-    }
+    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
   },
 
   /**
@@ -531,14 +518,10 @@ export default FlexberryBaseComponent.extend({
   },
 
   _addNamedSetting(namedSetting) {
-    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
-    listNamedSettings[namedSetting] = true;
-    Ember.set(this, 'listNamedSettings', listNamedSettings);
+    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
   },
 
   _deleteNamedSetting(namedSetting) {
-    let listNamedSettings = JSON.parse(JSON.stringify(this.listNamedSettings));
-    delete listNamedSettings[namedSetting];
-    Ember.set(this, 'listNamedSettings', listNamedSettings);
-  },
+    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+  }
 });

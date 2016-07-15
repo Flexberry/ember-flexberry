@@ -159,7 +159,7 @@ export default Ember.Service.extend({
   /**
    Implements current URL-params to currentUserSettings
 
-   @method setDeveloperUserSettings
+   @method setCurrentParams
    @param {Object} params.
    */
   setCurrentParams(params) {
@@ -327,7 +327,7 @@ export default Ember.Service.extend({
     if (appPage in this.developerUserSettings &&
       componentName in this.developerUserSettings[appPage] &&
       settingName in this.developerUserSettings[appPage][componentName]) {
-      this.currentUserSettings[appPage][componentName][settingName] = this.developerUserSettings[appPage][componentName][settingName];
+        this.currentUserSettings[appPage][componentName][settingName] = this.developerUserSettings[appPage][componentName][settingName];
     } else {
       if (settingName in this.currentUserSettings[appPage][componentName]) {
         delete this.currentUserSettings[appPage][componentName][settingName];

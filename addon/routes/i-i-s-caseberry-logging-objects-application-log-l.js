@@ -26,7 +26,7 @@ export default ListFormRoute.extend({
   <componentName>: {
     <settingName>: {
         colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
-        sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
+        sorting: [{ propName: <colName>, direction: 'asc'|'desc' }, ... ],
         colsWidths: [ <colName>:<colWidth>, ... ],
       },
       ...
@@ -42,250 +42,250 @@ export default ListFormRoute.extend({
   */
   developerUserSettings: { IISLoggingObjectListView:
     {
-      "DEFAULT": {
-        "colsOrder": [
+      'DEFAULT': {
+        'colsOrder': [
         {
-          "propName": "timestamp",
-          "hide": false
+          'propName': 'timestamp',
+          'hide': false
         },
         {
-          "propName": "category"
+          'propName': 'category'
         },
         {
-          "propName": "machineName"
+          'propName': 'machineName'
         },
         {
-          "propName": "appDomainName"
+          'propName': 'appDomainName'
         },
         {
-          "propName": "processId"
+          'propName': 'processId'
         },
         {
-          "propName": "message"
+          'propName': 'message'
         },
         {
-          "propName": "processName",
-          "hide": true
+          'propName': 'processName',
+          'hide': true
         },
         {
-          "propName": "formattedMessage",
-          "hide": true
+          'propName': 'formattedMessage',
+          'hide': true
         },
         {
-          "propName": "eventId",
-          "hide": true
+          'propName': 'eventId',
+          'hide': true
         },
         {
-          "propName": "priority",
-          "hide": true
+          'propName': 'priority',
+          'hide': true
         },
         {
-          "propName": "severity",
-          "hide": true
+          'propName': 'severity',
+          'hide': true
         },
         {
-          "propName": "title",
-          "hide": true
+          'propName': 'title',
+          'hide': true
         },
         {
-          "propName": "threadName",
-          "hide": true
+          'propName': 'threadName',
+          'hide': true
         },
         {
-          "propName": "win32ThreadId",
-          "hide": true
+          'propName': 'win32ThreadId',
+          'hide': true
         }
         ],
-        "sorting": [],
-        "columnWidths": [
+        'sorting': [],
+        'columnWidths': [
         {
-          "propName": "timestamp",
-          "width": 75
+          'propName': 'timestamp',
+          'width': 75
         },
         {
-          "propName": "category",
-          "width": 97
+          'propName': 'category',
+          'width': 97
         },
         {
-          "propName": "machineName",
-          "width": 119
+          'propName': 'machineName',
+          'width': 119
         },
         {
-          "propName": "appDomainName",
-          "width": 156
+          'propName': 'appDomainName',
+          'width': 156
         },
         {
-          "propName": "processId",
-          "width": 192
+          'propName': 'processId',
+          'width': 192
         },
         {
-          "propName": "message",
-          "width": 368
+          'propName': 'message',
+          'width': 368
         }
         ]
       },
-      "Message": {
-        "colsOrder": [
+      'Message': {
+        'colsOrder': [
         {
-          "propName": "timestamp",
-          "hide": false
+          'propName': 'timestamp',
+          'hide': false
         },
         {
-          "propName": "category"
+          'propName': 'category'
         },
         {
-          "propName": "machineName"
+          'propName': 'machineName'
         },
         {
-          "propName": "appDomainName"
+          'propName': 'appDomainName'
         },
         {
-          "propName": "processId"
+          'propName': 'processId'
         },
         {
-          "propName": "message"
+          'propName': 'message'
         },
         {
-          "propName": "processName",
-          "hide": true
+          'propName': 'processName',
+          'hide': true
         },
         {
-          "propName": "formattedMessage",
-          "hide": true
+          'propName': 'formattedMessage',
+          'hide': true
         },
         {
-          "propName": "eventId",
-          "hide": true
+          'propName': 'eventId',
+          'hide': true
         },
         {
-          "propName": "priority",
-          "hide": true
+          'propName': 'priority',
+          'hide': true
         },
         {
-          "propName": "severity",
-          "hide": true
+          'propName': 'severity',
+          'hide': true
         },
         {
-          "propName": "title",
-          "hide": true
+          'propName': 'title',
+          'hide': true
         },
         {
-          "propName": "threadName",
-          "hide": true
+          'propName': 'threadName',
+          'hide': true
         },
         {
-          "propName": "win32ThreadId",
-          "hide": true
+          'propName': 'win32ThreadId',
+          'hide': true
         }
         ],
-        "sorting": [],
-        "columnWidths": [
+        'sorting': [],
+        'columnWidths': [
         {
-          "propName": "timestamp",
-          "width": 75
+          'propName': 'timestamp',
+          'width': 75
         },
         {
-          "propName": "category",
-          "width": 97
+          'propName': 'category',
+          'width': 97
         },
         {
-          "propName": "machineName",
-          "width": 119
+          'propName': 'machineName',
+          'width': 119
         },
         {
-          "propName": "appDomainName",
-          "width": 156
+          'propName': 'appDomainName',
+          'width': 156
         },
         {
-          "propName": "processId",
-          "width": 192
+          'propName': 'processId',
+          'width': 192
         },
         {
-          "propName": "message",
-          "width": 368
+          'propName': 'message',
+          'width': 368
         }
         ]
       },
-      "FormattedMessage": {
-        "colsOrder": [
+      'FormattedMessage': {
+        'colsOrder': [
         {
-          "propName": "timestamp",
-          "hide": false
+          'propName': 'timestamp',
+          'hide': false
         },
         {
-          "propName": "category"
+          'propName': 'category'
         },
         {
-          "propName": "machineName"
+          'propName': 'machineName'
         },
         {
-          "propName": "appDomainName"
+          'propName': 'appDomainName'
         },
         {
-          "propName": "processId"
+          'propName': 'processId'
         },
         {
-          "propName": "formattedMessage",
-          "hide": false
+          'propName': 'formattedMessage',
+          'hide': false
         },
         {
-          "propName": "message",
-          "hide": true
+          'propName': 'message',
+          'hide': true
         },
         {
-          "propName": "processName",
-          "hide": true
+          'propName': 'processName',
+          'hide': true
         },
         {
-          "propName": "eventId",
-          "hide": true
+          'propName': 'eventId',
+          'hide': true
         },
         {
-          "propName": "priority",
-          "hide": true
+          'propName': 'priority',
+          'hide': true
         },
         {
-          "propName": "severity",
-          "hide": true
+          'propName': 'severity',
+          'hide': true
         },
         {
-          "propName": "title",
-          "hide": true
+          'propName': 'title',
+          'hide': true
         },
         {
-          "propName": "threadName",
-          "hide": true
+          'propName': 'threadName',
+          'hide': true
         },
         {
-          "propName": "win32ThreadId",
-          "hide": true
+          'propName': 'win32ThreadId',
+          'hide': true
         }
         ],
-        "sorting": [],
-        "columnWidths": [
+        'sorting': [],
+        'columnWidths': [
         {
-          "propName": "timestamp",
-          "width": 75
+          'propName': 'timestamp',
+          'width': 75
         },
         {
-          "propName": "category",
-          "width": 97
+          'propName': 'category',
+          'width': 97
         },
         {
-          "propName": "machineName",
-          "width": 119
+          'propName': 'machineName',
+          'width': 119
         },
         {
-          "propName": "appDomainName",
-          "width": 156
+          'propName': 'appDomainName',
+          'width': 156
         },
         {
-          "propName": "processId",
-          "width": 192
+          'propName': 'processId',
+          'width': 192
         },
         {
-          "propName": "message",
-          "width": 368
+          'propName': 'message',
+          'width': 368
         }
         ]
       }

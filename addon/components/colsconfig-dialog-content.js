@@ -79,7 +79,7 @@ export default FlexberryBaseComponent.extend({
       }
 
       if ('columnWidth' in colDesc) {
-        this.saveColWidthState =true;
+        this.saveColWidthState = true;
       }
 
       colDesc.trId = _idPrefix + 'TR_' + i;
@@ -372,10 +372,11 @@ export default FlexberryBaseComponent.extend({
       if (colDesc.sortPriority !== undefined) { // Sort priority defined
         sortSettings[sortSettings.length] = { propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority }; //Add sortSetting element
       }
+
       if (this.saveColWidthState) {
-        let colWidthElement = this._getEventElement('ColumnWidth',index);
-        let width = parseInt(colWidthElement.value,10);
-        if (width !== isNaN && width >=0) {
+        let colWidthElement = this._getEventElement('ColumnWidth', index);
+        let width = parseInt(colWidthElement.value, 10);
+        if (width !== isNaN && width >= 0) {
           widthSetting[widthSetting.length] = { propName: colDesc.propName, width: width };
         }
       }
@@ -392,6 +393,7 @@ export default FlexberryBaseComponent.extend({
     if (this.saveColWidthState) {
       colsConfig.columnWidths = widthSetting;
     }
+
     return colsConfig;
   },
 

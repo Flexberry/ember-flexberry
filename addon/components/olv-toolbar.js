@@ -243,7 +243,8 @@ export default FlexberryBaseComponent.extend({
     @type String
   */
   filterByAnyMatchText: Ember.computed.oneWay('filterText'),
-    /**
+
+  /**
     Caption to be displayed in info modal dialog.
     It will be displayed only if some info occurs.
 
@@ -300,12 +301,12 @@ export default FlexberryBaseComponent.extend({
       this.set('_infoModalDialogContent', infoContent);
       infoModalDialog.modal('show');
     }
+
     let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
     oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
     oLVToolbarInfoCopyButton.removeClass('disabled');
     return infoContent;
   },
-
 
   actions: {
     /**
@@ -460,7 +461,7 @@ export default FlexberryBaseComponent.extend({
       Ember.$('#OLVToolbarInfoContent').select();
       let copied = document.execCommand('copy');
       let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
-      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc') ;
+      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
       oLVToolbarInfoCopyButton.addClass('disabled');
     }
   },

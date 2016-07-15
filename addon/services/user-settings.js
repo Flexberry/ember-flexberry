@@ -149,7 +149,6 @@ export default Ember.Service.extend({
     @param {Object} developerUserSettings.
    */
   setDeveloperUserSettings(developerUserSettings) {
-    if (!)
     for (let componentName in developerUserSettings) {
       let componentSettings = developerUserSettings[componentName];
       for (let settingName in componentSettings) {

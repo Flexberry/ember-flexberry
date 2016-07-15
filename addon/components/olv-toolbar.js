@@ -305,7 +305,9 @@ export default FlexberryBaseComponent.extend({
       this.set('_infoModalDialogContent', infoContent);
       infoModalDialog.modal('show');
     }
-
+    let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
+    oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
+    oLVToolbarInfoCopyButton.removeClass('disabled');
     return infoContent;
   },
 
@@ -462,8 +464,9 @@ export default FlexberryBaseComponent.extend({
     copyJSONContent(event) {
       Ember.$('#OLVToolbarInfoContent').select();
       let copied = document.execCommand('copy');
-      Ember.$('#OLVToolbarInfoCopyButton').get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc') ;
-//       alert('Copy');
+      let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
+      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc') ;
+      oLVToolbarInfoCopyButton.addClass('disabled');
     }
   },
 

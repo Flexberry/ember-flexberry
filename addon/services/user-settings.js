@@ -35,26 +35,57 @@ export default Ember.Service.extend({
 
   /**
     Current Application name.
-   */
+
+    @property appName
+    @type String
+    @default ''
+    */
   appName: '',
 
   /**
     Current WEB page.
-   */
+
+    @property currentWebPage
+    @type String
+    @default ''
+    */
   currentWebPage: '',
 
   /**
     Current App page.
-   */
+
+    @property currentAppPage
+    @type String
+    @default ''
+    */
   currentAppPage: '',
 
   /**
     User settings for all pages defined by developer
+
+    @property developerUserSettings
+    @type Object
+    @default {}
    */
   developerUserSettings:{},
+
+  /**
+    User settings for all pages before params applying.
+
+    @property beforeParamUserSettings
+    @type Object
+    @default {}
+    */
+  beforeParamUserSettings:{},
+
+
   /**
     Current user settings for all pages
-   */
+
+    @property currentUserSettings
+    @type Object
+    @default {}
+    */
   currentUserSettings:{},
 
   /**
@@ -122,6 +153,7 @@ export default Ember.Service.extend({
     let appPage = this.currentAppPage;
     if (!(appPage  in this.currentUserSettings)) {
       this.currentUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
+      this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
       this.developerUserSettings[appPage] = developerUserSettings;
       if (this.isUserSettingsServiceEnabled) {
         return this._getUserSettings().then(
@@ -162,7 +194,13 @@ export default Ember.Service.extend({
    @method setCurrentParams
    @param {Object} params.
    */
-  setCurrentParams(params) {
+  setCurrentParams(componentName, params) {
+    if ('sort' in params && params.sort) {
+      let sorting = this._deserializeSortingParam(params.sort);
+      this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName].sorting = sorting;
+    } else {
+      this.currentUserSettings[this.currentAppPage][componentName][defaultSettingName].sorting = this.beforeParamUserSettings[this.currentAppPage][componentName][defaultSettingName].sorting;
+    }
   },
 
   /**
@@ -370,6 +408,7 @@ export default Ember.Service.extend({
     }
 
     this.currentUserSettings[this.currentAppPage][componentName][settingName] = userSetting;
+    this.beforeParamUserSettings[this.currentAppPage] = JSON.parse(JSON.stringify(this.currentUserSettings[this.currentAppPage]));
     if (!this.get('isUserSettingsServiceEnabled')) {
       return new Ember.RSVP.Promise((resolve, reject) => {resolve();});
     }
@@ -490,7 +529,7 @@ export default Ember.Service.extend({
     for (let componentName in appPageUserSettings) {
       this.currentUserSettings[appPage][componentName] = appPageUserSettings[componentName];
     }
-
+    this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
     return this.currentUserSettings[appPage];
   },
 
@@ -645,6 +684,51 @@ export default Ember.Service.extend({
     }
 
     return ret;
+  },
+
+  /**
+   *    Convert string with sorting parameters to object.
+   *
+   *    Expected string type: '+Name1-Name2...', where: '+' and '-' - sorting direction, 'NameX' - property name for soring.
+   *
+   *    @method deserializeSortingParam
+   *    @param {String} paramString String with sorting parameters.
+   *    @returns {Array} Array objects type: { propName: 'NameX', direction: 'asc|desc' }
+   */
+  _deserializeSortingParam(paramString) {
+    let result = [];
+    while (paramString) {
+      let direction = paramString.charAt(0) === '+' ? 'asc' : 'desc';
+      paramString = paramString.substring(1, paramString.length);
+      let nextIndices = this._getNextIndeces(paramString);
+      let nextPosition = Math.min.apply(null, nextIndices);
+      let propName = paramString.substring(0, nextPosition);
+      paramString = paramString.substring(nextPosition);
+
+      result.push({
+        propName: propName,
+        direction: direction
+      });
+    }
+
+    return result;
+  },
+
+  /**
+   * Return index start next sorting parameters.
+   *
+   * @method _getNextIndeces
+   * @param {String} paramString
+   * @return {Number}
+   * @private
+   */
+  _getNextIndeces(paramString) {
+    let nextIndices = ['+', '-'].map(function(element) {
+      let pos = paramString.indexOf(element);
+      return pos === -1 ? paramString.length : pos;
+    });
+
+    return nextIndices;
   }
 
 });

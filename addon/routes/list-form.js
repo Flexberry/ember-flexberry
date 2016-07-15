@@ -46,8 +46,13 @@ export default ProjectedModelFormRoute.extend(
   LimitedRouteMixin,
   ReloadListMixin,
   FlexberryObjectlistviewRouteMixin, {
-  developerUserSettings: {},
-  listUserSettings: {},
+  /**
+    Current sorting.
+
+    @property sorting
+    @type Array
+    @default []
+    */
   sorting: [],
 
   /**
@@ -70,13 +75,13 @@ export default ProjectedModelFormRoute.extend(
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let ret = userSettingPromise
       .then(currectPageUserSettings => {
-        if (params) {
-          userSettingsService.setCurrentParams(params);
-        }
-
         let listComponentNames = userSettingsService.getListComponentNames();
         Ember.assert('list-form must contain single component', listComponentNames.length === 1);
         let componentName = listComponentNames[0];
+        if (params) {
+          userSettingsService.setCurrentParams(componentName, params);
+        }
+
         this.sorting = userSettingsService.getCurrentSorting(componentName);
         let queryParameters = {
           modelName: modelName,
@@ -94,8 +99,6 @@ export default ProjectedModelFormRoute.extend(
         return this.reloadList(queryParameters);
       }).then((records) => {
         this.includeSorting(records, this.sorting);
-        //         records.set('userSettings', this.userSettings);
-        //         records.set('listUserSettings', this.listUserSettings);
         return records;
       });
     return ret;

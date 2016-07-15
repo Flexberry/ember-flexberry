@@ -1187,7 +1187,6 @@ export default FlexberryBaseComponent.extend(
     // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
     // if controller's 'getCellComponent' method call its super method from the base controller.
     let currentController = this.get('currentController');
-    let projection = this.get('modelProjection');
     let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
     let cellComponent = this.get('cellComponent');
 

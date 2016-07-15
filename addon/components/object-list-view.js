@@ -7,7 +7,7 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
-import { getProjectionAttrCaption } from '../utils/model-functions';
+import { getValueFromLocales } from '../utils/model-functions';
 
 /**
   Object list view component.
@@ -1150,26 +1150,26 @@ export default FlexberryBaseComponent.extend(
   /**
     Create the key from locales.
   */
-  _createKey(attrName) {
+  _createKey(bindingPath) {
     let projection = this.get('modelProjection');
     let modelName = projection.modelName;
-    let modelClass = this.get('store').modelFor(modelName);
-    let nameRelationship;
-    let mainModelName;
     let key;
-
-    modelClass.eachRelationship(function(name, descriptor) {
-      if (descriptor.kind === 'belongsTo' && descriptor.options.inverse) {
-        nameRelationship = descriptor.options.inverse;
-        mainModelName = descriptor.type;
-      }
-    });
 
     let mainModelProjection = this.get('mainModelProjection');
     if (mainModelProjection) {
-      key = 'models.' + mainModelName + '.projections.' + mainModelProjection.projectionName + '.' + nameRelationship + '.' + attrName + '.caption';
+      let modelClass = this.get('store').modelFor(modelName);
+      let nameRelationship;
+      let mainModelName;
+
+      modelClass.eachRelationship(function(name, descriptor) {
+        if (descriptor.kind === 'belongsTo' && descriptor.options.inverse) {
+          nameRelationship = descriptor.options.inverse;
+          mainModelName = descriptor.type;
+        }
+      });
+      key = 'models.' + mainModelName + '.projections.' + mainModelProjection.projectionName + '.' + nameRelationship + '.' + bindingPath + '.caption';
     } else {
-      key = 'models.' + modelName + '.projections.' + projection.projectionName + '.' + attrName + '.caption';
+      key = 'models.' + modelName + '.projections.' + projection.projectionName + '.' + bindingPath + '.caption';
     }
 
     return key;
@@ -1196,10 +1196,10 @@ export default FlexberryBaseComponent.extend(
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 
-    let key = this._createKey(attrName);
+    let key = this._createKey(bindingPath);
 
     let column = {
-      header: getProjectionAttrCaption(this.get('i18n'), projection, attrName, key),
+      header: getValueFromLocales(this.get('i18n'), key) || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
     };

@@ -20,6 +20,12 @@ Ember.$.extend(true, translations, {
           },
           'votes': {
             'caption': 'Голоса'
+          },
+          'author': {
+            'caption': 'Автор',
+            'eMail': {
+              'caption': 'Почта'
+            }
           }
         },
         'SuggestionE': {
@@ -31,7 +37,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Тип голосования'
             },
             'applicationUser': {
-              'caption': 'Пользователь'
+              'caption': 'Пользователь',
+              'eMail': {
+                'caption': 'Почта'
+              }
             }
           }
         }

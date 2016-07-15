@@ -28,25 +28,20 @@ export function getRelationType(model, relationName) {
 }
 
 /**
-  Gets the name of caption for projection.
+  Gets the value from locales.
 
-  @method getProjectionAttrCaption
+  @method getValueFromLocales
   @param {Service} i18n i18n service.
-  @param {Object} projection Model projection.
-  @param {String} attrName Name of attribute from projection.
-  @param {String} key Key from locales.
-  @return {String} Name of caption.
+  @param {String} key Key for property in locales.
+  @return {String} Value from locales. Returns `null` if key will not be found.
 */
-export function getProjectionAttrCaption(i18n, projection, attrName, key) {
-  let nameFromLocales = false;
+export function getValueFromLocales(i18n, key) {
+  Ember.assert('key should be defined', key);
 
-  if (key) {
-    if (i18n.exists(key)) {
-      nameFromLocales = i18n.t(key);
-    } else {
-      Ember.Logger.warn(`The ${key} is not found in locales.`);
-    }
+  if (i18n.exists(key)) {
+    return i18n.t(key);
+  } else {
+    Ember.Logger.warn(`The ${key} is not found in locales.`);
+    return null;
   }
-
-  return nameFromLocales || projection.attributes[attrName].caption || Ember.String.capitalize(attrName);
 }

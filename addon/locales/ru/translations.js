@@ -119,7 +119,9 @@ export default {
       'show-default-setting-title': 'Показать установки',
       'show-setting-caption': 'Для установки данных настроек по умолчнанию Вы можете их скопировать и инициализировать переменную developerUserSettings в /app/routes/',
       'close': 'Закрыть',
-      'copy': 'Копировать'
+      'copy': 'Копировать',
+      'copied': 'Скопировано',
+      'ctrlc': 'Нажмите Ctrl/C для копирования'
     },
 
     'colsconfig-dialog-content': {

@@ -119,7 +119,9 @@ export default {
       'show-default-setting-title': 'Show settings',
       'show-setting-caption': 'To set this settings by default you can copy and init property developerUserSettings in /app/routes/',
       'close': 'Close',
-      'copy': 'Copy'
+      'copy': 'Copy',
+      'copied': 'Copied',
+      'ctrlc': 'Press Ctrl/C to copy'
     },
 
     'colsconfig-dialog-content': {

@@ -459,8 +459,11 @@ export default FlexberryBaseComponent.extend({
       }
     },
 
-    copyJSONContent() {
-      alert('Copy');
+    copyJSONContent(event) {
+      Ember.$('#OLVToolbarInfoContent').select();
+      let copied = document.execCommand('copy');
+      Ember.$('#OLVToolbarInfoCopyButton').get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc') ;
+//       alert('Copy');
     }
   },
 

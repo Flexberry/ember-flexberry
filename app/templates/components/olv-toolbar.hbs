@@ -59,20 +59,20 @@
     {{_infoModalDialogCaption}}
   </div>
   <div class="center aligned ui grid">
-    <button class="ui icon button" {{action "copyJSONContent"}}>
+  <button class="ui icon button" {{action "copyJSONContent"}} id='OLVToolbarInfoCopyButton'>
       <i class="copy icon"></i>
       {{t "components.olv-toolbar.copy"}}
     </button>
     <div class="actions">
-      <div class="olv-toolbar-info-modal-dialog-ok-button ui approve green inverted button">
+    <div class="olv-toolbar-info-modal-dialog-ok-button ui approve green inverted button" >
         <i class="remove icon"></i>
         {{t "components.olv-toolbar.close"}}
       </div>
     </div>
   </div>
-  <div class="content">
-    <div class="olv-toolbar-info-modal-dialog-content center aligned ui grid">
-      <pre>{{_infoModalDialogContent}}</pre>
+  <div class="ui form">
+    <div class="olv-toolbar-info-modal-dialog-content center aligned ui field">
+      <textarea id='OLVToolbarInfoContent' cols='80' rows='20'>{{_infoModalDialogContent}}</textarea>
     </div>
   </div>
 

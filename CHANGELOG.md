@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Known issues
 * TransitionAborted error get thrown when adding query params (callback is called once for each query param you set to refreshModel: true).
+* `flexberry-datapicker` displays the next day when date with time '00:00:00'.
 
 ## [0.2.1] - 2016-07-07
 ### Changed

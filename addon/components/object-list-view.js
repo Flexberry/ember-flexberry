@@ -258,7 +258,7 @@ export default FlexberryBaseComponent.extend(
     'modelProjection',
     function() {
     if (this.get('modelProjection')) {
-      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow') || this.get('filters');
+      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
     } else {
       return false;
     }

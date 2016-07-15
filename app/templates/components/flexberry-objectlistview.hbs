@@ -7,7 +7,9 @@
   colsConfigButton=colsConfigButton
   enableFilters=enableFilters
   showFilters=_showFilters
+  filters=filters
   toggleStateFilters=(action "toggleStateFilters")
+  resetFilters = (action (if resetFilters resetFilters "resetFilters"))
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass
@@ -49,7 +51,6 @@
   showFilters=_showFilters
   filters=filters
   applyFilters = (action (if applyFilters applyFilters "applyFilters"))
-  resetFilters = (action (if resetFilters resetFilters "resetFilters"))
   componentForFilter=componentForFilter
   conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))

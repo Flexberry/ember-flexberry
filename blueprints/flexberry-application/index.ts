@@ -36,6 +36,7 @@ class ElapsedTime {
   public caption: string;
   public elapsedTimeSec: number;
   private static groups: ElapsedTime[] = [];
+  private static formatter = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 0 });
 
   public constructor(caption: string, startTime: number) {
     this.caption = caption;
@@ -43,14 +44,20 @@ class ElapsedTime {
   }
 
   public static print() {
-    let formatter = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 1});
     let total: number = 0;
     console.log("Ellapsed time:");
     for (let group of ElapsedTime.groups) {
-      console.log(`${group.caption}: ${formatter.format(group.elapsedTimeSec)} sec`);
+      console.log(`${group.caption}: ${ElapsedTime.format(group.elapsedTimeSec)}`);
       total += group.elapsedTimeSec;
     }
-    console.log(`Total: ${formatter.format(total)} sec`);
+    console.log(`Total: ${ElapsedTime.format(total)}`);
+  }
+
+  public static format(sec: number): string {
+    let hours = Math.floor(sec / 3600);
+    let min = Math.floor((sec - hours * 3600) / 60);
+    let sec2 = sec - hours * 3600 - min * 60;
+    return `${ElapsedTime.formatter.format(hours)}:${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
   }
 
   public static add(caption: string, startTime: number): number {
@@ -116,6 +123,8 @@ class ApplicationBlueprint {
       let name = path.parse(file).name;
       if (!this.fileExists(`app/models/${name}.js`))
         this.execCommand(`ember generate ${blueprintName}-init ${name} --metadata-dir=${this.metadataDir}`);
+      if (!this.fileExists(`app/serializers/${name}.js`))
+        this.execCommand(`ember generate flexberry-serializer-init ${name} --metadata-dir=${this.metadataDir}`);
       this.execCommand(`ember generate ${blueprintName} ${name} --metadata-dir=${this.metadataDir}`);
     }
   }

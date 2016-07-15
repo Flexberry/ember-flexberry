@@ -105,6 +105,11 @@ export default {
       }
     },
 
+    'object-list-view-cell': {
+      'boolean-false-caption': 'Ложь',
+      'boolean-true-caption': 'Истина'
+    },
+
     'olv-toolbar': {
       'add-button-text': 'Добавить',
       'refresh-button-text': 'Обновить',

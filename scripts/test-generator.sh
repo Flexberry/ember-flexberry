@@ -17,7 +17,6 @@ pushd "$TMP_DIR"
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.
 ember init
-npm install broccoli-jscs --save-dev
 cp app/index.html .
 rm -r app/*
 mv index.html app

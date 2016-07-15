@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## kaf - 2016-07-15
+## feature-multiOLVSettings - 2016-07-15
 ### Added
 * Full refactoring user setting service (see more details below):
     * User setting service support in-memory saving the settings of all ObjectListView components for all pages. This allows:

@@ -19,7 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * ObjectlistviewComponent:
     * Add support locales for captions models of projection.
 * ModelFunctions:
-    * Add `getProjectionAttrCaption` function.
+    * Add `getValueFromLocales` function.
 
 ### Fixed
 * Fixed select from `flexberry-lookup` in dropdown mode.

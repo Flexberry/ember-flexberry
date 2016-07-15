@@ -69,16 +69,25 @@ export default ProjectedModelFormRoute.extend(
     let projectionName = this.get('modelProjection');
     let limitPredicate =
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
-    let developerUserSettings = this.get('developerUserSettings');
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
+    let developerUserSettings = this.get('developerUserSettings');
+    Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+    let nComponents = 0;
+    let componentName;
+    for (componentName in developerUserSettings) {
+      nComponents += 1;
+    }
+
+    if (nComponents === 0) {
+      Ember.assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
+    }
+
+    Ember.assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
+      nComponents === 1);
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
-    let nComponents = listComponentNames.length;
-    Ember.assert('list-form must contain single component. ' + nComponents + ' defined.' +
-        ' Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js',
-      nComponents === 1);
-    let componentName = listComponentNames[0];
+    componentName = listComponentNames[0];
     let ret = userSettingPromise
       .then(currectPageUserSettings => {
         if (params) {

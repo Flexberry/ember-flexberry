@@ -32,16 +32,7 @@ export default ListFormRoute.extend({
   @default {}
   */
   developerUserSettings: {
-    SuggestionObjectListView: {
-      'DEFAULT': {
-        sorting:[
-          {
-            propName:'text',
-            direction:'desc'
-          }
-        ]
-      }
-    }
+    SuggestionObjectListView: { }
   },
 
   /**

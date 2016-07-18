@@ -24,28 +24,63 @@ export default FlexberryBaseComponent.extend({
   _showFilters: Ember.computed.oneWay('filters'),
 
   /**
+    Store the action name at controller for loading records.
+
+    @property _loadRecords
+    @type String
+    @default 'loadRecords'
+    @private
   */
   _loadRecords: 'loadRecords',
 
   /**
+    Store the action name at controller for switch to the hierarchical mode.
+
+    @property _switchHierarchicalMode
+    @type String
+    @default 'switchHierarchicalMode'
+    @private
   */
   _switchHierarchicalMode: 'switchHierarchicalMode',
 
   /**
+    Store the action name at controller for save the hierarchical attribute name.
+
+    @property _saveHierarchicalAttribute
+    @type String
+    @default 'saveHierarchicalAttribute'
+    @private
   */
   _saveHierarchicalAttribute: 'saveHierarchicalAttribute',
 
   /**
+    Flag indicate when available the hierarchical mode.
+
+    @property _availableHierarchicalMode
+    @type Boolean
+    @default false
+    @private
   */
   _availableHierarchicalMode: false,
 
   /**
+    Flag indicate when component is in the hierarchical mode.
+
+    @property _inHierarchicalMode
+    @type Boolean
+    @default false
+    @private
   */
   _inHierarchicalMode: Ember.computed(function() {
     return this.get('currentController').get('inHierarchicalMode');
   }),
 
   /**
+    Store the attribute name set by `hierarchyByAttribute`.
+
+    @property _hierarchicalAttribute
+    @type String
+    @private
   */
   _hierarchicalAttribute: undefined,
 

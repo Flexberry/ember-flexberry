@@ -230,7 +230,7 @@ export default ListFormRoute.extend({
         ]
       }
     }
-  `
+    `
   },
 
   /**

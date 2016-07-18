@@ -827,6 +827,7 @@ export default FlexberryBaseComponent.extend(
   init() {
     this._super(...arguments);
 
+    Ember.assert('ObjectListView must have componentName attribute ', this.componentName);
     this.set('selectedRecords', Ember.A());
     this.set('contentWithKeys', Ember.A());
 

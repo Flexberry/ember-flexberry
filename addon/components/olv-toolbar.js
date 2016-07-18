@@ -389,6 +389,7 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     showConfigDialog(settingName) {
+      Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
       this.get('modelController').send('showConfigDialog', this.componentName, settingName);
     },
 
@@ -440,6 +441,10 @@ export default FlexberryBaseComponent.extend({
           });
           break;
         case 'remove circle icon':
+          if (!userSettingsService.haveDefaultUserSetting(componentName)) {
+            alert('No default usersettings');
+            break;
+          }
           userSettingsService.deleteUserSetting(componentName)
           .then(record => {
             if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)

@@ -35,8 +35,7 @@ export default ApllicationLogListFormRoute.extend({
       "DEFAULT": {
         "colsOrder": [
         {
-          "propName": "timestamp",
-          "hide": false
+          "propName": "timestamp"
         },
         {
           "propName": "category"
@@ -97,8 +96,7 @@ export default ApllicationLogListFormRoute.extend({
       "Message": {
         "colsOrder": [
         {
-          "propName": "timestamp",
-          "hide": false
+          "propName": "timestamp"
         },
         {
           "propName": "category"
@@ -159,8 +157,7 @@ export default ApllicationLogListFormRoute.extend({
       "FormattedMessage": {
         "colsOrder": [
         {
-          "propName": "timestamp",
-          "hide": false
+          "propName": "timestamp"
         },
         {
           "propName": "category"

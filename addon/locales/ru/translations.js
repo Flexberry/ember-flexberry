@@ -148,4 +148,56 @@ export default {
 
   },
 
+  'models': {
+    'i-i-s-caseberry-logging-objects-application-log': {
+      'projections': {
+        'ApplicationLogL': {
+          'processId': {
+            'caption': 'URL'
+          },
+          'timestamp':{
+            'caption': 'Время'
+          },
+          'category':{
+            'caption': 'Категория'
+          },
+          'eventId':{
+            'caption': 'Идентификтатор события'
+          },
+          'priority':{
+            'caption': 'Приоритет'
+          },
+          'severity':{
+            'caption': 'Значимость'
+          },
+          'title':{
+            'caption': 'Заголовок'
+          },
+          'machineName':{
+            'caption': 'Сервер'
+          },
+          'appDomainName':{
+            'caption': 'Браузер'
+          },
+          'processName':{
+            'caption': 'Имя процесса'
+          },
+          'threadName':{
+            'caption': 'Имя потока'
+          },
+          'win32ThreadId':{
+            'caption': 'Идентификатор потока',
+          },
+          'message':{
+            'caption': 'Сообщение'
+          },
+          'formattedMessage':{
+            'caption': 'Форматированное сообщение'
+          }
+        }
+      }
+    }
+  }
+//   models.i-i-s-caseberry-logging-objects-application-log.projections.ApplicationLogL.processId.caption
+
 };

@@ -254,7 +254,7 @@ export default Ember.Service.extend({
     if (this.currentAppPage in  this.currentUserSettings &&
       componentName in this.currentUserSettings[this.currentAppPage]
     ) {
-      ret[ret.length] = this.currentUserSettings[this.currentAppPage][componentName];
+      ret = this.currentUserSettings[this.currentAppPage][componentName];
     }
 
     return ret;

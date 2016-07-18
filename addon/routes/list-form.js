@@ -73,9 +73,21 @@ export default ProjectedModelFormRoute.extend(
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');
     Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+
     let nComponents = 0;
     let componentName;
     for (componentName in developerUserSettings) {
+      let componentDesc = developerUserSettings[componentName];
+      switch (typeof componentDesc) {
+        case 'string':
+          developerUserSettings[componentName] = JSON.parse(componentDesc);
+          break;
+        case 'object':
+          break;
+        default:
+          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+            'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
+      }
       nComponents += 1;
     }
 

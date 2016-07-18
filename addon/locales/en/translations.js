@@ -144,5 +144,56 @@ export default {
       'use-without-save': 'Use this settings without saving in setting ',
       'save': 'Save'
     }
+  },
+
+  'models': {
+    'i-i-s-caseberry-logging-objects-application-log': {
+      'projections': {
+        'ApplicationLogL': {
+          'processId': {
+            'caption': 'URL'
+          },
+          'timestamp':{
+            'caption': 'Time'
+          },
+          'category':{
+            'caption': 'Category'
+          },
+          'eventId':{
+            'caption': 'Event ID'
+          },
+          'priority':{
+            'caption': 'Priority'
+          },
+          'severity':{
+            'caption': 'Severity'
+          },
+          'title':{
+            'caption': 'Title'
+          },
+          'machineName':{
+            'caption': 'Server'
+          },
+          'appDomainName':{
+            'caption': 'Browser'
+          },
+          'processName':{
+            'caption': 'Process name'
+          },
+          'threadName':{
+            'caption': 'ThreadName'
+          },
+          'win32ThreadId':{
+            'caption': 'Win32ThreadId',
+          },
+          'message':{
+            'caption': 'Message'
+          },
+          'formattedMessage':{
+            'caption': 'Formatted message'
+          }
+        }
+      }
+    }
   }
 };

@@ -59,7 +59,7 @@ export default ApplicationLogListFormController.extend({
     onThrowExceptionButtonClick() {
       setTimeout(() => {
         this.send('refreshList');
-      }, 100);
+      }, 5000);
       throw new Error(
         this._generateUniqueMessagePrefix() +
         this.get('i18n').t('forms.log-service-examples.settings-example.throw-exception-button-message'));
@@ -79,7 +79,7 @@ export default ApplicationLogListFormController.extend({
             this._generateUniqueMessagePrefix() +
             this.get('i18n').t('forms.log-service-examples.settings-example.reject-rsvp-promise-button-message'));
           this.send('refreshList');
-        }, 100);
+        }, 3000);
       });
     },
 
@@ -93,7 +93,7 @@ export default ApplicationLogListFormController.extend({
     onEmberAssertButtonClick() {
       setTimeout(() => {
         this.send('refreshList');
-      }, 100);
+      }, 3000);
       Ember.assert(
         this._generateUniqueMessagePrefix() +
         this.get('i18n').t('forms.log-service-examples.settings-example.ember-assert-button-message'),

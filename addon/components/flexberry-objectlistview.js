@@ -85,6 +85,11 @@ export default FlexberryBaseComponent.extend({
   _hierarchicalAttribute: undefined,
 
   /**
+    Set the attribute name to hierarchy build.
+    If specified, will attempt to build on this attribute hierarchy.
+
+    @property hierarchyByAttribute
+    @type String
   */
   hierarchyByAttribute: Ember.computed({
     get() {
@@ -98,10 +103,19 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Indent to indicate hierarchy, can be used HTML.
+
+    @property hierarchicalIndent
+    @type String
   */
   hierarchicalIndent: undefined,
 
   /**
+    Flag used for disable the hierarchical mode.
+
+    @property disableHierarchicalMode
+    @type Boolean
+    @default false
   */
   disableHierarchicalMode: false,
 
@@ -637,6 +651,10 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Set availability hierarchical mode, and save the attribute name in controller.
+
+      @method actions.availableHierarchicalMode
+      @param {String} hierarchicalAttribute Attribute name to hierarchy building.
     */
     availableHierarchicalMode(hierarchicalAttribute) {
       this.toggleProperty('_availableHierarchicalMode');
@@ -644,12 +662,21 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Called controller action to switch in hierarchical mode.
+
+      @method actions.switchHierarchicalMode
     */
     switchHierarchicalMode() {
       this.sendAction('_switchHierarchicalMode');
     },
 
     /**
+      Redirects the call to controller..
+
+      @method actions.loadRecords
+      @param {String} Primary key.
+      @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {String} Property name.
     */
     loadRecords(id, target, property) {
       this.sendAction('_loadRecords', id, target, property);

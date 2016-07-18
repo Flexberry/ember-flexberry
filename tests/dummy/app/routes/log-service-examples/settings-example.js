@@ -30,7 +30,7 @@ export default ApllicationLogListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { IISLoggingObjectListView: `
+ developerUserSettings: { FOLVSettingExample: `
     {
       "DEFAULT": {
         "colsOrder": [

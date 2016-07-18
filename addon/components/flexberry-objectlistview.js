@@ -24,6 +24,53 @@ export default FlexberryBaseComponent.extend({
   _showFilters: Ember.computed.oneWay('filters'),
 
   /**
+  */
+  _loadRecords: 'loadRecords',
+
+  /**
+  */
+  _switchHierarchicalMode: 'switchHierarchicalMode',
+
+  /**
+  */
+  _saveHierarchicalAttribute: 'saveHierarchicalAttribute',
+
+  /**
+  */
+  _availableHierarchicalMode: false,
+
+  /**
+  */
+  _inHierarchicalMode: Ember.computed(function() {
+    return this.get('currentController').get('inHierarchicalMode');
+  }),
+
+  /**
+  */
+  _hierarchicalAttribute: undefined,
+
+  /**
+  */
+  hierarchyByAttribute: Ember.computed({
+    get() {
+      return this.get('_hierarchicalAttribute');
+    },
+    set(key, value) {
+      this.set('_hierarchicalAttribute', value);
+      this.sendAction('_saveHierarchicalAttribute', value, true);
+      return value;
+    },
+  }),
+
+  /**
+  */
+  hierarchicalIndent: undefined,
+
+  /**
+  */
+  disableHierarchicalMode: false,
+
+  /**
     Text to be displayed in table body, if content is not defined or empty.
 
     @property placeholder
@@ -552,7 +599,26 @@ export default FlexberryBaseComponent.extend({
     filterByAnyMatch(pattern) {
       throw new Error('No handler for filterByAnyMatch action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action "filterByAnyMatch")}}.');
-    }
+    },
+
+    /**
+    */
+    availableHierarchicalMode(hierarchicalAttribute) {
+      this.toggleProperty('_availableHierarchicalMode');
+      this.sendAction('_saveHierarchicalAttribute', hierarchicalAttribute);
+    },
+
+    /**
+    */
+    switchHierarchicalMode() {
+      this.sendAction('_switchHierarchicalMode');
+    },
+
+    /**
+    */
+    loadRecords(id, target, property) {
+      this.sendAction('_loadRecords', id, target, property);
+    },
   },
 
   /**

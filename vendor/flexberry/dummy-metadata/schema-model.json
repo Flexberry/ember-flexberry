@@ -339,6 +339,12 @@
         "null"
       ]
     },
+    "className": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "parentModelName": {
       "type": [
         "string",
@@ -390,6 +396,7 @@
   },
   "required": [
     "modelName",
+    "className",
     "parentModelName",
     "parentClassName",
     "attrs",

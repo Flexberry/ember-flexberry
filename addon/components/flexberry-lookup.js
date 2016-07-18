@@ -14,32 +14,32 @@ import { BasePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberr
 /**
   Lookup component for Semantic UI.
 
-  Example:
-  ```javascript
-  // app/controllers/post.js
-  import EditFormController from './edit-form';
-  export default EditFormController.extend({
-    ...
-  });
-  ```
+  @example
+    ```javascript
+    // app/controllers/post.js
+    import EditFormController from './edit-form';
+    export default EditFormController.extend({
+      ...
+    });
+    ```
 
-  ```handlebars
-  <!-- app/templates/post.hbs -->
-  ...
-  {{flexberry-lookup
-    choose="showLookupDialog"
-    remove="removeLookupValue"
-    value=model.author
-    projection="UserL"
-    relationName="author"
-    displayAttributeName="name"
-    title="Author"
-    placeholder="Not select"
-    chooseText="Select"
-    removeText="Clear"
-  }}
-  ...
-  ```
+    ```handlebars
+    <!-- app/templates/post.hbs -->
+    ...
+    {{flexberry-lookup
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      value=model.author
+      projection="UserL"
+      relationName="author"
+      displayAttributeName="name"
+      title="Author"
+      placeholder="Not select"
+      chooseText="Select"
+      removeText="Clear"
+    }}
+    ...
+    ```
 
   @class FlexberryLookup
   @extends FlexberryBaseComponent
@@ -263,7 +263,7 @@ export default FlexberryBaseComponent.extend({
     @property chooseData
     @type Object
     @readOnly
-   */
+  */
   chooseData: Ember.computed(
     'projection',
     'relationName',
@@ -309,11 +309,11 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Name of the attribute of the model to display for the user.
+    Is required for autocomplete and dropdown modes.
 
     @property displayAttributeName
     @type String
     @default null
-    @required
   */
   displayAttributeName: null,
 
@@ -405,7 +405,6 @@ export default FlexberryBaseComponent.extend({
   */
   didDestroyElement() {
     this._super();
-
     this.removeObserver('i18n.locale', this, this._languageReinit);
   },
 
@@ -470,7 +469,8 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      throw new Error('Required property "displayAttributeName" is not defined.');
+      Ember.Logger.error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
+      return;
     }
 
     let minCharacters = this.get('minCharacters');
@@ -483,7 +483,7 @@ export default FlexberryBaseComponent.extend({
       throw new Error('maxResults has wrong value.');
     }
 
-    var state;
+    let state;
     this.$().search({
       minCharacters: minCharacters,
       maxResults: maxResults,
@@ -593,7 +593,12 @@ export default FlexberryBaseComponent.extend({
     let relationModelName = getRelationType(relatedModel, relationName);
     let minCharacters = this.get('minCharacters');
     let multiselect = this.get('multiselect');
-    let displayAttributeName = _this.get('displayAttributeName');
+
+    let displayAttributeName = this.get('displayAttributeName');
+    if (!displayAttributeName) {
+      Ember.Logger.error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
+      return;
+    }
 
     let i18n = _this.get('i18n');
     this.$('.flexberry-dropdown').dropdown({
@@ -666,6 +671,7 @@ export default FlexberryBaseComponent.extend({
   */
   _buildDisplayValue() {
     let selectedModel = this.get('value');
+    let displayAttributeName = this.get('displayAttributeName');
     if (!selectedModel) {
       this.set('placeholder', t('components.flexberry-lookup.placeholder'));
       return '';
@@ -673,7 +679,12 @@ export default FlexberryBaseComponent.extend({
       this.set('placeholder', '');
     }
 
-    return selectedModel.get(this.get('displayAttributeName'));
+    if (!displayAttributeName) {
+      Ember.Logger.warn('\`displayAttributeName\` is not defined.');
+      return '';
+    }
+
+    return selectedModel.get(displayAttributeName);
   },
 
   /**

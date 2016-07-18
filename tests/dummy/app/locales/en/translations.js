@@ -5,6 +5,46 @@ const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
+  'models': {
+    'ember-flexberry-dummy-suggestion': {
+      'projections': {
+        'SuggestionL': {
+          'address': {
+            'caption': 'Address'
+          },
+          'text': {
+            'caption': 'Text'
+          },
+          'date': {
+            'caption': 'Date'
+          },
+          'votes': {
+            'caption': 'Votes'
+          },
+          'author': {
+            'caption': 'Author',
+            'eMail': {
+              'caption': 'Email'
+            }
+          }
+        },
+        'SuggestionE': {
+          'userVotes': {
+            'voteType': {
+              'caption': 'Vote Type'
+            },
+            'applicationUser': {
+              'caption': 'Application User',
+              'eMail': {
+                'caption': 'Email'
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
   'application-name': 'Test stand for ember-flexberry',
 
   'forms': {
@@ -22,7 +62,11 @@ Ember.$.extend(true, translations, {
             'caption': '',
             'title': 'Menu'
           },
+          'user-settings-service-checkbox': {
+            'caption': 'Use user settings service'
+          },
           'language-dropdown': {
+            'caption': 'Application language',
             'placeholder': 'Choose language'
           }
         }
@@ -73,11 +117,15 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        'logging': {
-          'caption': 'Logging',
+        'log-service-examples': {
+          'caption': 'Log service',
           'title': '',
-          'show': {
+          'application-log': {
             'caption': 'Application log',
+            'title': ''
+          },
+          'settings-example': {
+            'caption': 'Settings example',
             'title': ''
           }
         },
@@ -155,6 +203,14 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
+            'lookup-block-form-example': {
+              'caption': 'Lookup block form example',
+              'title': ''
+            },
+            'lookup-in-modal': {
+              'caption': 'Lookup in modal window',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Dropdown mode example',
               'title': ''
@@ -185,6 +241,10 @@ Ember.$.extend(true, translations, {
             },
             'on-edit-form': {
               'caption': 'Placement on edit form',
+              'title': ''
+            },
+            'custom-filter': {
+              'caption': 'Custom filter',
               'title': ''
             }
           },
@@ -328,6 +388,32 @@ Ember.$.extend(true, translations, {
       'caption': 'Suggestion types'
     },
 
+    'log-service-examples': {
+      'settings-example': {
+        'caption': 'Log-service-examples/settings-example',
+        'setting-column-header-caption': 'Log service setting',
+        'settings-value-column-header-caption': 'Setting current value',
+        'throw-exception-button-caption': 'Throw exception',
+        'reject-rsvp-promise-button-caption': 'Reject promise',
+        'ember-assert-button-caption': 'Ember.assert',
+        'ember-logger-error-button-caption': 'Ember.Logger.error',
+        'ember-logger-warn-button-caption': 'Ember.Logger.warn',
+        'ember-deprecate-button-caption': 'Ember.deprecate',
+        'ember-logger-log-button-caption': 'Ember.Logger.log',
+        'ember-logger-info-button-caption': 'Ember.logger.info',
+        'ember-logger-debug-button-caption': 'Ember.Logger.debug',
+        'throw-exception-button-message': 'Exception thrown',
+        'reject-rsvp-promise-button-message': 'Promise rejected',
+        'ember-assert-button-message': 'Ember.assert called',
+        'ember-logger-error-button-message': 'Ember.Logger.error called',
+        'ember-logger-warn-button-message': 'Ember.Logger.warn called',
+        'ember-deprecate-button-message': 'Ember.deprecate called',
+        'ember-logger-log-button-message': 'Ember.Logger.log called',
+        'ember-logger-info-button-message': 'Ember.logger.info called',
+        'ember-logger-debug-button-message': 'Ember.Logger.debug called'
+      }
+    },
+
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {
@@ -382,6 +468,21 @@ Ember.$.extend(true, translations, {
         'limit-function-example': {
           'caption': 'Components-examples/flexberry-lookup/limit-function-example'
         },
+        'lookup-block-form-example': {
+          'caption': 'Components-examples/flexberry-lookup/lookup-block-form-example',
+          'message': 'This test only works on the mobile site. To start a mobile version should be:',
+          'paragraph1': 'Go to developer mode (press "F12").',
+          'paragraph2': 'Enable mobile site (press "Ctrl + Shift + M" in Chrome and Firefox)',
+          'paragraph3': 'Refresh page (press "F5")'
+        },
+        'lookup-in-modal': {
+          'caption': 'Components-examples/flexberry-lookup/lookup-in-modal',
+          'captionModal': 'Custom modal window №1',
+          'captionModalDouble': 'Custom modal window №2',
+          'buttonModal': 'Modal window №1',
+          'buttonModalDouble': 'Modal window №2',
+          'buttonClose': 'Close'
+        },
         'dropdown-mode-example': {
           'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'
         }
@@ -405,6 +506,9 @@ Ember.$.extend(true, translations, {
         },
         'on-edit-form': {
           'caption': 'FlexberryObjectlistview custom data sample'
+        },
+        'custom-filter': {
+          'caption': 'Components-examples/flexberry-objectlistview/custom-filter'
         }
       },
       'flexberry-simpledatetime': {

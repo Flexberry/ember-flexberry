@@ -47,8 +47,8 @@ export default {
       'add-button-title': 'Добавить файл',
       'add-button-caption': 'Добавить файл',
       'remove-button-title': 'Удалить файл',
-      'upload-button-title': 'Отправить файл',
-      'download-button-title': 'Загрузить файл',
+      'upload-button-title': 'Загрузить файл',
+      'download-button-title': 'Скачать файл',
 
       'preview-image-alternative-text': 'Загруженное изображение',
 
@@ -103,6 +103,11 @@ export default {
         'edit-menu-item-title': 'Редактировать запись',
         'delete-menu-item-title': 'Удалить запись'
       }
+    },
+
+    'object-list-view-cell': {
+      'boolean-false-caption': 'Ложь',
+      'boolean-true-caption': 'Истина'
     },
 
     'olv-toolbar': {

@@ -46,7 +46,8 @@ module.exports = {
       entityName: options.entity.name,// for use in files\__root__\controllers\__name__\new.js
       caption: editFormBlueprint.editForm.caption,// for use in files\__root__\controllers\__name__.js
       parentRoute: editFormBlueprint.parentRoute,// for use in files\__root__\controllers\__name__.js
-      flexberryComponents: editFormBlueprint.flexberryComponents// for use in files\__root__\templates\__name__.hbs
+      flexberryComponents: editFormBlueprint.flexberryComponents,// for use in files\__root__\templates\__name__.hbs
+      functionGetCellComponent: editFormBlueprint.functionGetCellComponent// for use in files\__root__\controllers\__name__.js
     };
   }
 };
@@ -55,6 +56,7 @@ class EditFormBlueprint {
   editForm: metadata.EditForm;
   parentRoute: string;
   flexberryComponents: string;
+  functionGetCellComponent: string;
   private snippetsResult = [];
   private _tmpSnippetsResult = [];
   private modelsDir:string;
@@ -67,6 +69,21 @@ class EditFormBlueprint {
     this.process();
     this.flexberryComponents = this.snippetsResult.join("\n");
     this.parentRoute = this.getParentRoute();
+    let bodySwitchBindingPath: string[] = [];
+    let propertyLookup: metadata.PropertyLookup;
+    for (propertyLookup of this.editForm.propertyLookup) {
+      if (!propertyLookup.master)
+        continue;
+      let snippet = this.readSnippetFile("getCellComponent-flexberry-lookup", "js");
+      bodySwitchBindingPath.push(lodash.template(snippet)(propertyLookup));
+    }
+    if (bodySwitchBindingPath.length > 0) {
+      let snippet = this.readSnippetFile("getCellComponent-function", "js");
+      this.functionGetCellComponent = lodash.template(snippet)({ bodySwitchBindingPath: bodySwitchBindingPath.join("\n") });
+      this.functionGetCellComponent = lodash.trimEnd(this.functionGetCellComponent, "\n");
+    } else {
+      this.functionGetCellComponent = null;
+    }
   }
 
   readSnippetFile(fileName: string, fileExt: string): string {

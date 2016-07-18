@@ -13,6 +13,15 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    Flag used to display filters.
+
+    @property _showFilters
+    @type Boolean
+    @default false
+    @private
+  */
+  _showFilters: Ember.computed.oneWay('filters'),
 
   /**
     Text to be displayed in table body, if content is not defined or empty.
@@ -256,6 +265,15 @@ export default FlexberryBaseComponent.extend({
   colsConfigButton: true,
 
   /**
+    Flag to use filters in OLV component.
+
+    @property enableFilters
+    @type Boolean
+    @default false
+  */
+  enableFilters: false,
+
+  /**
     Flag indicates whether to show filter button at toolbar.
 
     @property filterButton
@@ -496,6 +514,36 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Show/hide filters.
+
+      @method actions.toggleStateFilters
+    */
+    toggleStateFilters() {
+      this.toggleProperty('_showFilters');
+    },
+
+    /**
+      Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
+
+      @method actions.applyFilters
+      @param {Array} filters Filters.
+    */
+    applyFilters(filters) {
+      throw new Error('No handler for applyFilters action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... applyFilters=(action "applyFilters")}}.');
+    },
+
+    /**
+      Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
+
+      @method actions.resetFilters
+    */
+    resetFilters() {
+      throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... resetFilters=(action "resetFilters")}}.');
+    },
+
+    /**
       Handles action from object-list-view when no handler for this component is defined.
 
       @method actions.filterByAnyMatch
@@ -506,6 +554,105 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action "filterByAnyMatch")}}.');
     }
   },
+
+  /**
+    Hook that can be used to confirm delete row.
+
+    @example
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRow=(action 'confirmDeleteRow')
+        ...
+      }}
+      ```
+
+      ```javascript
+      // app/controllers/example.js
+      ...
+      actions: {
+        ...
+        confirmDeleteRow() {
+          return confirm('You sure?');
+        }
+        ...
+      }
+      ...
+      ```
+
+    @method confirmDeleteRow
+    @return {Boolean} If `true` then delete row, else cancel.
+  */
+  confirmDeleteRow: undefined,
+
+  /**
+    Hook that can be used to confirm delete rows.
+
+    @example
+      ```handlebars
+      <!-- app/templates/example.hbs -->
+      {{flexberry-objectlistview
+        ...
+        confirmDeleteRows=(action 'confirmDeleteRows')
+        ...
+      }}
+      ```
+
+      ```javascript
+      // app/controllers/example.js
+      ...
+      actions: {
+        ...
+        confirmDeleteRows() {
+          return confirm('You sure?');
+        }
+        ...
+      }
+      ...
+      ```
+
+    @method confirmDeleteRows
+    @return {Boolean} If `true` then delete selected rows, else cancel.
+  */
+  confirmDeleteRows: undefined,
+
+  /**
+    Hook that executes before deleting the record.
+    Not use async functions.
+
+    @example
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-objectlistview
+        ...
+        beforeDeleteRecord=(action 'beforeDeleteRecord')
+        ...
+      }}
+      ```
+
+      ```javascript
+      // app/controllers/employees.js
+      import ListFormController from './list-form';
+
+      export default ListFormController.extend({
+        actions: {
+          beforeDeleteRecord(record, data) {
+            if (record.get('myProperty')) {
+              data.cancel = true;
+            }
+          }
+        }
+      });
+      ```
+
+    @method beforeDeleteRecord
+    @param {DS.Model} record Deleting record.
+    @param {Object} data Metadata.
+    @param {Boolean} [data.cancel=false] Flag for canceling deletion.
+    @param {Boolean} [data.immediately] See {{#crossLink "ObjectListView/immediateDelete:property"}}{{/crossLink}} property for details.
+  */
+  beforeDeleteRecord: undefined,
 
   /**
     An overridable method called when objects are instantiated.

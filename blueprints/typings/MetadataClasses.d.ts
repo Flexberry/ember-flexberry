@@ -26,6 +26,9 @@ declare module "MetadataClasses" {
     }
     export class PropertyLookup {
         
+        public master: string;
+        public displayAttributeName: string;
+        public required: boolean;
         public relationName: string;
         public projection: string;
     }
@@ -41,6 +44,7 @@ declare module "MetadataClasses" {
     export class Model {
         
         public modelName: string;
+        public className: string;
         public parentModelName: string;
         public parentClassName: string;
         public attrs: DSattr[];

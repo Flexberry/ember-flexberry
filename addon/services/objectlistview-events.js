@@ -32,9 +32,10 @@ export default Ember.Service.extend(Ember.Evented, {
     @method deleteRowTrigger
 
     @param {String} componentName The name of objectlistview component
+    @param {Boolean} immediately Flag to delete record immediately
   */
-  deleteRowTrigger(componentName) {
-    this.trigger('olvDeleteRow', componentName);
+  deleteRowTrigger(componentName, immediately) {
+    this.trigger('olvDeleteRow', componentName, immediately);
   },
 
   /**
@@ -48,6 +49,16 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   deleteRowsTrigger(componentName, immediately) {
     this.trigger('olvDeleteRows', componentName, immediately);
+  },
+
+  /**
+    Trigger for "refresh list" event in OLV component.
+
+    @method refreshListTrigger
+    @param {String} componentName The name of OLV component.
+  */
+  refreshListTrigger(componentName) {
+    this.trigger('refreshList', componentName);
   },
 
   /**

@@ -13,7 +13,7 @@
   {{#if singleColumnHeaderTitle}}
     <thead>
       <tr>
-        <th class="object-list-view-operations collapsing {{unless (and showHelperColumn hasContent) 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+        <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
           {{component headerCellComponent.componentName
             column=(hash header=singleColumnHeaderTitle sortable=false)
             dynamicProperties=headerCellComponent.componentProperties
@@ -25,6 +25,38 @@
     </thead>
   {{/if}}
   <tbody>
+    {{#if showFilters}}
+      <tr>
+        <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
+          <div class="object-list-view-helper-column-cell"></div>
+        </td>
+        <td>
+          {{#each columns as |column|}}
+            <div class="inline fields">
+              <label>{{column.header}}:</label>
+              {{#if column.filter.conditions}}
+                {{component "flexberry-dropdown"
+                  value=column.filter.condition
+                  items=column.filter.conditions
+                  class="compact fluid"
+                  placeholder=""
+                  needChecksOnValue=false
+                }}
+              {{/if}}
+              {{#if column.filter.component.name}}
+                {{component column.filter.component.name
+                  value=column.filter.pattern
+                  dynamicProperties=column.filter.component.properties
+                }}
+              {{/if}}
+            </div>
+          {{/each}}
+        </td>
+        {{#if showMenuColumn}}
+          <td class="object-list-view-menu"></td>
+        {{/if}}
+      </tr>
+    {{/if}}
     {{#unless hasContent}}
       <tr>
         <td colspan="{{colspan}}" style="text-align:center;">{{placeholder}}</td>

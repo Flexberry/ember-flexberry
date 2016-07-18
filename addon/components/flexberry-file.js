@@ -9,6 +9,11 @@ import { translationMacro as t } from 'ember-i18n';
 /**
   Flexberry file component.
 
+  Usage sample:
+  ```handlebars
+  {{flexberry-file value=model.file uploadUrl="http://myApplication/api/File"}}
+  ```
+
   @class FlexberryFileComponent
   @extends FlexberryBaseComponent
 */
@@ -17,56 +22,21 @@ export default FlexberryBaseComponent.extend({
     Selected file content. It can be used as source for image tag in order to view preview.
 
     @property _previewImageAsBase64String
-    @private
     @type String
     @default null
+    @private
   */
   _previewImageAsBase64String: null,
 
   /**
-    Component's wrapping <div> CSS-class names.
-
-    @property classNames
-    @type String[]
-    @default ['flexberry-file']
-  */
-  classNames: ['flexberry-file'],
-
-  /**
-    Classes for buttons.
-
-    @property buttonClass
-    @type String
-    @default undefined
-  */
-  buttonClass: undefined,
-
-  /**
-    Path to component's settings in application configuration (JSON from ./config/environment.js).
-
-    @property appConfigSettingsPath
-    @type String
-    @default 'APP.components.flexberryBaseComponent'
-  */
-  appConfigSettingsPath: 'APP.components.flexberryFile',
-
-  /**
-    Name of action. This action will be send outside after click on selected image preview.
-
-    @property viewImageAction
-    @type String
-    @default 'flexberryFileViewImageAction'
-  */
-  viewImageAction: 'flexberryFileViewImageAction',
-
-  /**
     File input identifier.
 
-    @property fileInputId
+    @property _fileInputId
     @type String
-    @readonly
+    @readOnly
+    @private
   */
-  fileInputId: Ember.computed('elementId', function() {
+  _fileInputId: Ember.computed('elementId', function() {
     let fileInputId = 'flexberry-file-file-input-';
     let elementId = this.get('elementId');
     if (Ember.isBlank(elementId)) {
@@ -81,40 +51,34 @@ export default FlexberryBaseComponent.extend({
   /**
     Copy of value created at initialization moment or after successful upload.
 
-    @property initialValue
+    @property _initialValue
     @type String
+    @private
   */
-  initialValue: null,
+  _initialValue: null,
 
   /**
     Deserialized copy of value created at initialization moment or after successful upload.
 
-    @property jsonInitialValue
+    @property _jsonInitialValue
     @type Object
-    @readonly
+    @readOnly
+    @private
   */
-  jsonInitialValue: Ember.computed('initialValue', function() {
-    let initialValue = this.get('initialValue');
+  _jsonInitialValue: Ember.computed('_initialValue', function() {
+    let initialValue = this.get('_initialValue');
     return Ember.typeOf(initialValue) === 'string' && !Ember.isBlank(initialValue) ? JSON.parse(initialValue) : null;
   }),
 
   /**
-    Value of file component (contains serialized file metadata such as fileName, fileSize, etc.).
-    It is binded to related model property, so every change to value will automatically change model property.
-
-    @property value
-    @type String
-  */
-  value: null,
-
-  /**
     Deserialized value of file component.
 
-    @property jsonValue
+    @property _jsonValue
     @type Object
-    @readonly
+    @readOnly
+    @private
   */
-  jsonValue: Ember.computed('value', function() {
+  _jsonValue: Ember.computed('value', function() {
     let value = this.get('value');
     return Ember.typeOf(value) === 'string' && !Ember.isBlank(value) ? JSON.parse(value) : null;
   }),
@@ -123,12 +87,13 @@ export default FlexberryBaseComponent.extend({
     File name.
     It is binded to component file name input, so every change to fileName will automatically change file name input value.
 
-    @property fileName
+    @property _fileName
     @type String
-    @readonly
+    @readOnly
+    @private
   */
-  fileName: Ember.computed('jsonValue.fileName', function() {
-    let fileName = this.get('jsonValue.fileName');
+  _fileName: Ember.computed('_jsonValue.fileName', function() {
+    let fileName = this.get('_jsonValue.fileName');
     if (Ember.isNone(fileName)) {
       return null;
     }
@@ -139,126 +104,266 @@ export default FlexberryBaseComponent.extend({
   /**
     Flag: indicates whether some file is added now or not.
 
-    @property hasFile
+    @property _hasFile
     @type Boolean
-    @readonly
+    @readOnly
+    @private
   */
-  hasFile: Ember.computed('jsonValue', function() {
-    return !Ember.isNone(this.get('jsonValue'));
-  }),
-
-  /**
-    Value change handler.
-  */
-  valueDidChange: Ember.observer('value', function() {
-    this.sendAction('fileChange', {
-      uploadData: this.get('uploadData'),
-      value: this.get('value')
-    });
+  _hasFile: Ember.computed('_jsonValue', function() {
+    return !Ember.isNone(this.get('_jsonValue'));
   }),
 
   /**
     Data from jQuery fileupload plugin (contains selected file).
 
-    @property uploadData
+    @property _uploadData
     @type Object
     @default null
+    @private
   */
-  uploadData: null,
+  _uploadData: null,
 
   /**
     Current file selected for upload.
 
-    @property selectedFile
+    @property _selectedFile
     @type Object
-    @readonly
+    @readOnly
+    @private
   */
-  selectedFile: Ember.computed('uploadData', function() {
-    let uploadData = this.get('uploadData');
+  _selectedFile: Ember.computed('_uploadData', function() {
+    let uploadData = this.get('_uploadData');
     return uploadData && uploadData.files && uploadData.files.length > 0 ? uploadData.files[0] : null;
-  }),
-
-  /**
-    Upload data change handler.
-  */
-  uploadDataDidChange: Ember.observer('uploadData', function() {
-    this.set('_previewImageAsBase64String', null);
-
-    let file = this.get('selectedFile');
-    if (!Ember.isNone(file)) {
-      this.set('value', JSON.stringify({
-        fileName: file.name,
-        fileSize: file.size,
-        fileMimeType: file.type
-      }));
-    }
   }),
 
   /**
     Flag: indicates whether file upload is in progress now.
 
-    @property uploadIsInProgress
+    @property _uploadIsInProgress
     @type Boolean
     @default false
+    @private
   */
-  uploadIsInProgress: false,
+  _uploadIsInProgress: false,
 
   /**
     Flag: indicates whether file preview download is in progress now.
 
-    @property previewDownloadIsInProgress
+    @property _previewDownloadIsInProgress
     @type Boolean
     @default false
+    @private
   */
-  previewDownloadIsInProgress: false,
+  _previewDownloadIsInProgress: false,
 
   /**
     Flag: indicates whether add button is visible now.
 
-    @property addButtonIsVisible
+    @property _addButtonIsVisible
     @type Boolean
-    @readonly
+    @readOnly
+    @private
   */
-  addButtonIsVisible: Ember.computed('readonly', function() {
+  _addButtonIsVisible: Ember.computed('readonly', function() {
     return !this.get('readonly');
   }),
 
   /**
     Flag: indicates whether add button is enabled now.
 
-    @property addButtonIsEnabled
+    @property _addButtonIsEnabled
     @type Boolean
-    @readonly
+    @readOnly
+    @private
   */
-  addButtonIsEnabled: Ember.computed('uploadIsInProgress', function() {
-    let uploadIsInProgress = this.get('uploadIsInProgress');
+  _addButtonIsEnabled: Ember.computed('_uploadIsInProgress', function() {
+    let uploadIsInProgress = this.get('_uploadIsInProgress');
     return !uploadIsInProgress;
   }),
 
   /**
     Flag: indicates whether remove button is visible now.
 
-    @property removeButtonIsVisible
+    @property _removeButtonIsVisible
     @type Boolean
-    @readonly
+    @readOnly
+    @private
   */
-  removeButtonIsVisible: Ember.computed('readonly', function() {
+  _removeButtonIsVisible: Ember.computed('readonly', function() {
     return !this.get('readonly');
   }),
 
   /**
     Flag: indicates whether remove button is enabled now.
 
-    @property removeButtonIsEnabled
+    @property _removeButtonIsEnabled
     @type Boolean
-    @readonly
+    @readOnly
+    @private
   */
-  removeButtonIsEnabled: Ember.computed('uploadIsInProgress', 'value', function() {
-    let uploadIsInProgress = this.get('uploadIsInProgress');
-    let jsonValue = this.get('jsonValue');
+  _removeButtonIsEnabled: Ember.computed('_uploadIsInProgress', 'value', function() {
+    let uploadIsInProgress = this.get('_uploadIsInProgress');
+    let jsonValue = this.get('_jsonValue');
 
     return !(uploadIsInProgress || Ember.isNone(jsonValue));
   }),
+
+  /**
+    Flag: indicates whether upload button is visible now.
+
+    @property _uploadButtonIsVisible
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _uploadButtonIsVisible: Ember.computed('readonly', 'showUploadButton', function() {
+    return !this.get('readonly') && this.get('showUploadButton');
+  }),
+
+  /**
+    Flag: indicates whether upload button is enabled now.
+
+    @property _uploadButtonIsEnabled
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _uploadButtonIsEnabled: Ember.computed('_uploadIsInProgress', '_uploadData', function() {
+    let uploadIsInProgress = this.get('_uploadIsInProgress');
+    let selectedFile = this.get('_selectedFile');
+
+    return !(uploadIsInProgress || Ember.isNone(selectedFile));
+  }),
+
+  /**
+    Flag: indicates whether download button is visible now.
+
+    @property _downloadButtonIsVisible
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _downloadButtonIsVisible: Ember.computed('showDownloadButton', function() {
+    // Download button is always visible (but disabled if download is not available).
+    return this.get('showDownloadButton');
+  }),
+
+  /**
+    Flag: indicates whether download button is enabled now.
+
+    @property _downloadButtonIsEnabled
+    @type Boolean
+    @readOnly
+    @private
+  */
+  _downloadButtonIsEnabled: Ember.computed('_uploadIsInProgress', '_initialValue', function() {
+    let uploadIsInProgress = this.get('_uploadIsInProgress');
+    let jsonInitialValue = this.get('_jsonInitialValue');
+
+    return !(uploadIsInProgress || Ember.isNone(jsonInitialValue));
+  }),
+
+  /**
+    Caption to be displayed in error modal dialog.
+    It will be displayed only if some error occurs.
+
+    @property _errorModalDialogCaption
+    @type String
+    @default t('components.flexberry-file.error-dialog-caption')
+    @private
+  */
+  _errorModalDialogCaption: t('components.flexberry-file.error-dialog-caption'),
+
+  /**
+    Content to be displayed in error modal dialog.
+    It will be displayed only if some error occurs.
+
+    @property _errorModalDialogContent
+    @type String
+    @default t('components.flexberry-file.error-dialog-content')
+    @private
+  */
+  _errorModalDialogContent: t('components.flexberry-file.error-dialog-content'),
+
+  /**
+    Selected jQuery object, containing HTML of error modal dialog.
+
+    @property _errorModalDialog
+    @type <a href="http://api.jquery.com/Types/#jQuery">JQueryObject</a>
+    @default null
+    @private
+  */
+  _errorModalDialog: null,
+
+  /**
+    Component's wrapping <div> CSS-class names.
+
+    @property classNames
+    @type String[]
+    @default ['flexberry-file']
+  */
+  classNames: ['flexberry-file'],
+
+  /**
+    Component's input additional CSS-class names.
+    See [Semantic UI inputs classes](http://semantic-ui.com/elements/input.html).
+
+    @property class
+    @type String
+    @default 'fluid'
+    @example
+    ```handlebars
+    {{flexberry-file
+      class="compact"
+      value=model.file
+    }}
+    ```
+  */
+  class: 'fluid',
+
+  /**
+    CSS-classes names for component's add, remove, upload, download buttons.
+    See [Semantic UI buttons classes](http://semantic-ui.com/elements/button.html).
+
+    @property buttonClass
+    @type String
+    @default ''
+    @example
+    ```handlebars
+    {{flexberry-file
+      buttonClass="red"
+      value=model.file
+    }}
+    ```
+  */
+  buttonClass: '',
+
+  /**
+    Path to component's settings in application configuration (JSON from ./config/environment.js).
+
+    @property appConfigSettingsPath
+    @type String
+    @default 'APP.components.flexberryFile'
+  */
+  appConfigSettingsPath: 'APP.components.flexberryFile',
+
+  /**
+    Name of the action which will be send outside after click on selected image preview.
+
+    @property viewImageAction
+    @type String
+    @default 'flexberryFileViewImageAction'
+  */
+  viewImageAction: 'flexberryFileViewImageAction',
+
+  /**
+    Value of file component (contains serialized file metadata such as fileName, fileSize, etc.).
+    It is binded to related model property, so every change to value will automatically change model property.
+
+    @property value
+    @type String
+  */
+  value: null,
 
   /**
     Flag: indicates whether to upload file on 'relatedModel' 'preSave' event.
@@ -279,42 +384,6 @@ export default FlexberryBaseComponent.extend({
   showPreview: false,
 
   /**
-    Preview options change handler.
-  */
-  previewOptionsDidChange: Ember.on('init', Ember.observer('showPreview', 'selectedFile', 'jsonValue.previewUrl', function() {
-    if (!this.get('showPreview') || !Ember.isBlank(this.get('_previewImageAsBase64String'))) {
-      return;
-    }
-
-    let file = this.get('selectedFile');
-    if (!Ember.isNone(file)) {
-      let reader = new FileReader();
-      reader.onload = (e) => {
-        this.set('_previewImageAsBase64String', e.target.result);
-        this.set('previewDownloadIsInProgress', false);
-      };
-
-      this.set('previewDownloadIsInProgress', true);
-      reader.readAsDataURL(file);
-
-      return;
-    }
-
-    let previewUrl = this.get('jsonValue.previewUrl');
-    if (!Ember.isBlank(previewUrl)) {
-      // Download file preview.
-      this.set('previewDownloadIsInProgress', true);
-      Ember.$.ajax(previewUrl).done((data, textStatus, jqXHR) => {
-        this.set('_previewImageAsBase64String', data);
-      }).fail((jqXHR, textStatus, errorThrown) => {
-        this.showDownloadErrorModalDialog(this.get('jsonValue.fileName'), errorThrown);
-      }).always(() => {
-        this.set('previewDownloadIsInProgress', false);
-      });
-    }
-  })),
-
-  /**
     Flag: indicates whether to show upload button or not.
 
     @property showUploadButton
@@ -333,57 +402,6 @@ export default FlexberryBaseComponent.extend({
   showDownloadButton: undefined,
 
   /**
-    Flag: indicates whether upload button is visible now.
-
-    @property uploadButtonIsVisible
-    @type Boolean
-    @readonly
-  */
-  uploadButtonIsVisible: Ember.computed('readonly', 'showUploadButton', function() {
-    return !this.get('readonly') && this.get('showUploadButton');
-  }),
-
-  /**
-    Flag: indicates whether upload button is enabled now.
-
-    @property uploadButtonIsEnabled
-    @type Boolean
-    @readonly
-  */
-  uploadButtonIsEnabled: Ember.computed('uploadIsInProgress', 'uploadData', function() {
-    let uploadIsInProgress = this.get('uploadIsInProgress');
-    let selectedFile = this.get('selectedFile');
-
-    return !(uploadIsInProgress || Ember.isNone(selectedFile));
-  }),
-
-  /**
-    Flag: indicates whether download button is visible now.
-
-    @property downloadButtonIsVisible
-    @type Boolean
-    @readonly
-  */
-  downloadButtonIsVisible: Ember.computed('showDownloadButton', function() {
-    // Download button is always visible (but disabled if download is not available).
-    return this.get('showDownloadButton');
-  }),
-
-  /**
-    Flag: indicates whether download button is enabled now.
-
-    @property downloadButtonIsEnabled
-    @type Boolean
-    @readonly
-  */
-  downloadButtonIsEnabled: Ember.computed('uploadIsInProgress', 'initialValue', function() {
-    let uploadIsInProgress = this.get('uploadIsInProgress');
-    let jsonInitialValue = this.get('jsonInitialValue');
-
-    return !(uploadIsInProgress || Ember.isNone(jsonInitialValue));
-  }),
-
-  /**
     Maximum file size in bytes for uploading files.
     It should be greater then 0 and less or equal then APP.components.file.maxUploadFileSize from application config\environment.
     If null or undefined, then APP.components.file.maxUploadFileSize from application config\environment will be used.
@@ -399,7 +417,7 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-file.placeholder')'
+    @default t('components.flexberry-file.placeholder')
   */
   placeholder: t('components.flexberry-file.placeholder'),
 
@@ -422,35 +440,6 @@ export default FlexberryBaseComponent.extend({
   */
   showModalDialogOnUploadError: undefined,
 
-  /**
-    Caption to be displayed in error modal dialog.
-    It will be displayed only if some error occurs.
-
-    @property errorModalDialogCaption
-    @type String
-    @default 't('components.flexberry-file.error-dialog-caption')'
-  */
-  errorModalDialogCaption: t('components.flexberry-file.error-dialog-caption'),
-
-  /**
-    Content to be displayed in error modal dialog.
-    It will be displayed only if some error occurs.
-
-    @property errorModalDialogContent
-    @type String
-    @default 't('components.flexberry-file.error-dialog-content')'
-  */
-  errorModalDialogContent: t('components.flexberry-file.error-dialog-content'),
-
-  /**
-    Selected jQuery object, containing HTML of error modal dialog.
-
-    @property errorModalDialog
-    @type Object
-    @default null
-  */
-  errorModalDialog: null,
-
   actions: {
     /**
       Handles click on selected image preview and sends action with data outside component
@@ -460,7 +449,7 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     viewLoadedImage() {
-      let fileName = this.get('fileName');
+      let fileName = this.get('_fileName');
       let previewImageAsBase64String = this.get('_previewImageAsBase64String');
       if (!Ember.isBlank(fileName) && !Ember.isBlank(previewImageAsBase64String)) {
         this.sendAction('viewImageAction', {
@@ -520,7 +509,7 @@ export default FlexberryBaseComponent.extend({
 
     // Remember initial value.
     let value = this.get('value');
-    this.set('initialValue', Ember.copy(value, true));
+    this.set('_initialValue', Ember.copy(value, true));
 
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'uploadUrl', defaultValue: null });
@@ -546,7 +535,7 @@ export default FlexberryBaseComponent.extend({
     // because after call to errorModalDialog.modal its html will disappear from DOM.
     let errorModalDialog = this.$('.flexberry-file-error-modal-dialog');
     errorModalDialog.modal('setting', 'closable', false);
-    this.set('errorModalDialog', errorModalDialog);
+    this.set('_errorModalDialog', errorModalDialog);
 
     // jQuery fileupload 'add' callback.
     let onFileAdd = (e, uploadData) => {
@@ -563,11 +552,13 @@ export default FlexberryBaseComponent.extend({
             return;
           }
         } else {
-          Ember.Logger.error(`Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`. Allowed value is a number >= 0.`);
+          Ember.Logger.error(
+            `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
+            ` Allowed value is a number >= 0.`);
         }
       }
 
-      this.set('uploadData', uploadData);
+      this.set('_uploadData', uploadData);
     };
 
     // Initialize jQuery fileupload plugin (https://github.com/blueimp/jQuery-File-Upload/wiki/API).
@@ -613,7 +604,7 @@ export default FlexberryBaseComponent.extend({
     @method removeFile
   */
   removeFile() {
-    this.set('uploadData', null);
+    this.set('_uploadData', null);
     this.set('value', null);
     this.set('_previewImageAsBase64String', null);
   },
@@ -624,16 +615,16 @@ export default FlexberryBaseComponent.extend({
     @method uploadFile
   */
   uploadFile() {
-    let file = this.get('selectedFile');
+    let file = this.get('_selectedFile');
     if (Ember.isNone(file)) {
       return null;
     }
 
     return new Ember.RSVP.Promise((resolve, reject) => {
-      this.set('uploadIsInProgress', true);
+      this.set('_uploadIsInProgress', true);
 
-      let uploadData = this.get('uploadData');
-      let initialValue = this.get('initialValue');
+      let uploadData = this.get('_uploadData');
+      let initialValue = this.get('_initialValue');
       if (!Ember.isNone(initialValue)) {
         uploadData.formData = {
           // Metadata about previously uploaded file.
@@ -645,15 +636,15 @@ export default FlexberryBaseComponent.extend({
         let value = jqXhr.responseText;
 
         this.set('value', value);
-        this.set('initialValue', Ember.copy(value, true));
-        this.set('uploadData', null);
+        this.set('_initialValue', Ember.copy(value, true));
+        this.set('_uploadData', null);
 
         this.sendAction('uploadSuccess', {
           uploadData: uploadData,
           response: jqXhr,
           value: value
         });
-        resolve(this.get('jsonValue'));
+        resolve(this.get('_jsonValue'));
       }).fail((jqXhr, textStatus, errorThrown) => {
         let errorContent = this.showUploadErrorModalDialog(file.name, errorThrown ? ' (' + errorThrown + ')' : '');
         this.sendAction('uploadFail', {
@@ -663,19 +654,19 @@ export default FlexberryBaseComponent.extend({
         });
         reject(new Error(errorContent));
       }).always(() => {
-        this.set('uploadIsInProgress', false);
+        this.set('_uploadIsInProgress', false);
       });
     });
   },
 
   /**
-    Method to download previously uploaded file.
+    Downloads previously uploaded file.
 
     @method downloadFile
   */
   downloadFile() {
-    let fileName = this.get('jsonInitialValue.fileName');
-    let fileUrl = this.get('jsonInitialValue.fileUrl');
+    let fileName = this.get('_jsonInitialValue.fileName');
+    let fileUrl = this.get('_jsonInitialValue.fileUrl');
     if (Ember.isBlank(fileUrl)) {
       return null;
     }
@@ -700,10 +691,10 @@ export default FlexberryBaseComponent.extend({
     @returns {String} Error content.
   */
   showErrorModalDialog(errorCaption, errorContent) {
-    let errorModalDialog = this.get('errorModalDialog');
+    let errorModalDialog = this.get('_errorModalDialog');
     if (errorModalDialog && errorModalDialog.modal) {
-      this.set('errorModalDialogCaption', errorCaption);
-      this.set('errorModalDialogContent', errorContent);
+      this.set('_errorModalDialogCaption', errorCaption);
+      this.set('_errorModalDialogContent', errorContent);
       errorModalDialog.modal('show');
     }
 
@@ -780,10 +771,10 @@ export default FlexberryBaseComponent.extend({
   /**
     Handles related model's 'preSave' event.
 
-    @private
     @method _onRelatedModelPreSave
     @param {Object} e Related model's 'preSave' event arguments.
     @param {Object[]} e.promises Related model's 'preSave' operations promises array.
+    @private
   */
   _onRelatedModelPreSave(e) {
     // Remove uploaded file from server, if related model is deleted, otherwise upload selected file to server.
@@ -799,8 +790,8 @@ export default FlexberryBaseComponent.extend({
   /**
     Subscribes on related model's 'preSave' event.
 
-    @private
     @method _subscribeOnRelatedModelPreSaveEvent
+    @private
   */
   _subscribeOnRelatedModelPreSaveEvent() {
     let uploadOnModelPreSave = this.get('uploadOnModelPreSave');
@@ -820,8 +811,8 @@ export default FlexberryBaseComponent.extend({
   /**
     Unsubscribes from related model's 'preSave' event.
 
-    @private
     @method _unsubscribeFromRelatedModelPresaveEvent
+    @private
   */
   _unsubscribeFromRelatedModelPresaveEvent() {
     let relatedModelOffPropertyType = Ember.typeOf(this.get('relatedModel.off'));
@@ -831,5 +822,76 @@ export default FlexberryBaseComponent.extend({
 
     let relatedModel = this.get('relatedModel');
     relatedModel.off('preSave', this.get('_onRelatedModelPreSave'));
-  }
+  },
+
+  /**
+    Value change handler.
+
+    @method _valueDidChange
+    @private
+  */
+  _valueDidChange: Ember.observer('value', function() {
+    this.sendAction('fileChange', {
+      uploadData: this.get('_uploadData'),
+      value: this.get('value')
+    });
+  }),
+
+  /**
+    Upload data change handler.
+
+    @method _uploadDataDidChange
+    @private
+  */
+  _uploadDataDidChange: Ember.observer('_uploadData', function() {
+    this.set('_previewImageAsBase64String', null);
+
+    let file = this.get('_selectedFile');
+    if (!Ember.isNone(file)) {
+      this.set('value', JSON.stringify({
+        fileName: file.name,
+        fileSize: file.size,
+        fileMimeType: file.type
+      }));
+    }
+  }),
+
+  /**
+    Preview options change handler.
+
+    @method _previewOptionsDidChange
+    @private
+  */
+  _previewOptionsDidChange: Ember.on('init', Ember.observer('showPreview', '_selectedFile', '_jsonValue.previewUrl', function() {
+    if (!this.get('showPreview') || !Ember.isBlank(this.get('_previewImageAsBase64String'))) {
+      return;
+    }
+
+    let file = this.get('_selectedFile');
+    if (!Ember.isNone(file)) {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        this.set('_previewImageAsBase64String', e.target.result);
+        this.set('_previewDownloadIsInProgress', false);
+      };
+
+      this.set('_previewDownloadIsInProgress', true);
+      reader.readAsDataURL(file);
+
+      return;
+    }
+
+    let previewUrl = this.get('_jsonValue.previewUrl');
+    if (!Ember.isBlank(previewUrl)) {
+      // Download file preview.
+      this.set('_previewDownloadIsInProgress', true);
+      Ember.$.ajax(previewUrl).done((data, textStatus, jqXHR) => {
+        this.set('_previewImageAsBase64String', data);
+      }).fail((jqXHR, textStatus, errorThrown) => {
+        this.showDownloadErrorModalDialog(this.get('_jsonValue.fileName'), errorThrown);
+      }).always(() => {
+        this.set('_previewDownloadIsInProgress', false);
+      });
+    }
+  }))
 });

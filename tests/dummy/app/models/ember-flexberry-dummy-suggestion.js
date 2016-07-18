@@ -104,7 +104,8 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
     applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
       name: Proj.attr('Name', {
         hidden: true
-      })
+      }),
+      eMail: Proj.attr('Email')
     }, {
       displayMemberPath: 'name'
     })
@@ -140,7 +141,8 @@ Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
   author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
     name: Proj.attr('Name', {
       hidden: true
-    })
+    }),
+    eMail: Proj.attr('Email')
   }, {
     displayMemberPath: 'name'
   }),
@@ -207,6 +209,17 @@ Model.defineProjection('FolvWithLimitFunctionExampleView', 'ember-flexberry-dumm
     name: Proj.attr('Name', {
       hidden: true
     })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
+// Projection for lookup in block form.
+Model.defineProjection('LookupInBlockFormView', 'ember-flexberry-dummy-suggestion', {
+  editor1: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Proj.attr('name', { hidden: true }),
+    eMail: Proj.attr('eMail', { hidden: true }),
+    gender: Proj.attr('gender', { hidden: true })
   }, {
     displayMemberPath: 'name'
   })

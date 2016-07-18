@@ -9,11 +9,10 @@ import FlexberryBaseComponent from './flexberry-base-component';
  * @extends FlexberryBaseComponent
  */
 export default FlexberryBaseComponent.extend({
-
   _idPrefix: 'ColDesc',
-  _userSettingsService: Ember.inject.service('user-settings-service'),
   colsConfigMenu: Ember.inject.service(),
   _router: undefined,
+
   /**
    * model with
    *
@@ -97,11 +96,11 @@ export default FlexberryBaseComponent.extend({
      */
     setSortOrder: function(n) {
       let select = this._getEventElement('SortOrder', n); // changed select DOM-element
-      let tr = select.parentNode.parentNode;  // TR DOM-element
-      let tbody = tr.parentNode;  // TBODY DOM-element
+      let $tr = Ember.$(select).parents('tr');  // TR DOM-element
+      let $tbody = Ember.$(select).parents('tbody');  // TBODY DOM-element
       let value = select.options.item(select.selectedIndex).value;  // Chosen sort order
-      let input = Ember.$(tr).find('input').get(0); //sortPriority field in this row
-      let $inputs = Ember.$('input.sortPriority:enabled', tbody); // enabled sortPriority fields
+      let input = Ember.$($tr).find('input').get(0); //sortPriority field in this row
+      let $inputs = Ember.$('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
       let SortPriority = 1;
       let index = this._getIndexFromId(input.id);
       if (value === '0') {  // Disable sorting?
@@ -140,11 +139,10 @@ export default FlexberryBaseComponent.extend({
       let eventInput = this._getEventElement('SortPriority', n);  // changed input DOM-element
       let newValue = parseInt(eventInput.value);  //New value
       let prevValue = eventInput.getAttribute('prevValue'); // Previous value
-      let tr = eventInput.parentNode.parentNode;  // TR DOM-element
-      let tbody = tr.parentNode;  // TBODY DOM-element
+      let $tbody = Ember.$(eventInput).parents('tbody');  // TBODY DOM-element
       let input;
       let inputValue;
-      let $inputs = Ember.$('input.sortPriority:enabled', tbody); // enabled sortPriority fields
+      let $inputs = Ember.$('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
       if (isNaN(newValue) || newValue <= 0) { //new Value incorrectly setAttribute
         newValue = $inputs.length;  // Set last value
       }
@@ -196,10 +194,10 @@ export default FlexberryBaseComponent.extend({
     rowUp: function(n) {
       let eventButton = this._getEventElement('RowUp', n);
       let newTr;
-      let tr = eventButton.parentNode.parentNode;  // TR DOM-element
+      let tr = Ember.$(eventButton).parents('tr').get(0);  // TR DOM-element
       let select = Ember.$(tr).find('SELECT').get(0);
       let selectedIndex = select.selectedIndex; // selected index of sort order
-      let tbody = tr.parentNode;  // TBODY DOM-element
+      var tbody = Ember.$(eventButton).parents('tbody').get(0);   // TBODY DOM-element
       let prevTr = Ember.$(tr).prev('TR').get(0); // Previous TR DOM-element
       if (prevTr) { // Previous TR exist
         newTr = tbody.removeChild(tr);
@@ -229,10 +227,10 @@ export default FlexberryBaseComponent.extend({
     rowDown: function(n) {
       let eventButton = this._getEventElement('RowDown', n);
       var newTr;
-      let tr = eventButton.parentNode.parentNode;  // TR DOM-element
+      let tr = Ember.$(eventButton).parents('tr').get(0);  // TR DOM-element
       let select = Ember.$(tr).find('SELECT').get(0);
       let selectedIndex = select.selectedIndex; // selected index of sort order
-      var tbody = tr.parentNode;   // TBODY DOM-element
+      var tbody = Ember.$(eventButton).parents('tbody').get(0);   // TBODY DOM-element
       var nextTr = Ember.$(tr).next('TR').get(0); // Next TR DOM-element
       if (nextTr) { // Next TR exist
         newTr = tbody.removeChild(tr);  // Exchange TR's
@@ -313,9 +311,13 @@ export default FlexberryBaseComponent.extend({
 
   _getSavePromise: function(settingName, colsConfig) {
     this._router = getOwner(this).lookup('router:main');
-    let moduleName  =   this._router.currentRouteName;
-    let savePromise = this.get('_userSettingsService').saveUserSetting({ moduleName: moduleName, settingName: settingName, userSetting: colsConfig });
-    return savePromise;
+    let moduleName  = this._router.currentRouteName;
+
+    return this.get('userSettingsService').saveUserSetting({
+      moduleName: moduleName,
+      settingName: settingName,
+      userSetting: colsConfig
+    });
   },
 
   _getSettings: function() {

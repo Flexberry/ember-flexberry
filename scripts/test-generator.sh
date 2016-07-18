@@ -17,7 +17,6 @@ pushd "$TMP_DIR"
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.
 ember init
-npm install broccoli-jscs --save-dev
 cp app/index.html .
 rm -r app/*
 mv index.html app
@@ -25,7 +24,6 @@ ember install "${ADDON_DIR}"
 rm -f ./ember-cli-build.js
 cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
 rm -f ./.jscsrc
-cp "${ADDON_DIR}/vendor/flexberry/.jscsrc" .
 
 # Generate components using Dummy metamodel and test them.
 ember generate flexberry-application app --metadata-dir=${META_DIR}

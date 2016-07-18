@@ -1,6 +1,14 @@
 ﻿{
-  "propertyLookup": [],
-  "caption": null,
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Relation",
+      "projection": ""
+    }
+  ],
+  "caption": "Test polymorphic class",
   "name": "EmberFlexberryDummyTestPolyEdit",
   "attrs": [],
   "projections": [

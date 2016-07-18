@@ -1,22 +1,31 @@
 /**
   @module ember-flexberry
- */
+*/
 
-import EditFormController from 'ember-flexberry/controllers/edit-form';
+import EditFormController from './edit-form';
 
 /**
-  Controller for support edit form {{#crossLink "IISCaseberryLoggingObjectsApplicationLog"}}IISCaseberryLoggingObjectsApplicationLog{{/crossLink}} record.
+  Application log edit form controller.
 
   @class IISCaseberryLoggingObjectsApplicationLogEController
   @extends EditFormController
- */
+*/
 export default EditFormController.extend({
   /**
-    Title for edit form.
+    Flag: indicates whether edit form is in readonly mode or not.
 
-    @property title
+    @property readonly
+    @type Boolean
+    @default true
+  */
+  readonly: true,
+
+  /**
+    Parent route name.
+
+    @property parentRoute
     @type String
-    @default 'Application log'
-   */
-  title: 'Application log',
+    @default 'i-i-s-caseberry-logging-objects-application-log-l'
+  */
+  parentRoute: 'i-i-s-caseberry-logging-objects-application-log-l'
 });

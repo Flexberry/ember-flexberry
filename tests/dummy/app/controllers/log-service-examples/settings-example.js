@@ -97,7 +97,10 @@ export default ApplicationLogListFormController.extend({
       Ember.assert(
         this._generateUniqueMessagePrefix() +
         this.get('i18n').t('forms.log-service-examples.settings-example.ember-assert-button-message'),
-        false);
+        false).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -110,8 +113,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerErrorButtonClick() {
       Ember.Logger.error(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-error-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-error-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -124,8 +129,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerWarnButtonClick() {
       Ember.Logger.warn(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-warn-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-warn-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -154,8 +161,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerLogButtonClick() {
       Ember.Logger.log(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-log-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-log-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -168,8 +177,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerInfoButtonClick() {
       Ember.Logger.info(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-info-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-info-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -182,8 +193,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerDebugButtonClick() {
       Ember.Logger.debug(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-debug-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-debug-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     }
   },
 

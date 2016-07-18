@@ -27,6 +27,32 @@ var GroupBlueprint = (function () {
             case 'controller-test':
                 this.emberGenerate("list-forms");
                 this.emberGenerate("edit-forms");
+                break;
+            case 'route-test':
+                this.emberGenerate("list-forms");
+                this.emberGenerate("edit-forms");
+                break;
+            case 'flexberry-enum':
+                this.emberGenerate("enums");
+                break;
+            case 'flexberry-list-form':
+                this.emberGenerate("list-forms");
+                break;
+            case 'flexberry-edit-form':
+                this.emberGenerate("edit-forms");
+                break;
+            case 'flexberry-edit-form':
+                this.emberGenerate("edit-forms");
+                break;
+            case 'flexberry-model':
+                this.emberGenerate("models");
+                break;
+            case 'flexberry-model-init':
+                this.emberGenerate("models", true, "app/models");
+                break;
+            case 'flexberry-serializer-init':
+                this.emberGenerate("models", true, "app/serializers");
+                break;
         }
     }
     GroupBlueprint.funCallback = function (arg) {
@@ -35,21 +61,36 @@ var GroupBlueprint = (function () {
     };
     GroupBlueprint.prototype.setMainBlueprint = function (blueprintName) {
         GroupBlueprint.mainBlueprint = Blueprint.lookup(blueprintName, {
-            ui: this.blueprint.ui,
-            analytics: this.blueprint.analytics,
-            project: this.blueprint.project
+            ui: undefined,
+            analytics: undefined,
+            project: undefined,
+            paths: ["node_modules/ember-flexberry/blueprints"]
         });
     };
-    GroupBlueprint.prototype.emberGenerate = function (metadataSubDir) {
+    GroupBlueprint.prototype.emberGenerate = function (metadataSubDir, notOverwrite, folderJsFiles) {
+        if (notOverwrite === void 0) { notOverwrite = false; }
+        if (folderJsFiles === void 0) { folderJsFiles = undefined; }
         metadataSubDir = path.join(this.metadataDir, metadataSubDir);
         var list = fs.readdirSync(metadataSubDir);
         for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
             var file = list_1[_i];
             var entityName = path.parse(file).name;
+            if (notOverwrite && this.fileExists(folderJsFiles + "/" + entityName + ".js"))
+                continue;
             var groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
             GroupBlueprint.groupOptions.push(groupOptions);
             this.promise = this.promise.then(GroupBlueprint.funCallback);
         }
+    };
+    GroupBlueprint.prototype.fileExists = function (path) {
+        try {
+            fs.statSync(path);
+        }
+        catch (e) {
+            if (e.code === "ENOENT")
+                return false;
+        }
+        return true;
     };
     GroupBlueprint.groupOptions = [];
     return GroupBlueprint;

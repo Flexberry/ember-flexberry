@@ -49,26 +49,66 @@ class GroupBlueprint {
       case 'controller-test':
         this.emberGenerate("list-forms");
         this.emberGenerate("edit-forms");
+        break;
+      case 'route-test':
+        this.emberGenerate("list-forms");
+        this.emberGenerate("edit-forms");
+        break;
+      case 'flexberry-enum':
+        this.emberGenerate("enums");
+        break;
+      case 'flexberry-list-form':
+        this.emberGenerate("list-forms");
+        break;
+      case 'flexberry-edit-form':
+        this.emberGenerate("edit-forms");
+        break;
+      case 'flexberry-edit-form':
+        this.emberGenerate("edit-forms");
+        break;
+      case 'flexberry-model':
+        this.emberGenerate("models");
+        break;
+      case 'flexberry-model-init':
+        this.emberGenerate("models", true, "app/models");
+        break;
+      case 'flexberry-serializer-init':
+        this.emberGenerate("models", true, "app/serializers");
+        break;
     }
   }
 
   setMainBlueprint(blueprintName) {
     GroupBlueprint.mainBlueprint = Blueprint.lookup(blueprintName, {
-      ui: this.blueprint.ui,
-      analytics: this.blueprint.analytics,
-      project: this.blueprint.project
+      ui: undefined,
+      analytics: undefined,
+      project: undefined,
+      paths: ["node_modules/ember-flexberry/blueprints"]
     });
   }
 
-  emberGenerate(metadataSubDir: string) {
+  emberGenerate(metadataSubDir: string, notOverwrite = false, folderJsFiles=undefined) {
     metadataSubDir = path.join(this.metadataDir, metadataSubDir);
     let list = fs.readdirSync(metadataSubDir);
     for (let file of list) {
       let entityName = path.parse(file).name;
+      if (notOverwrite && this.fileExists(`${folderJsFiles}/${entityName}.js`))
+        continue;
       let groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
       GroupBlueprint.groupOptions.push(groupOptions);
       this.promise = this.promise.then(GroupBlueprint.funCallback);
     }
   }
+
+  fileExists(path: string): boolean {
+    try {
+      fs.statSync(path);
+    } catch (e) {
+      if (e.code === "ENOENT")
+        return false;
+    }
+    return true
+  }
+
 }
 

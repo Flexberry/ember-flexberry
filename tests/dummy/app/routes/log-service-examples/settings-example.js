@@ -10,7 +10,7 @@ export default ApllicationLogListFormRoute.extend({
   */
   modelProjection: 'ApplicationLogL',
 
- /**
+  /**
   developerUserSettings.
   {
   <componentName>: {
@@ -30,7 +30,7 @@ export default ApllicationLogListFormRoute.extend({
   @type Object
   @default {}
   */
- developerUserSettings: { FOLVSettingExample: `
+  developerUserSettings: { FOLVSettingExample: `
     {
       "DEFAULT": {
         "colsOrder": [

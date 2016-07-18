@@ -240,19 +240,7 @@ export default Ember.Service.extend({
         columnNumber: null,
         stack: null
       }, error));
-
       return _this._storeToApplicationLog(messageCategory.error, message, formattedMessage);
-
-      if (rethrowError === false) {
-
-        // Break execution if rethrowError === false.
-        return;
-      } else {
-
-        // Rethrow an error, because Ember.onerror handler has no bubbling
-        // and stored error won't appear in browser's console without rethrowing.
-        originalEmberLoggerError(...arguments);
-      }
     };
 
     // Assign Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).

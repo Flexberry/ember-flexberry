@@ -75,12 +75,15 @@ export default ApplicationLogListFormController.extend({
     onRejectRsvpPromiseButtonClick() {
       new Ember.RSVP.Promise((resolve, reject) => {
         setTimeout(() => {
-          reject(
+          reject(Ember.Logger.error(
             this._generateUniqueMessagePrefix() +
-            this.get('i18n').t('forms.log-service-examples.settings-example.reject-rsvp-promise-button-message'));
+            this.get('i18n').t('forms.log-service-examples.settings-example.reject-rsvp-promise-button-message')));
+        }, 0);
+      }).catch(
+        error => {
           this.send('refreshList');
-        }, 3000);
-      });
+        }
+      );
     },
 
     /**

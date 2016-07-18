@@ -198,6 +198,4 @@ export default {
       }
     }
   }
-//   models.i-i-s-caseberry-logging-objects-application-log.projections.ApplicationLogL.processId.caption
-
 };

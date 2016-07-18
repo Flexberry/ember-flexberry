@@ -445,6 +445,7 @@ export default FlexberryBaseComponent.extend({
             alert('No default usersettings');
             break;
           }
+
           userSettingsService.deleteUserSetting(componentName)
           .then(record => {
             if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)

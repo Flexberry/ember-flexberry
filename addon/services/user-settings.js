@@ -260,8 +260,6 @@ export default Ember.Service.extend({
     return ret;
   },
 
-
-
   /**
    Returns current list of named userSetting.
 

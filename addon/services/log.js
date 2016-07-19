@@ -232,6 +232,7 @@ export default Ember.Service.extend({
     let originalEmberLoggerError = Ember.Logger.error;
     let onError = function(error, rethrowError) {
       let message = error.message || error.toString();
+
       let formattedMessage = JSON.stringify(Ember.merge({
         name: null,
         message: null,

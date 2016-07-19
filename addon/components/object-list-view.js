@@ -1166,12 +1166,17 @@ export default FlexberryBaseComponent.extend(
     }
 
     let key = this._createKey(bindingPath);
+    let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
 
     let column = {
-      header: getValueFromLocales(this.get('i18n'), key) || attr.caption || Ember.String.capitalize(attrName),
+      header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
     };
+
+    if (valueFromLocales) {
+      column.keyLocale = key;
+    }
 
     let customColumnAttributesFunc = this.get('customColumnAttributes');
     if (customColumnAttributesFunc) {

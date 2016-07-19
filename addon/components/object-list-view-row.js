@@ -126,7 +126,7 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   hasRecords: Ember.computed('records.length', function() {
-    return this.get('records.length');
+    return this.get('records.length') > 0;
   }),
 
   /**

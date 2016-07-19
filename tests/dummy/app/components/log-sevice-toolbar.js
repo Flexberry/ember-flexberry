@@ -1,9 +1,8 @@
 import Ember from 'ember';
 import OlvToolbar from 'ember-flexberry/components/olv-toolbar';
-import { translationMacro as t } from 'ember-i18n';
 
 export default OlvToolbar.extend({
-  tagName: "",
+  tagName: '',
 
   actions: {
     /**

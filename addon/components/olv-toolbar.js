@@ -13,10 +13,11 @@ const { getOwner } = Ember;
 */
 export default FlexberryBaseComponent.extend({
   /**
-    Flag to show colsConfigButton button at toolbar or not.
-  */
-  colsConfigButton: true,
+    Controller for model.
 
+    @property modelController
+    @type Object
+  */
   modelController: null,
 
   /**

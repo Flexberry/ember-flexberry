@@ -229,7 +229,6 @@ export default Ember.Service.extend({
     return ret;
   },
 
-
   /**
     Returns  true if default userSettings for current appPage exists.
 

@@ -13,10 +13,21 @@ import ObjectListViewRowComponent from '../object-list-view-row';
 */
 export default ObjectListViewRowComponent.extend({
   /**
+    Stores the number of pixels to isolate one level of hierarchy.
+
+    @property _hierarchicalIndent
+    @type Number
+    @default 10
+    @private
   */
   _hierarchicalIndent: 10,
 
   /**
+    Number of pixels to isolate the current level of the hierarchy.
+
+    @property hierarchicalIndent
+    @type Number
+    @default 10
   */
   hierarchicalIndent: Ember.computed({
     get() {

@@ -1,0 +1,26 @@
+{{#if _colsConfigButton}}
+  <div class="ui buttons">
+    <button class="ui icon button" {{action "showConfigDialog"}}>
+      <i class="large table icon"></i>
+    </button>
+    {{#if colsSettingsItems}}
+      {{flexberry-menu
+        items=colsSettingsItems
+        onItemClick=(action "onMenuItemClick")
+      }}
+    {{/if}}
+  </div>
+{{/if}}
+{{#each customButtons as |customButton|}}
+  <button
+    class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
+    {{action "customButtonAction" customButton.buttonAction}}>
+    {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
+  </button>
+{{/each}}
+
+<button class="ui small red button" {{action 'onThrowExceptionButtonClick'}}>
+  {{t "forms.log-service-examples.settings-example.throw-exception-button-caption"}}
+</button>
+
+  

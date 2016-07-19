@@ -95,6 +95,20 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Default component that will be used to display values in toolbar.
+
+    @property {Object} toolbarComponent
+    @property {String} [toolbarComponent.name='olv-toolbar']
+    @property {String} [toolbarComponent.properties=null]
+  */
+  toolbarComponent: {
+    name: 'olv-toolbar',
+    properties: null,
+  },
+
+  configurateToolbar: undefined,
+
+  /**
     Flag indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
@@ -665,6 +679,14 @@ export default FlexberryBaseComponent.extend({
     if (this.get('componentMode') === 'lookupform' && customProperties && typeof customProperties === 'object') {
       // For lookup mode we allow to set properties.
       this.setProperties(customProperties);
+    }
+
+    let configurateToolbar = this.get('configurateToolbar');
+    if (configurateToolbar) {
+      Ember.assert('configurateToolbar must be a function', typeof configurateToolbar === 'function');
+
+      let toolbarComponent = this.get('toolbarComponent');
+      configurateToolbar(toolbarComponent);
     }
   }
 });

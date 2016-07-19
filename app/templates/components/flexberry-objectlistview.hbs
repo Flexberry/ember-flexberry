@@ -1,5 +1,5 @@
-{{olv-toolbar
-  class='ui secondary menu no-margin'
+{{!-- {{olv-toolbar
+  class="ui secondary menu no-margin"
   createNewButton=createNewButton
   enableCreateNewButton=(not readonly)
   refreshButton=refreshButton
@@ -9,19 +9,45 @@
   showFilters=_showFilters
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
-  resetFilters = (action (if resetFilters resetFilters "resetFilters"))
+  resetFilters=(action (if resetFilters resetFilters "resetFilters"))
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass
   enableDeleteButton=(not readonly)
   componentName=componentName
   modelController=currentController
-  customButtonAction='customButtonAction'
+  customButtonAction="customButtonAction"
+  customButtons=customButtons
+  editFormRoute=editFormRoute
+  showConfigDialog="showConfigDialog"
+  confirmDeleteRows=confirmDeleteRows
+}} --}}
+
+{{component toolbarComponent.name
+  dynamicProperties=toolbarComponent.properties
+  createNewButton=createNewButton
+  enableCreateNewButton=(not readonly)
+  refreshButton=refreshButton
+  deleteButton=deleteButton
+  colsConfigButton=colsConfigButton
+  enableFilters=enableFilters
+  showFilters=_showFilters
+  filters=filters
+  toggleStateFilters=(action "toggleStateFilters")
+  resetFilters=(action (if resetFilters resetFilters "resetFilters"))
+  filterButton=filterButton
+  filterText=filterText
+  buttonClass=buttonClass
+  enableDeleteButton=(not readonly)
+  componentName=componentName
+  modelController=currentController
+  customButtonAction="customButtonAction"
   customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
 }}
+
 {{object-list-view
   placeholder=placeholder
   readonly=readonly

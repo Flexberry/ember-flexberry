@@ -367,7 +367,7 @@ export default FlexberryBaseComponent.extend(
       return cols;
     }
 
-    var userSettings = this.currentController ? this.currentController.userSettings : undefined;
+    let userSettings = this.currentController ? this.currentController.userSettings : undefined;
     if (userSettings && userSettings.colsOrder !== undefined) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {

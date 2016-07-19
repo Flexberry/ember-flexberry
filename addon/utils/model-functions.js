@@ -26,3 +26,22 @@ export function getRelationType(model, relationName) {
   let relationType = relation.type;
   return relationType;
 }
+
+/**
+  Gets the value from locales.
+
+  @method getValueFromLocales
+  @param {Service} i18n i18n service.
+  @param {String} key Key for property in locales.
+  @return {String} Value from locales. Returns `null` if key will not be found.
+*/
+export function getValueFromLocales(i18n, key) {
+  Ember.assert('key should be defined', key);
+
+  if (i18n.exists(key)) {
+    return i18n.t(key);
+  } else {
+    Ember.Logger.warn(`The ${key} is not found in locales.`);
+    return null;
+  }
+}

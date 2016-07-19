@@ -104,7 +104,8 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
     applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
       name: Proj.attr('Name', {
         hidden: true
-      })
+      }),
+      eMail: Proj.attr('Email')
     }, {
       displayMemberPath: 'name'
     })
@@ -140,7 +141,8 @@ Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
   author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
     name: Proj.attr('Name', {
       hidden: true
-    })
+    }),
+    eMail: Proj.attr('Email')
   }, {
     displayMemberPath: 'name'
   }),

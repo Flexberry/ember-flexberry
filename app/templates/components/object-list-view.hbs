@@ -12,7 +12,7 @@
 <table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
   <thead>
     <tr>
-      <th class="object-list-view-operations collapsing {{unless (and showHelperColumn hasContent) 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+      <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
         {{#each columns as |column|}}
           {{component headerCellComponent.componentName
             column=column

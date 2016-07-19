@@ -71,63 +71,89 @@ export default Ember.Controller.extend({
   */
   init() {
     this._super(...arguments);
+  },
 
-    let itemsLeft = [{
-      icon: 'search icon',
-      title: 'Left side aligned icon',
-      items: null
-    }];
+  /**
+    Initializes itemsLeft.
 
-    let itemsRight = [{
+    @property itemsLeft
+    @type Object
+  */
+  itemsLeft: Ember.computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    let  nodes = [{
+        icon: 'search icon',
+        title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
+        items: null
+      }];
+    return nodes;
+  }),
+
+  /**
+    Initializes itemsRight.
+
+    @property itemsRight
+    @type Object
+  */
+  itemsRight: Ember.computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    let  nodes = [{
       icon: 'setting icon',
       iconAlignment: 'right',
-      title: 'Right side aligned icon',
+      title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'),
       items: null
     }];
+    return nodes;
+  }),
 
-    let itemsSubmenu = [{
+  /**
+    Initializes itemsSubmenu.
+
+    @property itemsSubmenu
+    @type Object
+  */
+  itemsSubmenu: Ember.computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    let nodes = [{
       icon: 'list layout icon',
-      title: 'Submenu',
+      title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'),
       itemsAlignment: null,
       items: [{
         icon: 'search icon',
-        title: 'Left side aligned icon',
+        title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
         items: null
       }, {
         icon: 'setting icon',
         iconAlignment: 'right',
-        title: 'Right side aligned icon',
+        title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'),
         items: null
       }, {
         icon: 'list layout icon',
-        title: 'Submenu',
+        title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'),
         itemsAlignment: 'left',
         items: [{
           icon: 'search icon',
-          title: 'Left side aligned icon',
+          title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
           items: null
         }, {
           icon: 'setting icon',
           iconAlignment: 'right',
-          title: 'Right side aligned icon',
+          title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'),
           items: null
         }, {
           icon: 'list layout icon',
-          title: 'Submenu',
+          title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'),
           itemsAlignment: 'right',
           items: [{
             icon: 'search icon',
-            title: 'Left side aligned icon',
+            title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
             items: null
           }]
         }]
       }]
     }];
-
-    this.set('itemsLeft', itemsLeft);
-    this.set('itemsRight', itemsRight);
-    this.set('itemsSubmenu', itemsSubmenu);
-  },
+    return nodes;
+  }),
 
   /**
     Component settings metadata.

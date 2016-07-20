@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* Blueprints
+    * Add new `flexberry-group` - bluepring for generation of group entities one blueprint.
+
+###  Fixed
+* Blueprints
+    * Fix blueprints speed up generation process
+
+### Added
 * Custom internationalized captions for boolean type in object-list-view-cell.
 
 ### Fixed

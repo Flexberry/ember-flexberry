@@ -53,6 +53,8 @@ var GroupBlueprint = (function () {
             case 'flexberry-serializer-init':
                 this.emberGenerate("models", true, "app/serializers");
                 break;
+            default:
+                throw new Error("Unknown blueprint: " + this.blueprintName);
         }
     }
     GroupBlueprint.funCallback = function (arg) {

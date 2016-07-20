@@ -73,8 +73,7 @@ export default FlexberryFile.extend({
       @param {Object} [e.data] Data of selected menu item.
       @public
     */
-    onMenuItemClick(e) {
-      
+    onMenuItemClick(e) {      
       if (!e.item) {
         return;
       }

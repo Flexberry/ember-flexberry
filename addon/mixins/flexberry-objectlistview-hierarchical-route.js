@@ -3,7 +3,9 @@
 */
 
 import Ember from 'ember';
-import QueryBuilder from 'ember-flexberry-data/query/builder';
+import { Query } from 'ember-flexberry-data';
+
+const { Builder } = Query;
 
 /**
   Mixin for [Ember.Route](http://emberjs.com/api/classes/Ember.Route.html) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
@@ -25,7 +27,7 @@ export default Ember.Mixin.create({
       let hierarchicalAttribute = this.controllerFor(this.routeName).get('hierarchicalAttribute');
       let modelName = this.get('modelName');
       let projectionName = this.get('modelProjection');
-      let builder = new QueryBuilder(this.store)
+      let builder = new Builder(this.store)
         .from(modelName)
         .selectByProjection(projectionName)
         .where(hierarchicalAttribute, 'eq', id);

@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   name: DS.attr('string'),
@@ -34,29 +34,29 @@ var Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('ApplicationUserE', 'ember-flexberry-dummy-application-user', {
-  name: Proj.attr('Name'),
-  eMail: Proj.attr('E-mail'),
-  phone1: Proj.attr('Phone1'),
-  phone2: Proj.attr('Phone2'),
-  phone3: Proj.attr('Phone3'),
-  activated: Proj.attr('Activated'),
-  vK: Proj.attr('VK'),
-  facebook: Proj.attr('Facebook'),
-  twitter: Proj.attr('Twitter'),
-  birthday: Proj.attr('Birthday'),
-  gender: Proj.attr('Gender'),
-  vip: Proj.attr('Vip'),
-  karma: Proj.attr('Karma')
+  name: Projection.attr('Name'),
+  eMail: Projection.attr('E-mail'),
+  phone1: Projection.attr('Phone1'),
+  phone2: Projection.attr('Phone2'),
+  phone3: Projection.attr('Phone3'),
+  activated: Projection.attr('Activated'),
+  vK: Projection.attr('VK'),
+  facebook: Projection.attr('Facebook'),
+  twitter: Projection.attr('Twitter'),
+  birthday: Projection.attr('Birthday'),
+  gender: Projection.attr('Gender'),
+  vip: Projection.attr('Vip'),
+  karma: Projection.attr('Karma')
 });
 
 // List form projection.
 Model.defineProjection('ApplicationUserL', 'ember-flexberry-dummy-application-user', {
-  name: Proj.attr('Name'),
-  eMail: Proj.attr('E-mail'),
-  activated: Proj.attr('Activated'),
-  birthday: Proj.attr('Birthday'),
-  gender: Proj.attr('Gender'),
-  karma: Proj.attr('Karma')
+  name: Projection.attr('Name'),
+  eMail: Projection.attr('E-mail'),
+  activated: Projection.attr('Activated'),
+  birthday: Projection.attr('Birthday'),
+  gender: Projection.attr('Gender'),
+  karma: Projection.attr('Karma')
 });
 
 export default Model;

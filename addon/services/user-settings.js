@@ -3,8 +3,10 @@
 */
 
 import Ember from 'ember';
-import QueryBuilder from 'ember-flexberry-data/query/builder';
+import { Query } from 'ember-flexberry-data';
 import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+
+const { Builder } = Query;
 
 const defaultSettingName = 'DEFAULT';
 /**
@@ -601,7 +603,7 @@ export default Ember.Service.extend({
     let cp = this._getSearchPredicate(componentName, settingName);
     let store = this.get('_store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
-    let builder = new QueryBuilder(store)
+    let builder = new Builder(store)
     .from(modelName)
     .selectByProjection('FlexberryUserSettingE')
     .where(cp);
@@ -640,7 +642,7 @@ export default Ember.Service.extend({
     let cp = this._getSearchPredicate(componentName, settingName);
     let store = this.get('_store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
-    let builder = new QueryBuilder(store)
+    let builder = new Builder(store)
     .from(modelName)
     .selectByProjection('FlexberryUserSettingE')
     .orderBy('settLastAccessTime desc')
@@ -675,7 +677,7 @@ export default Ember.Service.extend({
     let cp = this._getSearchPredicate(componentName, settingName);
     let store = this.get('_store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
-    let builder = new QueryBuilder(store)
+    let builder = new Builder(store)
     .from(modelName)
     .selectByProjection('FlexberryUserSettingE')
     .where(cp);

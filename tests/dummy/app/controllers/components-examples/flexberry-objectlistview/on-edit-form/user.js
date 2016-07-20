@@ -2,8 +2,10 @@ import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from '../../../../mixins/edit-form-controller-operations-indication';
 
-import QueryBuilder from 'ember-flexberry-data/query/builder';
+import { Query } from 'ember-flexberry-data';
 import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+
+const { Builder } = Query;
 
 export default EditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -23,7 +25,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
 
   customContent: Ember.computed('model.name', function() {
     let name = this.get('model.name');
-    let builder = new QueryBuilder(this.get('store'))
+    let builder = new Builder(this.get('store'))
       .from('ember-flexberry-dummy-suggestion')
       .selectByProjection('SuggestionL')
       .where(new StringPredicate('author.name').contains(name));

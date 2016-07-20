@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   // Inversed relationship for ember-flexberry-dummy-comment.userVotes.
@@ -24,9 +24,9 @@ var Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('CommentVoteE', 'ember-flexberry-dummy-comment-vote', {
-  voteType: Proj.attr('Vote type'),
-  applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
-    name: Proj.attr('Name', {
+  voteType: Projection.attr('Vote type'),
+  applicationUser: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {

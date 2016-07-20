@@ -3,8 +3,8 @@ import ReloadListMixin from 'ember-flexberry/mixins/reload-list-mixin';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
-import ODataSerializer from 'ember-flexberry-data/serializers/odata';
+import { Projection } from 'ember-flexberry-data';
+import { Serializer } from 'ember-flexberry-data';
 import { SimplePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
 module('Unit | Mixin | reload list mixin');
@@ -21,10 +21,10 @@ test('it properly generates simple filter predicate', function(assert) {
   });
 
   Model.defineProjection('EmployeeE', 'employeeTest', {
-    firstName: Proj.attr()
+    firstName: Projection.attr()
   });
 
-  let modelSerializer = ODataSerializer.extend({});
+  let modelSerializer = Serializer.Odata.extend({});
   let projection = Ember.get(Model, 'projections').EmployeeE;
 
   let app = startApp();
@@ -73,12 +73,12 @@ test('it properly generates complex filter predicate', function(assert) {
   app.register('model:employeeTest', Model);
 
   Model.defineProjection('EmployeeE', 'employeeTest', {
-    firstName: Proj.attr(),
-    lastName: Proj.attr(),
-    dateField: Proj.attr(),
-    numberField: Proj.attr(),
-    reportsTo: Proj.belongsTo('employeeTest2', 'Reports To', {
-      firstName: Proj.attr('Reports To - First Name', {
+    firstName: Projection.attr(),
+    lastName: Projection.attr(),
+    dateField: Projection.attr(),
+    numberField: Projection.attr(),
+    reportsTo: Projection.belongsTo('employeeTest2', 'Reports To', {
+      firstName: Projection.attr('Reports To - First Name', {
         hidden: true
       })
     }, {
@@ -86,8 +86,8 @@ test('it properly generates complex filter predicate', function(assert) {
     })
   });
 
-  let modelSerializer = ODataSerializer.extend({});
-  let modelSerializer0 = ODataSerializer.extend({});
+  let modelSerializer = Serializer.Odata.extend({});
+  let modelSerializer0 = Serializer.Odata.extend({});
   let projection = Ember.get(Model, 'projections').EmployeeE;
 
   app.register('serializer:employeeTest2', modelSerializer0);

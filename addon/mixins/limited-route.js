@@ -3,8 +3,10 @@
 */
 
 import Ember from 'ember';
-import Condition from 'ember-flexberry-data/query/condition';
+import { Query } from 'ember-flexberry-data';
 import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+
+const { Condition } = Query;
 
 /**
   Mixin for route, that restrictions on the list form.

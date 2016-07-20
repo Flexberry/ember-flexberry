@@ -11,6 +11,14 @@ import Ember from 'ember';
  * @public
  */
 export default Ember.Service.extend(Ember.Evented, {
+    /**
+    Current application environment.
+
+      @property environment
+      @type String
+    */
+    environment: undefined,
+
     menus: [
       { name: 'use', icon: 'checkmark box' },
       { name: 'edit', icon: 'setting' },
@@ -56,9 +64,18 @@ export default Ember.Service.extend(Ember.Evented, {
         title: params.setDefaultSettitingTitle
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
+      if (this.environment && this.environment === 'development') {
+        let showDefaultItem = {
+          icon: 'unhide icon',
+          iconAlignment: 'left',
+          title: params.showDefaultSettitingTitle
+        };
+        rootItem.items[rootItem.items.length] = showDefaultItem;
+      }
+
       this.colsSettingsItems = [rootItem];
-      this.listNamedSettings = params.listNamedSettings;
-      for (let namedSetting in this.listNamedSettings) {
+      this.listNamedUserSettings = params.listNamedUserSettings;
+      for (let namedSetting in this.listNamedUserSettings) {
         this._addNamedSetting(namedSetting);
       }
 

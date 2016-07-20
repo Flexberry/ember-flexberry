@@ -52,7 +52,7 @@ export default Ember.Mixin.create({
   },
 
   /**
-    Conver string with sorting parameters to object.
+    Convert string with sorting parameters to object.
 
     Expected string type: '+Name1-Name2...', where: '+' and '-' - sorting direction, 'NameX' - property name for soring.
 

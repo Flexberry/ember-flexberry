@@ -46,7 +46,7 @@
     </button>
   </div>
 {{/if}}
-{{#if _colsConfigButton}}
+{{#if colsConfigButton}}
   <div class="ui buttons">
     <button class="ui icon button" {{action "showConfigDialog"}}>
       <i class="large table icon"></i>
@@ -66,3 +66,27 @@
     {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
   </button>
 {{/each}}
+<div class="olv-toolbar-info-modal-dialog ui small basic modal">
+  <div class="ui icon header">
+    <i class="olvt icon"></i>
+    {{_infoModalDialogCaption}}
+  </div>
+  <div class="center aligned ui grid">
+  <button class="ui icon button" {{action "copyJSONContent"}} id='OLVToolbarInfoCopyButton'>
+      <i class="copy icon"></i>
+      {{t "components.olv-toolbar.copy"}}
+    </button>
+    <div class="actions">
+    <div class="olv-toolbar-info-modal-dialog-ok-button ui approve green inverted button" >
+        <i class="remove icon"></i>
+        {{t "components.olv-toolbar.close"}}
+      </div>
+    </div>
+  </div>
+  <div class="ui form">
+    <div class="olv-toolbar-info-modal-dialog-content center aligned ui field">
+      <textarea id='OLVToolbarInfoContent' cols='80' rows='20'>{{_infoModalDialogContent}}</textarea>
+    </div>
+  </div>
+
+</div>

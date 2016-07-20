@@ -59,7 +59,7 @@ export default ApplicationLogListFormController.extend({
     onThrowExceptionButtonClick() {
       setTimeout(() => {
         this.send('refreshList');
-      }, 100);
+      }, 5000);
       throw new Error(
         this._generateUniqueMessagePrefix() +
         this.get('i18n').t('forms.log-service-examples.settings-example.throw-exception-button-message'));
@@ -75,12 +75,15 @@ export default ApplicationLogListFormController.extend({
     onRejectRsvpPromiseButtonClick() {
       new Ember.RSVP.Promise((resolve, reject) => {
         setTimeout(() => {
-          reject(
+          reject(Ember.Logger.error(
             this._generateUniqueMessagePrefix() +
-            this.get('i18n').t('forms.log-service-examples.settings-example.reject-rsvp-promise-button-message'));
+            this.get('i18n').t('forms.log-service-examples.settings-example.reject-rsvp-promise-button-message')));
+        }, 0);
+      }).catch(
+        error => {
           this.send('refreshList');
-        }, 100);
-      });
+        }
+      );
     },
 
     /**
@@ -93,11 +96,14 @@ export default ApplicationLogListFormController.extend({
     onEmberAssertButtonClick() {
       setTimeout(() => {
         this.send('refreshList');
-      }, 100);
+      }, 3000);
       Ember.assert(
         this._generateUniqueMessagePrefix() +
         this.get('i18n').t('forms.log-service-examples.settings-example.ember-assert-button-message'),
-        false);
+        false).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -110,8 +116,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerErrorButtonClick() {
       Ember.Logger.error(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-error-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-error-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -124,8 +132,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerWarnButtonClick() {
       Ember.Logger.warn(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-warn-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-warn-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -154,8 +164,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerLogButtonClick() {
       Ember.Logger.log(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-log-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-log-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -168,8 +180,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerInfoButtonClick() {
       Ember.Logger.info(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-info-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-info-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     },
 
     /**
@@ -182,8 +196,10 @@ export default ApplicationLogListFormController.extend({
     onEmberLoggerDebugButtonClick() {
       Ember.Logger.debug(
         this._generateUniqueMessagePrefix() +
-        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-debug-button-message'));
-      this.send('refreshList');
+        this.get('i18n').t('forms.log-service-examples.settings-example.ember-logger-debug-button-message')).then(
+        result => {
+          this.send('refreshList');
+        });
     }
   },
 

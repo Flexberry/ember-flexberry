@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import Ember from 'ember';
 import LimitedRouteMixin from '../mixins/limited-route';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
@@ -47,8 +48,13 @@ export default ProjectedModelFormRoute.extend(
   ReloadListMixin,
   FlexberryObjectlistviewRouteMixin,
   FlexberryObjectlistviewHierarchicalRouteMixin, {
-  userSettings: {},
-  listUserSettings: {},
+  /**
+    Current sorting.
+
+    @property sorting
+    @type Array
+    @default []
+  */
   sorting: [],
 
   /**
@@ -61,55 +67,66 @@ export default ProjectedModelFormRoute.extend(
   */
   model: function(params, transition) {
     let modelName = this.get('modelName');
-    let moduleName = transition.targetName;
-    let projectionName = this.get('modelProjection');  //At this stage we use routername as modulName for settings
-    let filtersPredicate = this._filtersPredicate();
+    let webPage = transition.targetName;
+    let projectionName = this.get('modelProjection');
     let limitPredicate =
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
-    let userSettingPromise = this.get('userSettingsService').getUserSettings({ moduleName: moduleName })  //get sorting parameters from DEFAULT userSettings
-    .then(_listUserSettings => {
-      if (!_listUserSettings) { //UserSetting  switch off
-        _listUserSettings = { DEFAULT: { sorting: this.deserializeSortingParam(params.sort) } };
+    let userSettingsService = this.get('userSettingsService');
+    userSettingsService.setCurrentWebPage(webPage);
+    let developerUserSettings = this.get('developerUserSettings');
+    Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+
+    let nComponents = 0;
+    let componentName;
+    for (componentName in developerUserSettings) {
+      let componentDesc = developerUserSettings[componentName];
+      switch (typeof componentDesc) {
+        case 'string':
+          developerUserSettings[componentName] = JSON.parse(componentDesc);
+          break;
+        case 'object':
+          break;
+        default:
+          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+            'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
       }
+      nComponents += 1;
+    }
 
-      return _listUserSettings;
-    });
+    if (nComponents === 0) {
+      Ember.assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
+    }
 
+    Ember.assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
+      nComponents === 1);
+    let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
+    let listComponentNames = userSettingsService.getListComponentNames();
+    componentName = listComponentNames[0];
     let ret = userSettingPromise
-    .then(
-      listUserSettings=> {
-        this.listUserSettings = listUserSettings;
-        let sorting = [];
-        this.userSettings = {};
-        if ('DEFAULT' in listUserSettings) {
-          this.userSettings = this.listUserSettings.DEFAULT;
-          sorting = 'sorting' in this.userSettings ? this.userSettings.sorting : [];
+      .then(currectPageUserSettings => {
+        if (params) {
+          userSettingsService.setCurrentParams(componentName, params);
         }
 
-        this.sorting = sorting;
-
+        this.sorting = userSettingsService.getCurrentSorting(componentName);
         let queryParameters = {
           modelName: modelName,
           projectionName: projectionName,
           perPage: params.perPage,
           page: params.page,
-          sorting: sorting, // TODO: there can be some problems.
+          sorting: this.sorting,
           filter: params.filter,
-          filters: filtersPredicate,
-          predicate: limitPredicate,
+          predicate: limitPredicate
         };
 
         // Find by query is always fetching.
         // TODO: support getting from cache with "store.all->filterByProjection".
         // TODO: move includeSorting to setupController mixins?
         return this.reloadList(queryParameters);
-      })
-    .then((records) => {
-      this.includeSorting(records, this.sorting);
-      records.set('userSettings', this.userSettings);
-      records.set('listUserSettings', this.listUserSettings);
-      return records;
-    });
+      }).then((records) => {
+        this.includeSorting(records, this.sorting);
+        return records;
+      });
     return ret;
   },
 

@@ -66,7 +66,7 @@ Ember.$.extend(true, translations, {
             'title': 'Меню'
           },
           'user-settings-service-checkbox': {
-            'caption': 'Использовать сервис пользовательских настроек'
+            'caption': 'Использовать сервис сохранения пользовательских настроек'
           },
           'language-dropdown': {
             'caption': 'Язык приложения',

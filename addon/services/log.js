@@ -10,7 +10,7 @@ const messageCategory = {
   log: { name: 'LOG', priority: 3 },
   info: { name: 'INFO', priority: 4 },
   debug: { name: 'DEBUG', priority: 5 },
-  deprecation: { name: 'DEPRECATION', priority: 6 }
+  deprecate: { name: 'DEPRECATION', priority: 6 }
 };
 
 const joinArguments = function() {
@@ -240,27 +240,8 @@ export default Ember.Service.extend({
         lineNumber: null,
         columnNumber: null,
         stack: null
-      }, {
-        name: error.name,
-        message: error.message,
-        fileName: error.fileName,
-        lineNumber: error.lineNumber,
-        columnNumber: error.columnNumber,
-        stack: error.stack
-      }));
-
-      _this._storeToApplicationLog(messageCategory.error, message, formattedMessage);
-
-      if (rethrowError === false) {
-
-        // Break execution if rethrowError === false.
-        return;
-      } else {
-
-        // Rethrow an error, because Ember.onerror handler has no bubbling
-        // and stored error won't appear in browser's console without rethrowing.
-        originalEmberLoggerError(...arguments);
-      }
+      }, error));
+      return _this._storeToApplicationLog(messageCategory.error, message, formattedMessage);
     };
 
     // Assign Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
@@ -272,7 +253,7 @@ export default Ember.Service.extend({
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
-      onError(joinArguments(...arguments), false);
+      return onError(joinArguments(...arguments), false);
     };
 
     // Extend Ember.Logger.warn logic.
@@ -282,9 +263,9 @@ export default Ember.Service.extend({
 
       let message = joinArguments(...arguments);
       if (message.indexOf('DEPRECATION') === 0) {
-        _this._storeToApplicationLog(messageCategory.deprecation, message, '');
+        return _this._storeToApplicationLog(messageCategory.deprecate, message, '');
       } else {
-        _this._storeToApplicationLog(messageCategory.warn, message, '');
+        return _this._storeToApplicationLog(messageCategory.warn, message, '');
       }
     };
 
@@ -293,7 +274,7 @@ export default Ember.Service.extend({
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.info logic.
@@ -301,7 +282,7 @@ export default Ember.Service.extend({
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.debug logic.
@@ -309,7 +290,7 @@ export default Ember.Service.extend({
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
     };
   },
 
@@ -329,7 +310,7 @@ export default Ember.Service.extend({
       category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
       category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
       category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
-      category.name === messageCategory.deprecation.name && !this.get('storeDeprecationMessages')) {
+      category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages')) {
       return;
     }
 

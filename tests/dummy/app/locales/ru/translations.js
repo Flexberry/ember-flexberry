@@ -285,7 +285,7 @@ Ember.$.extend(true, translations, {
           }
         },
         'integration-examples': {
-          'caption': 'Integration examples',
+          'caption': 'Примеры интеграции',
           'title': '',
           'edit-form': {
             'caption': 'Форма редактирования',
@@ -393,7 +393,7 @@ Ember.$.extend(true, translations, {
 
     'log-service-examples': {
       'settings-example': {
-        'caption': 'Log-service-examples/settings-example',
+        'caption': 'Сервис логирования. Пример работы с настройками',
         'setting-column-header-caption': 'Настройка сервиса логирования',
         'settings-value-column-header-caption': 'Текущее значение настройки',
         'throw-exception-button-caption': 'Бросить исключение',
@@ -420,20 +420,20 @@ Ember.$.extend(true, translations, {
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-checkbox/settings-example'
+          'caption': 'Flexberry-checkbox. Пример работы с настройками'
         }
       },
       'flexberry-datepicker': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-datepicker/settings-example'
+          'caption': 'Flexberry-datepicker. Пример работы с настройками'
         }
       },
       'flexberry-dropdown': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-dropdown/settings-example'
+          'caption': 'Flexberry-dropdown. Пример работы с настройками'
         },
         'conditional-render-example': {
-          'caption': 'Components-examples/flexberry-dropdown/conditional-render-example',
+          'caption': 'Flexberry-dropdown. Пример условного рендеринга',
           'info-caption': 'Описание варианта использования',
           'info-message': 'Шаблон страницы выглядит следующим образом:' +
             '{{pageTemplate}}' +
@@ -444,43 +444,45 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-field': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-field/settings-example'
+          'caption': 'Flexberry-field. Пример работы с настройками'
         }
       },
       'flexberry-file': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-file/settings-example'
+          'caption': 'Flexberry-file. Пример работы с настройками'
         }
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-groupedit/settings-example'
+          'caption': 'Flexberry-groupedit. Пример работы с настройками'
         },
         'model-update-example': {
-          'caption': 'Components-examples/flexberry-groupedit/model-update-example',
+          'caption': 'Flexberry-groupedit. Обновление модели',
           'addDetailButton': 'Добавить детейл',
           'removeDetailButton': 'Удалить детейл',
         }
       },
       'flexberry-lookup': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-lookup/settings-example'
+          'caption': 'Flexberry-lookup. Пример работы с настройками'
         },
         'customizing-window-example': {
-          'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
+          'caption': 'Flexberry-lookup. Настройка окна',
+          'titleLookup': 'Мастер'
         },
         'limit-function-example': {
-          'caption': 'Components-examples/flexberry-lookup/limit-function-example'
+          'caption': 'Flexberry-lookup. Функция ограничения',
+          'titleLookup': 'Мастер'
         },
         'lookup-block-form-example': {
-          'caption': 'Components-examples/flexberry-lookup/lookup-block-form-example',
+          'caption': 'Flexberry-lookup. Лукап в блочной форме',
           'message': 'Данный тест работает только в мобильной версии сайта. Чтобы запустить мобильную версию нужно:',
           'paragraph1': 'Перейти в режим разработчика (нажать “F12”).',
           'paragraph2': 'Включить мобильную версию сайта (нажать “Ctrl+Shift+M” в Chrome и Firefox)',
           'paragraph3': 'Обновить страницу (нажать “F5”)'
         },
         'lookup-in-modal': {
-          'caption': 'Components-examples/flexberry-lookup/lookup-in-modal',
+          'caption': 'Flexberry-lookup. Лукап в модальном окне',
           'captionModal': 'Кастомное модальное окно №1',
           'captionModalDouble': 'Кастомное модальное окно №2',
           'buttonModal': 'Модальное окно №1',
@@ -488,58 +490,62 @@ Ember.$.extend(true, translations, {
           'buttonClose': 'Закрыть'
         },
         'dropdown-mode-example': {
-          'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'
+          'caption': 'Flexberry-lookup. Режим dropdown'
         }
       },
       'flexberry-menu': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-menu/settings-example'
+          'caption': 'Flexberry-menu. Пример работы с настройками',
+          'titleIcon1': 'Значок выравнен по левому краю',
+          'titleIcon2': 'Значок выравнен по правому краю',
+          'titleIcon3': 'Подменю'
         }
       },
       'flexberry-objectlistview': {
         'limit-function-example': {
-          'caption': 'Components-examples/flexberry-objectlistview/limit-function-example'
+          'caption': 'Flexberry-objectlistview. Функция ограничения'
         },
         'settings-example': {
-          'caption': 'Components-examples/flexberry-objectlistview/settings-example'
+          'caption': 'Flexberry-objectlistview. Пример работы с настройками'
         },
         'toolbar-custom-buttons-example': {
-          'caption': 'Components-examples/flexberry-objectlistview/toolbar-custom-buttons-example',
+          'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
           'custom-button-name': 'Передать привет'
         },
         'on-edit-form': {
-          'caption': 'FlexberryObjectlistview пример произвольных данных'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview пример произвольных данных'
         },
         'custom-filter': {
-          'caption': 'Components-examples/flexberry-objectlistview/custom-filter'
+          'caption': 'Flexberry-objectlistview. Настройка фильтра'
         }
       },
       'flexberry-simpledatetime': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-simpledatetime/settings-example'
+          'caption': 'Flexberry-simpledatetime. Пример работы с настройками'
         }
       },
       'flexberry-textarea': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-textarea/settings-example'
+          'caption': 'Flexberry-textarea. Пример работы с настройками'
         }
       },
       'flexberry-textbox': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-textbox/settings-example'
+          'caption': 'Flexberry-textbox. Пример работы с настройками'
         }
       },
       'flexberry-toggler': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-toggler/settings-example'
+          'caption': 'Flexberry-toggler. Пример работы с настройками',
+          'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
         }
       }
     },
     'integration-examples': {
       'edit-form': {
         'readonly-mode': {
-          'caption': 'Integration-examples/edit-form/readonly-mode',
+          'caption': 'Integration examples. Режим только для чтения',
           'readonly-flag-management-segment-caption': 'Управление режимом только для чтения формы',
           'readonly-flag-value-segment-caption': 'Значения свойства \'readonly\' контроллера',
           'readonly-flag-caption': 'Форма находится в режиме только для чтения',
@@ -555,7 +561,7 @@ Ember.$.extend(true, translations, {
           'master-dropdown-caption': 'Мастер в режиме dropdown-а'
         },
         'validation': {
-          'caption': 'Integration-examples/edit-form/validation',
+          'caption': 'Integration examples. Валидация',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',
           'text-caption': 'Текст',

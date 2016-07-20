@@ -37,7 +37,7 @@ export default Ember.Controller.extend({
     '  expandedCaption=expandedCaption<br>' +
     '  collapsedCaption=collapsedCaption<br>' +
     '}}<br>' +
-    '  Some expandable/collapsable content<br>' +
+    '  {{t "forms.components-examples.flexberry-toggler.settings-example.togglerContent"}}<br>' +
     '{{/flexberry-toggler}}'),
 
   /**

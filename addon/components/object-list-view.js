@@ -844,6 +844,19 @@ export default FlexberryBaseComponent.extend(
   init() {
     this._super(...arguments);
 
+    if (!this.get('disableHierarchicalMode')) {
+      let modelName = this.get('modelName');
+      if (modelName) {
+        let model = this.get('store').modelFor(modelName);
+        let relationships = Ember.get(model, 'relationships');
+        let hierarchicalrelationships = relationships.get(modelName);
+        if (hierarchicalrelationships.length === 1) {
+          let hierarchicalAttribute = hierarchicalrelationships[0].name;
+          this.sendAction('availableHierarchicalMode', hierarchicalAttribute);
+        }
+      }
+    }
+
     this.set('selectedRecords', Ember.A());
     this.set('contentWithKeys', Ember.A());
 

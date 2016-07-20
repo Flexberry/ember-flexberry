@@ -7,6 +7,7 @@ import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
 import ProjectedModelFormRoute from '../routes/projected-model-form';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
+import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
 import ReloadListMixin from '../mixins/reload-list-mixin';
 
 /**
@@ -44,7 +45,8 @@ export default ProjectedModelFormRoute.extend(
   SortableRouteMixin,
   LimitedRouteMixin,
   ReloadListMixin,
-  FlexberryObjectlistviewRouteMixin, {
+  FlexberryObjectlistviewRouteMixin,
+  FlexberryObjectlistviewHierarchicalRouteMixin, {
   userSettings: {},
   listUserSettings: {},
   sorting: [],

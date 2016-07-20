@@ -149,30 +149,39 @@ export default Ember.Controller.extend({
     if (typeof this.get('itemsLeft.0.title') === 'object') {
       this.set('itemsLeft.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
     }
+
     if (typeof this.get('itemsRight.0.title') === 'object') {
       this.set('itemsRight.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
     }
+
     if (typeof this.get('itemsSubmenu.0.title') === 'object') {
       this.set('itemsSubmenu.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
     }
+
     if (typeof this.get('itemsSubmenu.0.items.0.title') === 'object') {
       this.set('itemsSubmenu.0.items.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
     }
+
     if (typeof this.get('itemsSubmenu.0.items.1.title') === 'object') {
       this.set('itemsSubmenu.0.items.1.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
     }
+
     if (typeof this.get('itemsSubmenu.0.items.2.title') === 'object') {
       this.set('itemsSubmenu.0.items.2.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
     }
+
     if (typeof this.get('itemsSubmenu.0.items.2.items.0.title') === 'object') {
       this.set('itemsSubmenu.0.items.2.items.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
     }
+
     if (typeof this.get('itemsSubmenu.0.items.2.items.1.title') === 'object') {
       this.set('itemsSubmenu.0.items.2.items.1.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
     }
+
     if (typeof this.get('itemsSubmenu.0.items.2.items.2.title') === 'object') {
       this.set('itemsSubmenu.0.items.2.items.2.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
     }
+
     if (typeof this.get('itemsSubmenu.0.items.2.items.2.items.0.title') === 'object') {
       this.set('itemsSubmenu.0.items.2.items.2.items.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
     }
@@ -189,9 +198,11 @@ export default Ember.Controller.extend({
     if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon1').toString()) {
       this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
     }
+
     if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon2').toString()) {
       this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
     }
+
     if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon3').toString()) {
       this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
     }

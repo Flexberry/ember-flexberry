@@ -51,6 +51,13 @@ export default Ember.Controller.extend({
   currentItem: null,
 
   /**
+    @property collapseMenuOnItemClick
+    @type Boolean
+    @default true
+  */
+  collapseMenuOnItemClick: true,
+
+  /**
     Template text for 'flexberry-menu' component.
 
     @property componentTemplateText
@@ -61,6 +68,7 @@ export default Ember.Controller.extend({
     '  placeholder=placeholder<br>' +
     '  class="compact"<br>' +
     '  items=items<br>' +
+    '  collapseMenuOnItemClick=collapseMenuOnItemClick<br>' +
     '  onItemClick=(action "onMenuItemClick")<br>' +
     '}}'),
 
@@ -160,6 +168,12 @@ export default Ember.Controller.extend({
       settingType: 'string',
       settingDefaultValue: 'undefined',
       bindedControllerPropertieName: 'currentItem.itemsAlignment'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'collapseMenuOnItemClick',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'collapseMenuOnItemClick'
     });
 
     return componentSettingsMetadata;

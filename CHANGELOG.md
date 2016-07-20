@@ -30,6 +30,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * ModelFunctions:
     * Add `getValueFromLocales` function.
 
+### Changed
+* `flexberry-menu`:
+    * Added new property `collapseMenuOnItemClick` and related logic.
+    * Added `collapseMenuOnItemClick` property to test example.
+
+* `flexberry-file`:
+    * Removed collapsing menu logic.
+    * Added `collapseMenuOnItemClick` property to appropriate .hbs file (template).
+
 ### Fixed
 * Fixed select from `flexberry-lookup` in dropdown mode.
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.

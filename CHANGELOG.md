@@ -3,12 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-
 ### Added
 * Custom internationalized captions for boolean type in object-list-view-cell.
-* Blueprints
+* Blueprints:
     * Add regeneration for models and serializers.
     * Add new `flexberry-group` - blueprint for generation of group entities one blueprint.
+    * Add generate default comments for `flexberry-list-form` blueprint.
 * Added support `flexberry-lookup` in dropdown mode for mobile.
 * FlexberryObjectlistview component:
     * Add filter by attribute number type.
@@ -45,10 +45,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-file`:
     * Removed collapsing menu logic.
     * Added `collapseMenuOnItemClick` property to appropriate .hbs file (template).
+* Blueprints:
+    * Parameters `editFormRoute` moved to controller property.
 
 ### Fixed
 * Blueprints:
-    * Fix blueprints speed up generation process.
+    * Fixed blueprints speed up generation process.
+    * Fixed adapter generation in `flexberry-core` blueprint.
 * Fixed select from `flexberry-lookup` in dropdown mode.
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.

@@ -10,7 +10,7 @@ const messageCategory = {
   log: { name: 'LOG', priority: 3 },
   info: { name: 'INFO', priority: 4 },
   debug: { name: 'DEBUG', priority: 5 },
-  deprecation: { name: 'DEPRECATION', priority: 6 }
+  deprecate: { name: 'DEPRECATION', priority: 6 }
 };
 
 const joinArguments = function() {
@@ -229,8 +229,10 @@ export default Ember.Service.extend({
     this._super(...arguments);
 
     let _this = this;
+    let originalEmberLoggerError = Ember.Logger.error;
     let onError = function(error, rethrowError) {
       let message = error.message || error.toString();
+
       let formattedMessage = JSON.stringify(Ember.merge({
         name: null,
         message: null,
@@ -239,17 +241,7 @@ export default Ember.Service.extend({
         columnNumber: null,
         stack: null
       }, error));
-
-      _this._storeToApplicationLog(messageCategory.error, message, formattedMessage);
-
-      if (rethrowError === false) {
-        // Break execution if rethrowError === false.
-        return;
-      } else {
-        // Rethrow an error, because Ember.onerror handler has no bubbling
-        // and stored error won't appear in browser's console without rethrowing.
-        throw error.stack ? error : (error.message ? error.message : error);
-      }
+      return _this._storeToApplicationLog(messageCategory.error, message, formattedMessage);
     };
 
     // Assign Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
@@ -258,11 +250,10 @@ export default Ember.Service.extend({
     Ember.RSVP.on('error', onError);
 
     // Extend Ember.Logger.log logic.
-    let originalEmberLoggerError = Ember.Logger.error;
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
-      onError(joinArguments(...arguments), false);
+      return onError(joinArguments(...arguments), false);
     };
 
     // Extend Ember.Logger.warn logic.
@@ -272,9 +263,9 @@ export default Ember.Service.extend({
 
       let message = joinArguments(...arguments);
       if (message.indexOf('DEPRECATION') === 0) {
-        _this._storeToApplicationLog(messageCategory.deprecation, message, '');
+        return _this._storeToApplicationLog(messageCategory.deprecate, message, '');
       } else {
-        _this._storeToApplicationLog(messageCategory.warn, message, '');
+        return _this._storeToApplicationLog(messageCategory.warn, message, '');
       }
     };
 
@@ -283,7 +274,7 @@ export default Ember.Service.extend({
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.info logic.
@@ -291,7 +282,7 @@ export default Ember.Service.extend({
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
     };
 
     // Extend Ember.Logger.debug logic.
@@ -299,7 +290,7 @@ export default Ember.Service.extend({
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
+      return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
     };
   },
 
@@ -319,7 +310,7 @@ export default Ember.Service.extend({
       category.name === messageCategory.log.name && !this.get('storeLogMessages') ||
       category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
       category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
-      category.name === messageCategory.deprecation.name && !this.get('storeDeprecationMessages')) {
+      category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages')) {
       return;
     }
 
@@ -348,9 +339,12 @@ export default Ember.Service.extend({
       return;
     }
 
-    store.createRecord(applicationLogModelName, applicationLogProperties).save().catch(() => {
-      // Switch off remote logging on rejection to avoid infinite loop.
-      this.set('enabled', false);
-    });
+    return store.createRecord(applicationLogModelName, applicationLogProperties).save().
+      then(
+        result => {return result;},
+
+        // Switch off remote logging on rejection to avoid infinite loop.
+        reason => {this.set('enabled', false);}
+      );
   },
 });

@@ -51,6 +51,13 @@ export default Ember.Controller.extend({
   currentItem: null,
 
   /**
+    @property collapseMenuOnItemClick
+    @type Boolean
+    @default true
+  */
+  collapseMenuOnItemClick: true,
+
+  /**
     Template text for 'flexberry-menu' component.
 
     @property componentTemplateText
@@ -61,6 +68,7 @@ export default Ember.Controller.extend({
     '  placeholder=placeholder<br>' +
     '  class="compact"<br>' +
     '  items=items<br>' +
+    '  collapseMenuOnItemClick=collapseMenuOnItemClick<br>' +
     '  onItemClick=(action "onMenuItemClick")<br>' +
     '}}'),
 
@@ -72,52 +80,53 @@ export default Ember.Controller.extend({
   init() {
     this._super(...arguments);
 
+    let i18n = this.get('i18n');
     let itemsLeft = [{
       icon: 'search icon',
-      title: 'Left side aligned icon',
+      title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
       items: null
     }];
 
     let itemsRight = [{
       icon: 'setting icon',
       iconAlignment: 'right',
-      title: 'Right side aligned icon',
+      title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'),
       items: null
     }];
 
     let itemsSubmenu = [{
       icon: 'list layout icon',
-      title: 'Submenu',
+      title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'),
       itemsAlignment: null,
       items: [{
         icon: 'search icon',
-        title: 'Left side aligned icon',
+        title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
         items: null
       }, {
         icon: 'setting icon',
         iconAlignment: 'right',
-        title: 'Right side aligned icon',
+        title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'),
         items: null
       }, {
         icon: 'list layout icon',
-        title: 'Submenu',
+        title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'),
         itemsAlignment: 'left',
         items: [{
           icon: 'search icon',
-          title: 'Left side aligned icon',
+          title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
           items: null
         }, {
           icon: 'setting icon',
           iconAlignment: 'right',
-          title: 'Right side aligned icon',
+          title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'),
           items: null
         }, {
           icon: 'list layout icon',
-          title: 'Submenu',
+          title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'),
           itemsAlignment: 'right',
           items: [{
             icon: 'search icon',
-            title: 'Left side aligned icon',
+            title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
             items: null
           }]
         }]
@@ -128,6 +137,76 @@ export default Ember.Controller.extend({
     this.set('itemsRight', itemsRight);
     this.set('itemsSubmenu', itemsSubmenu);
   },
+
+  /**
+    Handles changes in i18n.locale.
+
+    @method _menuTitle
+    @private
+   */
+  _menuTitle: Ember.observer('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    if (typeof this.get('itemsLeft.0.title') === 'object') {
+      this.set('itemsLeft.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+
+    if (typeof this.get('itemsRight.0.title') === 'object') {
+      this.set('itemsRight.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
+    }
+
+    if (typeof this.get('itemsSubmenu.0.title') === 'object') {
+      this.set('itemsSubmenu.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
+    }
+
+    if (typeof this.get('itemsSubmenu.0.items.0.title') === 'object') {
+      this.set('itemsSubmenu.0.items.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+
+    if (typeof this.get('itemsSubmenu.0.items.1.title') === 'object') {
+      this.set('itemsSubmenu.0.items.1.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
+    }
+
+    if (typeof this.get('itemsSubmenu.0.items.2.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
+    }
+
+    if (typeof this.get('itemsSubmenu.0.items.2.items.0.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.items.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+
+    if (typeof this.get('itemsSubmenu.0.items.2.items.1.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.items.1.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
+    }
+
+    if (typeof this.get('itemsSubmenu.0.items.2.items.2.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.items.2.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
+    }
+
+    if (typeof this.get('itemsSubmenu.0.items.2.items.2.items.0.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.items.2.items.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+  }),
+
+  /**
+    Handles changes in currentItem.title.
+
+    @method _titleChanged
+    @private
+   */
+  _titleChanged: Ember.observer('currentItem.title', function() {
+    let i18n = this.get('i18n');
+    if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon1').toString()) {
+      this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+
+    if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon2').toString()) {
+      this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
+    }
+
+    if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon3').toString()) {
+      this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
+    }
+  }),
 
   /**
     Component settings metadata.
@@ -160,6 +239,12 @@ export default Ember.Controller.extend({
       settingType: 'string',
       settingDefaultValue: 'undefined',
       bindedControllerPropertieName: 'currentItem.itemsAlignment'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'collapseMenuOnItemClick',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'collapseMenuOnItemClick'
     });
 
     return componentSettingsMetadata;

@@ -53,6 +53,7 @@ export default Ember.Controller.extend({
   /**
     @property collapseMenuOnItemClick
     @type Boolean
+    @default true
   */
   collapseMenuOnItemClick: true,
 
@@ -171,7 +172,7 @@ export default Ember.Controller.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'collapseMenuOnItemClick',
       settingType: 'boolean',
-      settingDefaultValue: false,
+      settingDefaultValue: true,
       bindedControllerPropertieName: 'collapseMenuOnItemClick'
     });
 

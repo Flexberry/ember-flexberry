@@ -4,12 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* Custom internationalized captions for boolean type in object-list-view-cell.
+* Blueprints
+    * Add new `flexberry-group` - bluepring for generation of group entities one blueprint.
 
-### Fixed
-* Fixed select from `flexberry-lookup` in dropdown mode.
+###  Fixed
+* Blueprints
+    * Fix blueprints speed up generation process
 
 ### Added
+* Custom internationalized captions for boolean type in object-list-view-cell.
 * Blueprints
     * Add regeneration for models and serializers.
 * Added support `flexberry-lookup` in dropdown mode for mobile.
@@ -18,10 +21,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add filter by attribute master type.
     * Add `predicateForAttribute` function for customization filter.
     * Add filter for each columns.
+    * Add hierarchical mode:
+      * Auto detect available hierarchical mode by default.
+      * Use `hierarchyByAttribute` for building hierarchy.
+      * Use `disableHierarchicalMode` for disable hierarchical mode.
 * ObjectlistviewComponent:
     * Add support locales for captions models of projection.
 * ModelFunctions:
     * Add `getValueFromLocales` function.
+
+### Changed
+* `flexberry-menu`:
+    * Added new property `collapseMenuOnItemClick` and related logic.
+    * Added `collapseMenuOnItemClick` property to test example.
+
+* `flexberry-file`:
+    * Removed collapsing menu logic.
+    * Added `collapseMenuOnItemClick` property to appropriate .hbs file (template).
 
 ### Fixed
 * Fixed select from `flexberry-lookup` in dropdown mode.
@@ -167,7 +183,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Formatted message field of log object fills differently in IE11/Safari and Chrome/Firefox.
 * `flexberry-datepicker` eats too much memory, working slowly and slows down the application (especially when using multiple `flexberry-datepicker` components on form).
 * Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working after changing current locale for internationalization to another language and back again.
-* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving user setting on backend. 
+* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving user setting on backend.
 * Saving user settings for `flexberry-groupedit` component and for `flexberry-objectlistview` that shows for choosing value for `flexberry-lookup` component doesn't work correctly. It is possible to use `notUseUserSettings` property for `flexberry-objectlistview` component to turn off user settings for these cases as workaround.
 
 ## [0.1.0] - 2015-12-05

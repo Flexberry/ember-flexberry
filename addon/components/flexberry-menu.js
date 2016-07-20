@@ -66,6 +66,15 @@ export default FlexberryBaseComponent.extend({
   callItemsOnClickCallbacks: true,
 
   /**
+    Flag: indicates whether to collapse menu when clicking menuitem or not.
+
+    @property collapseMenuOnItemClick
+    @type Boolean
+    @default true
+  */
+  collapseMenuOnItemClick: false,
+
+  /**
     Menu items.
 
     @property items
@@ -140,6 +149,7 @@ export default FlexberryBaseComponent.extend({
     // Attach menu click event handler.
     this.$().on('click', onClickHandler);
     this.$().dropdown();
+    this._getActionForMenu(this.get('collapseMenuOnItemClick'));
   },
 
   /**
@@ -219,4 +229,25 @@ export default FlexberryBaseComponent.extend({
     // Send 'onClick' action on clicked 'flexberry-menuitem' component.
     this.sendAction('onItemClick', e);
   },
+
+  /**
+    Menu's collapseMenuOnItemClick observer.
+   */
+  _collapseMenuOnItemClickDidChange: Ember.observer('collapseMenuOnItemClick', function() {
+    this.$().dropdown({
+      action: this._getActionForMenu(this.get('collapseMenuOnItemClick'))
+    }).dropdown('clear');
+  }),
+
+  /**
+    Method for getting action name for menu based on collapseMenuOnItemClick property.
+
+    @method _getActionForMenu
+    @param {Boolean} collapseMenuOnItemClick Flag whether to collapse menu on click or not.
+    @return {String} Action name.
+    @private
+   */
+  _getActionForMenu(collapseMenuOnItemClick) {
+    return collapseMenuOnItemClick ? 'activate' : 'nothing';
+  }
 });

@@ -13,6 +13,11 @@
     {{t "components.olv-toolbar.delete-button-text"}}
   </button>
 {{/if}}
+{{#if availableHierarchicalMode}}
+  <button class="ui button icon {{buttonClass}} {{if inHierarchicalMode "active"}}" {{action switchHierarchicalMode}}>
+    <i class="sitemap icon"></i>
+  </button>
+{{/if}}
 {{#if enableFilters}}
   <div class="ui icon input buttons">
     <button class="ui button {{buttonClass}} {{if showFilters "active"}}" {{action toggleStateFilters}}>

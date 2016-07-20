@@ -3,43 +3,52 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Added
-* Full refactoring user setting service (see more details below):
-  * User setting service support in-memory saving the settings of all ObjectListView components for all pages. This allows:
-    * maintain user setting service on mode APP.useUserSettingsService: false without saving them to backend;
-    * store and appy (in future) settings to multiple components on a page;
-    * store an unlimited number of settings (default and unlimited named) for each ObjectListView component;
-    * store (define) all the information on defaut or named setting (columns order, sorting order, columns width and other) in single object (property, backend record);
-    * customize the column widths manually by mouse or by specifying digital values;
-    * enable or disable the settings column widths;
-    * avoid repated access to the backend's usersetting service when you return to the already loaded page.
-  * Support three levels of setting:
-    * defined by developer;
-    * defined by users and stored in usersetting's backend;
-    * temporary settings defined by users specified in the URL-parameters (sort, etc...).
-    * Support user setting service for developer. After adjasting component developer can display current default and named settings and save them in proporty developerUserSettings of app/routes/{{pageRouteName}}.js as default settings.
 
 ### Added
 * Custom internationalized captions for boolean type in object-list-view-cell.
-
-### Fixed
-* Fixed select from `flexberry-lookup` in dropdown mode.
-
-### Added
 * Blueprints
     * Add regeneration for models and serializers.
+    * Add new `flexberry-group` - blueprint for generation of group entities one blueprint.
 * Added support `flexberry-lookup` in dropdown mode for mobile.
 * FlexberryObjectlistview component:
     * Add filter by attribute number type.
     * Add filter by attribute master type.
     * Add `predicateForAttribute` function for customization filter.
     * Add filter for each columns.
+    * Add hierarchical mode:
+      * Auto detect available hierarchical mode by default.
+      * Use `hierarchyByAttribute` for building hierarchy.
+      * Use `disableHierarchicalMode` for disable hierarchical mode.
 * ObjectlistviewComponent:
     * Add support locales for captions models of projection.
 * ModelFunctions:
     * Add `getValueFromLocales` function.
+* Full refactoring user setting service (see more details below):
+  * User setting service support in-memory saving the settings of all ObjectListView components for all pages. This allows:
+    * Maintain user setting service on mode APP.useUserSettingsService: false without saving them to backend;
+    * Store and appy (in future) settings to multiple components on a page;
+    * Store an unlimited number of settings (default and unlimited named) for each ObjectListView component;
+    * Store (define) all the information on defaut or named setting (columns order, sorting order, columns width and other) in single object (property, backend record);
+    * customize the column widths manually by mouse or by specifying digital values;
+    * Enable or disable the settings column widths;
+    * Avoid repated access to the backend's usersetting service when you return to the already loaded page.
+  * Support three levels of setting:
+    * Defined by developer;
+    * Defined by users and stored in usersetting's backend;
+    * Temporary settings defined by users specified in the URL-parameters (sort, etc...).
+    * Support user setting service for developer. After adjasting component developer can display current default and named settings and save them in proporty developerUserSettings of app/routes/{{pageRouteName}}.js as default settings.
+
+### Changed
+* `flexberry-menu`:
+    * Added new property `collapseMenuOnItemClick` and related logic.
+    * Added `collapseMenuOnItemClick` property to test example.
+* `flexberry-file`:
+    * Removed collapsing menu logic.
+    * Added `collapseMenuOnItemClick` property to appropriate .hbs file (template).
 
 ### Fixed
+* Blueprints:
+    * Fix blueprints speed up generation process.
 * Fixed select from `flexberry-lookup` in dropdown mode.
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.

@@ -71,50 +71,22 @@ export default Ember.Controller.extend({
   */
   init() {
     this._super(...arguments);
-  },
 
-  /**
-    Initializes itemsLeft.
-
-    @property itemsLeft
-    @type Object
-  */
-  itemsLeft: Ember.computed('i18n.locale', function() {
     let i18n = this.get('i18n');
-    let  nodes = [{
-        icon: 'search icon',
-        title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
-        items: null
-      }];
-    return nodes;
-  }),
+    let itemsLeft = [{
+      icon: 'search icon',
+      title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'),
+      items: null
+    }];
 
-  /**
-    Initializes itemsRight.
-
-    @property itemsRight
-    @type Object
-  */
-  itemsRight: Ember.computed('i18n.locale', function() {
-    let i18n = this.get('i18n');
-    let  nodes = [{
+    let itemsRight = [{
       icon: 'setting icon',
       iconAlignment: 'right',
       title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'),
       items: null
     }];
-    return nodes;
-  }),
 
-  /**
-    Initializes itemsSubmenu.
-
-    @property itemsSubmenu
-    @type Object
-  */
-  itemsSubmenu: Ember.computed('i18n.locale', function() {
-    let i18n = this.get('i18n');
-    let nodes = [{
+    let itemsSubmenu = [{
       icon: 'list layout icon',
       title: i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'),
       itemsAlignment: null,
@@ -152,7 +124,69 @@ export default Ember.Controller.extend({
         }]
       }]
     }];
-    return nodes;
+
+    this.set('itemsLeft', itemsLeft);
+    this.set('itemsRight', itemsRight);
+    this.set('itemsSubmenu', itemsSubmenu);
+  },
+
+  /**
+    Handles changes in i18n.locale.
+
+    @method _menuTitle
+    @private
+   */
+  _menuTitle: Ember.observer('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    if (typeof this.get('itemsLeft.0.title') === 'object') {
+      this.set('itemsLeft.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+    if (typeof this.get('itemsRight.0.title') === 'object') {
+      this.set('itemsRight.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
+    }
+    if (typeof this.get('itemsSubmenu.0.title') === 'object') {
+      this.set('itemsSubmenu.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
+    }
+    if (typeof this.get('itemsSubmenu.0.items.0.title') === 'object') {
+      this.set('itemsSubmenu.0.items.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+    if (typeof this.get('itemsSubmenu.0.items.1.title') === 'object') {
+      this.set('itemsSubmenu.0.items.1.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
+    }
+    if (typeof this.get('itemsSubmenu.0.items.2.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
+    }
+    if (typeof this.get('itemsSubmenu.0.items.2.items.0.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.items.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+    if (typeof this.get('itemsSubmenu.0.items.2.items.1.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.items.1.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
+    }
+    if (typeof this.get('itemsSubmenu.0.items.2.items.2.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.items.2.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
+    }
+    if (typeof this.get('itemsSubmenu.0.items.2.items.2.items.0.title') === 'object') {
+      this.set('itemsSubmenu.0.items.2.items.2.items.0.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+  }),
+
+  /**
+    Handles changes in currentItem.title.
+
+    @method _titleChanged
+    @private
+   */
+  _titleChanged: Ember.observer('currentItem.title', function() {
+    let i18n = this.get('i18n');
+    if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon1').toString()) {
+      this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon1'));
+    }
+    if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon2').toString()) {
+      this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon2'));
+    }
+    if (this.get('currentItem.title') === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon3').toString()) {
+      this.set('currentItem.title', i18n.t('forms.components-examples.flexberry-menu.settings-example.titleIcon3'));
+    }
   }),
 
   /**

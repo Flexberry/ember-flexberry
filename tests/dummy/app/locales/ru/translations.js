@@ -433,7 +433,7 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-dropdown. Пример работы с настройками'
         },
         'conditional-render-example': {
-          'caption': 'Пример условного рендеринга',
+          'caption': 'Flexberry-dropdown. Пример условного рендеринга',
           'info-caption': 'Описание варианта использования',
           'info-message': 'Шаблон страницы выглядит следующим образом:' +
             '{{pageTemplate}}' +
@@ -457,7 +457,7 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Пример работы с настройками'
         },
         'model-update-example': {
-          'caption': 'Обновление модели',
+          'caption': 'Flexberry-groupedit. Обновление модели',
           'addDetailButton': 'Добавить детейл',
           'removeDetailButton': 'Удалить детейл',
         }
@@ -467,7 +467,7 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Пример работы с настройками'
         },
         'customizing-window-example': {
-          'caption': 'Настройка окна',
+          'caption': 'Flexberry-lookup. Настройка окна',
           'titleLookup': 'Мастер'
         },
         'limit-function-example': {
@@ -475,14 +475,14 @@ Ember.$.extend(true, translations, {
           'titleLookup': 'Мастер'
         },
         'lookup-block-form-example': {
-          'caption': 'Лукап в блочной форме',
+          'caption': 'Flexberry-lookup. Лукап в блочной форме',
           'message': 'Данный тест работает только в мобильной версии сайта. Чтобы запустить мобильную версию нужно:',
           'paragraph1': 'Перейти в режим разработчика (нажать “F12”).',
           'paragraph2': 'Включить мобильную версию сайта (нажать “Ctrl+Shift+M” в Chrome и Firefox)',
           'paragraph3': 'Обновить страницу (нажать “F5”)'
         },
         'lookup-in-modal': {
-          'caption': 'Лукап в модальном окне',
+          'caption': 'Flexberry-lookup. Лукап в модальном окне',
           'captionModal': 'Кастомное модальное окно №1',
           'captionModalDouble': 'Кастомное модальное окно №2',
           'buttonModal': 'Модальное окно №1',
@@ -490,7 +490,7 @@ Ember.$.extend(true, translations, {
           'buttonClose': 'Закрыть'
         },
         'dropdown-mode-example': {
-          'caption': 'Режим dropdown'
+          'caption': 'Flexberry-lookup. Режим dropdown'
         }
       },
       'flexberry-menu': {
@@ -509,15 +509,15 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Пример работы с настройками'
         },
         'toolbar-custom-buttons-example': {
-          'caption': 'Пользовательские кнопки',
+          'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
           'custom-button-name': 'Передать привет'
         },
         'on-edit-form': {
-          'caption': 'FlexberryObjectlistview пример произвольных данных'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview пример произвольных данных'
         },
         'custom-filter': {
-          'caption': 'Настройка фильтра'
+          'caption': 'Flexberry-objectlistview. Настройка фильтра'
         }
       },
       'flexberry-simpledatetime': {
@@ -545,7 +545,7 @@ Ember.$.extend(true, translations, {
     'integration-examples': {
       'edit-form': {
         'readonly-mode': {
-          'caption': 'Режим только для чтения',
+          'caption': 'Integration examples. Режим только для чтения',
           'readonly-flag-management-segment-caption': 'Управление режимом только для чтения формы',
           'readonly-flag-value-segment-caption': 'Значения свойства \'readonly\' контроллера',
           'readonly-flag-caption': 'Форма находится в режиме только для чтения',
@@ -561,7 +561,7 @@ Ember.$.extend(true, translations, {
           'master-dropdown-caption': 'Мастер в режиме dropdown-а'
         },
         'validation': {
-          'caption': 'Валидация',
+          'caption': 'Integration examples. Валидация',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',
           'text-caption': 'Текст',

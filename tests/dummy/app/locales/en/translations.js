@@ -430,7 +430,7 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-dropdown. Settings example'
         },
         'conditional-render-example': {
-          'caption': 'Conditional render example',
+          'caption': 'Flexberry-dropdown. Conditional render example',
           'info-caption': 'Use case description',
           'info-message': 'The page template looks like following:' +
             '{{pageTemplate}}' +
@@ -453,7 +453,7 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Settings example'
         },
         'model-update-example': {
-          'caption': 'Model update example',
+          'caption': 'Flexberry-groupedit. Model update example',
           'addDetailButton': 'Add detail',
           'removeDetailButton': 'Remove detail',
         }
@@ -463,7 +463,7 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Settings example'
         },
         'customizing-window-example': {
-          'caption': 'Window customization',
+          'caption': 'Flexberry-lookup. Window customization',
           'titleLookup': 'Master'
         },
         'limit-function-example': {
@@ -471,14 +471,14 @@ Ember.$.extend(true, translations, {
           'titleLookup': 'Master'
         },
         'lookup-block-form-example': {
-          'caption': 'Lookup block form example',
+          'caption': 'Flexberry-lookup. Lookup block form example',
           'message': 'This test only works on the mobile site. To start a mobile version should be:',
           'paragraph1': 'Go to developer mode (press "F12").',
           'paragraph2': 'Enable mobile site (press "Ctrl + Shift + M" in Chrome and Firefox)',
           'paragraph3': 'Refresh page (press "F5")'
         },
         'lookup-in-modal': {
-          'caption': 'Lookup in modal window',
+          'caption': 'Flexberry-lookup. Lookup in modal window',
           'captionModal': 'Custom modal window №1',
           'captionModalDouble': 'Custom modal window №2',
           'buttonModal': 'Modal window №1',
@@ -486,7 +486,7 @@ Ember.$.extend(true, translations, {
           'buttonClose': 'Close'
         },
         'dropdown-mode-example': {
-          'caption': 'Dropdown mode example'
+          'caption': 'Flexberry-lookup. Dropdown mode example'
         }
       },
       'flexberry-menu': {
@@ -505,15 +505,15 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Settings example'
         },
         'toolbar-custom-buttons-example': {
-          'caption': 'Custom buttons on toolbar',
+          'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
           'custom-message': 'Hello!',
           'custom-button-name': 'Send hello'
         },
         'on-edit-form': {
-          'caption': 'FlexberryObjectlistview custom data sample'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview custom data sample'
         },
         'custom-filter': {
-          'caption': 'Custom filter'
+          'caption': 'Flexberry-objectlistview. Custom filter'
         }
       },
       'flexberry-simpledatetime': {
@@ -541,7 +541,7 @@ Ember.$.extend(true, translations, {
     'integration-examples': {
       'edit-form': {
         'readonly-mode': {
-          'caption': 'Readonly mode',
+          'caption': 'Integration examples. Readonly mode',
           'readonly-flag-management-segment-caption': 'Form\'s readonly-mode management',
           'readonly-flag-value-segment-caption': 'Controller\'s \'readonly\' property value',
           'readonly-flag-caption': 'Form is in readonly mode',
@@ -557,7 +557,7 @@ Ember.$.extend(true, translations, {
           'master-dropdown-caption': 'Master in dropdown mode'
         },
         'validation': {
-          'caption': 'Validation',
+          'caption': 'Integration examples. Validation',
           'flag-caption': 'Flag',
           'number-caption': 'Number',
           'text-caption': 'Text',

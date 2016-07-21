@@ -14,6 +14,8 @@ module.exports = {
           { name: 'ember-moment', target: '6.0.0' },
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'broccoli-jscs', target: '1.2.2' },
+          { name: 'ember-browserify', target: '1.1.9' },
+          { name: 'dexie', target: '1.3.6' },
           'https://github.com/Flexberry/ember-localforage-adapter.git'
         ]
       });

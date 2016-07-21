@@ -128,7 +128,7 @@ var ModelBlueprint = (function () {
                 attrsStr = "";
                 indentStr = "";
             }
-            return new SortedPair(Number.MAX_VALUE, detailHasMany.name + ": Proj.hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "})");
+            return new SortedPair(Number.MAX_VALUE, detailHasMany.name + ": Projection.hasMany('" + detailHasMany.relatedTo + "', '" + detailHasMany.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "})");
         }
         return new SortedPair(Number.MAX_VALUE, "");
     };
@@ -169,7 +169,7 @@ var ModelBlueprint = (function () {
             if (index == -1)
                 index = Number.MAX_VALUE;
         }
-        return new SortedPair(index, belongsTo.name + ": Proj.belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}" + hiddenStr + ")");
+        return new SortedPair(index, belongsTo.name + ": Projection.belongsTo('" + belongsTo.relatedTo + "', '" + belongsTo.caption + "', {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}" + hiddenStr + ")");
     };
     ModelBlueprint.prototype.declareProjAttr = function (attr) {
         var hiddenStr = "";
@@ -218,7 +218,7 @@ var ModelBlueprint = (function () {
                 }
                 hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
                 var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n      ");
-                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": Proj.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n      " + attrsStr_1 + "\n    })"));
+                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": Projection.hasMany('" + hasMany.relatedTo + "', '" + hasMany.caption + "', {\n      " + attrsStr_1 + "\n    })"));
             }
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n    ");

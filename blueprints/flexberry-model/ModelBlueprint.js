@@ -176,7 +176,7 @@ var ModelBlueprint = (function () {
         if (attr.hidden) {
             hiddenStr = ", { hidden: true }";
         }
-        return new SortedPair(attr.index, attr.name + ": Proj.attr('" + attr.caption + "'" + hiddenStr + ")");
+        return new SortedPair(attr.index, attr.name + ": Projection.attr('" + attr.caption + "'" + hiddenStr + ")");
     };
     ModelBlueprint.prototype.getJSForProjections = function (model, modelsDir) {
         var projections = [];

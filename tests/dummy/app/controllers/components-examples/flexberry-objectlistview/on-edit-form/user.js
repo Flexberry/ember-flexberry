@@ -3,9 +3,8 @@ import EditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from '../../../../mixins/edit-form-controller-operations-indication';
 
 import { Query } from 'ember-flexberry-data';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
-const { Builder } = Query;
+const { Builder, StringPredicate } = Query;
 
 export default EditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**

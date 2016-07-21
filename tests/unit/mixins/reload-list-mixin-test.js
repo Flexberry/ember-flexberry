@@ -5,7 +5,13 @@ import startApp from '../../helpers/start-app';
 import BaseModel from 'ember-flexberry/models/base';
 import { Projection } from 'ember-flexberry-data';
 import { Serializer } from 'ember-flexberry-data';
-import { SimplePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { Query } from 'ember-flexberry-data';
+
+const {
+  SimplePredicate,
+  StringPredicate,
+  ComplexPredicate
+} = Query;
 
 module('Unit | Mixin | reload list mixin');
 

@@ -5,9 +5,15 @@
 import Ember from 'ember';
 
 import { Query } from 'ember-flexberry-data';
-import { SimplePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
-const { Builder, Condition, BasePredicate } = Query;
+const {
+  Builder,
+  Condition,
+  BasePredicate,
+  SimplePredicate,
+  StringPredicate,
+  ComplexPredicate
+} = Query;
 
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.

@@ -4,9 +4,8 @@
 
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
-import { SimplePredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
-const { Builder } = Query;
+const { Builder, SimplePredicate, ComplexPredicate } = Query;
 
 const defaultSettingName = 'DEFAULT';
 /**

@@ -8,9 +8,14 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from '../utils/model-functions';
 import { Query } from 'ember-flexberry-data';
-import { StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
 
-const { Builder, Condition, BasePredicate } = Query;
+const {
+  Builder,
+  Condition,
+  BasePredicate,
+  StringPredicate,
+  ComplexPredicate
+} = Query;
 
 /**
   Lookup component for Semantic UI.

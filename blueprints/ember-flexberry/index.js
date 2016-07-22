@@ -18,7 +18,11 @@ module.exports = {
           'https://github.com/Flexberry/ember-localforage-adapter.git'
         ]
       });
-    });
+      }).then(function () {
+        return _this.addAddonsToProject([
+          { name: 'dexie', target: '1.3.6' }
+        ]);
+      });
   },
 
   normalizeEntityName: function() {}

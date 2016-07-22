@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   date: DS.attr('date')
@@ -8,7 +8,7 @@ var Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('BaseE', 'components-examples/flexberry-datepicker/settings-example/base', {
-  date: Proj.attr('Date')
+  date: Projection.attr('Date')
 });
 
 export default Model;

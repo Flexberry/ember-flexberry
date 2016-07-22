@@ -5,7 +5,9 @@
 import Ember from 'ember';
 
 import ReloadListMixin from '../mixins/reload-list-mixin';
-import { BasePredicate } from 'ember-flexberry-data/query/predicate';
+import { Query } from 'ember-flexberry-data';
+
+const { BasePredicate } = Query;
 
 /**
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.

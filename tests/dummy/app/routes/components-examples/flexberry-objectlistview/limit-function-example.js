@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import { Query } from 'ember-flexberry-data';
+
+const { StringPredicate } = Query;
 
 export default ListFormRoute.extend({
   /**

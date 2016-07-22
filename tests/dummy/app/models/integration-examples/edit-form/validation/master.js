@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 let Model = BaseModel.extend({
   text: DS.attr('string')
@@ -8,7 +8,7 @@ let Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('MasterL', 'integration-examples/edit-form/validation/master', {
-  text: Proj.attr('Text')
+  text: Projection.attr('Text')
 });
 
 export default Model;

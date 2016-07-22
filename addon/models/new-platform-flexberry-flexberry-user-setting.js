@@ -4,7 +4,7 @@
 
 import DS from 'ember-data';
 import BaseModel from './base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 /**
   Model to work with user settings.
@@ -22,12 +22,12 @@ let Model = BaseModel.extend({
 });
 
 Model.defineProjection('FlexberryUserSettingE', 'new-platform-flexberry-flexberry-user-setting', {
-  appName: Proj.attr('Application page name'),
-  userName: Proj.attr('User name'),
-  moduleName: Proj.attr('Component name'),
-  settName: Proj.attr('Setting name'),
-  settLastAccessTime: Proj.attr('Modification time'),
-  txtVal: Proj.attr('Text value')
+  appName: Projection.attr('Application page name'),
+  userName: Projection.attr('User name'),
+  moduleName: Projection.attr('Component name'),
+  settName: Projection.attr('Setting name'),
+  settLastAccessTime: Projection.attr('Modification time'),
+  txtVal: Projection.attr('Text value')
 });
 
 export default Model;

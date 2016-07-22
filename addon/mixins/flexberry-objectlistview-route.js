@@ -4,6 +4,14 @@
 
 import Ember from 'ember';
 
+/**
+  Mixin for {{#crossLink "DS.Route"}}Route{{/crossLink}}
+  to support work with {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
+
+  @class FlexberryObjectlistviewRouteMixin
+  @extends Ember.Mixin
+  @public
+*/
 export default Ember.Mixin.create({
   actions: {
     /**
@@ -40,7 +48,9 @@ export default Ember.Mixin.create({
       // app/routes/limit-function-example.js
       import Ember from 'ember';
       import ListFormRoute from 'ember-flexberry/routes/list-form';
-      import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+      import { Query } from 'ember-flexberry-data';
+
+      const { StringPredicate } = Query;
 
       export default ListFormRoute.extend({
         modelProjection: 'FolvWithLimitFunctionExampleView',
@@ -77,7 +87,7 @@ export default Ember.Mixin.create({
   @param {String} [options.params] Current route query parameters
   @return {BasePredicate} The predicate to limit loaded data
   */
-  objectListViewLimitPredicate: function(options) {
+  objectListViewLimitPredicate(options) {
     return undefined;
   }
 });

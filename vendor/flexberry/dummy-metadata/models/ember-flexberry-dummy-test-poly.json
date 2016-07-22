@@ -1,5 +1,6 @@
 ﻿{
   "modelName": "ember-flexberry-dummy-test-poly",
+  "className": "TestPoly",
   "parentModelName": null,
   "parentClassName": null,
   "attrs": [
@@ -28,28 +29,28 @@
       "attrs": [
         {
           "name": "selfPole",
-          "caption": "",
+          "caption": "Self Pole",
           "hidden": false,
           "index": 0
         }
       ],
       "belongsTo": [
         {
-          "lookupValue": null,
-          "lookupValueField": null,
+          "lookupValue": "Pole",
+          "lookupValueField": "pole",
           "relationName": "Relation",
           "belongsTo": [],
-          "hidden": true,
+          "hidden": false,
           "attrs": [
             {
               "name": "pole",
-              "caption": "",
-              "hidden": false,
+              "caption": "Pole",
+              "hidden": true,
               "index": 2
             }
           ],
           "index": 1,
-          "caption": "",
+          "caption": "Relation",
           "name": "relation",
           "relatedTo": "ember-flexberry-dummy-test-poly-base",
           "inverse": null
@@ -63,23 +64,23 @@
       "attrs": [
         {
           "name": "selfPole",
-          "caption": "",
+          "caption": "SelfPole",
           "hidden": false,
           "index": 0
         }
       ],
       "belongsTo": [
         {
-          "lookupValue": null,
-          "lookupValueField": null,
+          "lookupValue": "Pole",
+          "lookupValueField": "pole",
           "relationName": "Relation",
           "belongsTo": [],
-          "hidden": true,
+          "hidden": false,
           "attrs": [
             {
               "name": "pole",
-              "caption": "",
-              "hidden": false,
+              "caption": "Pole",
+              "hidden": true,
               "index": 2
             }
           ],

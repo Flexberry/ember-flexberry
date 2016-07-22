@@ -1,13 +1,18 @@
 "use strict";
-var fs = require("fs");
-var path = require('path');
 var child_process = require('child_process');
 var stripBom = require("strip-bom");
+var Blueprint = require('ember-cli/lib/models/blueprint');
+var Promise = require('ember-cli/lib/ext/promise');
+var lodash = require('lodash');
 module.exports = {
     description: 'Generates all entities for flexberry.',
     availableOptions: [
         { name: 'metadata-dir', type: String }
     ],
+    install: function (options) {
+        var applicationBlueprint = new ApplicationBlueprint(this, options);
+        return applicationBlueprint.promise;
+    },
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.
@@ -19,44 +24,85 @@ module.exports = {
      * @return {Object} Сustom template variables.
      */
     locals: function (options) {
-        var applicationBlueprint = new ApplicationBlueprint(this, options);
     }
 };
+var ElapsedTime = (function () {
+    function ElapsedTime(caption, startTime) {
+        this.caption = caption;
+        this.elapsedTimeSec = (Date.now() - startTime) / 1000;
+    }
+    ElapsedTime.print = function () {
+        var total = 0;
+        console.log("Ellapsed time:");
+        for (var _i = 0, _a = ElapsedTime.groups; _i < _a.length; _i++) {
+            var group = _a[_i];
+            console.log(group.caption + ": " + ElapsedTime.format(group.elapsedTimeSec));
+            total += group.elapsedTimeSec;
+        }
+        console.log("Total: " + ElapsedTime.format(total));
+    };
+    ElapsedTime.format = function (sec) {
+        var hours = Math.floor(sec / 3600);
+        var min = Math.floor((sec - hours * 3600) / 60);
+        var sec2 = sec - hours * 3600 - min * 60;
+        //return `${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
+        return ElapsedTime.formatterFrac.format(sec) + " sec";
+    };
+    ElapsedTime.add = function (caption, startTime) {
+        ElapsedTime.groups.push(new ElapsedTime(caption, startTime));
+        return Date.now();
+    };
+    ElapsedTime.groups = [];
+    ElapsedTime.formatter = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 0 });
+    ElapsedTime.formatterFrac = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 1, minimumFractionDigits: 1 });
+    return ElapsedTime;
+}());
 var ApplicationBlueprint = (function () {
     function ApplicationBlueprint(blueprint, options) {
         this.metadataDir = options.metadataDir;
-        this.emberGenerateTests("list-forms");
-        this.emberGenerateTests("edit-forms");
-        this.execCommand("ember generate route index");
-        this.emberGenerate("flexberry-model", "models");
-        this.emberGenerate("flexberry-enum", "enums");
-        this.emberGenerate("flexberry-list-form", "list-forms");
-        this.emberGenerate("flexberry-edit-form", "edit-forms");
-        this.execCommand("ember generate flexberry-core app --metadata-dir=" + this.metadataDir);
+        this.options = options;
+        this.promise = Promise.resolve();
+        this.promise = this.emberGenerateFlexberryGroup("controller-test");
+        this.promise = this.emberGenerateFlexberryGroup("route-test");
+        this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
+        this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
+        this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
+        this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
+        this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
+        this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
+        this.promise = this.emberGenerate("route", "index");
+        this.promise = this.emberGenerate("flexberry-core", "app");
+        this.promise = this.promise
+            .then(function () {
+            ElapsedTime.print();
+        });
     }
+    ApplicationBlueprint.prototype.getMainBlueprint = function (blueprintName) {
+        return Blueprint.lookup(blueprintName, {
+            ui: undefined,
+            analytics: undefined,
+            project: undefined,
+            paths: ["node_modules/ember-flexberry/blueprints"]
+        });
+    };
+    ApplicationBlueprint.prototype.emberGenerateFlexberryGroup = function (blueprintName) {
+        return this.emberGenerate("flexberry-group", blueprintName);
+    };
+    ApplicationBlueprint.prototype.emberGenerate = function (blueprintName, entityName) {
+        var mainBlueprint = this.getMainBlueprint(blueprintName);
+        var options = lodash.merge({}, this.options, { entity: { name: entityName } });
+        return this.promise
+            .then(function () {
+            return mainBlueprint["install"](options);
+        }).then(function () {
+            ApplicationBlueprint.start = ElapsedTime.add(blueprintName + " " + entityName, ApplicationBlueprint.start);
+        });
+    };
     ApplicationBlueprint.prototype.execCommand = function (cmd) {
         console.log(cmd);
         return child_process.execSync(cmd, { stdio: ["inherit", "inherit", "inherit"] });
     };
-    ApplicationBlueprint.prototype.emberGenerateTests = function (metadataSubDir) {
-        metadataSubDir = path.join(this.metadataDir, metadataSubDir);
-        var list = fs.readdirSync(metadataSubDir);
-        for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
-            var file = list_1[_i];
-            var name_1 = path.parse(file).name;
-            this.execCommand("ember generate route-test " + name_1);
-            this.execCommand("ember generate controller-test " + name_1);
-        }
-    };
-    ApplicationBlueprint.prototype.emberGenerate = function (blueprintName, metadataSubDir) {
-        metadataSubDir = path.join(this.metadataDir, metadataSubDir);
-        var list = fs.readdirSync(metadataSubDir);
-        for (var _i = 0, list_2 = list; _i < list_2.length; _i++) {
-            var file = list_2[_i];
-            var name_2 = path.parse(file).name;
-            this.execCommand("ember generate " + blueprintName + " " + name_2 + " --metadata-dir=" + this.metadataDir);
-        }
-    };
+    ApplicationBlueprint.start = Date.now();
     return ApplicationBlueprint;
 }());
 //# sourceMappingURL=index.js.map

@@ -5,6 +5,49 @@ const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
+  'models': {
+    'ember-flexberry-dummy-suggestion': {
+      'projections': {
+        'SuggestionL': {
+          'address': {
+            'caption': 'Адрес'
+          },
+          'text': {
+            'caption': 'Текст'
+          },
+          'date': {
+            'caption': 'Дата'
+          },
+          'votes': {
+            'caption': 'Голоса'
+          },
+          'author': {
+            'caption': 'Автор',
+            'eMail': {
+              'caption': 'Почта'
+            }
+          }
+        },
+        'SuggestionE': {
+          'address': {
+            'caption': 'Адрес'
+          },
+          'userVotes': {
+            'voteType': {
+              'caption': 'Тип голосования'
+            },
+            'applicationUser': {
+              'caption': 'Пользователь',
+              'eMail': {
+                'caption': 'Почта'
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
   'application-name': 'Тестовый стенд ember-flexberry',
 
   'forms': {
@@ -23,11 +66,11 @@ Ember.$.extend(true, translations, {
             'title': 'Меню'
           },
           'user-settings-service-checkbox': {
-            'caption': 'Использовать сервис пользовательских настроек'
+            'caption': 'Использовать сервис сохранения пользовательских настроек'
           },
           'language-dropdown': {
             'caption': 'Язык приложения',
-            'placeholder': 'Выберете язык'
+            'placeholder': 'Выберите язык'
           }
         }
       },
@@ -163,6 +206,14 @@ Ember.$.extend(true, translations, {
               'caption': 'Функция ограничения',
               'title': ''
             },
+            'lookup-block-form-example': {
+              'caption': 'Лукап в блочной форме',
+              'title': ''
+            },
+            'lookup-in-modal': {
+              'caption': 'Лукап в модальном окне',
+              'title': ''
+            },
             'dropdown-mode-example': {
               'caption': 'Режим dropdown',
               'title': ''
@@ -193,6 +244,10 @@ Ember.$.extend(true, translations, {
             },
             'on-edit-form': {
               'caption': 'Размещение на форме редактирования',
+              'title': ''
+            },
+            'custom-filter': {
+              'caption': 'Настройка фильтра',
               'title': ''
             }
           },
@@ -230,7 +285,7 @@ Ember.$.extend(true, translations, {
           }
         },
         'integration-examples': {
-          'caption': 'Integration examples',
+          'caption': 'Примеры интеграции',
           'title': '',
           'edit-form': {
             'caption': 'Форма редактирования',
@@ -338,18 +393,18 @@ Ember.$.extend(true, translations, {
 
     'log-service-examples': {
       'settings-example': {
-        'caption': 'Log-service-examples/settings-example',
+        'caption': 'Сервис логирования. Пример работы с настройками',
         'setting-column-header-caption': 'Настройка сервиса логирования',
         'settings-value-column-header-caption': 'Текущее значение настройки',
         'throw-exception-button-caption': 'Бросить исключение',
         'reject-rsvp-promise-button-caption': 'Отклонить promise',
-        'ember-assert-button-caption': 'Ember.assert',
-        'ember-logger-error-button-caption': 'Ember.Logger.error',
-        'ember-logger-warn-button-caption': 'Ember.Logger.warn',
-        'ember-deprecate-button-caption': 'Ember.deprecate',
-        'ember-logger-log-button-caption': 'Ember.Logger.log',
-        'ember-logger-info-button-caption': 'Ember.logger.info',
-        'ember-logger-debug-button-caption': 'Ember.Logger.debug',
+        'ember-assert-button-caption': 'assert',
+        'ember-logger-error-button-caption': 'Error',
+        'ember-logger-warn-button-caption': 'Warn',
+        'ember-deprecate-button-caption': 'Deprecate',
+        'ember-logger-log-button-caption': 'Log',
+        'ember-logger-info-button-caption': 'Info',
+        'ember-logger-debug-button-caption': 'Debug',
         'throw-exception-button-message': 'Брошено исключение',
         'reject-rsvp-promise-button-message': 'Promise отклонен',
         'ember-assert-button-message': 'Вызван метод Ember.assert',
@@ -365,20 +420,20 @@ Ember.$.extend(true, translations, {
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-checkbox/settings-example'
+          'caption': 'Flexberry-checkbox. Пример работы с настройками'
         }
       },
       'flexberry-datepicker': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-datepicker/settings-example'
+          'caption': 'Flexberry-datepicker. Пример работы с настройками'
         }
       },
       'flexberry-dropdown': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-dropdown/settings-example'
+          'caption': 'Flexberry-dropdown. Пример работы с настройками'
         },
         'conditional-render-example': {
-          'caption': 'Components-examples/flexberry-dropdown/conditional-render-example',
+          'caption': 'Flexberry-dropdown. Пример условного рендеринга',
           'info-caption': 'Описание варианта использования',
           'info-message': 'Шаблон страницы выглядит следующим образом:' +
             '{{pageTemplate}}' +
@@ -389,84 +444,108 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-field': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-field/settings-example'
+          'caption': 'Flexberry-field. Пример работы с настройками'
         }
       },
       'flexberry-file': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-file/settings-example'
+          'caption': 'Flexberry-file. Пример работы с настройками'
         }
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-groupedit/settings-example'
+          'caption': 'Flexberry-groupedit. Пример работы с настройками'
         },
         'model-update-example': {
-          'caption': 'Components-examples/flexberry-groupedit/model-update-example',
+          'caption': 'Flexberry-groupedit. Обновление модели',
           'addDetailButton': 'Добавить детейл',
           'removeDetailButton': 'Удалить детейл',
         }
       },
       'flexberry-lookup': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-lookup/settings-example'
+          'caption': 'Flexberry-lookup. Пример работы с настройками'
         },
         'customizing-window-example': {
-          'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
+          'caption': 'Flexberry-lookup. Настройка окна',
+          'titleLookup': 'Мастер'
         },
         'limit-function-example': {
-          'caption': 'Components-examples/flexberry-lookup/limit-function-example'
+          'caption': 'Flexberry-lookup. Функция ограничения',
+          'titleLookup': 'Мастер'
+        },
+        'lookup-block-form-example': {
+          'caption': 'Flexberry-lookup. Лукап в блочной форме',
+          'message': 'Данный тест работает только в мобильной версии сайта. Чтобы запустить мобильную версию нужно:',
+          'paragraph1': 'Перейти в режим разработчика (нажать “F12”).',
+          'paragraph2': 'Включить мобильную версию сайта (нажать “Ctrl+Shift+M” в Chrome и Firefox)',
+          'paragraph3': 'Обновить страницу (нажать “F5”)'
+        },
+        'lookup-in-modal': {
+          'caption': 'Flexberry-lookup. Лукап в модальном окне',
+          'captionModal': 'Кастомное модальное окно №1',
+          'captionModalDouble': 'Кастомное модальное окно №2',
+          'buttonModal': 'Модальное окно №1',
+          'buttonModalDouble': 'Модальное окно №2',
+          'buttonClose': 'Закрыть'
         },
         'dropdown-mode-example': {
-          'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'
+          'caption': 'Flexberry-lookup. Режим dropdown'
         }
       },
       'flexberry-menu': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-menu/settings-example'
+          'caption': 'Flexberry-menu. Пример работы с настройками',
+          'titleIcon1': 'Значок выравнен по левому краю',
+          'titleIcon2': 'Значок выравнен по правому краю',
+          'titleIcon3': 'Подменю'
         }
       },
       'flexberry-objectlistview': {
         'limit-function-example': {
-          'caption': 'Components-examples/flexberry-objectlistview/limit-function-example'
+          'caption': 'Flexberry-objectlistview. Функция ограничения'
         },
         'settings-example': {
-          'caption': 'Components-examples/flexberry-objectlistview/settings-example'
+          'caption': 'Flexberry-objectlistview. Пример работы с настройками'
         },
         'toolbar-custom-buttons-example': {
-          'caption': 'Components-examples/flexberry-objectlistview/toolbar-custom-buttons-example',
+          'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
           'custom-button-name': 'Передать привет'
         },
         'on-edit-form': {
-          'caption': 'FlexberryObjectlistview пример произвольных данных'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview пример произвольных данных'
+        },
+        'custom-filter': {
+          'caption': 'Flexberry-objectlistview. Настройка фильтра'
         }
       },
       'flexberry-simpledatetime': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-simpledatetime/settings-example'
+          'caption': 'Flexberry-simpledatetime. Пример работы с настройками'
         }
       },
       'flexberry-textarea': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-textarea/settings-example'
+          'caption': 'Flexberry-textarea. Пример работы с настройками'
         }
       },
       'flexberry-textbox': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-textbox/settings-example'
+          'caption': 'Flexberry-textbox. Пример работы с настройками'
         }
       },
       'flexberry-toggler': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-toggler/settings-example'
+          'caption': 'Flexberry-toggler. Пример работы с настройками',
+          'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
         }
       }
     },
     'integration-examples': {
       'edit-form': {
         'readonly-mode': {
-          'caption': 'Integration-examples/edit-form/readonly-mode',
+          'caption': 'Integration examples. Режим только для чтения',
           'readonly-flag-management-segment-caption': 'Управление режимом только для чтения формы',
           'readonly-flag-value-segment-caption': 'Значения свойства \'readonly\' контроллера',
           'readonly-flag-caption': 'Форма находится в режиме только для чтения',
@@ -482,7 +561,7 @@ Ember.$.extend(true, translations, {
           'master-dropdown-caption': 'Мастер в режиме dropdown-а'
         },
         'validation': {
-          'caption': 'Integration-examples/edit-form/validation',
+          'caption': 'Integration examples. Валидация',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',
           'text-caption': 'Текст',

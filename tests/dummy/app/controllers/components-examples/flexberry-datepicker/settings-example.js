@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
     @type String
     @private
    */
-  _serializedMinDate: undefined,
+  _serializedMinDate: null,
 
   /**
     Serialized max date.
@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
     @type String
     @private
    */
-  _serializedMaxDate: undefined,
+  _serializedMaxDate: null,
 
   /**
     Handles changes in serialized model date.
@@ -153,14 +153,14 @@ export default Ember.Controller.extend({
     @property minDate
     @type Date
    */
-  minDate: undefined,
+  minDate: null,
   /**
     The latest date a user may select.
 
     @property maxDate
     @type date
    */
-  maxDate: undefined,
+  maxDate: null,
   /**
     Text for 'flexberry-datepicker' component 'placeholder' property.
 
@@ -168,6 +168,17 @@ export default Ember.Controller.extend({
     @type String
    */
   placeholder: t('components.flexberry-datepicker.placeholder'),
+  /**
+    Handles changes in placeholder.
+
+    @method _placeholderChanged
+    @private
+   */
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-datepicker.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-datepicker.placeholder'));
+    }
+  }),
   /**
     Flag: indicates whether 'flexberry-datepicker' component is in 'readonly' mode or not.
 
@@ -220,14 +231,14 @@ export default Ember.Controller.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'minDate',
       settingType: 'date',
-      settingDefaultValue: undefined,
+      settingDefaultValue: null,
       bindedControllerPropertieName: '_serializedMinDate',
       bindedControllerPropertieDisplayName: 'minDate'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'maxDate',
       settingType: 'date',
-      settingDefaultValue: undefined,
+      settingDefaultValue: null,
       bindedControllerPropertieName: '_serializedMaxDate',
       bindedControllerPropertieDisplayName: 'maxDate'
     });

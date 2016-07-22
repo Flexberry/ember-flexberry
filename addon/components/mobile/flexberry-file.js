@@ -74,9 +74,9 @@ export default FlexberryFile.extend({
       @public
     */
     onMenuItemClick(e) {
-      // TODO: Move collapse menu logic into flexberry-menu component,
-      // make it available through component setting (for example collapseMenuOnItemClick=true).
-      this._collapseMenu();
+      if (!e.item) {
+        return;
+      }
 
       if (e.item.isZoomItem) {
         this.send('viewLoadedImage');
@@ -133,17 +133,4 @@ export default FlexberryFile.extend({
       dropdownElement.dropdown();
     }
   },
-
-  /**
-    Collapses and clears menu after item selection.
-
-    @method _collapseMenu
-    @private
-  */
-  _collapseMenu() {
-    let dropdownMenu = this.$('.flexberry-file-menu .dropdown');
-    if (dropdownMenu && dropdownMenu.length > 0) {
-      dropdownMenu.dropdown('clear');
-    }
-  }
 });

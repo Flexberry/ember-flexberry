@@ -11,10 +11,11 @@
     {{#if _hasFile}}
       <div class="flexberry-file-menu">
         {{flexberry-menu
-          class="icon vertical"
+          class="bottom left pointing"
           items=_menuItems
           callItemsOnClickCallbacks=false
           onItemClick=(action "onMenuItemClick")
+          collapseMenuOnItemClick=true
         }}
       </div>
       {{#if showPreview}}

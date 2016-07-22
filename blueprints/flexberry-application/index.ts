@@ -6,6 +6,10 @@ import fs = require("fs");
 import path = require('path');
 import child_process = require('child_process');
 const stripBom = require("strip-bom");
+const Blueprint = require('ember-cli/lib/models/blueprint');
+const Promise = require('ember-cli/lib/ext/promise');
+import lodash = require('lodash');
+
 
 module.exports = {
 
@@ -15,6 +19,10 @@ module.exports = {
     { name: 'metadata-dir', type: String }
   ],
 
+  install: function (options) {
+    let applicationBlueprint = new ApplicationBlueprint(this, options);
+    return applicationBlueprint.promise;
+  },
 
 
   /**
@@ -28,46 +36,97 @@ module.exports = {
    * @return {Object} Сustom template variables.
    */
   locals: function(options) {
-    let applicationBlueprint = new ApplicationBlueprint(this, options);
   }
 };
 
+class ElapsedTime {
+  public caption: string;
+  public elapsedTimeSec: number;
+  private static groups: ElapsedTime[] = [];
+  private static formatter = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 0 });
+  private static formatterFrac = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 1, minimumFractionDigits: 1 });
+
+  public constructor(caption: string, startTime: number) {
+    this.caption = caption;
+    this.elapsedTimeSec = (Date.now() - startTime) / 1000;
+  }
+
+  public static print() {
+    let total: number = 0;
+    console.log("Ellapsed time:");
+    for (let group of ElapsedTime.groups) {
+      console.log(`${group.caption}: ${ElapsedTime.format(group.elapsedTimeSec)}`);
+      total += group.elapsedTimeSec;
+    }
+    console.log(`Total: ${ElapsedTime.format(total)}`);
+  }
+
+  public static format(sec: number): string {
+    let hours = Math.floor(sec / 3600);
+    let min = Math.floor((sec - hours * 3600) / 60);
+    let sec2 = sec - hours * 3600 - min * 60;
+    //return `${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
+    return `${ElapsedTime.formatterFrac.format(sec)} sec`;
+  }
+
+  public static add(caption: string, startTime: number): number {
+    ElapsedTime.groups.push(new ElapsedTime(caption, startTime));
+    return Date.now();
+  }
+}
+
 class ApplicationBlueprint {
+  public promise;
   private metadataDir: string;
+  private options;
+  static start = Date.now();
+
   constructor(blueprint, options) {
-    this.metadataDir=options.metadataDir;
-    this.emberGenerateTests("list-forms");
-    this.emberGenerateTests("edit-forms");
-    this.execCommand("ember generate route index");
-    this.emberGenerate("flexberry-model", "models");
-    this.emberGenerate("flexberry-enum", "enums");
-    this.emberGenerate("flexberry-list-form", "list-forms");
-    this.emberGenerate("flexberry-edit-form", "edit-forms");
-    this.execCommand(`ember generate flexberry-core app --metadata-dir=${this.metadataDir}`);
+    this.metadataDir = options.metadataDir;
+    this.options = options;
+    this.promise = Promise.resolve();
+    this.promise = this.emberGenerateFlexberryGroup("controller-test");
+    this.promise = this.emberGenerateFlexberryGroup("route-test");
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
+    this.promise = this.emberGenerate("route", "index");
+    this.promise = this.emberGenerate("flexberry-core", "app");
+    this.promise = this.promise
+      .then(function () {
+        ElapsedTime.print();
+      });
   }
 
-  execCommand(cmd: string){
+  getMainBlueprint(blueprintName) {
+    return Blueprint.lookup(blueprintName, {
+      ui: undefined,
+      analytics: undefined,
+      project: undefined,
+      paths: ["node_modules/ember-flexberry/blueprints"]
+    });
+  }
+
+  emberGenerateFlexberryGroup(blueprintName: string) {
+    return this.emberGenerate("flexberry-group", blueprintName);
+  }
+
+  emberGenerate(blueprintName: string, entityName: string) {
+    let mainBlueprint = this.getMainBlueprint(blueprintName);
+    let options = lodash.merge({}, this.options, { entity: { name: entityName } });
+    return this.promise
+      .then(function () {
+        return mainBlueprint["install"](options);
+      }).then(function () {
+        ApplicationBlueprint.start = ElapsedTime.add(`${blueprintName} ${entityName}`, ApplicationBlueprint.start);
+      });
+  }
+
+  execCommand(cmd: string) {
     console.log(cmd);
-    return child_process.execSync(cmd, {stdio:["inherit", "inherit", "inherit"]});
+    return child_process.execSync(cmd, { stdio: ["inherit", "inherit", "inherit"] });
   }
-
-  emberGenerateTests(metadataSubDir: string){
-    metadataSubDir = path.join(this.metadataDir, metadataSubDir);
-    let list = fs.readdirSync(metadataSubDir);
-    for (let file of list) {
-      let name = path.parse(file).name;
-      this.execCommand(`ember generate route-test ${name}`);
-      this.execCommand(`ember generate controller-test ${name}`);
-    }
-  }
-
-  emberGenerate(blueprintName: string, metadataSubDir: string){
-    metadataSubDir = path.join(this.metadataDir, metadataSubDir);
-    let list = fs.readdirSync(metadataSubDir);
-    for (let file of list) {
-      let name = path.parse(file).name;
-      this.execCommand(`ember generate ${blueprintName} ${name} --metadata-dir=${this.metadataDir}`);
-    }
-  }
-
 }

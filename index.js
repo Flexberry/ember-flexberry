@@ -7,7 +7,7 @@ module.exports = {
   included: function(app) {
     this._super.included.apply(this._super, arguments);
 
-    app.import('vendor/flexberry/register-version.js');
+    app.import('vendor/ember-flexberry/register-version.js');
 
     app.import({
       development: 'bower_components/moment/min/moment-with-locales.js',

@@ -1,5 +1,6 @@
 ﻿{
   "modelName": "ember-flexberry-dummy-application-user",
+  "className": "ApplicationUser",
   "parentModelName": null,
   "parentClassName": null,
   "attrs": [

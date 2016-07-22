@@ -7,40 +7,40 @@ import Ember from 'ember';
 /**
   Mixin for controller, that pagination support.
 
-  Example:
-  ```javascript
-  // app/controllers/employees.js
-  import Ember from 'ember';
-  import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
-  export default Ember.Controller.extend(PaginatedController, {
-  });
-  ```
+  @example
+    ```javascript
+    // app/controllers/employees.js
+    import Ember from 'ember';
+    import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
+    export default Ember.Controller.extend(PaginatedController, {
+    });
+    ```
 
-  ```javascript
-  // app/routes/employees.js
-  import Ember from 'ember';
-  import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
-  export default Ember.Route.extend(PaginatedRoute, {
-  });
-  ```
+    ```javascript
+    // app/routes/employees.js
+    import Ember from 'ember';
+    import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
+    export default Ember.Route.extend(PaginatedRoute, {
+    });
+    ```
 
-  ```handlebars
-  <!-- app/templates/employees.hbs -->
-  ...
-  {{flexberry-objectlistview
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
     ...
-    pages=pages
-    perPageValue=perPageValue
-    perPageValues=perPageValues
-    hasPreviousPage=hasPreviousPage
-    hasNextPage=hasNextPage
-    previousPage=(action 'previousPage')
-    gotoPage=(action 'gotoPage')
-    nextPage=(action 'nextPage')
+    {{flexberry-objectlistview
+      ...
+      pages=pages
+      perPageValue=perPageValue
+      perPageValues=perPageValues
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      previousPage=(action 'previousPage')
+      gotoPage=(action 'gotoPage')
+      nextPage=(action 'nextPage')
+      ...
+    }}
     ...
-  }}
-  ...
-  ```
+    ```
 
   @class PaginatedController
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
@@ -50,7 +50,7 @@ export default Ember.Mixin.create({
     Start page.
 
     @property page
-    @type Integer
+    @type Number
     @default 1
    */
   page: 1,
@@ -59,7 +59,7 @@ export default Ember.Mixin.create({
     Count records on page.
 
     @property perPage
-    @type Integer
+    @type Number
     @default 5
    */
   perPage: 5,
@@ -77,7 +77,7 @@ export default Ember.Mixin.create({
     Get or set `perPage` value.
 
     @property perPageValue
-    @type Integer
+    @type Number
    */
   perPageValue: Ember.computed('perPage', {
     get(key) {
@@ -119,7 +119,7 @@ export default Ember.Mixin.create({
     Total count records.
 
     @property recordsTotalCount
-    @type Integer
+    @type Number
     @readOnly
    */
   recordsTotalCount: Ember.computed('model', function() {
@@ -237,7 +237,7 @@ export default Ember.Mixin.create({
       Transition to page with number.
 
       @method actions.gotoPage
-      @param {Integer} pageNum Number of page.
+      @param {Number} pageNum Number of page.
      */
     gotoPage(pageNum) {
       let num = this._checkPageNumber(pageNum);
@@ -291,7 +291,7 @@ export default Ember.Mixin.create({
 
     @method _addPageNumberIntoArray
     @param {Array} arr Array pages.
-    @param {Integer} pageNumber Number of page.
+    @param {Number} pageNumber Number of page.
     @param {Boolean} isEllipsis If `true` this page not showing in list.
     @private
    */
@@ -308,9 +308,9 @@ export default Ember.Mixin.create({
     Get number last page.
 
     @method _getLastPage
-    @param {Integer} perPage Count records on page.
-    @param {Integer} count Total count records.
-    @return {Integer} Number last page.
+    @param {Number} perPage Count records on page.
+    @param {Number} count Total count records.
+    @return {Number} Number last page.
     @private
    */
   _getLastPage(perPage = this.get('perPage'), count = this.get('recordsTotalCount')) {
@@ -321,7 +321,7 @@ export default Ember.Mixin.create({
     Check there is a page with this number.
 
     @method _checkPageNumber
-    @param {Integer} pageNum Number of page.
+    @param {Number} pageNum Number of page.
     @return {Boolean} If page exists, return `pageNum`, else, return `lastPage`.
     @private
    */

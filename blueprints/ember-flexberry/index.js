@@ -19,7 +19,7 @@ module.exports = {
         ]
       });
       }).then(function () {
-        return _this.addAddonsToProject([
+        return _this.addPackagesToProject([
           { name: 'dexie', target: '1.3.6' }
         ]);
       });

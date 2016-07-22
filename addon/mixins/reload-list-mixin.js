@@ -86,9 +86,17 @@ export default Ember.Mixin.create({
     let builder = new QueryBuilder(store)
       .from(modelName)
       .selectByProjection(projectionName)
-      .top(perPageNumber)
-      .skip((pageNumber - 1) * perPageNumber)
       .count();
+
+    let controller = this.controllerFor(this.routeName);
+    let inHierarchicalMode = controller.get('inHierarchicalMode');
+    if (inHierarchicalMode) {
+      let hierarchicalAttribute = controller.get('hierarchicalAttribute');
+      let hierarchicalPredicate = new SimplePredicate(hierarchicalAttribute, 'eq', null);
+      limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, hierarchicalPredicate) : hierarchicalPredicate;
+    } else {
+      builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
+    }
 
     let sorting = reloadOptions.sorting.map(i => `${i.propName} ${i.direction}`).join(',');
     if (sorting) {

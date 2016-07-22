@@ -31,5 +31,5 @@ typings/ember/ember.d.ts
 /blueprints/.vs
 /blueprints/bin
 /blueprints/obj
-/blueprints/ember-flexberry.sln
-/blueprints/ember-flexberry.njsproj
+/blueprints/**/*.sln
+/blueprints/**/*.njsproj

@@ -33,32 +33,6 @@ export default FlexberryBaseComponent.extend(
   _modelProjection: null,
 
   /**
-    Computed property forms unique name for component from model name and current route.
-    This unique name can be used as module name for user settings service.
-
-    @property _moduleName
-    @private
-    @type String
-  */
-  _moduleName: Ember.computed('modelProjection', function() {
-    let modelName = this.get('modelProjection').modelName;
-    let currentController = this.get('currentController');
-    let currentRoute = currentController ? this.get('currentController').get('target').currentRouteName : 'application';
-    Ember.assert('Error while module name determing.', modelName && currentRoute);
-    return modelName + '__' + currentRoute;
-  }),
-
-  /**
-    Name of user setting name for column widths.
-
-    @property _columnWidthsUserSettingName
-    @private
-    @type String
-    @default 'OlvColumnWidths'
-  */
-  _columnWidthsUserSettingName: 'OlvColumnWidths',
-
-  /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
 
@@ -378,7 +352,7 @@ export default FlexberryBaseComponent.extend(
       return cols;
     }
 
-    let userSettings = this.currentController ? this.currentController.userSettings : undefined;
+    let userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     if (userSettings && userSettings.colsOrder !== undefined) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {
@@ -413,7 +387,7 @@ export default FlexberryBaseComponent.extend(
       }
     } else {
       if (this.currentController) {
-        if (userSettings === undefined) {
+        if (this.currentController.userSettings === undefined) {
           Ember.set(this.currentController, 'userSettings', {});
         }
 
@@ -657,6 +631,15 @@ export default FlexberryBaseComponent.extend(
   */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
+  /**
+    Used to identify objectListView on the page.
+
+    @property componentName
+    @type String
+    @default ''
+  */
+  componentName: '',
+
   actions: {
     /**
       This action is called when user click on row.
@@ -844,6 +827,21 @@ export default FlexberryBaseComponent.extend(
   init() {
     this._super(...arguments);
 
+    Ember.assert('ObjectListView must have componentName attribute.', this.get('componentName'));
+
+    if (!this.get('disableHierarchicalMode')) {
+      let modelName = this.get('modelName');
+      if (modelName) {
+        let model = this.get('store').modelFor(modelName);
+        let relationships = Ember.get(model, 'relationships');
+        let hierarchicalrelationships = relationships.get(modelName);
+        if (hierarchicalrelationships.length === 1) {
+          let hierarchicalAttribute = hierarchicalrelationships[0].name;
+          this.sendAction('availableHierarchicalMode', hierarchicalAttribute);
+        }
+      }
+    }
+
     this.set('selectedRecords', Ember.A());
     this.set('contentWithKeys', Ember.A());
 
@@ -892,15 +890,10 @@ export default FlexberryBaseComponent.extend(
       }
     }
 
-    let moduleName = this.get('_moduleName');
-    let userSetting = {
-      moduleName: moduleName,
-      settingName: this.get('_columnWidthsUserSettingName')
-    };
-
-    this.get('userSettingsService').getUserSetting(userSetting).then(data => {
-      this._setColumnWidths(data);
-    });
+    let columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+    if (columnWidth !== undefined) {
+      this._setColumnWidths(columnWidth);
+    }
 
     // TODO: resolve this problem.
     this.$('.flexberry-dropdown:last').dropdown({
@@ -919,7 +912,6 @@ export default FlexberryBaseComponent.extend(
     this._super(...arguments);
 
     let $currentTable = this.$('table.object-list-view');
-
     if (this.get('allowColumnResize')) {
       // The first column has semantic class "collapsing"
       // so the column has 1px width and plugin has problems.
@@ -999,17 +991,17 @@ export default FlexberryBaseComponent.extend(
     let hashedUserSetting = {};
     userSetting.forEach(item => {
       let userColumnInfo = Ember.merge({
-        propertyName: undefined,
+        propName: undefined,
         width: undefined
       }, item);
 
-      let propertyName = userColumnInfo.propertyName;
+      let propName = userColumnInfo.propName;
       let width = userColumnInfo.width;
 
-      Ember.assert('Property name is not defined at saved user setting.', propertyName);
+      Ember.assert('Property name is not defined at saved user setting.', propName);
       Ember.assert('Column width is not defined at saved user setting.', width);
 
-      hashedUserSetting[propertyName] = width;
+      hashedUserSetting[propName] = width;
     });
 
     let $columns = this.$('table.object-list-view').find('th');
@@ -1050,19 +1042,11 @@ export default FlexberryBaseComponent.extend(
       currentColumnWidth = Math.round(currentColumnWidth);
 
       userWidthSettings.push({
-        propertyName: currentPropertyName,
+        propName: currentPropertyName,
         width: currentColumnWidth,
       });
     });
-
-    let moduleName = this.get('_moduleName');
-    let userSetting = {
-      moduleName,
-      userSetting: userWidthSettings,
-      settingName: this.get('_columnWidthsUserSettingName'),
-    };
-
-    this.get('userSettingsService').saveUserSetting(userSetting);
+    this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
   },
 
   /**
@@ -1196,12 +1180,17 @@ export default FlexberryBaseComponent.extend(
     }
 
     let key = this._createKey(bindingPath);
+    let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
 
     let column = {
-      header: getValueFromLocales(this.get('i18n'), key) || attr.caption || Ember.String.capitalize(attrName),
+      header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
     };
+
+    if (valueFromLocales) {
+      column.keyLocale = key;
+    }
 
     let customColumnAttributesFunc = this.get('customColumnAttributes');
     if (customColumnAttributesFunc) {

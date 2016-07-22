@@ -5,25 +5,53 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * Custom internationalized captions for boolean type in object-list-view-cell.
-
-### Fixed
-* Fixed select from `flexberry-lookup` in dropdown mode.
-
-### Added
-* Blueprints
+* Blueprints:
     * Add regeneration for models and serializers.
+    * Add new `flexberry-group` - blueprint for generation of group entities one blueprint.
+    * Add generate default comments for `flexberry-list-form` blueprint.
 * Added support `flexberry-lookup` in dropdown mode for mobile.
 * FlexberryObjectlistview component:
     * Add filter by attribute number type.
     * Add filter by attribute master type.
     * Add `predicateForAttribute` function for customization filter.
     * Add filter for each columns.
+    * Add hierarchical mode:
+      * Auto detect available hierarchical mode by default.
+      * Use `hierarchyByAttribute` for building hierarchy.
+      * Use `disableHierarchicalMode` for disable hierarchical mode.
 * ObjectlistviewComponent:
     * Add support locales for captions models of projection.
 * ModelFunctions:
     * Add `getValueFromLocales` function.
+* Full refactoring user setting service (see more details below):
+  * User setting service support in-memory saving the settings of all ObjectListView components for all pages. This allows:
+    * Maintain user setting service on mode APP.useUserSettingsService: false without saving them to backend;
+    * Store and appy (in future) settings to multiple components on a page;
+    * Store an unlimited number of settings (default and unlimited named) for each ObjectListView component;
+    * Store (define) all the information on defaut or named setting (columns order, sorting order, columns width and other) in single object (property, backend record);
+    * customize the column widths manually by mouse or by specifying digital values;
+    * Enable or disable the settings column widths;
+    * Avoid repated access to the backend's usersetting service when you return to the already loaded page.
+  * Support three levels of setting:
+    * Defined by developer;
+    * Defined by users and stored in usersetting's backend;
+    * Temporary settings defined by users specified in the URL-parameters (sort, etc...).
+    * Support user setting service for developer. After adjasting component developer can display current default and named settings and save them in proporty developerUserSettings of app/routes/{{pageRouteName}}.js as default settings.
+
+### Changed
+* `flexberry-menu`:
+    * Added new property `collapseMenuOnItemClick` and related logic.
+    * Added `collapseMenuOnItemClick` property to test example.
+* `flexberry-file`:
+    * Removed collapsing menu logic.
+    * Added `collapseMenuOnItemClick` property to appropriate .hbs file (template).
+* Blueprints:
+    * Parameters `editFormRoute` moved to controller property.
 
 ### Fixed
+* Blueprints:
+    * Fixed blueprints speed up generation process.
+    * Fixed adapter generation in `flexberry-core` blueprint.
 * Fixed select from `flexberry-lookup` in dropdown mode.
 * Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.
@@ -167,7 +195,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Formatted message field of log object fills differently in IE11/Safari and Chrome/Firefox.
 * `flexberry-datepicker` eats too much memory, working slowly and slows down the application (especially when using multiple `flexberry-datepicker` components on form).
 * Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working after changing current locale for internationalization to another language and back again.
-* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving user setting on backend. 
+* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving user setting on backend.
 * Saving user settings for `flexberry-groupedit` component and for `flexberry-objectlistview` that shows for choosing value for `flexberry-lookup` component doesn't work correctly. It is possible to use `notUseUserSettings` property for `flexberry-objectlistview` component to turn off user settings for these cases as workaround.
 
 ## [0.1.0] - 2015-12-05

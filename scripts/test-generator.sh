@@ -21,6 +21,7 @@ cp app/index.html .
 rm -r app/*
 mv index.html app
 ember install "${ADDON_DIR}"
+npm install dexie@1.3.6
 rm -f ./ember-cli-build.js
 cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
 rm -f ./.jscsrc

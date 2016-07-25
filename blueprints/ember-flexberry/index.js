@@ -15,7 +15,8 @@ module.exports = {
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'broccoli-jscs', target: '1.2.2' },
           { name: 'ember-browserify', target: '1.1.9' },
-          'https://github.com/Flexberry/ember-localforage-adapter.git'
+          'https://github.com/Flexberry/ember-localforage-adapter.git',
+          'https://github.com/Flexberry/ember-flexberry-data.git#release-0.3.1'
         ]
       });
       }).then(function () {

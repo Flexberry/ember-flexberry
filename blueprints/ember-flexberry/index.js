@@ -16,11 +16,7 @@ module.exports = {
           'https://github.com/Flexberry/ember-flexberry-data.git#release-0.3.1'
         ]
       });
-      }).then(function () {
-        return _this.addPackagesToProject([
-          { name: 'dexie', target: '1.3.6' }
-        ]);
-      });
+    });
   },
 
   normalizeEntityName: function() {}

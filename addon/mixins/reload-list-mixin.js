@@ -55,6 +55,7 @@ export default Ember.Mixin.create({
       filter: undefined,
       filters: undefined,
       predicate: undefined,
+      hierarchicalAttribute: undefined,
     }, options);
 
     let modelName = reloadOptions.modelName;
@@ -95,11 +96,8 @@ export default Ember.Mixin.create({
       .selectByProjection(projectionName)
       .count();
 
-    let controller = this.controllerFor(this.routeName);
-    let inHierarchicalMode = controller.get('inHierarchicalMode');
-    if (inHierarchicalMode) {
-      let hierarchicalAttribute = controller.get('hierarchicalAttribute');
-      let hierarchicalPredicate = new SimplePredicate(hierarchicalAttribute, 'eq', null);
+    if (reloadOptions.hierarchicalAttribute) {
+      let hierarchicalPredicate = new SimplePredicate(reloadOptions.hierarchicalAttribute, 'eq', null);
       limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, hierarchicalPredicate) : hierarchicalPredicate;
     } else {
       builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);

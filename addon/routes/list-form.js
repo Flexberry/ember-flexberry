@@ -108,6 +108,12 @@ export default ProjectedModelFormRoute.extend(
           userSettingsService.setCurrentParams(componentName, params);
         }
 
+        let hierarchicalAttribute;
+        let controller = this.controllerFor(this.routeName);
+        if (controller.get('inHierarchicalMode')) {
+          hierarchicalAttribute = controller.get('hierarchicalAttribute');
+        }
+
         this.sorting = userSettingsService.getCurrentSorting(componentName);
         let queryParameters = {
           modelName: modelName,
@@ -116,7 +122,8 @@ export default ProjectedModelFormRoute.extend(
           page: params.page,
           sorting: this.sorting,
           filter: params.filter,
-          predicate: limitPredicate
+          predicate: limitPredicate,
+          hierarchicalAttribute: hierarchicalAttribute,
         };
 
         // Find by query is always fetching.

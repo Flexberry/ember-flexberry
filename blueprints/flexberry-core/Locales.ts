@@ -71,7 +71,11 @@ export default class Locales {
 export class ModelLocales extends Locales {
 
   protected getProperties(locale: string) {
-    return `  projections: {\n    ${this.translations[locale].join(",\n    ")}\n  }`;
+    let translation = this.translations[locale].join(",\n    ");
+    if (translation != "") {
+      translation = `    ${translation}`;
+    }
+    return `  projections: {\n${translation}\n  }`;
   }
 
   constructor(model: metadata.Model, modelsDir: string, currentLocale: string) {
@@ -111,7 +115,7 @@ export class ModelLocales extends Locales {
         hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
         hasManyAttrs.unshift(new SortedPair(-1, `        caption: '${this.escapeValue(hasMany.caption)}'`, `        caption: '${hasMany.name}'`));
         let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n        ");
-        let attrsStrOtherLocales = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n");
+        let attrsStrOtherLocales = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n        ");
         projAttrs.push(new SortedPair(Number.MAX_VALUE,
           `${hasMany.name}: {\n${attrsStr}\n      }`,
           `${hasMany.name}: {\n${attrsStrOtherLocales}\n      }`

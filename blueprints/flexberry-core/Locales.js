@@ -113,7 +113,7 @@ var ModelLocales = (function (_super) {
                 hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
                 hasManyAttrs.unshift(new SortedPair(-1, "        caption: '" + this.escapeValue(hasMany.caption) + "'", "        caption: '" + hasMany.name + "'"));
                 var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n        ");
-                var attrsStrOtherLocales_1 = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n");
+                var attrsStrOtherLocales_1 = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n        ");
                 projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": {\n" + attrsStr_1 + "\n      }", hasMany.name + ": {\n" + attrsStrOtherLocales_1 + "\n      }"));
             }
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
@@ -127,7 +127,11 @@ var ModelLocales = (function (_super) {
         }
     }
     ModelLocales.prototype.getProperties = function (locale) {
-        return "  projections: {\n    " + this.translations[locale].join(",\n    ") + "\n  }";
+        var translation = this.translations[locale].join(",\n    ");
+        if (translation != "") {
+            translation = "    " + translation;
+        }
+        return "  projections: {\n" + translation + "\n  }";
     };
     ModelLocales.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];

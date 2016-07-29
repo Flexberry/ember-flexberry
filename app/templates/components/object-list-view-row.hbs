@@ -27,7 +27,7 @@
     {{/if}}
   </td>
   {{#each columns as |column index|}}
-    <td {{action rowClick record}}>
+    <td {{action rowClick record preventDefault=false}}>
       {{#if (and (not index) inHierarchicalMode)}}
         {{hierarchicalIndent}}
         {{#if hasRecords}}

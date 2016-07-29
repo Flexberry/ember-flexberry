@@ -4,9 +4,16 @@
 
 import Ember from 'ember';
 
-import QueryBuilder from 'ember-flexberry-data/query/builder';
-import Condition from 'ember-flexberry-data/query/condition';
-import { BasePredicate, SimplePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { Query } from 'ember-flexberry-data';
+
+const {
+  Builder,
+  Condition,
+  BasePredicate,
+  SimplePredicate,
+  StringPredicate,
+  ComplexPredicate
+} = Query;
 
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.
@@ -48,6 +55,7 @@ export default Ember.Mixin.create({
       filter: undefined,
       filters: undefined,
       predicate: undefined,
+      hierarchicalAttribute: undefined,
     }, options);
 
     let modelName = reloadOptions.modelName;
@@ -83,16 +91,13 @@ export default Ember.Mixin.create({
     Ember.assert('page must be greater than zero.', pageNumber > 0);
     Ember.assert('perPage must be greater than zero.', perPageNumber > 0);
 
-    let builder = new QueryBuilder(store)
+    let builder = new Builder(store)
       .from(modelName)
       .selectByProjection(projectionName)
       .count();
 
-    let controller = this.controllerFor(this.routeName);
-    let inHierarchicalMode = controller.get('inHierarchicalMode');
-    if (inHierarchicalMode) {
-      let hierarchicalAttribute = controller.get('hierarchicalAttribute');
-      let hierarchicalPredicate = new SimplePredicate(hierarchicalAttribute, 'eq', null);
+    if (reloadOptions.hierarchicalAttribute) {
+      let hierarchicalPredicate = new SimplePredicate(reloadOptions.hierarchicalAttribute, 'eq', null);
       limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, hierarchicalPredicate) : hierarchicalPredicate;
     } else {
       builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);

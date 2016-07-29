@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 let Model = BaseModel.extend({
   flag: DS.attr('boolean'),
@@ -88,15 +88,15 @@ let Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('BaseE', 'integration-examples/edit-form/validation/base', {
-  flag: Proj.attr('Flag'),
-  number: Proj.attr('Number'),
-  text: Proj.attr('Text'),
-  longText: Proj.attr('Long text'),
-  date: Proj.attr('Date'),
-  enumeration: Proj.attr('Enumeration'),
-  file: Proj.attr('File'),
-  master: Proj.belongsTo('integration-examples/edit-form/validation/master', 'Master', {
-    text: Proj.attr('Text', {
+  flag: Projection.attr('Flag'),
+  number: Projection.attr('Number'),
+  text: Projection.attr('Text'),
+  longText: Projection.attr('Long text'),
+  date: Projection.attr('Date'),
+  enumeration: Projection.attr('Enumeration'),
+  file: Projection.attr('File'),
+  master: Projection.belongsTo('integration-examples/edit-form/validation/master', 'Master', {
+    text: Projection.attr('Text', {
       hidden: true
     })
   }, {

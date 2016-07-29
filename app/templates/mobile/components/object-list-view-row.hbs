@@ -26,7 +26,7 @@
       </div>
     {{/if}}
   </td>
-    <td {{action rowClick record}} style="padding-left:{{hierarchicalIndent}}px;">
+    <td {{action rowClick record preventDefault=false}} style="padding-left:{{hierarchicalIndent}}px;">
       {{component singleColumnCellComponent.componentName
         model=record.data
         columns=columns

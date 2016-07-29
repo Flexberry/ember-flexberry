@@ -22,19 +22,24 @@ export default ListFormRoute.extend({
 
   /**
   developerUserSettings.
-  {
-  <componentName>: {
-    <settingName>: {
-        colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
-        sorting: [{ propName: <colName>, direction: 'asc'|'desc' }, ... ],
-        colsWidths: [ <colName>:<colWidth>, ... ],
+  For default userSetting use empty name ('').
+
+  @example
+    ```javascript
+    {
+    <componentName>: {
+      <settingName>: {
+          colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+          sorting: [{ propName: <colName>, direction: 'asc'|'desc' }, ... ],
+          colsWidths: [ <colName>:<colWidth>, ... ],
+        },
+        ...
       },
       ...
-    },
-    ...
-  }
-  For default userSetting use empty name ('').
-  <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
+    }
+
+    <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
+    ```
 
   @property developerUserSettings
   @type Object

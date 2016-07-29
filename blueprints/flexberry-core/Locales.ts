@@ -32,9 +32,9 @@ export default class Locales {
     if (!form.caption)
       form.caption = "";
     let value = this.escapeValue(form.caption);
-    this.translations[this.currentLocale].push(`'caption': '${value}'`);
+    this.translations[this.currentLocale].push(`caption: '${value}'`);
     for (let locale of this.locales) {
-      this.translations[locale].push(`'caption': '${form.name}'`);
+      this.translations[locale].push(`caption: '${form.name}'`);
     }
     form.caption = `t 'forms.${this.entityName}.caption'`;
   }
@@ -43,9 +43,9 @@ export default class Locales {
     if (!projAttr.caption)
       projAttr.caption = "";
     let value = this.escapeValue(projAttr.caption);
-    this.translations[this.currentLocale].push(`'${projAttr.name}-caption': '${value}'`);
+    this.translations[this.currentLocale].push(`${projAttr.name}-caption: '${value}'`);
     for (let locale of this.locales) {
-      this.translations[locale].push(`'${projAttr.name}-caption': '${projAttr.name}'`);
+      this.translations[locale].push(`${projAttr.name}-caption: '${projAttr.name}'`);
     }
     projAttr.caption = `t 'forms.${this.entityName}.${projAttr.name}-caption'`;
   }
@@ -71,7 +71,7 @@ export default class Locales {
 export class ModelLocales extends Locales {
 
   protected getProperties(locale: string) {
-    return `  'projections': {\n    ${this.translations[locale].join(",\n    ")}\n  }`;
+    return `  projections: {\n    ${this.translations[locale].join(",\n    ")}\n  }`;
   }
 
   constructor(model: metadata.Model, modelsDir: string, currentLocale: string) {
@@ -109,20 +109,20 @@ export class ModelLocales extends Locales {
           }
         }
         hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
-        hasManyAttrs.unshift(new SortedPair(-1, `        'caption': '${this.escapeValue(hasMany.caption)}'`, `        'caption': '${hasMany.name}'`));
+        hasManyAttrs.unshift(new SortedPair(-1, `        caption: '${this.escapeValue(hasMany.caption)}'`, `        caption: '${hasMany.name}'`));
         let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n        ");
         let attrsStrOtherLocales = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n");
         projAttrs.push(new SortedPair(Number.MAX_VALUE,
-          `'${hasMany.name}': {\n${attrsStr}\n      }`,
-          `'${hasMany.name}': {\n${attrsStrOtherLocales}\n      }`
+          `${hasMany.name}: {\n${attrsStr}\n      }`,
+          `${hasMany.name}: {\n${attrsStrOtherLocales}\n      }`
         ));
       }
       projAttrs = lodash.sortBy(projAttrs, ["index"]);
       let attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
       let attrsStrOtherLocales = lodash.map(projAttrs, "strOtherLocales").join(",\n      ");
-      this.translations[this.currentLocale].push(`'${proj.name}': {\n      ${attrsStr}\n    }`);
+      this.translations[this.currentLocale].push(`${proj.name}: {\n      ${attrsStr}\n    }`);
       for (let locale of this.locales) {
-        this.translations[locale].push(`'${proj.name}': {\n      ${attrsStrOtherLocales}\n    }`);
+        this.translations[locale].push(`${proj.name}: {\n      ${attrsStrOtherLocales}\n    }`);
       }
     }
   }
@@ -147,13 +147,13 @@ export class ModelLocales extends Locales {
       indent.pop();
       let indentStr2 = indent.join("");
       hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
-      hasManyAttrs.unshift(new SortedPair(-1, `'caption': '${this.escapeValue(detailHasMany.caption)}'`, `'caption': '${detailHasMany.name}'`));
+      hasManyAttrs.unshift(new SortedPair(-1, `caption: '${this.escapeValue(detailHasMany.caption)}'`, `caption: '${detailHasMany.name}'`));
       let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n" + indentStr);
       let attrsStrOtherLocales = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n" + indentStr);
 
       return new SortedPair(Number.MAX_VALUE,
-        `'${detailHasMany.name}': {\n${indentStr}${attrsStr}\n${indentStr2}}`,
-        `'${detailHasMany.name}': {\n${indentStr}${attrsStrOtherLocales}\n${indentStr2}}`
+        `${detailHasMany.name}: {\n${indentStr}${attrsStr}\n${indentStr2}}`,
+        `${detailHasMany.name}: {\n${indentStr}${attrsStrOtherLocales}\n${indentStr2}}`
       );
     }
     return new SortedPair(Number.MAX_VALUE, "", "");
@@ -181,13 +181,13 @@ export class ModelLocales extends Locales {
     } else {
       index = belongsToAttrs[0].index;
     }
-    belongsToAttrs.unshift(new SortedPair(-1, `'caption': '${this.escapeValue(belongsTo.caption)}'`, `'caption': '${belongsTo.name}'`));
+    belongsToAttrs.unshift(new SortedPair(-1, `caption: '${this.escapeValue(belongsTo.caption)}'`, `caption: '${belongsTo.name}'`));
     let attrsStr = lodash.map(belongsToAttrs, "str").join(",\n" + indentStr);
     let attrsStrOtherLocales = lodash.map(belongsToAttrs, "strOtherLocales").join(",\n" + indentStr);
 
     return new SortedPair(index,
-      `'${belongsTo.name}': {\n${indentStr}${attrsStr}\n${indentStr2}}`,
-      `'${belongsTo.name}': {\n${indentStr}${attrsStrOtherLocales}\n${indentStr2}}`
+      `${belongsTo.name}: {\n${indentStr}${attrsStr}\n${indentStr2}}`,
+      `${belongsTo.name}: {\n${indentStr}${attrsStrOtherLocales}\n${indentStr2}}`
     );
   }
 
@@ -200,8 +200,8 @@ export class ModelLocales extends Locales {
     indent.pop();
     let indentStr2 = indent.join("");
     return new SortedPair(attr.index,
-      `'${attr.name}': {\n${indentStr}'caption': '${this.escapeValue(attr.caption)}'\n${indentStr2}}`,
-      `'${attr.name}': {\n${indentStr}'caption': '${attr.name}'\n${indentStr2}}`
+      `${attr.name}: {\n${indentStr}caption: '${this.escapeValue(attr.caption)}'\n${indentStr2}}`,
+      `${attr.name}: {\n${indentStr}caption: '${attr.name}'\n${indentStr2}}`
     );
   }
 

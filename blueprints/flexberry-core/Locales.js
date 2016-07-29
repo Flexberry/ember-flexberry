@@ -31,10 +31,10 @@ var Locales = (function () {
         if (!form.caption)
             form.caption = "";
         var value = this.escapeValue(form.caption);
-        this.translations[this.currentLocale].push("'caption': '" + value + "'");
+        this.translations[this.currentLocale].push("caption: '" + value + "'");
         for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
             var locale = _a[_i];
-            this.translations[locale].push("'caption': '" + form.name + "'");
+            this.translations[locale].push("caption: '" + form.name + "'");
         }
         form.caption = "t 'forms." + this.entityName + ".caption'";
     };
@@ -42,10 +42,10 @@ var Locales = (function () {
         if (!projAttr.caption)
             projAttr.caption = "";
         var value = this.escapeValue(projAttr.caption);
-        this.translations[this.currentLocale].push("'" + projAttr.name + "-caption': '" + value + "'");
+        this.translations[this.currentLocale].push(projAttr.name + "-caption: '" + value + "'");
         for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
             var locale = _a[_i];
-            this.translations[locale].push("'" + projAttr.name + "-caption': '" + projAttr.name + "'");
+            this.translations[locale].push(projAttr.name + "-caption: '" + projAttr.name + "'");
         }
         projAttr.caption = "t 'forms." + this.entityName + "." + projAttr.name + "-caption'";
     };
@@ -111,23 +111,23 @@ var ModelLocales = (function (_super) {
                     }
                 }
                 hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
-                hasManyAttrs.unshift(new SortedPair(-1, "        'caption': '" + this.escapeValue(hasMany.caption) + "'", "        'caption': '" + hasMany.name + "'"));
+                hasManyAttrs.unshift(new SortedPair(-1, "        caption: '" + this.escapeValue(hasMany.caption) + "'", "        caption: '" + hasMany.name + "'"));
                 var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n        ");
                 var attrsStrOtherLocales_1 = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n");
-                projAttrs.push(new SortedPair(Number.MAX_VALUE, "'" + hasMany.name + "': {\n" + attrsStr_1 + "\n      }", "'" + hasMany.name + "': {\n" + attrsStrOtherLocales_1 + "\n      }"));
+                projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": {\n" + attrsStr_1 + "\n      }", hasMany.name + ": {\n" + attrsStrOtherLocales_1 + "\n      }"));
             }
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
             var attrsStrOtherLocales = lodash.map(projAttrs, "strOtherLocales").join(",\n      ");
-            this.translations[this.currentLocale].push("'" + proj.name + "': {\n      " + attrsStr + "\n    }");
+            this.translations[this.currentLocale].push(proj.name + ": {\n      " + attrsStr + "\n    }");
             for (var _p = 0, _q = this.locales; _p < _q.length; _p++) {
                 var locale = _q[_p];
-                this.translations[locale].push("'" + proj.name + "': {\n      " + attrsStrOtherLocales + "\n    }");
+                this.translations[locale].push(proj.name + ": {\n      " + attrsStrOtherLocales + "\n    }");
             }
         }
     }
     ModelLocales.prototype.getProperties = function (locale) {
-        return "  'projections': {\n    " + this.translations[locale].join(",\n    ") + "\n  }";
+        return "  projections: {\n    " + this.translations[locale].join(",\n    ") + "\n  }";
     };
     ModelLocales.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
@@ -151,10 +151,10 @@ var ModelLocales = (function (_super) {
             indent.pop();
             var indentStr2 = indent.join("");
             hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
-            hasManyAttrs.unshift(new SortedPair(-1, "'caption': '" + this.escapeValue(detailHasMany.caption) + "'", "'caption': '" + detailHasMany.name + "'"));
+            hasManyAttrs.unshift(new SortedPair(-1, "caption: '" + this.escapeValue(detailHasMany.caption) + "'", "caption: '" + detailHasMany.name + "'"));
             var attrsStr = lodash.map(hasManyAttrs, "str").join(",\n" + indentStr);
             var attrsStrOtherLocales = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n" + indentStr);
-            return new SortedPair(Number.MAX_VALUE, "'" + detailHasMany.name + "': {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}", "'" + detailHasMany.name + "': {\n" + indentStr + attrsStrOtherLocales + "\n" + indentStr2 + "}");
+            return new SortedPair(Number.MAX_VALUE, detailHasMany.name + ": {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}", detailHasMany.name + ": {\n" + indentStr + attrsStrOtherLocales + "\n" + indentStr2 + "}");
         }
         return new SortedPair(Number.MAX_VALUE, "", "");
     };
@@ -183,10 +183,10 @@ var ModelLocales = (function (_super) {
         else {
             index = belongsToAttrs[0].index;
         }
-        belongsToAttrs.unshift(new SortedPair(-1, "'caption': '" + this.escapeValue(belongsTo.caption) + "'", "'caption': '" + belongsTo.name + "'"));
+        belongsToAttrs.unshift(new SortedPair(-1, "caption: '" + this.escapeValue(belongsTo.caption) + "'", "caption: '" + belongsTo.name + "'"));
         var attrsStr = lodash.map(belongsToAttrs, "str").join(",\n" + indentStr);
         var attrsStrOtherLocales = lodash.map(belongsToAttrs, "strOtherLocales").join(",\n" + indentStr);
-        return new SortedPair(index, "'" + belongsTo.name + "': {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}", "'" + belongsTo.name + "': {\n" + indentStr + attrsStrOtherLocales + "\n" + indentStr2 + "}");
+        return new SortedPair(index, belongsTo.name + ": {\n" + indentStr + attrsStr + "\n" + indentStr2 + "}", belongsTo.name + ": {\n" + indentStr + attrsStrOtherLocales + "\n" + indentStr2 + "}");
     };
     ModelLocales.prototype.declareProjAttr = function (attr, level) {
         var indent = [];
@@ -196,7 +196,7 @@ var ModelLocales = (function (_super) {
         var indentStr = indent.join("");
         indent.pop();
         var indentStr2 = indent.join("");
-        return new SortedPair(attr.index, "'" + attr.name + "': {\n" + indentStr + "'caption': '" + this.escapeValue(attr.caption) + "'\n" + indentStr2 + "}", "'" + attr.name + "': {\n" + indentStr + "'caption': '" + attr.name + "'\n" + indentStr2 + "}");
+        return new SortedPair(attr.index, attr.name + ": {\n" + indentStr + "caption: '" + this.escapeValue(attr.caption) + "'\n" + indentStr2 + "}", attr.name + ": {\n" + indentStr + "caption: '" + attr.name + "'\n" + indentStr2 + "}");
     };
     return ModelLocales;
 }(Locales));

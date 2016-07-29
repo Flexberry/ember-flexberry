@@ -1,4 +1,5 @@
 ﻿{
+  "name": "EmberFlexberryDummyTestPolyChild",
   "modelName": "ember-flexberry-dummy-test-poly-child",
   "className": "TestPolyChild",
   "parentModelName": "ember-flexberry-dummy-test-poly-base",

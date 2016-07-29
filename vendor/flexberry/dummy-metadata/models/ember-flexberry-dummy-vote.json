@@ -1,4 +1,5 @@
 ﻿{
+  "name": "EmberFlexberryDummyVote",
   "modelName": "ember-flexberry-dummy-vote",
   "className": "Vote",
   "parentModelName": null,

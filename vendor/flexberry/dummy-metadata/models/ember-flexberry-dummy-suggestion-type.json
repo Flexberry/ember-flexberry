@@ -1,4 +1,5 @@
 ﻿{
+  "name": "EmberFlexberryDummySuggestionType",
   "modelName": "ember-flexberry-dummy-suggestion-type",
   "className": "SuggestionType",
   "parentModelName": null,

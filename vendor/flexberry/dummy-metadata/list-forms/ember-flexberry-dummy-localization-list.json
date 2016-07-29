@@ -3,6 +3,7 @@
   "editForm": "ember-flexberry-dummy-localization-edit",
   "caption": "Localization",
   "name": "EmberFlexberryDummyLocalizationList",
+  "className": "LocalizationList",
   "attrs": [],
   "projections": [
     {

@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 let Model = BaseModel.extend({
   // Inversed relationship for aggregator.details.
@@ -25,13 +25,13 @@ let Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('DetailE', 'integration-examples/edit-form/readonly-mode/detail', {
-  flag: Proj.attr('Flag'),
-  text: Proj.attr('Text'),
-  date: Proj.attr('Date'),
-  enumeration: Proj.attr('Enumeration'),
-  file: Proj.attr('File'),
-  master: Proj.belongsTo('integration-examples/edit-form/readonly-mode/master', 'Master', {
-    text: Proj.attr('Text', {
+  flag: Projection.attr('Flag'),
+  text: Projection.attr('Text'),
+  date: Projection.attr('Date'),
+  enumeration: Projection.attr('Enumeration'),
+  file: Projection.attr('File'),
+  master: Projection.belongsTo('integration-examples/edit-form/readonly-mode/master', 'Master', {
+    text: Projection.attr('Text', {
       hidden: true
     })
   }, {

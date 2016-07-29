@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   name: DS.attr('string'),
@@ -17,12 +17,12 @@ var Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('LocalizationE', 'ember-flexberry-dummy-localization', {
-  name: Proj.attr('Name')
+  name: Projection.attr('Name')
 });
 
 // List form projection.
 Model.defineProjection('LocalizationL', 'ember-flexberry-dummy-localization', {
-  name: Proj.attr('Name')
+  name: Projection.attr('Name')
 });
 
 export default Model;

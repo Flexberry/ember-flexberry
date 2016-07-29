@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   address: DS.attr('string'),
@@ -69,52 +69,53 @@ var Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
-  address: Proj.attr('Address'),
-  text: Proj.attr('Text'),
-  date: Proj.attr('Date'),
-  votes: Proj.attr('Votes'),
-  moderated: Proj.attr('Moderated'),
-  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Proj.attr('Name', {
+  address: Projection.attr('Address'),
+  text: Projection.attr('Text'),
+  date: Projection.attr('Date'),
+  votes: Projection.attr('Votes'),
+  moderated: Projection.attr('Moderated'),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
     displayMemberPath: 'name'
   }),
-  author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Proj.attr('Name', {
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
     displayMemberPath: 'name'
   }),
-  editor1: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
-    name: Proj.attr('Name', {
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
     displayMemberPath: 'name'
   }),
-  files: Proj.hasMany('ember-flexberry-dummy-suggestion-file', 'Files', {
-    order: Proj.attr('Order'),
-    file: Proj.attr('File')
+  files: Projection.hasMany('ember-flexberry-dummy-suggestion-file', 'Files', {
+    order: Projection.attr('Order'),
+    file: Projection.attr('File')
   }),
-  userVotes: Proj.hasMany('ember-flexberry-dummy-vote', 'User votes', {
-    voteType: Proj.attr('Vote type'),
-    applicationUser: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
-      name: Proj.attr('Name', {
+  userVotes: Projection.hasMany('ember-flexberry-dummy-vote', 'User votes', {
+    voteType: Projection.attr('Vote type'),
+    applicationUser: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+      name: Projection.attr('Name', {
         hidden: true
-      })
+      }),
+      eMail: Projection.attr('Email')
     }, {
       displayMemberPath: 'name'
     })
   }),
-  comments: Proj.hasMany('ember-flexberry-dummy-comment', 'Comments', {
-    text: Proj.attr('Text'),
-    votes: Proj.attr('Votes'),
-    moderated: Proj.attr('Moderated'),
-    author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-      name: Proj.attr('Name', {
+  comments: Projection.hasMany('ember-flexberry-dummy-comment', 'Comments', {
+    text: Projection.attr('Text'),
+    votes: Projection.attr('Votes'),
+    moderated: Projection.attr('Moderated'),
+    author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+      name: Projection.attr('Name', {
         hidden: true
       })
     }, {
@@ -125,27 +126,28 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
 
 // List form projection.
 Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
-  address: Proj.attr('Address'),
-  text: Proj.attr('Text'),
-  date: Proj.attr('Date'),
-  votes: Proj.attr('Votes'),
-  moderated: Proj.attr('Moderated'),
-  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Proj.attr('Name', {
+  address: Projection.attr('Address'),
+  text: Projection.attr('Text'),
+  date: Projection.attr('Date'),
+  votes: Projection.attr('Votes'),
+  moderated: Projection.attr('Moderated'),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
     displayMemberPath: 'name'
   }),
-  author: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Proj.attr('Name', {
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Projection.attr('Name', {
       hidden: true
-    })
+    }),
+    eMail: Projection.attr('Email')
   }, {
     displayMemberPath: 'name'
   }),
-  editor1: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
-    name: Proj.attr('Name', {
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
@@ -155,8 +157,8 @@ Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
 
 // Projection for lookup example on settings example.
 Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-suggestion', {
-  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Proj.attr('Name', {
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
@@ -166,8 +168,8 @@ Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-sugges
 
 // Projection for lookup example on window customization.
 Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dummy-suggestion', {
-  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Proj.attr('Name', {
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
@@ -177,8 +179,8 @@ Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dumm
 
 // Projection for lookup with limit function example.
 Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-dummy-suggestion', {
-  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Proj.attr('Name', {
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
@@ -188,8 +190,8 @@ Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-du
 
 // Projection for lookup in dropdown mode example.
 Model.defineProjection('DropDownLookupExampleView', 'ember-flexberry-dummy-suggestion', {
-  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Proj.attr('Name', {
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
@@ -199,12 +201,12 @@ Model.defineProjection('DropDownLookupExampleView', 'ember-flexberry-dummy-sugge
 
 // Projection for FlexberryObjectlistviewComponent with limit function example.
 Model.defineProjection('FolvWithLimitFunctionExampleView', 'ember-flexberry-dummy-suggestion', {
-  address: Proj.attr('Address'),
-  text: Proj.attr('Text'),
-  votes: Proj.attr('Votes'),
-  moderated: Proj.attr('Moderated'),
-  type: Proj.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
-    name: Proj.attr('Name', {
+  address: Projection.attr('Address'),
+  text: Projection.attr('Text'),
+  votes: Projection.attr('Votes'),
+  moderated: Projection.attr('Moderated'),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
       hidden: true
     })
   }, {
@@ -214,10 +216,10 @@ Model.defineProjection('FolvWithLimitFunctionExampleView', 'ember-flexberry-dumm
 
 // Projection for lookup in block form.
 Model.defineProjection('LookupInBlockFormView', 'ember-flexberry-dummy-suggestion', {
-  editor1: Proj.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
-    name: Proj.attr('name', { hidden: true }),
-    eMail: Proj.attr('eMail', { hidden: true }),
-    gender: Proj.attr('gender', { hidden: true })
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Projection.attr('name', { hidden: true }),
+    eMail: Projection.attr('eMail', { hidden: true }),
+    gender: Projection.attr('gender', { hidden: true })
   }, {
     displayMemberPath: 'name'
   })

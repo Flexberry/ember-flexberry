@@ -58,6 +58,16 @@ export default Ember.Controller.extend({
   locales: ['ru', 'en'],
 
   /**
+    Handles changes in userSettingsService.isUserSettingsServiceEnabled.
+
+    @method _userSettingsServiceChanged
+    @private
+  */
+  _userSettingsServiceChanged: Ember.observer('userSettingsService.isUserSettingsServiceEnabled', function() {
+    this.get('target.router').refresh();
+  }),
+
+  /**
     Initializes controller.
   */
   init() {

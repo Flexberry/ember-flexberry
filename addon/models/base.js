@@ -3,14 +3,14 @@
 */
 
 import Ember from 'ember';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 import EmberValidations from 'ember-validations';
 
 /**
   Base model for 'ember-flexberry' models.
 
   @class BaseModel
-  @extends Proj.Model
+  @extends Projection.Model
   @uses EmberValidationsMixin
   @uses Ember.EventedMixin
 
@@ -18,7 +18,7 @@ import EmberValidations from 'ember-validations';
   @param {Object} event Event object
   @param {Promise[]} promises Array to which custom 'preSave' promises could be pushed
 */
-export default Proj.Model.extend(EmberValidations, Ember.Evented, {
+export default Projection.Model.extend(EmberValidations, Ember.Evented, {
   /**
     Model validation rules.
 
@@ -101,10 +101,10 @@ export default Proj.Model.extend(EmberValidations, Ember.Evented, {
       }).then(() => this.beforeSave(options)).then(() => {
         // Call to base class 'save' method with right context.
         // The problem is that call to current save method will be already finished,
-        // and traditional _this._super will point to something else, but not to Proj.Model 'save' method,
+        // and traditional _this._super will point to something else, but not to Projection.Model 'save' method,
         // so there is no other way, except to call it through the base class prototype.
         if (!options.softSave) {
-          return Proj.Model.prototype.save.call(this, options);
+          return Projection.Model.prototype.save.call(this, options);
         }
       }).then(value => {
         // Model validation was successful (model is valid or deleted),

@@ -7,9 +7,15 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from '../utils/model-functions';
-import QueryBuilder from 'ember-flexberry-data/query/builder';
-import Condition from 'ember-flexberry-data/query/condition';
-import { BasePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { Query } from 'ember-flexberry-data';
+
+const {
+  Builder,
+  Condition,
+  BasePredicate,
+  StringPredicate,
+  ComplexPredicate
+} = Query;
 
 /**
   Lookup component for Semantic UI.
@@ -309,11 +315,11 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Name of the attribute of the model to display for the user.
+    Is required for autocomplete and dropdown modes.
 
     @property displayAttributeName
     @type String
     @default null
-    @required
   */
   displayAttributeName: null,
 
@@ -469,7 +475,8 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      throw new Error('Required property "displayAttributeName" is not defined.');
+      Ember.Logger.error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
+      return;
     }
 
     let minCharacters = this.get('minCharacters');
@@ -496,7 +503,7 @@ export default FlexberryBaseComponent.extend({
          * @param {Function} callback
          */
         responseAsync(settings, callback) {
-          let builder = new QueryBuilder(store, relationModelName);
+          let builder = new Builder(store, relationModelName);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -592,7 +599,12 @@ export default FlexberryBaseComponent.extend({
     let relationModelName = getRelationType(relatedModel, relationName);
     let minCharacters = this.get('minCharacters');
     let multiselect = this.get('multiselect');
-    let displayAttributeName = _this.get('displayAttributeName');
+
+    let displayAttributeName = this.get('displayAttributeName');
+    if (!displayAttributeName) {
+      Ember.Logger.error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
+      return;
+    }
 
     let i18n = _this.get('i18n');
     this.$('.flexberry-dropdown').dropdown({
@@ -605,7 +617,7 @@ export default FlexberryBaseComponent.extend({
       apiSettings: {
         responseAsync(settings, callback) {
           console.log('load');
-          let builder = new QueryBuilder(store, relationModelName);
+          let builder = new Builder(store, relationModelName);
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
                                       undefined;
@@ -665,6 +677,7 @@ export default FlexberryBaseComponent.extend({
   */
   _buildDisplayValue() {
     let selectedModel = this.get('value');
+    let displayAttributeName = this.get('displayAttributeName');
     if (!selectedModel) {
       this.set('placeholder', t('components.flexberry-lookup.placeholder'));
       return '';
@@ -672,7 +685,12 @@ export default FlexberryBaseComponent.extend({
       this.set('placeholder', '');
     }
 
-    return selectedModel.get(this.get('displayAttributeName'));
+    if (!displayAttributeName) {
+      Ember.Logger.warn('\`displayAttributeName\` is not defined.');
+      return '';
+    }
+
+    return selectedModel.get(displayAttributeName);
   },
 
   /**

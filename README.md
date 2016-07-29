@@ -73,12 +73,20 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 * Merge current release branch with master branch
   * `git checkout master`
   * `git merge --no-ff <release-branch>`
-  * `git push`
+  * `git push origin master`
 * `ember release` (for more information visit [ember-cli-release](https://github.com/lytics/ember-cli-release))
   * To increment patch version run without specifying options.
   * To increment minor version run with `--minor` option.
   * To increment major version run with `--major` option.
 * `npm publish ./` (for more information visit [How to publish packages to NPM](https://gist.github.com/coolaj86/1318304))
+* Merge master branch that contains additional commit for changing addon version with develop branch using current release branch as intermediary
+  * `git checkout <release-branch>`
+  * `git merge --no-ff master`
+  * `git push origin <release-branch>`
+  * `git checkout develop`
+  * `git merge --no-ff <release-branch>`
+  * `git push origin develop`
+* Delete current release branch on GitHub
 
 #### Deploying Dummy Application
 

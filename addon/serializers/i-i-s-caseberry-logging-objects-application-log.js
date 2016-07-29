@@ -2,14 +2,14 @@
   @module ember-flexberry
 */
 
-import ODataSerializer from 'ember-flexberry-data/serializers/odata';
+import { Serializer } from 'ember-flexberry-data';
 
 /**
   Serializer for settings of {{#crossLink "IISCaseberryLoggingObjectsApplicationLog"}}IISCaseberryLoggingObjectsApplicationLog{{/crossLink}} model.
 
   @class IISCaseberryLoggingObjectsApplicationLogSerializer
 */
-export default ODataSerializer.extend({
+export default Serializer.Odata.extend({
   attrs: {
   },
 

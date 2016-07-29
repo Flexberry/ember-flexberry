@@ -120,7 +120,13 @@ export default {
       'use-setting-title': 'Use',
       'edit-setting-title': 'Edit',
       'remove-setting-title': 'Remove',
-      'set-default-setting-title': 'Default setting'
+      'set-default-setting-title': 'Default setting',
+      'show-default-setting-title': 'Show settings',
+      'show-setting-caption': 'To set this settings by default you can copy and init property developerUserSettings in /app/routes/',
+      'close': 'Close',
+      'copy': 'Copy',
+      'copied': 'Copied',
+      'ctrlc': 'Press Ctrl/C to copy'
     },
 
     'colsconfig-dialog-content': {
@@ -130,11 +136,64 @@ export default {
       'column-name': 'Column name',
       'sort-direction': 'Sorting direction',
       'sort-priority': 'Priority column sorting',
+      'column-width': 'Column width',
+      'save-colwidths': 'Save columns width',
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',
       'use-without-save': 'Use this settings without saving in setting ',
       'save': 'Save'
+    }
+  },
+
+  'models': {
+    'i-i-s-caseberry-logging-objects-application-log': {
+      'projections': {
+        'ApplicationLogL': {
+          'processId': {
+            'caption': 'URL'
+          },
+          'timestamp':{
+            'caption': 'Time'
+          },
+          'category':{
+            'caption': 'Category'
+          },
+          'eventId':{
+            'caption': 'Event ID'
+          },
+          'priority':{
+            'caption': 'Priority'
+          },
+          'severity':{
+            'caption': 'Severity'
+          },
+          'title':{
+            'caption': 'Title'
+          },
+          'machineName':{
+            'caption': 'Server'
+          },
+          'appDomainName':{
+            'caption': 'Browser'
+          },
+          'processName':{
+            'caption': 'Process name'
+          },
+          'threadName':{
+            'caption': 'ThreadName'
+          },
+          'win32ThreadId':{
+            'caption': 'Win32ThreadId',
+          },
+          'message':{
+            'caption': 'Message'
+          },
+          'formattedMessage':{
+            'caption': 'Formatted message'
+          }
+        }
+      }
     }
   }
 };

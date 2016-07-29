@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-<%if(projections) {%>import Proj from 'ember-flexberry-data';<%}%>
-export let MixinModel = Ember.Mixin.create({
+<%if(projections) {%>import { Projection } from 'ember-flexberry-data';<%}%>
+export let Model = Ember.Mixin.create({
 <%= model %>,
 
 });

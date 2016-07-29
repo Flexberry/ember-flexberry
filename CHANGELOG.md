@@ -3,29 +3,78 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.3.0] - 2016-07-29
 ### Added
-* Custom internationalized captions for boolean type in object-list-view-cell.
+* Custom internationalized captions for boolean type in `object-list-view-cell` commponent.
+* Blueprints:
+    * Add regeneration for models and serializers. Now models and serizlizers generates into separate regeneratable mixins, model and serializer classes will not be replaced during regeneration.
+    * Add new `flexberry-group` blueprint for generation of group of entities by one blueprint.
+    * Add generate of default comments for `flexberry-list-form` blueprint.
+* Support of `flexberry-lookup` component in dropdown mode for mobile devices.
+* `flexberry-objectlistview` component:
+    * Add filtering by attribute of number type.
+    * Add filtering by master attributes.
+    * Add [`predicateForAttribute` method](http://flexberry.github.io/Documentation/master/classes/ListFormRoute.html#method_predicateForAttribute) for filtering customization in application.
+    * Add filtering for each column.
+    * Add hierarchical mode:
+      * Autodetect availability of hierarchical mode by default.
+      * Use [`hierarchyByAttribute` property](http://flexberry.github.io/Documentation/master/classes/FlexberryObjectlistview.html#property_hierarchyByAttribute) for building hierarchy.
+      * Use [`disableHierarchicalMode` property](http://flexberry.github.io/Documentation/master/classes/FlexberryObjectlistview.html#property_disableHierarchicalMode)to disable hierarchical mode.
+* `object-list-view` component:
+    * Add localization support for model captions in projections.
+* `flexberry-menu` component:
+    * Added [`collapseMenuOnItemClick` property](http://flexberry.github.io/Documentation/master/classes/FlexberryMenu.html#property_collapseMenuOnItemClick) and related logic.
+* Add `getValueFromLocales` helper function.
+* Refactoring of user setting service:
+    * User setting service now supports in-memory saving the settings of all `object-list-view` components for all pages. This allows:
+        * Maintain user setting service on mode `APP.useUserSettingsService: false` without saving them to backend;
+        * Store and appy (in future) settings for multiple components on a page;
+        * Store an unlimited number of settings (default and named) for each `object-list-view` component;
+        * Store (define) all the information on defaut or named setting (columns order, sorting order, columns width and other) in single object (property, backend record);
+        * Customize the column widths manually by mouse or by specifying digital values;
+        * Enable or disable the settings column widths;
+        * Avoid repated access to the backend's usersetting service when you return to the already loaded page.
+    * Support three levels of setting:
+        * Defined by developer;
+        * Defined by users and stored in usersetting's backend;
+        * Temporary settings defined by users specified in the URL-parameters (`sort`, etc...).
+        * Support user setting service for developer. After adjusting component developer can display current default and named settings and save them in [`developerUserSettings` property](http://flexberry.github.io/Documentation/master/classes/UserSettingsService.html#property_developerUserSettings)(see also [this](http://flexberry.github.io/Documentation/master/classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html#property_developerUserSettings)) of `app/routes/{{pageRouteName}}.js` as default settings.
+
+### Changed
+* **Important**: now [`ember-flexberry`](https://github.com/Flexberry/ember-flexberry) depends on [`ember-flexberry-data@0.3.1`](https://github.com/Flexberry/ember-flexberry-data/releases/tag/0.3.1) that has [api changes](https://github.com/Flexberry/ember-flexberry-data/blob/master/CHANGELOG.md#changed). So it is necessary to make corresponding changes in application source code after updating vesrion of [`ember-flexberry`](https://github.com/Flexberry/ember-flexberry)!
+* `flexberry-file`:
+    * Removed collapsing menu logic.
+    * Added [`collapseMenuOnItemClick` property](http://flexberry.github.io/Documentation/master/classes/FlexberryMenu.html#property_collapseMenuOnItemClick) to appropriate .hbs file (template).
+* Blueprints:
+    * `editFormRoute` property was moved to controller.
 
 ### Fixed
-* Fixed select from `flexberry-lookup` in dropdown mode.
-
-### Added
-* Added support `flexberry-lookup` in dropdown mode for mobile.
-* FlexberryObjectlistview component:
-    * Add filter by attribute number type.
-    * Add filter by attribute master type.
-    * Add `predicateForAttribute` function for customization filter.
-    * Add filter for each columns.
-
-### Fixed
-* Fixed select from `flexberry-lookup` in dropdown mode.
-* Fixed column settings buttons if user settings service are off or `colsSettingsItems` is empty.
+* Blueprints:
+    * Speed up generation process.
+    * Fixed adapter generation in `flexberry-core` blueprint.
+* Fixed selection of value for `flexberry-lookup` component in dropdown mode.
+* Fixed displaying of column settings buttons if user settings service is off or menu items list for column settings is empty.
 * Fixed sorting by clicking on table header of `flexberry-objectlistview` or `flexberry-groupedit` component in Firefox.
 * Fixed blueprints dependency for generation of application prototype for hide the sidebar with sitemap after click on sitemap-node.
 * Fixed `flexberry-menu` for configuration of columns settings in `flexberry-objectlistview` component after changing current locale for internationalization to another language and back again.
+* Now [`displayAttributeName` property](http://flexberry.github.io/Documentation/master/classes/FlexberryLookup.html#property_displayAttributeName) is required for only autocomplete and dropdown modes in `flexberry-lookup` component.
 
 ### Known issues
-* TransitionAborted error get thrown when adding query params (callback is called once for each query param you set to refreshModel: true).
+* Only one `flexberry-objectlistview` or `flexberry-groupedit` component could be used on particular form.
+* It is not possible to open any route for generated application prototype (in case of generation of whole application prototype) because of wrong generation of internationalization mechanism. Also probably lookup components on edit forms of generated application prototype may not work.
+* It is not possible to sort list of models by property of "master" model if property of another "master" model from used projection has the same name.
+* No items of context menu for rows of `flexberry-objectlistview` component are shown when `showEditMenuItemInRow` or `showDeleteMenuItemInRow` property of component has been dynamically changed.
+* List of values of `flexberry-dropdown` component are not showing over scroll bar when the component is embedded into `flexberry-groupedit` and there is not enough space to show these values over table rows.
+* Formatted message field of log object fills differently in IE11/Safari and Chrome/Firefox.
+* `flexberry-datepicker` eats too much memory, working slowly and slows down the application (especially when using multiple `flexberry-datepicker` components on form).
+* "TransitionAborted" error get thrown when adding query params (callback is called once for each query param if `refreshModel: true` is set).
+* `flexberry-datapicker` displays the next day when date with time is '00:00:00'.
+* Placeholder text localization for `flexberry-dropdown` component works improperly when `readonly` property changes dynamically. Also placeholder text is not localize in all browsers except Google Chrome.
+* Some text is not localized in user settings dialog.
+* There are some problems with displaying styles of user settings dialog.
+* It is possible to save user settings when user settings serive is off.
+* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after deleting of user setting or changing page on list form.
 
 ## [0.2.1] - 2016-07-07
 ### Changed
@@ -35,7 +84,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed wrong dependency from [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
 * Fixed wrong import of `register-version.js`.
 
-## [0.2.0] - 2016-07-06
+## [0.2.0] - 2016-07-06 [YANKED]
 ### Added
 * New components based on `object-list-view` component to work with lists of models on list forms and edit forms (see more details below):
     * `flexberry-objectlistview` - usually used on list forms to work with list of "base" models loaded in route.
@@ -108,7 +157,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
         * Specifying pointing for component's appearance.
     * `flexberry-validationsummary` - component for displaying list of validation errors of model on edit form.
     * `groupedit-toolbar` - toolbar for `flexberry-groupedit` component. Support displaying of add and delete buttons. It should not be used independently.
-* Improved resolver to support substitution of source files for different device types (e.g. handlebars templates, .js files etc.). Device type detection based on [devicejs](https://github.com/ngot/devicejs) library. There are several component templates for mobile platforms that available out of the box (i.e. these components should look different on mobile devices):
+* Improved resolver to support substitution of source files for different device types (e.g. handlebars templates, .js files etc.). Device type detection based on [devicejs](https://github.com/matthewhudson/device.js) library. There are several component templates for mobile platforms that available out of the box (i.e. these components should look different on mobile devices):
     * Template for `flexberry-file` component.
     * Template for `flexberry-lookup` component.
     * Template for `object-list-view` component (used inside `flexberry-objectlistview` and `flexberry-groupedit` components).
@@ -132,7 +181,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Renamed `datetime-picker` component to `flexberry-datepicker`.
 * Renamed `drop-down` component to `flexberry-dropdown`.
 * Renamed `lookup-field` component to `flexberry-lookup`.
-* Base adapter and serializer for communication with backend via [OData protocol](http://www.odata.org/) was moved to [ember-flexberry-data](https://github.com/Flexberry/ember-flexberry-data) addon (this addon was formerly named as `ember-flexberry-projections`).
+* Base adapter and serializer for communication with backend via [OData protocol](http://www.odata.org/) was moved to [ember-flexberry-data](https://github.com/Flexberry/ember-flexberry-data) addon (this addon was formerly named as `ember-flexberry-projections`). So now [`ember-flexberry`](https://github.com/Flexberry/ember-flexberry) depends on [`ember-flexberry-data@0.2.0`](https://github.com/Flexberry/ember-flexberry-data/releases/tag/0.2.0)
 * Redesigned enumerations support.
 
 ### Deprecated
@@ -159,7 +208,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Formatted message field of log object fills differently in IE11/Safari and Chrome/Firefox.
 * `flexberry-datepicker` eats too much memory, working slowly and slows down the application (especially when using multiple `flexberry-datepicker` components on form).
 * Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working after changing current locale for internationalization to another language and back again.
-* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving user setting on backend. 
+* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after saving user setting on backend.
 * Saving user settings for `flexberry-groupedit` component and for `flexberry-objectlistview` that shows for choosing value for `flexberry-lookup` component doesn't work correctly. It is possible to use `notUseUserSettings` property for `flexberry-objectlistview` component to turn off user settings for these cases as workaround.
 
 ## [0.1.0] - 2015-12-05

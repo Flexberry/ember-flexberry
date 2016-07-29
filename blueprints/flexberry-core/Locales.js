@@ -42,10 +42,10 @@ var Locales = (function () {
         if (!projAttr.caption)
             projAttr.caption = "";
         var value = this.escapeValue(projAttr.caption);
-        this.translations[this.currentLocale].push(projAttr.name + "-caption: '" + value + "'");
+        this.translations[this.currentLocale].push("'" + projAttr.name + "-caption': '" + value + "'");
         for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
             var locale = _a[_i];
-            this.translations[locale].push(projAttr.name + "-caption: '" + projAttr.name + "'");
+            this.translations[locale].push("'" + projAttr.name + "-caption': '" + projAttr.name + "'");
         }
         projAttr.caption = "t 'forms." + this.entityName + "." + projAttr.name + "-caption'";
     };

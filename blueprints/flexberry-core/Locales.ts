@@ -43,9 +43,9 @@ export default class Locales {
     if (!projAttr.caption)
       projAttr.caption = "";
     let value = this.escapeValue(projAttr.caption);
-    this.translations[this.currentLocale].push(`${projAttr.name}-caption: '${value}'`);
+    this.translations[this.currentLocale].push(`'${projAttr.name}-caption': '${value}'`);
     for (let locale of this.locales) {
-      this.translations[locale].push(`${projAttr.name}-caption: '${projAttr.name}'`);
+      this.translations[locale].push(`'${projAttr.name}-caption': '${projAttr.name}'`);
     }
     projAttr.caption = `t 'forms.${this.entityName}.${projAttr.name}-caption'`;
   }

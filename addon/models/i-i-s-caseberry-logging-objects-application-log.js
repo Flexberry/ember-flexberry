@@ -4,7 +4,7 @@
 
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 /**
   Model of application log, message (used by {{#crossLink "LogService"}}log service{{/crossLink}}).
@@ -32,37 +32,37 @@ let Model = BaseModel.extend({
 });
 
 Model.defineProjection('ApplicationLogE', 'i-i-s-caseberry-logging-objects-application-log', {
-  category: Proj.attr('Category'),
-  eventId: Proj.attr('Event id'),
-  priority: Proj.attr('Priority'),
-  severity: Proj.attr('Severity'),
-  title: Proj.attr('Title'),
-  timestamp: Proj.attr('Timestamp'),
-  machineName: Proj.attr('Machine name'),
-  appDomainName: Proj.attr('App domain name'),
-  processId: Proj.attr('Process id'),
-  processName: Proj.attr('Process name'),
-  threadName: Proj.attr('Thread name'),
-  win32ThreadId: Proj.attr('Win32 thread id'),
-  message: Proj.attr('Message'),
-  formattedMessage: Proj.attr('Formatted message')
+  category: Projection.attr('Category'),
+  eventId: Projection.attr('Event id'),
+  priority: Projection.attr('Priority'),
+  severity: Projection.attr('Severity'),
+  title: Projection.attr('Title'),
+  timestamp: Projection.attr('Timestamp'),
+  machineName: Projection.attr('Machine name'),
+  appDomainName: Projection.attr('App domain name'),
+  processId: Projection.attr('Process id'),
+  processName: Projection.attr('Process name'),
+  threadName: Projection.attr('Thread name'),
+  win32ThreadId: Projection.attr('Win32 thread id'),
+  message: Projection.attr('Message'),
+  formattedMessage: Projection.attr('Formatted message')
 });
 
 Model.defineProjection('ApplicationLogL', 'i-i-s-caseberry-logging-objects-application-log', {
-  category: Proj.attr('Category'),
-  eventId: Proj.attr('Event id'),
-  priority: Proj.attr('Priority'),
-  severity: Proj.attr('Severity'),
-  title: Proj.attr('Title'),
-  timestamp: Proj.attr('Timestamp'),
-  machineName: Proj.attr('Machine name'),
-  appDomainName: Proj.attr('App domain name'),
-  processId: Proj.attr('Process id'),
-  processName: Proj.attr('Process name'),
-  threadName: Proj.attr('Thread name'),
-  win32ThreadId: Proj.attr('Win32 thread id'),
-  message: Proj.attr('Message'),
-  formattedMessage: Proj.attr('Formatted message')
+  category: Projection.attr('Category'),
+  eventId: Projection.attr('Event id'),
+  priority: Projection.attr('Priority'),
+  severity: Projection.attr('Severity'),
+  title: Projection.attr('Title'),
+  timestamp: Projection.attr('Timestamp'),
+  machineName: Projection.attr('Machine name'),
+  appDomainName: Projection.attr('App domain name'),
+  processId: Projection.attr('Process id'),
+  processName: Projection.attr('Process name'),
+  threadName: Projection.attr('Thread name'),
+  win32ThreadId: Projection.attr('Win32 thread id'),
+  message: Projection.attr('Message'),
+  formattedMessage: Projection.attr('Formatted message')
 });
 
 export default Model;

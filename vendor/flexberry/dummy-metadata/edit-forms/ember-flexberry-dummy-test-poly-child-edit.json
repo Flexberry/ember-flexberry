@@ -1,6 +1,6 @@
 ﻿{
   "propertyLookup": [],
-  "caption": null,
+  "caption": "Test polymorphic child class",
   "name": "EmberFlexberryDummyTestPolyChildEdit",
   "attrs": [],
   "projections": [

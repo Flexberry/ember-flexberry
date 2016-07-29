@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   // Inversed relationship for ember-flexberry-dummy-suggestion.files.
@@ -19,8 +19,8 @@ var Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('SuggestionFileE', 'ember-flexberry-dummy-suggestion-file', {
-  order: Proj.attr('Order'),
-  file: Proj.attr('File')
+  order: Projection.attr('Order'),
+  file: Projection.attr('File')
 });
 
 export default Model;

@@ -3,39 +3,38 @@
 */
 
 import Ember from 'ember';
-const { getOwner } = Ember;
 
 /**
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support
   sorting on {{#crossLink "ObjectListView"}}{{/crossLink}}.
 
-  Example:
-  ```javascript
-  // app/controllers/employees.js
-  import Ember from 'ember';
-  import SortableController from 'ember-flexberry/mixins/sortable-controller'
-  export default Ember.Controller.extend(SortableController, {
-  });
-  ```
-  ```javascript
-  // app/routes/employees.js
-  import Ember from 'ember';
-  import SortableRoute from 'ember-flexberry/mixins/sortable-route'
-  export default Ember.Route.extend(SortableRoute, {
-  });
-  ```
-  ```handlebars
-  <!-- app/templates/employees.hbs -->
-  ...
-  {{flexberry-objectlistview
+  @example
+    ```javascript
+    // app/controllers/employees.js
+    import Ember from 'ember';
+    import SortableController from 'ember-flexberry/mixins/sortable-controller'
+    export default Ember.Controller.extend(SortableController, {
+    });
+    ```
+    ```javascript
+    // app/routes/employees.js
+    import Ember from 'ember';
+    import SortableRoute from 'ember-flexberry/mixins/sortable-route'
+    export default Ember.Route.extend(SortableRoute, {
+    });
+    ```
+    ```handlebars
+    <!-- app/templates/employees.hbs -->
     ...
-    orderable=true
-    sortByColumn=(action 'sortByColumn')
-    addColumnToSorting=(action 'addColumnToSorting')
+    {{flexberry-objectlistview
+      ...
+      orderable=true
+      sortByColumn=(action 'sortByColumn')
+      addColumnToSorting=(action 'addColumnToSorting')
+      ...
+    }}
     ...
-  }}
-  ...
-  ```
+    ```
 
   @class SortableControllerMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
@@ -80,13 +79,13 @@ export default Ember.Mixin.create({
     @readOnly
   */
   computedSorting: Ember.computed('model.sorting', function() {
-    var sorting = this.get('model.sorting');
-    var result = {};
+    let sorting = this.get('model.sorting');
+    let result = {};
 
     if (sorting) {
-      for (var i = 0; i < sorting.length; i++) {
-        var propName = sorting[i].propName;
-        var sortDef = {
+      for (let i = 0; i < sorting.length; i++) {
+        let propName = sorting[i].propName;
+        let sortDef = {
           sortAscending: sorting[i].direction === 'asc' ? true : false,
           sortNumber: i + 1
         };
@@ -105,13 +104,13 @@ export default Ember.Mixin.create({
       @param {Object} column Column for sorting.
     */
     sortByColumn: function(column) {
-      var propName = column.propName;
-      var oldSorting = this.get('model.sorting');
-      var newSorting = [];
-      var sortDirection;
+      let propName = column.propName;
+      let oldSorting = this.get('model.sorting');
+      let newSorting = [];
+      let sortDirection;
       if (oldSorting) {
         sortDirection = 'asc';
-        for (var i = 0; i < oldSorting.length; i++) {
+        for (let i = 0; i < oldSorting.length; i++) {
           if (oldSorting[i].propName === propName) {
             sortDirection = this._getNextSortDirection(oldSorting[i].direction);
             break;
@@ -126,25 +125,7 @@ export default Ember.Mixin.create({
       }
 
       let sortQueryParam = this._serializeSortingParam(newSorting);
-      if ('userSettings' in this) { // NON modal window
-        this.userSettings.sorting = newSorting;
-        let router = getOwner(this).lookup('router:main');
-        let moduleName =  router.currentRouteName;
-        let savePromise = this.get('_userSettingsService').
-          saveUserSetting({
-            moduleName: moduleName,
-            settingName: 'DEFAULT',
-            userSetting: { sorting: newSorting }
-          }
-        );
-        savePromise.then(
-          record => {
-            this.set('sort', sortQueryParam);
-          }
-        );
-      } else {
-        this.set('sort', sortQueryParam);
-      }
+      this.set('sort', sortQueryParam);
     },
 
     /**
@@ -154,14 +135,14 @@ export default Ember.Mixin.create({
       @param {Object} column Column for sorting.
     */
     addColumnToSorting: function(column) {
-      var propName = column.propName;
-      var oldSorting = this.get('model.sorting');
-      var newSorting = [];
-      var changed = false;
+      let propName = column.propName;
+      let oldSorting = this.get('model.sorting');
+      let newSorting = [];
+      let changed = false;
 
-      for (var i = 0; i < oldSorting.length; i++) {
+      for (let i = 0; i < oldSorting.length; i++) {
         if (oldSorting[i].propName === propName) {
-          var newDirection = this._getNextSortDirection(oldSorting[i].direction);
+          let newDirection = this._getNextSortDirection(oldSorting[i].direction);
           if (newDirection !== 'none') {
             newSorting.push({ propName: propName, direction: newDirection });
           }
@@ -177,25 +158,7 @@ export default Ember.Mixin.create({
       }
 
       let sortQueryParam = this._serializeSortingParam(newSorting);
-      if ('userSettings' in this) { // NON model window
-        this.userSettings.sorting = newSorting;
-        let router = getOwner(this).lookup('router:main');
-        let moduleName =  router.currentRouteName;
-        let savePromise = this.get('_userSettingsService').
-          saveUserSetting({
-            moduleName: moduleName,
-            settingName: 'DEFAULT',
-            userSetting: { sorting: newSorting }
-          }
-        );
-        savePromise.then(
-          record => {
-            this.set('sort', sortQueryParam);
-          }
-        );
-      } else {
-        this.set('sort', sortQueryParam);
-      }
+      this.set('sort', sortQueryParam);
     }
   },
 

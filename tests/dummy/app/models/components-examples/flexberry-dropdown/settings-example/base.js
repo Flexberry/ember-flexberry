@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   enumeration: DS.attr('components-examples/flexberry-dropdown/settings-example/enumeration')
@@ -8,7 +8,7 @@ var Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('BaseE', 'components-examples/flexberry-dropdown/settings-example/base', {
-  enumeration: Proj.attr('Enumeration')
+  enumeration: Projection.attr('Enumeration')
 });
 
 export default Model;

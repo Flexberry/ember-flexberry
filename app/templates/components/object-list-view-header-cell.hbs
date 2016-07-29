@@ -1,5 +1,11 @@
 <div data-olv-header-property-name={{column.propName}} title="Click to change ordering, Ctrl+Click to append ordering for this column">
-  <span>{{column.header}}</span>
+  <span>
+  {{#if column.keyLocale}}
+    {{t column.keyLocale}}
+  {{else}}
+    {{column.header}}
+  {{/if}}
+  </span>
   {{#if column.sorted}}
     <div style="float:right;">
       {{#if column.sortAscending}}

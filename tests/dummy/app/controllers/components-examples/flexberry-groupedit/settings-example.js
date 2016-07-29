@@ -70,7 +70,17 @@ export default EditFormController.extend({
     @type String
    */
   placeholder: t('components.flexberry-groupedit.placeholder'),
+  /**
+    Handles changes in placeholder.
 
+    @method _placeholderChanged
+    @private
+   */
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-groupedit.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-groupedit.placeholder'));
+    }
+  }),
   /**
     Flag: indicates whether 'flexberry-groupedit' component is in 'readonly' mode or not.
 

@@ -11,46 +11,46 @@ import FlexberryBaseComponent from './flexberry-base-component';
   Questions:
   - Need {{yield}} in flexberry-menu.hbs?
 
-  Sample usage:
-  ```javascript
-  // app/controllers/menu.js
-  ...
-  items: [{
-    icon: 'search icon',
-    title: 'Search',
-  },{
-    icon: 'settings icon',
-    iconAlignment: 'right',
-    title: 'Settings',
-  },{
-    icon: 'list icon',
-    title: 'Submenu',
-    items: [{
-      icon: 'trash icon',
-      title: 'Delete',
-    }],
-  }],
-  ...
-  actions: {
+  @example
+    ```javascript
+    // app/controllers/menu.js
     ...
-    onItemClick(e) {
-      let clickedMenuItem = Ember.$(e.currentTarget);
+    items: [{
+      icon: 'search icon',
+      title: 'Search',
+    },{
+      icon: 'settings icon',
+      iconAlignment: 'right',
+      title: 'Settings',
+    },{
+      icon: 'list icon',
+      title: 'Submenu',
+      items: [{
+        icon: 'trash icon',
+        title: 'Delete',
+      }],
+    }],
+    ...
+    actions: {
+      ...
+      onItemClick(e) {
+        let clickedMenuItem = Ember.$(e.currentTarget);
+        ...
+      },
       ...
     },
     ...
-  },
-  ...
-  ```
+    ```
 
-  ```handlebars
-  <!-- app/templates/menu.hbs -->
-  ...
-  {{flexberry-menu
-    items=items
-    onItemClick=(action 'onItemClick')
-  }}
-  ...
-  ```
+    ```handlebars
+    <!-- app/templates/menu.hbs -->
+    ...
+    {{flexberry-menu
+      items=items
+      onItemClick=(action 'onItemClick')
+    }}
+    ...
+    ```
 
   @class FlexberryMenu
   @extends FlexberryBaseComponent
@@ -64,6 +64,15 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   callItemsOnClickCallbacks: true,
+
+  /**
+    Flag: indicates whether to collapse menu when clicking menuitem or not.
+
+    @property collapseMenuOnItemClick
+    @type Boolean
+    @default true
+  */
+  collapseMenuOnItemClick: false,
 
   /**
     Menu items.
@@ -139,8 +148,8 @@ export default FlexberryBaseComponent.extend({
 
     // Attach menu click event handler.
     this.$().on('click', onClickHandler);
-
     this.$().dropdown();
+    this._getActionForMenu(this.get('collapseMenuOnItemClick'));
   },
 
   /**
@@ -157,33 +166,33 @@ export default FlexberryBaseComponent.extend({
   /**
     Hook which will be called to configure menu items.
 
-    Example:
-    ```handlebars
-    <!-- app/templates/menu.hbs -->
-    {{flexberry-menu
-      ...
-      configurateItems=(action 'configurateItems')
-      ...
-    }}
-    ```
+    @example
+      ```handlebars
+      <!-- app/templates/menu.hbs -->
+      {{flexberry-menu
+        ...
+        configurateItems=(action 'configurateItems')
+        ...
+      }}
+      ```
 
-    ```javascript
-    // app/controllers/menu.js
-    export default Ember.Controller.extend({
-    ...
-      actions: {
-        ...
-        configurateItems(items) {
-          items.push({
-            icon: 'edit icon',
-            title: 'Edit',
-          });
-        },
-        ...
-      }
-    ...
-    });
-    ```
+      ```javascript
+      // app/controllers/menu.js
+      export default Ember.Controller.extend({
+      ...
+        actions: {
+          ...
+          configurateItems(items) {
+            items.push({
+              icon: 'edit icon',
+              title: 'Edit',
+            });
+          },
+          ...
+        }
+      ...
+      });
+      ```
 
     @method configurateItems
     @param {Array} items Menu items array.
@@ -220,4 +229,25 @@ export default FlexberryBaseComponent.extend({
     // Send 'onClick' action on clicked 'flexberry-menuitem' component.
     this.sendAction('onItemClick', e);
   },
+
+  /**
+    Menu's collapseMenuOnItemClick observer.
+   */
+  _collapseMenuOnItemClickDidChange: Ember.observer('collapseMenuOnItemClick', function() {
+    this.$().dropdown({
+      action: this._getActionForMenu(this.get('collapseMenuOnItemClick'))
+    }).dropdown('clear');
+  }),
+
+  /**
+    Method for getting action name for menu based on collapseMenuOnItemClick property.
+
+    @method _getActionForMenu
+    @param {Boolean} collapseMenuOnItemClick Flag whether to collapse menu on click or not.
+    @return {String} Action name.
+    @private
+   */
+  _getActionForMenu(collapseMenuOnItemClick) {
+    return collapseMenuOnItemClick ? 'activate' : 'nothing';
+  }
 });

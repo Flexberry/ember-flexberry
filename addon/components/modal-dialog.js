@@ -7,19 +7,19 @@ import Ember from 'ember';
 /**
   ModalDialog component for Semantic UI.
 
-  Sample usage:
-  ```handlebars
-  {{#modal-dialog
-    title='Title'
-    sizeClass='large'
-    close='removeModalDialog'
-    created='createdModalDialog'
-    useOkButton=false
-    useCloseButton=false
-  }}
-    {{outlet 'modal-content'}}
-  {{/modal-dialog}}
-  ```
+  @example
+    ```handlebars
+    {{#modal-dialog
+      title='Title'
+      sizeClass='large'
+      close='removeModalDialog'
+      created='createdModalDialog'
+      useOkButton=false
+      useCloseButton=false
+    }}
+      {{outlet 'modal-content'}}
+    {{/modal-dialog}}
+    ```
 
   @class ModalDialog
   @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>

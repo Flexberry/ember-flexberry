@@ -44,6 +44,8 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
   this.route('components-examples/flexberry-lookup/limit-function-example');
+  this.route('components-examples/flexberry-lookup/lookup-block-form-example');
+  this.route('components-examples/flexberry-lookup/lookup-in-modal');
   this.route('components-examples/flexberry-lookup/dropdown-mode-example');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
@@ -51,6 +53,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/limit-function-example');
   this.route('components-examples/flexberry-objectlistview/on-edit-form');
   this.route('components-examples/flexberry-objectlistview/on-edit-form/user', { path: 'components-examples/flexberry-objectlistview/on-edit-form/user/:id' });
+  this.route('components-examples/flexberry-objectlistview/custom-filter');
   this.route('components-examples/flexberry-simpledatetime/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');

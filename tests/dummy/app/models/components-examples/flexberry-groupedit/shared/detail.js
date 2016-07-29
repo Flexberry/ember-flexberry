@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
-import Proj from 'ember-flexberry-data';
+import { Projection } from 'ember-flexberry-data';
 
 var Model = BaseModel.extend({
   // Inversed relationship for aggregator.details.
@@ -25,13 +25,13 @@ var Model = BaseModel.extend({
 
 // Edit form projection.
 Model.defineProjection('DetailE', 'components-examples/flexberry-groupedit/shared/detail', {
-  flag: Proj.attr('Flag'),
-  text: Proj.attr('Text'),
-  date: Proj.attr('Date'),
-  enumeration: Proj.attr('Enumeration'),
-  file: Proj.attr('File'),
-  master: Proj.belongsTo('components-examples/flexberry-groupedit/shared/master', 'Master', {
-    text: Proj.attr('Text', {
+  flag: Projection.attr('Flag'),
+  text: Projection.attr('Text'),
+  date: Projection.attr('Date'),
+  enumeration: Projection.attr('Enumeration'),
+  file: Projection.attr('File'),
+  master: Projection.belongsTo('components-examples/flexberry-groupedit/shared/master', 'Master', {
+    text: Projection.attr('Text', {
       hidden: true
     })
   }, {
@@ -41,14 +41,14 @@ Model.defineProjection('DetailE', 'components-examples/flexberry-groupedit/share
 
 // Edit form short projection.
 Model.defineProjection('DetailShortE', 'components-examples/flexberry-groupedit/shared/detail', {
-  flag: Proj.attr('Flag'),
-  text: Proj.attr('Text'),
-  enumeration: Proj.attr('Enumeration'),
+  flag: Projection.attr('Flag'),
+  text: Projection.attr('Text'),
+  enumeration: Projection.attr('Enumeration'),
 });
 
 // Edit form ultra short projection.
 Model.defineProjection('DetailUltraShortE', 'components-examples/flexberry-groupedit/shared/detail', {
-  enumeration: Proj.attr('Enumeration'),
+  enumeration: Projection.attr('Enumeration'),
 });
 
 export default Model;

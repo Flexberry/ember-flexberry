@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import { Query } from 'ember-flexberry-data';
+
+const { StringPredicate } = Query;
 
 export default ListFormRoute.extend({
   /**
@@ -11,6 +13,28 @@ export default ListFormRoute.extend({
     @default 'FolvWithLimitFunctionExampleView'
    */
   modelProjection: 'FolvWithLimitFunctionExampleView',
+
+  /**
+  developerUserSettings.
+  {
+  <componentName>: {
+    <settingName>: {
+        colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+        sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
+        colsWidths: [ <colName>:<colWidth>, ... ],
+      },
+      ...
+    },
+    ...
+  }
+  For default userSetting use empty name ('').
+  <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
+
+  @property developerUserSettings
+  @type Object
+  @default {}
+  */
+  developerUserSettings: { FOLVLimitFunctionExampleObjectListView: { } },
 
   /**
     Name of model to be used as list's records types.

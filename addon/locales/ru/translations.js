@@ -105,6 +105,11 @@ export default {
       }
     },
 
+    'object-list-view-cell': {
+      'boolean-false-caption': 'Ложь',
+      'boolean-true-caption': 'Истина'
+    },
+
     'olv-toolbar': {
       'add-button-text': 'Добавить',
       'refresh-button-text': 'Обновить',
@@ -115,7 +120,14 @@ export default {
       'use-setting-title': 'Применить',
       'edit-setting-title': 'Редактировать',
       'remove-setting-title': 'Удалить',
-      'set-default-setting-title': 'Установка по умолчанию'
+      'set-default-setting-title': 'Установка по умолчанию',
+      'show-default-setting-title': 'Показать установки',
+      'show-setting-caption':
+        'Для установки данных настроек по умолчнанию Вы можете их скопировать и инициализировать переменную developerUserSettings в /app/routes/',
+      'close': 'Закрыть',
+      'copy': 'Копировать',
+      'copied': 'Скопировано',
+      'ctrlc': 'Нажмите Ctrl/C для копирования'
     },
 
     'colsconfig-dialog-content': {
@@ -125,6 +137,8 @@ export default {
       'column-name': 'Название столбца',
       'sort-direction': 'Направление сортировки',
       'sort-priority': 'Приоритет столбца при сортировке',
+      'column-width': 'Ширина столбца',
+      'save-colwidths': 'Сохранить ширину столбцов',
       'setting-name': 'Название настройки',
       'enter-setting-name': 'Введите название настройки',
       'use': 'Применить',
@@ -134,4 +148,54 @@ export default {
 
   },
 
+  'models': {
+    'i-i-s-caseberry-logging-objects-application-log': {
+      'projections': {
+        'ApplicationLogL': {
+          'processId': {
+            'caption': 'URL'
+          },
+          'timestamp':{
+            'caption': 'Время'
+          },
+          'category':{
+            'caption': 'Категория'
+          },
+          'eventId':{
+            'caption': 'Идентификтатор события'
+          },
+          'priority':{
+            'caption': 'Приоритет'
+          },
+          'severity':{
+            'caption': 'Значимость'
+          },
+          'title':{
+            'caption': 'Заголовок'
+          },
+          'machineName':{
+            'caption': 'Сервер'
+          },
+          'appDomainName':{
+            'caption': 'Браузер'
+          },
+          'processName':{
+            'caption': 'Имя процесса'
+          },
+          'threadName':{
+            'caption': 'Имя потока'
+          },
+          'win32ThreadId':{
+            'caption': 'Идентификатор потока',
+          },
+          'message':{
+            'caption': 'Сообщение'
+          },
+          'formattedMessage':{
+            'caption': 'Форматированное сообщение'
+          }
+        }
+      }
+    }
+  }
 };

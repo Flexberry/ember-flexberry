@@ -13,6 +13,111 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    Flag used to display filters.
+
+    @property _showFilters
+    @type Boolean
+    @default false
+    @private
+  */
+  _showFilters: Ember.computed.oneWay('filters'),
+
+  /**
+    Store the action name at controller for loading records.
+
+    @property _loadRecords
+    @type String
+    @default 'loadRecords'
+    @private
+  */
+  _loadRecords: 'loadRecords',
+
+  /**
+    Store the action name at controller for switch to the hierarchical mode.
+
+    @property _switchHierarchicalMode
+    @type String
+    @default 'switchHierarchicalMode'
+    @private
+  */
+  _switchHierarchicalMode: 'switchHierarchicalMode',
+
+  /**
+    Store the action name at controller for save the hierarchical attribute name.
+
+    @property _saveHierarchicalAttribute
+    @type String
+    @default 'saveHierarchicalAttribute'
+    @private
+  */
+  _saveHierarchicalAttribute: 'saveHierarchicalAttribute',
+
+  /**
+    Flag indicate when available the hierarchical mode.
+
+    @property _availableHierarchicalMode
+    @type Boolean
+    @default false
+    @private
+  */
+  _availableHierarchicalMode: false,
+
+  /**
+    Flag indicate when component is in the hierarchical mode.
+
+    @property _inHierarchicalMode
+    @type Boolean
+    @default false
+    @private
+  */
+  _inHierarchicalMode: Ember.computed(function() {
+    return this.get('currentController').get('inHierarchicalMode');
+  }),
+
+  /**
+    Store the attribute name set by `hierarchyByAttribute`.
+
+    @property _hierarchicalAttribute
+    @type String
+    @private
+  */
+  _hierarchicalAttribute: undefined,
+
+  /**
+    Set the attribute name to hierarchy build.
+    If specified, will attempt to build on this attribute hierarchy.
+
+    @property hierarchyByAttribute
+    @type String
+  */
+  hierarchyByAttribute: Ember.computed({
+    get() {
+      return this.get('_hierarchicalAttribute');
+    },
+    set(key, value) {
+      this.set('_hierarchicalAttribute', value);
+      this.sendAction('_saveHierarchicalAttribute', value, true);
+      return value;
+    },
+  }),
+
+  /**
+    Indent to indicate hierarchy, can be used HTML.
+
+    @property hierarchicalIndent
+    @type String
+  */
+  hierarchicalIndent: undefined,
+
+  /**
+    Flag used for disable the hierarchical mode.
+
+    @property disableHierarchicalMode
+    @type Boolean
+    @default false
+  */
+  disableHierarchicalMode: false,
 
   /**
     Text to be displayed in table body, if content is not defined or empty.
@@ -256,6 +361,15 @@ export default FlexberryBaseComponent.extend({
   colsConfigButton: true,
 
   /**
+    Flag to use filters in OLV component.
+
+    @property enableFilters
+    @type Boolean
+    @default false
+  */
+  enableFilters: false,
+
+  /**
     Flag indicates whether to show filter button at toolbar.
 
     @property filterButton
@@ -496,6 +610,36 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Show/hide filters.
+
+      @method actions.toggleStateFilters
+    */
+    toggleStateFilters() {
+      this.toggleProperty('_showFilters');
+    },
+
+    /**
+      Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
+
+      @method actions.applyFilters
+      @param {Array} filters Filters.
+    */
+    applyFilters(filters) {
+      throw new Error('No handler for applyFilters action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... applyFilters=(action "applyFilters")}}.');
+    },
+
+    /**
+      Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
+
+      @method actions.resetFilters
+    */
+    resetFilters() {
+      throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
+                      'Set handler like {{flexberry-objectlistview ... resetFilters=(action "resetFilters")}}.');
+    },
+
+    /**
       Handles action from object-list-view when no handler for this component is defined.
 
       @method actions.filterByAnyMatch
@@ -504,7 +648,39 @@ export default FlexberryBaseComponent.extend({
     filterByAnyMatch(pattern) {
       throw new Error('No handler for filterByAnyMatch action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action "filterByAnyMatch")}}.');
-    }
+    },
+
+    /**
+      Set availability hierarchical mode, and save the attribute name in controller.
+
+      @method actions.availableHierarchicalMode
+      @param {String} hierarchicalAttribute Attribute name to hierarchy building.
+    */
+    availableHierarchicalMode(hierarchicalAttribute) {
+      this.toggleProperty('_availableHierarchicalMode');
+      this.sendAction('_saveHierarchicalAttribute', hierarchicalAttribute);
+    },
+
+    /**
+      Called controller action to switch in hierarchical mode.
+
+      @method actions.switchHierarchicalMode
+    */
+    switchHierarchicalMode() {
+      this.sendAction('_switchHierarchicalMode');
+    },
+
+    /**
+      Redirects the call to controller..
+
+      @method actions.loadRecords
+      @param {String} Primary key.
+      @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {String} Property name.
+    */
+    loadRecords(id, target, property) {
+      this.sendAction('_loadRecords', id, target, property);
+    },
   },
 
   /**

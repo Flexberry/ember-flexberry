@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-objectlistview` component:
     * Add filtering by attribute of number type.
     * Add filtering by master attributes.
-    * Add `predicateForAttribute` method for filtering customization in application.
+    * Add [`predicateForAttribute` method](http://flexberry.github.io/Documentation/master/classes/ListFormRoute.html#method_predicateForAttribute) for filtering customization in application.
     * Add filtering for each column.
     * Add hierarchical mode:
       * Autodetect availability of hierarchical mode by default.
@@ -39,7 +39,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
         * Defined by developer;
         * Defined by users and stored in usersetting's backend;
         * Temporary settings defined by users specified in the URL-parameters (`sort`, etc...).
-        * Support user setting service for developer. After adjusting component developer can display current default and named settings and save them in `developerUserSettings` property of app/routes/{{pageRouteName}}.js as default settings.
+        * Support user setting service for developer. After adjusting component developer can display current default and named settings and save them in [`developerUserSettings` property](http://flexberry.github.io/Documentation/master/classes/UserSettingsService.html#property_developerUserSettings)(see also [this](http://flexberry.github.io/Documentation/master/classes/IISCaseberryLoggingObjectsApplicationLogLRoute.html#property_developerUserSettings)) of `app/routes/{{pageRouteName}}.js` as default settings.
 
 ### Changed
 * `flexberry-file`:
@@ -60,8 +60,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Now [`displayAttributeName` property](http://flexberry.github.io/Documentation/master/classes/FlexberryLookup.html#property_displayAttributeName) is required for only autocomplete and dropdown modes in `flexberry-lookup` component.
 
 ### Known issues
+* Only one `flexberry-objectlistview` or `flexberry-groupedit` component could be used on particular form.
+* It is not possible to open any route for generated application prototype (in case of generation of whole application prototype) because of wrong generation of internationalization mechanism. Also probably lookup components on edit forms of generated application prototype may not work.
+* It is not possible to sort list of models by property of "master" model if property of another "master" model from used projection has the same name.
+* No items of context menu for rows of `flexberry-objectlistview` component are shown when `showEditMenuItemInRow` or `showDeleteMenuItemInRow` property of component has been dynamically changed.
+* List of values of `flexberry-dropdown` component are not showing over scroll bar when the component is embedded into `flexberry-groupedit` and there is not enough space to show these values over table rows.
+* Formatted message field of log object fills differently in IE11/Safari and Chrome/Firefox.
+* `flexberry-datepicker` eats too much memory, working slowly and slows down the application (especially when using multiple `flexberry-datepicker` components on form).
 * "TransitionAborted" error get thrown when adding query params (callback is called once for each query param if `refreshModel: true` is set).
 * `flexberry-datapicker` displays the next day when date with time is '00:00:00'.
+* Placeholder text localization for `flexberry-dropdown` component works improperly when `readonly` property changes dynamically. Also placeholder text is not localize in all browsers except Google Chrome.
+* Some text is not localized in user settings dialog.
+* There are some problems with displaying styles of user settings dialog.
+* It is possible to save user settings when user settings serive is off.
+* Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after deleting of user setting or changing page on list form.
 
 ## [0.2.1] - 2016-07-07
 ### Changed

@@ -1,0 +1,47 @@
+﻿{
+  "items": [
+    {
+      "link": null,
+      "caption": "Application",
+      "title": "Application",
+      "children": [
+        {
+          "link": "ember-flexberry-dummy-application-user-list",
+          "caption": "Application Users",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-localization-list",
+          "caption": "Localizations",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-suggestion-list",
+          "caption": "Suggestions",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-suggestion-type-list",
+          "caption": "Suggestion types",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-test-poly-child-list",
+          "caption": "TestPolyChildList",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "ember-flexberry-dummy-test-poly-list",
+          "caption": "TestPolyList",
+          "title": "",
+          "children": null
+        }
+      ]
+    }
+  ]
+}

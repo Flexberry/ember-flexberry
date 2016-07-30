@@ -1,4 +1,5 @@
 ﻿{
+  "name": "EmberFlexberryDummyLocalizedSuggestionType",
   "modelName": "ember-flexberry-dummy-localized-suggestion-type",
   "className": "LocalizedSuggestionType",
   "parentModelName": null,

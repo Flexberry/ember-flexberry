@@ -93,6 +93,12 @@
         "null"
       ]
     },
+    "className": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "attrs": {
       "type": [
         "array",
@@ -117,6 +123,7 @@
     "editForm",
     "caption",
     "name",
+    "className",
     "attrs",
     "projections"
   ]

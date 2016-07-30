@@ -22,9 +22,9 @@
       "projection": "ApplicationUserList"
     },
     {
-      "master": "suggestion",
+      "master": null,
       "displayAttributeName": null,
-      "required": true,
+      "required": false,
       "relationName": "Files.Suggestion",
       "projection": "SuggestionList"
     },
@@ -36,9 +36,9 @@
       "projection": "ApplicationUserList"
     },
     {
-      "master": "suggestion",
+      "master": null,
       "displayAttributeName": null,
-      "required": true,
+      "required": false,
       "relationName": "UserVotes.Suggestion",
       "projection": "SuggestionList"
     },
@@ -52,6 +52,7 @@
   ],
   "caption": "Suggestion",
   "name": "EmberFlexberryDummySuggestionEdit",
+  "className": "SuggestionEdit",
   "attrs": [],
   "projections": [
     {

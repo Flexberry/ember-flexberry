@@ -39,6 +39,7 @@ var CoreBlueprint = (function () {
         var editForms = fs.readdirSync(editFormsDir);
         var modelsDir = path.join(options.metadataDir, "models");
         var models = fs.readdirSync(modelsDir);
+        var sitemapFile = path.join(options.metadataDir, "application", "sitemap.json");
         var children = [];
         var routes = [];
         var importProperties = [];
@@ -75,6 +76,12 @@ var CoreBlueprint = (function () {
             importProperties.push("import " + model.name + "Model from 'models/" + modelName + "';");
             modelsImportedProperties.push("    '" + modelName + "': " + model.name + "Model");
         }
+        var sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
+        for (var _c = 0, _d = sitemap.items; _c < _d.length; _c++) {
+            var item = _d[_c];
+            var childItemExt = new SitemapItemExt(item, null);
+            childItemExt.process();
+        }
         this.children = children.join(",\n");
         this.routes = routes.join("\n");
         this.importProperties = importProperties.join("\n");
@@ -82,5 +89,27 @@ var CoreBlueprint = (function () {
         this.modelsImportedProperties = modelsImportedProperties.join(",\n");
     }
     return CoreBlueprint;
+}());
+var SitemapItemExt = (function () {
+    function SitemapItemExt(baseItem, parentItem) {
+        this.baseItem = baseItem;
+        this.parentItem = parentItem;
+    }
+    SitemapItemExt.prototype.process = function () {
+        var level = 1;
+        var parentItem = this.parentItem;
+        var prefix = "forms.application.sitemap.application";
+        while (parentItem) {
+            prefix = prefix + ".";
+            level++;
+        }
+        for (var _i = 0, _a = this.baseItem.children; _i < _a.length; _i++) {
+            var childItem = _a[_i];
+            var childItemExt = new SitemapItemExt(childItem, this);
+            childItemExt.process();
+        }
+        //if (this.)
+    };
+    return SitemapItemExt;
 }());
 //# sourceMappingURL=index.js.map

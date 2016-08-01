@@ -25,7 +25,7 @@ export default class Locales {
     }
     this.currentLocale = currentLocale;
     this.entityName = entityName;
-    lodash.remove(this.locales, function (n: string) { return n == currentLocale; });
+    lodash.remove(this.locales, (n: string) => { return n == currentLocale });
   }
 
   setupForm(form: metadata.Form) {

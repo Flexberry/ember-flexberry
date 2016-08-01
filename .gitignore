@@ -22,7 +22,7 @@ testem.log
 .tern-port
 .dir-locals.el
 /blueprints/.vscode
-/blueprints/tsconfig.json
+**/tsconfig.json
 /blueprints/.editorconfig
 
 .vscodeignore
@@ -31,5 +31,8 @@ typings/ember/ember.d.ts
 /blueprints/.vs
 /blueprints/bin
 /blueprints/obj
-/blueprints/**/*.sln
-/blueprints/**/*.njsproj
+**/*.sln
+**/*.njsproj
+/.vs
+/bin
+/obj

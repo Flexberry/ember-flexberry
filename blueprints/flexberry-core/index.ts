@@ -50,6 +50,7 @@ class CoreBlueprint {
     let editForms = fs.readdirSync(editFormsDir);
     let modelsDir = path.join(options.metadataDir, "models");
     let models = fs.readdirSync(modelsDir);
+    let sitemapFile = path.join(options.metadataDir, "application", "sitemap.json");
     let children = [];
     let routes = [];
     let importProperties = [];
@@ -83,10 +84,44 @@ class CoreBlueprint {
       importProperties.push(`import ${model.name}Model from 'models/${modelName}';`);
       modelsImportedProperties.push(`    '${modelName}': ${model.name}Model`);
     }
+
+    let sitemap: metadata.Sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
+    for (let item of sitemap.items) {
+      let childItemExt = new SitemapItemExt(item, null);
+      childItemExt.process();
+    }
+
     this.children = children.join(",\n");
     this.routes = routes.join("\n");
     this.importProperties = importProperties.join("\n");
     this.formsImportedProperties = formsImportedProperties.join(",\n");
     this.modelsImportedProperties = modelsImportedProperties.join(",\n");
+  }
+
+}
+
+
+class SitemapItemExt{
+  translation: string;
+  sitemap: string;
+  baseItem: metadata.SitemapItem;
+  parentItem: SitemapItemExt;
+  constructor(baseItem: metadata.SitemapItem, parentItem: SitemapItemExt) {
+    this.baseItem = baseItem;
+    this.parentItem = parentItem;
+  }
+  process() {
+    let level = 1;
+    let parentItem = this.parentItem;
+    let prefix = "forms.application.sitemap.application";
+    while (parentItem) {
+      prefix = `${prefix}.`
+      level++;
+    }
+    for (let childItem of this.baseItem.children) {
+      let childItemExt = new SitemapItemExt(childItem, this);
+      childItemExt.process();
+    }
+    //if (this.)
   }
 }

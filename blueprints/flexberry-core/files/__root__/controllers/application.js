@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.index.caption'),
           title: i18n.t('forms.application.sitemap.index.title'),
           children: null
-        },<%=children%>
+        }, <%=children%>
       ]
     };
   }),

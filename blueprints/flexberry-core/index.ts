@@ -104,7 +104,7 @@ class CoreBlueprint {
     }
     this.lodashVariablesApplicationMenu = applicationMenuLocales.getLodashVariablesWithSuffix("ApplicationMenu");
 
-    this.children = children.join(",");
+    this.children = children.join(", ");
     this.routes = routes.join("\n");
     this.importProperties = importProperties.join("\n");
     this.formsImportedProperties = formsImportedProperties.join(",\n");

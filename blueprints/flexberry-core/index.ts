@@ -98,7 +98,7 @@ class CoreBlueprint {
     let applicationMenuLocales = new ApplicationMenuLocales("ru");
     for (let item of this.sitemap.items) {
       let childItemExt = new SitemapItemExt(item);
-      childItemExt.process("forms.application.sitemap.application", 2);
+      childItemExt.process("forms.application.sitemap", 5);
       applicationMenuLocales.push(childItemExt.translation, childItemExt.translationOtherLocales);
       children.push(childItemExt.sitemap);
     }
@@ -160,10 +160,10 @@ class SitemapItemExt{
     }
     this.translation = `${indentStr2}${this.quote(translationName)}: {\n${indentStr}caption: '${this.escapeValue(this.baseItem.caption)}',\n` +
       `${indentStr}title: '${this.escapeValue(this.baseItem.title)}',\n${childrenStr}\n${indentStr2}}`;
-    this.translationOtherLocales = `${indentStr2}'${this.quote(translationName)}': {\n${indentStr}caption: '${this.escapeValue(translationName)}',\n` +
+    this.translationOtherLocales = `${indentStr2}${this.quote(translationName)}: {\n${indentStr}caption: '${this.escapeValue(translationName)}',\n` +
       `${indentStr}title: '${this.escapeValue(translationName)}',\n${childrenOtherLocalesStr}\n${indentStr2}}`;
 
-    const INDENT = "        ";
+    const INDENT = "";
     this.sitemap = `{\n${INDENT}${indentStr}link: ${this.quoteIfNotNull(this.baseItem.link)},\n` +
       `${INDENT}${indentStr}caption: i18n.t('${translationProp}.caption'),\n` +
       `${INDENT}${indentStr}title: i18n.t('${translationProp}.title'),\n` +

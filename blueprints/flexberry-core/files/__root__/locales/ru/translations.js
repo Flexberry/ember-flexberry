@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import EmberFlexberryTranslations from 'ember-flexberry/locales/ru/translations';
 
-import SitemapApplicationMenu from 'application-menu';
 <%= importProperties %>
 
 const translations = {};
@@ -64,7 +63,7 @@ Ember.$.extend(true, translations, {
           caption: 'Главная',
           title: ''
         },
-        application: SitemapApplicationMenu,
+<%= ruApplicationMenu %>,
       }
     },
 

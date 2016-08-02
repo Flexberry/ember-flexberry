@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+* Blueprints:
+    * Add localization support for generated ember entities.
+
 ## [0.3.0] - 2016-07-29
 ### Added
 * Custom internationalized captions for boolean type in `object-list-view-cell` commponent.

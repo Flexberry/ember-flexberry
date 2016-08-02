@@ -1,4 +1,4 @@
-import { createEnum, inverseEnum, enumCaptions } from 'ember-flexberry/utils/enum-functions';
+import { createEnum, inverseEnum, enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | enum functions');

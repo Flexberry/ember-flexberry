@@ -4,14 +4,14 @@
     {{model.errors.<%= name %>.file}}
   </span>
   {{/if}}
-  <label><%= caption %></label>
+  <label>{{<%= caption %>}}</label>
   {{
     flexberry-file
-    placeholder='(файл не выбран)'
+    placeholder=(t 'components.flexberry-file.placeholder')
     readonly=<%= readonly %>
     value=model.<%= name %>
     class=(if model.errors.<%= name %> 'error' '')
-    label='<%= caption %>'
-  }}
+    label=(<%= caption %>)
+}}
   {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
 </div>

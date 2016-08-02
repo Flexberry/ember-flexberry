@@ -1,4 +1,5 @@
 ﻿{
+  "name": "EmberFlexberryDummyTestPoly",
   "modelName": "ember-flexberry-dummy-test-poly",
   "className": "TestPoly",
   "parentModelName": null,

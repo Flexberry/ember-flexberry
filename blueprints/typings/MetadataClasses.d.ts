@@ -11,6 +11,7 @@ declare module "MetadataClasses" {
         
         public caption: string;
         public name: string;
+        public className: string;
         public attrs: DSattr[];
         public projections: ProjectionForForm[];
     }
@@ -43,6 +44,7 @@ declare module "MetadataClasses" {
     }
     export class Model {
         
+        public name: string;
         public modelName: string;
         public className: string;
         public parentModelName: string;
@@ -106,5 +108,16 @@ declare module "MetadataClasses" {
         public hidden: boolean;
         public attrs: ProjAttr[];
         public index: number;
+    }
+    export class Sitemap {
+        
+        public items: SitemapItem[];
+    }
+    export class SitemapItem {
+        
+        public link: string;
+        public caption: string;
+        public title: string;
+        public children: SitemapItem[];
     }
 }

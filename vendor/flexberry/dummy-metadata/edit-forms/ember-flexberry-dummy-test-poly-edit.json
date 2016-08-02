@@ -10,6 +10,7 @@
   ],
   "caption": "Test polymorphic class",
   "name": "EmberFlexberryDummyTestPolyEdit",
+  "className": "TestPolyEdit",
   "attrs": [],
   "projections": [
     {

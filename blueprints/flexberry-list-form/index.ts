@@ -1,10 +1,13 @@
 /// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 
 import fs = require("fs");
 import path = require('path');
+import lodash = require('lodash');
 const stripBom = require("strip-bom");
 import metadata = require('MetadataClasses');
+import Locales from '../flexberry-core/Locales';
 
 module.exports = {
   description: 'Generates an ember list-form for flexberry.',
@@ -26,25 +29,30 @@ module.exports = {
    */
   locals: function(options) {
     let listFormBlueprint = new ListFormBlueprint(this, options);
-    return {
+    return lodash.defaults({
       editForm: listFormBlueprint.listForm.editForm,// for use in files\__root__\templates\__name__.hbs
       formName: listFormBlueprint.listForm.name,// for use in files\__root__\controllers\__name__.js
       modelName: listFormBlueprint.listForm.projections[0].modelName,// for use in files\__root__\templates\__name__.hbs, files\__root__\routes\__name__.js
       modelProjection: listFormBlueprint.listForm.projections[0].modelProjection,// for use in files\__root__\routes\__name__.js
       caption: listFormBlueprint.listForm.caption// for use in files\__root__\templates\__name__.hbs
-    };
+      },
+      listFormBlueprint.locales.getLodashVariables()// for use in files\__root__\locales\**\forms\__name__.js
+   );
   }
 };
 
 class ListFormBlueprint {
+  locales: Locales;
   listForm: metadata.ListForm;
   constructor(blueprint, options) {
     let listFormsDir = path.join(options.metadataDir, "list-forms");
     if (!options.file) {
       options.file = options.entity.name + ".json";
     }
+    this.locales = new Locales(options.entity.name, "ru");
     let listFormFile = path.join(listFormsDir, options.file);
     let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
     this.listForm = JSON.parse(content);
+    this.locales.setupForm(this.listForm);
   }
 }

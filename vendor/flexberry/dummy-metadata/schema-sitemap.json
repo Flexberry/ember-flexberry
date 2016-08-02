@@ -12,6 +12,12 @@
             "null"
           ]
         },
+        "menuName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "caption": {
           "type": [
             "string",
@@ -36,6 +42,7 @@
       },
       "required": [
         "link",
+        "menuName",
         "caption",
         "title",
         "children"
@@ -44,6 +51,18 @@
   },
   "type": "object",
   "properties": {
+    "applicationCaption": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "applicationTitle": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "items": {
       "type": [
         "array",
@@ -55,6 +74,8 @@
     }
   },
   "required": [
+    "applicationCaption",
+    "applicationTitle",
     "items"
   ]
 }

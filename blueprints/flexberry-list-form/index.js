@@ -31,7 +31,7 @@ module.exports = {
             modelName: listFormBlueprint.listForm.projections[0].modelName,
             modelProjection: listFormBlueprint.listForm.projections[0].modelProjection,
             caption: listFormBlueprint.listForm.caption // for use in files\__root__\templates\__name__.hbs
-        }, listFormBlueprint.locales.getLodashVariables() // for use in files\__root__\locales\**\forms\__name__.js
+        }, listFormBlueprint.locales.getLodashVariablesProperties() // for use in files\__root__\locales\**\forms\__name__.js
         );
     }
 };

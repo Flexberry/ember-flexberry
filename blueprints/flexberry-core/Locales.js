@@ -31,35 +31,37 @@ var Locales = (function () {
         if (!form.caption)
             form.caption = "";
         var value = this.escapeValue(form.caption);
-        this.translations[this.currentLocale].push("caption: '" + value + "'");
-        for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
-            var locale = _a[_i];
-            this.translations[locale].push("caption: '" + form.name + "'");
-        }
+        this.push("caption: '" + value + "'", "caption: '" + form.name + "'");
         form.caption = "t 'forms." + this.entityName + ".caption'";
     };
     Locales.prototype.setupEditFormAttribute = function (projAttr) {
         if (!projAttr.caption)
             projAttr.caption = "";
         var value = this.escapeValue(projAttr.caption);
-        this.translations[this.currentLocale].push("'" + projAttr.name + "-caption': '" + value + "'");
+        this.push("'" + projAttr.name + "-caption': '" + value + "'", "'" + projAttr.name + "-caption': '" + projAttr.name + "'");
+        projAttr.caption = "t 'forms." + this.entityName + "." + projAttr.name + "-caption'";
+    };
+    Locales.prototype.push = function (currentLocaleStr, otherLocalesStr) {
+        this.translations[this.currentLocale].push(currentLocaleStr);
         for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
             var locale = _a[_i];
-            this.translations[locale].push("'" + projAttr.name + "-caption': '" + projAttr.name + "'");
+            this.translations[locale].push(otherLocalesStr);
         }
-        projAttr.caption = "t 'forms." + this.entityName + "." + projAttr.name + "-caption'";
     };
     Locales.prototype.escapeValue = function (value) {
         return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
     };
-    Locales.prototype.getLodashVariables = function () {
+    Locales.prototype.getLodashVariablesWithSuffix = function (suffix) {
         var lodashVariables = {};
-        lodashVariables[(this.currentLocale + "Properties")] = this.getProperties(this.currentLocale);
+        lodashVariables[("" + this.currentLocale + suffix)] = this.getProperties(this.currentLocale);
         for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
             var locale = _a[_i];
-            lodashVariables[(locale + "Properties")] = this.getProperties(locale);
+            lodashVariables[("" + locale + suffix)] = this.getProperties(locale);
         }
         return lodashVariables;
+    };
+    Locales.prototype.getLodashVariablesProperties = function () {
+        return this.getLodashVariablesWithSuffix("Properties");
     };
     Locales.prototype.getProperties = function (locale) {
         return "  " + this.translations[locale].join(",\n  ");
@@ -68,6 +70,17 @@ var Locales = (function () {
 }());
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Locales;
+var ApplicationMenuLocales = (function (_super) {
+    __extends(ApplicationMenuLocales, _super);
+    function ApplicationMenuLocales(currentLocale) {
+        _super.call(this, "", currentLocale);
+    }
+    ApplicationMenuLocales.prototype.getProperties = function (locale) {
+        return "" + this.translations[locale].join(",\n");
+    };
+    return ApplicationMenuLocales;
+}(Locales));
+exports.ApplicationMenuLocales = ApplicationMenuLocales;
 var ModelLocales = (function (_super) {
     __extends(ModelLocales, _super);
     function ModelLocales(model, modelsDir, currentLocale) {
@@ -119,11 +132,7 @@ var ModelLocales = (function (_super) {
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
             var attrsStrOtherLocales = lodash.map(projAttrs, "strOtherLocales").join(",\n      ");
-            this.translations[this.currentLocale].push(proj.name + ": {\n      " + attrsStr + "\n    }");
-            for (var _p = 0, _q = this.locales; _p < _q.length; _p++) {
-                var locale = _q[_p];
-                this.translations[locale].push(proj.name + ": {\n      " + attrsStrOtherLocales + "\n    }");
-            }
+            this.push(proj.name + ": {\n      " + attrsStr + "\n    }", proj.name + ": {\n      " + attrsStrOtherLocales + "\n    }");
         }
     }
     ModelLocales.prototype.getProperties = function (locale) {

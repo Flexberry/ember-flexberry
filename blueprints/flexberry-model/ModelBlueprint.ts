@@ -49,7 +49,7 @@ export default class ModelBlueprint {
     this.needsAllModels = this.getNeedsAllModels(modelsDir);
     this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
     let modelLocales = new ModelLocales(model, modelsDir, "ru");
-    this.lodashVariables = modelLocales.getLodashVariables();
+    this.lodashVariables = modelLocales.getLodashVariablesProperties();
   }
 
   getNeedsAllEnums(enumsDir: string): string {

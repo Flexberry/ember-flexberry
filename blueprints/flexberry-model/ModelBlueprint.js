@@ -34,7 +34,7 @@ var ModelBlueprint = (function () {
         this.needsAllModels = this.getNeedsAllModels(modelsDir);
         this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru");
-        this.lodashVariables = modelLocales.getLodashVariables();
+        this.lodashVariables = modelLocales.getLodashVariablesProperties();
     }
     ModelBlueprint.prototype.getNeedsAllEnums = function (enumsDir) {
         var listEnums = fs.readdirSync(enumsDir);

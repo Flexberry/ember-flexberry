@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import EmberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
 
+import SitemapApplicationMenu from 'application-menu';
 <%= importProperties %>
 
 const translations = {};
@@ -11,7 +12,7 @@ Ember.$.extend(true, translations, {
 <%= modelsImportedProperties %>,
   },
 
-  'application-name': 'Test stand for ember-flexberry',
+  'application-name': 'Application caption',
 
   forms: {
     loading: {
@@ -39,7 +40,7 @@ Ember.$.extend(true, translations, {
       },
 
       footer: {
-        'application-name': 'Test stand for ember-flexberry',
+        'application-name': 'Application caption',
         'application-version': {
           caption: 'Addon version {{version}}',
           title: 'It is version of ember-flexberry addon, which uses in this dummy application ' +
@@ -50,8 +51,8 @@ Ember.$.extend(true, translations, {
 
       sitemap: {
         'application-name': {
-          caption: 'Test stand for ember-flexberry',
-          title: ''
+          caption: 'Application caption',
+          title: 'Application title'
         },
         'application-version': {
           caption: 'Addon version {{version}}',
@@ -63,28 +64,7 @@ Ember.$.extend(true, translations, {
           caption: 'Home',
           title: ''
         },
-        application: {
-          /*
-
-          'caption': 'Application',
-          'title': '',
-          'application-users': {
-            'caption': 'Application users',
-            'title': ''
-          },
-          'localizations': {
-            'caption': 'Localizations',
-            'title': ''
-          },
-          'suggestion-types': {
-            'caption': 'Suggestion types',
-            'title': ''
-          },
-          'suggestions': {
-            'caption': 'Suggestions',
-            'title': ''
-          }*/
-        },
+        application: SitemapApplicationMenu,
       }
     },
 

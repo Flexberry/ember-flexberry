@@ -32,10 +32,10 @@ export default class Locales {
     if (!form.caption)
       form.caption = "";
     let value = this.escapeValue(form.caption);
-    this.translations[this.currentLocale].push(`caption: '${value}'`);
-    for (let locale of this.locales) {
-      this.translations[locale].push(`caption: '${form.name}'`);
-    }
+    this.push(
+      `caption: '${value}'`,
+      `caption: '${form.name}'`
+    );
     form.caption = `t 'forms.${this.entityName}.caption'`;
   }
 
@@ -43,28 +43,50 @@ export default class Locales {
     if (!projAttr.caption)
       projAttr.caption = "";
     let value = this.escapeValue(projAttr.caption);
-    this.translations[this.currentLocale].push(`'${projAttr.name}-caption': '${value}'`);
-    for (let locale of this.locales) {
-      this.translations[locale].push(`'${projAttr.name}-caption': '${projAttr.name}'`);
-    }
+    this.push(
+      `'${projAttr.name}-caption': '${value}'`,
+      `'${projAttr.name}-caption': '${projAttr.name}'`
+    );
     projAttr.caption = `t 'forms.${this.entityName}.${projAttr.name}-caption'`;
+  }
+
+  push(currentLocaleStr: string, otherLocalesStr: string) {
+    this.translations[this.currentLocale].push(currentLocaleStr);
+    for (let locale of this.locales) {
+      this.translations[locale].push(otherLocalesStr);
+    }
   }
 
   escapeValue(value: string) {
     return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
   }
 
-  getLodashVariables() {
+  getLodashVariablesWithSuffix(suffix: string) {
     let lodashVariables = {};
-    lodashVariables[`${this.currentLocale}Properties`] = this.getProperties(this.currentLocale);
+    lodashVariables[`${this.currentLocale}${suffix}`] = this.getProperties(this.currentLocale);
     for (let locale of this.locales) {
-      lodashVariables[`${locale}Properties`] = this.getProperties(locale);
+      lodashVariables[`${locale}${suffix}`] = this.getProperties(locale);
     }
     return lodashVariables;
   }
 
+  getLodashVariablesProperties() {
+    return this.getLodashVariablesWithSuffix("Properties");
+  }
+
   protected getProperties(locale: string) {
     return `  ${this.translations[locale].join(",\n  ")}`;
+  }
+}
+
+export class ApplicationMenuLocales extends Locales {
+
+  constructor(currentLocale: string) {
+    super("", currentLocale);
+  }
+
+  protected getProperties(locale: string) {
+    return `${this.translations[locale].join(",\n")}`;
   }
 }
 
@@ -124,10 +146,10 @@ export class ModelLocales extends Locales {
       projAttrs = lodash.sortBy(projAttrs, ["index"]);
       let attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
       let attrsStrOtherLocales = lodash.map(projAttrs, "strOtherLocales").join(",\n      ");
-      this.translations[this.currentLocale].push(`${proj.name}: {\n      ${attrsStr}\n    }`);
-      for (let locale of this.locales) {
-        this.translations[locale].push(`${proj.name}: {\n      ${attrsStrOtherLocales}\n    }`);
-      }
+      this.push(
+        `${proj.name}: {\n      ${attrsStr}\n    }`,
+        `${proj.name}: {\n      ${attrsStrOtherLocales}\n    }`
+      );
     }
   }
 

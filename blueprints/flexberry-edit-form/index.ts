@@ -50,7 +50,7 @@ module.exports = {
       flexberryComponents: editFormBlueprint.flexberryComponents,// for use in files\__root__\templates\__name__.hbs
       functionGetCellComponent: editFormBlueprint.functionGetCellComponent,// for use in files\__root__\controllers\__name__.js
       },
-      editFormBlueprint.locales.getLodashVariables()// for use in files\__root__\locales\**\forms\__name__.js
+      editFormBlueprint.locales.getLodashVariablesProperties()// for use in files\__root__\locales\**\forms\__name__.js
     );
   }
 };

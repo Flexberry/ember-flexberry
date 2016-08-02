@@ -111,11 +111,14 @@ declare module "MetadataClasses" {
     }
     export class Sitemap {
         
+        public applicationCaption: string;
+        public applicationTitle: string;
         public items: SitemapItem[];
     }
     export class SitemapItem {
         
         public link: string;
+        public menuName: string;
         public caption: string;
         public title: string;
         public children: SitemapItem[];

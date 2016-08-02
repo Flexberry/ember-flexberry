@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import EmberFlexberryTranslations from 'ember-flexberry/locales/ru/translations';
 
+import SitemapApplicationMenu from 'application-menu';
 <%= importProperties %>
 
 const translations = {};
@@ -11,7 +12,7 @@ Ember.$.extend(true, translations, {
 <%= modelsImportedProperties %>,
   },
 
-  'application-name': 'Тестовый стенд ember-flexberry',
+  'application-name': '<%= applicationCaption %>',
 
   forms: {
     loading: {
@@ -39,7 +40,7 @@ Ember.$.extend(true, translations, {
       },
 
       footer: {
-        'application-name': 'Тестовый стенд ember-flexberry',
+        'application-name': '<%= applicationCaption %>',
         'application-version': {
           caption: 'Версия аддона {{version}}',
           title: 'Это версия аддона ember-flexberry, которая сейчас используется в этом тестовом приложении ' +
@@ -50,8 +51,8 @@ Ember.$.extend(true, translations, {
 
       sitemap: {
         'application-name': {
-          caption: 'Тестовый стенд ember-flexberry',
-          title: ''
+          caption: '<%= applicationCaption %>',
+          title: '<%= applicationTitle %>'
         },
         'application-version': {
           caption: 'Версия аддона {{version}}',
@@ -63,40 +64,7 @@ Ember.$.extend(true, translations, {
           caption: 'Главная',
           title: ''
         },
-        application: {
-          /*
-
-          caption: 'Приложение',
-          title: '',
-          'application-users': {
-            'caption': 'Пользователи приложения',
-            'title': ''
-          },
-          'localizations': {
-            'caption': 'Локализация',
-            'title': ''
-          },
-          'suggestion-types': {
-            'caption': 'Типы предложений',
-            'title': ''
-          },
-          'suggestions': {
-            'caption': 'Предложения',
-            'title': ''
-          }
-        },
-        'log-service-examples': {
-          'caption': 'Сервис логирования',
-          'title': '',
-          'application-log': {
-            'caption': 'Лог приложения',
-            'title': ''
-          },
-          'settings-example': {
-            'caption': 'Пример работы с настройками',
-            'title': ''
-          }*/
-        },
+        application: SitemapApplicationMenu,
       }
     },
 

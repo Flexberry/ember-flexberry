@@ -43,7 +43,7 @@ module.exports = {
             parentRoute: editFormBlueprint.parentRoute,
             flexberryComponents: editFormBlueprint.flexberryComponents,
             functionGetCellComponent: editFormBlueprint.functionGetCellComponent,
-        }, editFormBlueprint.locales.getLodashVariables() // for use in files\__root__\locales\**\forms\__name__.js
+        }, editFormBlueprint.locales.getLodashVariablesProperties() // for use in files\__root__\locales\**\forms\__name__.js
         );
     }
 };

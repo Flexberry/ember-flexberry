@@ -4,7 +4,7 @@
 
 import Ember from 'ember';
 const { getOwner } = Ember;
-import { enumCaptions } from '../utils/enum-functions';
+import { enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
 
 /**
   Helper for get array captions of registered enum.

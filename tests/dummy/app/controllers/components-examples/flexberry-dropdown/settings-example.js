@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Enumeration from '../../../enums/components-examples/flexberry-dropdown/settings-example/enumeration';
-import { enumCaptions } from 'ember-flexberry/utils/enum-functions';
+import { enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
 import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({

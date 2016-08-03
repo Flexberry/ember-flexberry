@@ -7,7 +7,7 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
-import { getValueFromLocales } from '../utils/model-functions';
+import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 
 /**
   Object list view component.

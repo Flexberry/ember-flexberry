@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Transforms:
+    * Moved transforms to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+* Enums:
+    * Moved enum initializers to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
 
 ### Added
 * Blueprints:

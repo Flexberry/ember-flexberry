@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Transforms:
+    * Moved transforms to ember-flexberry-data addon.
+* Enums:
+    * Moved enum initializers to ember-flexberry-data addon.
 
 ## [0.3.0] - 2016-07-29
 ### Added

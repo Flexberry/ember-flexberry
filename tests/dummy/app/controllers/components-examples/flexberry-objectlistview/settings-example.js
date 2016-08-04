@@ -242,6 +242,7 @@ export default ListFormController.extend({
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-objectlistview<br>' +
     '  componentName=\"SuggestionsObjectListView\"<br>' +
+    '  colsConfigButton=true<br>' +
     '  content=model<br>' +
     '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
     '  editFormRoute=editFormRoute<br>' +
@@ -295,6 +296,13 @@ export default ListFormController.extend({
       settingValue: 'SuggestionsObjectListView',
       settingDefaultValue: undefined,
       settingIsWithoutUI: true
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'colsConfigButton',
+      settingType: 'boolean',
+      settingValue: true,
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'colsConfigButton'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'content',

@@ -8,6 +8,7 @@
     }}
       {{flexberry-objectlistview
         componentName="SuggestionsObjectListView"
+        colsConfigButton=true
         content=model
         modelName="ember-flexberry-dummy-suggestion"
         editFormRoute=editFormRoute
@@ -45,7 +46,6 @@
         gotoPage=(action "gotoPage")
         nextPage=(action "nextPage")
         configurateRow=(action "configurateRow")
-        componentName="FOLVSettingExampleObjectListView"
         }}
     {{/settings-example}}
   </div>

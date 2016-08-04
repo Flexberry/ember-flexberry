@@ -94,7 +94,7 @@ export default Ember.Mixin.create({
 
   },
 
-/**
+  /**
     Generate the columns.
 
     @method _generateColumns

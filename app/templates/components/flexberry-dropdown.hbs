@@ -14,7 +14,7 @@
     <div class="text">{{text}}</div>
   {{/if}}
   <div class="menu">
-    {{#each-in items as |key value|}}
+    {{#each-in _items as |key value|}}
       <div class="item" data-value="{{value}}">{{value}}</div>
     {{/each-in}}
   </div>

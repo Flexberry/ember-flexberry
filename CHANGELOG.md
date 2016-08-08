@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Moved transforms to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
 * Enums:
     * Moved enum initializers to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+    * Renamed `enum-captions` helper to `flexberry-enum`.
 
 ### Added
 * Blueprints:

@@ -10,6 +10,18 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  _items: Ember.computed('items', function() {
+    let items = this.get('items');
+    let obj = null;
+
+    if (Ember.isArray(items)) {
+      obj = {};
+      items.forEach(item => obj[item] = item.toString());
+    }
+
+    return obj || items;
+  }),
+
   /**
     Flag indicates whether to make checks on selected value or not.
 
@@ -114,24 +126,13 @@ export default FlexberryBaseComponent.extend({
   /**
     Handles changes in available items & selected item (including changes on component initialization).
   */
-  itemsOrValueDidChange: Ember.on('init', Ember.observer('items', 'value', function() {
+  itemsOrValueDidChange: Ember.on('init', Ember.observer('_items.[]', 'value', function() {
     let destroyHasBeenCalled = this.get('destroyHasBeenCalled');
     if (destroyHasBeenCalled) {
       return;
     }
 
-    let items = this.get('items');
-    
-    if (Ember.isArray(items)) {
-      let obj = {};
-
-      items.forEach(function(item) {
-        obj[item] = item.toString();
-      });
-
-      this.set('items', obj);
-    }
-
+    let items = this.get('_items');
     let needChecksOnValue = this.get('needChecksOnValue');
 
     // Convert 'value' and 'items' to strings because flexberry-dropdown interpret selected value as string commonly.
@@ -147,7 +148,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (needChecksOnValue && !Ember.isNone(stringValue) && !valueIsExist) {
-      Ember.Logger.error(`Wrong value of flexberry-dropdown \`value\` propery: \`${value}\`. Allowed values are: [\`${items.join(`\`, \``)}\`].`);
+      Ember.Logger.error(`Wrong value of flexberry-dropdown \`value\` property: \`${value}\`. Allowed values are: [\`${items.join(`\`, \``)}\`].`);
     }
 
     let dropdownDomElement = this.get('dropdownDomElement');

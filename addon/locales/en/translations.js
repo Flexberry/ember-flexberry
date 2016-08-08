@@ -44,29 +44,32 @@ export default {
     'flexberry-file': {
       placeholder: '(no file)',
 
-      'add-btn-text': 'Add File',
-      'remove-btn-text': 'Remove File',
-      'upload-btn-text': 'Upload File',
-      'download-btn-text': 'Download File',
+      'add-button-title': 'Add File',
+      'add-button-caption': 'Add File',
+      'remove-button-title': 'Remove File',
+      'upload-button-title': 'Upload File',
+      'download-button-title': 'Download File',
 
-      'error-dialog-title': 'File component error',
+      'preview-image-alternative-text': 'Loaded image',
+
+      'error-dialog-caption': 'File component error',
       'error-dialog-content': 'File component error occurred',
-      'error-dialog-ok-btn-text': 'OK',
+      'error-dialog-ok-button-caption': 'OK',
 
-      'add-file-error-title': 'Add file error',
-      'file-too-big-message': 'File size must not be greater than {{maxSize}} bytes. Selected file {{fileName}} has size of {{actualSize}} bytes.',
+      'add-file-error-caption': 'Add file error',
+      'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
+        'Selected file \'{{fileName}}\' has size of {{actualFileSize}} bytes.',
 
-      'upload-file-error-title': 'File upload error',
-      'upload-file-error-message': 'Upload {{fileName}} failed. {{errorText}}',
+      'upload-file-error-caption': 'File upload error',
+      'upload-file-error-message': 'Upload of \'{{fileName}}\' failed. {{errorMessage}}',
 
-      'download-file-error-title': 'File download error',
-      'download-file-error-message': 'Download {{fileName}} failed. {{errorText}}',
+      'download-file-error-caption': 'File download error',
+      'download-file-error-message': 'Download of \'{{fileName}}\' failed. {{errorMessage}}',
       'menu-for-file': {
-        'zoom-image-item-title': 'Zoom image',
-        'replace-file-item-title': 'Replace file',
-        'delete-file-item-title': 'Delete file'
-      },
-      'alt-image-text': 'LoadedImage'
+        'zoom-image-item-caption': 'Zoom image',
+        'replace-file-item-caption': 'Replace file',
+        'delete-file-item-caption': 'Delete file'
+      }
     },
 
     'flexberry-lookup': {
@@ -102,6 +105,11 @@ export default {
       }
     },
 
+    'object-list-view-cell': {
+      'boolean-false-caption': 'False',
+      'boolean-true-caption': 'True'
+    },
+
     'olv-toolbar': {
       'add-button-text': 'Add',
       'refresh-button-text': 'Refresh',
@@ -112,7 +120,13 @@ export default {
       'use-setting-title': 'Use',
       'edit-setting-title': 'Edit',
       'remove-setting-title': 'Remove',
-      'set-default-setting-title': 'Default setting'
+      'set-default-setting-title': 'Default setting',
+      'show-default-setting-title': 'Show settings',
+      'show-setting-caption': 'To set this settings by default you can copy and init property developerUserSettings in /app/routes/',
+      'close': 'Close',
+      'copy': 'Copy',
+      'copied': 'Copied',
+      'ctrlc': 'Press Ctrl/C to copy'
     },
 
     'colsconfig-dialog-content': {
@@ -122,11 +136,64 @@ export default {
       'column-name': 'Column name',
       'sort-direction': 'Sorting direction',
       'sort-priority': 'Priority column sorting',
+      'column-width': 'Column width',
+      'save-colwidths': 'Save columns width',
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',
       'use-without-save': 'Use this settings without saving in setting ',
       'save': 'Save'
+    }
+  },
+
+  'models': {
+    'i-i-s-caseberry-logging-objects-application-log': {
+      'projections': {
+        'ApplicationLogL': {
+          'processId': {
+            'caption': 'URL'
+          },
+          'timestamp':{
+            'caption': 'Time'
+          },
+          'category':{
+            'caption': 'Category'
+          },
+          'eventId':{
+            'caption': 'Event ID'
+          },
+          'priority':{
+            'caption': 'Priority'
+          },
+          'severity':{
+            'caption': 'Severity'
+          },
+          'title':{
+            'caption': 'Title'
+          },
+          'machineName':{
+            'caption': 'Server'
+          },
+          'appDomainName':{
+            'caption': 'Browser'
+          },
+          'processName':{
+            'caption': 'Process name'
+          },
+          'threadName':{
+            'caption': 'ThreadName'
+          },
+          'win32ThreadId':{
+            'caption': 'Win32ThreadId',
+          },
+          'message':{
+            'caption': 'Message'
+          },
+          'formattedMessage':{
+            'caption': 'Formatted message'
+          }
+        }
+      }
     }
   }
 };

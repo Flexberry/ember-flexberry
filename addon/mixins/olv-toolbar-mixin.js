@@ -2,17 +2,13 @@ import Ember from 'ember';
 
 // TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
-  _userSettingsService: Ember.inject.service('user-settings-service'),
+  _userSettingsService: Ember.inject.service('user-settings'),
 
   actions: {
-    showConfigDialog: function(settingName) {
-      if (!this.get('_userSettingsService').isUserSettingsServiceEnabled) {
-        alert('Реконфигурация отображения столбцов невозможна. Сервис пользовательских настроек выключен.');
-        return;
-      }
-
-      let listUserSettings = this.model.listUserSettings;
-      let userSettings = settingName !== undefined && settingName in listUserSettings ? listUserSettings[settingName] :  this.model.userSettings;
+    showConfigDialog: function(componentName, settingName) {
+      let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
+      let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
+      let columnWidths = this.get('userSettingsService').getCurrentColumnWidths(componentName, settingName);
       let propName;
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
@@ -25,37 +21,53 @@ export default Ember.Mixin.create({
         namedColList[propName] = colDesc;
       }
 
-      if (userSettings && userSettings.colsOrder !== undefined) {
-        let namedSorting = {};
-        let sortPriority = 0;
-        if (userSettings.sorting === undefined) {
-          userSettings.sorting = [];
+      if (colsOrder === undefined) {
+        colsOrder = colList;
+      }
+
+      let namedSorting = {};
+      let sortPriority = 0;
+      if (sorting === undefined) {
+        sorting = [];
+      }
+
+      for (let i = 0; i < sorting.length; i++) {
+        colDesc = sorting[i];
+        colDesc.sortPriority = ++sortPriority;
+        propName = colDesc.propName;
+        namedSorting[propName] = colDesc;
+      }
+
+      if (columnWidths === undefined) {
+        columnWidths = [];
+      }
+
+      let namedColWidth = {};
+      for (let i = 0; i < columnWidths.length; i++) {
+        colDesc = columnWidths[i];
+        propName = colDesc.propName;
+        namedColWidth[propName] = colDesc.width;
+      }
+
+      for (let i = 0; i < colsOrder.length; i++) {
+        let colOrder = colsOrder[i];
+        propName = colOrder.propName;
+        let name = namedColList[propName].header;
+        delete namedColList[propName];
+        colDesc = { name: name, propName: propName, hide: colOrder.hide };
+        if (propName in namedSorting) {
+          let sortColumn = namedSorting[propName];
+          colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
+          colDesc.sortPriority = sortColumn.sortPriority;
+        } else {
+          colDesc.sortOrder = 0;
         }
 
-        for (let i = 0; i < userSettings.sorting.length; i++) {
-          colDesc = userSettings.sorting[i];
-          colDesc.sortPriority = ++sortPriority;
-          propName = colDesc.propName;
-          namedSorting[propName] = colDesc;
+        if (propName in namedColWidth) {
+          colDesc.columnWidth = namedColWidth[propName];
         }
 
-        for (let i = 0; i < userSettings.colsOrder.length; i++) {
-          let colOrder = userSettings.colsOrder[i];
-          propName = colOrder.propName;
-          let name = namedColList[propName].header;
-          delete namedColList[propName];
-          colDesc = { name: name, propName: propName, hide: colOrder.hide };
-          if (propName in namedSorting) {
-            let sortColumn = namedSorting[propName];
-            colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
-            colDesc.sortPriority = sortColumn.sortPriority;
-          } else {
-            colDesc.sortOrder = 0;
-          }
-
-          colDescs[i] = colDesc;
-        }
-
+        colDescs[i] = colDesc;
       }
 
       for (propName in namedColList) {
@@ -75,7 +87,7 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: { colDescs: colDescs, listUserSettings: listUserSettings, settingName: settingName } },
+                { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settingName } },
                 loadingParams);
     }
 

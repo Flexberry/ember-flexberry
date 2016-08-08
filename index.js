@@ -7,7 +7,7 @@ module.exports = {
   included: function(app) {
     this._super.included.apply(this._super, arguments);
 
-    app.import('vendor/flexberry/register-version.js');
+    app.import('vendor/ember-flexberry/register-version.js');
 
     app.import({
       development: 'bower_components/moment/min/moment-with-locales.js',
@@ -30,11 +30,6 @@ module.exports = {
     });
 
     app.import({
-      development: 'bower_components/jquery-file-download/src/Scripts/jquery.fileDownload.js',
-      production:  'bower_components/jquery-file-download/src/Scripts/jquery.fileDownload.js'
-    });
-
-    app.import({
       development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.js',
       production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.js'
     });
@@ -54,5 +49,8 @@ module.exports = {
 
     // Script for column resize.
     app.import('vendor/jquery.colResizable/colResizable-1.5.min.js');
+
+    // JQuery file download plugin with error callbacks support.
+    app.import('vendor/jquery.flexberry.downloadFile/jquery.flexberry.downloadFile.js');
   }
 };

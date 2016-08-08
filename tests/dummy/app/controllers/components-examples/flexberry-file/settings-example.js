@@ -10,7 +10,17 @@ export default EditFormController.extend({
     @type String
    */
   placeholder: t('components.flexberry-file.placeholder'),
+  /**
+    Handles changes in placeholder.
 
+    @method _placeholderChanged
+    @private
+   */
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-file.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-file.placeholder'));
+    }
+  }),
   /**
     Flag: indicates whether 'flexberry-file' component is in 'readonly' mode or not.
 
@@ -129,7 +139,7 @@ export default EditFormController.extend({
     });
     componentSettingsMetadata.pushObject({
       settingName: 'maxUploadFileSize',
-      settingType: 'string',
+      settingType: 'number',
       settingDefaultValue: null,
       bindedControllerPropertieName: 'maxUploadFileSize'
     });

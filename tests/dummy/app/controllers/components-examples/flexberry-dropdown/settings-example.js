@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Enumeration from '../../../enums/components-examples/flexberry-dropdown/settings-example/enumeration';
-import { enumCaptions } from 'ember-flexberry/utils/enum-functions';
+import { enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
 import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({
@@ -11,7 +11,17 @@ export default Ember.Controller.extend({
     @type String
    */
   placeholder: t('components.flexberry-dropdown.placeholder'),
+  /**
+    Handles changes in placeholder.
 
+    @method _placeholderChanged
+    @private
+   */
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-dropdown.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-dropdown.placeholder'));
+    }
+  }),
   /**
     Flag: indicates whether 'flexberry-dropdown' component is in 'readonly' mode or not.
 

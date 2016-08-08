@@ -1,77 +1,133 @@
-/* global moment:true */
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
+import moment from 'moment';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
- * DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
- *
- * @class FlexberryDatetimePicker
- * @extends FlexberryBaseComponent
- */
+  DateTime picker component for Semantic UI (Semantic UI hasn't its own DateTime picker component yet).
+  # Need refactoring.
+
+  @example
+    ```handlebars
+    {{flexberry-datepicker
+      value=model.birthday
+      placeholder='(no value)'
+      hasTimePicker=true
+      minDate='01.01.2000'
+      maxDate='31.12.2020'
+    }}
+    ```
+
+  @class FlexberryDatePicker
+  @extends FlexberryBaseComponent
+*/
 export default FlexberryBaseComponent.extend({
-  // String with input css classes.
-  classes: undefined,
-
-  classNames: ['ui', 'icon', 'input'],
-
-  // Flag to make control required.
-  required: false,
-
   /**
-   * The placeholder attribute.
-   *
-   * @property placeholder
-   * @type String
-   * @default 't('components.flexberry-datepicker.placeholder')'
-   */
-  placeholder: t('components.flexberry-datepicker.placeholder'),
+    Input value.
 
-  // Flag to show time in control and time picker inside date picker.
-  hasTimePicker: false,
-
-  // Type of input element for render.
-  type: 'text',
-
-  // Input value.
+    @property value
+    @type Date
+  */
   value: undefined,
 
-  // Invalid date for set to model value when needed.
+  /**
+    The placeholder attribute.
+
+    @property placeholder
+    @type String
+    @default t('components.flexberry-datepicker.placeholder')
+  */
+  placeholder: t('components.flexberry-datepicker.placeholder'),
+
+  /**
+    Type of input element for render.
+    In @type not used Markdown, so that [HTMLAttribute](https://www.w3.org/TR/html5/forms.html#attr-input-type).
+
+    @property type
+    @type HTMLAttribute
+    @default text
+  */
+  type: 'text',
+
+  /**
+    Flag: show time in control and time picker inside date picker.
+
+    @property hasTimePicker
+    @type Boolean
+    @default false
+  */
+  hasTimePicker: false,
+
+  /**
+    Invalid date for set to model value when needed.
+
+    @property invalidDate
+    @type Date
+    @default Invalid Date
+  */
   invalidDate: new Date('invalid'),
 
-  // Default display format.
+  /**
+    Default display format.
+
+    @property dateTimeFormat
+    @type String
+    @default 'DD.MM.YYYY'
+  */
   dateTimeFormat: 'DD.MM.YYYY',
 
-  // The earliest date a user may select.
+  /**
+    The earliest date a user may select.
+
+    @property minDate
+    @type Date
+  */
   minDate: undefined,
 
-  // The latest date a user may select.
+  /**
+    The latest date a user may select.
+
+    @property maxDate
+    @type Date
+  */
   maxDate: undefined,
 
-  // Init component when DOM is ready.
-  didInsertElement: function() {
+  /**
+    Array CSS class names.
+    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
+
+    @property classNames
+    @type Array
+    @readOnly
+  */
+  classNames: ['ui', 'icon', 'input'],
+
+  /**
+    Init component when DOM is ready.
+  */
+  didInsertElement() {
     this.minDate = this.minDate === undefined ? moment('01.01.1900', this.dateTimeFormat) : moment(this.minDate, this.dateTimeFormat);
     this.maxDate = this.maxDate === undefined ? moment('31.12.9999', this.dateTimeFormat) : moment(this.maxDate, this.dateTimeFormat);
 
-    var hasTimePicker = this.get('hasTimePicker');
+    let hasTimePicker = this.get('hasTimePicker');
     if (hasTimePicker) {
       this.dateTimeFormat = 'DD.MM.YYYY HH:mm:ss';
     }
 
-    var val = this.get('value');
-    var startDate = moment(new Date());
+    let val = this.get('value');
+    let startDate = moment(new Date());
     if (val !== undefined && moment(val).isValid()) {
       startDate = moment(val);
       this.$('input').val(startDate.format(this.dateTimeFormat));
     }
 
-    var readonly = this.get('readonly');
-    var _this = this;
-    var i18n = _this.get('i18n');
+    let readonly = this.get('readonly');
+    let _this = this;
+    let i18n = _this.get('i18n');
     if (!readonly) {
       this.$('input').daterangepicker(
       {
@@ -91,37 +147,37 @@ export default FlexberryBaseComponent.extend({
         format: this.dateTimeFormat
       },
       function(start, end, label) {
-        _this.setValue(end);
+        _this._setValue(end);
       });
       this.$('i').click(function() {
         _this.$('input').trigger('click');
       });
       this.$('input').on('apply.daterangepicker', function(ev, picker) {
-        var currentValue = _this.get('value');
-        var pickerDateString = moment(picker.endDate.toDate()).format(_this.dateTimeFormat);
+        let currentValue = _this.get('value');
+        let pickerDateString = moment(picker.endDate.toDate()).format(_this.dateTimeFormat);
 
         // TODO: refactor
         let tmp = !moment(moment(currentValue).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat));
         if (!currentValue || tmp) {
-          _this.setValue(picker.endDate);
+          _this._setValue(picker.endDate);
         }
       });
       this.$('input').on('cancel.daterangepicker', function(ev, picker) {
-        var currentInputValueString = _this.$('input').val();
-        var pickerDateString = picker.endDate.format(_this.dateTimeFormat);
+        let currentInputValueString = _this.$('input').val();
+        let pickerDateString = picker.endDate.format(_this.dateTimeFormat);
 
         // TODO: refactor
         let tmp = moment(currentInputValueString, _this.dateTimeFormat);
         let tmp2 = !moment(tmp.format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat));
         if (tmp2) {
-          var oldPickerDateString = picker.endDate._i;
+          let oldPickerDateString = picker.endDate._i;
           if (typeof (oldPickerDateString) === 'string' && currentInputValueString !== oldPickerDateString) {
             _this.$('input').val(oldPickerDateString);
           }
 
-          var currentValue = _this.get('value');
+          let currentValue = _this.get('value');
           if (!moment(moment(currentValue).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat))) {
-            _this.setValue(picker.endDate);
+            _this._setValue(picker.endDate);
           }
         }
       });
@@ -130,60 +186,99 @@ export default FlexberryBaseComponent.extend({
           _this.$('input').data('daterangepicker').startDate = moment.invalid();
         }
 
-        _this.setCalendarEnabledState();
+        _this._setCalendarEnabledState();
       });
       this.$('input').keyup(function() {
-        var valueFromInput = _this.$(this).val();
-        _this.setValue(moment(valueFromInput, _this.dateTimeFormat));
+        let valueFromInput = _this.$(this).val();
+        _this._setValue(moment(valueFromInput, _this.dateTimeFormat));
       });
     }
   },
 
-  setValue: function(dateFromPicker) {
-    var valueFromInput = this.$('input').val();
-    if (valueFromInput === '' && !dateFromPicker.isValid()) {
-      this.setEmptyValue();
-    } else {
-      var dateToSet = this.getDateToSet(dateFromPicker);
-      var currentValue = this.get('value');
+  /**
+    Get JS Date object from Moment object.
 
-      // TODO: refactor
-      let tmp = moment(dateToSet).format(this.dateTimeFormat);
-      let tmp2 = !moment(tmp, this.dateTimeFormat).isSame(moment(moment(currentValue).format(this.dateTimeFormat), this.dateTimeFormat));
-      if (currentValue === null || tmp2) {
-        this.set('value', dateToSet);
-        this.setProperOffsetToCalendar();
-      }
-    }
-
-    this.setCalendarEnabledState();
-  },
-
-  setEmptyValue: function() {
-    var currentValue = this.get('value');
-    if (currentValue !== null) {
-      this.set('value', null);
-      this.setProperOffsetToCalendar();
-    }
-  },
-
-  getDateToSet: function(dateFromPicker) {
+    @method _getDateToSet
+    @param {Moment} dateFromPicker Object of Moment.
+    @private
+  */
+  _getDateToSet(dateFromPicker) {
     if (!dateFromPicker.isValid()) {
       return this.invalidDate;
     }
 
-    let minDate = this.get('minDate');
-    let maxDate = this.get('maxDate');
-    if (moment.isDate(minDate) && dateFromPicker.isBefore(this.minDate) ||
-      moment.isDate(maxDate) && dateFromPicker.isAfter(this.maxDate)) {
+    if (dateFromPicker.isBefore(this.minDate) || dateFromPicker.isAfter(this.maxDate)) {
       return this.invalidDate;
     }
 
     return dateFromPicker.toDate();
   },
 
-  setCalendarEnabledState: function() {
-    var dateToSet = this.getDateToSet(this.$('input').data('daterangepicker').endDate);
+  /**
+    Set value.
+
+    @method setValue
+    @param {Moment} dateFromPicker Object of Moment.
+    @private
+  */
+  _setValue(dateFromPicker) {
+    let valueFromInput = this.$('input').val();
+    if (valueFromInput === '' && !dateFromPicker.isValid()) {
+      this._setEmptyValue();
+    } else {
+      let dateToSet = this._getDateToSet(dateFromPicker);
+      let currentValue = this.get('value');
+
+      // TODO: refactor
+      let tmp = moment(dateToSet).format(this.dateTimeFormat);
+      let tmp2 = !moment(tmp, this.dateTimeFormat).isSame(moment(moment(currentValue).format(this.dateTimeFormat), this.dateTimeFormat));
+      if (currentValue === null || tmp2) {
+        this.set('value', dateToSet);
+        this._setProperOffsetToCalendar();
+      }
+    }
+
+    this._setCalendarEnabledState();
+  },
+
+  /**
+    Set empty value.
+
+    @method _setEmptyValue
+    @private
+  */
+  _setEmptyValue() {
+    let currentValue = this.get('value');
+    if (currentValue !== null) {
+      this.set('value', null);
+      this._setProperOffsetToCalendar();
+    }
+  },
+
+  /**
+    Change state of calendar.
+
+    @example
+      ```javascript
+      getDateToSet: function(dateFromPicker) {
+        if (!dateFromPicker.isValid()) {
+          return this.invalidDate;
+        }
+
+        let minDate = this.get('minDate');
+        let maxDate = this.get('maxDate');
+        if (moment.isDate(minDate) && dateFromPicker.isBefore(this.minDate) ||
+            moment.isDate(maxDate) && dateFromPicker.isAfter(this.maxDate)) {
+            return this.invalidDate;
+        }
+      }
+      ```
+
+    @method _setCalendarEnabledState
+    @private
+  */
+  _setCalendarEnabledState() {
+    let dateToSet = this._getDateToSet(this.$('input').data('daterangepicker').endDate);
     if ((!dateToSet || dateToSet === this.invalidDate) && this.hasTimePicker) {
       this.$().parents('body').find('button.applyBtn').attr('disabled', 'disabled');
       this.$('input').data('daterangepicker').startDate = moment.invalid();
@@ -192,18 +287,28 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
-  setProperOffsetToCalendar: function() {
-    //Waiting for end of validation and displaying errors if model is not valid
-    var _this = this;
+  /**
+    Waiting for end of validation and displaying errors if model is not valid.
+
+    @method _setProperOffsetToCalendar
+    @private
+  */
+  _setProperOffsetToCalendar() {
+    let _this = this;
     setTimeout(function() { _this.$('input').data('daterangepicker').move(); }, 500);
   },
 
-  // Set proper start date when value changed outside of component.
-  valueChanged: Ember.observer('value', function() {
-    var val = this.get('value');
-    var currValueDateTime = moment(this.getDateToSet(moment(val)));
+  /**
+    Set proper start date when value changed outside of component.
+
+    @method _valueChanged
+    @private
+  */
+  _valueChanged: Ember.observer('value', function() {
+    let val = this.get('value');
+    let currValueDateTime = moment(this._getDateToSet(moment(val)));
     if (val && moment.isDate(val) && currValueDateTime.isValid()) {
-      var currInputDateTime = moment(moment(this.$('input').val(), this.dateTimeFormat).toDate());
+      let currInputDateTime = moment(moment(this.$('input').val(), this.dateTimeFormat).toDate());
 
       // Change current date and time when changes were made outside of input element.
       if (!currValueDateTime.isSame(currInputDateTime)) {
@@ -215,7 +320,7 @@ export default FlexberryBaseComponent.extend({
         }
       }
     } else if (val === null) {
-      var valueFromInput = this.$('input').val();
+      let valueFromInput = this.$('input').val();
       if (valueFromInput !== '') {
         this.$('input').val('');
       }
@@ -227,5 +332,5 @@ export default FlexberryBaseComponent.extend({
     } else if (!moment.isDate(val)) {
       this.set('value', currValueDateTime.toDate());
     }
-  })
+  }),
 });

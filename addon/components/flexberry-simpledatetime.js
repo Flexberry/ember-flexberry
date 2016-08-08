@@ -1,123 +1,134 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
- * Wrapper for input[type='date/datetime/datetime-local'] component.
+  Wrapper for input[type='date/datetime/datetime-local'] component.
+  **Please keep in mind that these input types are not supported in all browsers, [see supported browsers](http://caniuse.com/#feat=input-datetime).**
 
-   Please keep in mind that these input types are not supported
-   in all browsers: http://caniuse.com/#feat=input-datetime.
+  @example
+    ```handlebars
+    {{flexberry-simpledatetime
+      type='datetime-local'
+      value=model.orderDate
+      min=model.orderDateMin
+      max=model.orderDateMax
+    }}
+    ```
 
-   Example:
-   ```handlebars
-   {{flexberry-simpledatetime type='datetime-local' value=model.orderDate min=model.orderDateMin readonly=readonly}}
-   ```
-
- * @class FlexberrySimpledatetime
- * @extends FlexberryBaseComponent
- */
+  @class FlexberrySimpledatetime
+  @extends FlexberryBaseComponent
+*/
 export default FlexberryBaseComponent.extend({
-  classNames: ['flexberry-simpledatetime'],
+  /**
+    Convert date in `value` to appropriate input datatype.
+    For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.value).
+
+    @property _valueAsString
+    @type String
+    @private
+  */
+  _valueAsString: Ember.computed('value', {
+    get() {
+      let date = this.get('value');
+      let str = this._convertDateToString(date);
+      return str;
+    },
+    set(key, value) {
+      let date = this._convertStringToDate(value);
+      this.set('value', date);
+      return value;
+    },
+  }),
 
   /**
-   * Value of this component.
-   *
-   * @property value
-   * @type Date
-   */
+    Convert date in `min` to appropriate input datatype.
+    For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.min).
+
+    @property _minAsString
+    @type String
+    @private
+  */
+  _minAsString: Ember.computed('min', {
+    get() {
+      let date = this.get('min');
+      let str = this._convertDateToString(date);
+      return str;
+    },
+    set(key, value) {
+      let date = this._convertStringToDate(value);
+      this.set('min', date);
+      return value;
+    },
+  }),
+
+  /**
+    Convert date in `max` to appropriate input datatype.
+    For example, [see here](https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.max).
+
+    @property _maxAsString
+    @type String
+    @private
+  */
+  _maxAsString: Ember.computed('max', {
+    get() {
+      let date = this.get('max');
+      let str = this._convertDateToString(date);
+      return str;
+    },
+    set(key, value) {
+      let date = this._convertStringToDate(value);
+      this.set('max', date);
+      return value;
+    },
+  }),
+
+  /**
+    Value of date.
+
+    @property value
+    @type Date
+  */
   value: undefined,
 
   /**
-   * Minimum value of this component.
-   *
-   * @property min
-   * @type Date
-   */
+    Minimum value of date.
+
+    @property min
+    @type Date
+  */
   min: undefined,
 
   /**
-   * Maximum value of this component.
-   *
-   * @property max
-   * @type Date
-   */
+    Maximum value of date.
+
+    @property max
+    @type Date
+  */
   max: undefined,
 
   /**
-   * Converted date in `value` to appropriate input datatype.
-   * For example, see https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.value.
-   *
-   * @property valueStr
-   * @type String
-   * @private
-   */
-  valueStr: Ember.computed('value', {
-    get() {
-      let date = this.get('value');
-      let str = this.convertDateToString(date);
-      return str;
-    },
+    Array CSS class names.
+    [More info.](http://emberjs.com/api/classes/Ember.Component.html#property_classNames)
 
-    set(key, value, oldvalue) {
-      let date = this.convertStringToDate(value);
-      this.set('value', date);
-      return value;
-    }
-  }),
+    @property classNames
+    @type Array
+    @readOnly
+  */
+  classNames: ['flexberry-simpledatetime'],
 
   /**
-   * Converted date in `min` to appropriate input datatype.
-   * For example, see https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.min.
-   *
-   * @property minStr
-   * @type String
-   * @private
-   */
-  minStr: Ember.computed('min', {
-    get() {
-      let date = this.get('min');
-      let str = this.convertDateToString(date);
-      return str;
-    },
+    Convert Date object to appropriate string value for input.
 
-    set(key, value, oldvalue) {
-      let date = this.convertStringToDate(value);
-      this.set('min', date);
-      return value;
-    }
-  }),
-
-  /**
-   * Converted date in `max` to appropriate input datatype.
-   * For example, see https://www.w3.org/TR/html-markup/input.datetime-local.html#input.datetime-local.attrs.max.
-   *
-   * @property maxStr
-   * @type String
-   * @private
-   */
-  maxStr: Ember.computed('max', {
-    get() {
-      let date = this.get('max');
-      let str = this.convertDateToString(date);
-      return str;
-    },
-
-    set(key, value, oldvalue) {
-      let date = this.convertStringToDate(value);
-      this.set('max', date);
-      return value;
-    }
-  }),
-
-  /**
-   * Converts Date object to appropriate string value for input.
-   * @method convertDateToString
-   * @private
-   */
-  convertDateToString: function(value) {
+    @method _convertDateToString
+    @param {Date} value Object of Date.
+    @return {String} Date in string format.
+    @private
+  */
+  _convertDateToString(value) {
     if (value == null) {
       return value;
     }
@@ -146,11 +157,14 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-   * Converts string value of input to Date object.
-   * @method convertStringToDate
-   * @private
-   */
-  convertStringToDate: function(value) {
+    Converts string value of input to Date object.
+
+    @method _convertStringToDate
+    @param {String} value Date in string format.
+    @return {Date} Object of Date.
+    @private
+  */
+  _convertStringToDate(value) {
     if (value == null) {
       return value;
     }
@@ -164,5 +178,5 @@ export default FlexberryBaseComponent.extend({
     }
 
     return new Date(value);
-  }
+  },
 });

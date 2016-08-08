@@ -5,6 +5,11 @@
   refreshButton=refreshButton
   deleteButton=deleteButton
   colsConfigButton=colsConfigButton
+  enableFilters=enableFilters
+  showFilters=_showFilters
+  filters=filters
+  toggleStateFilters=(action "toggleStateFilters")
+  resetFilters = (action (if resetFilters resetFilters "resetFilters"))
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass
@@ -12,9 +17,13 @@
   componentName=componentName
   modelController=currentController
   customButtonAction='customButtonAction'
-  customButtonsClosureEvent=(action (if this.attrs.customButtons this.attrs.customButtons 'customButtons'))
+  customButtons=customButtons
   editFormRoute=editFormRoute
   showConfigDialog="showConfigDialog"
+  confirmDeleteRows=confirmDeleteRows
+  inHierarchicalMode=_inHierarchicalMode
+  availableHierarchicalMode=_availableHierarchicalMode
+  switchHierarchicalMode=(action "switchHierarchicalMode")
 }}
 {{object-list-view
   placeholder=placeholder
@@ -25,7 +34,6 @@
   headerCellComponent=headerCellComponent
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
-  useSingleColumn=useSingleColumn
   singleColumnHeaderTitle=singleColumnHeaderTitle
   showAsteriskInRow=(and (not readonly) showAsteriskInRow)
   showCheckBoxInRow=(and (not readonly) showCheckBoxInRow)
@@ -42,33 +50,46 @@
   content=content
   sortByColumn=(action (if this.attrs.sortByColumn this.attrs.sortByColumn 'sortByColumn'))
   addColumnToSorting=(action (if this.attrs.addColumnToSorting this.attrs.addColumnToSorting 'addColumnToSorting'))
+  enableFilters=enableFilters
+  showFilters=_showFilters
+  filters=filters
+  applyFilters = (action (if applyFilters applyFilters "applyFilters"))
+  componentForFilter=componentForFilter
+  conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
   configurateRow=this.attrs.configurateRow
-  confirmDeleteRow=this.attrs.confirmDeleteRow
-  confirmDeleteRows=this.attrs.confirmDeleteRows
-  beforeDeleteRecord=this.attrs.beforeDeleteRecord
+  confirmDeleteRow=confirmDeleteRow
+  beforeDeleteRecord=beforeDeleteRecord
   action='objectListViewRowClick'
   componentName=componentName
   allowColumnResize=allowColumnResize
   selectedRecord=selectedRecord
+  notUseUserSettings=notUseUserSettings
+  hierarchicalIndent=hierarchicalIndent
+  inHierarchicalMode=_inHierarchicalMode
+  disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
+  loadRecords=(action "loadRecords")
+  availableHierarchicalMode=(action "availableHierarchicalMode")
 }}
-<div class="ui secondary menu no-margin">
-  <div class="ui basic buttons">
-	<button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
-	{{#each pages as |page|}}
-	  {{#if page.isEllipsis}}
-		  <button class="ui button">...</button>
-	  {{else}}
-		{{#if page.isCurrent}}
-			<button class="ui active button">{{page.number}}</button>
-		{{else}}
-			<button class="ui button" {{action (if this.attrs.gotoPage this.attrs.gotoPage 'gotoPage') page.number}}>{{page.number}}</button>
-		{{/if}}
-	  {{/if}}
-	{{/each}}
-	<button class="ui {{unless hasNextPage 'disabled'}} button" {{action (if this.attrs.nextPage this.attrs.nextPage 'nextPage')}}>&raquo;</button>
+{{#unless _inHierarchicalMode}}
+  <div class="ui secondary menu no-margin">
+    <div class="ui basic buttons">
+  	<button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
+  	{{#each pages as |page|}}
+  	  {{#if page.isEllipsis}}
+  		  <button class="ui button">...</button>
+  	  {{else}}
+  		{{#if page.isCurrent}}
+  			<button class="ui active button">{{page.number}}</button>
+  		{{else}}
+  			<button class="ui button" {{action (if this.attrs.gotoPage this.attrs.gotoPage 'gotoPage') page.number}}>{{page.number}}</button>
+  		{{/if}}
+  	  {{/if}}
+  	{{/each}}
+  	<button class="ui {{unless hasNextPage 'disabled'}} button" {{action (if this.attrs.nextPage this.attrs.nextPage 'nextPage')}}>&raquo;</button>
+    </div>
+    <div class="right menu">
+      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection"}}
+    </div>
   </div>
-  <div class="right menu">
-    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection"}}
-  </div>
-</div>
+{{/unless}}

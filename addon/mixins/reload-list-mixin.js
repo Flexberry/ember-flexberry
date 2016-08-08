@@ -4,9 +4,16 @@
 
 import Ember from 'ember';
 
-import QueryBuilder from 'ember-flexberry-data/query/builder';
-import Condition from 'ember-flexberry-data/query/condition';
-import { BasePredicate, StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { Query } from 'ember-flexberry-data';
+
+const {
+  Builder,
+  Condition,
+  BasePredicate,
+  SimplePredicate,
+  StringPredicate,
+  ComplexPredicate
+} = Query;
 
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.
@@ -46,7 +53,9 @@ export default Ember.Mixin.create({
       page: undefined,
       sorting: undefined,
       filter: undefined,
-      predicate: undefined
+      filters: undefined,
+      predicate: undefined,
+      hierarchicalAttribute: undefined,
     }, options);
 
     let modelName = reloadOptions.modelName;
@@ -66,6 +75,15 @@ export default Ember.Mixin.create({
       throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
     }
 
+    let filtersPredicate = reloadOptions.filters;
+    if (filtersPredicate && !(filtersPredicate instanceof BasePredicate)) {
+      throw new Error('Incorrect filters. It has to be instance of BasePredicate.');
+    }
+
+    if (filtersPredicate) {
+      limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, filtersPredicate) : filtersPredicate;
+    }
+
     let perPage = reloadOptions.perPage;
     let page = reloadOptions.page;
     let pageNumber = parseInt(page, 10);
@@ -73,25 +91,25 @@ export default Ember.Mixin.create({
     Ember.assert('page must be greater than zero.', pageNumber > 0);
     Ember.assert('perPage must be greater than zero.', perPageNumber > 0);
 
-    let serializer = store.serializerFor(modelName);
-    Ember.assert(`No serializer defined for model '${modelName}'.`, serializer);
-
-    let sorting = reloadOptions.sorting;
-    let filter = reloadOptions.filter;
-
-    let builder = new QueryBuilder(store)
+    let builder = new Builder(store)
       .from(modelName)
       .selectByProjection(projectionName)
-      .top(perPageNumber)
-      .skip((pageNumber - 1) * perPageNumber)
-      .count()
-      .orderBy(
-        sorting
-          .map(i => `${serializer.keyForAttribute(i.propName)} ${i.direction}`)
-          .join(',')
-      );
+      .count();
 
-    let filterPredicate = filter ? this.getFilterPredicate(projection, { filter: filter }) : undefined;
+    if (reloadOptions.hierarchicalAttribute) {
+      let hierarchicalPredicate = new SimplePredicate(reloadOptions.hierarchicalAttribute, 'eq', null);
+      limitPredicate = limitPredicate ? new ComplexPredicate(Condition.And, limitPredicate, hierarchicalPredicate) : hierarchicalPredicate;
+    } else {
+      builder.top(perPageNumber).skip((pageNumber - 1) * perPageNumber);
+    }
+
+    let sorting = reloadOptions.sorting.map(i => `${i.propName} ${i.direction}`).join(',');
+    if (sorting) {
+      builder.orderBy(sorting);
+    }
+
+    let filter = reloadOptions.filter;
+    let filterPredicate = filter ? this._getFilterPredicate(projection, { filter: filter }) : undefined;
     let resultPredicate = (limitPredicate && filterPredicate) ?
                           new ComplexPredicate(Condition.And, limitPredicate, filterPredicate) :
                           (limitPredicate ?
@@ -108,45 +126,128 @@ export default Ember.Mixin.create({
   },
 
   /**
-   * It forms the filter predicate for data loading.
-   *
-   * @method _getFilterPredicate
-   * @public
-   *
-   * @param {String} modelProjection A projection used for data retrieving.
-   * @param {Object} params Current parameters to form predicate.
-   * @return {BasePredicate} Filter predicate for data loading.
-   */
-  getFilterPredicate: function(modelProjection, params) {
+    Create predicate for attribute. Can you overload this function for extended logic.
+
+    Default supported attribute types:
+    - `string`
+    - `number`
+
+    @example
+      ```javascript
+      // app/routes/example.js
+      ...
+      // Add support for logical attribute
+      predicateForAttribute(attribute, filter) {
+        switch (attribute.type) {
+          case 'boolean':
+            let yes = ['TRUE', 'True', 'true', 'YES', 'Yes', 'yes', 'ДА', 'Да', 'да', '1', '+'];
+            let no = ['False', 'False', 'false', 'NO', 'No', 'no', 'НЕТ', 'Нет', 'нет', '0', '-'];
+
+            if (yes.indexOf(filter) > 0) {
+              return new SimplePredicate(attribute.name, 'eq', 'true');
+            }
+
+            if (no.indexOf(filter) > 0) {
+              return new SimplePredicate(attribute.name, 'eq', 'false');
+            }
+
+            return null;
+
+          default:
+            return this._super(...arguments);
+        }
+      },
+      ...
+      ```
+
+    @method predicateForAttribute
+    @param {Object} attribute Object format: `{ name, type }`, where `name` - attribute name, `type` - attribute type.
+    @param {String} filter Pattern for search.
+    @return {BasePredicate|null} Object class of `BasePredicate` or `null`, if not need filter.
+    @for ListFormRoute
+  */
+  predicateForAttribute(attribute, filter) {
+    switch (attribute.type) {
+      case 'string':
+        return new StringPredicate(attribute.name).contains(filter);
+
+      case 'number':
+        if (isFinite(filter)) {
+          return new SimplePredicate(attribute.name, 'eq', filter);
+        }
+
+        return null;
+
+      default:
+        return null;
+    }
+  },
+
+  /**
+    It forms the filter predicate for data loading.
+
+    @method _getFilterPredicate
+    @param {Object} modelProjection A projection used for data retrieving.
+    @param {Object} params Current parameters to form predicate.
+    @return {BasePredicate|null} Filter predicate for data loading.
+    @private
+  */
+  _getFilterPredicate: function(modelProjection, params) {
     Ember.assert('Projection is not defined', modelProjection);
 
-    let store = this.store;
-    let modelConstructor = store.modelFor(modelProjection.modelName);
+    let predicates = [];
+    if (params.filter) {
+      let attributes = this._attributesForFilter(modelProjection, this.store);
+      attributes.forEach((attribute) => {
+        let predicate = this.predicateForAttribute(attribute, params.filter);
+        if (predicate) {
+          predicates.push(predicate);
+        }
+      });
+    }
 
-    let attrToFilterNames = [];
-    let projAttrs = modelProjection.attributes;
-    for (var attrName in projAttrs) {
-      // TODO: it has to work not only with own string attributes.
-      if (projAttrs[attrName].kind === 'attr' &&
-          Ember.get(modelConstructor, 'attributes').get(attrName).type === 'string') {
-        attrToFilterNames.push(attrName);
+    return predicates.length ? predicates.length > 1 ? new ComplexPredicate(Condition.Or, ...predicates) : predicates[0] : null;
+  },
+
+  /**
+    Generates array attributes for filter.
+
+    @method _attributesForFilter
+    @param {Object} projection
+    @param {DS.Store} store
+    @return {Array} Array objects format: `{ name, type }`, where `name` - attribute name, `type` - attribute type.
+    @private
+  */
+  _attributesForFilter(projection, store) {
+    let attributes = [];
+
+    for (let name in projection.attributes) {
+      if (projection.attributes.hasOwnProperty(name)) {
+        let attribute = projection.attributes[name];
+        switch (attribute.kind) {
+          case 'attr':
+            attributes.push({
+              name: name,
+              type: Ember.get(store.modelFor(projection.modelName), 'attributes').get(name).type,
+            });
+            break;
+
+          case 'belongsTo':
+            if (attribute.options.displayMemberPath) {
+              attributes.push({
+                name: `${name}.${attribute.options.displayMemberPath}`,
+                type: Ember.get(store.modelFor(attribute.modelName), 'attributes').get(attribute.options.displayMemberPath).type,
+              });
+            }
+
+            break;
+
+          default:
+            throw new Error(`Not supported kind: ${attribute.kind}`);
+        }
       }
     }
 
-    let finalString;
-    let filter = params.filter;
-
-    if (typeof filter === 'string' && filter.length > 0) {
-      let containsExpressions = attrToFilterNames.map(function(fieldName) {
-        return new StringPredicate(fieldName).contains(filter);
-      });
-
-      let newExpression = containsExpressions.length > 1 ? new ComplexPredicate(Condition.Or, ...containsExpressions) : containsExpressions[0];
-
-      // TODO: concat with lf.
-      finalString = newExpression;
-    }
-
-    return finalString;
-  }
+    return attributes;
+  },
 });

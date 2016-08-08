@@ -1,0 +1,19 @@
+﻿{
+  "name": "EmberFlexberryDummyTestPolyBase",
+  "modelName": "ember-flexberry-dummy-test-poly-base",
+  "className": "TestPolyBase",
+  "parentModelName": null,
+  "parentClassName": null,
+  "attrs": [
+    {
+      "name": "pole",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    }
+  ],
+  "belongsTo": [],
+  "hasMany": [],
+  "projections": []
+}

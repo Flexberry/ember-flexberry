@@ -1,104 +1,101 @@
 /**
- * @module ember-flexberry
- */
+  @module ember-flexberry
+*/
 
 import Ember from 'ember';
 
 import ReloadListMixin from '../mixins/reload-list-mixin';
+import { Query } from 'ember-flexberry-data';
 
-import { BasePredicate } from 'ember-flexberry-data/query/predicate';
+const { BasePredicate } = Query;
 
 /**
- * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.
- *
- * @class FlexberryLookupMixin
- * @extends Ember.Mixin
- * @uses ReloadListMixin
- * @public
- */
+  Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.
+
+  TODO: Rename file, add 'controller' word into filename.
+
+  @class FlexberryLookupMixin
+  @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
+  @uses ReloadListMixin
+*/
 export default Ember.Mixin.create(ReloadListMixin, {
   /**
-   * Lookup settings for modal window.
-   * It has to be overriden on controller where this mixin is used.
-   *
-   * @property lookupSettings
-   * @type Object
-   */
+    Lookup settings for modal window.
+    It has to be overriden on controller where this mixin is used.
+
+    @property lookupSettings
+    @type Object
+  */
   lookupSettings: {
     /**
-     * Name of controller that handles modal window.
-     * Controller with the same name has to be injected to property `lookupController`.
-     *
-     * @property controllerName
-     * @type String
-     * @default undefined
-     */
+      Name of controller that handles modal window.
+      Controller with the same name has to be injected to property `lookupController`.
+
+      @property controllerName
+      @type String
+    */
     controllerName: undefined,
 
     /**
-     * Name of template for modal window itself (not content of modal window).
-     *
-     * @property template
-     * @type String
-     * @default undefined
-     */
+      Name of template for modal window itself (not content of modal window).
+
+      @property template
+      @type String
+    */
     template: undefined,
 
     /**
-     * Name of template for content of modal window.
-     *
-     * @property contentTemplate
-     * @type String
-     * @default undefined
-     */
+      Name of template for content of modal window.
+
+      @property contentTemplate
+      @type String
+    */
     contentTemplate: undefined,
 
     /**
-     * Name of template for content of loading modal window.
-     *
-     * @property loaderTemplate
-     * @type String
-     * @default undefined
-     */
+      Name of template for content of loading modal window.
+
+      @property loaderTemplate
+      @type String
+    */
     loaderTemplate: undefined
   },
 
   /**
-   * Controller to show lookup modal window.
-   *
-   * @property lookupController
-   * @type Ember.InjectedProperty
-   * @default undefined
-   */
+    Controller to show modal window.
+
+    @property lookupController
+    @type Ember.Controller
+  */
   lookupController: undefined,
 
   /**
-   * Default number of records per page on lookup window list.
-   *
-   * @property lookupModalWindowPerPage
-   * @type Number
-   * @default 5
-   */
+    Default number of records per page on lookup window list.
+
+    @property lookupModalWindowPerPage
+    @type Number
+    @default 5
+  */
   lookupModalWindowPerPage: 5,
 
   actions: {
     /**
-     * Handles action from lookup choose action.
-       It opens modal window where availible values are shown.
+      Handles action from lookup choose action.
+      It opens modal window where availible values are shown.
 
-       In order to customize content of all lookup modal window there is such a way:
-       1) create template with necessary content and set unique name for it (for example 'customlookupform.hbs');
-       2) override lookup setting `lookupSettings.contentTemplate` on controller level (for example 'customlookupform');
-       3) if there has to be specific logic or properties on controller for template,
-          current lookup controller can be overriden (it is 'lookup-dialog' for edit forms),
-          new name can be set on lookup setting `lookupSettings.controllerName`
-          and new controller can be injected as `lookupController`
-          (if the controller was extended and not reopened).
+      In order to customize content of all lookup modal window there is such a way:
+      1. Create template with necessary content and set unique name for it (for example 'customlookupform.hbs');
+      2. Override lookup setting `lookupSettings.contentTemplate` on controller level (for example 'customlookupform');
+      3. If there has to be specific logic or properties on controller for template,
+         current lookup controller can be overriden (it is 'lookup-dialog' for edit forms),
+         new name can be set on lookup setting `lookupSettings.controllerName`
+         and new controller can be injected as `lookupController`
+         (if the controller was extended and not reopened).
 
-     * @method showLookupDialog
-     * @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
-     */
-    showLookupDialog: function(chooseData) {
+      @method actions.showLookupDialog
+      @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
+    */
+    showLookupDialog(chooseData) {
       let options = Ember.$.extend(true, {
         projection: undefined,
         relationName: undefined,
@@ -166,22 +163,22 @@ export default Ember.Mixin.create(ReloadListMixin, {
     },
 
     /**
-     * Handles correcponding route's willTransition action.
-     * It sends message about transition to showing lookup modal window controller.
-     *
-     * @method routeWillTransition
-     */
-    routeWillTransition: function() {
+      Handlers corresponding route's willTransition action.
+      It sends message about transition to showing lookup modal window controller.
+
+      @method actions.routeWillTransition
+    */
+    routeWillTransition() {
       this.get('lookupController').send('routeWillTransition');
     },
 
     /**
-     * Handles action from lookup remove action.
-     *
-     * @method removeLookupValue
-     * @param {Object} removeData Lookup parameters (projection name, etc).
-     */
-    removeLookupValue: function(removeData) {
+      Handlers action from FlexberryLookup remove action.
+
+      @method actions.removeLookupValue
+      @param {Object} removeData Lookup parameters: { relationName, modelToLookup }.
+    */
+    removeLookupValue(removeData) {
       let options = Ember.$.extend(true, {
         relationName: undefined,
         modelToLookup: undefined
@@ -197,12 +194,12 @@ export default Ember.Mixin.create(ReloadListMixin, {
     },
 
     /**
-     * Update relation value at model.
-     *
-     * @method updateLookupValue
-     * @param {Object} updateData Lookup parameters to update data at model (projection name, etc).
-     */
-    updateLookupValue: function(updateData) {
+      Update relation value at model.
+
+      @method actions.updateLookupValue
+      @param {Object} updateData Lookup parameters to update data at model: { relationName, newRelationValue, modelToLookup }.
+    */
+    updateLookupValue(updateData) {
       let options = Ember.$.extend(true, {
         relationName: undefined,
         newRelationValue: undefined,
@@ -216,39 +213,39 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
       model.makeDirty();
-    }
+    },
   },
 
   /**
-   * This method refreshes displayed data on lookup modal window.
+    This method refreshes displayed data on lookup modal window.
 
-     It reloads current lookup modal window in order to show loading image.
-     Then proper request to load data is formed (it considers current page, filter, etc).
-     After the data loading data are displayed on lookup modal window.
+    It reloads current lookup modal window in order to show loading image.
+    Then proper request to load data is formed (it considers current page, filter, etc).
+    After the data loading data are displayed on lookup modal window.
 
-     This method is called during the first data loading
-     and after each change of request parameters (current page, filter, etc) on lookup modal window controller
-     (it is implemented by sending handler on this method to lookup modal window controller).
+    This method is called during the first data loading
+    and after each change of request parameters (current page, filter, etc) on lookup modal window controller
+    (it is implemented by sending handler on this method to lookup modal window controller).
 
-   * @method _reloadModalData
-   * @private
-   *
-   * @param {String} currentContext Current execution context of this method.
-   * @param {Object} options Parameters to load proper data and to tune modal lookup window outlook.
-   * @param {String} [options.relatedToType] Type of records to load.
-   * @param {String} [options.projectionName] Projection name to load data by.
-   * @param {String} [options.perPage] Number of records to display on page.
-   * @param {String} [options.page] Current page to display on lookup window.
-   * @param {String} [options.sorting] Current sorting.
-   * @param {String} [options.filter] Current filter.
-   * @param {String} [options.predicate] Current limit predicate.
-   * @param {String} [options.title] Title of modal lookup window.
-   * @param {String} [options.sizeClass] Size of modal lookup window.
-   * @param {String} [options.saveTo] Options to save selected lookup value.
-   * @param {String} [options.currentLookupRow] Current lookup value.
-   * @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
-   */
-  _reloadModalData: function(currentContext, options) {
+    @method _reloadModalData
+    @private
+
+    @param {String} currentContext Current execution context of this method.
+    @param {Object} options Parameters to load proper data and to tune modal lookup window outlook.
+    @param {String} [options.relatedToType] Type of records to load.
+    @param {String} [options.projectionName] Projection name to load data by.
+    @param {String} [options.perPage] Number of records to display on page.
+    @param {String} [options.page] Current page to display on lookup window.
+    @param {String} [options.sorting] Current sorting.
+    @param {String} [options.filter] Current filter.
+    @param {String} [options.predicate] Current limit predicate.
+    @param {String} [options.title] Title of modal lookup window.
+    @param {String} [options.sizeClass] Size of modal lookup window.
+    @param {String} [options.saveTo] Options to save selected lookup value.
+    @param {String} [options.currentLookupRow] Current lookup value.
+    @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
+  */
+  _reloadModalData(currentContext, options) {
     var lookupSettings = currentContext.get('lookupSettings');
     Ember.assert('Lookup settings are undefined.', lookupSettings);
     Ember.assert('Lookup template is undefined.', lookupSettings.template);
@@ -342,5 +339,5 @@ export default Ember.Mixin.create(ReloadListMixin, {
         model: data
       }, loadingParams);
     });
-  }
+  },
 });

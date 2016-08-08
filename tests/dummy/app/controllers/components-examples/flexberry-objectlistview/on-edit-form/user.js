@@ -1,10 +1,12 @@
 import Ember from 'ember';
-import BaseEditFormController from '../../../base-edit-form';
+import EditFormController from 'ember-flexberry/controllers/edit-form';
+import EditFormControllerOperationsIndicationMixin from '../../../../mixins/edit-form-controller-operations-indication';
 
-import QueryBuilder from 'ember-flexberry-data/query/builder';
-import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import { Query } from 'ember-flexberry-data';
 
-export default BaseEditFormController.extend({
+const { Builder, StringPredicate } = Query;
+
+export default EditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
    Route name for transition after close edit form.
 
@@ -22,10 +24,10 @@ export default BaseEditFormController.extend({
 
   customContent: Ember.computed('model.name', function() {
     let name = this.get('model.name');
-    let builder = new QueryBuilder(this.get('store'))
+    let builder = new Builder(this.get('store'))
       .from('ember-flexberry-dummy-suggestion')
       .selectByProjection('SuggestionL')
-      .where(new StringPredicate('Author/Name').contains(name));
+      .where(new StringPredicate('author.name').contains(name));
     return this.get('store').query('ember-flexberry-dummy-suggestion', builder.build());
   })
 });

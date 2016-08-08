@@ -1,109 +1,157 @@
+/**
+  @module ember-flexberry
+*/
+
 import Ember from 'ember';
-
-import SortableRouteMixin from '../mixins/sortable-route';
 import ListFormController from '../controllers/list-form';
+import SortableRouteMixin from '../mixins/sortable-route';
 
+/**
+  Controller to support a modal windows in FlexberryLookup component.
+
+  @class LookupDialogController
+  @extends ListFormController
+  @uses SortableRouteMixin
+*/
 export default ListFormController.extend(SortableRouteMixin, {
   /**
-   * Current opened modal window.
-   *
-   * @property _openedModalDialog
-   * @type JQuery
-   * @default undefined
-   */
+    Current open a modal window.
+
+    @property _openedModalDialog
+    @type JQuery
+    @private
+  */
   _openedModalDialog: undefined,
 
+  /**
+    Title for modal window.
+
+    @property title
+    @type String
+  */
   title: undefined,
 
   /**
-   * Size of Semantic-UI modal.
-   * Possible variants: 'small', 'large', 'fullscreen'.
-   *
-   * @property sizeClass
-   * @type String
-   * @default 'small'
-   */
+    Size of Semantic-UI modal.
+    [More info](http://semantic-ui.com/modules/modal.html#size).
+
+    Possible variants:
+    - **small**
+    - **large**
+    - **fullscreen**
+
+    @property sizeClass
+    @type String
+    @default 'small'
+  */
   sizeClass: 'small',
 
   /**
-   * Current lookup selected record.
-   * It is used to highlight selected record.
-   *
-   * @property currentLookupRow
-   * @type DS.Model
-   * @default undefined
-   */
+    Current lookup selected record.
+    It is used to highlight selected record.
+
+    @property currentLookupRow
+    @type DS.Model
+  */
   currentLookupRow: undefined,
 
   /**
-   * Set of properties to set for list commponent.
-   *
-   * @property customPropertiesData
-   * @type Object
-   * @default undefined
-   */
+    Set of properties to set for list commponent.
+
+    @property customPropertiesData
+    @type Object
+  */
   customPropertiesData: undefined,
 
   /**
-   * Type of current loaded data.
-   *
-   * @property modelType
-   * @type String
-   * @default undefined
-   */
+    Type of current loaded data.
+
+    @property modelType
+    @type String
+  */
   modelType: undefined,
 
   /**
-   * Name of projection data were loaded by.
-   *
-   * @property projectionName
-   * @type String
-   * @default undefined
-   */
+    Name of projection data were loaded by.
+
+    @property projectionName
+    @type String
+  */
   projectionName: undefined,
 
   /**
-   * Predicate to limit loaded data by.
-   *
-   * @property predicate
-   * @type BasePredicate
-   * @default undefined
-   */
+    Predicate to limit loaded data by.
+
+    @property predicate
+    @type BasePredicate
+  */
   predicate: undefined,
 
   /**
-   * Handler to call when parameters of loaded data changed (filter, currentPage, etc.).
-   *
-   * @property reloadDataHandler
-   * @type Function
-   * @default undefined
-   */
+    Handler to call when parameters of loaded data changed (filter, currentPage, etc.).
+
+    @property reloadDataHandler
+    @type Function
+  */
   reloadDataHandler: undefined,
 
   /**
-   * Context for handler of data reloading call.
-   *
-   * @property reloadContext
-   * @type Object
-   * @default undefined
-   */
+    Context for handler of data reloading call.
+
+    @property reloadContext
+    @type Object
+    @default undefined
+  */
   reloadContext: undefined,
 
   /**
-   * Flag indicates whether to observe query parameters or they are not still initiated..
-   *
-   * @property reloadObserverIsActive
-   * @type Boolean
-   * @default false
-   */
+    Flag indicates whether to observe query parameters or they are not still initiated..
+
+    @property reloadObserverIsActive
+    @type Boolean
+    @default false
+  */
   reloadObserverIsActive: false,
 
-  /**
-   * It observes query parameters changing.
-     If query parameter (filter, current page, etc.) is changed then displayed data are reloaded.
+  actions: {
+    /**
+      Handlers OLV row click, Save selected row to object master property and close modal window.
 
-   * @method queryParametersChanged
-   */
+      @method actions.objectListViewRowClick
+      @param {Object} record Selected row.
+    */
+    objectListViewRowClick(record) {
+      this._selectMaster(record);
+      this.closeModalDialog();
+    },
+
+    /**
+      Handlers create modal window action. Save created window, to have opportunity to close it later.
+
+      @method actions.createdModalDialog
+      @param {JQuery} modalDialog Created modal window.
+    */
+    createdModalDialog(modalDialog) {
+      this.set('_openedModalDialog', modalDialog);
+    },
+
+    /**
+      Handlers correcponding route's willTransition action.
+      It closes modal window if it is opened (if Ember uses hash location type, modal window won't be closed automatically).
+
+      @method actions.routeWillTransition
+    */
+    routeWillTransition() {
+      this._closeModalDialog();
+    },
+  },
+
+  /**
+    It observes query parameters changing.
+    If query parameter (filter, current page, etc.) is changed then displayed data are reloaded.
+
+    @method queryParametersChanged
+  */
   queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function() {
     if (!this.get('reloadObserverIsActive')) {
       return;
@@ -135,81 +183,13 @@ export default ListFormController.extend(SortableRouteMixin, {
     reloadDataHandler(this.get('reloadContext'), reloadData);
   }),
 
-  actions: {
-    /**
-     * Handles olv row clicked.
-     * Save selected row to object master property and close modal window
-     *
-     * @method rowClick
-     * @param {Ember.Object} record Row record
-     */
-    objectListViewRowClick: function (record) {
-      this.selectMaster(record);
-      this.closeModalDialog();
-    },
-
-    /**
-     * Handles create modal window action.
-     * It saves created window to have opportunity to close it later.
-     *
-     * @method createdModalDialog
-     * @param {JQuery} modalDialog Created modal window.
-     */
-    createdModalDialog: function(modalDialog) {
-      this.set('_openedModalDialog', modalDialog);
-    },
-
-    /**
-     * Handles correcponding route's willTransition action.
-     * It closes modal window if it is opened (if Ember uses hash location type, modal window won't be closed automatically).
-     *
-     * @method routeWillTransition
-     */
-    routeWillTransition: function() {
-      this.closeModalDialog();
-    }
-  },
-
   /**
-   * Set master to corresponding property of editing object.
-   *
-   * @method selectMaster
-   * @param {Ember.Object} master Selected master for editing property
-   */
-  selectMaster: function (master) {
-    var saveTo = this.get('saveTo');
-    if (!saveTo) {
-      throw new Error('Don\'t know where to save - no saveTo data defined.');
-    }
+    It clears current controller.
+    It has to be done before each use.
 
-    saveTo.model.set(saveTo.propName, master);
-
-    // Manually make record dirty, because ember-data does not do it when relationship changes.
-    saveTo.model.makeDirty();
-  },
-
-  /**
-   * Close current modal window if it exists.
-   *
-   * @method closeModalDialog
-   */
-  closeModalDialog: function () {
-    let openedDialog = this.get('_openedModalDialog');
-    if (openedDialog) {
-      openedDialog.modal('hide');
-      this.set('_openedModalDialog', undefined);
-    }
-  },
-
-  /**
-   * It clears current controller.
-   * It has to be done before each use.
-   *
-   * @method clear
-   * @public
-   *
-   * @param {Boolean} initialClear Flag indicates whether it is clear on first load or just on reload.
-   */
+    @method clear
+    @param {Boolean} initialClear Flag indicates whether it is clear on first load or just on reload.
+  */
   clear: function(initialClear) {
     this.set('reloadObserverIsActive', false);
 
@@ -232,5 +212,38 @@ export default ListFormController.extend(SortableRouteMixin, {
     this.set('modelType', undefined);
     this.set('projectionName', undefined);
     return this;
-  }
+  },
+
+  /**
+    Set master to corresponding property of editing object.
+
+    @method _selectMaster
+    @param {Object} master Selected master for editing property.
+    @private
+  */
+  _selectMaster(master) {
+    var saveTo = this.get('saveTo');
+    if (!saveTo) {
+      throw new Error('Don\'t know where to save - no saveTo data defined.');
+    }
+
+    saveTo.model.set(saveTo.propName, master);
+
+    // Manually make record dirty, because ember-data does not do it when relationship changes.
+    saveTo.model.makeDirty();
+  },
+
+  /**
+    Close current modal window if it exists.
+
+    @method _closeModalDialog
+    @private
+  */
+  _closeModalDialog() {
+    let openedDialog = this.get('_openedModalDialog');
+    if (openedDialog) {
+      openedDialog.modal('hide');
+      this.set('_openedModalDialog', undefined);
+    }
+  },
 });

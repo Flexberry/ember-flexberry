@@ -1,9 +1,16 @@
 /**
- * @module ember-flexberry
- */
-import ODataSerializer from 'ember-flexberry-data/serializers/odata';
+  @module ember-flexberry
+*/
+import { Serializer } from 'ember-flexberry-data';
 
-export default ODataSerializer.extend({
+/**
+  Serializer for {{#crossLink "NewPlatformFlexberryFlexberryUserSettingModel"}}model{{/crossLink}}
+  working with user settings.
+
+  @class NewPlatformFlexberryFlexberryUserSettingSerializer
+  @extends Serializer.Odata
+*/
+export default Serializer.Odata.extend({
   attrs: { },
 
   primaryKey: '__PrimaryKey'

@@ -11,6 +11,7 @@ declare module "MetadataClasses" {
         
         public caption: string;
         public name: string;
+        public className: string;
         public attrs: DSattr[];
         public projections: ProjectionForForm[];
     }
@@ -26,6 +27,9 @@ declare module "MetadataClasses" {
     }
     export class PropertyLookup {
         
+        public master: string;
+        public displayAttributeName: string;
+        public required: boolean;
         public relationName: string;
         public projection: string;
     }
@@ -40,7 +44,9 @@ declare module "MetadataClasses" {
     }
     export class Model {
         
+        public name: string;
         public modelName: string;
+        public className: string;
         public parentModelName: string;
         public parentClassName: string;
         public attrs: DSattr[];
@@ -67,6 +73,8 @@ declare module "MetadataClasses" {
     }
     export class DSbelongsTo extends Relation {
         
+        public polymorphic: boolean;
+        public presence: boolean;
     }
     export class ProjectionForModel {
         
@@ -100,5 +108,19 @@ declare module "MetadataClasses" {
         public hidden: boolean;
         public attrs: ProjAttr[];
         public index: number;
+    }
+    export class Sitemap {
+        
+        public applicationCaption: string;
+        public applicationTitle: string;
+        public items: SitemapItem[];
+    }
+    export class SitemapItem {
+        
+        public link: string;
+        public menuName: string;
+        public caption: string;
+        public title: string;
+        public children: SitemapItem[];
     }
 }

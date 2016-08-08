@@ -1,16 +1,30 @@
 ﻿{
   "propertyLookup": [
     {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
       "relationName": "Parent",
-      "projection": "SuggestionTypeL"
+      "projection": "SuggestionTypeList"
     },
     {
+      "master": "localization",
+      "displayAttributeName": "name",
+      "required": true,
       "relationName": "LocalizedTypes.Localization",
-      "projection": "LocalizationL"
+      "projection": "LocalizationList"
+    },
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "LocalizedTypes.SuggestionType",
+      "projection": "SuggestionTypeList"
     }
   ],
   "caption": "Suggestion type",
   "name": "EmberFlexberryDummySuggestionTypeEdit",
+  "className": "SuggestionTypeEdit",
   "attrs": [],
   "projections": [
     {

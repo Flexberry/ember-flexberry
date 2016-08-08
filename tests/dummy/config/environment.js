@@ -15,6 +15,9 @@ module.exports = function(environment) {
     },
 
     APP: {
+      // Application name
+      name: 'dummy',
+
       // Here you can pass flags/options to your application instance
       // when it is created
       backendUrl: backendUrl,
@@ -23,6 +26,15 @@ module.exports = function(environment) {
       backendUrls: {
         root: backendUrl,
         api: backendUrl + '/odata'
+      },
+
+      // Log service settings.
+      log: {
+        // Flag: indicates whether log service is enabled or not.
+        enabled: true,
+
+        // Flag: indicates whether to store error messages or not.
+        storeErrorMessages: true
       },
 
       // Flag: indicates whether to use user settings service or not.

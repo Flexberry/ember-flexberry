@@ -1,5 +1,5 @@
 <div class="field">
-  <label><%= caption %></label>
+  <label>{{<%= caption %>}}</label>
   {{#if model.errors.<%= name %>}}
   <span style="color:red">{{model.errors.<%= name %>}}</span>
   {{/if}}
@@ -10,4 +10,5 @@
     value=model.<%= name %>
     class=(if model.errors.<%= name %> 'error' '')
   }}
+  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
 </div>

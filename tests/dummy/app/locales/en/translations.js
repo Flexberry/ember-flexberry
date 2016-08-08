@@ -5,6 +5,46 @@ const translations = {};
 Ember.$.extend(true, translations, emberFlexberryTranslations);
 
 Ember.$.extend(true, translations, {
+  'models': {
+    'ember-flexberry-dummy-suggestion': {
+      'projections': {
+        'SuggestionL': {
+          'address': {
+            'caption': 'Address'
+          },
+          'text': {
+            'caption': 'Text'
+          },
+          'date': {
+            'caption': 'Date'
+          },
+          'votes': {
+            'caption': 'Votes'
+          },
+          'author': {
+            'caption': 'Author',
+            'eMail': {
+              'caption': 'Email'
+            }
+          }
+        },
+        'SuggestionE': {
+          'userVotes': {
+            'voteType': {
+              'caption': 'Vote Type'
+            },
+            'applicationUser': {
+              'caption': 'Application User',
+              'eMail': {
+                'caption': 'Email'
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
   'application-name': 'Test stand for ember-flexberry',
 
   'forms': {
@@ -22,7 +62,11 @@ Ember.$.extend(true, translations, {
             'caption': '',
             'title': 'Menu'
           },
+          'user-settings-service-checkbox': {
+            'caption': 'Use service to save user settings'
+          },
           'language-dropdown': {
+            'caption': 'Application language',
             'placeholder': 'Choose language'
           }
         }
@@ -73,11 +117,15 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        'logging': {
-          'caption': 'Logging',
+        'log-service-examples': {
+          'caption': 'Log service',
           'title': '',
-          'show': {
+          'application-log': {
             'caption': 'Application log',
+            'title': ''
+          },
+          'settings-example': {
+            'caption': 'Settings example',
             'title': ''
           }
         },
@@ -134,6 +182,10 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'model-update-example': {
+              'caption': 'Model update example',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -149,6 +201,14 @@ Ember.$.extend(true, translations, {
             },
             'limit-function-example': {
               'caption': 'Limit function example',
+              'title': ''
+            },
+            'lookup-block-form-example': {
+              'caption': 'Lookup block form example',
+              'title': ''
+            },
+            'lookup-in-modal': {
+              'caption': 'Lookup in modal window',
               'title': ''
             },
             'dropdown-mode-example': {
@@ -175,8 +235,16 @@ Ember.$.extend(true, translations, {
               'caption': 'Settings example',
               'title': ''
             },
+            'toolbar-custom-buttons-example': {
+              'caption': 'Custom buttons on toolbar',
+              'title': ''
+            },
             'on-edit-form': {
               'caption': 'Placement on edit form',
+              'title': ''
+            },
+            'custom-filter': {
+              'caption': 'Custom filter',
               'title': ''
             }
           },
@@ -320,23 +388,49 @@ Ember.$.extend(true, translations, {
       'caption': 'Suggestion types'
     },
 
+    'log-service-examples': {
+      'settings-example': {
+        'caption': 'Log service. Settings example',
+        'setting-column-header-caption': 'Log service setting',
+        'settings-value-column-header-caption': 'Setting current value',
+        'throw-exception-button-caption': 'Throw exception',
+        'reject-rsvp-promise-button-caption': 'Reject promise',
+        'ember-assert-button-caption': 'assert',
+        'ember-logger-error-button-caption': 'Error',
+        'ember-logger-warn-button-caption': 'Warn',
+        'ember-deprecate-button-caption': 'Deprecate',
+        'ember-logger-log-button-caption': 'Log',
+        'ember-logger-info-button-caption': 'Info',
+        'ember-logger-debug-button-caption': 'Debug',
+        'throw-exception-button-message': 'Exception thrown',
+        'reject-rsvp-promise-button-message': 'Promise rejected',
+        'ember-assert-button-message': 'Ember.assert called',
+        'ember-logger-error-button-message': 'Ember.Logger.error called',
+        'ember-logger-warn-button-message': 'Ember.Logger.warn called',
+        'ember-deprecate-button-message': 'Ember.deprecate called',
+        'ember-logger-log-button-message': 'Ember.Logger.log called',
+        'ember-logger-info-button-message': 'Ember.logger.info called',
+        'ember-logger-debug-button-message': 'Ember.Logger.debug called'
+      }
+    },
+
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-checkbox/settings-example'
+          'caption': 'Flexberry-checkbox. Settings example'
         }
       },
       'flexberry-datepicker': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-datepicker/settings-example'
+          'caption': 'Flexberry-datepicker. Settings example'
         }
       },
       'flexberry-dropdown': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-dropdown/settings-example'
+          'caption': 'Flexberry-dropdown. Settings example'
         },
         'conditional-render-example': {
-          'caption': 'Components-examples/flexberry-dropdown/conditional-render-example',
+          'caption': 'Flexberry-dropdown. Conditional render example',
           'info-caption': 'Use case description',
           'info-message': 'The page template looks like following:' +
             '{{pageTemplate}}' +
@@ -346,74 +440,108 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-field': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-field/settings-example'
+          'caption': 'Flexberry-field. Settings example'
         }
       },
       'flexberry-file': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-file/settings-example'
+          'caption': 'Flexberry-file. Settings example'
         }
       },
       'flexberry-groupedit': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-groupedit/settings-example'
+          'caption': 'Flexberry-groupedit. Settings example'
+        },
+        'model-update-example': {
+          'caption': 'Flexberry-groupedit. Model update example',
+          'addDetailButton': 'Add detail',
+          'removeDetailButton': 'Remove detail',
         }
       },
       'flexberry-lookup': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-lookup/settings-example'
+          'caption': 'Flexberry-lookup. Settings example'
         },
         'customizing-window-example': {
-          'caption': 'Components-examples/flexberry-lookup/customizing-window-example'
+          'caption': 'Flexberry-lookup. Window customization',
+          'titleLookup': 'Master'
         },
         'limit-function-example': {
-          'caption': 'Components-examples/flexberry-lookup/limit-function-example'
+          'caption': 'Flexberry-lookup. Limit function example',
+          'titleLookup': 'Master'
+        },
+        'lookup-block-form-example': {
+          'caption': 'Flexberry-lookup. Lookup block form example',
+          'message': 'This test only works on the mobile site. To start a mobile version should be:',
+          'paragraph1': 'Go to developer mode (press "F12").',
+          'paragraph2': 'Enable mobile site (press "Ctrl + Shift + M" in Chrome and Firefox)',
+          'paragraph3': 'Refresh page (press "F5")'
+        },
+        'lookup-in-modal': {
+          'caption': 'Flexberry-lookup. Lookup in modal window',
+          'captionModal': 'Custom modal window №1',
+          'captionModalDouble': 'Custom modal window №2',
+          'buttonModal': 'Modal window №1',
+          'buttonModalDouble': 'Modal window №2',
+          'buttonClose': 'Close'
         },
         'dropdown-mode-example': {
-          'caption': 'Components-examples/flexberry-lookup/dropdown-mode-example'
+          'caption': 'Flexberry-lookup. Dropdown mode example'
         }
       },
       'flexberry-menu': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-menu/settings-example'
+          'caption': 'Flexberry-menu. Settings example',
+          'titleIcon1': 'Left side aligned icon',
+          'titleIcon2': 'Right side aligned icon',
+          'titleIcon3': 'Submenu'
         }
       },
       'flexberry-objectlistview': {
         'limit-function-example': {
-          'caption': 'Components-examples/flexberry-objectlistview/limit-function-example'
+          'caption': 'Flexberry-objectlistview. Limit function example'
         },
         'settings-example': {
-          'caption': 'Components-examples/flexberry-objectlistview/settings-example'
+          'caption': 'Flexberry-objectlistview. Settings example'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
+          'custom-message': 'Hello!',
+          'custom-button-name': 'Send hello'
         },
         'on-edit-form': {
-          'caption': 'FlexberryObjectlistview custom data sample'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview custom data sample'
+        },
+        'custom-filter': {
+          'caption': 'Flexberry-objectlistview. Custom filter'
         }
       },
       'flexberry-simpledatetime': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-simpledatetime/settings-example'
+          'caption': 'Flexberry-simpledatetime. Settings example'
         }
       },
       'flexberry-textarea': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-textarea/settings-example'
+          'caption': 'Flexberry-textarea. Settings example'
         }
       },
       'flexberry-textbox': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-textbox/settings-example'
+          'caption': 'Flexberry-textbox. Settings example'
         }
       },
       'flexberry-toggler': {
         'settings-example': {
-          'caption': 'Components-examples/flexberry-toggler/settings-example'
+          'caption': 'Flexberry-toggler. Settings example',
+          'togglerContent': 'Some expandable/collapsable content'
         }
       }
     },
     'integration-examples': {
       'edit-form': {
         'readonly-mode': {
-          'caption': 'Integration-examples/edit-form/readonly-mode',
+          'caption': 'Integration examples. Readonly mode',
           'readonly-flag-management-segment-caption': 'Form\'s readonly-mode management',
           'readonly-flag-value-segment-caption': 'Controller\'s \'readonly\' property value',
           'readonly-flag-caption': 'Form is in readonly mode',
@@ -429,7 +557,7 @@ Ember.$.extend(true, translations, {
           'master-dropdown-caption': 'Master in dropdown mode'
         },
         'validation': {
-          'caption': 'Integration-examples/edit-form/validation',
+          'caption': 'Integration examples. Validation',
           'flag-caption': 'Flag',
           'number-caption': 'Number',
           'text-caption': 'Text',

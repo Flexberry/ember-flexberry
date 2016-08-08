@@ -1,5 +1,7 @@
 ﻿{
+  "name": "EmberFlexberryDummySuggestion",
   "modelName": "ember-flexberry-dummy-suggestion",
+  "className": "Suggestion",
   "parentModelName": null,
   "parentClassName": null,
   "attrs": [
@@ -37,20 +39,54 @@
       "flexberryType": "bool",
       "notNull": false,
       "defaultValue": ""
+    },
+    {
+      "name": "createTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "creator",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editor",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
     }
   ],
   "belongsTo": [
     {
-      "name": "editor",
+      "polymorphic": false,
+      "presence": true,
+      "name": "editor1",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     },
     {
+      "polymorphic": false,
+      "presence": true,
       "name": "type",
       "relatedTo": "ember-flexberry-dummy-suggestion-type",
       "inverse": null
     },
     {
+      "polymorphic": false,
+      "presence": true,
       "name": "author",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
@@ -74,6 +110,107 @@
     }
   ],
   "projections": [
+    {
+      "name": "AuditView",
+      "modelName": "ember-flexberry-dummy-suggestion",
+      "attrs": [
+        {
+          "name": "address",
+          "caption": "Address",
+          "hidden": false,
+          "index": 0
+        },
+        {
+          "name": "text",
+          "caption": "Text",
+          "hidden": false,
+          "index": 1
+        },
+        {
+          "name": "date",
+          "caption": "Date",
+          "hidden": false,
+          "index": 2
+        },
+        {
+          "name": "votes",
+          "caption": "Votes",
+          "hidden": false,
+          "index": 3
+        },
+        {
+          "name": "moderated",
+          "caption": "Moderated",
+          "hidden": false,
+          "index": 4
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Type",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "Name",
+              "hidden": false,
+              "index": 6
+            }
+          ],
+          "index": 5,
+          "caption": "Type",
+          "name": "type",
+          "relatedTo": "ember-flexberry-dummy-suggestion-type",
+          "inverse": null
+        },
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Author",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "Name",
+              "hidden": false,
+              "index": 8
+            }
+          ],
+          "index": 7,
+          "caption": "Author",
+          "name": "author",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        }
+      ],
+      "hasMany": [
+        {
+          "projectionName": "AuditView",
+          "caption": "Files",
+          "name": "files",
+          "relatedTo": "ember-flexberry-dummy-suggestion-file",
+          "inverse": null
+        },
+        {
+          "projectionName": "AuditView",
+          "caption": "Comments",
+          "name": "comments",
+          "relatedTo": "ember-flexberry-dummy-comment",
+          "inverse": null
+        },
+        {
+          "projectionName": "AuditView",
+          "caption": "User votes",
+          "name": "userVotes",
+          "relatedTo": "ember-flexberry-dummy-vote",
+          "inverse": null
+        }
+      ]
+    },
     {
       "name": "SuggestionE",
       "modelName": "ember-flexberry-dummy-suggestion",
@@ -107,6 +244,30 @@
           "caption": "Moderated",
           "hidden": false,
           "index": 4
+        },
+        {
+          "name": "createTime",
+          "caption": "",
+          "hidden": true,
+          "index": 11
+        },
+        {
+          "name": "creator",
+          "caption": "",
+          "hidden": true,
+          "index": 12
+        },
+        {
+          "name": "editTime",
+          "caption": "",
+          "hidden": true,
+          "index": 13
+        },
+        {
+          "name": "editor",
+          "caption": "",
+          "hidden": true,
+          "index": 14
         }
       ],
       "belongsTo": [
@@ -151,22 +312,22 @@
           "inverse": null
         },
         {
-          "lookupValue": "Name",
-          "lookupValueField": "name",
-          "relationName": "Editor",
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Editor1",
           "belongsTo": [],
           "hidden": false,
           "attrs": [
             {
               "name": "name",
-              "caption": "",
+              "caption": "Name",
               "hidden": true,
               "index": 10
             }
           ],
           "index": 9,
-          "caption": "Editor",
-          "name": "editor",
+          "caption": "Editor1",
+          "name": "editor1",
           "relatedTo": "ember-flexberry-dummy-application-user",
           "inverse": null
         }
@@ -180,17 +341,17 @@
           "inverse": null
         },
         {
-          "projectionName": "CommentD",
-          "caption": "Comments",
-          "name": "comments",
-          "relatedTo": "ember-flexberry-dummy-comment",
-          "inverse": null
-        },
-        {
           "projectionName": "VoteE",
           "caption": "User votes",
           "name": "userVotes",
           "relatedTo": "ember-flexberry-dummy-vote",
+          "inverse": null
+        },
+        {
+          "projectionName": "CommentD",
+          "caption": "Comments",
+          "name": "comments",
+          "relatedTo": "ember-flexberry-dummy-comment",
           "inverse": null
         }
       ]
@@ -228,12 +389,36 @@
           "caption": "Moderated",
           "hidden": false,
           "index": 4
+        },
+        {
+          "name": "createTime",
+          "caption": "",
+          "hidden": true,
+          "index": 11
+        },
+        {
+          "name": "creator",
+          "caption": "",
+          "hidden": true,
+          "index": 12
+        },
+        {
+          "name": "editTime",
+          "caption": "",
+          "hidden": true,
+          "index": 13
+        },
+        {
+          "name": "editor",
+          "caption": "",
+          "hidden": true,
+          "index": 14
         }
       ],
       "belongsTo": [
         {
-          "lookupValue": null,
-          "lookupValueField": null,
+          "lookupValue": "Name",
+          "lookupValueField": "name",
           "relationName": "Type",
           "belongsTo": [],
           "hidden": false,
@@ -241,19 +426,19 @@
             {
               "name": "name",
               "caption": "Name",
-              "hidden": false,
-              "index": 5
+              "hidden": true,
+              "index": 6
             }
           ],
-          "index": -1,
-          "caption": "Name",
+          "index": 5,
+          "caption": "",
           "name": "type",
           "relatedTo": "ember-flexberry-dummy-suggestion-type",
           "inverse": null
         },
         {
-          "lookupValue": null,
-          "lookupValueField": null,
+          "lookupValue": "Name",
+          "lookupValueField": "name",
           "relationName": "Author",
           "belongsTo": [],
           "hidden": false,
@@ -261,33 +446,33 @@
             {
               "name": "name",
               "caption": "Name",
-              "hidden": false,
-              "index": 6
+              "hidden": true,
+              "index": 8
             }
           ],
-          "index": -1,
-          "caption": "Name",
+          "index": 7,
+          "caption": "",
           "name": "author",
           "relatedTo": "ember-flexberry-dummy-application-user",
           "inverse": null
         },
         {
-          "lookupValue": null,
-          "lookupValueField": null,
-          "relationName": "Editor",
+          "lookupValue": "Name",
+          "lookupValueField": "name",
+          "relationName": "Editor1",
           "belongsTo": [],
           "hidden": false,
           "attrs": [
             {
               "name": "name",
-              "caption": "",
-              "hidden": false,
-              "index": 7
+              "caption": "Name",
+              "hidden": true,
+              "index": 10
             }
           ],
-          "index": -1,
+          "index": 9,
           "caption": "",
-          "name": "editor",
+          "name": "editor1",
           "relatedTo": "ember-flexberry-dummy-application-user",
           "inverse": null
         }

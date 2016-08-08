@@ -75,6 +75,17 @@ export default ListFormController.extend({
     @type String
    */
   placeholder: t('components.flexberry-objectlistview.placeholder'),
+  /**
+    Handles changes in placeholder.
+
+    @method _placeholderChanged
+    @private
+  **/
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-objectlistview.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-objectlistview.placeholder'));
+    }
+  }),
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'readonly' mode or not.
@@ -115,6 +126,14 @@ export default ListFormController.extend({
     @type Boolean
    */
   deleteButton: false,
+
+  /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'enableFilters' mode or not.
+
+    @property enableFilters
+    @type Boolean
+   */
+  enableFilters: false,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'filterButton' mode or not.
@@ -181,14 +200,6 @@ export default ListFormController.extend({
   orderable: true,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in single column mode or not.
-
-    @property useSingleColumn
-    @type Boolean
-   */
-  useSingleColumn: false,
-
-  /**
     ext for 'flexberry-objectlistview' component 'singleColumnHeaderTitle' property.
 
     @property singleColumnHeaderTitle
@@ -241,6 +252,10 @@ export default ListFormController.extend({
     '  allowColumnResize=allowColumnResize<br>' +
     '  createNewButton=createNewButton<br>' +
     '  deleteButton=deleteButton<br>' +
+    '  enableFilters=enableFilters<br>' +
+    '  filters=filters<br>' +
+    '  applyFilters=(action "applyFilters")<br>' +
+    '  resetFilters=(action "resetFilters")<br>' +
     '  refreshButton=refreshButton<br>' +
     '  filterButton=filterButton<br>' +
     '  showCheckBoxInRow=showCheckBoxInRow<br>' +
@@ -347,6 +362,12 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'deleteButton'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'enableFilters',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'enableFilters'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'filterButton',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -395,12 +416,6 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'orderable'
     });
     componentSettingsMetadata.pushObject({
-      settingName: 'useSingleColumn',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'useSingleColumn'
-    });
-    componentSettingsMetadata.pushObject({
       settingName: 'singleColumnHeaderTitle',
       settingType: 'string',
       settingDefaultValue: undefined,
@@ -430,4 +445,10 @@ export default ListFormController.extend({
       }
     }
   },
+
+  _enableFilters: Ember.observer('enableFilters', function() {
+    if (this.get('enableFilters')) {
+      this.set('refreshButton', true);
+    }
+  }),
 });

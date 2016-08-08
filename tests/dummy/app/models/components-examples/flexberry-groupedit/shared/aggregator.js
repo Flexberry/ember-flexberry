@@ -1,0 +1,50 @@
+import DS from 'ember-data';
+import BaseModel from 'ember-flexberry/models/base';
+import { Projection } from 'ember-flexberry-data';
+
+var Model = BaseModel.extend({
+  // This property is for flexberry-groupedit component.
+  // Inverse relationship is necessary here.
+  details: DS.hasMany('components-examples/flexberry-groupedit/shared/detail', {
+    inverse: 'aggregator',
+    async: false
+  })
+});
+
+// Edit form projection.
+Model.defineProjection('AggregatorE', 'components-examples/flexberry-groupedit/shared/aggregator', {
+  details: Projection.hasMany('components-examples/flexberry-groupedit/shared/detail', 'Details', {
+    flag: Projection.attr('Flag'),
+    text: Projection.attr('Text'),
+    date: Projection.attr('Date'),
+    enumeration: Projection.attr('Enumeration'),
+    file: Projection.attr('File'),
+    master: Projection.belongsTo('components-examples/flexberry-groupedit/shared/master', 'Master', {
+      text: Projection.attr('Text', {
+        hidden: true
+      })
+    }, {
+      displayMemberPath: 'text'
+    })
+  })
+});
+
+// Projection for testing displaying changes on GE after manual model update.
+Model.defineProjection('ManualModelUpdateView', 'components-examples/flexberry-groupedit/shared/aggregator', {
+  details: Projection.hasMany('components-examples/flexberry-groupedit/shared/detail', 'Details', {
+    flag: Projection.attr('Flag'),
+    text: Projection.attr('Text'),
+    date: Projection.attr('Date'),
+    enumeration: Projection.attr('Enumeration'),
+    file: Projection.attr('File'),
+    master: Projection.belongsTo('components-examples/flexberry-groupedit/shared/master', 'Master', {
+      text: Projection.attr('Text', {
+        hidden: true
+      })
+    }, {
+      displayMemberPath: 'text'
+    })
+  })
+});
+
+export default Model;

@@ -1,5 +1,7 @@
 ﻿{
+  "name": "EmberFlexberryDummyCommentVote",
   "modelName": "ember-flexberry-dummy-comment-vote",
+  "className": "CommentVote",
   "parentModelName": null,
   "parentClassName": null,
   "attrs": [
@@ -9,15 +11,47 @@
       "flexberryType": "VoteType",
       "notNull": false,
       "defaultValue": ""
+    },
+    {
+      "name": "createTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "creator",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editTime",
+      "type": "string",
+      "flexberryType": "AuditNullableDateTime",
+      "notNull": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "editor",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": ""
     }
   ],
   "belongsTo": [
     {
+      "polymorphic": false,
+      "presence": true,
       "name": "applicationUser",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     },
     {
+      "polymorphic": false,
+      "presence": true,
       "name": "comment",
       "relatedTo": "ember-flexberry-dummy-comment",
       "inverse": "userVotes"
@@ -25,6 +59,41 @@
   ],
   "hasMany": [],
   "projections": [
+    {
+      "name": "AuditView",
+      "modelName": "ember-flexberry-dummy-comment-vote",
+      "attrs": [
+        {
+          "name": "voteType",
+          "caption": "Vote type",
+          "hidden": false,
+          "index": 0
+        }
+      ],
+      "belongsTo": [
+        {
+          "lookupValue": "Name",
+          "lookupValueField": "name",
+          "relationName": "ApplicationUser",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "Name",
+              "hidden": true,
+              "index": 2
+            }
+          ],
+          "index": 1,
+          "caption": "Application user",
+          "name": "applicationUser",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    },
     {
       "name": "CommentVoteE",
       "modelName": "ember-flexberry-dummy-comment-vote",
@@ -55,6 +124,19 @@
           "caption": "Application user",
           "name": "applicationUser",
           "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        },
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Comment",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [],
+          "index": 3,
+          "caption": "",
+          "name": "comment",
+          "relatedTo": "ember-flexberry-dummy-comment",
           "inverse": null
         }
       ],

@@ -1,40 +1,62 @@
 /**
- * @module ember-flexberry
+  @module ember-flexberry
  */
 
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 
 /**
- * Base route for the Edit Forms.
+  Base route for the Edit Forms.
 
- This class re-exports to the application as `/routes/edit-form`.
- So, you can inherit from `./edit-form`, even if file `app/routes/edit-form.js`
- is not presented in the application.
+  This class re-exports to the application as `/routes/edit-form`.
+  So, you can inherit from `./edit-form`, even if file `app/routes/edit-form.js` is not presented in the application.
 
- Example:
- ```js
- // app/routes/employee.js
- import EditFormRoute from './edit-form';
- export default EditFormRoute.extend({
- });
- ```
+  Example:
+  ```javascript
+  // app/routes/employee.js
+  import EditFormRoute from './edit-form';
+  export default EditFormRoute.extend({
+  });
+  ```
 
- If you want to add some common logic on all Edit Forms, you can define
- (actually override) `app/routes/edit-form.js` as follows:
- ```js
- // app/routes/edit-form.js
- import EditFormRoute from 'ember-flexberry/routes/edit-form';
- export default EditFormRoute.extend({
- });
- ```
+  If you want to add some common logic on all Edit Forms, you can override `app/routes/edit-form.js` as follows:
+  ```javascript
+  // app/routes/edit-form.js
+  import EditFormRoute from 'ember-flexberry/routes/edit-form';
+  export default EditFormRoute.extend({
+  });
+  ```
 
- * @class EditFormRoute
- * @extends ProjectedModelFormRoute
- * @uses FlexberryGroupeditRouteMixin
+  @class EditFormRoute
+  @extends ProjectedModelForm
+  @uses FlexberryGroupeditRouteMixin
  */
 export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
-  model: function(params, transition) {
+  actions: {
+    /**
+      It sends message about transition to corresponding controller.
+
+      The willTransition action is fired at the beginning of any attempted transition with a Transition object as the sole argument.
+      [More info](http://emberjs.com/api/classes/Ember.Route.html#event_willTransition).
+
+      @method actions.willTransition
+      @param {Object} transition
+     */
+    willTransition(transition) {
+      this._super(transition);
+      this.controller.send('routeWillTransition');
+    },
+  },
+
+  /**
+    A hook you can implement to convert the URL into the model for this route.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
+
+    @method model
+    @param {Object} params
+    @param {Object} transition
+   */
+  model(params, transition) {
     this._super.apply(this, arguments);
 
     let modelName = this.get('modelName');
@@ -55,7 +77,16 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     return this.store.findRecord(modelName, params.id, findRecordParameters);
   },
 
-  resetController: function(controller, isExisting, transition) {
+  /**
+    A hook you can use to reset controller values either when the model changes or the route is exiting.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_resetController).
+
+    @method resetController
+    @param {Ember.Controller} controller
+    @param {Boolean} isExisting
+    @param {Object} transition
+   */
+  resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
     let keptAgregators = controller.get('modelCurrentAgregators');
 
@@ -89,7 +120,15 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     });
   },
 
-  setupController: function(controller, model) {
+  /**
+    A hook you can use to setup the controller for the current route.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
+
+    @method setupController
+    @param {Ember.Controller} controller
+    @param {Object} model
+   */
+  setupController(controller, model) {
     this._super(...arguments);
 
     // Define 'modelProjection' for controller instance.
@@ -131,17 +170,4 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
       controller.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
     }
   },
-
-  actions: {
-    /**
-     * Handles willTransition action (this action is fired at the beginning of any attempted transition).
-     * It sends message about transition to corresponding controller.
-     *
-     * @method willTransition
-     */
-    willTransition: function(transition) {
-      this._super(transition);
-      this.controller.send('routeWillTransition');
-    }
-  }
 });

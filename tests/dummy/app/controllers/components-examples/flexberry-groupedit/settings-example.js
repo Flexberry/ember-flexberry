@@ -70,7 +70,17 @@ export default EditFormController.extend({
     @type String
    */
   placeholder: t('components.flexberry-groupedit.placeholder'),
+  /**
+    Handles changes in placeholder.
 
+    @method _placeholderChanged
+    @private
+   */
+  _placeholderChanged: Ember.observer('placeholder', function() {
+    if (this.get('placeholder') === this.get('i18n').t('components.flexberry-groupedit.placeholder').toString()) {
+      this.set('placeholder', t('components.flexberry-groupedit.placeholder'));
+    }
+  }),
   /**
     Flag: indicates whether 'flexberry-groupedit' component is in 'readonly' mode or not.
 
@@ -152,20 +162,12 @@ export default EditFormController.extend({
   showDeleteMenuItemInRow: false,
 
   /**
-    Flag for 'flexberry-groupedit' component 'useSingleColumn' property.
+    Text for 'flexberry-groupedit' component 'singleColumnHeaderTitle' property.
 
-    @property useSingleColumn
+    @property singleColumnHeaderTitle
     @type Boolean
    */
-  useSingleColumn: false,
-
-  /**
-    Text for 'flexberry-groupedit' component 'singleColumnHeader' property.
-
-    @property singleColumnHeader
-    @type Boolean
-   */
-  singleColumnHeader: undefined,
+  singleColumnHeaderTitle: undefined,
 
   /**
     Flag for 'flexberry-groupedit' component 'rowClickable' property.
@@ -229,8 +231,7 @@ export default EditFormController.extend({
     '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
     '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
     '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
-    '  useSingleColumn=useSingleColumn<br>' +
-    '  singleColumnHeader=singleColumnHeader<br>' +
+    '  singleColumnHeaderTitle=singleColumnHeaderTitle<br>' +
     '  rowClickable=rowClickable<br>' +
     '  immediateDelete=immediateDelete<br>' +
     '  editOnSeperateRoute=editOnSeperateRoute<br>' +
@@ -337,16 +338,10 @@ export default EditFormController.extend({
       bindedControllerPropertieName: 'showDeleteMenuItemInRow'
     });
     componentSettingsMetadata.pushObject({
-      settingName: 'useSingleColumn',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'useSingleColumn'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'singleColumnHeader',
+      settingName: 'singleColumnHeaderTitle',
       settingType: 'string',
       settingDefaultValue: undefined,
-      bindedControllerPropertieName: 'singleColumnHeader'
+      bindedControllerPropertieName: 'singleColumnHeaderTitle'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'rowClickable',

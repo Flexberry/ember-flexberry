@@ -1,24 +1,58 @@
 ﻿{
   "propertyLookup": [
     {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
       "relationName": "Type",
-      "projection": "SuggestionTypeL"
+      "projection": "SuggestionTypeList"
     },
     {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
       "relationName": "Author",
-      "projection": "ApplicationUserL"
+      "projection": "ApplicationUserList"
     },
     {
-      "relationName": "Comments.Author",
-      "projection": "ApplicationUserL"
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Editor1",
+      "projection": "ApplicationUserList"
     },
     {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Files.Suggestion",
+      "projection": "SuggestionList"
+    },
+    {
+      "master": "applicationUser",
+      "displayAttributeName": "name",
+      "required": true,
       "relationName": "UserVotes.ApplicationUser",
-      "projection": "ApplicationUserL"
+      "projection": "ApplicationUserList"
+    },
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "UserVotes.Suggestion",
+      "projection": "SuggestionList"
+    },
+    {
+      "master": "author",
+      "displayAttributeName": "name",
+      "required": true,
+      "relationName": "Comments.Author",
+      "projection": "ApplicationUserList"
     }
   ],
   "caption": "Suggestion",
   "name": "EmberFlexberryDummySuggestionEdit",
+  "className": "SuggestionEdit",
   "attrs": [],
   "projections": [
     {

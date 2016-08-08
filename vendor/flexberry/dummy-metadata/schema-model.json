@@ -48,6 +48,12 @@
         "null"
       ],
       "properties": {
+        "polymorphic": {
+          "type": "boolean"
+        },
+        "presence": {
+          "type": "boolean"
+        },
         "name": {
           "type": [
             "string",
@@ -68,6 +74,8 @@
         }
       },
       "required": [
+        "polymorphic",
+        "presence",
         "name",
         "relatedTo",
         "inverse"
@@ -325,7 +333,19 @@
   },
   "type": "object",
   "properties": {
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "modelName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "className": {
       "type": [
         "string",
         "null"
@@ -381,7 +401,9 @@
     }
   },
   "required": [
+    "name",
     "modelName",
+    "className",
     "parentModelName",
     "parentClassName",
     "attrs",

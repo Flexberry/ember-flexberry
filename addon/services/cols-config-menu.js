@@ -11,6 +11,14 @@ import Ember from 'ember';
  * @public
  */
 export default Ember.Service.extend(Ember.Evented, {
+    /**
+    Current application environment.
+
+      @property environment
+      @type String
+    */
+    environment: undefined,
+
     menus: [
       { name: 'use', icon: 'checkmark box' },
       { name: 'edit', icon: 'setting' },
@@ -30,12 +38,10 @@ export default Ember.Service.extend(Ember.Evented, {
     },
 
     resetMenu: function(params) {
-      let itemsAlignment = window.innerWidth < 720 ? 'left' : 'right';
       let rootItem = {
         icon: 'dropdown icon',
         iconAlignment: 'right',
         title: '',
-        itemsAlignment: itemsAlignment,
         items:[]
       };
       let createSettitingItem = {
@@ -48,7 +54,7 @@ export default Ember.Service.extend(Ember.Evented, {
         let menu = this.menus[n];
         let titleName = menu.name + 'SettitingTitle';
         let title = params[titleName];
-        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: title, itemsAlignment:itemsAlignment, items: [] };
+        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: title, items: [] };
         rootItem.items[rootItem.items.length] = submenu;
       }
 
@@ -58,9 +64,18 @@ export default Ember.Service.extend(Ember.Evented, {
         title: params.setDefaultSettitingTitle
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
+      if (this.environment && this.environment === 'development') {
+        let showDefaultItem = {
+          icon: 'unhide icon',
+          iconAlignment: 'left',
+          title: params.showDefaultSettitingTitle
+        };
+        rootItem.items[rootItem.items.length] = showDefaultItem;
+      }
+
       this.colsSettingsItems = [rootItem];
-      this.listNamedSettings = params.listNamedSettings;
-      for (let namedSetting in this.listNamedSettings) {
+      this.listNamedUserSettings = params.listNamedUserSettings;
+      for (let namedSetting in this.listNamedUserSettings) {
         this._addNamedSetting(namedSetting);
       }
 

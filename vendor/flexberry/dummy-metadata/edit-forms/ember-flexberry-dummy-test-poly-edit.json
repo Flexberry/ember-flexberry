@@ -1,0 +1,21 @@
+﻿{
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Relation",
+      "projection": ""
+    }
+  ],
+  "caption": "Test polymorphic class",
+  "name": "EmberFlexberryDummyTestPolyEdit",
+  "className": "TestPolyEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-test-poly",
+      "modelProjection": "TestPolyEdit"
+    }
+  ]
+}

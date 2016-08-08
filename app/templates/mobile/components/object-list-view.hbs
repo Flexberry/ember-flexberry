@@ -1,0 +1,89 @@
+{{#if errorMessages}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type="error"
+      closeable=true
+      visible=true
+      title="Error occurred"
+      message=currentError
+    }}
+  {{/each}}
+{{/if}}
+<table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
+  {{#if singleColumnHeaderTitle}}
+    <thead>
+      <tr>
+        <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+          {{component headerCellComponent.componentName
+            column=(hash header=singleColumnHeaderTitle sortable=false)
+            dynamicProperties=headerCellComponent.componentProperties
+          }}
+        {{#if showMenuColumn}}
+          <th class="object-list-view-menu collapsing" data-olv-header-property-name="OlvRowMenu"></th>
+        {{/if}}
+      </tr>
+    </thead>
+  {{/if}}
+  <tbody>
+    {{#if showFilters}}
+      <tr>
+        <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
+          <div class="object-list-view-helper-column-cell"></div>
+        </td>
+        <td>
+          {{#each columns as |column|}}
+            <div class="inline fields">
+              <label>{{column.header}}:</label>
+              {{#if column.filter.conditions}}
+                {{component "flexberry-dropdown"
+                  value=column.filter.condition
+                  items=column.filter.conditions
+                  class="compact fluid"
+                  placeholder=""
+                  needChecksOnValue=false
+                }}
+              {{/if}}
+              {{#if column.filter.component.name}}
+                {{component column.filter.component.name
+                  value=column.filter.pattern
+                  dynamicProperties=column.filter.component.properties
+                }}
+              {{/if}}
+            </div>
+          {{/each}}
+        </td>
+        {{#if showMenuColumn}}
+          <td class="object-list-view-menu"></td>
+        {{/if}}
+      </tr>
+    {{/if}}
+    {{#unless hasContent}}
+      <tr>
+        <td colspan="{{colspan}}" style="text-align:center;">{{placeholder}}</td>
+      </tr>
+    {{/unless}}
+    {{#each contentWithKeys key="key" as |record|}}
+      {{object-list-view-row
+        record=record
+        columns=columns
+        readonly=readonly
+        required=required
+        showMenuColumn=showMenuColumn
+        showHelperColumn=showHelperColumn
+        defaultRowConfig=defaultRowConfig
+        showAsteriskInRow=showAsteriskInRow
+        showCheckBoxInRow=showCheckBoxInRow
+        showDeleteButtonInRow=showDeleteButtonInRow
+        hierarchicalIndent=hierarchicalIndent
+        inHierarchicalMode=inHierarchicalMode
+        singleColumnCellComponent=singleColumnCellComponent
+        loadRecords=loadRecords
+        rowClick=(action "rowClick")
+        selectRow=(action "selectRow")
+        deleteRow=(action "deleteRow")
+        menuInRowItemClick=(action "menuInRowItemClick")
+        menuInRowConfigurateItems=(action "menuInRowConfigurateItems")
+      }}
+    {{/each}}
+  </tbody>
+</table>

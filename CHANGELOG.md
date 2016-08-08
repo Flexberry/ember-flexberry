@@ -7,12 +7,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Transforms:
     * Moved transforms to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
 * Enums:
-    * Moved enum initializers to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+    * Moved enum initializer to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
 
 ### Added
 * Blueprints:
     * Add localization support for generated ember entities.
     * Add support empty values for generated enums.
+
+### Fixed
+* `flexberry-objectlistview` component:
+    * Incorrect work of pagination for large lists.
 
 ## [0.3.0] - 2016-07-29
 ### Added

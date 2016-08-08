@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Blueprints:
     * Add localization support for generated ember entities.
+    * Add support empty values for generated enums.
 
 ## [0.3.0] - 2016-07-29
 ### Added

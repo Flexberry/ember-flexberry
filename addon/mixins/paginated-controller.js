@@ -170,7 +170,7 @@ export default Ember.Mixin.create({
     // and nearest neighbors are and displayed for the current page. In case, when the current page is located in close to the beginning or end
     // list of page is shown accordingly [1] [2] [3] {4} [5] … [18] [19] or [1] [2] … [15] {16} [17] [18] [19].
     const visiblePageCount = 5;
-    const visibleEndPageCount = 2;
+    const visibleEndPageCount = 1;
     let arr = [];
 
     if (visiblePageCount >= lastPage) {

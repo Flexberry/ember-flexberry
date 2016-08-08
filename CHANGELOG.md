@@ -13,6 +13,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprints:
     * Add localization support for generated ember entities.
 
+### Deprecated
+* EditFormController:
+  * Function `rollbackHasManyRelationships` deprecated, use `rollbackHasMany` from model.
+
 ## [0.3.0] - 2016-07-29
 ### Added
 * Custom internationalized captions for boolean type in `object-list-view-cell` commponent.

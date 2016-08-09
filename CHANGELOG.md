@@ -7,11 +7,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Transforms:
     * Moved transforms to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
 * Enums:
-    * Moved enum initializer to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+    * Moved enum initializers to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+    * Renamed `enum-captions` helper to `flexberry-enum`.
 
 ### Added
 * Blueprints:
     * Add localization support for generated ember entities.
+* `flexberry-dropdown` component:
+    * Add support object type for `items` property.
     * Add support empty values for generated enums.
 
 ### Fixed

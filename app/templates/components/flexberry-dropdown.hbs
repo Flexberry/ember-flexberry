@@ -4,18 +4,18 @@
   onHide=(action 'onShowHide')
   onShow=(action 'onShowHide')
 }}
-    {{#if isSearch}}
-      <input class="search" autocomplete="off">
-    {{/if}}
-    <i class="dropdown icon"></i>
-    {{#if showPlaceholder}}
-      <div class="default text">{{placeholder}}</div>
-    {{else}}
-      <div class="text">{{text}}</div>
-    {{/if}}
-    <div class="menu">
-      {{#each items as |item|}}
-        <div class="item" data-value="{{item}}">{{item}}</div>
-      {{/each}}
-    </div>
+  {{#if isSearch}}
+    <input class="search" autocomplete="off">
+  {{/if}}
+  <i class="dropdown icon"></i>
+  {{#if showPlaceholder}}
+    <div class="default text">{{placeholder}}</div>
+  {{else}}
+    <div class="text">{{text}}</div>
+  {{/if}}
+  <div class="menu">
+    {{#each-in _items as |key value|}}
+      <div class="item" data-value="{{value}}">{{value}}</div>
+    {{/each-in}}
+  </div>
 {{/ui-dropdown}}

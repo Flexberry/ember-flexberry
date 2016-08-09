@@ -15,6 +15,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add localization support for generated ember entities.
 * `flexberry-dropdown` component:
     * Add support object type for `items` property.
+    * Add support empty values for generated enums.
+
+### Fixed
+* `flexberry-objectlistview` component:
+    * Incorrect work of pagination for large lists.
 
 ## [0.3.0] - 2016-07-29
 ### Added

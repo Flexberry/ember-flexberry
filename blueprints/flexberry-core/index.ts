@@ -74,7 +74,7 @@ class CoreBlueprint {
       routes.push(`  this.route('${listFormName}');`);
       routes.push(`  this.route('${listForm.editForm}', { path: '${listForm.editForm}/:id' });`);
       routes.push(`  this.route('${listForm.newForm}.new', { path: '${listForm.newForm}/new' });`);
-      importProperties.push(`import ${listForm.name}Form from 'forms/${listFormName}';`);
+      importProperties.push(`import ${listForm.name}Form from './forms/${listFormName}';`);
       formsImportedProperties.push(`    '${listFormName}': ${listForm.name}Form`);
     }
     for (let formFileName of editForms) {
@@ -82,7 +82,7 @@ class CoreBlueprint {
       let content = stripBom(fs.readFileSync(editFormFile, "utf8"));
       let editForm: metadata.EditForm = JSON.parse(content);
       let editFormName = path.parse(formFileName).name;
-      importProperties.push(`import ${editForm.name}Form from 'forms/${editFormName}';`);
+      importProperties.push(`import ${editForm.name}Form from './forms/${editFormName}';`);
       formsImportedProperties.push(`    '${editFormName}': ${editForm.name}Form`);
     }
     for (let modelFileName of models) {
@@ -90,7 +90,7 @@ class CoreBlueprint {
       let content = stripBom(fs.readFileSync(modelFile, "utf8"));
       let model: metadata.Model = JSON.parse(content);
       let modelName = path.parse(modelFileName).name;
-      importProperties.push(`import ${model.name}Model from 'models/${modelName}';`);
+      importProperties.push(`import ${model.name}Model from './models/${modelName}';`);
       modelsImportedProperties.push(`    '${modelName}': ${model.name}Model`);
     }
 

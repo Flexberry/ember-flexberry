@@ -86,16 +86,16 @@ class ApplicationBlueprint {
     this.metadataDir = options.metadataDir;
     this.options = options;
     this.promise = Promise.resolve();
-    // this.promise = this.emberGenerateFlexberryGroup("controller-test");
-    // this.promise = this.emberGenerateFlexberryGroup("route-test");
-    // this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
-    // this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
-    // this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
-    // this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
-    // this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
-    // this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
-    // this.promise = this.emberGenerate("route", "index");
-    this.promise = this.emberGenerate("flexberry-core", "app");
+    this.promise = this.emberGenerateFlexberryGroup("controller-test", false);
+    this.promise = this.emberGenerateFlexberryGroup("route-test", false);
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-model", false);
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init", false);
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init", false);
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-enum", false);
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form", false);
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form", false);
+    this.promise = this.emberGenerate("route", "index", true);
+    this.promise = this.emberGenerate("flexberry-core", "app", true);
     this.promise = this.promise
       .then(function () {
         ElapsedTime.print();
@@ -111,13 +111,17 @@ class ApplicationBlueprint {
     });
   }
 
-  emberGenerateFlexberryGroup(blueprintName: string) {
-    return this.emberGenerate("flexberry-group", blueprintName);
+  emberGenerateFlexberryGroup(blueprintName: string, dummy: boolean) {
+    return this.emberGenerate("flexberry-group", blueprintName, dummy);
   }
 
-  emberGenerate(blueprintName: string, entityName: string) {
+  emberGenerate(blueprintName: string, entityName: string, dummy: boolean) {
     let mainBlueprint = this.getMainBlueprint(blueprintName);
     let options = lodash.merge({}, this.options, { entity: { name: entityName } });
+    if(dummy){
+      options.dummy = true;
+    }
+
     return this.promise
       .then(function () {
         return mainBlueprint["install"](options);

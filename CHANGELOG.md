@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Blueprints:
     * Add localization support for generated ember entities.
+    * Add generation of explicit inflection rules. Rules for inflector are declared in `custom-inflector-rules.js` file inside `models` folder.
 * `flexberry-dropdown` component:
     * Add support object type for `items` property.
     * Add support empty values for generated enums.

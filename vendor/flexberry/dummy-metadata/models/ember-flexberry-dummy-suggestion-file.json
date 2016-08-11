@@ -96,21 +96,7 @@
           "index": 1
         }
       ],
-      "belongsTo": [
-        {
-          "lookupValue": null,
-          "lookupValueField": null,
-          "relationName": "Suggestion",
-          "belongsTo": [],
-          "hidden": false,
-          "attrs": [],
-          "index": 2,
-          "caption": "",
-          "name": "suggestion",
-          "relatedTo": "ember-flexberry-dummy-suggestion",
-          "inverse": null
-        }
-      ],
+      "belongsTo": [],
       "hasMany": []
     }
   ]

@@ -125,19 +125,6 @@
           "name": "localization",
           "relatedTo": "ember-flexberry-dummy-localization",
           "inverse": null
-        },
-        {
-          "lookupValue": null,
-          "lookupValueField": null,
-          "relationName": "SuggestionType",
-          "belongsTo": [],
-          "hidden": false,
-          "attrs": [],
-          "index": 3,
-          "caption": "",
-          "name": "suggestionType",
-          "relatedTo": "ember-flexberry-dummy-suggestion-type",
-          "inverse": null
         }
       ],
       "hasMany": []

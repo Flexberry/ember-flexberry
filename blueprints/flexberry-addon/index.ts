@@ -10,10 +10,8 @@ const Blueprint = require('ember-cli/lib/models/blueprint');
 const Promise = require('ember-cli/lib/ext/promise');
 import lodash = require('lodash');
 
-
 module.exports = {
-
-  description: 'Generates all entities for flexberry.',
+  description: 'Generates all entities for flexberry into addon.',
 
   availableOptions: [
     { name: 'metadata-dir', type: String }
@@ -65,7 +63,6 @@ class ElapsedTime {
     let hours = Math.floor(sec / 3600);
     let min = Math.floor((sec - hours * 3600) / 60);
     let sec2 = sec - hours * 3600 - min * 60;
-    //return `${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
     return `${ElapsedTime.formatterFrac.format(sec)} sec`;
   }
 
@@ -89,15 +86,15 @@ class ApplicationBlueprint {
     this.metadataDir = options.metadataDir;
     this.options = options;
     this.promise = Promise.resolve();
-    this.promise = this.emberGenerateFlexberryGroup("controller-test");
-    this.promise = this.emberGenerateFlexberryGroup("route-test");
-    this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
-    this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
-    this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
-    this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
-    this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
-    this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
-    this.promise = this.emberGenerate("route", "index");
+    // this.promise = this.emberGenerateFlexberryGroup("controller-test");
+    // this.promise = this.emberGenerateFlexberryGroup("route-test");
+    // this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
+    // this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
+    // this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
+    // this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
+    // this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
+    // this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
+    // this.promise = this.emberGenerate("route", "index");
     this.promise = this.emberGenerate("flexberry-core", "app");
     this.promise = this.promise
       .then(function () {

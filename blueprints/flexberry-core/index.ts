@@ -93,9 +93,11 @@ class CoreBlueprint {
       let content = stripBom(fs.readFileSync(modelFile, "utf8"));
       let model: metadata.Model = JSON.parse(content);
       let modelName = path.parse(modelFileName).name;
+      let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
+      let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
       importProperties.push(`import ${model.name}Model from './models/${modelName}';`);
       modelsImportedProperties.push(`    '${modelName}': ${model.name}Model`);
-      inflectorIrregular.push(`inflector.irregular('${model.name}', '${model.name}s');`);
+      inflectorIrregular.push(`inflector.irregular('${irregularLastWordOfModelName}', '${irregularLastWordOfModelName}s');`);
     }
 
     this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));

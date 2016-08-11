@@ -24,6 +24,9 @@ module.exports = {
      * @return {Object} Сustom template variables.
      */
     locals: function (options) {
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            options.dummy = true;
+        }
         var coreBlueprint = new CoreBlueprint(this, options);
         return lodash.defaults({
             children: coreBlueprint.children,

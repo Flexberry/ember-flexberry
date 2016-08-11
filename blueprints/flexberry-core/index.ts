@@ -28,6 +28,10 @@ module.exports = {
    * @return {Object} Сustom template variables.
    */
   locals: function (options) {
+    if( options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+      options.dummy = true;
+    }
+
     let coreBlueprint = new CoreBlueprint(this, options);
     return lodash.defaults({
       children: coreBlueprint.children,// for use in files\__root__\controllers\application.js
@@ -54,6 +58,7 @@ class CoreBlueprint {
   sitemap: metadata.Sitemap;
 
   constructor(blueprint, options) {
+
     let listFormsDir = path.join(options.metadataDir, "list-forms");
     let listForms = fs.readdirSync(listFormsDir);
     let editFormsDir = path.join(options.metadataDir, "edit-forms");

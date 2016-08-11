@@ -74,6 +74,7 @@ var ApplicationBlueprint = (function () {
         this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
         this.promise = this.emberGenerate("route", "index");
+        this.promise = this.emberGenerate("flexberry-common", "app");
         this.promise = this.emberGenerate("flexberry-core", "app");
         this.promise = this.promise
             .then(function () {

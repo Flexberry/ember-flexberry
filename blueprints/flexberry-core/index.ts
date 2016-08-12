@@ -37,6 +37,7 @@ module.exports = {
       modelsImportedProperties: coreBlueprint.modelsImportedProperties,// for use in files\__root__\locales\**\translations.js
       applicationCaption: coreBlueprint.sitemap.applicationCaption,// for use in files\__root__\locales\**\translations.js
       applicationTitle: coreBlueprint.sitemap.applicationTitle,// for use in files\__root__\locales\**\translations.js
+      inflectorIrregular: coreBlueprint.inflectorIrregular,// for use in files\__root__\models\custom-inflector-rules.js
       },
       coreBlueprint.lodashVariablesApplicationMenu// for use in files\__root__\locales\**\translations.js
     );
@@ -52,6 +53,7 @@ class CoreBlueprint {
   modelsImportedProperties: string;
   lodashVariablesApplicationMenu: {};
   sitemap: metadata.Sitemap;
+  inflectorIrregular: string;
 
   constructor(blueprint, options) {
     let listFormsDir = path.join(options.metadataDir, "list-forms");
@@ -66,6 +68,7 @@ class CoreBlueprint {
     let importProperties = [];
     let formsImportedProperties = [];
     let modelsImportedProperties = [];
+    let inflectorIrregular = [];
     for (let formFileName of listForms) {
       let listFormFile = path.join(listFormsDir, formFileName);
       let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
@@ -90,8 +93,11 @@ class CoreBlueprint {
       let content = stripBom(fs.readFileSync(modelFile, "utf8"));
       let model: metadata.Model = JSON.parse(content);
       let modelName = path.parse(modelFileName).name;
+      let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
+      let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
       importProperties.push(`import ${model.name}Model from './models/${modelName}';`);
       modelsImportedProperties.push(`    '${modelName}': ${model.name}Model`);
+      inflectorIrregular.push(`inflector.irregular('${irregularLastWordOfModelName}', '${irregularLastWordOfModelName}s');`);
     }
 
     this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
@@ -109,6 +115,7 @@ class CoreBlueprint {
     this.importProperties = importProperties.join("\n");
     this.formsImportedProperties = formsImportedProperties.join(",\n");
     this.modelsImportedProperties = modelsImportedProperties.join(",\n");
+    this.inflectorIrregular = inflectorIrregular.join("\n");
   }
 
 }

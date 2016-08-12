@@ -46,7 +46,7 @@ var EnumBlueprint = (function () {
             if (caption != null)
                 caption = "'" + caption + "'";
             else
-                caption = "null";
+                caption = "'" + key + "'";
             values.push(key + ": " + caption);
         }
         this.enumObjects = "{\n  " + values.join(",\n  ") + "\n}";

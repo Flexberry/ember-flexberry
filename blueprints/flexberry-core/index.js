@@ -33,6 +33,7 @@ module.exports = {
             modelsImportedProperties: coreBlueprint.modelsImportedProperties,
             applicationCaption: coreBlueprint.sitemap.applicationCaption,
             applicationTitle: coreBlueprint.sitemap.applicationTitle,
+            inflectorIrregular: coreBlueprint.inflectorIrregular,
         }, coreBlueprint.lodashVariablesApplicationMenu // for use in files\__root__\locales\**\translations.js
         );
     }
@@ -51,6 +52,7 @@ var CoreBlueprint = (function () {
         var importProperties = [];
         var formsImportedProperties = [];
         var modelsImportedProperties = [];
+        var inflectorIrregular = [];
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
             var formFileName = listForms_1[_i];
             var listFormFile = path.join(listFormsDir, formFileName);
@@ -78,8 +80,11 @@ var CoreBlueprint = (function () {
             var content = stripBom(fs.readFileSync(modelFile, "utf8"));
             var model = JSON.parse(content);
             var modelName = path.parse(modelFileName).name;
+            var LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
+            var irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
             importProperties.push("import " + model.name + "Model from './models/" + modelName + "';");
             modelsImportedProperties.push("    '" + modelName + "': " + model.name + "Model");
+            inflectorIrregular.push("inflector.irregular('" + irregularLastWordOfModelName + "', '" + irregularLastWordOfModelName + "s');");
         }
         this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
         var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru");
@@ -96,6 +101,7 @@ var CoreBlueprint = (function () {
         this.importProperties = importProperties.join("\n");
         this.formsImportedProperties = formsImportedProperties.join(",\n");
         this.modelsImportedProperties = modelsImportedProperties.join(",\n");
+        this.inflectorIrregular = inflectorIrregular.join("\n");
     }
     return CoreBlueprint;
 }());

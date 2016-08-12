@@ -125,19 +125,6 @@
           "name": "applicationUser",
           "relatedTo": "ember-flexberry-dummy-application-user",
           "inverse": null
-        },
-        {
-          "lookupValue": null,
-          "lookupValueField": null,
-          "relationName": "Suggestion",
-          "belongsTo": [],
-          "hidden": false,
-          "attrs": [],
-          "index": 3,
-          "caption": "",
-          "name": "suggestion",
-          "relatedTo": "ember-flexberry-dummy-suggestion",
-          "inverse": null
         }
       ],
       "hasMany": []

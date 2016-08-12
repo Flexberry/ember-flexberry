@@ -31,6 +31,8 @@ export default Ember.Controller.extend({
     itemsObject3: 'itemsObject3'
   },
 
+  value: undefined,
+
   /**
     Flag indicates whether use `itemsArray` or `itemsObject`.
   */
@@ -59,6 +61,13 @@ export default Ember.Controller.extend({
     checked() {
       let usedArray = this.get('usedArray');
       this.set('usedArray', !usedArray);
+    },
+
+    /**
+      This action is called when user clicks on reset button.
+    */
+    resetValue() {
+      this.set('value', null);
     }
   }
 });

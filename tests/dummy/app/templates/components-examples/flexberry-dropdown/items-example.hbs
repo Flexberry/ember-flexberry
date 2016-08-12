@@ -10,16 +10,24 @@
   }}        
   <div class="field">
     {{flexberry-checkbox
-      class="toggle"
+      class=(concat (if value "disabled") " toggle")
       onChange=(action "checked")
       label=(t "forms.components-examples.flexberry-dropdown.items-example.checkbox-caption")
     }}
+
   </div>
   <div class="field">
-    {{flexberry-dropdown
-      items=currentItems
-      placeholder=placeholder
-      readonly=readonly
-    }}
+    <div class="ui action fluid input">
+      {{flexberry-dropdown
+        items=currentItems
+        placeholder=placeholder
+        readonly=readonly
+        class="fluid"
+        value=value
+      }}
+      <button class="ui green basic button icon" {{action 'resetValue'}}>
+        <i class="large remove circle icon"></i>
+      </button>
+    </div>
   </div>
 </form>

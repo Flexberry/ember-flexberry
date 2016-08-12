@@ -83,9 +83,11 @@ var CoreBlueprint = (function () {
             var content = stripBom(fs.readFileSync(modelFile, "utf8"));
             var model = JSON.parse(content);
             var modelName = path.parse(modelFileName).name;
+            var LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
+            var irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
             importProperties.push("import " + model.name + "Model from './models/" + modelName + "';");
             modelsImportedProperties.push("    '" + modelName + "': " + model.name + "Model");
-            inflectorIrregular.push("inflector.irregular('" + model.name + "', '" + model.name + "s');");
+            inflectorIrregular.push("inflector.irregular('" + irregularLastWordOfModelName + "', '" + irregularLastWordOfModelName + "s');");
         }
         this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
         var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru");

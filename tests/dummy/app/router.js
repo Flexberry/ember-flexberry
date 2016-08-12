@@ -37,6 +37,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-datepicker/settings-example');
   this.route('components-examples/flexberry-dropdown/settings-example');
   this.route('components-examples/flexberry-dropdown/conditional-render-example');
+  this.route('components-examples/flexberry-dropdown/items-example');
   this.route('components-examples/flexberry-field/settings-example');
   this.route('components-examples/flexberry-file/settings-example');
   this.route('components-examples/flexberry-groupedit/settings-example');

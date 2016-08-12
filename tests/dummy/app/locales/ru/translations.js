@@ -161,6 +161,10 @@ Ember.$.extend(true, translations, {
             'conditional-render-example': {
               'caption': 'Пример условного рендеринга',
               'title': ''
+            },
+            'items-example': {
+              'caption': 'Пример элементов значений',
+              'title': ''
             }
           },
           'flexberry-field': {
@@ -440,6 +444,10 @@ Ember.$.extend(true, translations, {
             'После того как какое-либо значение будет выбрано, компонент будет заменен на ' +
             '&lt;span&gt;selected value&lt;/span&gt;,<br>' +
             'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \"Semantic-UI\" и прочих ошибок.'
+        },
+        'items-example': {
+          'caption': 'Flexberry-dropdown. Пример значений элементов',
+          'checkbox-caption': 'использовать itemsObject'
         }
       },
       'flexberry-field': {

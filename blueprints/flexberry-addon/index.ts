@@ -35,4 +35,5 @@ module.exports = {
     return {
       modulePath: `${options.project.name()}/${inflector.pluralize(options.middlePath)}/${options.entity.name}` // for use in files\__root__\__path__\__name__.js
     }
-  };
+  }
+}

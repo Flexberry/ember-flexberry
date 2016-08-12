@@ -3,7 +3,7 @@ var lodash = require('lodash');
 var fs = require("fs");
 var path = require('path');
 var stripBom = require("strip-bom");
-var RSVP = require('rsvp');
+var Promise = require('ember-cli/lib/ext/promise');
 var Blueprint = require('ember-cli/lib/models/blueprint');
 module.exports = {
     description: 'Generates an group of entities for flexberry.',
@@ -93,7 +93,7 @@ var GroupBlueprint = (function () {
                         middlePaths = ["controller", "route"];
                         break;
                     case 'flexberry-model':
-                        middlePaths = ["model", "transform", "serializer"];
+                        middlePaths = ["model", "serializer"];
                         break;
                     default:
                         return;
@@ -110,7 +110,7 @@ var GroupBlueprint = (function () {
                     var addonBlueprintOptions = lodash.merge({}, groupOptions, { installingAddon: true, middlePath: middlePath, originBlueprintName: middlePath });
                     promises.push(flexberryAddon["install"](addonBlueprintOptions));
                 }
-                return RSVP.all(promises);
+                return Promise.all(promises);
             }.bind(this_1));
         };
         var this_1 = this;

@@ -6,7 +6,7 @@ import lodash = require('lodash');
 import fs = require("fs");
 import path = require('path');
 const stripBom = require("strip-bom");
-const RSVP = require('rsvp')
+const Promise = require('ember-cli/lib/ext/promise');
 
 const Blueprint = require('ember-cli/lib/models/blueprint');
 
@@ -114,7 +114,7 @@ class GroupBlueprint {
             middlePaths = ["controller", "route"];
             break;
           case 'flexberry-model':
-            middlePaths = ["model", "transform", "serializer"];
+            middlePaths = ["model", "serializer"];
             break;
           default:
             return;
@@ -133,7 +133,7 @@ class GroupBlueprint {
 
           promises.push( flexberryAddon["install"](addonBlueprintOptions));
         }
-        return RSVP.all(promises);
+        return Promise.all(promises);
       }.bind(this));
     }
   }

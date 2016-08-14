@@ -15,7 +15,7 @@ var Model = BaseModel.extend({
   birthday: DS.attr('date'),
   gender: DS.attr('ember-flexberry-dummy-gender'),
   vip: DS.attr('boolean'),
-  karma: DS.attr('number'),
+  karma: DS.attr('decimal'),
 
   // Model validation rules.
   validations: {

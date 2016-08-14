@@ -91,7 +91,7 @@
     },
     {
       "name": "karma",
-      "type": "number",
+      "type": "decimal",
       "flexberryType": "decimal",
       "notNull": false,
       "defaultValue": "100"

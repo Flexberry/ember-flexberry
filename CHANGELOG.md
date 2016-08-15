@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * It is possible now to specify resources that should be resolved with origin resolving path (without considering device type detection).
+* `flexberry-textarea` component:
+    * Added support of HTML attributes.
 
 ## [0.4.0] - 2016-08-15
 ### Changed

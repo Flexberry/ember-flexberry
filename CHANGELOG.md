@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+
+### Added
+* Blueprints:
+    * Add support generation into ember addon.
+
+### Fixed
+
 
 ## [0.4.0] - 2016-08-15
 ### Changed

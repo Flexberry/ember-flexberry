@@ -54,11 +54,11 @@ rm -f ./tests/dummy/app/resolver.js
 rm -f ./tests/dummy/app/router.js
 rm -f ./tests/dummy/app/templates/application.hbs
 rm -f ./tests/dummy/app/templates/loading.hbs
-rm -f ./ember-cli-build.js
+# rm -f ./ember-cli-build.js // TODO: Wy on Travis this file don't created?
 rm -f ./.jscsrc
 
 # Generate components using Dummy metamodel and test them.
-ember generate flexberry-application app --metadata-dir=${META_DIR}
+ember generate flexberry-application --metadata-dir=${META_DIR}
 
 ember test
 

@@ -45,7 +45,18 @@ class PrototypeBlueprint {
     return this.promise
       .then(function () {
         this.options.ui.writeLine(`Get OData metadata from ${odataFeedUrl} and write it to ${metadataDir}`);
-        // TODO: write to file odata-feed-url.
+        let dirPath = path.join('./', this.metadataDir);
+        try {
+          fs.statSync(dirPath);
+        } catch (e) {
+          if (e.code === "ENOENT")
+            fs.mkdirSync(dirPath);
+        }
+        let filename = path.join(dirPath, '/odataFeedUrl.txt');
+        fs.writeFileSync(filename, odataFeedUrl);
+
+        // TODO: get OData metadata.
+
       }.bind(this));
   }
 }

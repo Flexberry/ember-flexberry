@@ -1,4 +1,6 @@
 "use strict";
+var fs = require("fs");
+var path = require('path');
 var Blueprint = require('ember-cli/lib/models/blueprint');
 var Promise = require('ember-cli/lib/ext/promise');
 module.exports = {
@@ -28,7 +30,17 @@ var PrototypeBlueprint = (function () {
         return this.promise
             .then(function () {
             this.options.ui.writeLine("Get OData metadata from " + odataFeedUrl + " and write it to " + metadataDir);
-            // TODO: write to file odata-feed-url.
+            var dirPath = path.join('./', this.metadataDir);
+            try {
+                fs.statSync(dirPath);
+            }
+            catch (e) {
+                if (e.code === "ENOENT")
+                    fs.mkdirSync(dirPath);
+            }
+            var filename = path.join(dirPath, '/odataFeedUrl.txt');
+            fs.writeFileSync(filename, odataFeedUrl);
+            // TODO: get OData metadata.
         }.bind(this));
     };
     return PrototypeBlueprint;

@@ -28,8 +28,12 @@ module.exports = {
    * @return {Object} Сustom template variables.
    */
   locals: function (options) {
+    let projectTypeNameCamel = "App";
+    let projectTypeNameCebab = "app";
     if( options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
       options.dummy = true;
+      projectTypeNameCamel = "Addon";
+      projectTypeNameCebab = "addon";
     }
 
     let coreBlueprint = new CoreBlueprint(this, options);
@@ -42,6 +46,8 @@ module.exports = {
       applicationCaption: coreBlueprint.sitemap.applicationCaption,// for use in files\__root__\locales\**\translations.js
       applicationTitle: coreBlueprint.sitemap.applicationTitle,// for use in files\__root__\locales\**\translations.js
       inflectorIrregular: coreBlueprint.inflectorIrregular,// for use in files\__root__\models\custom-inflector-rules.js
+      projectTypeNameCamel: projectTypeNameCamel,// for use in files\ember-cli-build.js
+      projectTypeNameCebab: projectTypeNameCebab// for use in files\ember-cli-build.js
       },
       coreBlueprint.lodashVariablesApplicationMenu// for use in files\__root__\locales\**\translations.js
     );

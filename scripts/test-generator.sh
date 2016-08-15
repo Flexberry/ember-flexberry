@@ -55,8 +55,6 @@ rm -f ./tests/dummy/app/router.js
 rm -f ./tests/dummy/app/templates/application.hbs
 rm -f ./tests/dummy/app/templates/loading.hbs
 rm -f ./ember-cli-build.js
-
-cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
 rm -f ./.jscsrc
 
 # Generate components using Dummy metamodel and test them.

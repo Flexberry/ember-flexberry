@@ -40,6 +40,10 @@ class GroupBlueprint {
   }
 
   constructor(blueprint, options) {
+    let projectTypeName = "app";
+    if( options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+      projectTypeName = "addon";
+    }
     this.metadataDir = options.metadataDir;
     this.options = options;
     this.blueprint = blueprint;
@@ -68,10 +72,10 @@ class GroupBlueprint {
         this.emberGenerate("models");
         break;
       case 'flexberry-model-init':
-        this.emberGenerate("models", true, "app/models");
+        this.emberGenerate("models", true, projectTypeName + "/models");
         break;
       case 'flexberry-serializer-init':
-        this.emberGenerate("models", true, "app/serializers");
+        this.emberGenerate("models", true, projectTypeName + "/serializers");
         break;
       default:
         throw new Error(`Unknown blueprint: ${this.blueprintName}`);

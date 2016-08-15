@@ -17,6 +17,10 @@ module.exports = {
 };
 var GroupBlueprint = (function () {
     function GroupBlueprint(blueprint, options) {
+        var projectTypeName = "app";
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            projectTypeName = "addon";
+        }
         this.metadataDir = options.metadataDir;
         this.options = options;
         this.blueprint = blueprint;
@@ -45,10 +49,10 @@ var GroupBlueprint = (function () {
                 this.emberGenerate("models");
                 break;
             case 'flexberry-model-init':
-                this.emberGenerate("models", true, "app/models");
+                this.emberGenerate("models", true, projectTypeName + "/models");
                 break;
             case 'flexberry-serializer-init':
-                this.emberGenerate("models", true, "app/serializers");
+                this.emberGenerate("models", true, projectTypeName + "/serializers");
                 break;
             default:
                 throw new Error("Unknown blueprint: " + this.blueprintName);

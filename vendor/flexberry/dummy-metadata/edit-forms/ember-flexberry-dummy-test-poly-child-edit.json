@@ -2,6 +2,7 @@
   "propertyLookup": [],
   "caption": "Test polymorphic child class",
   "name": "EmberFlexberryDummyTestPolyChildEdit",
+  "className": "TestPolyChildEdit",
   "attrs": [],
   "projections": [
     {

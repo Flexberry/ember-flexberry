@@ -123,7 +123,7 @@
     <label>{{t "forms.ember-flexberry-dummy-application-user-edit.gender-caption"}}</label>
     {{flexberry-dropdown
       value=model.gender
-      items=(enum-captions "ember-flexberry-dummy-gender")
+      items=(flexberry-enum "ember-flexberry-dummy-gender")
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.gender pointing="pointing"}}

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Enumeration from '../../../enums/components-examples/flexberry-dropdown/settings-example/enumeration';
-import { enumCaptions } from 'ember-flexberry/utils/enum-functions';
+import { enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
 import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({
@@ -38,7 +38,7 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-dropdown<br>' +
-    '  items=(enum-captions \"components-examples/flexberry-dropdown/settings-example/enumeration\")<br>' +
+    '  items=(flexberry-enum \"components-examples/flexberry-dropdown/settings-example/enumeration\")<br>' +
     '  value=model.enumeration<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +

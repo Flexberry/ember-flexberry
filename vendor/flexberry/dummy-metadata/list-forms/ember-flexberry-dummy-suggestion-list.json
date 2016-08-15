@@ -3,6 +3,7 @@
   "editForm": "ember-flexberry-dummy-suggestion-edit",
   "caption": "Suggestions",
   "name": "EmberFlexberryDummySuggestionList",
+  "className": "SuggestionList",
   "attrs": [],
   "projections": [
     {

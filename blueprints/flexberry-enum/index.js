@@ -41,11 +41,12 @@ var EnumBlueprint = (function () {
         var values = [];
         for (var key in enumeration.enumObjects) {
             var caption = enumeration.enumObjects[key];
-            if (caption)
+            if (caption === "~")
+                caption = "";
+            if (caption != null)
                 caption = "'" + caption + "'";
             else
                 caption = "'" + key + "'";
-            ;
             values.push(key + ": " + caption);
         }
         this.enumObjects = "{\n  " + values.join(",\n  ") + "\n}";

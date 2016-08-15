@@ -4,6 +4,26 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2016-08-15
+### Changed
+* Transforms:
+    * Moved transforms to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+* Enums:
+    * Moved enum initializer to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+    * Renamed `enum-captions` helper to `flexberry-enum`.
+
+### Added
+* Blueprints:
+    * Add localization support for generated ember entities.
+    * Add generation of explicit inflection rules. Rules for inflector are declared in `custom-inflector-rules.js` file inside `models` folder.
+* `flexberry-dropdown` component:
+    * Add support object type for `items` property.
+    * Add support empty values for generated enums.
+
+### Fixed
+* `flexberry-objectlistview` component:
+    * Incorrect work of pagination for large lists.
+
 ## [0.3.0] - 2016-07-29
 ### Added
 * Custom internationalized captions for boolean type in `object-list-view-cell` commponent.

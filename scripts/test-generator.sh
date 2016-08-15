@@ -43,8 +43,19 @@ pushd "$TMP_DIR"
 
 ember addon new-addon-for-tests
 pushd new-addon-for-tests
+
 ember install "${ADDON_DIR}"
+ember install inflection
+
+# EmberCLI asks whether it needs to overwrite existing files,
+# so we need to remove them for non-interactive build.
+rm -f ./tests/dummy/app/app.js
+rm -f ./tests/dummy/app/resolver.js
+rm -f ./tests/dummy/app/router.js
+rm -f ./tests/dummy/app/templates/application.hbs
+rm -f ./tests/dummy/app/templates/loading.hbs
 rm -f ./ember-cli-build.js
+
 cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
 rm -f ./.jscsrc
 

@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-textarea` component:
+    * Added support of HTML attributes.
 
 ## [0.4.0] - 2016-08-15
 ### Changed

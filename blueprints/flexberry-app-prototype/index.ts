@@ -6,6 +6,7 @@ import fs = require("fs");
 import path = require('path');
 const Blueprint = require('ember-cli/lib/models/blueprint');
 const Promise = require('ember-cli/lib/ext/promise');
+import http = require('http');
 import lodash = require('lodash');
 
 module.exports = {
@@ -52,11 +53,40 @@ class PrototypeBlueprint {
           if (e.code === "ENOENT")
             fs.mkdirSync(dirPath);
         }
-        let filename = path.join(dirPath, '/odataFeedUrl.txt');
-        fs.writeFileSync(filename, odataFeedUrl);
+        let filenameUrl = path.join(dirPath, '/odataFeedUrl.txt');
+        fs.writeFileSync(filenameUrl, odataFeedUrl);
 
         // TODO: get OData metadata.
+        let filenameMetadata = path.join(dirPath, '/odataMetadata.xml');
 
+        http.get({
+          host: odataFeedUrl,
+          path: '/$metadata'
+        }, function (response) {
+          // Continuously update stream with data
+          this.options.ui.writeLine(`Get response with OData metadata: ${response}.`);
+          let body = '';
+          response.on('data', function (d) {
+            body += d;
+          });
+          response.on('end', function () {
+            fs.writeFileSync(filenameMetadata, body);
+            this.options.ui.writeLine(`Get end response: ${body}.`);
+          });
+        }).on('error', (e) => {
+          this.options.ui.writeLine(`Got error: ${e.message}`);
+        }).end();
+
+      }.bind(this)).then(function () {
+        this.options.ui.writeLine(`send request`);
+
+        http.get('http://www.google.com/index.html', (res) => {
+          this.options.ui.writeLine(`Got response: ${res.statusCode}`);
+          // consume response body
+          res.resume();
+        }).on('error', (e) => {
+          this.options.ui.writeLine(`Got error: ${e.message}`);
+        });
       }.bind(this));
   }
 }

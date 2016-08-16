@@ -3,6 +3,7 @@ var fs = require("fs");
 var path = require('path');
 var Blueprint = require('ember-cli/lib/models/blueprint');
 var Promise = require('ember-cli/lib/ext/promise');
+var http = require('http');
 module.exports = {
     description: 'Prototyping flexberry applications by external metadata.',
     availableOptions: [
@@ -29,6 +30,7 @@ var PrototypeBlueprint = (function () {
     PrototypeBlueprint.prototype.getOdataMetadata = function (metadataDir, odataFeedUrl) {
         return this.promise
             .then(function () {
+            var _this = this;
             this.options.ui.writeLine("Get OData metadata from " + odataFeedUrl + " and write it to " + metadataDir);
             var dirPath = path.join('./', this.metadataDir);
             try {
@@ -38,9 +40,37 @@ var PrototypeBlueprint = (function () {
                 if (e.code === "ENOENT")
                     fs.mkdirSync(dirPath);
             }
-            var filename = path.join(dirPath, '/odataFeedUrl.txt');
-            fs.writeFileSync(filename, odataFeedUrl);
+            var filenameUrl = path.join(dirPath, '/odataFeedUrl.txt');
+            fs.writeFileSync(filenameUrl, odataFeedUrl);
             // TODO: get OData metadata.
+            var filenameMetadata = path.join(dirPath, '/odataMetadata.xml');
+            http.get({
+                host: odataFeedUrl,
+                path: '/$metadata'
+            }, function (response) {
+                // Continuously update stream with data
+                this.options.ui.writeLine("Get response with OData metadata: " + response + ".");
+                var body = '';
+                response.on('data', function (d) {
+                    body += d;
+                });
+                response.on('end', function () {
+                    fs.writeFileSync(filenameMetadata, body);
+                    this.options.ui.writeLine("Get end response: " + body + ".");
+                });
+            }).on('error', function (e) {
+                _this.options.ui.writeLine("Got error: " + e.message);
+            }).end();
+        }.bind(this)).then(function () {
+            var _this = this;
+            this.options.ui.writeLine("send request");
+            http.get('http://www.google.com/index.html', function (res) {
+                _this.options.ui.writeLine("Got response: " + res.statusCode);
+                // consume response body
+                res.resume();
+            }).on('error', function (e) {
+                _this.options.ui.writeLine("Got error: " + e.message);
+            });
         }.bind(this));
     };
     return PrototypeBlueprint;

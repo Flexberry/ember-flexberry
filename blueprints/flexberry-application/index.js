@@ -60,7 +60,7 @@ var ElapsedTime = (function () {
 var ApplicationBlueprint = (function () {
     function ApplicationBlueprint(blueprint, options) {
         if (options.metadataDir === undefined) {
-            options.metadataDir = "vendor\\flexberry";
+            options.metadataDir = "vendor/flexberry";
         }
         this.metadataDir = options.metadataDir;
         this.options = options;

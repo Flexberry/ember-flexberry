@@ -35,3 +35,34 @@ ember test
 # Cleanup.
 popd
 rm -rf "$TMP_DIR"
+
+# Initialize new ember addon and install ember-flexberry.
+mkdir -p "$TMP_DIR"
+rm -rf "$TMP_DIR/*"
+pushd "$TMP_DIR"
+
+ember addon new-addon-for-tests
+pushd new-addon-for-tests
+
+ember install "${ADDON_DIR}"
+npm install inflection
+
+# EmberCLI asks whether it needs to overwrite existing files,
+# so we need to remove them for non-interactive build.
+rm -f ./tests/dummy/app/app.js
+rm -f ./tests/dummy/app/resolver.js
+rm -f ./tests/dummy/app/router.js
+rm -f ./tests/dummy/app/templates/application.hbs
+rm -f ./tests/dummy/app/templates/loading.hbs
+# rm -f ./ember-cli-build.js // TODO: Wy on Travis this file don't created?
+rm -f ./.jscsrc
+
+# Generate components using Dummy metamodel and test them.
+ember generate flexberry-application --metadata-dir=${META_DIR}
+
+ember test
+
+# Cleanup.
+popd
+popd
+rm -rf "$TMP_DIR"

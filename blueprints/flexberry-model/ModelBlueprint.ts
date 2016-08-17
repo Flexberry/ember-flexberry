@@ -7,6 +7,8 @@ import fs = require("fs");
 import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
+import { ModelLocales } from '../flexberry-core/Locales';
+
 const TAB = "  ";
 
 class SortedPair{
@@ -28,6 +30,7 @@ export default class ModelBlueprint {
   name: string;
   needsAllModels: string;
   needsAllEnums: string;
+  lodashVariables: {};
   constructor(blueprint, options) {
     let modelsDir = path.join(options.metadataDir, "models");
     if (!options.file) {
@@ -45,6 +48,8 @@ export default class ModelBlueprint {
     this.name = options.entity.name;
     this.needsAllModels = this.getNeedsAllModels(modelsDir);
     this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
+    let modelLocales = new ModelLocales(model, modelsDir, "ru");
+    this.lodashVariables = modelLocales.getLodashVariablesProperties();
   }
 
   getNeedsAllEnums(enumsDir: string): string {

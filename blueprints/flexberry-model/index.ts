@@ -1,4 +1,9 @@
+/// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/lodash/index.d.ts' />
+/// <reference path='../typings/MetadataClasses.d.ts' />
+
 import ModelBlueprint from './ModelBlueprint';
+import lodash = require('lodash');
 
 module.exports = {
 
@@ -21,7 +26,7 @@ module.exports = {
    */
   locals: function(options) {
     let modelBlueprint = new ModelBlueprint(this, options);
-    return {
+    return lodash.defaults({
       parentModelName: modelBlueprint.parentModelName,//
       parentClassName: modelBlueprint.parentClassName,//
       model: modelBlueprint.model,// for use in files\__root__\mixins\regenerated\models\__name__.js
@@ -30,6 +35,8 @@ module.exports = {
       name: modelBlueprint.name,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
       needsAllModels: modelBlueprint.needsAllModels,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
       needsAllEnums: modelBlueprint.needsAllEnums// for use in files\tests\unit\serializers\__name__.js
-    };
+      },
+      modelBlueprint.lodashVariables
+    );
   }
 };

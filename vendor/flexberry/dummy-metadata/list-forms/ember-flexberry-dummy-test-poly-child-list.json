@@ -3,6 +3,7 @@
   "editForm": "ember-flexberry-dummy-test-poly-child-edit",
   "caption": "Test polymorphic child class",
   "name": "EmberFlexberryDummyTestPolyChildList",
+  "className": "TestPolyChildList",
   "attrs": [],
   "projections": [
     {

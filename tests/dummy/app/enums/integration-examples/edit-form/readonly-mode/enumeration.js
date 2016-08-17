@@ -1,4 +1,4 @@
-import { createEnum } from 'ember-flexberry/utils/enum-functions';
+import { createEnum } from 'ember-flexberry-data/utils/enum-functions';
 
 export default createEnum({
   Value1: 'Enum value №1',

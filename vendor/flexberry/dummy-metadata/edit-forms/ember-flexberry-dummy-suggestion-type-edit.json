@@ -5,25 +5,26 @@
       "displayAttributeName": null,
       "required": false,
       "relationName": "Parent",
-      "projection": ""
+      "projection": "SuggestionTypeL"
     },
     {
       "master": "localization",
       "displayAttributeName": "name",
       "required": true,
       "relationName": "LocalizedTypes.Localization",
-      "projection": "LocalizationList"
+      "projection": "LocalizationL"
     },
     {
-      "master": "suggestionType",
+      "master": null,
       "displayAttributeName": null,
-      "required": true,
+      "required": false,
       "relationName": "LocalizedTypes.SuggestionType",
-      "projection": "SuggestionTypeList"
+      "projection": "SuggestionTypeL"
     }
   ],
   "caption": "Suggestion type",
   "name": "EmberFlexberryDummySuggestionTypeEdit",
+  "className": "SuggestionTypeEdit",
   "attrs": [],
   "projections": [
     {

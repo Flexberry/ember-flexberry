@@ -54,10 +54,12 @@ class EnumBlueprint {
     let values: string[] = [];
     for (let key in enumeration.enumObjects) {
       let caption = enumeration.enumObjects[key];
-      if (caption)
+      if (caption === "~")
+        caption = "";
+      if (caption != null)
         caption = `'${caption}'`;
       else
-        caption = `'${key}'`;;
+        caption = `'${key}'`;
       values.push(`${key}: ${caption}`);
     }
     this.enumObjects = `{\n  ${values.join(",\n  ")}\n}`;

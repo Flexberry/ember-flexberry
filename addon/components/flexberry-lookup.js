@@ -6,7 +6,7 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 import { translationMacro as t } from 'ember-i18n';
-import { getRelationType } from '../utils/model-functions';
+import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
 
 const {

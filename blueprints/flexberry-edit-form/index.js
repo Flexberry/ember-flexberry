@@ -6,6 +6,7 @@ var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require('path');
 var lodash = require('lodash');
+var Locales_1 = require('../flexberry-core/Locales');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -33,7 +34,7 @@ module.exports = {
             options.file = options.entity.name + ".json";
         }
         var editFormBlueprint = new EditFormBlueprint(this, options);
-        return {
+        return lodash.defaults({
             modelName: editFormBlueprint.editForm.projections[0].modelName,
             modelProjection: editFormBlueprint.editForm.projections[0].modelProjection,
             formName: editFormBlueprint.editForm.name,
@@ -41,8 +42,9 @@ module.exports = {
             caption: editFormBlueprint.editForm.caption,
             parentRoute: editFormBlueprint.parentRoute,
             flexberryComponents: editFormBlueprint.flexberryComponents,
-            functionGetCellComponent: editFormBlueprint.functionGetCellComponent // for use in files\__root__\controllers\__name__.js
-        };
+            functionGetCellComponent: editFormBlueprint.functionGetCellComponent,
+        }, editFormBlueprint.locales.getLodashVariablesProperties() // for use in files\__root__\locales\**\forms\__name__.js
+        );
     }
 };
 var EditFormBlueprint = (function () {
@@ -52,6 +54,7 @@ var EditFormBlueprint = (function () {
         this.blueprint = blueprint;
         this.options = options;
         this.modelsDir = path.join(options.metadataDir, "models");
+        this.locales = new Locales_1.default(options.entity.name, "ru");
         this.process();
         this.flexberryComponents = this.snippetsResult.join("\n");
         this.parentRoute = this.getParentRoute();
@@ -106,12 +109,14 @@ var EditFormBlueprint = (function () {
         var editFormsFile = path.join(editFormsDir, this.options.file);
         var content = stripBom(fs.readFileSync(editFormsFile, "utf8"));
         this.editForm = JSON.parse(content);
+        this.locales.setupForm(this.editForm);
         var linkProj = this.editForm.projections[0];
         var model = this.loadModel(linkProj.modelName);
         var proj = lodash.find(model.projections, function (pr) { return pr.name === linkProj.modelProjection; });
         var projAttr;
         for (var _i = 0, _a = proj.attrs; _i < _a.length; _i++) {
             projAttr = _a[_i];
+            this.locales.setupEditFormAttribute(projAttr);
             if (projAttr.hidden || projAttr.index === -1) {
                 continue;
             }
@@ -125,6 +130,7 @@ var EditFormBlueprint = (function () {
         var belongsTo, hasMany;
         for (var _b = 0, _c = proj.belongsTo; _b < _c.length; _b++) {
             belongsTo = _c[_b];
+            this.locales.setupEditFormAttribute(belongsTo);
             if (belongsTo.hidden || belongsTo.index === -1) {
                 continue;
             }
@@ -140,6 +146,7 @@ var EditFormBlueprint = (function () {
         for (var _d = 0, _e = proj.hasMany; _d < _e.length; _d++) {
             hasMany = _e[_d];
             hasMany.readonly = "readonly";
+            this.locales.setupEditFormAttribute(hasMany);
             this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
         }
     };

@@ -1,4 +1,5 @@
 ﻿{
+  "name": "EmberFlexberryDummyLocalization",
   "modelName": "ember-flexberry-dummy-localization",
   "className": "Localization",
   "parentModelName": null,

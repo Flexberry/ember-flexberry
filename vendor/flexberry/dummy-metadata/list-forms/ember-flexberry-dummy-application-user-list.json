@@ -3,6 +3,7 @@
   "editForm": "ember-flexberry-dummy-application-user-edit",
   "caption": "Application users",
   "name": "EmberFlexberryDummyApplicationUserList",
+  "className": "ApplicationUserList",
   "attrs": [],
   "projections": [
     {

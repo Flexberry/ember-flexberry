@@ -6,6 +6,7 @@ var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require('path');
 var lodash = require('lodash');
+var Locales_1 = require('../flexberry-core/Locales');
 var TAB = "  ";
 var SortedPair = (function () {
     function SortedPair(index, str) {
@@ -32,6 +33,8 @@ var ModelBlueprint = (function () {
         this.name = options.entity.name;
         this.needsAllModels = this.getNeedsAllModels(modelsDir);
         this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
+        var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru");
+        this.lodashVariables = modelLocales.getLodashVariablesProperties();
     }
     ModelBlueprint.prototype.getNeedsAllEnums = function (enumsDir) {
         var listEnums = fs.readdirSync(enumsDir);

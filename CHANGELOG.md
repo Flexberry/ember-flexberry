@@ -15,6 +15,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-checkbox` component:
     * Now if `flexberry-checkbox` was unchecked it doest'n has checked class.
+* `log` service will write error messages to console along with sending it to server if error would be handled in `Ember.onerror` or `Ember.RSVP.on('error')` events.
+
 
 ## [0.4.0] - 2016-08-15
 ### Changed

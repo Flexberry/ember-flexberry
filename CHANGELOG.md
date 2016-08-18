@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Added support of HTML attributes.
 
 ### Fixed
+* `log` service will write error messages to console along with sending it to server if error would be handled in `Ember.onerror` or `Ember.RSVP.on('error')` events.
 
 
 ## [0.4.0] - 2016-08-15

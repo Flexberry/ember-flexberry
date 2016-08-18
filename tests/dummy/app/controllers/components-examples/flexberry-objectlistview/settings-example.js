@@ -244,7 +244,7 @@ export default ListFormController.extend({
     '  componentName=\"SuggestionsObjectListView\"<br>' +
     '  content=model<br>' +
     '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '  editFormRoute=editFormRoute<br>' +
+    '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
     '  modelProjection=projection<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
@@ -318,12 +318,6 @@ export default ListFormController.extend({
       settingValue: 'ember-flexberry-dummy-suggestion',
       settingDefaultValue: undefined,
       settingIsWithoutUI: true
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'editFormRoute',
-      settingType: 'string',
-      settingDefaultValue: 'ember-flexberry-dummy-suggestion-edit',
-      bindedControllerPropertieName: 'editFormRoute'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'placeholder',

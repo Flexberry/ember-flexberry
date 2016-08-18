@@ -7,6 +7,7 @@ import path = require('path');
 const Blueprint = require('ember-cli/lib/models/blueprint');
 const Promise = require('ember-cli/lib/ext/promise');
 import http = require('http');
+import https = require('https');
 import lodash = require('lodash');
 
 module.exports = {
@@ -39,6 +40,7 @@ class PrototypeBlueprint {
     this.options = options;
     this.promise = Promise.resolve();
     this.promise = this.getOdataMetadata(this.metadataDir, this.odataFeedUrl);
+    this.promise = this.getContent(this.metadataDir, this.odataFeedUrl);
     this.promise = this.promise;
   }
 
@@ -55,38 +57,27 @@ class PrototypeBlueprint {
         }
         let filenameUrl = path.join(dirPath, '/odataFeedUrl.txt');
         fs.writeFileSync(filenameUrl, odataFeedUrl);
-
-        // TODO: get OData metadata.
-        let filenameMetadata = path.join(dirPath, '/odataMetadata.xml');
-
-        http.get({
-          host: odataFeedUrl,
-          path: '/$metadata'
-        }, function (response) {
-          // Continuously update stream with data
-          this.options.ui.writeLine(`Get response with OData metadata: ${response}.`);
-          let body = '';
-          response.on('data', function (d) {
-            body += d;
-          });
-          response.on('end', function () {
-            fs.writeFileSync(filenameMetadata, body);
-            this.options.ui.writeLine(`Get end response: ${body}.`);
-          });
-        }).on('error', (e) => {
-          this.options.ui.writeLine(`Got error: ${e.message}`);
-        }).end();
-
-      }.bind(this)).then(function () {
-        this.options.ui.writeLine(`send request`);
-
-        http.get('http://www.google.com/index.html', (res) => {
-          this.options.ui.writeLine(`Got response: ${res.statusCode}`);
-          // consume response body
-          res.resume();
-        }).on('error', (e) => {
-          this.options.ui.writeLine(`Got error: ${e.message}`);
-        });
       }.bind(this));
-  }
+  };
+
+  getContent(metadataDir, odataFeedUrl) {
+    let url = odataFeedUrl + '/$metadata';
+    let writeToFileName = path.join('./', metadataDir, '/odataMetadata.xml');
+
+    return new Promise((resolve, reject) => {
+      const lib = url.startsWith('https') ? https : http;
+      const request = lib.get(url, (response) => {
+        if (response.statusCode < 200 || response.statusCode > 299) {
+          reject(new Error('Failed to load page, status code: ' + response.statusCode));
+        }
+        const body = [];
+        response.on('data', (chunk) => body.push(chunk));
+        response.on('end', () => {
+          fs.writeFileSync(writeToFileName, body.join(''));
+          resolve(true)
+        });
+      });
+      request.on('error', (err) => reject(err));
+    });
+  };
 }

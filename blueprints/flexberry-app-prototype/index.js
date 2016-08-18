@@ -4,6 +4,7 @@ var path = require('path');
 var Blueprint = require('ember-cli/lib/models/blueprint');
 var Promise = require('ember-cli/lib/ext/promise');
 var http = require('http');
+var https = require('https');
 module.exports = {
     description: 'Prototyping flexberry applications by external metadata.',
     availableOptions: [
@@ -25,12 +26,12 @@ var PrototypeBlueprint = (function () {
         this.options = options;
         this.promise = Promise.resolve();
         this.promise = this.getOdataMetadata(this.metadataDir, this.odataFeedUrl);
+        this.promise = this.getContent(this.metadataDir, this.odataFeedUrl);
         this.promise = this.promise;
     }
     PrototypeBlueprint.prototype.getOdataMetadata = function (metadataDir, odataFeedUrl) {
         return this.promise
             .then(function () {
-            var _this = this;
             this.options.ui.writeLine("Get OData metadata from " + odataFeedUrl + " and write it to " + metadataDir);
             var dirPath = path.join('./', this.metadataDir);
             try {
@@ -42,37 +43,29 @@ var PrototypeBlueprint = (function () {
             }
             var filenameUrl = path.join(dirPath, '/odataFeedUrl.txt');
             fs.writeFileSync(filenameUrl, odataFeedUrl);
-            // TODO: get OData metadata.
-            var filenameMetadata = path.join(dirPath, '/odataMetadata.xml');
-            http.get({
-                host: odataFeedUrl,
-                path: '/$metadata'
-            }, function (response) {
-                // Continuously update stream with data
-                this.options.ui.writeLine("Get response with OData metadata: " + response + ".");
-                var body = '';
-                response.on('data', function (d) {
-                    body += d;
-                });
-                response.on('end', function () {
-                    fs.writeFileSync(filenameMetadata, body);
-                    this.options.ui.writeLine("Get end response: " + body + ".");
-                });
-            }).on('error', function (e) {
-                _this.options.ui.writeLine("Got error: " + e.message);
-            }).end();
-        }.bind(this)).then(function () {
-            var _this = this;
-            this.options.ui.writeLine("send request");
-            http.get('http://www.google.com/index.html', function (res) {
-                _this.options.ui.writeLine("Got response: " + res.statusCode);
-                // consume response body
-                res.resume();
-            }).on('error', function (e) {
-                _this.options.ui.writeLine("Got error: " + e.message);
-            });
         }.bind(this));
     };
+    ;
+    PrototypeBlueprint.prototype.getContent = function (metadataDir, odataFeedUrl) {
+        var url = odataFeedUrl + '/$metadata';
+        var writeToFileName = path.join('./', metadataDir, '/odataMetadata.xml');
+        return new Promise(function (resolve, reject) {
+            var lib = url.startsWith('https') ? https : http;
+            var request = lib.get(url, function (response) {
+                if (response.statusCode < 200 || response.statusCode > 299) {
+                    reject(new Error('Failed to load page, status code: ' + response.statusCode));
+                }
+                var body = [];
+                response.on('data', function (chunk) { return body.push(chunk); });
+                response.on('end', function () {
+                    fs.writeFileSync(writeToFileName, body.join(''));
+                    resolve(true);
+                });
+            });
+            request.on('error', function (err) { return reject(err); });
+        });
+    };
+    ;
     return PrototypeBlueprint;
 }());
 //# sourceMappingURL=index.js.map

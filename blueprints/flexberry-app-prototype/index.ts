@@ -20,7 +20,7 @@ module.exports = {
 
   install: function (options) {
     if (options.metadataDir === undefined) {
-      options.metadataDir = "vendor\\flexberry";
+      options.metadataDir = "vendor/flexberry";
     }
 
     let prototypeBlueprint = new PrototypeBlueprint(this, options);

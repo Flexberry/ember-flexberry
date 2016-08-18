@@ -13,7 +13,7 @@ module.exports = {
     ],
     install: function (options) {
         if (options.metadataDir === undefined) {
-            options.metadataDir = "vendor\\flexberry";
+            options.metadataDir = "vendor/flexberry";
         }
         var prototypeBlueprint = new PrototypeBlueprint(this, options);
         return prototypeBlueprint.promise;

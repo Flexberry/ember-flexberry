@@ -138,9 +138,4 @@ export default ListFormController.extend({
     }
   },
 
-  _enableFilters: Ember.observer('enableFilters', function() {
-    if (this.get('enableFilters')) {
-      this.set('refreshButton', true);
-    }
-  }),
 });

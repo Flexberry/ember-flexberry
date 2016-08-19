@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Added support of HTML attributes.
 
 ### Fixed
+* `flexberry-checkbox` component:
+    * Now if `flexberry-checkbox` was unchecked it doest'n has checked class.
 * `log` service will write error messages to console along with sending it to server if error would be handled in `Ember.onerror` or `Ember.RSVP.on('error')` events.
 * Fixed decimal fields generation on edit-forms (it will generate `flexberry-field` instead of `flexberry-dropdown`).
 
@@ -39,7 +41,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.3.0] - 2016-07-29
 ### Added
-* Custom internationalized captions for boolean type in `object-list-view-cell` commponent.
+* Custom internationalized captions for boolean type in `object-list-view-cell` component.
 * Blueprints:
     * Add regeneration for models and serializers. Now models and serizlizers generates into separate regeneratable mixins, model and serializer classes will not be replaced during regeneration.
     * Add new `flexberry-group` blueprint for generation of group of entities by one blueprint.

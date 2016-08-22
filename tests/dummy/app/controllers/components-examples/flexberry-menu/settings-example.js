@@ -243,7 +243,7 @@ export default Ember.Controller.extend({
           'inverted teal paw icon',
           'big green tree icon',
           'circular small record icon',
-          'list layout icon'
+          'olive list layout icon'
         ],
       bindedControllerPropertieName: 'currentItem.icon'
     });

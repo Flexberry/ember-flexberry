@@ -39,6 +39,7 @@ export default Ember.Controller.extend({
     '  value=model.text<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
+    '  class=class<br>' +
     '}}'),
 
   /**
@@ -66,6 +67,13 @@ export default Ember.Controller.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'readonly'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'class',
+      settingType: 'css',
+      settingDefaultValue: '',
+      settingAvailableItems: ['fluid input', 'mini input', 'huge input'],
+      bindedControllerPropertieName: 'class'
     });
 
     return componentSettingsMetadata;

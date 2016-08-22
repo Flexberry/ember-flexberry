@@ -215,6 +215,15 @@ export default Ember.Controller.extend({
     }
   }),
 
+  menuPosition: Ember.computed('isVertical', function() {
+    let isVertical = this.get('isVertical');
+    if (isVertical === true) {
+      return 'ui basic vertical buttons';
+    } else {
+      return 'ui basic buttons';
+    }
+  }),
+
   /**
     Component settings metadata.
 

@@ -7,6 +7,8 @@
       componentTemplateText=componentTemplateText
     }}
     <div class="ui basic buttons">
+      <div class="ui {{if isVertical 'vertical'}} basic buttons">
+      </div>
       {{flexberry-menu
         items=itemsLeft
         onItemClick=(action "onMenuItemClick")

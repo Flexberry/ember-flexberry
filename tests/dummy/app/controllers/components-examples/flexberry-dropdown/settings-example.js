@@ -5,14 +5,6 @@ import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({
   /**
-    Component's wrapper CSS classes.
-
-    @property class
-    @type String
-  */
-  class: '',
-
-  /**
     Text for 'flexberry-dropdown' component 'placeholder' property.
 
     @property placeholder
@@ -50,7 +42,6 @@ export default Ember.Controller.extend({
     '  value=model.enumeration<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
-    '  class=class<br>' +
     '}}'),
 
   /**
@@ -80,13 +71,7 @@ export default Ember.Controller.extend({
       settingDefaultValue: false,
       bindedControllerPropertieName: 'readonly'
     });
-    componentSettingsMetadata.pushObject({
-      settingName: 'class',
-      settingType: 'css',
-      settingDefaultValue: '',
-      settingAvailableItems: ['scrolling', 'compact', 'fluid'],
-      bindedControllerPropertieName: 'class'
-    });
+
     return componentSettingsMetadata;
   })
 });

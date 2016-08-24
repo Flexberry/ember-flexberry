@@ -1,9 +1,9 @@
 /*jshint node:true*/
 /* global require, module */
-var Ember<%=projectTypeNameCamel%> = require('ember-cli/lib/broccoli/ember-<%=projectTypeNameCebab%>');
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
-  var app = new Ember<%=projectTypeNameCamel%>(defaults, {
+  var app = new EmberApp(defaults, {
     // Add options here
     jscsOptions: {
       enabled: true,

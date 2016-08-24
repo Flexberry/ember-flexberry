@@ -59,9 +59,6 @@ var ElapsedTime = (function () {
 }());
 var ApplicationBlueprint = (function () {
     function ApplicationBlueprint(blueprint, options) {
-        if (options.metadataDir === undefined) {
-            options.metadataDir = "vendor/flexberry";
-        }
         this.metadataDir = options.metadataDir;
         this.options = options;
         this.promise = Promise.resolve();
@@ -73,10 +70,7 @@ var ApplicationBlueprint = (function () {
         this.promise = this.emberGenerateFlexberryGroup("flexberry-enum");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-list-form");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-edit-form");
-        if (!(options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon")) {
-            this.promise = this.emberGenerate("route", "index");
-        }
-        this.promise = this.emberGenerate("flexberry-common", "app");
+        this.promise = this.emberGenerate("route", "index");
         this.promise = this.emberGenerate("flexberry-core", "app");
         this.promise = this.promise
             .then(function () {

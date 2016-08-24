@@ -15,11 +15,7 @@
   {{/if}}
   <div class="menu">
     {{#each-in _items as |key value|}}
-      {{#if value}}
-        <div class="item" data-value="{{value}}">{{value}}</div>
-      {{else}}
-        <div class="item" data-value="_">{{value}}</div>
-      {{/if}}
+      <div class="item" data-value="{{value}}">{{value}}</div>
     {{/each-in}}
   </div>
 {{/ui-dropdown}}

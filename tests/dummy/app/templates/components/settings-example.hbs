@@ -31,30 +31,19 @@
                 {{else}}
                   {{! Mutable setting with UI }}
                   {{#if (eq settingMetadata.settingType "boolean")}}
-                    {{input
-                      type="checkbox"
-                      checked=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))
-                    }}
+                    {{input type="checkbox" checked=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
                   {{/if}}
 
                   {{#if (eq settingMetadata.settingType "string")}}
-                    {{input
-                      type="text"
-                      value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))
-                    }}
+                    {{input type="text" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
                   {{/if}}
 
                   {{#if (eq settingMetadata.settingType "number")}}
-                    {{number-input
-                      value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))
-                    }}
+                    {{number-input value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
                   {{/if}}
 
                   {{#if (or (eq settingMetadata.settingType "date") (eq settingMetadata.settingType "datetime"))}}
-                    {{input
-                      type="datetime-local"
-                      value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))
-                    }}
+                    {{input type="datetime-local" value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))}}
                   {{/if}}
 
                   {{#if (eq settingMetadata.settingType "enumeration")}}
@@ -66,13 +55,6 @@
                         </option>
                       {{/each}}
                     </select>
-                  {{/if}}
-
-                  {{#if (eq settingMetadata.settingType "css")}}
-                    {{css-picker
-                      value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))
-                      items=settingMetadata.settingAvailableItems
-                    }}
                   {{/if}}
 
                   {{#if (eq settingMetadata.settingType "hasManyArray")}}

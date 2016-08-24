@@ -1,15 +1,16 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-textarea.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  {{#settings-example
-    controllerProperties=this
-    componentSettingsMetadata=componentSettingsMetadata
-    componentTemplateText=componentTemplateText
-  }}
-    {{flexberry-textarea
-      value=model.text
-      placeholder=placeholder
-      readonly=readonly
-      class=class
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
     }}
-  {{/settings-example}}
+      {{flexberry-textarea
+        value=model.text
+        placeholder=placeholder
+        readonly=readonly
+      }}
+    {{/settings-example}}
+  </div>
 </form>

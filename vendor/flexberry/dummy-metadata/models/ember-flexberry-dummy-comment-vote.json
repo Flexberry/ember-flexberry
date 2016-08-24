@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "EmberFlexberryDummyCommentVote",
   "modelName": "ember-flexberry-dummy-comment-vote",
   "className": "CommentVote",
@@ -124,19 +124,6 @@
           "caption": "Application user",
           "name": "applicationUser",
           "relatedTo": "ember-flexberry-dummy-application-user",
-          "inverse": null
-        },
-        {
-          "lookupValue": null,
-          "lookupValueField": null,
-          "relationName": "Comment",
-          "belongsTo": [],
-          "hidden": true,
-          "attrs": [],
-          "index": 3,
-          "caption": "",
-          "name": "comment",
-          "relatedTo": "ember-flexberry-dummy-comment",
           "inverse": null
         }
       ],

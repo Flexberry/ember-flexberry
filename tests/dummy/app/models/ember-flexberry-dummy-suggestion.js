@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import DS from 'ember-data';
 import BaseModel from 'ember-flexberry/models/base';
 import { Projection } from 'ember-flexberry-data';
@@ -9,7 +8,6 @@ var Model = BaseModel.extend({
   date: DS.attr('date'),
   votes: DS.attr('number'),
   moderated: DS.attr('boolean'),
-  commentsCount: DS.attr('number'),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   type: DS.belongsTo('ember-flexberry-dummy-suggestion-type', {
@@ -66,18 +64,6 @@ var Model = BaseModel.extend({
         message: 'Editor is required'
       }
     }
-  },
-
-  commentsChanged: Ember.on('init', Ember.observer('comments', function() {
-    Ember.run.once(this, 'commentsCountCompute');
-  })),
-
-  commentsCountCompute: function() {
-    let result = 0;
-    this.get('comments').forEach(function() {
-      result++;
-    });
-    this.set('commentsCount', result);
   }
 });
 
@@ -166,15 +152,6 @@ Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
     })
   }, {
     displayMemberPath: 'name'
-  }),
-  commentsCount: Projection.attr('Comments Count'),
-  comments: Projection.hasMany('ember-flexberry-dummy-comment', 'Comments', {
-    text: Projection.attr('Text'),
-    votes: Projection.attr('Votes'),
-    moderated: Projection.attr('Moderated'),
-    author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-      name: Projection.attr('Name', { hidden: true })
-    }, { displayMemberPath: 'name' })
   })
 });
 

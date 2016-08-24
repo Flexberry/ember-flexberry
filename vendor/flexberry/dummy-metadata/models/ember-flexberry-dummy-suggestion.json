@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "EmberFlexberryDummySuggestion",
   "modelName": "ember-flexberry-dummy-suggestion",
   "className": "Suggestion",
@@ -67,13 +67,6 @@
       "flexberryType": "string",
       "notNull": false,
       "defaultValue": ""
-    },
-    {
-      "name": "commentsCount",
-      "type": "number",
-      "flexberryType": "int",
-      "notNull": false,
-      "defaultValue": ""
     }
   ],
   "belongsTo": [
@@ -87,19 +80,24 @@
     {
       "polymorphic": false,
       "presence": true,
-      "name": "author",
-      "relatedTo": "ember-flexberry-dummy-application-user",
+      "name": "type",
+      "relatedTo": "ember-flexberry-dummy-suggestion-type",
       "inverse": null
     },
     {
       "polymorphic": false,
       "presence": true,
-      "name": "type",
-      "relatedTo": "ember-flexberry-dummy-suggestion-type",
+      "name": "author",
+      "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     }
   ],
   "hasMany": [
+    {
+      "name": "files",
+      "relatedTo": "ember-flexberry-dummy-suggestion-file",
+      "inverse": "suggestion"
+    },
     {
       "name": "comments",
       "relatedTo": "ember-flexberry-dummy-comment",
@@ -108,11 +106,6 @@
     {
       "name": "userVotes",
       "relatedTo": "ember-flexberry-dummy-vote",
-      "inverse": "suggestion"
-    },
-    {
-      "name": "files",
-      "relatedTo": "ember-flexberry-dummy-suggestion-file",
       "inverse": "suggestion"
     }
   ],
@@ -420,12 +413,6 @@
           "caption": "",
           "hidden": true,
           "index": 14
-        },
-        {
-          "name": "commentsCount",
-          "caption": "Comments Count",
-          "hidden": false,
-          "index": 15
         }
       ],
       "belongsTo": [
@@ -490,15 +477,7 @@
           "inverse": null
         }
       ],
-      "hasMany": [
-        {
-          "projectionName": "CommentD",
-          "caption": "Comments",
-          "name": "comments",
-          "relatedTo": "ember-flexberry-dummy-comment",
-          "inverse": null
-        }
-      ]
+      "hasMany": []
     }
   ]
 }

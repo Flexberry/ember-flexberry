@@ -24,13 +24,6 @@ module.exports = {
      * @return {Object} Сustom template variables.
      */
     locals: function (options) {
-        var projectTypeNameCamel = "App";
-        var projectTypeNameCebab = "app";
-        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
-            options.dummy = true;
-            projectTypeNameCamel = "Addon";
-            projectTypeNameCebab = "addon";
-        }
         var coreBlueprint = new CoreBlueprint(this, options);
         return lodash.defaults({
             children: coreBlueprint.children,
@@ -41,8 +34,6 @@ module.exports = {
             applicationCaption: coreBlueprint.sitemap.applicationCaption,
             applicationTitle: coreBlueprint.sitemap.applicationTitle,
             inflectorIrregular: coreBlueprint.inflectorIrregular,
-            projectTypeNameCamel: projectTypeNameCamel,
-            projectTypeNameCebab: projectTypeNameCebab // for use in files\ember-cli-build.js
         }, coreBlueprint.lodashVariablesApplicationMenu // for use in files\__root__\locales\**\translations.js
         );
     }

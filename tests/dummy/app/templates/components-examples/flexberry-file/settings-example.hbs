@@ -1,23 +1,23 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-file.settings-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
-  {{#settings-example
-    controllerProperties=this
-    componentSettingsMetadata=componentSettingsMetadata
-    componentTemplateText=componentTemplateText
-  }}
-    {{flexberry-file
-      value=model.file
-      placeholder=placeholder
-      readonly=readonly
-      uploadUrl=uploadUrl
-      maxUploadFileSize=maxUploadFileSize
-      showPreview=showPreview
-      showUploadButton=showUploadButton
-      showDownloadButton=showDownloadButton
-      showModalDialogOnUploadError=showModalDialogOnUploadError
-      showModalDialogOnDownloadError=showModalDialogOnDownloadError
-      class=class
-      buttonClass=buttonClass
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
     }}
-  {{/settings-example}}
+      {{flexberry-file
+        value=model.file
+        placeholder=placeholder
+        readonly=readonly
+        uploadUrl=uploadUrl
+        maxUploadFileSize=maxUploadFileSize
+        showPreview=showPreview
+        showUploadButton=showUploadButton
+        showDownloadButton=showDownloadButton  
+        showModalDialogOnUploadError=showModalDialogOnUploadError
+        showModalDialogOnDownloadError=showModalDialogOnDownloadError
+      }}
+    {{/settings-example}}
+  </div>
 </form>

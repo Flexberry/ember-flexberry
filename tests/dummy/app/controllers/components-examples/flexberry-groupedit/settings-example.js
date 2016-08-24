@@ -186,6 +186,30 @@ export default EditFormController.extend({
   immediateDelete: false,
 
   /**
+    Flag for 'flexberry-groupedit' component 'editOnSeperateRoute' property.
+
+    @property editOnSeperateRoute
+    @type Boolean
+   */
+  editOnSeperateRoute: false,
+
+  /**
+    Flag for 'flexberry-groupedit' component 'saveBeforeRoutLeave' property.
+
+    @property saveBeforeRoutLeave
+    @type Boolean
+   */
+  saveBeforeRoutLeave: false,
+
+  /**
+    Route name for 'flexberry-groupedit' component 'editFormRoute' property.
+
+    @property editFormRoute
+    @type Boolean
+   */
+  editFormRoute: undefined,
+
+  /**
     Template text for 'flexberry-groupedit' component.
 
     @property componentTemplateText
@@ -210,6 +234,9 @@ export default EditFormController.extend({
     '  singleColumnHeaderTitle=singleColumnHeaderTitle<br>' +
     '  rowClickable=rowClickable<br>' +
     '  immediateDelete=immediateDelete<br>' +
+    '  editOnSeperateRoute=editOnSeperateRoute<br>' +
+    '  saveBeforeRoutLeave=saveBeforeRoutLeave<br>' +
+    '  editFormRoute=editFormRoute<br>' +
     '}}'),
 
   /**
@@ -327,6 +354,24 @@ export default EditFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'immediateDelete'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'editOnSeperateRoute',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'editOnSeperateRoute'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'saveBeforeRoutLeave',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'saveBeforeRoutLeave'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'editFormRoute',
+      settingType: 'string',
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'editFormRoute'
     });
 
     return componentSettingsMetadata;

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "EmberFlexberryDummyLocalizedSuggestionType",
   "modelName": "ember-flexberry-dummy-localized-suggestion-type",
   "className": "LocalizedSuggestionType",
@@ -124,19 +124,6 @@
           "caption": "Localization",
           "name": "localization",
           "relatedTo": "ember-flexberry-dummy-localization",
-          "inverse": null
-        },
-        {
-          "lookupValue": null,
-          "lookupValueField": null,
-          "relationName": "SuggestionType",
-          "belongsTo": [],
-          "hidden": true,
-          "attrs": [],
-          "index": 3,
-          "caption": "",
-          "name": "suggestionType",
-          "relatedTo": "ember-flexberry-dummy-suggestion-type",
           "inverse": null
         }
       ],

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "EmberFlexberryDummySuggestionFile",
   "modelName": "ember-flexberry-dummy-suggestion-file",
   "className": "SuggestionFile",
@@ -96,21 +96,7 @@
           "index": 1
         }
       ],
-      "belongsTo": [
-        {
-          "lookupValue": null,
-          "lookupValueField": null,
-          "relationName": "Suggestion",
-          "belongsTo": [],
-          "hidden": true,
-          "attrs": [],
-          "index": 2,
-          "caption": "",
-          "name": "suggestion",
-          "relatedTo": "ember-flexberry-dummy-suggestion",
-          "inverse": null
-        }
-      ],
+      "belongsTo": [],
       "hasMany": []
     }
   ]

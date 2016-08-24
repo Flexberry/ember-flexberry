@@ -253,10 +253,6 @@ Ember.$.extend(true, translations, {
             'custom-filter': {
               'caption': 'Настройка фильтра',
               'title': ''
-            },
-            'configurate-rows': {
-              'caption': 'Раскраска строк',
-              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -530,9 +526,6 @@ Ember.$.extend(true, translations, {
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Настройка фильтра'
-        },
-        'configurate-rows': {
-          'caption': 'Flexberry-objectlistview. Раскраска строк'
         }
       },
       'flexberry-simpledatetime': {

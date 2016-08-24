@@ -241,9 +241,6 @@ export default Ember.Service.extend({
         columnNumber: null,
         stack: null
       }, error));
-
-      originalEmberLoggerError(error);
-
       return _this._storeToApplicationLog(messageCategory.error, message, formattedMessage);
     };
 
@@ -254,6 +251,8 @@ export default Ember.Service.extend({
 
     // Extend Ember.Logger.log logic.
     Ember.Logger.error = function() {
+      originalEmberLoggerError(...arguments);
+
       return onError(joinArguments(...arguments), false);
     };
 

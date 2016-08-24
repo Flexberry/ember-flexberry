@@ -10,7 +10,7 @@
         componentName="SuggestionsObjectListView"
         content=model
         modelName="ember-flexberry-dummy-suggestion"
-        editFormRoute='ember-flexberry-dummy-suggestion-edit'
+        editFormRoute=editFormRoute
         modelProjection=projection
         placeholder=placeholder
         readonly=readonly
@@ -44,6 +44,7 @@
         previousPage=(action "previousPage")
         gotoPage=(action "gotoPage")
         nextPage=(action "nextPage")
+        configurateRow=(action "configurateRow")
         componentName="FOLVSettingExampleObjectListView"
         }}
     {{/settings-example}}

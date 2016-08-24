@@ -11,11 +11,6 @@ export default ApplicationSerializer.extend({
     userVotes: { serialize: false, deserialize: 'records' }
   },
 
-  serialize(snapshot, options) {
-    let data = this._super(...arguments);
-    delete data.СommentsCount;
-    return data;
-  },
   /**
     Property name in which object identifier is kept.
    */

@@ -13,7 +13,7 @@ const componentMaps = [
   { name: "flexberry-file", types: ["file"] },
   { name: "flexberry-checkbox", types: ["boolean"] },
   { name: "flexberry-datepicker", types: ["date"] },
-  { name: "flexberry-field", types: ["string", "number", "decimal"] }
+  { name: "flexberry-field", types: ["string", "number"] }
 ];
 
 

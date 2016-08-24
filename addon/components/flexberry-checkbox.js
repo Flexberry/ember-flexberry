@@ -8,10 +8,10 @@ import FlexberryBaseComponent from './flexberry-base-component';
 /**
   Checkbox component for Semantic UI.
 
-  @example
-    ```handlebars
-    {{flexberry-checkbox checked=model.enabled label='Enabled'}}
-    ```
+  Sample usage:
+  ```handlebars
+  {{flexberry-checkbox checked=model.enabled label='Enabled'}}
+  ```
 
   @class FlexberryCheckboxComponent
   @extends FlexberryBaseComponent
@@ -23,7 +23,7 @@ export default FlexberryBaseComponent.extend({
     @property value
     @type Boolean
     @default false
-  */
+   */
   value: false,
 
   /**

@@ -18,12 +18,12 @@ export default Ember.Controller.extend({
   readonly: false,
 
   /**
-    Classes for component wrapper.
+    Component's wrapper CSS classes.
 
     @property class
     @type String
   */
-  class: 'toggle',
+  class: '',
 
   /**
     Template text for 'flexberry-checkbox' component.
@@ -67,8 +67,9 @@ export default Ember.Controller.extend({
     });
     componentSettingsMetadata.pushObject({
       settingName: 'class',
-      settingType: 'string',
-      settingDefaultValue: 'toggle',
+      settingType: 'css',
+      settingDefaultValue: '',
+      settingAvailableItems: ['radio', 'slider', 'toggle'],
       bindedControllerPropertieName: 'class'
     });
 

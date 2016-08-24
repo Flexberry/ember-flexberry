@@ -1,4 +1,4 @@
-<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.settings-example.caption"}}</h3>
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.configurate-rows.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
     {{#settings-example
@@ -12,25 +12,6 @@
         modelName="ember-flexberry-dummy-suggestion"
         editFormRoute='ember-flexberry-dummy-suggestion-edit'
         modelProjection=projection
-        placeholder=placeholder
-        readonly=readonly
-        tableStriped=tableStriped
-        allowColumnResize=allowColumnResize
-        createNewButton=createNewButton
-        deleteButton=deleteButton
-        refreshButton=refreshButton
-        enableFilters=enableFilters
-        filters=filters
-        applyFilters=(action "applyFilters")
-        resetFilters=(action "resetFilters")
-        filterButton=filterButton
-        showCheckBoxInRow=showCheckBoxInRow
-        showDeleteButtonInRow=showDeleteButtonInRow
-        showEditMenuItemInRow=showEditMenuItemInRow
-        showDeleteMenuItemInRow=showDeleteMenuItemInRow
-        rowClickable=rowClickable
-        orderable=orderable
-        singleColumnHeaderTitle=singleColumnHeaderTitle
         filterByAnyMatch=(action "filterByAnyMatch")
         filterText=filter
         sorting=computedSorting
@@ -44,6 +25,7 @@
         previousPage=(action "previousPage")
         gotoPage=(action "gotoPage")
         nextPage=(action "nextPage")
+        configurateRow=(action "configurateRow")
         componentName="FOLVSettingExampleObjectListView"
         }}
     {{/settings-example}}

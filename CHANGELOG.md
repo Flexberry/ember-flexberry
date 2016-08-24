@@ -4,18 +4,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0-beta.1] - 2016-08-24
 ### Changed
 * Updated `semantic-ui-ember` addon to v2.0.0-beta.0.
 
 ### Deprecated
 * `edit-form` controller:
-  * `rollbackHasManyRelationships` method was deprecated, use model's `rollbackHasMany` method instead.
+    * `rollbackHasManyRelationships` method was deprecated, use model's `rollbackHasMany` method instead.
 
 ### Fixed
 * Fixed localization of column names displayed in column settings window.
 
 ### Removed
-* Remove 'fluid' CSS-class from component's defaults for `flexberry-file` component.
+* `flexberry-file` component:
+    * Remove 'fluid' CSS-class from component's defaults for `flexberry-file` component.
 
 ## [0.5.0-beta.0] - 2016-08-23
 ### Added

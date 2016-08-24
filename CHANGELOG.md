@@ -4,6 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+* Updated `semantic-ui-ember` addon to v2.0.0-beta.0.
+
+### Deprecated
+* `edit-form` controller:
+  * `rollbackHasManyRelationships` method was deprecated, use model's `rollbackHasMany` method instead.
+
+### Fixed
+* Fixed localization of column names displayed in column settings window.
+
 ### Removed
 * Remove 'fluid' CSS-class from component's defaults for `flexberry-file` component.
 
@@ -39,6 +49,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Enums:
     * Moved enum initializer to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
     * Renamed `enum-captions` helper to `flexberry-enum`.
+* Changed dependency on `ember-flexberry-data` addon to [`v0.4.0`](https://github.com/Flexberry/ember-flexberry-data/releases/tag/0.4.0).
 
 ### Fixed
 * `flexberry-objectlistview` component:

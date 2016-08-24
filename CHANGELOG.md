@@ -101,6 +101,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed `flexberry-menu` for configuration of columns settings in `flexberry-objectlistview` component after changing current locale for internationalization to another language and back again.
 * Now [`displayAttributeName` property](http://flexberry.github.io/Documentation/master/classes/FlexberryLookup.html#property_displayAttributeName) is required for only autocomplete and dropdown modes in `flexberry-lookup` component.
 
+### Removed
+* Remove 'fluid' CSS-class from component's defaults for `flexberry-file` component.
+
+
 ### Known issues
 * Only one `flexberry-objectlistview` or `flexberry-groupedit` component could be used on particular form.
 * It is not possible to open any route for generated application prototype (in case of generation of whole application prototype) because of wrong generation of internationalization mechanism. Also probably lookup components on edit forms of generated application prototype may not work.

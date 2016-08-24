@@ -158,6 +158,10 @@ Ember.$.extend(true, translations, {
             'conditional-render-example': {
               'caption': 'Conditional render example',
               'title': ''
+            },
+            'items': {
+              'caption': 'Example values of the items',
+              'title': ''
             }
           },
           'flexberry-field': {
@@ -245,6 +249,10 @@ Ember.$.extend(true, translations, {
             },
             'custom-filter': {
               'caption': 'Custom filter',
+              'title': ''
+            },
+            'configurate-rows': {
+              'caption': 'Configurate rows',
               'title': ''
             }
           },
@@ -436,6 +444,10 @@ Ember.$.extend(true, translations, {
             '{{pageTemplate}}' +
             'So, once the value is selected, the component will be rendered as &lt;span&gt;selected value&lt;/span&gt;,<br>' +
             'after that check browser\'s console, it must be free from \"Semantic-UI\" and other errors.'
+        },
+        'items-example': {
+          'caption': 'Flexberry-dropdown. Example values of the items',
+          'checkbox-caption': 'use the itemsObject'
         }
       },
       'flexberry-field': {
@@ -514,6 +526,9 @@ Ember.$.extend(true, translations, {
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'
+        },
+        'configurate-rows': {
+          'caption': 'Flexberry-objectlistview. Configurate rows'
         }
       },
       'flexberry-simpledatetime': {

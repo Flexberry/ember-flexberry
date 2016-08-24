@@ -5,49 +5,49 @@
       "displayAttributeName": null,
       "required": false,
       "relationName": "Type",
-      "projection": "SuggestionTypeList"
+      "projection": "SuggestionTypeL"
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "Author",
-      "projection": "ApplicationUserList"
+      "projection": "ApplicationUserL"
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "Editor1",
-      "projection": "ApplicationUserList"
+      "projection": "ApplicationUserL"
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "Files.Suggestion",
-      "projection": "SuggestionList"
+      "projection": "SuggestionL"
     },
     {
       "master": "applicationUser",
       "displayAttributeName": "name",
       "required": true,
       "relationName": "UserVotes.ApplicationUser",
-      "projection": "ApplicationUserList"
+      "projection": "ApplicationUserL"
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "UserVotes.Suggestion",
-      "projection": "SuggestionList"
+      "projection": "SuggestionL"
     },
     {
       "master": "author",
       "displayAttributeName": "name",
       "required": true,
       "relationName": "Comments.Author",
-      "projection": "ApplicationUserList"
+      "projection": "ApplicationUserL"
     }
   ],
   "caption": "Suggestion",

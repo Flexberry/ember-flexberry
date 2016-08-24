@@ -64,7 +64,7 @@
   <div class="field">
     <label>{{t "forms.integration-examples.edit-form.readonly-mode.enumeration-caption"}}</label>
     {{flexberry-dropdown
-      items=(enum-captions "integration-examples/edit-form/readonly-mode/enumeration")
+      items=(flexberry-enum "integration-examples/edit-form/readonly-mode/enumeration")
       value=model.enumeration
       readonly=readonly
     }}

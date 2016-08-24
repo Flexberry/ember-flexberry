@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "EmberFlexberryDummyComment",
   "modelName": "ember-flexberry-dummy-comment",
   "className": "Comment",
@@ -210,7 +210,7 @@
           "lookupValueField": null,
           "relationName": "Suggestion",
           "belongsTo": [],
-          "hidden": false,
+          "hidden": true,
           "attrs": [
             {
               "name": "address",

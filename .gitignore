@@ -24,6 +24,7 @@ testem.log
 /blueprints/.vscode
 **/tsconfig.json
 /blueprints/.editorconfig
+/.vscode
 
 .vscodeignore
 jsconfig.json

@@ -24,6 +24,13 @@ module.exports = {
      * @return {Object} Сustom template variables.
      */
     locals: function (options) {
+        var projectTypeNameCamel = "App";
+        var projectTypeNameCebab = "app";
+        if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
+            options.dummy = true;
+            projectTypeNameCamel = "Addon";
+            projectTypeNameCebab = "addon";
+        }
         var coreBlueprint = new CoreBlueprint(this, options);
         return lodash.defaults({
             children: coreBlueprint.children,
@@ -33,6 +40,9 @@ module.exports = {
             modelsImportedProperties: coreBlueprint.modelsImportedProperties,
             applicationCaption: coreBlueprint.sitemap.applicationCaption,
             applicationTitle: coreBlueprint.sitemap.applicationTitle,
+            inflectorIrregular: coreBlueprint.inflectorIrregular,
+            projectTypeNameCamel: projectTypeNameCamel,
+            projectTypeNameCebab: projectTypeNameCebab // for use in files\ember-cli-build.js
         }, coreBlueprint.lodashVariablesApplicationMenu // for use in files\__root__\locales\**\translations.js
         );
     }
@@ -51,6 +61,7 @@ var CoreBlueprint = (function () {
         var importProperties = [];
         var formsImportedProperties = [];
         var modelsImportedProperties = [];
+        var inflectorIrregular = [];
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
             var formFileName = listForms_1[_i];
             var listFormFile = path.join(listFormsDir, formFileName);
@@ -60,7 +71,7 @@ var CoreBlueprint = (function () {
             routes.push("  this.route('" + listFormName + "');");
             routes.push("  this.route('" + listForm.editForm + "', { path: '" + listForm.editForm + "/:id' });");
             routes.push("  this.route('" + listForm.newForm + ".new', { path: '" + listForm.newForm + "/new' });");
-            importProperties.push("import " + listForm.name + "Form from 'forms/" + listFormName + "';");
+            importProperties.push("import " + listForm.name + "Form from './forms/" + listFormName + "';");
             formsImportedProperties.push("    '" + listFormName + "': " + listForm.name + "Form");
         }
         for (var _a = 0, editForms_1 = editForms; _a < editForms_1.length; _a++) {
@@ -69,7 +80,7 @@ var CoreBlueprint = (function () {
             var content = stripBom(fs.readFileSync(editFormFile, "utf8"));
             var editForm = JSON.parse(content);
             var editFormName = path.parse(formFileName).name;
-            importProperties.push("import " + editForm.name + "Form from 'forms/" + editFormName + "';");
+            importProperties.push("import " + editForm.name + "Form from './forms/" + editFormName + "';");
             formsImportedProperties.push("    '" + editFormName + "': " + editForm.name + "Form");
         }
         for (var _b = 0, models_1 = models; _b < models_1.length; _b++) {
@@ -78,8 +89,11 @@ var CoreBlueprint = (function () {
             var content = stripBom(fs.readFileSync(modelFile, "utf8"));
             var model = JSON.parse(content);
             var modelName = path.parse(modelFileName).name;
-            importProperties.push("import " + model.name + "Model from 'models/" + modelName + "';");
+            var LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
+            var irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
+            importProperties.push("import " + model.name + "Model from './models/" + modelName + "';");
             modelsImportedProperties.push("    '" + modelName + "': " + model.name + "Model");
+            inflectorIrregular.push("inflector.irregular('" + irregularLastWordOfModelName + "', '" + irregularLastWordOfModelName + "s');");
         }
         this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
         var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru");
@@ -96,6 +110,7 @@ var CoreBlueprint = (function () {
         this.importProperties = importProperties.join("\n");
         this.formsImportedProperties = formsImportedProperties.join(",\n");
         this.modelsImportedProperties = modelsImportedProperties.join(",\n");
+        this.inflectorIrregular = inflectorIrregular.join("\n");
     }
     return CoreBlueprint;
 }());

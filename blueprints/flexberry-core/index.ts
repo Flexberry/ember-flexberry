@@ -28,6 +28,14 @@ module.exports = {
    * @return {Object} Сustom template variables.
    */
   locals: function (options) {
+    let projectTypeNameCamel = "App";
+    let projectTypeNameCebab = "app";
+    if( options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+      options.dummy = true;
+      projectTypeNameCamel = "Addon";
+      projectTypeNameCebab = "addon";
+    }
+
     let coreBlueprint = new CoreBlueprint(this, options);
     return lodash.defaults({
       children: coreBlueprint.children,// for use in files\__root__\controllers\application.js
@@ -37,6 +45,9 @@ module.exports = {
       modelsImportedProperties: coreBlueprint.modelsImportedProperties,// for use in files\__root__\locales\**\translations.js
       applicationCaption: coreBlueprint.sitemap.applicationCaption,// for use in files\__root__\locales\**\translations.js
       applicationTitle: coreBlueprint.sitemap.applicationTitle,// for use in files\__root__\locales\**\translations.js
+      inflectorIrregular: coreBlueprint.inflectorIrregular,// for use in files\__root__\models\custom-inflector-rules.js
+      projectTypeNameCamel: projectTypeNameCamel,// for use in files\ember-cli-build.js
+      projectTypeNameCebab: projectTypeNameCebab// for use in files\ember-cli-build.js
       },
       coreBlueprint.lodashVariablesApplicationMenu// for use in files\__root__\locales\**\translations.js
     );
@@ -52,8 +63,10 @@ class CoreBlueprint {
   modelsImportedProperties: string;
   lodashVariablesApplicationMenu: {};
   sitemap: metadata.Sitemap;
+  inflectorIrregular: string;
 
   constructor(blueprint, options) {
+
     let listFormsDir = path.join(options.metadataDir, "list-forms");
     let listForms = fs.readdirSync(listFormsDir);
     let editFormsDir = path.join(options.metadataDir, "edit-forms");
@@ -66,6 +79,7 @@ class CoreBlueprint {
     let importProperties = [];
     let formsImportedProperties = [];
     let modelsImportedProperties = [];
+    let inflectorIrregular = [];
     for (let formFileName of listForms) {
       let listFormFile = path.join(listFormsDir, formFileName);
       let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
@@ -74,7 +88,7 @@ class CoreBlueprint {
       routes.push(`  this.route('${listFormName}');`);
       routes.push(`  this.route('${listForm.editForm}', { path: '${listForm.editForm}/:id' });`);
       routes.push(`  this.route('${listForm.newForm}.new', { path: '${listForm.newForm}/new' });`);
-      importProperties.push(`import ${listForm.name}Form from 'forms/${listFormName}';`);
+      importProperties.push(`import ${listForm.name}Form from './forms/${listFormName}';`);
       formsImportedProperties.push(`    '${listFormName}': ${listForm.name}Form`);
     }
     for (let formFileName of editForms) {
@@ -82,7 +96,7 @@ class CoreBlueprint {
       let content = stripBom(fs.readFileSync(editFormFile, "utf8"));
       let editForm: metadata.EditForm = JSON.parse(content);
       let editFormName = path.parse(formFileName).name;
-      importProperties.push(`import ${editForm.name}Form from 'forms/${editFormName}';`);
+      importProperties.push(`import ${editForm.name}Form from './forms/${editFormName}';`);
       formsImportedProperties.push(`    '${editFormName}': ${editForm.name}Form`);
     }
     for (let modelFileName of models) {
@@ -90,8 +104,11 @@ class CoreBlueprint {
       let content = stripBom(fs.readFileSync(modelFile, "utf8"));
       let model: metadata.Model = JSON.parse(content);
       let modelName = path.parse(modelFileName).name;
-      importProperties.push(`import ${model.name}Model from 'models/${modelName}';`);
+      let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
+      let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
+      importProperties.push(`import ${model.name}Model from './models/${modelName}';`);
       modelsImportedProperties.push(`    '${modelName}': ${model.name}Model`);
+      inflectorIrregular.push(`inflector.irregular('${irregularLastWordOfModelName}', '${irregularLastWordOfModelName}s');`);
     }
 
     this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
@@ -109,6 +126,7 @@ class CoreBlueprint {
     this.importProperties = importProperties.join("\n");
     this.formsImportedProperties = formsImportedProperties.join(",\n");
     this.modelsImportedProperties = modelsImportedProperties.join(",\n");
+    this.inflectorIrregular = inflectorIrregular.join("\n");
   }
 
 }

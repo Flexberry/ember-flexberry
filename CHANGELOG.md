@@ -3,8 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Changed
 
+## [0.5.0-beta.0] - 2016-08-23
 ### Added
 * Blueprints:
     * Add support generation into ember addon.
@@ -13,16 +13,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Added support of HTML attributes.
 
 ### Fixed
+* `flexberry-checkbox` component:
+    * Now if `flexberry-checkbox` was unchecked it doest'n has checked class.
+* `flexberry-dropdown` component:
+    * Fixed displaying of enums with empty values.
+* `log` service will write error messages to console along with sending it to server if error would be handled in `Ember.onerror` or `Ember.RSVP.on('error')` events.
+* Blueprints:
+    * Fixed decimal fields generation on edit-forms (it will generate `flexberry-field` instead of `flexberry-dropdown`).
 
 
 ## [0.4.0] - 2016-08-15
-### Changed
-* Transforms:
-    * Moved transforms to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
-* Enums:
-    * Moved enum initializer to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
-    * Renamed `enum-captions` helper to `flexberry-enum`.
-
 ### Added
 * Blueprints:
     * Add localization support for generated ember entities.
@@ -31,13 +31,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add support object type for `items` property.
     * Add support empty values for generated enums.
 
+### Changed
+* Transforms:
+    * Moved transforms to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+* Enums:
+    * Moved enum initializer to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+    * Renamed `enum-captions` helper to `flexberry-enum`.
+
 ### Fixed
 * `flexberry-objectlistview` component:
     * Incorrect work of pagination for large lists.
 
+### Known issues
+* Same as in previous release except issues in blueprints.
+
 ## [0.3.0] - 2016-07-29
 ### Added
-* Custom internationalized captions for boolean type in `object-list-view-cell` commponent.
+* Custom internationalized captions for boolean type in `object-list-view-cell` component.
 * Blueprints:
     * Add regeneration for models and serializers. Now models and serizlizers generates into separate regeneratable mixins, model and serializer classes will not be replaced during regeneration.
     * Add new `flexberry-group` blueprint for generation of group of entities by one blueprint.
@@ -104,7 +114,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Placeholder text localization for `flexberry-dropdown` component works improperly when `readonly` property changes dynamically. Also placeholder text is not localize in all browsers except Google Chrome.
 * Some text is not localized in user settings dialog.
 * There are some problems with displaying styles of user settings dialog.
-* It is possible to save user settings when user settings serive is off.
 * Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after deleting of user setting or changing page on list form.
 
 ## [0.2.1] - 2016-07-07

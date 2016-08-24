@@ -14,6 +14,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Fixed localization of column names displayed in column settings window.
 
+### Removed
+* Remove 'fluid' CSS-class from component's defaults for `flexberry-file` component.
+
 ## [0.5.0-beta.0] - 2016-08-23
 ### Added
 * Blueprints:

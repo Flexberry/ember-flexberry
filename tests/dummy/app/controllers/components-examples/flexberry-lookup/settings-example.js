@@ -83,7 +83,7 @@ export default EditFormController.extend({
     @type String
     @default 'purple'
   */
-  chooseButtonClass: 'purple',
+  chooseButtonClass: '',
 
   /**
     Text for 'flexberry-lookup' component 'removeButtonClass' property.
@@ -92,7 +92,7 @@ export default EditFormController.extend({
     @type String
     @default 'olive'
   */
-  removeButtonClass: 'olive',
+  removeButtonClass: '',
 
   /**
     Template text for 'flexberry-lookup' component.
@@ -172,14 +172,16 @@ export default EditFormController.extend({
     });
     componentSettingsMetadata.pushObject({
       settingName: 'chooseButtonClass',
-      settingType: 'string',
-      settingDefaultValue: 'purple',
+      settingType: 'css',
+      settingDefaultValue: '',
+      settingAvailableItems: ['blue basic', 'positive', 'teal colored'],
       bindedControllerPropertieName: 'chooseButtonClass'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'removeButtonClass',
-      settingType: 'string',
-      settingDefaultValue: 'olive',
+      settingType: 'css',
+      settingDefaultValue: '',
+      settingAvailableItems: ['purple basic', 'negative', 'yellow colored'],
       bindedControllerPropertieName: 'removeButtonClass'
     });
 

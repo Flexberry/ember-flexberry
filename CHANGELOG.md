@@ -21,6 +21,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprints:
     * Fixed decimal fields generation on edit-forms (it will generate `flexberry-field` instead of `flexberry-dropdown`).
 
+### Removed
+* Remove 'fluid' CSS-class from component's defaults for `flexberry-file` component.
 
 ## [0.4.0] - 2016-08-15
 ### Added
@@ -100,10 +102,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed blueprints dependency for generation of application prototype for hide the sidebar with sitemap after click on sitemap-node.
 * Fixed `flexberry-menu` for configuration of columns settings in `flexberry-objectlistview` component after changing current locale for internationalization to another language and back again.
 * Now [`displayAttributeName` property](http://flexberry.github.io/Documentation/master/classes/FlexberryLookup.html#property_displayAttributeName) is required for only autocomplete and dropdown modes in `flexberry-lookup` component.
-
-### Removed
-* Remove 'fluid' CSS-class from component's defaults for `flexberry-file` component.
-
 
 ### Known issues
 * Only one `flexberry-objectlistview` or `flexberry-groupedit` component could be used on particular form.

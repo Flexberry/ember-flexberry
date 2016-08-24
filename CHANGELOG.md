@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Deprecated
+* EditFormController:
+  * Function `rollbackHasManyRelationships` deprecated, use `rollbackHasMany` from model.
 
 ## [0.5.0-beta.0] - 2016-08-23
 ### Added
@@ -20,7 +23,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `log` service will write error messages to console along with sending it to server if error would be handled in `Ember.onerror` or `Ember.RSVP.on('error')` events.
 * Blueprints:
     * Fixed decimal fields generation on edit-forms (it will generate `flexberry-field` instead of `flexberry-dropdown`).
-
 
 ## [0.4.0] - 2016-08-15
 ### Added

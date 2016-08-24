@@ -562,16 +562,11 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @method rollbackHasManyRelationships
     @param {DS.Model} model Record with hasMany relationships.
+    @deprecated Use `rollbackHasMany` from model.
   */
-  rollbackHasManyRelationships: function(model) {
-    model.eachRelationship((name, desc) => {
-      if (desc.kind === 'hasMany') {
-        model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
-          this.rollbackHasManyRelationships(record);
-          record.rollbackAttributes();
-        });
-      }
-    });
+  rollbackHasManyRelationships(model) {
+    Ember.deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
+    model.rollbackHasMany();
   },
 
   /**
@@ -627,4 +622,3 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     return Ember.RSVP.all(promises);
   },
 });
-

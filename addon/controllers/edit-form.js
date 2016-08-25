@@ -57,6 +57,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   parentRoute: undefined,
 
   /**
+    Route name corresponding this edit form.
+
+    @property routeName
+    @type String
+  */
+  routeName: undefined,
+
+  /**
     Indicates whether the current form is opened only for reading.
 
     @property readonly
@@ -283,6 +291,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         this.onSaveActionFulfilled();
         if (close) {
           this.close();
+        } else {
+          let routeName = this.get('routeName');
+          if (routeName.indexOf('.new') > 0)
+          {
+            this.transitionToRoute(routeName.slice(0, -4), this.get('model'));
+          }
         }
       });
     }).catch((errorData) => {

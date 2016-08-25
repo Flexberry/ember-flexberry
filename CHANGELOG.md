@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Rollback `semantic-ui-ember` addon to v0.9.3.
+
+### Fixed
+* `flexberry-checkbox` component:
+    * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doest'n has checked class.
 
 ## [0.5.0-beta.1] - 2016-08-24
 ### Changed

@@ -2,12 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.5.0-beta.2] - 2016-08-25
-### Added
-* Add transition from new to edit route after save.
+## [Unreleased]
+### Changed
+* Rollback `semantic-ui-ember` addon to v0.9.3.
 
+### Fixed
+* `flexberry-checkbox` component:
+    * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
+
+## [0.5.0-beta.2] - 2016-08-25
 ### Changed
 * Updated `ember-flexberry-data` addon to v0.5.0-beta.4.
+* Now performing transition to `edit-form` route after saving new model.
 
 ## [0.5.0-beta.1] - 2016-08-24
 ### Changed

@@ -319,7 +319,7 @@ export default FlexberryBaseComponent.extend({
     }}
     ```
   */
-  class: 'fluid',
+  class: '',
 
   /**
     CSS-classes names for component's add, remove, upload, download buttons.

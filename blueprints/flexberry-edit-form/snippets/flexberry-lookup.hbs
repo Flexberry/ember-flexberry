@@ -1,5 +1,5 @@
 <div class="field">
-    <label><%= caption %></label>
+    <label>{{<%= caption %>}}</label>
   {{#if model.errors.<%= name %>}}
       <span style="color:red">{{model.errors.<%= name %>}}</span>
   {{/if}}
@@ -11,7 +11,7 @@
   <%if(lookupValueField){%>displayAttributeName='<%= lookupValueField %>'<%}else{%><%}%>
   relationName='<%= name %>'
   projection='<%= projection %>'
-  title='<%= caption %>'
+  title=(<%= caption %>)
   readonly=<%= readonly %>
   }}
   {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}

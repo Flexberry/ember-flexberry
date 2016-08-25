@@ -1,0 +1,33 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-dropdown.items-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="info"
+    closeable=false
+    visible=true
+    icon="info circle icon"
+    title=(t "forms.components-examples.flexberry-dropdown.items-example.info-caption")
+    message=message
+  }}        
+  <div class="field">
+    {{flexberry-checkbox
+      class=(concat (if value "disabled") " toggle")
+      onChange=(action "checked")
+      label=(t "forms.components-examples.flexberry-dropdown.items-example.checkbox-caption")
+    }}
+
+  </div>
+  <div class="field">
+    <div class="ui action fluid input">
+      {{flexberry-dropdown
+        items=currentItems
+        placeholder=placeholder
+        readonly=readonly
+        class="fluid"
+        value=value
+      }}
+      <button class="ui green basic button icon" {{action 'resetValue'}}>
+        <i class="large remove circle icon"></i>
+      </button>
+    </div>
+  </div>
+</form>

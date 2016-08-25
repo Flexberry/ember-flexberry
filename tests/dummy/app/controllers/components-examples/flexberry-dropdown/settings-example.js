@@ -1,9 +1,17 @@
 import Ember from 'ember';
 import Enumeration from '../../../enums/components-examples/flexberry-dropdown/settings-example/enumeration';
-import { enumCaptions } from 'ember-flexberry/utils/enum-functions';
+import { enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
 import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({
+  /**
+    Component's wrapper CSS classes.
+
+    @property class
+    @type String
+  */
+  class: '',
+
   /**
     Text for 'flexberry-dropdown' component 'placeholder' property.
 
@@ -38,10 +46,11 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-dropdown<br>' +
-    '  items=(enum-captions \"components-examples/flexberry-dropdown/settings-example/enumeration\")<br>' +
+    '  items=(flexberry-enum \"components-examples/flexberry-dropdown/settings-example/enumeration\")<br>' +
     '  value=model.enumeration<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
+    '  class=class<br>' +
     '}}'),
 
   /**
@@ -71,7 +80,13 @@ export default Ember.Controller.extend({
       settingDefaultValue: false,
       bindedControllerPropertieName: 'readonly'
     });
-
+    componentSettingsMetadata.pushObject({
+      settingName: 'class',
+      settingType: 'css',
+      settingDefaultValue: '',
+      settingAvailableItems: ['scrolling', 'compact', 'fluid'],
+      bindedControllerPropertieName: 'class'
+    });
     return componentSettingsMetadata;
   })
 });

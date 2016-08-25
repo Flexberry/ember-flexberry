@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 
 // TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
@@ -93,7 +94,13 @@ export default Ember.Mixin.create({
 
   },
 
-  _generateColumns: function(attributes, columnsBuf, relationshipPath) {
+  /**
+    Generate the columns.
+
+    @method _generateColumns
+    @private
+  */
+  _generateColumns(attributes, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];
     relationshipPath = relationshipPath || '';
 
@@ -111,16 +118,16 @@ export default Ember.Mixin.create({
         case 'belongsTo':
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
-            if (attr.options.displayMemberPath) {
-              bindingPath += '.' + attr.options.displayMemberPath;
-            } else {
-              bindingPath += '.id';
+            let column = this._createColumn(attr, attrName, bindingPath);
+
+            if (column.cellComponent.componentName === 'object-list-view-cell') {
+              if (attr.options.displayMemberPath) {
+                column.propName += '.' + attr.options.displayMemberPath;
+              } else {
+                column.propName += '.id';
+              }
             }
 
-            let column = {
-              header: attr.caption,
-              propName: bindingPath
-            };
             columnsBuf.push(column);
           }
 
@@ -134,18 +141,99 @@ export default Ember.Mixin.create({
           }
 
           let bindingPath = currentRelationshipPath + attrName;
-          let column = {
-            header: attr.caption,
-            propName: bindingPath
-          };
+          let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
 
         default:
-          throw new Error(`Unknown kind of projection attribute: ${attr.kind}`);
+          Ember.Logger.error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
 
     return columnsBuf;
-  }
+  },
+
+  /**
+    Create the key from locales.
+  */
+  _createKey(bindingPath) {
+    let projection = this.get('modelProjection');
+    let modelName = projection.modelName;
+    let key;
+
+    let mainModelProjection = this.get('mainModelProjection');
+    if (mainModelProjection) {
+      let modelClass = this.get('store').modelFor(modelName);
+      let nameRelationship;
+      let mainModelName;
+
+      modelClass.eachRelationship(function(name, descriptor) {
+        if (descriptor.kind === 'belongsTo' && descriptor.options.inverse) {
+          nameRelationship = descriptor.options.inverse;
+          mainModelName = descriptor.type;
+        }
+      });
+      key = 'models.' + mainModelName + '.projections.' + mainModelProjection.projectionName + '.' + nameRelationship + '.' + bindingPath + '.caption';
+    } else {
+      key = 'models.' + modelName + '.projections.' + projection.projectionName + '.' + bindingPath + '.caption';
+    }
+
+    return key;
+  },
+
+  /**
+    Create the column.
+
+    @method _createColumn
+    @private
+  */
+  _createColumn(attr, attrName, bindingPath) {
+    // We get the 'getCellComponent' function directly from the controller,
+    // and do not pass this function as a component attrubute,
+    // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
+    // if controller's 'getCellComponent' method call its super method from the base controller.
+    let currentController = this.get('currentController');
+    let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
+    let cellComponent = this.get('cellComponent');
+
+    if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
+      let recordModel =  (this.get('content') || {}).type || null;
+      cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
+    }
+
+    let key = this._createKey(bindingPath);
+    let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
+
+    let column = {
+      header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
+      propName: bindingPath, // TODO: rename column.propName
+      cellComponent: cellComponent,
+    };
+
+    if (valueFromLocales) {
+      column.keyLocale = key;
+    }
+
+    let customColumnAttributesFunc = this.get('customColumnAttributes');
+    if (customColumnAttributesFunc) {
+      let customColAttr = customColumnAttributesFunc(attr, bindingPath);
+      if (customColAttr && (typeof customColAttr === 'object')) {
+        Ember.$.extend(true, column, customColAttr);
+      }
+    }
+
+    if (this.get('enableFilters')) {
+      this._addFilterForColumn(column, attr, bindingPath);
+    }
+
+    let sortDef;
+    let sorting = this.get('sorting');
+    if (sorting && (sortDef = sorting[bindingPath])) {
+      column.sorted = true;
+      column.sortAscending = sortDef.sortAscending;
+      column.sortNumber = sortDef.sortNumber;
+    }
+
+    return column;
+  },
 });

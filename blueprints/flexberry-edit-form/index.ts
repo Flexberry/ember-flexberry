@@ -7,12 +7,13 @@ import fs = require("fs");
 import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
+import Locales from '../flexberry-core/Locales';
 
 const componentMaps = [
   { name: "flexberry-file", types: ["file"] },
   { name: "flexberry-checkbox", types: ["boolean"] },
   { name: "flexberry-datepicker", types: ["date"] },
-  { name: "flexberry-field", types: ["string", "number"] }
+  { name: "flexberry-field", types: ["string", "number", "decimal"] }
 ];
 
 
@@ -39,7 +40,7 @@ module.exports = {
       options.file = options.entity.name + ".json";
     }
     var editFormBlueprint = new EditFormBlueprint(this, options);
-    return {
+    return lodash.defaults({
       modelName: editFormBlueprint.editForm.projections[0].modelName,// for use in files\__root__\routes\__name__.js, files\__root__\routes\__name__\new.js
       modelProjection: editFormBlueprint.editForm.projections[0].modelProjection,// for use in files\__root__\routes\__name__.js, files\__root__\routes\__name__\new.js
       formName: editFormBlueprint.editForm.name,// for use in files\__root__\controllers\__name__\new.js
@@ -47,12 +48,15 @@ module.exports = {
       caption: editFormBlueprint.editForm.caption,// for use in files\__root__\controllers\__name__.js
       parentRoute: editFormBlueprint.parentRoute,// for use in files\__root__\controllers\__name__.js
       flexberryComponents: editFormBlueprint.flexberryComponents,// for use in files\__root__\templates\__name__.hbs
-      functionGetCellComponent: editFormBlueprint.functionGetCellComponent// for use in files\__root__\controllers\__name__.js
-    };
+      functionGetCellComponent: editFormBlueprint.functionGetCellComponent,// for use in files\__root__\controllers\__name__.js
+      },
+      editFormBlueprint.locales.getLodashVariablesProperties()// for use in files\__root__\locales\**\forms\__name__.js
+    );
   }
 };
 
 class EditFormBlueprint {
+  locales: Locales;
   editForm: metadata.EditForm;
   parentRoute: string;
   flexberryComponents: string;
@@ -62,10 +66,12 @@ class EditFormBlueprint {
   private modelsDir:string;
   private blueprint;
   private options;
+
   constructor(blueprint, options) {
     this.blueprint=blueprint;
     this.options=options;
     this.modelsDir = path.join(options.metadataDir, "models");
+    this.locales = new Locales(options.entity.name, "ru");
     this.process();
     this.flexberryComponents = this.snippetsResult.join("\n");
     this.parentRoute = this.getParentRoute();
@@ -124,37 +130,41 @@ class EditFormBlueprint {
     let editFormsFile = path.join(editFormsDir, this.options.file);
     let content: string = stripBom(fs.readFileSync(editFormsFile, "utf8"));
     this.editForm = JSON.parse(content);
+    this.locales.setupForm(this.editForm);
     let linkProj = this.editForm.projections[0];
     let model = this.loadModel(linkProj.modelName);
     let proj = lodash.find(model.projections, function (pr) { return pr.name === linkProj.modelProjection; });
     let projAttr: any;
     for (projAttr of proj.attrs) {
+      this.locales.setupEditFormAttribute(projAttr);
       if (projAttr.hidden || projAttr.index === -1) {
         continue;
       }
       let snippet = this.loadSnippet(model, projAttr.name);
       let attr = this.findAttr(model, projAttr.name);
       projAttr.readonly="readonly";
-      projAttr.type=attr.type;
+      projAttr.type = attr.type;
       this._tmpSnippetsResult.push({ index: projAttr.index, snippetResult: lodash.template(snippet)(projAttr) });
     }
     this.fillBelongsToAttrs(proj.belongsTo, []);
     let belongsTo,hasMany: any;
     for (belongsTo of proj.belongsTo) {
+      this.locales.setupEditFormAttribute(belongsTo);
       if (belongsTo.hidden || belongsTo.index === -1) {
         continue;
       }
       var propertyLookup = lodash.find(this.editForm.propertyLookup, function (propLookup) { return propLookup.relationName === belongsTo.relationName; });
       if (propertyLookup) {
         belongsTo.projection = propertyLookup.projection;
-        belongsTo.readonly="readonly";
+        belongsTo.readonly = "readonly";
         this._tmpSnippetsResult.push({ index: belongsTo.index, snippetResult: lodash.template(this.readHbsSnippetFile("flexberry-lookup"))(belongsTo) });
       }
     }
     this._tmpSnippetsResult = lodash.sortBy(this._tmpSnippetsResult, ["index"]);
     this.snippetsResult = lodash.map(this._tmpSnippetsResult, "snippetResult");
     for (hasMany of proj.hasMany) {
-      hasMany.readonly="readonly";
+      hasMany.readonly = "readonly";
+      this.locales.setupEditFormAttribute(hasMany);
       this.snippetsResult.push(lodash.template(this.readHbsSnippetFile("flexberry-groupedit"))(hasMany));
     }
   }

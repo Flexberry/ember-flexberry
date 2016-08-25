@@ -1,0 +1,81 @@
+﻿{
+  "definitions": {
+    "SitemapItem": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "link": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "menuName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "caption": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "children": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/SitemapItem"
+          }
+        }
+      },
+      "required": [
+        "link",
+        "menuName",
+        "caption",
+        "title",
+        "children"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "applicationCaption": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "applicationTitle": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "items": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/SitemapItem"
+      }
+    }
+  },
+  "required": [
+    "applicationCaption",
+    "applicationTitle",
+    "items"
+  ]
+}

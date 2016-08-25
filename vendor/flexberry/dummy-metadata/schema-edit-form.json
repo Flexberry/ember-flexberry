@@ -132,6 +132,12 @@
         "null"
       ]
     },
+    "className": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "attrs": {
       "type": [
         "array",
@@ -155,6 +161,7 @@
     "propertyLookup",
     "caption",
     "name",
+    "className",
     "attrs",
     "projections"
   ]

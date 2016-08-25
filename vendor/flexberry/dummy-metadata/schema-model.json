@@ -333,6 +333,12 @@
   },
   "type": "object",
   "properties": {
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "modelName": {
       "type": [
         "string",
@@ -395,6 +401,7 @@
     }
   },
   "required": [
+    "name",
     "modelName",
     "className",
     "parentModelName",

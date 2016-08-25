@@ -7,10 +7,11 @@
       componentTemplateText=componentTemplateText
     }}
       {{flexberry-dropdown
-        items=(enum-captions "components-examples/flexberry-dropdown/settings-example/enumeration")
+        items=(flexberry-enum "components-examples/flexberry-dropdown/settings-example/enumeration")
         value=model.enumeration
         placeholder=placeholder
         readonly=readonly
+        class=class
       }}
     {{/settings-example}}
   </div>

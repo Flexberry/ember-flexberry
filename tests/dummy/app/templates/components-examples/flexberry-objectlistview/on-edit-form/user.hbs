@@ -153,7 +153,7 @@
     {{#if model.errors.gender}}
       <span style="color:red">{{model.errors.gender}}</span>
     {{/if}}
-    {{flexberry-dropdown items=(enum-captions "ember-flexberry-dummy-gender") value=model.gender readonly=readonly}}
+    {{flexberry-dropdown items=(flexberry-enum "ember-flexberry-dummy-gender") value=model.gender readonly=readonly}}
   </div>
   <div class="field">
     <label>{{t "forms.ember-flexberry-dummy-application-user-edit.vip-caption"}}</label>

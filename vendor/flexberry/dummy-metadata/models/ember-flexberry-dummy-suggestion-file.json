@@ -1,4 +1,5 @@
-﻿{
+{
+  "name": "EmberFlexberryDummySuggestionFile",
   "modelName": "ember-flexberry-dummy-suggestion-file",
   "className": "SuggestionFile",
   "parentModelName": null,
@@ -101,7 +102,7 @@
           "lookupValueField": null,
           "relationName": "Suggestion",
           "belongsTo": [],
-          "hidden": false,
+          "hidden": true,
           "attrs": [],
           "index": 2,
           "caption": "",

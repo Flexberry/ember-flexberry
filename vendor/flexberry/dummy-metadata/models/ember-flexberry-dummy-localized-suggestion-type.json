@@ -1,4 +1,5 @@
-﻿{
+{
+  "name": "EmberFlexberryDummyLocalizedSuggestionType",
   "modelName": "ember-flexberry-dummy-localized-suggestion-type",
   "className": "LocalizedSuggestionType",
   "parentModelName": null,
@@ -130,7 +131,7 @@
           "lookupValueField": null,
           "relationName": "SuggestionType",
           "belongsTo": [],
-          "hidden": false,
+          "hidden": true,
           "attrs": [],
           "index": 3,
           "caption": "",

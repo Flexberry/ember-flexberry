@@ -185,6 +185,16 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.conditional-render-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.conditional-render-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-dropdown/empty-value-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.empty-value-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.empty-value-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-dropdown/items-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.items-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.items-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -293,6 +303,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-objectlistview/custom-filter',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/configurate-rows',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.title'),
             children: null
           }]
         }, {

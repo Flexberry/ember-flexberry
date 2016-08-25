@@ -1,0 +1,6 @@
+{{#each _items as |item|}}
+  <div>
+    {{input type="checkbox" name=item.name checked=item.checked change=(action "onChange" preventDefault=false)}}
+    <label>{{item.name}}</label>
+  </div>
+{{/each}}

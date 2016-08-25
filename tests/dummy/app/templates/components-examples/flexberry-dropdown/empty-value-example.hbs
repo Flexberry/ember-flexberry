@@ -1,0 +1,14 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-dropdown.empty-value-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="ui info message">
+    <div class="header">
+    {{t "forms.components-examples.flexberry-dropdown.empty-value-example.message"}}
+    </div>
+  </div>
+  <div class="field">
+    {{flexberry-dropdown
+      items=(flexberry-enum "components-examples/flexberry-dropdown/empty-value-example/enumeration")
+      value='Enum value №2'
+    }}
+  </div>
+</form>

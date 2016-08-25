@@ -136,7 +136,7 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let modelProjName = this.get('modelProjection');
     let proj = modelClass.projections.get(modelProjName);
     controller.set('modelProjection', proj);
-
+    controller.set('routeName', this.get('routeName'));
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');

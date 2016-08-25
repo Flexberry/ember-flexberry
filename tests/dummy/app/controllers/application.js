@@ -186,6 +186,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.conditional-render-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-dropdown/empty-value-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.empty-value-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.empty-value-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-dropdown/items-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.items-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.items-example.title'),

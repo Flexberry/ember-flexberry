@@ -8,11 +8,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * `flexberry-checkbox` component:
-    * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doest'n has checked class.
+    * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
+
+## [0.5.0-beta.2] - 2016-08-25
+### Changed
+* Updated `ember-flexberry-data` addon to v0.5.0-beta.4.
+* Now performing transition to `edit-form` route after saving new model.
 
 ## [0.5.0-beta.1] - 2016-08-24
 ### Changed
 * Updated `semantic-ui-ember` addon to v2.0.0-beta.0.
+* Updated `ember-flexberry-data` addon to v0.5.0-beta.3.
 
 ### Deprecated
 * `edit-form` controller:

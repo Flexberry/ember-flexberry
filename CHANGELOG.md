@@ -2,14 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.5.0-beta.2] - 2016-08-25
 ### Added
 * Add transition from new to edit route after save.
 
+### Changed
+* Updated `ember-flexberry-data` addon to v0.5.0-beta.4.
 
 ## [0.5.0-beta.1] - 2016-08-24
 ### Changed
 * Updated `semantic-ui-ember` addon to v2.0.0-beta.0.
+* Updated `ember-flexberry-data` addon to v0.5.0-beta.3.
 
 ### Deprecated
 * `edit-form` controller:

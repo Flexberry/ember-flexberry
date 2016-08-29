@@ -86,7 +86,6 @@ export default Ember.Component.extend({
   */
   classNames: ['flexberry-toggler', 'ui', 'accordion', 'fluid'],
 
-
   /**
     CSS clasess for i tag.
 

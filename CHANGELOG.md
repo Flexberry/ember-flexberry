@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 * Rollback `semantic-ui-ember` addon to v0.9.3.
+* Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.
+* Renamed `flexberry-lookup` mixin to `flexberry-lookup-controller`.
 
 ### Fixed
 * `flexberry-checkbox` component:

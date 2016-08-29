@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 
-// TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
 

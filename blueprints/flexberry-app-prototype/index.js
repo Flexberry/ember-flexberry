@@ -5,6 +5,7 @@ var Blueprint = require('ember-cli/lib/models/blueprint');
 var Promise = require('ember-cli/lib/ext/promise');
 var http = require('http');
 var https = require('https');
+var xml2js = require('xml2js');
 module.exports = {
     description: 'Prototyping flexberry applications by external metadata.',
     availableOptions: [
@@ -27,6 +28,7 @@ var PrototypeBlueprint = (function () {
         this.promise = Promise.resolve();
         this.promise = this.getOdataMetadata(this.metadataDir, this.odataFeedUrl);
         this.promise = this.getContent(this.metadataDir, this.odataFeedUrl);
+        this.promise = this.parseXmlMetadata(this.metadataDir);
         this.promise = this.promise;
     }
     PrototypeBlueprint.prototype.getOdataMetadata = function (metadataDir, odataFeedUrl) {
@@ -53,7 +55,7 @@ var PrototypeBlueprint = (function () {
             var lib = url.startsWith('https') ? https : http;
             var request = lib.get(url, function (response) {
                 if (response.statusCode < 200 || response.statusCode > 299) {
-                    reject(new Error('Failed to load page, status code: ' + response.statusCode));
+                    reject(new Error(("Failed to load OData metadata from " + url + ", status code: ") + response.statusCode));
                 }
                 var body = [];
                 response.on('data', function (chunk) { return body.push(chunk); });
@@ -63,6 +65,24 @@ var PrototypeBlueprint = (function () {
                 });
             });
             request.on('error', function (err) { return reject(err); });
+        });
+    };
+    ;
+    PrototypeBlueprint.prototype.parseXmlMetadata = function (metadataDir) {
+        var readFromFileName = path.join('./', metadataDir, '/odataMetadata.xml');
+        var writeToFileName = path.join('./', metadataDir, '/odataMetadata.json');
+        return new Promise(function (resolve, reject) {
+            var xml = fs.readFileSync(readFromFileName);
+            xml2js.parseString(xml, function (err, result) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    fs.writeFileSync(writeToFileName, JSON.stringify(result, null, ' '));
+                    // TODO: parse xml metadata https://www.npmjs.com/package/xml2js
+                    resolve(true);
+                }
+            });
         });
     };
     ;

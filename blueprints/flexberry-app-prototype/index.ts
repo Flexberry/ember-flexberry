@@ -9,6 +9,7 @@ const Promise = require('ember-cli/lib/ext/promise');
 import http = require('http');
 import https = require('https');
 import lodash = require('lodash');
+import xml2js = require('xml2js');
 
 module.exports = {
   description: 'Prototyping flexberry applications by external metadata.',
@@ -41,6 +42,7 @@ class PrototypeBlueprint {
     this.promise = Promise.resolve();
     this.promise = this.getOdataMetadata(this.metadataDir, this.odataFeedUrl);
     this.promise = this.getContent(this.metadataDir, this.odataFeedUrl);
+    this.promise = this.parseXmlMetadata(this.metadataDir);
     this.promise = this.promise;
   }
 
@@ -68,7 +70,7 @@ class PrototypeBlueprint {
       const lib = url.startsWith('https') ? https : http;
       const request = lib.get(url, (response) => {
         if (response.statusCode < 200 || response.statusCode > 299) {
-          reject(new Error('Failed to load page, status code: ' + response.statusCode));
+          reject(new Error(`Failed to load OData metadata from ${url}, status code: ` + response.statusCode));
         }
         const body = [];
         response.on('data', (chunk) => body.push(chunk));
@@ -78,6 +80,25 @@ class PrototypeBlueprint {
         });
       });
       request.on('error', (err) => reject(err));
+    });
+  };
+
+  parseXmlMetadata(metadataDir) {
+     let readFromFileName = path.join('./', metadataDir, '/odataMetadata.xml');
+     let writeToFileName = path.join('./', metadataDir, '/odataMetadata.json');
+      return  new Promise((resolve, reject) => {
+        let xml = fs.readFileSync(readFromFileName);
+        xml2js.parseString(xml, function (err, result) {
+            if (err){
+              reject(err);
+            } else {
+              fs.writeFileSync(writeToFileName, JSON.stringify(result, null, ' '));
+
+              // TODO: parse xml metadata https://www.npmjs.com/package/xml2js
+
+              resolve(true);
+            }
+        });
     });
   };
 }

@@ -218,22 +218,6 @@ export default ListFormController.extend({
   records: [],
 
   /**
-    Configurate rows 'flexberry-objectlistview' component by address.
-
-    @property configurateRowByAddress
-    @type String
-   */
-  configurateRowByAddress: 'Street, 20',
-
-  _configurateRowByAddress: Ember.observer('configurateRowByAddress', function() {
-    let rowConfig = { customClass: '' };
-
-    this.get('records').forEach((record, index, records) => {
-      this.send('configurateRow', rowConfig, record);
-    });
-  }),
-
-  /**
     Template text for 'flexberry-objectlistview' component.
 
     @property componentTemplateText
@@ -242,9 +226,10 @@ export default ListFormController.extend({
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-objectlistview<br>' +
     '  componentName=\"SuggestionsObjectListView\"<br>' +
+    '  colsConfigButton=true<br>' +
     '  content=model<br>' +
     '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '  editFormRoute=editFormRoute<br>' +
+    '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
     '  modelProjection=projection<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
@@ -277,7 +262,6 @@ export default ListFormController.extend({
     '  previousPage=(action \"previousPage\")<br>' +
     '  gotoPage=(action \"gotoPage\")<br>' +
     '  nextPage=(action \"nextPage\")<br>' +
-    '  configurateRow=(action \"configurateRow\")<br>' +
     '}}'),
 
   /**
@@ -295,6 +279,13 @@ export default ListFormController.extend({
       settingValue: 'SuggestionsObjectListView',
       settingDefaultValue: undefined,
       settingIsWithoutUI: true
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'colsConfigButton',
+      settingType: 'boolean',
+      settingValue: true,
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'colsConfigButton'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'content',
@@ -318,12 +309,6 @@ export default ListFormController.extend({
       settingValue: 'ember-flexberry-dummy-suggestion',
       settingDefaultValue: undefined,
       settingIsWithoutUI: true
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'editFormRoute',
-      settingType: 'string',
-      settingDefaultValue: 'ember-flexberry-dummy-suggestion-edit',
-      bindedControllerPropertieName: 'editFormRoute'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'placeholder',
@@ -421,30 +406,9 @@ export default ListFormController.extend({
       settingDefaultValue: undefined,
       bindedControllerPropertieName: 'singleColumnHeaderTitle'
     });
-    componentSettingsMetadata.pushObject({
-      settingName: 'configurateRowByAddress',
-      settingType: 'string',
-      settingDefaultValue: 'Street, 20',
-      bindedControllerPropertieName: 'configurateRowByAddress'
-    });
 
     return componentSettingsMetadata;
   }),
-
-  actions: {
-    /**
-      Configurate rows on the condition.
-    */
-    configurateRow(rowConfig, record) {
-      if (record) {
-        this.get('records').push(record);
-      }
-
-      if (record.get('address') === this.get('configurateRowByAddress')) {
-        rowConfig.customClass += 'positive ';
-      }
-    }
-  },
 
   _enableFilters: Ember.observer('enableFilters', function() {
     if (this.get('enableFilters')) {

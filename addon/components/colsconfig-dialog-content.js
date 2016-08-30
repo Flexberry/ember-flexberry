@@ -348,7 +348,16 @@ export default FlexberryBaseComponent.extend({
      */
     widthChanged: function() {
       this._changed();
-    }
+    },
+
+    /**
+     Config name is defined
+
+     @method actions.setConfigName
+     */
+    setConfigName: function() {
+      this._changed();
+    },
 
   },
 

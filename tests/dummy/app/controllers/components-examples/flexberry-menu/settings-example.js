@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
       window.setTimeout((function() {
         clickedMenu.popup('hide');
       }).bind(this), 3000);
-    }
+    },
   },
 
   /**
@@ -56,6 +56,13 @@ export default Ember.Controller.extend({
     @default true
   */
   collapseMenuOnItemClick: true,
+
+  /**
+    @property isVertical
+    @type Boolean
+    @default false
+  */
+  isVertical: false,
 
   /**
     Template text for 'flexberry-menu' component.
@@ -208,6 +215,15 @@ export default Ember.Controller.extend({
     }
   }),
 
+  menuPosition: Ember.computed('isVertical', function() {
+    let isVertical = this.get('isVertical');
+    if (isVertical === true) {
+      return 'ui basic vertical buttons';
+    } else {
+      return 'ui basic buttons';
+    }
+  }),
+
   /**
     Component settings metadata.
 
@@ -218,14 +234,24 @@ export default Ember.Controller.extend({
     let componentSettingsMetadata = Ember.A();
     componentSettingsMetadata.pushObject({
       settingName: 'icon',
-      settingType: 'string',
+      settingType: 'enumeration',
       settingDefaultValue: 'undefined',
+      settingAvailableItems:
+        [
+          'search icon',
+          'bordered setting icon',
+          'inverted teal paw icon',
+          'big green tree icon',
+          'circular small record icon',
+          'olive list layout icon'
+        ],
       bindedControllerPropertieName: 'currentItem.icon'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'iconAlignment',
-      settingType: 'string',
+      settingType: 'enumeration',
       settingDefaultValue: 'undefined',
+      settingAvailableItems: ['left', 'right'],
       bindedControllerPropertieName: 'currentItem.iconAlignment'
     });
     componentSettingsMetadata.pushObject({
@@ -236,8 +262,9 @@ export default Ember.Controller.extend({
     });
     componentSettingsMetadata.pushObject({
       settingName: 'itemsAlignment',
-      settingType: 'string',
+      settingType: 'enumeration',
       settingDefaultValue: 'undefined',
+      settingAvailableItems: ['left', 'right'],
       bindedControllerPropertieName: 'currentItem.itemsAlignment'
     });
     componentSettingsMetadata.pushObject({
@@ -245,6 +272,12 @@ export default Ember.Controller.extend({
       settingType: 'boolean',
       settingDefaultValue: true,
       bindedControllerPropertieName: 'collapseMenuOnItemClick'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'isVertical',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'isVertical'
     });
 
     return componentSettingsMetadata;

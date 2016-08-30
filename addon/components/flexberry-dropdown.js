@@ -120,6 +120,7 @@ export default FlexberryBaseComponent.extend({
   */
   text: Ember.computed('value', function() {
     let value = this.get('value');
+    value = value === '<!---->' ? '' : value;
     return !Ember.isBlank(value) ? value : '';
   }),
 
@@ -136,8 +137,8 @@ export default FlexberryBaseComponent.extend({
     let needChecksOnValue = this.get('needChecksOnValue');
 
     // Convert 'value' and 'items' to strings because flexberry-dropdown interpret selected value as string commonly.
-    let value = this.get('value') || null;
-    let stringValue = value ? value.toString() : null;
+    let value = !Ember.isNone(this.get('value')) ? this.get('value') : null;
+    let stringValue = !Ember.isNone(value) ? value.toString() : null;
 
     let valueIsExist = false;
     for (let key in items) {
@@ -185,8 +186,9 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     onChange(component, id, newValue) {
-      let oldValue = this.get('value') || null;
-      newValue = newValue || null;
+      let oldValue = !Ember.isNone(this.get('value')) ? this.get('value') : null;
+      newValue = !Ember.isNone(newValue) ? newValue : null;
+      newValue = newValue === '<!---->' ? '' : newValue;
 
       if (newValue === oldValue) {
         return;

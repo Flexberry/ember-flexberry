@@ -159,7 +159,11 @@ Ember.$.extend(true, translations, {
               'caption': 'Conditional render example',
               'title': ''
             },
-            'items': {
+            'empty-value-example': {
+              'caption': 'Example dropdown with empty value',
+              'title': ''
+            },
+            'items-example': {
               'caption': 'Example values of the items',
               'title': ''
             }
@@ -249,6 +253,10 @@ Ember.$.extend(true, translations, {
             },
             'custom-filter': {
               'caption': 'Custom filter',
+              'title': ''
+            },
+            'configurate-rows': {
+              'caption': 'Configurate rows',
               'title': ''
             }
           },
@@ -441,6 +449,11 @@ Ember.$.extend(true, translations, {
             'So, once the value is selected, the component will be rendered as &lt;span&gt;selected value&lt;/span&gt;,<br>' +
             'after that check browser\'s console, it must be free from \"Semantic-UI\" and other errors.'
         },
+        'empty-value-example': {
+          'caption': 'Flexberry-dropdown. Example dropdown with empty value',
+          'message': 'When you open the form in the Dropdown should not be empty. Should be: Enum value №2.',
+          'enumeration-caption': 'Dropdown with empty value',
+        },
         'items-example': {
           'caption': 'Flexberry-dropdown. Example values of the items',
           'checkbox-caption': 'use the itemsObject'
@@ -522,6 +535,9 @@ Ember.$.extend(true, translations, {
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'
+        },
+        'configurate-rows': {
+          'caption': 'Flexberry-objectlistview. Configurate rows'
         }
       },
       'flexberry-simpledatetime': {

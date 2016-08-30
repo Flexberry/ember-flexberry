@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-checkbox` component:
     * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
+* `list-form` route:
+    * Apply filters from `object-list-view`, deleted during resolved conflicts.
 
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed

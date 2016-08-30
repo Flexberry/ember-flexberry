@@ -308,18 +308,18 @@ export default FlexberryBaseComponent.extend({
     Component's input additional CSS-class names.
     See [Semantic UI inputs classes](http://semantic-ui.com/elements/input.html).
 
-    @property class
+    @property inputClass
     @type String
-    @default 'fluid'
+    @default ''
     @example
     ```handlebars
     {{flexberry-file
-      class="compact"
+      inputClass="compact"
       value=model.file
     }}
     ```
   */
-  class: '',
+  inputClass: '',
 
   /**
     CSS-classes names for component's add, remove, upload, download buttons.

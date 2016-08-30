@@ -94,7 +94,11 @@ export default EditFormController.extend({
       if (this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         throw new Error('\'Save\' operation is not accessible due to current settings.');
       }
-
+      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
+      let modelCurrentAgregators = this.get('modelCurrentAgregators');
+      let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
+      flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
+      flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
       this._super.apply(this, arguments);
     },
 

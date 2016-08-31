@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-checkbox` component:
     * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
+*   `flexberry-toffler` component:
+    * Now `expanded` property is not private & work.
+    * Add `iconClass` property.
 
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed

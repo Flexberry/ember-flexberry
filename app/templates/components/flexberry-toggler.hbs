@@ -1,4 +1,4 @@
-<div class="title">
-  <i class="dropdown icon"></i><span class="flexberry-toggler-caption">{{currentCaption}}</span>
+<div class="title {{if expanded 'active'}}">
+  <i class="{{if iconClass iconClass 'dropdown icon' }}"></i><span class="flexberry-toggler-caption">{{currentCaption}}</span>
 </div>
-<div class="content flexberry-toggler-content">{{yield}}</div>
+<div class="content flexberry-toggler-content {{if expanded 'active'}}">{{yield}}</div>

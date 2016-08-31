@@ -568,7 +568,7 @@ export default FlexberryBaseComponent.extend(
     @param {Object} config Settings for row.
                             See {{#crossLink "ObjectListView/defaultRowConfig:property"}}{{/crossLink}}
                             property for details
-    @param {DS.Model} record The record in row
+    @param {DS.Model} record The record in row.
   */
   configurateRow: undefined,
 

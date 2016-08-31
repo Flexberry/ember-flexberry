@@ -26,6 +26,23 @@ export default Ember.Controller.extend({
   collapsedCaption: null,
 
   /**
+    CSS clasess for i tag.
+
+    @property iconClass
+    @type String
+  */
+  iconClass: '',
+
+  /**
+    Current visibility state.
+
+    @property expanded
+    @type Boolean
+    @default true
+  */
+  expanded: true,
+
+  /**
     Template text for 'flexberry-textbox' component.
 
     @property componentTemplateText
@@ -36,6 +53,8 @@ export default Ember.Controller.extend({
     '  caption=caption<br>' +
     '  expandedCaption=expandedCaption<br>' +
     '  collapsedCaption=collapsedCaption<br>' +
+    '  expanded=true<br>' +
+    '  iconClass=iconClass<br>' +
     '}}<br>' +
     '  {{t "forms.components-examples.flexberry-toggler.settings-example.togglerContent"}}<br>' +
     '{{/flexberry-toggler}}'),
@@ -65,6 +84,18 @@ export default Ember.Controller.extend({
       settingType: 'string',
       settingDefaultValue: null,
       bindedControllerPropertieName: 'collapsedCaption'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'expanded',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'expanded'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'iconClass',
+      settingType: 'string',
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'iconClass'
     });
 
     return componentSettingsMetadata;

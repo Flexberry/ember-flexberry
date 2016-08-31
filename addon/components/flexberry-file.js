@@ -312,12 +312,12 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default ''
     @example
-    ```handlebars
-    {{flexberry-file
-      inputClass="compact"
-      value=model.file
-    }}
-    ```
+        ```handlebars
+        {{flexberry-file
+          inputClass="compact"
+          value=model.file
+        }}
+        ```
   */
   inputClass: '',
 
@@ -329,12 +329,12 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default ''
     @example
-    ```handlebars
-    {{flexberry-file
-      buttonClass="red"
-      value=model.file
-    }}
-    ```
+        ```handlebars
+        {{flexberry-file
+          buttonClass="red"
+          value=model.file
+        }}
+      ```
   */
   buttonClass: '',
 
@@ -408,8 +408,7 @@ export default FlexberryBaseComponent.extend({
 
     @property maxUploadFileSize
     @type Number
-    @default null
-  */
+ */
   maxUploadFileSize: undefined,
 
   /**
@@ -427,7 +426,6 @@ export default FlexberryBaseComponent.extend({
 
     @property uploadUrl
     @type String
-    @default null
   */
   uploadUrl: undefined,
 

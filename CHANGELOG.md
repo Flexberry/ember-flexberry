@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-checkbox` component:
     * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
+* Now `flexberry-file`'s download button is disabled after deleting selected file and saving model.
 * Filters for `flexberry-objectlistview` are working now (tere was a code that was accidentally deleted during merges).
 * Transition to `edit-form` route after saving new details.
 * `flexberry-toggler` component:

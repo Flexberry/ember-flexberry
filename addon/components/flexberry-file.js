@@ -616,7 +616,13 @@ export default FlexberryBaseComponent.extend({
   */
   uploadFile() {
     let file = this.get('_selectedFile');
+
     if (Ember.isNone(file)) {
+      if (!this.get('_hasFile')) {
+        this.set('value', null);
+        this.set('_initialValue', null);
+      }
+
       return null;
     }
 

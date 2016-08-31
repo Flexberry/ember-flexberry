@@ -14,7 +14,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-toggler` component:
     * Now `expanded` property is not private & work.
     * Added `iconClass` property.
->>>>>>> release-0.5.0
 
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed

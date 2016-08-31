@@ -999,7 +999,7 @@ export default FlexberryBaseComponent.extend(
       let width = userColumnInfo.width;
 
       Ember.assert('Property name is not defined at saved user setting.', propName);
-      Ember.assert('Column width is not defined at saved user setting.', width);
+      Ember.assert('Column width is not defined at saved user setting.', width !== undefined);
 
       hashedUserSetting[propName] = width;
     });

@@ -22,6 +22,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Wrong assertion for user setting's `width` property when creating a new detail in separate route.
 * Rolling back isDeleted state of model if errors occurrs during destroying of the model.
 
+### Removed
+* Removed outdated style in `object-list-view` styles component.
+
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed
 * Updated `ember-flexberry-data` addon to v0.5.0-beta.4.

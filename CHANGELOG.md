@@ -5,10 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 * Rollback `semantic-ui-ember` addon to v0.9.3.
+* Blueprint will no longer generate old top validator for properties in hbs templates.
 
 ### Fixed
 * `flexberry-checkbox` component:
     * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
+* Blueprint for hbs now generate clearly formatted code.
 
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed

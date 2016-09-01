@@ -103,7 +103,7 @@ export default EditFormController.extend({
     '  showDownloadButton=showDownloadButton<br>' +
     '  showModalDialogOnUploadError=showModalDialogOnUploadError<br>' +
     '  showModalDialogOnDownloadError=showModalDialogOnDownloadError<br>' +
-    '  class=class<br>' +
+    '  inputClass=inputClass<br>' +
     '  buttonClass=buttonClass<br>' +
     '}}'),
 
@@ -176,11 +176,11 @@ export default EditFormController.extend({
       bindedControllerPropertieName: 'showModalDialogOnDownloadError'
     });
     componentSettingsMetadata.pushObject({
-      settingName: 'class',
+      settingName: 'inputClass',
       settingType: 'css',
       settingDefaultValue: '',
       settingAvailableItems: ['fluid input', 'transparent input', 'mini input', 'huge input', 'input error'],
-      bindedControllerPropertieName: 'class'
+      bindedControllerPropertieName: 'inputClass'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'buttonClass',

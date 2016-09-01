@@ -549,6 +549,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         break;
       case 'file':
         cellComponent.componentName = 'flexberry-file';
+        cellComponent.componentProperties = { inputClass: 'fluid' };
         break;
       default:
 

@@ -17,6 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Added `iconClass` property.
 * Incorrect setting of first columns's width in `object-list-view` component.
 * Wrong assertion for user setting's `width` property when creating a new detail in separate route.
+* Rolling back isDeleted state of model if errors occurrs during destroying of the model.
 
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed

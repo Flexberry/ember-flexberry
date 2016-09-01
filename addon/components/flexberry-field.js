@@ -53,6 +53,15 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-field', 'ui', 'field'],
 
   /**
+    Type of html input.
+
+    @property type
+    @type String
+    @default 'text'
+   */
+  type: 'text',
+
+  /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
 
     @property appConfigSettingsPath

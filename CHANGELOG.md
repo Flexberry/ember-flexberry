@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Rollback `semantic-ui-ember` addon to v0.9.3.
 * Renamed property for input in `flexberry-file`. Deprecated `class`, new `inputClass`.
+* Rename model for UserSettings. Deprecated `new-platform-flexberry-flexberry-user-setting`, new `i-c-s-soft-services-user-setting`.
 
 ### Fixed
 * `flexberry-checkbox` component:

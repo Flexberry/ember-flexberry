@@ -161,7 +161,12 @@ export default Ember.Mixin.create({
       ```
 
     @method predicateForAttribute
-    @param {Object} attribute Object format: `{ name, type }`, where `name` - attribute name, `type` - attribute type.
+    @param {Object} attribute Object contains attribute info.
+    @param {String} attribute.name Name of attribute, example `name` or `type.name` if it attribute of relationship.
+    @param {Object} attribute.options Object with attribute options.
+    @param {Boolean} [attribute.options.hidden] Flag, indicate that this hidden attribute.
+    @param {Boolean} [attribute.options.displayMemberPath] Flag, indicate that this attribute uses for display relationship.
+    @param {String} attribute.type Type of attribute, example `string` or `number`.
     @param {String} filter Pattern for search.
     @return {BasePredicate|null} Object class of `BasePredicate` or `null`, if not need filter.
     @for ListFormRoute

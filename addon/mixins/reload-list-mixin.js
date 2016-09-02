@@ -244,6 +244,9 @@ export default Ember.Mixin.create({
 
             break;
 
+          case 'hasMany':
+            break;
+
           default:
             throw new Error(`Not supported kind: ${attribute.kind}`);
         }

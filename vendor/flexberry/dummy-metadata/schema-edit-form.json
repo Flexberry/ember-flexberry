@@ -32,6 +32,12 @@
             "string",
             "null"
           ]
+        },
+        "detailModelName": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "required": [
@@ -39,7 +45,8 @@
         "displayAttributeName",
         "required",
         "relationName",
-        "projection"
+        "projection",
+        "detailModelName"
       ]
     },
     "DSattr": {

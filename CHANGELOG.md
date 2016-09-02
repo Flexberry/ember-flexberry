@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Incorrect setting of first columns's width in `object-list-view` component.
 * Wrong assertion for user setting's `width` property when creating a new detail in separate route.
 * Rolling back isDeleted state of model if errors occurrs during destroying of the model.
+* Now creating and editing of user settings are working properly on list forms.
 
 ### Removed
 * Removed outdated style in `object-list-view` styles component.

@@ -121,6 +121,7 @@ export default Ember.Mixin.create({
           break;
 
         case 'belongsTo':
+          // TODO To understand in future releases  the reasons of incorrect form columns of composite names. A'la type.name etc...
           if (true || !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
@@ -141,6 +142,7 @@ export default Ember.Mixin.create({
           break;
 
         case 'attr':
+          // TODO To understand in future releases the reasons of incorrect form columns of composite names. A'la type.name etc...
           if (false && attr.options.hidden) {
             break;
           }

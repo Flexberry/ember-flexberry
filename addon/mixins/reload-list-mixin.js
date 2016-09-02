@@ -167,6 +167,10 @@ export default Ember.Mixin.create({
     @for ListFormRoute
   */
   predicateForAttribute(attribute, filter) {
+    if (attribute.options.hidden && !attribute.options.displayMemberPath) {
+      return null;
+    }
+
     switch (attribute.type) {
       case 'string':
         return new StringPredicate(attribute.name).contains(filter);

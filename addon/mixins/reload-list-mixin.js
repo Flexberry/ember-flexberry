@@ -226,18 +226,20 @@ export default Ember.Mixin.create({
         let attribute = projection.attributes[name];
         switch (attribute.kind) {
           case 'attr':
+            let options = Ember.merge({}, attribute.options);
+            options.displayMemberPath = projection.options && projection.options.displayMemberPath === name;
             attributes.push({
               name: name,
+              options: options,
               type: Ember.get(store.modelFor(projection.modelName), 'attributes').get(name).type,
             });
             break;
 
           case 'belongsTo':
-            if (attribute.options.displayMemberPath) {
-              attributes.push({
-                name: `${name}.${attribute.options.displayMemberPath}`,
-                type: Ember.get(store.modelFor(attribute.modelName), 'attributes').get(attribute.options.displayMemberPath).type,
-              });
+            let belongsToAttributes = this._attributesForFilter(attribute, store);
+            for (let i = 0; i < belongsToAttributes.length; i++) {
+              belongsToAttributes[i].name = `${name}.${belongsToAttributes[i].name}`;
+              attributes.push(belongsToAttributes[i]);
             }
 
             break;

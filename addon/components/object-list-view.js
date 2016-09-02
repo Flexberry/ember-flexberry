@@ -913,16 +913,7 @@ export default FlexberryBaseComponent.extend(
 
     let $currentTable = this.$('table.object-list-view');
     if (this.get('allowColumnResize')) {
-      // The first column has semantic class "collapsing"
-      // so the column has 1px width and plugin has problems.
-      // A real width is reset in order to keep computed by semantic width.
-      Ember.$.each(this.$('th', $currentTable), (key, item) => {
-        let curWidth = Ember.$(item).width();
-        Ember.$(item).width(curWidth);
-      });
-
       $currentTable.addClass('fixed');
-
       this._reinitResizablePlugin();
     } else {
       $currentTable.colResizable({ disable: true });
@@ -966,7 +957,7 @@ export default FlexberryBaseComponent.extend(
     $currentTable.colResizable({ disable: true });
 
     $currentTable.colResizable({
-      minWidth: 90,
+      minWidth: 50,
       resizeMode:'flex',
       onResize: (e)=> {
         // Save column width as user setting on resize.

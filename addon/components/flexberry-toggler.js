@@ -7,15 +7,16 @@ import Ember from 'ember';
 /**
   Component for expand / collapse content.
 
-  Sample usage:
-  ```handlebars
-  {{#flexberry-toggler
-    expandedCaption='Expanded caption'
-    collapsedCaption='Collapsed caption'
-  }}
-    Your content.
-  {{/flexberry-toggler}}
-  ```
+  @example
+    ```handlebars
+    {{#flexberry-toggler
+      expandedCaption='Expanded caption'
+      collapsedCaption='Collapsed caption'
+      expanded=true
+    }}
+      Your content.
+    {{/flexberry-toggler}}
+    ```
 
   @class FlexberryToggler
   @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
@@ -24,12 +25,11 @@ export default Ember.Component.extend({
   /**
     Current visibility state.
 
-    @property _expanded
+    @property expanded
     @type Boolean
     @default false
-    @private
   */
-  _expanded: false,
+  expanded: false,
 
   /**
     Common caption in the component header.
@@ -65,13 +65,13 @@ export default Ember.Component.extend({
   /**
     Current caption.
 
-    @property _caption
+    @property currentCaption
     @type String
     @readOnly
   */
-  currentCaption: Ember.computed('caption', 'expandedCaption', 'collapsedCaption', '_expanded', function() {
+  currentCaption: Ember.computed('caption', 'expandedCaption', 'collapsedCaption', 'expanded', function() {
     let defaultCaption = this.get('caption');
-    let caption = this.get('_expanded') ? (this.get('expandedCaption') || defaultCaption) : (this.get('collapsedCaption') || defaultCaption);
+    let caption = this.get('expanded') ? (this.get('expandedCaption') || defaultCaption) : (this.get('collapsedCaption') || defaultCaption);
 
     return caption;
   }),
@@ -87,6 +87,14 @@ export default Ember.Component.extend({
   classNames: ['flexberry-toggler', 'ui', 'accordion', 'fluid'],
 
   /**
+    CSS clasess for i tag.
+
+    @property iconClass
+    @type String
+  */
+  iconClass: undefined,
+
+  /**
     Handles the event, when component has been insterted.
     Attaches event handlers for expanding / collapsing content.
   */
@@ -96,14 +104,14 @@ export default Ember.Component.extend({
     // Attach semantic-ui open/close callbacks.
     $accordeonDomElement.accordion({
       onOpen: () => {
-        this.set('_expanded', true);
+        this.set('expanded', true);
       },
       onClose: () => {
-        this.set('_expanded', false);
+        this.set('expanded', false);
       },
     });
 
     // Initialize right state (call semantic-ui accordion open/close method).
-    $accordeonDomElement.accordion(this.get('_expanded') ? 'open' : 'close');
+    $accordeonDomElement.accordion(this.get('expanded') ? 'open' : 'close');
   },
 });

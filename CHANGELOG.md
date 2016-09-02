@@ -11,12 +11,25 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * Rollback `semantic-ui-ember` addon to v0.9.3.
-* Blueprint will no longer generate old top validator for properties in hbs templates.
+* Renamed property for input in `flexberry-file`. Deprecated `class`, new `inputClass`.
 
 ### Fixed
 * `flexberry-checkbox` component:
     * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
-* Blueprint for hbs now generate clearly formatted code.
+* `edit-form` controller: add omponentProperties for `flexberry-file`.
+
+* Now `flexberry-file`'s download button is disabled after deleting selected file and saving model.
+* Filters for `flexberry-objectlistview` are working now (tere was a code that was accidentally deleted during merges).
+* Transition to `edit-form` route after saving new details.
+* `flexberry-toggler` component:
+    * Now `expanded` property is not private & work.
+    * Added `iconClass` property.
+* Incorrect setting of first columns's width in `object-list-view` component.
+* Wrong assertion for user setting's `width` property when creating a new detail in separate route.
+* Rolling back isDeleted state of model if errors occurrs during destroying of the model.
+
+### Removed
+* Removed outdated style in `object-list-view` styles component.
 
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed

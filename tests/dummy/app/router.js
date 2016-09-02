@@ -43,6 +43,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-file/settings-example');
   this.route('components-examples/flexberry-groupedit/settings-example');
   this.route('components-examples/flexberry-groupedit/model-update-example');
+  this.route('components-examples/flexberry-groupedit/configurate-row-example');
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
   this.route('components-examples/flexberry-lookup/limit-function-example');

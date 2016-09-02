@@ -121,6 +121,7 @@ export default Ember.Mixin.create({
           break;
 
         case 'belongsTo':
+
           //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
           if (true || !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
@@ -142,6 +143,7 @@ export default Ember.Mixin.create({
           break;
 
         case 'attr':
+
           //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
           if (false && attr.options.hidden) {
             break;

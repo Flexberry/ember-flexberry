@@ -21,7 +21,7 @@ let Model = BaseModel.extend({
   txtVal: DS.attr('string')
 });
 
-Model.defineProjection('FlexberryUserSettingE', 'new-platform-flexberry-flexberry-user-setting', {
+Model.defineProjection('FlexberryUserSettingE', 'i-c-s-soft-services-user-setting', {
   appName: Projection.attr('Application page name'),
   userName: Projection.attr('User name'),
   moduleName: Projection.attr('Component name'),

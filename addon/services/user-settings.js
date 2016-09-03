@@ -457,7 +457,7 @@ export default Ember.Service.extend({
           foundRecord.set('txtVal', JSON.stringify(prevUserSetting));
         } else {
           let currentUserName = this.getCurrentUser();
-          foundRecord = store.createRecord('new-platform-flexberry-flexberry-user-setting');
+          foundRecord = store.createRecord('i-c-s-soft-services-user-setting');
           foundRecord.set('userName', currentUserName);
           foundRecord.set('appName', this.currentAppPage);
           foundRecord.set('moduleName', componentName);
@@ -601,7 +601,7 @@ export default Ember.Service.extend({
     // TODO: add search by username.
     let cp = this._getSearchPredicate(componentName, settingName);
     let store = this.get('_store');
-    let modelName = 'new-platform-flexberry-flexberry-user-setting';
+    let modelName = 'i-c-s-soft-services-user-setting';
     let builder = new Builder(store)
     .from(modelName)
     .selectByProjection('FlexberryUserSettingE')
@@ -640,7 +640,7 @@ export default Ember.Service.extend({
     // TODO: add search by username.
     let cp = this._getSearchPredicate(componentName, settingName);
     let store = this.get('_store');
-    let modelName = 'new-platform-flexberry-flexberry-user-setting';
+    let modelName = 'i-c-s-soft-services-user-setting';
     let builder = new Builder(store)
     .from(modelName)
     .selectByProjection('FlexberryUserSettingE')
@@ -675,7 +675,7 @@ export default Ember.Service.extend({
     // TODO: add search by username.
     let cp = this._getSearchPredicate(componentName, settingName);
     let store = this.get('_store');
-    let modelName = 'new-platform-flexberry-flexberry-user-setting';
+    let modelName = 'i-c-s-soft-services-user-setting';
     let builder = new Builder(store)
     .from(modelName)
     .selectByProjection('FlexberryUserSettingE')

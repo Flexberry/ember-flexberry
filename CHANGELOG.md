@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `flexberry-groupedit` component:
     * Add support `configurateRow`.
+* `object-list-view` component: 
+    * Add observer `attributeChanged` that calls the `configurateRow` method. Now needs to use Ember.set(), to add custom class for record config.
 
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed

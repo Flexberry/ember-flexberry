@@ -83,7 +83,7 @@ export default ListFormController.extend({
     @property configurateRowByAddress
     @type String
    */
-  configurateRowByAddress: 'Street, 20',
+  configurateRowByAddress: 'Street, 200',
 
   _configurateRowByAddress: Ember.observer('configurateRowByAddress', function() {
     let rowConfig = { customClass: '' };
@@ -116,7 +116,7 @@ export default ListFormController.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'configurateRowByAddress',
       settingType: 'string',
-      settingDefaultValue: 'Street, 20',
+      settingDefaultValue: 'Street, 200',
       bindedControllerPropertieName: 'configurateRowByAddress'
     });
 
@@ -129,13 +129,22 @@ export default ListFormController.extend({
     */
     configurateRow(rowConfig, record) {
       if (record) {
-        this.get('records').push(record);
+       this.get('records').push(record);
       }
 
       if (record.get('address') === this.get('configurateRowByAddress')) {
-        rowConfig.customClass += 'positive ';
+        Ember.set(rowConfig, 'customClass', 'positive ');
+      } else {
+        Ember.set(rowConfig, 'customClass', 'negative ');
       }
-    }
+    },
+
+    /**
+      Change attribute 2.
+    */
+    changeAttribute2() {
+      this.get('records')[1].set('address', 'Street, 200');
+    },
   },
 
 });

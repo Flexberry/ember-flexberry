@@ -3,12 +3,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-field` component:
+    * Now support explicit html type definition. Default type is "text".
+* `flexberry-textbox` component:
+    * Now support explicit html type definition. Default type is "text".
+
 ### Changed
 * Rollback `semantic-ui-ember` addon to v0.9.3.
+* Blueprint will no longer generate old top validator for properties in hbs templates.
 
 ### Fixed
 * `flexberry-checkbox` component:
     * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
+* Blueprint for hbs now generate clearly formatted code.
 
 ### Added
 * `flexberry-groupedit` component:

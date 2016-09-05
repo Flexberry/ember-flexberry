@@ -870,13 +870,7 @@ export default FlexberryBaseComponent.extend(
       this.addObserver('content.[]', this, this._contentDidChange);
     }
 
-    let attributes = this.get('_modelProjection').attributes;
-    let attrsArray = [];
-
-    for (let attrName in attributes) {
-      attrsArray.push(attrName);
-    }
-
+    let attrsArray = this._getAttributesName();
     content.forEach((record) => {
       attrsArray.forEach((attrName) => {
         Ember.addObserver(record, attrName, this, '_attributeChanged');
@@ -956,13 +950,8 @@ export default FlexberryBaseComponent.extend(
 
     this._super(...arguments);
 
-    let attributes = this.get('_modelProjection').attributes;
-    let attrsArray = [];
     let content = this.get('content');
-
-    for (let attrName in attributes) {
-      attrsArray.push(attrName);
-    }
+    let attrsArray = this._getAttributesName();
 
     content.forEach((record) => {
       attrsArray.forEach((attrName) => {
@@ -1510,6 +1499,11 @@ export default FlexberryBaseComponent.extend(
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
         this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
+
+        let attrsArray = this._getAttributesName();
+        attrsArray.forEach((attrName) => {
+          Ember.addObserver(modelToAdd, attrName, this, '_attributeChanged');
+        });
       }
     }
   },
@@ -1573,6 +1567,11 @@ export default FlexberryBaseComponent.extend(
 
     let componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
+
+    let attrsArray = this._getAttributesName();
+    attrsArray.forEach((attrName) => {
+      Ember.removeObserver(record, attrName, this, '_attributeChanged');
+    });
   },
 
   /**
@@ -1702,6 +1701,23 @@ export default FlexberryBaseComponent.extend(
       selectedRecords.removeObject(deletedItem);
       this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, deletedItem, immediateDelete);
     });
+  },
+
+  /**
+    Get attributes name from model.
+
+    @method _getAttributesName
+    @private
+  */
+  _getAttributesName() {
+    let attributes = this.get('_modelProjection').attributes;
+    let attrsArray = [];
+
+    for (let attrName in attributes) {
+      attrsArray.push(attrName);
+    }
+
+    return attrsArray;
   },
 
   /**

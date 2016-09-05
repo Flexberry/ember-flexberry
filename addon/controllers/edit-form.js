@@ -57,6 +57,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   parentRoute: undefined,
 
   /**
+    Route name corresponding this edit form.
+
+    @property routeName
+    @type String
+  */
+  routeName: undefined,
+
+  /**
     Indicates whether the current form is opened only for reading.
 
     @property readonly
@@ -283,6 +291,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         this.onSaveActionFulfilled();
         if (close) {
           this.close();
+        } else {
+          let routeName = this.get('routeName');
+          if (routeName.indexOf('.new') > 0)
+          {
+            this.transitionToRoute(routeName.slice(0, -4), this.get('model'));
+          }
         }
       });
     }).catch((errorData) => {
@@ -320,6 +334,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     }
 
     deletePromise.catch((errorData) => {
+      model.rollbackAttributes();
       this.onDeleteActionRejected(errorData);
     }).finally((data) => {
       this.onDeleteActionAlways(data);
@@ -534,6 +549,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         break;
       case 'file':
         cellComponent.componentName = 'flexberry-file';
+        cellComponent.componentProperties = { inputClass: 'fluid' };
         break;
       default:
 
@@ -562,16 +578,11 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @method rollbackHasManyRelationships
     @param {DS.Model} model Record with hasMany relationships.
+    @deprecated Use `rollbackHasMany` from model.
   */
-  rollbackHasManyRelationships: function(model) {
-    model.eachRelationship((name, desc) => {
-      if (desc.kind === 'hasMany') {
-        model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
-          this.rollbackHasManyRelationships(record);
-          record.rollbackAttributes();
-        });
-      }
-    });
+  rollbackHasManyRelationships(model) {
+    Ember.deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
+    model.rollbackHasMany();
   },
 
   /**
@@ -627,4 +638,3 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     return Ember.RSVP.all(promises);
   },
 });
-

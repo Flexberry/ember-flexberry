@@ -50,6 +50,10 @@ export default ListFormRoute.extend({
       return new StringPredicate(filter.name).contains(filter.pattern);
     }
 
+    if (filter.type === 'decimal') {
+      return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+    }
+
     return this._super(...arguments);
   },
 

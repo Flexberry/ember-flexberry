@@ -308,18 +308,18 @@ export default FlexberryBaseComponent.extend({
     Component's input additional CSS-class names.
     See [Semantic UI inputs classes](http://semantic-ui.com/elements/input.html).
 
-    @property class
+    @property inputClass
     @type String
-    @default 'fluid'
+    @default ''
     @example
-    ```handlebars
-    {{flexberry-file
-      class="compact"
-      value=model.file
-    }}
-    ```
+        ```handlebars
+        {{flexberry-file
+          inputClass="compact"
+          value=model.file
+        }}
+        ```
   */
-  class: 'fluid',
+  inputClass: '',
 
   /**
     CSS-classes names for component's add, remove, upload, download buttons.
@@ -329,12 +329,12 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default ''
     @example
-    ```handlebars
-    {{flexberry-file
-      buttonClass="red"
-      value=model.file
-    }}
-    ```
+        ```handlebars
+        {{flexberry-file
+          buttonClass="red"
+          value=model.file
+        }}
+      ```
   */
   buttonClass: '',
 
@@ -408,8 +408,7 @@ export default FlexberryBaseComponent.extend({
 
     @property maxUploadFileSize
     @type Number
-    @default null
-  */
+ */
   maxUploadFileSize: undefined,
 
   /**
@@ -427,7 +426,6 @@ export default FlexberryBaseComponent.extend({
 
     @property uploadUrl
     @type String
-    @default null
   */
   uploadUrl: undefined,
 
@@ -616,7 +614,13 @@ export default FlexberryBaseComponent.extend({
   */
   uploadFile() {
     let file = this.get('_selectedFile');
+
     if (Ember.isNone(file)) {
+      if (!this.get('_hasFile')) {
+        this.set('value', null);
+        this.set('_initialValue', null);
+      }
+
       return null;
     }
 

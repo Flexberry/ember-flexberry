@@ -4,14 +4,64 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [0.4.0] - 2016-08-15
-### Changed
-* Transforms:
-    * Moved transforms to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
-* Enums:
-    * Moved enum initializer to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
-    * Renamed `enum-captions` helper to `flexberry-enum`.
+## [0.5.0] - 2016-09-05
+### Added
+* Blueprints:
+    * Add support generation into ember addon.
+* Resolver:
+    * It is possible now to specify resources that should be resolved with origin resolving path (without considering device type detection).
+* `flexberry-textarea` component:
+    * Added support of HTML attributes.
 
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.5.0.
+* Now performing transition to `edit-form` route after saving new model.
+* `flexberry-file` component:
+* Renamed property for input element: `class` property was renamed to `inputClass`.
+
+### Fixed
+* `flexberry-checkbox` component:
+    * Now if `flexberry-checkbox` was unchecked it doest'n has checked class.
+* `flexberry-dropdown` component:
+    * Fixed displaying of enums with empty values.
+* `log` service will write error messages to console along with sending it to server if error would be handled in `Ember.onerror` or `Ember.RSVP.on('error')` events.
+* Blueprints:
+    * Fixed decimal fields generation on edit-forms (it will generate `flexberry-field` instead of `flexberry-dropdown`).
+* `flexberry-checkbox` component:
+    * `flexberry-checkbox` doesn't have `checked` class in unchecked state.
+* `edit-form` controller: add сomponentProperties for `flexberry-file`.
+* Now `flexberry-file`'s download button is disabled after deleting selected file and saving model.
+* Filters for `flexberry-objectlistview` are working now (there was a code that was accidentally deleted during merges).
+* `flexberry-toggler` component:
+    * Now `expanded` property is not private & work.
+    * Added `iconClass` property.
+* Incorrect setting of first columns's width in `object-list-view` component.
+* Wrong assertion for user setting's `width` property when creating a new detail in separate route.
+* Rolling back `isDeleted` state of model if errors occurrs during destroying of the model.
+* Now creating and editing of user settings are working properly on list forms.
+* Fixed localization of column names displayed in column settings window.
+
+### Removed
+* Removed outdated style in `object-list-view` styles component.
+* `flexberry-file` component:
+    * Remove 'fluid' CSS-class from component's defaults for `flexberry-file` component.
+
+### Deprecated
+* `edit-form` controller:
+    * `rollbackHasManyRelationships` method was deprecated, use model's `rollbackHasMany` method instead.
+
+### Known issues
+* `flexberry-file` works improperly inside `flexberry-groupedit` when upload and delete file before saving model. Download button is active and it's possible to download deleted file after saving model and applying mentioned actions before saving.
+* Only one `flexberry-objectlistview` or `flexberry-groupedit` component could be used on particular form.
+* No items of context menu for rows of `flexberry-objectlistview` component are shown when `showEditMenuItemInRow` or `showDeleteMenuItemInRow` property of component has been dynamically changed.
+* List of values of `flexberry-dropdown` component are not showing over scroll bar when the component is embedded into `flexberry-groupedit` and there is not enough space to show these values over table rows.
+* If there's not enough space in window for displaying submenu of `flexberry-menu` component on bottom then submenu shows on top only first time. Then it shows on bottom.
+* Formatted message field of log object fills differently in IE11/Safari and Chrome/Firefox.
+* `flexberry-datepicker` eats too much memory, working slowly and slows down the application (especially when using multiple `flexberry-datepicker` components on form).
+* "TransitionAborted" error get thrown when adding query params (callback is called once for each query param if `refreshModel: true` is set).
+* `flexberry-datapicker` displays the next day when date with time is '00:00:00'.
+
+## [0.4.0] - 2016-08-15
 ### Added
 * Blueprints:
     * Add localization support for generated ember entities.
@@ -20,13 +70,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add support object type for `items` property.
     * Add support empty values for generated enums.
 
+### Changed
+* Transforms:
+    * Moved transforms to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+* Enums:
+    * Moved enum initializer to [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) addon.
+    * Renamed `enum-captions` helper to `flexberry-enum`.
+* Changed dependency on `ember-flexberry-data` addon to [`v0.4.0`](https://github.com/Flexberry/ember-flexberry-data/releases/tag/0.4.0).
+
 ### Fixed
 * `flexberry-objectlistview` component:
     * Incorrect work of pagination for large lists.
 
+### Known issues
+* Same as in previous release except issues in blueprints.
+
 ## [0.3.0] - 2016-07-29
 ### Added
-* Custom internationalized captions for boolean type in `object-list-view-cell` commponent.
+* Custom internationalized captions for boolean type in `object-list-view-cell` component.
 * Blueprints:
     * Add regeneration for models and serializers. Now models and serizlizers generates into separate regeneratable mixins, model and serializer classes will not be replaced during regeneration.
     * Add new `flexberry-group` blueprint for generation of group of entities by one blueprint.
@@ -93,7 +154,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Placeholder text localization for `flexberry-dropdown` component works improperly when `readonly` property changes dynamically. Also placeholder text is not localize in all browsers except Google Chrome.
 * Some text is not localized in user settings dialog.
 * There are some problems with displaying styles of user settings dialog.
-* It is possible to save user settings when user settings serive is off.
 * Drop-down menu for configuration of columns settings in `flexberry-objectlistview` component stops working properly after deleting of user setting or changing page on list form.
 
 ## [0.2.1] - 2016-07-07

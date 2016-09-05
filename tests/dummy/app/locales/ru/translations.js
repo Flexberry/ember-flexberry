@@ -162,6 +162,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Пример условного рендеринга',
               'title': ''
             },
+            'empty-value-example': {
+              'caption': 'Пример dropdown-а с пустым значением',
+              'title': ''
+            },
             'items-example': {
               'caption': 'Пример элементов значений',
               'title': ''
@@ -252,6 +256,10 @@ Ember.$.extend(true, translations, {
             },
             'custom-filter': {
               'caption': 'Настройка фильтра',
+              'title': ''
+            },
+            'configurate-rows': {
+              'caption': 'Раскраска строк',
               'title': ''
             }
           },
@@ -445,6 +453,11 @@ Ember.$.extend(true, translations, {
             '&lt;span&gt;selected value&lt;/span&gt;,<br>' +
             'после этого следует проверить консоль браузера, она должна быть чиста от ошибок \"Semantic-UI\" и прочих ошибок.'
         },
+        'empty-value-example': {
+          'caption': 'Flexberry-dropdown. Пример dropdown-а с пустым значением',
+          'message': 'При открытии формы в dropdown-е должно быть не пустое значение. Должно быть Enum value №2.',
+          'enumeration-caption': 'Dropdown с пустым значением',
+        },
         'items-example': {
           'caption': 'Flexberry-dropdown. Пример значений элементов',
           'checkbox-caption': 'использовать itemsObject'
@@ -526,6 +539,9 @@ Ember.$.extend(true, translations, {
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Настройка фильтра'
+        },
+        'configurate-rows': {
+          'caption': 'Flexberry-objectlistview. Раскраска строк'
         }
       },
       'flexberry-simpledatetime': {

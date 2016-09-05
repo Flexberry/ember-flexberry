@@ -65,24 +65,44 @@ export default EmberResolver.extend({
     let { resolvingType, resolvingPath } = { resolvingType: fullNamePartsArray[0], resolvingPath: fullNamePartsArray[1] };
     let resolvingPathParts = resolvingPath.split('/');
 
-    let pathPrefixes = device.pathPrefixes(true);
-    for (let i = 0, len = pathPrefixes.length; i < len; i++) {
-      let pathPrefix = pathPrefixes[i];
+    if (!this._resolveResourceWithoutDeviceTypeDetection(fullName)) {
+      let pathPrefixes = device.pathPrefixes(true);
+      for (let i = 0, len = pathPrefixes.length; i < len; i++) {
+        let pathPrefix = pathPrefixes[i];
 
-      // Change resolvingPath from 'path/name' to 'pathPrefix/path/name.
-      // For example 'components/my-component' -> 'tablet-portrait/components/my-component'.
-      let newPathParts = Ember.copy(resolvingPathParts);
-      newPathParts.unshift(pathPrefix);
-      let newPath = newPathParts.join('/');
+        // Change resolvingPath from 'path/name' to 'pathPrefix/path/name.
+        // For example 'components/my-component' -> 'tablet-portrait/components/my-component'.
+        let newPathParts = Ember.copy(resolvingPathParts);
+        newPathParts.unshift(pathPrefix);
+        let newPath = newPathParts.join('/');
 
-      // Change resolvingPath in the given fullName (if resolving resource exists in the new device-related path).
-      let newFullName = resolvingType + ':' + newPath;
-      if (this.isKnown(newFullName)) {
-        fullName = newFullName;
-        break;
+        // Change resolvingPath in the given fullName (if resolving resource exists in the new device-related path).
+        let newFullName = resolvingType + ':' + newPath;
+        if (this.isKnown(newFullName)) {
+          fullName = newFullName;
+          break;
+        }
       }
     }
 
     return this._super(fullName);
-  }
+  },
+
+  /**
+    Determines if resource should be resolved with origin resolving path.
+    Returns true if full name of resource was specified in 'resolveWithoutDeviceTypeDetection' application setting.
+
+    @method _resolveResourceWithoutDeviceTypeDetection
+    @param {String} fullName Resource full name (with path inside type-related directory).
+    @return {Boolean} Flag: indicates whether given resource should be resolved with origin resolving path.
+    @private
+  */
+  _resolveResourceWithoutDeviceTypeDetection(fullName) {
+    if (this.namespace && this.namespace.resolveWithoutDeviceTypeDetection && Ember.isArray(this.namespace.resolveWithoutDeviceTypeDetection)) {
+      let resourceTypesToApplyOriginResolving = this.namespace.resolveWithoutDeviceTypeDetection;
+      return resourceTypesToApplyOriginResolving.includes(fullName);
+    }
+
+    return false;
+  },
 });

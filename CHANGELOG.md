@@ -17,7 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Updated dependency on `ember-flexberry-data` addon to v0.5.0.
 * Now performing transition to `edit-form` route after saving new model.
 * `flexberry-file` component:
-* Renamed property for input element: `class` property was renamed to `inputClass`.
+    * Renamed property for input element: `class` property was renamed to `inputClass`.
 
 ### Fixed
 * `flexberry-checkbox` component:
@@ -44,7 +44,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * Removed outdated style in `object-list-view` styles component.
 * `flexberry-file` component:
-    * Remove 'fluid' CSS-class from component's defaults for `flexberry-file` component.
+    * Remove `fluid` CSS-class from component's defaults for `flexberry-file` component.
 
 ### Deprecated
 * `edit-form` controller:

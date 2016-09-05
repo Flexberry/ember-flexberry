@@ -129,7 +129,7 @@ export default ListFormController.extend({
     */
     configurateRow(rowConfig, record) {
       if (record) {
-       this.get('records').push(record);
+        this.get('records').push(record);
       }
 
       if (record.get('address') === this.get('configurateRowByAddress')) {

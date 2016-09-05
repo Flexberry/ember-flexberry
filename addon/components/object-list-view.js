@@ -557,7 +557,7 @@ export default FlexberryBaseComponent.extend(
           configurateRow(rowConfig, record) {
             rowConfig.canBeDeleted = false;
             if (record.get('isMyFavoriteRecord')) {
-              rowConfig.customClass += 'my-fav-record';
+              Ember.set(rowConfig, 'customClass', 'my-fav-record);
             }
           }
         }
@@ -869,6 +869,19 @@ export default FlexberryBaseComponent.extend(
     if (searchForContentChange) {
       this.addObserver('content.[]', this, this._contentDidChange);
     }
+
+    let attributes = this.get('_modelProjection').attributes;
+    let attrsArray = [];
+
+    for (let attrName in attributes) {
+      attrsArray.push(attrName);
+    }
+
+    content.forEach((record) => {
+      attrsArray.forEach((attrName) => {
+        Ember.addObserver(record, attrName, this, '_attributeChanged');
+      });
+    });
   },
 
   /**
@@ -942,6 +955,20 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
 
     this._super(...arguments);
+
+    let attributes = this.get('_modelProjection').attributes;
+    let attrsArray = [];
+    let content = this.get('content');
+
+    for (let attrName in attributes) {
+      attrsArray.push(attrName);
+    }
+
+    content.forEach((record) => {
+      attrsArray.forEach((attrName) => {
+        Ember.removeObserver(record, attrName, this, '_attributeChanged');
+      });
+    });
   },
 
   /**
@@ -1448,7 +1475,8 @@ export default FlexberryBaseComponent.extend(
     modelWithKey.set('data', record);
 
     let rowConfig = Ember.copy(this.get('defaultRowConfig'));
-    modelWithKey.set('config', rowConfig);
+    modelWithKey.set('rowConfig', rowConfig);
+    record.set('rowConfig', rowConfig);
 
     let configurateRow = this.get('configurateRow');
     if (configurateRow) {
@@ -1674,5 +1702,20 @@ export default FlexberryBaseComponent.extend(
       selectedRecords.removeObject(deletedItem);
       this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, deletedItem, immediateDelete);
     });
-  }
+  },
+
+  /**
+    That observer is called when change attributes of model.
+
+    @method _attributeChanged
+    @private
+  */
+  _attributeChanged(record, attrName) {
+    let rowConfig = record.get('rowConfig');
+    let configurateRow = this.get('configurateRow');
+    if (configurateRow) {
+      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
+      configurateRow(rowConfig, record);
+    }
+  },
 });

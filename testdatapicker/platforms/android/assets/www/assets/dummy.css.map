@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "dummy.css",
+	"sources": [
+		"../../sass_compiler-input_base_path-ftsNL5py.tmp/0/app/styles/app.scss"
+	],
+	"sourcesContent": [
+		".spinner {\n  background: url('/assets/images/cat.gif') no-repeat;\n  background-size: contain;\n  height: 140px;\n  width: 175px;\n  margin: 0 auto;\n}\n\n.loading-message {\n  text-align: center;\n  color: #aaa;\n}\n\n// Examples application template\n#example-with-submenu {\n  padding-top: 40px;\n\n  .flexberry-submenu .item {\n    padding-right: 0;\n    > .menu {\n      margin-right: -2px;\n    }\n  }\n\n  .flexberry-content {\n    position: relative;\n    padding: 0;\n\n    &.segment {\n      box-shadow: none;\n      border: none;\n    }\n  }\n}\n\n.ui.form .field > .field {\n  margin-bottom: 0;\n}\n\n#example {\n  .flexberry-content {\n    padding: 3em 0;\n  }\n}\n\n#example-mobile {\n  .flexberry-content {\n    padding: 6em 10px 2em 10px;\n    border-bottom: none;\n  }\n}\n\n.flexberry-word-break {\n  word-break: break-all !important;\n}\n"
+	],
+	"mappings": "AAAA,AAAA,QAAQ,CAAC;EACP,UAAU,EAAE,6BAAG,CAA2B,SAAS;EACnD,eAAe,EAAE,OAAQ;EACzB,MAAM,EAAE,KAAM;EACd,KAAK,EAAE,KAAM;EACb,MAAM,EAAE,MAAO,GAChB;;AAED,AAAA,gBAAgB,CAAC;EACf,UAAU,EAAE,MAAO;EACnB,KAAK,EAAE,IAAK,GACb;;AAGD,AAAA,qBAAqB,CAAC;EACpB,WAAW,EAAE,IAAK,GAkBnB;EAnBD,AAGqB,qBAHA,CAGnB,kBAAkB,CAAC,KAAK,CAAC;IACvB,aAAa,EAAE,CAAE,GAIlB;IARH,AAKM,qBALe,CAGnB,kBAAkB,CAAC,KAAK,GAEpB,KAAK,CAAC;MACN,YAAY,EAAE,IAAK,GACpB;EAPL,AAUE,qBAVmB,CAUnB,kBAAkB,CAAC;IACjB,QAAQ,EAAE,QAAS;IACnB,OAAO,EAAE,CAAE,GAMZ;IAlBH,AAUE,qBAVmB,CAUnB,kBAAkB,AAIf,QAAQ,CAAC;MACR,UAAU,EAAE,IAAK;MACjB,MAAM,EAAE,IAAK,GACd;;AAIL,AAAkB,GAAf,AAAA,KAAK,CAAC,MAAM,GAAG,MAAM,CAAC;EACvB,aAAa,EAAE,CAAE,GAClB;;AAED,AACE,QADM,CACN,kBAAkB,CAAC;EACjB,OAAO,EAAE,KAAM,GAChB;;AAGH,AACE,eADa,CACb,kBAAkB,CAAC;EACjB,OAAO,EAAE,iBAAkB;EAC3B,aAAa,EAAE,IAAK,GACrB;;AAGH,AAAA,qBAAqB,CAAC;EACpB,UAAU,EAAE,oBAAqB,GAClC",
+	"names": []
+}

@@ -24,11 +24,15 @@ export default ListFormController.extend({
       @method userButtonActionTest
      */
     allDelButtonAction: function() {
+      let proms = [];
       this.get('store').findAll('new-platform-flexberry-flexberry-user-setting')
       .then((settings) => {
-        settings.content.forEach(function(setting) {
-          setting.deleteRecord();
-          setting.save();
+        settings.forEach(function(setting) {
+          proms.push(setting.destroyRecord());
+        });
+      }).then(() => {
+        Ember.RSVP.all(proms).then(() => {
+          this.get('target').router.refresh();
         });
       });
     }

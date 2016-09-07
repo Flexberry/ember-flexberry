@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "EmberFlexberryDummyLocalizedSuggestionType",
   "modelName": "ember-flexberry-dummy-localized-suggestion-type",
   "className": "LocalizedSuggestionType",
@@ -14,7 +14,7 @@
     },
     {
       "name": "createTime",
-      "type": "string",
+      "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
       "defaultValue": ""
@@ -28,7 +28,7 @@
     },
     {
       "name": "editTime",
-      "type": "string",
+      "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
       "defaultValue": ""

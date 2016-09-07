@@ -5,21 +5,24 @@
       "displayAttributeName": null,
       "required": false,
       "relationName": "Parent",
-      "projection": "SuggestionTypeL"
+      "projection": "SuggestionTypeL",
+      "detailModelName": null
     },
     {
       "master": "localization",
       "displayAttributeName": "name",
       "required": true,
       "relationName": "LocalizedTypes.Localization",
-      "projection": "LocalizationL"
+      "projection": "LocalizationL",
+      "detailModelName": "ember-flexberry-dummy-localized-suggestion-type"
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "LocalizedTypes.SuggestionType",
-      "projection": "SuggestionTypeL"
+      "projection": "SuggestionTypeL",
+      "detailModelName": null
     }
   ],
   "caption": "Suggestion type",

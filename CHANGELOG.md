@@ -20,6 +20,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-objectlistview` component:
     * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
     * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
+* Blueprint `flexberry-edit-form`:
+    * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
 
 ## [0.5.0] - 2016-09-05
 ### Added

@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Blueprint for hbs now generate clearly formatted code.
 * Now resolver is working correctly in IE.
+* `flexberry-objectlistview` component:
+    * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
+    * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
 
 ## [0.5.0] - 2016-09-05
 ### Added
@@ -109,7 +112,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Support of `flexberry-lookup` component in dropdown mode for mobile devices.
 * `flexberry-objectlistview` component:
     * Add filtering by attribute of number type.
-    * Add filtering by master attributes.
+    * Add filtering by "master" attributes.
     * Add [`predicateForAttribute` method](http://flexberry.github.io/Documentation/master/classes/ListFormRoute.html#method_predicateForAttribute) for filtering customization in application.
     * Add filtering for each column.
     * Add hierarchical mode:

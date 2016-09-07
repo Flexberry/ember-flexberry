@@ -132,6 +132,14 @@ Ember.$.extend(true, translations, {
         'components-examples': {
           'caption': 'Components examples',
           'title': '',
+          'datepicker-examples': {
+            'caption': 'datepicker-examples',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
           'flexberry-checkbox': {
             'caption': 'flexberry-checkbox',
             'title': '',
@@ -435,6 +443,11 @@ Ember.$.extend(true, translations, {
     },
 
     'components-examples': {
+      'datepicker-examples': {
+        'settings-example': {
+          'caption': 'Datepicker-examples. Settings example'
+        }
+      },
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Settings example'

@@ -5,19 +5,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * `flexberry-field` component:
-    * Now support explicit html type definition. Default type is "text".
+    * Now support explicit html type definition. Default type is `text`.
 * `flexberry-textbox` component:
-    * Now support explicit html type definition. Default type is "text".
+    * Now support explicit html type definition. Default type is `text`.
 
 ### Changed
-* Rollback `semantic-ui-ember` addon to v0.9.3.
+* Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.
+* Renamed `flexberry-lookup` mixin to `flexberry-lookup-controller`.
 * Blueprint will no longer generate old top validator for properties in hbs templates.
-* Replace `includes` to `contains` in resolver for support IE.
 
 ### Fixed
-* `flexberry-checkbox` component:
-    * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
 * Blueprint for hbs now generate clearly formatted code.
+* Now resolver is working correctly in IE.
 
 ## [0.5.0] - 2016-09-05
 ### Added

@@ -18,7 +18,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
 * Blueprint for hbs now generate clearly formatted code.
 * Blueprint `flexberry-edit-form`:
-    * Generate correct `getCellComponent` function, if model has many details which refer to same master.
+    * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
 
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed

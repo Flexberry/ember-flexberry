@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 
-// TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
 
@@ -53,6 +52,11 @@ export default Ember.Mixin.create({
       for (let i = 0; i < colsOrder.length; i++) {
         let colOrder = colsOrder[i];
         propName = colOrder.propName;
+        if (!(propName in namedColList) || !('header' in  namedColList[propName])) {
+          delete namedColList[propName];
+          continue;
+        }
+
         let name = namedColList[propName].header;
         delete namedColList[propName];
         colDesc = { name: name, propName: propName, hide: colOrder.hide };
@@ -116,11 +120,13 @@ export default Ember.Mixin.create({
           break;
 
         case 'belongsTo':
-          if (!attr.options.hidden) {
+
+          //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
+          if (true || !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
 
-            if (column.cellComponent.componentName === 'object-list-view-cell') {
+            if (column.cellComponent && column.cellComponent.componentName === 'object-list-view-cell') {
               if (attr.options.displayMemberPath) {
                 column.propName += '.' + attr.options.displayMemberPath;
               } else {
@@ -136,7 +142,9 @@ export default Ember.Mixin.create({
           break;
 
         case 'attr':
-          if (attr.options.hidden) {
+
+          //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
+          if (false && attr.options.hidden) {
             break;
           }
 
@@ -194,7 +202,7 @@ export default Ember.Mixin.create({
     // if controller's 'getCellComponent' method call its super method from the base controller.
     let currentController = this.get('currentController');
     let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
-    let cellComponent = this.get('cellComponent');
+    let cellComponent = this.get('cellComponent') || {};
 
     if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
       let recordModel =  (this.get('content') || {}).type || null;

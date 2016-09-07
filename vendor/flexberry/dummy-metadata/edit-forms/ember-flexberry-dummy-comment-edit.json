@@ -5,28 +5,32 @@
       "displayAttributeName": null,
       "required": false,
       "relationName": "Suggestion",
-      "projection": "SuggestionL"
+      "projection": "SuggestionL",
+      "detailModelName": null
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "Author",
-      "projection": "ApplicationUserL"
+      "projection": "ApplicationUserL",
+      "detailModelName": null
     },
     {
       "master": "applicationUser",
       "displayAttributeName": "name",
       "required": true,
       "relationName": "UserVotes.ApplicationUser",
-      "projection": "ApplicationUserL"
+      "projection": "ApplicationUserL",
+      "detailModelName": "ember-flexberry-dummy-comment-vote"
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "UserVotes.Comment",
-      "projection": ""
+      "projection": "",
+      "detailModelName": null
     }
   ],
   "caption": "Comment edit",

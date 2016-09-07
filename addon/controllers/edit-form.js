@@ -3,7 +3,7 @@
 */
 
 import Ember from 'ember';
-import FlexberryLookupMixin from '../mixins/flexberry-lookup';
+import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
 
@@ -334,6 +334,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     }
 
     deletePromise.catch((errorData) => {
+      model.rollbackAttributes();
       this.onDeleteActionRejected(errorData);
     }).finally((data) => {
       this.onDeleteActionAlways(data);
@@ -548,6 +549,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         break;
       case 'file':
         cellComponent.componentName = 'flexberry-file';
+        cellComponent.componentProperties = { inputClass: 'fluid' };
         break;
       default:
 

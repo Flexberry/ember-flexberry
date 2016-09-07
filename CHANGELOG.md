@@ -18,8 +18,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
 * Blueprint for hbs now generate clearly formatted code.
 * `flexberry-objectlistview` component:
-    * Now for filter by any matches uses all attributes `belongsTo` relationship, instead of `displayMemberPath` attribute.
-    * If projection, specified for filter by any matches, contains `hasMany` relationship, it relationship skip.
+    * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
+    * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
 
 ## [0.5.0-beta.2] - 2016-08-25
 ### Changed
@@ -93,7 +93,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Support of `flexberry-lookup` component in dropdown mode for mobile devices.
 * `flexberry-objectlistview` component:
     * Add filtering by attribute of number type.
-    * Add filtering by master attributes.
+    * Add filtering by "master" attributes.
     * Add [`predicateForAttribute` method](http://flexberry.github.io/Documentation/master/classes/ListFormRoute.html#method_predicateForAttribute) for filtering customization in application.
     * Add filtering for each column.
     * Add hierarchical mode:

@@ -371,6 +371,16 @@ export default Ember.Controller.extend({
             children: null
           }]
         }]
+      }, {
+        link: null,
+        caption: i18n.t('forms.application.sitemap.user-setting-forms.caption'),
+        title: i18n.t('forms.application.sitemap.user-setting-forms.title'),
+        children: [{
+          link: 'user-setting-forms/user-setting-delete',
+          caption: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.caption'),
+          title: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.title'),
+          children: null
+        }]
       }]
     };
   })

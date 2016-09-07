@@ -334,6 +334,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     }
 
     deletePromise.catch((errorData) => {
+      model.rollbackAttributes();
       this.onDeleteActionRejected(errorData);
     }).finally((data) => {
       this.onDeleteActionAlways(data);
@@ -548,6 +549,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         break;
       case 'file':
         cellComponent.componentName = 'flexberry-file';
+        cellComponent.componentProperties = { inputClass: 'fluid' };
         break;
       default:
 

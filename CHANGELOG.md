@@ -17,7 +17,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Blueprint for hbs now generate clearly formatted code.
 * Now resolver is working correctly in IE.
-* Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
+* `flexberry-objectlistview` component:
+    * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
     * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
 
 ## [0.5.0] - 2016-09-05

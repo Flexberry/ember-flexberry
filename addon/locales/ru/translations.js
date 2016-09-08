@@ -16,7 +16,14 @@ export default {
     },
 
     'new-platform-flexberry-services-lock-list': {
-      caption: 'Блокировки',
+      caption: 'Список блокировок',
+    },
+
+    'new-platform-flexberry-services-lock-edit': {
+      caption: 'Объект блокировки',
+      'lockKey-caption': 'Ключ заблокированного объекта',
+      'userName-caption': 'Заблокировавший пользователь',
+      'lockDate-caption': 'Дата блокировки',
     },
   },
 

@@ -16,7 +16,14 @@ export default {
     },
 
     'new-platform-flexberry-services-lock-list': {
-      caption: 'Blocking',
+      caption: 'Block list',
+    },
+
+    'new-platform-flexberry-services-lock-edit': {
+      caption: 'Lock object',
+      'lockKey-caption': 'Key locked object',
+      'userName-caption': 'User locked object',
+      'lockDate-caption': 'Date lock',
     },
   },
 

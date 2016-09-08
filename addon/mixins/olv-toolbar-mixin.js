@@ -146,11 +146,13 @@ export default Ember.Mixin.create({
           break;
 
         case 'belongsTo':
-          if (!attr.options.hidden) {
+
+          //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
+          if (true || !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
 
-            if (column.cellComponent.componentName === 'object-list-view-cell') {
+            if (column.cellComponent && column.cellComponent.componentName === 'object-list-view-cell') {
               if (attr.options.displayMemberPath) {
                 column.propName += '.' + attr.options.displayMemberPath;
               } else {
@@ -166,7 +168,9 @@ export default Ember.Mixin.create({
           break;
 
         case 'attr':
-          if (attr.options.hidden) {
+
+          //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
+          if (false && attr.options.hidden) {
             break;
           }
 

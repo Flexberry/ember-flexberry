@@ -2,7 +2,7 @@ import Ember from 'ember';
 import ReloadListMixin from 'ember-flexberry/mixins/reload-list-mixin';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
-import BaseModel from 'ember-flexberry/models/base';
+import BaseModel from 'ember-flexberry-data/models/model';
 import { Projection } from 'ember-flexberry-data';
 import { Serializer } from 'ember-flexberry-data';
 import { Query } from 'ember-flexberry-data';

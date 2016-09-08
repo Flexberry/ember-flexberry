@@ -1,5 +1,5 @@
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry/models/base';
+import BaseModel from 'ember-flexberry-data/models/model';
 import { Projection } from 'ember-flexberry-data';
 
 let Model = BaseModel.extend({

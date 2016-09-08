@@ -3,7 +3,7 @@
 */
 
 import DS from 'ember-data';
-import BaseModel from './base';
+import BaseModel from 'ember-flexberry-data/models/model';
 import { Projection } from 'ember-flexberry-data';
 
 /**

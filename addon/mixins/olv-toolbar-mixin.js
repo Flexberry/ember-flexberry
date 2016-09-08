@@ -14,7 +14,7 @@ export default Ember.Mixin.create({
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
       let projectionAttributes = this.modelProjection.attributes;
-      let colList = this._generateColumns(projectionAttributes);
+      let colList = this._generateFullColumnsTree(projectionAttributes);
       let namedColList = {};
       for (let i = 0; i < colList.length; i++) {
         colDesc = colList[i];
@@ -102,10 +102,10 @@ export default Ember.Mixin.create({
   /**
     Generate the columns.
 
-    @method _generateColumns
+    @method _generateFullColumnsTree
     @private
   */
-  _generateColumns(attributes, columnsBuf, relationshipPath) {
+  _generateFullColumnsTree(attributes, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];
     relationshipPath = relationshipPath || '';
 
@@ -121,32 +121,22 @@ export default Ember.Mixin.create({
           break;
 
         case 'belongsTo':
-          // TODO To understand in future releases  the reasons of incorrect form columns of composite names. A'la type.name etc...
-          if (true || !attr.options.hidden) {
-            let bindingPath = currentRelationshipPath + attrName;
-            let column = this._createColumn(attr, attrName, bindingPath);
-
-            if (column.cellComponent && column.cellComponent.componentName === 'object-list-view-cell') {
-              if (attr.options.displayMemberPath) {
-                column.propName += '.' + attr.options.displayMemberPath;
-              } else {
-                column.propName += '.id';
-              }
+          let bindingPath = currentRelationshipPath + attrName;
+          let column = this._createColumn(attr, attrName, bindingPath);
+          if (column.cellComponent && column.cellComponent.componentName === 'object-list-view-cell') {
+            if (attr.options.displayMemberPath) {
+              column.propName += '.' + attr.options.displayMemberPath;
+            } else {
+              column.propName += '.id';
             }
-
-            columnsBuf.push(column);
           }
 
+          columnsBuf.push(column);
           currentRelationshipPath += attrName + '.';
-          this._generateColumns(attr.attributes, columnsBuf, currentRelationshipPath);
+          this._generateFullColumnsTree(attr.attributes, columnsBuf, currentRelationshipPath);
           break;
 
         case 'attr':
-          // TODO To understand in future releases the reasons of incorrect form columns of composite names. A'la type.name etc...
-          if (false && attr.options.hidden) {
-            break;
-          }
-
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);

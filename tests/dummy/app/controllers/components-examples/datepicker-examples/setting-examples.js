@@ -64,6 +64,7 @@ export default Ember.Controller.extend({
     @type String
    */
   dateTimeFormat: 'DD.MM.YYYY',
+
   /**
     Template text for 'flexberry-datepicker' component.
 
@@ -72,7 +73,8 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{daterangepicker-example<br>' +
-    '}}'),
+    '}}',
+    ),
 
   /**
     Component settings metadata.

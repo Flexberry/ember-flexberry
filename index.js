@@ -40,11 +40,6 @@ module.exports = {
     });
 
     app.import({
-      development: 'bower_components/sm-calendar/Calendar.js',
-      production:  'bower_components/sm-datepicker/DatePicker.js'
-    });
-
-    app.import({
       development: 'bower_components/devicejs/lib/device.js',
       production:  'bower_components/devicejs/lib/device.min.js'
     });

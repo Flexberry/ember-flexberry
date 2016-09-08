@@ -162,22 +162,6 @@ export default Ember.Component.extend({
   /**
     Change state of calendar.
 
-    @example
-      ```javascript
-      getDateToSet: function(dateFromPicker) {
-        if (!dateFromPicker.isValid()) {
-          return this.invalidDate;
-        }
-
-        let minDate = this.get('minDate');
-        let maxDate = this.get('maxDate');
-        if (moment.isDate(minDate) && dateFromPicker.isBefore(this.minDate) ||
-            moment.isDate(maxDate) && dateFromPicker.isAfter(this.maxDate)) {
-            return this.invalidDate;
-        }
-      }
-      ```
-
     @method _setCalendarEnabledState
     @private
   */

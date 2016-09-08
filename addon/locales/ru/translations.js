@@ -13,7 +13,11 @@ export default {
 
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Лог приложения'
-    }
+    },
+
+    'new-platform-flexberry-services-lock-list': {
+      caption: 'Блокировки',
+    },
   },
 
   'components': {
@@ -196,6 +200,15 @@ export default {
           }
         }
       }
-    }
+    },
+    'new-platform-flexberry-services-lock': {
+      'projections': {
+        'LockL': {
+          'lockKey': { 'caption': 'Ключ заблокированного объекта' },
+          'userName': { 'caption': 'Заблокировавший пользователь' },
+          'lockDate': { 'caption': 'Дата блокировки' },
+        },
+      },
+    },
   }
 };

@@ -4,6 +4,17 @@ import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions'
 // TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
+  /**
+    Default cell component that will be used to display values in columns cells.
+
+    @property {Object} cellComponent
+    @property {String} [cellComponent.componentName='object-list-view-cell']
+    @property {String} [cellComponent.componentProperties=null]
+  */
+  cellComponent: {
+    componentName: 'object-list-view-cell',
+    componentProperties: null,
+  },
 
   actions: {
     showConfigDialog: function(componentName, settingName) {
@@ -14,7 +25,7 @@ export default Ember.Mixin.create({
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
       let projectionAttributes = this.modelProjection.attributes;
-      let colList = this._generateFullColumnsTree(projectionAttributes);
+      let colList = this._generateColumns(projectionAttributes);
       let namedColList = {};
       for (let i = 0; i < colList.length; i++) {
         colDesc = colList[i];
@@ -22,7 +33,21 @@ export default Ember.Mixin.create({
         namedColList[propName] = colDesc;
       }
 
-      if (colsOrder === undefined) {
+      if (Ember.isArray(colsOrder)) {
+        /*
+         Remove propName, that are not in colList
+         */
+        let reliableColsOrder = [];
+        for (let i = 0; i < colsOrder.length; i++) {
+          let colOrder = colsOrder[i];
+          propName = colOrder.propName;
+          if ((propName in namedColList) && ('header' in  namedColList[propName])) {
+            reliableColsOrder.push(colOrder);
+          }
+        }
+
+        colsOrder = reliableColsOrder;
+      } else {
         colsOrder = colList;
       }
 
@@ -100,12 +125,12 @@ export default Ember.Mixin.create({
   },
 
   /**
-    Generate the columns.
-
-    @method _generateFullColumnsTree
-    @private
-  */
-  _generateFullColumnsTree(attributes, columnsBuf, relationshipPath) {
+   *    Generate the columns.
+   *
+   *    @method _generateColumns
+   *    @private
+   */
+  _generateColumns(attributes, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];
     relationshipPath = relationshipPath || '';
 
@@ -121,22 +146,30 @@ export default Ember.Mixin.create({
           break;
 
         case 'belongsTo':
-          let bindingPath = currentRelationshipPath + attrName;
-          let column = this._createColumn(attr, attrName, bindingPath);
-          if (column.cellComponent && column.cellComponent.componentName === 'object-list-view-cell') {
-            if (attr.options.displayMemberPath) {
-              column.propName += '.' + attr.options.displayMemberPath;
-            } else {
-              column.propName += '.id';
+          if (!attr.options.hidden) {
+            let bindingPath = currentRelationshipPath + attrName;
+            let column = this._createColumn(attr, attrName, bindingPath);
+
+            if (column.cellComponent.componentName === 'object-list-view-cell') {
+              if (attr.options.displayMemberPath) {
+                column.propName += '.' + attr.options.displayMemberPath;
+              } else {
+                column.propName += '.id';
+              }
             }
+
+            columnsBuf.push(column);
           }
 
-          columnsBuf.push(column);
           currentRelationshipPath += attrName + '.';
-          this._generateFullColumnsTree(attr.attributes, columnsBuf, currentRelationshipPath);
+          this._generateColumns(attr.attributes, columnsBuf, currentRelationshipPath);
           break;
 
         case 'attr':
+          if (attr.options.hidden) {
+            break;
+          }
+
           let bindingPath = currentRelationshipPath + attrName;
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);

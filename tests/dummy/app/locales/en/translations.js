@@ -129,6 +129,10 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
+        lock: {
+          caption: 'Blocking',
+          title: 'Block list',
+        },
         'components-examples': {
           'caption': 'Components examples',
           'title': '',

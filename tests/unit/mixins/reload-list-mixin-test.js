@@ -2,7 +2,6 @@ import Ember from 'ember';
 import ReloadListMixin from 'ember-flexberry/mixins/reload-list-mixin';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
-import BaseModel from 'ember-flexberry-data/models/model';
 import { Projection } from 'ember-flexberry-data';
 import { Serializer } from 'ember-flexberry-data';
 import { Query } from 'ember-flexberry-data';
@@ -22,7 +21,7 @@ test('it works', function(assert) {
 });
 
 test('it properly generates simple filter predicate', function(assert) {
-  let Model = BaseModel.extend({
+  let Model = Projection.Model.extend({
     firstName: DS.attr('string'),
   });
 
@@ -58,7 +57,7 @@ test('it properly generates simple filter predicate', function(assert) {
 });
 
 test('it properly generates complex filter predicate', function(assert) {
-  let Model0 = BaseModel.extend({
+  let Model0 = Projection.Model.extend({
     firstName: DS.attr('string'),
     lastName: DS.attr('string'),
     dateField: DS.attr('date'),
@@ -68,7 +67,7 @@ test('it properly generates complex filter predicate', function(assert) {
   let app = startApp();
   app.register('model:employeeTest2', Model0);
 
-  let Model = BaseModel.extend({
+  let Model = Projection.Model.extend({
     firstName: DS.attr('string'),
     lastName: DS.attr('string'),
     dateField: DS.attr('date'),

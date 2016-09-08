@@ -3,7 +3,6 @@
 */
 
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry-data/models/model';
 import { Projection } from 'ember-flexberry-data';
 
 /**
@@ -12,7 +11,7 @@ import { Projection } from 'ember-flexberry-data';
   @class IISCaseberryLoggingObjectsApplicationLogModel
   @extends BaseModel
 */
-let Model = BaseModel.extend({
+let Model = Projection.Model.extend({
   category: DS.attr('string'),
   eventId: DS.attr('number'),
   priority: DS.attr('number'),

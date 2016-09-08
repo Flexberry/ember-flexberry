@@ -1,8 +1,7 @@
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry-data/models/model';
 import { Projection } from 'ember-flexberry-data';
 
-let Model = BaseModel.extend({
+let Model = Projection.Model.extend({
   flag: DS.attr('boolean'),
   number: DS.attr('number'),
   text: DS.attr('string'),

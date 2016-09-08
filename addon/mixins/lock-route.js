@@ -110,6 +110,7 @@ export default Ember.Mixin.create({
             this.store.createRecord('new-platform-flexberry-services-lock', {
               lockKey: params.id,
               userName: this.get('userName'),
+              lockDate: new Date(),
             }).save().then((lock) => {
               this.set('_currentLock', lock);
               resolve();

@@ -9,7 +9,7 @@ import { Projection } from 'ember-flexberry-data';
 let Model = BaseModel.extend({
   lockKey: DS.attr('string'),
   userName: DS.attr('string'),
-  lockDate: DS.attr('date', { defaultValue() { return new Date(); } }),
+  lockDate: DS.attr('date'),
 });
 
 Model.defineProjection('LockL', 'new-platform-flexberry-services-lock', {

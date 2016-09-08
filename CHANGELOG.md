@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now support explicit html type definition. Default type is `text`.
 * `flexberry-textbox` component:
     * Now support explicit html type definition. Default type is `text`.
+* Support locks for `EditFormRoute`.
 
 ### Changed
 * Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.

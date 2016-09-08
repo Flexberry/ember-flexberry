@@ -9,7 +9,7 @@ import { Projection } from 'ember-flexberry-data';
   Model to work with user settings.
 
   @class NewPlatformFlexberryFlexberryUserSettingModel
-  @extends BaseModel
+  @extends Projection.Model
 */
 let Model = Projection.Model.extend({
   appName: DS.attr('string'),

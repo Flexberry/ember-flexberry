@@ -9,7 +9,7 @@ import { Projection } from 'ember-flexberry-data';
   Model of application log, message (used by {{#crossLink "LogService"}}log service{{/crossLink}}).
 
   @class IISCaseberryLoggingObjectsApplicationLogModel
-  @extends BaseModel
+  @extends Projection.Model
 */
 let Model = Projection.Model.extend({
   category: DS.attr('string'),

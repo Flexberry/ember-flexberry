@@ -438,6 +438,13 @@ Ember.$.extend(true, translations, {
       }
     },
 
+    'new-platform-flexberry-services-lock-list': {
+      'change-user-name': 'Change user name',
+      'open-read-only': 'Open read only',
+      'unlock-object': 'Unlock object',
+      'enter-new-user-name': 'Enter new user name:',
+    },
+
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {

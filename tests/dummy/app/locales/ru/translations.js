@@ -441,6 +441,13 @@ Ember.$.extend(true, translations, {
       }
     },
 
+    'new-platform-flexberry-services-lock-list': {
+      'change-user-name': 'Изменить имя пользователя',
+      'open-read-only': 'Открывать только для чтения',
+      'unlock-object': 'Снимать блокировку',
+      'enter-new-user-name': 'Введите новое имя пользователя:',
+    },
+
     'components-examples': {
       'flexberry-checkbox': {
         'settings-example': {

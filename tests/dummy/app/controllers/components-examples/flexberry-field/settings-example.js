@@ -37,6 +37,14 @@ export default Ember.Controller.extend({
   readonly: false,
 
   /**
+    Type of 'flexberry-field' component.
+
+    @property type
+    @type String
+   */
+  type: 'text',
+
+  /**
     Template text for 'flexberry-field' component.
 
     @property componentTemplateText
@@ -48,6 +56,7 @@ export default Ember.Controller.extend({
     '  label=label<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
+    '  type=type<br>' +
     '}}'),
 
   /**
@@ -58,6 +67,13 @@ export default Ember.Controller.extend({
    */
   componentSettingsMetadata: Ember.computed('i18n.locale', function() {
     var componentSettingsMetadata = Ember.A();
+    componentSettingsMetadata.pushObject({
+      settingName: 'type',
+      settingType: 'enumeration',
+      settingDefaultValue: 'text',
+      settingAvailableItems: ['text', 'number', 'password', 'color', 'button', 'hidden'],
+      bindedControllerPropertieName: 'type'
+    });
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'string',

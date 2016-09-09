@@ -57,5 +57,11 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     }
 
     return cellComponent;
+  },
+
+  actions: {
+    configurateRow(rowConfig, record) {
+      rowConfig.customClass += 'positive';
+    }
   }
 });

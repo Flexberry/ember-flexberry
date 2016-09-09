@@ -161,12 +161,21 @@ export default Ember.Mixin.create({
       ```
 
     @method predicateForAttribute
-    @param {Object} attribute Object format: `{ name, type }`, where `name` - attribute name, `type` - attribute type.
+    @param {Object} attribute Object contains attribute info.
+    @param {String} attribute.name Name of attribute, example `name` or `type.name` if it attribute of relationship.
+    @param {Object} attribute.options Object with attribute options.
+    @param {Boolean} [attribute.options.hidden] Flag, indicate that this hidden attribute.
+    @param {Boolean} [attribute.options.displayMemberPath] Flag, indicate that this attribute uses for display relationship.
+    @param {String} attribute.type Type of attribute, example `string` or `number`.
     @param {String} filter Pattern for search.
     @return {BasePredicate|null} Object class of `BasePredicate` or `null`, if not need filter.
     @for ListFormRoute
   */
   predicateForAttribute(attribute, filter) {
+    if (attribute.options.hidden && !attribute.options.displayMemberPath) {
+      return null;
+    }
+
     switch (attribute.type) {
       case 'string':
         return new StringPredicate(attribute.name).contains(filter);
@@ -226,20 +235,25 @@ export default Ember.Mixin.create({
         let attribute = projection.attributes[name];
         switch (attribute.kind) {
           case 'attr':
+            let options = Ember.merge({}, attribute.options);
+            options.displayMemberPath = projection.options && projection.options.displayMemberPath === name;
             attributes.push({
               name: name,
+              options: options,
               type: Ember.get(store.modelFor(projection.modelName), 'attributes').get(name).type,
             });
             break;
 
           case 'belongsTo':
-            if (attribute.options.displayMemberPath) {
-              attributes.push({
-                name: `${name}.${attribute.options.displayMemberPath}`,
-                type: Ember.get(store.modelFor(attribute.modelName), 'attributes').get(attribute.options.displayMemberPath).type,
-              });
+            let belongsToAttributes = this._attributesForFilter(attribute, store);
+            for (let i = 0; i < belongsToAttributes.length; i++) {
+              belongsToAttributes[i].name = `${name}.${belongsToAttributes[i].name}`;
+              attributes.push(belongsToAttributes[i]);
             }
 
+            break;
+
+          case 'hasMany':
             break;
 
           default:

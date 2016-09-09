@@ -3,6 +3,33 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-field` component:
+    * Now support explicit html type definition. Default type is `text`.
+* `flexberry-textbox` component:
+    * Now support explicit html type definition. Default type is `text`.
+* `flexberry-groupedit` component:
+    * Add support `configurateRow`.
+* `object-list-view` component:
+    * Add observer `attributeChanged` that calls the `configurateRow` method. Now need to use `Ember.set()` to add custom class for record config.
+* Support locks for `EditFormRoute`.
+
+### Changed
+* Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.
+* Renamed `flexberry-lookup` mixin to `flexberry-lookup-controller`.
+* Blueprint will no longer generate old top validator for properties in hbs templates.
+
+### Fixed
+* Blueprint for hbs now generate clearly formatted code.
+* Now resolver is working correctly in IE.
+* `flexberry-objectlistview` component:
+    * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
+    * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
+* Blueprint `flexberry-edit-form`:
+    * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
+
+### Removed
+* Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.
 
 ## [0.5.0] - 2016-09-05
 ### Added
@@ -95,7 +122,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Support of `flexberry-lookup` component in dropdown mode for mobile devices.
 * `flexberry-objectlistview` component:
     * Add filtering by attribute of number type.
-    * Add filtering by master attributes.
+    * Add filtering by "master" attributes.
     * Add [`predicateForAttribute` method](http://flexberry.github.io/Documentation/master/classes/ListFormRoute.html#method_predicateForAttribute) for filtering customization in application.
     * Add filtering for each column.
     * Add hierarchical mode:

@@ -24,12 +24,15 @@ var ModelBlueprint = (function () {
         var modelFile = path.join(modelsDir, options.file);
         var content = stripBom(fs.readFileSync(modelFile, "utf8"));
         var model = JSON.parse(content);
+        var jsModel = this.getJSForModel(model);
         this.parentModelName = model.parentModelName;
         this.parentClassName = model.parentClassName;
         this.className = model.className;
         this.serializerAttrs = this.getSerializerAttrs(model);
         this.projections = this.getJSForProjections(model, modelsDir);
-        this.model = this.getJSForModel(model);
+        this.model = jsModel["properties"];
+        this.validations = jsModel["validations"];
+        this.initFunction = jsModel["initFunction"];
         this.name = options.entity.name;
         this.needsAllModels = this.getNeedsAllModels(modelsDir);
         this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
@@ -97,12 +100,24 @@ var ModelBlueprint = (function () {
             var hasMany = _e[_d];
             attrs.push(templateHasMany(hasMany));
         }
-        var validationsStr = "    " + validations.join(",\n    ");
+        var validationsFunc = TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
         if (validations.length === 0) {
-            validationsStr = "";
+            validationsFunc = "";
         }
-        attrs.push("validations: {\n" + validationsStr + "\n  }");
-        return TAB + attrs.join(",\n" + TAB);
+        validationsFunc = TAB + "getValidations: function () {\n" +
+            TAB + TAB + "let parentValidations = this._super();\n" +
+            TAB + TAB + "let thisValidations = {\n" +
+            validationsFunc + TAB + TAB + "};\n" +
+            TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+            TAB + "},\n";
+        var result = {};
+        result["properties"] = TAB + attrs.join(",\n" + TAB);
+        result["validations"] = validationsFunc;
+        result["initFunction"] = TAB + "init: function () {\n" +
+            TAB + TAB + "this.set('validations', this.getValidations());\n" +
+            TAB + TAB + "this._super.apply(this, arguments);\n" +
+            TAB + "},\n";
+        return result;
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
@@ -231,6 +246,5 @@ var ModelBlueprint = (function () {
     };
     return ModelBlueprint;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = ModelBlueprint;
-//# sourceMappingURL=ModelBlueprint.js.map
+exports.__esModule = true;
+exports["default"] = ModelBlueprint;

@@ -20,15 +20,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprint will no longer generate old top validator for properties in hbs templates.
 
 ### Fixed
-* Blueprint for hbs now generate clearly formatted code.
 * Now resolver is working correctly in IE.
 * `flexberry-objectlistview` component:
     * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
     * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
-* Blueprint `flexberry-edit-form`:
+* Blueprints:
     * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
+    * Fix generation of validation rules inheritance in models. 
+    * Blueprint for hbs now generate clearly formatted code.
 * Fixed wrong generation of columns list for user setting's dialog.
-* Building filters into `object-list-view` component.
+* Building filters in `object-list-view` component.
 
 ### Removed
 * Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.

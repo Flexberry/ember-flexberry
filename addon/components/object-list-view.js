@@ -1225,26 +1225,14 @@ export default FlexberryBaseComponent.extend(
   /**
     Add filter parameters for column.
 
-    @method _createFilterForColumn
+    @method _addFilterForColumn
     @param {Object} column
     @param {Object} attr
     @param {String} bindingPath
   */
   _addFilterForColumn(column, attr, bindingPath) {
-    let modelName;
-    let attributeName;
     let relation = attr.kind !== 'attr';
-    if (relation) {
-      modelName = attr.modelName;
-      attributeName = attr.options.displayMemberPath;
-    } else {
-      attributeName = bindingPath;
-      modelName = this.get('modelName');
-    }
-
-    let model = this.get('store').modelFor(modelName);
-    let attribute = Ember.get(model, 'attributes').get(attributeName);
-
+    let attribute = this._getAttribute(attr, bindingPath);
     let component = this._getFilterComponent(attribute.type, relation);
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
@@ -1255,7 +1243,7 @@ export default FlexberryBaseComponent.extend(
     let conditions;
     let conditionsByType = this.get('conditionsByType');
     if (conditionsByType) {
-      Ember.assert(`Need function in 'componentForFilter'.`, typeof conditionsByType === 'function');
+      Ember.assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
       conditions = conditionsByType(attribute.type);
     } else {
       conditions = this._conditionsByType(attribute.type);
@@ -1273,6 +1261,33 @@ export default FlexberryBaseComponent.extend(
     }
 
     column.filter = { name, type, pattern, condition, conditions, component };
+  },
+
+  /**
+    Return attribute of model.
+
+    @method _getAttribute
+    @param {Object} attr
+    @param {String} bindingPath
+    @return {Object} Return attribute of model.
+  */
+  _getAttribute(attr, bindingPath) {
+    let modelName;
+    let attributeName;
+    if (attr.kind !== 'attr') {
+      attributeName = attr.options.displayMemberPath;
+      modelName = attr.modelName;
+    } else if (bindingPath.indexOf('.') > 0) {
+      let path = bindingPath.split('.');
+      attributeName = path.pop();
+      modelName = this.get(`modelProjection.attributes.${path.join('.attributes.')}.modelName`);
+    } else {
+      attributeName = bindingPath;
+      modelName = this.get('modelName');
+    }
+
+    let model = this.get('store').modelFor(modelName);
+    return Ember.get(model, 'attributes').get(attributeName);
   },
 
   /**

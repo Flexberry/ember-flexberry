@@ -247,4 +247,42 @@ Model.defineProjection('LookupInBlockFormView', 'ember-flexberry-dummy-suggestio
   })
 });
 
+// Example custom filter.
+Model.defineProjection('FlexberryObjectlistviewCustomFilter', 'ember-flexberry-dummy-suggestion', {
+  address: Projection.attr('Address'),
+  date: Projection.attr('Date'),
+  votes: Projection.attr('Votes'),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
+      hidden: true,
+    }),
+    moderated: Projection.attr('Moderated'),
+    parent: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent moderated', {
+      moderated: Projection.attr('Moderated', {
+        hidden: true,
+      }),
+      name: Projection.attr('Parent type'),
+    }, {
+      displayMemberPath: 'moderated',
+    }),
+  }, {
+    displayMemberPath: 'name',
+  }),
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Projection.attr('Name', {
+      hidden: true,
+    }),
+    eMail: Projection.attr('Author email'),
+  }, {
+    displayMemberPath: 'name',
+  }),
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Projection.attr('Name', {
+      hidden: true,
+    }),
+  }, {
+    displayMemberPath: 'name',
+  }),
+});
+
 export default Model;

@@ -9,16 +9,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-textbox` component:
     * Now support explicit html type definition. Default type is `text`.
 * `flexberry-groupedit` component:
-    * Add support `configurateRow`.
+    * Add support of `configurateRow` method.
 * `object-list-view` component:
     * Add observer `attributeChanged` that calls the `configurateRow` method. Now needs to use Ember.set(), to add custom class for record config.
-* Support locks for `EditFormRoute`.
+* Support locks for `edit-form` route. Locks are not used by default, use [application config](https://github.com/Flexberry/ember-flexberry/blob/1fa9130c55a0dc07b0939f6499d97d98af0002e3/tests/dummy/config/environment.js#L41) to configure it.
 
 ### Changed
 * Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.
 * Renamed `flexberry-lookup` mixin to `flexberry-lookup-controller`.
 * Blueprint will no longer generate old top validator for properties in hbs templates.
-* Locks now not used by default, use [application config](https://github.com/Flexberry/ember-flexberry/blob/1fa9130c55a0dc07b0939f6499d97d98af0002e3/tests/dummy/config/environment.js#L41) for configure.
 
 ### Fixed
 * Blueprint for hbs now generate clearly formatted code.

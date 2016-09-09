@@ -149,6 +149,16 @@ export default Ember.Controller.extend({
         }]
       }, {
         link: null,
+        caption: i18n.t('forms.application.sitemap.lock.caption'),
+        title: i18n.t('forms.application.sitemap.lock.caption'),
+        children: [{
+          link: 'new-platform-flexberry-services-lock-list',
+          caption: i18n.t('forms.application.sitemap.lock.title'),
+          title: i18n.t('forms.application.sitemap.lock.title'),
+          children: null
+        }]
+      }, {
+        link: null,
         caption: i18n.t('forms.application.sitemap.components-examples.caption'),
         title: i18n.t('forms.application.sitemap.components-examples.title'),
         children: [{

@@ -699,7 +699,7 @@ export default FlexberryBaseComponent.extend(
     deleteRow(recordWithKey, e) {
 
       // TODO: rename recordWithKey. rename record in the template, where it is actually recordWithKey.
-      if (this.get('readonly') || !recordWithKey.config.canBeDeleted) {
+      if (this.get('readonly') || !recordWithKey.rowConfig.canBeDeleted) {
         return;
       }
 
@@ -756,7 +756,7 @@ export default FlexberryBaseComponent.extend(
     */
     menuInRowConfigurateItems(recordWithKey, menuItems) {
       let menuInRowSubItems = [];
-      if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
+      if (this.get('showEditMenuItemInRow') && recordWithKey.rowConfig.canBeSelected) {
         menuInRowSubItems.push({
           icon: 'edit icon',
           title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
@@ -764,7 +764,7 @@ export default FlexberryBaseComponent.extend(
         });
       }
 
-      if (this.get('showDeleteMenuItemInRow') && recordWithKey.config.canBeDeleted) {
+      if (this.get('showDeleteMenuItemInRow') && recordWithKey.rowConfig.canBeDeleted) {
         menuInRowSubItems.push({
           icon: 'trash icon',
           title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',

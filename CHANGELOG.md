@@ -10,8 +10,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now support explicit html type definition. Default type is `text`.
 * `flexberry-groupedit` component:
     * Add support `configurateRow`.
-* `object-list-view` component: 
+* `object-list-view` component:
     * Add observer `attributeChanged` that calls the `configurateRow` method. Now needs to use Ember.set(), to add custom class for record config.
+* Support locks for `EditFormRoute`.
 
 ### Changed
 * Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.

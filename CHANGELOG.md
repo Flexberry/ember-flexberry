@@ -28,6 +28,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprint `flexberry-edit-form`:
     * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
 
+### Removed
+* Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.
+
 ## [0.5.0] - 2016-09-05
 ### Added
 * Blueprints:

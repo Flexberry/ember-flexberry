@@ -3,10 +3,9 @@
 */
 
 import DS from 'ember-data';
-import BaseModel from './base';
 import { Projection } from 'ember-flexberry-data';
 
-let Model = BaseModel.extend({
+let Model = Projection.Model.extend({
   lockKey: DS.attr('string'),
   userName: DS.attr('string'),
   lockDate: DS.attr('date'),

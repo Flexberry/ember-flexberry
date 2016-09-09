@@ -4,6 +4,7 @@
 
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
+import LockRouteMixin from '../mixins/lock-route';
 
 /**
   Base route for the Edit Forms.
@@ -31,7 +32,7 @@ import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
   @extends ProjectedModelForm
   @uses FlexberryGroupeditRouteMixin
  */
-export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
+export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, LockRouteMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.

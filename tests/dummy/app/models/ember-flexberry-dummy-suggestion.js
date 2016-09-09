@@ -1,9 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry/models/base';
 import { Projection } from 'ember-flexberry-data';
 
-var Model = BaseModel.extend({
+var Model = Projection.Model.extend({
   address: DS.attr('string'),
   text: DS.attr('string'),
   date: DS.attr('date'),

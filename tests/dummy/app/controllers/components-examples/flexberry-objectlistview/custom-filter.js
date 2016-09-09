@@ -3,13 +3,11 @@ import ListFormController from 'ember-flexberry/controllers/list-form';
 export default ListFormController.extend({
   actions: {
     componentForFilter(type, relation) {
-      if (type === 'date') {
-        return {
-          name: 'flexberry-datepicker',
-        };
+      switch (type) {
+        case 'date': return { name: 'flexberry-datepicker' };
+        case 'decimal': return { name: 'flexberry-textbox', properties: { class: 'compact fluid' } };
+        default: return {};
       }
-
-      return {};
     },
 
     conditionsByType(type) {

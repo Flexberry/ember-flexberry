@@ -1,8 +1,7 @@
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry/models/base';
 import { Projection } from 'ember-flexberry-data';
 
-var Model = BaseModel.extend({
+var Model = Projection.Model.extend({
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
     inverse: 'comments',
     async: false

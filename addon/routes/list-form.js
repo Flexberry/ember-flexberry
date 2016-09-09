@@ -69,6 +69,7 @@ export default ProjectedModelFormRoute.extend(
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
+    let filtersPredicate = this._filtersPredicate();
     let limitPredicate =
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
     let userSettingsService = this.get('userSettingsService');
@@ -122,6 +123,7 @@ export default ProjectedModelFormRoute.extend(
           page: params.page,
           sorting: this.sorting,
           filter: params.filter,
+          filters: filtersPredicate,
           predicate: limitPredicate,
           hierarchicalAttribute: hierarchicalAttribute,
         };

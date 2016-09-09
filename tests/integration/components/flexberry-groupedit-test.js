@@ -30,9 +30,16 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-  this.render(hbs`{{flexberry-groupedit modelProjection=proj componentName='my-group-edit'}}`);
-  assert.ok(true);
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.render(hbs`{{flexberry-groupedit modelProjection=proj content=model.details componentName='my-group-edit'}}`);
+    assert.ok(true);
+  });
 });
 
 test('it properly rerenders', function(assert) {

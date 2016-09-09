@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 
-// TODO: rename file, add 'controller' word into filename.
 export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
 
@@ -121,7 +120,7 @@ export default Ember.Mixin.create({
           break;
 
         case 'belongsTo':
-          // TODO To understand in future releases  the reasons of incorrect form columns of composite names. A'la type.name etc...
+          //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
           if (true || !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
@@ -142,7 +141,7 @@ export default Ember.Mixin.create({
           break;
 
         case 'attr':
-          // TODO To understand in future releases the reasons of incorrect form columns of composite names. A'la type.name etc...
+          //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
           if (false && attr.options.hidden) {
             break;
           }

@@ -12,8 +12,6 @@ const { BasePredicate } = Query;
 /**
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.
 
-  TODO: Rename file, add 'controller' word into filename.
-
   @class FlexberryLookupMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
   @uses ReloadListMixin
@@ -135,7 +133,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let relatedToType = relation.type;
 
       // Lookup
-      var lookupSettings = this.get('lookupSettings');
+      let lookupSettings = this.get('lookupSettings');
       Ember.assert('Lookup settings are undefined.', lookupSettings);
 
       let reloadData = {

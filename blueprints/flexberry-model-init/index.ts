@@ -26,6 +26,7 @@ module.exports = {
       parentModelName: modelBlueprint.parentModelName,// for use in files\__root__\models\__name__.js
       parentClassName: modelBlueprint.parentClassName,// for use in files\__root__\models\__name__.js
       name: modelBlueprint.name,// for use in files\__root__\models\__name__.js
+      initFunction: modelBlueprint.initFunction,// for use in files\__root__\models\__name__.js
       projections: modelBlueprint.projections,// for use in files\__root__\models\__name__.js
     };
   }

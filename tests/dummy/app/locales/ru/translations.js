@@ -132,6 +132,10 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
+        'lock': {
+          'caption': 'Блокировки',
+          'title': 'Список блокировок',
+        },
         'components-examples': {
           'caption': 'Примеры компонентов',
           'title': '',
@@ -311,6 +315,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           }
+        },
+        'user-setting-forms': {
+          'caption': 'Пользовательские настройки',
+          'title': '',
+          'user-setting-delete': {
+            'caption': 'Удаление настроек',
+            'title': ''
+          }
         }
       }
     },
@@ -427,6 +439,13 @@ Ember.$.extend(true, translations, {
         'ember-logger-info-button-message': 'Вызван метод Ember.logger.info',
         'ember-logger-debug-button-message': 'Вызван метод Ember.Logger.debug'
       }
+    },
+
+    'new-platform-flexberry-services-lock-list': {
+      'change-user-name': 'Изменить имя пользователя',
+      'open-read-only': 'Открывать только для чтения',
+      'unlock-object': 'Снимать блокировку',
+      'enter-new-user-name': 'Введите новое имя пользователя:',
     },
 
     'components-examples': {
@@ -595,6 +614,13 @@ Ember.$.extend(true, translations, {
           'file-caption': 'Файл',
           'master-caption': 'Мастер'
         }
+      }
+    },
+    'user-setting-forms': {
+      'user-setting-delete': {
+        'caption': 'Пользовательские настройки',
+        'all-del-button-name': 'Удалить все!',
+        'message': 'Настройки удалены'
       }
     }
   },

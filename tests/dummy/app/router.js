@@ -32,6 +32,10 @@ Router.map(function() {
   this.route('i-i-s-caseberry-logging-objects-application-log-e.new', { path: 'i-i-s-caseberry-logging-objects-application-log-e/new' });
   this.route('log-service-examples/settings-example');
 
+  // Locks.
+  this.route('new-platform-flexberry-services-lock-list');
+  this.route('new-platform-flexberry-services-lock-edit', { path: 'new-platform-flexberry-services-lock-edit/:id' });
+
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-checkbox/settings-example');
   this.route('components-examples/flexberry-datepicker/settings-example');
@@ -62,10 +66,12 @@ Router.map(function() {
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');
 
-  // Integration examples routes
+  // Integration examples routes.
   this.route('integration-examples/edit-form/readonly-mode');
   this.route('integration-examples/edit-form/validation');
 
+  // User-setting forms.
+  this.route('user-setting-forms/user-setting-delete');
 });
 
 export default Router;

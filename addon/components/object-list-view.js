@@ -1225,7 +1225,7 @@ export default FlexberryBaseComponent.extend(
   /**
     Add filter parameters for column.
 
-    @method _createFilterForColumn
+    @method _addFilterForColumn
     @param {Object} column
     @param {Object} attr
     @param {String} bindingPath
@@ -1243,7 +1243,7 @@ export default FlexberryBaseComponent.extend(
     let conditions;
     let conditionsByType = this.get('conditionsByType');
     if (conditionsByType) {
-      Ember.assert(`Need function in 'componentForFilter'.`, typeof conditionsByType === 'function');
+      Ember.assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
       conditions = conditionsByType(attribute.type);
     } else {
       conditions = this._conditionsByType(attribute.type);

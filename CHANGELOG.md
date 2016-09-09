@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprint `flexberry-edit-form`:
     * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
 * Fixed wrong generation of columns list for user setting's dialog.
+* Building filters into `object-list-view` component.
 
 ### Removed
 * Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.

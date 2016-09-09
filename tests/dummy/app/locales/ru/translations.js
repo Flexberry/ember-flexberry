@@ -135,14 +135,6 @@ Ember.$.extend(true, translations, {
         'components-examples': {
           'caption': 'Примеры компонентов',
           'title': '',
-          'datepicker-examples': {
-            'caption': 'datepicker-examples',
-            'title': '',
-            'settings-example': {
-              'caption': 'Пример работы с настройками',
-              'title': ''
-            }
-          },
           'flexberry-checkbox': {
             'caption': 'flexberry-checkbox',
             'title': '',
@@ -156,6 +148,10 @@ Ember.$.extend(true, translations, {
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'daterangepicker-in-fge': {
+              'caption': 'Пример отображения даты в детейле',
               'title': ''
             }
           },
@@ -446,11 +442,6 @@ Ember.$.extend(true, translations, {
     },
 
     'components-examples': {
-      'datepicker-examples': {
-        'settings-example': {
-          'caption': 'Datepicker-examples. Пример работы с настройками'
-        }
-      },
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Пример работы с настройками'
@@ -459,6 +450,9 @@ Ember.$.extend(true, translations, {
       'flexberry-datepicker': {
         'settings-example': {
           'caption': 'Flexberry-datepicker. Пример работы с настройками'
+        },
+        'daterangepicker-in-fge': {
+          'caption': 'Flexberry-datepicker. Пример отображения даты в детейле'
         }
       },
       'flexberry-dropdown': {

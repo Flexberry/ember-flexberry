@@ -33,9 +33,9 @@ Router.map(function() {
   this.route('log-service-examples/settings-example');
 
   // Components examples routes (sorted by component's names).
-  this.route('components-examples/datepicker-examples/settings-example');
   this.route('components-examples/flexberry-checkbox/settings-example');
   this.route('components-examples/flexberry-datepicker/settings-example');
+  this.route('components-examples/flexberry-datepicker/daterangepicker-in-fge');
   this.route('components-examples/flexberry-dropdown/settings-example');
   this.route('components-examples/flexberry-dropdown/conditional-render-example');
   this.route('components-examples/flexberry-dropdown/empty-value-example');

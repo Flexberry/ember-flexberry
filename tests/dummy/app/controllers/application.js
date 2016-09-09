@@ -153,16 +153,6 @@ export default Ember.Controller.extend({
         title: i18n.t('forms.application.sitemap.components-examples.title'),
         children: [{
           link: null,
-          caption: i18n.t('forms.application.sitemap.components-examples.datepicker-examples.caption'),
-          title: i18n.t('forms.application.sitemap.components-examples.datepicker-examples.title'),
-          children: [{
-            link: 'components-examples/datepicker-examples/settings-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.datepicker-examples.settings-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.datepicker-examples.settings-example.title'),
-            children: null
-          }]
-        }, {
-          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.title'),
           children: [{
@@ -179,6 +169,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-datepicker/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-datepicker/daterangepicker-in-fge',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.daterangepicker-in-fge.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.daterangepicker-in-fge.title'),
             children: null
           }]
         }, {

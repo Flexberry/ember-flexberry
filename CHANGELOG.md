@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.
 * Renamed `flexberry-lookup` mixin to `flexberry-lookup-controller`.
 * Blueprint will no longer generate old top validator for properties in hbs templates.
+* Locks now not used by default, use [application config](https://github.com/Flexberry/ember-flexberry/blob/1fa9130c55a0dc07b0939f6499d97d98af0002e3/tests/dummy/config/environment.js#L41) for configure.
 
 ### Fixed
 * Blueprint for hbs now generate clearly formatted code.

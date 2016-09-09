@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "EmberFlexberryDummySuggestionFile",
   "modelName": "ember-flexberry-dummy-suggestion-file",
   "className": "SuggestionFile",
@@ -21,7 +21,7 @@
     },
     {
       "name": "createTime",
-      "type": "string",
+      "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
       "defaultValue": ""
@@ -35,7 +35,7 @@
     },
     {
       "name": "editTime",
-      "type": "string",
+      "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
       "defaultValue": ""

@@ -3,7 +3,7 @@
 */
 
 import Ember from 'ember';
-import FlexberryLookupMixin from '../mixins/flexberry-lookup';
+import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
 

@@ -557,7 +557,7 @@ export default FlexberryBaseComponent.extend(
           configurateRow(rowConfig, record) {
             rowConfig.canBeDeleted = false;
             if (record.get('isMyFavoriteRecord')) {
-              rowConfig.customClass += 'my-fav-record';
+              Ember.set(rowConfig, 'customClass', 'my-fav-record);
             }
           }
         }
@@ -568,7 +568,7 @@ export default FlexberryBaseComponent.extend(
     @param {Object} config Settings for row.
                             See {{#crossLink "ObjectListView/defaultRowConfig:property"}}{{/crossLink}}
                             property for details
-    @param {DS.Model} record The record in row
+    @param {DS.Model} record The record in row.
   */
   configurateRow: undefined,
 
@@ -869,6 +869,13 @@ export default FlexberryBaseComponent.extend(
     if (searchForContentChange) {
       this.addObserver('content.[]', this, this._contentDidChange);
     }
+
+    let attrsArray = this._getAttributesName();
+    content.forEach((record) => {
+      attrsArray.forEach((attrName) => {
+        Ember.addObserver(record, attrName, this, '_attributeChanged');
+      });
+    });
   },
 
   /**
@@ -933,6 +940,15 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
 
     this._super(...arguments);
+
+    let content = this.get('content');
+    let attrsArray = this._getAttributesName();
+
+    content.forEach((record) => {
+      attrsArray.forEach((attrName) => {
+        Ember.removeObserver(record, attrName, this, '_attributeChanged');
+      });
+    });
   },
 
   /**
@@ -1439,7 +1455,8 @@ export default FlexberryBaseComponent.extend(
     modelWithKey.set('data', record);
 
     let rowConfig = Ember.copy(this.get('defaultRowConfig'));
-    modelWithKey.set('config', rowConfig);
+    modelWithKey.set('rowConfig', rowConfig);
+    record.set('rowConfig', rowConfig);
 
     let configurateRow = this.get('configurateRow');
     if (configurateRow) {
@@ -1473,6 +1490,11 @@ export default FlexberryBaseComponent.extend(
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
         this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
+
+        let attrsArray = this._getAttributesName();
+        attrsArray.forEach((attrName) => {
+          Ember.addObserver(modelToAdd, attrName, this, '_attributeChanged');
+        });
       }
     }
   },
@@ -1536,6 +1558,11 @@ export default FlexberryBaseComponent.extend(
 
     let componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
+
+    let attrsArray = this._getAttributesName();
+    attrsArray.forEach((attrName) => {
+      Ember.removeObserver(record, attrName, this, '_attributeChanged');
+    });
   },
 
   /**
@@ -1665,5 +1692,37 @@ export default FlexberryBaseComponent.extend(
       selectedRecords.removeObject(deletedItem);
       this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, deletedItem, immediateDelete);
     });
-  }
+  },
+
+  /**
+    Get attributes name from model.
+
+    @method _getAttributesName
+    @private
+  */
+  _getAttributesName() {
+    let attributes = this.get('_modelProjection').attributes;
+    let attrsArray = [];
+
+    for (let attrName in attributes) {
+      attrsArray.push(attrName);
+    }
+
+    return attrsArray;
+  },
+
+  /**
+    That observer is called when change attributes of model.
+
+    @method _attributeChanged
+    @private
+  */
+  _attributeChanged(record, attrName) {
+    let rowConfig = record.get('rowConfig');
+    let configurateRow = this.get('configurateRow');
+    if (configurateRow) {
+      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
+      configurateRow(rowConfig, record);
+    }
+  },
 });

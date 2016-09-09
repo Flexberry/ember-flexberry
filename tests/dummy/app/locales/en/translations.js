@@ -308,6 +308,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           }
+        },
+        'user-setting-forms': {
+          'caption': 'User settings',
+          'title': '',
+          'user-setting-delete': {
+            'caption': 'Settings deletion',
+            'title': ''
+          }
         }
       }
     },
@@ -591,6 +599,13 @@ Ember.$.extend(true, translations, {
           'file-caption': 'File',
           'master-caption': 'Master'
         }
+      }
+    },
+    'user-setting-forms': {
+      'user-setting-delete': {
+        'caption': 'User settings',
+        'all-del-button-name': 'Delete all!',
+        'message': 'Settings were removed'
       }
     }
   },

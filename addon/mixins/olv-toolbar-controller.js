@@ -3,6 +3,17 @@ import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions'
 
 export default Ember.Mixin.create({
   _userSettingsService: Ember.inject.service('user-settings'),
+  /**
+    Default cell component that will be used to display values in columns cells.
+
+    @property {Object} cellComponent
+    @property {String} [cellComponent.componentName='object-list-view-cell']
+    @property {String} [cellComponent.componentProperties=null]
+  */
+  cellComponent: {
+    componentName: 'object-list-view-cell',
+    componentProperties: null,
+  },
 
   actions: {
     showConfigDialog: function(componentName, settingName) {
@@ -21,7 +32,21 @@ export default Ember.Mixin.create({
         namedColList[propName] = colDesc;
       }
 
-      if (colsOrder === undefined) {
+      if (Ember.isArray(colsOrder)) {
+        /*
+         Remove propName, that are not in colList
+         */
+        let reliableColsOrder = [];
+        for (let i = 0; i < colsOrder.length; i++) {
+          let colOrder = colsOrder[i];
+          propName = colOrder.propName;
+          if ((propName in namedColList) && ('header' in  namedColList[propName])) {
+            reliableColsOrder.push(colOrder);
+          }
+        }
+
+        colsOrder = reliableColsOrder;
+      } else {
         colsOrder = colList;
       }
 
@@ -33,9 +58,11 @@ export default Ember.Mixin.create({
 
       for (let i = 0; i < sorting.length; i++) {
         colDesc = sorting[i];
-        colDesc.sortPriority = ++sortPriority;
         propName = colDesc.propName;
-        namedSorting[propName] = colDesc;
+        if (propName in namedColList) {
+          colDesc.sortPriority = ++sortPriority;
+          namedSorting[propName] = colDesc;
+        }
       }
 
       if (columnWidths === undefined) {
@@ -72,11 +99,11 @@ export default Ember.Mixin.create({
           colDesc.columnWidth = namedColWidth[propName];
         }
 
-        colDescs[i] = colDesc;
+        colDescs.push(colDesc);
       }
 
       for (propName in namedColList) {
-        colDescs[colDescs.length] = { propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 };
+        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 });
       }
 
       let controller = this.get('colsconfigController');
@@ -120,13 +147,11 @@ export default Ember.Mixin.create({
           break;
 
         case 'belongsTo':
-
-          //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
-          if (true || !attr.options.hidden) {
+          if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
 
-            if (column.cellComponent && column.cellComponent.componentName === 'object-list-view-cell') {
+            if (column.cellComponent.componentName === 'object-list-view-cell') {
               if (attr.options.displayMemberPath) {
                 column.propName += '.' + attr.options.displayMemberPath;
               } else {
@@ -142,9 +167,7 @@ export default Ember.Mixin.create({
           break;
 
         case 'attr':
-
-          //TODO: this is temporarily solution, please refactor this code when cancer at mount will whistle.
-          if (false && attr.options.hidden) {
+          if (attr.options.hidden) {
             break;
           }
 
@@ -202,7 +225,7 @@ export default Ember.Mixin.create({
     // if controller's 'getCellComponent' method call its super method from the base controller.
     let currentController = this.get('currentController');
     let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
-    let cellComponent = this.get('cellComponent') || {};
+    let cellComponent = this.get('cellComponent');
 
     if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
       let recordModel =  (this.get('content') || {}).type || null;
@@ -243,5 +266,5 @@ export default Ember.Mixin.create({
     }
 
     return column;
-  },
+  }
 });

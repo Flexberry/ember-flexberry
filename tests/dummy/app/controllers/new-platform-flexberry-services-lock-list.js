@@ -96,7 +96,9 @@ export default NewPlatformFlexberryServicesLockListController.extend({
   init() {
     this._super(...arguments);
     let currentDefaultBehaviorLock = EditFormRoute.create().get('defaultBehaviorLock');
-    this.set('openReadOnly', currentDefaultBehaviorLock.openReadOnly);
-    this.set('unlockObject', currentDefaultBehaviorLock.unlockObject);
+    if (currentDefaultBehaviorLock) {
+      this.set('openReadOnly', currentDefaultBehaviorLock.openReadOnly);
+      this.set('unlockObject', currentDefaultBehaviorLock.unlockObject);
+    }
   },
 });

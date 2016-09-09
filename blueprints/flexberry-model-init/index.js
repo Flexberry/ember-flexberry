@@ -23,7 +23,6 @@ module.exports = {
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,
             name: modelBlueprint.name,
-            initFunction: modelBlueprint.initFunction,
             projections: modelBlueprint.projections
         };
     }

@@ -26,7 +26,6 @@ module.exports = {
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,
             model: modelBlueprint.model,
-            validations: modelBlueprint.validations,
             projections: modelBlueprint.projections,
             serializerAttrs: modelBlueprint.serializerAttrs,
             name: modelBlueprint.name,

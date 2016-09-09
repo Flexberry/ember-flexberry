@@ -100,14 +100,14 @@ var ModelBlueprint = (function () {
             var hasMany = _e[_d];
             attrs.push(templateHasMany(hasMany));
         }
-        var validationsFunc = validations.join(",\n" + TAB + TAB + TAB);
+        var validationsFunc = TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
         if (validations.length === 0) {
             validationsFunc = "";
         }
         validationsFunc = TAB + "getValidations: function () {\n" +
             TAB + TAB + "let parentValidations = this._super();\n" +
             TAB + TAB + "let thisValidations = {\n" +
-            TAB + TAB + TAB + validationsFunc + "\n" + TAB + TAB + "};\n" +
+            validationsFunc + TAB + TAB + "};\n" +
             TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
             TAB + "},\n";
         var result = {};

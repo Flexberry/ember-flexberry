@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
 * Blueprint `flexberry-edit-form`:
     * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
+* Fix validations inheritance generation in models. 
 
 ### Removed
 * Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.

@@ -58,9 +58,11 @@ export default Ember.Mixin.create({
 
       for (let i = 0; i < sorting.length; i++) {
         colDesc = sorting[i];
-        colDesc.sortPriority = ++sortPriority;
         propName = colDesc.propName;
-        namedSorting[propName] = colDesc;
+        if (propName in namedColList) {
+          colDesc.sortPriority = ++sortPriority;
+          namedSorting[propName] = colDesc;
+        }
       }
 
       if (columnWidths === undefined) {
@@ -97,11 +99,11 @@ export default Ember.Mixin.create({
           colDesc.columnWidth = namedColWidth[propName];
         }
 
-        colDescs[i] = colDesc;
+        colDescs.push(colDesc);
       }
 
       for (propName in namedColList) {
-        colDescs[colDescs.length] = { propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 };
+        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 });
       }
 
       let controller = this.get('colsconfigController');

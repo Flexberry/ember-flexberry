@@ -5,7 +5,7 @@
 import { Adapter } from 'ember-flexberry-data';
 
 /**
-  Adapter for {{#crossLink "NewPlatformFlexberryServicesLockMode"}}{{/crossLink}}.
+  Adapter for {{#crossLink "NewPlatformFlexberryServicesLockModel"}}{{/crossLink}}.
 
   @class NewPlatformFlexberryServicesLockAdapter
   @extends OData

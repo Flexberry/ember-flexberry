@@ -31,28 +31,36 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @return {Object} Object containing name & properties of component, which will be used to render current table cell.
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
-  getCellComponent: function(attr, bindingPath, model) {
-    var cellComponent = this._super(...arguments);
-
+  getCellComponent(attr, bindingPath, model) {
+    let cellComponent = this._super(...arguments);
     if (attr.kind === 'belongsTo') {
-      if (model.modelName === 'ember-flexberry-dummy-comment' && bindingPath === 'author') {
-        cellComponent.componentProperties = {
-          projection: 'ApplicationUserL',
-          displayAttributeName: 'name',
-          title: 'Author',
-          relationName: 'author',
-          choose: 'showLookupDialog',
-          remove: 'removeLookupValue'
-        };
-      } else if (model.modelName === 'ember-flexberry-dummy-vote' && bindingPath === 'applicationUser') {
-        cellComponent.componentProperties = {
-          projection: 'ApplicationUserL',
-          displayAttributeName: 'name',
-          title: 'Application user',
-          relationName: 'applicationUser',
-          choose: 'showLookupDialog',
-          remove: 'removeLookupValue'
-        };
+      switch (`${model.modelName}+${bindingPath}`) {
+        case 'ember-flexberry-dummy-vote+author':
+          cellComponent.componentProperties = {
+            choose: 'showLookupDialog',
+            chooseText: '...',
+            remove: 'removeLookupValue',
+            displayAttributeName: 'name',
+            required: true,
+            relationName: 'author',
+            projection: 'ApplicationUserL',
+            autocomplete: true,
+          };
+          break;
+
+        case 'ember-flexberry-dummy-comment+author':
+          cellComponent.componentProperties = {
+            choose: 'showLookupDialog',
+            chooseText: '...',
+            remove: 'removeLookupValue',
+            displayAttributeName: 'name',
+            required: true,
+            relationName: 'author',
+            projection: 'ApplicationUserL',
+            autocomplete: true,
+          };
+          break;
+
       }
     }
 

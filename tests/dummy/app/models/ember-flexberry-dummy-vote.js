@@ -11,10 +11,7 @@ var Model = Projection.Model.extend({
   voteType: DS.attr('ember-flexberry-dummy-vote-type'),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
-  applicationUser: DS.belongsTo('ember-flexberry-dummy-application-user', {
-    inverse: null,
-    async: false
-  }),
+  author: DS.belongsTo('ember-flexberry-dummy-application-user', { inverse: null, async: false }),
 
   // Model validation rules.
   validations: {
@@ -24,7 +21,7 @@ var Model = Projection.Model.extend({
 // Edit form projection.
 Model.defineProjection('VoteE', 'ember-flexberry-dummy-vote', {
   voteType: Projection.attr('Vote type'),
-  applicationUser: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
     name: Projection.attr('Name', {
       hidden: true
     })

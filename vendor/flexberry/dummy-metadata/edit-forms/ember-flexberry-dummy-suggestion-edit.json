@@ -33,20 +33,20 @@
       "detailModelName": null
     },
     {
-      "master": "applicationUser",
-      "displayAttributeName": "name",
-      "required": true,
-      "relationName": "UserVotes.ApplicationUser",
-      "projection": "ApplicationUserL",
-      "detailModelName": "ember-flexberry-dummy-vote"
-    },
-    {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "UserVotes.Suggestion",
       "projection": "SuggestionL",
       "detailModelName": null
+    },
+    {
+      "master": "author",
+      "displayAttributeName": "name",
+      "required": true,
+      "relationName": "UserVotes.Author",
+      "projection": "ApplicationUserL",
+      "detailModelName": "ember-flexberry-dummy-vote"
     },
     {
       "master": "author",

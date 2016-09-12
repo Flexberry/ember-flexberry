@@ -26,10 +26,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
 * Blueprints:
     * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
-    * Fix generation of validation rules inheritance in models. 
+    * Fix generation of validation rules inheritance in models.
     * Blueprint for hbs now generate clearly formatted code.
 * Fixed wrong generation of columns list for user setting's dialog.
 * Building filters in `object-list-view` component.
+* Now `inflection` package installing along with `ember-flexberry` addon.
 
 ### Removed
 * Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.

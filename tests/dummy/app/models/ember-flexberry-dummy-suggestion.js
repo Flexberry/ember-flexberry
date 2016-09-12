@@ -114,7 +114,7 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   }),
   userVotes: Projection.hasMany('ember-flexberry-dummy-vote', 'User votes', {
     voteType: Projection.attr('Vote type'),
-    applicationUser: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+    author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
       name: Projection.attr('Name', {
         hidden: true
       }),

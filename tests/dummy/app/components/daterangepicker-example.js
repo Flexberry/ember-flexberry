@@ -221,4 +221,16 @@ export default Ember.Component.extend({
       this.set('value', currValueDateTime.toDate());
     }
   }),
+
+  /**
+    Destroys DOM-related component's properties.
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    let dateRangePicker = this.$().data('daterangepicker');
+    if (!Ember.isNone(dateRangePicker)) {
+      dateRangePicker.remove();
+    }
+  }
 });

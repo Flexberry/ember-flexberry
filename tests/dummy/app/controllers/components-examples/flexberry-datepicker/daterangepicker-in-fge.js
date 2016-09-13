@@ -106,5 +106,5 @@ export default EditFormController.extend({
     }
 
     return cellComponent;
-  }
+  },
 });

@@ -45,7 +45,6 @@ ember addon new-addon-for-tests
 pushd new-addon-for-tests
 
 ember install "${ADDON_DIR}"
-npm install inflection
 
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.

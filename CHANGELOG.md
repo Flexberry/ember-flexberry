@@ -5,18 +5,35 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * `flexberry-field` component:
-    * Now support explicit html type definition. Default type is "text".
+    * Now support explicit html type definition. Default type is `text`.
 * `flexberry-textbox` component:
-    * Now support explicit html type definition. Default type is "text".
+    * Now support explicit html type definition. Default type is `text`.
+* `flexberry-groupedit` component:
+    * Add support of `configurateRow` method.
+* `object-list-view` component:
+    * Add observer `attributeChanged` that calls the `configurateRow` method. Now needs to use Ember.set(), to add custom class for record config.
+* Support locks for `edit-form` route. Locks are not used by default, use [application config](https://github.com/Flexberry/ember-flexberry/blob/1fa9130c55a0dc07b0939f6499d97d98af0002e3/tests/dummy/config/environment.js#L41) to configure it.
 
 ### Changed
-* Rollback `semantic-ui-ember` addon to v0.9.3.
+* Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.
+* Renamed `flexberry-lookup` mixin to `flexberry-lookup-controller`.
 * Blueprint will no longer generate old top validator for properties in hbs templates.
 
 ### Fixed
-* `flexberry-checkbox` component:
-    * Now with `semantic-ui-ember` v0.9.3, if `flexberry-checkbox` was unchecked it doesn't have `checked` class.
-* Blueprint for hbs now generate clearly formatted code.
+* Now resolver is working correctly in IE.
+* `flexberry-objectlistview` component:
+    * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
+    * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
+* Blueprints:
+    * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
+    * Fix generation of validation rules inheritance in models.
+    * Blueprint for hbs now generate clearly formatted code.
+* Fixed wrong generation of columns list for user setting's dialog.
+* Building filters in `object-list-view` component.
+* Now `inflection` package installing along with `ember-flexberry` addon.
+
+### Removed
+* Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.
 
 ## [0.5.0] - 2016-09-05
 ### Added
@@ -109,7 +126,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Support of `flexberry-lookup` component in dropdown mode for mobile devices.
 * `flexberry-objectlistview` component:
     * Add filtering by attribute of number type.
-    * Add filtering by master attributes.
+    * Add filtering by "master" attributes.
     * Add [`predicateForAttribute` method](http://flexberry.github.io/Documentation/master/classes/ListFormRoute.html#method_predicateForAttribute) for filtering customization in application.
     * Add filtering for each column.
     * Add hierarchical mode:

@@ -17,14 +17,13 @@ module.exports = {
      * @return {Object} Custom template variables.
      */
     locals: function (options) {
-        var modelBlueprint = new ModelBlueprint_1.default(this, options);
+        var modelBlueprint = new ModelBlueprint_1["default"](this, options);
         return {
             className: modelBlueprint.className,
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,
             name: modelBlueprint.name,
-            projections: modelBlueprint.projections,
+            projections: modelBlueprint.projections
         };
     }
 };
-//# sourceMappingURL=index.js.map

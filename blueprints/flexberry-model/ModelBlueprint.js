@@ -97,11 +97,21 @@ var ModelBlueprint = (function () {
             var hasMany = _e[_d];
             attrs.push(templateHasMany(hasMany));
         }
-        var validationsStr = "    " + validations.join(",\n    ");
+        var validationsFunc = TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
         if (validations.length === 0) {
-            validationsStr = "";
+            validationsFunc = "";
         }
-        attrs.push("validations: {\n" + validationsStr + "\n  }");
+        validationsFunc = "getValidations: function () {\n" +
+            TAB + TAB + "let parentValidations = this._super();\n" +
+            TAB + TAB + "let thisValidations = {\n" +
+            validationsFunc + TAB + TAB + "};\n" +
+            TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+            TAB + "}";
+        var initFunction = "init: function () {\n" +
+            TAB + TAB + "this.set('validations', this.getValidations());\n" +
+            TAB + TAB + "this._super.apply(this, arguments);\n" +
+            TAB + "}";
+        attrs.push(validationsFunc, initFunction);
         return TAB + attrs.join(",\n" + TAB);
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
@@ -231,6 +241,5 @@ var ModelBlueprint = (function () {
     };
     return ModelBlueprint;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = ModelBlueprint;
-//# sourceMappingURL=ModelBlueprint.js.map
+exports.__esModule = true;
+exports["default"] = ModelBlueprint;

@@ -1,9 +1,10 @@
-﻿function(attr, bindingPath) {
+﻿(attr, bindingPath, model) {
+    let cellComponent = this._super(...arguments);
     if (attr.kind === 'belongsTo') {
-      switch (bindingPath) {
+      switch (<%= '`${model.modelName}+${bindingPath}`' %>) {
 <%= bodySwitchBindingPath %>
       }
     }
 
-    return this._super(...arguments);
+    return cellComponent;
   }

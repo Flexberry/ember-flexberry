@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "EmberFlexberryDummyVote",
   "modelName": "ember-flexberry-dummy-vote",
   "className": "Vote",
@@ -14,7 +14,7 @@
     },
     {
       "name": "createTime",
-      "type": "string",
+      "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
       "defaultValue": ""
@@ -28,7 +28,7 @@
     },
     {
       "name": "editTime",
-      "type": "string",
+      "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
       "defaultValue": ""
@@ -45,7 +45,7 @@
     {
       "polymorphic": false,
       "presence": true,
-      "name": "applicationUser",
+      "name": "author",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     },
@@ -74,20 +74,20 @@
         {
           "lookupValue": "Name",
           "lookupValueField": "name",
-          "relationName": "ApplicationUser",
+          "relationName": "Author",
           "belongsTo": [],
           "hidden": false,
           "attrs": [
             {
               "name": "name",
-              "caption": "Name",
+              "caption": "",
               "hidden": true,
               "index": 2
             }
           ],
           "index": 1,
-          "caption": "Application user",
-          "name": "applicationUser",
+          "caption": "",
+          "name": "author",
           "relatedTo": "ember-flexberry-dummy-application-user",
           "inverse": null
         }
@@ -107,36 +107,36 @@
       ],
       "belongsTo": [
         {
-          "lookupValue": "Name",
-          "lookupValueField": "name",
-          "relationName": "ApplicationUser",
-          "belongsTo": [],
-          "hidden": false,
-          "attrs": [
-            {
-              "name": "name",
-              "caption": "Name",
-              "hidden": true,
-              "index": 2
-            }
-          ],
-          "index": 1,
-          "caption": "Application user",
-          "name": "applicationUser",
-          "relatedTo": "ember-flexberry-dummy-application-user",
-          "inverse": null
-        },
-        {
           "lookupValue": null,
           "lookupValueField": null,
           "relationName": "Suggestion",
           "belongsTo": [],
           "hidden": true,
           "attrs": [],
-          "index": 3,
+          "index": 1,
           "caption": "",
           "name": "suggestion",
           "relatedTo": "ember-flexberry-dummy-suggestion",
+          "inverse": null
+        },
+        {
+          "lookupValue": "Name",
+          "lookupValueField": "name",
+          "relationName": "Author",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "name",
+              "caption": "",
+              "hidden": true,
+              "index": 3
+            }
+          ],
+          "index": 2,
+          "caption": "",
+          "name": "author",
+          "relatedTo": "ember-flexberry-dummy-application-user",
           "inverse": null
         }
       ],

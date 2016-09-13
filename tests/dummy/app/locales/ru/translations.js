@@ -132,6 +132,10 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
+        'lock': {
+          'caption': 'Блокировки',
+          'title': 'Список блокировок',
+        },
         'components-examples': {
           'caption': 'Примеры компонентов',
           'title': '',
@@ -439,6 +443,13 @@ Ember.$.extend(true, translations, {
         'ember-logger-info-button-message': 'Вызван метод Ember.logger.info',
         'ember-logger-debug-button-message': 'Вызван метод Ember.Logger.debug'
       }
+    },
+
+    'new-platform-flexberry-services-lock-list': {
+      'change-user-name': 'Изменить имя пользователя',
+      'open-read-only': 'Открывать только для чтения',
+      'unlock-object': 'Снимать блокировку',
+      'enter-new-user-name': 'Введите новое имя пользователя:',
     },
 
     'components-examples': {

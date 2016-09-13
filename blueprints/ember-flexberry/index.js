@@ -27,7 +27,9 @@ module.exports = {
       });
     }).then(function () {
       return _this.addPackagesToProject([
-        { name: 'dexie', target: '1.3.6' }
+        { name: 'dexie', target: '1.3.6' },
+        { name: 'node-uuid', target: '1.4.7' },
+        { name: 'inflection', target: '1.10.0' }
       ]);
     });
   },

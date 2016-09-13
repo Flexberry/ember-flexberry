@@ -21,7 +21,7 @@ module.exports = {
      * @return {Object} Custom template variables.
      */
     locals: function (options) {
-        var modelBlueprint = new ModelBlueprint_1.default(this, options);
+        var modelBlueprint = new ModelBlueprint_1["default"](this, options);
         return lodash.defaults({
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,
@@ -34,4 +34,3 @@ module.exports = {
         }, modelBlueprint.lodashVariables);
     }
 };
-//# sourceMappingURL=index.js.map

@@ -3,16 +3,15 @@
 */
 
 import DS from 'ember-data';
-import BaseModel from './base';
 import { Projection } from 'ember-flexberry-data';
 
 /**
   Model to work with user settings.
 
   @class NewPlatformFlexberryFlexberryUserSettingModel
-  @extends BaseModel
+  @extends Projection.Model
 */
-let Model = BaseModel.extend({
+let Model = Projection.Model.extend({
   appName: DS.attr('string'),
   userName: DS.attr('string'),
   moduleName: DS.attr('string'),

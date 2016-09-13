@@ -1733,7 +1733,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _attributeChanged(record, attrName) {
-    let rowConfig = record.get('rowConfig');
+    let rowConfig = Ember.copy(record.get('rowConfig'));
     let configurateRow = this.get('configurateRow');
     if (configurateRow) {
       Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');

@@ -100,7 +100,7 @@ export default EmberResolver.extend({
   _resolveResourceWithoutDeviceTypeDetection(fullName) {
     if (this.namespace && this.namespace.resolveWithoutDeviceTypeDetection && Ember.isArray(this.namespace.resolveWithoutDeviceTypeDetection)) {
       let resourceTypesToApplyOriginResolving = this.namespace.resolveWithoutDeviceTypeDetection;
-      return resourceTypesToApplyOriginResolving.contains(fullName);
+      return resourceTypesToApplyOriginResolving.indexOf(fullName) > -1;
     }
 
     return false;

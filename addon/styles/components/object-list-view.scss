@@ -62,7 +62,7 @@ table.object-list-view tbody tr td:first-child button i {
       overflow: hidden;
     }
 
-    .flexberry-lookup, .flexberry-file {
+    .flexberry-lookup, .flexberry-file:not(.mobile) {
       overflow: hidden;
     }
   }

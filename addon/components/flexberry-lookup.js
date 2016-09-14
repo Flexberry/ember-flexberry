@@ -176,6 +176,15 @@ export default FlexberryBaseComponent.extend({
   dropdown: false,
 
   /**
+    Flag to show that lookup has search or autocomplite in dropdown mode.
+
+    @property dropdownIsSearch
+    @type Boolean
+    @default false
+  */
+  dropdownIsSearch: false,
+
+  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -599,6 +608,7 @@ export default FlexberryBaseComponent.extend({
     let relationModelName = getRelationType(relatedModel, relationName);
     let minCharacters = this.get('minCharacters');
     let multiselect = this.get('multiselect');
+    let dropdownIsSearch = this.get('dropdownIsSearch');
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
@@ -608,7 +618,7 @@ export default FlexberryBaseComponent.extend({
 
     let i18n = _this.get('i18n');
     this.$('.flexberry-dropdown').dropdown({
-      minCharacters: minCharacters,
+      minCharacters: dropdownIsSearch ? minCharacters : 0,
       allowAdditions: multiselect,
       cache: false,
       message: {

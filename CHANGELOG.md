@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `object-list-view` component:
     * Add observer `attributeChanged` that calls the `configurateRow` method. Now needs to use Ember.set(), to add custom class for record config.
 * Support locks for `edit-form` route. Locks are not used by default, use [application config](https://github.com/Flexberry/ember-flexberry/blob/1fa9130c55a0dc07b0939f6499d97d98af0002e3/tests/dummy/config/environment.js#L41) to configure it.
+* `flexberry-lookup`:
+    * Add property `dropdownIsSearch`. Now can be turned off autocomplete in dropdown mode.
 
 ### Changed
 * Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.

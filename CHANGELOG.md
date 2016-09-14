@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed wrong generation of columns list for user setting's dialog.
 * Building filters in `object-list-view` component.
 * Now `inflection` package installing along with `ember-flexberry` addon.
+* Now `Save` and `Save and close` buttons on `detail-edit-form` after transition from new route working correctly.
 
 ### Removed
 * Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.

@@ -176,6 +176,17 @@ export default FlexberryBaseComponent.extend({
   dropdown: false,
 
   /**
+    Specify direction for sorting by `displayAttributeName`.
+    For `autocomplete` or `dropdown` mode only.
+    Possible values: `asc` or `desc`.
+
+    @property sorting
+    @type String
+    @default 'asc'
+  */
+  sorting: 'asc',
+
+  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -504,7 +515,8 @@ export default FlexberryBaseComponent.extend({
          */
         responseAsync(settings, callback) {
           let builder = new Builder(store, relationModelName)
-            .select(displayAttributeName);
+            .select(displayAttributeName)
+            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -619,7 +631,9 @@ export default FlexberryBaseComponent.extend({
         responseAsync(settings, callback) {
           console.log('load');
           let builder = new Builder(store, relationModelName)
-            .select(displayAttributeName);
+            .select(displayAttributeName)
+            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
+
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
                                       undefined;

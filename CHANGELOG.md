@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.6.0] - 2016-09-14
 ### Added
 * `flexberry-lookup` component:
     * Sorting direction for `autocomplete` and `dropdown` mode, use `sorting` property for specify direction.

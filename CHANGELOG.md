@@ -3,7 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.6.0] - 2016-09-14
 ### Added
+* `flexberry-lookup` component:
+    * Sorting direction for `autocomplete` and `dropdown` mode, use `sorting` property for specify direction.
+    * Possibility reset value for `dropdown` mode, if `required` property not equals `true`.
+    * Add property `dropdownIsSearch`. Now can be turned off autocomplete in dropdown mode.
 * `flexberry-field` component:
     * Now support explicit html type definition. Default type is `text`.
 * `flexberry-textbox` component:
@@ -11,7 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-groupedit` component:
     * Add support of `configurateRow` method.
 * `object-list-view` component:
-    * Add observer `attributeChanged` that calls the `configurateRow` method. Now needs to use Ember.set(), to add custom class for record config.
+    * Add observer `attributeChanged` that calls the `configurateRow` method. Now needs to use Ember.set(), to add custom class or show/hide buttons in menu items for record config.
 * Support locks for `edit-form` route. Locks are not used by default, use [application config](https://github.com/Flexberry/ember-flexberry/blob/1fa9130c55a0dc07b0939f6499d97d98af0002e3/tests/dummy/config/environment.js#L41) to configure it.
 
 ### Changed
@@ -20,6 +26,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprint will no longer generate old top validator for properties in hbs templates.
 
 ### Fixed
+* `flexberry-lookup` component not specify properties for select on `autocomplete` and `dropdown` mode.
 * Now resolver is working correctly in IE.
 * `flexberry-objectlistview` component:
     * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
@@ -31,6 +38,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed wrong generation of columns list for user setting's dialog.
 * Building filters in `object-list-view` component.
 * Now `inflection` package installing along with `ember-flexberry` addon.
+* Now `Save` and `Save and close` buttons on `detail-edit-form` after transition from new route working correctly.
 
 ### Removed
 * Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.

@@ -4,9 +4,14 @@
   onHide=(action 'onShowHide')
   onShow=(action 'onShowHide')
 }}
-  {{#if isSearch}}
+  {{#if (and isSearch isSearchReadOnly)}}
     <input class="search" autocomplete="off">
   {{/if}}
+
+  {{#if (and isSearch (not isSearchReadOnly))}}
+    <input class="search" autocomplete="off" readonly>
+  {{/if}}
+
   <i class="dropdown icon"></i>
   {{#if showPlaceholder}}
     <div class="default text">{{placeholder}}</div>

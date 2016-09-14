@@ -1,8 +1,7 @@
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry/models/base';
 import { Projection } from 'ember-flexberry-data';
 
-var Model = BaseModel.extend({
+var Model = Projection.Model.extend({
   // Inversed relationship for ember-flexberry-dummy-suggestion.files.
   // It's not a property for flexberry-lookup component.
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {

@@ -543,7 +543,7 @@ export default FlexberryBaseComponent.extend(
       <!-- app/templates/employees.hbs -->
       {{flexberry-objectlistview
         ...
-        configurateRow=(action 'configurateRow')
+        configurateRow=(action "configurateRow")
         ...
       }}
       ```
@@ -555,9 +555,9 @@ export default FlexberryBaseComponent.extend(
       export default ListFormController.extend({
         actions: {
           configurateRow(rowConfig, record) {
-            rowConfig.canBeDeleted = false;
+            Ember.set(rowConfig, 'canBeDeleted', false);
             if (record.get('isMyFavoriteRecord')) {
-              rowConfig.customClass += 'my-fav-record';
+              Ember.set(rowConfig, 'customClass', 'my-fav-record');
             }
           }
         }
@@ -568,7 +568,7 @@ export default FlexberryBaseComponent.extend(
     @param {Object} config Settings for row.
                             See {{#crossLink "ObjectListView/defaultRowConfig:property"}}{{/crossLink}}
                             property for details
-    @param {DS.Model} record The record in row
+    @param {DS.Model} record The record in row.
   */
   configurateRow: undefined,
 
@@ -699,7 +699,7 @@ export default FlexberryBaseComponent.extend(
     deleteRow(recordWithKey, e) {
 
       // TODO: rename recordWithKey. rename record in the template, where it is actually recordWithKey.
-      if (this.get('readonly') || !recordWithKey.config.canBeDeleted) {
+      if (this.get('readonly') || !recordWithKey.rowConfig.canBeDeleted) {
         return;
       }
 
@@ -756,7 +756,7 @@ export default FlexberryBaseComponent.extend(
     */
     menuInRowConfigurateItems(recordWithKey, menuItems) {
       let menuInRowSubItems = [];
-      if (this.get('showEditMenuItemInRow') && recordWithKey.config.canBeSelected) {
+      if (this.get('showEditMenuItemInRow') && recordWithKey.rowConfig.canBeSelected) {
         menuInRowSubItems.push({
           icon: 'edit icon',
           title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
@@ -764,7 +764,7 @@ export default FlexberryBaseComponent.extend(
         });
       }
 
-      if (this.get('showDeleteMenuItemInRow') && recordWithKey.config.canBeDeleted) {
+      if (this.get('showDeleteMenuItemInRow') && recordWithKey.rowConfig.canBeDeleted) {
         menuInRowSubItems.push({
           icon: 'trash icon',
           title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
@@ -869,6 +869,13 @@ export default FlexberryBaseComponent.extend(
     if (searchForContentChange) {
       this.addObserver('content.[]', this, this._contentDidChange);
     }
+
+    let attrsArray = this._getAttributesName();
+    content.forEach((record) => {
+      attrsArray.forEach((attrName) => {
+        Ember.addObserver(record, attrName, this, '_attributeChanged');
+      });
+    });
   },
 
   /**
@@ -933,6 +940,15 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
 
     this._super(...arguments);
+
+    let content = this.get('content');
+    let attrsArray = this._getAttributesName();
+
+    content.forEach((record) => {
+      attrsArray.forEach((attrName) => {
+        Ember.removeObserver(record, attrName, this, '_attributeChanged');
+      });
+    });
   },
 
   /**
@@ -1209,26 +1225,14 @@ export default FlexberryBaseComponent.extend(
   /**
     Add filter parameters for column.
 
-    @method _createFilterForColumn
+    @method _addFilterForColumn
     @param {Object} column
     @param {Object} attr
     @param {String} bindingPath
   */
   _addFilterForColumn(column, attr, bindingPath) {
-    let modelName;
-    let attributeName;
     let relation = attr.kind !== 'attr';
-    if (relation) {
-      modelName = attr.modelName;
-      attributeName = attr.options.displayMemberPath;
-    } else {
-      attributeName = bindingPath;
-      modelName = this.get('modelName');
-    }
-
-    let model = this.get('store').modelFor(modelName);
-    let attribute = Ember.get(model, 'attributes').get(attributeName);
-
+    let attribute = this._getAttribute(attr, bindingPath);
     let component = this._getFilterComponent(attribute.type, relation);
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
@@ -1239,7 +1243,7 @@ export default FlexberryBaseComponent.extend(
     let conditions;
     let conditionsByType = this.get('conditionsByType');
     if (conditionsByType) {
-      Ember.assert(`Need function in 'componentForFilter'.`, typeof conditionsByType === 'function');
+      Ember.assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
       conditions = conditionsByType(attribute.type);
     } else {
       conditions = this._conditionsByType(attribute.type);
@@ -1257,6 +1261,33 @@ export default FlexberryBaseComponent.extend(
     }
 
     column.filter = { name, type, pattern, condition, conditions, component };
+  },
+
+  /**
+    Return attribute of model.
+
+    @method _getAttribute
+    @param {Object} attr
+    @param {String} bindingPath
+    @return {Object} Return attribute of model.
+  */
+  _getAttribute(attr, bindingPath) {
+    let modelName;
+    let attributeName;
+    if (attr.kind !== 'attr') {
+      attributeName = attr.options.displayMemberPath;
+      modelName = attr.modelName;
+    } else if (bindingPath.indexOf('.') > 0) {
+      let path = bindingPath.split('.');
+      attributeName = path.pop();
+      modelName = this.get(`modelProjection.attributes.${path.join('.attributes.')}.modelName`);
+    } else {
+      attributeName = bindingPath;
+      modelName = this.get('modelName');
+    }
+
+    let model = this.get('store').modelFor(modelName);
+    return Ember.get(model, 'attributes').get(attributeName);
   },
 
   /**
@@ -1439,7 +1470,8 @@ export default FlexberryBaseComponent.extend(
     modelWithKey.set('data', record);
 
     let rowConfig = Ember.copy(this.get('defaultRowConfig'));
-    modelWithKey.set('config', rowConfig);
+    modelWithKey.set('rowConfig', rowConfig);
+    record.set('rowConfig', rowConfig);
 
     let configurateRow = this.get('configurateRow');
     if (configurateRow) {
@@ -1473,6 +1505,11 @@ export default FlexberryBaseComponent.extend(
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
         this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
+
+        let attrsArray = this._getAttributesName();
+        attrsArray.forEach((attrName) => {
+          Ember.addObserver(modelToAdd, attrName, this, '_attributeChanged');
+        });
       }
     }
   },
@@ -1536,6 +1573,11 @@ export default FlexberryBaseComponent.extend(
 
     let componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
+
+    let attrsArray = this._getAttributesName();
+    attrsArray.forEach((attrName) => {
+      Ember.removeObserver(record, attrName, this, '_attributeChanged');
+    });
   },
 
   /**
@@ -1665,5 +1707,37 @@ export default FlexberryBaseComponent.extend(
       selectedRecords.removeObject(deletedItem);
       this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, deletedItem, immediateDelete);
     });
-  }
+  },
+
+  /**
+    Get attributes name from model.
+
+    @method _getAttributesName
+    @private
+  */
+  _getAttributesName() {
+    let attributes = this.get('_modelProjection').attributes;
+    let attrsArray = [];
+
+    for (let attrName in attributes) {
+      attrsArray.push(attrName);
+    }
+
+    return attrsArray;
+  },
+
+  /**
+    That observer is called when change attributes of model.
+
+    @method _attributeChanged
+    @private
+  */
+  _attributeChanged(record, attrName) {
+    let rowConfig = record.get('rowConfig');
+    let configurateRow = this.get('configurateRow');
+    if (configurateRow) {
+      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
+      configurateRow(rowConfig, record);
+    }
+  },
 });

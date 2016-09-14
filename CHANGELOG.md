@@ -4,6 +4,45 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2016-09-14
+### Added
+* `flexberry-lookup` component:
+    * Sorting direction for `autocomplete` and `dropdown` mode, use `sorting` property for specify direction.
+    * Possibility reset value for `dropdown` mode, if `required` property not equals `true`.
+    * Add property `dropdownIsSearch`. Now can be turned off autocomplete in dropdown mode.
+* `flexberry-field` component:
+    * Now support explicit html type definition. Default type is `text`.
+* `flexberry-textbox` component:
+    * Now support explicit html type definition. Default type is `text`.
+* `flexberry-groupedit` component:
+    * Add support of `configurateRow` method.
+* `object-list-view` component:
+    * Add observer `attributeChanged` that calls the `configurateRow` method. Now needs to use Ember.set(), to add custom class or show/hide buttons in menu items for record config.
+* Support locks for `edit-form` route. Locks are not used by default, use [application config](https://github.com/Flexberry/ember-flexberry/blob/1fa9130c55a0dc07b0939f6499d97d98af0002e3/tests/dummy/config/environment.js#L41) to configure it.
+
+### Changed
+* Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.
+* Renamed `flexberry-lookup` mixin to `flexberry-lookup-controller`.
+* Blueprint will no longer generate old top validator for properties in hbs templates.
+
+### Fixed
+* `flexberry-lookup` component not specify properties for select on `autocomplete` and `dropdown` mode.
+* Now resolver is working correctly in IE.
+* `flexberry-objectlistview` component:
+    * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.
+    * If projection used for filter by any matches contains `hasMany` relationship, then that relationship will be skipped.
+* Blueprints:
+    * Generate correct `getCellComponent` function, if model has many "detail" models which refers to same "master" model.
+    * Fix generation of validation rules inheritance in models.
+    * Blueprint for hbs now generate clearly formatted code.
+* Fixed wrong generation of columns list for user setting's dialog.
+* Building filters in `object-list-view` component.
+* Now `inflection` package installing along with `ember-flexberry` addon.
+* Now `Save` and `Save and close` buttons on `detail-edit-form` after transition from new route working correctly.
+
+### Removed
+* Remove `base.js` from `models`. Now used the base model from `ember-flexberry-data` addon.
+
 ## [0.5.0] - 2016-09-05
 ### Added
 * Blueprints:
@@ -95,7 +134,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Support of `flexberry-lookup` component in dropdown mode for mobile devices.
 * `flexberry-objectlistview` component:
     * Add filtering by attribute of number type.
-    * Add filtering by master attributes.
+    * Add filtering by "master" attributes.
     * Add [`predicateForAttribute` method](http://flexberry.github.io/Documentation/master/classes/ListFormRoute.html#method_predicateForAttribute) for filtering customization in application.
     * Add filtering for each column.
     * Add hierarchical mode:

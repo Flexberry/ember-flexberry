@@ -37,6 +37,13 @@ module.exports = function(environment) {
         storeErrorMessages: true
       },
 
+      // Settings lock.
+      lock: {
+        enabled: true,
+        openReadOnly: true,
+        unlockObject: true,
+      },
+
       // Flag: indicates whether to use user settings service or not.
       useUserSettingsService: true,
 

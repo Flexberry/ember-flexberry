@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* `flexberry-lookup` component:
+    * Sorting direction for `autocomplete` and `dropdown` mode, use `sorting` property for specify direction.
+    * Possibility reset value for `dropdown` mode, if `required` property not equals `true`.
 * `flexberry-field` component:
     * Now support explicit html type definition. Default type is `text`.
 * `flexberry-textbox` component:
@@ -20,6 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprint will no longer generate old top validator for properties in hbs templates.
 
 ### Fixed
+* `flexberry-lookup` component not specify properties for select on `autocomplete` and `dropdown` mode.
 * Now resolver is working correctly in IE.
 * `flexberry-objectlistview` component:
     * Now for filter by any matches using all attributes of "master" model instead of one attribute with `displayMemberPath` option in projection.

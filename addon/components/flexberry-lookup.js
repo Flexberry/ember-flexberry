@@ -176,6 +176,17 @@ export default FlexberryBaseComponent.extend({
   dropdown: false,
 
   /**
+    Specify direction for sorting by `displayAttributeName`.
+    For `autocomplete` or `dropdown` mode only.
+    Possible values: `asc` or `desc`.
+
+    @property sorting
+    @type String
+    @default 'asc'
+  */
+  sorting: 'asc',
+
+  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -503,7 +514,9 @@ export default FlexberryBaseComponent.extend({
          * @param {Function} callback
          */
         responseAsync(settings, callback) {
-          let builder = new Builder(store, relationModelName);
+          let builder = new Builder(store, relationModelName)
+            .select(displayAttributeName)
+            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -617,7 +630,10 @@ export default FlexberryBaseComponent.extend({
       apiSettings: {
         responseAsync(settings, callback) {
           console.log('load');
-          let builder = new Builder(store, relationModelName);
+          let builder = new Builder(store, relationModelName)
+            .select(displayAttributeName)
+            .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
+
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
                                       undefined;
@@ -629,17 +645,21 @@ export default FlexberryBaseComponent.extend({
           store.query(relationModelName, builder.build()).then((records) => {
             // We have to cache data because dropdown component sets text as value and we lose object value.
             let resultArray = [];
-            callback({
-              success: true,
-              results: records.map(i => {
-                let attributeName = i.get(displayAttributeName);
-                resultArray[i.id] = i;
-                return {
-                  name: attributeName,
-                  value: i.id
-                };
-              })
+            let results = records.map((i) => {
+              let attributeName = i.get(displayAttributeName);
+              resultArray[i.id] = i;
+              return {
+                name: attributeName,
+                value: i.id
+              };
             });
+
+            if (!_this.get('required')) {
+              results.unshift({ name: _this.get('placeholder'), value: null });
+              resultArray['null'] = null;
+            }
+
+            callback({ success: true, results: results });
             _this.set('_cachedDropdownValues', resultArray);
           }, () => {
             callback({ success: false });
@@ -650,7 +670,7 @@ export default FlexberryBaseComponent.extend({
         let newValue = value;
         if (value) {
           let cachedValues = _this.get('_cachedDropdownValues');
-          if (!cachedValues || !cachedValues[value]) {
+          if (!cachedValues || cachedValues[value] !== null && !cachedValues[value]) {
             Ember.Logger.error('Can\'t find selected dropdown value among cached values.');
           } else {
             newValue = cachedValues[value];

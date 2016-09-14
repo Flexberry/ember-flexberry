@@ -543,7 +543,7 @@ export default FlexberryBaseComponent.extend(
       <!-- app/templates/employees.hbs -->
       {{flexberry-objectlistview
         ...
-        configurateRow=(action 'configurateRow')
+        configurateRow=(action "configurateRow")
         ...
       }}
       ```
@@ -555,9 +555,9 @@ export default FlexberryBaseComponent.extend(
       export default ListFormController.extend({
         actions: {
           configurateRow(rowConfig, record) {
-            rowConfig.canBeDeleted = false;
+            Ember.set(rowConfig, 'canBeDeleted', false);
             if (record.get('isMyFavoriteRecord')) {
-              Ember.set(rowConfig, 'customClass', 'my-fav-record);
+              Ember.set(rowConfig, 'customClass', 'my-fav-record');
             }
           }
         }
@@ -1733,7 +1733,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _attributeChanged(record, attrName) {
-    let rowConfig = Ember.copy(record.get('rowConfig'));
+    let rowConfig = record.get('rowConfig');
     let configurateRow = this.get('configurateRow');
     if (configurateRow) {
       Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');

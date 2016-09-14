@@ -503,7 +503,8 @@ export default FlexberryBaseComponent.extend({
          * @param {Function} callback
          */
         responseAsync(settings, callback) {
-          let builder = new Builder(store, relationModelName);
+          let builder = new Builder(store, relationModelName)
+            .select(displayAttributeName);
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -617,7 +618,8 @@ export default FlexberryBaseComponent.extend({
       apiSettings: {
         responseAsync(settings, callback) {
           console.log('load');
-          let builder = new Builder(store, relationModelName);
+          let builder = new Builder(store, relationModelName)
+            .select(displayAttributeName);
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
                                       undefined;

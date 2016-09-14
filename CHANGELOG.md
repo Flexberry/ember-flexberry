@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Sorting direction for `autocomplete` and `dropdown` mode, use `sorting` property for specify direction.
     * Possibility reset value for `dropdown` mode, if `required` property not equals `true`.
+    * Add property `dropdownIsSearch`. Now can be turned off autocomplete in dropdown mode.
 * `flexberry-field` component:
     * Now support explicit html type definition. Default type is `text`.
 * `flexberry-textbox` component:

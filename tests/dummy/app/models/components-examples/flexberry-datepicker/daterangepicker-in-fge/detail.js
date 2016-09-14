@@ -1,8 +1,7 @@
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry/models/base';
 import { Projection } from 'ember-flexberry-data';
 
-var Model = BaseModel.extend({
+var Model = Projection.Model.extend({
   // Inversed relationship for aggregator.details.
   aggregator: DS.belongsTo('components-examples/flexberry-datepicker/daterangepicker-in-fge/aggregator', {
     inverse: 'details',

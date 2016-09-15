@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-groupedit` component:
+    * Add `configurateSelectedRows` method for configurated selected records.
+* `flexberry-objectlistview` component:
+    * Add `configurateSelectedRows` method for configurated selected records.
+
 
 ## [0.6.0] - 2016-09-14
 ### Added
@@ -19,10 +25,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `object-list-view` component:
     * Add observer `attributeChanged` that calls the `configurateRow` method. Now needs to use Ember.set(), to add custom class or show/hide buttons in menu items for record config.
 * Support locks for `edit-form` route. Locks are not used by default, use [application config](https://github.com/Flexberry/ember-flexberry/blob/1fa9130c55a0dc07b0939f6499d97d98af0002e3/tests/dummy/config/environment.js#L41) to configure it.
-* `flexberry-groupedit` component:
-    * Add `configurateSelectedRows` method for configurated selected records.
-* `flexberry-objectlistview` component:
-    * Add `configurateSelectedRows` method for configurated selected records.
 
 ### Changed
 * Renamed `olv-toolbar-mixin` mixin to `olv-toolbar-controller`.

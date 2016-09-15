@@ -44,7 +44,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   actions: {
     configurateSelectedRows(selectedRecords) {
       if (selectedRecords.length > 0) {
-        console.log("selectedRecords.length", selectedRecords.length)
+        console.log('selectedRecords.length', selectedRecords.length);
       }
     }
   }

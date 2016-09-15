@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `object-list-view` component:
+    * Now the text does not fall outside the cell borders. 
 
 ## [0.6.0] - 2016-09-14
 ### Added

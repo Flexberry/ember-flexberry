@@ -39,13 +39,5 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     }
 
     return cellComponent;
-  },
-
-  actions: {
-    configurateSelectedRows(selectedRecords) {
-      if (selectedRecords.length > 0) {
-        console.log('selectedRecords.length', selectedRecords.length);
-      }
-    }
   }
 });

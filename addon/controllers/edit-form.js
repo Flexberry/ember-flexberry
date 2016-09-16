@@ -77,7 +77,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     State form. A form is in different states: loading, success, error.
 
     @property state
-    @type String 
+    @type String
   */
   state: undefined,
 
@@ -370,7 +370,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   /**
     This method will be invoked before save operation will be called.
     Override this method to add some custom logic on save operation start.
-    
+
     @example
       ```javascript
       onSaveActionStarted() {

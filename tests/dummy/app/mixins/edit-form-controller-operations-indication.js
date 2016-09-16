@@ -152,7 +152,6 @@ export default Ember.Mixin.create({
   onSaveActionStarted() {
     this._super(...arguments);
 
-    // this.set('showFormSpinner', true);
     this.set('latestOperationType', 'save');
   },
 

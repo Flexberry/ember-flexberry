@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+* Add state for `edit-form`. Now forms has loaging.
+
 ## [0.6.0] - 2016-09-14
 ### Added
 * `flexberry-lookup` component:

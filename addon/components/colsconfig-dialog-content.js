@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
-import { translationMacro as t } from 'ember-i18n';
 const { getOwner } = Ember;
 const _idPrefix = 'ColDesc';
 
@@ -64,7 +63,6 @@ export default FlexberryBaseComponent.extend({
    @default false
    */
   saveColWidthState: false,
-
 
   init: function() {
     this._super(...arguments);

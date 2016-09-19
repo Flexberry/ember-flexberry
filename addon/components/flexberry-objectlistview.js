@@ -442,7 +442,7 @@ export default FlexberryBaseComponent.extend({
     let currentStartRecords = null;
     let currentEndRecords = null;
 
-    pages.forEach( (page) => {
+    pages.forEach((page) => {
       if (page.isCurrent) {
         currentStartRecords = page.number * perPageValue - perPageValue + 1;
         currentEndRecords = page.number * perPageValue;

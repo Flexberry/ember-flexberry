@@ -153,7 +153,8 @@ export default {
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',
       'use-without-save': 'Use this settings without saving in setting ',
-      'save': 'Save'
+      'save': 'Save',
+      'col-width-on': 'Enable setting column widths'
     }
   },
 

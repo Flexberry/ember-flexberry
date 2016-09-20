@@ -13,6 +13,8 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+    _userSettingsService: Ember.inject.service('user-settings'),
+
   /**
     Flag used to display filters.
 
@@ -681,6 +683,12 @@ export default FlexberryBaseComponent.extend({
     loadRecords(id, target, property) {
       this.sendAction('_loadRecords', id, target, property);
     },
+
+    setPerPageValue(newPerPageValue) {
+      let currentDefaultUserSetting = this.get('_userSettingsService').getCurrentUserSetting(this.componentName, 'DEFAULT');
+      currentDefaultUserSetting.perPageValue = parseInt(newPerPageValue);
+      this.get('_userSettingsService').saveUserSetting(this.componentName, 'DEFAULT', currentDefaultUserSetting);
+    },
   },
 
   /**
@@ -788,6 +796,10 @@ export default FlexberryBaseComponent.extend({
    */
   init() {
     this._super(...arguments);
+    let currentDefaultUserSetting = this.get('_userSettingsService').getCurrentUserSetting(this.componentName, 'DEFAULT');
+    if ('perPageValue' in currentDefaultUserSetting) {
+      this.perPageValue = currentDefaultUserSetting.perPageValue;
+    }
 
     let customProperties = this.get('customProperties');
     if (this.get('componentMode') === 'lookupform' && customProperties && typeof customProperties === 'object') {

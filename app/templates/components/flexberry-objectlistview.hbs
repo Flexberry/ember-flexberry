@@ -89,7 +89,7 @@
   	<button class="ui {{unless hasNextPage 'disabled'}} button" {{action (if this.attrs.nextPage this.attrs.nextPage 'nextPage')}}>&raquo;</button>
     </div>
     <div class="right menu">
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection"}}
+    {{flexberry-dropdown items=perPageValues value=perPageValue onChange='setPerPageValue' class="compact selection"}}
     </div>
   </div>
 {{/unless}}

@@ -1,0 +1,4 @@
+import ListFormController from 'ember-flexberry/controllers/list-form';
+
+var EmberFlexberryDummyСписокРусскийАгерегаторController = ListFormController;
+export default EmberFlexberryDummyСписокРусскийАгерегаторController;

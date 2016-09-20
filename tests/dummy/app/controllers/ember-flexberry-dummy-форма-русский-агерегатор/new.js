@@ -1,0 +1,4 @@
+import EmberFlexberryDummyФормаРусскийАгерегаторController from '../ember-flexberry-dummy-форма-русский-агерегатор';
+
+var EmberFlexberryDummyФормаРусскийАгерегаторNewController = EmberFlexberryDummyФормаРусскийАгерегаторController;
+export default EmberFlexberryDummyФормаРусскийАгерегаторNewController;

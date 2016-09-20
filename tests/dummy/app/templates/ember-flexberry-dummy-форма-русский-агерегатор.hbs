@@ -1,0 +1,90 @@
+<h3 class="ui header">{{title}}</h3>
+
+{{#if errorMessages}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type='error'
+      closeable=true
+      visible=true
+      title='Error occurred'
+      message=currentError
+    }}
+  {{/each}}
+{{/if}}
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        <button type="submit" class="ui positive button" {{action 'save'}}>
+          {{t "forms.edit-form.save-button-text"}}
+        </button>
+        {{#unless model.isNew}}
+          <button type="submit" class="ui negative button" {{action 'delete'}}>
+            {{t "forms.edit-form.delete-button-text"}}
+          </button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button" {{action 'close'}}>
+        {{t "forms.edit-form.close-button-text"}}
+      </button>
+    </div>
+  </div>
+  <div class="field">
+  {{#if model.errors.полеАгрегатора}}
+  <span style="color:red">
+    {{model.errors.полеАгрегатора}}
+  </span>
+  {{/if}}
+  {{
+  flexberry-field
+  placeholder='(no value)'
+  readonly=readonly
+  required=true
+  value=model.полеАгрегатора
+  class=(if model.errors.полеАгрегатора 'error' '')
+  label='Поле агрегатора'
+  }}
+  {{flexberry-validationmessage error=model.errors.полеАгрегатора pointing="pointing"}}
+</div>
+
+<div class="field">
+    <label>Мастер агрегатора</label>
+  {{#if model.errors.мастерАгрегатора}}
+      <span style="color:red">{{model.errors.мастерАгрегатора}}</span>
+  {{/if}}
+  {{
+  flexberry-lookup
+  choose='showLookupDialog'
+  remove='removeLookupValue'
+  value=model.мастерАгрегатора
+  displayAttributeName='полеМастераАгрегатора'
+  relationName='мастерАгрегатора'
+  projection='СписокМастерАгрегатора'
+  title='Мастер агрегатора'
+  readonly=readonly
+  }}
+  {{flexberry-validationmessage error=model.errors.мастерАгрегатора pointing="pointing"}}
+</div>
+
+<div class="field">
+  <label>Русский детейл</label>
+  {{#if model.errors.русскийДетейл}}
+    <span style="color:red">{{model.errors.русскийДетейл}}</span>
+  {{/if}}
+  {{flexberry-groupedit
+    componentName="русскийДетейлGroupEdit"
+    modelProjection=modelProjection.attributes.русскийДетейл
+    content=model.русскийДетейл
+    readonly=readonly
+    orderable=false
+    class=(if model.errors.русскийДетейл 'error' '')
+  }}
+  {{flexberry-validationmessage error=model.errors.русскийДетейл pointing="pointing"}}
+</div>
+
+</form>

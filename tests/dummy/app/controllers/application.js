@@ -131,7 +131,21 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.application.suggestion-types.caption'),
           title: i18n.t('forms.application.sitemap.application.suggestion-types.title'),
           children: null
-        }]
+        }, {
+            link: 'ember-flexberry-dummy-список-мастер-агрегатора',
+            title: 'Список мастер агрегатора',
+            children: null
+          },
+          {
+            link: 'ember-flexberry-dummy-список-мастер-детейла',
+            title: 'Список мастер детейла',
+            children: null
+          },
+          {
+            link: 'ember-flexberry-dummy-список-русский-агерегатор',
+            title: 'Список русский агерегатор',
+            children: null
+          }]
       }, {
         link: null,
         caption: i18n.t('forms.application.sitemap.log-service-examples.caption'),

@@ -1,6 +1,7 @@
 import DS from 'ember-data';
 import __BaseModel from './base';
 import Proj from 'ember-flexberry-data';
+
 let Model = __BaseModel.extend({
   полеМастераАгрегатора: DS.attr('number'),
   validations: {

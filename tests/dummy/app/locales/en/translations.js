@@ -115,6 +115,18 @@ Ember.$.extend(true, translations, {
           'suggestions': {
             'caption': 'Suggestions',
             'title': ''
+          },
+          'мастер-агрегатора': {
+            'caption': 'List master aggregator',
+            'title': ''
+          },
+          'мастер-детейла': {
+            'caption': 'List master detaille',
+            'title': ''
+          },
+          'русский-агерегатор': {
+            'caption': 'List of Russian aggregator',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -396,6 +408,27 @@ Ember.$.extend(true, translations, {
       'name-validation-message-caption': 'Name is required'
     },
 
+    'ember-flexberry-dummy-форма-мастер-агрегатора': {
+      'caption': 'Master aggregator',
+      'полеМастераАгрегатора-caption': 'Field master aggregator',
+    },
+
+    'ember-flexberry-dummy-форма-мастер-детейла': {
+      'caption': 'Master detaille',
+      'nameполеМастераДетейла-caption': 'Field masters detaille',
+    },
+
+    'ember-flexberry-dummy-форма-русский-агерегатор': {
+      'caption': 'Russian aggregator',
+      'полеАгрегатора-caption': 'Field aggregator',
+      'мастерАгрегатора-caption': 'Master aggregator',
+      'русскийДетейл-caption': 'Russian detaille',
+      'полеДетейла-caption': 'Field detaille',
+      'перечислениеДетейла-caption': 'Enumeration detaille',
+      'мастерДетейла-caption': 'Master detaille',
+      'полеМастераДетейла-caption': 'Field master detaille'
+    },
+
     'ember-flexberry-dummy-application-user-list': {
       'caption': 'Application users'
     },
@@ -410,6 +443,18 @@ Ember.$.extend(true, translations, {
 
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Suggestion types'
+    },
+
+    'ember-flexberry-dummy-список-мастер-агрегатора': {
+      'caption': 'List master aggregator'
+    },
+
+    'ember-flexberry-dummy-список-мастер-детейла': {
+      'caption': 'List master detaille'
+    },
+
+    'ember-flexberry-dummy-список-русский-агерегатор': {
+      'caption': 'List of Russian aggregator'
     },
 
     'log-service-examples': {

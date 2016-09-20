@@ -1,4 +1,1 @@
-import EmberFlexberryDummyФормаМастерДетейлаController from '../ember-flexberry-dummy-форма-мастер-детейла';
-
-var EmberFlexberryDummyФормаМастерДетейлаNewController = EmberFlexberryDummyФормаМастерДетейлаController;
-export default EmberFlexberryDummyФормаМастерДетейлаNewController;
+export { default } from '../ember-flexberry-dummy-форма-мастер-детейла';

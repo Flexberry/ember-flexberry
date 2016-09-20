@@ -118,6 +118,18 @@ Ember.$.extend(true, translations, {
           'suggestions': {
             'caption': 'Предложения',
             'title': ''
+          },
+          'мастер-агрегатора': {
+            'caption': 'Список мастер агрегатора',
+            'title': ''
+          },
+          'мастер-детейла': {
+            'caption': 'Список мастер детейла',
+            'title': ''
+          },
+          'русский-агерегатор': {
+            'caption': 'Список русский агерегатор',
+            'title': ''
           }
         },
         'log-service-examples': {
@@ -399,6 +411,27 @@ Ember.$.extend(true, translations, {
       'name-validation-message-caption': 'Заполните наименование'
     },
 
+    'ember-flexberry-dummy-форма-мастер-агрегатора': {
+      'caption': 'Мастер агерегатор',
+      'полеМастераАгрегатора-caption': 'Поле мастера агрегатора',
+    },
+
+    'ember-flexberry-dummy-форма-мастер-детейла': {
+      'caption': 'Мастер детейла',
+      'nameполеМастераДетейла-caption': 'Поле мастера детейла',
+    },
+
+    'ember-flexberry-dummy-форма-русский-агерегатор': {
+      'caption': 'Русский агерегатор',
+      'полеАгрегатора-caption': 'Поле агрегатора',
+      'мастерАгрегатора-caption': 'Мастер агрегатора',
+      'русскийДетейл-caption': 'Русский детейл',
+      'полеДетейла-caption': 'Поле детейла',
+      'перечислениеДетейла-caption': 'Перечисление детейла',
+      'мастерДетейла-caption': 'Мастер детейла',
+      'полеМастераДетейла-caption': 'Поле мастера детейла'
+    },
+
     'ember-flexberry-dummy-application-user-list': {
       'caption': 'Пользователи приложения'
     },
@@ -413,6 +446,18 @@ Ember.$.extend(true, translations, {
 
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Типы предложений'
+    },
+
+    'ember-flexberry-dummy-список-мастер-агрегатора': {
+      'caption': 'Список мастера агрегатора'
+    },
+
+    'ember-flexberry-dummy-список-мастер-детейла': {
+      'caption': 'Список мастера детейла'
+    },
+
+    'ember-flexberry-dummy-список-русский-агерегатор': {
+      'caption': 'Список Русский агерегатор'
     },
 
     'log-service-examples': {

@@ -26,6 +26,18 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
+  this.route('ember-flexberry-dummy-список-мастер-агрегатора');
+  this.route('ember-flexberry-dummy-форма-мастер-агрегатора', { path: 'ember-flexberry-dummy-форма-мастер-агрегатора/:id' });
+  this.route('ember-flexberry-dummy-форма-мастер-агрегатора.new', { path: 'ember-flexberry-dummy-форма-мастер-агрегатора/new' });
+
+  this.route('ember-flexberry-dummy-список-мастер-детейла');
+  this.route('ember-flexberry-dummy-форма-мастер-детейла', { path: 'ember-flexberry-dummy-форма-мастер-детейла/:id' });
+  this.route('ember-flexberry-dummy-форма-мастер-детейла.new', { path: 'ember-flexberry-dummy-форма-мастер-детейла/new' });
+
+  this.route('ember-flexberry-dummy-список-русский-агерегатор');
+  this.route('ember-flexberry-dummy-форма-русский-агерегатор', { path: 'ember-flexberry-dummy-форма-русский-агерегатор/:id' });
+  this.route('ember-flexberry-dummy-форма-русский-агерегатор.new', { path: 'ember-flexberry-dummy-форма-русский-агерегатор/new' });
+
   // Logging.
   this.route('i-i-s-caseberry-logging-objects-application-log-l');
   this.route('i-i-s-caseberry-logging-objects-application-log-e', { path: 'i-i-s-caseberry-logging-objects-application-log-e/:id' });

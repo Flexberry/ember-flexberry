@@ -1,4 +1,1 @@
-import EmberFlexberryDummyФормаМастерАгрегатораController from '../ember-flexberry-dummy-форма-мастер-агрегатора';
-
-var EmberFlexberryDummyФормаМастерАгрегатораNewController = EmberFlexberryDummyФормаМастерАгрегатораController;
-export default EmberFlexberryDummyФормаМастерАгрегатораNewController;
+export { default } from '../ember-flexberry-dummy-форма-мастер-агрегатора';

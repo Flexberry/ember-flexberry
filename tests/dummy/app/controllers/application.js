@@ -133,17 +133,20 @@ export default Ember.Controller.extend({
           children: null
         }, {
             link: 'ember-flexberry-dummy-список-мастер-агрегатора',
-            title: 'Список мастер агрегатора',
+            caption: i18n.t('forms.application.sitemap.application.мастер-агрегатора.caption'),
+            title: i18n.t('forms.application.sitemap.application.мастер-агрегатора.title'),
             children: null
           },
           {
             link: 'ember-flexberry-dummy-список-мастер-детейла',
-            title: 'Список мастер детейла',
+            caption: i18n.t('forms.application.sitemap.application.мастер-детейла.caption'),
+            title: i18n.t('forms.application.sitemap.application.мастер-детейла.title'),
             children: null
           },
           {
             link: 'ember-flexberry-dummy-список-русский-агерегатор',
-            title: 'Список русский агерегатор',
+            caption: i18n.t('forms.application.sitemap.application.русский-агерегатор.caption'),
+            title: i18n.t('forms.application.sitemap.application.русский-агерегатор.title'),
             children: null
           }]
       }, {

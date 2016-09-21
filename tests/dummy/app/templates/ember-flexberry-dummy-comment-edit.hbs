@@ -84,6 +84,11 @@
       componentName="commentUserVotesGroupEdit"
       content=model.userVotes
       modelProjection=modelProjection.attributes.userVotes
+      rowClickable=true
+      rowClick="rowClick"
+      editOnSeparateRoute=true
+      editFormRoute=commentsVoteEditRoute
+      saveBeforeRouteLeave=true
       orderable=false
       readonly=readonly
     }}

@@ -220,7 +220,7 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
-    Flag: indicates whether to show asterisk icon in first column of every changed row.
+    Flag indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
     @type Boolean
@@ -252,7 +252,7 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @default false
   */
-  notUseUserSettings:false,
+  notUseUserSettings: false,
 
   /**
     Flag indicates whether to show helper column or not.
@@ -1014,7 +1014,7 @@ export default FlexberryBaseComponent.extend(
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode:'flex',
+      resizeMode: 'flex',
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);

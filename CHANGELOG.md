@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Add state for `edit-form`. Now forms has loading.
 * `flexberry-groupedit` and `flexberry-objectlistview` components:
     * Add `configurateSelectedRows` method for configure selected records.
+* `flexberry-objectlistview`:
+    * Add info `showing-entries`. To display the need to add `recordsTotalCount` for component.
 * Blueprint `flexberry-enum` generate `sourceType` property for enumeration transforms.
 
 ## [0.6.0] - 2016-09-14

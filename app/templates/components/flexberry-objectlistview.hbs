@@ -75,20 +75,27 @@
 {{#unless _inHierarchicalMode}}
   <div class="ui secondary menu no-margin">
     <div class="ui basic buttons">
-  	<button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
-  	{{#each pages as |page|}}
-  	  {{#if page.isEllipsis}}
-  		  <button class="ui button">...</button>
-  	  {{else}}
-  		{{#if page.isCurrent}}
-  			<button class="ui active button">{{page.number}}</button>
-  		{{else}}
-  			<button class="ui button" {{action (if this.attrs.gotoPage this.attrs.gotoPage 'gotoPage') page.number}}>{{page.number}}</button>
-  		{{/if}}
-  	  {{/if}}
-  	{{/each}}
-  	<button class="ui {{unless hasNextPage 'disabled'}} button" {{action (if this.attrs.nextPage this.attrs.nextPage 'nextPage')}}>&raquo;</button>
+      <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
+      {{#each pages as |page|}}
+        {{#if page.isEllipsis}}
+          <button class="ui button">...</button>
+        {{else}}
+          {{#if page.isCurrent}}
+            <button class="ui active button">{{page.number}}</button>
+          {{else}}
+            <button class="ui button" {{action (if this.attrs.gotoPage this.attrs.gotoPage 'gotoPage') page.number}}>{{page.number}}</button>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+      <button class="ui {{unless hasNextPage 'disabled'}} button" {{action (if this.attrs.nextPage this.attrs.nextPage 'nextPage')}}>&raquo;</button>
     </div>
+    {{#if showShowingEntries}}
+      <div class="item showing-entries">
+      {{concat
+        (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+      }}
+      </div>
+    {{/if}}
     <div class="right menu">
       {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection"}}
     </div>

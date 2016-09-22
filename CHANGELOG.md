@@ -10,6 +10,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add `configurateSelectedRows` method for configurated selected records.
 
 
+### Added
+* Add state for `edit-form`. Now forms has loaging.
+
 ## [0.6.0] - 2016-09-14
 ### Added
 * `flexberry-lookup` component:

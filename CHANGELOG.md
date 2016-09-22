@@ -4,14 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* `flexberry-groupedit` component:
-    * Add `configurateSelectedRows` method for configurated selected records.
-* `flexberry-objectlistview` component:
-    * Add `configurateSelectedRows` method for configurated selected records.
-
-
-### Added
-* Add state for `edit-form`. Now forms has loaging.
+* Add state for `edit-form`. Now forms has loading.
+* `flexberry-groupedit` and `flexberry-objectlistview` components:
+    * Add `configurateSelectedRows` method for configure selected records.
+* Blueprint `flexberry-enum` generate `sourceType` property for enumeration transforms.
 
 ## [0.6.0] - 2016-09-14
 ### Added

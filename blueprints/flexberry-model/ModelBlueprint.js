@@ -241,5 +241,6 @@ var ModelBlueprint = (function () {
     };
     return ModelBlueprint;
 }());
-exports.__esModule = true;
-exports["default"] = ModelBlueprint;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = ModelBlueprint;
+//# sourceMappingURL=ModelBlueprint.js.map

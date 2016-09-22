@@ -145,31 +145,6 @@ export default Ember.Mixin.create({
   }),
 
   /**
-    Form semantic ui class related to it's current state ('loading', 'success', 'error').
-
-    @property formState.
-    @type String
-   */
-  formState: Ember.computed(
-    'showFormSpinner',
-    'showFormSuccessMessage',
-    'showFormErrorMessage', function() {
-      if (this.get('showFormSpinner') === true) {
-        return 'loading';
-      }
-
-      if (this.get('showFormSuccessMessage') === true) {
-        return 'success';
-      }
-
-      if (this.get('showFormErrorMessage') === true) {
-        return 'error';
-      }
-
-      return '';
-    }),
-
-  /**
     This method will be invoked before save operation will be called.
 
     @method onSaveActionStarted.
@@ -177,7 +152,6 @@ export default Ember.Mixin.create({
   onSaveActionStarted() {
     this._super(...arguments);
 
-    this.set('showFormSpinner', true);
     this.set('latestOperationType', 'save');
   },
 
@@ -215,8 +189,6 @@ export default Ember.Mixin.create({
    */
   onSaveActionAlways(data) {
     this._super(...arguments);
-
-    this.set('showFormSpinner', false);
   },
 
   /**
@@ -227,7 +199,6 @@ export default Ember.Mixin.create({
   onDeleteActionStarted() {
     this._super(...arguments);
 
-    this.set('showFormSpinner', true);
     this.set('latestOperationType', 'delete');
   },
 
@@ -265,8 +236,6 @@ export default Ember.Mixin.create({
    */
   onDeleteActionAlways(data) {
     this._super(...arguments);
-
-    this.set('showFormSpinner', false);
   },
 
   /**
@@ -275,7 +244,6 @@ export default Ember.Mixin.create({
     @method onDeleteActionStarted.
    */
   onCloseActionStarted() {
-    this.set('showFormSpinner', undefined);
     this.set('showFormSuccessMessage', undefined);
     this.set('showFormErrorMessage', undefined);
     this.set('latestOperationType', undefined);

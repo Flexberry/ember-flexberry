@@ -11,6 +11,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add info `showing-entries`. To display the need to add `recordsTotalCount` for component.
 * Blueprint `flexberry-enum` generate `sourceType` property for enumeration transforms.
 
+### Fixed
+* `object-list-view` component:
+    * Now the text does not fall outside the cell borders.
+
 ## [0.6.0] - 2016-09-14
 ### Added
 * `flexberry-lookup` component:

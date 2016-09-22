@@ -265,6 +265,10 @@ Ember.$.extend(true, translations, {
             'configurate-rows': {
               'caption': 'Раскраска строк',
               'title': ''
+            },
+            'selected-rows': {
+              'caption': 'Выбранные строки',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {

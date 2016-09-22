@@ -565,12 +565,52 @@ export default FlexberryBaseComponent.extend(
       ```
     @method configurateRow
 
-    @param {Object} config Settings for row.
+    @param {Object} rowConfig Settings for row.
                             See {{#crossLink "ObjectListView/defaultRowConfig:property"}}{{/crossLink}}
                             property for details
     @param {DS.Model} record The record in row.
   */
   configurateRow: undefined,
+
+  /**
+    Hook for configurate selected rows.
+
+    @example
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-objectlistview
+        ...
+        configurateSelectedRows=(action "configurateSelectedRows")
+        ...
+      }}
+      ```
+
+      ```js
+      // app/controllers/employees.js
+      import ListFormController from './list-form';
+
+      export default ListFormController.extend({
+        actions: {
+          configurateSelectedRows(selectedRecords) {
+            // do something
+          }
+        }
+      });
+      ```
+    @method configurateSelectedRows
+
+    @param {DS.Model[]} selectedRecords All selected records.
+  */
+  configurateSelectedRows: undefined,
+
+  selectedRowsChanged: Ember.observer('selectedRecords.@each', function() {
+    let selectedRecords = this.get('selectedRecords');
+    let configurateSelectedRows = this.get('configurateSelectedRows');
+    if (configurateSelectedRows) {
+      Ember.assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
+      configurateSelectedRows(selectedRecords);
+    }
+  }),
 
   /**
     Default settings for rows.

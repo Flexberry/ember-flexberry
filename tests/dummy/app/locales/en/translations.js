@@ -262,6 +262,10 @@ Ember.$.extend(true, translations, {
             'configurate-rows': {
               'caption': 'Configurate rows',
               'title': ''
+            },
+            'selected-rows': {
+              'caption': 'Selected rows',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {

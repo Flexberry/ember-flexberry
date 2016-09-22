@@ -31,6 +31,7 @@ module.exports = {
     let enumBlueprint = new EnumBlueprint(this, options);
     return {
       className: enumBlueprint.className, // for use in files\__root__\transforms\__name__.js
+      sourceType: enumBlueprint.sourceType, // for use in files\__root__\transforms\__name__.js
       name: enumBlueprint.name, // for use in files\__root__\transforms\__name__.js
       enumObjects: enumBlueprint.enumObjects // for use in files\__root__\enums\__name__.js
     };
@@ -40,6 +41,7 @@ module.exports = {
 class EnumBlueprint {
   enumObjects: string;
   className: string;
+  sourceType: string;
   name: string;
   constructor(blueprint, options) {
     let enumsDir = path.join(options.metadataDir, "enums");
@@ -51,6 +53,7 @@ class EnumBlueprint {
     let enumeration: metadata.Enumeration = JSON.parse(content);
     this.name = options.entity.name;
     this.className = enumeration.className;
+    this.sourceType = enumeration.nameSpace == null ? enumeration.className : `${enumeration.nameSpace}.${enumeration.className}`;
     let values: string[] = [];
     for (let key in enumeration.enumObjects) {
       let caption = enumeration.enumObjects[key];

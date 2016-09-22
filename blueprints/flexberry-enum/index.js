@@ -22,6 +22,7 @@ module.exports = {
         var enumBlueprint = new EnumBlueprint(this, options);
         return {
             className: enumBlueprint.className,
+            sourceType: enumBlueprint.sourceType,
             name: enumBlueprint.name,
             enumObjects: enumBlueprint.enumObjects // for use in files\__root__\enums\__name__.js
         };
@@ -38,6 +39,7 @@ var EnumBlueprint = (function () {
         var enumeration = JSON.parse(content);
         this.name = options.entity.name;
         this.className = enumeration.className;
+        this.sourceType = enumeration.nameSpace == null ? enumeration.className : enumeration.nameSpace + "." + enumeration.className;
         var values = [];
         for (var key in enumeration.enumObjects) {
             var caption = enumeration.enumObjects[key];

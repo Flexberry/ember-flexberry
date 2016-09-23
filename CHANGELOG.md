@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.2-beta.1] - 2016-09-23
+### Fixed
+- Transition to agregator with id from detail edit form if agregator will be saved.
+
 ## [0.6.2-beta.0] - 2016-09-23
 ### Added
 * `flexberry-groupedit` component:

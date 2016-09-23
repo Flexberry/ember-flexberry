@@ -3,6 +3,15 @@ import EditFormControllerOperationsIndicationMixin from '../mixins/edit-form-con
 
 export default DetailEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
+    Name of model.commentsVote edit route.
+
+    @property commentsVoteEditRoute
+    @type String
+    @default 'ember-flexberry-dummy-comment-vote-edit'
+   */
+  commentsVoteEditRoute: 'ember-flexberry-dummy-comment-vote-edit',
+
+  /**
     Method to get type and attributes of a component,
     which will be embeded in object-list-view cell.
 

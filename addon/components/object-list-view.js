@@ -690,8 +690,11 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     rowClick(recordWithKey, e) {
+      let editOnSeparateRoute = this.get('editOnSeparateRoute');
       if (this.get('readonly')) {
-        return;
+        if (!editOnSeparateRoute) {
+          return;
+        }
       }
 
       if (this.rowClickable) {
@@ -707,6 +710,7 @@ export default FlexberryBaseComponent.extend(
           editOnSeparateRoute: editOnSeparateRoute,
           modelName: this.get('modelProjection').modelName,
           detailArray: this.get('content'),
+          readonly: this.get('readonly')
         });
       }
     },

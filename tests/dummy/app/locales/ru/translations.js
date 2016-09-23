@@ -370,6 +370,12 @@ Ember.$.extend(true, translations, {
       'author-validation-message-caption': 'Заполните поле "Автор"'
     },
 
+    'ember-flexberry-dummy-comment-vote-edit': {
+      'caption': 'Голос пользователя',
+      'voteType-caption': 'Тип голоса',
+      'applicationUser-caption': 'Пользователь приложения',
+    },
+
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Локализация',
       'name-caption': 'Наименование',

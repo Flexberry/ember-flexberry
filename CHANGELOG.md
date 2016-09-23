@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* `flexberry-groupedit` component:
+    * Now possible open `detail-edit-form` in `readonly` mode from `edit-form` in `readonly` mode, if `editOnSeparateRoute` = true.
 * Add state for `edit-form`. Now forms has loading.
 * `flexberry-groupedit` and `flexberry-objectlistview` components:
     * Add `configurateSelectedRows` method for configure selected records.

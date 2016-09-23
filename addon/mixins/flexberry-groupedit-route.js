@@ -50,7 +50,8 @@ export default Ember.Mixin.create({
         editOnSeparateRoute: false,
         modelName: undefined,
         detailArray: undefined,
-        editFormRoute: undefined
+        editFormRoute: undefined,
+        readonly: false
       };
       methodOptions = Ember.merge(methodOptions, options);
       let editOnSeparateRoute = methodOptions.editOnSeparateRoute;
@@ -92,10 +93,16 @@ export default Ember.Mixin.create({
           'modelCurrentAgregators', _this.controller.get('modelCurrentAgregators'), _this.controller.get('model'));
 
         if (recordId) {
-          _this.transitionTo(editFormRoute, record.get('id'));
+          _this.transitionTo(editFormRoute, record.get('id'))
+          .then(function(newRoute) {
+            newRoute.controller.set('readonly', methodOptions.readonly);
+          });
         } else {
           let newModelPath = _this.newRoutePath(editFormRoute);
-          _this.transitionTo(newModelPath);
+          _this.transitionTo(newModelPath)
+          .then(function(newRoute) {
+            newRoute.controller.set('readonly', methodOptions.readonly);
+          });
         }
       };
 

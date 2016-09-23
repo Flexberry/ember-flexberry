@@ -14,6 +14,9 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-comment-edit', { path: 'ember-flexberry-dummy-comment-edit/:id' });
   this.route('ember-flexberry-dummy-comment-edit.new', { path: 'ember-flexberry-dummy-comment-edit/new' });
 
+  this.route('ember-flexberry-dummy-comment-vote-edit', { path: 'ember-flexberry-dummy-comment-vote-edit/:id' });
+  this.route('ember-flexberry-dummy-comment-vote-edit.new', { path: 'ember-flexberry-dummy-comment-vote-edit/new' });
+
   this.route('ember-flexberry-dummy-localization-list');
   this.route('ember-flexberry-dummy-localization-edit', { path: 'ember-flexberry-dummy-localization-edit/:id' });
   this.route('ember-flexberry-dummy-localization-edit.new', { path: 'ember-flexberry-dummy-localization-edit/new' });

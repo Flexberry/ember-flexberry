@@ -367,6 +367,12 @@ Ember.$.extend(true, translations, {
       'author-validation-message-caption': 'Author is required'
     },
 
+    'ember-flexberry-dummy-comment-vote-edit': {
+      'caption': 'User Vote',
+      'voteType-caption': 'Vote type',
+      'applicationUser-caption': 'Application user',
+    },
+
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Localization',
       'name-caption': 'Name',

@@ -305,7 +305,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         } else {
           let routeName = this.get('routeName');
           if (routeName.indexOf('.new') > 0) {
-            this.transitionToRoute(routeName.slice(0, -4), this.get('model'));
+            let qpars = {};
+            let queryParams = this.get('queryParams');
+            queryParams.forEach(function(item, i, params) {
+              qpars[item] = this.get(item);
+            }, this);
+            let transitionQuery = {};
+            transitionQuery.queryParams = qpars;
+            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
           }
         }
       });

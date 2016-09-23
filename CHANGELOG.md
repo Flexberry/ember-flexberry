@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.6.2-beta.0] - 2016-09-23
 ### Added
 * `flexberry-groupedit` component:
     * Now possible open `detail-edit-form` in `readonly` mode from `edit-form` in `readonly` mode, if `editOnSeparateRoute` = true.
@@ -12,6 +14,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-objectlistview`:
     * Add info `showing-entries`. To display the need to add `recordsTotalCount` for component.
 * Blueprint `flexberry-enum` generate `sourceType` property for enumeration transforms.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.1 version.
 
 ### Fixed
 * `object-list-view` component:

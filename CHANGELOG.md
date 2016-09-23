@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `object-list-view` component:
     * Now the text does not fall outside the cell borders.
+* Now send `queryParams` when transition from new to edit route.
 
 ## [0.6.0] - 2016-09-14
 ### Added

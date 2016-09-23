@@ -18,6 +18,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now the text does not fall outside the cell borders.
 * Now send `queryParams` when transition from new to edit route.
 
+## [0.6.1] - 2016-09-16
+### Removed
+* Remove `localforage` and `ember-localforage-adapter` from package dependencies and default blueprint. Now used only  `dexie` for IndexedDB access.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.1. There fixed offline store adapter errors.
+
 ## [0.6.0] - 2016-09-14
 ### Added
 * `flexberry-lookup` component:

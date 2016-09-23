@@ -95,7 +95,12 @@ export default {
     },
 
     'flexberry-objectlistview': {
-      'placeholder': 'Нет данных'
+      'placeholder': 'Нет данных',
+      'showing-entries': {
+        'showing': 'Показано ',
+        'of': ' из ',
+        'entries': ' записей'
+      }
     },
 
     'flexberry-groupedit': {

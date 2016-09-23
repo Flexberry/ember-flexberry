@@ -352,12 +352,12 @@ export default FlexberryBaseComponent.extend({
   deleteButton: false,
 
   /**
-   * Flag indicates whether to show colsConfigButton button at toolbar.
-   *
-   * @property colsConfigButton
-   * @type Boolean
-   * @default false
-   */
+    Flag indicates whether to show colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default false
+  */
   colsConfigButton: true,
 
   /**
@@ -415,6 +415,57 @@ export default FlexberryBaseComponent.extend({
   perPageValues: null,
 
   /**
+    Total count records.
+
+    @property recordsTotalCount
+    @type Number
+    @default null
+  */
+  recordsTotalCount: null,
+
+  /**
+    Current interval of records.
+
+    @property currentIntervalRecords
+    @type String
+    @readOnly
+  */
+  currentIntervalRecords: Ember.computed('pages', 'perPageValue', function() {
+    let pages = this.get('pages');
+    let perPageValue = this.get('perPageValue');
+    let recordsTotalCount = this.get('recordsTotalCount');
+    if (recordsTotalCount === null && this.get('showShowingEntries')) {
+      this.set('showShowingEntries', false);
+      Ember.Logger.error('Property \'recordsTotalCount\' is undefined.');
+    }
+
+    let currentStartRecords = null;
+    let currentEndRecords = null;
+
+    pages.forEach((page) => {
+      if (page.isCurrent) {
+        currentStartRecords = page.number * perPageValue - perPageValue + 1;
+        currentEndRecords = page.number * perPageValue;
+      }
+    });
+
+    if (currentEndRecords > recordsTotalCount) {
+      currentEndRecords = recordsTotalCount;
+    }
+
+    return currentStartRecords + '-' + currentEndRecords;
+  }),
+
+  /**
+    Flag indicates whether to show showingEntries.
+
+    @property showShowingEntries
+    @type Boolean
+    @default true
+  */
+  showShowingEntries: true,
+
+  /**
     Function to determine if current page has previous page.
 
     @property hasPreviousPage
@@ -424,7 +475,7 @@ export default FlexberryBaseComponent.extend({
   hasPreviousPage: null,
 
   /**
-   * Function to determine if current page has next page.
+    Function to determine if current page has next page.
 
     @property hasNextPage
     @type Function

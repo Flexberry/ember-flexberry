@@ -66,4 +66,9 @@ table.object-list-view tbody tr td:first-child button i {
       overflow: hidden;
     }
   }
+
+  .oveflow-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

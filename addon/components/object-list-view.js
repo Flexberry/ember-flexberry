@@ -220,7 +220,7 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
-    Flag: indicates whether to show asterisk icon in first column of every changed row.
+    Flag indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
     @type Boolean
@@ -252,7 +252,7 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @default false
   */
-  notUseUserSettings:false,
+  notUseUserSettings: false,
 
   /**
     Flag indicates whether to show helper column or not.
@@ -565,12 +565,52 @@ export default FlexberryBaseComponent.extend(
       ```
     @method configurateRow
 
-    @param {Object} config Settings for row.
+    @param {Object} rowConfig Settings for row.
                             See {{#crossLink "ObjectListView/defaultRowConfig:property"}}{{/crossLink}}
                             property for details
     @param {DS.Model} record The record in row.
   */
   configurateRow: undefined,
+
+  /**
+    Hook for configurate selected rows.
+
+    @example
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-objectlistview
+        ...
+        configurateSelectedRows=(action "configurateSelectedRows")
+        ...
+      }}
+      ```
+
+      ```js
+      // app/controllers/employees.js
+      import ListFormController from './list-form';
+
+      export default ListFormController.extend({
+        actions: {
+          configurateSelectedRows(selectedRecords) {
+            // do something
+          }
+        }
+      });
+      ```
+    @method configurateSelectedRows
+
+    @param {DS.Model[]} selectedRecords All selected records.
+  */
+  configurateSelectedRows: undefined,
+
+  selectedRowsChanged: Ember.observer('selectedRecords.@each', function() {
+    let selectedRecords = this.get('selectedRecords');
+    let configurateSelectedRows = this.get('configurateSelectedRows');
+    if (configurateSelectedRows) {
+      Ember.assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
+      configurateSelectedRows(selectedRecords);
+    }
+  }),
 
   /**
     Default settings for rows.
@@ -978,7 +1018,7 @@ export default FlexberryBaseComponent.extend(
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode:'flex',
+      resizeMode: 'flex',
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);

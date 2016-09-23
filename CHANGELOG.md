@@ -6,6 +6,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `flexberry-groupedit` component:
     * Now possible open `detail-edit-form` in `readonly` mode from `edit-form` in `readonly` mode, if `editOnSeparateRoute` = true.
+* Add state for `edit-form`. Now forms has loading.
+* `flexberry-groupedit` and `flexberry-objectlistview` components:
+    * Add `configurateSelectedRows` method for configure selected records.
+* `flexberry-objectlistview`:
+    * Add info `showing-entries`. To display the need to add `recordsTotalCount` for component.
+* Blueprint `flexberry-enum` generate `sourceType` property for enumeration transforms.
+
+### Fixed
+* `object-list-view` component:
+    * Now the text does not fall outside the cell borders.
 
 ## [0.6.0] - 2016-09-14
 ### Added

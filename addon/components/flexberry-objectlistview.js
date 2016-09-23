@@ -796,11 +796,6 @@ export default FlexberryBaseComponent.extend({
    */
   init() {
     this._super(...arguments);
-    let currentDefaultUserSetting = this.get('_userSettingsService').getCurrentUserSetting(this.componentName, 'DEFAULT');
-    if ('perPageValue' in currentDefaultUserSetting) {
-      this.perPageValue = currentDefaultUserSetting.perPageValue;
-    }
-
     let customProperties = this.get('customProperties');
     if (this.get('componentMode') === 'lookupform' && customProperties && typeof customProperties === 'object') {
       // For lookup mode we allow to set properties.

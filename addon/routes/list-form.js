@@ -68,6 +68,7 @@ export default ProjectedModelFormRoute.extend(
   model: function(params, transition) {
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
+    this.transitionQueryParams = transition.queryParams;
     let projectionName = this.get('modelProjection');
     let filtersPredicate = this._filtersPredicate();
     let limitPredicate =
@@ -105,6 +106,14 @@ export default ProjectedModelFormRoute.extend(
     componentName = listComponentNames[0];
     let ret = userSettingPromise
       .then(currectPageUserSettings => {
+        if (currectPageUserSettings &&
+          componentName in currectPageUserSettings &&
+          'DEFAULT' in currectPageUserSettings[componentName]  &&
+          'perPageValue' in currectPageUserSettings[componentName].DEFAULT &&
+          !('perPage' in this.transitionQueryParams)) {
+//           params.perPage = currectPageUserSettings[componentName].DEFAULT.perPageValue;
+          this.transitionQueryParams.perPage = currectPageUserSettings[componentName].DEFAULT.perPageValue;
+        }
         if (params) {
           userSettingsService.setCurrentParams(componentName, params);
         }

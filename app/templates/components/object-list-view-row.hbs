@@ -36,13 +36,22 @@
           </button>
         {{/if}}
       {{/if}}
-      {{component column.cellComponent.componentName
-        dynamicProperties=column.cellComponent.componentProperties
-        relatedModel=record.data
-        value=(mut (get record.data column.propName))
-        readonly=readonly
-        required=required
-      }}
+      {{#if column.cellComponent.componentName}}
+        {{component column.cellComponent.componentName
+          dynamicProperties=column.cellComponent.componentProperties
+          relatedModel=record.data
+          value=(mut (get record.data column.propName))
+          readonly=readonly
+          required=required
+        }}
+      {{else}}
+        <div class="oveflow-text">
+          {{get-formatted record.data column.propName
+            dateFormat=dateFormat
+            moment=moment
+          }}
+        </div>
+      {{/if}}
     </td>
   {{/each}}
   {{#if showMenuColumn}}

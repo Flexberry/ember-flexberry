@@ -5,7 +5,7 @@ import config from '../config/environment';
 let enabled = Ember.get(config, 'APP.log.enabled');
 if (Ember.typeOf(enabled) === 'boolean') {
   LogService.reopen({
-    storeErrorMessages: enabled
+    enabled: enabled
   });
 }
 

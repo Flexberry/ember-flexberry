@@ -120,9 +120,7 @@ export default Ember.Mixin.create({
         sortDirection = 'asc';
       }
 
-      if (sortDirection !== 'none') {
-        newSorting.push({ propName: propName, direction: sortDirection });
-      }
+      newSorting.push({ propName: propName, direction: sortDirection });
 
       let sortQueryParam = this._serializeSortingParam(newSorting);
       this.set('sort', sortQueryParam);
@@ -143,10 +141,7 @@ export default Ember.Mixin.create({
       for (let i = 0; i < oldSorting.length; i++) {
         if (oldSorting[i].propName === propName) {
           let newDirection = this._getNextSortDirection(oldSorting[i].direction);
-          if (newDirection !== 'none') {
-            newSorting.push({ propName: propName, direction: newDirection });
-          }
-
+          newSorting.push({ propName: propName, direction: newDirection });
           changed = true;
         } else {
           newSorting.push(oldSorting[i]);
@@ -171,7 +166,17 @@ export default Ember.Mixin.create({
     @private
   */
   _getNextSortDirection: function(currentDirection) {
-    return currentDirection === 'asc' ? 'desc' : 'none';
+    let ret;
+    switch (currentDirection) {
+      case 'asc':
+        ret = 'desc';
+        break;
+      case 'desc':
+        ret = 'none';
+        break;
+      default: ret = 'asc';
+    }
+    return ret;
   },
 
   /**
@@ -184,7 +189,7 @@ export default Ember.Mixin.create({
   */
   _serializeSortingParam: function(sorting) {
     return sorting.map(function(element) {
-      return (element.direction === 'asc' ? '+' : '-') + element.propName;
+      return (element.direction === 'asc' ? '+' : element.direction === 'desc' ? '-' : '!') + element.propName;
     }).join('') || this.get('sortDefaultValue');
   },
 });

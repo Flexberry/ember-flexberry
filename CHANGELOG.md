@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+    * `get-formatted` helper.
+    * `PerfService`, where performance bottlenecks can see on console timeline.
 
 ## [0.6.2-beta.2] - 2016-09-23
 ### Fixed

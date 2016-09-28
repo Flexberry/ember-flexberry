@@ -37,6 +37,10 @@ module.exports = function(environment) {
         storeErrorMessages: true
       },
 
+      perf: {
+        enabled: true,
+      }
+
       // Settings lock.
       lock: {
         enabled: true,

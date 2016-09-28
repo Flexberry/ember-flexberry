@@ -145,7 +145,7 @@ export default Ember.Service.extend({
       let nudgeCount = 0;
       let isClosedTag = element.tagName === 'IMG' || element.tagName === 'INPUT';
       let isNudger = false;
-      let perfElem = undefined;
+      let perfElem;
 
       element.classList.add('has-perf');
       element.insertAdjacentElement(isClosedTag ? 'afterEnd' : 'beforeEnd', dataElement);
@@ -196,6 +196,7 @@ export default Ember.Service.extend({
           parent.addEventListener('click', this.handleClick);
         }
       }
+
       this.set('tagsHaveBeenPlaced', true);
     });
   },
@@ -222,7 +223,7 @@ export default Ember.Service.extend({
           let className = payload.containerKey;
           if (className && selectors.filter(regEx => regEx.test(className)).length) {
 
-            if (!window.perf.runningTime){
+            if (!window.perf.runningTime) {
               window.perf.runningTime = timestamp;
             }
 
@@ -254,7 +255,7 @@ export default Ember.Service.extend({
             console.timeEnd(perfObject.name);
 
             perfObject.afterInsertTime = Math.round(timestamp * 100) / 100;
-            perfObject.totalRenderTime = Math.round((perfObject.afterInsertTime - perfObject.beforeInsertTime)*100)/100;
+            perfObject.totalRenderTime = Math.round((perfObject.afterInsertTime - perfObject.beforeInsertTime) * 100) / 100;
             perfObject.renderIndex = Object.keys(window.perf.selection).filter(key => !window.perf.selection[key].afterInsertTime).length;
             perfObject.dashedName = _this._preDash(perfObject.name, perfObject.renderIndex);
             perfObject.element = payload.view.element;
@@ -277,7 +278,7 @@ export default Ember.Service.extend({
 
               // console.profileEnd();
               window.perf.selectionEndTime = performance.now();
-              window.perf.selectionRenderTime = Math.round((window.perf.selectionEndTime - window.perf.runningTime)*100)/100;
+              window.perf.selectionRenderTime = Math.round((window.perf.selectionEndTime - window.perf.runningTime) * 100) / 100;
               window.perf.results.reverse();
 
               // console.table(window.perf.results);

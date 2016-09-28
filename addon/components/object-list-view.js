@@ -346,13 +346,17 @@ export default FlexberryBaseComponent.extend(
     }
 
     let cols = this._generateColumns(projection.attributes);
+    let userSettings;
     if (this.notUseUserSettings === true) {
-      // flexberry-groupedit and lookup-dialog-content set this flag to true and don't use userSettings.
+      // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
       // In future release backend can save userSettings for each olv.
-      return cols;
+      userSettings = this.get('currentController.developerUserSettings');
+      userSettings = userSettings ? userSettings[this.get('componentName')] : undefined;
+      userSettings = userSettings ? userSettings['DEFAULT'] : undefined;
+    } else {
+      userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }
 
-    let userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     if (userSettings && userSettings.colsOrder !== undefined) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {
@@ -941,7 +945,15 @@ export default FlexberryBaseComponent.extend(
       }
     }
 
-    let columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+    let columnWidth;
+    if (this.notUseUserSettings) {
+      columnWidth = this.get('currentController.developerUserSettings');
+      columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
+      columnWidth = columnWidth ? columnWidth['DEFAULT'] : undefined;
+      columnWidth = columnWidth ? columnWidth['columnWidths'] : undefined;
+    } else {
+      columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+    }
     if (columnWidth !== undefined) {
       this._setColumnWidths(columnWidth);
     }

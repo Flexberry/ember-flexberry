@@ -151,6 +151,15 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   */
   queryParams: ['readonly'],
 
+  /**
+    Object with developer user settings.
+
+    @property developerUserSettings
+    @type Object
+    @default undefined
+  */
+  developerUserSettings: undefined,
+
   actions: {
     /**
       Default action for button 'Save'.

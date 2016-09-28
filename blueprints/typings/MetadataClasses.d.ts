@@ -32,6 +32,7 @@ declare module "MetadataClasses" {
         public required: boolean;
         public relationName: string;
         public projection: string;
+        public detailModelName: string;
     }
     export class EditForm extends Form {
         
@@ -39,6 +40,7 @@ declare module "MetadataClasses" {
     }
     export class Enumeration {
         
+        public nameSpace: string;
         public className: string;
         public enumObjects: { [key: string]: string; };
     }

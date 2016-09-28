@@ -129,6 +129,10 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
+        lock: {
+          caption: 'Blocking',
+          title: 'Block list',
+        },
         'components-examples': {
           'caption': 'Components examples',
           'title': '',
@@ -258,6 +262,10 @@ Ember.$.extend(true, translations, {
             'configurate-rows': {
               'caption': 'Configurate rows',
               'title': ''
+            },
+            'selected-rows': {
+              'caption': 'Selected rows',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -308,6 +316,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           }
+        },
+        'user-setting-forms': {
+          'caption': 'User settings',
+          'title': '',
+          'user-setting-delete': {
+            'caption': 'Settings deletion',
+            'title': ''
+          }
         }
       }
     },
@@ -349,6 +365,12 @@ Ember.$.extend(true, translations, {
       'userVotes-caption': 'User votes',
       'date-caption': 'Date',
       'author-validation-message-caption': 'Author is required'
+    },
+
+    'ember-flexberry-dummy-comment-vote-edit': {
+      'caption': 'User Vote',
+      'voteType-caption': 'Vote type',
+      'applicationUser-caption': 'Application user',
     },
 
     'ember-flexberry-dummy-localization-edit': {
@@ -424,6 +446,13 @@ Ember.$.extend(true, translations, {
         'ember-logger-info-button-message': 'Ember.logger.info called',
         'ember-logger-debug-button-message': 'Ember.Logger.debug called'
       }
+    },
+
+    'new-platform-flexberry-services-lock-list': {
+      'change-user-name': 'Change user name',
+      'open-read-only': 'Open read only',
+      'unlock-object': 'Unlock object',
+      'enter-new-user-name': 'Enter new user name:',
     },
 
     'components-examples': {
@@ -591,6 +620,13 @@ Ember.$.extend(true, translations, {
           'file-caption': 'File',
           'master-caption': 'Master'
         }
+      }
+    },
+    'user-setting-forms': {
+      'user-setting-delete': {
+        'caption': 'User settings',
+        'all-del-button-name': 'Delete all!',
+        'message': 'Settings were removed'
       }
     }
   },

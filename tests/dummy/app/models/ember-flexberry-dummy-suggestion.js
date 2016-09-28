@@ -1,9 +1,8 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry/models/base';
 import { Projection } from 'ember-flexberry-data';
 
-var Model = BaseModel.extend({
+var Model = Projection.Model.extend({
   address: DS.attr('string'),
   text: DS.attr('string'),
   date: DS.attr('date'),
@@ -115,7 +114,7 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   }),
   userVotes: Projection.hasMany('ember-flexberry-dummy-vote', 'User votes', {
     voteType: Projection.attr('Vote type'),
-    applicationUser: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+    author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
       name: Projection.attr('Name', {
         hidden: true
       }),
@@ -246,6 +245,44 @@ Model.defineProjection('LookupInBlockFormView', 'ember-flexberry-dummy-suggestio
   }, {
     displayMemberPath: 'name'
   })
+});
+
+// Example custom filter.
+Model.defineProjection('FlexberryObjectlistviewCustomFilter', 'ember-flexberry-dummy-suggestion', {
+  address: Projection.attr('Address'),
+  date: Projection.attr('Date'),
+  votes: Projection.attr('Votes'),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
+      hidden: true,
+    }),
+    moderated: Projection.attr('Moderated'),
+    parent: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent moderated', {
+      moderated: Projection.attr('Moderated', {
+        hidden: true,
+      }),
+      name: Projection.attr('Parent type'),
+    }, {
+      displayMemberPath: 'moderated',
+    }),
+  }, {
+    displayMemberPath: 'name',
+  }),
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Projection.attr('Name', {
+      hidden: true,
+    }),
+    eMail: Projection.attr('Author email'),
+  }, {
+    displayMemberPath: 'name',
+  }),
+  editor1: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Editor', {
+    name: Projection.attr('Name', {
+      hidden: true,
+    }),
+  }, {
+    displayMemberPath: 'name',
+  }),
 });
 
 export default Model;

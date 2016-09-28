@@ -6,7 +6,7 @@ import Ember from 'ember';
 import PaginatedControllerMixin from '../mixins/paginated-controller';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
-import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-mixin';
+import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-controller';
 import ColsConfigDialogMixin from '../mixins/colsconfig-dialog-controller';
 
 import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';

@@ -7,7 +7,6 @@
       componentTemplateText=componentTemplateText
     }}
       {{flexberry-objectlistview
-        componentName="SuggestionsObjectListView"
         colsConfigButton=true
         content=model
         modelName="ember-flexberry-dummy-suggestion"
@@ -40,12 +39,13 @@
         pages=pages
         perPageValue=perPageValue
         perPageValues=perPageValues
+        recordsTotalCount=recordsTotalCount
         hasPreviousPage=hasPreviousPage
         hasNextPage=hasNextPage
         previousPage=(action "previousPage")
         gotoPage=(action "gotoPage")
         nextPage=(action "nextPage")
-        configurateRow=(action "configurateRow")
+        componentName="FOLVSettingsExampleObjectListView"
         }}
     {{/settings-example}}
   </div>

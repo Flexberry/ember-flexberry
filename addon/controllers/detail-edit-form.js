@@ -95,6 +95,13 @@ export default EditFormController.extend({
         throw new Error('\'Save\' operation is not accessible due to current settings.');
       }
 
+      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
+      let modelCurrentAgregators = this.get('modelCurrentAgregators');
+      let saveBeforeRouteLeave = this.get('saveBeforeRouteLeave');
+      let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
+      flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
+      flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
+      flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
       this._super.apply(this, arguments);
     },
 
@@ -191,7 +198,11 @@ export default EditFormController.extend({
         flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);
       }
 
-      this.transitionToRoute(modelAgregatorRoute);
+      if (modelAgregatorRoute.indexOf('/new') > 0 && modelCurrentAgregator.get('id')) {
+        modelAgregatorRoute = modelAgregatorRoute.slice(1, -4);
+      }
+
+      this.transitionToRoute(modelAgregatorRoute, modelCurrentAgregator);
     } else {
       this._super.apply(this, arguments);
     }

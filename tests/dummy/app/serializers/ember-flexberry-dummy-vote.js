@@ -3,7 +3,7 @@ import ApplicationSerializer from './application';
 // TODO: ODataSerializer.extend
 export default ApplicationSerializer.extend({
   attrs: {
-    applicationUser: { serialize: 'odata-id', deserialize: 'records' },
+    author: { serialize: 'odata-id', deserialize: 'records' },
     suggestion: { serialize: 'odata-id', deserialize: 'records' }
   },
 

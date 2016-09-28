@@ -10,9 +10,18 @@ export default ListFormRoute.extend({
 
     @property modelProjection
     @type String
-    @default 'ApplicationUserL'
-   */
-  modelProjection: 'ApplicationUserL',
+    @default 'FlexberryObjectlistviewCustomFilter'
+  */
+  modelProjection: 'FlexberryObjectlistviewCustomFilter',
+
+  /**
+    Name of model to be used as list's records types.
+
+    @property modelName
+    @type String
+    @default 'ember-flexberry-dummy-application-user'
+  */
+  modelName: 'ember-flexberry-dummy-suggestion',
 
   /**
   developerUserSettings.
@@ -36,18 +45,13 @@ export default ListFormRoute.extend({
   */
   developerUserSettings: { FOLVCustomFilterObjectListView: { } },
 
-  /**
-    Name of model to be used as list's records types.
-
-    @property modelName
-    @type String
-    @default 'ember-flexberry-dummy-application-user'
-   */
-  modelName: 'ember-flexberry-dummy-application-user',
-
   predicateForFilter(filter) {
     if (filter.type === 'string' && filter.condition === 'like') {
       return new StringPredicate(filter.name).contains(filter.pattern);
+    }
+
+    if (filter.type === 'decimal') {
+      return new SimplePredicate(filter.name, filter.condition, filter.pattern);
     }
 
     return this._super(...arguments);

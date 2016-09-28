@@ -50,6 +50,11 @@ table.object-list-view tbody tr td:first-child button i {
 }
 
 .ui.table.object-list-view {
+
+  th.collapsing {
+    width: 50px;
+  }
+
   td {
     overflow: inherit;
 
@@ -57,13 +62,13 @@ table.object-list-view tbody tr td:first-child button i {
       overflow: hidden;
     }
 
-    .flexberry-lookup,
-    .ui.input > input {
-      width: 100%;
-    }
-
-    .flexberry-lookup, .flexberry-file {
+    .flexberry-lookup, .flexberry-file:not(.mobile) {
       overflow: hidden;
     }
+  }
+
+  .oveflow-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

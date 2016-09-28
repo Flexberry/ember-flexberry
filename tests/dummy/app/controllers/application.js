@@ -149,6 +149,16 @@ export default Ember.Controller.extend({
         }]
       }, {
         link: null,
+        caption: i18n.t('forms.application.sitemap.lock.caption'),
+        title: i18n.t('forms.application.sitemap.lock.caption'),
+        children: [{
+          link: 'new-platform-flexberry-services-lock-list',
+          caption: i18n.t('forms.application.sitemap.lock.title'),
+          title: i18n.t('forms.application.sitemap.lock.title'),
+          children: null
+        }]
+      }, {
+        link: null,
         caption: i18n.t('forms.application.sitemap.components-examples.caption'),
         title: i18n.t('forms.application.sitemap.components-examples.title'),
         children: [{
@@ -309,6 +319,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/selected-rows',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -370,6 +385,16 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
             children: null
           }]
+        }]
+      }, {
+        link: null,
+        caption: i18n.t('forms.application.sitemap.user-setting-forms.caption'),
+        title: i18n.t('forms.application.sitemap.user-setting-forms.title'),
+        children: [{
+          link: 'user-setting-forms/user-setting-delete',
+          caption: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.caption'),
+          title: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.title'),
+          children: null
         }]
       }]
     };

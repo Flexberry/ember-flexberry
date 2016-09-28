@@ -12,6 +12,23 @@
       readonly=readonly
       lookupLimitPredicate=lookupCustomLimitPredicate
       dropdown=true
+      dropdownIsSearch=true
+      sorting="desc"
+    }}
+  </div>
+  <div class="field">
+    {{flexberry-lookup
+      value=model.type
+      projection="DropDownLookupExampleView"
+      displayAttributeName="name"
+      title="Master"
+      relationName="type"
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      readonly=readonly
+      lookupLimitPredicate=lookupCustomLimitPredicate
+      dropdown=true
+      sorting="desc"
     }}
   </div>
 </form>

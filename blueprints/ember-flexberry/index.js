@@ -5,15 +5,14 @@ module.exports = {
 
     /*
       Following packages should be installed as dependencies of `ember-flexberry-data`:
-      `localforage`, `ember-browserify`, `ember-localforage-adapter`, `dexie`.
+      `ember-browserify`, `dexie`.
 	  Also `app/browserify.js` should be removed when check this.
     */
 
     return this.addBowerPackagesToProject([
       { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
       { name: 'blueimp-file-upload', target: '9.11.2' },
-      { name: 'devicejs', target: '0.2.7' },
-      { name: 'localforage', target: '1.3.3' }
+      { name: 'devicejs', target: '0.2.7' }
     ]).then(function() {
       return _this.addAddonsToProject({
         packages: [
@@ -21,13 +20,14 @@ module.exports = {
           { name: 'ember-moment', target: '6.0.0' },
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'broccoli-jscs', target: '1.2.2' },
-          { name: 'ember-browserify', target: '1.1.9' },
-          'https://github.com/Flexberry/ember-localforage-adapter.git'
+          { name: 'ember-browserify', target: '1.1.9' }
         ]
       });
     }).then(function () {
       return _this.addPackagesToProject([
-        { name: 'dexie', target: '1.3.6' }
+        { name: 'dexie', target: '1.4.2' },
+        { name: 'node-uuid', target: '1.4.7' },
+        { name: 'inflection', target: '1.10.0' }
       ]);
     });
   },

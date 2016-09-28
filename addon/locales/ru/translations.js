@@ -13,7 +13,18 @@ export default {
 
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Лог приложения'
-    }
+    },
+
+    'new-platform-flexberry-services-lock-list': {
+      caption: 'Список блокировок',
+    },
+
+    'new-platform-flexberry-services-lock-edit': {
+      caption: 'Объект блокировки',
+      'lockKey-caption': 'Ключ заблокированного объекта',
+      'userName-caption': 'Заблокировавший пользователь',
+      'lockDate-caption': 'Дата блокировки',
+    },
   },
 
   'components': {
@@ -84,7 +95,12 @@ export default {
     },
 
     'flexberry-objectlistview': {
-      'placeholder': 'Нет данных'
+      'placeholder': 'Нет данных',
+      'showing-entries': {
+        'showing': 'Показано ',
+        'of': ' из ',
+        'entries': ' записей'
+      }
     },
 
     'flexberry-groupedit': {
@@ -196,6 +212,15 @@ export default {
           }
         }
       }
-    }
+    },
+    'new-platform-flexberry-services-lock': {
+      'projections': {
+        'LockL': {
+          'lockKey': { 'caption': 'Ключ заблокированного объекта' },
+          'userName': { 'caption': 'Заблокировавший пользователь' },
+          'lockDate': { 'caption': 'Дата блокировки' },
+        },
+      },
+    },
   }
 };

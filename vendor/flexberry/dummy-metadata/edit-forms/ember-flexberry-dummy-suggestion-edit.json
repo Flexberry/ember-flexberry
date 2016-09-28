@@ -5,49 +5,56 @@
       "displayAttributeName": null,
       "required": false,
       "relationName": "Type",
-      "projection": "SuggestionTypeL"
+      "projection": "SuggestionTypeL",
+      "detailModelName": null
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "Author",
-      "projection": "ApplicationUserL"
+      "projection": "ApplicationUserL",
+      "detailModelName": null
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "Editor1",
-      "projection": "ApplicationUserL"
+      "projection": "ApplicationUserL",
+      "detailModelName": null
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "Files.Suggestion",
-      "projection": "SuggestionL"
-    },
-    {
-      "master": "applicationUser",
-      "displayAttributeName": "name",
-      "required": true,
-      "relationName": "UserVotes.ApplicationUser",
-      "projection": "ApplicationUserL"
+      "projection": "SuggestionL",
+      "detailModelName": null
     },
     {
       "master": null,
       "displayAttributeName": null,
       "required": false,
       "relationName": "UserVotes.Suggestion",
-      "projection": "SuggestionL"
+      "projection": "SuggestionL",
+      "detailModelName": null
+    },
+    {
+      "master": "author",
+      "displayAttributeName": "name",
+      "required": true,
+      "relationName": "UserVotes.Author",
+      "projection": "ApplicationUserL",
+      "detailModelName": "ember-flexberry-dummy-vote"
     },
     {
       "master": "author",
       "displayAttributeName": "name",
       "required": true,
       "relationName": "Comments.Author",
-      "projection": "ApplicationUserL"
+      "projection": "ApplicationUserL",
+      "detailModelName": "ember-flexberry-dummy-comment"
     }
   ],
   "caption": "Suggestion",

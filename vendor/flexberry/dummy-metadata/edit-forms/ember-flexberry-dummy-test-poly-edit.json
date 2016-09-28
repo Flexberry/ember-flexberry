@@ -5,7 +5,8 @@
       "displayAttributeName": null,
       "required": false,
       "relationName": "Relation",
-      "projection": ""
+      "projection": "",
+      "detailModelName": null
     }
   ],
   "caption": "Test polymorphic class",

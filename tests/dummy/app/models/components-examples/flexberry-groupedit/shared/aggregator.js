@@ -1,8 +1,7 @@
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry/models/base';
 import { Projection } from 'ember-flexberry-data';
 
-var Model = BaseModel.extend({
+var Model = Projection.Model.extend({
   // This property is for flexberry-groupedit component.
   // Inverse relationship is necessary here.
   details: DS.hasMany('components-examples/flexberry-groupedit/shared/detail', {

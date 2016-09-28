@@ -3,7 +3,7 @@
 */
 
 import Ember from 'ember';
-import FlexberryLookupMixin from '../mixins/flexberry-lookup';
+import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
 
@@ -15,21 +15,21 @@ const { getOwner } = Ember;
   This class re-exports to the application as `/controllers/edit-form`.
   So, you can inherit from `./edit-form`, even if file `app/controllers/edit-form.js` is not presented in the application.
 
-  Example:
-  ```javascript
-  // app/controllers/employee.js
-  import EditFormController from './edit-form';
-  export default EditFormController.extend({
-  });
-  ```
+  @example
+    ```javascript
+    // app/controllers/employee.js
+    import EditFormController from './edit-form';
+    export default EditFormController.extend({
+    });
+    ```
 
-  If you want to add some common logic on all Edit Forms, you can override `app/controllers/edit-form.js` as follows:
-  ```javascript
-  // app/controllers/edit-form.js
-  import EditFormController from 'ember-flexberry/controllers/edit-form';
-  export default EditFormController.extend({
-  });
-  ```
+    If you want to add some common logic on all Edit Forms, you can override `app/controllers/edit-form.js` as follows:
+    ```javascript
+    // app/controllers/edit-form.js
+    import EditFormController from 'ember-flexberry/controllers/edit-form';
+    export default EditFormController.extend({
+    });
+    ```
 
   @class EditFormController
   @extends <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
@@ -72,6 +72,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @default false
   */
   readonly: false,
+
+  /**
+    State form. A form is in different states: loading, success, error.
+
+    @property state
+    @type String
+  */
+  state: undefined,
 
   /**
     Readonly HTML attribute following to the `readonly` query param. According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
@@ -148,29 +156,29 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       Default action for button 'Save'.
       You can override this action to add custom logic.
 
-      Example:
-      ```javascript
-      // app/controllers/your-controller.js
-      ...
-      actions: {
+      @example
+        ```javascript
+        // app/controllers/your-controller.js
         ...
-        save() {
-          if (confirm('You sure?')) {
-            this.save();
+        actions: {
+          ...
+          save() {
+            if (confirm('You sure?')) {
+              this.save();
+            }
           }
+          ...
         }
         ...
-      }
-      ...
-      onSaveActionFulfilled() {
-        alert('Save successful!');
-      }
-      ...
-      onSaveActionRejected() {
-        alert('Save failed!');
-      }
-      ...
-      ```
+        onSaveActionFulfilled() {
+          alert('Save successful!');
+        }
+        ...
+        onSaveActionRejected() {
+          alert('Save failed!');
+        }
+        ...
+        ```
 
       @method actions.save
     */
@@ -182,29 +190,29 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       Default action for button 'Save and close'.
       You can override this action to add custom logic.
 
-      Example:
-      ```javascript
-      // app/controllers/your-controller.js
-      ...
-      actions: {
+      @example
+        ```javascript
+        // app/controllers/your-controller.js
         ...
-        saveAndClose() {
-          if (confirm('You sure?')) {
-            this.save(true);
+        actions: {
+          ...
+          saveAndClose() {
+            if (confirm('You sure?')) {
+              this.save(true);
+            }
           }
+          ...
         }
         ...
-      }
-      ...
-      onSaveActionFulfilled() {
-        alert('Save successful!');
-      }
-      ...
-      onSaveActionRejected() {
-        alert('Save failed!');
-      }
-      ...
-      ```
+        onSaveActionFulfilled() {
+          alert('Save successful!');
+        }
+        ...
+        onSaveActionRejected() {
+          alert('Save failed!');
+        }
+        ...
+        ```
 
       @method actions.saveAndClose
     */
@@ -216,30 +224,30 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       Default action for button 'Delete'.
       You can override this action to add custom logic.
 
-      Example:
-      ```javascript
-      // app/controllers/your-controller.js
-      ...
-      actions: {
+      @example
+        ```javascript
+        // app/controllers/your-controller.js
         ...
-        delete() {
-          if (confirm('You sure?')) {
-            this.delete();
+        actions: {
+          ...
+          delete() {
+            if (confirm('You sure?')) {
+              this.delete();
+            }
           }
+          ...
         }
         ...
-      }
-      ...
-      onDeleteActionFulfilled() {
-        alert('Successful delete!');
-        this.close();
-      }
-      ...
-      onDeleteActionRejected() {
-        alert('Failed delete!');
-      }
-      ...
-      ```
+        onDeleteActionFulfilled() {
+          alert('Successful delete!');
+          this.close();
+        }
+        ...
+        onDeleteActionRejected() {
+          alert('Failed delete!');
+        }
+        ...
+        ```
 
       @method actions.delete
     */
@@ -251,21 +259,21 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       Default action for button 'Close'.
       You can override this action to add custom logic.
 
-      Example:
-      ```javascript
-      // app/controllers/your-controller.js
-      ...
-      actions: {
+      @example
+        ```javascript
+        // app/controllers/your-controller.js
         ...
-        close() {
-          if (confirm('You sure?')) {
-            this.close();
+        actions: {
+          ...
+          close() {
+            if (confirm('You sure?')) {
+              this.close();
+            }
           }
+          ...
         }
         ...
-      }
-      ...
-      ```
+        ```
 
       @method actions.close
     */
@@ -285,21 +293,31 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     this.send('dismissErrorMessages');
 
     this.onSaveActionStarted();
+    this.set('state', 'loading');
 
     let savePromise = this.get('model').save().then((model) => {
       return this._saveHasManyRelationships(model).then(() => {
+        this.set('state', 'success');
         this.onSaveActionFulfilled();
         if (close) {
+          this.set('state', '');
           this.close();
         } else {
           let routeName = this.get('routeName');
-          if (routeName.indexOf('.new') > 0)
-          {
-            this.transitionToRoute(routeName.slice(0, -4), this.get('model'));
+          if (routeName.indexOf('.new') > 0) {
+            let qpars = {};
+            let queryParams = this.get('queryParams');
+            queryParams.forEach(function(item, i, params) {
+              qpars[item] = this.get(item);
+            }, this);
+            let transitionQuery = {};
+            transitionQuery.queryParams = qpars;
+            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
           }
         }
       });
     }).catch((errorData) => {
+      this.set('state', 'error');
       this.onSaveActionRejected(errorData);
     }).finally((data) => {
       this.onSaveActionAlways(data);
@@ -318,6 +336,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     this.send('dismissErrorMessages');
 
     this.onDeleteActionStarted();
+    this.set('state', 'loading');
 
     let model = this.get('model');
     let deletePromise = null;
@@ -334,6 +353,8 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     }
 
     deletePromise.catch((errorData) => {
+      model.rollbackAttributes();
+      this.set('state', 'error');
       this.onDeleteActionRejected(errorData);
     }).finally((data) => {
       this.onDeleteActionAlways(data);
@@ -348,6 +369,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @method close
   */
   close() {
+    this.set('state', '');
     this.onCloseActionStarted();
     this.transitionToParentRoute();
   },
@@ -356,11 +378,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked before save operation will be called.
     Override this method to add some custom logic on save operation start.
 
-    ```javascript
-    onSaveActionStarted() {
-      alert('Save operation started!');
-    }
-    ```
+    @example
+      ```javascript
+      onSaveActionStarted() {
+        alert('Save operation started!');
+      }
+      ```
     @method onSaveActionStarted.
   */
   onSaveActionStarted() {
@@ -370,11 +393,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked when save operation successfully completed.
     Override this method to add some custom logic on save operation success.
 
-    ```javascript
-    onSaveActionFulfilled() {
-      alert('Save operation succeed!');
-    }
-    ```
+    @example
+      ```javascript
+      onSaveActionFulfilled() {
+        alert('Save operation succeed!');
+      }
+      ```
     @method onSaveActionFulfilled.
   */
   onSaveActionFulfilled() {
@@ -384,11 +408,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked when save operation completed, but failed.
     Override this method to add some custom logic on save operation fail.
 
-    ```javascript
-    onSaveActionRejected() {
-      alert('Save operation failed!');
-    }
-    ```
+    @example
+      ```javascript
+      onSaveActionRejected() {
+        alert('Save operation failed!');
+      }
+      ```
     @method onSaveActionRejected.
     @param {Object} errorData Data about save operation fail.
   */
@@ -401,11 +426,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     regardless of save promise's state (was it fulfilled or rejected).
     Override this method to add some custom logic on save operation completion.
 
-    ```js
-    onSaveActionAlways(data) {
-      alert('Save operation completed!');
-    }
-    ```
+    @example
+      ```js
+      onSaveActionAlways(data) {
+        alert('Save operation completed!');
+      }
+      ```
 
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
@@ -417,11 +443,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked before delete operation will be called.
     Override this method to add custom logic on delete operation start.
 
-    ```javascript
-    onDeleteActionStarted() {
-      alert('Delete operation started!');
-    }
-    ```
+    @example
+      ```javascript
+      onDeleteActionStarted() {
+        alert('Delete operation started!');
+      }
+      ```
     @method onDeleteActionStarted.
   */
   onDeleteActionStarted() {
@@ -431,12 +458,13 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked when delete operation successfully completed.
     Override this method to add some custom logic on delete operation success.
 
-    ```javascript
-    onDeleteActionFulfilled() {
-      alert('Delete operation succeed!');
-      this.close();
-    }
-    ```
+    @example
+      ```javascript
+      onDeleteActionFulfilled() {
+        alert('Delete operation succeed!');
+        this.close();
+      }
+      ```
     @method onDeleteActionFulfilled.
   */
   onDeleteActionFulfilled() {
@@ -447,11 +475,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked when delete operation completed, but failed.
     Override this method to add some custom logic on delete operation fail.
 
-    ```javascript
-    onDeleteActionRejected() {
-      alert('Delete operation failed!');
-    }
-    ```
+    @example
+      ```javascript
+      onDeleteActionRejected() {
+        alert('Delete operation failed!');
+      }
+      ```
     @method onDeleteActionRejected.
     @param {Object} errorData Data about delete operation fail.
   */
@@ -464,11 +493,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     regardless of save promise's state (was it fulfilled or rejected).
     Override this method to add some custom logic on delete operation completion.
 
-    ```js
-    onDeleteActionAlways(data) {
-      alert('Delete operation completed!');
-    }
-    ```
+    @example
+      ```js
+      onDeleteActionAlways(data) {
+        alert('Delete operation completed!');
+      }
+      ```
 
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
@@ -480,11 +510,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked before close method will be called.
     Override this method to add custom logic on close method start.
 
-    ```javascript
-    onCloseActionStarted() {
-      alert('Form will be closed right now!');
-    }
-    ```
+    @example
+      ```javascript
+      onCloseActionStarted() {
+        alert('Form will be closed right now!');
+      }
+      ```
     @method onDeleteActionStarted.
   */
   onCloseActionStarted() {
@@ -548,6 +579,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         break;
       case 'file':
         cellComponent.componentName = 'flexberry-file';
+        cellComponent.componentProperties = { inputClass: 'fluid' };
         break;
       default:
 

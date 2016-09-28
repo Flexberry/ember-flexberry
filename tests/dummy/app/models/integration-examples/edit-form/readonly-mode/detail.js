@@ -1,8 +1,7 @@
 import DS from 'ember-data';
-import BaseModel from 'ember-flexberry/models/base';
 import { Projection } from 'ember-flexberry-data';
 
-let Model = BaseModel.extend({
+let Model = Projection.Model.extend({
   // Inversed relationship for aggregator.details.
   // It's not a property for flexberry-lookup component.
   aggregator: DS.belongsTo('integration-examples/edit-form/readonly-mode/aggregator', {

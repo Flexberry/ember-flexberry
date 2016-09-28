@@ -13,7 +13,18 @@ export default {
 
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Application log'
-    }
+    },
+
+    'new-platform-flexberry-services-lock-list': {
+      caption: 'Block list',
+    },
+
+    'new-platform-flexberry-services-lock-edit': {
+      caption: 'Lock object',
+      'lockKey-caption': 'Key locked object',
+      'userName-caption': 'User locked object',
+      'lockDate-caption': 'Date lock',
+    },
   },
 
   'components': {
@@ -84,7 +95,12 @@ export default {
     },
 
     'flexberry-objectlistview': {
-      'placeholder': 'There is no data'
+      'placeholder': 'There is no data',
+      'showing-entries': {
+        'showing': 'Showing ',
+        'of': ' of ',
+        'entries': ' entries'
+      }
     },
 
     'flexberry-groupedit': {
@@ -194,6 +210,15 @@ export default {
           }
         }
       }
-    }
+    },
+    'new-platform-flexberry-services-lock': {
+      'projections': {
+        'LockL': {
+          'lockKey': { 'caption': 'Key locked object' },
+          'userName': { 'caption': 'User locked object' },
+          'lockDate': { 'caption': 'Date lock' },
+        },
+      },
+    },
   }
 };

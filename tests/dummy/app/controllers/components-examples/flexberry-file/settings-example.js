@@ -2,6 +2,7 @@ import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
 
+
 export default EditFormController.extend({
   /**
     Text for 'flexberry-file' component 'placeholder' property.
@@ -35,7 +36,7 @@ export default EditFormController.extend({
     @property uploadUrl
     @type String
    */
-  uploadUrl: null,
+  uploadUrl: config.APP.components.flexberryFile.uploadUrll,
 
   /**
     Max upload file size (in bytes) for 'flexberry-file' component 'maxUploadFileSize' property.

@@ -1,0 +1,32 @@
+<h3>{{t "forms.components-examples.flexberry-objectlistview.object-list-view-resize.caption"}}</h3>
+
+<div class="ui stackable grid">
+    <div class="armti-toggler">
+      {{#flexberry-toggler
+        expandedCaption="свернуть"
+        collapsedCaption="развернуть"
+        _expanded=true
+      }}
+    <div>
+    <button class="ui armti-primary-btn button {{addSignerHiddenState}}" {{action 'addSigner'}}>Добавить подписанта</button>
+    {{object-list-view
+        modelName='ember-flexberry-dummy-suggestion'
+        modelProjection=modelProjection
+        componentName="SuggestionsObjectListView"
+        content=model
+        editOnSeparateRoute=true
+        rowClickable=true
+        action='objectListViewRowClick'
+        searchForContentChange=true
+        showDeleteButtonInRow=false
+        showDeleteMenuItemInRow=true
+        singleColumnCellComponent=singleColumnCellComponent
+        configurateRow=configOlvRowCallback
+        searchForContentChange=true
+        immediateDelete=true
+    }}
+
+    </div>
+      {{/flexberry-toggler}}
+    </div>
+</div>

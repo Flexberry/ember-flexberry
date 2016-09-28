@@ -34,7 +34,6 @@ export default Ember.Service.extend({
   tagsHaveBeenPlaced: false,
   perfObjects: [],
 
-
   /**
     Initializes perf service.
     Ember services are singletons, so this code will be executed only once since application initialization.
@@ -91,6 +90,7 @@ export default Ember.Service.extend({
         if (!localStorage) {
           return;
         }
+
         let selectors = localStorage.getItem(PERF_SELECTORS);
         return selectors ? selectors.split(',').map((selector) => new RegExp(selector.replace(/(^\/)|(\/$)/g, ''))) : [/./];
       },
@@ -111,6 +111,7 @@ export default Ember.Service.extend({
     if (!element) {
       return;
     }
+
     let dataElement = document.createElement('perf');
     let hasChildren = !![].concat.apply([], element.children).length;
     let parentClasses = [].concat.apply([], element.classList);
@@ -143,15 +144,16 @@ export default Ember.Service.extend({
     Ember.run.schedule('afterRender', this, () => {
       let nudgeCount = 0;
       let isClosedTag = element.tagName === 'IMG' || element.tagName === 'INPUT';
-      let dims, perfElems, isNudger, perfElem;
+      let isNudger = false;
+      let perfElem = undefined;
 
       element.classList.add('has-perf');
       element.insertAdjacentElement(isClosedTag ? 'afterEnd' : 'beforeEnd', dataElement);
-      dims = dataElement.getBoundingClientRect();
-      let sizeWidth = dims.left + (dims.width/2);
-      let sizeHeight = dims.top + (dims.height/2);
+      let dims = dataElement.getBoundingClientRect();
+      let sizeWidth = dims.left + (dims.width / 2);
+      let sizeHeight = dims.top + (dims.height / 2);
 
-      perfElems = document.elementsFromPoint(sizeWidth, sizeHeight).filter((item) => item.tagName === 'PERF').without(dataElement);
+      let perfElems = document.elementsFromPoint(sizeWidth, sizeHeight).filter((item) => item.tagName === 'PERF').without(dataElement);
 
       if (perfElems.length) {
         perfElem = perfElems.find((item) => item.classList.contains('nudger')) || perfElems[0];
@@ -226,6 +228,7 @@ export default Ember.Service.extend({
 
             if (!isQueueRendering) {
               isQueueRendering = true;
+
               // console.profile();
               console.timeStamp('Render queue running.');
               window.perf.startTime = timestamp;
@@ -239,7 +242,7 @@ export default Ember.Service.extend({
             name = payload.object.replace(/(<voyager-web@)|(>)/g, '');
             window.perf.selection[payload.object] = {
               name: name,
-              beforeInsertTime: Math.round(timestamp*100)/100
+              beforeInsertTime: Math.round(timestamp * 100) / 100
             };
             console.time(name);
           }
@@ -250,7 +253,7 @@ export default Ember.Service.extend({
           if (perfObject) {
             console.timeEnd(perfObject.name);
 
-            perfObject.afterInsertTime = Math.round(timestamp*100)/100;
+            perfObject.afterInsertTime = Math.round(timestamp * 100) / 100;
             perfObject.totalRenderTime = Math.round((perfObject.afterInsertTime - perfObject.beforeInsertTime)*100)/100;
             perfObject.renderIndex = Object.keys(window.perf.selection).filter(key => !window.perf.selection[key].afterInsertTime).length;
             perfObject.dashedName = _this._preDash(perfObject.name, perfObject.renderIndex);
@@ -271,6 +274,7 @@ export default Ember.Service.extend({
 
             if (!perfObject.renderIndex) {
               isQueueRendering = false;
+
               // console.profileEnd();
               window.perf.selectionEndTime = performance.now();
               window.perf.selectionRenderTime = Math.round((window.perf.selectionEndTime - window.perf.runningTime)*100)/100;
@@ -278,8 +282,9 @@ export default Ember.Service.extend({
 
               // console.table(window.perf.results);
 
-              console.log('Render queue is flushed: ', window.perf.selectionRenderTime+'ms');
-              console.timeStamp('Render queue is flushed: ', window.perf.selectionRenderTime+'ms');
+              console.log('Render queue is flushed: ', window.perf.selectionRenderTime + 'ms');
+              console.timeStamp('Render queue is flushed: ', window.perf.selectionRenderTime + 'ms');
+
               // window.perf.results.forEach(result => console.log(result.totalRenderTime + 'ms', result.element))
               window.perf.results = [];
             }

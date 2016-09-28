@@ -70,7 +70,7 @@ export default Ember.Service.extend({
 
   _init() {
     let PERF_SELECTORS = 'perf_selectors';
-    let perf = window.perf = {
+    window.perf = {
       runningTime: null,
       selectionStartTime: null,
       selectionEndTime: null,
@@ -284,7 +284,6 @@ export default Ember.Service.extend({
               window.perf.results = [];
             }
           }
-
         }
       });
     }

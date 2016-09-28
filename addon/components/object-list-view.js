@@ -352,7 +352,7 @@ export default FlexberryBaseComponent.extend(
       // In future release backend can save userSettings for each olv.
       userSettings = this.get('currentController.developerUserSettings');
       userSettings = userSettings ? userSettings[this.get('componentName')] : undefined;
-      userSettings = userSettings ? userSettings['DEFAULT'] : undefined;
+      userSettings = userSettings ? userSettings.DEFAULT : undefined;
     } else {
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }
@@ -949,11 +949,12 @@ export default FlexberryBaseComponent.extend(
     if (this.notUseUserSettings) {
       columnWidth = this.get('currentController.developerUserSettings');
       columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
-      columnWidth = columnWidth ? columnWidth['DEFAULT'] : undefined;
-      columnWidth = columnWidth ? columnWidth['columnWidths'] : undefined;
+      columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
+      columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
     } else {
       columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
     }
+
     if (columnWidth !== undefined) {
       this._setColumnWidths(columnWidth);
     }

@@ -17,7 +17,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   <componentName>: {
     <settingName>: {
         colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
-        sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
+        sorting: [{ propName: <colName>, direction: 'asc'|'desc' }, ... ],
         colsWidths: [ <colName>:<colWidth>, ... ],
       },
       ...
@@ -32,8 +32,17 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   @default {}
   */
   developerUserSettings: {
-    suggestionUserVotesGroupEdit: {"DEFAULT":{"columnWidths":[{"propName":"OlvRowToolbar","width":30},{"propName":"voteType","width":133},{"propName":"author","width":348},{"propName":"author.eMail","width":531}]}},
-    filesGroupEdit: {"DEFAULT":{"columnWidths":[{"propName":"OlvRowToolbar","width":30},{"propName":"order","width":140},{"propName":"file","width":893}], "colsOrder":[{"propName":"file"},{"propName":"order"}]}}
+    suggestionUserVotesGroupEdit: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'voteType', 'width': 133 }, { 'propName': 'author', 'width': 348 }, { 'propName': 'author.eMail', 'width': 531 }]
+      }
+    },
+    filesGroupEdit: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'order', 'width': 140 }, { 'propName': 'file', 'width': 893 }],
+        'colsOrder': [{ 'propName': 'file' }, { 'propName': 'order' }]
+      }
+    }
   },
 
   /**

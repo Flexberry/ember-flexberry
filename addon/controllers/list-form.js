@@ -71,5 +71,14 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     };
 
     return cellComponent;
-  }
+  },
+
+  activateTime: null,
+  afterModelTime: null,
+  beforeModelTime: null,
+  initTime: null,
+  modelTime: null,
+  renderTemplateTime: null,
+  setupControllerTime: null
+
 });

@@ -56,6 +56,28 @@ export default ProjectedModelFormRoute.extend(
     @default []
   */
   sorting: [],
+  activateTime: null,
+  afterModelTime: null,
+  beforeModelTime: null,
+  initTime: null,
+  modelTime: null,
+  renderTemplateTime: null,
+  setupControllerTime: null,
+
+  init: function() {
+    this.initTime = performance.now();
+    return this._super.apply(this, arguments);
+  },
+
+  activate: function() {
+    this.activateTime = performance.now();
+    return this._super.apply(this, arguments);
+  },
+
+  beforeModel: function() {
+    this.beforeModelTime = performance.now();
+    return this._super.apply(this, arguments);
+  },
 
   /**
     A hook you can implement to convert the URL into the model for this route.
@@ -66,6 +88,7 @@ export default ProjectedModelFormRoute.extend(
     @param {Object} transition
   */
   model: function(params, transition) {
+    this.modelTime = performance.now();
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -139,6 +162,11 @@ export default ProjectedModelFormRoute.extend(
     return ret;
   },
 
+  afterModel: function() {
+    this.afterModelTime = performance.now();
+    return this._super.apply(this, arguments);
+  },
+
   /**
     A hook you can use to setup the controller for the current route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
@@ -156,5 +184,19 @@ export default ProjectedModelFormRoute.extend(
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
+
+    this.setupControllerTime = performance.now();
+
+    controller.set('initTime', this.initTime);
+    controller.set('beforeModelTime', this.beforeModelTime - this.initTime);
+    controller.set('modelTime', this.modelTime - this.beforeModelTime);
+    controller.set('afterModelTime', this.afterModelTime - this.modelTime);
+    controller.set('activateTime', this.activateTime - this.afterModelTime);
+    controller.set('setupControllerTime', this.setupControllerTime - this.activateTime);
   },
+
+  renderTemplate: function() {
+    this.controller.set('renderTemplateTime', performance.now() - this.setupControllerTime);
+    return this._super.apply(this, arguments);
+  }
 });

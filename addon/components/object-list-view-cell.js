@@ -3,13 +3,13 @@
 */
 
 import Ember from 'ember';
-import FlexberryBaseComponent from './flexberry-base-component';
+// import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
   @class ObjectListViewCell
   @extends FlexberryBaseComponent
 */
-export default FlexberryBaseComponent.extend({
+export default Ember.Component.extend({
   /**
     Overload wrapper tag name for disabling wrapper.
   */

@@ -21,13 +21,12 @@ export default EditFormController.extend({
   */
   searchForContentChange: true,
 
- 
-    /**
+  /**
     Configurate rows 'flexberry-groupedit' component by address.
 
     @property configurateRowByFlag
     @type String
-   */
+  */
   configurateRowByFlag: 1,
 
   _configurateRowByFlag: Ember.observer('configurateRowByFlag', function() {
@@ -43,7 +42,7 @@ export default EditFormController.extend({
 
     @property componentTemplateText
     @type String
-   */
+  */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-groupedit<br>' +
     '  configurateRow=(action \"configurateRow\")<br>' +
@@ -54,7 +53,7 @@ export default EditFormController.extend({
 
     @property componentSettingsMetadata
     @type Object[]
-   */
+  */
   componentSettingsMetadata: Ember.computed('i18n.locale', function() {
     let componentSettingsMetadata = Ember.A();
 
@@ -62,7 +61,7 @@ export default EditFormController.extend({
       settingName: 'configurateRowByFlag',
       settingType: 'boolean',
       settingDefaultValue: 1,
-      bindedControllerPropertieName: 'configurateRowByFlag'
+      bindedControllerPropertieName: 'configurateRowByFlag',
     });
 
     return componentSettingsMetadata;
@@ -80,7 +79,7 @@ export default EditFormController.extend({
       if (record.get('flag') === this.get('configurateRowByFlag')) {
         rowConfig.showDeleteButtonInRow = false;
       }
-    }
+    },
   },
-  
+
 });

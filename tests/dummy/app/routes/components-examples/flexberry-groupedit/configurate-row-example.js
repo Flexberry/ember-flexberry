@@ -7,7 +7,7 @@ export default EditFormRoute.extend({
     @property modelProjection
     @type String
     @default 'AggregatorE'
-   */
+  */
   modelProjection: 'AggregatorE',
 
   /**
@@ -16,28 +16,28 @@ export default EditFormRoute.extend({
     @property modelName
     @type String
     @default 'components-examples/flexberry-groupedit/shared/aggregator'
-   */
+  */
   modelName: 'components-examples/flexberry-groupedit/shared/aggregator',
 
   /**
     Returns model related to current route.
 
     @method model
-   */
+  */
   model(params) {
     var store = this.get('store');
 
-    var arrRec=[];
-    for (var i=1; i<20; i++){
-        var newRecord = store.createRecord('components-examples/flexberry-groupedit/shared/detail',
-            {
-            text: i+'test',
-            flag: i % 2
-            });        
-        arrRec.push(newRecord);
+    var arrRec = [];
+    for (var i = 1; i < 20; i++) {
+      let newRecord = store.createRecord('components-examples/flexberry-groupedit/shared/detail', {
+        text: i + 'test',
+        flag: i % 2,
+      });
+      arrRec.push(newRecord);
     }
-    // Aggregator with details.      
-    var aggregator = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', {details:arrRec});
+
+    // Aggregator with details.
+    let aggregator = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', { details: arrRec });
     return aggregator;
-  }
+  },
 });

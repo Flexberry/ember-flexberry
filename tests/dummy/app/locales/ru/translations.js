@@ -480,7 +480,7 @@ Ember.$.extend(true, translations, {
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Пример работы с настройками'
-        },        
+        },
         'configurate-row-example': {
           'caption': 'Flexberry-groupedit. Настройка столбцов'
         },

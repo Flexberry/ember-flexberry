@@ -201,6 +201,10 @@ Ember.$.extend(true, translations, {
             'model-update-example': {
               'caption': 'Обновление модели',
               'title': ''
+            },
+            'configurate-row-example': {
+              'caption': 'Настройка строк',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -505,6 +509,9 @@ Ember.$.extend(true, translations, {
       'flexberry-groupedit': {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Пример работы с настройками'
+        },
+        'configurate-row-example': {
+          'caption': 'Flexberry-groupedit. Настройка столбцов'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',

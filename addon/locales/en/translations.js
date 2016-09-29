@@ -159,6 +159,9 @@ export default {
       'use': 'Use',
       'use-without-save': 'Use this settings without saving in setting ',
       'save': 'Save',
+      'have-errors': 'When you save a configuration errors occurred: ',
+      'setting': 'Setting ',
+      'is-saved': ' is saved',
       'col-width-on': 'Enable setting column widths'
     }
   },

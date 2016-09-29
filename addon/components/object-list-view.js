@@ -466,6 +466,24 @@ export default FlexberryBaseComponent.extend(
   contentWithKeys: null,
 
   /**
+    Array of models portions from content collection with some synthetic keys related to them.
+
+    @property rowsPortions
+    @type Object[]
+    @default null
+  */
+  rowsPortions: null,
+
+  /**
+    Flag indicates whether some rows are not loaded yet.
+
+    @property rowsInLoadingState
+    @type Boolean
+    @default true
+  */
+  rowsInLoadingState: true,
+
+  /**
     Flag indicates whether content is defined.
 
     @property hasContent

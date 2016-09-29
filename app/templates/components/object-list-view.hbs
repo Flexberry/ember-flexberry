@@ -63,9 +63,9 @@
         <td colspan="{{colspan}}" style="text-align:center;">{{placeholder}}</td>
       </tr>
     {{/unless}}
-    {{#each contentWithKeys key="key" as |record|}}
-      {{object-list-view-row
-        record=record
+    {{#each rowsPortions as |portion|}}
+      {{object-list-view-rows-portion
+        portion=portion
         columns=columns
         readonly=readonly
         required=required
@@ -83,5 +83,11 @@
         deleteRow=(action "deleteRow")
       }}
     {{/each}}
+    {{outlet "rows"}}
+    {{#if rowsInLoadingState}}
+      <tr>
+        <td colspan="{{colspan}}" style="text-align:center;">Данные загружаются...</td>
+      </tr>
+    {{/if}}
   </tbody>
 </table>

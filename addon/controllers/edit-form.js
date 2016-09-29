@@ -564,7 +564,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     // Handle order attributes (they must be readonly).
     if (modelAttrOptions && modelAttrOptions.isOrderAttribute) {
-      cellComponent.componentName = 'object-list-view-cell';
+      cellComponent.componentName = undefined;
     }
 
     switch (modelAttr.type) {

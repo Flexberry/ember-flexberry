@@ -209,4 +209,8 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('loadRecords', id, this, 'records');
     }
   },
+
+  didInsertElement() {
+    Ember.$('.object-list-view-menu > .ui.dropdown').dropdown();
+  }
 });

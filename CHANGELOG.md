@@ -3,11 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
 ### Added
+* `get-formatted` helper, for formatted value into `object-list-view` component.
+* `PerfService`, where performance bottlenecks can see on console timeline.
+* Installing `ember-cli-sass` addon into default blueprint.
 * `flexberry-groupedit` component:
     * Now possible specify `developerUserSettings` for `flexberry-groupedit` on `edit-form`.
 
-## [0.6.2-beta.1] - 2016-09-23
+### Fixed
+* Not canceled sorting at click on `flexberry-objectlistview` header.
+
+## [0.6.2-beta.2] - 2016-09-23
 ### Fixed
 - Transition to agregator with id from detail edit form if agregator will be saved.
 

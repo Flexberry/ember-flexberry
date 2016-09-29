@@ -7,11 +7,11 @@ export default Ember.Mixin.create({
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent
-    @property {String} [cellComponent.componentName='object-list-view-cell']
+    @property {String} [cellComponent.componentName=undefined]
     @property {String} [cellComponent.componentProperties=null]
   */
   cellComponent: {
-    componentName: 'object-list-view-cell',
+    componentName: undefined,
     componentProperties: null,
   },
 
@@ -19,7 +19,7 @@ export default Ember.Mixin.create({
     showConfigDialog: function(componentName, settingName) {
       let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
-      let columnWidths = this.get('userSettingsService').getCurrentColumnWidths(componentName, settingName);
+      let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
       let propName;
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
@@ -151,7 +151,7 @@ export default Ember.Mixin.create({
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
 
-            if (column.cellComponent.componentName === 'object-list-view-cell') {
+            if (column.cellComponent.componentName === undefined) {
               if (attr.options.displayMemberPath) {
                 column.propName += '.' + attr.options.displayMemberPath;
               } else {

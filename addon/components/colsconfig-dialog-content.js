@@ -29,22 +29,31 @@ export default FlexberryBaseComponent.extend({
   modelForDOM: [],
 
   /**
-   *   ObjectListView component name.
+   ObjectListView component name.
    *
-   *   @property componentName
-   *   @type {String}
-   *   @default ''
+   @property componentName
+   @type {String}
+   @default ''
    */
   componentName: '',
 
   /**
-   *   ObjectListView setting name.
+   ObjectListView setting name.
    *
-   *   @property settingName
-   *   @type {String}
-   *   @default ''
+   @property settingName
+   @type {String}
+   @default ''
    */
   settingName: '',
+
+  /**
+   changed flag.
+   *
+   @property isChanged
+   @type {Boolean}
+   @default false
+   */
+  _isChanged: false,
 
   /**
    Flag. If true, store columns width.
@@ -296,7 +305,7 @@ export default FlexberryBaseComponent.extend({
     apply: function() {
       let colsConfig = this._getSettings();
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
-      if (settingName.length > 0 && !confirm('Применить данные установки без сохранения в настройке ' + settingName)) {
+      if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
         return;
       }
 
@@ -322,7 +331,7 @@ export default FlexberryBaseComponent.extend({
     saveColsSetting: function() {
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
       if (settingName.length <= 0) {
-        alert('Введите название настройки');
+        alert(this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
         return;
       }
 
@@ -331,12 +340,13 @@ export default FlexberryBaseComponent.extend({
       this.get('colsConfigMenu').addNamedSettingTrigger(settingName);
       savePromise.then(
         record => {
-          alert('Настройка ' + settingName + ' сохранена');
-          Ember.$('#columnConfigurtionButtonUse')[0].className += ' disabled';
+          alert(this.get('i18n').t('components.colsconfig-dialog-content.setting') +
+            settingName +
+            this.get('i18n').t('components.colsconfig-dialog-content.is-saved'));
           Ember.$('#columnConfigurtionButtonSave')[0].className += ' disabled';
         },
         error => {
-          alert('При сохранении настройки возникли ошибки: ' + JSON.stringify(error));
+          alert(this.get('i18n').t('components.colsconfig-dialog-content.have-errors') + JSON.stringify(error));
         }
       );
     },
@@ -418,6 +428,7 @@ export default FlexberryBaseComponent.extend({
   },
 
   _changed: function() {
+    this._isChanged = true;
     Ember.$('#columnConfigurtionButtonUse')[0].className = Ember.$('#columnConfigurtionButtonUse')[0].className.replace('disabled', '');
     Ember.$('#columnConfigurtionButtonSave')[0].className = Ember.$('#columnConfigurtionButtonSave')[0].className.replace('disabled', '');
   }

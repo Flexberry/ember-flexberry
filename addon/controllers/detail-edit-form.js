@@ -199,7 +199,7 @@ export default EditFormController.extend({
       }
 
       if (modelAgregatorRoute.indexOf('/new') > 0 && modelCurrentAgregator.get('id')) {
-        modelAgregatorRoute = modelAgregatorRoute.slice(0, -4);
+        modelAgregatorRoute = modelAgregatorRoute.slice(1, -4);
       }
 
       this.transitionToRoute(modelAgregatorRoute, modelCurrentAgregator);

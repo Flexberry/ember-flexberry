@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `log` service: settings for displaying exceptions in the application log.
 
 ## [0.6.2-beta.0] - 2016-09-23
 ### Added

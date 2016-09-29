@@ -19,7 +19,7 @@ export default Ember.Mixin.create({
     showConfigDialog: function(componentName, settingName) {
       let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
-      let columnWidths = this.get('userSettingsService').getCurrentColumnWidths(componentName, settingName);
+      let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
       let propName;
       let colDesc;  //Column description
       let colDescs = [];  //Columns description

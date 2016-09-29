@@ -4,8 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-    * `get-formatted` helper.
-    * `PerfService`, where performance bottlenecks can see on console timeline.
+* `get-formatted` helper, for formatted value into `object-list-view` component.
+* `PerfService`, where performance bottlenecks can see on console timeline.
+* Installing `ember-cli-sass` addon into default blueprint.
+
+### Fixed
+* Not canceled sorting at click on `flexberry-objectlistview` header.
 
 ## [0.6.2-beta.2] - 2016-09-23
 ### Fixed

@@ -95,7 +95,12 @@ export default {
     },
 
     'flexberry-objectlistview': {
-      'placeholder': 'Нет данных'
+      'placeholder': 'Нет данных',
+      'showing-entries': {
+        'showing': 'Показано ',
+        'of': ' из ',
+        'entries': ' записей'
+      }
     },
 
     'flexberry-groupedit': {
@@ -157,7 +162,8 @@ export default {
       'save': 'Сохранить',
       'have-errors': 'При сохранении настройки возникли ошибки: ',
       'setting': 'Настройка ',
-      'is-saved': ' сохранена'
+      'is-saved': ' сохранена',
+      'col-width-on': 'Включить настройку ширины столбцов'
     }
 
   },

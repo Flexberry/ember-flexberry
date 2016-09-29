@@ -10,8 +10,7 @@
     "blob-polyfill": "~1.0.20150320",
     "semantic-ui": "git://github.com/Flexberry/Semantic-UI.git#fixed-abort",
     "blueimp-file-upload": "9.11.2",
-    "devicejs": "0.2.7",
-    "localforage": "~1.3.3"
+    "devicejs": "0.2.7"
   },
   "resolutions": {
     "ember": "2.4.3"

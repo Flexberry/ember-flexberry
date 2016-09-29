@@ -198,7 +198,11 @@ export default EditFormController.extend({
         flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);
       }
 
-      this.transitionToRoute(modelAgregatorRoute);
+      if (modelAgregatorRoute.indexOf('/new') > 0 && modelCurrentAgregator.get('id')) {
+        modelAgregatorRoute = modelAgregatorRoute.slice(1, -4);
+      }
+
+      this.transitionToRoute(modelAgregatorRoute, modelCurrentAgregator);
     } else {
       this._super.apply(this, arguments);
     }

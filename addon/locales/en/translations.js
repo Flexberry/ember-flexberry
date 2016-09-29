@@ -95,7 +95,12 @@ export default {
     },
 
     'flexberry-objectlistview': {
-      'placeholder': 'There is no data'
+      'placeholder': 'There is no data',
+      'showing-entries': {
+        'showing': 'Showing ',
+        'of': ' of ',
+        'entries': ' entries'
+      }
     },
 
     'flexberry-groupedit': {
@@ -156,7 +161,8 @@ export default {
       'save': 'Save',
       'have-errors': 'When you save a configuration errors occurred: ',
       'setting': 'Setting ',
-      'is-saved': ' is saved'
+      'is-saved': ' is saved',
+      'col-width-on': 'Enable setting column widths'
     }
   },
 

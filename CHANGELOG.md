@@ -3,6 +3,39 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+    * `get-formatted` helper.
+    * `PerfService`, where performance bottlenecks can see on console timeline.
+
+## [0.6.2-beta.2] - 2016-09-23
+### Fixed
+- Transition to agregator with id from detail edit form if agregator will be saved.
+
+## [0.6.2-beta.0] - 2016-09-23
+### Added
+* `flexberry-groupedit` component:
+    * Now possible open `detail-edit-form` in `readonly` mode from `edit-form` in `readonly` mode, if `editOnSeparateRoute` = true.
+* Add state for `edit-form`. Now forms has loading.
+* `flexberry-groupedit` and `flexberry-objectlistview` components:
+    * Add `configurateSelectedRows` method for configure selected records.
+* `flexberry-objectlistview`:
+    * Add info `showing-entries`. To display the need to add `recordsTotalCount` for component.
+* Blueprint `flexberry-enum` generate `sourceType` property for enumeration transforms.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.1 version.
+
+### Fixed
+* `object-list-view` component:
+    * Now the text does not fall outside the cell borders.
+* Now send `queryParams` when transition from new to edit route.
+
+## [0.6.1] - 2016-09-16
+### Removed
+* Remove `localforage` and `ember-localforage-adapter` from package dependencies and default blueprint. Now used only  `dexie` for IndexedDB access.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.1. There fixed offline store adapter errors.
 
 ## [0.6.0] - 2016-09-14
 ### Added

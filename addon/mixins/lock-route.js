@@ -75,16 +75,15 @@ export default Ember.Mixin.create({
     */
     willTransition(transition) {
       this.set('_readonly', false);
-      this.controller.set('readonly', false);
       let lock = this.get('_currentLock');
       if (lock) {
-        transition.abort();
         this.unlockObject().then((answer) => {
           (answer ? lock.destroyRecord() : new Ember.RSVP.resolve()).then(() => {
             this.set('_currentLock', null);
-            transition.retry();
           });
         });
+      } else {
+        this.controller.set('readonly', false);
       }
     },
   },
@@ -100,7 +99,7 @@ export default Ember.Mixin.create({
   beforeModel(transition) {
     let params = this.paramsFor(this.routeName);
     return new Ember.RSVP.Promise((resolve, reject) => {
-      if (params.id && !params.readonly) {
+      if (params.id) {
         let builder = new Query.Builder(this.store)
           .from('new-platform-flexberry-services-lock')
           .selectByProjection('LockL')

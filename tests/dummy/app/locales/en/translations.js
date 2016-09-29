@@ -262,6 +262,10 @@ Ember.$.extend(true, translations, {
             'configurate-rows': {
               'caption': 'Configurate rows',
               'title': ''
+            },
+            'selected-rows': {
+              'caption': 'Selected rows',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -361,6 +365,12 @@ Ember.$.extend(true, translations, {
       'userVotes-caption': 'User votes',
       'date-caption': 'Date',
       'author-validation-message-caption': 'Author is required'
+    },
+
+    'ember-flexberry-dummy-comment-vote-edit': {
+      'caption': 'User Vote',
+      'voteType-caption': 'Vote type',
+      'applicationUser-caption': 'Application user',
     },
 
     'ember-flexberry-dummy-localization-edit': {

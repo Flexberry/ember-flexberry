@@ -11,9 +11,7 @@
           ></tr
         ></thead
         ><tbody id='colsConfigtableRows'>
-        {{#each modelForDOM as |colDesc n|}}
-{{!--log 'name='colDesc.name ' sortOrderNot='colDesc.sortOrderNot ' sortOrderAsc='colDesc.sortOrderAsc ' sortOrderDesc='colDesc.sortOrderDesc--}}
-{{!--debugger--}}
+{{#each modelForDOM as |colDesc n|}}
           <tr id="{{colDesc.trId}}" propName='{{colDesc.propName}}'
             ><td><i id="{{colDesc.hideId}}" class='large {{if colDesc.hide 'hide' 'unhide'}} icon' colsConfigHidden=false {{action 'invertVisibility' n}}></i></td
             ><td class="{{if colDesc.hide 'disabled' ''}}">
@@ -49,24 +47,27 @@
         </tbody
         ><tfoot class="full-width"
           ><tr
-          ><th colspan='5'>
-          <div class="ui action input" >
-            <input id="columnConfigurtionSettingName" type='input' name='configName'
-              placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'
-              {{action "setConfigName" n on="focusOut"}}>
-            <div id="columnConfigurtionButtonSave" class="ui small button disabled" {{action 'saveColsSetting'}}>
-              {{t "components.colsconfig-dialog-content.save"}}
-            </div>
-          </div>
-            <div id="columnConfigurtionButtonUse" class="ui right floated button" {{action 'apply'}}>{{t "components.colsconfig-dialog-content.use"}}</div>
-          </th
-          ><th>
-          {{flexberry-checkbox
-            class="toggle"
-            value=saveColWidthState
-            }}
-          </th
-        ></tr
-      ></tfoot
+          ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.col-width-on"}}</th
+            ><th>
+              {{flexberry-checkbox
+                class="toggle"
+                value=saveColWidthState
+              }}
+            </th
+          ></tr
+          ><tr
+            ><th colspan='6'>
+              <div class="ui action input">
+                <input id="columnConfigurtionSettingName" type='input' name='configName'
+                  placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'
+                  {{action "setConfigName" n on="focusOut"}}>
+                <div id="columnConfigurtionButtonSave" class="ui small button disabled" {{action 'saveColsSetting'}}>
+                  {{t "components.colsconfig-dialog-content.save"}}
+                </div>
+              </div>
+                <div id="columnConfigurtionButtonUse" class="ui right floated button" {{action 'apply'}}>{{t "components.colsconfig-dialog-content.use"}}</div>
+            </th
+          ></tr
+        ></tfoot
       ></table>
 </div>

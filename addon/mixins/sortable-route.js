@@ -63,17 +63,20 @@ export default Ember.Mixin.create({
   deserializeSortingParam(paramString) {
     let result = [];
     while (paramString) {
-      let direction = paramString.charAt(0) === '+' ? 'asc' : 'desc';
+      let order = paramString.charAt(0);
+      let direction = order === '+' ? 'asc' :  order === '-' ? 'desc' : null;
       paramString = paramString.substring(1, paramString.length);
       let nextIndices = this._getNextIndeces(paramString);
       let nextPosition = Math.min.apply(null, nextIndices);
       let propName = paramString.substring(0, nextPosition);
       paramString = paramString.substring(nextPosition);
 
-      result.push({
-        propName: propName,
-        direction: direction
-      });
+      if (direction) {
+        result.push({
+          propName: propName,
+          direction: direction
+        });
+      }
     }
 
     return result;
@@ -101,7 +104,7 @@ export default Ember.Mixin.create({
     @private
    */
   _getNextIndeces(paramString) {
-    let nextIndices = ['+', '-'].map(function(element) {
+    let nextIndices = ['+', '-', '!'].map(function(element) {
       let pos = paramString.indexOf(element);
       return pos === -1 ? paramString.length : pos;
     });

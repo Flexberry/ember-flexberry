@@ -215,12 +215,12 @@ export default FlexberryBaseComponent.extend(
     @property {String} [cellComponent.componentProperties=null]
   */
   cellComponent: {
-    componentName: 'object-list-view-cell',
+    componentName: undefined,
     componentProperties: null,
   },
 
   /**
-    Flag: indicates whether to show asterisk icon in first column of every changed row.
+    Flag indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
     @type Boolean
@@ -252,7 +252,7 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @default false
   */
-  notUseUserSettings:false,
+  notUseUserSettings: false,
 
   /**
     Flag indicates whether to show helper column or not.
@@ -565,12 +565,52 @@ export default FlexberryBaseComponent.extend(
       ```
     @method configurateRow
 
-    @param {Object} config Settings for row.
+    @param {Object} rowConfig Settings for row.
                             See {{#crossLink "ObjectListView/defaultRowConfig:property"}}{{/crossLink}}
                             property for details
     @param {DS.Model} record The record in row.
   */
   configurateRow: undefined,
+
+  /**
+    Hook for configurate selected rows.
+
+    @example
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-objectlistview
+        ...
+        configurateSelectedRows=(action "configurateSelectedRows")
+        ...
+      }}
+      ```
+
+      ```js
+      // app/controllers/employees.js
+      import ListFormController from './list-form';
+
+      export default ListFormController.extend({
+        actions: {
+          configurateSelectedRows(selectedRecords) {
+            // do something
+          }
+        }
+      });
+      ```
+    @method configurateSelectedRows
+
+    @param {DS.Model[]} selectedRecords All selected records.
+  */
+  configurateSelectedRows: undefined,
+
+  selectedRowsChanged: Ember.observer('selectedRecords.@each', function() {
+    let selectedRecords = this.get('selectedRecords');
+    let configurateSelectedRows = this.get('configurateSelectedRows');
+    if (configurateSelectedRows) {
+      Ember.assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
+      configurateSelectedRows(selectedRecords);
+    }
+  }),
 
   /**
     Default settings for rows.
@@ -650,8 +690,11 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     rowClick(recordWithKey, e) {
+      let editOnSeparateRoute = this.get('editOnSeparateRoute');
       if (this.get('readonly')) {
-        return;
+        if (!editOnSeparateRoute) {
+          return;
+        }
       }
 
       if (this.rowClickable) {
@@ -667,6 +710,7 @@ export default FlexberryBaseComponent.extend(
           editOnSeparateRoute: editOnSeparateRoute,
           modelName: this.get('modelProjection').modelName,
           detailArray: this.get('content'),
+          readonly: this.get('readonly')
         });
       }
     },
@@ -745,79 +789,6 @@ export default FlexberryBaseComponent.extend(
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
     },
-
-    /**
-      Configurate items menu in row.
-
-      @method actions.menuInRowConfigurateItems
-      @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {Object} menuItems Menu items in row
-    */
-    menuInRowConfigurateItems(recordWithKey, menuItems) {
-      let menuInRowSubItems = [];
-      if (this.get('showEditMenuItemInRow') && recordWithKey.rowConfig.canBeSelected) {
-        menuInRowSubItems.push({
-          icon: 'edit icon',
-          title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
-          isEditItem: true,
-        });
-      }
-
-      if (this.get('showDeleteMenuItemInRow') && recordWithKey.rowConfig.canBeDeleted) {
-        menuInRowSubItems.push({
-          icon: 'trash icon',
-          title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
-          isDeleteItem: true,
-        });
-      }
-
-      if (this.get('menuInRowHasAdditionalItems')) {
-        menuInRowSubItems.push(...this.get('menuInRowAdditionalItems'));
-      }
-
-      menuItems.push({
-        icon: 'list layout icon',
-        itemsAlignment: 'left',
-        items: menuInRowSubItems,
-      });
-    },
-
-    /**
-      This action is called when user click on item menu.
-
-      @method actions.menuInRowItemClick
-      @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on item menu
-    */
-    menuInRowItemClick(recordWithKey, e) {
-      if (this.get('readonly')) {
-        return;
-      }
-
-      if (!e.item) {
-        return;
-      }
-
-      if (e.item.isDeleteItem) {
-        this.send('deleteRow', recordWithKey);
-        return;
-      }
-
-      if (e.item.isEditItem) {
-        this.send('rowClick', recordWithKey);
-        return;
-      }
-
-      // Call onClick handler if it is specified in the given menu item.
-      if (e.item && Ember.typeOf(e.item.onClick) === 'function') {
-        e.modelKey = recordWithKey.key;
-        e.model = recordWithKey.data;
-
-        e.item.onClick.call(e.currentTarget, e);
-      }
-    }
   },
 
   /**
@@ -974,7 +945,7 @@ export default FlexberryBaseComponent.extend(
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode:'flex',
+      resizeMode: 'flex',
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);
@@ -1105,7 +1076,7 @@ export default FlexberryBaseComponent.extend(
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
 
-            if (column.cellComponent.componentName === 'object-list-view-cell') {
+            if (column.cellComponent.componentName === undefined) {
               if (attr.options.displayMemberPath) {
                 column.propName += '.' + attr.options.displayMemberPath;
               } else {

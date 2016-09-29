@@ -4,14 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* `log` service: settings for displaying exceptions in the application log.
-
-### Added
 * `get-formatted` helper, for formatted value into `object-list-view` component.
 * `PerfService`, where performance bottlenecks can see on console timeline.
 * Installing `ember-cli-sass` addon into default blueprint.
 * `flexberry-groupedit` component:
     * Now possible specify `developerUserSettings` for `flexberry-groupedit` on `edit-form`.
+* `log` service: settings for displaying exceptions in the application log.
 
 ### Fixed
 * Not canceled sorting at click on `flexberry-objectlistview` header.

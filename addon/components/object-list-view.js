@@ -32,6 +32,39 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
+  _contentObserver: Ember.on('init', Ember.observer('content', function() {
+    let content = this.get('content');
+    if (content && !content.isLoading) {
+      this.set('rowsInLoadingState', false);
+      this.set('contentWithKeys', Ember.A());
+      if (content.get('isFulfilled') === false) {
+        content.then((items) => {
+          items.forEach((item) => {
+            this._addModel(item);
+          });
+        });
+      } else {
+        content.forEach((item) => {
+          this._addModel(item);
+        });
+      }
+
+      let searchForContentChange = this.get('searchForContentChange');
+      if (searchForContentChange) {
+        this.addObserver('content.[]', this, this._contentDidChange);
+      }
+
+      let attrsArray = this._getAttributesName();
+      content.forEach((record) => {
+        attrsArray.forEach((attrName) => {
+          Ember.addObserver(record, attrName, this, '_attributeChanged');
+        });
+      });
+    } else {
+      this.set('rowsInLoadingState', true);
+    }
+  })),
+
   /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
@@ -480,8 +513,9 @@ export default FlexberryBaseComponent.extend(
     @property rowsInLoadingState
     @type Boolean
     @default true
+    @default false
   */
-  rowsInLoadingState: true,
+  rowsInLoadingState: false,
 
   /**
     Flag indicates whether content is defined.
@@ -884,11 +918,6 @@ export default FlexberryBaseComponent.extend(
   */
   didInsertElement() {
     this._super(...arguments);
-
-    if (!(this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow'))) {
-      this.$('thead tr th:eq(1)').css('border-left', 'none');
-      this.$('tbody tr').find('td:eq(1)').css('border-left', 'none');
-    }
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1440,6 +1469,10 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _getModelKey(record) {
+    if (!this.get('contentWithKeys')) {
+      return null;
+    }
+
     let modelWithKeyItem = this.get('contentWithKeys').findBy('data', record);
     return modelWithKeyItem ? modelWithKeyItem.key : null;
   },

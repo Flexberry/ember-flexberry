@@ -103,7 +103,7 @@ export default ProjectedModelFormRoute.extend(
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
-    let ret = userSettingPromise
+    userSettingPromise
       .then(currectPageUserSettings => {
         if (params) {
           userSettingsService.setCurrentParams(componentName, params);
@@ -134,9 +134,20 @@ export default ProjectedModelFormRoute.extend(
         return this.reloadList(queryParameters);
       }).then((records) => {
         this.includeSorting(records, this.sorting);
-        return records;
+        this.get('controller').set('model', records);
       });
-    return ret;
+
+    if (this.get('controller') === undefined) {
+      return { isLoading: true };
+    }
+
+    let model = this.get('controller').get('model');
+
+    if (this.get('controller').get('model') !== null) {
+      return model;
+    } else {
+      return { isLoading: true };
+    }
   },
 
   /**

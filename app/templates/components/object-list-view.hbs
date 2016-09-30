@@ -12,7 +12,9 @@
 <table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
   <thead>
     <tr>
-      <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+      {{#if showHelperColumn}}
+        <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+      {{/if}}
         {{#each columns as |column|}}
           {{component headerCellComponent.componentName
             column=column
@@ -58,30 +60,40 @@
         {{/each}}
       </tr>
     {{/if}}
-    {{#unless hasContent}}
+    {{#if rowsInLoadingState}}
       <tr>
-        <td colspan="{{colspan}}" style="text-align:center;">{{placeholder}}</td>
+        <td colspan="{{colspan}}" style="text-align:center;">
+          <div class="ui active centered inline loader"></div> {{t "components.object-list-view.loading-text"}}
+        </td>
       </tr>
+    {{/if}}
+    {{#unless content}}
+      <tr>
+        <td colspan="{{colspan}}" style="text-align:center;">
+            {{placeholder}}
+        </td>
+      </tr>
+    {{else}}
+      {{#each contentWithKeys key="key" as |record|}}
+        {{object-list-view-row
+          record=record
+          columns=columns
+          readonly=readonly
+          required=required
+          showMenuColumn=showMenuColumn
+          showHelperColumn=showHelperColumn
+          defaultRowConfig=defaultRowConfig
+          showAsteriskInRow=showAsteriskInRow
+          showCheckBoxInRow=showCheckBoxInRow
+          showDeleteButtonInRow=showDeleteButtonInRow
+          hierarchicalIndent=hierarchicalIndent
+          inHierarchicalMode=inHierarchicalMode
+          loadRecords=loadRecords
+          rowClick=(action "rowClick")
+          selectRow=(action "selectRow")
+          deleteRow=(action "deleteRow")
+        }}
+      {{/each}}
     {{/unless}}
-    {{#each contentWithKeys key="key" as |record|}}
-      {{object-list-view-row
-        record=record
-        columns=columns
-        readonly=readonly
-        required=required
-        showMenuColumn=showMenuColumn
-        showHelperColumn=showHelperColumn
-        defaultRowConfig=defaultRowConfig
-        showAsteriskInRow=showAsteriskInRow
-        showCheckBoxInRow=showCheckBoxInRow
-        showDeleteButtonInRow=showDeleteButtonInRow
-        hierarchicalIndent=hierarchicalIndent
-        inHierarchicalMode=inHierarchicalMode
-        loadRecords=loadRecords
-        rowClick=(action "rowClick")
-        selectRow=(action "selectRow")
-        deleteRow=(action "deleteRow")
-      }}
-    {{/each}}
   </tbody>
 </table>

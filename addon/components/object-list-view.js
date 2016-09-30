@@ -32,6 +32,39 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
+  _contentObserver: Ember.on('init', Ember.observer('content', function() {
+    let content = this.get('content');
+    if (content && !content.isLoading) {
+      this.set('rowsInLoadingState', false);
+      this.set('contentWithKeys', Ember.A());
+      if (content.get('isFulfilled') === false) {
+        content.then((items) => {
+          items.forEach((item) => {
+            this._addModel(item);
+          });
+        });
+      } else {
+        content.forEach((item) => {
+          this._addModel(item);
+        });
+      }
+
+      let searchForContentChange = this.get('searchForContentChange');
+      if (searchForContentChange) {
+        this.addObserver('content.[]', this, this._contentDidChange);
+      }
+
+      let attrsArray = this._getAttributesName();
+      content.forEach((record) => {
+        attrsArray.forEach((attrName) => {
+          Ember.addObserver(record, attrName, this, '_attributeChanged');
+        });
+      });
+    } else {
+      this.set('rowsInLoadingState', true);
+    }
+  })),
+
   /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
@@ -194,18 +227,6 @@ export default FlexberryBaseComponent.extend(
     @default 'APP.components.objectListView'
   */
   appConfigSettingsPath: 'APP.components.objectListView',
-
-  /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null,
-  },
 
   /**
     Default cell component that will be used to display values in columns cells.
@@ -464,6 +485,15 @@ export default FlexberryBaseComponent.extend(
     @default null
   */
   contentWithKeys: null,
+
+  /**
+    Flag indicates whether some rows are not loaded yet.
+
+    @property rowsInLoadingState
+    @type Boolean
+    @default false
+  */
+  rowsInLoadingState: false,
 
   /**
     Flag indicates whether content is defined.
@@ -818,39 +848,11 @@ export default FlexberryBaseComponent.extend(
     }
 
     this.set('selectedRecords', Ember.A());
-    this.set('contentWithKeys', Ember.A());
 
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
-
-    let content = this.get('content');
-    if (content) {
-      if (content.get('isFulfilled') === false) {
-        content.then((items) => {
-          items.forEach((item) => {
-            this._addModel(item);
-          });
-        });
-      } else {
-        content.forEach((item) => {
-          this._addModel(item);
-        });
-      }
-    }
-
-    let searchForContentChange = this.get('searchForContentChange');
-    if (searchForContentChange) {
-      this.addObserver('content.[]', this, this._contentDidChange);
-    }
-
-    let attrsArray = this._getAttributesName();
-    content.forEach((record) => {
-      attrsArray.forEach((attrName) => {
-        Ember.addObserver(record, attrName, this, '_attributeChanged');
-      });
-    });
   },
 
   /**
@@ -859,11 +861,6 @@ export default FlexberryBaseComponent.extend(
   */
   didInsertElement() {
     this._super(...arguments);
-
-    if (!(this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow'))) {
-      this.$('thead tr th:eq(1)').css('border-left', 'none');
-      this.$('tbody tr').find('td:eq(1)').css('border-left', 'none');
-    }
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1415,6 +1412,10 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _getModelKey(record) {
+    if (!this.get('contentWithKeys')) {
+      return null;
+    }
+
     let modelWithKeyItem = this.get('contentWithKeys').findBy('data', record);
     return modelWithKeyItem ? modelWithKeyItem.key : null;
   },

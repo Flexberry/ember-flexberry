@@ -722,7 +722,7 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-      Redirects the call to controller..
+      Redirects the call to controller.
 
       @method actions.loadRecords
       @param {String} Primary key.

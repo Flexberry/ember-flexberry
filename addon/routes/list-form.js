@@ -17,21 +17,21 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
   This class re-exports to the application as `/routes/list-form`.
   So, you can inherit from `./list-form`, even if file `app/routes/list-form.js` is not presented in the application.
 
-  Example:
-  ```javascript
-  // app/routes/employees.js
-  import ListFormRoute from './list-form';
-  export default ListFormRoute.extend({
-  });
-  ```
+  @example
+    ```javascript
+    // app/routes/employees.js
+    import ListFormRoute from './list-form';
+    export default ListFormRoute.extend({
+    });
+    ```
 
-  If you want to add some common logic on all List Forms, you can override `app/routes/list-form.js` as follows:
-  ```javascript
-  // app/routes/list-form.js
-  import ListFormRoute from 'ember-flexberry/routes/list-form';
-  export default ListFormRoute.extend({
-  });
-  ```
+    If you want to add some common logic on all List Forms, you can override `app/routes/list-form.js` as follows:
+    ```javascript
+    // app/routes/list-form.js
+    import ListFormRoute from 'ember-flexberry/routes/list-form';
+    export default ListFormRoute.extend({
+    });
+    ```
 
   @class ListFormRoute
   @extends ProjectedModelFormRoute

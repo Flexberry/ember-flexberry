@@ -71,10 +71,11 @@
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
+  showLoadingTbodyClass=showLoadingTbodyClass
 }}
 {{#unless _inHierarchicalMode}}
   <div class="ui secondary menu no-margin">
-    <div class="ui basic buttons">
+    <div class="ui basic buttons" {{action "paginationClick"}}>
       <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}

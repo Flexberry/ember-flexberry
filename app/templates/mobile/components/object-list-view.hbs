@@ -27,9 +27,11 @@
   <tbody>
     {{#if showFilters}}
       <tr>
-        <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
-          <div class="object-list-view-helper-column-cell"></div>
-        </td>
+        {{#if showHelperColumn}}
+          <td class="object-list-view-helper-column {{unless showHelperColumn 'hidden'}}">
+            <div class="object-list-view-helper-column-cell"></div>
+          </td>
+        {{/if}}
         <td>
           {{#each columns as |column|}}
             <div class="inline fields">

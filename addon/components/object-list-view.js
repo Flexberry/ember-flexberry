@@ -49,6 +49,8 @@ export default FlexberryBaseComponent.extend(
         });
       }
 
+      this.set('showLoadingTbodyClass', false);
+
       let searchForContentChange = this.get('searchForContentChange');
       if (searchForContentChange) {
         this.addObserver('content.[]', this, this._contentDidChange);
@@ -506,6 +508,15 @@ export default FlexberryBaseComponent.extend(
     @default false
   */
   rowsInLoadingState: false,
+
+  /**
+    Class loading for tbody.
+
+    @property showLoadingTbodyClass
+    @type Boolean
+    @defaul false
+  */
+  showLoadingTbodyClass: false,
 
   /**
     Flag indicates whether content is defined.

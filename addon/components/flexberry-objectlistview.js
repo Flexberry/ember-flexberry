@@ -499,6 +499,8 @@ export default FlexberryBaseComponent.extend({
   */
   customProperties: undefined,
 
+  showLoadingTbodyClass: false,
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -732,6 +734,10 @@ export default FlexberryBaseComponent.extend({
     loadRecords(id, target, property) {
       this.sendAction('_loadRecords', id, target, property);
     },
+
+    paginationClick() {
+      this.set('showLoadingTbodyClass', true);
+    }
   },
 
   /**

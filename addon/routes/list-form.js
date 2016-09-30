@@ -137,17 +137,17 @@ export default ProjectedModelFormRoute.extend(
         this.get('controller').set('model', records);
       });
 
-      if (this.get('controller') === undefined) {
-        return {isLoading: true};
-      }
+    if (this.get('controller') === undefined) {
+      return { isLoading: true };
+    }
 
-      let model = this.get('controller').get('model');
+    let model = this.get('controller').get('model');
 
-      if (this.get('controller').get('model') !== null) {
-        return model;
-      } else {
-        return {isLoading: true};
-      }
+    if (this.get('controller').get('model') !== null) {
+      return model;
+    } else {
+      return { isLoading: true };
+    }
   },
 
   /**

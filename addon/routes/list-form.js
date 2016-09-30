@@ -57,22 +57,6 @@ export default ProjectedModelFormRoute.extend(
   */
   sorting: [],
 
-  // beforeModel(params, transition) {
-  //   let modelName = this.get('modelName');
-  //   let projectionName = this.get('modelProjection');
-  //   let filtersPredicate = this._filtersPredicate();
-  //   let limitPredicate = this.objectListViewLimitPredicate({ modelName, projectionName, params });
-
-  //   let queryParameters = {
-  //     modelName: modelName,
-  //     projectionName: projectionName,
-  //     filters: filtersPredicate,
-  //     predicate: limitPredicate,
-  //   };
-
-  //   return this.reloadList(queryParameters);
-  // },
-
   /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).

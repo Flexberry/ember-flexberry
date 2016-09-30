@@ -129,10 +129,10 @@ export default Ember.Mixin.create({
       return count;
     } else {
       let mName = this.get('model.query.modelName');
-      let self = this;
+      let _this = this;
       return this.get('store').findAll(mName)
       .then((result) => {
-        self.set('recordsTotalCount', result.content.length);
+        _this.set('recordsTotalCount', result.content.length);
       });
     }
   }),

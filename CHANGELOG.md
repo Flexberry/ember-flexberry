@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [0.7.0-beta.1] - 2016-09-29
+## [0.7.0-beta.2] - 2016-09-30
 ### Added
 * `get-formatted` helper, for formatted value into `object-list-view` component.
 * `PerfService`, where performance bottlenecks can see on console timeline.
@@ -14,7 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `log` service: settings for displaying exceptions in the application log.
 
 ### Changed
-* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.4 version.
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.5 version.
 
 ### Fixed
 * Not canceled sorting at click on `flexberry-objectlistview` header.

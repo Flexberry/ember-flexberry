@@ -889,7 +889,7 @@ export default FlexberryBaseComponent.extend(
       if (content.get('isFulfilled') === false) {
         content.then((items) => {
           items.forEach((item) => {
-            this._addModel(item); // TODO: добавлять в правильную порцию
+            this._addModel(item, this.rowsPortions[0]); // TODO: добавлять в правильную порцию
           });
         });
       } else {

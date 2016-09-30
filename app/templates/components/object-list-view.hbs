@@ -83,7 +83,6 @@
         deleteRow=(action "deleteRow")
       }}
     {{/each}}
-    {{outlet "rows"}}
     {{#if rowsInLoadingState}}
       <tr>
         <td colspan="{{colspan}}" style="text-align:center;">Данные загружаются...</td>

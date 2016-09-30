@@ -1,1 +1,20 @@
-{{yield}}
+{{#each portion key="key" as |record|}}
+  {{object-list-view-row
+    record=record
+    columns=columns
+    readonly=readonly
+    required=required
+    showMenuColumn=showMenuColumn
+    showHelperColumn=showHelperColumn
+    defaultRowConfig=defaultRowConfig
+    showAsteriskInRow=showAsteriskInRow
+    showCheckBoxInRow=showCheckBoxInRow
+    showDeleteButtonInRow=showDeleteButtonInRow
+    hierarchicalIndent=hierarchicalIndent
+    inHierarchicalMode=inHierarchicalMode
+    loadRecords=loadRecords
+    rowClick=rowClick
+    selectRow=selectRow
+    deleteRow=deleteRow
+  }}
+{{/each}}

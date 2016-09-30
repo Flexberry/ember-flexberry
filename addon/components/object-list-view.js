@@ -837,6 +837,13 @@ export default FlexberryBaseComponent.extend(
 
     this.set('selectedRecords', Ember.A());
     this.set('contentWithKeys', Ember.A());
+    this.set('rowsPortions', Ember.A());
+
+    // TODO: заполнить rowsPortions исходя из количества строк на странице, [portion [rows]], надо заполнять по мере рендеринга portion (научиться определять отрендерился ли уже компонент).
+    let portionsCount = 10;
+    for (let i = 0; i < portionsCount; i++) {
+      this.rowsPortions.pushObject(Ember.A());
+    }
 
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
@@ -848,12 +855,12 @@ export default FlexberryBaseComponent.extend(
       if (content.get('isFulfilled') === false) {
         content.then((items) => {
           items.forEach((item) => {
-            this._addModel(item);
+            this._addModel(item); // TODO: добавлять в правильную порцию
           });
         });
       } else {
         content.forEach((item) => {
-          this._addModel(item);
+          this._addModel(item, this.rowsPortions[0]); // TODO: добавлять в правильную порцию
         });
       }
     }
@@ -1460,7 +1467,7 @@ export default FlexberryBaseComponent.extend(
     @param {DS.Model} record Detail model to add to current model
     @return {String} Unique key for added record or `undefined` if record is deleted
   */
-  _addModel(record) {
+  _addModel(record, portion) {
     if (record.get('isDeleted')) {
       return undefined;
     }
@@ -1482,6 +1489,10 @@ export default FlexberryBaseComponent.extend(
     }
 
     this.get('contentWithKeys').pushObject(modelWithKey);
+
+    if (portion) {
+      portion.pushObject(modelWithKey);
+    }
 
     return key;
   },

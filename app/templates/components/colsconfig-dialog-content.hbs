@@ -24,7 +24,7 @@
             </td
             ><td class="{{if colDesc.hide 'disabled' ''}}">{{colDesc.name}}</td
             ><td
-              ><select class="ui compact dropdown selection icon button {{if colDesc.hide 'disabled' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n}}>
+              ><select class="ui compact dropdown selection icon button {{if colDesc.hide 'disabled' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n on='change'}}>
                 <option selected='{{colDesc.sortOrderNot}}' value='0'>-</option>
                 <option selected='{{colDesc.sortOrderAsc}}' value='1'>▲</option>
                 <option selected='{{colDesc.sortOrderDesc}}' value='-1'>▼</option>

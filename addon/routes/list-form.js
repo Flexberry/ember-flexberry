@@ -148,9 +148,6 @@ export default ProjectedModelFormRoute.extend(
       } else {
         return {isLoading: true};
       }
-
-    // модель есть в контроллере то возвращаем ее? то объект
-    // return null;
   },
 
   /**

@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-groupedit` component:
     * Now possible specify `developerUserSettings` for `flexberry-groupedit` on `edit-form`.
 * `log` service: settings for displaying exceptions in the application log.
+* Add asyng loading record for `object-list-view` component.
 
 ### Fixed
 * Not canceled sorting at click on `flexberry-objectlistview` header.

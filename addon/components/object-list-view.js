@@ -881,9 +881,12 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
 
-    this.get('eventsBus').on('showLoadingTbodyClass', (showLoadingTbodyClass) => {
-      this.set('showLoadingTbodyClass', showLoadingTbodyClass);
-    });
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.on('showLoadingTbodyClass', (showLoadingTbodyClass) => {
+        this.set('showLoadingTbodyClass', showLoadingTbodyClass);
+      });
+    }
   },
 
   /**

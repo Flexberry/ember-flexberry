@@ -14,6 +14,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Not canceled sorting at click on `flexberry-objectlistview` header.
 
+### Removed
+* `object-list-view-header-cell` component removed.
+* `object-list-view-cell` component removed.
+
 ## [0.6.2-beta.2] - 2016-09-23
 ### Fixed
 - Transition to agregator with id from detail edit form if agregator will be saved.

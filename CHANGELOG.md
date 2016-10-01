@@ -12,12 +12,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-groupedit` component:
     * Now possible specify `developerUserSettings` for `flexberry-groupedit` on `edit-form`.
 * `log` service: settings for displaying exceptions in the application log.
+* Add asyng loading record for `object-list-view` component.
 
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.6 version.
 
 ### Fixed
 * Not canceled sorting at click on `flexberry-objectlistview` header.
+* Now paging works in offline.
+
+### Removed
+* `object-list-view-header-cell` component removed.
+* `object-list-view-cell` component removed.
 
 ## [0.6.2-beta.2] - 2016-09-23
 ### Fixed

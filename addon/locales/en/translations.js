@@ -114,6 +114,7 @@ export default {
 
     'object-list-view': {
       'placeholder': 'There is no data',
+      'loading-text': 'Loading data...',
       'single-column-header-title': 'Model properties',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',

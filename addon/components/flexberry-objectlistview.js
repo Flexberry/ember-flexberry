@@ -499,7 +499,13 @@ export default FlexberryBaseComponent.extend({
   */
   customProperties: undefined,
 
-  showLoadingTbodyClass: false,
+  /**
+    Interface for communication between object-list-view and flexberry-objectlistview.
+
+    @property eventsBus
+    @type Ember.Evented
+  */
+  eventsBus: Ember.Object.extend(Ember.Evented, {}).create(),
 
   actions: {
     /**
@@ -735,8 +741,13 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('_loadRecords', id, target, property);
     },
 
+    /**
+      Called when click on pagination.
+
+      @method actions.paginationClick
+    */
     paginationClick() {
-      this.set('showLoadingTbodyClass', true);
+      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
     }
   },
 

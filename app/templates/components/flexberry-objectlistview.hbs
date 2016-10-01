@@ -53,7 +53,7 @@
   enableFilters=enableFilters
   showFilters=_showFilters
   filters=filters
-  applyFilters = (action (if applyFilters applyFilters "applyFilters"))
+  applyFilters=(action (if applyFilters applyFilters "applyFilters"))
   componentForFilter=componentForFilter
   conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
@@ -71,7 +71,7 @@
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
-  showLoadingTbodyClass=showLoadingTbodyClass
+  eventsBus=eventsBus
 }}
 {{#unless _inHierarchicalMode}}
   <div class="ui secondary menu no-margin">
@@ -98,7 +98,7 @@
       </div>
     {{/if}}
     <div class="right menu">
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection"}}
+      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "paginationClick")}}
     </div>
   </div>
 {{/unless}}

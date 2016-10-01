@@ -49,19 +49,18 @@ export default FlexberryBaseComponent.extend(
         });
       }
 
-      this.set('showLoadingTbodyClass', false);
-
-      let searchForContentChange = this.get('searchForContentChange');
-      if (searchForContentChange) {
-        this.addObserver('content.[]', this, this._contentDidChange);
-      }
-
+      // TODO: analyze this observers.
       let attrsArray = this._getAttributesName();
       content.forEach((record) => {
         attrsArray.forEach((attrName) => {
           Ember.addObserver(record, attrName, this, '_attributeChanged');
         });
       });
+
+      // Needs for displaying loading.
+      setTimeout(() => {
+        this.set('showLoadingTbodyClass', false);
+      }, 20);
     } else {
       this.set('rowsInLoadingState', true);
     }
@@ -845,7 +844,7 @@ export default FlexberryBaseComponent.extend(
 
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
-    },
+    }
   },
 
   /**
@@ -872,10 +871,19 @@ export default FlexberryBaseComponent.extend(
 
     this.set('selectedRecords', Ember.A());
 
+    let searchForContentChange = this.get('searchForContentChange');
+    if (searchForContentChange) {
+      this.addObserver('content.[]', this, this._contentDidChange);
+    }
+
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
+
+    this.get('eventsBus').on('showLoadingTbodyClass', (showLoadingTbodyClass) => {
+      this.set('showLoadingTbodyClass', showLoadingTbodyClass);
+    });
   },
 
   /**

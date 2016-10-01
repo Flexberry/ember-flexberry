@@ -135,15 +135,16 @@ export default ProjectedModelFormRoute.extend(
       }).then((records) => {
         this.includeSorting(records, this.sorting);
         this.get('controller').set('model', records);
+        return records;
       });
 
     if (this.get('controller') === undefined) {
       return { isLoading: true };
     }
 
-    let model = this.get('controller').get('model');
+    let model = this.get('controller.model');
 
-    if (this.get('controller').get('model') !== null) {
+    if (model !== null) {
       return model;
     } else {
       return { isLoading: true };

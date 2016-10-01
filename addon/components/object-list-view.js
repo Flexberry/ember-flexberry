@@ -37,15 +37,43 @@ export default FlexberryBaseComponent.extend(
     if (content && !content.isLoading) {
       this.set('rowsInLoadingState', false);
       this.set('contentWithKeys', Ember.A());
+      this.set('rowsPortions', Ember.A());
+
       if (content.get('isFulfilled') === false) {
         content.then((items) => {
+          let itemIndex = 0;
+          let portionIndex = 0;
           items.forEach((item) => {
-            this._addModel(item);
+            if (!this.rowsPortions[portionIndex]) {
+              this.rowsPortions.pushObject(Ember.A());
+            }
+
+            let _portionIndex = portionIndex;
+            let renderPromise = new Ember.RSVP.Promise((resolve, reject) => {
+              this._addModel(item, this.rowsPortions[_portionIndex]);
+              resolve();
+            });
+            renderPromise.then();
+            itemIndex++;
+            portionIndex = Math.floor(itemIndex / 5);
           });
         });
       } else {
+        let itemIndex = 0;
+        let portionIndex = 0;
         content.forEach((item) => {
-          this._addModel(item);
+          if (!this.rowsPortions[portionIndex]) {
+            this.rowsPortions.pushObject(Ember.A());
+          }
+
+          let _portionIndex = portionIndex;
+          let renderPromise = new Ember.RSVP.Promise((resolve, reject) => {
+            this._addModel(item, this.rowsPortions[_portionIndex]);
+            resolve();
+          });
+          renderPromise.then();
+          itemIndex++;
+          portionIndex = Math.floor(itemIndex / 5);
         });
       }
 
@@ -870,46 +898,12 @@ export default FlexberryBaseComponent.extend(
     }
 
     this.set('selectedRecords', Ember.A());
-    this.set('contentWithKeys', Ember.A());
-    this.set('rowsPortions', Ember.A());
-
-    // TODO: заполнить rowsPortions исходя из количества строк на странице, [portion [rows]], надо заполнять по мере рендеринга portion (научиться определять отрендерился ли уже компонент).
-    let portionsCount = 10;
-    for (let i = 0; i < portionsCount; i++) {
-      this.rowsPortions.pushObject(Ember.A());
-    }
 
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
 
-    let content = this.get('content');
-    if (content) {
-      if (content.get('isFulfilled') === false) {
-        content.then((items) => {
-          items.forEach((item) => {
-            this._addModel(item, this.rowsPortions[0]); // TODO: добавлять в правильную порцию
-          });
-        });
-      } else {
-        content.forEach((item) => {
-          this._addModel(item, this.rowsPortions[0]); // TODO: добавлять в правильную порцию
-        });
-      }
-    }
-
-    let searchForContentChange = this.get('searchForContentChange');
-    if (searchForContentChange) {
-      this.addObserver('content.[]', this, this._contentDidChange);
-    }
-
-    let attrsArray = this._getAttributesName();
-    content.forEach((record) => {
-      attrsArray.forEach((attrName) => {
-        Ember.addObserver(record, attrName, this, '_attributeChanged');
-      });
-    });
   },
 
   /**

@@ -124,7 +124,17 @@ export default Ember.Mixin.create({
     @readOnly
   */
   recordsTotalCount: Ember.computed('model', function() {
-    return this.get('model.meta.count');
+    let count = this.get('model.meta.count');
+    if (count) {
+      return count;
+    } else {
+      let mName = this.get('model.query.modelName');
+      let _this = this;
+      return this.get('store').findAll(mName)
+      .then((result) => {
+        _this.set('recordsTotalCount', result.content.length);
+      });
+    }
   }),
 
   /**

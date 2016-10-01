@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * Not canceled sorting at click on `flexberry-objectlistview` header.
+* Now paging works in offline.
 
 ### Removed
 * `object-list-view-header-cell` component removed.

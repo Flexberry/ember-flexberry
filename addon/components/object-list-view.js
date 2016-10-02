@@ -929,32 +929,40 @@ export default FlexberryBaseComponent.extend(
     this.$('.flexberry-menu:last').addClass('bottom');
   },
 
+  _corResizableInit: false,
+
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     For more information see [didRender](http://emberjs.com/api/classes/Ember.Component.html#method_didRender) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   didRender() {
     this._super(...arguments);
+    if (!this._corResizableInit) {
+      let $currentTable = this.$('table.object-list-view');
+      if (this.get('allowColumnResize')) {
+        $currentTable.addClass('fixed');
+        this._reinitResizablePlugin();
+      } else {
+        $currentTable.colResizable({ disable: true });
+      }
 
-    let $currentTable = this.$('table.object-list-view');
-    if (this.get('allowColumnResize')) {
-      $currentTable.addClass('fixed');
-      this._reinitResizablePlugin();
-    } else {
-      $currentTable.colResizable({ disable: true });
+      this.set('_corResizableInit', true);
     }
 
     // Start row by row rendering at first row.
     if (this.get('useRowByRowLoading')) {
       let contentForRender = this.get('contentForRender');
-      if (contentForRender.get('length') > 0) {
-        if (this.get('useRowByRowLoadingProgress')) {
-          this.set('rowByRowLoadingProgress', true);
-        }
+      let contentLength = contentForRender.get('length');
+      if (contentLength > 0) {
+        if (!contentForRender[contentLength - 1].get('rendered')) {
+          if (this.get('useRowByRowLoadingProgress')) {
+            this.set('rowByRowLoadingProgress', true);
+          }
 
-        let modelWithKey = contentForRender[0];
-        Ember.addObserver(modelWithKey, 'rendered', this, '_rowRendered');
-        modelWithKey.set('doRenderData', true);
+          let modelWithKey = contentForRender[0];
+          Ember.addObserver(modelWithKey, 'rendered', this, '_rowRendered');
+          modelWithKey.set('doRenderData', true);
+        }
       }
     }
   },
@@ -1678,9 +1686,7 @@ export default FlexberryBaseComponent.extend(
       Ember.addObserver(nextRow, attrName, this, '_rowRendered');
       nextRow.set('doRenderData', true);
     } else {
-      if (this.get('useRowByRowLoadingProgress')) {
-        this.set('rowByRowLoadingProgress', false);
-      }
+      this.set('rowByRowLoadingProgress', false);
     }
   },
 

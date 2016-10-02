@@ -78,10 +78,17 @@
         hierarchicalIndent=hierarchicalIndent
         inHierarchicalMode=inHierarchicalMode
         loadRecords=loadRecords
+        rendered=record.rendered
+        doRenderData=record.doRenderData
         rowClick=(action "rowClick")
         selectRow=(action "selectRow")
         deleteRow=(action "deleteRow")
       }}
     {{/each}}
+    {{#if rowByRowLoadingProgress}}
+      <tr>
+        <td colspan="{{colspan}}" style="text-align:center;">Данные загружаются...</td>
+      </tr>
+    {{/if}}
   </tbody>
 </table>

@@ -465,6 +465,35 @@ export default FlexberryBaseComponent.extend(
   */
   contentWithKeys: null,
 
+  contentForRender: null,
+
+  /**
+    Flag indicates whether row by row loading mode on.
+
+    @property useRowByRowLoading
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoading: false,
+
+  /**
+    Flag indicates whether to show row by row loading in progress.
+
+    @property rowByRowLoadingProgress
+    @type Boolean
+    @default false
+  */
+  rowByRowLoadingProgress: false,
+
+  /**
+    Flag indicates whether to use bottom row by row loading progress while rows in loading state.
+
+    @property useRowByRowLoadingProgress
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoadingProgress: false,
+
   /**
     Flag indicates whether content is defined.
 
@@ -818,25 +847,30 @@ export default FlexberryBaseComponent.extend(
     }
 
     this.set('selectedRecords', Ember.A());
-    this.set('contentWithKeys', Ember.A());
+    this.set('contentForRender', Ember.A());
 
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
 
+    let _this = this;
+
     let content = this.get('content');
     if (content) {
       if (content.get('isFulfilled') === false) {
         content.then((items) => {
           items.forEach((item) => {
-            this._addModel(item);
+            _this._addModel(item);
           });
+        }).then(()=> {
+          _this.set('contentWithKeys', this.contentForRender);
         });
       } else {
         content.forEach((item) => {
           this._addModel(item);
         });
+        this.set('contentWithKeys', this.contentForRender);
       }
     }
 
@@ -908,6 +942,20 @@ export default FlexberryBaseComponent.extend(
       this._reinitResizablePlugin();
     } else {
       $currentTable.colResizable({ disable: true });
+    }
+
+    // Start row by row rendering at first row.
+    if (this.get('useRowByRowLoading')) {
+      let contentForRender = this.get('contentForRender');
+      if (contentForRender.get('length') > 0) {
+        if (this.get('useRowByRowLoadingProgress')) {
+          this.set('rowByRowLoadingProgress', true);
+        }
+
+        let modelWithKey = contentForRender[0];
+        Ember.addObserver(modelWithKey, 'rendered', this, '_rowRendered');
+        modelWithKey.set('doRenderData', true);
+      }
     }
   },
 
@@ -1463,7 +1511,15 @@ export default FlexberryBaseComponent.extend(
       configurateRow(rowConfig, record);
     }
 
-    this.get('contentWithKeys').pushObject(modelWithKey);
+    if (this.get('useRowByRowLoading')) {
+      let modelIndex = this.get('contentForRender.length');
+      modelWithKey.set('modelIndex', modelIndex);
+      modelWithKey.set('doRenderData', false);
+    } else {
+      modelWithKey.set('doRenderData', true);
+    }
+
+    this.get('contentForRender').pushObject(modelWithKey);
 
     return key;
   },
@@ -1611,6 +1667,21 @@ export default FlexberryBaseComponent.extend(
     let selectedRow = this._getRowByKey(key);
     this.$('tbody tr.active').removeClass('active');
     selectedRow.addClass('active');
+  },
+
+  _rowRendered(row, attrName) {
+    Ember.removeObserver(row, attrName, this, '_rowRendered');
+    let modelIndex = row.get('modelIndex');
+
+    if (this.get('contentForRender.length') > modelIndex + 1) {
+      let nextRow = this.get('contentForRender')[modelIndex + 1];
+      Ember.addObserver(nextRow, attrName, this, '_rowRendered');
+      nextRow.set('doRenderData', true);
+    } else {
+      if (this.get('useRowByRowLoadingProgress')) {
+        this.set('rowByRowLoadingProgress', false);
+      }
+    }
   },
 
   // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?

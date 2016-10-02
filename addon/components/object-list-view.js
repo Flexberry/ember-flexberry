@@ -929,7 +929,7 @@ export default FlexberryBaseComponent.extend(
     this.$('.flexberry-menu:last').addClass('bottom');
   },
 
-  _corResizableInit: false,
+  _colResizableInit: false,
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
@@ -937,7 +937,7 @@ export default FlexberryBaseComponent.extend(
   */
   didRender() {
     this._super(...arguments);
-    if (!this._corResizableInit) {
+    if (!this._colResizableInit) {
       let $currentTable = this.$('table.object-list-view');
       if (this.get('allowColumnResize')) {
         $currentTable.addClass('fixed');
@@ -946,7 +946,7 @@ export default FlexberryBaseComponent.extend(
         $currentTable.colResizable({ disable: true });
       }
 
-      this.set('_corResizableInit', true);
+      this.set('_colResizableInit', true);
     }
 
     // Start row by row rendering at first row.

@@ -24,7 +24,7 @@
       </tr>
     </thead>
   {{/if}}
-  <tbody>
+  <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
     {{#if showFilters}}
       <tr>
         {{#if showHelperColumn}}
@@ -92,8 +92,6 @@
           rowClick=(action "rowClick")
           selectRow=(action "selectRow")
           deleteRow=(action "deleteRow")
-          menuInRowItemClick=(action "menuInRowItemClick")
-          menuInRowConfigurateItems=(action "menuInRowConfigurateItems")
         }}
       {{/each}}
     {{/unless}}

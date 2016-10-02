@@ -167,18 +167,6 @@ export default FlexberryBaseComponent.extend({
   componentMode: 'listform',
 
   /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null,
-  },
-
-  /**
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent

@@ -125,7 +125,7 @@ export default Ember.Mixin.create({
   */
   recordsTotalCount: Ember.computed('model', function() {
     let count = this.get('model.meta.count');
-    if (count) {
+    if (count || this.get('model.isLoading')) {
       return count;
     } else {
       let mName = this.get('model.query.modelName');

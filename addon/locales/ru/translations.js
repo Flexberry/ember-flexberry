@@ -114,6 +114,7 @@ export default {
 
     'object-list-view': {
       'placeholder': 'Нет данных',
+      'loading-text': 'Данные загружаются...',
       'single-column-header-title': 'Свойства модели',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',

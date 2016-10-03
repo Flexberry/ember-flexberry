@@ -167,18 +167,6 @@ export default FlexberryBaseComponent.extend({
   componentMode: 'listform',
 
   /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null,
-  },
-
-  /**
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent
@@ -517,6 +505,14 @@ export default FlexberryBaseComponent.extend({
   */
   useRowByRowLoadingProgress: true,
 
+  /**
+    Interface for communication between object-list-view and flexberry-objectlistview.
+
+    @property eventsBus
+    @type Ember.Evented
+  */
+  eventsBus: Ember.Object.extend(Ember.Evented, {}).create(),
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -740,7 +736,7 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-      Redirects the call to controller..
+      Redirects the call to controller.
 
       @method actions.loadRecords
       @param {String} Primary key.
@@ -750,6 +746,15 @@ export default FlexberryBaseComponent.extend({
     loadRecords(id, target, property) {
       this.sendAction('_loadRecords', id, target, property);
     },
+
+    /**
+      Called when click on pagination.
+
+      @method actions.paginationClick
+    */
+    paginationClick() {
+      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+    }
   },
 
   /**

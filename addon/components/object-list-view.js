@@ -32,6 +32,44 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
+  _contentObserver: Ember.on('init', Ember.observer('content', function() {
+    let content = this.get('content');
+    if (content && !content.isLoading) {
+      this.set('rowsInLoadingState', false);
+      this.set('contentWithKeys', Ember.A());
+      this.set('contentForRender', Ember.A());
+      if (content.get('isFulfilled') === false) {
+        content.then((items) => {
+          items.forEach((item) => {
+            this._addModel(item);
+          });
+        }).then(()=> {
+          this.set('contentWithKeys', this.contentForRender);
+        });
+      } else {
+        content.forEach((item) => {
+          this._addModel(item);
+        });
+        this.set('contentWithKeys', this.contentForRender);
+      }
+
+      // TODO: analyze this observers.
+      let attrsArray = this._getAttributesName();
+      content.forEach((record) => {
+        attrsArray.forEach((attrName) => {
+          Ember.addObserver(record, attrName, this, '_attributeChanged');
+        });
+      });
+
+      // Needs for displaying loading.
+      setTimeout(() => {
+        this.set('showLoadingTbodyClass', false);
+      }, 20);
+    } else {
+      this.set('rowsInLoadingState', true);
+    }
+  })),
+
   /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
@@ -495,6 +533,24 @@ export default FlexberryBaseComponent.extend(
   useRowByRowLoadingProgress: false,
 
   /**
+    Flag indicates whether some rows are not loaded yet.
+
+    @property rowsInLoadingState
+    @type Boolean
+    @default false
+  */
+  rowsInLoadingState: false,
+
+  /**
+    Class loading for tbody.
+
+    @property showLoadingTbodyClass
+    @type Boolean
+    @defaul false
+  */
+  showLoadingTbodyClass: false,
+
+  /**
     Flag indicates whether content is defined.
 
     @property hasContent
@@ -821,7 +877,7 @@ export default FlexberryBaseComponent.extend(
 
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
-    },
+    }
   },
 
   /**
@@ -847,44 +903,23 @@ export default FlexberryBaseComponent.extend(
     }
 
     this.set('selectedRecords', Ember.A());
-    this.set('contentForRender', Ember.A());
-
-    this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
-    this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
-    this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
-    this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
-
-    let _this = this;
-
-    let content = this.get('content');
-    if (content) {
-      if (content.get('isFulfilled') === false) {
-        content.then((items) => {
-          items.forEach((item) => {
-            _this._addModel(item);
-          });
-        }).then(()=> {
-          _this.set('contentWithKeys', this.contentForRender);
-        });
-      } else {
-        content.forEach((item) => {
-          this._addModel(item);
-        });
-        this.set('contentWithKeys', this.contentForRender);
-      }
-    }
 
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
       this.addObserver('content.[]', this, this._contentDidChange);
     }
 
-    let attrsArray = this._getAttributesName();
-    content.forEach((record) => {
-      attrsArray.forEach((attrName) => {
-        Ember.addObserver(record, attrName, this, '_attributeChanged');
+    this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
+    this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
+    this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
+
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.on('showLoadingTbodyClass', (showLoadingTbodyClass) => {
+        this.set('showLoadingTbodyClass', showLoadingTbodyClass);
       });
-    });
+    }
   },
 
   /**
@@ -893,11 +928,6 @@ export default FlexberryBaseComponent.extend(
   */
   didInsertElement() {
     this._super(...arguments);
-
-    if (!(this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow'))) {
-      this.$('thead tr th:eq(1)').css('border-left', 'none');
-      this.$('tbody tr').find('td:eq(1)').css('border-left', 'none');
-    }
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1471,6 +1501,10 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _getModelKey(record) {
+    if (!this.get('contentWithKeys')) {
+      return null;
+    }
+
     let modelWithKeyItem = this.get('contentWithKeys').findBy('data', record);
     return modelWithKeyItem ? modelWithKeyItem.key : null;
   },

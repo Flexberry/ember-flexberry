@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.7.0-beta.6] - 2016-10-03
 ### Added
 * `get-formatted` helper, for formatted value into `object-list-view` component.
 * `PerfService`, where performance bottlenecks can see on console timeline.

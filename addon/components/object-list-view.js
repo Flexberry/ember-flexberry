@@ -62,9 +62,7 @@ export default FlexberryBaseComponent.extend(
       });
 
       // Needs for displaying loading.
-      setTimeout(() => {
-        this.set('showLoadingTbodyClass', false);
-      }, 20);
+      this.set('showLoadingTbodyClass', false);
     } else {
       this.set('rowsInLoadingState', true);
     }
@@ -886,7 +884,6 @@ export default FlexberryBaseComponent.extend(
    */
   init() {
     this._super(...arguments);
-
     Ember.assert('ObjectListView must have componentName attribute.', this.get('componentName'));
 
     if (!this.get('disableHierarchicalMode')) {
@@ -959,6 +956,14 @@ export default FlexberryBaseComponent.extend(
     this.$('.flexberry-menu:last').addClass('bottom');
   },
 
+  /**
+    Flag indicates whether columns resizable plugin already was initialized.
+
+    @property _colResizableInit
+    @type Boolean
+    @default false
+    @private
+  */
   _colResizableInit: false,
 
   /**

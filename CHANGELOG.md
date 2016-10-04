@@ -15,9 +15,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Add asyng loading record for `object-list-view` component.
 
 ### Changed
-* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.8 version.
-
-### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.9 version.
 
 ### Fixed

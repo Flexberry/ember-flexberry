@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0-beta.9] - 2016-10-04
+### Fixed
+* If in offline storage not contains data, pagination crashed.
+
 ## [0.7.0-beta.8] - 2016-10-04
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to `v0.6.2-beta.11` version.

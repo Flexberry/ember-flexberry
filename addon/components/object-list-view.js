@@ -913,7 +913,7 @@ export default FlexberryBaseComponent.extend(
 
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
-      eventsBus.on('showLoadingTbodyClass', (showLoadingTbodyClass) => {
+      eventsBus.one('showLoadingTbodyClass', (showLoadingTbodyClass) => {
         this.set('showLoadingTbodyClass', showLoadingTbodyClass);
       });
     }

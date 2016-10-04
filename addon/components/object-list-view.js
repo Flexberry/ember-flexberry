@@ -987,16 +987,18 @@ export default FlexberryBaseComponent.extend(
     // Start row by row rendering at first row.
     if (this.get('useRowByRowLoading')) {
       let contentForRender = this.get('contentForRender');
-      let contentLength = contentForRender.get('length');
-      if (contentLength > 0) {
-        if (!contentForRender[contentLength - 1].get('rendered')) {
-          if (this.get('useRowByRowLoadingProgress')) {
-            this.set('rowByRowLoadingProgress', true);
-          }
+      if (contentForRender) {
+        let contentLength = contentForRender.get('length');
+        if (contentLength > 0) {
+          if (!contentForRender[contentLength - 1].get('rendered')) {
+            if (this.get('useRowByRowLoadingProgress')) {
+              this.set('rowByRowLoadingProgress', true);
+            }
 
-          let modelWithKey = contentForRender[0];
-          Ember.addObserver(modelWithKey, 'rendered', this, '_rowRendered');
-          modelWithKey.set('doRenderData', true);
+            let modelWithKey = contentForRender[0];
+            Ember.addObserver(modelWithKey, 'rendered', this, '_rowRendered');
+            modelWithKey.set('doRenderData', true);
+          }
         }
       }
     }

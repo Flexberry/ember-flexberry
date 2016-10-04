@@ -3,8 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.7.0-beta.8] - 2016-10-04
 ### Changed
-* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.11 version.
+* Updated dependency on `ember-flexberry-data` addon to `v0.6.2-beta.11` version.
+
+### Fixed
+* List of lookup values is not empty now if value of lookup was selected more than one time.
 
 ## [0.7.0-beta.7] - 2016-10-03
 ### Added

@@ -89,11 +89,21 @@
           inHierarchicalMode=inHierarchicalMode
           singleColumnCellComponent=singleColumnCellComponent
           loadRecords=loadRecords
+          rendered=record.rendered
+          doRenderData=record.doRenderData
           rowClick=(action "rowClick")
           selectRow=(action "selectRow")
           deleteRow=(action "deleteRow")
         }}
       {{/each}}
+      {{#if rowByRowLoadingProgress}}
+        <tr>
+          <td colspan="{{colspan}}" style="text-align:center;">
+            <div class="ui active centered inline loader"></div>
+            {{t "components.object-list-view.loading-text"}}
+          </td>
+        </tr>
+      {{/if}}
     {{/unless}}
   </tbody>
 </table>

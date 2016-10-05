@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to last v0.6.2-beta version.
 
 ## [0.7.0-beta.9] - 2016-10-04
 ### Fixed
@@ -24,9 +26,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now possible specify `developerUserSettings` for `flexberry-groupedit` on `edit-form`.
 * `log` service: settings for displaying exceptions in the application log.
 * Add asyng loading record for `object-list-view` component.
-
-### Changed
-* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.8 version.
 
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.9 version.

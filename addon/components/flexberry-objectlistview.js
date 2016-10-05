@@ -561,9 +561,14 @@ export default FlexberryBaseComponent.extend({
       @method actions.previousPage
       @public
     */
-    previousPage() {
-      throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
-                      'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
+    previousPage(action) {
+      if (!action) {
+        throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
+                        'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
+      }
+
+      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      action();
     },
 
     /**
@@ -572,9 +577,14 @@ export default FlexberryBaseComponent.extend({
       @method actions.nextPage
       @public
     */
-    nextPage() {
-      throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
+    nextPage(action) {
+      if (!action) {
+        throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
+      }
+
+      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      action();
     },
 
     /**
@@ -584,9 +594,14 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Number} pageNumber Number of page to go to
     */
-    gotoPage(pageNumber) {
-      throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
+    gotoPage(action, pageNumber) {
+      if (!action) {
+        throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
+      }
+
+      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      action(pageNumber);
     },
 
     /**
@@ -748,11 +763,11 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-      Called when click on pagination.
+      Called when click on perPage.
 
-      @method actions.paginationClick
+      @method actions.perPageClick
     */
-    paginationClick() {
+    perPageClick() {
       this.get('eventsBus').trigger('showLoadingTbodyClass', true);
     }
   },

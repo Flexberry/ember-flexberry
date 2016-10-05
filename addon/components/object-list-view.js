@@ -43,8 +43,8 @@ export default FlexberryBaseComponent.extend(
           items.forEach((item) => {
             this._addModel(item);
           }).then(()=> {
-          this.set('contentWithKeys', this.contentForRender);
-        });
+            this.set('contentWithKeys', this.contentForRender);
+          });
         });
       } else {
         content.forEach((item) => {
@@ -62,9 +62,7 @@ export default FlexberryBaseComponent.extend(
       });
 
       // Needs for displaying loading.
-      setTimeout(() => {
-        this.set('showLoadingTbodyClass', false);
-      }, 20);
+      this.set('showLoadingTbodyClass', false);
     } else {
       this.set('rowsInLoadingState', true);
     }

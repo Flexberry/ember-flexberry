@@ -3,7 +3,10 @@
 */
 
 import Ember from 'ember';
+import Modernizr from 'npm:modernizr';
 import FlexberryBaseComponent from './flexberry-base-component';
+
+// var Modernizr = require('modernizr');
 
 /**
   Wrapper for input[type='date/datetime/datetime-local'] component.
@@ -84,6 +87,14 @@ export default FlexberryBaseComponent.extend({
       this.set('max', date);
       return value;
     },
+  }),
+
+  _supportDateType: Ember.computed(function() {
+    if (Modernizr.inputtypes.date || Modernizr.inputtypes.datetime) {
+      return true;
+    }
+
+    return false;
   }),
 
   /**
@@ -179,4 +190,10 @@ export default FlexberryBaseComponent.extend({
 
     return new Date(value);
   },
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    this.$('.flatpickr').flatpickr({});
+  }
 });

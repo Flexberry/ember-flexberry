@@ -40,6 +40,16 @@ module.exports = {
     });
 
     app.import({
+      development: 'bower_components/flatpickr/dist/flatpickr.js',
+      production:  'bower_components/flatpickr/dist/flatpickr.min.js'
+    });
+
+    app.import({
+      development: 'bower_components/flatpickr/dist/flatpickr.min.css',
+      production:  'bower_components/flatpickr/dist/flatpickr.min.css'
+    });
+
+    app.import({
       development: 'bower_components/devicejs/lib/device.js',
       production:  'bower_components/devicejs/lib/device.min.js'
     });

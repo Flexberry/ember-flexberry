@@ -1,1 +1,5 @@
-{{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString}}
+{{#if _supportDateType}}
+  <input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString placeholder="{{t components.flexberry-datepicker.placeholder}}">
+{{else}}
+  <input type="text" class="flatpickr" placeholder="{{t components.flexberry-datepicker.placeholder}}">
+{{/if}}

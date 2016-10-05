@@ -80,7 +80,7 @@
       <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}
-          <button class="ui button">...</button>
+          <div class="ui button">...</div>
         {{else}}
           {{#if page.isCurrent}}
             <button class="ui active button">{{page.number}}</button>

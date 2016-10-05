@@ -42,6 +42,8 @@ export default FlexberryBaseComponent.extend(
         content.then((items) => {
           items.forEach((item) => {
             this._addModel(item);
+          }).then(()=> {
+            this.set('contentWithKeys', this.contentForRender);
           });
         }).then(()=> {
           this.set('contentWithKeys', this.contentForRender);
@@ -1715,7 +1717,9 @@ export default FlexberryBaseComponent.extend(
   _setActiveRecord(key) {
     let selectedRow = this._getRowByKey(key);
     this.$('tbody tr.active').removeClass('active');
-    selectedRow.addClass('active');
+    if (selectedRow) {
+      selectedRow.addClass('active');
+    }
   },
 
   _rowRendered(row, attrName) {
@@ -1728,6 +1732,12 @@ export default FlexberryBaseComponent.extend(
       nextRow.set('doRenderData', true);
     } else {
       this.set('rowByRowLoadingProgress', false);
+      if (this.rowClickable) {
+        let key = this._getModelKey(this.selectedRecord);
+        if (key) {
+          this._setActiveRecord(key);
+        }
+      }
     }
   },
 

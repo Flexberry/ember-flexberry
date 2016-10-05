@@ -31,7 +31,6 @@
   buttonClass=buttonClass
   tableStriped=tableStriped
   customTableClass=customTableClass
-  headerCellComponent=headerCellComponent
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
   singleColumnHeaderTitle=singleColumnHeaderTitle
@@ -53,7 +52,7 @@
   enableFilters=enableFilters
   showFilters=_showFilters
   filters=filters
-  applyFilters = (action (if applyFilters applyFilters "applyFilters"))
+  applyFilters=(action (if applyFilters applyFilters "applyFilters"))
   componentForFilter=componentForFilter
   conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
@@ -73,14 +72,15 @@
   availableHierarchicalMode=(action "availableHierarchicalMode")
   useRowByRowLoading = useRowByRowLoading
   useRowByRowLoadingProgress = useRowByRowLoadingProgress
+  eventsBus=eventsBus
 }}
 {{#unless _inHierarchicalMode}}
   <div class="ui secondary menu no-margin">
-    <div class="ui basic buttons">
+    <div class="ui basic buttons" {{action "paginationClick"}}>
       <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action (if this.attrs.previousPage this.attrs.previousPage 'previousPage')}}>&laquo;</button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}
-          <button class="ui button">...</button>
+          <div class="ui button">...</div>
         {{else}}
           {{#if page.isCurrent}}
             <button class="ui active button">{{page.number}}</button>
@@ -99,7 +99,7 @@
       </div>
     {{/if}}
     <div class="right menu">
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection"}}
+      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "paginationClick")}}
     </div>
   </div>
 {{/unless}}

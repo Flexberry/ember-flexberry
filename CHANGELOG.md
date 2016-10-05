@@ -3,8 +3,21 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to last v0.6.2-beta version.
 
-## [0.7.0-beta.5] - 2016-10-02
+## [0.7.0-beta.9] - 2016-10-04
+### Fixed
+* If in offline storage not contains data, pagination crashed.
+
+## [0.7.0-beta.8] - 2016-10-04
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to `v0.6.2-beta.11` version.
+
+### Fixed
+* List of lookup values is not empty now if value of lookup was selected more than one time.
+
+## [0.7.0-beta.7] - 2016-10-03
 ### Added
 * `get-formatted` helper, for formatted value into `object-list-view` component.
 * `PerfService`, where performance bottlenecks can see on console timeline.
@@ -15,7 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Add asyng loading record for `object-list-view` component.
 
 ### Changed
-* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.8 version.
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.9 version.
 
 ### Fixed
 * Not canceled sorting at click on `flexberry-objectlistview` header.

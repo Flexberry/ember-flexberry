@@ -69,6 +69,10 @@ export default FlexberryBaseComponent.extend({
   */
   _records: Ember.computed(() => Ember.A()),
 
+  rendered: false,
+
+  doRenderData: false,
+
   /**
     Current record.
     - `key` - Ember GUID for record.
@@ -212,5 +216,12 @@ export default FlexberryBaseComponent.extend({
 
   didInsertElement() {
     Ember.$('.object-list-view-menu > .ui.dropdown').dropdown();
+  },
+
+  didRender() {
+    this._super(...arguments);
+    if (this.doRenderData) {
+      this.set('rendered', true);
+    }
   }
 });

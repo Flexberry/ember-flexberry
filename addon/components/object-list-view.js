@@ -37,16 +37,22 @@ export default FlexberryBaseComponent.extend(
     if (content && !content.isLoading) {
       this.set('rowsInLoadingState', false);
       this.set('contentWithKeys', Ember.A());
+      this.set('contentForRender', Ember.A());
       if (content.get('isFulfilled') === false) {
         content.then((items) => {
           items.forEach((item) => {
             this._addModel(item);
+          }).then(()=> {
+            this.set('contentWithKeys', this.contentForRender);
           });
+        }).then(()=> {
+          this.set('contentWithKeys', this.contentForRender);
         });
       } else {
         content.forEach((item) => {
           this._addModel(item);
         });
+        this.set('contentWithKeys', this.contentForRender);
       }
 
       // TODO: analyze this observers.
@@ -57,10 +63,7 @@ export default FlexberryBaseComponent.extend(
         });
       });
 
-      // Needs for displaying loading.
-      setTimeout(() => {
-        this.set('showLoadingTbodyClass', false);
-      }, 20);
+      this.set('showLoadingTbodyClass', false);
     } else {
       this.set('rowsInLoadingState', true);
     }
@@ -499,6 +502,35 @@ export default FlexberryBaseComponent.extend(
   */
   contentWithKeys: null,
 
+  contentForRender: null,
+
+  /**
+    Flag indicates whether row by row loading mode on.
+
+    @property useRowByRowLoading
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoading: false,
+
+  /**
+    Flag indicates whether to show row by row loading in progress.
+
+    @property rowByRowLoadingProgress
+    @type Boolean
+    @default false
+  */
+  rowByRowLoadingProgress: false,
+
+  /**
+    Flag indicates whether to use bottom row by row loading progress while rows in loading state.
+
+    @property useRowByRowLoadingProgress
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoadingProgress: false,
+
   /**
     Flag indicates whether some rows are not loaded yet.
 
@@ -853,7 +885,6 @@ export default FlexberryBaseComponent.extend(
    */
   init() {
     this._super(...arguments);
-
     Ember.assert('ObjectListView must have componentName attribute.', this.get('componentName'));
 
     if (!this.get('disableHierarchicalMode')) {
@@ -927,18 +958,50 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
+    Flag indicates whether columns resizable plugin already was initialized.
+
+    @property _colResizableInit
+    @type Boolean
+    @default false
+    @private
+  */
+  _colResizableInit: false,
+
+  /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     For more information see [didRender](http://emberjs.com/api/classes/Ember.Component.html#method_didRender) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   didRender() {
     this._super(...arguments);
+    if (!this._colResizableInit) {
+      let $currentTable = this.$('table.object-list-view');
+      if (this.get('allowColumnResize')) {
+        $currentTable.addClass('fixed');
+        this._reinitResizablePlugin();
+      } else {
+        $currentTable.colResizable({ disable: true });
+      }
 
-    let $currentTable = this.$('table.object-list-view');
-    if (this.get('allowColumnResize')) {
-      $currentTable.addClass('fixed');
-      this._reinitResizablePlugin();
-    } else {
-      $currentTable.colResizable({ disable: true });
+      this.set('_colResizableInit', true);
+    }
+
+    // Start row by row rendering at first row.
+    if (this.get('useRowByRowLoading')) {
+      let contentForRender = this.get('contentForRender');
+      if (contentForRender) {
+        let contentLength = contentForRender.get('length');
+        if (contentLength > 0) {
+          if (!contentForRender[contentLength - 1].get('rendered')) {
+            if (this.get('useRowByRowLoadingProgress')) {
+              this.set('rowByRowLoadingProgress', true);
+            }
+
+            let modelWithKey = contentForRender[0];
+            Ember.addObserver(modelWithKey, 'rendered', this, '_rowRendered');
+            modelWithKey.set('doRenderData', true);
+          }
+        }
+      }
     }
   },
 
@@ -972,6 +1035,11 @@ export default FlexberryBaseComponent.extend(
   */
   willDestroyElement() {
     this._super(...arguments);
+
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.off('showLoadingTbodyClass');
+    }
   },
 
   /**
@@ -1498,7 +1566,15 @@ export default FlexberryBaseComponent.extend(
       configurateRow(rowConfig, record);
     }
 
-    this.get('contentWithKeys').pushObject(modelWithKey);
+    if (this.get('useRowByRowLoading')) {
+      let modelIndex = this.get('contentForRender.length');
+      modelWithKey.set('modelIndex', modelIndex);
+      modelWithKey.set('doRenderData', false);
+    } else {
+      modelWithKey.set('doRenderData', true);
+    }
+
+    this.get('contentForRender').pushObject(modelWithKey);
 
     return key;
   },
@@ -1645,7 +1721,28 @@ export default FlexberryBaseComponent.extend(
   _setActiveRecord(key) {
     let selectedRow = this._getRowByKey(key);
     this.$('tbody tr.active').removeClass('active');
-    selectedRow.addClass('active');
+    if (selectedRow) {
+      selectedRow.addClass('active');
+    }
+  },
+
+  _rowRendered(row, attrName) {
+    Ember.removeObserver(row, attrName, this, '_rowRendered');
+    let modelIndex = row.get('modelIndex');
+
+    if (this.get('contentForRender.length') > modelIndex + 1) {
+      let nextRow = this.get('contentForRender')[modelIndex + 1];
+      Ember.addObserver(nextRow, attrName, this, '_rowRendered');
+      nextRow.set('doRenderData', true);
+    } else {
+      this.set('rowByRowLoadingProgress', false);
+      if (this.rowClickable) {
+        let key = this._getModelKey(this.selectedRecord);
+        if (key) {
+          this._setActiveRecord(key);
+        }
+      }
+    }
   },
 
   // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?

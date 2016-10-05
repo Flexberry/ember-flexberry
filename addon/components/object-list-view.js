@@ -63,7 +63,6 @@ export default FlexberryBaseComponent.extend(
         });
       });
 
-      // Needs for displaying loading.
       this.set('showLoadingTbodyClass', false);
     } else {
       this.set('rowsInLoadingState', true);
@@ -915,7 +914,7 @@ export default FlexberryBaseComponent.extend(
 
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
-      eventsBus.one('showLoadingTbodyClass', (showLoadingTbodyClass) => {
+      eventsBus.on('showLoadingTbodyClass', (showLoadingTbodyClass) => {
         this.set('showLoadingTbodyClass', showLoadingTbodyClass);
       });
     }
@@ -1036,6 +1035,11 @@ export default FlexberryBaseComponent.extend(
   */
   willDestroyElement() {
     this._super(...arguments);
+
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.off('showLoadingTbodyClass');
+    }
   },
 
   /**

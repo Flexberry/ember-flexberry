@@ -3,10 +3,8 @@
 */
 
 import Ember from 'ember';
-import Modernizr from 'npm:modernizr';
 import FlexberryBaseComponent from './flexberry-base-component';
-
-// var Modernizr = require('modernizr');
+import { translationMacro as t } from 'ember-i18n';
 
 /**
   Wrapper for input[type='date/datetime/datetime-local'] component.
@@ -90,7 +88,7 @@ export default FlexberryBaseComponent.extend({
   }),
 
   _supportDateType: Ember.computed(function() {
-    if (Modernizr.inputtypes.date || Modernizr.inputtypes.datetime) {
+    if (this._checkInput('date') || this._checkInput('datetime') || this._checkInput('datetime-local')) {
       return true;
     }
 
@@ -130,6 +128,35 @@ export default FlexberryBaseComponent.extend({
     @readOnly
   */
   classNames: ['flexberry-simpledatetime'],
+
+  /**
+    Text to be displayed in field, if field has not been filled.
+
+    @property placeholder
+    @type String
+    @default 't('components.flexberry-datepicker.placeholder')'
+  */
+  placeholder: t('components.flexberry-datepicker.placeholder'),
+
+  /**
+    Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
+    For more information see [didInsertElement](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  didInsertElement() {
+    this._super(...arguments);
+
+    this.$('.flatpickr').flatpickr({
+      dateFormat: 'd.m.Y',
+      inline: false,
+      clickOpens: true,
+      minDate: this.get('min'),
+      maxDate: this.get('max'),
+      noCalendar: false,
+      altInput: false,
+      defaultDate: this.get('value'),
+      static: false
+    });
+  },
 
   /**
     Convert Date object to appropriate string value for input.
@@ -191,9 +218,16 @@ export default FlexberryBaseComponent.extend({
     return new Date(value);
   },
 
-  didInsertElement() {
-    this._super(...arguments);
-
-    this.$('.flatpickr').flatpickr({});
-  }
+  /**
+    The method checks if some input type is supported by the browser.
+    @method _checkInput
+    @param {String} type Type of input.
+    return {Boolean}
+    @private
+  */
+  _checkInput(type) {
+    let input = document.createElement('input');
+    input.setAttribute('type', type);
+    return input.type === type;
+  },
 });

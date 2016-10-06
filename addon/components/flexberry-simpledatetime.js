@@ -149,12 +149,12 @@ export default FlexberryBaseComponent.extend({
       dateFormat: 'd.m.Y',
       inline: false,
       clickOpens: true,
-      minDate: this.get('min'),
-      maxDate: this.get('max'),
-      noCalendar: false,
-      altInput: false,
-      defaultDate: this.get('value'),
-      static: false
+      // minDate: this.get('min'),
+      // maxDate: this.get('max'),
+      // noCalendar: false,
+      // altInput: false,
+      // defaultDate: this.get('value'),
+      // static: false
     });
   },
 

@@ -155,7 +155,7 @@ export default FlexberryBaseComponent.extend({
       } else {
         if (input.disabled) { // SortPriority disabled
           input.disabled = false;  // Enable SortPriority field in this row
-          input.style.display = ''; // Show SortPriority field in this row
+          input.style.display = 'block'; // Show SortPriority field in this row
           if (input.value <= 0) { //Sort priority not set
             SortPriority = $inputs.length + 1;  //Set current maximim
             input.value = SortPriority;

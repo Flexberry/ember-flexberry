@@ -3,8 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.7.0-beta.10] - 2016-10-06
 ### Changed
-* Updated dependency on `ember-flexberry-data` addon to last v0.6.2-beta version.
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.13 version.
+
+### Fixed
+* Displaying sorting priority input after changing sort direction.
+* Asyng loading record for `object-list-view` component.
 
 ## [0.7.0-beta.9] - 2016-10-04
 ### Fixed

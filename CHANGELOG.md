@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+* Fixed deprecations warnings on `didRender` content update into `object-list-view-row`.
 * Detect necessity reload `aggregator` model if it was `detail` model modified.
 
 ### Added

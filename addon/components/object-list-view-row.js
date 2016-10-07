@@ -218,9 +218,5 @@ export default FlexberryBaseComponent.extend({
     if (id && this.get('inHierarchicalMode')) {
       this.sendAction('loadRecords', id, this, 'records');
     }
-  },
-
-  didInsertElement() {
-    Ember.$('.object-list-view-menu > .ui.dropdown').dropdown();
-  },
+  }
 });

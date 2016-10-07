@@ -16,7 +16,8 @@ export function initialize(application) {
     'controller',
     'model',
     'route',
-    'view'
+    'view',
+    'helper'
   ].forEach(type => {
     application.inject(type, 'i18n', 'service:i18n');
   });

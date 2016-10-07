@@ -68,7 +68,7 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
     let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
-    let needReload = !(modelCurrentNotSaved || (modelSelectedDetail && modelSelectedDetail.get('hasDirtyAttributes')));
+    let needReload = !!(modelCurrentNotSaved || (modelSelectedDetail && modelSelectedDetail.get('hasDirtyAttributes')));
 
     // TODO: now 'findRecord' at ember-flexberry-projection not support 'reload: false' flag.
     let findRecordParameters = needReload ? { reload: needReload, projection: modelProjName } : undefined;
@@ -137,6 +137,7 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let proj = modelClass.projections.get(modelProjName);
     controller.set('modelProjection', proj);
     controller.set('routeName', this.get('routeName'));
+    controller.set('developerUserSettings', this.get('developerUserSettings'));
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');

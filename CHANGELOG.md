@@ -3,6 +3,48 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Detect necessity reload `aggregator` model if it was `detail` model modified.
+
+## [0.7.0-beta.10] - 2016-10-06
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.13 version.
+
+### Fixed
+* Displaying sorting priority input after changing sort direction.
+* Asyng loading record for `object-list-view` component.
+
+## [0.7.0-beta.9] - 2016-10-04
+### Fixed
+* If in offline storage not contains data, pagination crashed.
+
+## [0.7.0-beta.8] - 2016-10-04
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to `v0.6.2-beta.11` version.
+
+### Fixed
+* List of lookup values is not empty now if value of lookup was selected more than one time.
+
+## [0.7.0-beta.7] - 2016-10-03
+### Added
+* `get-formatted` helper, for formatted value into `object-list-view` component.
+* `PerfService`, where performance bottlenecks can see on console timeline.
+* Installing `ember-cli-sass` addon into default blueprint.
+* `flexberry-groupedit` component:
+    * Now possible specify `developerUserSettings` for `flexberry-groupedit` on `edit-form`.
+* `log` service: settings for displaying exceptions in the application log.
+* Add asyng loading record for `object-list-view` component.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.9 version.
+
+### Fixed
+* Not canceled sorting at click on `flexberry-objectlistview` header.
+* Now paging works in offline.
+
+### Removed
+* `object-list-view-header-cell` component removed.
+* `object-list-view-cell` component removed.
 
 ## [0.6.2-beta.2] - 2016-09-23
 ### Fixed

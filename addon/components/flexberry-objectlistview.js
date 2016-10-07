@@ -167,26 +167,14 @@ export default FlexberryBaseComponent.extend({
   componentMode: 'listform',
 
   /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null,
-  },
-
-  /**
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent
-    @property {String} [cellComponent.componentName='object-list-view-cell']
+    @property {String} [cellComponent.componentName=undefined]
     @property {String} [cellComponent.componentProperties=null]
   */
   cellComponent: {
-    componentName: 'object-list-view-cell',
+    componentName: undefined,
     componentProperties: null,
   },
 
@@ -499,6 +487,32 @@ export default FlexberryBaseComponent.extend({
   */
   customProperties: undefined,
 
+  /**
+    Flag indicates whether row by row loading mode on.
+
+    @property useRowByRowLoading
+    @type Boolean
+    @default true
+  */
+  useRowByRowLoading: true,
+
+  /**
+    Flag indicates whether to use bottom row by row loading progress while rows in loading state.
+
+    @property useRowByRowLoadingProgress
+    @type Boolean
+    @default true
+  */
+  useRowByRowLoadingProgress: true,
+
+  /**
+    Interface for communication between object-list-view and flexberry-objectlistview.
+
+    @property eventsBus
+    @type Ember.Evented
+  */
+  eventsBus: Ember.Object.extend(Ember.Evented, {}).create(),
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -547,9 +561,14 @@ export default FlexberryBaseComponent.extend({
       @method actions.previousPage
       @public
     */
-    previousPage() {
-      throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
-                      'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
+    previousPage(action) {
+      if (!action) {
+        throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
+                        'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
+      }
+
+      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      action();
     },
 
     /**
@@ -558,9 +577,14 @@ export default FlexberryBaseComponent.extend({
       @method actions.nextPage
       @public
     */
-    nextPage() {
-      throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
+    nextPage(action) {
+      if (!action) {
+        throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
+      }
+
+      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      action();
     },
 
     /**
@@ -570,9 +594,14 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Number} pageNumber Number of page to go to
     */
-    gotoPage(pageNumber) {
-      throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
+    gotoPage(action, pageNumber) {
+      if (!action) {
+        throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
+      }
+
+      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      action(pageNumber);
     },
 
     /**
@@ -722,7 +751,7 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-      Redirects the call to controller..
+      Redirects the call to controller.
 
       @method actions.loadRecords
       @param {String} Primary key.
@@ -732,6 +761,15 @@ export default FlexberryBaseComponent.extend({
     loadRecords(id, target, property) {
       this.sendAction('_loadRecords', id, target, property);
     },
+
+    /**
+      Called when click on perPage.
+
+      @method actions.perPageClick
+    */
+    perPageClick() {
+      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+    }
   },
 
   /**

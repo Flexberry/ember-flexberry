@@ -34,7 +34,17 @@ module.exports = function(environment) {
         enabled: true,
 
         // Flag: indicates whether to store error messages or not.
-        storeErrorMessages: true
+        storeErrorMessages: true,
+
+        storeWarnMessages: true,
+        storeLogMessages: false,
+        storeInfoMessages: true,
+        storeDebugMessages: true,
+        storeDeprecationMessages: true,
+      },
+
+      perf: {
+        enabled: true,
       },
 
       // Settings lock.

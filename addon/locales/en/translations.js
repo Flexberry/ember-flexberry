@@ -114,6 +114,7 @@ export default {
 
     'object-list-view': {
       'placeholder': 'There is no data',
+      'loading-text': 'Loading data...',
       'single-column-header-title': 'Model properties',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',
@@ -158,7 +159,11 @@ export default {
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',
       'use-without-save': 'Use this settings without saving in setting ',
-      'save': 'Save'
+      'save': 'Save',
+      'have-errors': 'When you save a configuration errors occurred: ',
+      'setting': 'Setting ',
+      'is-saved': ' is saved',
+      'col-width-on': 'Enable setting column widths'
     }
   },
 

@@ -114,6 +114,7 @@ export default {
 
     'object-list-view': {
       'placeholder': 'Нет данных',
+      'loading-text': 'Данные загружаются...',
       'single-column-header-title': 'Свойства модели',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',
@@ -159,7 +160,11 @@ export default {
       'enter-setting-name': 'Введите название настройки',
       'use': 'Применить',
       'use-without-save': 'Применить данные установки без сохранения в настройке ',
-      'save': 'Сохранить'
+      'save': 'Сохранить',
+      'have-errors': 'При сохранении настройки возникли ошибки: ',
+      'setting': 'Настройка ',
+      'is-saved': ' сохранена',
+      'col-width-on': 'Включить настройку ширины столбцов'
     }
 
   },

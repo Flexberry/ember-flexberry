@@ -58,11 +58,11 @@ export default FlexberryBaseComponent.extend({
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent
-    @property {String} [cellComponent.componentName='object-list-view-cell']
+    @property {String} [cellComponent.componentName=undefined]
     @property {String} [cellComponent.componentProperties=null]
   */
   cellComponent: {
-    componentName: 'object-list-view-cell',
+    componentName: undefined,
     componentProperties: null
   },
 
@@ -141,18 +141,6 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   editOnSeparateRoute: false,
-
-  /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null
-  },
 
   /**
     Additional menu items for dropdown menu in last column of every row.

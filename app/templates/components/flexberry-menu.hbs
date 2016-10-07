@@ -1,4 +1,20 @@
 {{#each items as |item|}}
-  {{flexberry-menuitem tagName="" item=item}}
+  {{#if (and titleIsBeforeIcon item.title)}}
+    <span>{{item.title}}</span>
+  {{/if}}
+  {{#if item.icon}}
+    <i class="{{item.icon}}"></i>
+  {{/if}}
+  {{#if (and (not titleIsBeforeIcon) item.title)}}
+    <span>{{item.title}}</span>
+  {{/if}}
+  {{#if item.items}}
+    <div class="{{if item.itemsAlignment item.itemsAlignment}} menu">
+      {{#each item.items as |item|}}
+        {{flexberry-menuitem item=item}}
+      {{/each}}
+    </div>
+  {{/if}}
+  {{yield}}
 {{/each}}
 {{yield}}

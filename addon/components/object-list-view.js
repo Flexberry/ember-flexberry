@@ -953,8 +953,8 @@ export default FlexberryBaseComponent.extend(
       direction: 'upward'
     });
 
-    // The last flexberry-menu need will be up.
-    this.$('.flexberry-menu:last').addClass('bottom');
+    // TODO: the last menu needs will be up.
+    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**
@@ -984,6 +984,8 @@ export default FlexberryBaseComponent.extend(
 
       this.set('_colResizableInit', true);
     }
+
+    this.$('.object-list-view-menu > .ui.dropdown').dropdown();
 
     // Start row by row rendering at first row.
     if (this.get('useRowByRowLoading')) {

@@ -214,10 +214,6 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
-  didInsertElement() {
-    Ember.$('.object-list-view-menu > .ui.dropdown').dropdown();
-  },
-
   didRender() {
     this._super(...arguments);
     if (this.doRenderData) {

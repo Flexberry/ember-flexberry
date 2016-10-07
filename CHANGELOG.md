@@ -3,8 +3,23 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.7.0-beta.12] - 2016-10-07
+### Added
+* `flexberry-dropdown` component:
+    * Add support of semantic-ui settings.
+* Add `object-list-view-cell` component.
+* Add locales for title attribute in header of `object-list-view` component.
+
 ### Fixed
+* Displaying sorting indicator in `object-list-view` component.
+* Fixed deprecations warnings on `didRender` content update into `object-list-view-row`.
 * Detect necessity reload `aggregator` model if it was `detail` model modified.
+* Fix menu in row of `object-list-view` component.
+
+### Changed
+* Move `showing-entries` to new line in `flexberry-objectlistview` component.
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.14 version.
 
 ## [0.7.0-beta.10] - 2016-10-06
 ### Changed

@@ -233,18 +233,6 @@ export default FlexberryBaseComponent.extend(
   appConfigSettingsPath: 'APP.components.objectListView',
 
   /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null,
-  },
-
-  /**
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent
@@ -373,7 +361,7 @@ export default FlexberryBaseComponent.extend(
     @type Object[]
     @readOnly
   */
-  columns: Ember.computed('modelProjection', 'enableFilters', function() {
+  columns: Ember.computed('modelProjection', 'enableFilters', 'content', function() {
     let ret;
     let projection = this.get('modelProjection');
 
@@ -953,8 +941,8 @@ export default FlexberryBaseComponent.extend(
       direction: 'upward'
     });
 
-    // The last flexberry-menu need will be up.
-    this.$('.flexberry-menu:last').addClass('bottom');
+    // TODO: the last menu needs will be up.
+    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**
@@ -966,6 +954,16 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _colResizableInit: false,
+
+  /**
+    Field contains index for already rendered row.
+
+    @property _colResizableInit
+    @type Number
+    @default -1
+    @private
+  */
+  _renderedRowIndex: -1,
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
@@ -991,17 +989,45 @@ export default FlexberryBaseComponent.extend(
       if (contentForRender) {
         let contentLength = contentForRender.get('length');
         if (contentLength > 0) {
-          if (!contentForRender[contentLength - 1].get('rendered')) {
-            if (this.get('useRowByRowLoadingProgress')) {
-              this.set('rowByRowLoadingProgress', true);
-            }
+          let renderedRowIndex = this.get('_renderedRowIndex') + 1;
 
-            let modelWithKey = contentForRender[0];
-            Ember.addObserver(modelWithKey, 'rendered', this, '_rowRendered');
-            modelWithKey.set('doRenderData', true);
+          if (renderedRowIndex >= contentLength) {
+            this.$('.object-list-view-menu > .ui.dropdown').dropdown();
+
+            // The last menu needs will be up.
+            Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+
+            // Remove long loading spinners.
+            this.set('rowByRowLoadingProgress', false);
+            this.set('showLoadingTbodyClass', false);
+
+            this.set('_renderedRowIndex', -1);
+
+            if (this.rowClickable) {
+              let key = this._getModelKey(this.selectedRecord);
+              if (key) {
+                this._setActiveRecord(key);
+              }
+            }
+          } else {
+            // Start render row.
+            let modelWithKey = contentForRender[renderedRowIndex];
+            if (!modelWithKey.get('doRenderData')) {
+              modelWithKey.set('doRenderData', true);
+              this.set('_renderedRowIndex', renderedRowIndex);
+
+              if (renderedRowIndex === 0) {
+                if (this.get('useRowByRowLoadingProgress')) {
+                  // Set loading progress.
+                  this.set('rowByRowLoadingProgress', true);
+                }
+              }
+            }
           }
         }
       }
+    } else {
+      this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
   },
 
@@ -1723,25 +1749,6 @@ export default FlexberryBaseComponent.extend(
     this.$('tbody tr.active').removeClass('active');
     if (selectedRow) {
       selectedRow.addClass('active');
-    }
-  },
-
-  _rowRendered(row, attrName) {
-    Ember.removeObserver(row, attrName, this, '_rowRendered');
-    let modelIndex = row.get('modelIndex');
-
-    if (this.get('contentForRender.length') > modelIndex + 1) {
-      let nextRow = this.get('contentForRender')[modelIndex + 1];
-      Ember.addObserver(nextRow, attrName, this, '_rowRendered');
-      nextRow.set('doRenderData', true);
-    } else {
-      this.set('rowByRowLoadingProgress', false);
-      if (this.rowClickable) {
-        let key = this._getModelKey(this.selectedRecord);
-        if (key) {
-          this._setActiveRecord(key);
-        }
-      }
     }
   },
 

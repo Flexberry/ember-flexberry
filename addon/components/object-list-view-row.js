@@ -69,8 +69,13 @@ export default FlexberryBaseComponent.extend({
   */
   _records: Ember.computed(() => Ember.A()),
 
-  rendered: false,
+  /**
+    Flag used to start render row content.
 
+    @property doRenderData
+    @type Boolean
+    @default false
+  */
   doRenderData: false,
 
   /**
@@ -113,6 +118,7 @@ export default FlexberryBaseComponent.extend({
             key: Ember.guidFor(record),
             data: record,
             config: config,
+            doRenderData: true
           });
 
           this.get('_records').pushObject(newRecord);
@@ -212,17 +218,6 @@ export default FlexberryBaseComponent.extend({
     let id = this.get('record.data.id');
     if (id && this.get('inHierarchicalMode')) {
       this.sendAction('loadRecords', id, this, 'records');
-    }
-  },
-
-  didInsertElement() {
-    Ember.$('.object-list-view-menu > .ui.dropdown').dropdown();
-  },
-
-  didRender() {
-    this._super(...arguments);
-    if (this.doRenderData) {
-      this.set('rendered', true);
     }
   }
 });

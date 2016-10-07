@@ -115,6 +115,7 @@ export default {
     'object-list-view': {
       'placeholder': 'There is no data',
       'loading-text': 'Loading data...',
+      'header-title-attr': 'Click to change ordering, Ctrl+Click to append ordering for this column',
       'single-column-header-title': 'Model properties',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',

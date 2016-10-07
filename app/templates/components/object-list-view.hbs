@@ -17,7 +17,7 @@
       {{/if}}
       {{#each columns as |column|}}
         <th class="dt-head-left me class" onclick={{ action "headerCellClick" column }}>
-          <div data-olv-header-property-name={{column.propName}} title="Click to change ordering, Ctrl+Click to append ordering for this column">
+          <div data-olv-header-property-name={{column.propName}} title={{t "components.object-list-view.header-title-attr"}}>
             <span>
             {{#if column.keyLocale}}
               {{t column.keyLocale}}

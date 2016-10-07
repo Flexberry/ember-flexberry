@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * Add `object-list-view-cell` component.
+* Add locales for title attribute in header of `object-list-view` component.
 
 ## [0.7.0-beta.10] - 2016-10-06
 ### Changed

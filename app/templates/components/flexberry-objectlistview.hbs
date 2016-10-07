@@ -91,17 +91,17 @@
       {{/each}}
       <button class="ui {{unless hasNextPage 'disabled'}} button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
     </div>
-    {{#if showShowingEntries}}
-      <div class="item showing-entries">
-        {{#if (and currentIntervalRecords recordsTotalCount) }}
-          {{concat
-            (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-          }}
-        {{/if}}
-      </div>
-    {{/if}}
     <div class="right menu">
       {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick")}}
     </div>
   </div>
+  {{#if showShowingEntries}}
+    <div class="showing-entries">
+      {{#if (and currentIntervalRecords recordsTotalCount) }}
+        {{concat
+          (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+        }}
+      {{/if}}
+    </div>
+  {{/if}}
 {{/unless}}

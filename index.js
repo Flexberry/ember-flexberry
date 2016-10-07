@@ -7,6 +7,10 @@ module.exports = {
   included: function(app) {
     this._super.included.apply(this._super, arguments);
 
+    app.import('vendor/polyfills.js', {
+      prepend: true
+    });
+
     app.import('vendor/ember-flexberry/register-version.js');
 
     app.import({
@@ -39,15 +43,14 @@ module.exports = {
       production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.css'
     });
 
-    app.import({
-      development: 'bower_components/flatpickr/dist/flatpickr.js',
-      production:  'bower_components/flatpickr/dist/flatpickr.min.js'
-    });
+    // app.import({
+    //   development: 'bower_components/flatpickr/dist/flatpickr.js',
+    //   production:  'bower_components/flatpickr/dist/flatpickr.min.js'
+    // });
 
-    app.import({
-      development: 'bower_components/flatpickr/dist/flatpickr.min.css',
-      production:  'bower_components/flatpickr/dist/flatpickr.min.css'
-    });
+    // app.import('bower_components/flatpickr/dist/flatpickr.min.css');
+    // app.import('bower_components/flatpickr/dist/flatpickr.confetti.min.css');
+    
 
     app.import({
       development: 'bower_components/devicejs/lib/device.js',
@@ -62,5 +65,9 @@ module.exports = {
 
     // JQuery file download plugin with error callbacks support.
     app.import('vendor/jquery.flexberry.downloadFile/jquery.flexberry.downloadFile.js');
+
+    // app.import('vendor/flatpickr/flatpickr.js');
+
+    // app.import('vendor/flatpickr/flatpickr.min.css');
   }
 };

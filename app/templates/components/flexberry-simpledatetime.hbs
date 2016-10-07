@@ -1,5 +1,28 @@
 {{#if _supportDateType}} 
-	{{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString placeholder=placeholder}}
+  {{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString placeholder=placeholder}}
 {{else}}
-  {{input type="text" class="flatpickr" placeholder=placeholder readonly=(if readonly "readonly") value=_valueAsString}}
+{{!--   {{input type="text" class="flatpickr" placeholder=placeholder readonly=(if readonly "readonly") value=_valueAsString}} --}}
+
+  {{ember-flatpickr
+    allowInput=false  
+    altFormat="d.m.Y h:i"
+    altInput=true
+    clickOpens=true
+    dateFormat="D.M.Y"
+    inline=false
+    enableSeconds=false
+    enableTime=true
+    nextArrow=">"
+    noCalendar=false
+    onChange=(action (mut _valueAsString))
+    parseDate=false
+    placeholder=placeholder
+    prevArrow="<"
+    static=false
+    timeFormat="H:i"
+    time_24hr=false
+    utc=false
+    value=(readonly _valueAsString)
+    wrap=false
+  }}
 {{/if}}

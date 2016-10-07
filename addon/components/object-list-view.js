@@ -233,18 +233,6 @@ export default FlexberryBaseComponent.extend(
   appConfigSettingsPath: 'APP.components.objectListView',
 
   /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null,
-  },
-
-  /**
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent
@@ -373,7 +361,7 @@ export default FlexberryBaseComponent.extend(
     @type Object[]
     @readOnly
   */
-  columns: Ember.computed('modelProjection', 'enableFilters', function() {
+  columns: Ember.computed('modelProjection', 'enableFilters', 'content', function() {
     let ret;
     let projection = this.get('modelProjection');
 

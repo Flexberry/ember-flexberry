@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0-beta.13] - 2016-10-07
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.15 version.
+* Rolled back fix detection of necessity reload `aggregator` model if it was `detail` model modified.
+
 ## [0.7.0-beta.12] - 2016-10-07
 ### Added
 * `flexberry-dropdown` component:

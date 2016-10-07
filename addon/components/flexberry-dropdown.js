@@ -23,6 +23,30 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Semantic-ui settings.
+    For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
+  */
+  on: 'click',
+  allowReselection: false,
+  allowAdditions: false,
+  hideAdditions: true,
+  minCharacters: 1,
+  match: 'both',
+  selectOnKeydown: true,
+  forceSelection: true,
+  allowCategorySelection: false,
+  direction: 'auto',
+  keepOnScreen: true,
+  context: 'windows',
+  fullTextSearch: false,
+  preserveHTML: true,
+  sortSelect: false,
+  showOnFocus: true,
+  allowTab: true,
+  transition: 'auto',
+  duration: 200,
+
+  /**
     Flag indicates whether to make checks on selected value or not.
 
     It has `false` value when component loads data by request by semantic processes.
@@ -263,8 +287,7 @@ export default FlexberryBaseComponent.extend({
     For more information see [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   willDestroyElement() {
-    this.set('destroyHasBeenCalled', true);
-
     this._super(...arguments);
+    this.set('destroyHasBeenCalled', true);
   }
 });

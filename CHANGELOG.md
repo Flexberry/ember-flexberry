@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+* `flexberry-dropdown` component:
+    * Add support of semantic-ui settings.
+
 ## [0.7.0-beta.10] - 2016-10-06
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.13 version.

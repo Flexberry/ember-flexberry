@@ -48,6 +48,8 @@ export default ProjectedModelFormRoute.extend(
   ReloadListMixin,
   FlexberryObjectlistviewRouteMixin,
   FlexberryObjectlistviewHierarchicalRouteMixin, {
+  formLoadTimeTracker: Ember.inject.service('form-load-time-tracker'),
+
   /**
     Current sorting.
 
@@ -56,26 +58,19 @@ export default ProjectedModelFormRoute.extend(
     @default []
   */
   sorting: [],
-  activateTime: null,
-  afterModelTime: null,
-  beforeModelTime: null,
-  initTime: null,
-  modelTime: null,
-  renderTemplateTime: null,
-  setupControllerTime: null,
 
   init: function() {
-    this.initTime = performance.now();
+    this.set('formLoadTimeTracker.initTime', Math.round(performance.now()));
     return this._super.apply(this, arguments);
   },
 
   activate: function() {
-    this.activateTime = performance.now();
+    this.set('formLoadTimeTracker.activateTime', Math.round(performance.now()));
     return this._super.apply(this, arguments);
   },
 
   beforeModel: function() {
-    this.beforeModelTime = performance.now();
+    this.set('formLoadTimeTracker.beforeModelTime', Math.round(performance.now()));
     return this._super.apply(this, arguments);
   },
 
@@ -88,7 +83,7 @@ export default ProjectedModelFormRoute.extend(
     @param {Object} transition
   */
   model: function(params, transition) {
-    this.modelTime = performance.now();
+    this.set('formLoadTimeTracker.modelTime', Math.round(performance.now() - this.get('formLoadTimeTracker.beforeModelTime')));
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -175,7 +170,7 @@ export default ProjectedModelFormRoute.extend(
   },
 
   afterModel: function() {
-    this.afterModelTime = performance.now();
+    this.set('formLoadTimeTracker.afterModel', Math.round(performance.now() - this.get('formLoadTimeTracker.modelTime')));
     return this._super.apply(this, arguments);
   },
 
@@ -188,6 +183,8 @@ export default ProjectedModelFormRoute.extend(
     @param {Object} model
   */
   setupController: function(controller, model) {
+    this.set('formLoadTimeTracker.setupControllerTime', Math.round(performance.now()));
+
     this._super(...arguments);
 
     // Define 'modelProjection' for controller instance.
@@ -196,19 +193,10 @@ export default ProjectedModelFormRoute.extend(
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
-
-    this.setupControllerTime = performance.now();
-
-    controller.set('initTime', this.initTime);
-    controller.set('beforeModelTime', this.beforeModelTime - this.initTime);
-    controller.set('modelTime', this.modelTime - this.beforeModelTime);
-    controller.set('afterModelTime', this.afterModelTime - this.modelTime);
-    controller.set('activateTime', this.activateTime - this.afterModelTime);
-    controller.set('setupControllerTime', this.setupControllerTime - this.activateTime);
   },
 
   renderTemplate: function() {
-    this.controller.set('renderTemplateTime', performance.now() - this.setupControllerTime);
+    this.set('formLoadTimeTracker.renderTemplateTime', Math.round(performance.now()));
     return this._super.apply(this, arguments);
-  }
+  },
 });

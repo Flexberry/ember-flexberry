@@ -941,8 +941,8 @@ export default FlexberryBaseComponent.extend(
       direction: 'upward'
     });
 
-    // The last flexberry-menu need will be up.
-    this.$('.flexberry-menu:last').addClass('bottom');
+    // TODO: the last menu needs will be up.
+    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**
@@ -959,7 +959,7 @@ export default FlexberryBaseComponent.extend(
     Field contains index for already rendered row.
 
     @property _colResizableInit
-    @type Int
+    @type Number
     @default -1
     @private
   */
@@ -992,8 +992,15 @@ export default FlexberryBaseComponent.extend(
           let renderedRowIndex = this.get('_renderedRowIndex') + 1;
 
           if (renderedRowIndex >= contentLength) {
+            this.$('.object-list-view-menu > .ui.dropdown').dropdown();
+
+            // The last menu needs will be up.
+            Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+
+            // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
             this.set('showLoadingTbodyClass', false);
+
             this.set('_renderedRowIndex', -1);
 
             if (this.rowClickable) {
@@ -1019,6 +1026,8 @@ export default FlexberryBaseComponent.extend(
           }
         }
       }
+    } else {
+      this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
   },
 

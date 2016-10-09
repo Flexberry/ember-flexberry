@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import ReloadListMixin from 'ember-flexberry/mixins/reload-list-mixin';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';

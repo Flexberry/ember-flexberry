@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+* `object-list-view` component.
+    * Rename `headerClickable` to `orderable`.
+
 ## [0.7.0-beta.12] - 2016-10-07
 ### Added
 * `flexberry-dropdown` component:

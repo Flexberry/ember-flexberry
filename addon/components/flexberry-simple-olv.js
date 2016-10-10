@@ -5,8 +5,7 @@ import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-comp
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
-
-// const { getOwner } = Ember;
+const { getOwner } = Ember;
 
 export default folv.extend(
   FlexberryLookupCompatibleComponentMixin,
@@ -102,7 +101,7 @@ export default folv.extend(
   /**
     Default classes for component wrapper.
   */
-  classNames: ['object-list-view-container'],
+  classNames: ['flexberry-simpleolv'],
 
   /**
     Table row click action name.
@@ -551,11 +550,11 @@ export default folv.extend(
   /**
     Flag indicates whether table headers are clickable.
 
-    @property headerClickable
+    @property orderable
     @type Boolean
     @default false
   */
-  headerClickable: false,
+  orderable: false,
 
   /**
     Dictionary with sorting data related to columns.
@@ -791,7 +790,7 @@ export default folv.extend(
       @param {jQuery.Event} e jQuery.Event by click on column.
     */
     headerCellClick(column, e) {
-      if (!this.headerClickable || column.sortable === false) {
+      if (!this.orderable || column.sortable === false) {
         return;
       }
 
@@ -1051,7 +1050,7 @@ export default folv.extend(
   /**
     An overridable method called when objects are instantiated.
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
-   */
+  */
   init() {
     this._super(...arguments);
     Ember.assert('ObjectListView must have componentName attribute.', this.get('componentName'));
@@ -1087,9 +1086,6 @@ export default folv.extend(
         this.set('showLoadingTbodyClass', showLoadingTbodyClass);
       });
     }
-
-    // let id = this.get('record.data.id');
-    // this.sendAction('loadRecords', id, this, 'records');
   },
 
   /**
@@ -2397,74 +2393,74 @@ export default folv.extend(
   */
   _records: Ember.computed(() => Ember.A()),
 
-  // /**
-  //   Flag used to start render row content.
+  /**
+    Flag used to start render row content.
 
-  //   @property doRenderData
-  //   @type Boolean
-  //   @default false
-  // */
-  // doRenderData: false,
+    @property doRenderData
+    @type Boolean
+    @default false
+  */
+  doRenderData: false,
 
-  // /**
-  //   Current record.
-  //   - `key` - Ember GUID for record.
-  //   - `data` - Instance of DS.Model.
-  //   - `config` - Object with config for record.
+  /**
+    Current record.
+    - `key` - Ember GUID for record.
+    - `data` - Instance of DS.Model.
+    - `config` - Object with config for record.
 
-  //   @property record
-  //   @type Object
-  // */
-  // record: Ember.computed(() => ({
-  //   key: undefined,
-  //   data: undefined,
-  //   config: undefined,
-  // })),
+    @property record
+    @type Object
+  */
+  record: Ember.computed(() => ({
+    key: undefined,
+    data: undefined,
+    config: undefined,
+  })),
 
-  // /**
-  //   Store nested records.
+  /**
+    Store nested records.
 
-  //   @property records
-  //   @type Ember.NativeArray
-  //   @default Empty
-  // */
-  // records: Ember.computed({
-  //   get() {
-  //     return this.get('_records');
-  //   },
-  //   set(key, value) {
-  //     value.then((records) => {
-  //       records.forEach((record) => {
-  //         let config = Ember.copy(this.get('defaultRowConfig'));
-  //         let configurateRow = this.get('configurateRow');
-  //         if (configurateRow) {
-  //           Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-  //           configurateRow(config, record);
-  //         }
+    @property records
+    @type Ember.NativeArray
+    @default Empty
+  */
+  records: Ember.computed({
+    get() {
+      return this.get('_records');
+    },
+    set(key, value) {
+      value.then((records) => {
+        records.forEach((record) => {
+          let config = Ember.copy(this.get('defaultRowConfig'));
+          let configurateRow = this.get('configurateRow');
+          if (configurateRow) {
+            Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
+            configurateRow(config, record);
+          }
 
-  //         let newRecord = Ember.Object.create({
-  //           key: Ember.guidFor(record),
-  //           data: record,
-  //           config: config,
-  //           doRenderData: true
-  //         });
+          let newRecord = Ember.Object.create({
+            key: Ember.guidFor(record),
+            data: record,
+            config: config,
+            doRenderData: true
+          });
 
-  //         this.get('_records').pushObject(newRecord);
-  //       });
-  //     });
-  //     return this.get('records');
-  //   },
-  // }),
+          this.get('_records').pushObject(newRecord);
+        });
+      });
+      return this.get('records');
+    },
+  }),
 
-  // /**
-  //   Flag indicate whether there nested records.
+  /**
+    Flag indicate whether there nested records.
 
-  //   @property hasRecords
-  //   @type Boolean
-  //   @default false
-  // */
-  // hasRecords: Ember.computed('records.length', function() {
-  //   return this.get('records.length') > 0;
-  // }),
+    @property hasRecords
+    @type Boolean
+    @default false
+  */
+  hasRecords: Ember.computed('records.length', function() {
+    return this.get('records.length') > 0;
+  }),
 
-  });
+});

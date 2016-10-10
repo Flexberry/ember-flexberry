@@ -262,7 +262,7 @@ export default FlexberryBaseComponent.extend({
   /**
     Flag indicates whether ordering by clicking on column headers is allowed.
 
-    @property headerClickable
+    @property orderable
     @type Boolean
     @default false
   */

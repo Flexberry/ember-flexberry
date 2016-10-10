@@ -560,11 +560,11 @@ export default FlexberryBaseComponent.extend(
   /**
     Flag indicates whether table headers are clickable.
 
-    @property headerClickable
+    @property orderable
     @type Boolean
     @default false
   */
-  headerClickable: false,
+  orderable: false,
 
   /**
     Dictionary with sorting data related to columns.
@@ -800,7 +800,7 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on column.
     */
     headerCellClick(column, e) {
-      if (!this.headerClickable || column.sortable === false) {
+      if (!this.orderable || column.sortable === false) {
         return;
       }
 

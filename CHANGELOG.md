@@ -3,16 +3,19 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.7.0-beta.14] - 2016-10-10
 ### Added
 * `flexberry-simpleolv` component for rapid rows rendering.
+* `flexberry-lookup` component:
+    * Add support of semantic-ui settings in dropdown mode.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.16 version.
 
 ### Fixed
-* Detect necessity reload `aggregator` model if it was `detail` model modified.
-* Transition to edit form route when record has an `id` and same time is new.
-
-### Added
-* `flexberry-lookup` component in mode dropdown:
-    * Add support of semantic-ui settings.
+* Detect necessity reload `aggregator` model if `detail` model was modified.
+* Transition to edit form route when record has an `id` and new at the same time.
 
 ## [0.7.0-beta.13] - 2016-10-07
 ### Changed

@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Detect necessity reload `aggregator` model if it was `detail` model modified.
 
+### Added
+* `flexberry-lookup` component in mode dropdown:
+    * Add support of semantic-ui settings.
+
 ## [0.7.0-beta.13] - 2016-10-07
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.15 version.

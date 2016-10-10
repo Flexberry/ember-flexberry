@@ -8,9 +8,9 @@ import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions'
 const { getOwner } = Ember;
 
 export default folv.extend(
-  FlexberryLookupCompatibleComponentMixin,
-  FlexberryFileCompatibleComponentMixin,
-  ErrorableControllerMixin, {
+FlexberryLookupCompatibleComponentMixin,
+FlexberryFileCompatibleComponentMixin,
+ErrorableControllerMixin, {
 
   /**
     Projection set by property {{#crossLink "ObjectListViewComponent/modelProjection:property"}}{{/crossLink}}.
@@ -471,33 +471,6 @@ export default folv.extend(
   contentWithKeys: null,
 
   contentForRender: null,
-
-  /**
-    Flag indicates whether row by row loading mode on.
-
-    @property useRowByRowLoading
-    @type Boolean
-    @default false
-  */
-  useRowByRowLoading: false,
-
-  /**
-    Flag indicates whether to show row by row loading in progress.
-
-    @property rowByRowLoadingProgress
-    @type Boolean
-    @default false
-  */
-  rowByRowLoadingProgress: false,
-
-  /**
-    Flag indicates whether to use bottom row by row loading progress while rows in loading state.
-
-    @property useRowByRowLoadingProgress
-    @type Boolean
-    @default false
-  */
-  useRowByRowLoadingProgress: false,
 
   /**
     Flag indicates whether some rows are not loaded yet.
@@ -1077,16 +1050,6 @@ export default folv.extend(
   _colResizableInit: false,
 
   /**
-    Field contains index for already rendered row.
-
-    @property _colResizableInit
-    @type Number
-    @default -1
-    @private
-  */
-  _renderedRowIndex: -1,
-
-  /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     For more information see [didRender](http://emberjs.com/api/classes/Ember.Component.html#method_didRender) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
@@ -1104,52 +1067,15 @@ export default folv.extend(
       this.set('_colResizableInit', true);
     }
 
-    // Start row by row rendering at first row.
-    if (this.get('useRowByRowLoading')) {
-      let contentForRender = this.get('contentForRender');
-      if (contentForRender) {
-        let contentLength = contentForRender.get('length');
-        if (contentLength > 0) {
-          let renderedRowIndex = this.get('_renderedRowIndex') + 1;
-
-          if (renderedRowIndex >= contentLength) {
-            this.$('.object-list-view-menu > .ui.dropdown').dropdown();
-
-            // The last menu needs will be up.
-            Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
-
-            // Remove long loading spinners.
-            this.set('rowByRowLoadingProgress', false);
-            this.set('showLoadingTbodyClass', false);
-
-            this.set('_renderedRowIndex', -1);
-
-            if (this.rowClickable) {
-              let key = this._getModelKey(this.selectedRecord);
-              if (key) {
-                this._setActiveRecord(key);
-              }
-            }
-          } else {
-            // Start render row.
-            let modelWithKey = contentForRender[renderedRowIndex];
-            if (!modelWithKey.get('doRenderData')) {
-              modelWithKey.set('doRenderData', true);
-              this.set('_renderedRowIndex', renderedRowIndex);
-
-              if (renderedRowIndex === 0) {
-                if (this.get('useRowByRowLoadingProgress')) {
-                  // Set loading progress.
-                  this.set('rowByRowLoadingProgress', true);
-                }
-              }
-            }
-          }
-        }
+    if (this.rowClickable) {
+      let key = this._getModelKey(this.selectedRecord);
+      if (key) {
+        this._setActiveRecord(key);
       }
-    } else {
-      this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
+
+    this.$('.object-list-view-menu > .ui.dropdown').dropdown();
+    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**
@@ -1711,14 +1637,6 @@ export default folv.extend(
     if (configurateRow) {
       Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
       configurateRow(rowConfig, record);
-    }
-
-    if (this.get('useRowByRowLoading')) {
-      let modelIndex = this.get('contentForRender.length');
-      modelWithKey.set('modelIndex', modelIndex);
-      modelWithKey.set('doRenderData', false);
-    } else {
-      modelWithKey.set('doRenderData', true);
     }
 
     this.get('contentForRender').pushObject(modelWithKey);

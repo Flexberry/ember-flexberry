@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0-beta.15] - 2016-10-10
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.17 version.
+
 ## [0.7.0-beta.14] - 2016-10-10
 ### Added
 * `flexberry-simpleolv` component for rapid rows rendering.

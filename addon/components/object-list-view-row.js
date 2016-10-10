@@ -213,7 +213,6 @@ export default FlexberryBaseComponent.extend({
   */
   init() {
     this._super(...arguments);
-    Ember.Logger.debug(`Init object-list-view-row '${this.get('record.key')}' at '${performance.now()}'`);
 
     let id = this.get('record.data.id');
     if (id && this.get('inHierarchicalMode')) {

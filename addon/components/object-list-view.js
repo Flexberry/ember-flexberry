@@ -22,6 +22,8 @@ export default FlexberryBaseComponent.extend(
   FlexberryLookupCompatibleComponentMixin,
   FlexberryFileCompatibleComponentMixin,
   ErrorableControllerMixin, {
+  formLoadTimeTracker: Ember.inject.service('form-load-time-tracker'),
+
   /**
     Projection set by property {{#crossLink "ObjectListViewComponent/modelProjection:property"}}{{/crossLink}}.
 
@@ -965,6 +967,8 @@ export default FlexberryBaseComponent.extend(
   */
   _renderedRowIndex: -1,
 
+  _firstDidRender: true,
+
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     For more information see [didRender](http://emberjs.com/api/classes/Ember.Component.html#method_didRender) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
@@ -1029,6 +1033,13 @@ export default FlexberryBaseComponent.extend(
     } else {
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
+
+    if (this._firstDidRender) {
+      this.set('formLoadTimeTracker.firstDidRenderTime', performance.now());
+      this.set('_firstDidRender', false);
+    }
+
+    this.set('formLoadTimeTracker.lastDidRenderTime', performance.now());
   },
 
   /**

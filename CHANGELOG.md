@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Detect necessity reload `aggregator` model if it was `detail` model modified.
+
+## [0.7.0-beta.13] - 2016-10-07
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.15 version.
+* Rolled back fix detection of necessity reload `aggregator` model if it was `detail` model modified.
 
 ### Changed
 * `object-list-view` component.

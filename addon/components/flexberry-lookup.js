@@ -218,33 +218,13 @@ export default FlexberryBaseComponent.extend({
   updateLookupAction: 'updateLookupValue',
 
   /**
-    Min characters count necessary to call autocomplete.
-
-    @property minCharacters
-    @type Integer
-    @default 1
-  */
-  minCharacters: 1,
-
-  /**
     Maximum number of results to display on autocomplete or dropdown.
 
     @property maxResults
-    @type Integer
+    @type Number
     @default 10
   */
   maxResults: 10,
-
-  /**
-    Flag enable to multiple select.
-
-    Note! Not working!
-
-    @property multiselect
-    @type Boolean
-    @default false
-  */
-  multiselect: false,
 
   /**
     Limit function on lookup.
@@ -392,6 +372,30 @@ export default FlexberryBaseComponent.extend({
     @readOnly
   */
   classNameBindings: ['autocompleteClass'],
+
+  /**
+    Semantic-ui settings for dropdown.
+    For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
+  */
+  on: 'click',
+  allowReselection: false,
+  allowAdditions: false,
+  hideAdditions: true,
+  minCharacters: 1,
+  match: 'both',
+  selectOnKeydown: true,
+  forceSelection: true,
+  allowCategorySelection: false,
+  direction: 'auto',
+  keepOnScreen: true,
+  context: 'windows',
+  fullTextSearch: false,
+  preserveHTML: true,
+  sortSelect: false,
+  showOnFocus: true,
+  allowTab: true,
+  transition: 'auto',
+  duration: 200,
 
   actions: {
     /**
@@ -620,7 +624,6 @@ export default FlexberryBaseComponent.extend({
 
     let relationModelName = getRelationType(relatedModel, relationName);
     let minCharacters = this.get('minCharacters');
-    let multiselect = this.get('multiselect');
     let dropdownIsSearch = this.get('dropdownIsSearch');
 
     let displayAttributeName = this.get('displayAttributeName');
@@ -632,8 +635,25 @@ export default FlexberryBaseComponent.extend({
     let i18n = _this.get('i18n');
     this.$('.flexberry-dropdown').dropdown({
       minCharacters: dropdownIsSearch ? minCharacters : 0,
-      allowAdditions: multiselect,
       cache: false,
+      on: this.get('on'),
+      allowReselection: this.get('allowReselection'),
+      allowAdditions: this.get('allowAdditions'),
+      hideAdditions: this.get('hideAdditions'),
+      match: this.get('match'),
+      selectOnKeydown: this.get('selectOnKeydown'),
+      forceSelection: this.get('forceSelection'),
+      allowCategorySelection: this.get('allowCategorySelection'),
+      direction: this.get('direction'),
+      keepOnScreen: this.get('keepOnScreen'),
+      context: this.get('context'),
+      fullTextSearch: this.get('fullTextSearch'),
+      preserveHTML: this.get('preserveHTML'),
+      sortSelect: this.get('sortSelect'),
+      showOnFocus: this.get('showOnFocus'),
+      allowTab: this.get('allowTab'),
+      transition: this.get('transition'),
+      duration: this.get('duration'),
       message: {
         noResults: i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string
       },

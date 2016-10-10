@@ -1115,14 +1115,6 @@ export default folv.extend(
     if (columnWidth !== undefined) {
       this._setColumnWidths(columnWidth);
     }
-
-    // TODO: resolve this problem.
-    this.$('.flexberry-dropdown:last').dropdown({
-      direction: 'upward'
-    });
-
-    // TODO: the last menu needs will be up.
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**

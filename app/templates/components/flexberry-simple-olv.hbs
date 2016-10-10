@@ -283,32 +283,32 @@
     </tbody>
   </table>
 </div>
-  <div class="ui secondary menu no-margin">
-    <div class="ui basic buttons">
-      <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
-      {{#each pages as |page|}}
-        {{#if page.isEllipsis}}
-          <div class="ui button">...</div>
+<div class="ui secondary menu no-margin">
+  <div class="ui basic buttons">
+    <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
+    {{#each pages as |page|}}
+      {{#if page.isEllipsis}}
+        <div class="ui button">...</div>
+      {{else}}
+        {{#if page.isCurrent}}
+          <button class="ui active button">{{page.number}}</button>
         {{else}}
-          {{#if page.isCurrent}}
-            <button class="ui active button">{{page.number}}</button>
-          {{else}}
-            <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
-          {{/if}}
+          <button class="ui button" {{action 'gotoPage' this.attrs.gotoPage page.number}}>{{page.number}}</button>
         {{/if}}
-      {{/each}}
-      <button class="ui {{unless hasNextPage 'disabled'}} button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
-    </div>
-    <div class="right menu">
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick")}}
-    </div>
-  </div>
-  {{#if showShowingEntries}}
-    <div class="showing-entries">
-      {{#if (and currentIntervalRecords recordsTotalCount) }}
-        {{concat
-          (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-        }}
       {{/if}}
-    </div>
-  {{/if}}
+    {{/each}}
+    <button class="ui {{unless hasNextPage 'disabled'}} button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
+  </div>
+  <div class="right menu">
+    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick")}}
+  </div>
+</div>
+{{#if showShowingEntries}}
+  <div class="showing-entries">
+    {{#if (and currentIntervalRecords recordsTotalCount) }}
+      {{concat
+        (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+      }}
+    {{/if}}
+  </div>
+{{/if}}

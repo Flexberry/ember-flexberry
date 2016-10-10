@@ -81,7 +81,6 @@ export default Ember.Mixin.create({
           record = modelToAdd;
         }
 
-        let recordId = record.get('id');
         _this.controller.set('modelNoRollBack', true);
 
         let flexberryDetailInteractionService = _this.get('flexberryDetailInteractionService');
@@ -92,15 +91,13 @@ export default Ember.Mixin.create({
         flexberryDetailInteractionService.pushValue(
           'modelCurrentAgregators', _this.controller.get('modelCurrentAgregators'), _this.controller.get('model'));
 
-        if (recordId) {
-          _this.transitionTo(editFormRoute, record.get('id'))
-          .then(function(newRoute) {
+        if (record.get('isNew')) {
+          let newModelPath = _this.newRoutePath(editFormRoute);
+          _this.transitionTo(newModelPath).then((newRoute) => {
             newRoute.controller.set('readonly', methodOptions.readonly);
           });
         } else {
-          let newModelPath = _this.newRoutePath(editFormRoute);
-          _this.transitionTo(newModelPath)
-          .then(function(newRoute) {
+          _this.transitionTo(editFormRoute, record.get('id')).then((newRoute) => {
             newRoute.controller.set('readonly', methodOptions.readonly);
           });
         }

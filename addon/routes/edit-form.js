@@ -71,7 +71,7 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let needReload = !!(modelCurrentNotSaved || (modelSelectedDetail && modelSelectedDetail.get('hasDirtyAttributes')));
 
     // TODO: now 'findRecord' at ember-flexberry-projection not support 'reload: false' flag.
-    let findRecordParameters = needReload ? { reload: needReload, projection: modelProjName } : undefined;
+    let findRecordParameters = { reload: needReload, projection: modelProjName };
 
     // :id param defined in router.js
     return this.store.findRecord(modelName, params.id, findRecordParameters);

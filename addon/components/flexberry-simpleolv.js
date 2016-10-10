@@ -7,6 +7,14 @@ import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 const { getOwner } = Ember;
 
+/**
+  Simple object list view  component.
+
+  @extends FlexberryObjectlistviewComponent
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses FlexberryLookupCompatibleComponentMixin
+  @uses ErrorableControllerMixin
+*/
 export default folv.extend(
 FlexberryLookupCompatibleComponentMixin,
 FlexberryFileCompatibleComponentMixin,
@@ -662,9 +670,9 @@ ErrorableControllerMixin, {
 
     @property immediateDelete
     @type Boolean
-    @default false
+    @default true
   */
-  immediateDelete: false,
+  immediateDelete: true,
 
   /**
     Flag indicates whether records should be edited on separate route.
@@ -976,19 +984,6 @@ ErrorableControllerMixin, {
   init() {
     this._super(...arguments);
     Ember.assert('ObjectListView must have componentName attribute.', this.get('componentName'));
-
-    if (!this.get('disableHierarchicalMode')) {
-      let modelName = this.get('modelName');
-      if (modelName) {
-        let model = this.get('store').modelFor(modelName);
-        let relationships = Ember.get(model, 'relationships');
-        let hierarchicalrelationships = relationships.get(modelName);
-        if (hierarchicalrelationships.length === 1) {
-          let hierarchicalAttribute = hierarchicalrelationships[0].name;
-          this.sendAction('availableHierarchicalMode', hierarchicalAttribute);
-        }
-      }
-    }
 
     this.set('selectedRecords', Ember.A());
 

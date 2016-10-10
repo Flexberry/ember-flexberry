@@ -220,15 +220,7 @@
                 {{/if}}
               </td>
               {{#each columns as |column index|}}
-                <td {{action "rowClick" record preventDefault=false}}>
-                  {{#if (and (not index) inHierarchicalMode)}}
-                    {{hierarchicalIndent}}
-                    {{#if hasRecords}}
-                      <button class="ui button icon mini {{buttonClass}}" {{action "expand" bubbles=false}}>
-                        <i class="{{if _expanded "minus" "plus"}} icon"></i>
-                      </button>
-                    {{/if}}
-                  {{/if}}
+                <td {{action "objectListViewRowClick" record preventDefault=false}}>
                   {{#if column.cellComponent.componentName}}
                     {{component column.cellComponent.componentName
                       dynamicProperties=column.cellComponent.componentProperties
@@ -253,7 +245,7 @@
                     <i class="list layout icon"></i>
                     <div class="left menu">
                       {{#if record.rowConfig.canBeSelected}}
-                        <div class="item" {{ action "rowClick" record }}>
+                        <div class="item" {{ action "objectListViewRowClick" record }}>
                           <i class="edit icon"></i>
                           <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
                         </div>

@@ -12,7 +12,7 @@ export default folv.extend(
   FlexberryFileCompatibleComponentMixin,
   ErrorableControllerMixin, {
 
-    /**
+  /**
     Projection set by property {{#crossLink "ObjectListViewComponent/modelProjection:property"}}{{/crossLink}}.
 
     @property _modelProjection
@@ -102,16 +102,6 @@ export default folv.extend(
     Default classes for component wrapper.
   */
   classNames: ['flexberry-simpleolv'],
-
-  /**
-    Table row click action name.
-
-    @property action
-    @type String
-    @default ''
-    @readOnly
-  */
-  action: '',
 
   /**
     Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
@@ -544,7 +534,7 @@ export default folv.extend(
     @property placeholder
     @type String
     @default 't('components.object-list-view.placeholder')'
-   */
+  */
   placeholder: t('components.object-list-view.placeholder'),
 
   /**
@@ -746,41 +736,9 @@ export default folv.extend(
   */
   componentName: '',
 
+  showConfigDialog: 'showConfigDialog',
+
   actions: {
-    /**
-      This action is called when user click on row.
-
-      @method actions.rowClick
-      @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
-    */
-    rowClick(recordWithKey, e) {
-      let editOnSeparateRoute = this.get('editOnSeparateRoute');
-      if (this.get('readonly')) {
-        if (!editOnSeparateRoute) {
-          return;
-        }
-      }
-
-      if (this.rowClickable) {
-        let editOnSeparateRoute = this.get('editOnSeparateRoute');
-        if (!editOnSeparateRoute) {
-          // It is necessary only when we will not go to other route on click.
-          this.set('selectedRecord', recordWithKey.data);
-          this._setActiveRecord(recordWithKey.key);
-        }
-
-        this.sendAction('action', recordWithKey ? recordWithKey.data : undefined, {
-          saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
-          editOnSeparateRoute: editOnSeparateRoute,
-          modelName: this.get('modelProjection').modelName,
-          detailArray: this.get('content'),
-          readonly: this.get('readonly')
-        });
-      }
-    },
-
     /**
       This action is called when user click on header.
 
@@ -1015,15 +973,6 @@ export default folv.extend(
       let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
       oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
       oLVToolbarInfoCopyButton.addClass('disabled');
-    },
-
-    /** 
-      Show/hide embedded records.
-
-      @method actions.expand
-    */
-    expand() {
-      this.toggleProperty('_expanded');
     },
 
     /**
@@ -2036,317 +1985,298 @@ export default folv.extend(
     }
   },
 
-    /**
-      Controller for model.
+  /**
+    Controller for model.
 
-      @property modelController
-      @type Object
-    */
-    modelController: null,
-
-    /**
-      Route for edit form by click row.
-
-      @property editFormRoute
-      @type String
-    */
-    editFormRoute: undefined,
-
-    /**
-      Flag to use creation button at toolbar.
-
-      @property createNewButton
-      @type Boolean
-      @default false
-    */
-    createNewButton: false,
-
-    /**
-      Flag to specify whether the create button is enabled.
-
-      @property enableCreateNewButton
-      @type Boolean
-      @default true
-    */
-    enableCreateNewButton: true,
-
-    /**
-      Flag to use refresh button at toolbar.
-
-      @property refreshButton
-      @type Boolean
-      @default false
-    */
-    refreshButton: false,
-
-    /**
-      Flag to use delete button at toolbar.
-
-      @property deleteButton
-      @type Boolean
-      @default false
-    */
-    deleteButton: false,
-
-    /**
-      Flag to use colsConfigButton button at toolbar.
-
-      @property colsConfigButton
-      @type Boolean
-      @default true
-      @readOnly
-    */
-    colsConfigButton: true,
-
-    /**
-      Flag to use filter button at toolbar.
-
-      @property filterButton
-      @type Boolean
-      @default false
-    */
-    filterButton: false,
-
-    /**
-      Used to specify default 'filter by any match' field text.
-
-      @property filterText
-      @type String
-      @default null
-    */
-    filterText: null,
-
-    /**
-      The flag to specify whether the delete button is enabled.
-
-      @property enableDeleteButton
-      @type Boolean
-      @default true
-    */
-    enableDeleteButton: true,
-
-    /**
-      Name of action to send out, action triggered by click on user button.
-
-      @property customButtonAction
-      @type String
-      @default 'customButtonAction'
-    */
-    customButtonAction: 'customButtonAction',
-
-    /**
-      Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
-
-      @example
-        ```
-        {
-          buttonName: '...', // Button displayed name.
-          buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-          buttonClasses: '...' // Css classes for button.
-        }
-        ```
-
-      @property customButtonsArray
-      @type Array
-    */
-    customButtons: undefined,
-
-    /**
-      @property listNamedUserSettings
-    */
-    listNamedUserSettings: undefined,
-
-    /**
-      @property createSettitingTitle
-      @type String
-      @default t('components.olv-toolbar.create-setting-title')
-    */
-    createSettitingTitle: t('components.olv-toolbar.create-setting-title'),
-
-    /**
-      @property useSettitingTitle
-      @type String
-      @default t('components.olv-toolbar.use-setting-title')
-    */
-    useSettitingTitle: t('components.olv-toolbar.use-setting-title'),
-
-    /**
-      @property editSettitingTitle
-      @type String
-      @default t('components.olv-toolbar.edit-setting-title')
-    */
-    editSettitingTitle: t('components.olv-toolbar.edit-setting-title'),
-
-    /**
-      @property removeSettitingTitle
-      @type String
-      @default t('components.olv-toolbar.remove-setting-title')
-    */
-    removeSettitingTitle: t('components.olv-toolbar.remove-setting-title'),
-
-    /**
-      @property setDefaultSettitingTitle
-      @type String
-      @default t('components.olv-toolbar.set-default-setting-title')
-    */
-    setDefaultSettitingTitle: t('components.olv-toolbar.set-default-setting-title'),
-
-    /**
-      @property setDefaultSettitingTitle
-      @type String
-      @default t('components.olv-toolbar.set-default-setting-title')
-    */
-    showDefaultSettitingTitle: t('components.olv-toolbar.show-default-setting-title'),
-
-    /**
-      @property colsConfigMenu
-      @type Service
-    */
-    colsConfigMenu: Ember.inject.service(),
-
-    /**
-      @property colsSettingsItems
-      @readOnly
-    */
-    colsSettingsItems:  Ember.computed(
-      'createSettitingTitle',
-      'setDefaultSettitingTitle',
-      'showDefaultSettitingTitle',
-      'useSettitingTitle',
-      'editSettitingTitle',
-      'removeSettitingTitle',
-      'listNamedUserSettings',
-      function() {
-        let params = {
-          createSettitingTitle: this.get('createSettitingTitle'),
-          setDefaultSettitingTitle: this.get('setDefaultSettitingTitle'),
-          showDefaultSettitingTitle: this.get('showDefaultSettitingTitle'),
-          useSettitingTitle: this.get('useSettitingTitle'),
-          editSettitingTitle: this.get('editSettitingTitle'),
-          removeSettitingTitle: this.get('removeSettitingTitle'),
-          listNamedUserSettings: this.get('listNamedUserSettings'),
-        };
-
-        return this.get('userSettingsService').isUserSettingsServiceEnabled ?
-          this.get('colsConfigMenu').resetMenu(params) :
-          [];
-      }
-    ),
-
-    /**
-      Flag shows enable-state of delete button.
-      If there are selected rows button is enabled. Otherwise - not.
-
-      @property isDeleteButtonEnabled
-      @type Boolean
-      @default false
-    */
-    isDeleteButtonEnabled: false,
-
-    /**
-      Stores the text from "Filter by any match" input field.
-
-      @property filterByAnyMatchText
-      @type String
-    */
-    filterByAnyMatchText: Ember.computed.oneWay('filterText'),
-
-    /**
-      Caption to be displayed in info modal dialog.
-      It will be displayed only if some info occurs.
-
-      @property _infoModalDialogCaption
-      @type String
-      @default ''
-      @private
-    */
-    _infoModalDialogCaption: '',
-
-    /**
-      Content to be displayed in info modal dialog.
-      It will be displayed only if some info occurs.
-
-      @property _infoModalDialogContent
-      @type String
-      @default ''
-      @private
-    */
-    _infoModalDialogContent: '',
-
-    /**
-      Selected jQuery object, containing HTML of error modal dialog.
-
-      @property _errorModalDialog
-      @type <a href="http://api.jquery.com/Types/#jQuery">JQueryObject</a>
-      @default null
-      @private
-    */
-    _infoModalDialog: null,
-
-    /**
-     Shows info modal dialog.
-
-      @method showInfoModalDialog
-      @param {String} infoCaption Info caption (window header caption).
-      @param {String} infoContent Info content (window body content).
-      @returns {String} Info content.
-    */
-    showInfoModalDialog(infoCaption, infoContent) {
-      let infoModalDialog = this.get('_infoModalDialog');
-      if (infoModalDialog && infoModalDialog.modal) {
-        this.set('_infoModalDialogCaption', infoCaption);
-        this.set('_infoModalDialogContent', infoContent);
-        infoModalDialog.modal('show');
-      }
-
-      let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
-      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
-      oLVToolbarInfoCopyButton.removeClass('disabled');
-      return infoContent;
-    },
-    /**
-      Event handler for "row has been selected" event in objectlistview.
-
-      @method _rowSelected
-      @private
-
-      @param {String} componentName The name of objectlistview component
-      @param {DS.Model} record The model corresponding to selected row in objectlistview
-      @param {Number} count Count of selected rows in objectlistview
-    */
-    _rowSelected(componentName, record, count) {
-      if (componentName === this.get('componentName')) {
-        this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
-      }
-    },
-
-    _addNamedSetting(namedSetting) {
-      Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
-    },
-
-    _deleteNamedSetting(namedSetting) {
-      Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
-    },
-
-    /**
-    Flag used to display embedded records.
-
-    @property _expanded
-    @type Boolean
-    @default false
-    @private
+    @property modelController
+    @type Object
   */
-  _expanded: false,
+  modelController: null,
 
   /**
-    Store the string for building hierarchical indent.
+    Route for edit form by click row.
 
-    @property _hierarchicalIndent
+    @property editFormRoute
     @type String
-    @default '&nbsp;'
+  */
+  editFormRoute: undefined,
+
+  /**
+    Flag to use creation button at toolbar.
+
+    @property createNewButton
+    @type Boolean
+    @default false
+  */
+  createNewButton: false,
+
+  /**
+    Flag to specify whether the create button is enabled.
+
+    @property enableCreateNewButton
+    @type Boolean
+    @default true
+  */
+  enableCreateNewButton: true,
+
+  /**
+    Flag to use refresh button at toolbar.
+
+    @property refreshButton
+    @type Boolean
+    @default false
+  */
+  refreshButton: false,
+
+  /**
+    Flag to use delete button at toolbar.
+
+    @property deleteButton
+    @type Boolean
+    @default false
+  */
+  deleteButton: false,
+
+  /**
+    Flag to use colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default true
+    @readOnly
+  */
+  colsConfigButton: true,
+
+  /**
+    Flag to use filter button at toolbar.
+
+    @property filterButton
+    @type Boolean
+    @default false
+  */
+  filterButton: false,
+
+  /**
+    Used to specify default 'filter by any match' field text.
+
+    @property filterText
+    @type String
+    @default null
+  */
+  filterText: null,
+
+  /**
+    The flag to specify whether the delete button is enabled.
+
+    @property enableDeleteButton
+    @type Boolean
+    @default true
+  */
+  enableDeleteButton: true,
+
+  /**
+    Name of action to send out, action triggered by click on user button.
+
+    @property customButtonAction
+    @type String
+    @default 'customButtonAction'
+  */
+  customButtonAction: 'customButtonAction',
+
+  /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...' // Css classes for button.
+      }
+      ```
+
+    @property customButtonsArray
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
+    @property listNamedUserSettings
+  */
+  listNamedUserSettings: undefined,
+
+  /**
+    @property createSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.create-setting-title')
+  */
+  createSettitingTitle: t('components.olv-toolbar.create-setting-title'),
+
+  /**
+    @property useSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.use-setting-title')
+  */
+  useSettitingTitle: t('components.olv-toolbar.use-setting-title'),
+
+  /**
+    @property editSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.edit-setting-title')
+  */
+  editSettitingTitle: t('components.olv-toolbar.edit-setting-title'),
+
+  /**
+    @property removeSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.remove-setting-title')
+  */
+  removeSettitingTitle: t('components.olv-toolbar.remove-setting-title'),
+
+  /**
+    @property setDefaultSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.set-default-setting-title')
+  */
+  setDefaultSettitingTitle: t('components.olv-toolbar.set-default-setting-title'),
+
+  /**
+    @property setDefaultSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.set-default-setting-title')
+  */
+  showDefaultSettitingTitle: t('components.olv-toolbar.show-default-setting-title'),
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  /**
+    @property colsSettingsItems
+    @readOnly
+  */
+  colsSettingsItems:  Ember.computed(
+    'createSettitingTitle',
+    'setDefaultSettitingTitle',
+    'showDefaultSettitingTitle',
+    'useSettitingTitle',
+    'editSettitingTitle',
+    'removeSettitingTitle',
+    'listNamedUserSettings',
+    function() {
+      let params = {
+        createSettitingTitle: this.get('createSettitingTitle'),
+        setDefaultSettitingTitle: this.get('setDefaultSettitingTitle'),
+        showDefaultSettitingTitle: this.get('showDefaultSettitingTitle'),
+        useSettitingTitle: this.get('useSettitingTitle'),
+        editSettitingTitle: this.get('editSettitingTitle'),
+        removeSettitingTitle: this.get('removeSettitingTitle'),
+        listNamedUserSettings: this.get('listNamedUserSettings'),
+      };
+
+      return this.get('userSettingsService').isUserSettingsServiceEnabled ?
+        this.get('colsConfigMenu').resetMenu(params) :
+        [];
+    }
+  ),
+
+  /**
+    Flag shows enable-state of delete button.
+    If there are selected rows button is enabled. Otherwise - not.
+
+    @property isDeleteButtonEnabled
+    @type Boolean
+    @default false
+  */
+  isDeleteButtonEnabled: false,
+
+  /**
+    Stores the text from "Filter by any match" input field.
+
+    @property filterByAnyMatchText
+    @type String
+  */
+  filterByAnyMatchText: Ember.computed.oneWay('filterText'),
+
+  /**
+    Caption to be displayed in info modal dialog.
+    It will be displayed only if some info occurs.
+
+    @property _infoModalDialogCaption
+    @type String
+    @default ''
     @private
   */
-  _hierarchicalIndent: '&nbsp;',
+  _infoModalDialogCaption: '',
+
+  /**
+    Content to be displayed in info modal dialog.
+    It will be displayed only if some info occurs.
+
+    @property _infoModalDialogContent
+    @type String
+    @default ''
+    @private
+  */
+  _infoModalDialogContent: '',
+
+  /**
+    Selected jQuery object, containing HTML of error modal dialog.
+
+    @property _errorModalDialog
+    @type <a href="http://api.jquery.com/Types/#jQuery">JQueryObject</a>
+    @default null
+    @private
+  */
+  _infoModalDialog: null,
+
+  /**
+   Shows info modal dialog.
+
+    @method showInfoModalDialog
+    @param {String} infoCaption Info caption (window header caption).
+    @param {String} infoContent Info content (window body content).
+    @returns {String} Info content.
+  */
+  showInfoModalDialog(infoCaption, infoContent) {
+    let infoModalDialog = this.get('_infoModalDialog');
+    if (infoModalDialog && infoModalDialog.modal) {
+      this.set('_infoModalDialogCaption', infoCaption);
+      this.set('_infoModalDialogContent', infoContent);
+      infoModalDialog.modal('show');
+    }
+
+    let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
+    oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
+    oLVToolbarInfoCopyButton.removeClass('disabled');
+    return infoContent;
+  },
+
+  /**
+    Event handler for "row has been selected" event in objectlistview.
+
+    @method _rowSelected
+    @private
+
+    @param {String} componentName The name of objectlistview component
+    @param {DS.Model} record The model corresponding to selected row in objectlistview
+    @param {Number} count Count of selected rows in objectlistview
+  */
+  _rowSelected(componentName, record, count) {
+    if (componentName === this.get('componentName')) {
+      this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
+    }
+  },
+
+  _addNamedSetting(namedSetting) {
+    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+  },
+
+  _deleteNamedSetting(namedSetting) {
+    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+  },
 
   /**
     Level nesting by default.
@@ -2443,16 +2373,4 @@ export default folv.extend(
       return this.get('records');
     },
   }),
-
-  /**
-    Flag indicate whether there nested records.
-
-    @property hasRecords
-    @type Boolean
-    @default false
-  */
-  hasRecords: Ember.computed('records.length', function() {
-    return this.get('records.length') > 0;
-  }),
-
 });

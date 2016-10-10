@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-simpleolv` component for rapid rows rendering.
+
 ### Fixed
 * Detect necessity reload `aggregator` model if it was `detail` model modified.
 * Transition to edit form route when record has an `id` and same time is new.
@@ -15,6 +18,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.15 version.
 * Rolled back fix detection of necessity reload `aggregator` model if it was `detail` model modified.
+
+### Changed
+* `object-list-view` component.
+    * Rename `headerClickable` to `orderable`.
 
 ## [0.7.0-beta.12] - 2016-10-07
 ### Added

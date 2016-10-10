@@ -1,27 +1,24 @@
-/**
-  @module ember-flexberry
-*/
 import Ember from 'ember';
-import FlexberryBaseComponent from './flexberry-base-component';
+import folv from './flexberry-objectlistview';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
+const { getOwner } = Ember;
 
 /**
-  Object list view component.
+  Simple object list view  component.
 
-  @class ObjectListViewComponent
-  @extends FlexberryBaseComponent
+  @extends FlexberryObjectlistviewComponent
   @uses FlexberryLookupCompatibleComponentMixin
   @uses FlexberryLookupCompatibleComponentMixin
   @uses ErrorableControllerMixin
 */
-export default FlexberryBaseComponent.extend(
-  FlexberryLookupCompatibleComponentMixin,
-  FlexberryFileCompatibleComponentMixin,
-  ErrorableControllerMixin, {
+export default folv.extend(
+FlexberryLookupCompatibleComponentMixin,
+FlexberryFileCompatibleComponentMixin,
+ErrorableControllerMixin, {
 
   /**
     Projection set by property {{#crossLink "ObjectListViewComponent/modelProjection:property"}}{{/crossLink}}.
@@ -112,17 +109,7 @@ export default FlexberryBaseComponent.extend(
   /**
     Default classes for component wrapper.
   */
-  classNames: ['object-list-view-container'],
-
-  /**
-    Table row click action name.
-
-    @property action
-    @type String
-    @default ''
-    @readOnly
-  */
-  action: '',
+  classNames: ['flexberry-simpleolv'],
 
   /**
     Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
@@ -494,33 +481,6 @@ export default FlexberryBaseComponent.extend(
   contentForRender: null,
 
   /**
-    Flag indicates whether row by row loading mode on.
-
-    @property useRowByRowLoading
-    @type Boolean
-    @default false
-  */
-  useRowByRowLoading: false,
-
-  /**
-    Flag indicates whether to show row by row loading in progress.
-
-    @property rowByRowLoadingProgress
-    @type Boolean
-    @default false
-  */
-  rowByRowLoadingProgress: false,
-
-  /**
-    Flag indicates whether to use bottom row by row loading progress while rows in loading state.
-
-    @property useRowByRowLoadingProgress
-    @type Boolean
-    @default false
-  */
-  useRowByRowLoadingProgress: false,
-
-  /**
     Flag indicates whether some rows are not loaded yet.
 
     @property rowsInLoadingState
@@ -555,7 +515,7 @@ export default FlexberryBaseComponent.extend(
     @property placeholder
     @type String
     @default 't('components.object-list-view.placeholder')'
-   */
+  */
   placeholder: t('components.object-list-view.placeholder'),
 
   /**
@@ -710,9 +670,9 @@ export default FlexberryBaseComponent.extend(
 
     @property immediateDelete
     @type Boolean
-    @default false
+    @default true
   */
-  immediateDelete: false,
+  immediateDelete: true,
 
   /**
     Flag indicates whether records should be edited on separate route.
@@ -757,41 +717,9 @@ export default FlexberryBaseComponent.extend(
   */
   componentName: '',
 
+  showConfigDialog: 'showConfigDialog',
+
   actions: {
-    /**
-      This action is called when user click on row.
-
-      @method actions.rowClick
-      @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
-    */
-    rowClick(recordWithKey, e) {
-      let editOnSeparateRoute = this.get('editOnSeparateRoute');
-      if (this.get('readonly')) {
-        if (!editOnSeparateRoute) {
-          return;
-        }
-      }
-
-      if (this.rowClickable) {
-        let editOnSeparateRoute = this.get('editOnSeparateRoute');
-        if (!editOnSeparateRoute) {
-          // It is necessary only when we will not go to other route on click.
-          this.set('selectedRecord', recordWithKey.data);
-          this._setActiveRecord(recordWithKey.key);
-        }
-
-        this.sendAction('action', recordWithKey ? recordWithKey.data : undefined, {
-          saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
-          editOnSeparateRoute: editOnSeparateRoute,
-          modelName: this.get('modelProjection').modelName,
-          detailArray: this.get('content'),
-          readonly: this.get('readonly')
-        });
-      }
-    },
-
     /**
       This action is called when user click on header.
 
@@ -865,29 +793,197 @@ export default FlexberryBaseComponent.extend(
 
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
-    }
+    },
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.refresh
+      @public
+    */
+    refresh() {
+      this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
+    },
+
+    /**
+      Handles action from object-list-view when no handler for this component is defined.
+
+      @method actions.createNew
+      @public
+    */
+    createNew() {
+      let editFormRoute = this.get('editFormRoute');
+      let modelController = this.get('modelController');
+      modelController.transitionToRoute(editFormRoute + '.new');
+    },
+
+    /**
+      Delete selected rows.
+
+      @method actions.delete
+      @public
+    */
+    delete() {
+      let confirmDeleteRows = this.get('confirmDeleteRows');
+      if (confirmDeleteRows) {
+        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        if (!confirmDeleteRows()) {
+          return;
+        }
+      }
+
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+    },
+
+    /**
+      Filters the content by "Filter by any match" field value.
+
+      @method actions.filterByAnyMatch
+      @public
+    */
+    filterByAnyMatch() {
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, this.get('filterByAnyMatchText'));
+    },
+
+    /**
+      Remove filter from url.
+
+      @method actions.removeFilter
+      @public
+    */
+    removeFilter() {
+      this.set('filterText', null);
+    },
+
+    /**
+      Action for custom button.
+
+      @method actions.customButtonAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonAction(actionName) {
+      this.sendAction('customButtonAction', actionName);
+    },
+
+    /**
+      Action to show confis dialog.
+
+      @method actions.showConfigDialog
+      @public
+    */
+    showConfigDialog(settingName) {
+      Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('modelController').send('showConfigDialog', this.componentName, settingName);
+    },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onMenuItemClick(e) {
+      let iTags = Ember.$(e.currentTarget).find('i');
+      let namedSettingSpans = Ember.$(e.currentTarget).find('span');
+      if (iTags.length <= 0 || namedSettingSpans.length <= 0) {
+        return;
+      }
+
+      this._router = getOwner(this).lookup('router:main');
+      let className = iTags.get(0).className;
+      let namedSetting = namedSettingSpans.get(0).innerText;
+      let componentName  =  this.componentName;
+      let userSettingsService = this.get('userSettingsService');
+
+      switch (className) {
+        case 'table icon':
+          this.send('showConfigDialog');
+          break;
+        case 'checkmark box icon':
+
+          //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
+          let colsConfig = this.listNamedUserSettings[namedSetting];
+          userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
+            then(record => {
+              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              } else {
+                this._router.router.refresh();  //Reload current page and records (model) list
+              }
+            });
+          break;
+        case 'setting icon':
+          this.send('showConfigDialog', namedSetting);
+          break;
+        case 'remove icon':
+          userSettingsService.deleteUserSetting(componentName, namedSetting)
+          .then(result => {
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
+            alert('Настройка ' + namedSetting + ' удалена');
+          });
+          break;
+        case 'remove circle icon':
+          if (!userSettingsService.haveDefaultUserSetting(componentName)) {
+            alert('No default usersettings');
+            break;
+          }
+
+          userSettingsService.deleteUserSetting(componentName)
+          .then(record => {
+            if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+            } else {
+              this._router.router.refresh();  //Reload current page and records (model) list
+            }
+          });
+          break;
+        case 'unhide icon':
+          let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
+          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
+          this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
+          break;
+      }
+    },
+
+    copyJSONContent(event) {
+      Ember.$('#OLVToolbarInfoContent').select();
+      let copied = document.execCommand('copy');
+      let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
+      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
+      oLVToolbarInfoCopyButton.addClass('disabled');
+    },
+
+    /**
+      Redirect action from FlexberryLookupComponent in the controller.
+
+      @method actions.showLookupDialog
+      @param {Object} chooseData
+    */
+    showLookupDialog(chooseData) {
+      this.get('currentController').send('showLookupDialog', chooseData);
+    },
+
+    /**
+      Redirect action from FlexberryLookupComponent in the controller.
+
+      @method actions.removeLookupValue
+      @param {Object} removeData
+    */
+    removeLookupValue(removeData) {
+      this.get('currentController').send('removeLookupValue', removeData);
+    },
   },
 
   /**
     An overridable method called when objects are instantiated.
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
-   */
+  */
   init() {
     this._super(...arguments);
     Ember.assert('ObjectListView must have componentName attribute.', this.get('componentName'));
-
-    if (!this.get('disableHierarchicalMode')) {
-      let modelName = this.get('modelName');
-      if (modelName) {
-        let model = this.get('store').modelFor(modelName);
-        let relationships = Ember.get(model, 'relationships');
-        let hierarchicalrelationships = relationships.get(modelName);
-        if (hierarchicalrelationships.length === 1) {
-          let hierarchicalAttribute = hierarchicalrelationships[0].name;
-          this.sendAction('availableHierarchicalMode', hierarchicalAttribute);
-        }
-      }
-    }
 
     this.set('selectedRecords', Ember.A());
 
@@ -936,14 +1032,6 @@ export default FlexberryBaseComponent.extend(
     if (columnWidth !== undefined) {
       this._setColumnWidths(columnWidth);
     }
-
-    // TODO: resolve this problem.
-    this.$('.flexberry-dropdown:last').dropdown({
-      direction: 'upward'
-    });
-
-    // TODO: the last menu needs will be up.
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**
@@ -955,16 +1043,6 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _colResizableInit: false,
-
-  /**
-    Field contains index for already rendered row.
-
-    @property _colResizableInit
-    @type Number
-    @default -1
-    @private
-  */
-  _renderedRowIndex: -1,
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
@@ -984,52 +1062,15 @@ export default FlexberryBaseComponent.extend(
       this.set('_colResizableInit', true);
     }
 
-    // Start row by row rendering at first row.
-    if (this.get('useRowByRowLoading')) {
-      let contentForRender = this.get('contentForRender');
-      if (contentForRender) {
-        let contentLength = contentForRender.get('length');
-        if (contentLength > 0) {
-          let renderedRowIndex = this.get('_renderedRowIndex') + 1;
-
-          if (renderedRowIndex >= contentLength) {
-            this.$('.object-list-view-menu > .ui.dropdown').dropdown();
-
-            // The last menu needs will be up.
-            Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
-
-            // Remove long loading spinners.
-            this.set('rowByRowLoadingProgress', false);
-            this.set('showLoadingTbodyClass', false);
-
-            this.set('_renderedRowIndex', -1);
-
-            if (this.rowClickable) {
-              let key = this._getModelKey(this.selectedRecord);
-              if (key) {
-                this._setActiveRecord(key);
-              }
-            }
-          } else {
-            // Start render row.
-            let modelWithKey = contentForRender[renderedRowIndex];
-            if (!modelWithKey.get('doRenderData')) {
-              modelWithKey.set('doRenderData', true);
-              this.set('_renderedRowIndex', renderedRowIndex);
-
-              if (renderedRowIndex === 0) {
-                if (this.get('useRowByRowLoadingProgress')) {
-                  // Set loading progress.
-                  this.set('rowByRowLoadingProgress', true);
-                }
-              }
-            }
-          }
-        }
+    if (this.rowClickable) {
+      let key = this._getModelKey(this.selectedRecord);
+      if (key) {
+        this._setActiveRecord(key);
       }
-    } else {
-      this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
+
+    this.$('.object-list-view-menu > .ui.dropdown').dropdown();
+    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**
@@ -1593,14 +1634,6 @@ export default FlexberryBaseComponent.extend(
       configurateRow(rowConfig, record);
     }
 
-    if (this.get('useRowByRowLoading')) {
-      let modelIndex = this.get('contentForRender.length');
-      modelWithKey.set('modelIndex', modelIndex);
-      modelWithKey.set('doRenderData', false);
-    } else {
-      modelWithKey.set('doRenderData', true);
-    }
-
     this.get('contentForRender').pushObject(modelWithKey);
 
     return key;
@@ -1864,4 +1897,393 @@ export default FlexberryBaseComponent.extend(
       configurateRow(rowConfig, record);
     }
   },
+
+  /**
+    Controller for model.
+
+    @property modelController
+    @type Object
+  */
+  modelController: null,
+
+  /**
+    Route for edit form by click row.
+
+    @property editFormRoute
+    @type String
+  */
+  editFormRoute: undefined,
+
+  /**
+    Flag to use creation button at toolbar.
+
+    @property createNewButton
+    @type Boolean
+    @default false
+  */
+  createNewButton: false,
+
+  /**
+    Flag to specify whether the create button is enabled.
+
+    @property enableCreateNewButton
+    @type Boolean
+    @default true
+  */
+  enableCreateNewButton: true,
+
+  /**
+    Flag to use refresh button at toolbar.
+
+    @property refreshButton
+    @type Boolean
+    @default false
+  */
+  refreshButton: false,
+
+  /**
+    Flag to use delete button at toolbar.
+
+    @property deleteButton
+    @type Boolean
+    @default false
+  */
+  deleteButton: false,
+
+  /**
+    Flag to use colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default true
+    @readOnly
+  */
+  colsConfigButton: true,
+
+  /**
+    Flag to use filter button at toolbar.
+
+    @property filterButton
+    @type Boolean
+    @default false
+  */
+  filterButton: false,
+
+  /**
+    Used to specify default 'filter by any match' field text.
+
+    @property filterText
+    @type String
+    @default null
+  */
+  filterText: null,
+
+  /**
+    The flag to specify whether the delete button is enabled.
+
+    @property enableDeleteButton
+    @type Boolean
+    @default true
+  */
+  enableDeleteButton: true,
+
+  /**
+    Name of action to send out, action triggered by click on user button.
+
+    @property customButtonAction
+    @type String
+    @default 'customButtonAction'
+  */
+  customButtonAction: 'customButtonAction',
+
+  /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...' // Css classes for button.
+      }
+      ```
+
+    @property customButtonsArray
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
+    @property listNamedUserSettings
+  */
+  listNamedUserSettings: undefined,
+
+  /**
+    @property createSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.create-setting-title')
+  */
+  createSettitingTitle: t('components.olv-toolbar.create-setting-title'),
+
+  /**
+    @property useSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.use-setting-title')
+  */
+  useSettitingTitle: t('components.olv-toolbar.use-setting-title'),
+
+  /**
+    @property editSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.edit-setting-title')
+  */
+  editSettitingTitle: t('components.olv-toolbar.edit-setting-title'),
+
+  /**
+    @property removeSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.remove-setting-title')
+  */
+  removeSettitingTitle: t('components.olv-toolbar.remove-setting-title'),
+
+  /**
+    @property setDefaultSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.set-default-setting-title')
+  */
+  setDefaultSettitingTitle: t('components.olv-toolbar.set-default-setting-title'),
+
+  /**
+    @property setDefaultSettitingTitle
+    @type String
+    @default t('components.olv-toolbar.set-default-setting-title')
+  */
+  showDefaultSettitingTitle: t('components.olv-toolbar.show-default-setting-title'),
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  /**
+    @property colsSettingsItems
+    @readOnly
+  */
+  colsSettingsItems:  Ember.computed(
+    'createSettitingTitle',
+    'setDefaultSettitingTitle',
+    'showDefaultSettitingTitle',
+    'useSettitingTitle',
+    'editSettitingTitle',
+    'removeSettitingTitle',
+    'listNamedUserSettings',
+    function() {
+      let params = {
+        createSettitingTitle: this.get('createSettitingTitle'),
+        setDefaultSettitingTitle: this.get('setDefaultSettitingTitle'),
+        showDefaultSettitingTitle: this.get('showDefaultSettitingTitle'),
+        useSettitingTitle: this.get('useSettitingTitle'),
+        editSettitingTitle: this.get('editSettitingTitle'),
+        removeSettitingTitle: this.get('removeSettitingTitle'),
+        listNamedUserSettings: this.get('listNamedUserSettings'),
+      };
+
+      return this.get('userSettingsService').isUserSettingsServiceEnabled ?
+        this.get('colsConfigMenu').resetMenu(params) :
+        [];
+    }
+  ),
+
+  /**
+    Flag shows enable-state of delete button.
+    If there are selected rows button is enabled. Otherwise - not.
+
+    @property isDeleteButtonEnabled
+    @type Boolean
+    @default false
+  */
+  isDeleteButtonEnabled: false,
+
+  /**
+    Stores the text from "Filter by any match" input field.
+
+    @property filterByAnyMatchText
+    @type String
+  */
+  filterByAnyMatchText: Ember.computed.oneWay('filterText'),
+
+  /**
+    Caption to be displayed in info modal dialog.
+    It will be displayed only if some info occurs.
+
+    @property _infoModalDialogCaption
+    @type String
+    @default ''
+    @private
+  */
+  _infoModalDialogCaption: '',
+
+  /**
+    Content to be displayed in info modal dialog.
+    It will be displayed only if some info occurs.
+
+    @property _infoModalDialogContent
+    @type String
+    @default ''
+    @private
+  */
+  _infoModalDialogContent: '',
+
+  /**
+    Selected jQuery object, containing HTML of error modal dialog.
+
+    @property _errorModalDialog
+    @type <a href="http://api.jquery.com/Types/#jQuery">JQueryObject</a>
+    @default null
+    @private
+  */
+  _infoModalDialog: null,
+
+  /**
+   Shows info modal dialog.
+
+    @method showInfoModalDialog
+    @param {String} infoCaption Info caption (window header caption).
+    @param {String} infoContent Info content (window body content).
+    @returns {String} Info content.
+  */
+  showInfoModalDialog(infoCaption, infoContent) {
+    let infoModalDialog = this.get('_infoModalDialog');
+    if (infoModalDialog && infoModalDialog.modal) {
+      this.set('_infoModalDialogCaption', infoCaption);
+      this.set('_infoModalDialogContent', infoContent);
+      infoModalDialog.modal('show');
+    }
+
+    let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
+    oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
+    oLVToolbarInfoCopyButton.removeClass('disabled');
+    return infoContent;
+  },
+
+  /**
+    Event handler for "row has been selected" event in objectlistview.
+
+    @method _rowSelected
+    @private
+
+    @param {String} componentName The name of objectlistview component
+    @param {DS.Model} record The model corresponding to selected row in objectlistview
+    @param {Number} count Count of selected rows in objectlistview
+  */
+  _rowSelected(componentName, record, count) {
+    if (componentName === this.get('componentName')) {
+      this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
+    }
+  },
+
+  _addNamedSetting(namedSetting) {
+    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+  },
+
+  _deleteNamedSetting(namedSetting) {
+    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+  },
+
+  /**
+    Level nesting by default.
+
+    @property _level
+    @type Number
+    @default 0
+    @private
+  */
+  _level: 0,
+
+  /**
+    Level nesting current record.
+
+    @property _currentLevel
+    @type Number
+    @default 0
+    @private
+  */
+  _currentLevel: Ember.computed({
+    get() {
+      return this.get('_level');
+    },
+    set(key, value) {
+      return this.set('_level', ++value);
+    },
+  }),
+
+  /**
+    Store nested records.
+
+    @property _records
+    @type Ember.NativeArray
+    @default Empty
+    @private
+  */
+  _records: Ember.computed(() => Ember.A()),
+
+  /**
+    Flag used to start render row content.
+
+    @property doRenderData
+    @type Boolean
+    @default false
+  */
+  doRenderData: false,
+
+  /**
+    Current record.
+    - `key` - Ember GUID for record.
+    - `data` - Instance of DS.Model.
+    - `config` - Object with config for record.
+
+    @property record
+    @type Object
+  */
+  record: Ember.computed(() => ({
+    key: undefined,
+    data: undefined,
+    config: undefined,
+  })),
+
+  /**
+    Store nested records.
+
+    @property records
+    @type Ember.NativeArray
+    @default Empty
+  */
+  records: Ember.computed({
+    get() {
+      return this.get('_records');
+    },
+    set(key, value) {
+      value.then((records) => {
+        records.forEach((record) => {
+          let config = Ember.copy(this.get('defaultRowConfig'));
+          let configurateRow = this.get('configurateRow');
+          if (configurateRow) {
+            Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
+            configurateRow(config, record);
+          }
+
+          let newRecord = Ember.Object.create({
+            key: Ember.guidFor(record),
+            data: record,
+            config: config,
+            doRenderData: true
+          });
+
+          this.get('_records').pushObject(newRecord);
+        });
+      });
+      return this.get('records');
+    },
+  }),
 });

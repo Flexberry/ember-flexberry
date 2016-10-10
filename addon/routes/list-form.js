@@ -42,12 +42,13 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
   @uses FlexberryObjectlistviewRouteMixin
 */
 export default ProjectedModelFormRoute.extend(
-  PaginatedRouteMixin,
-  SortableRouteMixin,
-  LimitedRouteMixin,
-  ReloadListMixin,
-  FlexberryObjectlistviewRouteMixin,
-  FlexberryObjectlistviewHierarchicalRouteMixin, {
+PaginatedRouteMixin,
+SortableRouteMixin,
+LimitedRouteMixin,
+ReloadListMixin,
+FlexberryObjectlistviewRouteMixin,
+FlexberryObjectlistviewHierarchicalRouteMixin, {
+
   /**
     Current sorting.
 
@@ -168,5 +169,5 @@ export default ProjectedModelFormRoute.extend(
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
-  },
+  }
 });

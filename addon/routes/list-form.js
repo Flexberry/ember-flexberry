@@ -42,13 +42,12 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
   @uses FlexberryObjectlistviewRouteMixin
 */
 export default ProjectedModelFormRoute.extend(
-  PaginatedRouteMixin,
-  SortableRouteMixin,
-  LimitedRouteMixin,
-  ReloadListMixin,
-  FlexberryObjectlistviewRouteMixin,
-  FlexberryObjectlistviewHierarchicalRouteMixin, {
-  formLoadTimeTracker: Ember.inject.service('form-load-time-tracker'),
+PaginatedRouteMixin,
+SortableRouteMixin,
+LimitedRouteMixin,
+ReloadListMixin,
+FlexberryObjectlistviewRouteMixin,
+FlexberryObjectlistviewHierarchicalRouteMixin, {
 
   /**
     Current sorting.
@@ -59,21 +58,6 @@ export default ProjectedModelFormRoute.extend(
   */
   sorting: [],
 
-  init: function() {
-    this.set('formLoadTimeTracker.initTime', Math.round(performance.now()));
-    return this._super.apply(this, arguments);
-  },
-
-  activate: function() {
-    this.set('formLoadTimeTracker.activateTime', Math.round(performance.now()));
-    return this._super.apply(this, arguments);
-  },
-
-  beforeModel: function() {
-    this.set('formLoadTimeTracker.beforeModelTime', Math.round(performance.now()));
-    return this._super.apply(this, arguments);
-  },
-
   /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
@@ -83,7 +67,6 @@ export default ProjectedModelFormRoute.extend(
     @param {Object} transition
   */
   model: function(params, transition) {
-    this.set('formLoadTimeTracker.modelTime', Math.round(performance.now() - this.get('formLoadTimeTracker.beforeModelTime')));
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -169,11 +152,6 @@ export default ProjectedModelFormRoute.extend(
     }
   },
 
-  afterModel: function() {
-    this.set('formLoadTimeTracker.afterModel', Math.round(performance.now() - this.get('formLoadTimeTracker.modelTime')));
-    return this._super.apply(this, arguments);
-  },
-
   /**
     A hook you can use to setup the controller for the current route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_setupController).
@@ -183,8 +161,6 @@ export default ProjectedModelFormRoute.extend(
     @param {Object} model
   */
   setupController: function(controller, model) {
-    this.set('formLoadTimeTracker.setupControllerTime', Math.round(performance.now()));
-
     this._super(...arguments);
 
     // Define 'modelProjection' for controller instance.
@@ -193,10 +169,5 @@ export default ProjectedModelFormRoute.extend(
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
-  },
-
-  renderTemplate: function() {
-    this.set('formLoadTimeTracker.renderTemplateTime', Math.round(performance.now()));
-    return this._super.apply(this, arguments);
-  },
+  }
 });

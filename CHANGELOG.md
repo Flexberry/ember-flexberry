@@ -3,13 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.7.0-beta.16] - 2016-10-11
 ### Added
-* Track time load and render on list form using `FormLoadTimeTrackerService`.
-* Component `form-load-time-tracker` for view data from `FormLoadTimeTrackerService`.
+* Track time load and render on list form using `form-load-time-tracker` service.
+* `form-load-time-tracker` component for view data from `form-load-time-tracker` service.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.18 version.
 
 ### Fixed
 * `flexberry-simpleolv` component:
-    * Fix remove from toolbar & context menu in row.
+    * Fix ability to remove records from toolbar & context menu in row.
 * `flexberry-simpleolv`, `flexberry-objectlistview`, `object-list-view` components:
     * Fix `showLoadingTbodyClass` event.
 * Component `flexberry-lookup` override private property `context` from `Ember.Component` that could cause errors.

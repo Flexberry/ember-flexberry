@@ -3,8 +3,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 const formLoadTimeTracker = Ember.Service.extend({
-  loadTime: 1,
-  renderTime: 2,
+  loadTime: 1.0000,
+  renderTime: 2.0000,
 });
 
 moduleForComponent('form-load-time-tracker', 'Integration | Component | form load time tracker', {

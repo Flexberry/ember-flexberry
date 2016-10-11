@@ -41,7 +41,6 @@
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
     "ember-cli-test-loader": "^1.1.0",
-    "ember-cli-legacy-blueprints": "^0.1.0",
     "ember-data": "~2.8.0",
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^1.0.5",
@@ -59,6 +58,7 @@
     "node-uuid": "^1.4.7"
   },
   "dependencies": {
+    "ember-cli-legacy-blueprints": "^0.1.0",
     "ember-cli-babel": "^5.1.6",
     "ember-cli-sass": "^5.2.0",
     "ember-flexberry-data": "git+https://github.com/Flexberry/ember-flexberry-data.git#feature-ember-update",

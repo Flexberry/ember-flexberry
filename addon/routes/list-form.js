@@ -48,6 +48,14 @@ LimitedRouteMixin,
 ReloadListMixin,
 FlexberryObjectlistviewRouteMixin,
 FlexberryObjectlistviewHierarchicalRouteMixin, {
+  /**
+    Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
+
+    @property formLoadTimeTracker
+    @type FormLoadTimeTrackerService
+    @private
+  */
+  formLoadTimeTracker: Ember.inject.service(),
 
   /**
     Current sorting.
@@ -67,6 +75,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     @param {Object} transition
   */
   model: function(params, transition) {
+    this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -134,6 +143,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         // TODO: move includeSorting to setupController mixins?
         return this.reloadList(queryParameters);
       }).then((records) => {
+        this.get('formLoadTimeTracker').set('endLoadTime', performance.now());
         this.includeSorting(records, this.sorting);
         this.get('controller').set('model', records);
         return records;
@@ -162,6 +172,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   */
   setupController: function(controller, model) {
     this._super(...arguments);
+    this.get('formLoadTimeTracker').set('startRenderTime', performance.now());
 
     // Define 'modelProjection' for controller instance.
     // TODO: remove that when list-form controller will be moved to this route.

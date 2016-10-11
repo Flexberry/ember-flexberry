@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-simpleolv` component:
     * Fix remove from toolbar & context menu in row.
-
+* Component `flexberry-lookup` override private property `context` from `Ember.Component` that could cause errors.
 
 ## [0.7.0-beta.15] - 2016-10-10
 ### Changed

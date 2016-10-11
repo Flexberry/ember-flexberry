@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Component `flexberry-lookup` override private property `context` from `Ember.Component` that could cause errors.
 
 ## [0.7.0-beta.15] - 2016-10-10
 ### Changed

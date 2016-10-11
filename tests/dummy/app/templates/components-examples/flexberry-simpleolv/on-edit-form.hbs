@@ -1,11 +1,11 @@
-<h3>{{t "forms.ember-flexberry-dummy-suggestion-type-list.caption"}}</h3>
+<h3>{{t "forms.ember-flexberry-dummy-application-user-list.caption"}}</h3>
 <div class="row">
-  {{flexberry-objectlistview
+  {{flexberry-simpleolv
     content=model
-    modelName="ember-flexberry-dummy-suggestion-type"
+    modelName="ember-flexberry-dummy-application-user"
     modelProjection=modelProjection
     editFormRoute=editFormRoute
-    createNewButton=true
+    createNewButton=false
     refreshButton=true
     sorting=computedSorting
     orderable=true
@@ -20,10 +20,6 @@
     previousPage=(action "previousPage")
     gotoPage=(action "gotoPage")
     nextPage=(action "nextPage")
-    componentName="suggestionTypeObjectListView"
-    showCheckBoxInRow=true
-    showEditMenuItemInRow=true
-    showDeleteMenuItemInRow=true
-    showDeleteButtonInRow=true
+    componentName="SOLVOnEditFormObjectListView"
   }}
 </div>

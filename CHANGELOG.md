@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+* `flexberry-simpleolv` component:
+    * Fix remove from toolbar & context menu in row.
 * `flexberry-simpleolv`, `flexberry-objectlistview`, `object-list-view` components:
     * Fix `showLoadingTbodyClass` event.
 * Component `flexberry-lookup` override private property `context` from `Ember.Component` that could cause errors.

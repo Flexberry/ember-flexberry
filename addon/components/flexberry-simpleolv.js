@@ -996,6 +996,11 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
+    this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
+    this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
+
+    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
 
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
@@ -1086,6 +1091,10 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
+    this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
+    this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
 
     this._super(...arguments);
 

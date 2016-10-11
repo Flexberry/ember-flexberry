@@ -1,7 +1,8 @@
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-list.caption"}}</h3>
 <div class="row">
-  {{flexberry-objectlistview
+  {{flexberry-simpleolv
     editFormRoute=editFormRoute
+    showCheckBoxInRow=true
     modelName="ember-flexberry-dummy-suggestion"
     modelProjection=modelProjection
     content=model
@@ -22,5 +23,6 @@
     nextPage=(action "nextPage")
     componentName="SuggestionObjectListView"
     showDeleteMenuItemInRow=true
+    deleteButton=true
   }}
 </div>

@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Track time load and render on list form using `FormLoadTimeTrackerService`.
+* Component `form-load-time-tracker` for view data from `FormLoadTimeTrackerService`.
+
 ### Fixed
 * `flexberry-simpleolv` component:
     * Fix remove from toolbar & context menu in row.

@@ -24,6 +24,15 @@ export default FlexberryBaseComponent.extend({
   _showFilters: Ember.computed.oneWay('filters'),
 
   /**
+    Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
+
+    @property formLoadTimeTracker
+    @type FormLoadTimeTrackerService
+    @private
+  */
+  formLoadTimeTracker: Ember.inject.service(),
+
+  /**
     Store the action name at controller for loading records.
 
     @property _loadRecords
@@ -883,5 +892,15 @@ export default FlexberryBaseComponent.extend({
       // For lookup mode we allow to set properties.
       this.setProperties(customProperties);
     }
-  }
+  },
+
+  /**
+    Called after a component has been rendered, both on initial render and in subsequent rerenders.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+
+    @method didRender
+  */
+  didRender() {
+    this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
+  },
 });

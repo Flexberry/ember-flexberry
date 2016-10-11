@@ -40,7 +40,7 @@ export default ListFormController.extend({
   }),
 
   /**
-    Model projection for 'flexberry-objectlistview' component 'modelProjection' property.
+    Model projection for 'flexberry-simpleolv' component 'modelProjection' property.
 
     @property projection
     @type Object
@@ -60,7 +60,7 @@ export default ListFormController.extend({
   }),
 
   /**
-    Name of related edit form route (for 'flexberry-objectlistview' component 'editFormRoute' property).
+    Name of related edit form route (for 'flexberry-simpleolv' component 'editFormRoute' property).
 
     @property editFormRoute
     @type String
@@ -78,7 +78,7 @@ export default ListFormController.extend({
   records: [],
 
   /**
-    Configurate rows 'flexberry-objectlistview' component by address.
+    Configurate rows 'flexberry-simpleolv' component by address.
 
     @property configurateRowByAddress
     @type String
@@ -94,13 +94,13 @@ export default ListFormController.extend({
   }),
 
   /**
-    Template text for 'flexberry-objectlistview' component.
+    Template text for 'flexberry-simpleolv' component.
 
     @property componentTemplateText
     @type String
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-objectlistview<br>' +
+    '{{flexberry-simpleolv<br>' +
     '  configurateRow=(action \"configurateRow\")<br>' +
     '}}'),
 

@@ -41,7 +41,7 @@ export default ListFormController.extend({
   }),
 
   /**
-    Model projection for 'flexberry-objectlistview' component 'modelProjection' property.
+    Model projection for 'flexberry-simpleolv' component 'modelProjection' property.
 
     @property projection
     @type Object
@@ -61,7 +61,7 @@ export default ListFormController.extend({
   }),
 
   /**
-    Name of related edit form route (for 'flexberry-objectlistview' component 'editFormRoute' property).
+    Name of related edit form route (for 'flexberry-simpleolv' component 'editFormRoute' property).
 
     @property editFormRoute
     @type String
@@ -69,7 +69,7 @@ export default ListFormController.extend({
   editFormRoute: 'ember-flexberry-dummy-suggestion-edit',
 
   /**
-    Text for 'flexberry-objectlistview' component 'placeholder' property.
+    Text for 'flexberry-simpleolv' component 'placeholder' property.
 
     @property placeholder
     @type String
@@ -88,7 +88,7 @@ export default ListFormController.extend({
   }),
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'readonly' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'readonly' mode or not.
 
     @property readonly
     @type Boolean
@@ -96,7 +96,7 @@ export default ListFormController.extend({
   readonly: false,
 
   /**
-    Flag for 'flexberry-objectlistview' component 'tableStriped' property.
+    Flag for 'flexberry-simpleolv' component 'tableStriped' property.
 
     @property tableStriped
     @type Boolean
@@ -104,7 +104,7 @@ export default ListFormController.extend({
   tableStriped: true,
 
   /**
-    Flag for 'flexberry-objectlistview' component 'allowColumnResize' property.
+    Flag for 'flexberry-simpleolv' component 'allowColumnResize' property.
 
     @property allowColumnResize
     @type Boolean
@@ -112,7 +112,7 @@ export default ListFormController.extend({
   allowColumnResize: true,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'createNewButton' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'createNewButton' mode or not.
 
     @property createNewButton
     @type Boolean
@@ -120,7 +120,7 @@ export default ListFormController.extend({
   createNewButton: false,
 
   /**
-    Flag for 'flexberry-objectlistview' component 'deleteButton' property.
+    Flag for 'flexberry-simpleolv' component 'deleteButton' property.
 
     @property deleteButton
     @type Boolean
@@ -128,7 +128,7 @@ export default ListFormController.extend({
   deleteButton: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'enableFilters' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'enableFilters' mode or not.
 
     @property enableFilters
     @type Boolean
@@ -136,7 +136,7 @@ export default ListFormController.extend({
   enableFilters: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'filterButton' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'filterButton' mode or not.
 
     @property filterButton
     @type Boolean
@@ -144,7 +144,7 @@ export default ListFormController.extend({
   filterButton: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'refreshButton' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'refreshButton' mode or not.
 
     @property refreshButton
     @type Boolean
@@ -152,7 +152,7 @@ export default ListFormController.extend({
   refreshButton: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'showCheckBoxInRow' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'showCheckBoxInRow' mode or not.
 
     @property showCheckBoxInRow
     @type Boolean
@@ -160,7 +160,7 @@ export default ListFormController.extend({
   showCheckBoxInRow: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteButtonInRow' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'showDeleteButtonInRow' mode or not.
 
     @property showDeleteButtonInRow
     @type Boolean
@@ -168,7 +168,7 @@ export default ListFormController.extend({
   showDeleteButtonInRow: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'showEditMenuItemInRow' mode or not.
 
     @property showEditMenuItemInRow
     @type Boolean
@@ -176,7 +176,7 @@ export default ListFormController.extend({
   showEditMenuItemInRow: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteMenuItemInRow' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'showDeleteMenuItemInRow' mode or not.
 
     @property showDeleteMenuItemInRow
     @type Boolean
@@ -184,7 +184,7 @@ export default ListFormController.extend({
   showDeleteMenuItemInRow: false,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'rowClickable' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'rowClickable' mode or not.
 
     @property rowClickable
     @type Boolean
@@ -192,7 +192,7 @@ export default ListFormController.extend({
   rowClickable: true,
 
   /**
-    Flag: indicates whether 'flexberry-objectlistview' component is in 'orderable' mode or not.
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'orderable' mode or not.
 
     @property orderable
     @type Boolean
@@ -200,7 +200,7 @@ export default ListFormController.extend({
   orderable: true,
 
   /**
-    ext for 'flexberry-objectlistview' component 'singleColumnHeaderTitle' property.
+    ext for 'flexberry-simpleolv' component 'singleColumnHeaderTitle' property.
 
     @property singleColumnHeaderTitle
     @type String
@@ -218,13 +218,13 @@ export default ListFormController.extend({
   records: [],
 
   /**
-    Template text for 'flexberry-objectlistview' component.
+    Template text for 'flexberry-simpleolv' component.
 
     @property componentTemplateText
     @type String
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-objectlistview<br>' +
+    '{{flexberry-simpleolv<br>' +
     '  componentName=\"SuggestionsObjectListView\"<br>' +
     '  colsConfigButton=true<br>' +
     '  content=model<br>' +

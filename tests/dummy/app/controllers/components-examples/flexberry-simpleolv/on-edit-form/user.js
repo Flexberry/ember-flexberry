@@ -14,7 +14,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
    @type String
    @default 'ember-flexberry-dummy-application-user-list'
   */
-  parentRoute: 'components-examples/flexberry-objectlistview/on-edit-form',
+  parentRoute: 'components-examples/flexberry-simpleolv/on-edit-form',
 
   store: Ember.inject.service(),
 

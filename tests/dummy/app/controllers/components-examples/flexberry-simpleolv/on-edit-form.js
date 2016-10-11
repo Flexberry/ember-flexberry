@@ -8,5 +8,5 @@ export default ListFormController.extend({
     @type String
     @default 'ember-flexberry-dummy-application-user-edit'
    */
-  editFormRoute: 'components-examples/flexberry-objectlistview/on-edit-form/user'
+  editFormRoute: 'components-examples/flexberry-simpleolv/on-edit-form/user'
 });

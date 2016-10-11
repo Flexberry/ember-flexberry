@@ -1035,31 +1035,17 @@ ErrorableControllerMixin, {
   },
 
   /**
-    Flag indicates whether columns resizable plugin already was initialized.
-
-    @property _colResizableInit
-    @type Boolean
-    @default false
-    @private
-  */
-  _colResizableInit: false,
-
-  /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     For more information see [didRender](http://emberjs.com/api/classes/Ember.Component.html#method_didRender) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   didRender() {
     this._super(...arguments);
-    if (!this._colResizableInit) {
-      let $currentTable = this.$('table.object-list-view');
-      if (this.get('allowColumnResize')) {
-        $currentTable.addClass('fixed');
-        this._reinitResizablePlugin();
-      } else {
-        $currentTable.colResizable({ disable: true });
-      }
-
-      this.set('_colResizableInit', true);
+    let $currentTable = this.$('table.object-list-view');
+    if (this.get('allowColumnResize')) {
+      $currentTable.addClass('fixed');
+      this._reinitResizablePlugin();
+    } else {
+      $currentTable.colResizable({ disable: true });
     }
 
     if (this.rowClickable) {

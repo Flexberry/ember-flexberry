@@ -251,9 +251,9 @@ export default Ember.Component.extend({
 
     // Component's 'targetObject' is parent component or a controller (in the end of components hierarchy).
     // Search until 'targetObject' is none or condition is true.
-    let targetObject = this.get('targetObject');
+    let targetObject = this.get('_targetObject');
     while (!(Ember.isNone(targetObject) || condition(targetObject))) {
-      targetObject = targetObject.get('targetObject');
+      targetObject = targetObject.get('_targetObject');
     }
 
     return targetObject;

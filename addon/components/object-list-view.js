@@ -977,17 +977,6 @@ export default FlexberryBaseComponent.extend(
   */
     didRender() {
       this._super(...arguments);
-      if (!this._colResizableInit) {
-        let $currentTable = this.$('table.object-list-view');
-        if (this.get('allowColumnResize')) {
-          $currentTable.addClass('fixed');
-          this._reinitResizablePlugin();
-        } else {
-          $currentTable.colResizable({ disable: true });
-        }
-
-        this.set('_colResizableInit', true);
-      }
 
       // Start row by row rendering at first row.
       if (this.get('useRowByRowLoading')) {
@@ -1015,6 +1004,14 @@ export default FlexberryBaseComponent.extend(
                   this._setActiveRecord(key);
                 }
               }
+
+              let $currentTable = this.$('table.object-list-view');
+              if (this.get('allowColumnResize')) {
+                $currentTable.addClass('fixed');
+                this._reinitResizablePlugin();
+              } else {
+                $currentTable.colResizable({ disable: true });
+              }
             } else {
               // Start render row.
               let modelWithKey = contentForRender[renderedRowIndex];
@@ -1033,6 +1030,19 @@ export default FlexberryBaseComponent.extend(
           }
         }
       } else {
+
+        if (!this._colResizableInit) {
+          let $currentTable = this.$('table.object-list-view');
+          if (this.get('allowColumnResize')) {
+            $currentTable.addClass('fixed');
+            this._reinitResizablePlugin();
+          } else {
+            $currentTable.colResizable({ disable: true });
+          }
+
+          this.set('_colResizableInit', true);
+        }
+
         this.$('.object-list-view-menu > .ui.dropdown').dropdown();
       }
     },

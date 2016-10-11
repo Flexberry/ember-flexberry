@@ -67,7 +67,10 @@ var GroupBlueprint = (function () {
             ui: undefined,
             analytics: undefined,
             project: undefined,
-            paths: ["node_modules/ember-flexberry/blueprints"]
+            paths: [
+                "node_modules/ember-flexberry/blueprints",
+                "node_modules/ember-cli-legacy-blueprints/blueprints"
+            ]
         });
     };
     GroupBlueprint.prototype.emberGenerate = function (metadataSubDir, notOverwrite, folderJsFiles) {

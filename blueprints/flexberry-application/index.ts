@@ -113,7 +113,10 @@ class ApplicationBlueprint {
       ui: undefined,
       analytics: undefined,
       project: undefined,
-      paths: ["node_modules/ember-flexberry/blueprints"]
+      paths: [
+        "node_modules/ember-flexberry/blueprints",
+        "node_modules/ember-cli-legacy-blueprints/blueprints"
+      ]
     });
   }
 

@@ -567,7 +567,7 @@ export default FlexberryBaseComponent.extend({
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
       action();
     },
 
@@ -583,7 +583,7 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
       action();
     },
 
@@ -600,7 +600,7 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
       action(pageNumber);
     },
 
@@ -768,7 +768,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.perPageClick
     */
     perPageClick() {
-      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
     }
   },
 

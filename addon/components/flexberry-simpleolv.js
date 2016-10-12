@@ -30,6 +30,10 @@ ErrorableControllerMixin, {
   */
   _modelProjection: null,
 
+  _columnsObserver: Ember.on('init', Ember.observer('columns', function() {
+    console.log('_columns observer');
+  })),
+
   _contentObserver: Ember.on('init', Ember.observer('content', function() {
     let content = this.get('content');
     if (content && !content.isLoading) {
@@ -39,10 +43,8 @@ ErrorableControllerMixin, {
 
       let userSettings = this._getUserSettings();
       this.set('_userSettings', userSettings);
-      // let columns = this.get('columns');
       this._setColumnsUserSettings();
 
-      // this.set('columns', newColumns);
       if (content.get('isFulfilled') === false) {
         content.then((items) => {
           items.forEach((item) => {
@@ -368,10 +370,6 @@ ErrorableControllerMixin, {
   // }),
 
   columns: null,
-
-  _columns: Ember.observer('columns', function() {
-    console.log('_columns observer');
-  }),
 
   _userSettings: Ember.computed(function() {
     return this._getUserSettings();
@@ -994,7 +992,7 @@ ErrorableControllerMixin, {
     if (cols) {
       this.set('columns', cols);
     } else {
-      this.set('columns', Ember.A());
+      this.set('columns', []);
     }
   },
 
@@ -1011,11 +1009,6 @@ ErrorableControllerMixin, {
         this._setActiveRecord(key);
       }
     }
-
-    // let userSettings = this.get('_userSettings');
-    // if (userSettings !== undefined) {
-    //   this._setColumnWidths(userSettings);
-    // }
   },
 
   /**
@@ -1024,13 +1017,8 @@ ErrorableControllerMixin, {
   */
   didRender() {
     this._super(...arguments);
-    let $currentTable = this.$('table.object-list-view');
-    if (this.get('allowColumnResize')) {
-      $currentTable.addClass('fixed');
-      this._reinitResizablePlugin();
-    } else {
-      $currentTable.colResizable({ disable: true });
-    }
+
+    this._setColumnWidths();
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1115,15 +1103,28 @@ ErrorableControllerMixin, {
 
     @param {Array} userSetting User setting to apply to control
   */
-  _setColumnWidths(userSetting) {
+  _setColumnWidths() {
+    let $objectListView = this.$('table.object-list-view');
+    if (!$objectListView) {
+      // Table will not rendered yet.
+      return;
+    }
+
+    if (this.get('allowColumnResize')) {
+      $objectListView.addClass('fixed');
+      this._reinitResizablePlugin();
+    } else {
+      $objectListView.colResizable({ disable: true });
+    }
+
     let userSettings = this.get('_userSettings');
 
-    if (!Ember.isArray(userSetting)) {
+    if (!userSettings || (userSettings && !Ember.isArray(userSettings.columnWidths))) {
       return;
     }
 
     let hashedUserSetting = {};
-    userSetting.forEach(item => {
+    userSettings.columnWidths.forEach(item => {
       let userColumnInfo = Ember.merge({
         propName: undefined,
         width: undefined
@@ -1138,7 +1139,7 @@ ErrorableControllerMixin, {
       hashedUserSetting[propName] = width;
     });
 
-    let $columns = this.$('table.object-list-view').find('th');
+    let $columns = $objectListView.find('th');
     Ember.$.each($columns, (key, item) => {
       let currentItem = this.$(item);
       let currentPropertyName = this._getColumnPropertyName(currentItem);
@@ -1154,124 +1155,41 @@ ErrorableControllerMixin, {
   },
 
   _setColumnsUserSettings() {
-    // let ret;
-    let cols = this.get('columns');
-    let userSettings = this.get('_userSettings');
-    // let namedCols = this._getNamedCols(cols);
-    this._setColumnsSorting(cols);
-    this._setColumnWidths();
-    // if (userSettings && userSettings.colsOrder !== undefined) {
-      // let namedCols = {};
-      // for (let i = 0; i < cols.length; i++) {
-      //   let col = cols[i];
-      //   delete col.sorted;
-      //   delete col.sortNumber;
-      //   delete col.sortAscending;
-      //   let propName = col.propName;
-      //   namedCols[propName] = col;
-      // }
-
-      
-
-      // if (userSettings.sorting === undefined) {
-      //   userSettings.sorting = [];
-      // }
-
-      // for (let i = 0; i < userSettings.sorting.length; i++) {
-      //   let sorting = userSettings.sorting[i];
-      //   let propName = sorting.propName;
-      //   namedCols[propName].sorted = true;
-      //   namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
-      //   namedCols[propName].sortNumber = i + 1;
-      // }
-
-      
-
-      // ret = [];
-      // for (let i = 0; i < userSettings.colsOrder.length; i++) {
-      //   let userSetting = userSettings.colsOrder[i];
-      //   if (!userSetting.hide) {
-      //     let propName = userSetting.propName;
-      //     let col = namedCols[propName];
-      //     ret[ret.length] = col;
-      //   }
-      // }
-    // } else {
-    //   if (this.currentController) {
-    //     if (this.currentController.userSettings === undefined) {
-    //       Ember.set(this.currentController, 'userSettings', {});
-    //     }
-
-    //     Ember.set(this.currentController.userSettings, 'colsOrder', cols);
-    //   }
-
-    //   ret = cols;
-    // }
-
-    // return ret;
+    this._setColumnsSorting();
   },
 
-  _getNamedCols(columns) {
-    if(!columns) {
+  _setColumnsSorting() {
+    let columns = this.get('columns');
+    if (!columns) {
       return;
     }
 
-    let cols = columns;
-    let namedCols = {};
-    for (let i = 0; i < cols.length; i++) {
-      let col = cols[i];
-      delete col.sorted;
-      delete col.sortNumber;
-      delete col.sortAscending;
-      let propName = col.propName;
-      namedCols[propName] = col;
-    }
-
-    return namedCols;
-  },
-
-  _setColumnsSorting(columns, namedColumns) {
-    if(!columns) {
-      return;
-    }
-
-    // let namedCols = namedColumns;
-    // if (namedCols === undefined) {
-    //   namedCols = this._getNamedCols(columns);
-    // }
-
     let userSettings = this.get('_userSettings');
-    if (userSettings.sorting === undefined) {
+    if (userSettings && userSettings.sorting === undefined) {
       userSettings.sorting = [];
     }
 
-    // for (let i = 0; i < userSettings.sorting.length; i++) {
-    //   let sorting = userSettings.sorting[i];
-    //   let propName = sorting.propName;
-    userSettings.sorting.forEach( (sort, index) => {
+    userSettings.sorting.forEach((sort, index) => {
       columns.forEach(cols => {
         if (cols.propName === sort.propName) {
-          cols.sorted = true;
-          cols.sortAscending = sort.direction === 'asc' ? true : false;
-          cols.sortNumber = index + 1;
+          cols.set('sorted', true);
+          cols.set('sortAscending', sort.direction === 'asc' ? true : false);
+          cols.set('sortNumber', index + 1);
         }
-      })
-    })
-    // }
+      });
+    });
   },
 
   _getUserSettings() {
     if (this.get('notUseUserSettings')) {
       // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
-      // In future release backend can save userSettings for each olv. 
+      // In future release backend can save userSettings for each olv.
       return this.get('currentController.developerUserSettings')
       || userSettings ? userSettings[this.get('componentName')] : undefined
       || userSettings ? userSettings.DEFAULT : undefined;
     } else {
       return this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }
-
-    return;
   },
 
   /**
@@ -1437,11 +1355,11 @@ ErrorableControllerMixin, {
     let key = this._createKey(bindingPath);
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
 
-    let column = {
+    let column = Ember.Object.create({
       header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
-    };
+    });
 
     if (valueFromLocales) {
       column.keyLocale = key;
@@ -1462,9 +1380,9 @@ ErrorableControllerMixin, {
     let sortDef;
     let sorting = this.get('sorting');
     if (sorting && (sortDef = sorting[bindingPath])) {
-      column.sorted = true;
-      column.sortAscending = sortDef.sortAscending;
-      column.sortNumber = sortDef.sortNumber;
+      column.set('sorted', true);
+      column.set('sortAscending', sortDef.sortAscending);
+      column.set('sortNumber', sortDef.sortNumber);
     }
 
     return column;

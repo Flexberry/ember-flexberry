@@ -362,7 +362,7 @@ export default FlexberryBaseComponent.extend(
     @type Object[]
     @readOnly
   */
-    columns: Ember.computed('modelProjection', 'enableFilters', 'content', function() {
+    columns: Ember.computed('modelProjection', 'enableFilters', function() {
       let ret;
       let projection = this.get('modelProjection');
 

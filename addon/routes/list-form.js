@@ -153,13 +153,15 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
       return { isLoading: true };
     }
 
-    let model = this.get('controller.model');
+    return { isLoading: true };
 
-    if (model !== null) {
-      return model;
-    } else {
-      return { isLoading: true };
-    }
+    // let model = this.get('controller.model');
+
+    // if (model !== null) {
+    //   return model;
+    // } else {
+    //   return { isLoading: true };
+    // }
   },
 
   /**

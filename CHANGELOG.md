@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Component `object-list-view-cell` now support `yield` content.
+
+### Fixed
+* Component `flexberry-objectlistview` not detect hierarchical mode, because computed property was not dependent on property from controller.
 
 ## [0.7.0-beta.16] - 2016-10-11
 ### Added

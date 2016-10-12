@@ -80,8 +80,8 @@ export default FlexberryBaseComponent.extend({
     @default false
     @private
   */
-  _inHierarchicalMode: Ember.computed(function() {
-    return this.get('currentController').get('inHierarchicalMode');
+  _inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
+    return this.get('currentController.inHierarchicalMode');
   }),
 
   /**

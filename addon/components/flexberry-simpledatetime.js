@@ -142,22 +142,19 @@ export default FlexberryBaseComponent.extend({
     Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
     For more information see [didInsertElement](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
-  // didInsertElement() {
-  //   this._super(...arguments);
+  didInsertElement() {
+    this._super(...arguments);
 
-  //   this.$('.flatpickr').flatpickr({
-  //     dateFormat: 'd.m.Y',
-  //     inline: true,
-  //     clickOpens: true,
-  //     // minDate: this.get('min'),
-  //     // maxDate: this.get('max'),
-  //     noCalendar: false,
-  //     altInput: false,
-  //     defaultDate: this.get('value'),
-  //     static: false,
-
-  //   });
-  // },
+    this.$('.flatpickr')[0].flatpickr({
+      dateFormat: 'd.m.Y',
+      inline: false,
+      clickOpens: true,
+      minDate: this.get('min'),
+      maxDate: this.get('max'),
+      noCalendar: false,
+      altInput: false,
+    });
+  },
 
   /**
     Convert Date object to appropriate string value for input.

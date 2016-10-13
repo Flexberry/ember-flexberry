@@ -30,22 +30,32 @@
     {{#each columns as |column index|}}
       <td {{action rowClick record preventDefault=false}}>
         {{#if column.cellComponent.componentName}}
-          {{#component column.cellComponent.componentName
-            dynamicProperties=column.cellComponent.componentProperties
-            relatedModel=record.data
-            value=(mut (get record.data column.propName))
-            readonly=readonly
-            required=required
-          }}
-            {{#if (and (not index) inHierarchicalMode)}}
-              {{hierarchicalIndent}}
-              {{#if hasRecords}}
-                <button class="ui button icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
-                  <i class="{{if _expanded "minus" "plus"}} icon"></i>
-                </button>
+          {{#if inHierarchicalMode}}
+            {{#component column.cellComponent.componentName
+              dynamicProperties=column.cellComponent.componentProperties
+              relatedModel=record.data
+              value=(mut (get record.data column.propName))
+              readonly=readonly
+              required=required
+            }}
+              {{#if (and (not index) inHierarchicalMode)}}
+                {{hierarchicalIndent}}
+                {{#if hasRecords}}
+                  <button class="ui button icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
+                    <i class="{{if _expanded "minus" "plus"}} icon"></i>
+                  </button>
+                {{/if}}
               {{/if}}
-            {{/if}}
-          {{/component}}
+            {{/component}}
+          {{else}}
+            {{component column.cellComponent.componentName
+              dynamicProperties=column.cellComponent.componentProperties
+              relatedModel=record.data
+              value=(mut (get record.data column.propName))
+              readonly=readonly
+              required=required
+            }}
+          {{/if}}
         {{else}}
           <div class="oveflow-text">
             {{#if (and (not index) inHierarchicalMode)}}

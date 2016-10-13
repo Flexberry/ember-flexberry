@@ -1169,14 +1169,17 @@ ErrorableControllerMixin, {
       userSettings.sorting = [];
     }
 
-    userSettings.sorting.forEach((sort, index) => {
-      columns.forEach(cols => {
+    columns.forEach((cols) => {
+      let sorted = { sorted: false, sortNumber: 0, sortAscending: false };
+      userSettings.sorting.forEach((sort, index) => {
         if (cols.propName === sort.propName) {
-          cols.set('sorted', true);
-          cols.set('sortAscending', sort.direction === 'asc' ? true : false);
-          cols.set('sortNumber', index + 1);
+          sorted.sorted = true;
+          sorted.sortNumber = index + 1;
+          sorted.sortAscending = sort.direction === 'asc' ? true : false;
         }
       });
+
+      cols.setProperties(sorted);
     });
   },
 

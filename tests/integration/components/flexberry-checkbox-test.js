@@ -7,7 +7,7 @@ moduleForComponent('flexberry-checkbox', 'Integration | Component | Flexberry ch
 });
 
 test('Component renders properly', function(assert) {
-  assert.expect(28);
+  assert.expect(18);
 
   this.render(hbs`{{flexberry-checkbox caption=caption class=class}}`);
 
@@ -44,7 +44,7 @@ test('Component renders properly', function(assert) {
     'Component\'s inner <label> is empty by default');
 
   // Check wrapper's additional CSS-classes.
-  let additioanlCssClasses = 'additional-css-class-name and-another-one';
+  let additioanlCssClasses = 'radio slider toggle';
   this.set('class', additioanlCssClasses);
 
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
@@ -56,63 +56,6 @@ test('Component renders properly', function(assert) {
 
   this.set('class', '');
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
-    assert.strictEqual(
-    $component.hasClass(cssClassName),
-    false,
-    'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
-  });
-
-  // Check wrapper's additional CSS-class 'radio'.
-  let additioanlCssClassesRadio = 'radio and-another-one';
-  this.set('class', additioanlCssClassesRadio);
-
-  Ember.A(additioanlCssClassesRadio.split(' ')).forEach((cssClassName, index) => {
-    assert.strictEqual(
-    $component.hasClass(cssClassName),
-    true,
-   'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
-  });
-
-  this.set('class', '');
-  Ember.A(additioanlCssClassesRadio.split(' ')).forEach((cssClassName, index) => {
-    assert.strictEqual(
-    $component.hasClass(cssClassName),
-    false,
-     'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
-  });
-
-  // Check wrapper's additional CSS-class 'slider'.
-  let additioanlCssClassesSlider = 'slider and-another-one';
-  this.set('class', additioanlCssClassesSlider);
-
-  Ember.A(additioanlCssClassesSlider.split(' ')).forEach((cssClassName, index) => {
-    assert.strictEqual(
-    $component.hasClass(cssClassName),
-    true,
-    'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
-  });
-
-  this.set('class', '');
-  Ember.A(additioanlCssClassesSlider.split(' ')).forEach((cssClassName, index) => {
-    assert.strictEqual(
-    $component.hasClass(cssClassName),
-    false,
-    'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
-  });
-
-  // Check wrapper's additional CSS-class 'toggle'.
-  let additioanlCssClassesToggle = 'toggle and-another-one';
-  this.set('class', additioanlCssClassesToggle);
-
-  Ember.A(additioanlCssClassesToggle.split(' ')).forEach((cssClassName, index) => {
-    assert.strictEqual(
-    $component.hasClass(cssClassName),
-    true,
-    'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
-  });
-
-  this.set('class', '');
-  Ember.A(additioanlCssClassesToggle.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,

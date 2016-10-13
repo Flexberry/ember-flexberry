@@ -88,6 +88,14 @@ export default Ember.Service.extend({
     */
   currentUserSettings:{},
 
+  init() {
+    this._super(...arguments);
+    let appConfig = Ember.getOwner(this)._lookupFactory('config:environment');
+    if (!Ember.isNone(appConfig.APP.useUserSettingsService)) {
+      this.set('isUserSettingsServiceEnabled', appConfig.APP.useUserSettingsService);
+    }
+  },
+
   /**
    Set current Web Page.
 

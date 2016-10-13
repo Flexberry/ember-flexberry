@@ -578,6 +578,34 @@ Ember.$.extend(true, translations, {
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Раскраска строк'
+        },
+        'selected-rows': {
+          'caption': 'Flexberry-objectlistview. Выбранные строки'
+        }
+      },
+      'flexberry-simpleolv': {
+        'limit-function-example': {
+          'caption': 'Flexberry-simpleolv. Функция ограничения'
+        },
+        'settings-example': {
+          'caption': 'Flexberry-simpleolv. Пример работы с настройками'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Flexberry-simpleolv. Пользовательские кнопки',
+          'custom-message': 'Привет!',
+          'custom-button-name': 'Передать привет'
+        },
+        'on-edit-form': {
+          'caption': 'Flexberry-simpleolv. FlexberryObjectlistview пример произвольных данных'
+        },
+        'custom-filter': {
+          'caption': 'Flexberry-simpleolv. Настройка фильтра'
+        },
+        'configurate-rows': {
+          'caption': 'Flexberry-simpleolv. Раскраска строк'
+        },
+        'selected-rows': {
+          'caption': 'Flexberry-simpleolv. Выбранные строки'
         }
       },
       'flexberry-simpledatetime': {

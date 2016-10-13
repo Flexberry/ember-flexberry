@@ -24,6 +24,15 @@ export default FlexberryBaseComponent.extend({
   _showFilters: Ember.computed.oneWay('filters'),
 
   /**
+    Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
+
+    @property formLoadTimeTracker
+    @type FormLoadTimeTrackerService
+    @private
+  */
+  formLoadTimeTracker: Ember.inject.service(),
+
+  /**
     Store the action name at controller for loading records.
 
     @property _loadRecords
@@ -71,8 +80,8 @@ export default FlexberryBaseComponent.extend({
     @default false
     @private
   */
-  _inHierarchicalMode: Ember.computed(function() {
-    return this.get('currentController').get('inHierarchicalMode');
+  _inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
+    return this.get('currentController.inHierarchicalMode');
   }),
 
   /**
@@ -262,7 +271,7 @@ export default FlexberryBaseComponent.extend({
   /**
     Flag indicates whether ordering by clicking on column headers is allowed.
 
-    @property headerClickable
+    @property orderable
     @type Boolean
     @default false
   */
@@ -567,7 +576,7 @@ export default FlexberryBaseComponent.extend({
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
       action();
     },
 
@@ -583,7 +592,7 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
       action();
     },
 
@@ -600,7 +609,7 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
       action(pageNumber);
     },
 
@@ -768,7 +777,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.perPageClick
     */
     perPageClick() {
-      this.get('eventsBus').trigger('showLoadingTbodyClass', true);
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
     }
   },
 
@@ -883,5 +892,15 @@ export default FlexberryBaseComponent.extend({
       // For lookup mode we allow to set properties.
       this.setProperties(customProperties);
     }
-  }
+  },
+
+  /**
+    Called after a component has been rendered, both on initial render and in subsequent rerenders.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+
+    @method didRender
+  */
+  didRender() {
+    this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
+  },
 });

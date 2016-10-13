@@ -9,7 +9,7 @@
   showFilters=_showFilters
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
-  resetFilters = (action (if resetFilters resetFilters "resetFilters"))
+  resetFilters=(action (if resetFilters resetFilters "resetFilters"))
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass
@@ -41,7 +41,7 @@
   showDeleteMenuItemInRow=(and (not readonly) showDeleteMenuItemInRow)
   menuInRowAdditionalItems=menuInRowAdditionalItems
   rowClickable=(and (not readonly) rowClickable)
-  headerClickable=orderable
+  orderable=orderable
   sorting=sorting
   immediateDelete=true
   modelName=modelName
@@ -70,8 +70,8 @@
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
-  useRowByRowLoading = useRowByRowLoading
-  useRowByRowLoadingProgress = useRowByRowLoadingProgress
+  useRowByRowLoading=useRowByRowLoading
+  useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
 }}
 {{#unless _inHierarchicalMode}}
@@ -91,17 +91,17 @@
       {{/each}}
       <button class="ui {{unless hasNextPage 'disabled'}} button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
     </div>
-    {{#if showShowingEntries}}
-      <div class="item showing-entries">
-        {{#if (and currentIntervalRecords recordsTotalCount) }}
-          {{concat
-            (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-          }}
-        {{/if}}
-      </div>
-    {{/if}}
     <div class="right menu">
       {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick")}}
     </div>
   </div>
+  {{#if showShowingEntries}}
+    <div class="showing-entries">
+      {{#if (and currentIntervalRecords recordsTotalCount) }}
+        {{concat
+          (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+        }}
+      {{/if}}
+    </div>
+  {{/if}}
 {{/unless}}

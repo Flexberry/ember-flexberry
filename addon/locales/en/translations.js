@@ -115,6 +115,7 @@ export default {
     'object-list-view': {
       'placeholder': 'There is no data',
       'loading-text': 'Loading data...',
+      'header-title-attr': 'Click to change ordering, Ctrl+Click to append ordering for this column',
       'single-column-header-title': 'Model properties',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',
@@ -164,7 +165,13 @@ export default {
       'setting': 'Setting ',
       'is-saved': ' is saved',
       'col-width-on': 'Enable setting column widths'
-    }
+    },
+
+    'form-load-time-tracker': {
+      'load-time': 'Load time',
+      'render-time': 'Render time',
+    },
+
   },
 
   'models': {

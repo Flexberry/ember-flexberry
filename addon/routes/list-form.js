@@ -42,12 +42,21 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
   @uses FlexberryObjectlistviewRouteMixin
 */
 export default ProjectedModelFormRoute.extend(
-  PaginatedRouteMixin,
-  SortableRouteMixin,
-  LimitedRouteMixin,
-  ReloadListMixin,
-  FlexberryObjectlistviewRouteMixin,
-  FlexberryObjectlistviewHierarchicalRouteMixin, {
+PaginatedRouteMixin,
+SortableRouteMixin,
+LimitedRouteMixin,
+ReloadListMixin,
+FlexberryObjectlistviewRouteMixin,
+FlexberryObjectlistviewHierarchicalRouteMixin, {
+  /**
+    Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
+
+    @property formLoadTimeTracker
+    @type FormLoadTimeTrackerService
+    @private
+  */
+  formLoadTimeTracker: Ember.inject.service(),
+
   /**
     Current sorting.
 
@@ -66,6 +75,7 @@ export default ProjectedModelFormRoute.extend(
     @param {Object} transition
   */
   model: function(params, transition) {
+    this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -133,6 +143,7 @@ export default ProjectedModelFormRoute.extend(
         // TODO: move includeSorting to setupController mixins?
         return this.reloadList(queryParameters);
       }).then((records) => {
+        this.get('formLoadTimeTracker').set('endLoadTime', performance.now());
         this.includeSorting(records, this.sorting);
         this.get('controller').set('model', records);
         return records;
@@ -161,6 +172,7 @@ export default ProjectedModelFormRoute.extend(
   */
   setupController: function(controller, model) {
     this._super(...arguments);
+    this.get('formLoadTimeTracker').set('startRenderTime', performance.now());
 
     // Define 'modelProjection' for controller instance.
     // TODO: remove that when list-form controller will be moved to this route.
@@ -168,5 +180,5 @@ export default ProjectedModelFormRoute.extend(
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
-  },
+  }
 });

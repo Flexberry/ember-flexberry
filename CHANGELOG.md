@@ -3,8 +3,82 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.7.0-beta.17] - 2016-10-12
+### Added
+* Component `object-list-view-cell` now supports `yield` content.
+
 ### Changed
-* Updated dependency on `ember-flexberry-data` addon to last v0.6.2-beta version.
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.19 version.
+
+### Fixed
+* Component `flexberry-objectlistview` did not detect hierarchical mode, because computed property was not dependent on property of controller.
+
+## [0.7.0-beta.16] - 2016-10-11
+### Added
+* Track time load and render on list form using `form-load-time-tracker` service.
+* `form-load-time-tracker` component for view data from `form-load-time-tracker` service.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.18 version.
+
+### Fixed
+* `flexberry-simpleolv` component:
+    * Fix ability to remove records from toolbar & context menu in row.
+* `flexberry-simpleolv`, `flexberry-objectlistview`, `object-list-view` components:
+    * Fix `showLoadingTbodyClass` event.
+* Component `flexberry-lookup` override private property `context` from `Ember.Component` that could cause errors.
+
+## [0.7.0-beta.15] - 2016-10-10
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.17 version.
+
+## [0.7.0-beta.14] - 2016-10-10
+### Added
+* `flexberry-simpleolv` component for rapid rows rendering.
+* `flexberry-lookup` component:
+    * Add support of semantic-ui settings in dropdown mode.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.16 version.
+
+### Fixed
+* Detect necessity reload `aggregator` model if `detail` model was modified.
+* Transition to edit form route when record has an `id` and new at the same time.
+
+## [0.7.0-beta.13] - 2016-10-07
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.15 version.
+* Rolled back fix detection of necessity reload `aggregator` model if it was `detail` model modified.
+
+### Changed
+* `object-list-view` component.
+    * Rename `headerClickable` to `orderable`.
+
+## [0.7.0-beta.12] - 2016-10-07
+### Added
+* `flexberry-dropdown` component:
+    * Add support of semantic-ui settings.
+* Add `object-list-view-cell` component.
+* Add locales for title attribute in header of `object-list-view` component.
+
+### Fixed
+* Displaying sorting indicator in `object-list-view` component.
+* Fixed deprecations warnings on `didRender` content update into `object-list-view-row`.
+* Detect necessity reload `aggregator` model if it was `detail` model modified.
+* Fix menu in row of `object-list-view` component.
+
+### Changed
+* Move `showing-entries` to new line in `flexberry-objectlistview` component.
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.14 version.
+
+## [0.7.0-beta.10] - 2016-10-06
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.13 version.
+
+### Fixed
+* Displaying sorting priority input after changing sort direction.
+* Asyng loading record for `object-list-view` component.
 
 ## [0.7.0-beta.9] - 2016-10-04
 ### Fixed

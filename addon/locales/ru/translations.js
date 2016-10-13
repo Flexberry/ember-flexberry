@@ -115,6 +115,7 @@ export default {
     'object-list-view': {
       'placeholder': 'Нет данных',
       'loading-text': 'Данные загружаются...',
+      'header-title-attr': 'Нажмите, чтобы изменить порядок, Ctrl+Click чтобы добавить упорядочение для этого столбца',
       'single-column-header-title': 'Свойства модели',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',
@@ -165,7 +166,12 @@ export default {
       'setting': 'Настройка ',
       'is-saved': ' сохранена',
       'col-width-on': 'Включить настройку ширины столбцов'
-    }
+    },
+
+    'form-load-time-tracker': {
+      'load-time': 'Время загрузки',
+      'render-time': 'Время отрисовки',
+    },
 
   },
 

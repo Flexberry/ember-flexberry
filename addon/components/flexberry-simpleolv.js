@@ -782,8 +782,8 @@ ErrorableControllerMixin, {
     */
     createNew() {
       let editFormRoute = this.get('editFormRoute');
-      let modelController = this.get('modelController');
-      modelController.transitionToRoute(editFormRoute + '.new');
+      let currentController = this.get('currentController');
+      currentController.transitionToRoute(editFormRoute + '.new');
     },
 
     /**
@@ -845,7 +845,7 @@ ErrorableControllerMixin, {
     */
     showConfigDialog(settingName) {
       Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.componentName, settingName);
+      this.get('currentController').send('showConfigDialog', this.componentName, settingName);
     },
 
     /**
@@ -1915,14 +1915,6 @@ ErrorableControllerMixin, {
       configurateRow(rowConfig, record);
     }
   },
-
-  /**
-    Controller for model.
-
-    @property modelController
-    @type Object
-  */
-  modelController: null,
 
   /**
     Route for edit form by click row.

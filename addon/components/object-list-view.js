@@ -1005,6 +1005,20 @@ export default FlexberryBaseComponent.extend(
                 }
               }
 
+              let columnWidth;
+              if (this.notUseUserSettings) {
+                columnWidth = this.get('currentController.developerUserSettings');
+                columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
+                columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
+                columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
+              } else {
+                columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+              }
+
+              if (columnWidth !== undefined) {
+                this._setColumnWidths(columnWidth);
+              }
+
               let $currentTable = this.$('table.object-list-view');
               if (this.get('allowColumnResize')) {
                 $currentTable.addClass('fixed');

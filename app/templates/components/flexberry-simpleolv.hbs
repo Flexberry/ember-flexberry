@@ -110,31 +110,33 @@
         {{#if showHelperColumn}}
           <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
         {{/if}}
-        {{#each columns as |column|}}
-          <th class="dt-head-left me class" onclick={{ action "headerCellClick" column }}>
-            <div data-olv-header-property-name={{column.propName}} title={{t "components.object-list-view.header-title-attr"}}>
-              <span>
-              {{#if column.keyLocale}}
-                {{t column.keyLocale}}
-              {{else}}
-                {{column.header}}
-              {{/if}}
-              </span>
-              {{#if column.sorted}}
-                <div style="float:right;">
-                  {{#if column.sortAscending}}
-                    <div title="Order ascending">
-                    ▲{{column.sortNumber}}
-                    </div>
-                  {{else}}
-                    <div title="Order descending">
-                    ▼{{column.sortNumber}}
-                    </div>
-                  {{/if}}
-                </div>
-              {{/if}}
-            </div>
-          </th>
+        {{#each _columns as |column|}}
+          {{#unless column.hide}}
+            <th class="dt-head-left me class" onclick={{ action "headerCellClick" column }}>
+              <div data-olv-header-property-name={{column.propName}} title={{t "components.object-list-view.header-title-attr"}}>
+                <span>
+                {{#if column.keyLocale}}
+                  {{t column.keyLocale}}
+                {{else}}
+                  {{column.header}}
+                {{/if}}
+                </span>
+                {{#if column.sorted}}
+                  <div style="float:right;">
+                    {{#if column.sortAscending}}
+                      <div title="Order ascending">
+                      ▲{{column.sortNumber}}
+                      </div>
+                    {{else}}
+                      <div title="Order descending">
+                      ▼{{column.sortNumber}}
+                      </div>
+                    {{/if}}
+                  </div>
+                {{/if}}
+              </div>
+            </th>
+          {{/unless}}
         {{/each}}
         {{#if showMenuColumn}}
           <th class="object-list-view-menu collapsing" data-olv-header-property-name="OlvRowMenu"></th>
@@ -145,33 +147,37 @@
       {{#if showFilters}}
         <tr>
           <td rowspan="2" class="{{unless (and showHelperColumn hasContent) 'hidden'}}"></td>
-          {{#each columns as |column|}}
-            <td>
-              {{#if column.filter.conditions}}
-                {{component "flexberry-dropdown"
-                  value=column.filter.condition
-                  items=column.filter.conditions
-                  class="compact fluid"
-                  placeholder=""
-                  needChecksOnValue=false
-                }}
-              {{/if}}
-            </td>
+          {{#each _columns as |column|}}
+            {{#unless column.hide}}
+              <td>
+                {{#if column.filter.conditions}}
+                  {{component "flexberry-dropdown"
+                    value=column.filter.condition
+                    items=column.filter.conditions
+                    class="compact fluid"
+                    placeholder=""
+                    needChecksOnValue=false
+                  }}
+                {{/if}}
+              </td>
+            {{/unless}}
           {{/each}}
           {{#if showMenuColumn}}
             <td rowspan="2"></td>
           {{/if}}
         </tr>
         <tr>
-          {{#each columns as |column|}}
-            <td>
-              {{#if column.filter.component.name}}
-                {{component column.filter.component.name
-                  value=column.filter.pattern
-                  dynamicProperties=column.filter.component.properties
-                }}
-              {{/if}}
-            </td>
+          {{#each _columns as |column|}}
+            {{#unless column.hide}}
+              <td>
+                {{#if column.filter.component.name}}
+                  {{component column.filter.component.name
+                    value=column.filter.pattern
+                    dynamicProperties=column.filter.component.properties
+                  }}
+                {{/if}}
+              </td>
+            {{/unless}}
           {{/each}}
         </tr>
       {{/if}}
@@ -218,25 +224,27 @@
                   </div>
                 {{/if}}
               </td>
-              {{#each columns as |column index|}}
-                <td {{action "objectListViewRowClick" record preventDefault=false}}>
-                  {{#if column.cellComponent.componentName}}
-                    {{component column.cellComponent.componentName
-                      dynamicProperties=column.cellComponent.componentProperties
-                      relatedModel=record.data
-                      value=(mut (get record.data column.propName))
-                      readonly=readonly
-                      required=required
-                    }}
-                  {{else}}
-                    <div class="oveflow-text">
-                      {{get-formatted record.data column.propName
-                        dateFormat=dateFormat
-                        moment=moment
+              {{#each _columns as |column|}}
+                {{#unless column.hide}}
+                  <td {{action "objectListViewRowClick" record preventDefault=false}}>
+                    {{#if column.cellComponent.componentName}}
+                      {{component column.cellComponent.componentName
+                        dynamicProperties=column.cellComponent.componentProperties
+                        relatedModel=record.data
+                        value=(mut (get record.data column.propName))
+                        readonly=readonly
+                        required=required
                       }}
-                    </div>
-                  {{/if}}
-                </td>
+                    {{else}}
+                      <div class="oveflow-text">
+                        {{get-formatted record.data column.propName
+                          dateFormat=dateFormat
+                          moment=moment
+                        }}
+                      </div>
+                    {{/if}}
+                  </td>
+                {{/unless}}
               {{/each}}
               {{#if showMenuColumn}}
                 <td class="object-list-view-menu">

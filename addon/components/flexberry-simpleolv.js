@@ -369,7 +369,7 @@ ErrorableControllerMixin, {
   //   return this._generateColumns(projection.attributes);
   // }),
 
-  columns: null,
+  columns: Ember.A(),
 
   _userSettings: Ember.computed(function() {
     return this._getUserSettings();
@@ -991,8 +991,6 @@ ErrorableControllerMixin, {
     let cols = this._generateColumns(projection.attributes);
     if (cols) {
       this.set('columns', cols);
-    } else {
-      this.set('columns', []);
     }
   },
 
@@ -1019,6 +1017,7 @@ ErrorableControllerMixin, {
     this._super(...arguments);
 
     this._setColumnWidths();
+    this._setColumnsOrder();
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1158,6 +1157,26 @@ ErrorableControllerMixin, {
     this._setColumnsSorting();
   },
 
+  _columns: Ember.computed('columns.@each.index', function() {
+    return this.get('columns');
+  }),
+
+  _setColumnsOrder() {
+    let columns = this.get('columns');
+    let order = this.get('_userSettings.colsOrder');
+    if (columns && order) {
+      order.forEach((item, index) => {
+        columns.forEach((column) => {
+          if (column.get('propName') === item.propName) {
+            column.set('hide', item.hide);
+            column.set('index', index);
+          }
+        });
+      });
+      columns.sort((a, b) => (a.index > b.index ? 1 : -1));
+    }
+  },
+
   _setColumnsSorting() {
     let columns = this.get('columns');
     if (!columns) {
@@ -1255,7 +1274,7 @@ ErrorableControllerMixin, {
     @private
   */
   _generateColumns(attributes, columnsBuf, relationshipPath) {
-    columnsBuf = columnsBuf || [];
+    columnsBuf = columnsBuf || Ember.A();
     relationshipPath = relationshipPath || '';
 
     for (let attrName in attributes) {

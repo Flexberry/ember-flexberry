@@ -139,21 +139,63 @@ export default FlexberryBaseComponent.extend({
   placeholder: t('components.flexberry-datepicker.placeholder'),
 
   /**
+    Flatpickr options.
+    For more information see [flatpickr](https://chmln.github.io/flatpickr/)
+  */
+  dateFormat: 'Y-m-d H:i',
+  defaultDate: null,
+  noCalendar: false,
+  enableTime: true,
+  enableSeconds: false,
+  time_24hr: true,
+  utc: false,
+  altInput: true,
+  altFormat: 'd.m.Y H:i',
+
+  /**
     Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
     For more information see [didInsertElement](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   didInsertElement() {
     this._super(...arguments);
 
-    this.$('.flatpickr')[0].flatpickr({
-      dateFormat: 'd.m.Y',
-      inline: false,
-      clickOpens: true,
-      minDate: this.get('min'),
-      maxDate: this.get('max'),
-      noCalendar: false,
-      altInput: false,
-    });
+    if (!this.get('_supportDateType')) {
+      this._setFlatpickrOptionsWithType();
+      this.$('.flatpickr')[0].flatpickr({
+        dateFormat: this.get('dateFormat'),
+        defaultDate: this.get('_valueAsString'),
+        noCalendar: this.get('noCalendar'),
+        enableTime: this.get('enableTime'),
+        enableSeconds: this.get('enableSeconds'),
+        time_24hr: this.get('time_24hr'),
+        utc: this.get('utc'),
+        minDate: this.get('_minAsString'),
+        maxDate: this.get('_maxAsString'),
+        altInput: this.get('altInput'),
+        altFormat: this.get('altFormat'),
+      });
+    }
+  },
+
+  /**
+    This method set flatpickr options depending on the type.
+
+    @method _setFlatpickrOptionsWithType
+    @private
+  */
+  _setFlatpickrOptionsWithType() {
+    let type = this.get('type');
+    switch (type) {
+      case 'datetime-local':
+        this.set('utc', true);
+        break;
+      case 'datetime':
+        break;
+      case 'date':
+        this.set('altFormat', 'd.m.Y');
+        this.set('enableTime', false);
+        break;
+    }
   },
 
   /**
@@ -218,6 +260,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     The method checks if some input type is supported by the browser.
+
     @method _checkInput
     @param {String} type Type of input.
     return {Boolean}

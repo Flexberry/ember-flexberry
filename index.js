@@ -48,9 +48,7 @@ module.exports = {
       production:  'bower_components/flatpickr/dist/flatpickr.min.js'
     });
 
-    app.import('bower_components/flatpickr/dist/flatpickr.min.css');
-    app.import('bower_components/flatpickr/dist/flatpickr.confetti.min.css');
-    
+    app.import('bower_components/flatpickr/dist/flatpickr.min.css');    
 
     app.import({
       development: 'bower_components/devicejs/lib/device.js',

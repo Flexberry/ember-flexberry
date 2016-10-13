@@ -57,9 +57,10 @@
   </div>
   <div class="field {{if model.errors.date "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
-    {{flexberry-datepicker
+    {{flexberry-simpledatetime
       value=model.date
       readonly=readonly
+      type="datetime-local"
     }}
     {{flexberry-validationmessage error=model.errors.date pointing="pointing"}}
   </div>

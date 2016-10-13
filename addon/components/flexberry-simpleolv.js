@@ -358,6 +358,7 @@ ErrorableControllerMixin, {
     @type Object[]
     @readOnly
   */
+
   // columns: Ember.computed('modelProjection', 'enableFilters', function() {
   //   let projection = this.get('modelProjection');
 
@@ -704,7 +705,7 @@ ErrorableControllerMixin, {
       this.sendAction(action, column);
 
       let sortingChanged = this.get('_sortingChanged');
-      this.set('_sortingChanged', !sortingChanged)
+      this.set('_sortingChanged', !sortingChanged);
     },
 
     /**

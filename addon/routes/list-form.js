@@ -153,6 +153,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
       return { isLoading: true };
     }
 
+    // TODO: Check controller loaded model loading parameters and return it without reloading if there is same backend query was executed.
     let model = this.get('controller.model');
 
     if (model !== null) {

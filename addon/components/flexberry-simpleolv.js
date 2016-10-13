@@ -30,10 +30,6 @@ ErrorableControllerMixin, {
   */
   _modelProjection: null,
 
-  _columnsObserver: Ember.on('init', Ember.observer('columns', function() {
-    console.log('_columns observer');
-  })),
-
   _contentObserver: Ember.on('init', Ember.observer('content', function() {
     let content = this.get('content');
     if (content && !content.isLoading) {
@@ -358,19 +354,7 @@ ErrorableControllerMixin, {
     @type Object[]
     @readOnly
   */
-
-  // columns: Ember.computed('modelProjection', 'enableFilters', function() {
-  //   let projection = this.get('modelProjection');
-
-  //   if (!projection) {
-  //     Ember.Logger.error('Property \'modelProjection\' is undefined.');
-  //     return [];
-  //   }
-
-  //   return this._generateColumns(projection.attributes);
-  // }),
-
-  columns: Ember.A(),
+  _columns: Ember.A(),
 
   _userSettings: Ember.computed(function() {
     return this._getUserSettings();
@@ -1157,8 +1141,21 @@ ErrorableControllerMixin, {
     this._setColumnsSorting();
   },
 
-  _columns: Ember.computed('columns.@each.index', function() {
-    return this.get('columns');
+  /**
+    Table columns related to current model projection.
+
+    @property columns
+    @type Object[]
+    @readOnly
+  */
+  columns: Ember.computed('modelProjection', 'enableFilters', 'columns.@each.index', {
+    get(key) {
+      return this.get('_columns');
+    },
+    set(key, value) {
+      this.set('_columns', value);
+      return value;
+    }
   }),
 
   _setColumnsOrder() {

@@ -110,7 +110,7 @@
         {{#if showHelperColumn}}
           <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
         {{/if}}
-        {{#each _columns as |column|}}
+        {{#each columns as |column|}}
           {{#unless column.hide}}
             <th class="dt-head-left me class" onclick={{ action "headerCellClick" column }}>
               <div data-olv-header-property-name={{column.propName}} title={{t "components.object-list-view.header-title-attr"}}>
@@ -147,7 +147,7 @@
       {{#if showFilters}}
         <tr>
           <td rowspan="2" class="{{unless (and showHelperColumn hasContent) 'hidden'}}"></td>
-          {{#each _columns as |column|}}
+          {{#each columns as |column|}}
             {{#unless column.hide}}
               <td>
                 {{#if column.filter.conditions}}
@@ -167,7 +167,7 @@
           {{/if}}
         </tr>
         <tr>
-          {{#each _columns as |column|}}
+          {{#each columns as |column|}}
             {{#unless column.hide}}
               <td>
                 {{#if column.filter.component.name}}
@@ -224,7 +224,7 @@
                   </div>
                 {{/if}}
               </td>
-              {{#each _columns as |column|}}
+              {{#each columns as |column|}}
                 {{#unless column.hide}}
                   <td {{action "objectListViewRowClick" record preventDefault=false}}>
                     {{#if column.cellComponent.componentName}}

@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+* Fix template of `object-list-view` component for mobile.
+* Fix displaying value in `flexberry-lookup` when used decktop version template of `object-list-view` in mobile.
+
 ## [0.7.0-beta.17] - 2016-10-12
 ### Added
 * Component `object-list-view-cell` now supports `yield` content.

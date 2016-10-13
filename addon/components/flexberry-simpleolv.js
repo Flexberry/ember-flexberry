@@ -681,7 +681,6 @@ ErrorableControllerMixin, {
   _sortingChanged: false,
 
   sortingChanged: Ember.observer('_sortingChanged', function() {
-    let userSettings = this.get('_userSettings');
     let columns = this.get('columns');
 
     this._setColumnsSorting(columns);
@@ -1207,9 +1206,10 @@ ErrorableControllerMixin, {
     if (this.get('notUseUserSettings')) {
       // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
       // In future release backend can save userSettings for each olv.
-      return this.get('currentController.developerUserSettings')
-      || userSettings ? userSettings[this.get('componentName')] : undefined
-      || userSettings ? userSettings.DEFAULT : undefined;
+      let userSettings = this.get('currentController.developerUserSettings');
+      return userSettings ||
+        userSettings ? userSettings[this.get('componentName')] : undefined ||
+        userSettings ? userSettings.DEFAULT : undefined;
     } else {
       return this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }

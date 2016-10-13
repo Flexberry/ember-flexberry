@@ -7,7 +7,7 @@ moduleForComponent('flexberry-checkbox', 'Integration | Component | Flexberry ch
 });
 
 test('Component renders properly', function(assert) {
-  assert.expect(17);
+  assert.expect(28);
 
   this.render(hbs`{{flexberry-checkbox caption=caption class=class}}`);
 
@@ -17,13 +17,10 @@ test('Component renders properly', function(assert) {
   let $checkboxCaption = $component.children('label');
 
   // Check wrapper <div>.
-  // assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
-  // assert.strictEqual(
-  // $component.hasClass(flexberryClassNames.wrapper),
-  // true,
-  // 'Component\'s container has \'' + flexberryClassNames.wrapper + '\' css-class');
-  //assert.strictEqual($component.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
-  //assert.strictEqual($component.hasClass('checkbox'), true, 'Component\'s wrapper has \'checkbox\' css-class');
+  assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
+  assert.strictEqual($component.hasClass('flexberry-checkbox'), true, 'Component\'s container has \'flexberry-checkbox\' css-class');
+  assert.strictEqual($component.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
+  assert.strictEqual($component.hasClass('checkbox'), true, 'Component\'s wrapper has \'checkbox\' css-class');
 
   // Check <input>.
   assert.strictEqual($checkboxInput.length === 1, true, 'Component has inner <input>');
@@ -46,13 +43,6 @@ test('Component renders properly', function(assert) {
     true,
     'Component\'s inner <label> is empty by default');
 
-  let checkboxCaptionText = 'Checkbox caption';
-  this.set('caption', checkboxCaptionText);
-  assert.strictEqual(
-    Ember.$.trim($checkboxCaption.text()),
-    checkboxCaptionText,
-    'Component\'s inner <label> text changes when component\'s \'caption\' property changes');
-
   // Check wrapper's additional CSS-classes.
   let additioanlCssClasses = 'additional-css-class-name and-another-one';
   this.set('class', additioanlCssClasses);
@@ -73,66 +63,61 @@ test('Component renders properly', function(assert) {
   });
 
   // Check wrapper's additional CSS-class 'radio'.
-  let additioanlCssClassesRadio = 'radio';
-  this.set('class', additioanlCssClasses);
+  let additioanlCssClassesRadio = 'radio and-another-one';
+  this.set('class', additioanlCssClassesRadio);
 
-  assert.strictEqual(
-    $component.hasClass('radio'),
+  Ember.A(additioanlCssClassesRadio.split(' ')).forEach((cssClassName, index) => {
+    assert.strictEqual(
+    $component.hasClass(cssClassName),
     true,
-    'Component\'s wrapper has additional css class \' radio\'');
+   'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
+  });
 
-  // Ember.A(additioanlCssClassesRadio.split('radio')).forEach((index) => {
-  //  assert.strictEqual(
-  //  $component.hasClass('radio'),
-  //  true,
-  // 'Component\'s wrapper has additional css class \' radio\'');
-  // });
-
-  //this.set('class', 'radio');
-  //Ember.A(additioanlCssClassesRadio.split('radio')).forEach((index) => {
-  //  assert.strictEqual(
-  //  $component.hasClass('radio'),
-  //  false,
-  //  'Component\'s wrapper hasn\'t additional css class \'radio\'');
-  //});
+  this.set('class', '');
+  Ember.A(additioanlCssClassesRadio.split(' ')).forEach((cssClassName, index) => {
+    assert.strictEqual(
+    $component.hasClass(cssClassName),
+    false,
+     'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
+  });
 
   // Check wrapper's additional CSS-class 'slider'.
-  // let additioanlCssClassesSlider = 'slider';
-  // this.set('class', additioanlCssClasses);
+  let additioanlCssClassesSlider = 'slider and-another-one';
+  this.set('class', additioanlCssClassesSlider);
 
-  // Ember.A(additioanlCssClassesSlider.split('slider')).forEach((cssClassName, index) => {
-  //  assert.strictEqual(
-  //  $component.hasClass(cssClassName),
-  //  true,
-  //  'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
-  //});
+  Ember.A(additioanlCssClassesSlider.split(' ')).forEach((cssClassName, index) => {
+    assert.strictEqual(
+    $component.hasClass(cssClassName),
+    true,
+    'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
+  });
 
-  //this.set('class', 'slider');
-  //Ember.A(additioanlCssClassesSlider.split('slider')).forEach((cssClassName, index) => {
-  //  assert.strictEqual(
-  //  $component.hasClass(cssClassName),
-  //  false,
-  //  'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
-  //});
+  this.set('class', '');
+  Ember.A(additioanlCssClassesSlider.split(' ')).forEach((cssClassName, index) => {
+    assert.strictEqual(
+    $component.hasClass(cssClassName),
+    false,
+    'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
+  });
 
   // Check wrapper's additional CSS-class 'toggle'.
-  //let additioanlCssClassesToggle = 'toggle';
-  //this.set('class', additioanlCssClasses);
+  let additioanlCssClassesToggle = 'toggle and-another-one';
+  this.set('class', additioanlCssClassesToggle);
 
-  //Ember.A(additioanlCssClassesToggle.split('toggle')).forEach((cssClassName, index) => {
-  //  assert.strictEqual(
-  //  $component.hasClass(cssClassName),
-  //  true,
-  //  'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
-  // });
+  Ember.A(additioanlCssClassesToggle.split(' ')).forEach((cssClassName, index) => {
+    assert.strictEqual(
+    $component.hasClass(cssClassName),
+    true,
+    'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
+  });
 
-  //this.set('class', 'toggle');
-  //Ember.A(additioanlCssClassesToggle.split('toggle')).forEach((cssClassName, index) => {
-  //  assert.strictEqual(
-  //  $component.hasClass(cssClassName),
-  //  false,
-  //  'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
-  //});
+  this.set('class', '');
+  Ember.A(additioanlCssClassesToggle.split(' ')).forEach((cssClassName, index) => {
+    assert.strictEqual(
+    $component.hasClass(cssClassName),
+    false,
+    'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
+  });
 
   test('Component invokes actions', function(assert) {
     assert.expect(3);
@@ -253,4 +238,107 @@ test('Component renders properly', function(assert) {
       false,
       'Component\' binded value changed after second click (with \'change\' action handler)');
   });
+});
+
+test('Component changes binded value (with \'change\' action handler from special mixin)', function(assert) {
+  assert.expect(5);
+
+  this.set('flag', false);
+
+  // Bind component's 'change' action handler from specialized mixin.
+  this.set('actions.onCheckboxChange', FlexberryDdauCheckboxActionsHandlerMixin.mixins[0].properties.actions.onCheckboxChange);
+
+  this.render(hbs`{{flexberry-ddau-checkbox value=flag change=(action "onCheckboxChange" "flag")}}`);
+
+  // Retrieve component & it's inner <input>.
+  let $component = this.$().children();
+  let $checkboxInput = $component.children('input');
+
+  // Check component's initial state.
+  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
+
+  // Make component checked.
+  $component.click();
+  assert.strictEqual(
+    $checkboxInput.prop('checked'),
+    true,
+    'Component\'s inner checkbox <input> is checked after click (with \'change\' action handler from special mixin)');
+  assert.strictEqual(
+    this.get('flag'),
+    true,
+    'Component changed binded value (with \'change\' action handler from special mixin)');
+
+  // Make component unchecked.
+  $component.click();
+  assert.strictEqual(
+    $checkboxInput.prop('checked'),
+    false,
+    'Component\'s inner checkbox <input> is unchecked after second click (with \'change\' action handler from special mixin)');
+  assert.strictEqual(
+    this.get('flag'),
+    false,
+    'Component changed binded value after second click (with \'change\' action handler from special mixin)');
+});
+
+test('Component works properly in readonly mode', function(assert) {
+  assert.expect(9);
+
+  let latestEventObjects = {
+    change: null
+  };
+
+  // Bind component's action handlers.
+  this.set('actions.onFlagChange', e => {
+    latestEventObjects.change = e;
+  });
+
+  // Render component in readonly mode.
+  this.set('flag', false);
+  this.set('readonly', true);
+  this.render(hbs`{{flexberry-ddau-checkbox value=flag readonly=readonly change=(action "onFlagChange")}}`);
+
+  // Retrieve component & it's inner <input>.
+  let $component = this.$().children();
+  let $checkboxInput = $component.children('input');
+
+  // Check component's initial state.
+  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
+
+  // Imitate click on component.
+  $component.click();
+
+  // Check after click state.
+  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked after click');
+  assert.strictEqual(latestEventObjects.change, null, 'Component doesn\'t send \'change\' action in readonly mode');
+
+  // Disable readonly mode.
+  this.set('readonly', false);
+
+  // Imitate click on component.
+  $component.click();
+
+  // Check after click state.
+  assert.strictEqual($checkboxInput.prop('checked'), true, 'Component\'s inner checkbox <input> is checked after click');
+  assert.notStrictEqual(latestEventObjects.change, null, 'Component send \'change\' action after readonly mode disabling');
+
+  latestEventObjects.change = null;
+
+  // Imitate click on component.
+  $component.click();
+
+  // Check after click state.
+  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> is unchecked after click');
+  assert.notStrictEqual(latestEventObjects.change, null, 'Component send \'change\' action after readonly mode disabling');
+
+  latestEventObjects.change = null;
+
+  // Enable readonly mode again.
+  this.set('readonly', true);
+
+  // Imitate click on component.
+  $component.click();
+
+  // Check after click state.
+  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked after click');
+  assert.strictEqual(latestEventObjects.change, null, 'Component doesn\'t send \'change\' action in readonly mode');
 });

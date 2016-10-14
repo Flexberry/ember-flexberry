@@ -22,8 +22,21 @@ rm -r app/*
 mv index.html app
 ember install "${ADDON_DIR}"
 
-# Run default blueprint from addon.
-ember generate ember-flexberry
+# I do not understand why there is something like this:
+# https://github.com/ember-cli/ember-cli/issues/4003
+# Install each addon, instead of run default blueprint.
+npm install dexie@1.4.2
+npm install node-uuid@1.4.7
+npm install inflection@1.10.0
+ember install semantic-ui-ember@0.9.3
+ember install ember-moment@6.0.0
+ember install ember-link-action@0.0.35
+ember install ember-cli-sass@5.2.0
+ember install broccoli-jscs@1.2.2
+ember install ember-browserify@1.1.9
+bower install semantic-ui-daterangepicker#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be
+bower install blueimp-file-upload#9.11.2
+bower install devicejs#0.2.7
 
 rm -f ./ember-cli-build.js
 cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
@@ -49,8 +62,19 @@ pushd new-addon-for-tests
 
 ember install "${ADDON_DIR}"
 
-# Run default blueprint from addon.
-ember generate ember-flexberry
+# Here is the same.
+npm install dexie@1.4.2
+npm install node-uuid@1.4.7
+npm install inflection@1.10.0
+ember install semantic-ui-ember@0.9.3
+ember install ember-moment@6.0.0
+ember install ember-link-action@0.0.35
+ember install ember-cli-sass@5.2.0
+ember install broccoli-jscs@1.2.2
+ember install ember-browserify@1.1.9
+bower install semantic-ui-daterangepicker#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be
+bower install blueimp-file-upload#9.11.2
+bower install devicejs#0.2.7
 
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.

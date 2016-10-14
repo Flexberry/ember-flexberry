@@ -4,9 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0-beta.18] - 2016-10-12
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.20 version.
+
 ### Fixed
-* Fix template of `object-list-view` component for mobile.
-* Fix displaying value in `flexberry-lookup` when used decktop version template of `object-list-view` in mobile.
+* Columns user settings (width, sorting, ordering, visibility, toolbar button) for `flexberry-simpleolv` component.
+* Template of `object-list-view` component for mobile.
+* Displaying value in `flexberry-lookup` when using desktop version of `object-list-view` template in mobile.
 
 ## [0.7.0-beta.17] - 2016-10-12
 ### Added

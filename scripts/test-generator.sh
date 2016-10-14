@@ -21,7 +21,10 @@ cp app/index.html .
 rm -r app/*
 mv index.html app
 ember install "${ADDON_DIR}"
-#npm install dexie@1.3.6
+
+# Run default blueprint from addon.
+ember generate ember-flexberry
+
 rm -f ./ember-cli-build.js
 cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
 rm -f ./.jscsrc
@@ -45,6 +48,9 @@ ember addon new-addon-for-tests
 pushd new-addon-for-tests
 
 ember install "${ADDON_DIR}"
+
+# Run default blueprint from addon.
+ember generate ember-flexberry
 
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.

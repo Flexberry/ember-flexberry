@@ -13,7 +13,7 @@ import { translationMacro as t } from 'ember-i18n';
   @example
     ```handlebars
     {{flexberry-simpledatetime
-      type='datetime-local'
+      type="datetime-local"
       value=model.orderDate
       min=model.orderDateMin
       max=model.orderDateMax
@@ -35,8 +35,11 @@ export default FlexberryBaseComponent.extend({
   _valueAsString: Ember.computed('value', {
     get() {
       let date = this.get('value');
-      let str = this._convertDateToString(date);
-      return str;
+      if (this.get('_supportDateType')) {
+        return this._convertDateToString(date);
+      } else {
+        return date;
+      }
     },
     set(key, value) {
       let date = this._convertStringToDate(value);
@@ -142,13 +145,14 @@ export default FlexberryBaseComponent.extend({
     Flatpickr options.
     For more information see [flatpickr](https://chmln.github.io/flatpickr/)
   */
-  dateFormat: 'Y-m-d H:i',
+  dateFormat: 'Y-m-dTH:iZ',
+  timeFormat: 'H:i',
   defaultDate: null,
   noCalendar: false,
   enableTime: true,
   enableSeconds: false,
   time_24hr: true,
-  utc: false,
+  utc: true,
   altInput: true,
   altFormat: 'd.m.Y H:i',
 
@@ -163,6 +167,7 @@ export default FlexberryBaseComponent.extend({
       this._setFlatpickrOptionsWithType();
       this.$('.flatpickr')[0].flatpickr({
         dateFormat: this.get('dateFormat'),
+        timeFormat: this.get('timeFormat'),
         defaultDate: this.get('_valueAsString'),
         noCalendar: this.get('noCalendar'),
         enableTime: this.get('enableTime'),

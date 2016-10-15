@@ -327,6 +327,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         }
       }
     };
+
     let savePromise = this.get('model').save().then((model) => {
       let store = Ember.getOwner(this).lookup('service:store');
       let agragatorModel = this.get('_flexberryDetailInteractionService').getLastValue('modelCurrentAgregators');

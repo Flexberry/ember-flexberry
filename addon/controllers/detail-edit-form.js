@@ -35,7 +35,8 @@ export default EditFormController.extend({
   _hasParentRoute: Ember.computed('modelCurrentAgregatorPathes', function() {
     let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
     let modelAgregatorRoutes = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
-    return flexberryDetailInteractionService.hasValues(this.get('modelCurrentAgregatorPathes')) || flexberryDetailInteractionService.hasValues(modelAgregatorRoutes);
+    return flexberryDetailInteractionService.hasValues(this.get('modelCurrentAgregatorPathes')) ||
+      flexberryDetailInteractionService.hasValues(modelAgregatorRoutes);
   }),
 
   /**
@@ -178,9 +179,11 @@ export default EditFormController.extend({
       }
 
       let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
-      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes') ? this.get('modelCurrentAgregatorPathes') : flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
+      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes') ? this.get('modelCurrentAgregatorPathes') :
+        flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
       let modelAgregatorRoute = modelAgregatorRoutes.pop();
-      let modelCurrentAgregators = this.get('modelCurrentAgregators') ? this.get('modelCurrentAgregators') : flexberryDetailInteractionService.get('modelCurrentAgregators');
+      let modelCurrentAgregators = this.get('modelCurrentAgregators') ? this.get('modelCurrentAgregators') :
+        flexberryDetailInteractionService.get('modelCurrentAgregators');
       let modelCurrentAgregator = modelCurrentAgregators.pop();
 
       flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
@@ -188,7 +191,8 @@ export default EditFormController.extend({
       flexberryDetailInteractionService.set('modelLastUpdatedDetail', this.get('model'));
       if (modelCurrentAgregator) {
         let store = Ember.getOwner(this).lookup('service:store');
-        let agregatorIsOfflineModel = modelCurrentAgregator && store.get('offlineModels') && store.get(`offlineModels.${modelCurrentAgregator.constructor.modelName}`);
+        let agregatorIsOfflineModel = modelCurrentAgregator && store.get('offlineModels') &&
+          store.get(`offlineModels.${modelCurrentAgregator.constructor.modelName}`);
 
         if (this.get('offlineGlobals.isOnline') && !agregatorIsOfflineModel) {
           flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);

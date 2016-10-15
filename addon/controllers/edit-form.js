@@ -305,7 +305,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     this.onSaveActionStarted();
     this.set('state', 'loading');
 
-    let _this =this;
+    let _this = this;
 
     let afterSaveModelFunction = () => {
       _this.set('state', 'success');

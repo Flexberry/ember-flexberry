@@ -25,16 +25,6 @@ import EditFormController from './edit-form';
 */
 export default EditFormController.extend({
   /**
-    Service that lets interact between agregator's and detail's form.
-
-    @property flexberryDetailInteractionService
-    @type Ember.Service
-    @readOnly
-    @private
-  */
-  _flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
-
-  /**
     A logic value showing if current route has parent one.
 
     @property _hasParentRoute

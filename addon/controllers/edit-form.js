@@ -304,27 +304,40 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     this.onSaveActionStarted();
     this.set('state', 'loading');
 
-    let savePromise = this.get('model').save().then((model) => {
-      return this._saveHasManyRelationships(model).then(() => {
-        this.set('state', 'success');
-        this.onSaveActionFulfilled();
-        if (close) {
-          this.set('state', '');
-          this.close();
-        } else {
-          let routeName = this.get('routeName');
-          if (routeName.indexOf('.new') > 0) {
-            let qpars = {};
-            let queryParams = this.get('queryParams');
-            queryParams.forEach(function(item, i, params) {
-              qpars[item] = this.get(item);
-            }, this);
-            let transitionQuery = {};
-            transitionQuery.queryParams = qpars;
-            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
-          }
+    let _this =this;
+
+    let afterSaveModelFunction = () => {
+      _this.set('state', 'success');
+      _this.onSaveActionFulfilled();
+      if (close) {
+        _this.set('state', '');
+        _this.close();
+      } else {
+        let routeName = _this.get('routeName');
+        if (routeName.indexOf('.new') > 0) {
+          let qpars = {};
+          let queryParams = _this.get('queryParams');
+          queryParams.forEach(function(item, i, params) {
+            qpars[item] = this.get(item);
+          }, _this);
+          let transitionQuery = {};
+          transitionQuery.queryParams = qpars;
+          _this.transitionToRoute(routeName.slice(0, -4), _this.get('model'), transitionQuery);
         }
-      });
+      }
+    };
+    let savePromise = this.get('model').save().then((model) => {
+      let store = Ember.getOwner(this).lookup('service:store');
+      let agragatorModel = this.get('_flexberryDetailInteractionService').getLastValue('modelCurrentAgregators');
+      let agregatorIsOfflineModel = agragatorModel && store.get('offlineModels') && store.get(`offlineModels.${agragatorModel.constructor.modelName}`);
+
+      if ((!this.get('offlineGlobals.isOnline') && agragatorModel) || (this.get('offlineGlobals.isOnline') && agregatorIsOfflineModel)) {
+        return this._saveHasManyRelationships(model).then(() => {
+          agragatorModel.save().then(afterSaveModelFunction);
+        });
+      } else {
+        return this._saveHasManyRelationships(model).then(afterSaveModelFunction);
+      }
     }).catch((errorData) => {
       this.set('state', 'error');
       this.onSaveActionRejected(errorData);
@@ -623,6 +636,16 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Ember.deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
     model.rollbackHasMany();
   },
+
+  /**
+    Service that lets interact between agregator's and detail's form.
+
+    @property flexberryDetailInteractionService
+    @type Ember.Service
+    @readOnly
+    @private
+  */
+  _flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
 
   /**
     Save dirty hasMany relationships in the `model` recursively.

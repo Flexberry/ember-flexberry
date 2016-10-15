@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Saving details in offline mode.
 
 ## [0.7.0-beta.19] - 2016-10-15
 ### Added

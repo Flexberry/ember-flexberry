@@ -111,7 +111,7 @@ export default EditFormController.extend({
       if (this.get('model').get('id') && this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         if (confirm('Are you sure you want to delete that record?')) {
           this.get('model').deleteRecord();
-          this.transitionToParentRoute();
+          this.transitionToParentRoute(false, false);
         }
       } else {
         this._super.apply(this, arguments);
@@ -132,7 +132,7 @@ export default EditFormController.extend({
       }
 
       if (this.get('saveBeforeRouteLeave')) {
-        this.transitionToParentRoute(true);
+        this.transitionToParentRoute(false, true);
         return;
       }
 
@@ -143,7 +143,7 @@ export default EditFormController.extend({
       // gonna be destroyed, and files won't be uploaded at all.
       let model = this.get('model');
       model.validate().then(() => model.beforeSave({ softSave: true })).then(() => {
-        this.transitionToParentRoute(false);
+        this.transitionToParentRoute(false, false);
       }, (reason) => {
         this.rejectError(reason);
       });
@@ -170,9 +170,10 @@ export default EditFormController.extend({
     Otherwise transition to corresponding list.
 
     @method transitionToParentRoute
+    @param {Boolean} skipTransition If `true`, then transition will be skipped.
     @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
-  transitionToParentRoute(rollBackModel) {
+  transitionToParentRoute(skipTransition, rollBackModel) {
     if (this.get('_hasParentRoute')) {
       if (!rollBackModel) {
         this.set('modelNoRollBack', true);
@@ -199,11 +200,13 @@ export default EditFormController.extend({
         }
       }
 
-      if (modelAgregatorRoute.indexOf('/new') > 0 && modelCurrentAgregator.get('id')) {
-        modelAgregatorRoute = modelAgregatorRoute.slice(1, -4);
-      }
+      if (!skipTransition) {
+        if (modelAgregatorRoute.indexOf('/new') > 0 && modelCurrentAgregator.get('id')) {
+          modelAgregatorRoute = modelAgregatorRoute.slice(1, -4);
+        }
 
-      this.transitionToRoute(modelAgregatorRoute, modelCurrentAgregator);
+        this.transitionToRoute(modelAgregatorRoute, modelCurrentAgregator);
+      }
     } else {
       this._super.apply(this, arguments);
     }

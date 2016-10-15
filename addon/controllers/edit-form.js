@@ -397,7 +397,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     this.set('state', '');
     this.onCloseActionStarted();
     if (!skipTransition) {
-      this.transitionToParentRoute();
+      this.transitionToParentRoute(skipTransition);
     }
   },
 
@@ -552,14 +552,17 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Method transition to parent route (corresponding list form).
 
     @method transitionToParentRoute
+    @param {Boolean} skipTransition If `true`, then transition will be skipped.
   */
-  transitionToParentRoute() {
-    // TODO: нужно учитывать пэйджинг.
-    // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
-    // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-    let parentRoute = this.get('parentRoute');
-    Ember.assert('Parent route must be defined.', parentRoute);
-    this.transitionToRoute(parentRoute);
+  transitionToParentRoute(skipTransition) {
+    if (!skipTransition) {
+      // TODO: нужно учитывать пэйджинг.
+      // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
+      // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
+      let parentRoute = this.get('parentRoute');
+      Ember.assert('Parent route must be defined.', parentRoute);
+      this.transitionToRoute(parentRoute);
+    }
   },
 
   /**

@@ -3,12 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.7.0-beta.20] - 2016-10-16
 ### Added
-* `skipTransition` parameter to `save` method of `edit-form` controller (second paramether of method). Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `save` method (second paramether of method) and `close` method (first paramether of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.22 version.
 
 ### Fixed
-* Saving details in offline mode.
-* Transition to parent route logic in `detail-edit-form` route.
+* Detail models saving logic in offline mode.
+* Logic for `save` and `saveAndClose` actions and `save` method in `detail-edit-form` controller.
+* Transition to parent route logic in `detail-edit-form` controller.
 
 ## [0.7.0-beta.19] - 2016-10-15
 ### Added

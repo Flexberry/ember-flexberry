@@ -33,7 +33,9 @@ export default EditFormController.extend({
     @readOnly
   */
   _hasParentRoute: Ember.computed('modelCurrentAgregatorPathes', function() {
-    return this.get('_flexberryDetailInteractionService').hasValues(this.get('modelCurrentAgregatorPathes'));
+    let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
+    let modelAgregatorRoutes = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
+    return flexberryDetailInteractionService.hasValues(this.get('modelCurrentAgregatorPathes')) || flexberryDetailInteractionService.hasValues(modelAgregatorRoutes);
   }),
 
   /**
@@ -81,17 +83,7 @@ export default EditFormController.extend({
       @method actions.save
     */
     save() {
-      if (this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
-        throw new Error('\'Save\' operation is not accessible due to current settings.');
-      }
-
-      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
-      let modelCurrentAgregators = this.get('modelCurrentAgregators');
-      let saveBeforeRouteLeave = this.get('saveBeforeRouteLeave');
-      let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
-      flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
-      flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
-      flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
+      this._saveInternalLogic();
       this._super.apply(this, arguments);
     },
 
@@ -103,10 +95,7 @@ export default EditFormController.extend({
       @method actions.saveAndClose
     */
     saveAndClose() {
-      if (this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
-        throw new Error('\'Save and close\' operation is not accessible due to current settings.');
-      }
-
+      this._saveInternalLogic();
       this._super.apply(this, arguments);
     },
 
@@ -161,6 +150,19 @@ export default EditFormController.extend({
   },
 
   /**
+    Save object.
+
+    @method save
+    @param {Boolean} close If `true`, then save and close.
+    @param {Boolean} skipTransition If `true`, then transition after save process will be skipped.
+    @return {Promise}
+  */
+  save(close, skipTransition) {
+    this._saveInternalLogic();
+    return this._super(...arguments);
+  },
+
+  /**
     Method to transit to parent's route (previous route).
     If `modelAgregatorRoute` is set, transition to defined path and set flag 'modelNoRollBack' to `true` on controller to prevent rollback of model.
     Then if `parentRoute` is set, transition to defined path.
@@ -175,17 +177,22 @@ export default EditFormController.extend({
         this.set('modelNoRollBack', true);
       }
 
-      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
+      let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
+      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes') ? this.get('modelCurrentAgregatorPathes') : flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
       let modelAgregatorRoute = modelAgregatorRoutes.pop();
-      let modelCurrentAgregators = this.get('modelCurrentAgregators');
+      let modelCurrentAgregators = this.get('modelCurrentAgregators') ? this.get('modelCurrentAgregators') : flexberryDetailInteractionService.get('modelCurrentAgregators');
       let modelCurrentAgregator = modelCurrentAgregators.pop();
 
-      let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
       flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
       flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
       flexberryDetailInteractionService.set('modelLastUpdatedDetail', this.get('model'));
       if (modelCurrentAgregator) {
-        flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);
+        let store = Ember.getOwner(this).lookup('service:store');
+        let agregatorIsOfflineModel = modelCurrentAgregator && store.get('offlineModels') && store.get(`offlineModels.${modelCurrentAgregator.constructor.modelName}`);
+
+        if (this.get('offlineGlobals.isOnline') && !agregatorIsOfflineModel) {
+          flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);
+        }
       }
 
       if (modelAgregatorRoute.indexOf('/new') > 0 && modelCurrentAgregator.get('id')) {
@@ -196,5 +203,19 @@ export default EditFormController.extend({
     } else {
       this._super.apply(this, arguments);
     }
+  },
+
+  _saveInternalLogic() {
+    if (this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
+      throw new Error('\'Save\' operation is not accessible due to current settings.');
+    }
+
+    let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
+    let modelCurrentAgregators = this.get('modelCurrentAgregators');
+    let saveBeforeRouteLeave = this.get('saveBeforeRouteLeave');
+    let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
+    flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
+    flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
+    flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
   }
 });

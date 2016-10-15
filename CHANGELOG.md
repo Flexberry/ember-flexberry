@@ -3,8 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `skipTransition` parameter to `save` method of `edit-form` controller (second paramether of method). Setting to true allows to skip technological call of `transitionToRoute` method.
+
 ### Fixed
 * Saving details in offline mode.
+* Transition to parent route logic in `detail-edit-form` route.
 
 ## [0.7.0-beta.19] - 2016-10-15
 ### Added

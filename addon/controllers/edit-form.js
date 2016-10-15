@@ -296,9 +296,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @method save
     @param {Boolean} close If `true`, then save and close.
+    @param {Boolean} skipTransition If `true`, then transition after save process will be skipped.
     @return {Promise}
   */
-  save(close) {
+  save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
     this.onSaveActionStarted();
@@ -311,8 +312,8 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       _this.onSaveActionFulfilled();
       if (close) {
         _this.set('state', '');
-        _this.close();
-      } else {
+        _this.close(skipTransition);
+      } else if (!skipTransition) {
         let routeName = _this.get('routeName');
         if (routeName.indexOf('.new') > 0) {
           let qpars = {};
@@ -333,7 +334,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
       if ((!this.get('offlineGlobals.isOnline') && agragatorModel) || (this.get('offlineGlobals.isOnline') && agregatorIsOfflineModel)) {
         return this._saveHasManyRelationships(model).then(() => {
-          agragatorModel.save().then(afterSaveModelFunction);
+          return agragatorModel.save().then(afterSaveModelFunction);
         });
       } else {
         return this._saveHasManyRelationships(model).then(afterSaveModelFunction);
@@ -389,11 +390,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Сlose edit form and transition to parent route.
 
     @method close
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
   */
-  close() {
+  close(skipTransition) {
     this.set('state', '');
     this.onCloseActionStarted();
-    this.transitionToParentRoute();
+    if (!skipTransition) {
+      this.transitionToParentRoute();
+    }
   },
 
   /**

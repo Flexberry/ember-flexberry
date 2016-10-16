@@ -1756,7 +1756,10 @@ ErrorableControllerMixin, {
     let key = this._getModelKey(record);
     this._removeModelWithKey(key);
 
-    this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord() : record.deleteRecord()).catch((reason) => {
+    this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
+        this.sendAction('saveAgregator');
+      }) : record.deleteRecord()
+    ).catch((reason) => {
       this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
       record.rollbackAll();
     });

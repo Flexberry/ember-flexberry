@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `skipTransition` parameter to `saveAndClose`, `close` and `delete` actions (as first parameter) of `edit-form` and `detail-edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
 
 ### Fixed
+* Detail models delete logic in offline mode.
 * Rollback logic for unsuccessful delete operations.
 * Logic for `delete` method in `edit-form` and `detail-edit-form` controllers.
 

@@ -94,8 +94,9 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.saveAndClose
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after save.
     */
-    saveAndClose() {
+    saveAndClose(skipTransition) {
       this._saveInternalLogic();
       this._super.apply(this, arguments);
     },
@@ -106,15 +107,16 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.delete
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
     */
-    delete() {
+    delete(skipTransition) {
       if (this.get('model').get('id') && this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         if (confirm('Are you sure you want to delete that record?')) {
           this.get('model').deleteRecord();
-          this.transitionToParentRoute(false, false);
+          this.transitionToParentRoute(skipTransition, false);
         }
       } else {
-        this._super.apply(this, arguments);
+        this.delete(skipTransition);
       }
     },
 
@@ -124,15 +126,16 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.close
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
     */
-    close() {
+    close(skipTransition) {
       if (!this.get('_hasParentRoute')) {
         this._super.apply(this, arguments);
         return;
       }
 
       if (this.get('saveBeforeRouteLeave')) {
-        this.transitionToParentRoute(false, true);
+        this.transitionToParentRoute(skipTransition, true);
         return;
       }
 
@@ -143,7 +146,7 @@ export default EditFormController.extend({
       // gonna be destroyed, and files won't be uploaded at all.
       let model = this.get('model');
       model.validate().then(() => model.beforeSave({ softSave: true })).then(() => {
-        this.transitionToParentRoute(false, false);
+        this.transitionToParentRoute(skipTransition, false);
       }, (reason) => {
         this.rejectError(reason);
       });
@@ -160,6 +163,18 @@ export default EditFormController.extend({
   */
   save(close, skipTransition) {
     this._saveInternalLogic();
+    return this._super(...arguments);
+  },
+
+  /**
+    Delete object, if successful transition to parent route.
+
+    @method delete
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
+    @return {Promise}
+  */
+  delete(skipTransition) {
+    this._setFlexberryDetailInteractionSettings();
     return this._super(...arguments);
   },
 
@@ -217,6 +232,10 @@ export default EditFormController.extend({
       throw new Error('\'Save\' operation is not accessible due to current settings.');
     }
 
+    this._setFlexberryDetailInteractionSettings();
+  },
+
+  _setFlexberryDetailInteractionSettings() {
     let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
     let modelCurrentAgregators = this.get('modelCurrentAgregators');
     let saveBeforeRouteLeave = this.get('saveBeforeRouteLeave');

@@ -4,14 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* `skipTransition` parameter to `delete` method (first paramether of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `delete` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `saveAndClose`, `close` and `delete` actions (as first parameter) of `edit-form` and `detail-edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
 
 ### Fixed
 * Rollback logic for unsuccessful delete operations.
+* Logic for `delete` method in `edit-form` and `detail-edit-form` controllers.
 
 ## [0.7.0-beta.20] - 2016-10-16
 ### Added
-* `skipTransition` parameter to `save` method (second paramether of method) and `close` method (first paramether of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `save` method (second parameter of method) and `close` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
 
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.22 version.

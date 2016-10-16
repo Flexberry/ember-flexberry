@@ -6,6 +6,8 @@ import Ember from 'ember';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
+import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
+import getCurrentAgregator from '../utils/get-current-agregator';
 
 const { getOwner } = Ember;
 
@@ -224,9 +226,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         ```
 
       @method actions.saveAndClose
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after save.
     */
-    saveAndClose() {
-      this.save(true);
+    saveAndClose(skipTransition) {
+      this.save(true, skipTransition);
     },
 
     /**
@@ -241,7 +244,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
           ...
           delete() {
             if (confirm('You sure?')) {
-              this.delete();
+              this.delete(false);
             }
           }
           ...
@@ -259,9 +262,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         ```
 
       @method actions.delete
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
     */
-    delete() {
-      this.delete();
+    delete(skipTransition) {
+      this.delete(skipTransition);
     },
 
     /**
@@ -285,9 +289,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         ```
 
       @method actions.close
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
     */
-    close() {
-      this.close();
+    close(skipTransition) {
+      this.close(skipTransition);
     },
   },
 
@@ -329,11 +334,8 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     };
 
     let savePromise = this.get('model').save().then((model) => {
-      let store = Ember.getOwner(this).lookup('service:store');
-      let agragatorModel = this.get('_flexberryDetailInteractionService').getLastValue('modelCurrentAgregators');
-      let agregatorIsOfflineModel = agragatorModel && store.get('offlineModels') && store.get(`offlineModels.${agragatorModel.constructor.modelName}`);
-
-      if ((!this.get('offlineGlobals.isOnline') && agragatorModel) || (this.get('offlineGlobals.isOnline') && agregatorIsOfflineModel)) {
+      let agragatorModel = getCurrentAgregator.call(this);
+      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
         return this._saveHasManyRelationships(model).then(() => {
           return agragatorModel.save().then(afterSaveModelFunction);
         });
@@ -365,16 +367,23 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     let model = this.get('model');
     let deletePromise = null;
-    if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
-      deletePromise = this.destroyHasManyRelationships(model).then(() => {
-        return model.destroyRecord().then(() => {
+    let deleteOperation = () => {
+      let agragatorModel = getCurrentAgregator.call(this);
+      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+        return agragatorModel.save().then(() => {
           this.onDeleteActionFulfilled(skipTransition);
         });
+      } else {
+        this.onDeleteActionFulfilled(skipTransition);
+      }
+    };
+
+    if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
+      deletePromise = this.destroyHasManyRelationships(model).then(() => {
+        return model.destroyRecord().then(deleteOperation);
       });
     } else {
-      deletePromise = model.destroyRecord().then(() => {
-        this.onDeleteActionFulfilled(skipTransition);
-      });
+      deletePromise = model.destroyRecord().then(deleteOperation);
     }
 
     deletePromise.catch((errorData) => {

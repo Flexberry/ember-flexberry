@@ -377,7 +377,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     }
 
     deletePromise.catch((errorData) => {
-      model.rollbackAttributes();
+      model.rollbackAll();
       this.set('state', 'error');
       this.onDeleteActionRejected(errorData);
     }).finally((data) => {

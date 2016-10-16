@@ -1722,7 +1722,7 @@ export default FlexberryBaseComponent.extend(
 
       this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord() : record.deleteRecord()).catch((reason) => {
         this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
-        record.rollbackAttributes();
+        record.rollbackAll();
       });
 
       let componentName = this.get('componentName');

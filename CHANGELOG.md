@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Rollback logic for unsuccessful delete operations.
 
 ## [0.7.0-beta.20] - 2016-10-16
 ### Added

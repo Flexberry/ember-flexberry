@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `skipTransition` parameter to `delete` method (first paramether of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+
 ### Fixed
 * Rollback logic for unsuccessful delete operations.
 

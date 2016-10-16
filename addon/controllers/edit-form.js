@@ -354,9 +354,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Delete object, if successful transition to parent route.
 
     @method delete
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
     @return {Promise}
   */
-  delete() {
+  delete(skipTransition) {
     this.send('dismissErrorMessages');
 
     this.onDeleteActionStarted();
@@ -367,12 +368,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
       deletePromise = this.destroyHasManyRelationships(model).then(() => {
         return model.destroyRecord().then(() => {
-          this.onDeleteActionFulfilled();
+          this.onDeleteActionFulfilled(skipTransition);
         });
       });
     } else {
       deletePromise = model.destroyRecord().then(() => {
-        this.onDeleteActionFulfilled();
+        this.onDeleteActionFulfilled(skipTransition);
       });
     }
 
@@ -489,13 +490,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       ```javascript
       onDeleteActionFulfilled() {
         alert('Delete operation succeed!');
-        this.close();
+        this.close(false);
       }
       ```
     @method onDeleteActionFulfilled.
+    @param {Boolean} skipTransition If `true`, then transition during close form process (default behavior) will be skipped.
   */
-  onDeleteActionFulfilled() {
-    this.close();
+  onDeleteActionFulfilled(skipTransition) {
+    this.close(skipTransition);
   },
 
   /**

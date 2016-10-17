@@ -906,8 +906,10 @@ export default FlexberryBaseComponent.extend(
 
       let eventsBus = this.get('eventsBus');
       if (eventsBus) {
-        eventsBus.on('showLoadingTbodyClass', (showLoadingTbodyClass) => {
-          this.set('showLoadingTbodyClass', showLoadingTbodyClass);
+        eventsBus.on('showLoadingTbodyClass', (componentName, showLoadingTbodyClass) => {
+          if (componentName === this.get('componentName')) {
+            this.set('showLoadingTbodyClass', showLoadingTbodyClass);
+          }
         });
       }
     },
@@ -975,17 +977,6 @@ export default FlexberryBaseComponent.extend(
   */
     didRender() {
       this._super(...arguments);
-      if (!this._colResizableInit) {
-        let $currentTable = this.$('table.object-list-view');
-        if (this.get('allowColumnResize')) {
-          $currentTable.addClass('fixed');
-          this._reinitResizablePlugin();
-        } else {
-          $currentTable.colResizable({ disable: true });
-        }
-
-        this.set('_colResizableInit', true);
-      }
 
       // Start row by row rendering at first row.
       if (this.get('useRowByRowLoading')) {
@@ -1013,6 +1004,28 @@ export default FlexberryBaseComponent.extend(
                   this._setActiveRecord(key);
                 }
               }
+
+              let columnWidth;
+              if (this.notUseUserSettings) {
+                columnWidth = this.get('currentController.developerUserSettings');
+                columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
+                columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
+                columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
+              } else {
+                columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+              }
+
+              if (columnWidth !== undefined) {
+                this._setColumnWidths(columnWidth);
+              }
+
+              let $currentTable = this.$('table.object-list-view');
+              if (this.get('allowColumnResize')) {
+                $currentTable.addClass('fixed');
+                this._reinitResizablePlugin();
+              } else {
+                $currentTable.colResizable({ disable: true });
+              }
             } else {
               // Start render row.
               let modelWithKey = contentForRender[renderedRowIndex];
@@ -1031,6 +1044,19 @@ export default FlexberryBaseComponent.extend(
           }
         }
       } else {
+
+        if (!this._colResizableInit) {
+          let $currentTable = this.$('table.object-list-view');
+          if (this.get('allowColumnResize')) {
+            $currentTable.addClass('fixed');
+            this._reinitResizablePlugin();
+          } else {
+            $currentTable.colResizable({ disable: true });
+          }
+
+          this.set('_colResizableInit', true);
+        }
+
         this.$('.object-list-view-menu > .ui.dropdown').dropdown();
       }
     },
@@ -1694,9 +1720,11 @@ export default FlexberryBaseComponent.extend(
       let key = this._getModelKey(record);
       this._removeModelWithKey(key);
 
-      this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord() : record.deleteRecord()).catch((reason) => {
+      this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
+        this.sendAction('saveAgregator');
+      }) : record.deleteRecord()).catch((reason) => {
         this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
-        record.rollbackAttributes();
+        record.rollbackAll();
       });
 
       let componentName = this.get('componentName');

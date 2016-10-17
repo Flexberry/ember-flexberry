@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
 
 /**
   Mixin for {{#crossLink "DS.Route"}}Route{{/crossLink}}
@@ -111,6 +112,13 @@ export default Ember.Mixin.create({
         });
       } else {
         goToOtherRouteFunction();
+      }
+    },
+
+    saveAgregator(agregatorModel) {
+      let agregator = agregatorModel ? agregatorModel : this.get('controller.model');
+      if (needSaveCurrentAgregator.call(this, agregator)) {
+        agregator.save();
       }
     }
   },

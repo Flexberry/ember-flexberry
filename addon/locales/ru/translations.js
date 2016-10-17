@@ -166,7 +166,12 @@ export default {
       'setting': 'Настройка ',
       'is-saved': ' сохранена',
       'col-width-on': 'Включить настройку ширины столбцов'
-    }
+    },
+
+    'form-load-time-tracker': {
+      'load-time': 'Время загрузки',
+      'render-time': 'Время отрисовки',
+    },
 
   },
 

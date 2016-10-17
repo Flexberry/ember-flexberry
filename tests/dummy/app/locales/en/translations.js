@@ -567,6 +567,34 @@ Ember.$.extend(true, translations, {
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'
+        },
+        'selected-rows': {
+          'caption': 'Flexberry-objectlistview. Setected rows'
+        }
+      },
+      'flexberry-simpleolv': {
+        'limit-function-example': {
+          'caption': 'Flexberry-simpleolv. Limit function example'
+        },
+        'settings-example': {
+          'caption': 'Flexberry-simpleolv. Settings example'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Flexberry-simpleolv. Custom buttons on toolbar',
+          'custom-message': 'Hello!',
+          'custom-button-name': 'Send hello'
+        },
+        'on-edit-form': {
+          'caption': 'Flexberry-simpleolv. FlexberryObjectlistview custom data sample'
+        },
+        'custom-filter': {
+          'caption': 'Flexberry-simpleolv. Custom filter'
+        },
+        'configurate-rows': {
+          'caption': 'Flexberry-simpleolv. Configurate rows'
+        },
+        'selected-rows': {
+          'caption': 'Flexberry-simpleolv. Setected rows'
         }
       },
       'flexberry-simpledatetime': {

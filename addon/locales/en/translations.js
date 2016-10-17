@@ -165,7 +165,13 @@ export default {
       'setting': 'Setting ',
       'is-saved': ' is saved',
       'col-width-on': 'Enable setting column widths'
-    }
+    },
+
+    'form-load-time-tracker': {
+      'load-time': 'Load time',
+      'render-time': 'Render time',
+    },
+
   },
 
   'models': {

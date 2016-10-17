@@ -4,6 +4,75 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0-beta.21] - 2016-10-16
+### Added
+* `skipTransition` parameter to `delete` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `saveAndClose`, `close` and `delete` actions (as first parameter) of `edit-form` and `detail-edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.23 version.
+
+### Fixed
+* Detail models delete logic in offline mode.
+* Rollback logic for unsuccessful delete operations.
+* Logic for `delete` method in `edit-form` and `detail-edit-form` controllers.
+
+## [0.7.0-beta.20] - 2016-10-16
+### Added
+* `skipTransition` parameter to `save` method (second parameter of method) and `close` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.22 version.
+
+### Fixed
+* Detail models saving logic in offline mode.
+* Logic for `save` and `saveAndClose` actions and `save` method in `detail-edit-form` controller.
+* Transition to parent route logic in `detail-edit-form` controller.
+
+## [0.7.0-beta.19] - 2016-10-15
+### Added
+* Add model loading events for `list-form` route.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.21 version.
+
+### Fixed
+* Adding filter parameter to route url when trying to find records in lookup list.
+
+## [0.7.0-beta.18] - 2016-10-14
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.20 version.
+
+### Fixed
+* Columns user settings (width, sorting, ordering, visibility, toolbar button) for `flexberry-simpleolv` component.
+* Template of `object-list-view` component for mobile.
+* Displaying value in `flexberry-lookup` when using desktop version of `object-list-view` template in mobile.
+
+## [0.7.0-beta.17] - 2016-10-12
+### Added
+* Component `object-list-view-cell` now supports `yield` content.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.19 version.
+
+### Fixed
+* Component `flexberry-objectlistview` did not detect hierarchical mode, because computed property was not dependent on property of controller.
+
+## [0.7.0-beta.16] - 2016-10-11
+### Added
+* Track time load and render on list form using `form-load-time-tracker` service.
+* `form-load-time-tracker` component for view data from `form-load-time-tracker` service.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.18 version.
+
+### Fixed
+* `flexberry-simpleolv` component:
+    * Fix ability to remove records from toolbar & context menu in row.
+* `flexberry-simpleolv`, `flexberry-objectlistview`, `object-list-view` components:
+    * Fix `showLoadingTbodyClass` event.
+* Component `flexberry-lookup` override private property `context` from `Ember.Component` that could cause errors.
+
 ## [0.7.0-beta.15] - 2016-10-10
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.17 version.

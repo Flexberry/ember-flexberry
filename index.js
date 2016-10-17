@@ -44,12 +44,12 @@ module.exports = {
     });
 
     app.import({
-      development: 'bower_components/flatpickr/dist/flatpickr.js',
-      production:  'bower_components/flatpickr/dist/flatpickr.min.js'
+      development: 'bower_components/flatpickr-calendar/dist/flatpickr.js',
+      production:  'bower_components/flatpickr-calendar/dist/flatpickr.min.js'
     });
 
-    app.import('bower_components/flatpickr/dist/flatpickr.min.css');
-    app.import('bower_components/flatpickr/src/flatpickr.l10n.ru.js');
+    app.import('bower_components/flatpickr-calendar/dist/flatpickr.min.css');
+    app.import('bower_components/flatpickr-calendar/src/flatpickr.l10n.ru.js');
 
     app.import({
       development: 'bower_components/devicejs/lib/device.js',

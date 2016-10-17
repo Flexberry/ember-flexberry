@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0-beta.22] - 2016-10-16
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.23 version.
+
 ## [0.7.0-beta.21] - 2016-10-16
 ### Added
 * `skipTransition` parameter to `delete` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.

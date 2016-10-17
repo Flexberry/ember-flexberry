@@ -11,7 +11,7 @@
     "semantic-ui": "git://github.com/Flexberry/Semantic-UI.git#fixed-abort",
     "blueimp-file-upload": "9.11.2",
     "devicejs": "0.2.7",
-    "flatpickr": "git://github.com/chmln/flatpickr.git#4ca9590caa70bc0232cf0a3455cfac1be9c65c2a"
+    "flatpickr": "flatpickr-calendar#4ca9590caa70bc0232cf0a3455cfac1be9c65c2a"
   },
   "resolutions": {
     "ember": "2.4.3"

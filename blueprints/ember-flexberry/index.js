@@ -11,6 +11,7 @@ module.exports = {
 
     return this.addBowerPackagesToProject([
       { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
+      { name: 'flatpickr', target: '4ca9590caa70bc0232cf0a3455cfac1be9c65c2a' },
       { name: 'blueimp-file-upload', target: '9.11.2' },
       { name: 'devicejs', target: '0.2.7' }
     ]).then(function() {

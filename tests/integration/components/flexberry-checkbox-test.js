@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('flexberry-checkbox', 'Integration | Component | Flexberry checkbox', {
+moduleForComponent('flexberry-checkbox', 'Integration | Component | flexberry-checkbox', {
   integration: true,
 });
 
@@ -51,58 +51,46 @@ test('Component renders properly', function(assert) {
   });
 });
 
-test('Component render label', function(assert) {
-  assert.expect(3);
+test('Component renders it\'s label properly', function(assert) {
+  assert.expect(5);
 
-  this.render(hbs`{{flexberry-checkbox caption=caption class=class}}`);
+  this.render(hbs`{{flexberry-checkbox label=label}}`);
 
   // Retrieve component, it's inner <label>.
   let $component = this.$().children();
-  let $checkboxCaption = $component.children('label');
+  let $checkboxLabel = $component.children('label');
 
-  // Check caption's <label>.
-  assert.strictEqual($checkboxCaption.length === 1, true, 'Component has inner <label>');
+  // Check <label>'s text.
+  assert.strictEqual($checkboxLabel.length === 1, true, 'Component has inner <label>');
   assert.strictEqual(
-  $checkboxCaption.hasClass('flexberry-checkbox-label'),
-  true,
-  'Component\'s inner <label> has flexberry-checkbox-label css-class');
+    $checkboxLabel.hasClass('flexberry-checkbox-label'),
+    true,
+    'Component\'s inner <label> has flexberry-checkbox-label css-class');
   assert.strictEqual(
-  Ember.$.trim($checkboxCaption.text()).length === 0,
-  true,
-  'Component\'s inner <label> is empty by default');
+    Ember.$.trim($checkboxLabel.text()).length === 0,
+    true,
+    'Component\'s inner <label> is empty by default');
+
+  // Define some label & check <label>'s text again.
+  let label = 'This is checkbox';
+  this.set('label', label);
+  assert.strictEqual(
+    Ember.$.trim($checkboxLabel.text()) === label,
+    true,
+    `Component\'s inner <label> has text defined in component's 'label' property: '${label}'`);
+
+  // Clean up defined label & check <label>'s text again.
+  label = null;
+  this.set('label', label);
+  assert.strictEqual(
+    Ember.$.trim($checkboxLabel.text()).length === 0,
+    true,
+    `Component\'s inner <label> is empty if component's 'label' property is cleaned up`);
 });
 
-test('Component works properly in readonly mode', function(assert) {
-  assert.expect(3);
+test('Changes in checkbox causes changes in binded value', function(assert) {
+  assert.expect(9);
 
-  let latestEventObjects = {
-    change: null
-  };
-
-  // Render component in readonly mode.
-  this.set('flag', false);
-  this.set('readonly', true);
-  this.render(hbs`{{flexberry-checkbox value=flag readonly=readonly}}`);
-
-  // Retrieve component & it's inner <input>.
-  let $component = this.$().children();
-  let $checkboxInput = $component.children('input');
-
-  // Check component's initial state.
-  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
-
-  // Imitate click on component.
-  $component.click();
-
-  // Check after click state.
-  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked after click');
-  assert.strictEqual(latestEventObjects.change, null, 'Component doesn\'t send \'change\' action in readonly mode');
-});
-
-test('Component changes binded value', function(assert) {
-  assert.expect(2);
-
-  this.set('flag', false);
   this.render(hbs`{{flexberry-checkbox value=flag}}`);
 
   // Retrieve component & it's inner <input>.
@@ -110,12 +98,154 @@ test('Component changes binded value', function(assert) {
   let $checkboxInput = $component.children('input');
 
   // Check component's initial state.
-  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
+  assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' before first click');
+  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before first click');
+  assert.strictEqual(Ember.typeOf(this.get('flag')), 'undefined', 'Component\'s binded value is \'undefined\' before first click');
 
-  // Imitate click on component (change the state of the component).
-  $component.click();
-  assert.strictEqual(
-   $checkboxInput.prop('checked'),
-   true,
-  'Component\'s inner checkbox <input> is checked after click)');
+  // Imitate click on component (change it's state to checked) & check it's state again.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  Ember.run(() => {
+    $component.click();
+    assert.strictEqual($component.hasClass('checked'), true, 'Component has css-class \'checked\' after click');
+    assert.strictEqual($checkboxInput.prop('checked'), true, 'Component\'s inner checkbox <input> is checked after click');
+    assert.strictEqual(this.get('flag'), true, 'Component\'s binded value is \'true\' after click');
+  });
+
+  // Imitate click on component again (change it's state to unchecked) & check it's state again.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  Ember.run(() => {
+    $component.click();
+    assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' after second click');
+    assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked after second click');
+    assert.strictEqual(this.get('flag'), false, 'Component\'s binded value is \'false\' after second click');
+  });
+});
+
+test('Changes in in binded value causes changes in checkbox', function(assert) {
+  assert.expect(7);
+
+  this.render(hbs`{{flexberry-checkbox value=flag}}`);
+
+  // Retrieve component & it's inner <input>.
+  let $component = this.$().children();
+  let $checkboxInput = $component.children('input');
+
+  // Check component's initial state.
+  assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' by default');
+  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked by default');
+  assert.strictEqual(Ember.typeOf(this.get('flag')), 'undefined', 'Component\'s binded value is \'undefined\' by default');
+
+  // Change binded value to 'true' & check component's state again (it must be checked).
+  this.set('flag', true);
+  assert.strictEqual($component.hasClass('checked'), true, 'Component has css-class \'checked\' after binded value changed to \'true\'');
+  assert.strictEqual($checkboxInput.prop('checked'), true, 'Component\'s inner checkbox <input> is checked after binded value changed to \'true\'');
+
+  // Change binded value to 'false' & check component's state again (it must be unchecked).
+  this.set('flag', false);
+  assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' after binded value changed to \'false\'');
+  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked after binded value changed to \'false\'');
+});
+
+test('Component sends \'onChange\' action', function(assert) {
+  assert.expect(2);
+
+  let onCheckboxChangeEventObject = null;
+  this.set('actions.onCheckboxChange', (e) => {
+    onCheckboxChangeEventObject = e;
+  });
+
+  this.render(hbs`{{flexberry-checkbox value=flag onChange=(action \"onCheckboxChange\")}}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+
+  // Imitate click on component (change it's state to checked) & check action's event object.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  Ember.run(() => {
+    $component.click();
+    assert.strictEqual(
+      Ember.get(onCheckboxChangeEventObject, 'checked'),
+      true,
+      'Component sends \'onChange\' action with \'checked\' property equals to \'true\' after first click');
+  });
+
+  // Imitate click on component again (change it's state to unchecked) & check action's event object again.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  Ember.run(() => {
+    $component.click();
+    assert.strictEqual(
+      Ember.get(onCheckboxChangeEventObject, 'checked'),
+      false,
+      'Component sends \'onChange\' action with \'checked\' property equals to \'false\' after second click');
+  });
+});
+
+test('Component works properly in readonly mode', function(assert) {
+  assert.expect(11);
+
+  let onCheckboxChangeEventObject = null;
+  this.set('actions.onCheckboxChange', (e) => {
+    onCheckboxChangeEventObject = e;
+  });
+
+  this.render(hbs`{{flexberry-checkbox readonly=readonly value=flag onChange=(action \"onCheckboxChange\")}}`);
+
+  // Retrieve component & it's inner <input>.
+  let $component = this.$().children();
+  let $checkboxInput = $component.children('input');
+
+  // Check component's initial state.
+  assert.strictEqual($component.hasClass('read-only'), false, 'Component hasn\'t css-class \'read-only\' by default');
+
+  // Enable readonly mode & check component's state again.
+  this.set('readonly', true);
+  assert.strictEqual($component.hasClass('read-only'), true, 'Component has css-class \'read-only\' when readonly mode is enabled');
+
+  // Imitate click on component (try to change it's state to checked) & check it's state & action's event object.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  Ember.run(() => {
+    $component.click();
+    assert.strictEqual(
+      onCheckboxChangeEventObject,
+      null,
+      'Component doesn\'t send \'onChange\' action in readonly mode');
+    assert.strictEqual(
+      $component.hasClass('checked'),
+      false,
+      'Component hasn\'t css-class \'checked\' after click in readonly mode');
+    assert.strictEqual(
+      $checkboxInput.prop('checked'),
+      false,
+      'Component\'s inner checkbox <input> isn\'t checked after click in readonly mode');
+    assert.strictEqual(
+      Ember.typeOf(this.get('flag')),
+      'undefined',
+      'Component\'s binded value is still \'undefined\' after click in readonly mode');
+  });
+
+  // Disable readonly mode & check component's state again.
+  this.set('readonly', false);
+  assert.strictEqual($component.hasClass('read-only'), false, 'Component hasn\'t css-class \'read-only\' when readonly mode is disabled');
+
+  // Imitate click on component (try to change it's state to checked) & check it's state & action's event object.
+  // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
+  Ember.run(() => {
+    $component.click();
+    assert.strictEqual(
+      Ember.isNone(onCheckboxChangeEventObject),
+      false,
+      'Component sends \'onChange\' action when readonly mode is disabled');
+    assert.strictEqual(
+      $component.hasClass('checked'),
+      true,
+      'Component has css-class \'checked\' after first click when readonly mode is disabled');
+    assert.strictEqual(
+      $checkboxInput.prop('checked'),
+      true,
+      'Component\'s inner checkbox <input> is checked after first click when readonly mode is disabled');
+    assert.strictEqual(
+      this.get('flag'),
+      true,
+      'Component\'s binded value is equals to \'true\' after first click when readonly mode is disabled');
+  });
 });

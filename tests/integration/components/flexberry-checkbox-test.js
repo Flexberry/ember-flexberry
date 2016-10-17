@@ -104,3 +104,29 @@ test('Component works properly in readonly mode', function(assert) {
   assert.strictEqual(latestEventObjects.change, null, 'Component doesn\'t send \'change\' action in readonly mode');
 });
 
+test('Component changes binded value (with \'change\' action handler)', function(assert) {
+  assert.expect(2);
+
+  this.set('flag', false);
+
+  // Bind component's 'change' action handler.
+  this.set('actions.onFlagChange', e => {
+    assert.strictEqual(e.originalEvent.target.id, this.$('input')[0].id);
+    this.set('flag', e.newValue);
+  });
+
+  this.render(hbs`{{flexberry-checkbox value=flag change=(action "onFlagChange")}}`);
+
+  // Retrieve component & it's inner <input>.
+  let $component = this.$().children();
+  let $checkboxInput = $component.children('input');
+
+  // Check component's initial state.
+  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
+
+  $component.click();
+  assert.strictEqual(
+    $checkboxInput.prop('checked'),
+    true,
+    'Component\'s inner checkbox <input> is checked after click (with \'change\' action handler)');
+});

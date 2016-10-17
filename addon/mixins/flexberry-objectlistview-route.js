@@ -35,6 +35,10 @@ export default Ember.Mixin.create({
     */
     refreshList() {
       this.refresh();
+    },
+
+    saveAgregator(agregatorModel) {
+      return false;
     }
   },
 

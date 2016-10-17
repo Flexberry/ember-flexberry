@@ -113,9 +113,8 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
 
     // Roll back all found agregators and its has-many relations.
     modelsToRollBack.forEach(function(processedModel) {
-      controller.rollbackHasManyRelationships(processedModel);
       if (processedModel) {
-        processedModel.rollbackAttributes();
+        processedModel.rollbackAll();
       }
     });
   },

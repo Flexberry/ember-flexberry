@@ -36,6 +36,11 @@ ErrorableControllerMixin, {
       this.set('rowsInLoadingState', false);
       this.set('contentWithKeys', Ember.A());
       this.set('contentForRender', Ember.A());
+
+      let userSettings = this._getUserSettings();
+      this.set('_userSettings', userSettings);
+      this._setColumnsUserSettings();
+
       if (content.get('isFulfilled') === false) {
         content.then((items) => {
           items.forEach((item) => {
@@ -349,72 +354,10 @@ ErrorableControllerMixin, {
     @type Object[]
     @readOnly
   */
-  columns: Ember.computed('modelProjection', 'enableFilters', 'content', function() {
-    let ret;
-    let projection = this.get('modelProjection');
+  _columns: Ember.A(),
 
-    if (!projection) {
-      Ember.Logger.error('Property \'modelProjection\' is undefined.');
-      return [];
-    }
-
-    let cols = this._generateColumns(projection.attributes);
-    let userSettings;
-    if (this.notUseUserSettings === true) {
-      // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
-      // In future release backend can save userSettings for each olv.
-      userSettings = this.get('currentController.developerUserSettings');
-      userSettings = userSettings ? userSettings[this.get('componentName')] : undefined;
-      userSettings = userSettings ? userSettings.DEFAULT : undefined;
-    } else {
-      userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
-    }
-
-    if (userSettings && userSettings.colsOrder !== undefined) {
-      let namedCols = {};
-      for (let i = 0; i < cols.length; i++) {
-        let col = cols[i];
-        delete col.sorted;
-        delete col.sortNumber;
-        delete col.sortAscending;
-        let propName = col.propName;
-        namedCols[propName] = col;
-      }
-
-      if (userSettings.sorting === undefined) {
-        userSettings.sorting = [];
-      }
-
-      for (let i = 0; i < userSettings.sorting.length; i++) {
-        let sorting = userSettings.sorting[i];
-        let propName = sorting.propName;
-        namedCols[propName].sorted = true;
-        namedCols[propName].sortAscending = sorting.direction === 'asc' ? true : false;
-        namedCols[propName].sortNumber = i + 1;
-      }
-
-      ret = [];
-      for (let i = 0; i < userSettings.colsOrder.length; i++) {
-        let userSetting = userSettings.colsOrder[i];
-        if (!userSetting.hide) {
-          let propName = userSetting.propName;
-          let col = namedCols[propName];
-          ret[ret.length] = col;
-        }
-      }
-    } else {
-      if (this.currentController) {
-        if (this.currentController.userSettings === undefined) {
-          Ember.set(this.currentController, 'userSettings', {});
-        }
-
-        Ember.set(this.currentController.userSettings, 'colsOrder', cols);
-      }
-
-      ret = cols;
-    }
-
-    return ret;
+  _userSettings: Ember.computed(function() {
+    return this._getUserSettings();
   }),
 
   /**
@@ -719,6 +662,14 @@ ErrorableControllerMixin, {
 
   showConfigDialog: 'showConfigDialog',
 
+  _sortingChanged: false,
+
+  sortingChanged: Ember.observer('_sortingChanged', function() {
+    let columns = this.get('columns');
+
+    this._setColumnsSorting(columns);
+  }),
+
   actions: {
     /**
       This action is called when user click on header.
@@ -735,6 +686,9 @@ ErrorableControllerMixin, {
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
+
+      let sortingChanged = this.get('_sortingChanged');
+      this.set('_sortingChanged', !sortingChanged);
     },
 
     /**
@@ -812,8 +766,8 @@ ErrorableControllerMixin, {
     */
     createNew() {
       let editFormRoute = this.get('editFormRoute');
-      let modelController = this.get('modelController');
-      modelController.transitionToRoute(editFormRoute + '.new');
+      let currentController = this.get('currentController');
+      currentController.transitionToRoute(editFormRoute + '.new');
     },
 
     /**
@@ -875,7 +829,7 @@ ErrorableControllerMixin, {
     */
     showConfigDialog(settingName) {
       Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.componentName, settingName);
+      this.get('currentController').send('showConfigDialog', this.componentName, settingName);
     },
 
     /**
@@ -1010,6 +964,18 @@ ErrorableControllerMixin, {
         }
       });
     }
+
+    let projection = this.get('modelProjection');
+
+    if (!projection) {
+      Ember.Logger.error('Property \'modelProjection\' is undefined.');
+      return [];
+    }
+
+    let cols = this._generateColumns(projection.attributes);
+    if (cols) {
+      this.set('columns', cols);
+    }
   },
 
   /**
@@ -1025,20 +991,6 @@ ErrorableControllerMixin, {
         this._setActiveRecord(key);
       }
     }
-
-    let columnWidth;
-    if (this.notUseUserSettings) {
-      columnWidth = this.get('currentController.developerUserSettings');
-      columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
-      columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
-      columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
-    } else {
-      columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
-    }
-
-    if (columnWidth !== undefined) {
-      this._setColumnWidths(columnWidth);
-    }
   },
 
   /**
@@ -1047,13 +999,9 @@ ErrorableControllerMixin, {
   */
   didRender() {
     this._super(...arguments);
-    let $currentTable = this.$('table.object-list-view');
-    if (this.get('allowColumnResize')) {
-      $currentTable.addClass('fixed');
-      this._reinitResizablePlugin();
-    } else {
-      $currentTable.colResizable({ disable: true });
-    }
+
+    this._setColumnWidths();
+    this._setColumnsOrder();
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1138,13 +1086,28 @@ ErrorableControllerMixin, {
 
     @param {Array} userSetting User setting to apply to control
   */
-  _setColumnWidths(userSetting) {
-    if (!Ember.isArray(userSetting)) {
+  _setColumnWidths() {
+    let $objectListView = this.$('table.object-list-view');
+    if (!$objectListView) {
+      // Table will not rendered yet.
+      return;
+    }
+
+    if (this.get('allowColumnResize')) {
+      $objectListView.addClass('fixed');
+      this._reinitResizablePlugin();
+    } else {
+      $objectListView.colResizable({ disable: true });
+    }
+
+    let userSettings = this.get('_userSettings');
+
+    if (!userSettings || (userSettings && !Ember.isArray(userSettings.columnWidths))) {
       return;
     }
 
     let hashedUserSetting = {};
-    userSetting.forEach(item => {
+    userSettings.columnWidths.forEach(item => {
       let userColumnInfo = Ember.merge({
         propName: undefined,
         width: undefined
@@ -1159,7 +1122,7 @@ ErrorableControllerMixin, {
       hashedUserSetting[propName] = width;
     });
 
-    let $columns = this.$('table.object-list-view').find('th');
+    let $columns = $objectListView.find('th');
     Ember.$.each($columns, (key, item) => {
       let currentItem = this.$(item);
       let currentPropertyName = this._getColumnPropertyName(currentItem);
@@ -1172,6 +1135,81 @@ ErrorableControllerMixin, {
     });
 
     this._reinitResizablePlugin();
+  },
+
+  _setColumnsUserSettings() {
+    this._setColumnsSorting();
+  },
+
+  /**
+    Table columns related to current model projection.
+
+    @property columns
+    @type Object[]
+    @readOnly
+  */
+  columns: Ember.computed('modelProjection', 'enableFilters', 'columns.@each.index', {
+    get(key) {
+      return this.get('_columns');
+    },
+    set(key, value) {
+      this.set('_columns', value);
+      return value;
+    }
+  }),
+
+  _setColumnsOrder() {
+    let columns = this.get('columns');
+    let order = this.get('_userSettings.colsOrder');
+    if (columns && order) {
+      order.forEach((item, index) => {
+        columns.forEach((column) => {
+          if (column.get('propName') === item.propName) {
+            column.set('hide', item.hide);
+            column.set('index', index);
+          }
+        });
+      });
+      columns.sort((a, b) => (a.index > b.index ? 1 : -1));
+    }
+  },
+
+  _setColumnsSorting() {
+    let columns = this.get('columns');
+    if (!columns) {
+      return;
+    }
+
+    let userSettings = this.get('_userSettings');
+    if (userSettings && userSettings.sorting === undefined) {
+      userSettings.sorting = [];
+    }
+
+    columns.forEach((cols) => {
+      let sorted = { sorted: false, sortNumber: 0, sortAscending: false };
+      userSettings.sorting.forEach((sort, index) => {
+        if (cols.propName === sort.propName) {
+          sorted.sorted = true;
+          sorted.sortNumber = index + 1;
+          sorted.sortAscending = sort.direction === 'asc' ? true : false;
+        }
+      });
+
+      cols.setProperties(sorted);
+    });
+  },
+
+  _getUserSettings() {
+    if (this.get('notUseUserSettings')) {
+      // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
+      // In future release backend can save userSettings for each olv.
+      let userSettings = this.get('currentController.developerUserSettings');
+      return userSettings ||
+        userSettings ? userSettings[this.get('componentName')] : undefined ||
+        userSettings ? userSettings.DEFAULT : undefined;
+    } else {
+      return this.get('userSettingsService').getCurrentUserSetting(this.componentName);
+    }
   },
 
   /**
@@ -1234,7 +1272,7 @@ ErrorableControllerMixin, {
     @private
   */
   _generateColumns(attributes, columnsBuf, relationshipPath) {
-    columnsBuf = columnsBuf || [];
+    columnsBuf = columnsBuf || Ember.A();
     relationshipPath = relationshipPath || '';
 
     for (let attrName in attributes) {
@@ -1337,11 +1375,11 @@ ErrorableControllerMixin, {
     let key = this._createKey(bindingPath);
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
 
-    let column = {
+    let column = Ember.Object.create({
       header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
-    };
+    });
 
     if (valueFromLocales) {
       column.keyLocale = key;
@@ -1362,9 +1400,9 @@ ErrorableControllerMixin, {
     let sortDef;
     let sorting = this.get('sorting');
     if (sorting && (sortDef = sorting[bindingPath])) {
-      column.sorted = true;
-      column.sortAscending = sortDef.sortAscending;
-      column.sortNumber = sortDef.sortNumber;
+      column.set('sorted', true);
+      column.set('sortAscending', sortDef.sortAscending);
+      column.set('sortNumber', sortDef.sortNumber);
     }
 
     return column;
@@ -1718,9 +1756,11 @@ ErrorableControllerMixin, {
     let key = this._getModelKey(record);
     this._removeModelWithKey(key);
 
-    this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord() : record.deleteRecord()).catch((reason) => {
+    this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
+      this.sendAction('saveAgregator');
+    }) : record.deleteRecord()).catch((reason) => {
       this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
-      record.rollbackAttributes();
+      record.rollbackAll();
     });
 
     let componentName = this.get('componentName');
@@ -1764,7 +1804,9 @@ ErrorableControllerMixin, {
     @param {String} pattern The pattern to filter objects
   */
   _filterByAnyMatch(componentName, pattern) {
-    this.sendAction('filterByAnyMatch', pattern);
+    if (this.get('componentName') === componentName) {
+      this.sendAction('filterByAnyMatch', pattern);
+    }
   },
 
   /**
@@ -1784,13 +1826,13 @@ ErrorableControllerMixin, {
   },
 
   // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
-  _rowsChanged: Ember.observer('content.@each.dirtyType', function() {
-    let content = this.get('content');
-    if (content && content.isAny('dirtyType', 'updated')) {
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
-    }
-  }),
+  // _rowsChanged: Ember.observer('content.@each.dirtyType', function() {
+  //   let content = this.get('content');
+  //   if (content && content.isAny('dirtyType', 'updated')) {
+  //     let componentName = this.get('componentName');
+  //     this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
+  //   }
+  // }),
 
   /**
     It observes changes of flag {{#crossLink "ObjectListViewComponent/searchForContentChange:property"}}searchForContentChange{{/crossLink}}.
@@ -1894,14 +1936,6 @@ ErrorableControllerMixin, {
       configurateRow(rowConfig, record);
     }
   },
-
-  /**
-    Controller for model.
-
-    @property modelController
-    @type Object
-  */
-  modelController: null,
 
   /**
     Route for edit form by click row.
@@ -2189,33 +2223,6 @@ ErrorableControllerMixin, {
   },
 
   /**
-    Level nesting by default.
-
-    @property _level
-    @type Number
-    @default 0
-    @private
-  */
-  _level: 0,
-
-  /**
-    Level nesting current record.
-
-    @property _currentLevel
-    @type Number
-    @default 0
-    @private
-  */
-  _currentLevel: Ember.computed({
-    get() {
-      return this.get('_level');
-    },
-    set(key, value) {
-      return this.set('_level', ++value);
-    },
-  }),
-
-  /**
     Store nested records.
 
     @property _records
@@ -2224,15 +2231,6 @@ ErrorableControllerMixin, {
     @private
   */
   _records: Ember.computed(() => Ember.A()),
-
-  /**
-    Flag used to start render row content.
-
-    @property doRenderData
-    @type Boolean
-    @default false
-  */
-  doRenderData: false,
 
   /**
     Current record.

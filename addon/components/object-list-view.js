@@ -1005,6 +1005,20 @@ export default FlexberryBaseComponent.extend(
                 }
               }
 
+              let columnWidth;
+              if (this.notUseUserSettings) {
+                columnWidth = this.get('currentController.developerUserSettings');
+                columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
+                columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
+                columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
+              } else {
+                columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+              }
+
+              if (columnWidth !== undefined) {
+                this._setColumnWidths(columnWidth);
+              }
+
               let $currentTable = this.$('table.object-list-view');
               if (this.get('allowColumnResize')) {
                 $currentTable.addClass('fixed');
@@ -1706,9 +1720,11 @@ export default FlexberryBaseComponent.extend(
       let key = this._getModelKey(record);
       this._removeModelWithKey(key);
 
-      this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord() : record.deleteRecord()).catch((reason) => {
+      this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
+        this.sendAction('saveAgregator');
+      }) : record.deleteRecord()).catch((reason) => {
         this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
-        record.rollbackAttributes();
+        record.rollbackAll();
       });
 
       let componentName = this.get('componentName');

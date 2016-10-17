@@ -19,7 +19,9 @@ Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework p
 
 ## Documentation
 
-* Auto-generated under master branch: http://flexberry.github.io/Documentation
+* Common Flexberry PLATFORM documentation site: http://flexberry.github.io
+* Auto-generated documentation under `master` branch: http://flexberry.github.io/master
+* Auto-generated documentation under `develop` branch: http://flexberry.github.io/develop
 
 ## Demo
 
@@ -38,9 +40,9 @@ Information on how to contribute to the project you can find [here](https://gith
 You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
+* [Node.js (v5.6.0)](http://nodejs.org/) (with NPM)
 * [Bower](http://bower.io/)
-* [Ember CLI](http://www.ember-cli.com/)
+* [Ember CLI (v2.4.3)](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
 
 #### Installation
@@ -106,7 +108,7 @@ Manual deployment on [Firebase](https://www.firebase.com):
 #### Documenting
 
 * Document your code using [YUIDoc Syntax Reference](http://yui.github.io/yuidoc/syntax/index.html). For examples, you can look at the documented code in the ember.js repository.
-* After pushing into master or develop branch, documentation will be automatically generated and updated in [Flexberry/Documentation repository](https://github.com/Flexberry/Documentation), which is available via http://flexberry.github.io/Documentation.
+* After pushing into master or develop branch, documentation will be automatically generated and updated in [Flexberry/Documentation repository](https://github.com/Flexberry/flexberry.github.io), which is available via http://flexberry.github.io.
 * For testing and generating documentation by hands use [YUIDoc](http://yui.github.io/yuidoc/).
 
 ## Further Reading / Useful Links

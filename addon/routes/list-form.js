@@ -138,21 +138,29 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
           hierarchicalAttribute: hierarchicalAttribute,
         };
 
+        this.onModelLoadingStarted(queryParameters);
+
         // Find by query is always fetching.
         // TODO: support getting from cache with "store.all->filterByProjection".
         // TODO: move includeSorting to setupController mixins?
         return this.reloadList(queryParameters);
       }).then((records) => {
         this.get('formLoadTimeTracker').set('endLoadTime', performance.now());
+        this.onModelLoadingFulfilled(records);
         this.includeSorting(records, this.sorting);
         this.get('controller').set('model', records);
         return records;
+      }).catch((errorData) => {
+        this.onModelLoadingRejected(errorData);
+      }).finally((data) => {
+        this.onModelLoadingAlways(data);
       });
 
     if (this.get('controller') === undefined) {
       return { isLoading: true };
     }
 
+    // TODO: Check controller loaded model loading parameters and return it without reloading if there is same backend query was executed.
     let model = this.get('controller.model');
 
     if (model !== null) {
@@ -160,6 +168,73 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     } else {
       return { isLoading: true };
     }
+  },
+
+  /**
+    This method will be invoked before model loading operation will be called.
+    Override this method to add some custom logic on model loading operation start.
+
+    @example
+      ```javascript
+      onModelLoadingStarted(queryParameters) {
+        alert('Model loading operation started!');
+      }
+      ```
+    @method onModelLoadingStarted.
+    @param {Object} queryParameters Query parameters used for model loading operation.
+  */
+  onModelLoadingStarted(queryParameters) {
+  },
+
+  /**
+    This method will be invoked when model loading operation successfully completed.
+    Override this method to add some custom logic on model loading operation success.
+
+    @example
+      ```javascript
+      onModelLoadingFulfilled() {
+        alert('Model loading operation succeed!');
+      }
+      ```
+    @method onModelLoadingFulfilled.
+    @param {Object} model Loaded model data.
+  */
+  onModelLoadingFulfilled(model) {
+  },
+
+  /**
+    This method will be invoked when model loading operation completed, but failed.
+    Override this method to add some custom logic on model loading operation fail.
+
+    @example
+      ```javascript
+      onModelLoadingRejected() {
+        alert('Model loading operation failed!');
+      }
+      ```
+    @method onModelLoadingRejected.
+    @param {Object} errorData Data about model loading operation fail.
+  */
+  onModelLoadingRejected(errorData) {
+    // TODO: Provide information about error to user.
+  },
+
+  /**
+    This method will be invoked always when model loading operation completed,
+    regardless of model loading promise's state (was it fulfilled or rejected).
+    Override this method to add some custom logic on model loading operation completion.
+
+    @example
+      ```js
+      onModelLoadingAlways(data) {
+        alert('Model loading operation completed!');
+      }
+      ```
+
+    @method onModelLoadingAlways.
+    @param {Object} data Data about completed model loading operation.
+  */
+  onModelLoadingAlways(data) {
   },
 
   /**

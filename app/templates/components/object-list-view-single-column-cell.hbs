@@ -1,11 +1,21 @@
 {{#each columns as |column|}}
   <div class="inline fields {{if (not hasEditableValues) 'readonly'}}">
-    <label>{{column.header}}:</label>
+  <label>{{column.header}}:</label>
+  {{#if column.cellComponent.componentName}}
     {{component column.cellComponent.componentName
-      dynamicProperties=column.cellComponent.componentProperties
-      relatedModel=model
-      value=(mut (get model column.propName))
-      readonly=readonly
+    dynamicProperties=column.cellComponent.componentProperties
+    relatedModel=model
+    value=(mut (get model column.propName))
+    readonly=readonly
+    required=required
     }}
+  {{else}}
+    <div class="oveflow-text">
+      {{get-formatted model column.propName
+        dateFormat=dateFormat
+        moment=moment
+      }}
+    </div>
+  {{/if}}
   </div>
 {{/each}}

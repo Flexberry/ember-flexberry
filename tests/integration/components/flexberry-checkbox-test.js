@@ -79,15 +79,10 @@ test('Component works properly in readonly mode', function(assert) {
     change: null
   };
 
-  // Bind component's action handlers.
-  this.set('actions.onFlagChange', e => {
-    latestEventObjects.change = e;
-  });
-
   // Render component in readonly mode.
   this.set('flag', false);
   this.set('readonly', true);
-  this.render(hbs`{{flexberry-checkbox value=flag readonly=readonly change=(action "onFlagChange")}}`);
+  this.render(hbs`{{flexberry-checkbox value=flag readonly=readonly}}`);
 
   // Retrieve component & it's inner <input>.
   let $component = this.$().children();
@@ -104,18 +99,11 @@ test('Component works properly in readonly mode', function(assert) {
   assert.strictEqual(latestEventObjects.change, null, 'Component doesn\'t send \'change\' action in readonly mode');
 });
 
-test('Component changes binded value (with \'change\' action handler)', function(assert) {
+test('Component changes binded value', function(assert) {
   assert.expect(2);
 
   this.set('flag', false);
-
-  // Bind component's 'change' action handler.
-  this.set('actions.onFlagChange', e => {
-    assert.strictEqual(e.originalEvent.target.id, this.$('input')[0].id);
-    this.set('flag', e.newValue);
-  });
-
-  this.render(hbs`{{flexberry-checkbox value=flag change=(action "onFlagChange")}}`);
+  this.render(hbs`{{flexberry-checkbox value=flag}}`);
 
   // Retrieve component & it's inner <input>.
   let $component = this.$().children();
@@ -124,9 +112,10 @@ test('Component changes binded value (with \'change\' action handler)', function
   // Check component's initial state.
   assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
 
+  // Imitate click on component (change the state of the component).
   $component.click();
   assert.strictEqual(
-    $checkboxInput.prop('checked'),
-    true,
-    'Component\'s inner checkbox <input> is checked after click (with \'change\' action handler)');
+   $checkboxInput.prop('checked'),
+   true,
+  'Component\'s inner checkbox <input> is checked after click)');
 });

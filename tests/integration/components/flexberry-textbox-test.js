@@ -26,7 +26,7 @@ moduleForComponent('flexberry-textbox', 'Integration | Component | flexberry-tex
 });
 
 test('it renders properly', function(assert) {
-  assert.expect(10);
+  assert.expect(16);
 
   // Render component.
   this.render(hbs`{{flexberry-textbox
@@ -48,7 +48,7 @@ test('it renders properly', function(assert) {
   assert.strictEqual($textboxInput.attr('type'), 'text', 'Component\'s inner <input> is of text type');
 
   // Check wrapper's additional CSS-classes.
-  let additioanlCssClasses = 'additional-css-class-name and-another-one';
+  let additioanlCssClasses = 'fluid transparent mini huge error';
   this.set('class', additioanlCssClasses);
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
@@ -86,19 +86,54 @@ test('readonly mode works properly', function(assert) {
     '',
     'Component\'s inner <input> hasn\'t readonly attribute');
 
-  // Activate readonly mode & check that <input>'s readonly attribute exists now & has value equals to 'readonly'. 
+  // Activate readonly mode & check that <input>'s readonly attribute exists now & has value equals to 'readonly'.
   this.set('readonly', true);
   assert.strictEqual(
     Ember.$.trim($textboxInput.attr('readonly')),
     'readonly',
     'Component\'s inner <input> has readonly attribute with value equals to \'readonly\'');
 
-  // Deactivate readonly mode & check that <input>'s readonly attribute doesn't exist now. 
+  // Check that <input>'s readonly attribute doesn't exist now.
   this.set('readonly', false);
   assert.strictEqual(
     Ember.$.trim($textboxInput.attr('readonly')),
     '',
     'Component\'s inner <input> hasn\'t readonly attribute');
+});
+
+test('readonly mode works properly with value', function(assert){
+
+  // Set <input>'s value' & render component.
+  this.set('value', null);
+  this.set('readonly', true);
+  this.render(hbs`{{flexberry-textbox
+    readonly=readonly
+    value=value
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textboxInput = $component.children('input');
+
+  $textboxInput.on('change', (e) => {
+    if (this.get('readonly')) {
+      e.stopPropagation();
+    }
+  });
+
+  let newValue = 'New value';
+  $textboxInput.val(newValue);
+  $textboxInput.change();
+
+  // Check <input>'s value not chenged.
+  assert.strictEqual(
+    Ember.$.trim($textboxInput.val()),
+    '',
+    'Component\'s inner <input>\'s value not chenged');
+  assert.strictEqual(
+    this.get('value'),
+    null,
+    'Component\'s property binded to unchanged \'value\'');
 });
 
 test('it renders i18n-ed placeholder', function(assert) {

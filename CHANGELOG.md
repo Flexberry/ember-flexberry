@@ -4,7 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [0.7.0-beta.22] - 2016-10-16
+## [0.7.0-beta.23] - 2016-10-18
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.26 version.
+
+### Fixed
+* `flexberry-simpleolv` component.
+    * Wrong handling of click on current page number if component placed inside `form` tag.
+
+## [0.7.0-beta.22] - 2016-10-17
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.24 version.
 

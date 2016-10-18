@@ -118,6 +118,7 @@ test('readonly mode works properly with value', function(assert){
   $textboxInput.on('change', (e) => {
     if (this.get('readonly')) {
       e.stopPropagation();
+      $textboxInput.val(null);
     }
   });
 

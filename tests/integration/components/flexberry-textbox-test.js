@@ -101,7 +101,7 @@ test('readonly mode works properly', function(assert) {
     'Component\'s inner <input> hasn\'t readonly attribute');
 });
 
-test('readonly mode works properly with value', function(assert){
+test('readonly mode works properly with value', function(assert) {
 
   // Set <input>'s value' & render component.
   this.set('value', null);

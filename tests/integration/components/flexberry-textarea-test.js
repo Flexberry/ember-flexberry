@@ -35,7 +35,6 @@ test('it renders properly', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $textareaInput = $component.children('input');
 
   // Check wrapper <div>.
   assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
@@ -83,11 +82,11 @@ test('readonly mode works properly', function(assert) {
     'Component\'s inner <input> hasn\'t readonly attribute');
 
   // Activate readonly mode & check that <input>'s readonly attribute exists now & has value equals to 'readonly'.
-  //this.set('readonly', true);
-  //assert.strictEqual(
-  //  Ember.$.trim($textareaInput.attr('readonly')),
-  //  'readonly',
-  //  'Component\'s inner <input> has readonly attribute with value equals to \'readonly\'');
+  this.set('readonly', true);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('readonly')),
+    'readonly',
+    'Component\'s inner <input> has readonly attribute with value equals to \'readonly\'');
 
   // Check that <input>'s readonly attribute doesn't exist now.
   this.set('readonly', false);

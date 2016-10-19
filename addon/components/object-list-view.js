@@ -39,12 +39,10 @@ export default FlexberryBaseComponent.extend(
       this.set('rowsInLoadingState', false);
       this.set('contentWithKeys', Ember.A());
       this.set('contentForRender', Ember.A());
-      if (content.get('isFulfilled') === false) {
+      if (content instanceof Ember.RSVP.Promise) {
         content.then((items) => {
           items.forEach((item) => {
             this._addModel(item);
-          }).then(()=> {
-            this.set('contentWithKeys', this.contentForRender);
           });
         }).then(()=> {
           this.set('contentWithKeys', this.contentForRender);
@@ -54,15 +52,15 @@ export default FlexberryBaseComponent.extend(
           this._addModel(item);
         });
         this.set('contentWithKeys', this.contentForRender);
-      }
 
-      // TODO: analyze this observers.
-      let attrsArray = this._getAttributesName();
-      content.forEach((record) => {
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(record, attrName, this, '_attributeChanged');
+        // TODO: analyze this observers.
+        let attrsArray = this._getAttributesName();
+        content.forEach((record) => {
+          attrsArray.forEach((attrName) => {
+            Ember.addObserver(record, attrName, this, '_attributeChanged');
+          });
         });
-      });
+      }
 
       this.set('showLoadingTbodyClass', false);
     } else {

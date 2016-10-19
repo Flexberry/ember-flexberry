@@ -10,6 +10,7 @@ export default EditFormRoute.extend({
    */
   modelProjection: 'ApplicationUserE',
 
+  developerUserSettings: { FOLVOnEditFormSuggestionsObjectListView: { } },
   /**
     Name of model to be used as form's record type.
 

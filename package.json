@@ -27,7 +27,9 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
     "broccoli-jscs": "1.2.2",
+    "dexie": "^1.4.2",
     "ember-ajax": "0.7.1",
+    "ember-browserify": "1.1.9",
     "ember-cli": "2.4.3",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-dependency-checker": "^1.2.0",
@@ -51,10 +53,8 @@
     "loader.js": "^4.0.1",
     "moment": "2.11.2",
     "moment-timezone": "0.5.0",
-    "ember-browserify": "1.1.9",
-    "dexie": "^1.4.2",
-    "semantic-ui-ember": "0.9.3",
-    "node-uuid": "^1.4.7"
+    "node-uuid": "^1.4.7",
+    "semantic-ui-ember": "0.9.3"
   },
   "dependencies": {
     "ember-cli-babel": "^5.1.6",

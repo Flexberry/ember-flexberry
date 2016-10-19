@@ -186,6 +186,128 @@ test('it renders manually defined placeholder', function(assert) {
     'Component\'s inner <textarea>\'s placeholder is equals to manually updated value \'' + placeholder + '\'');
 });
 
+test('required mode works properly', function(assert) {
+  assert.expect(3);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    required=required
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Check that <textarea>'s required attribute doesn't exist yet.
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('required')),
+    '',
+    'Component\'s inner <textarea> hasn\'t required attribute');
+
+  // Activate required mode & check that <textarea>'s required attribute exists now & has value equals to 'required'.
+  this.set('required', true);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('required')),
+    'required',
+    'Component\'s inner <textarea> has required attribute with value equals to \'required\'');
+
+  // Check that <textarea>'s required attribute doesn't exist now.
+  this.set('required', false);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('required')),
+    '',
+    'Component\'s inner <textarea> hasn\'t required attribute');
+});
+
+test('disabled mode works properly', function(assert) {
+  assert.expect(3);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    disabled=disabled
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Check that <textarea>'s disabled attribute doesn't exist yet.
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('disabled')),
+    '',
+    'Component\'s inner <textarea> hasn\'t disabled attribute');
+
+  // Activate disabled mode & check that <textarea>'s disabled attribute exists now & has value equals to 'disabled'.
+  this.set('disabled', true);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('disabled')),
+    'disabled',
+    'Component\'s inner <textarea> has disabled attribute with value equals to \'disabled\'');
+
+  // Check that <textarea>'s disabled attribute doesn't exist now.
+  this.set('disabled', false);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('disabled')),
+    '',
+    'Component\'s inner <textarea> hasn\'t disabled attribute');
+});
+
+test('autofocus mode works properly', function(assert) {
+  assert.expect(3);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    autofocus=autofocus
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Check that <textarea>'s autofocus attribute doesn't exist yet.
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('autofocus')),
+    '',
+    'Component\'s inner <textarea> hasn\'t autofocus attribute');
+
+  // Activate autofocus mode & check that <textarea>'s autofocus attribute exists now & has value equals to 'autofocus'.
+  this.set('autofocus', true);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('autofocus')),
+    'autofocus',
+    'Component\'s inner <textarea> has autofocus attribute with value equals to \'autofocus\'');
+
+  // Check that <textarea>'s autofocus attribute doesn't exist now.
+  this.set('autofocus', false);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('autofocus')),
+    '',
+    'Component\'s inner <textarea> hasn\'t autofocus attribute');
+});
+
+test('spellcheck mode works properly', function(assert) {
+  assert.expect(1);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    spellcheck=false
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Check that <textarea>'s spellcheck attribute doesn't exist yet.
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('spellcheck')),
+    'false',
+    'Component\'s inner <textarea> hasn\'t autofocus attribute');
+});
+
 test('changes in inner <textarea> causes changes in property binded to \'value\'', function(assert) {
   assert.expect(4);
 

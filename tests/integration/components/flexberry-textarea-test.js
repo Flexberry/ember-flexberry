@@ -73,33 +73,33 @@ test('readonly mode works properly', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $textareaInput = $component.children('input');
+  let $textareaInput = $component.children('textarea');
 
-  // Check that <input>'s readonly attribute doesn't exist yet.
+  // Check that <textarea>'s readonly attribute doesn't exist yet.
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('readonly')),
     '',
-    'Component\'s inner <input> hasn\'t readonly attribute');
+    'Component\'s inner <textarea> hasn\'t readonly attribute');
 
-  // Activate readonly mode & check that <input>'s readonly attribute exists now & has value equals to 'readonly'.
+  // Activate readonly mode & check that <textarea>'s readonly attribute exists now & has value equals to 'readonly'.
   this.set('readonly', true);
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('readonly')),
     'readonly',
-    'Component\'s inner <input> has readonly attribute with value equals to \'readonly\'');
+    'Component\'s inner <textarea> has readonly attribute with value equals to \'readonly\'');
 
-  // Check that <input>'s readonly attribute doesn't exist now.
+  // Check that <textarea>'s readonly attribute doesn't exist now.
   this.set('readonly', false);
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('readonly')),
     '',
-    'Component\'s inner <input> hasn\'t readonly attribute');
+    'Component\'s inner <textarea> hasn\'t readonly attribute');
 });
 
 test('readonly mode works properly with value', function(assert) {
   assert.expect(2);
 
-  // Set <input>'s value' & render component.
+  // Set <textarea>'s value' & render component.
   this.set('value', null);
   this.set('readonly', true);
   this.render(hbs`{{flexberry-textarea
@@ -109,7 +109,7 @@ test('readonly mode works properly with value', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $textareaInput = $component.children('input');
+  let $textareaInput = $component.children('textarea');
 
   $textareaInput.on('change', (e) => {
     if (this.get('readonly')) {
@@ -122,11 +122,11 @@ test('readonly mode works properly with value', function(assert) {
   $textareaInput.val(newValue);
   $textareaInput.change();
 
-  // Check <input>'s value not chenged.
+  // Check <textarea>'s value not chenged.
   assert.strictEqual(
     Ember.$.trim($textareaInput.val()),
     '',
-    'Component\'s inner <input>\'s value not chenged');
+    'Component\'s inner <textarea>\'s value not chenged');
   assert.strictEqual(
     this.get('value'),
     null,
@@ -141,27 +141,27 @@ test('it renders i18n-ed placeholder', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $textareaInput = $component.children('input');
+  let $textareaInput = $component.children('textarea');
 
-  // Check <input>'s placeholder.
+  // Check <textarea>'s placeholder.
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('placeholder')),
     Ember.get(I18nRuLocale, 'components.flexberry-textarea.placeholder'),
-    'Component\'s inner <input>\'s placeholder is equals to it\'s default value from i18n locales/ru/translations');
+    'Component\'s inner <textarea>\'s placeholder is equals to it\'s default value from i18n locales/ru/translations');
 
-  // Change current locale to 'en' & check <input>'s placeholder again.
+  // Change current locale to 'en' & check <textarea>'s placeholder again.
   this.set('i18n.locale', 'en');
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('placeholder')),
     Ember.get(I18nEnLocale, 'components.flexberry-textarea.placeholder'),
-    'Component\'s inner <input>\'s placeholder is equals to it\'s value from i18n locales/en/translations');
+    'Component\'s inner <textarea>\'s placeholder is equals to it\'s value from i18n locales/en/translations');
 });
 
 test('it renders manually defined placeholder', function(assert) {
   assert.expect(2);
 
-  // Set <input>'s placeholder' & render component.
-  let placeholder = 'Input is empty, please type some text';
+  // Set <textarea>'s placeholder' & render component.
+  let placeholder = 'textarea is empty, please type some text';
   this.set('placeholder', placeholder);
   this.render(hbs`{{flexberry-textarea
     placeholder=placeholder
@@ -169,19 +169,95 @@ test('it renders manually defined placeholder', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $textareaInput = $component.children('input');
+  let $textareaInput = $component.children('textarea');
 
-  // Check <input>'s placeholder.
+  // Check <textarea>'s placeholder.
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('placeholder')),
     placeholder,
-    'Component\'s inner <input>\'s placeholder is equals to manually defined value \'' + placeholder + '\'');
+    'Component\'s inner <textarea>\'s placeholder is equals to manually defined value \'' + placeholder + '\'');
 
-  // Change placeholder's value & check <input>'s placeholder again.
-  placeholder = 'Input has no value';
+  // Change placeholder's value & check <textarea>'s placeholder again.
+  placeholder = 'textarea has no value';
   this.set('placeholder', placeholder);
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('placeholder')),
     placeholder,
-    'Component\'s inner <input>\'s placeholder is equals to manually updated value \'' + placeholder + '\'');
+    'Component\'s inner <textarea>\'s placeholder is equals to manually updated value \'' + placeholder + '\'');
+});
+
+test('changes in inner <textarea> causes changes in property binded to \'value\'', function(assert) {
+  assert.expect(4);
+
+  // Set <textarea>'s value' & render component.
+  this.set('value', null);
+  this.render(hbs`{{flexberry-textarea
+    value=value
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Check <textarea>'s value & binded value for initial emptyness.
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.val()),
+    '',
+    'Component\'s inner <textarea>\'s value is equals to \'\'');
+  assert.strictEqual(
+    this.get('value'),
+    null,
+    'Component\'s property binded to \'value\' is equals to null');
+
+  // Change <textarea>'s value (imitate situation when user typed something into component's <textarea>)
+  // & check them again ('change' event is needed to force bindings work).
+  let newValue = 'Some text typed into textboxes inner <textarea>';
+  $textareaInput.val(newValue);
+  $textareaInput.change();
+
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.val()),
+    newValue,
+    'Component\'s inner <textarea>\'s value is equals to \'' + newValue + '\'');
+  assert.strictEqual(
+    this.get('value'),
+    newValue,
+    'Component\'s property binded to \'value\' is equals to \'' + newValue + '\'');
+});
+
+test('changes in property binded to \'value\' causes changes in inner <textarea>', function(assert) {
+  assert.expect(4);
+
+  // Set <textarea>'s value' & render component.
+  this.set('value', null);
+  this.render(hbs`{{flexberry-textarea
+    value=value
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Check <textarea>'s value & binded value for initial emptyness.
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.val()),
+    '',
+    'Component\'s inner <textarea>\'s value is equals to \'\'');
+  assert.strictEqual(
+    this.get('value'),
+    null,
+    'Component\'s property binded to \'value\' is equals to null');
+
+  // Change property binded to 'value' & check them again.
+  let newValue = 'Some text typed into textboxes inner <textarea>';
+  this.set('value', newValue);
+
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.val()),
+    newValue,
+    'Component\'s inner <textarea>\'s value is equals to \'' + newValue + '\'');
+  assert.strictEqual(
+    this.get('value'),
+    newValue,
+    'Component\'s property binded to \'value\' is equals to \'' + newValue + '\'');
 });

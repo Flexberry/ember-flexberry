@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0-beta.25] - 2016-10-20
+### Added
+* Component `flexberry-simpledatetime` now supports in FF and IE.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.29 version.
+
 ## [0.7.0-beta.24] - 2016-10-19
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.28 version.
@@ -67,7 +74,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.7.0-beta.17] - 2016-10-12
 ### Added
 * Component `object-list-view-cell` now supports `yield` content.
-* Component `flexberry-simpledatetime` now supports in FF and IE.
 
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.19 version.

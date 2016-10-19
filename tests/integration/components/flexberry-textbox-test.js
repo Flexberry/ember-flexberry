@@ -102,6 +102,7 @@ test('readonly mode works properly', function(assert) {
 });
 
 test('readonly mode works properly with value', function(assert) {
+  assert.expect(2);
 
   // Set <input>'s value' & render component.
   this.set('value', null);

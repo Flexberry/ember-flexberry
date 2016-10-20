@@ -289,12 +289,12 @@ test('autofocus mode works properly', function(assert) {
 });
 
 test('spellcheck mode works properly', function(assert) {
-  assert.expect(1);
+  assert.expect(3);
 
   // Render component.
   this.render(hbs`{{flexberry-textarea
     class=class
-    spellcheck=false
+    spellcheck=spellcheck
   }}`);
 
   // Retrieve component.
@@ -304,8 +304,57 @@ test('spellcheck mode works properly', function(assert) {
   // Check that <textarea>'s spellcheck attribute doesn't exist yet.
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('spellcheck')),
+    '',
+    'Component\'s inner <textarea> hasn\'t spellcheck attribute');
+
+  // Activate spellcheck mode & check that <textarea>'s spellcheck attribute exists now & has value equals to 'spellcheck'.
+  this.set('spellcheck', true);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('spellcheck')),
+    'true',
+    'Component\'s inner <textarea> has spellcheck attribute with value equals to \'spellcheck\'');
+
+  // Check that <textarea>'s spellcheck attribute doesn't exist now.
+  this.set('spellcheck', false);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('spellcheck')),
     'false',
-    'Component\'s inner <textarea> hasn\'t autofocus attribute');
+    'Component\'s inner <textarea> hasn\'t spellcheck attribute');
+});
+
+test('wrap mode works properly', function(assert) {
+  assert.expect(3);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    wrap=wrap
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Check that <textarea>'s wrap attribute 'soft'.
+  this.set('wrap', 'soft');
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('wrap')),
+    'soft',
+    'Component\'s inner <textarea> wrap attribute \'soft\'');
+
+  // Check that <textarea>'s wrap attribute 'hard'.
+  this.set('wrap', 'hard');
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('wrap')),
+    'hard',
+    'Component\'s inner <textarea> wrap attribute \'hard\'');
+
+  // Check that <textarea>'s wrap attribute 'off'.
+  this.set('wrap', 'off');
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('wrap')),
+    'off',
+    'Component\'s inner <textarea> wrap attribute \'off\'');
 });
 
 test('changes in inner <textarea> causes changes in property binded to \'value\'', function(assert) {

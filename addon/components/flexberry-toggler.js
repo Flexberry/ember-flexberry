@@ -116,12 +116,6 @@ export default Ember.Component.extend({
         });
       },
     });
-
-    // Animation is asynchronous, so we need Ember.run here.
-    Ember.run(() => {
-      // Initialize right state (call semantic-ui accordion open/close method).
-      $accordeonDomElement.accordion(this.get('expanded') ? 'open' : 'close');
-    });
   },
 
   /**

@@ -19,11 +19,12 @@ test('component renders properly closed', function(assert) {
   {{/flexberry-toggler}}`);
 
   // Retrieve component, it's inner <input>.
-  let $component = this.$().children();    
+  let $component = this.$().children();
   let $togglerTitle = $component.children('.title');
   let $togglerI = $togglerTitle.children('i');
   let $togglerSpan = $togglerTitle.children('span');
   let $togglerContent = $component.children('.content');
+
   // Check wrapper <title>.
   assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
   assert.strictEqual($component.hasClass('flexberry-toggler'), true, 'Component\'s container has \'flexberry-toggler\' css-class');
@@ -70,7 +71,7 @@ test('component renders properly open', function(assert) {
   {{/flexberry-toggler}}`);
 
   // Retrieve component, it's inner <input>.
-  let $component = this.$().children();    
+  let $component = this.$().children();
   let $togglerTitle = $component.children('.title');
   let $togglerContent = $component.children('.content');
 
@@ -79,7 +80,7 @@ test('component renders properly open', function(assert) {
 
   // Check <content>
   assert.strictEqual($togglerContent.hasClass('active'), true, 'Component\'s container has \'active\' css-class');
-  assert.strictEqual($togglerContent.text().trim(), tempText,'Component\'s container has \'tempText\' text');
+  assert.strictEqual($togglerContent.text().trim(), tempText, 'Component\'s container has \'tempText\' text');
 });
 
 test('it renders', function(assert) {
@@ -150,7 +151,7 @@ test('component expands/collapses/animating on title click', function(assert) {
         // Tell to test method that asynchronous operation completed.
         animation();
 
-      }, Ember.$.fn.accordion.settings.duration/2);
+      }, Ember.$.fn.accordion.settings.duration / 2);
     });
 
     // Wait for expand animation to be completed & check component's state.
@@ -200,8 +201,8 @@ test('caption renders with collapsedCaption and expandedCaption test', function(
   let tempTextOpen = 'Temp opnen arcardion text.';
   let tempTextClosed = 'Temp closed arcardion text.';
 
-  this.set('expandedCaption', tempTextOpen );
-  this.set('collapsedCaption', tempTextClosed );
+  this.set('expandedCaption', tempTextOpen);
+  this.set('collapsedCaption', tempTextClosed);
 
   this.render(hbs`{{#flexberry-toggler
   caption=caption
@@ -213,7 +214,7 @@ test('caption renders with collapsedCaption and expandedCaption test', function(
   {{/flexberry-toggler}}`);
 
   // Retrieve component, it's inner <input>.
-  let $component = this.$().children();    
+  let $component = this.$().children();
   let $togglerTitle = $component.children('.title');
   let $togglerSpan = $togglerTitle.children('span');
 
@@ -221,19 +222,19 @@ test('caption renders with collapsedCaption and expandedCaption test', function(
   assert.strictEqual($togglerSpan.text().trim(), tempTextClosed, 'Component\'s container has title \'tempTextClosed\' text');
 
   // Try to expand component.
-  Ember.run(() => { 
-  $togglerTitle.click();
-  }); 
+  Ember.run(() => {
+    $togglerTitle.click();
+  });
 
   // Wait for collapse animation to be completed & check component's state.
   var done = assert.async();
-  Ember.run(() => { 
+  Ember.run(() => {
     setTimeout(function() {
       assert.strictEqual($togglerSpan.text().trim(), tempTextOpen, 'Component\'s container has title \'tempTextOpen\' text after first click');
       done();
-    },Ember.$.fn.accordion.settings.duration + 100);
+    }, Ember.$.fn.accordion.settings.duration + 100);
 
-  }); 
+  });
 });
 
 test('caption renders with caption and expandedCaption test', function(assert) {
@@ -242,8 +243,8 @@ test('caption renders with caption and expandedCaption test', function(assert) {
   let tempText = 'Temp caption arcardion text.';
   let tempTextOpen = 'Temp opne arcardion text.';
 
-  this.set('caption', tempText );
-  this.set('expandedCaption', tempTextOpen );
+  this.set('caption', tempText);
+  this.set('expandedCaption', tempTextOpen);
 
   this.render(hbs`{{#flexberry-toggler
   caption=caption
@@ -255,7 +256,7 @@ test('caption renders with caption and expandedCaption test', function(assert) {
   {{/flexberry-toggler}}`);
 
   // Retrieve component, it's inner <input>.
-  let $component = this.$().children();    
+  let $component = this.$().children();
   let $togglerDiv = $component.children('.title');
   let $togglerSpan = $togglerDiv.children('span');
 
@@ -263,17 +264,285 @@ test('caption renders with caption and expandedCaption test', function(assert) {
   assert.strictEqual($togglerSpan.text().trim(), tempText, 'Component\'s container has title \'tempText\' text');
 
   // Try to expand component.
-  Ember.run( () => { 
-  $togglerDiv.click();
-  }); 
+  Ember.run(() => {
+    $togglerDiv.click();
+  });
 
   // Wait for collapse animation to be completed & check component's state.
   var done = assert.async();
-  Ember.run(() => { 
-      setTimeout(function() {
-        // Check that component has title by open.
-        assert.strictEqual($togglerSpan.text().trim(), tempTextOpen, 'Component\'s container has title \'tempTextOpen\' text after first click');
-        done();
-      },Ember.$.fn.accordion.settings.duration + 100);
-  }); 
+  Ember.run(() => {
+    setTimeout(function() {
+      // Check that component has title by open.
+      assert.strictEqual($togglerSpan.text().trim(), tempTextOpen, 'Component\'s container has title \'tempTextOpen\' text after first click');
+      done();
+    }, Ember.$.fn.accordion.settings.duration + 100);
+  });
+});
+
+test('caption renders with collapsedCaption and caption test', function(assert) {
+  assert.expect(2);
+
+  let tempText = 'Temp caption arcardion text.';
+  let tempTextClosed = 'Temp closed arcardion text.';
+
+  this.set('caption', tempText);
+  this.set('collapsedCaption', tempTextClosed);
+
+  this.render(hbs`{{#flexberry-toggler
+  caption=caption
+  expandedCaption=expandedCaption
+  collapsedCaption=collapsedCaption
+  expanded=expanded
+  iconClass=iconClass
+  }}
+  {{/flexberry-toggler}}`);
+
+  // Retrieve component, it's inner <input>.
+  let $component = this.$().children();
+  let $togglerDiv = $component.children('.title');
+  let $togglerSpan = $togglerDiv.children('span');
+
+  // Check that component has title by default.
+  assert.strictEqual($togglerSpan.text().trim(), tempTextClosed, 'Component\'s container has title \'tempTextClosed\' text');
+
+  // Try to expand component.
+  Ember.run(() => {
+    $togglerDiv.click();
+  });
+
+  // Wait for collapse animation to be completed & check component's state.
+  var done = assert.async();
+  Ember.run(() => {
+    setTimeout(function() {
+      // Check that component has title by open.
+      assert.strictEqual($togglerSpan.text().trim(), tempText, 'Component\'s container has title \'tempText\' text after first click');
+      done();
+    }, Ember.$.fn.accordion.settings.duration + 100);
+  });
+});
+
+test('caption renders with caption, expandedCaption and collapsedCaption test', function(assert) {
+  assert.expect(2);
+
+  let tempText = 'Temp caption arcardion text.';
+  let tempTextOpen = 'Temp opne arcardion text.';
+  let tempTextClosed = 'Temp closed arcardion text.';
+
+  this.set('caption', tempText);
+  this.set('expandedCaption', tempTextOpen);
+  this.set('collapsedCaption', tempTextClosed);
+
+  this.render(hbs`{{#flexberry-toggler
+  caption=caption
+  expandedCaption=expandedCaption
+  collapsedCaption=collapsedCaption
+  expanded=expanded
+  iconClass=iconClass
+  }}
+  {{/flexberry-toggler}}`);
+
+  // Retrieve component, it's inner <input>.
+  let $component = this.$().children();
+  let $togglerDiv = $component.children('.title');
+  let $togglerSpan = $togglerDiv.children('span');
+
+  // Check that component has title by default.
+  assert.strictEqual($togglerSpan.text().trim(), tempTextClosed, 'Component\'s container has title \'tempText\' text');
+
+  // Try to expand component.
+  Ember.run(() => {
+    $togglerDiv.click();
+  });
+
+  // Wait for collapse animation to be completed & check component's state.
+  var done = assert.async();
+  Ember.run(() => {
+    setTimeout(function() {
+      // Check that component has title by open.
+      assert.strictEqual($togglerSpan.text().trim(), tempTextOpen, 'Component\'s container has title \'tempTextOpen\' text after first click');
+      done();
+    }, Ember.$.fn.accordion.settings.duration + 100);
+  });
+});
+
+test('caption renders with caption test', function(assert) {
+  assert.expect(2);
+
+  let tempText = 'Temp caption arcardion text.';
+
+  this.set('caption', tempText);
+
+  this.render(hbs`{{#flexberry-toggler
+  caption=caption
+  expandedCaption=expandedCaption
+  collapsedCaption=collapsedCaption
+  expanded=expanded
+  iconClass=iconClass
+  }}
+  {{/flexberry-toggler}}`);
+
+  // Retrieve component, it's inner <input>.
+  let $component = this.$().children();
+  let $togglerDiv = $component.children('.title');
+  let $togglerSpan = $togglerDiv.children('span');
+
+  // Check that component has title by default.
+  assert.strictEqual($togglerSpan.text().trim(), tempText, 'Component\'s container has title \'tempText\' text');
+
+  // Try to expand component.
+  Ember.run(() => {
+    $togglerDiv.click();
+  });
+
+  // Wait for collapse animation to be completed & check component's state.
+  var done = assert.async();
+  Ember.run(() => {
+    setTimeout(function() {
+      // Check that component has title by open.
+      assert.strictEqual($togglerSpan.text().trim(), tempText, 'Component\'s container has title \'tempText\' text after first click');
+      done();
+    }, Ember.$.fn.accordion.settings.duration + 100);
+  });
+});
+
+test('caption renders with collapsedCaption test', function(assert) {
+  assert.expect(2);
+
+  let tempTextClosed = 'Temp closed arcardion text.';
+
+  this.set('collapsedCaption', tempTextClosed);
+
+  this.render(hbs`{{#flexberry-toggler
+  caption=caption
+  expandedCaption=expandedCaption
+  collapsedCaption=collapsedCaption
+  expanded=expanded
+  iconClass=iconClass
+  }}
+  {{/flexberry-toggler}}`);
+
+  // Retrieve component, it's inner <input>.
+  let $component = this.$().children();
+  let $togglerDiv = $component.children('.title');
+  let $togglerSpan = $togglerDiv.children('span');
+
+  // Check that component has title by default.
+  assert.strictEqual($togglerSpan.text().trim(), tempTextClosed, 'Component\'s container has title \'tempTextClosed\' text');
+
+  // Try to expand component.
+  Ember.run(() => {
+    $togglerDiv.click();
+  });
+
+  // Wait for collapse animation to be completed & check component's state.
+  var done = assert.async();
+  Ember.run(() => {
+    setTimeout(function() {
+      // Check that component has title by open.
+      assert.strictEqual($togglerSpan.text().trim(), '', 'Component\'s container hasn\'t text after first click');
+      done();
+    }, Ember.$.fn.accordion.settings.duration + 100);
+  });
+});
+
+test('caption renders with expandedCaption test', function(assert) {
+  assert.expect(2);
+
+  let tempTextOpen = 'Temp opne arcardion text.';
+
+  this.set('expandedCaption', tempTextOpen);
+
+  this.render(hbs`{{#flexberry-toggler
+  caption=caption
+  expandedCaption=expandedCaption
+  collapsedCaption=collapsedCaption
+  expanded=expanded
+  iconClass=iconClass
+  }}
+  {{/flexberry-toggler}}`);
+
+  // Retrieve component, it's inner <input>.
+  let $component = this.$().children();
+  let $togglerDiv = $component.children('.title');
+  let $togglerSpan = $togglerDiv.children('span');
+
+  // Check that component has title by default.
+  assert.strictEqual($togglerSpan.text().trim(), '', 'Component\'s container has title \'tempTextClosed\' text');
+
+  // Try to expand component.
+  Ember.run(() => {
+    $togglerDiv.click();
+  });
+
+  // Wait for collapse animation to be completed & check component's state.
+  var done = assert.async();
+  Ember.run(() => {
+    setTimeout(function() {
+      // Check that component has title by open.
+      assert.strictEqual($togglerSpan.text().trim(), tempTextOpen, 'Component\'s container hasn\'t text after first click');
+      done();
+    }, Ember.$.fn.accordion.settings.duration + 100);
+  });
+});
+
+test('caption renders without text test', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`{{#flexberry-toggler
+  caption=caption
+  expandedCaption=expandedCaption
+  collapsedCaption=collapsedCaption
+  expanded=expanded
+  iconClass=iconClass
+  }}
+  {{/flexberry-toggler}}`);
+
+  // Retrieve component, it's inner <input>.
+  let $component = this.$().children();
+  let $togglerDiv = $component.children('.title');
+  let $togglerSpan = $togglerDiv.children('span');
+
+  // Check that component has title by default.
+  assert.strictEqual($togglerSpan.text().trim(), '', 'Component\'s container has title \'tempTextClosed\' text');
+
+  // Try to expand component.
+  Ember.run( () => {
+  $togglerDiv.click();
+  });
+
+  // Wait for collapse animation to be completed & check component's state.
+  var done = assert.async();
+  Ember.run(() => {
+    setTimeout(function() {
+      // Check that component has title by open.
+      assert.strictEqual($togglerSpan.text().trim(), '', 'Component\'s container hasn\'t text after first click');
+      done();
+    },Ember.$.fn.accordion.settings.duration + 100);
+  });
+});
+
+test('change expanded test', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`{{#flexberry-toggler
+  caption=caption
+  expandedCaption=expandedCaption
+  collapsedCaption=collapsedCaption
+  expanded=expanded
+  iconClass=iconClass
+  }}
+  {{/flexberry-toggler}}`);
+
+  // Retrieve component, it's inner <input>.
+  let $component = this.$().children();
+  let $togglerTitle = $component.children('.title');
+
+  // Check that component has title by default.
+  assert.strictEqual($togglerTitle.hasClass('active'), false);
+
+  // Change expanded.
+  this.set('expanded', true);
+
+  // Check that component has title by default.
+  assert.strictEqual($togglerTitle.hasClass('active'), true);
 });

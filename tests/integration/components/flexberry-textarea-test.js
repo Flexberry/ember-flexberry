@@ -357,6 +357,98 @@ test('wrap mode works properly', function(assert) {
     'Component\'s inner <textarea> wrap attribute \'off\'');
 });
 
+test('rows mode works properly', function(assert) {
+  assert.expect(2);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    rows=rows
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  //Generate a random value 'rows' and convert to a string.
+  let rowsValue = '' + (Math.floor(Math.random() * 10));
+
+  // Check that <textarea>'s rows attribute.
+  this.set('rows', rowsValue);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('rows')),
+    rowsValue,
+    'Component\'s inner <textarea>\'s value \'rows\' is equals to \'' + rowsValue + '\'');
+
+  // Check that <textarea>'s hasn\'t value rows attribute.
+  this.set('rows', null);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('rows')),
+    '0',
+    'Component\'s inner <textarea> hasn\'t value rows attribute');
+});
+
+test('cols mode works properly', function(assert) {
+  assert.expect(2);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    cols=cols
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  //Generate a random value 'cols' and convert to a string.
+  let colsValue = '' + (Math.floor(Math.random() * 10));;
+
+  // Check that <textarea>'s cols attribute.
+  this.set('cols', colsValue);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('cols')),
+    colsValue,
+    'Component\'s inner <textarea>\'s value \'cols\' is equals to \'' + colsValue + '\'');
+
+  // Check that <textarea>'s hasn\'t value cols attribute.
+  this.set('cols', null);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('cols')),
+    '0',
+    'Component\'s inner <textarea> hasn\'t value cols attribute');
+});
+
+test('maxlength mode works properly', function(assert) {
+  assert.expect(2);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    maxlength=maxlength
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  //Generate a random value 'maxlength' and convert to a string.
+  let maxlengthValue = '' + (Math.floor(Math.random() * 10));;
+
+  // Check that <textarea>'s maxlength attribute.
+  this.set('maxlength', maxlengthValue);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('maxlength')),
+    maxlengthValue,
+    'Component\'s inner <textarea>\'s value \'maxlength\' is equals to \'' + maxlengthValue + '\'');
+
+  this.set('maxlength', null);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('maxlength')),
+    '',
+    'Component\'s inner <textarea> hasn\'t value maxlength attribute');
+});
+
 test('changes in inner <textarea> causes changes in property binded to \'value\'', function(assert) {
   assert.expect(4);
 

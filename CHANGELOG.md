@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0-beta.26] - 2016-10-21
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.30 version.
+
 ## [0.7.0-beta.25] - 2016-10-20
 ### Added
 * Component `flexberry-simpledatetime` now supports in FF and IE.

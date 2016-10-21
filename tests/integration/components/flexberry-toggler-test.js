@@ -506,8 +506,8 @@ test('caption renders without text test', function(assert) {
   assert.strictEqual($togglerSpan.text().trim(), '', 'Component\'s container has title \'tempTextClosed\' text');
 
   // Try to expand component.
-  Ember.run( () => {
-  $togglerDiv.click();
+  Ember.run(() => {
+    $togglerDiv.click();
   });
 
   // Wait for collapse animation to be completed & check component's state.
@@ -517,7 +517,7 @@ test('caption renders without text test', function(assert) {
       // Check that component has title by open.
       assert.strictEqual($togglerSpan.text().trim(), '', 'Component\'s container hasn\'t text after first click');
       done();
-    },Ember.$.fn.accordion.settings.duration + 100);
+    }, Ember.$.fn.accordion.settings.duration + 100);
   });
 });
 

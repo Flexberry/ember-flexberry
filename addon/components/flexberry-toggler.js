@@ -104,14 +104,33 @@ export default Ember.Component.extend({
     // Attach semantic-ui open/close callbacks.
     $accordeonDomElement.accordion({
       onOpen: () => {
-        this.set('expanded', true);
+        // Change of 'expanded' state may cause asynchronous animation, so we need Ember.run here.
+        Ember.run(() => {
+          this.set('expanded', true);
+        });
       },
       onClose: () => {
-        this.set('expanded', false);
+        // Change of 'expanded' state may cause asynchronous animation, so we need Ember.run here.
+        Ember.run(() => {
+          this.set('expanded', false);
+        });
       },
     });
 
-    // Initialize right state (call semantic-ui accordion open/close method).
-    $accordeonDomElement.accordion(this.get('expanded') ? 'open' : 'close');
+    // Animation is asynchronous, so we need Ember.run here.
+    Ember.run(() => {
+      // Initialize right state (call semantic-ui accordion open/close method).
+      $accordeonDomElement.accordion(this.get('expanded') ? 'open' : 'close');
+    });
   },
+
+  /**
+    Destroys DOM-related component's properties.
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    // Destroys Semantic UI accordion.
+    this.$().accordion('destroy');
+  }
 });

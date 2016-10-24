@@ -672,6 +672,14 @@ ErrorableControllerMixin, {
 
   actions: {
     /**
+      Show/hide filters.
+
+      @method actions.toggleStateFilters
+    */
+    toggleStateFilters() {
+      this.toggleProperty('showFilters');
+    },
+    /**
       This action is called when user click on header.
 
       @method actions.headerCellClick
@@ -818,7 +826,7 @@ ErrorableControllerMixin, {
       @param {String} actionName The name of action
     */
     customButtonAction(actionName) {
-      this.sendAction('customButtonAction', actionName);
+      this.sendAction(actionName);
     },
 
     /**
@@ -1936,6 +1944,15 @@ ErrorableControllerMixin, {
       configurateRow(rowConfig, record);
     }
   },
+
+  /**
+    Flag used to display filters.
+
+    @property showFilters
+    @type Boolean
+    @default false
+  */
+  showFilters: Ember.computed.oneWay('filters'),
 
   /**
     Route for edit form by click row.

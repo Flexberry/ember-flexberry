@@ -46,6 +46,15 @@ export default FlexberryBaseComponent.extend(
           });
         }).then(()=> {
           this.set('contentWithKeys', this.contentForRender);
+
+          // TODO: analyze this observers.
+          let attrsArray = this._getAttributesName();
+          content.forEach((record) => {
+            attrsArray.forEach((attrName) => {
+              Ember.addObserver(record, attrName, this, '_attributeChanged');
+            });
+          });
+          this.set('showLoadingTbodyClass', false);
         });
       } else {
         content.forEach((item) => {
@@ -60,9 +69,8 @@ export default FlexberryBaseComponent.extend(
             Ember.addObserver(record, attrName, this, '_attributeChanged');
           });
         });
+        this.set('showLoadingTbodyClass', false);
       }
-
-      this.set('showLoadingTbodyClass', false);
     } else {
       this.set('rowsInLoadingState', true);
     }

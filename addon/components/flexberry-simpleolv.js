@@ -826,7 +826,7 @@ ErrorableControllerMixin, {
       @param {String} actionName The name of action
     */
     customButtonAction(actionName) {
-      this.sendAction('customButtonAction', actionName);
+      this.sendAction(actionName);
     },
 
     /**

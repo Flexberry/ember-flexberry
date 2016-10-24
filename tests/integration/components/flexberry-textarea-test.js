@@ -402,7 +402,7 @@ test('cols mode works properly', function(assert) {
   let $textareaInput = $component.children('textarea');
 
   //Generate a random value 'cols' and convert to a string.
-  let colsValue = '' + (Math.floor(Math.random() * 10));;
+  let colsValue = '' + (Math.floor(Math.random() * 10));
 
   // Check that <textarea>'s cols attribute.
   this.set('cols', colsValue);
@@ -433,7 +433,7 @@ test('maxlength mode works properly', function(assert) {
   let $textareaInput = $component.children('textarea');
 
   //Generate a random value 'maxlength' and convert to a string.
-  let maxlengthValue = '' + (Math.floor(Math.random() * 10));;
+  let maxlengthValue = '' + (Math.floor(Math.random() * 10));
 
   // Check that <textarea>'s maxlength attribute.
   this.set('maxlength', maxlengthValue);
@@ -442,11 +442,130 @@ test('maxlength mode works properly', function(assert) {
     maxlengthValue,
     'Component\'s inner <textarea>\'s value \'maxlength\' is equals to \'' + maxlengthValue + '\'');
 
+  // Check that <textarea>'s hasn\'t value maxlength attribute.
   this.set('maxlength', null);
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('maxlength')),
     '',
     'Component\'s inner <textarea> hasn\'t value maxlength attribute');
+});
+
+test('selectionStart mode works properly', function(assert) {
+  assert.expect(2);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    selectionStart=selectionStart
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Change <textarea>'s value (imitate situation when user typed something into component's <textarea>)
+  // & check them again ('change' event is needed to force bindings work).
+  let newValue = 'Some text typed into textarea';
+  $textareaInput.val(newValue);
+  $textareaInput.change();
+
+  //Generate a random value 'selectionStart' and convert to a string.
+  let selectionStartValue = (Math.floor(Math.random() * 10));;
+
+  // Check that <textarea>'s selectionStart attribute.
+  this.set('selectionStart', selectionStartValue);
+  assert.strictEqual(
+    $textareaInput.prop('selectionStart'),
+    selectionStartValue,
+    'Component\'s inner <textarea>\'s value \'selectionStart\' is equals to \'' + selectionStartValue + '\'');
+
+  // Check that <textarea>'s hasn\'t value maxlength attribute.
+  this.set('selectionStart', null);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('selectionStart')),
+    '',
+    'Component\'s inner <textarea> hasn\'t value selectionStart attribute');
+});
+
+test('selectionEnd mode works properly', function(assert) {
+  assert.expect(2);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    selectionEnd=selectionEnd
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Change <textarea>'s value (imitate situation when user typed something into component's <textarea>)
+  // & check them again ('change' event is needed to force bindings work).
+  let newValue = 'Some text typed into textarea';
+  $textareaInput.val(newValue);
+  $textareaInput.change();
+
+  //Generate a random value 'selectionEnd' and convert to a string.
+  let selectionEndValue = (Math.floor(Math.random() * 10));;
+
+  // Check that <textarea>'s selectionEnd attribute.
+  this.set('selectionEnd', selectionEndValue);
+  assert.strictEqual(
+    $textareaInput.prop('selectionEnd'),
+    selectionEndValue,
+    'Component\'s inner <textarea>\'s value \'selectionEnd\' is equals to \'' + selectionEndValue + '\'');
+
+  // Check that <textarea>'s hasn\'t value maxlength attribute.
+  this.set('selectionEnd', null);
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('selectionEnd')),
+    '',
+    'Component\'s inner <textarea> hasn\'t value selectionEnd attribute');
+});
+
+test('selectionDirection mode works properly', function(assert) {
+  assert.expect(4);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textarea
+    class=class
+    selectionDirection=selectionDirection
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textareaInput = $component.children('textarea');
+
+  // Check that <textarea>'s selectionDirection attribute 'forward'.
+  this.set('selectionDirection', 'forward');
+  assert.strictEqual(
+    $textareaInput.prop('selectionDirection'),
+    'forward',
+    'Component\'s inner <textarea> selectionDirection attribute \'forward\'');
+
+  // Check that <textarea>'s selectionDirection attribute 'backward'.
+  this.set('selectionEnd', null);
+  this.set('selectionDirection', 'backward');
+  assert.strictEqual(
+    $textareaInput.prop('selectionDirection'),
+    'backward',
+    'Component\'s inner <textarea> selectionDirection attribute \'backward\'');
+
+  // Check that <textarea>'s selectionDirection attribute 'none'.
+  this.set('selectionEnd', undefined);
+  this.set('selectionDirection', 'none');
+  assert.strictEqual(
+   $textareaInput.prop('selectionDirection'),
+    'none',
+    'Component\'s inner <textarea> selectionDirection attribute \'none\'');
+
+  // Check that <textarea>'s hasn\'t value selectionDirection attribute.
+  this.set('selectionEnd', null);
+  assert.strictEqual(
+   $textareaInput.attr('selectionEnd'),
+    undefined,
+    'Component\'s inner <textarea> hasn\'t value selectionEnd attribute');
 });
 
 test('changes in inner <textarea> causes changes in property binded to \'value\'', function(assert) {
@@ -474,7 +593,7 @@ test('changes in inner <textarea> causes changes in property binded to \'value\'
 
   // Change <textarea>'s value (imitate situation when user typed something into component's <textarea>)
   // & check them again ('change' event is needed to force bindings work).
-  let newValue = 'Some text typed into textboxes inner <textarea>';
+  let newValue = 'Some text typed into textareas inner <textarea>';
   $textareaInput.val(newValue);
   $textareaInput.change();
 
@@ -512,7 +631,7 @@ test('changes in property binded to \'value\' causes changes in inner <textarea>
     'Component\'s property binded to \'value\' is equals to null');
 
   // Change property binded to 'value' & check them again.
-  let newValue = 'Some text typed into textboxes inner <textarea>';
+  let newValue = 'Some text typed into textareas inner <textarea>';
   this.set('value', newValue);
 
   assert.strictEqual(

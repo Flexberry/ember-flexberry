@@ -127,9 +127,10 @@ export default EditFormController.extend({
 
       @method actions.close
       @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+      @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
     */
-    close(skipTransition) {
-      this.close(skipTransition);
+    close(skipTransition, rollBackModel) {
+      this.close(skipTransition, rollBackModel);
     },
   },
 
@@ -138,8 +139,9 @@ export default EditFormController.extend({
 
     @method close
     @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+    @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
-  close(skipTransition) {
+  close(skipTransition, rollBackModel) {
     this._setFlexberryDetailInteractionSettings();
     if (!this.get('_hasParentRoute')) {
       this._super.apply(this, arguments);

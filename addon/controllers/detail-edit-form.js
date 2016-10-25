@@ -140,6 +140,7 @@ export default EditFormController.extend({
     @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
   */
   close(skipTransition) {
+    this._setFlexberryDetailInteractionSettings();
     if (!this.get('_hasParentRoute')) {
       this._super.apply(this, arguments);
       return;

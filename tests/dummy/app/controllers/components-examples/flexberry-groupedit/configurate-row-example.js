@@ -30,7 +30,7 @@ export default EditFormController.extend({
       }
 
       if (record.get('flag') === this.get('configurateRowByFlag')) {
-        rowConfig.canBeDeleted = false;
+        Ember.set(rowConfig, 'canBeDeleted', false);
       }
     },
   },

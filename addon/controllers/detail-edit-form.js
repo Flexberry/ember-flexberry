@@ -129,28 +129,38 @@ export default EditFormController.extend({
       @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
     */
     close(skipTransition) {
-      if (!this.get('_hasParentRoute')) {
-        this._super.apply(this, arguments);
-        return;
-      }
+      this.close(skipTransition);
+    },
+  },
 
-      if (this.get('saveBeforeRouteLeave')) {
-        this.transitionToParentRoute(skipTransition, true);
-        return;
-      }
+  /**
+    Сlose edit form and transition to parent route.
 
-      // If 'saveBeforeRouteLeave' == false & 'close' button has been pressed,
-      // before transition to parent route we should validate model and then upload files
-      // (if some file components are present on current detail rout),
-      // because after transition, all components correspondent to current detail route (including file components)
-      // gonna be destroyed, and files won't be uploaded at all.
-      let model = this.get('model');
-      model.validate().then(() => model.beforeSave({ softSave: true })).then(() => {
-        this.transitionToParentRoute(skipTransition, false);
-      }, (reason) => {
-        this.rejectError(reason);
-      });
+    @method close
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+  */
+  close(skipTransition) {
+    if (!this.get('_hasParentRoute')) {
+      this._super.apply(this, arguments);
+      return;
     }
+
+    if (this.get('saveBeforeRouteLeave')) {
+      this._super.apply(this, [skipTransition, true]);
+      return;
+    }
+
+    // If 'saveBeforeRouteLeave' == false & 'close' button has been pressed,
+    // before transition to parent route we should validate model and then upload files
+    // (if some file components are present on current detail rout),
+    // because after transition, all components correspondent to current detail route (including file components)
+    // gonna be destroyed, and files won't be uploaded at all.
+    let model = this.get('model');
+    model.validate().then(() => model.beforeSave({ softSave: true })).then(() => {
+      this._super.apply(this, [skipTransition, false]);
+    }, (reason) => {
+      this.rejectError(reason);
+    });
   },
 
   /**

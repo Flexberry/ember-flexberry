@@ -122,11 +122,11 @@ test('readonly mode works properly with value', function(assert) {
   $textareaInput.val(newValue);
   $textareaInput.change();
 
-  // Check <textarea>'s value not chenged.
+  // Check <textarea>'s value not changed.
   assert.strictEqual(
     Ember.$.trim($textareaInput.val()),
     '',
-    'Component\'s inner <textarea>\'s value not chenged');
+    'Component\'s inner <textarea>\'s value not changed');
   assert.strictEqual(
     this.get('value'),
     null,
@@ -384,7 +384,7 @@ test('rows mode works properly', function(assert) {
   this.set('rows', null);
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('rows')),
-    '0',
+    '',
     'Component\'s inner <textarea> hasn\'t value rows attribute');
 });
 
@@ -415,7 +415,7 @@ test('cols mode works properly', function(assert) {
   this.set('cols', null);
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('cols')),
-    '0',
+    undefined,
     'Component\'s inner <textarea> hasn\'t value cols attribute');
 });
 
@@ -470,7 +470,7 @@ test('selectionStart mode works properly', function(assert) {
   $textareaInput.change();
 
   //Generate a random value 'selectionStart' and convert to a string.
-  let selectionStartValue = (Math.floor(Math.random() * 10));;
+  let selectionStartValue = (Math.floor(Math.random() * 10));
 
   // Check that <textarea>'s selectionStart attribute.
   this.set('selectionStart', selectionStartValue);
@@ -507,7 +507,7 @@ test('selectionEnd mode works properly', function(assert) {
   $textareaInput.change();
 
   //Generate a random value 'selectionEnd' and convert to a string.
-  let selectionEndValue = (Math.floor(Math.random() * 10));;
+  let selectionEndValue = (Math.floor(Math.random() * 10));
 
   // Check that <textarea>'s selectionEnd attribute.
   this.set('selectionEnd', selectionEndValue);
@@ -545,7 +545,6 @@ test('selectionDirection mode works properly', function(assert) {
     'Component\'s inner <textarea> selectionDirection attribute \'forward\'');
 
   // Check that <textarea>'s selectionDirection attribute 'backward'.
-  this.set('selectionEnd', null);
   this.set('selectionDirection', 'backward');
   assert.strictEqual(
     $textareaInput.prop('selectionDirection'),
@@ -553,7 +552,7 @@ test('selectionDirection mode works properly', function(assert) {
     'Component\'s inner <textarea> selectionDirection attribute \'backward\'');
 
   // Check that <textarea>'s selectionDirection attribute 'none'.
-  this.set('selectionEnd', undefined);
+  this.set('selectionDirection', null);
   this.set('selectionDirection', 'none');
   assert.strictEqual(
    $textareaInput.prop('selectionDirection'),
@@ -561,11 +560,11 @@ test('selectionDirection mode works properly', function(assert) {
     'Component\'s inner <textarea> selectionDirection attribute \'none\'');
 
   // Check that <textarea>'s hasn\'t value selectionDirection attribute.
-  this.set('selectionEnd', null);
+  this.set('selectionDirection', null);
   assert.strictEqual(
-   $textareaInput.attr('selectionEnd'),
+   $textareaInput.attr('selectionDirection'),
     undefined,
-    'Component\'s inner <textarea> hasn\'t value selectionEnd attribute');
+    'Component\'s inner <textarea> hasn\'t value selectionDirection attribute');
 });
 
 test('changes in inner <textarea> causes changes in property binded to \'value\'', function(assert) {

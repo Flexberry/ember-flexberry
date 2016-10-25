@@ -4,6 +4,8 @@
 
 import Ember from 'ember';
 
+import DynamicProperties from '../mixins/dynamic-properties';
+
 const { getOwner } = Ember;
 
 /**
@@ -12,7 +14,8 @@ const { getOwner } = Ember;
  * @class FlexberryBaseComponent
  * @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
  */
-export default Ember.Component.extend({
+export default Ember.Component.extend(
+  DynamicProperties, {
   /**
     Flag: indicates whether component is readonly.
 
@@ -139,22 +142,6 @@ export default Ember.Component.extend({
       let appConfigSettings = Ember.get(appConfig, appConfigSettingsPath);
       if (!Ember.isNone(appConfigSettings)) {
         this.set('appConfigSettings', appConfigSettings);
-      }
-    }
-
-    let dynamicProperties = this.get('dynamicProperties');
-    if (Ember.typeOf(dynamicProperties) !== 'object') {
-      return;
-    }
-
-    // Initialize properties for dynamicly-rendered component.
-    for (let propertyName in dynamicProperties) {
-      if (dynamicProperties.hasOwnProperty(propertyName)) {
-        if (propertyName === 'class' && this.get('tagName') !== '') {
-          this.set('classNames', this.get('classNames').concat(dynamicProperties[propertyName].split(' ')));
-        } else {
-          this.set(propertyName, dynamicProperties[propertyName]);
-        }
       }
     }
   },

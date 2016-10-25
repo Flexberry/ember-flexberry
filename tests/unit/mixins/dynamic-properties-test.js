@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import DynamicPropertiesMixin from 'ember-flexberry-gis/mixins/dynamic-properties';
+import DynamicPropertiesMixin from 'ember-flexberry/mixins/dynamic-properties';
 import { module, test } from 'qunit';
 
 let ClassWithDynamicPropertiesMixin = Ember.Object.extend(DynamicPropertiesMixin, {});

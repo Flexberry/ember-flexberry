@@ -32,3 +32,26 @@ test('it renders', function(assert) {
   //Component does not support template block usage.
   assert.equal(this.$().text().trim(), '');
 });
+
+test('Testing dynamicProperties of flexberry-base-component', function (assert) {
+  assert.expect(1);
+
+  let propertyNameValue = 'class';
+  let propertyValueClass = 'firstClass secondClass';
+  let dynamicPropertiesTemp = { class: propertyValueClass, propertyName: propertyNameValue };
+
+  this.set('dynamicPropertiesTemp', dynamicPropertiesTemp);
+
+  this.render(hbs`
+    {{#flexberry-textbox
+      dynamicProperties = dynamicPropertiesTemp
+    }}
+      template block text
+    {{/flexberry-textbox}}
+  `);
+
+  let $component = this.$().children();
+
+  assert.strictEqual($component.hasClass(propertyValueClass), true,
+    'Component\'s container has \'firstClass and secondClass\' css-class');
+});

@@ -127,11 +127,11 @@ test('readonly mode works properly with value', function(assert) {
   $textboxInput.val(newValue);
   $textboxInput.change();
 
-  // Check <input>'s value not chenged.
+  // Check <input>'s value not changed.
   assert.strictEqual(
     Ember.$.trim($textboxInput.val()),
     '',
-    'Component\'s inner <input>\'s value not chenged');
+    'Component\'s inner <input>\'s value not changed');
   assert.strictEqual(
     this.get('value'),
     null,

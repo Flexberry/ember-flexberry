@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * Adding filter parameter to route url when trying to find records in lookup list. Fixed for `object-list-view` component.
+* `flexberry-simpledatetime` component:
+    * Now looks good when value is empty in IE. But it has no placeholder.
 
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed

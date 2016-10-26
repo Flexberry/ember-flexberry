@@ -59,8 +59,11 @@ export default FlexberryBaseComponent.extend({
   _minAsString: Ember.computed('min', {
     get() {
       let date = this.get('min');
-      let str = this._convertDateToString(date);
-      return str;
+      if (this.get('_supportDateType')) {
+        return this._convertDateToString(date);
+      } else {
+        return date;
+      }
     },
     set(key, value) {
       let date = this._convertStringToDate(value);
@@ -80,8 +83,11 @@ export default FlexberryBaseComponent.extend({
   _maxAsString: Ember.computed('max', {
     get() {
       let date = this.get('max');
-      let str = this._convertDateToString(date);
-      return str;
+      if (this.get('_supportDateType')) {
+        return this._convertDateToString(date);
+      } else {
+        return date;
+      }
     },
     set(key, value) {
       let date = this._convertStringToDate(value);
@@ -147,7 +153,6 @@ export default FlexberryBaseComponent.extend({
   */
   dateFormat: 'Y-m-dTH:iZ',
   timeFormat: 'H:i',
-  defaultDate: null,
   noCalendar: false,
   enableTime: true,
   enableSeconds: false,

@@ -290,9 +290,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
       @method actions.close
       @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+      @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
     */
-    close(skipTransition) {
-      this.close(skipTransition);
+    close(skipTransition, rollBackModel) {
+      this.close(skipTransition, rollBackModel);
     },
   },
 
@@ -402,12 +403,13 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @method close
     @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+    @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
-  close(skipTransition) {
+  close(skipTransition, rollBackModel) {
     this.set('state', '');
     this.onCloseActionStarted();
     if (!skipTransition) {
-      this.transitionToParentRoute(skipTransition);
+      this.transitionToParentRoute(skipTransition, rollBackModel);
     }
   },
 

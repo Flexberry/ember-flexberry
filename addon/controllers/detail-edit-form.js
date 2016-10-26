@@ -127,30 +127,43 @@ export default EditFormController.extend({
 
       @method actions.close
       @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+      @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
     */
-    close(skipTransition) {
-      if (!this.get('_hasParentRoute')) {
-        this._super.apply(this, arguments);
-        return;
-      }
+    close(skipTransition, rollBackModel) {
+      this.close(skipTransition, rollBackModel);
+    },
+  },
 
-      if (this.get('saveBeforeRouteLeave')) {
-        this.transitionToParentRoute(skipTransition, true);
-        return;
-      }
+  /**
+    Сlose edit form and transition to parent route.
 
-      // If 'saveBeforeRouteLeave' == false & 'close' button has been pressed,
-      // before transition to parent route we should validate model and then upload files
-      // (if some file components are present on current detail rout),
-      // because after transition, all components correspondent to current detail route (including file components)
-      // gonna be destroyed, and files won't be uploaded at all.
-      let model = this.get('model');
-      model.validate().then(() => model.beforeSave({ softSave: true })).then(() => {
-        this.transitionToParentRoute(skipTransition, false);
-      }, (reason) => {
-        this.rejectError(reason);
-      });
+    @method close
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+    @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
+  */
+  close(skipTransition, rollBackModel) {
+    this._setFlexberryDetailInteractionSettings();
+    if (!this.get('_hasParentRoute')) {
+      this._super.apply(this, arguments);
+      return;
     }
+
+    if (this.get('saveBeforeRouteLeave')) {
+      this._super.apply(this, [skipTransition, true]);
+      return;
+    }
+
+    // If 'saveBeforeRouteLeave' == false & 'close' button has been pressed,
+    // before transition to parent route we should validate model and then upload files
+    // (if some file components are present on current detail rout),
+    // because after transition, all components correspondent to current detail route (including file components)
+    // gonna be destroyed, and files won't be uploaded at all.
+    let model = this.get('model');
+    model.validate().then(() => model.beforeSave({ softSave: true })).then(() => {
+      this._super.apply(this, [skipTransition, false]);
+    }, (reason) => {
+      this.rejectError(reason);
+    });
   },
 
   /**

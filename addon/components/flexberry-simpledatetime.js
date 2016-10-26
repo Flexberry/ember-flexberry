@@ -160,6 +160,13 @@ export default FlexberryBaseComponent.extend({
   utc: true,
   altInput: true,
   altFormat: 'd.m.Y H:i',
+  clickOpens: Ember.computed('readonly', function() {
+    if (this.get('readonly')) {
+      return false;
+    }
+
+    return true;
+  }),
 
   /**
     Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
@@ -184,6 +191,8 @@ export default FlexberryBaseComponent.extend({
         maxDate: this.get('_maxAsString'),
         altInput: this.get('altInput'),
         altFormat: this.get('altFormat'),
+        clickOpens: this.get('clickOpens'),
+
         // Needs for support IE.
         onChange: function(dateObj, dateStr, instance) {
           let date = _this._convertStringToDate(dateStr);

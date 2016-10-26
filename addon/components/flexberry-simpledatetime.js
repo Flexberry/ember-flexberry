@@ -166,6 +166,7 @@ export default FlexberryBaseComponent.extend({
     For more information see [didInsertElement](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   didInsertElement() {
+    let _this = this;
     this._super(...arguments);
 
     if (!this.get('_supportDateType')) {
@@ -183,6 +184,11 @@ export default FlexberryBaseComponent.extend({
         maxDate: this.get('_maxAsString'),
         altInput: this.get('altInput'),
         altFormat: this.get('altFormat'),
+        // Needs for support IE.
+        onChange: function(dateObj, dateStr, instance) {
+          let date = _this._convertStringToDate(dateStr);
+          _this.set('value', date);
+        }
       });
     }
   },

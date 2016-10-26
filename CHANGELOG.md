@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Adding filter parameter to route url when trying to find records in lookup list. Fixed for `object-list-view` component.
 
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed
@@ -64,7 +66,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.21 version.
 
 ### Fixed
-* Adding filter parameter to route url when trying to find records in lookup list.
+* Adding filter parameter to route url when trying to find records in lookup list. Fixed for `flexberry-simpleolv` component.
 
 ## [0.7.0-beta.18] - 2016-10-14
 ### Changed

@@ -1774,7 +1774,9 @@ export default FlexberryBaseComponent.extend(
     @param {String} pattern The pattern to filter objects
   */
     _filterByAnyMatch(componentName, pattern) {
-      this.sendAction('filterByAnyMatch', pattern);
+      if (this.get('componentName') === componentName) {
+        this.sendAction('filterByAnyMatch', pattern);
+      }
     },
 
     /**

@@ -10,6 +10,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Adding filter parameter to route url when trying to find records in lookup list. Fixed for `object-list-view` component.
 * Now settings for `detail-interation` services are applying correctly on closing detail's edit form.
 
+### Changed
+* Buttons of `flexberry-lookup` with readOnly=true has class disabled.
+
+
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.30 version.

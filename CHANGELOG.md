@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now saving works in IE.
     * Fix `flatpick` for readonly property.
 * Now settings for `detail-interation` services are applying correctly on closing detail's edit form.
+* Leave invalid edit form at attempt to add detail on separate route.
 
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed

@@ -54,33 +54,33 @@ test('readonly mode works properly', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('field');
+  let $fieldInput = $component.children('input');
 
-  // Check that <field>'s readonly attribute doesn't exist yet.
+  // Check that <input>'s readonly attribute doesn't exist yet.
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('readonly')),
     '',
-    'Component\'s inner <field> hasn\'t readonly attribute');
+    'Component\'s inner <input> hasn\'t readonly attribute');
 
-  // Activate readonly mode & check that <field>'s readonly attribute exists now & has value equals to 'readonly'.
+  // Activate readonly mode & check that <input>'s readonly attribute exists now & has value equals to 'readonly'.
   this.set('readonly', true);
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('readonly')),
     'readonly',
-    'Component\'s inner <field> has readonly attribute with value equals to \'readonly\'');
+    'Component\'s inner <input> has readonly attribute with value equals to \'readonly\'');
 
-  // Check that <field>'s readonly attribute doesn't exist now.
+  // Check that <input>'s readonly attribute doesn't exist now.
   this.set('readonly', false);
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('readonly')),
     '',
-    'Component\'s inner <field> hasn\'t readonly attribute');
+    'Component\'s inner <input> hasn\'t readonly attribute');
 });
 
 test('readonly mode works properly with value', function(assert) {
   assert.expect(2);
 
-  // Set <field>'s value' & render component.
+  // Set <input>'s value' & render component.
   this.set('value', null);
   this.set('readonly', true);
   this.render(hbs`{{flexberry-field
@@ -90,7 +90,7 @@ test('readonly mode works properly with value', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('field');
+  let $fieldInput = $component.children('input');
 
   $fieldInput.on('change', (e) => {
     if (this.get('readonly')) {
@@ -103,11 +103,11 @@ test('readonly mode works properly with value', function(assert) {
   $fieldInput.val(newValue);
   $fieldInput.change();
 
-  // Check <field>'s value not changed.
+  // Check <input>'s value not changed.
   assert.strictEqual(
     Ember.$.trim($fieldInput.val()),
     '',
-    'Component\'s inner <field>\'s value not changed');
+    'Component\'s inner <input>\'s value not changed');
   assert.strictEqual(
     this.get('value'),
     null,
@@ -122,27 +122,27 @@ test('it renders i18n-ed placeholder', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('field');
+  let $fieldInput = $component.children('input');
 
-  // Check <field>'s placeholder.
+  // Check <input>'s placeholder.
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('placeholder')),
     Ember.get(I18nRuLocale, 'components.flexberry-field.placeholder'),
-    'Component\'s inner <field>\'s placeholder is equals to it\'s default value from i18n locales/ru/translations');
+    'Component\'s inner <input>\'s placeholder is equals to it\'s default value from i18n locales/ru/translations');
 
-  // Change current locale to 'en' & check <field>'s placeholder again.
+  // Change current locale to 'en' & check <input>'s placeholder again.
   this.set('i18n.locale', 'en');
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('placeholder')),
     Ember.get(I18nEnLocale, 'components.flexberry-field.placeholder'),
-    'Component\'s inner <field>\'s placeholder is equals to it\'s value from i18n locales/en/translations');
+    'Component\'s inner <input>\'s placeholder is equals to it\'s value from i18n locales/en/translations');
 });
 
 test('it renders manually defined placeholder', function(assert) {
   assert.expect(2);
 
-  // Set <field>'s placeholder' & render component.
-  let placeholder = 'field is empty, please type some text';
+  // Set <input>'s placeholder' & render component.
+  let placeholder = 'input is empty, please type some text';
   this.set('placeholder', placeholder);
   this.render(hbs`{{flexberry-field
     placeholder=placeholder
@@ -150,19 +150,19 @@ test('it renders manually defined placeholder', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('field');
+  let $fieldInput = $component.children('input');
 
-  // Check <field>'s placeholder.
+  // Check <input>'s placeholder.
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('placeholder')),
     placeholder,
-    'Component\'s inner <field>\'s placeholder is equals to manually defined value \'' + placeholder + '\'');
+    'Component\'s inner <input>\'s placeholder is equals to manually defined value \'' + placeholder + '\'');
 
-  // Change placeholder's value & check <field>'s placeholder again.
-  placeholder = 'field has no value';
+  // Change placeholder's value & check <input>'s placeholder again.
+  placeholder = 'input has no value';
   this.set('placeholder', placeholder);
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('placeholder')),
     placeholder,
-    'Component\'s inner <field>\'s placeholder is equals to manually updated value \'' + placeholder + '\'');
+    'Component\'s inner <input>\'s placeholder is equals to manually updated value \'' + placeholder + '\'');
 });

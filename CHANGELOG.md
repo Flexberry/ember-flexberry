@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now saving works in IE.
     * Fix `flatpick` for readonly property.
 * Now settings for `detail-interation` services are applying correctly on closing detail's edit form.
+* `flexberry-simpleolv` component:
+    * Now data loading indicator and placeholder never shown at the same time.
 
 ### Removed
 * `flexberry-simpleolv` component:

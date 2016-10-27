@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Adding filter parameter to route url when trying to find records in lookup list. Fixed for `object-list-view` component.
 * `flexberry-simpledatetime` component:
-    * Now looks good when value is empty in IE. But it has no placeholder.
+    * Now looks good when value is empty in IE.
     * Now saving works in IE.
     * Fix `flatpick` for readonly property.
 * Now settings for `detail-interation` services are applying correctly on closing detail's edit form.

@@ -346,6 +346,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     }).catch((errorData) => {
       this.set('state', 'error');
       this.onSaveActionRejected(errorData);
+      return Ember.RSVP.reject(errorData);
     }).finally((data) => {
       this.onSaveActionAlways(data);
     });

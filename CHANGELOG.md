@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-simpledatetime` component:
     * Problems with no placeholder has beean solved.
+* Transition to detail model's edit form route form agregator's edit form route when agregator's model is not valid and `saveBeforeRouteLeave` option is true.
 
 ## [0.8.0-beta.0] - 2016-10-27
 ### Added

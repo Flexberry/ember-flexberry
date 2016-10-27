@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * Adding filter parameter to route url when trying to find records in lookup list. Fixed for `object-list-view` component.
+* Searching by `number`, `decimal` and `boolean` values.
 
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed

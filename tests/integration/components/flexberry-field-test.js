@@ -43,6 +43,20 @@ test('it renders properly', function(assert) {
   assert.strictEqual($component.hasClass('field'), true, 'Component\'s wrapper has \'field\' css-class');
 });
 
+test('gfghfhjg', function(assert) {
+  assert.expect();
+
+  // Render component.
+  this.render(hbs`{{flexberry-field
+    class=class
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+
+  assert.strictEqual($component.prop('tagName'), 'lable', 'Component\'s wrapper is a <lable>');
+});
+
 test('readonly mode works properly', function(assert) {
   assert.expect(3);
 
@@ -83,7 +97,7 @@ test('readonly mode works properly with value', function(assert) {
   // Set <input>'s value' & render component.
   this.set('value', null);
   this.set('readonly', true);
-  this.render(hbs`{{flexberry-field
+  this.render(hbs`{{flexberry-textbox
     readonly=readonly
     value=value
   }}`);
@@ -118,7 +132,7 @@ test('it renders i18n-ed placeholder', function(assert) {
   assert.expect(2);
 
   // Render component.
-  this.render(hbs`{{flexberry-field}}`);
+  this.render(hbs`{{flexberry-textbox}}`);
 
   // Retrieve component.
   let $component = this.$().children();
@@ -144,7 +158,7 @@ test('it renders manually defined placeholder', function(assert) {
   // Set <input>'s placeholder' & render component.
   let placeholder = 'input is empty, please type some text';
   this.set('placeholder', placeholder);
-  this.render(hbs`{{flexberry-field
+  this.render(hbs`{{flexberry-textbox
     placeholder=placeholder
   }}`);
 
@@ -165,4 +179,66 @@ test('it renders manually defined placeholder', function(assert) {
     Ember.$.trim($fieldInput.attr('placeholder')),
     placeholder,
     'Component\'s inner <input>\'s placeholder is equals to manually updated value \'' + placeholder + '\'');
+});
+
+test('type mode works properly', function(assert) {
+  assert.expect(7);
+
+  // Render component.
+  this.render(hbs`{{flexberry-textbox
+    class=class
+    type=type
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $fieldInput = $component.children('input');
+
+  // Check that <input>'s type attribute doesn't exist yet.
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.attr('type')),
+    '',
+    'Component\'s inner <input> hasn\'t type attribute');
+
+  // Check that <input>'s type attribute 'text'.
+  this.set('type', 'text');
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.attr('type')),
+    'text',
+    'Component\'s inner <input> type attribute \'text\'');
+
+  // Check that <input>'s type attribute 'number'.
+  this.set('type', 'number');
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.attr('type')),
+    'number',
+    'Component\'s inner <input> type attribute \'number\'');
+
+  // Check that <input>'s type attribute 'password'.
+  this.set('type', 'password');
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.attr('type')),
+    'password',
+    'Component\'s inner <input> type attribute \'password\'');
+
+  // Check that <input>'s type attribute 'color'.
+  this.set('type', 'color');
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.attr('type')),
+    'color',
+    'Component\'s inner <input> type attribute \'color\'');
+
+  // Check that <input>'s type attribute 'button'.
+  this.set('type', 'button');
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.attr('type')),
+    'button',
+    'Component\'s inner <input> type attribute \'button\'');
+
+  // Check that <input>'s type attribute 'hidden'.
+  this.set('type', 'hidden');
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.attr('type')),
+    'hidden',
+    'Component\'s inner <input> type attribute \'hidden\'');
 });

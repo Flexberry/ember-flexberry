@@ -3,8 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.1] - 2016-10-27
 ### Changed
-* Buttons of `flexberry-lookup` with readOnly=true has class disabled.
+* Buttons of `flexberry-lookup` component will be disabled if `readOnly` property is `true`.
 
 ### Fixed
 * `flexberry-simpledatetime` component:

@@ -3,17 +3,30 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Buttons of `flexberry-lookup` with readOnly=true has class disabled.
+
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Problems with no placeholder has beean solved.
+* Transition to detail model's edit form route form agregator's edit form route when agregator's model is not valid and `saveBeforeRouteLeave` option is true.
+
+## [0.8.0-beta.0] - 2016-10-27
 ### Added
 * `rollBackModel` parameter to `close` method (as second parameter of method) of `edit-form` and `detail-edit-form` controllers. Setting to true allows to roll back model after leaving route (applicable for detail's model edit form).
 
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.0 version.
+
 ### Fixed
 * Adding filter parameter to route url when trying to find records in lookup list. Fixed for `object-list-view` component.
+* `flexberry-objectlistview` and `flexberry-simpleolv` components:
+    * Searching by `number`, `decimal` and `boolean` values.
 * `flexberry-simpledatetime` component:
     * Now looks good when value is empty in IE. But it has no placeholder.
     * Now saving works in IE.
     * Fix `flatpick` for readonly property.
-* Now settings for `detail-interation` services are applying correctly on closing detail's edit form.
-* Leave invalid edit form at attempt to add detail on separate route.
+* Now settings for `detail-interation` services are applying correctly when closing detail model's edit form.
 
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed

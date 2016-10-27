@@ -182,7 +182,29 @@ export default Ember.Mixin.create({
 
       case 'number':
         if (isFinite(filter)) {
-          return new SimplePredicate(attribute.name, 'eq', filter);
+          return new SimplePredicate(attribute.name, 'eq', +filter);
+        }
+
+        return null;
+
+      case 'decimal':
+        filter = filter.replace(',', '.');
+        if (isFinite(filter)) {
+          return new SimplePredicate(attribute.name, 'eq', +filter);
+        }
+
+        return null;
+
+      case 'boolean':
+        let yes = ['TRUE', 'True', 'true', 'YES', 'Yes', 'yes', 'ДА', 'Да', 'да', '1', '+'];
+        let no = ['False', 'False', 'false', 'NO', 'No', 'no', 'НЕТ', 'Нет', 'нет', '0', '-'];
+
+        if (yes.indexOf(filter) > 0) {
+          return new SimplePredicate(attribute.name, 'eq', 'true');
+        }
+
+        if (no.indexOf(filter) > 0) {
+          return new SimplePredicate(attribute.name, 'eq', 'false');
         }
 
         return null;

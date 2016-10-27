@@ -3,9 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `rollBackModel` parameter to `close` method (as second parameter of method) of `edit-form` and `detail-edit-form` controllers. Setting to true allows to roll back model after leaving route (applicable for detail's model edit form).
+
 ### Fixed
 * Adding filter parameter to route url when trying to find records in lookup list. Fixed for `object-list-view` component.
-* Searching by `number`, `decimal` and `boolean` values.
+* `flexberry-objectlistview` and `flexberry-simpleolv` components:
+    * Searching by `number`, `decimal` and `boolean` values.
+* `flexberry-simpledatetime` component:
+    * Now looks good when value is empty in IE. But it has no placeholder.
+    * Now saving works in IE.
+    * Fix `flatpick` for readonly property.
+* Now settings for `detail-interation` services are applying correctly on closing detail's edit form.
 
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed
@@ -36,8 +45,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.7.0-beta.21] - 2016-10-16
 ### Added
-* `skipTransition` parameter to `delete` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
-* `skipTransition` parameter to `saveAndClose`, `close` and `delete` actions (as first parameter) of `edit-form` and `detail-edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `delete` method (as first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `saveAndClose`, `close` and `delete` actions (as first parameter) of `edit-form` and `detail-edit-form` controllers. Setting to true allows to skip technological call of `transitionToRoute` method.
 
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.23 version.
@@ -49,7 +58,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.7.0-beta.20] - 2016-10-16
 ### Added
-* `skipTransition` parameter to `save` method (second parameter of method) and `close` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `save` method (as second parameter of method) and `close` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
 
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.22 version.

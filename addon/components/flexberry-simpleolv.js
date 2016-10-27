@@ -58,14 +58,6 @@ ErrorableControllerMixin, {
         this.set('contentWithKeys', this.contentForRender);
       }
 
-      // TODO: analyze this observers.
-      let attrsArray = this._getAttributesName();
-      content.forEach((record) => {
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(record, attrName, this, '_attributeChanged');
-        });
-      });
-
       this.set('showLoadingTbodyClass', false);
     } else {
       this.set('rowsInLoadingState', true);
@@ -1039,15 +1031,6 @@ ErrorableControllerMixin, {
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
 
     this._super(...arguments);
-
-    let content = this.get('content');
-    let attrsArray = this._getAttributesName();
-
-    content.forEach((record) => {
-      attrsArray.forEach((attrName) => {
-        Ember.removeObserver(record, attrName, this, '_attributeChanged');
-      });
-    });
   },
 
   /**
@@ -1703,11 +1686,6 @@ ErrorableControllerMixin, {
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
         this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
-
-        let attrsArray = this._getAttributesName();
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(modelToAdd, attrName, this, '_attributeChanged');
-        });
       }
     }
   },
@@ -1773,11 +1751,6 @@ ErrorableControllerMixin, {
 
     let componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
-
-    let attrsArray = this._getAttributesName();
-    attrsArray.forEach((attrName) => {
-      Ember.removeObserver(record, attrName, this, '_attributeChanged');
-    });
   },
 
   /**
@@ -1928,21 +1901,6 @@ ErrorableControllerMixin, {
     }
 
     return attrsArray;
-  },
-
-  /**
-    That observer is called when change attributes of model.
-
-    @method _attributeChanged
-    @private
-  */
-  _attributeChanged(record, attrName) {
-    let rowConfig = record.get('rowConfig');
-    let configurateRow = this.get('configurateRow');
-    if (configurateRow) {
-      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-      configurateRow(rowConfig, record);
-    }
   },
 
   /**

@@ -6,16 +6,10 @@ moduleForComponent('flexberry-toggler', 'Integration | Component | flexberry tog
   integration: true
 });
 
-test('component renders properly closed', function(assert) {
+test('component renders properly when closed', function(assert) {
   assert.expect(18);
 
-  this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=true
-  iconClass=iconClass
-  }}
+  this.render(hbs`{{#flexberry-toggler}}
   {{/flexberry-toggler}}`);
 
   // Retrieve component, it's inner <input>.
@@ -26,46 +20,42 @@ test('component renders properly closed', function(assert) {
   let $togglerContent = $component.children('.content');
 
   // Check wrapper <title>.
-  assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
+  assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s title block is a <div>');
   assert.strictEqual($component.hasClass('flexberry-toggler'), true, 'Component\'s container has \'flexberry-toggler\' css-class');
   assert.strictEqual($component.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
   assert.strictEqual($component.hasClass('accordion'), true, 'Component\'s wrapper has \'accordion\' css-class');
   assert.strictEqual($component.hasClass('fluid'), true, 'Component\'s wrapper has \'fluid\' css-class');
 
   // Check <title>.
-  assert.strictEqual($togglerTitle.length === 1, true, 'Component has inner <title>');
+  assert.strictEqual($togglerTitle.length === 1, true, 'Component has inner title block');
   assert.strictEqual($togglerTitle.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
-  assert.strictEqual($togglerTitle.hasClass('title'), true, 'Component\'s container has \'title\' css-class');
+  assert.strictEqual($togglerTitle.hasClass('title'), true, 'Component\'s title block has \'title\' css-class');
 
   // Check <i>.
-  assert.strictEqual($togglerI.length === 1, true, 'Component has inner <i>');
-  assert.strictEqual($togglerI.prop('tagName'), 'I', 'Component\'s wrapper is a <i>');
+  assert.strictEqual($togglerI.length === 1, true, 'Component has inner title block');
+  assert.strictEqual($togglerI.prop('tagName'), 'I', 'Component\'s title block is a <i>');
   assert.strictEqual($togglerI.hasClass('dropdown icon'), true, 'Component\'s container has \'dropdown icon\' css-class');
 
   // Check <span>
-  assert.strictEqual($togglerSpan.length === 1, true, 'Component has inner <span>');
-  assert.strictEqual($togglerSpan.prop('tagName'), 'SPAN', 'Component\'s wrapper is a <span>');
+  assert.strictEqual($togglerSpan.length === 1, true, 'Component has inner title block');
+  assert.strictEqual($togglerSpan.prop('tagName'), 'SPAN', 'Component\'s title block is a <span>');
   assert.strictEqual($togglerSpan.hasClass('flexberry-toggler-caption'), true, 'Component\'s container has \'flexberry-toggler-caption\' css-class');
 
   // Check <content>
-  assert.strictEqual($togglerContent.length === 1, true, 'Component has inner <content>');
-  assert.strictEqual($togglerContent.prop('tagName'), 'DIV', 'Component\'s wrapper is a <content>');
+  assert.strictEqual($togglerContent.length === 1, true, 'Component has inner title block');
+  assert.strictEqual($togglerContent.prop('tagName'), 'DIV', 'Component\'s title block is a <content>');
   assert.strictEqual($togglerContent.hasClass('content'), true, 'Component\'s container has \'content\' css-class');
   assert.strictEqual($togglerContent.hasClass('flexberry-toggler-content'), true, 'Component\'s container has \'flexberry-toggler-content\' css-class');
 });
 
-test('component renders properly open', function(assert) {
+test('component renders properly when expanded', function(assert) {
   assert.expect(3);
 
   let tempText = 'Temp arcardion text.';
   this.set('tempText', tempText);
 
   this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=true
-  iconClass=iconClass
+    expanded=true
   }}
   {{tempText}}
   {{/flexberry-toggler}}`);
@@ -81,21 +71,6 @@ test('component renders properly open', function(assert) {
   // Check <content>
   assert.strictEqual($togglerContent.hasClass('active'), true, 'Component\'s container has \'active\' css-class');
   assert.strictEqual($togglerContent.text().trim(), tempText, 'Component\'s container has \'tempText\' text');
-});
-
-test('it renders', function(assert) {
-
-  this.render(hbs`{{flexberry-toggler}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-  this.render(hbs`
-    {{#flexberry-toggler}}
-      template block text
-    {{/flexberry-toggler}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
 });
 
 test('component expands/collapses/animating on title click', function(assert) {
@@ -205,11 +180,9 @@ test('caption renders with collapsedCaption and expandedCaption test', function(
   this.set('collapsedCaption', tempTextClosed);
 
   this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=expanded
-  iconClass=iconClass
+    expandedCaption=expandedCaption
+    collapsedCaption=collapsedCaption
+    expanded=expanded
   }}
   {{/flexberry-toggler}}`);
 
@@ -247,11 +220,9 @@ test('caption renders with caption and expandedCaption test', function(assert) {
   this.set('expandedCaption', tempTextOpen);
 
   this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=expanded
-  iconClass=iconClass
+    caption=caption
+    expandedCaption=expandedCaption
+    expanded=expanded
   }}
   {{/flexberry-toggler}}`);
 
@@ -289,11 +260,9 @@ test('caption renders with collapsedCaption and caption test', function(assert) 
   this.set('collapsedCaption', tempTextClosed);
 
   this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=expanded
-  iconClass=iconClass
+    caption=caption
+    collapsedCaption=collapsedCaption
+    expanded=expanded
   }}
   {{/flexberry-toggler}}`);
 
@@ -333,11 +302,10 @@ test('caption renders with caption, expandedCaption and collapsedCaption test', 
   this.set('collapsedCaption', tempTextClosed);
 
   this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=expanded
-  iconClass=iconClass
+    caption=caption
+    expandedCaption=expandedCaption
+    collapsedCaption=collapsedCaption
+    expanded=expanded
   }}
   {{/flexberry-toggler}}`);
 
@@ -373,11 +341,8 @@ test('caption renders with caption test', function(assert) {
   this.set('caption', tempText);
 
   this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=expanded
-  iconClass=iconClass
+    caption=caption
+    expanded=expanded
   }}
   {{/flexberry-toggler}}`);
 
@@ -413,11 +378,8 @@ test('caption renders with collapsedCaption test', function(assert) {
   this.set('collapsedCaption', tempTextClosed);
 
   this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=expanded
-  iconClass=iconClass
+    collapsedCaption=collapsedCaption
+    expanded=expanded
   }}
   {{/flexberry-toggler}}`);
 
@@ -453,11 +415,7 @@ test('caption renders with expandedCaption test', function(assert) {
   this.set('expandedCaption', tempTextOpen);
 
   this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=expanded
-  iconClass=iconClass
+    expandedCaption=expandedCaption
   }}
   {{/flexberry-toggler}}`);
 
@@ -488,13 +446,7 @@ test('caption renders with expandedCaption test', function(assert) {
 test('caption renders without text test', function(assert) {
   assert.expect(2);
 
-  this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=expanded
-  iconClass=iconClass
-  }}
+  this.render(hbs`{{#flexberry-toggler}}
   {{/flexberry-toggler}}`);
 
   // Retrieve component, it's inner <input>.
@@ -521,15 +473,11 @@ test('caption renders without text test', function(assert) {
   });
 });
 
-test('change expanded test', function(assert) {
+test('component open/closed afther change expanded test', function(assert) {
   assert.expect(2);
 
   this.render(hbs`{{#flexberry-toggler
-  caption=caption
-  expandedCaption=expandedCaption
-  collapsedCaption=collapsedCaption
-  expanded=expanded
-  iconClass=iconClass
+    expanded=expanded
   }}
   {{/flexberry-toggler}}`);
 

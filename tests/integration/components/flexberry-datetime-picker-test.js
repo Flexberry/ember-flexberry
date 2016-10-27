@@ -34,10 +34,11 @@ test('it renders', function(assert) {
 });
 
 test('Testing dynamicProperties of flexberry-base-component', function (assert) {
-  assert.expect(1);
+  assert.expect(2);
 
   let propertyNameValue = 'class';
   let propertyValueClass = 'firstClass secondClass';
+  let propertyValueClassChange = 'firstClass secondClass thirdClass';
   let dynamicPropertiesTemp = { class: propertyValueClass, propertyName: propertyNameValue };
 
   this.set('dynamicPropertiesTemp', dynamicPropertiesTemp);
@@ -54,4 +55,13 @@ test('Testing dynamicProperties of flexberry-base-component', function (assert) 
 
   assert.strictEqual($component.hasClass(propertyValueClass), true,
     'Component\'s container has \'firstClass and secondClass\' css-class');
+
+  Ember.set(dynamicPropertiesTemp, 'class', propertyValueClassChange);
+
+  this.set('dynamicPropertiesTemp', dynamicPropertiesTemp);
+
+  $component = this.$().children();
+
+  assert.strictEqual($component.hasClass(propertyValueClassChange), true,
+    'Component\'s container has \'firstClass, secondClass and thirdClass\' css-class');
 });

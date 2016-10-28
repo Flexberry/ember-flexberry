@@ -1000,9 +1000,6 @@ ErrorableControllerMixin, {
   didRender() {
     this._super(...arguments);
 
-    this._setColumnWidths();
-    this._setColumnsOrder();
-
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -1129,6 +1126,7 @@ ErrorableControllerMixin, {
   },
 
   _setColumnsUserSettings() {
+    this._setColumnWidths();
     this._setColumnsSorting();
   },
 
@@ -2195,65 +2193,5 @@ ErrorableControllerMixin, {
 
   _deleteNamedSetting(namedSetting) {
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
-  },
-
-  /**
-    Store nested records.
-
-    @property _records
-    @type Ember.NativeArray
-    @default Empty
-    @private
-  */
-  _records: Ember.computed(() => Ember.A()),
-
-  /**
-    Current record.
-    - `key` - Ember GUID for record.
-    - `data` - Instance of DS.Model.
-    - `config` - Object with config for record.
-
-    @property record
-    @type Object
-  */
-  record: Ember.computed(() => ({
-    key: undefined,
-    data: undefined,
-    config: undefined,
-  })),
-
-  /**
-    Store nested records.
-
-    @property records
-    @type Ember.NativeArray
-    @default Empty
-  */
-  records: Ember.computed({
-    get() {
-      return this.get('_records');
-    },
-    set(key, value) {
-      value.then((records) => {
-        records.forEach((record) => {
-          let config = Ember.copy(this.get('defaultRowConfig'));
-          let configurateRow = this.get('configurateRow');
-          if (configurateRow) {
-            Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-            configurateRow(config, record);
-          }
-
-          let newRecord = Ember.Object.create({
-            key: Ember.guidFor(record),
-            data: record,
-            config: config,
-            doRenderData: true
-          });
-
-          this.get('_records').pushObject(newRecord);
-        });
-      });
-      return this.get('records');
-    },
-  }),
+  }
 });

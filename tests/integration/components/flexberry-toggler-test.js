@@ -495,7 +495,7 @@ test('component open/closed afther change expanded test', function(assert) {
   assert.strictEqual($togglerTitle.hasClass('active'), true);
 });
 
-test('component open/closed inner acardion component test', function(assert) {
+test('component closed inner acardion component test', function(assert) {
   assert.expect(4);
 
   this.render(hbs`{{#flexberry-toggler
@@ -509,12 +509,14 @@ test('component open/closed inner acardion component test', function(assert) {
 
   // Retrieve component, it's inner <input>.
   let $component = this.$().children();
+  let $togglerContent = $component.children('.content');
   let $togglerTitle = $component.children('.title');
-  let $innerComponent = $component.children();
-  let $innerTogglerTitle = $component.children('.title');
+  let $innerComponent = $togglerContent.children();
+  let $innerTogglerTitle = $innerComponent.children('.title');
 
   // Check component <div> block.
   assert.strictEqual($togglerTitle.hasClass('active'), true, 'Component\'s container has \'active\' css-class');
+
   // Check inner component <div> block.
   assert.strictEqual($innerTogglerTitle .hasClass('active'), true, 'Inner component\'s container has \'active\' css-class');
 
@@ -526,21 +528,64 @@ test('component open/closed inner acardion component test', function(assert) {
   // Wait for collapse animation to be completed & check component's state.
   var done = assert.async();
   Ember.run(() => {
-    setTimeout(function() { done(); }, Ember.$.fn.accordion.settings.duration + 100);
+    setTimeout(function() {    	
+	  // Check component <div> block.
+	  assert.strictEqual($togglerTitle.hasClass('active'), true, 'Component\'s container has \'active\' css-class');
+
+	  // Check inner component <div> block.
+	  assert.strictEqual($innerTogglerTitle .hasClass('active'), false, 'Inner component\'s container has \'active\' css-class');
+
+      done();
+    }, Ember.$.fn.accordion.settings.duration + 100);
   });
+});
+
+test('component open inner acardion component test', function(assert) {
+  assert.expect(4);
+
+  this.render(hbs`{{#flexberry-toggler
+    expanded=true
+  }}
+    {{#flexberry-toggler
+      expanded=false
+    }}
+    {{/flexberry-toggler}}
+  {{/flexberry-toggler}}`);
+
+  // Retrieve component, it's inner <input>.
+  let $component = this.$().children();
+  let $togglerContent = $component.children('.content');
+  let $togglerTitle = $component.children('.title');
+  let $innerComponent = $togglerContent.children();
+  let $innerTogglerTitle = $innerComponent.children('.title');
 
   // Check component <div> block.
   assert.strictEqual($togglerTitle.hasClass('active'), true, 'Component\'s container has \'active\' css-class');
-  // Check inner component <div> block.
-  assert.strictEqual($innerTogglerTitle .hasClass('active'), false, 'Inner component\'s container has \'active\' css-class');
 
+  // Check inner component <div> block.
+  assert.strictEqual($innerTogglerTitle .hasClass('active'), false, 'Inner component\'s container hasn\'t \'active\' css-class');
+
+  // Try to expand component.
+  Ember.run(() => {
+    $innerTogglerTitle.click();
+  });
+
+  // Wait for collapse animation to be completed & check component's state.
+  var done = assert.async();
+  Ember.run(() => {
+	setTimeout(function() {
+	  // Check component <div> block.
+	  assert.strictEqual($togglerTitle.hasClass('active'), true, 'Component\'s container has \'active\' css-class');
+
+	  // Check inner component <div> block.
+	  assert.strictEqual($innerTogglerTitle .hasClass('active'), true, 'Inner component\'s container has \'active\' css-class');
+	  done(); 
+	}, Ember.$.fn.accordion.settings.duration + 100);
+  });
 });
 
-test('component open/closed inner acardion component test2', function(assert) {
+test('component closed acardion with inner component test', function(assert) {
   assert.expect(4);
-
-  let tempText = 'Temp arcardion text.';
-  this.set('tempText', tempText);
 
   this.render(hbs`{{#flexberry-toggler
     expanded=true
@@ -548,18 +593,19 @@ test('component open/closed inner acardion component test2', function(assert) {
     {{#flexberry-toggler
       expanded=true
     }}
-      {{tempText}}
     {{/flexberry-toggler}}
   {{/flexberry-toggler}}`);
 
   // Retrieve component, it's inner <input>.
   let $component = this.$().children();
+  let $togglerContent = $component.children('.content');
   let $togglerTitle = $component.children('.title');
-  let $innerComponent = $component.children();
-  let $innerTogglerTitle = $component.children('.title');
+  let $innerComponent = $togglerContent.children();
+  let $innerTogglerTitle = $innerComponent.children('.title');
 
   // Check component <div> block.
   assert.strictEqual($togglerTitle.hasClass('active'), true, 'Component\'s container has \'active\' css-class');
+
   // Check inner component <div> block.
   assert.strictEqual($innerTogglerTitle .hasClass('active'), true, 'Inner component\'s container has \'active\' css-class');
 
@@ -571,12 +617,58 @@ test('component open/closed inner acardion component test2', function(assert) {
   // Wait for collapse animation to be completed & check component's state.
   var done = assert.async();
   Ember.run(() => {
-    setTimeout(function() { done(); }, Ember.$.fn.accordion.settings.duration + 100);
+    setTimeout(function() {
+      // Check component <div> block.
+	  assert.strictEqual($togglerTitle.hasClass('active'), false, 'Component\'s container hasn\'t \'active\' css-class');
+
+	  // Check inner component <div> block.
+	  assert.strictEqual($innerTogglerTitle .hasClass('active'), true, 'Inner component\'s container has \'active\' css-class');
+  
+      done();
+    }, Ember.$.fn.accordion.settings.duration + 100);
   });
+});
+
+test('component open acardion with inner component test', function(assert) {
+  assert.expect(4);
+
+  this.render(hbs`{{#flexberry-toggler
+    expanded=false
+  }}
+    {{#flexberry-toggler
+      expanded=true
+    }}
+    {{/flexberry-toggler}}
+  {{/flexberry-toggler}}`);
+
+  // Retrieve component, it's inner <input>.
+  let $component = this.$().children();
+  let $togglerContent = $component.children('.content');
+  let $togglerTitle = $component.children('.title');
+  let $innerComponent = $togglerContent.children();
+  let $innerTogglerTitle = $innerComponent.children('.title');
 
   // Check component <div> block.
-  assert.strictEqual($togglerTitle.hasClass('active'), true, 'Component\'s container has \'active\' css-class');
-  // Check inner component <div> block.
-  assert.strictEqual($innerTogglerTitle .hasClass('active'), false, 'Inner component\'s container has \'active\' css-class');
+  assert.strictEqual($togglerTitle.hasClass('active'), false, 'Component\'s container hasn\'t \'active\' css-class');
 
+  // Check inner component <div> block.
+  assert.strictEqual($innerTogglerTitle .hasClass('active'), true, 'Inner component\'s container has \'active\' css-class');
+
+  // Try to expand component.
+  Ember.run(() => {
+    $togglerTitle.click();
+  });
+
+  // Wait for collapse animation to be completed & check component's state.
+  var done = assert.async();
+  Ember.run(() => {
+    setTimeout(function() {
+      // Check component <div> block.
+	  assert.strictEqual($togglerTitle.hasClass('active'), true, 'Component\'s container has \'active\' css-class');
+
+	  // Check inner component <div> block.
+	  assert.strictEqual($innerTogglerTitle .hasClass('active'), true, 'Inner component\'s container has \'active\' css-class');
+	  done();
+	}, Ember.$.fn.accordion.settings.duration + 100);
+  });
 });

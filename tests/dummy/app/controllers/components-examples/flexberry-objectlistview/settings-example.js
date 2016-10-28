@@ -251,6 +251,8 @@ export default ListFormController.extend({
     '  orderable=orderable<br>' +
     '  filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
     '  filterText=filter<br>' +
+    '  filterByAnyWord=filterByAnyWord<br>' +
+    '  filterByAllWords=filterByAllWords<br>' +
     '  sorting=computedSorting<br>' +
     '  sortByColumn=(action \"sortByColumn\")<br>' +
     '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
@@ -357,6 +359,18 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'filterButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'filterByAnyWord',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'filterByAnyWord'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'filterByAllWords',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'filterByAllWords'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'refreshButton',

@@ -368,6 +368,7 @@ export default FlexberryBaseComponent.extend({
     */
     removeFilter() {
       this.set('filterText', null);
+      this.set('filterByAnyMatchText', null);
     },
 
     /**

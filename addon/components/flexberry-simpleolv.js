@@ -816,6 +816,7 @@ ErrorableControllerMixin, {
     */
     removeFilter() {
       this.set('filterText', null);
+      this.set('filterByAnyMatchText', null);
     },
 
     /**

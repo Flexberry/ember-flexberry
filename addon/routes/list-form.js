@@ -133,6 +133,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
           page: params.page,
           sorting: this.sorting,
           filter: params.filter,
+          filterCondition: this.get('controller.filterCondition'),
           filters: filtersPredicate,
           predicate: limitPredicate,
           hierarchicalAttribute: hierarchicalAttribute,

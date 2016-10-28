@@ -194,7 +194,7 @@
                 {{placeholder}}
             </td>
           </tr>
-        
+        {{else}}
           {{#each contentWithKeys key="key" as |record|}}
               <tr class="{{record.rowConfig.customClass}}">
                 <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}">

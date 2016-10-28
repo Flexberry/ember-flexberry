@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Options `filterByAnyWord` and `filterByAllWords` for `flexberry-objectlistview` and `flexberry-simpleolv` components, used for configurate `filterByAnyMatch` logic.
 
+### Fixed
+* Not clear value in input field at reset filters on `flexberry-objectlistview` and `flexberry-simpleolv` components.
+
 ## [0.8.0-beta.1] - 2016-10-27
 ### Changed
 * Buttons of `flexberry-lookup` component will be disabled if `readOnly` property is `true`.

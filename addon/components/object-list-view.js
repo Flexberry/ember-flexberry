@@ -1775,7 +1775,11 @@ export default FlexberryBaseComponent.extend(
   */
     _filterByAnyMatch(componentName, pattern) {
       if (this.get('componentName') === componentName) {
-        this.sendAction('filterByAnyMatch', pattern);
+        let anyWord = this.get('filterByAnyWord');
+        let allWords = this.get('filterByAllWords');
+        Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
+        let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
+        this.sendAction('filterByAnyMatch', pattern, filterCondition);
       }
     },
 

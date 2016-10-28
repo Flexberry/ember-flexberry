@@ -1813,7 +1813,11 @@ ErrorableControllerMixin, {
   */
   _filterByAnyMatch(componentName, pattern) {
     if (this.get('componentName') === componentName) {
-      this.sendAction('filterByAnyMatch', pattern);
+      let anyWord = this.get('filterByAnyWord');
+      let allWords = this.get('filterByAllWords');
+      Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
+      let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
+      this.sendAction('filterByAnyMatch', pattern, filterCondition);
     }
   },
 
@@ -2025,6 +2029,24 @@ ErrorableControllerMixin, {
     @default null
   */
   filterText: null,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain any word of search query.
+
+    @property filterByAnyWord
+    @type Boolean
+    @default false
+  */
+  filterByAnyWord: false,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain each of search query word.
+
+    @property filterByAllWords
+    @type Boolean
+    @default false
+  */
+  filterByAllWords: false,
 
   /**
     The flag to specify whether the delete button is enabled.

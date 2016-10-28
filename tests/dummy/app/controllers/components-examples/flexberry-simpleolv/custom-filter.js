@@ -1,7 +1,32 @@
+import Ember from 'ember';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
 export default ListFormController.extend({
+  filterByAnyWord: false,
+
+  filterByAllWords: false,
+
+  customButtons: Ember.computed('filterByAnyWord', 'filterByAllWords', function() {
+    return [{
+      buttonName: 'filterByAnyWord',
+      buttonAction: 'toggleFilterByAnyWord',
+      buttonClasses: this.get('filterByAnyWord') ? 'positive' : '',
+    }, {
+      buttonName: 'filterByAllWords',
+      buttonAction: 'toggleFilterByAllWords',
+      buttonClasses: this.get('filterByAllWords') ? 'positive' : '',
+    }];
+  }),
+
   actions: {
+    toggleFilterByAnyWord() {
+      this.toggleProperty('filterByAnyWord');
+    },
+
+    toggleFilterByAllWords() {
+      this.toggleProperty('filterByAllWords');
+    },
+
     componentForFilter(type, relation) {
       switch (type) {
         case 'date': return { name: 'flexberry-datepicker' };

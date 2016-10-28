@@ -3,11 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+<<<<<<< HEAD
 ### Added
 * Options `filterByAnyWord` and `filterByAllWords` for `flexberry-objectlistview` and `flexberry-simpleolv` components, used for configurate `filterByAnyMatch` logic.
 
 ### Fixed
 * Not clear value in input field at reset filters on `flexberry-objectlistview` and `flexberry-simpleolv` components.
+=======
+### Changed
+* In template of `sitemap-node` replaced `link-to` to `href-to` for improved performance.
+
+>>>>>>> develop
 
 ## [0.8.0-beta.1] - 2016-10-27
 ### Changed

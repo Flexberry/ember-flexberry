@@ -1,7 +1,7 @@
 {{#if model.link}}
-  <a href="{{href-to model.link}}" class="item" title={{model.title}} {{ action "hideSidebar" preventDefault=false }}>
+  {{#link-to model.link class="item" title=model.title invokeAction=(action 'hideSidebar')}}
     {{partial "sitemap-node-content"}}
-  </a>
+  {{/link-to}}
 {{else}}
   <div class="item" title={{model.title}}>
     {{partial "sitemap-node-content"}}

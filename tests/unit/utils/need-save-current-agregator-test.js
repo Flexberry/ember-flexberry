@@ -1,19 +1,20 @@
-import needSaveCurrentAgregator from 'dummy/utils/need-save-current-agregator';
-import { module, test } from 'qunit';
-import startApp from '../../helpers/start-app';
 import Ember from 'ember';
+import { module, test } from 'qunit';
+import startApp from 'dummy/tests/helpers/start-app';
+import needSaveCurrentAgregator from 'dummy/utils/need-save-current-agregator';
 
 let App;
 
 module('Unit | Utility | need save current agregator', {
-  setup: function() {
+  beforeEach() {
     App = startApp();
     let offlineGlobals = App.__container__.lookup('service:offline-globals');
     offlineGlobals.setOnlineAvailable(false);
   },
-  teardown: function() {
+
+  afterEach() {
     Ember.run(App, 'destroy');
-  }
+  },
 });
 
 // Replace this with your real tests.

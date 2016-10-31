@@ -526,7 +526,10 @@ Ember.$.extend(true, translations, {
         },
         'limit-function-with-dinamic-properties-example': {
           'caption': 'Flexberry-lookup. Limit function with dinamic properties example',
-          'titleLookup': 'Master'
+          'titleLookup': 'Master',
+          'captionFirstLimitFunction': 'Limit function №1',
+          'captionSecondLimitFunction': 'Limit function №2',
+          'captionClearLimitFunction': 'Clear limit function'
         },
         'lookup-block-form-example': {
           'caption': 'Flexberry-lookup. Lookup block form example',

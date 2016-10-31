@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.8.0-beta.3] - 2016-10-31
 ### Changed
 * Replace `a` tag with `link-to` helper in `sitemap-node` template, because `a` tag with `href-to` heper causes full page reload.
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.2 version.
 
 ## [0.8.0-beta.2] - 2016-10-28
 ### Added

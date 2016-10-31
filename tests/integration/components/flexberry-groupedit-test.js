@@ -43,6 +43,7 @@ test('it renders', function(assert) {
 });
 
 test('it properly rerenders', function(assert) {
+  let done = assert.async();
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -86,6 +87,7 @@ test('it properly rerenders', function(assert) {
           detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail', { text: '4' }));
           wait().then(() => {
             assert.equal(this.$('.object-list-view').find('tr').length, 3);
+            done();
           });
         });
       });

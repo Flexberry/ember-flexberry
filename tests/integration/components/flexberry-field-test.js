@@ -43,18 +43,30 @@ test('it renders properly', function(assert) {
   assert.strictEqual($component.hasClass('field'), true, 'Component\'s wrapper has \'field\' css-class');
 });
 
-test('gfghfhjg', function(assert) {
-  assert.expect();
+test('label mode works properly', function(assert) {
+  assert.expect(3);
 
   // Render component.
   this.render(hbs`{{flexberry-field
     class=class
+    label=label
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
+  let $fieldLabel = $component.children('label');
 
-  assert.strictEqual($component.prop('tagName'), 'lable', 'Component\'s wrapper is a <lable>');
+  this.set('label', null);
+  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <lable>');
+
+  let labelText = 'Some text for label';
+  this.set('label', labelText);
+
+  assert.strictEqual(
+  this.get('label'), labelText, 'Component\'s has wrapper is a <lable>');
+
+  this.set('label', null);
+  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <lable>');
 });
 
 test('readonly mode works properly', function(assert) {
@@ -68,7 +80,7 @@ test('readonly mode works properly', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('input');
+  let $fieldInput = Ember.$('.flexberry-textbox input', $component);
 
   // Check that <input>'s readonly attribute doesn't exist yet.
   assert.strictEqual(
@@ -97,14 +109,14 @@ test('readonly mode works properly with value', function(assert) {
   // Set <input>'s value' & render component.
   this.set('value', null);
   this.set('readonly', true);
-  this.render(hbs`{{flexberry-textbox
+  this.render(hbs`{{flexberry-field
     readonly=readonly
     value=value
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('input');
+  let $fieldInput = Ember.$('.flexberry-textbox input', $component);
 
   $fieldInput.on('change', (e) => {
     if (this.get('readonly')) {
@@ -132,11 +144,11 @@ test('it renders i18n-ed placeholder', function(assert) {
   assert.expect(2);
 
   // Render component.
-  this.render(hbs`{{flexberry-textbox}}`);
+  this.render(hbs`{{flexberry-field}}`);
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('input');
+  let $fieldInput = Ember.$('.flexberry-textbox input', $component);
 
   // Check <input>'s placeholder.
   assert.strictEqual(
@@ -156,15 +168,16 @@ test('it renders manually defined placeholder', function(assert) {
   assert.expect(2);
 
   // Set <input>'s placeholder' & render component.
-  let placeholder = 'input is empty, please type some text';
-  this.set('placeholder', placeholder);
-  this.render(hbs`{{flexberry-textbox
+  this.render(hbs`{{flexberry-field
     placeholder=placeholder
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('input');
+  let $fieldInput = Ember.$('.flexberry-textbox input', $component);
+
+  let placeholder = 'input is empty, please type some text';
+  this.set('placeholder', placeholder);
 
   // Check <input>'s placeholder.
   assert.strictEqual(
@@ -185,14 +198,14 @@ test('type mode works properly', function(assert) {
   assert.expect(7);
 
   // Render component.
-  this.render(hbs`{{flexberry-textbox
+  this.render(hbs`{{flexberry-field
     class=class
     type=type
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('input');
+  let $fieldInput = Ember.$('.flexberry-textbox input', $component);
 
   // Check that <input>'s type attribute doesn't exist yet.
   assert.strictEqual(
@@ -241,4 +254,80 @@ test('type mode works properly', function(assert) {
     Ember.$.trim($fieldInput.attr('type')),
     'hidden',
     'Component\'s inner <input> type attribute \'hidden\'');
+});
+
+test('changes in inner <input> causes changes in property binded to \'value\'', function(assert) {
+  assert.expect(4);
+
+  // Set <input>'s value' & render component.
+  this.set('value', null);
+  this.render(hbs`{{flexberry-field
+    value=value
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $fieldInput = Ember.$('.flexberry-textbox input', $component);
+
+  // Check <input>'s value & binded value for initial emptyness.
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.val()),
+    '',
+    'Component\'s inner <input>\'s value is equals to \'\'');
+  assert.strictEqual(
+    this.get('value'),
+    null,
+    'Component\'s property binded to \'value\' is equals to null');
+
+  // Change <input>'s value (imitate situation when user typed something into component's <input>)
+  // & check them again ('change' event is needed to force bindings work).
+  let newValue = 'Some text typed into inputs inner <input>';
+  $fieldInput.val(newValue);
+  $fieldInput.change();
+
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.val()),
+    newValue,
+    'Component\'s inner <input>\'s value is equals to \'' + newValue + '\'');
+  assert.strictEqual(
+    this.get('value'),
+    newValue,
+    'Component\'s property binded to \'value\' is equals to \'' + newValue + '\'');
+});
+
+test('changes in property binded to \'value\' causes changes in inner <input>', function(assert) {
+  assert.expect(4);
+
+  // Set <input>'s value' & render component.
+  this.set('value', null);
+  this.render(hbs`{{flexberry-field
+    value=value
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $fieldInput = Ember.$('.flexberry-textbox input', $component);
+
+  // Check <input>'s value & binded value for initial emptyness.
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.val()),
+    '',
+    'Component\'s inner <input>\'s value is equals to \'\'');
+  assert.strictEqual(
+    this.get('value'),
+    null,
+    'Component\'s property binded to \'value\' is equals to null');
+
+  // Change property binded to 'value' & check them again.
+  let newValue = 'Some text typed into inputs inner <input>';
+  this.set('value', newValue);
+
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.val()),
+    newValue,
+    'Component\'s inner <input>\'s value is equals to \'' + newValue + '\'');
+  assert.strictEqual(
+    this.get('value'),
+    newValue,
+    'Component\'s property binded to \'value\' is equals to \'' + newValue + '\'');
 });

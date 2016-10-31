@@ -1,17 +1,18 @@
-import getCurrentAgregator from 'dummy/utils/get-current-agregator';
-import { module, test } from 'qunit';
-import startApp from '../../helpers/start-app';
 import Ember from 'ember';
+import { module, test } from 'qunit';
+import startApp from 'dummy/tests/helpers/start-app';
+import getCurrentAgregator from 'dummy/utils/get-current-agregator';
 
 let App;
 
 module('Unit | Utility | get current agregator', {
-  setup: function() {
+  beforeEach() {
     App = startApp();
   },
-  teardown: function() {
+
+  afterEach() {
     Ember.run(App, 'destroy');
-  }
+  },
 });
 
 // Replace this with your real tests.

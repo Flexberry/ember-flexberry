@@ -32,7 +32,7 @@ ember install semantic-ui-ember@0.9.3
 ember install ember-moment@6.0.0
 ember install ember-link-action@0.0.35
 ember install ember-cli-sass@5.2.0
-ember install broccoli-jscs@1.2.2
+ember install broccoli-jscs@1.4.1
 ember install ember-browserify@1.1.9
 ember install ember-href-to@1.9.0
 bower install semantic-ui-daterangepicker#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be
@@ -75,7 +75,7 @@ ember install semantic-ui-ember@0.9.3
 ember install ember-moment@6.0.0
 ember install ember-link-action@0.0.35
 ember install ember-cli-sass@5.2.0
-ember install broccoli-jscs@1.2.2
+ember install broccoli-jscs@1.4.1
 ember install ember-browserify@1.1.9
 ember install ember-href-to@1.9.0
 bower install semantic-ui-daterangepicker#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be

@@ -37,6 +37,8 @@ ember install ember-browserify@1.1.9
 bower install semantic-ui-daterangepicker#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be
 bower install blueimp-file-upload#9.11.2
 bower install devicejs#0.2.7
+npm install
+bower install
 
 rm -f ./ember-cli-build.js
 cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
@@ -75,6 +77,8 @@ ember install ember-browserify@1.1.9
 bower install semantic-ui-daterangepicker#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be
 bower install blueimp-file-upload#9.11.2
 bower install devicejs#0.2.7
+npm install
+bower install
 
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.

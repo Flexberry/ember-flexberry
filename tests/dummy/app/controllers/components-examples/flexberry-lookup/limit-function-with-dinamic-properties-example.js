@@ -7,7 +7,7 @@ export default EditFormController.extend({
 
   dynamicProperties: undefined,
 
- actions: {
+  actions: {
 
     firstLimitFunction() {
       let currentLookupValue = '234';
@@ -26,9 +26,9 @@ export default EditFormController.extend({
     }
   },
 
-  init(){
+  init() {
     this._super(...arguments);
-    this.set('dynamicProperties', 
+    this.set('dynamicProperties',
     {
       lookupLimitPredicate: null
     });

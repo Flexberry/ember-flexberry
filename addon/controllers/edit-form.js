@@ -6,6 +6,8 @@ import Ember from 'ember';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
+import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
+import getCurrentAgregator from '../utils/get-current-agregator';
 
 const { getOwner } = Ember;
 
@@ -224,9 +226,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         ```
 
       @method actions.saveAndClose
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after save.
     */
-    saveAndClose() {
-      this.save(true);
+    saveAndClose(skipTransition) {
+      this.save(true, skipTransition);
     },
 
     /**
@@ -241,7 +244,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
           ...
           delete() {
             if (confirm('You sure?')) {
-              this.delete();
+              this.delete(false);
             }
           }
           ...
@@ -259,9 +262,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         ```
 
       @method actions.delete
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
     */
-    delete() {
-      this.delete();
+    delete(skipTransition) {
+      this.delete(skipTransition);
     },
 
     /**
@@ -285,9 +289,11 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
         ```
 
       @method actions.close
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+      @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
     */
-    close() {
-      this.close();
+    close(skipTransition, rollBackModel) {
+      this.close(skipTransition, rollBackModel);
     },
   },
 
@@ -296,38 +302,51 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @method save
     @param {Boolean} close If `true`, then save and close.
+    @param {Boolean} skipTransition If `true`, then transition after save process will be skipped.
     @return {Promise}
   */
-  save(close) {
+  save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
     this.onSaveActionStarted();
     this.set('state', 'loading');
 
-    let savePromise = this.get('model').save().then((model) => {
-      return this._saveHasManyRelationships(model).then(() => {
-        this.set('state', 'success');
-        this.onSaveActionFulfilled();
-        if (close) {
-          this.set('state', '');
-          this.close();
-        } else {
-          let routeName = this.get('routeName');
-          if (routeName.indexOf('.new') > 0) {
-            let qpars = {};
-            let queryParams = this.get('queryParams');
-            queryParams.forEach(function(item, i, params) {
-              qpars[item] = this.get(item);
-            }, this);
-            let transitionQuery = {};
-            transitionQuery.queryParams = qpars;
-            this.transitionToRoute(routeName.slice(0, -4), this.get('model'), transitionQuery);
-          }
+    let _this = this;
+
+    let afterSaveModelFunction = () => {
+      _this.set('state', 'success');
+      _this.onSaveActionFulfilled();
+      if (close) {
+        _this.set('state', '');
+        _this.close(skipTransition);
+      } else if (!skipTransition) {
+        let routeName = _this.get('routeName');
+        if (routeName.indexOf('.new') > 0) {
+          let qpars = {};
+          let queryParams = _this.get('queryParams');
+          queryParams.forEach(function(item, i, params) {
+            qpars[item] = this.get(item);
+          }, _this);
+          let transitionQuery = {};
+          transitionQuery.queryParams = qpars;
+          _this.transitionToRoute(routeName.slice(0, -4), _this.get('model'), transitionQuery);
         }
-      });
+      }
+    };
+
+    let savePromise = this.get('model').save().then((model) => {
+      let agragatorModel = getCurrentAgregator.call(this);
+      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+        return this._saveHasManyRelationships(model).then(() => {
+          return agragatorModel.save().then(afterSaveModelFunction);
+        });
+      } else {
+        return this._saveHasManyRelationships(model).then(afterSaveModelFunction);
+      }
     }).catch((errorData) => {
       this.set('state', 'error');
       this.onSaveActionRejected(errorData);
+      return Ember.RSVP.reject(errorData);
     }).finally((data) => {
       this.onSaveActionAlways(data);
     });
@@ -339,9 +358,10 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Delete object, if successful transition to parent route.
 
     @method delete
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
     @return {Promise}
   */
-  delete() {
+  delete(skipTransition) {
     this.send('dismissErrorMessages');
 
     this.onDeleteActionStarted();
@@ -349,20 +369,27 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     let model = this.get('model');
     let deletePromise = null;
+    let deleteOperation = () => {
+      let agragatorModel = getCurrentAgregator.call(this);
+      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+        return agragatorModel.save().then(() => {
+          this.onDeleteActionFulfilled(skipTransition);
+        });
+      } else {
+        this.onDeleteActionFulfilled(skipTransition);
+      }
+    };
+
     if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
       deletePromise = this.destroyHasManyRelationships(model).then(() => {
-        return model.destroyRecord().then(() => {
-          this.onDeleteActionFulfilled();
-        });
+        return model.destroyRecord().then(deleteOperation);
       });
     } else {
-      deletePromise = model.destroyRecord().then(() => {
-        this.onDeleteActionFulfilled();
-      });
+      deletePromise = model.destroyRecord().then(deleteOperation);
     }
 
     deletePromise.catch((errorData) => {
-      model.rollbackAttributes();
+      model.rollbackAll();
       this.set('state', 'error');
       this.onDeleteActionRejected(errorData);
     }).finally((data) => {
@@ -376,11 +403,15 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Сlose edit form and transition to parent route.
 
     @method close
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+    @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
-  close() {
+  close(skipTransition, rollBackModel) {
     this.set('state', '');
     this.onCloseActionStarted();
-    this.transitionToParentRoute();
+    if (!skipTransition) {
+      this.transitionToParentRoute(skipTransition, rollBackModel);
+    }
   },
 
   /**
@@ -471,13 +502,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       ```javascript
       onDeleteActionFulfilled() {
         alert('Delete operation succeed!');
-        this.close();
+        this.close(false);
       }
       ```
     @method onDeleteActionFulfilled.
+    @param {Boolean} skipTransition If `true`, then transition during close form process (default behavior) will be skipped.
   */
-  onDeleteActionFulfilled() {
-    this.close();
+  onDeleteActionFulfilled(skipTransition) {
+    this.close(skipTransition);
   },
 
   /**
@@ -534,14 +566,17 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Method transition to parent route (corresponding list form).
 
     @method transitionToParentRoute
+    @param {Boolean} skipTransition If `true`, then transition will be skipped.
   */
-  transitionToParentRoute() {
-    // TODO: нужно учитывать пэйджинг.
-    // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
-    // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-    let parentRoute = this.get('parentRoute');
-    Ember.assert('Parent route must be defined.', parentRoute);
-    this.transitionToRoute(parentRoute);
+  transitionToParentRoute(skipTransition) {
+    if (!skipTransition) {
+      // TODO: нужно учитывать пэйджинг.
+      // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
+      // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
+      let parentRoute = this.get('parentRoute');
+      Ember.assert('Parent route must be defined.', parentRoute);
+      this.transitionToRoute(parentRoute);
+    }
   },
 
   /**
@@ -623,6 +658,16 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Ember.deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
     model.rollbackHasMany();
   },
+
+  /**
+    Service that lets interact between agregator's and detail's form.
+
+    @property flexberryDetailInteractionService
+    @type Ember.Service
+    @readOnly
+    @private
+  */
+  _flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
 
   /**
     Save dirty hasMany relationships in the `model` recursively.

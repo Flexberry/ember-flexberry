@@ -44,7 +44,7 @@ module.exports = function(environment) {
       },
 
       perf: {
-        enabled: true,
+        enabled: false,
       },
 
       // Settings lock.

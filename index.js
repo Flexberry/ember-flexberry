@@ -7,6 +7,10 @@ module.exports = {
   included: function(app) {
     this._super.included.apply(this._super, arguments);
 
+    app.import('vendor/polyfills.js', {
+      prepend: true
+    });
+
     app.import('vendor/ember-flexberry/register-version.js');
 
     app.import({
@@ -38,6 +42,14 @@ module.exports = {
       development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.css',
       production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.css'
     });
+
+    app.import({
+      development: 'bower_components/flatpickr-calendar/dist/flatpickr.js',
+      production:  'bower_components/flatpickr-calendar/dist/flatpickr.min.js'
+    });
+
+    app.import('bower_components/flatpickr-calendar/dist/flatpickr.min.css');
+    app.import('bower_components/flatpickr-calendar/src/flatpickr.l10n.ru.js');
 
     app.import({
       development: 'bower_components/devicejs/lib/device.js',

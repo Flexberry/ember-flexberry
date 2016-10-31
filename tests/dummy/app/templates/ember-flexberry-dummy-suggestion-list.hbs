@@ -2,6 +2,7 @@
 <div class="row">
   {{flexberry-objectlistview
     editFormRoute=editFormRoute
+    showCheckBoxInRow=true
     modelName="ember-flexberry-dummy-suggestion"
     modelProjection=modelProjection
     content=model
@@ -21,5 +22,7 @@
     gotoPage=(action "gotoPage")
     nextPage=(action "nextPage")
     componentName="SuggestionObjectListView"
+    showDeleteMenuItemInRow=true
+    deleteButton=true
   }}
 </div>

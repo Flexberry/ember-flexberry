@@ -104,7 +104,8 @@ export default Ember.Service.extend({
       currentArray.push(value);
       currentPropertyValue = currentArray;
     } else {
-      currentPropertyValue = [value];
+      currentPropertyValue = Ember.A();
+      currentPropertyValue.push(value);
     }
 
     this.set(propertyName, currentPropertyValue);

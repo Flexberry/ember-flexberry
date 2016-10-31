@@ -1,1 +1,5 @@
-{{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString}}
+{{#if _supportDateType}} 
+  {{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString placeholder=placeholder}}
+{{else}}
+  {{input type="text" class="flatpickr" placeholder=placeholder value=_valueAsString min=_minAsString max=_maxAsString}}
+{{/if}}

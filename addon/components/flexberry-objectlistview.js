@@ -385,6 +385,24 @@ export default FlexberryBaseComponent.extend({
   filterText: null,
 
   /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain any word of search query.
+
+    @property filterByAnyWord
+    @type Boolean
+    @default false
+  */
+  filterByAnyWord: false,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain each of search query word.
+
+    @property filterByAllWords
+    @type Boolean
+    @default false
+  */
+  filterByAllWords: false,
+
+  /**
     Array of pages to show.
 
     @property pages

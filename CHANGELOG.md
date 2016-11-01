@@ -4,6 +4,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0-beta.3] - 2016-10-31
+### Changed
+* Replace `a` tag with `link-to` helper in `sitemap-node` template, because `a` tag with `href-to` heper causes full page reload.
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.2 version.
+
+## [0.8.0-beta.2] - 2016-10-28
+### Added
+* Options `filterByAnyWord` and `filterByAllWords` for `flexberry-objectlistview` and `flexberry-simpleolv` components. Use to configurate `filterByAnyMatch` logic.
+
+### Changed
+* Replaced `link-to` to `href-to` in `sitemap-node` template for improving performance.
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.1 version.
+
+### Fixed
+* Now clearing value in input field when reset filters on `flexberry-objectlistview` or `flexberry-simpleolv` component.
+
 ## [0.8.0-beta.1] - 2016-10-27
 ### Changed
 * Buttons of `flexberry-lookup` component will be disabled if `readOnly` property is `true`.

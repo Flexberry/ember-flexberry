@@ -275,6 +275,7 @@ export default FlexberryBaseComponent.extend({
     'relationName',
     'title',
     'lookupLimitPredicate',
+    'relatedModel',
     '_lookupWindowCustomPropertiesData',
     function() {
       return {
@@ -297,7 +298,7 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @readOnly
   */
-  removeData: Ember.computed('relationName', function() {
+  removeData: Ember.computed('relationName', 'relatedModel', function() {
     return {
       relationName: this.get('relationName'),
       modelToLookup: this.get('relatedModel')

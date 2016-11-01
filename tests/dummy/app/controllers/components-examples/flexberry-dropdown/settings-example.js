@@ -41,30 +41,6 @@ export default Ember.Controller.extend({
   readonly: false,
 
   /**
-    Semantic-ui settings.
-    For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
-  */
-  on: 'click',
-  allowReselection: false,
-  allowAdditions: false,
-  hideAdditions: true,
-  minCharacters: 1,
-  match: 'both',
-  selectOnKeydown: true,
-  forceSelection: true,
-  allowCategorySelection: false,
-  direction: 'auto',
-  keepOnScreen: true,
-  context: 'windows',
-  fullTextSearch: false,
-  preserveHTML: true,
-  sortSelect: false,
-  showOnFocus: true,
-  allowTab: true,
-  transition: 'auto',
-  duration: 200,
-
-  /**
     Template text for 'flexberry-dropdown' component.
 
     @property componentTemplateText
@@ -77,25 +53,6 @@ export default Ember.Controller.extend({
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
     '  class=class<br>' +
-    '  on="click"<br>' +
-    '  allowReselection=false<br>' +
-    '  allowAdditions=false<br>' +
-    '  hideAdditions=true<br>' +
-    '  minCharacters=1<br>' +
-    '  match="both"<br>' +
-    '  selectOnKeydown=true<br>' +
-    '  forceSelection=true<br>' +
-    '  allowCategorySelection=false<br>' +
-    '  direction="auto"<br>' +
-    '  keepOnScreen=true<br>' +
-    '  context="windows"<br>' +
-    '  fullTextSearch=false<br>' +
-    '  preserveHTML=true<br>' +
-    '  sortSelect=false<br>' +
-    '  showOnFocus=true<br>' +
-    '  allowTab=true<br>' +
-    '  transition="auto"<br>' +
-    '  duration=200<br>' +
     '}}'),
 
   /**
@@ -131,120 +88,6 @@ export default Ember.Controller.extend({
       settingDefaultValue: '',
       settingAvailableItems: ['scrolling', 'compact', 'fluid'],
       bindedControllerPropertieName: 'class'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'on',
-      settingType: 'string',
-      settingDefaultValue: 'click',
-      bindedControllerPropertieName: 'on'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'allowReselection',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'allowReselection'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'allowAdditions',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'allowAdditions'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'hideAdditions',
-      settingType: 'boolean',
-      settingDefaultValue: true,
-      bindedControllerPropertieName: 'hideAdditions'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'minCharacters',
-      settingType: 'number',
-      settingDefaultValue: 1,
-      bindedControllerPropertieName: 'minCharacters'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'match',
-      settingType: 'string',
-      settingDefaultValue: 'both',
-      bindedControllerPropertieName: 'match'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'selectOnKeydown',
-      settingType: 'boolean',
-      settingDefaultValue: true,
-      bindedControllerPropertieName: 'selectOnKeydown'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'forceSelection',
-      settingType: 'boolean',
-      settingDefaultValue: true,
-      bindedControllerPropertieName: 'forceSelection'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'allowCategorySelection',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'allowCategorySelection'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'direction',
-      settingType: 'string',
-      settingDefaultValue: 'auto',
-      bindedControllerPropertieName: 'direction'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'keepOnScreen',
-      settingType: 'boolean',
-      settingDefaultValue: true,
-      bindedControllerPropertieName: 'keepOnScreen'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'context',
-      settingType: 'string',
-      settingDefaultValue: 'windows',
-      bindedControllerPropertieName: 'context'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'fullTextSearch',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'fullTextSearch'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'preserveHTML',
-      settingType: 'boolean',
-      settingDefaultValue: true,
-      bindedControllerPropertieName: 'preserveHTML'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'sortSelect',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'sortSelect'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'showOnFocus',
-      settingType: 'boolean',
-      settingDefaultValue: true,
-      bindedControllerPropertieName: 'showOnFocus'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'allowTab',
-      settingType: 'boolean',
-      settingDefaultValue: true,
-      bindedControllerPropertieName: 'allowTab'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'transition',
-      settingType: 'string',
-      settingDefaultValue: 'auto',
-      bindedControllerPropertieName: 'transition'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'duration',
-      settingType: 'number',
-      settingDefaultValue: 200,
-      bindedControllerPropertieName: 'duration'
     });
     return componentSettingsMetadata;
   })

@@ -52,7 +52,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now looks good when value is empty in IE. But it has no placeholder.
     * Now saving works in IE.
     * Fix `flatpick` for readonly property.
-* Now settings for `detail-interation` services are applying correctly on closing detail's edit form.
+* Now settings for `detail-interation` services are applying correctly when closing detail model's edit form.
 
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed

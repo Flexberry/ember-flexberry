@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-lookup` component: 
+    * Add `lookup-event` servise for to set when modal dialog is open. Now the user can not press the choose button several times before the modal dialog is open.
 
 ## [0.8.0-beta.3] - 2016-10-31
 ### Changed

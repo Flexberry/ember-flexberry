@@ -76,6 +76,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
   */
   lookupModalWindowPerPage: 5,
 
+  modalIsShow: false,
+
   actions: {
     /**
       Handles action from lookup choose action.

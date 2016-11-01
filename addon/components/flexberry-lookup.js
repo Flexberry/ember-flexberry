@@ -341,6 +341,16 @@ export default FlexberryBaseComponent.extend({
     this.set('displayValue', this._buildDisplayValue());
   }),
 
+  modalIsShow: false,
+
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: Ember.inject.service('lookup-events'),
+
   /**
     Text that displayed for the user as representation of currently selected value.
     This property is binded to the view and can be changed by user (it won't be applied to model automatically).
@@ -423,7 +433,20 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction('remove', removeData);
+    },
+
+    chooseButtonClick() {
+      this.set('modalIsStartToShow', true);
     }
+  },
+
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+  */
+  init() {
+    this._super(...arguments);
+    this.get('lookupEventsService').on('setModalIsShow', this, this._setModalIsShow);
   },
 
   /**
@@ -476,6 +499,22 @@ export default FlexberryBaseComponent.extend({
 
     this.set('_cachedDropdownValue', isDropdown);
     this.set('_cachedAutocompleteValue', isAutocomplete);
+  },
+
+  /**
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroy() {
+    this._super(...arguments);
+    this.get('lookupEventsService').off('modalIsShow', this, this._setModalIsShow);
+  },
+
+  _setModalIsShow(modalIsShow) {
+    this.set('modalIsShow', modalIsShow);
+    if (modalIsShow) {
+      this.set('modalIsStartToShow', false);
+    }
   },
 
   /**

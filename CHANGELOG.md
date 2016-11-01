@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-simpleolv` component:
     * Double rendering.
+    * Now data loading indicator and placeholder never shown at the same time.
+
+### Removed
+* `flexberry-simpleolv` component:
+    * Remove `_attributeChanged` observers.
 
 ## [0.8.0-beta.3] - 2016-10-31
 ### Changed
@@ -48,12 +53,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Now saving works in IE.
     * Fix `flatpick` for readonly property.
 * Now settings for `detail-interation` services are applying correctly on closing detail's edit form.
-* `flexberry-simpleolv` component:
-    * Now data loading indicator and placeholder never shown at the same time.
-
-### Removed
-* `flexberry-simpleolv` component:
-    * Remove `_attributeChanged` observers.
 
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed

@@ -7,6 +7,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Add support for change related model.
 
+### Fixed
+* `flexberry-simpleolv` component:
+    * Double rendering.
+    * Now data loading indicator and placeholder are never shows at the same time.
+
+### Removed
+* `flexberry-simpleolv` component:
+    * Remove `_attributeChanged` observers.
+
 ## [0.8.0-beta.3] - 2016-10-31
 ### Changed
 * Replace `a` tag with `link-to` helper in `sitemap-node` template, because `a` tag with `href-to` heper causes full page reload.

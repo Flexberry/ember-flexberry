@@ -13,6 +13,12 @@ import Ember from 'ember';
   @public
 */
 export default Ember.Service.extend(Ember.Evented, {
+  /**
+    Trigger for "modal is show" event in flexberry-lookup.
+
+    @method showDialogTrigger
+    @param {Boolean} modalIsShow Flag modal dialog open or not.
+  */
   showDialogTrigger(modalIsShow) {
     this.trigger('setModalIsShow', modalIsShow);
   }

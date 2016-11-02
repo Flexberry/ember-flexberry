@@ -127,6 +127,6 @@ export default Ember.Component.extend({
       },
       _this.get('settings'));
 
-    this.$('.ui.modal').modal(modalSettings).modal('show');    
+    this.$('.ui.modal').modal(modalSettings).modal('show');
   },
 });

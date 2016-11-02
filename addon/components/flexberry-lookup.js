@@ -341,7 +341,24 @@ export default FlexberryBaseComponent.extend({
     this.set('displayValue', this._buildDisplayValue());
   }),
 
+  /**
+    Flag indicating whether a modal dialog is open.
+
+    @property modalIsShow
+    @type Boolean
+    @default false
+  */
   modalIsShow: false,
+
+  /**
+    Flag indicating whether a modal dialog starts to open.
+    Needs for add loading indicator for choose button.
+
+    @property modalIsStartToShow
+    @type Boolean
+    @default false
+  */
+  modalIsStartToShow: false,
 
   /**
     Service that triggers lookup events.
@@ -510,6 +527,12 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').off('modalIsShow', this, this._setModalIsShow);
   },
 
+  /**
+    Set the value for the property `modalIsShow`.
+
+    @method _setModalIsShow
+    @private
+  */
   _setModalIsShow(modalIsShow) {
     this.set('modalIsShow', modalIsShow);
     if (modalIsShow) {

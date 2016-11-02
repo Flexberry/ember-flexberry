@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-simpleolv` component:
+    * Double rendering.
+    * Now data loading indicator and placeholder never shown at the same time.
+
+### Removed
+* `flexberry-simpleolv` component:
+    * Remove `_attributeChanged` observers.
 
 ## [0.8.0-beta.3] - 2016-10-31
 ### Changed

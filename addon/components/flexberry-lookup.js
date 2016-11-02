@@ -285,6 +285,7 @@ export default FlexberryBaseComponent.extend({
         predicate: this.get('lookupLimitPredicate'),
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
+        componentName: this.get('componentName'),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')
@@ -402,6 +403,14 @@ export default FlexberryBaseComponent.extend({
   classNameBindings: ['autocompleteClass'],
 
   /**
+    Used to identify lookup on the page.
+
+    @property componentName
+    @type String
+  */
+  componentName: undefined,
+
+  /**
     Semantic-ui settings for dropdown.
     For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
   */
@@ -436,7 +445,6 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
-      this.get('lookupEventsService').lookupDialogOnShowTrigger();
       this.sendAction('choose', chooseData);
     },
 
@@ -455,7 +463,14 @@ export default FlexberryBaseComponent.extend({
     },
 
     chooseButtonClick() {
-      this.set('modalIsStartToShow', true);
+      let componentName = this.get('componentName');
+      if (!componentName) {
+        Ember.Logger.warn('`componentName` of flexberry-lookup are undefined.');
+        return;
+      }
+
+      this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
+
     }
   },
 
@@ -465,7 +480,9 @@ export default FlexberryBaseComponent.extend({
   */
   init() {
     this._super(...arguments);
-    this.get('lookupEventsService').on('setModalIsShow', this, this._setModalIsShow);
+    this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
+    this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
+    this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
   },
 
   /**
@@ -526,19 +543,45 @@ export default FlexberryBaseComponent.extend({
   */
   willDestroy() {
     this._super(...arguments);
-    this.get('lookupEventsService').off('modalIsShow', this, this._setModalIsShow);
+    this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
+    this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
+    this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
+  },
+
+  /**
+    Set the value for the property `modalIsStartToShow`.
+
+    @method _setModalIsStartToShow
+    @private
+  */
+  _setModalIsStartToShow(componentName) {
+    if (this.get('componentName') === componentName) {
+      this.set('modalIsStartToShow', true);
+    }
+  },
+
+  /**
+    Set the value for the property `modalIsShow` & `modalIsStartToShow`.
+
+    @method _setModalIsVisible
+    @private
+  */
+  _setModalIsVisible(componentName, lookupDialog) {
+    if (this.get('componentName') === componentName) {
+      this.set('modalIsShow', true);
+      this.set('modalIsStartToShow', false);
+    }
   },
 
   /**
     Set the value for the property `modalIsShow`.
 
-    @method _setModalIsShow
+    @method _setModalIsHidden
     @private
   */
-  _setModalIsShow(modalIsShow) {
-    this.set('modalIsShow', modalIsShow);
-    if (modalIsShow) {
-      this.set('modalIsStartToShow', false);
+  _setModalIsHidden(componentName) {
+    if (this.get('componentName') === componentName) {
+      this.set('modalIsShow', false);
     }
   },
 

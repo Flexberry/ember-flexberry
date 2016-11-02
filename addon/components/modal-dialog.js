@@ -94,10 +94,19 @@ export default Ember.Component.extend({
   lookupEventsService: Ember.inject.service('lookup-events'),
 
   /**
+    Used to identify lookup on the page.
+
+    @property componentName
+    @type String
+  */
+  componentName: undefined,
+
+  /**
     Initializes DOM-related component's logic.
   */
   didInsertElement() {
     let _this = this;
+    let componentName = this.get('componentName');
     let modalSettings = Ember.$.extend({
         observeChanges: true,
         detachable: false,
@@ -105,24 +114,20 @@ export default Ember.Component.extend({
 
         onApprove: function () {
           _this.sendAction('ok');
-          _this.get('lookupEventsService').showDialogTrigger(false);
-          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger();
+          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
         },
         onDeny: function () {
           _this.sendAction('close');
-          _this.get('lookupEventsService').showDialogTrigger(false);
-          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger();
+          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
         },
         onHidden: function () {
           _this.sendAction('close');
 
           // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
           Ember.$(this).remove();
-          _this.get('lookupEventsService').showDialogTrigger(false);
-          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger();
+          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
         },
         onVisible: function () {
-          _this.get('lookupEventsService').showDialogTrigger(true);
           Ember.run(() => {
             _this.sendAction('created', Ember.$(this));
           });

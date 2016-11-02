@@ -6,8 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `flexberry-lookup` component:
     * Add support for change related model.
-    * Add `lookup-events` service for to set when modal dialog is open. Now the user can not press the choose button several times before the modal dialog is open.
-    * Add in `lookup-events` service new triggers: lookupDialogOnShowTrigger, lookupDialogOnVisibleTrigger, lookupDialogOnHiddenTrigger. 
+    * Add `lookup-events` service with triggers: lookupDialogOnShowTrigger, lookupDialogOnVisibleTrigger, lookupDialogOnHiddenTrigger.
+    * Now the user can not press the choose button several times before the modal dialog is open.
 
 ### Fixed
 * `flexberry-simpleolv` component:

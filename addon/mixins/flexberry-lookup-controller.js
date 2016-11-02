@@ -101,7 +101,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
         predicate: undefined,
         modelToLookup: undefined,
         sizeClass: undefined,
-        lookupWindowCustomPropertiesData: undefined
+        lookupWindowCustomPropertiesData: undefined,
+        componentName: undefined
       }, chooseData);
 
       let projectionName = options.projection;
@@ -117,6 +118,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let modelToLookup = options.modelToLookup;
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
       let sizeClass = options.sizeClass;
+      let componentName = options.componentName;
 
       let model = modelToLookup ? modelToLookup : this.get('model');
 
@@ -154,7 +156,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
           propName: relationName
         },
         currentLookupRow: model.get(relationName),
-        customPropertiesData: lookupWindowCustomPropertiesData
+        customPropertiesData: lookupWindowCustomPropertiesData,
+        componentName: componentName
       };
 
       this._reloadModalData(this, reloadData);
@@ -242,9 +245,10 @@ export default Ember.Mixin.create(ReloadListMixin, {
     @param {String} [options.saveTo] Options to save selected lookup value.
     @param {String} [options.currentLookupRow] Current lookup value.
     @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
+    @param {String} [options.componentName] Component name of lookup component.
   */
   _reloadModalData(currentContext, options) {
-    var lookupSettings = currentContext.get('lookupSettings');
+    let lookupSettings = currentContext.get('lookupSettings');
     Ember.assert('Lookup settings are undefined.', lookupSettings);
     Ember.assert('Lookup template is undefined.', lookupSettings.template);
     Ember.assert('Lookup content template is undefined.', lookupSettings.contentTemplate);
@@ -265,7 +269,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
       sizeClass: undefined,
       saveTo: undefined,
       currentLookupRow: undefined,
-      customPropertiesData: undefined
+      customPropertiesData: undefined,
+      componentName: undefined
     }, options);
 
     Ember.assert('Reload data are not defined fully.',
@@ -305,6 +310,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       saveTo: reloadData.saveTo,
       currentLookupRow: reloadData.currentLookupRow,
       customPropertiesData: reloadData.customPropertiesData,
+      componentName: reloadData.componentName,
 
       perPage: queryParameters.perPage,
       page: queryParameters.page,
@@ -323,7 +329,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
     controller.set('reloadObserverIsActive', true);
 
-    var loadingParams = {
+    let loadingParams = {
       view: lookupSettings.template,
       outlet: 'modal-content'
     };

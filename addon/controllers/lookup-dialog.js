@@ -141,7 +141,7 @@ export default ListFormController.extend(SortableRouteMixin, {
     */
     createdModalDialog(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
-      this.get('lookupEventsService').lookupDialogOnVisibleTrigger(modalDialog);
+      this.get('lookupEventsService').lookupDialogOnVisibleTrigger(this.get('componentName'), modalDialog);
     },
 
     /**
@@ -186,7 +186,8 @@ export default ListFormController.extend(SortableRouteMixin, {
       sizeClass: this.get('sizeClass'),
       saveTo: this.get('saveTo'),
       currentLookupRow: this.get('currentLookupRow'),
-      customPropertiesData: this.get('customPropertiesData')
+      customPropertiesData: this.get('customPropertiesData'),
+      componentName: this.get('componentName')
     };
 
     reloadDataHandler(this.get('reloadContext'), reloadData);
@@ -231,7 +232,7 @@ export default ListFormController.extend(SortableRouteMixin, {
     @private
   */
   _selectMaster(master) {
-    var saveTo = this.get('saveTo');
+    let saveTo = this.get('saveTo');
     if (!saveTo) {
       throw new Error('Don\'t know where to save - no saveTo data defined.');
     }
@@ -254,6 +255,7 @@ export default ListFormController.extend(SortableRouteMixin, {
       openedDialog.modal('hide');
       this.set('_openedModalDialog', undefined);
     }
-    this.get('lookupEventsService').lookupDialogOnHiddenTrigger();
+
+    this.get('lookupEventsService').lookupDialogOnHiddenTrigger(this.get('componentName'));
   },
 });

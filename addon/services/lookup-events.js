@@ -14,40 +14,34 @@ import Ember from 'ember';
 */
 export default Ember.Service.extend(Ember.Evented, {
   /**
-    Trigger for "modal is show" event in flexberry-lookup.
-
-    @method showDialogTrigger
-    @param {Boolean} modalIsShow Flag modal dialog open or not.
-  */
-  showDialogTrigger(modalIsShow) {
-    this.trigger('setModalIsShow', modalIsShow);
-  },
-
-  /**
     Trigger is called when a modal starts to show.
 
     @method lookupDialogOnShowTrigger
+    @param {String} componentName Name of flexberry-lookup component.
   */
-  lookupDialogOnShowTrigger() {
-    this.trigger('lookupDialogOnShow');
+  lookupDialogOnShowTrigger(componentName) {
+    this.trigger('lookupDialogOnShow', componentName);
   },
 
   /**
     Trigger is called after a modal has finished showing.
 
     @method lookupDialogOnVisibleTrigger
+
+    @param {String} componentName Name of flexberry-lookup component.
     @param {Object} lookupDialog Context for this lookup dialog.
   */
-  lookupDialogOnVisibleTrigger(lookupDialog) {
-    this.trigger('lookupDialogOnVisible', lookupDialog);
+  lookupDialogOnVisibleTrigger(componentName, lookupDialog) {
+    this.trigger('lookupDialogOnVisible', componentName, lookupDialog);
   },
 
   /**
     Trigger is called after a modal has finished hiding.
 
     @method lookupDialogOnHiddenTrigger
+    @param {String} componentName Name of flexberry-lookup component.
   */
-  lookupDialogOnHiddenTrigger() {
-    this.trigger('lookupDialogOnHidden');
+  lookupDialogOnHiddenTrigger(componentName) {
+    this.trigger('lookupDialogOnHidden', componentName);
   }
 });

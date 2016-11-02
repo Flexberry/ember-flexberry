@@ -285,6 +285,7 @@ export default FlexberryBaseComponent.extend({
         predicate: this.get('lookupLimitPredicate'),
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
+        componentName: this.get('componentName'),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')
@@ -343,6 +344,33 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Flag indicating whether a modal dialog is open.
+
+    @property modalIsShow
+    @type Boolean
+    @default false
+  */
+  modalIsShow: false,
+
+  /**
+    Flag indicating whether a modal dialog starts to show.
+    Needs for add loading indicator for choose button.
+
+    @property modalIsStartToShow
+    @type Boolean
+    @default false
+  */
+  modalIsStartToShow: false,
+
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: Ember.inject.service('lookup-events'),
+
+  /**
     Text that displayed for the user as representation of currently selected value.
     This property is binded to the view and can be changed by user (it won't be applied to model automatically).
 
@@ -373,6 +401,14 @@ export default FlexberryBaseComponent.extend({
     @readOnly
   */
   classNameBindings: ['autocompleteClass'],
+
+  /**
+    Used to identify lookup on the page.
+
+    @property componentName
+    @type String
+  */
+  componentName: undefined,
 
   /**
     Semantic-ui settings for dropdown.
@@ -424,7 +460,29 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction('remove', removeData);
+    },
+
+    chooseButtonClick() {
+      let componentName = this.get('componentName');
+      if (!componentName) {
+        Ember.Logger.warn('`componentName` of flexberry-lookup are undefined.');
+        return;
+      }
+
+      this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
+
     }
+  },
+
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+  */
+  init() {
+    this._super(...arguments);
+    this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
+    this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
+    this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
   },
 
   /**
@@ -477,6 +535,54 @@ export default FlexberryBaseComponent.extend({
 
     this.set('_cachedDropdownValue', isDropdown);
     this.set('_cachedAutocompleteValue', isAutocomplete);
+  },
+
+  /**
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroy() {
+    this._super(...arguments);
+    this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
+    this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
+    this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
+  },
+
+  /**
+    Set the value for the property `modalIsStartToShow`.
+
+    @method _setModalIsStartToShow
+    @private
+  */
+  _setModalIsStartToShow(componentName) {
+    if (this.get('componentName') === componentName) {
+      this.set('modalIsStartToShow', true);
+    }
+  },
+
+  /**
+    Set the value for the property `modalIsShow` & `modalIsStartToShow`.
+
+    @method _setModalIsVisible
+    @private
+  */
+  _setModalIsVisible(componentName, lookupDialog) {
+    if (this.get('componentName') === componentName) {
+      this.set('modalIsShow', true);
+      this.set('modalIsStartToShow', false);
+    }
+  },
+
+  /**
+    Set the value for the property `modalIsShow`.
+
+    @method _setModalIsHidden
+    @private
+  */
+  _setModalIsHidden(componentName) {
+    if (this.get('componentName') === componentName) {
+      this.set('modalIsShow', false);
+    }
   },
 
   /**

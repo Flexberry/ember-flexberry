@@ -351,7 +351,7 @@ export default FlexberryBaseComponent.extend({
   modalIsShow: false,
 
   /**
-    Flag indicating whether a modal dialog starts to open.
+    Flag indicating whether a modal dialog starts to show.
     Needs for add loading indicator for choose button.
 
     @property modalIsStartToShow
@@ -435,6 +435,7 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
+      this.get('lookupEventsService').lookupDialogOnShowTrigger();
       this.sendAction('choose', chooseData);
     },
 

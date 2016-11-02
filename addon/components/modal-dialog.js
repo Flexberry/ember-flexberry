@@ -106,10 +106,12 @@ export default Ember.Component.extend({
         onApprove: function () {
           _this.sendAction('ok');
           _this.get('lookupEventsService').showDialogTrigger(false);
+          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger();
         },
         onDeny: function () {
           _this.sendAction('close');
           _this.get('lookupEventsService').showDialogTrigger(false);
+          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger();
         },
         onHidden: function () {
           _this.sendAction('close');
@@ -117,6 +119,7 @@ export default Ember.Component.extend({
           // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
           Ember.$(this).remove();
           _this.get('lookupEventsService').showDialogTrigger(false);
+          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger();
         },
         onVisible: function () {
           _this.get('lookupEventsService').showDialogTrigger(true);

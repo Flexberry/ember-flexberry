@@ -21,5 +21,33 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   showDialogTrigger(modalIsShow) {
     this.trigger('setModalIsShow', modalIsShow);
+  },
+
+  /**
+    Trigger is called when a modal starts to show.
+
+    @method lookupDialogOnShowTrigger
+  */
+  lookupDialogOnShowTrigger() {
+    this.trigger('lookupDialogOnShow');
+  },
+
+  /**
+    Trigger is called after a modal has finished showing.
+
+    @method lookupDialogOnVisibleTrigger
+    @param {Object} lookupDialog Context for this lookup dialog.
+  */
+  lookupDialogOnVisibleTrigger(lookupDialog) {
+    this.trigger('lookupDialogOnVisible', lookupDialog);
+  },
+
+  /**
+    Trigger is called after a modal has finished hiding.
+
+    @method lookupDialogOnHiddenTrigger
+  */
+  lookupDialogOnHiddenTrigger() {
+    this.trigger('lookupDialogOnHidden');
   }
 });

@@ -113,6 +113,14 @@ export default ListFormController.extend(SortableRouteMixin, {
   */
   reloadObserverIsActive: false,
 
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: Ember.inject.service('lookup-events'),
+
   actions: {
     /**
       Handlers OLV row click, Save selected row to object master property and close modal window.
@@ -133,6 +141,7 @@ export default ListFormController.extend(SortableRouteMixin, {
     */
     createdModalDialog(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
+      this.get('lookupEventsService').lookupDialogOnVisibleTrigger(modalDialog);
     },
 
     /**
@@ -245,5 +254,6 @@ export default ListFormController.extend(SortableRouteMixin, {
       openedDialog.modal('hide');
       this.set('_openedModalDialog', undefined);
     }
+    this.get('lookupEventsService').lookupDialogOnHiddenTrigger();
   },
 });

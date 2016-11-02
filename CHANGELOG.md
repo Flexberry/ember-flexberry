@@ -17,7 +17,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * `flexberry-simpleolv` component:
     * Remove `_attributeChanged` observers.
->>>>>>> d08a146b0f5429bb300f3980de1b69abab81db19
 
 ## [0.8.0-beta.3] - 2016-10-31
 ### Changed

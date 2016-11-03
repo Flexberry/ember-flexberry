@@ -9,7 +9,7 @@ export default EditFormController.extend({
 
   firstLimitType: undefined,
 
-  SecondLimitType: undefined,
+  secondLimitType: undefined,
 
   actions: {
 
@@ -20,7 +20,7 @@ export default EditFormController.extend({
     },
 
     secondLimitFunction() {
-      let currentLookupValue = this.get('firstLimitType');
+      let currentLookupValue = this.get('secondLimitType');
       let per = new StringPredicate('name').contains(currentLookupValue);
       this.set('dynamicProperties.lookupLimitPredicate', per);
     },
@@ -37,6 +37,6 @@ export default EditFormController.extend({
       lookupLimitPredicate: null
     });
     this.set('firstLimitType', this.get('controller.firstLimitType'));
+    this.set('secondLimitType', this.get('controller.secondLimitType'));
   }
 });
-

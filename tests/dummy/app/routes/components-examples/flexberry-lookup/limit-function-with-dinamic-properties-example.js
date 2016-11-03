@@ -1,6 +1,11 @@
+import { Query } from 'ember-flexberry-data';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 export default EditFormRoute.extend({
+
+  firstLimitType: undefined,
+
+  secondLimitType: undefined,
   /**
     Name of model projection to be used as record's properties limitation.
 
@@ -26,7 +31,27 @@ export default EditFormRoute.extend({
    */
   model(params) {
     let store = this.get('store');
-    let base = store.createRecord('ember-flexberry-dummy-suggestion');
-    return base;
+
+    let query = new Query.Builder(store)
+      .from('ember-flexberry-dummy-suggestion-type')
+      .selectByProjection('SuggestionTypeE').top(2);
+
+    return store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((cswTypes) => {
+      let cswTypesArr = cswTypes.toArray();
+      this.set('firstLimitType', cswTypesArr.objectAt(0).get('name'));
+      this.set('secondLimitType', cswTypesArr.objectAt(1).get('name'));
+
+      let base = store.createRecord(this.get('modelName'));
+      return base;
+    });
+
+  },
+
+  setupController() {
+    this._super(...arguments);
+
+    this.set('controller.firstLimitType',this.get('firstLimitType'));
+
+    this.set('controller.secondLimitType',this.get('secondLimitType'));
   }
 });

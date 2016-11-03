@@ -50,8 +50,8 @@ export default EditFormRoute.extend({
   setupController() {
     this._super(...arguments);
 
-    this.set('controller.firstLimitType',this.get('firstLimitType'));
+    this.set('controller.firstLimitType', this.get('firstLimitType'));
 
-    this.set('controller.secondLimitType',this.get('secondLimitType'));
+    this.set('controller.secondLimitType', this.get('secondLimitType'));
   }
 });

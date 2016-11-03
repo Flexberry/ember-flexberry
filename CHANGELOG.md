@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-simpleolv` component:
     * Double rendering.
     * Now data loading indicator and placeholder are never shows at the same time.
+    * Fix `resetFilters` action.
 
 ### Removed
 * `flexberry-simpleolv` component:

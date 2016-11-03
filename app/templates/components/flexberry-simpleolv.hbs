@@ -26,7 +26,8 @@
       </button>
       {{#if filters}}
         <div class="or" data-text="&bull;"></div>
-        <button class="ui button {{buttonClass}}" {{action "resetFilters"}}>
+        <button class="ui button {{buttonClass}}" {{action "resetFilters" this.attrs.resetFilters}}
+        >
           <i class="remove icon"></i>
         </button>
       {{/if}}

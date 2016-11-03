@@ -587,6 +587,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.previousPage
       @public
+      @param {Action} action Action previous page.
     */
     previousPage(action) {
       if (!action) {
@@ -603,6 +604,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.nextPage
       @public
+      @param {Action} action Action next page.
     */
     nextPage(action) {
       if (!action) {
@@ -619,7 +621,8 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.gotoPage
       @public
-      @param {Number} pageNumber Number of page to go to
+      @param {Action} action Action go to page.
+      @param {Number} pageNumber Number of page to go to.
     */
     gotoPage(action, pageNumber) {
       if (!action) {
@@ -740,10 +743,15 @@ export default FlexberryBaseComponent.extend({
       Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
 
       @method actions.resetFilters
+      @param {Action} action Action reset filters.
     */
-    resetFilters() {
-      throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
+    resetFilters(action) {
+      if (!action) {
+        throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... resetFilters=(action "resetFilters")}}.');
+      }
+
+      action(this.get('componentName'));
     },
 
     /**

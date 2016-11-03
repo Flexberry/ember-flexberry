@@ -9,7 +9,7 @@
   showFilters=_showFilters
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
-  resetFilters=(action (if resetFilters resetFilters "resetFilters"))
+  resetFilters=(action "resetFilters" this.attrs.resetFilters)
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass

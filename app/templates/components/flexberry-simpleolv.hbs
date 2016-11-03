@@ -23,11 +23,10 @@
     <div class="ui icon input buttons">
       <button class="ui button {{buttonClass}} {{if showFilters "active"}}" {{action "toggleStateFilters"}}>
         <i class="filter icon"></i>
-        {{log resetFilters}}
       </button>
       {{#if filters}}
         <div class="or" data-text="&bull;"></div>
-        <button class="ui button {{buttonClass}}" {{action (if resetFilters resetFilters "resetFilters")}}
+        <button class="ui button {{buttonClass}}" {{action "resetFilters" this.attrs.resetFilters}}
         >
           <i class="remove icon"></i>
         </button>

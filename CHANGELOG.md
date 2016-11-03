@@ -3,21 +3,26 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.4] - 2016-11-03
 ### Added
 * `flexberry-lookup` component:
     * Add support for change related model.
-    * Add `lookup-events` service with triggers: lookupDialogOnShowTrigger, lookupDialogOnVisibleTrigger, lookupDialogOnHiddenTrigger.
-    * Now the user can not press the choose button several times before the modal dialog is open. NOTE: Need to add componenName.
+    * Add `lookup-events` service with triggers: `lookupDialogOnShowTrigger`, `lookupDialogOnVisibleTrigger`, `lookupDialogOnHiddenTrigger`.
+    * Now the user can not press choose button several times before modal dialog will be opened. **NOTE**: Need to add componenName.
 
-### Fixed
-* `flexberry-simpleolv` component:
-    * Double rendering.
-    * Now data loading indicator and placeholder are never shows at the same time.
-    * Fix `resetFilters` action.
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.3 version.
 
 ### Removed
 * `flexberry-simpleolv` component:
     * Remove `_attributeChanged` observers.
+
+### Fixed
+* `flexberry-simpleolv` component:
+    * Double rendering.
+    * Now data loading indicator and placeholder are never show at the same time.
+    * Fix `resetFilters` action.
 
 ## [0.8.0-beta.3] - 2016-10-31
 ### Changed

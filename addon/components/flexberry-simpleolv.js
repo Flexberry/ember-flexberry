@@ -58,14 +58,6 @@ ErrorableControllerMixin, {
         this.set('contentWithKeys', this.contentForRender);
       }
 
-      // TODO: analyze this observers.
-      let attrsArray = this._getAttributesName();
-      content.forEach((record) => {
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(record, attrName, this, '_attributeChanged');
-        });
-      });
-
       this.set('showLoadingTbodyClass', false);
     } else {
       this.set('rowsInLoadingState', true);
@@ -1010,9 +1002,6 @@ ErrorableControllerMixin, {
   didRender() {
     this._super(...arguments);
 
-    this._setColumnWidths();
-    this._setColumnsOrder();
-
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -1042,15 +1031,6 @@ ErrorableControllerMixin, {
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
 
     this._super(...arguments);
-
-    let content = this.get('content');
-    let attrsArray = this._getAttributesName();
-
-    content.forEach((record) => {
-      attrsArray.forEach((attrName) => {
-        Ember.removeObserver(record, attrName, this, '_attributeChanged');
-      });
-    });
   },
 
   /**
@@ -1149,6 +1129,7 @@ ErrorableControllerMixin, {
   },
 
   _setColumnsUserSettings() {
+    this._setColumnWidths();
     this._setColumnsSorting();
   },
 
@@ -1720,11 +1701,6 @@ ErrorableControllerMixin, {
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
         this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
-
-        let attrsArray = this._getAttributesName();
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(modelToAdd, attrName, this, '_attributeChanged');
-        });
       }
     }
   },
@@ -1790,11 +1766,6 @@ ErrorableControllerMixin, {
 
     let componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
-
-    let attrsArray = this._getAttributesName();
-    attrsArray.forEach((attrName) => {
-      Ember.removeObserver(record, attrName, this, '_attributeChanged');
-    });
   },
 
   /**
@@ -1949,21 +1920,6 @@ ErrorableControllerMixin, {
     }
 
     return attrsArray;
-  },
-
-  /**
-    That observer is called when change attributes of model.
-
-    @method _attributeChanged
-    @private
-  */
-  _attributeChanged(record, attrName) {
-    let rowConfig = record.get('rowConfig');
-    let configurateRow = this.get('configurateRow');
-    if (configurateRow) {
-      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-      configurateRow(rowConfig, record);
-    }
   },
 
   /**
@@ -2276,65 +2232,5 @@ ErrorableControllerMixin, {
 
   _deleteNamedSetting(namedSetting) {
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
-  },
-
-  /**
-    Store nested records.
-
-    @property _records
-    @type Ember.NativeArray
-    @default Empty
-    @private
-  */
-  _records: Ember.computed(() => Ember.A()),
-
-  /**
-    Current record.
-    - `key` - Ember GUID for record.
-    - `data` - Instance of DS.Model.
-    - `config` - Object with config for record.
-
-    @property record
-    @type Object
-  */
-  record: Ember.computed(() => ({
-    key: undefined,
-    data: undefined,
-    config: undefined,
-  })),
-
-  /**
-    Store nested records.
-
-    @property records
-    @type Ember.NativeArray
-    @default Empty
-  */
-  records: Ember.computed({
-    get() {
-      return this.get('_records');
-    },
-    set(key, value) {
-      value.then((records) => {
-        records.forEach((record) => {
-          let config = Ember.copy(this.get('defaultRowConfig'));
-          let configurateRow = this.get('configurateRow');
-          if (configurateRow) {
-            Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-            configurateRow(config, record);
-          }
-
-          let newRecord = Ember.Object.create({
-            key: Ember.guidFor(record),
-            data: record,
-            config: config,
-            doRenderData: true
-          });
-
-          this.get('_records').pushObject(newRecord);
-        });
-      });
-      return this.get('records');
-    },
-  }),
+  }
 });

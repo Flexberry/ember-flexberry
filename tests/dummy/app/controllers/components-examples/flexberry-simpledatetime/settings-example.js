@@ -11,24 +11,6 @@ export default Ember.Controller.extend({
   _serializedModelDate: undefined,
 
   /**
-    Serialized min date.
-
-    @property _serializedMinDate
-    @type String
-    @private
-   */
-  _serializedMinDate: undefined,
-
-  /**
-    Serialized max date.
-
-    @property _serializedMaxDate
-    @type String
-    @private
-   */
-  _serializedMaxDate: undefined,
-
-  /**
     Handles changes in serialized model date.
 
     @method _serializedModelDateDidChange
@@ -36,26 +18,6 @@ export default Ember.Controller.extend({
    */
   _serializedModelDateDidChange: Ember.observer('_serializedModelDate', function() {
     Ember.run.once(this, '_changeDateProperty', '_serializedModelDate', 'model.date');
-  }),
-
-  /**
-    Handles changes in min date.
-
-    @method _serializedMinDateDidChange
-    @private
-   */
-  _serializedMinDateDidChange: Ember.observer('_serializedMinDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedMinDate', 'min');
-  }),
-
-  /**
-    Handles changes in serialized max date.
-
-    @method _serializedMaxDateDidChange
-    @private
-   */
-  _serializedMaxDateDidChange: Ember.observer('_serializedMaxDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedMaxDate', 'max');
   }),
 
   /**
@@ -122,15 +84,18 @@ export default Ember.Controller.extend({
 
    @property min
    @type Date
+   @default 'today'
    */
-  min: undefined,
+  min: new Date(),
+
   /**
     Maximum value of this component.
 
    @property max
    @type Date
+   @default 'today' + 7 days
    */
-  max: undefined,
+  max: new Date().fp_incr(14),
 
   /**
     Flag: indicates whether 'flexberry-simpledatetime' component is in 'readonly' mode or not.
@@ -174,20 +139,16 @@ export default Ember.Controller.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'min',
       settingType: 'date',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: '_serializedMinDate',
-      bindedControllerPropertieDisplayName: 'min'
+      settingDefaultValue: this._convertDateToString(this.get('min'))
     });
     componentSettingsMetadata.pushObject({
       settingName: 'max',
       settingType: 'date',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: '_serializedMaxDate',
-      bindedControllerPropertieDisplayName: 'max'
+      settingDefaultValue: this._convertDateToString(this.get('max'))
     });
     componentSettingsMetadata.pushObject({
       settingName: 'value',
-      settingType: 'date',
+      settingType: 'datetime',
       settingDefaultValue: undefined,
       bindedControllerPropertieName: '_serializedModelDate',
       bindedControllerPropertieDisplayName: 'model.date'
@@ -200,5 +161,25 @@ export default Ember.Controller.extend({
     });
 
     return componentSettingsMetadata;
-  })
+  }),
+
+  /**
+    Convert Date object to appropriate string value for input.
+
+    @method _convertDateToString
+    @param {Date} value Object of Date.
+    @return {String} Date in string format.
+    @private
+  */
+  _convertDateToString(value) {
+    if (value == null) {
+      return value;
+    }
+
+    if (typeof value !== 'object') {
+      throw new Error('Value must be a Date object.');
+    }
+
+    return value.toISOString();
+  },
 });

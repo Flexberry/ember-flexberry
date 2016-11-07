@@ -953,6 +953,7 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('objectlistviewEventsService').on('resetFilters', this, this._resetColumnFilters);
 
     this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
@@ -1025,6 +1026,7 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('objectlistviewEventsService').off('resetFilters', this, this._resetColumnFilters);
     this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
 
@@ -1187,6 +1189,20 @@ ErrorableControllerMixin, {
 
       cols.setProperties(sorted);
     });
+  },
+
+  _resetColumnFilters(componentName) {
+    if (this.get('componentName') === componentName) {
+      let columns = this.get('columns');
+      if (!columns) {
+        return;
+      }
+
+      columns.forEach((column) => {
+        column.set('filter.pattern', null);
+        column.set('filter.condition', null);
+      });
+    }
   },
 
   _getUserSettings() {

@@ -83,6 +83,14 @@ export default Ember.Mixin.create({
   */
   filterCondition: undefined,
 
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
   actions: {
     /**
       Save filters and refresh list.
@@ -99,10 +107,12 @@ export default Ember.Mixin.create({
       Reset filters and refresh list.
 
       @method actions.resetFilters
+      @param {String} componentName The name of objectlistview component.
     */
-    resetFilters() {
+    resetFilters(componentName) {
       this.set('filters', null);
       this.send('refreshList');
+      this.get('objectlistviewEventsService').resetFiltersTrigger(componentName);
     },
 
     /**

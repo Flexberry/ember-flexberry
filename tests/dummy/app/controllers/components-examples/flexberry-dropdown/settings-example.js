@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import Enumeration from '../../../enums/components-examples/flexberry-dropdown/settings-example/enumeration';
-import { enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
 import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend({
@@ -62,11 +61,13 @@ export default Ember.Controller.extend({
     @type Object[]
    */
   componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    var componentSettingsMetadata = Ember.A();
+    let componentSettingsMetadata = Ember.A();
+    let enumCaptions = Ember.A(Object.keys(Enumeration)).map((key) => { return Enumeration[key]; });
+
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'enumeration',
-      settingAvailableItems: enumCaptions(Enumeration),
+      settingAvailableItems: enumCaptions,
       settingDefaultValue: undefined,
       bindedControllerPropertieName: 'model.enumeration'
     });

@@ -56,7 +56,26 @@ test('it renders properly', function(assert) {
   });
 });
 
-test('changes dropdown', function(assert) {
+test('readonly mode works properly', function(assert) {
+  assert.expect(3);
 
+  // Render component.
+  this.render(hbs`{{flexberry-dropdown
+    class=class
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+
+  // Check that readonly (disabled) attribute doesn't exist yet.
+  assert.strictEqual($component.hasClass('disabled'), false, 'Component\'s hasn\'t readonly');
+
+  // Activate readonly mode & check that readonly (disabled) attribute exists now & has value equals to 'readonly'.
+  this.set('class', 'disabled');
+  assert.strictEqual($component.hasClass('disabled'), true, 'Component\'s has readonly');
+
+  // Check that readonly (disabled) attribute doesn't exist now.
+  this.set('class', '');
+  assert.strictEqual($component.hasClass('disabled'), false, 'Component\'s hasn\'t readonly');
 });
 

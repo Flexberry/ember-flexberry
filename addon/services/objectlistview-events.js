@@ -139,5 +139,17 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   rowsChangedTrigger(componentName) {
     this.trigger('olvRowsChanged', componentName);
+  },
+
+  /**
+    Trigger for "reset filters" event in simpleolv.
+    Event name: resetFilters.
+
+    @method resetFiltersTrigger
+
+    @param {String} componentName The name of simpleolv component.
+  */
+  resetFiltersTrigger(componentName) {
+    this.trigger('resetFilters', componentName);
   }
 });

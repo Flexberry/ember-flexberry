@@ -58,14 +58,6 @@ ErrorableControllerMixin, {
         this.set('contentWithKeys', this.contentForRender);
       }
 
-      // TODO: analyze this observers.
-      let attrsArray = this._getAttributesName();
-      content.forEach((record) => {
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(record, attrName, this, '_attributeChanged');
-        });
-      });
-
       this.set('showLoadingTbodyClass', false);
     } else {
       this.set('rowsInLoadingState', true);
@@ -672,6 +664,14 @@ ErrorableControllerMixin, {
 
   actions: {
     /**
+      Show/hide filters.
+
+      @method actions.toggleStateFilters
+    */
+    toggleStateFilters() {
+      this.toggleProperty('showFilters');
+    },
+    /**
       This action is called when user click on header.
 
       @method actions.headerCellClick
@@ -808,6 +808,7 @@ ErrorableControllerMixin, {
     */
     removeFilter() {
       this.set('filterText', null);
+      this.set('filterByAnyMatchText', null);
     },
 
     /**
@@ -818,7 +819,7 @@ ErrorableControllerMixin, {
       @param {String} actionName The name of action
     */
     customButtonAction(actionName) {
-      this.sendAction('customButtonAction', actionName);
+      this.sendAction(actionName);
     },
 
     /**
@@ -952,6 +953,7 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('objectlistviewEventsService').on('resetFilters', this, this._resetColumnFilters);
 
     this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
@@ -1000,9 +1002,6 @@ ErrorableControllerMixin, {
   didRender() {
     this._super(...arguments);
 
-    this._setColumnWidths();
-    this._setColumnsOrder();
-
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -1027,19 +1026,11 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('objectlistviewEventsService').off('resetFilters', this, this._resetColumnFilters);
     this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
 
     this._super(...arguments);
-
-    let content = this.get('content');
-    let attrsArray = this._getAttributesName();
-
-    content.forEach((record) => {
-      attrsArray.forEach((attrName) => {
-        Ember.removeObserver(record, attrName, this, '_attributeChanged');
-      });
-    });
   },
 
   /**
@@ -1138,6 +1129,7 @@ ErrorableControllerMixin, {
   },
 
   _setColumnsUserSettings() {
+    this._setColumnWidths();
     this._setColumnsSorting();
   },
 
@@ -1197,6 +1189,20 @@ ErrorableControllerMixin, {
 
       cols.setProperties(sorted);
     });
+  },
+
+  _resetColumnFilters(componentName) {
+    if (this.get('componentName') === componentName) {
+      let columns = this.get('columns');
+      if (!columns) {
+        return;
+      }
+
+      columns.forEach((column) => {
+        column.set('filter.pattern', null);
+        column.set('filter.condition', null);
+      });
+    }
   },
 
   _getUserSettings() {
@@ -1695,11 +1701,6 @@ ErrorableControllerMixin, {
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
         this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
-
-        let attrsArray = this._getAttributesName();
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(modelToAdd, attrName, this, '_attributeChanged');
-        });
       }
     }
   },
@@ -1765,11 +1766,6 @@ ErrorableControllerMixin, {
 
     let componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
-
-    let attrsArray = this._getAttributesName();
-    attrsArray.forEach((attrName) => {
-      Ember.removeObserver(record, attrName, this, '_attributeChanged');
-    });
   },
 
   /**
@@ -1805,7 +1801,11 @@ ErrorableControllerMixin, {
   */
   _filterByAnyMatch(componentName, pattern) {
     if (this.get('componentName') === componentName) {
-      this.sendAction('filterByAnyMatch', pattern);
+      let anyWord = this.get('filterByAnyWord');
+      let allWords = this.get('filterByAllWords');
+      Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
+      let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
+      this.sendAction('filterByAnyMatch', pattern, filterCondition);
     }
   },
 
@@ -1923,19 +1923,13 @@ ErrorableControllerMixin, {
   },
 
   /**
-    That observer is called when change attributes of model.
+    Flag used to display filters.
 
-    @method _attributeChanged
-    @private
+    @property showFilters
+    @type Boolean
+    @default false
   */
-  _attributeChanged(record, attrName) {
-    let rowConfig = record.get('rowConfig');
-    let configurateRow = this.get('configurateRow');
-    if (configurateRow) {
-      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-      configurateRow(rowConfig, record);
-    }
-  },
+  showFilters: Ember.computed.oneWay('filters'),
 
   /**
     Route for edit form by click row.
@@ -2008,6 +2002,24 @@ ErrorableControllerMixin, {
     @default null
   */
   filterText: null,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain any word of search query.
+
+    @property filterByAnyWord
+    @type Boolean
+    @default false
+  */
+  filterByAnyWord: false,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain each of search query word.
+
+    @property filterByAllWords
+    @type Boolean
+    @default false
+  */
+  filterByAllWords: false,
 
   /**
     The flag to specify whether the delete button is enabled.
@@ -2220,65 +2232,5 @@ ErrorableControllerMixin, {
 
   _deleteNamedSetting(namedSetting) {
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
-  },
-
-  /**
-    Store nested records.
-
-    @property _records
-    @type Ember.NativeArray
-    @default Empty
-    @private
-  */
-  _records: Ember.computed(() => Ember.A()),
-
-  /**
-    Current record.
-    - `key` - Ember GUID for record.
-    - `data` - Instance of DS.Model.
-    - `config` - Object with config for record.
-
-    @property record
-    @type Object
-  */
-  record: Ember.computed(() => ({
-    key: undefined,
-    data: undefined,
-    config: undefined,
-  })),
-
-  /**
-    Store nested records.
-
-    @property records
-    @type Ember.NativeArray
-    @default Empty
-  */
-  records: Ember.computed({
-    get() {
-      return this.get('_records');
-    },
-    set(key, value) {
-      value.then((records) => {
-        records.forEach((record) => {
-          let config = Ember.copy(this.get('defaultRowConfig'));
-          let configurateRow = this.get('configurateRow');
-          if (configurateRow) {
-            Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-            configurateRow(config, record);
-          }
-
-          let newRecord = Ember.Object.create({
-            key: Ember.guidFor(record),
-            data: record,
-            config: config,
-            doRenderData: true
-          });
-
-          this.get('_records').pushObject(newRecord);
-        });
-      });
-      return this.get('records');
-    },
-  }),
+  }
 });

@@ -9,7 +9,7 @@
   showFilters=_showFilters
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
-  resetFilters=(action (if resetFilters resetFilters "resetFilters"))
+  resetFilters=(action "resetFilters" this.attrs.resetFilters)
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass
@@ -56,6 +56,8 @@
   componentForFilter=componentForFilter
   conditionsByType=conditionsByType
   filterByAnyMatch=(action (if this.attrs.filterByAnyMatch this.attrs.filterByAnyMatch 'filterByAnyMatch'))
+  filterByAnyWord=filterByAnyWord
+  filterByAllWords=filterByAllWords
   configurateRow=this.attrs.configurateRow
   configurateSelectedRows=this.attrs.configurateSelectedRows
   confirmDeleteRow=confirmDeleteRow

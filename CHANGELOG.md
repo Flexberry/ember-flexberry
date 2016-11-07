@@ -4,6 +4,68 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0-beta.4] - 2016-11-03
+### Added
+* `flexberry-lookup` component:
+    * Add support for change related model.
+    * Add `lookup-events` service with triggers: `lookupDialogOnShowTrigger`, `lookupDialogOnVisibleTrigger`, `lookupDialogOnHiddenTrigger`.
+    * Now the user can not press choose button several times before modal dialog will be opened. **NOTE**: Need to add componenName.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.3 version.
+
+### Removed
+* `flexberry-simpleolv` component:
+    * Remove `_attributeChanged` observers.
+
+### Fixed
+* `flexberry-simpleolv` component:
+    * Double rendering.
+    * Now data loading indicator and placeholder are never show at the same time.
+    * Fix `resetFilters` action.
+
+## [0.8.0-beta.3] - 2016-10-31
+### Changed
+* Replace `a` tag with `link-to` helper in `sitemap-node` template, because `a` tag with `href-to` heper causes full page reload.
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.2 version.
+
+## [0.8.0-beta.2] - 2016-10-28
+### Added
+* Options `filterByAnyWord` and `filterByAllWords` for `flexberry-objectlistview` and `flexberry-simpleolv` components. Use to configurate `filterByAnyMatch` logic.
+
+### Changed
+* Replaced `link-to` to `href-to` in `sitemap-node` template for improving performance.
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.1 version.
+
+### Fixed
+* Now clearing value in input field when reset filters on `flexberry-objectlistview` or `flexberry-simpleolv` component.
+
+## [0.8.0-beta.1] - 2016-10-27
+### Changed
+* Buttons of `flexberry-lookup` component will be disabled if `readOnly` property is `true`.
+
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Problems with no placeholder has beean solved.
+* Transition to detail model's edit form route form agregator's edit form route when agregator's model is not valid and `saveBeforeRouteLeave` option is true.
+
+## [0.8.0-beta.0] - 2016-10-27
+### Added
+* `rollBackModel` parameter to `close` method (as second parameter of method) of `edit-form` and `detail-edit-form` controllers. Setting to true allows to roll back model after leaving route (applicable for detail's model edit form).
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.0 version.
+
+### Fixed
+* Adding filter parameter to route url when trying to find records in lookup list. Fixed for `object-list-view` component.
+* `flexberry-objectlistview` and `flexberry-simpleolv` components:
+    * Searching by `number`, `decimal` and `boolean` values.
+* `flexberry-simpledatetime` component:
+    * Now looks good when value is empty in IE. But it has no placeholder.
+    * Now saving works in IE.
+    * Fix `flatpick` for readonly property.
+* Now settings for `detail-interation` services are applying correctly when closing detail model's edit form.
+
 ## [0.7.0-beta.26] - 2016-10-22
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.30 version.
@@ -33,8 +95,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.7.0-beta.21] - 2016-10-16
 ### Added
-* `skipTransition` parameter to `delete` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
-* `skipTransition` parameter to `saveAndClose`, `close` and `delete` actions (as first parameter) of `edit-form` and `detail-edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `delete` method (as first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `saveAndClose`, `close` and `delete` actions (as first parameter) of `edit-form` and `detail-edit-form` controllers. Setting to true allows to skip technological call of `transitionToRoute` method.
 
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.23 version.
@@ -46,7 +108,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.7.0-beta.20] - 2016-10-16
 ### Added
-* `skipTransition` parameter to `save` method (second parameter of method) and `close` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
+* `skipTransition` parameter to `save` method (as second parameter of method) and `close` method (first parameter of method) of `edit-form` controller. Setting to true allows to skip technological call of `transitionToRoute` method.
 
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.22 version.
@@ -64,7 +126,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Updated dependency on `ember-flexberry-data` addon to v0.6.2-beta.21 version.
 
 ### Fixed
-* Adding filter parameter to route url when trying to find records in lookup list.
+* Adding filter parameter to route url when trying to find records in lookup list. Fixed for `flexberry-simpleolv` component.
 
 ## [0.7.0-beta.18] - 2016-10-14
 ### Changed

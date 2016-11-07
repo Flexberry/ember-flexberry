@@ -75,6 +75,22 @@ export default Ember.Mixin.create({
    */
   filter: null,
 
+  /**
+    Condition for predicate uses at filter by any match, can be `or` or `and`.
+
+    @property filterCondition
+    @type String
+  */
+  filterCondition: undefined,
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
   actions: {
     /**
       Save filters and refresh list.
@@ -91,10 +107,12 @@ export default Ember.Mixin.create({
       Reset filters and refresh list.
 
       @method actions.resetFilters
+      @param {String} componentName The name of objectlistview component.
     */
-    resetFilters() {
+    resetFilters(componentName) {
       this.set('filters', null);
       this.send('refreshList');
+      this.get('objectlistviewEventsService').resetFiltersTrigger(componentName);
     },
 
     /**
@@ -102,10 +120,12 @@ export default Ember.Mixin.create({
 
       @method filterByAnyMatch
       @param {String} pattern A substring that is searched in objects while filtering.
+      @param {String} filterCondition Condition for predicate, can be `or` or `and`.
     */
-    filterByAnyMatch(pattern) {
+    filterByAnyMatch(pattern, filterCondition) {
       if (this.get('filter') !== pattern) {
         this.setProperties({
+          filterCondition: filterCondition,
           filter: pattern,
           page: 1
         });

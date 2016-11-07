@@ -515,7 +515,7 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Пример работы с настройками'
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Настройка столбцов'
+          'caption': 'Flexberry-groupedit. Настройка строк'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',

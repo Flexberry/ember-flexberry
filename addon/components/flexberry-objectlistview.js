@@ -385,6 +385,24 @@ export default FlexberryBaseComponent.extend({
   filterText: null,
 
   /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain any word of search query.
+
+    @property filterByAnyWord
+    @type Boolean
+    @default false
+  */
+  filterByAnyWord: false,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain each of search query word.
+
+    @property filterByAllWords
+    @type Boolean
+    @default false
+  */
+  filterByAllWords: false,
+
+  /**
     Array of pages to show.
 
     @property pages
@@ -569,6 +587,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.previousPage
       @public
+      @param {Action} action Action previous page.
     */
     previousPage(action) {
       if (!action) {
@@ -585,6 +604,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.nextPage
       @public
+      @param {Action} action Action next page.
     */
     nextPage(action) {
       if (!action) {
@@ -601,7 +621,8 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.gotoPage
       @public
-      @param {Number} pageNumber Number of page to go to
+      @param {Action} action Action go to page.
+      @param {Number} pageNumber Number of page to go to.
     */
     gotoPage(action, pageNumber) {
       if (!action) {
@@ -722,10 +743,15 @@ export default FlexberryBaseComponent.extend({
       Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
 
       @method actions.resetFilters
+      @param {Action} action Action reset filters.
     */
-    resetFilters() {
-      throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
+    resetFilters(action) {
+      if (!action) {
+        throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... resetFilters=(action "resetFilters")}}.');
+      }
+
+      action(this.get('componentName'));
     },
 
     /**

@@ -105,10 +105,10 @@ export default Ember.Mixin.create({
       };
 
       if (saveBeforeRouteLeave) {
-        this.controller.save().then(() => {
+        this.controller.save(false, true).then(() => {
           goToOtherRouteFunction();
         }).catch((errorData) => {
-          this.rejectError(errorData, this.get('i18n').t('edit-form.save-failed-message'));
+          this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
         });
       } else {
         goToOtherRouteFunction();

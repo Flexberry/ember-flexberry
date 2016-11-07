@@ -172,7 +172,7 @@ export default FlexberryBaseComponent.extend({
       }
     }
 
-    if (needChecksOnValue && !Ember.isNone(stringValue) && !valueIsExist) {
+    if (needChecksOnValue && !Ember.isBlank(stringValue) && !valueIsExist) {
       Ember.Logger.error(`Wrong value of flexberry-dropdown \`value\` property: \`${value}\`. Allowed values are: [\`${items.join(`\`, \``)}\`].`);
     }
 

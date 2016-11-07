@@ -54,17 +54,19 @@ test('label mode works properly', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldLabel = $component.children('label');
 
+  // Check that label attribute doesn't exist now.
   this.set('label', null);
   assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <lable>');
 
+  // Add text for label & check that label attribute exist.
   let labelText = 'Some text for label';
   this.set('label', labelText);
 
   assert.strictEqual(
   this.get('label'), labelText, 'Component\'s has wrapper is a <lable>');
 
+  // Check that label attribute doesn't exist now.
   this.set('label', null);
   assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <lable>');
 });

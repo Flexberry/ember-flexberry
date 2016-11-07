@@ -26,6 +26,7 @@ moduleForComponent('flexberry-dropdown', 'Integration | Component | flexberry dr
 });
 
 test('it renders properly', function(assert) {
+  assert.expect(6);
 
   // Render component.
   this.render(hbs`{{flexberry-dropdown
@@ -55,13 +56,7 @@ test('it renders properly', function(assert) {
   });
 });
 
-test('it renders manually defined placeholder', function(assert) {
+test('changes dropdown', function(assert) {
 
-  // Render component.
-  this.render(hbs`{{flexberry-dropdown
-    }}`);
-
-  // Retrieve component.
-  let $component = this.$().children();
-  let $textareaInput = $component.children('div');
 });
+

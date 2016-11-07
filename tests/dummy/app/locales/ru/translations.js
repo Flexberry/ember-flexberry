@@ -201,6 +201,10 @@ Ember.$.extend(true, translations, {
             'model-update-example': {
               'caption': 'Обновление модели',
               'title': ''
+            },
+            'configurate-row-example': {
+              'caption': 'Настройка строк',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -264,6 +268,10 @@ Ember.$.extend(true, translations, {
             },
             'configurate-rows': {
               'caption': 'Раскраска строк',
+              'title': ''
+            },
+            'selected-rows': {
+              'caption': 'Выбранные строки',
               'title': ''
             }
           },
@@ -364,6 +372,12 @@ Ember.$.extend(true, translations, {
       'userVotes-caption': 'Голоса пользователей',
       'date-caption': 'Дата',
       'author-validation-message-caption': 'Заполните поле "Автор"'
+    },
+
+    'ember-flexberry-dummy-comment-vote-edit': {
+      'caption': 'Голос пользователя',
+      'voteType-caption': 'Тип голоса',
+      'applicationUser-caption': 'Пользователь приложения',
     },
 
     'ember-flexberry-dummy-localization-edit': {
@@ -496,6 +510,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Пример работы с настройками'
         },
+        'configurate-row-example': {
+          'caption': 'Flexberry-groupedit. Настройка столбцов'
+        },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',
           'addDetailButton': 'Добавить детейл',
@@ -561,6 +578,34 @@ Ember.$.extend(true, translations, {
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Раскраска строк'
+        },
+        'selected-rows': {
+          'caption': 'Flexberry-objectlistview. Выбранные строки'
+        }
+      },
+      'flexberry-simpleolv': {
+        'limit-function-example': {
+          'caption': 'Flexberry-simpleolv. Функция ограничения'
+        },
+        'settings-example': {
+          'caption': 'Flexberry-simpleolv. Пример работы с настройками'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Flexberry-simpleolv. Пользовательские кнопки',
+          'custom-message': 'Привет!',
+          'custom-button-name': 'Передать привет'
+        },
+        'on-edit-form': {
+          'caption': 'Flexberry-simpleolv. FlexberryObjectlistview пример произвольных данных'
+        },
+        'custom-filter': {
+          'caption': 'Flexberry-simpleolv. Настройка фильтра'
+        },
+        'configurate-rows': {
+          'caption': 'Flexberry-simpleolv. Раскраска строк'
+        },
+        'selected-rows': {
+          'caption': 'Flexberry-simpleolv. Выбранные строки'
         }
       },
       'flexberry-simpledatetime': {

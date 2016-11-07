@@ -66,7 +66,7 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   */
   getCellComponent(attr, bindingPath, modelClass) {
     let cellComponent = {
-      componentName: 'object-list-view-cell',
+      componentName: undefined,
       componentProperties: null
     };
 

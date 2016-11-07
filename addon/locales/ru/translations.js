@@ -95,7 +95,12 @@ export default {
     },
 
     'flexberry-objectlistview': {
-      'placeholder': 'Нет данных'
+      'placeholder': 'Нет данных',
+      'showing-entries': {
+        'showing': 'Показано ',
+        'of': ' из ',
+        'entries': ' записей'
+      }
     },
 
     'flexberry-groupedit': {
@@ -109,6 +114,8 @@ export default {
 
     'object-list-view': {
       'placeholder': 'Нет данных',
+      'loading-text': 'Данные загружаются...',
+      'header-title-attr': 'Нажмите, чтобы изменить порядок, Ctrl+Click чтобы добавить упорядочение для этого столбца',
       'single-column-header-title': 'Свойства модели',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',
@@ -154,8 +161,17 @@ export default {
       'enter-setting-name': 'Введите название настройки',
       'use': 'Применить',
       'use-without-save': 'Применить данные установки без сохранения в настройке ',
-      'save': 'Сохранить'
-    }
+      'save': 'Сохранить',
+      'have-errors': 'При сохранении настройки возникли ошибки: ',
+      'setting': 'Настройка ',
+      'is-saved': ' сохранена',
+      'col-width-on': 'Включить настройку ширины столбцов'
+    },
+
+    'form-load-time-tracker': {
+      'load-time': 'Время загрузки',
+      'render-time': 'Время отрисовки',
+    },
 
   },
 

@@ -24,6 +24,15 @@ export default FlexberryBaseComponent.extend({
   _showFilters: Ember.computed.oneWay('filters'),
 
   /**
+    Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
+
+    @property formLoadTimeTracker
+    @type FormLoadTimeTrackerService
+    @private
+  */
+  formLoadTimeTracker: Ember.inject.service(),
+
+  /**
     Store the action name at controller for loading records.
 
     @property _loadRecords
@@ -71,8 +80,8 @@ export default FlexberryBaseComponent.extend({
     @default false
     @private
   */
-  _inHierarchicalMode: Ember.computed(function() {
-    return this.get('currentController').get('inHierarchicalMode');
+  _inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
+    return this.get('currentController.inHierarchicalMode');
   }),
 
   /**
@@ -167,26 +176,14 @@ export default FlexberryBaseComponent.extend({
   componentMode: 'listform',
 
   /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null,
-  },
-
-  /**
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent
-    @property {String} [cellComponent.componentName='object-list-view-cell']
+    @property {String} [cellComponent.componentName=undefined]
     @property {String} [cellComponent.componentProperties=null]
   */
   cellComponent: {
-    componentName: 'object-list-view-cell',
+    componentName: undefined,
     componentProperties: null,
   },
 
@@ -274,7 +271,7 @@ export default FlexberryBaseComponent.extend({
   /**
     Flag indicates whether ordering by clicking on column headers is allowed.
 
-    @property headerClickable
+    @property orderable
     @type Boolean
     @default false
   */
@@ -352,12 +349,12 @@ export default FlexberryBaseComponent.extend({
   deleteButton: false,
 
   /**
-   * Flag indicates whether to show colsConfigButton button at toolbar.
-   *
-   * @property colsConfigButton
-   * @type Boolean
-   * @default false
-   */
+    Flag indicates whether to show colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default false
+  */
   colsConfigButton: true,
 
   /**
@@ -415,6 +412,57 @@ export default FlexberryBaseComponent.extend({
   perPageValues: null,
 
   /**
+    Total count records.
+
+    @property recordsTotalCount
+    @type Number
+    @default null
+  */
+  recordsTotalCount: null,
+
+  /**
+    Current interval of records.
+
+    @property currentIntervalRecords
+    @type String
+    @readOnly
+  */
+  currentIntervalRecords: Ember.computed('pages', 'perPageValue', function() {
+    let pages = this.get('pages');
+    let perPageValue = this.get('perPageValue');
+    let recordsTotalCount = this.get('recordsTotalCount');
+    if (recordsTotalCount === null && this.get('showShowingEntries')) {
+      this.set('showShowingEntries', false);
+      Ember.Logger.error('Property \'recordsTotalCount\' is undefined.');
+    }
+
+    let currentStartRecords = null;
+    let currentEndRecords = null;
+
+    pages.forEach((page) => {
+      if (page.isCurrent) {
+        currentStartRecords = page.number * perPageValue - perPageValue + 1;
+        currentEndRecords = page.number * perPageValue;
+      }
+    });
+
+    if (currentEndRecords > recordsTotalCount) {
+      currentEndRecords = recordsTotalCount;
+    }
+
+    return currentStartRecords + '-' + currentEndRecords;
+  }),
+
+  /**
+    Flag indicates whether to show showingEntries.
+
+    @property showShowingEntries
+    @type Boolean
+    @default true
+  */
+  showShowingEntries: true,
+
+  /**
     Function to determine if current page has previous page.
 
     @property hasPreviousPage
@@ -424,7 +472,7 @@ export default FlexberryBaseComponent.extend({
   hasPreviousPage: null,
 
   /**
-   * Function to determine if current page has next page.
+    Function to determine if current page has next page.
 
     @property hasNextPage
     @type Function
@@ -447,6 +495,32 @@ export default FlexberryBaseComponent.extend({
     @type Object
   */
   customProperties: undefined,
+
+  /**
+    Flag indicates whether row by row loading mode on.
+
+    @property useRowByRowLoading
+    @type Boolean
+    @default true
+  */
+  useRowByRowLoading: true,
+
+  /**
+    Flag indicates whether to use bottom row by row loading progress while rows in loading state.
+
+    @property useRowByRowLoadingProgress
+    @type Boolean
+    @default true
+  */
+  useRowByRowLoadingProgress: true,
+
+  /**
+    Interface for communication between object-list-view and flexberry-objectlistview.
+
+    @property eventsBus
+    @type Ember.Evented
+  */
+  eventsBus: Ember.Object.extend(Ember.Evented, {}).create(),
 
   actions: {
     /**
@@ -496,9 +570,14 @@ export default FlexberryBaseComponent.extend({
       @method actions.previousPage
       @public
     */
-    previousPage() {
-      throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
-                      'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
+    previousPage(action) {
+      if (!action) {
+        throw new Error('No handler for previousPage action set for flexberry-objectlistview. ' +
+                        'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
+      }
+
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      action();
     },
 
     /**
@@ -507,9 +586,14 @@ export default FlexberryBaseComponent.extend({
       @method actions.nextPage
       @public
     */
-    nextPage() {
-      throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
+    nextPage(action) {
+      if (!action) {
+        throw new Error('No handler for nextPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
+      }
+
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      action();
     },
 
     /**
@@ -519,9 +603,14 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Number} pageNumber Number of page to go to
     */
-    gotoPage(pageNumber) {
-      throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
+    gotoPage(action, pageNumber) {
+      if (!action) {
+        throw new Error('No handler for gotoPage action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
+      }
+
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      action(pageNumber);
     },
 
     /**
@@ -671,7 +760,7 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-      Redirects the call to controller..
+      Redirects the call to controller.
 
       @method actions.loadRecords
       @param {String} Primary key.
@@ -681,6 +770,15 @@ export default FlexberryBaseComponent.extend({
     loadRecords(id, target, property) {
       this.sendAction('_loadRecords', id, target, property);
     },
+
+    /**
+      Called when click on perPage.
+
+      @method actions.perPageClick
+    */
+    perPageClick() {
+      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+    }
   },
 
   /**
@@ -794,5 +892,15 @@ export default FlexberryBaseComponent.extend({
       // For lookup mode we allow to set properties.
       this.setProperties(customProperties);
     }
-  }
+  },
+
+  /**
+    Called after a component has been rendered, both on initial render and in subsequent rerenders.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
+
+    @method didRender
+  */
+  didRender() {
+    this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
+  },
 });

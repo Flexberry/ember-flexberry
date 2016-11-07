@@ -58,11 +58,11 @@ export default FlexberryBaseComponent.extend({
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent
-    @property {String} [cellComponent.componentName='object-list-view-cell']
+    @property {String} [cellComponent.componentName=undefined]
     @property {String} [cellComponent.componentProperties=null]
   */
   cellComponent: {
-    componentName: 'object-list-view-cell',
+    componentName: undefined,
     componentProperties: null
   },
 
@@ -143,18 +143,6 @@ export default FlexberryBaseComponent.extend({
   editOnSeparateRoute: false,
 
   /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null
-  },
-
-  /**
     Additional menu items for dropdown menu in last column of every row.
 
     @example
@@ -200,7 +188,7 @@ export default FlexberryBaseComponent.extend({
   mainModelProjection: undefined,
 
   /**
-    Flag: indicates whether ordering by clicking on column headers is allowed.
+    Flag indicates whether ordering by clicking on column headers is allowed.
 
     @example
     If sorting is used then there has to be declaration:
@@ -229,7 +217,7 @@ export default FlexberryBaseComponent.extend({
   placeholder: t('components.flexberry-groupedit.placeholder'),
 
   /**
-    Flag: indicates whether table rows are clickable (action will be fired after row click).
+    Flag indicates whether table rows are clickable (action will be fired after row click).
 
     @property rowClickable
     @type Boolean
@@ -238,7 +226,7 @@ export default FlexberryBaseComponent.extend({
   rowClickable: false,
 
   /**
-    Flag: indicates whether to save current model before going to the detail's route.
+    Flag indicates whether to save current model before going to the detail's route.
 
     @example
     This flag is used when flag {{#crossLink "FlexberryGroupeditComponent/editOnSeparateRoute:property"}}{{/crossLink}} is enabled.

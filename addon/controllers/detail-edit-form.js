@@ -25,16 +25,6 @@ import EditFormController from './edit-form';
 */
 export default EditFormController.extend({
   /**
-    Service that lets interact between agregator's and detail's form.
-
-    @property flexberryDetailInteractionService
-    @type Ember.Service
-    @readOnly
-    @private
-  */
-  _flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
-
-  /**
     A logic value showing if current route has parent one.
 
     @property _hasParentRoute
@@ -43,7 +33,10 @@ export default EditFormController.extend({
     @readOnly
   */
   _hasParentRoute: Ember.computed('modelCurrentAgregatorPathes', function() {
-    return this.get('_flexberryDetailInteractionService').hasValues(this.get('modelCurrentAgregatorPathes'));
+    let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
+    let modelAgregatorRoutes = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
+    return flexberryDetailInteractionService.hasValues(this.get('modelCurrentAgregatorPathes')) ||
+      flexberryDetailInteractionService.hasValues(modelAgregatorRoutes);
   }),
 
   /**
@@ -91,17 +84,7 @@ export default EditFormController.extend({
       @method actions.save
     */
     save() {
-      if (this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
-        throw new Error('\'Save\' operation is not accessible due to current settings.');
-      }
-
-      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
-      let modelCurrentAgregators = this.get('modelCurrentAgregators');
-      let saveBeforeRouteLeave = this.get('saveBeforeRouteLeave');
-      let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
-      flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
-      flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
-      flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
+      this._saveInternalLogic();
       this._super.apply(this, arguments);
     },
 
@@ -111,12 +94,10 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.saveAndClose
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after save.
     */
-    saveAndClose() {
-      if (this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
-        throw new Error('\'Save and close\' operation is not accessible due to current settings.');
-      }
-
+    saveAndClose(skipTransition) {
+      this._saveInternalLogic();
       this._super.apply(this, arguments);
     },
 
@@ -126,15 +107,16 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.delete
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
     */
-    delete() {
+    delete(skipTransition) {
       if (this.get('model').get('id') && this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
         if (confirm('Are you sure you want to delete that record?')) {
           this.get('model').deleteRecord();
-          this.transitionToParentRoute();
+          this.transitionToParentRoute(skipTransition, false);
         }
       } else {
-        this._super.apply(this, arguments);
+        this.delete(skipTransition);
       }
     },
 
@@ -144,15 +126,16 @@ export default EditFormController.extend({
       Otherwise base logic is executed.
 
       @method actions.close
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
     */
-    close() {
+    close(skipTransition) {
       if (!this.get('_hasParentRoute')) {
         this._super.apply(this, arguments);
         return;
       }
 
       if (this.get('saveBeforeRouteLeave')) {
-        this.transitionToParentRoute(true);
+        this.transitionToParentRoute(skipTransition, true);
         return;
       }
 
@@ -163,11 +146,36 @@ export default EditFormController.extend({
       // gonna be destroyed, and files won't be uploaded at all.
       let model = this.get('model');
       model.validate().then(() => model.beforeSave({ softSave: true })).then(() => {
-        this.transitionToParentRoute(false);
+        this.transitionToParentRoute(skipTransition, false);
       }, (reason) => {
         this.rejectError(reason);
       });
     }
+  },
+
+  /**
+    Save object.
+
+    @method save
+    @param {Boolean} close If `true`, then save and close.
+    @param {Boolean} skipTransition If `true`, then transition after save process will be skipped.
+    @return {Promise}
+  */
+  save(close, skipTransition) {
+    this._saveInternalLogic();
+    return this._super(...arguments);
+  },
+
+  /**
+    Delete object, if successful transition to parent route.
+
+    @method delete
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
+    @return {Promise}
+  */
+  delete(skipTransition) {
+    this._setFlexberryDetailInteractionSettings();
+    return this._super(...arguments);
   },
 
   /**
@@ -177,30 +185,63 @@ export default EditFormController.extend({
     Otherwise transition to corresponding list.
 
     @method transitionToParentRoute
+    @param {Boolean} skipTransition If `true`, then transition will be skipped.
     @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
-  transitionToParentRoute(rollBackModel) {
+  transitionToParentRoute(skipTransition, rollBackModel) {
     if (this.get('_hasParentRoute')) {
       if (!rollBackModel) {
         this.set('modelNoRollBack', true);
       }
 
-      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
+      let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
+      let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes') ? this.get('modelCurrentAgregatorPathes') :
+        flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
       let modelAgregatorRoute = modelAgregatorRoutes.pop();
-      let modelCurrentAgregators = this.get('modelCurrentAgregators');
+      let modelCurrentAgregators = this.get('modelCurrentAgregators') ? this.get('modelCurrentAgregators') :
+        flexberryDetailInteractionService.get('modelCurrentAgregators');
       let modelCurrentAgregator = modelCurrentAgregators.pop();
 
-      let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
       flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
       flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
       flexberryDetailInteractionService.set('modelLastUpdatedDetail', this.get('model'));
       if (modelCurrentAgregator) {
-        flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);
+        let store = Ember.getOwner(this).lookup('service:store');
+        let agregatorIsOfflineModel = modelCurrentAgregator && store.get('offlineModels') &&
+          store.get(`offlineModels.${modelCurrentAgregator.constructor.modelName}`);
+
+        if (this.get('offlineGlobals.isOnline') && !agregatorIsOfflineModel) {
+          flexberryDetailInteractionService.set('modelCurrentNotSaved', modelCurrentAgregator);
+        }
       }
 
-      this.transitionToRoute(modelAgregatorRoute);
+      if (!skipTransition) {
+        if (modelAgregatorRoute.indexOf('/new') > 0 && modelCurrentAgregator.get('id')) {
+          modelAgregatorRoute = modelAgregatorRoute.slice(1, -4);
+        }
+
+        this.transitionToRoute(modelAgregatorRoute, modelCurrentAgregator);
+      }
     } else {
       this._super.apply(this, arguments);
     }
+  },
+
+  _saveInternalLogic() {
+    if (this.get('_hasParentRoute') && !this.get('saveBeforeRouteLeave')) {
+      throw new Error('\'Save\' operation is not accessible due to current settings.');
+    }
+
+    this._setFlexberryDetailInteractionSettings();
+  },
+
+  _setFlexberryDetailInteractionSettings() {
+    let modelAgregatorRoutes = this.get('modelCurrentAgregatorPathes');
+    let modelCurrentAgregators = this.get('modelCurrentAgregators');
+    let saveBeforeRouteLeave = this.get('saveBeforeRouteLeave');
+    let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
+    flexberryDetailInteractionService.set('modelCurrentAgregatorPathes', modelAgregatorRoutes);
+    flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
+    flexberryDetailInteractionService.set('saveBeforeRouteLeave', saveBeforeRouteLeave);
   }
 });

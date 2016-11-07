@@ -1,5 +1,5 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-edit.caption"}}</h3>
-<form class="ui {{formState}} form flexberry-vertical-form" role="form">
+<form class="ui {{state}} form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
     closeable=true
@@ -90,7 +90,9 @@
       title=(t "forms.ember-flexberry-dummy-suggestion-edit.type-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
+      dropdown=true
       readonly=readonly
+      direction="upward"
     }}
     {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
   </div>

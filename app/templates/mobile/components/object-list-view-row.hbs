@@ -42,12 +42,23 @@
     </td>
   {{#if showMenuColumn}}
     <td class="object-list-view-menu">
-      {{flexberry-menu
-        class="basic right pointing"
-        callItemsOnClickCallbacks=false
-        configurateItems=(action menuInRowConfigurateItems record)
-        onItemClick=(action menuInRowItemClick record)
-      }}
+      <div class="basic right pointing ui icon dropdown button">
+        <i class="list layout icon"></i>
+        <div class="left menu">
+          {{#if record.rowConfig.canBeSelected}}
+            <div class="item" {{ action rowClick record }}>
+              <i class="edit icon"></i>
+              <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
+            </div>
+          {{/if}}
+          {{#if record.rowConfig.canBeDeleted}}
+            <div class="item" {{ action deleteRow record }}>
+              <i class="trash icon"></i>
+              <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
+            </div>
+          {{/if}}
+        </div>
+      </div>
     </td>
   {{/if}}
 </tr>
@@ -70,8 +81,6 @@
       rowClick=rowClick
       selectRow=selectRow
       deleteRow=deleteRow
-      menuInRowItemClick=menuInRowItemClick
-      menuInRowConfigurateItems=menuInRowConfigurateItems
       _currentLevel=_currentLevel
       hierarchicalIndent=_hierarchicalIndent
     }}

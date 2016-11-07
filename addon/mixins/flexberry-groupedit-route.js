@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
 
 /**
   Mixin for {{#crossLink "DS.Route"}}Route{{/crossLink}}
@@ -50,7 +51,8 @@ export default Ember.Mixin.create({
         editOnSeparateRoute: false,
         modelName: undefined,
         detailArray: undefined,
-        editFormRoute: undefined
+        editFormRoute: undefined,
+        readonly: false
       };
       methodOptions = Ember.merge(methodOptions, options);
       let editOnSeparateRoute = methodOptions.editOnSeparateRoute;
@@ -80,7 +82,6 @@ export default Ember.Mixin.create({
           record = modelToAdd;
         }
 
-        let recordId = record.get('id');
         _this.controller.set('modelNoRollBack', true);
 
         let flexberryDetailInteractionService = _this.get('flexberryDetailInteractionService');
@@ -91,11 +92,15 @@ export default Ember.Mixin.create({
         flexberryDetailInteractionService.pushValue(
           'modelCurrentAgregators', _this.controller.get('modelCurrentAgregators'), _this.controller.get('model'));
 
-        if (recordId) {
-          _this.transitionTo(editFormRoute, record.get('id'));
-        } else {
+        if (record.get('isNew')) {
           let newModelPath = _this.newRoutePath(editFormRoute);
-          _this.transitionTo(newModelPath);
+          _this.transitionTo(newModelPath).then((newRoute) => {
+            newRoute.controller.set('readonly', methodOptions.readonly);
+          });
+        } else {
+          _this.transitionTo(editFormRoute, record.get('id')).then((newRoute) => {
+            newRoute.controller.set('readonly', methodOptions.readonly);
+          });
         }
       };
 
@@ -107,6 +112,13 @@ export default Ember.Mixin.create({
         });
       } else {
         goToOtherRouteFunction();
+      }
+    },
+
+    saveAgregator(agregatorModel) {
+      let agregator = agregatorModel ? agregatorModel : this.get('controller.model');
+      if (needSaveCurrentAgregator.call(this, agregator)) {
+        agregator.save();
       }
     }
   },

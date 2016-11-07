@@ -40,6 +40,7 @@ declare module "MetadataClasses" {
     }
     export class Enumeration {
         
+        public nameSpace: string;
         public className: string;
         public enumObjects: { [key: string]: string; };
     }

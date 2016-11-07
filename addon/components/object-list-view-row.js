@@ -70,6 +70,15 @@ export default FlexberryBaseComponent.extend({
   _records: Ember.computed(() => Ember.A()),
 
   /**
+    Flag used to start render row content.
+
+    @property doRenderData
+    @type Boolean
+    @default false
+  */
+  doRenderData: false,
+
+  /**
     Current record.
     - `key` - Ember GUID for record.
     - `data` - Instance of DS.Model.
@@ -109,6 +118,7 @@ export default FlexberryBaseComponent.extend({
             key: Ember.guidFor(record),
             data: record,
             config: config,
+            doRenderData: true
           });
 
           this.get('_records').pushObject(newRecord);
@@ -208,5 +218,5 @@ export default FlexberryBaseComponent.extend({
     if (id && this.get('inHierarchicalMode')) {
       this.sendAction('loadRecords', id, this, 'records');
     }
-  },
+  }
 });

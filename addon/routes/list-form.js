@@ -17,21 +17,21 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
   This class re-exports to the application as `/routes/list-form`.
   So, you can inherit from `./list-form`, even if file `app/routes/list-form.js` is not presented in the application.
 
-  Example:
-  ```javascript
-  // app/routes/employees.js
-  import ListFormRoute from './list-form';
-  export default ListFormRoute.extend({
-  });
-  ```
+  @example
+    ```javascript
+    // app/routes/employees.js
+    import ListFormRoute from './list-form';
+    export default ListFormRoute.extend({
+    });
+    ```
 
-  If you want to add some common logic on all List Forms, you can override `app/routes/list-form.js` as follows:
-  ```javascript
-  // app/routes/list-form.js
-  import ListFormRoute from 'ember-flexberry/routes/list-form';
-  export default ListFormRoute.extend({
-  });
-  ```
+    If you want to add some common logic on all List Forms, you can override `app/routes/list-form.js` as follows:
+    ```javascript
+    // app/routes/list-form.js
+    import ListFormRoute from 'ember-flexberry/routes/list-form';
+    export default ListFormRoute.extend({
+    });
+    ```
 
   @class ListFormRoute
   @extends ProjectedModelFormRoute
@@ -42,12 +42,21 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
   @uses FlexberryObjectlistviewRouteMixin
 */
 export default ProjectedModelFormRoute.extend(
-  PaginatedRouteMixin,
-  SortableRouteMixin,
-  LimitedRouteMixin,
-  ReloadListMixin,
-  FlexberryObjectlistviewRouteMixin,
-  FlexberryObjectlistviewHierarchicalRouteMixin, {
+PaginatedRouteMixin,
+SortableRouteMixin,
+LimitedRouteMixin,
+ReloadListMixin,
+FlexberryObjectlistviewRouteMixin,
+FlexberryObjectlistviewHierarchicalRouteMixin, {
+  /**
+    Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
+
+    @property formLoadTimeTracker
+    @type FormLoadTimeTrackerService
+    @private
+  */
+  formLoadTimeTracker: Ember.inject.service(),
+
   /**
     Current sorting.
 
@@ -66,6 +75,7 @@ export default ProjectedModelFormRoute.extend(
     @param {Object} transition
   */
   model: function(params, transition) {
+    this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -103,7 +113,7 @@ export default ProjectedModelFormRoute.extend(
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
-    let ret = userSettingPromise
+    userSettingPromise
       .then(currectPageUserSettings => {
         if (params) {
           userSettingsService.setCurrentParams(componentName, params);
@@ -128,15 +138,103 @@ export default ProjectedModelFormRoute.extend(
           hierarchicalAttribute: hierarchicalAttribute,
         };
 
+        this.onModelLoadingStarted(queryParameters);
+
         // Find by query is always fetching.
         // TODO: support getting from cache with "store.all->filterByProjection".
         // TODO: move includeSorting to setupController mixins?
         return this.reloadList(queryParameters);
       }).then((records) => {
+        this.get('formLoadTimeTracker').set('endLoadTime', performance.now());
+        this.onModelLoadingFulfilled(records);
         this.includeSorting(records, this.sorting);
+        this.get('controller').set('model', records);
         return records;
+      }).catch((errorData) => {
+        this.onModelLoadingRejected(errorData);
+      }).finally((data) => {
+        this.onModelLoadingAlways(data);
       });
-    return ret;
+
+    if (this.get('controller') === undefined) {
+      return { isLoading: true };
+    }
+
+    // TODO: Check controller loaded model loading parameters and return it without reloading if there is same backend query was executed.
+    let model = this.get('controller.model');
+
+    if (model !== null) {
+      return model;
+    } else {
+      return { isLoading: true };
+    }
+  },
+
+  /**
+    This method will be invoked before model loading operation will be called.
+    Override this method to add some custom logic on model loading operation start.
+
+    @example
+      ```javascript
+      onModelLoadingStarted(queryParameters) {
+        alert('Model loading operation started!');
+      }
+      ```
+    @method onModelLoadingStarted.
+    @param {Object} queryParameters Query parameters used for model loading operation.
+  */
+  onModelLoadingStarted(queryParameters) {
+  },
+
+  /**
+    This method will be invoked when model loading operation successfully completed.
+    Override this method to add some custom logic on model loading operation success.
+
+    @example
+      ```javascript
+      onModelLoadingFulfilled() {
+        alert('Model loading operation succeed!');
+      }
+      ```
+    @method onModelLoadingFulfilled.
+    @param {Object} model Loaded model data.
+  */
+  onModelLoadingFulfilled(model) {
+  },
+
+  /**
+    This method will be invoked when model loading operation completed, but failed.
+    Override this method to add some custom logic on model loading operation fail.
+
+    @example
+      ```javascript
+      onModelLoadingRejected() {
+        alert('Model loading operation failed!');
+      }
+      ```
+    @method onModelLoadingRejected.
+    @param {Object} errorData Data about model loading operation fail.
+  */
+  onModelLoadingRejected(errorData) {
+    // TODO: Provide information about error to user.
+  },
+
+  /**
+    This method will be invoked always when model loading operation completed,
+    regardless of model loading promise's state (was it fulfilled or rejected).
+    Override this method to add some custom logic on model loading operation completion.
+
+    @example
+      ```js
+      onModelLoadingAlways(data) {
+        alert('Model loading operation completed!');
+      }
+      ```
+
+    @method onModelLoadingAlways.
+    @param {Object} data Data about completed model loading operation.
+  */
+  onModelLoadingAlways(data) {
   },
 
   /**
@@ -149,6 +247,7 @@ export default ProjectedModelFormRoute.extend(
   */
   setupController: function(controller, model) {
     this._super(...arguments);
+    this.get('formLoadTimeTracker').set('startRenderTime', performance.now());
 
     // Define 'modelProjection' for controller instance.
     // TODO: remove that when list-form controller will be moved to this route.
@@ -156,5 +255,5 @@ export default ProjectedModelFormRoute.extend(
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
-  },
+  }
 });

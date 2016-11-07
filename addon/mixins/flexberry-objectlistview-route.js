@@ -23,7 +23,8 @@ export default Ember.Mixin.create({
       @param {Ember.Object} record Record related to clicked table row
     */
     objectListViewRowClick(record, editFormRoute) {
-      this.transitionTo(editFormRoute, record.get('id'));
+      let recordId = record.get('id') || record.get('data.id');
+      this.transitionTo(editFormRoute, recordId);
     },
 
     /**
@@ -34,6 +35,10 @@ export default Ember.Mixin.create({
     */
     refreshList() {
       this.refresh();
+    },
+
+    saveAgregator(agregatorModel) {
+      return false;
     }
   },
 

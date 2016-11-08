@@ -54,18 +54,18 @@ test('label mode works properly', function(assert) {
 
   // Check that label attribute doesn't exist now.
   this.set('label', null);
-  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <lable>');
+  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <label>');
 
   // Add text for label & check that label attribute exist.
   let labelText = 'Some text for label';
   this.set('label', labelText);
 
   assert.strictEqual(
-  this.get('label'), labelText, 'Component\'s has wrapper is a <lable>');
+  this.get('label'), labelText, 'Component\'s has wrapper is a <label>');
 
   // Check that label attribute doesn't exist now.
   this.set('label', null);
-  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <lable>');
+  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <label>');
 });
 
 test('readonly mode works properly', function(assert) {
@@ -280,7 +280,7 @@ test('changes in inner <input> causes changes in property binded to \'value\'', 
 
   // Change <input>'s value (imitate situation when user typed something into component's <input>)
   // & check them again ('change' event is needed to force bindings work).
-  let newValue = 'Some text typed into inputs inner <input>';
+  let newValue = 'Some text typed into field\'s inner input';
   $fieldInput.val(newValue);
   $fieldInput.change();
 
@@ -318,7 +318,7 @@ test('changes in property binded to \'value\' causes changes in inner <input>', 
     'Component\'s property binded to \'value\' is equals to null');
 
   // Change property binded to 'value' & check them again.
-  let newValue = 'Some text typed into inputs inner <input>';
+  let newValue = 'Some text typed into field\'s inner input';
   this.set('value', newValue);
 
   assert.strictEqual(

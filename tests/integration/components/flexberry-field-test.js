@@ -35,7 +35,7 @@ test('it renders properly', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('DIV');
+  let $fieldInput = $component.children('div .flexberry-textbox');
 
   // Check wrapper <div>.
   assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
@@ -75,18 +75,18 @@ test('label mode works properly', function(assert) {
 
   // Check that label attribute doesn't exist now.
   this.set('label', null);
-  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <label>');
+  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t inner <label>');
 
   // Add text for label & check that label attribute exist.
   let labelText = 'Some text for label';
   this.set('label', labelText);
 
   assert.strictEqual(
-  this.get('label'), labelText, 'Component\'s has wrapper is a <label>');
+  this.get('label'), labelText, 'Component has inner <label>');
 
   // Check that label attribute doesn't exist now.
   this.set('label', null);
-  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t wrapper is a <label>');
+  assert.strictEqual(this.get('label'), null, 'Component\'s hasn\'t inner <label>');
 });
 
 test('readonly mode works properly', function(assert) {

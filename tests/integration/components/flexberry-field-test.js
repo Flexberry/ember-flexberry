@@ -35,14 +35,14 @@ test('it renders properly', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
-  let $fieldInput = $component.children('div .flexberry-textbox');
+  let $fieldTextbox = $component.children('div.flexberry-textbox');
 
   // Check wrapper <div>.
   assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
   assert.strictEqual($component.hasClass('flexberry-field'), true, 'Component\'s wrapper has \' flexberry-field\' css-class');
   assert.strictEqual($component.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
   assert.strictEqual($component.hasClass('field'), true, 'Component\'s wrapper has \'field\' css-class');
-  assert.strictEqual($fieldInput.hasClass('flexberry-textbox'), true, 'Component\'s wrapper has \'flexberry-textbox\' class');
+  assert.strictEqual($fieldTextbox.length === 1, true, 'Component has inner \'flexberry-textbox\'');
 
   // Check wrapper's additional CSS-classes.
   let additioanlCssClasses = 'transparent mini huge error';

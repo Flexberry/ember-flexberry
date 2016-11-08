@@ -26,7 +26,7 @@ moduleForComponent('flexberry-field', 'Integration | Component | flexberry field
 });
 
 test('it renders properly', function(assert) {
-  assert.expect(4);
+  assert.expect(13);
 
   // Render component.
   this.render(hbs`{{flexberry-field
@@ -35,12 +35,33 @@ test('it renders properly', function(assert) {
 
   // Retrieve component.
   let $component = this.$().children();
+  let $fieldInput = $component.children('DIV');
 
   // Check wrapper <div>.
   assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s wrapper is a <div>');
   assert.strictEqual($component.hasClass('flexberry-field'), true, 'Component\'s wrapper has \' flexberry-field\' css-class');
   assert.strictEqual($component.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
   assert.strictEqual($component.hasClass('field'), true, 'Component\'s wrapper has \'field\' css-class');
+  assert.strictEqual($fieldInput.hasClass('flexberry-textbox'), true, 'Component\'s wrapper has \'flexberry-textbox\' class');
+
+  // Check wrapper's additional CSS-classes.
+  let additioanlCssClasses = 'transparent mini huge error';
+  this.set('class', additioanlCssClasses);
+  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+    assert.strictEqual(
+    $component.hasClass(cssClassName),
+    true,
+    'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
+  });
+
+  // Clean up wrapper's additional CSS-classes.
+  this.set('class', '');
+  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+    assert.strictEqual(
+    $component.hasClass(cssClassName),
+    false,
+    'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
+  });
 });
 
 test('label mode works properly', function(assert) {

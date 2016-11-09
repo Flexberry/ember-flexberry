@@ -3,8 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.5] - 2016-11-09
 ### Fixed
-* Problem is corrected in [this PR](https://github.com/emberjs/ember.js/pull/13333) causes an error in `flexberry-validationsummary` component, added hack for bypass.
+* Problem that was corrected in [this PR](https://github.com/emberjs/ember.js/pull/13333) causes an error in `flexberry-validationsummary` component. Added temporarily solution until ember 2.5.1 or higher will be used.
 
 ## [0.8.0-beta.4] - 2016-11-03
 ### Added

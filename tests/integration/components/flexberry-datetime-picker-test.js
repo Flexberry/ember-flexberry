@@ -44,11 +44,11 @@ test('Testing dynamicProperties of flexberry-base-component', function (assert) 
   this.set('dynamicPropertiesTemp', dynamicPropertiesTemp);
 
   this.render(hbs`
-    {{#flexberry-textbox
+    {{#flexberry-datepicker
       dynamicProperties = dynamicPropertiesTemp
     }}
       template block text
-    {{/flexberry-textbox}}
+    {{/flexberry-datepicker}}
   `);
 
   let $component = this.$().children();

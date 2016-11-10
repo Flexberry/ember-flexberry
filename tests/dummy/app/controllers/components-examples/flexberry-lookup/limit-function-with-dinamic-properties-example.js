@@ -4,27 +4,63 @@ import { Query } from 'ember-flexberry-data';
 const { StringPredicate } = Query;
 
 export default EditFormController.extend({
+  /**
+    Object containing dynamic properties that must be assigned to
+    component using {{#crossLink "DynamicPropertiesMixin"}}dynamic-properties mixin{{/crossLink}}.
 
+    @property dynamicProperties
+    @type Object
+    @default undefined
+  */
   dynamicProperties: undefined,
 
+  /**
+    Current predicate to limit accessible values for lookup.
+
+    @property firstLimitType
+    @type BasePredicate
+    @default undefined
+   */
   firstLimitType: undefined,
 
+  /**
+    Current predicate to limit accessible values for lookup.
+
+    @property secondLimitType
+    @type BasePredicate
+    @default undefined
+   */
   secondLimitType: undefined,
 
   actions: {
 
+    /**
+      This method returns custom properties for lookup window.
+
+      @method firstLimitFunction
+     */
     firstLimitFunction() {
       let currentLookupValue = this.get('firstLimitType');
-      let per = new StringPredicate('name').contains(currentLookupValue);
-      this.set('dynamicProperties.lookupLimitPredicate', per);
+      let limitFunction = new StringPredicate('name').contains(currentLookupValue);
+      this.set('dynamicProperties.lookupLimitPredicate', limitFunction);
     },
 
+    /**
+      This method returns custom properties for lookup window.
+
+      @method secondLimitFunction
+     */
     secondLimitFunction() {
       let currentLookupValue = this.get('secondLimitType');
-      let per = new StringPredicate('name').contains(currentLookupValue);
-      this.set('dynamicProperties.lookupLimitPredicate', per);
+      let limitFunction = new StringPredicate('name').contains(currentLookupValue);
+      this.set('dynamicProperties.lookupLimitPredicate', limitFunction);
     },
 
+    /**
+      This method returns custom properties for lookup window.
+
+      @method clearLimitFunction
+     */
     clearLimitFunction() {
       this.set('dynamicProperties.lookupLimitPredicate', undefined);
     }

@@ -3,8 +3,22 @@ import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
 export default EditFormRoute.extend({
 
+  /**
+    Current predicate to limit accessible values for lookup.
+
+    @property firstLimitType
+    @type BasePredicate
+    @default undefined
+   */
   firstLimitType: undefined,
 
+  /**
+    Current predicate to limit accessible values for lookup.
+
+    @property secondLimitType
+    @type BasePredicate
+    @default undefined
+   */
   secondLimitType: undefined,
   /**
     Name of model projection to be used as record's properties limitation.
@@ -36,10 +50,10 @@ export default EditFormRoute.extend({
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SuggestionTypeE').top(2);
 
-    return store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((cswTypes) => {
-      let cswTypesArr = cswTypes.toArray();
-      this.set('firstLimitType', cswTypesArr.objectAt(0).get('name'));
-      this.set('secondLimitType', cswTypesArr.objectAt(1).get('name'));
+    return store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
+      let suggestionTypesArr = suggestionTypes.toArray();
+      this.set('firstLimitType', suggestionTypesArr.objectAt(0).get('name'));
+      this.set('secondLimitType', suggestionTypesArr.objectAt(1).get('name'));
 
       let base = store.createRecord(this.get('modelName'));
       return base;

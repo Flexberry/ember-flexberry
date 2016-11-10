@@ -7,6 +7,8 @@ import I18nEnLocale from 'ember-flexberry/locales/en/translations';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+const animationDuration = Ember.$.fn.accordion.settings.duration + 100;
+
 moduleForComponent('flexberry-dropdown', 'Integration | Component | flexberry dropdown', {
   integration: true,
 
@@ -79,3 +81,128 @@ test('readonly mode works properly', function(assert) {
   assert.strictEqual($component.hasClass('disabled'), false, 'Component\'s hasn\'t readonly');
 });
 
+test('itemsObject render properly', function(assert) {
+  assert.expect(4);
+
+  // Create objects for testing.
+  let itemsObject = {
+    item1: 'Caption1',
+    item2: 'Caption2',
+    item3: 'Caption3'
+  };
+  this.set('itemsObject', itemsObject);
+
+  // Render component.
+  this.render(hbs`{{flexberry-dropdown
+    items=itemsObject
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $dropdownMenu = $component.children('div.menu');
+  let $dropdomnItem = $dropdownMenu.children('div.item');
+
+  // Check that  class 'item' in <menu> exist.
+  assert.strictEqual($dropdomnItem.hasClass('item'), true, 'Component\'s has class');
+
+  // Check component's captions and objects.
+  let itemsObjectKeys = Object.keys(itemsObject);
+  $dropdomnItem.each(function(i) {
+    let $item = Ember.$(this);
+    let itemKey = itemsObjectKeys[i];
+    let itemCaption = itemsObject[itemKey];
+
+    // Check that the captions matches the objects.
+    assert.strictEqual($item.attr('data-value'), itemCaption, 'Component\'s item\'s сaptions matches the objects');
+  });
+});
+
+test('itemsArray render properly', function(assert) {
+  assert.expect(4);
+
+  // Create array for testing.
+  let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
+  this.set('itemsArray', itemsArray);
+
+  // Render component.
+  this.render(hbs`{{flexberry-dropdown
+    items=itemsArray
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $dropdownMenu = $component.children('div.menu');
+  let $dropdomnItem = $dropdownMenu.children('div.item');
+
+  // Check that  class 'item' in <menu> exist.
+  assert.strictEqual($dropdomnItem.hasClass('item'), true, 'Component\'s has class');
+
+  // Check component's captions and array.
+  $dropdomnItem.each(function(i) {
+    let $item = Ember.$(this);
+    let itemCaption = itemsArray[i];
+
+    // Check that the captions matches the array.
+    assert.strictEqual($item.attr('data-value'), itemCaption, 'Component\'s item\'s сaptions matches the array');
+  });
+});
+
+// Тут проблема с кликом.
+test('animation dropdown', function(assert) {
+
+  // Render component.
+  this.render(hbs`{{flexberry-dropdown
+    class=class
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $dropdownMenu = $component.children('div.menu');
+  let $dropdomnItem = $dropdownMenu.children('div.item');
+
+  // Check that component is collapsed by default.
+  assert.strictEqual($component.hasClass('upward'), false, 'net');
+  assert.strictEqual($component.hasClass('active'), false, 'net');
+  assert.strictEqual($component.hasClass('visible'), false, 'net');
+  assert.strictEqual($dropdownMenu.hasClass('transition'), false, 'net');
+  assert.strictEqual($dropdownMenu.hasClass('visible'), false, 'net');
+
+  let expandAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
+    // Try to expand component.
+    // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
+    // Вот тут возникает проблема. В $component все приходит, но $component.click возвращает ошибку,
+    // словно $component не определен. Соответственно дальше ничего не идет.
+    Ember.run(() => {
+      $component.click();
+    });
+
+    // Wait animation to check component's state.
+    Ember.run(() => {
+      let animation = assert.async();
+      setTimeout(() => {
+        // Check that component is animating now.
+        assert.strictEqual($dropdownMenu.hasClass('animating'), true);
+
+        // Tell to test method that asynchronous operation completed.
+        animation();
+
+      }, animationDuration / 2);
+    });
+
+    // Wait for expand animation to be completed & check component's state.
+    Ember.run(() => {
+      let animationCompleted = assert.async();
+      setTimeout(() => {
+        // Check that component is expanded now.
+        assert.strictEqual($component.hasClass('active'), true);
+        assert.strictEqual($dropdownMenu.hasClass('visible'), true);
+
+        // Tell to test method that asynchronous operation completed.
+        animationCompleted();
+
+        // Resolve 'expandAnimationCompleted' promise.
+        resolve();
+      }, animationDuration);
+    });
+  });
+});

@@ -95,32 +95,6 @@ export default EditFormController.extend({
   removeButtonClass: '',
 
   /**
-    Template text for 'flexberry-lookup' component.
-
-    @property componentTemplateText
-    @type String
-  */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-lookup<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  value=model.type<br>' +
-    '  projection="SettingLookupExampleView"<br>' +
-    '  displayAttributeName="name"<br>' +
-    '  title="Master"<br>' +
-    '  relatedModel=model<br>' +
-    '  relationName="type"<br>' +
-    '  choose="showLookupDialog"<br>' +
-    '  remove="removeLookupValue"<br>' +
-    '  autocomplete=autocomplete<br>' +
-    '  dropdown=dropdown<br>' +
-    '  chooseText=chooseText<br>' +
-    '  removeText=removeText<br>' +
-    '  chooseButtonClass=chooseButtonClass<br>' +
-    '  removeButtonClass=removeButtonClass<br>' +
-    '}}'),
-
-  /**
     Component settings metadata.
 
     @property componentSettingsMetadata

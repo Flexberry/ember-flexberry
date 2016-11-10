@@ -66,6 +66,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/custom-filter');
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
   this.route('components-examples/flexberry-objectlistview/selected-rows');
+  this.route('acceptance-tests/flexberry-lookup/settings-example');
 
   this.route('components-examples/flexberry-simpleolv/settings-example');
   this.route('components-examples/flexberry-simpleolv/toolbar-custom-buttons-example');

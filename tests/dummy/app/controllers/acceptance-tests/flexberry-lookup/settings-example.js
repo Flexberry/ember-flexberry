@@ -11,6 +11,7 @@ export default EditFormController.extend({
     @default 't('components.flexberry-lookup.placeholder')'
    */
   placeholder: t('components.flexberry-lookup.placeholder'),
+  componentName: 'flexberry-lookup',
   /**
     Handles changes in placeholder.
 
@@ -143,6 +144,12 @@ export default EditFormController.extend({
       settingType: 'string',
       settingDefaultValue: '<i class="remove icon"></i>',
       bindedControllerPropertieName: 'removeText'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'componentName',
+      settingType: 'string',
+      settingDefaultValue: 'flexberry-lookup',
+      bindedControllerPropertieName: 'componentName'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'chooseButtonClass',

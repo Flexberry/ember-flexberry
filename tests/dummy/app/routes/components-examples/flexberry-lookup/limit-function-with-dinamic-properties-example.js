@@ -61,6 +61,11 @@ export default EditFormRoute.extend({
 
   },
 
+  /**
+    Load limit accessible values for lookup.
+
+    @method setupController
+   */
   setupController() {
     this._super(...arguments);
 

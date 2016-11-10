@@ -35,7 +35,7 @@ export default EditFormController.extend({
   actions: {
 
     /**
-      This method returns custom properties for lookup window.
+      This method set dynamicProperties.lookupLimitPredicate for lookup window.
 
       @method firstLimitFunction
      */
@@ -46,7 +46,7 @@ export default EditFormController.extend({
     },
 
     /**
-      This method returns custom properties for lookup window.
+      This method set dynamicProperties.lookupLimitPredicate for lookup window.
 
       @method secondLimitFunction
      */
@@ -57,7 +57,7 @@ export default EditFormController.extend({
     },
 
     /**
-      This method returns custom properties for lookup window.
+      This method set dynamicProperties.lookupLimitPredicate for lookup window.
 
       @method clearLimitFunction
      */
@@ -66,6 +66,11 @@ export default EditFormController.extend({
     }
   },
 
+  /**
+    Set limit accessible values for lookup.
+
+    @method init
+   */
   init() {
     this._super(...arguments);
     this.set('dynamicProperties',

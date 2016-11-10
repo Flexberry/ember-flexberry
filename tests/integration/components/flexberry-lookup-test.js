@@ -80,10 +80,8 @@ test('component with readonly renders properly', function(assert) {
   // Retrieve component, it's inner <input>.
   let $component = this.$().children();
   let $lookupFluid = $component.children('.fluid');
-  let $lookupInput = $lookupFluid.children('.lookup-field');
   let $lookupButtouChoose = $lookupFluid.children('.lookup-choose-button');
   let $lookupButtouClear = $lookupFluid.children('.lookup-clear-button');
-  let $lookupButtouClearIcon = $lookupButtouClear.children('.remove');
 
   // Check <choose button>.
   assert.strictEqual($lookupButtouChoose.hasClass('disabled'), true, 'Component\'s container has \'disabled\' css-class');
@@ -94,25 +92,23 @@ test('component with readonly renders properly', function(assert) {
 
 test('component with choose-text and remove-text properly', function(assert) {
   assert.expect(2);
-  this.set('tempText1',"TempText1")    
-  this.set('tempText2',"TempText2")
+  this.set('tempTextChoose', 'TempText1');
+  this.set('tempTextRemove', 'TempText2');
 
   this.render(hbs`{{#flexberry-lookup
-    chooseText=tempText1
-    removeText=tempText2
+    chooseText=tempTextChoose
+    removeText=tempTextRemove
   }}
   {{/flexberry-lookup}}`);
 
   let $component = this.$().children();
   let $lookupFluid = $component.children('.fluid');
-  let $lookupInput = $lookupFluid.children('.lookup-field');
   let $lookupButtouChoose = $lookupFluid.children('.lookup-choose-button');
   let $lookupButtouClear = $lookupFluid.children('.lookup-clear-button');
-  let $lookupButtouClearIcon = $lookupButtouClear.children('.remove');
 
   // Check <choose button>.
-  assert.equal($lookupButtouChoose.text().trim(), "TempText1");
+  assert.equal($lookupButtouChoose.text().trim(), 'TempText1');
 
   // Check <clear button>.
-  assert.equal($lookupButtouClear.text().trim(), "TempText2");
+  assert.equal($lookupButtouClear.text().trim(), 'TempText2');
 });

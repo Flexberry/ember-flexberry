@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+
 
 /**
   ModalDialog component for Semantic UI.
@@ -127,10 +127,9 @@ export default Ember.Component.extend({
           });
         },
         onHidden: function () {
-          // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
           Ember.run(() => {
             _this.sendAction('close');
-
+            
             // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
             Ember.$(this).remove();
             _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);

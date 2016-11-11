@@ -66,8 +66,6 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/custom-filter');
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
   this.route('components-examples/flexberry-objectlistview/selected-rows');
-  this.route('acceptance-tests/flexberry-lookup/settings-example');
-
   this.route('components-examples/flexberry-simpleolv/settings-example');
   this.route('components-examples/flexberry-simpleolv/toolbar-custom-buttons-example');
   this.route('components-examples/flexberry-simpleolv/limit-function-example');
@@ -88,6 +86,9 @@ Router.map(function() {
 
   // User-setting forms.
   this.route('user-setting-forms/user-setting-delete');
+
+  // Components acceptance tests forms.
+  this.route('components-acceptance-tests/flexberry-lookup/base-operations');
 });
 
 export default Router;

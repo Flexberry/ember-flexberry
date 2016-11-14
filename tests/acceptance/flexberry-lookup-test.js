@@ -52,45 +52,26 @@ test('visiting flexberry-lookup', function(assert) {
 });*/
 
 test('visiting flexberry-lookup autocomplete', function(assert) {
-  assert.expect(1);
+  assert.expect(5);
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
 
   andThen(function() {
 
-    let expandAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
+    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
 
-      assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
+    let $lookup = Ember.$('.flexberry-lookup');
 
-      let $lookupButtouChoose = Ember.$('.lookup-choose-button');
+    assert.strictEqual($lookup.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
+    assert.strictEqual($lookup.hasClass('search'), true, 'Component\'s wrapper has \'search\' css-class');
 
-      Ember.run(() => {
-        $lookupButtouChoose.click();
-      });
+    let $lookupField = Ember.$('.lookup-field');
 
-      Ember.run(() => {
-        var done = assert.async();
-        setTimeout(function() {
+    assert.strictEqual($lookupField.hasClass('prompt'), true, 'Component\'s wrapper has \'prompt\' css-class');
 
-          let $modal = Ember.$('.flexberry-modal');
+    let $result= Ember.$('.result');
 
-          done();
-          resolve();
-        }, 200);
-      });
-    });
-
-    expandAnimationCompleted.then(() => {
-      Ember.run(() => {
-        let $modalCloseIcon = Ember.$('.close.icon');
-        $modalCloseIcon.click();
-      });
-
-      Ember.run(() => {
-        var endClose = assert.async();
-        setTimeout(function() { endClose(); }, 100);
-      });
-    });
+    assert.strictEqual($result.length === 1, true, 'Component has inner class \'result\'');
   });
 });
 

@@ -3,21 +3,30 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.5] - 2016-11-09
+### Fixed
+* Problem that was corrected in [this PR](https://github.com/emberjs/ember.js/pull/13333) causes an error in `flexberry-validationsummary` component. Added temporarily solution until ember 2.5.1 or higher will be used.
+
+## [0.8.0-beta.4] - 2016-11-03
 ### Added
 * `flexberry-lookup` component:
     * Add support for change related model.
-    * Add `lookup-events` service with triggers: lookupDialogOnShowTrigger, lookupDialogOnVisibleTrigger, lookupDialogOnHiddenTrigger.
-    * Now the user can not press the choose button several times before the modal dialog is open. NOTE: Need to add componenName.
+    * Add `lookup-events` service with triggers: `lookupDialogOnShowTrigger`, `lookupDialogOnVisibleTrigger`, `lookupDialogOnHiddenTrigger`.
+    * Now the user can not press choose button several times before modal dialog will be opened. **NOTE**: Need to add componenName.
 
-### Fixed
-* `flexberry-simpleolv` component:
-    * Double rendering.
-    * Now data loading indicator and placeholder are never shows at the same time.
-    * Fix `resetFilters` action.
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.3 version.
 
 ### Removed
 * `flexberry-simpleolv` component:
     * Remove `_attributeChanged` observers.
+
+### Fixed
+* `flexberry-simpleolv` component:
+    * Double rendering.
+    * Now data loading indicator and placeholder are never show at the same time.
+    * Fix `resetFilters` action.
 
 ## [0.8.0-beta.3] - 2016-10-31
 ### Changed

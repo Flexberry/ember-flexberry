@@ -431,8 +431,7 @@ export default ListFormController.extend({
   showLoadingTbodyClass: Ember.computed('model.content', function() {
     if (this.get('model.content') === undefined) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }),

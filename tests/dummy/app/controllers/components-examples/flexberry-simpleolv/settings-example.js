@@ -13,58 +13,6 @@ export default ListFormController.extend({
   _projectionName: 'SuggestionL',
 
   /**
-    Array of available model projections.
-
-    @property _projections
-    @type Object[]
-   */
-  _projections: Ember.computed('model.[]', function() {
-    let records = this.get('model');
-    let modelClass = Ember.get(records, 'length') > 0 ? Ember.get(records, 'firstObject').constructor : {};
-
-    return Ember.get(modelClass, 'projections');
-  }),
-
-  /**
-    Array of available model projections names.
-
-    @property _projectionsNames
-    @type String[]
-   */
-  _projectionsNames: Ember.computed('_projections.[]', function() {
-    let projections = this.get('_projections');
-    if (Ember.isNone(projections)) {
-      return [];
-    }
-
-    return Object.keys(projections);
-  }),
-
-  /**
-    Model projection for 'flexberry-simpleolv' component 'modelProjection' property.
-
-    @property projection
-    @type Object
-   */
-  projection: Ember.computed('_projections.[]', '_projectionName', function() {
-    let projectionName = this.get('_projectionName');
-    if (Ember.isBlank(projectionName)) {
-      return null;
-    }
-
-    let projections = this.get('_projections');
-    if ((Ember.isNone(projections)) && (this.get('model.content') === undefined)) {
-      return {}; // модель не загрузилась ещё, свойство пересчитывается, потому что грузится страница.
-    }
-
-    if (Ember.isNone(projections)) {
-      return null;
-    }
-
-    return projections[projectionName];
-  }),
-
-  /**
     Name of related edit form route (for 'flexberry-simpleolv' component 'editFormRoute' property).
 
     @property editFormRoute
@@ -137,7 +85,7 @@ export default ListFormController.extend({
     @property enableFilters
     @type Boolean
    */
-  enableFilters: false,
+  enableFilters: true,
 
   /**
     Flag: indicates whether 'flexberry-simpleolv' component is in 'filterButton' mode or not.
@@ -234,7 +182,7 @@ export default ListFormController.extend({
     '  content=model<br>' +
     '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
     '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '  modelProjection=projection<br>' +
+    '  modelProjection=modelProjection<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
     '  tableStriped=tableStriped<br>' +
@@ -303,8 +251,8 @@ export default ListFormController.extend({
     });
     componentSettingsMetadata.pushObject({
       settingName: 'modelProjection',
-      settingType: 'enumeration',
-      settingAvailableItems: this.get('_projectionsNames'),
+      settingType: 'hasManyArray',
+      settingAvailableItems: this.get('_projectionName'),
       settingDefaultValue: null,
       bindedControllerPropertieName: '_projectionName',
       bindedControllerPropertieDisplayName: 'projection',
@@ -431,8 +379,7 @@ export default ListFormController.extend({
   showLoadingTbodyClass: Ember.computed('model.content', function() {
     if (this.get('model.content') === undefined) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }),

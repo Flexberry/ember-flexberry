@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Known issues
+* Incomprehensible one-way binding `flexberry-lookup` component on new detail form.
 
 ## [0.8.0-beta.5] - 2016-11-09
 ### Fixed

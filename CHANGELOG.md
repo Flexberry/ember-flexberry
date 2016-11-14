@@ -3,10 +3,21 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.6] - 2016-11-15
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.5 version.
+
+### Fixed
+* Choosed value of `flexberry-lookup` component now correctly display on edit form for new detail.
+
 ### Known issues
-* Incomprehensible one-way binding `flexberry-lookup` component on new detail form.
+* Incomprehensible one-way binding of `value` property of `flexberry-lookup` component placed on edit form for new detail.
 
 ## [0.8.0-beta.5] - 2016-11-09
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.4 version.
+
 ### Fixed
 * Problem that was corrected in [this PR](https://github.com/emberjs/ember.js/pull/13333) causes an error in `flexberry-validationsummary` component. Added temporarily solution until ember 2.5.1 or higher will be used.
 

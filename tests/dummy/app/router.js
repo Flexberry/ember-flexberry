@@ -89,7 +89,7 @@ Router.map(function() {
 
   // Components acceptance tests forms.
   this.route('components-acceptance-tests/flexberry-lookup/base-operations');
-  this.route('acceptance/components/flexberry-lookup-test');
+  this.route('acceptance-tests/flexberry-lookup/settings-example');
 });
 
 export default Router;

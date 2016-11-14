@@ -49,12 +49,7 @@ export default Ember.Controller.extend({
       return;
     }
 
-    let momentDate = this.get('moment').moment(serializedDate);
-    if (momentDate.isValid()) {
-      this.set(datePropertyName, momentDate.toDate());
-    } else {
-      this.set(datePropertyName, new Date('invalid'));
-    }
+    this.set(datePropertyName, serializedDate);
   },
 
   /**
@@ -71,34 +66,29 @@ export default Ember.Controller.extend({
       return;
     }
 
-    let momentDate = this.get('moment').moment(date);
-    if (momentDate.isValid()) {
-      this.set(serializedDatePropertyName, momentDate.format('YYYY-MM-DDTHH:MM'));
-    } else {
-      this.set(serializedDatePropertyName, '' + new Date('invalid'));
-    }
+    this.set(serializedDatePropertyName, date);
   },
 
   /**
-   Minimum value of this component.
+    Minimum value of this component.
 
-   @property min
-   @type Date
-   @default 'today'
+    @property min
+    @type Date
+    @default 'today'
    */
   min: new Date(),
 
   /**
     Maximum value of this component.
 
-   @property max
-   @type Date
-   @default 'today' + 7 days
+    @property max
+    @type Date
+    @default 'today' + 7 days
    */
   max: new Date().fp_incr(14),
 
   /**
-    Flag: indicates whether 'flexberry-simpledatetime' component is in 'readonly' mode or not.
+    Flag indicates whether 'flexberry-simpledatetime' component is in 'readonly' mode or not.
 
     @property readonly
     @type Boolean
@@ -139,12 +129,12 @@ export default Ember.Controller.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'min',
       settingType: 'date',
-      settingDefaultValue: this._convertDateToString(this.get('min'))
+      settingDefaultValue: this._convertDateToString(this.get('min')),
     });
     componentSettingsMetadata.pushObject({
       settingName: 'max',
       settingType: 'date',
-      settingDefaultValue: this._convertDateToString(this.get('max'))
+      settingDefaultValue: this._convertDateToString(this.get('max')),
     });
     componentSettingsMetadata.pushObject({
       settingName: 'value',
@@ -161,6 +151,14 @@ export default Ember.Controller.extend({
     });
 
     return componentSettingsMetadata;
+  }),
+
+  _supportDateType: Ember.computed(function() {
+    if (this._checkInput('date') || this._checkInput('datetime') || this._checkInput('datetime-local')) {
+      return true;
+    }
+
+    return false;
   }),
 
   /**
@@ -180,6 +178,21 @@ export default Ember.Controller.extend({
       throw new Error('Value must be a Date object.');
     }
 
-    return value.toISOString();
+    let momentDate = this.get('moment').moment(value);
+    return momentDate.format('DD.MM.YYYY HH:MM');
+  },
+
+  /**
+    The method checks if some input type is supported by the browser.
+
+    @method _checkInput
+    @param {String} type Type of input.
+    return {Boolean}
+    @private
+  */
+  _checkInput(type) {
+    let input = document.createElement('input');
+    input.setAttribute('type', type);
+    return input.type === type;
   },
 });

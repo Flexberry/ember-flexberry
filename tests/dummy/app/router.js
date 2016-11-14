@@ -91,6 +91,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/base-operations');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example');  
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
 });
 
 export default Router;

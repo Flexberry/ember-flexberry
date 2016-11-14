@@ -51,7 +51,7 @@ test('visiting flexberry-lookup', function(assert) {
   });
 });*/
 
-test('visiting flexberry-lookup autocomplete', function(assert) {
+/*test('visiting flexberry-lookup autocomplete', function(assert) {
   assert.expect(5);
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
@@ -72,6 +72,51 @@ test('visiting flexberry-lookup autocomplete', function(assert) {
     let $result= Ember.$('.result');
 
     assert.strictEqual($result.length === 1, true, 'Component has inner class \'result\'');
+  });
+});*/
+
+test('visiting flexberry-lookup dropdown', function(assert) {
+  assert.expect(13);
+
+  visit('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
+
+  andThen(function() {
+
+  assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
+
+  // Retrieve component, it's inner <input>.
+  let $lookupSearch = Ember.$('.lookup-field');
+  let $lookupButtonChoose = Ember.$('.lookup-choose-button');
+  let $lookupButtonClear = Ember.$('.lookup-remove-button');
+
+  assert.strictEqual($lookupSearch.length === 0, true, 'Component has n\'t flexberry-lookup');
+  assert.strictEqual($lookupButtonChoose.length === 0, true, 'Component has n\'t button choose');
+  assert.strictEqual($lookupButtonClear.length === 0, true, 'Component has n\'t button remove');
+
+  // Retrieve component, it's inner <input>.
+  let $dropdown = Ember.$('.flexberry-dropdown.search.selection');
+
+  assert.strictEqual($dropdown.length === 1, true, 'Component has class flexberry-dropdown');
+  assert.strictEqual($dropdown.hasClass('search'), true, 'Component\'s wrapper has \'search\' css-class');
+  assert.strictEqual($dropdown.hasClass('selection'), true, 'Component\'s wrapper has \'selection\' css-class');
+  assert.strictEqual($dropdown.hasClass('ember-view'), true, 'Component\'s wrapper has \'ember-view\' css-class');
+  assert.strictEqual($dropdown.hasClass('dropdown'), true, 'Component\'s wrapper has \'dropdown\' css-class');
+
+  let $dropdownSearch = $dropdown.children('.search');
+
+  assert.strictEqual($dropdownSearch.length === 1, true, 'Component has class search');
+
+  let $dropdownIcon = $dropdown.children('.dropdown.icon');
+
+  assert.strictEqual($dropdownIcon.length === 1, true, 'Component has class dropdown and icon');
+
+  let $deopdownText = $dropdown.children('.text');
+
+  assert.strictEqual($deopdownText.length === 1, true, 'Component has class text');
+
+  let $dropdownMenu = $dropdown.children('.menu');
+
+  assert.strictEqual($dropdownMenu.length === 1, true, 'Component has class menu');
   });
 });
 

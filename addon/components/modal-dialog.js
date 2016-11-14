@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-
+import Ember from 'ember';
 
 /**
   ModalDialog component for Semantic UI.
@@ -129,7 +129,7 @@ export default Ember.Component.extend({
         onHidden: function () {
           Ember.run(() => {
             _this.sendAction('close');
-            
+
             // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
             Ember.$(this).remove();
             _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* For `flexberry-groupedit` and `flexberry-objectlistview` components restore opportunity add additional menu items in row across `menuInRowAdditionalItems` property, now behavior is similar `customButtons` property.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

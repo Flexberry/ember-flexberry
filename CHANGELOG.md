@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Removed
+* Remove `_attributeChanged` observer from `object-list-view` component.
+
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.5 version.

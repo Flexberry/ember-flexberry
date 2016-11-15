@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Now `rowConfig.customClass` property working on mobile.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

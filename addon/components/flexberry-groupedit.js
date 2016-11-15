@@ -146,16 +146,37 @@ export default FlexberryBaseComponent.extend({
     Additional menu items for dropdown menu in last column of every row.
 
     @example
-    It has to be an array of items that can be set as menu items (see {{#crossLink "FlexberryMenuComponent"}}{{/crossLink}}).
-    ```
-    [{
-       icon: 'trophy icon',
-       title: 'Some localized item name',
-       onClick: function() {
-        alert('Take the cake off the shelf.');
-       }
-     }]
-    ```
+      ```javascript
+      // app/controllers/exapmle.js
+      ...
+      menuItems: [{
+        icon: 'spy icon',
+        title: 'Recruit it',
+        actionName: 'recruit',
+      }],
+      ...
+      actions: {
+        ...
+        recruit(record) {
+          record.set('isSpy', true);
+        },
+        ...
+      },
+      ...
+      ```
+
+      Note: For every action in component you need to pass an additional parameter in the form of `actionName="actionName"`.
+      ```javascript
+      // app/templates/example.hbs
+      ...
+      {{flexberry-groupedit
+        ...
+        menuInRowAdditionalItems=menuItems
+        recruit="recruit"
+        ...
+      }}
+      ...
+      ```
 
     For in-row menu following properties are used:
     - {{#crossLink "FlexberryGroupeditComponent/showDeleteMenuItemInRow:property"}}{{/crossLink}},

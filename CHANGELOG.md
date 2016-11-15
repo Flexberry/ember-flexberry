@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * Remove `_attributeChanged` observer from `object-list-view` component.
 
+### Fixed
+* Fix sorting from colsconfig-dialog if in url has param sort.
+
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.5 version.

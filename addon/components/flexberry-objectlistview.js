@@ -804,7 +804,18 @@ export default FlexberryBaseComponent.extend({
     */
     perPageClick() {
       this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
-    }
+    },
+
+    /**
+      Send action with `actionName` into controller.
+
+      @method actions.sendMenuItemAction
+      @param {String} actionName
+      @param {DS.Model} record
+    */
+    sendMenuItemAction(actionName, record) {
+      this.sendAction(actionName, record);
+    },
   },
 
   /**

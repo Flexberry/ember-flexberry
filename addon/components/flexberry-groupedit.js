@@ -395,7 +395,18 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction('action', record, options);
-    }
+    },
+
+    /**
+      Send action with `actionName` into controller.
+
+      @method actions.sendMenuItemAction
+      @param {String} actionName
+      @param {DS.Model} record
+    */
+    sendMenuItemAction(actionName, record) {
+      this.sendAction(actionName, record);
+    },
   },
 
   /**

@@ -20,7 +20,6 @@ module.exports = {
           { name: 'semantic-ui-ember', target: '0.9.3' },
           { name: 'ember-moment', target: '6.0.0' },
           { name: 'ember-link-action', target: '0.0.34' },
-          { name: 'ember-href-to', target: '1.9.0' },
           { name: 'ember-cli-sass', target: '5.2.0' },
           { name: 'broccoli-jscs', target: '1.2.2' },
           { name: 'ember-browserify', target: '1.1.9' }

@@ -4,7 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
-* For `flexberry-groupedit` and `flexberry-objectlistview` components restore opportunity add additional menu items in row across `menuInRowAdditionalItems` property, now behavior is similar `customButtons` property.
+* Restore ability to add menu items in row for `flexberry-groupedit` and `flexberry-objectlistview` components using `menuInRowAdditionalItems` property. Now this behavior is similar to `customButtons` property for toolbar.
+
+### Fixed
+* Using of wrong model to get `id` param when performig transition to parent route after saving and changing deatil model of 2nd level.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

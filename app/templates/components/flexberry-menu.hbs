@@ -1,17 +1,25 @@
 {{#each items as |item|}}
-  {{#if (and titleIsBeforeIcon item.title)}}
-    <span>{{item.title}}</span>
+  {{#if titleIsBeforeIcon}}
+    {{#if item.localeKey}}
+      {{t item.localeKey}}
+    {{else}}
+      <span>{{item.title}}</span>
+    {{/if}}
   {{/if}}
   {{#if item.icon}}
     <i class="{{item.icon}}"></i>
   {{/if}}
-  {{#if (and (not titleIsBeforeIcon) item.title)}}
-    <span>{{item.title}}</span>
+  {{#if (not titleIsBeforeIcon)}}
+    {{#if item.localeKey}}
+      {{t item.localeKey}}
+    {{else}}
+      <span>{{item.title}}</span>
+    {{/if}}
   {{/if}}
   {{#if item.items}}
     <div class="{{if item.itemsAlignment item.itemsAlignment}} menu">
       {{#each item.items as |item|}}
-        {{flexberry-menuitem item=item}}
+          {{flexberry-menuitem item=item}}
       {{/each}}
     </div>
   {{/if}}

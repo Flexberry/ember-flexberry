@@ -1,11 +1,19 @@
-{{#if (and titleIsBeforeIcon item.title)}}
-  <span>{{item.title}}</span>
+{{#if titleIsBeforeIcon}}
+  {{#if item.localeKey}}
+    {{t item.localeKey}}
+  {{else}}
+    <span>{{item.title}}</span>
+  {{/if}}
 {{/if}}
 {{#if item.icon}}
   <i class="{{item.icon}}"></i>
 {{/if}}
-{{#if (and (not titleIsBeforeIcon) item.title)}}
-  <span>{{item.title}}</span>
+{{#if (not titleIsBeforeIcon)}}
+  {{#if item.localeKey}}
+    {{t item.localeKey}}
+  {{else}}
+    <span>{{item.title}}</span>
+  {{/if}}
 {{/if}}
 {{#if hasSubitems}}
   <div class="{{if item.itemsAlignment item.itemsAlignment}} menu">

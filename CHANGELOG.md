@@ -10,6 +10,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Fix sorting from colsconfig-dialog if in url has param sort.
 
+### Added
+* Add `localeKey` property of item in `flexberry-menu`.
+
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.5 version.

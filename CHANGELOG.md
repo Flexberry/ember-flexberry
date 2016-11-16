@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Using of wrong model to get `id` param when performig transition to parent route after saving and changing deatil model of 2nd level.
 * Now `rowConfig.customClass` property working on mobile.
+* Component `flexberry-simpleolv` not used columns order from user settings.
+* When generating a columns in user settings window for `flexberry-objectlistview` and `flexberry-simpleolv` components, if  is set `enableFilters` property into controller, attempt to add filters for these columns.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

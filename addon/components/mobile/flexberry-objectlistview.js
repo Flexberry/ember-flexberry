@@ -81,7 +81,7 @@ export default FlexberryObjectlistview.extend({
     @type Boolean
     @default false
   */
-  createNewButton: true,
+  createNewButton: false,
 
   /**
     Flag indicates whether to show refresh button at toolbar.

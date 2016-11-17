@@ -234,7 +234,7 @@ export default Ember.Service.extend({
     @return {Boolean}
    */
   exists() {
-    let ret = this.currentAppPage in  this.currentUserSettings;
+    let ret = this.currentAppPage in this.currentUserSettings;
     return ret;
   },
 
@@ -269,11 +269,11 @@ export default Ember.Service.extend({
   },
 
   /**
-   Returns current list of named userSetting.
+    Returns current list of named userSetting.
 
-   @method getListCurrentNamedUserSetting
-   @return {String}
-   */
+    @method getListCurrentNamedUserSetting
+    @return {String}
+  */
   getListCurrentNamedUserSetting(componentName) {
     let ret = {};
     let listCurrentUserSetting = this.getListCurrentUserSetting(componentName);

@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Using of wrong model to get `id` param when performig transition to parent route after saving and changing deatil model of 2nd level.
 * Now `rowConfig.customClass` property working on mobile.
+* Clear errors before delete record on `flexberry-simpleolv` and `object-list-view` components.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

@@ -714,6 +714,7 @@ ErrorableControllerMixin, {
         }
       }
 
+      this.send('dismissErrorMessages');
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 

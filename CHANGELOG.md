@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Using of wrong model to get `id` param when performig transition to parent route after saving and changing deatil model of 2nd level.
 * Now `rowConfig.customClass` property working on mobile.
+* Fix mobile template of `flexberry-lookup` for adding loading.
 
 ### Removed
 * Remove `_attributeChanged` observer from `object-list-view` component.

@@ -9,6 +9,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Using of wrong model to get `id` param when performig transition to parent route after saving and changing deatil model of 2nd level.
 * Now `rowConfig.customClass` property working on mobile.
+* Fix mobile template of `flexberry-lookup` for adding loading.
+
+### Removed
+* Remove `_attributeChanged` observer from `object-list-view` component.
+* Remove properties from `olv-toolbar` & `flexberry-simpleolv`: `createSettitingTitle`, `useSettitingTitle`, `editSettitingTitle`, `removeSettitingTitle`, `setDefaultSettitingTitle`, `showDefaultSettitingTitle`.
+
+### Fixed
+* Fix sorting from colsconfig-dialog if in url has param sort.
+* Now if change locale several time `cols-config-menu` still work.
+* Fix `col-config-menu` for namedSetting, now can see them.
+
+### Added
+* Add `localeKey` property of item in `flexberry-menu`.
+
+### Changed
+* Move `resetMenu`, `addNamedSetting` and `sort` methods from `col-config-menu` service to `olv-toolbar` & `flexberry-simpleolv`. `sort` method rename to `sortNamedSetting`.
 
 ### Added
 * Add loading for `object-list-view` and `flexberry-simpleolv` when click to the head of column for list sorting.

@@ -26,6 +26,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Move `resetMenu`, `addNamedSetting` and `sort` methods from `col-config-menu` service to `olv-toolbar` & `flexberry-simpleolv`. `sort` method rename to `sortNamedSetting`.
 
+### Added
+* Add loading for `object-list-view` and `flexberry-simpleolv` when click to the head of column for list sorting.
+
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.5 version.

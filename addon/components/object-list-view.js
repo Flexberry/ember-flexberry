@@ -797,6 +797,8 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
+      this.set('showLoadingTbodyClass', true);
+
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
     },

@@ -231,14 +231,16 @@ test('itemsArray render properly', function(assert) {
   });
 });
 
-function clickOnDropdown(assert, $component, $dropdownMenu, resolve) {
+function clickOnDropdown(assert, resolve, $dropdomnItem, $component, $dropdownMenu) {
 
   // Wait animation to check component's state.
   Ember.run(() => {
     let animation = assert.async();
     setTimeout(() => {
       // Check that component is animating now.
-      assert.strictEqual($dropdownMenu.hasClass('animating'), true, 'Component has class \'animating\'');
+      if ($dropdownMenu) {
+        assert.strictEqual($dropdownMenu.hasClass('animating'), true, 'Component has class \'animating\'');
+      }
 
       // Tell to test method that asynchronous operation completed.
       animation();
@@ -251,8 +253,18 @@ function clickOnDropdown(assert, $component, $dropdownMenu, resolve) {
     let animationCompleted = assert.async();
     setTimeout(() => {
       // Check that component is expanded now.
-      assert.strictEqual($component.hasClass('active'), true, 'Component has class \'active\'');
-      assert.strictEqual($dropdownMenu.hasClass('visible'), true, 'Component\'s menu has class \'visible\'');
+      if ($component) {
+        assert.strictEqual($component.hasClass('active'), true, 'Component has class \'active\'');
+      }
+
+      if ($dropdownMenu) {
+        assert.strictEqual($dropdownMenu.hasClass('visible'), true, 'Component\'s menu has class \'visible\'');
+      }
+
+      if ($dropdomnItem) {
+        assert.strictEqual($dropdomnItem.hasClass('active'), true, 'Component\'s item has class \'active\'');
+        assert.strictEqual($dropdomnItem.hasClass('selected'), true, 'Component\'s item has class \'selected\'');
+      }
 
       // Tell to test method that asynchronous operation completed.
       animationCompleted();
@@ -295,7 +307,7 @@ test('animation dropdown without selecting a value', function(assert) {
       $component.click();
     });
 
-    clickOnDropdown(assert, $component, $dropdownMenu, resolve);
+    clickOnDropdown(assert, resolve, null, $component, $dropdownMenu);
   });
 
   // Wait animation to be completed (when resolve will be called inside previous timeout).
@@ -322,7 +334,7 @@ test('animation dropdown without selecting a value', function(assert) {
 });
 
 test('animation dropdown with selecting a value', function(assert) {
-  assert.expect(15);
+  assert.expect(14);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -353,7 +365,7 @@ test('animation dropdown with selecting a value', function(assert) {
       $component.click();
     });
 
-    clickOnDropdown(assert, $component, $dropdownMenu, resolve);
+    clickOnDropdown(assert, resolve, null, $component, $dropdownMenu);
   });
 
   dropdownOpen.then(() => {
@@ -366,34 +378,7 @@ test('animation dropdown with selecting a value', function(assert) {
         Ember.$($items[2]).click();
       });
 
-      // Wait animation to check component's state.
-      Ember.run(() => {
-        let animation = assert.async();
-        setTimeout(() => {
-          // Check that component is animating now.
-          assert.strictEqual($dropdownMenu.hasClass('animating'), true, 'Component\'class \'menu\' has class \'animating\'');
-
-          // Tell to test method that asynchronous operation completed.
-          animation();
-
-        }, animationDuration / 2);
-      });
-
-      // Wait for expand animation to be completed & check component's state.
-      Ember.run(() => {
-        let animationCompleted = assert.async();
-        setTimeout(() => {
-          // Check that component is expanded now.
-          assert.strictEqual($dropdomnItem.hasClass('active'), true, 'Component\'s item has class \'active\'');
-          assert.strictEqual($dropdomnItem.hasClass('selected'), true, 'Component\'s item has class \'selected\'');
-
-          // Tell to test method that asynchronous operation completed.
-          animationCompleted();
-
-          // Resolve 'menuAnimationCompleted' promise.
-          resolve();
-        }, animationDuration);
-      });
+      clickOnDropdown(assert, resolve, $dropdomnItem, null, null);
     });
 
     // Wait animation to be completed (when resolve will be called inside previous timeout).

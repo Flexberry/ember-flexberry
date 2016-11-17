@@ -3,8 +3,8 @@ import { test } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | flexberry lookup');
-/*
-test('visiting flexberry-lookup', function(assert) {
+
+/*test('visiting flexberry-lookup', function(assert) {
   assert.expect(3);
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example');
@@ -33,7 +33,7 @@ test('visiting flexberry-lookup', function(assert) {
 
           done();
           resolve();
-        }, 200);
+        }, 500);
       });
     });
 
@@ -45,7 +45,7 @@ test('visiting flexberry-lookup', function(assert) {
 
       Ember.run(() => {
         var endClose = assert.async();
-        setTimeout(function() { endClose(); }, 100);
+        setTimeout(function() { endClose(); }, 1000);
       });
     });
   });
@@ -73,99 +73,62 @@ test('visiting flexberry-lookup', function(assert) {
 
     assert.strictEqual($result.length === 1, true, 'Component has inner class \'result\'');
   });
-});*/
-
+});
+*/
 test('visiting flexberry-lookup dropdown', function(assert) {
-  assert.expect(13);
+  assert.expect(14);
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
 
   andThen(function() {
 
-  assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
+    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
 
-  // Retrieve component, it's inner <input>.
-  let $lookupSearch = Ember.$('.lookup-field');
-  let $lookupButtonChoose = Ember.$('.lookup-choose-button');
-  let $lookupButtonClear = Ember.$('.lookup-remove-button');
+    // Retrieve component, it's inner <input>.
+    let $lookupSearch = Ember.$('.lookup-field');
+    let $lookupButtonChoose = Ember.$('.lookup-choose-button');
+    let $lookupButtonClear = Ember.$('.lookup-remove-button');
 
-  assert.strictEqual($lookupSearch.length === 0, true, 'Component has n\'t flexberry-lookup');
-  assert.strictEqual($lookupButtonChoose.length === 0, true, 'Component has n\'t button choose');
-  assert.strictEqual($lookupButtonClear.length === 0, true, 'Component has n\'t button remove');
+    assert.strictEqual($lookupSearch.length === 0, true, 'Component has n\'t flexberry-lookup');
+    assert.strictEqual($lookupButtonChoose.length === 0, true, 'Component has n\'t button choose');
+    assert.strictEqual($lookupButtonClear.length === 0, true, 'Component has n\'t button remove');
 
-  // Retrieve component, it's inner <input>.
-  let $dropdown = Ember.$('.flexberry-dropdown.search.selection');
+    // Retrieve component, it's inner <input>.
+    let $dropdown = Ember.$('.flexberry-dropdown.search.selection');
+    let $dropdownSearch = $dropdown.children('.search');
+    let $dropdownIcon = $dropdown.children('.dropdown.icon');
+    let $dropdownMenu = $dropdown.children('.menu');
+    let $deopdownText = $dropdown.children('.text');
 
-  assert.strictEqual($dropdown.length === 1, true, 'Component has class flexberry-dropdown');
-  assert.strictEqual($dropdown.hasClass('search'), true, 'Component\'s wrapper has \'search\' css-class');
-  assert.strictEqual($dropdown.hasClass('selection'), true, 'Component\'s wrapper has \'selection\' css-class');
-  assert.strictEqual($dropdown.hasClass('ember-view'), true, 'Component\'s wrapper has \'ember-view\' css-class');
-  assert.strictEqual($dropdown.hasClass('dropdown'), true, 'Component\'s wrapper has \'dropdown\' css-class');
+    assert.strictEqual($dropdown.length === 1, true, 'Component has class flexberry-dropdown');
+    assert.strictEqual($dropdown.hasClass('search'), true, 'Component\'s wrapper has \'search\' css-class');
+    assert.strictEqual($dropdown.hasClass('selection'), true, 'Component\'s wrapper has \'selection\' css-class');
+    assert.strictEqual($dropdown.hasClass('ember-view'), true, 'Component\'s wrapper has \'ember-view\' css-class');
+    assert.strictEqual($dropdown.hasClass('dropdown'), true, 'Component\'s wrapper has \'dropdown\' css-class');
 
-  let $dropdownSearch = $dropdown.children('.search');
+    assert.strictEqual($dropdownSearch.length === 1, true, 'Component has class search');
 
-  assert.strictEqual($dropdownSearch.length === 1, true, 'Component has class search');
+    assert.strictEqual($dropdownIcon.length === 1, true, 'Component has class dropdown and icon');
 
-  let $dropdownIcon = $dropdown.children('.dropdown.icon');
+    assert.strictEqual($deopdownText.length === 1, true, 'Component has class text');
 
-  assert.strictEqual($dropdownIcon.length === 1, true, 'Component has class dropdown and icon');
+    assert.strictEqual($dropdownMenu.length === 1, true, 'Component has class menu');
 
-  let $deopdownText = $dropdown.children('.text');
+    Ember.run(() => {
+      $deopdownText.click();
+    });
 
-  assert.strictEqual($deopdownText.length === 1, true, 'Component has class text');
+    Ember.run(() => {
+      var done = assert.async();
+      setTimeout(function() {
 
-  let $dropdownMenu = $dropdown.children('.menu');
+        $dropdownMenu = $dropdown.children('.menu');
+        $dropdownItem = $dropdownMenu.children('.item');
 
-  assert.strictEqual($dropdownMenu.length === 1, true, 'Component has class menu');
+        assert.strictEqual($dropdownItem.length === 38, true, 'Component has class flexberry-dropdown');
+
+        done();
+      }, 5000);
+    });
   });
 });
-
-/*
-test('set title', function(assert) {
-  assert.expect(2);
-
-  visit('components-acceptance-tests/flexberry-lookup/base-operations');
-
-  andThen(function() {
-
-    let expandAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
-
-      let $lookupButtouChoose = Ember.$('.lookup-choose-button');
-      let $ = Ember.$('.lookup-choose-button');
-      assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/base-operations');
-
-      Ember.run(() => {
-        $lookupButtouChoose.click();
-      });
-
-      Ember.run(() => {
-        var done = assert.async();
-        setTimeout(function() {
-
-          let $modal = Ember.$('.flexberry-modal');
-          let $modalTitle = $modal.children('.header');
-          let $modalField = $modal.children('tr');
-
-
-          assert.strictEqual($modalTitle.text().trim(), 'Temp title', 'Component\'s container has title \'Temp title\' text');
-
-          done();
-          resolve();
-
-        }, 100);
-      });
-    });
-
-    expandAnimationCompleted.then(() => {
-      Ember.run(() => {
-        let $modalCloseIcon = Ember.$('.close.icon');
-        $modalCloseIcon.click();
-      });
-
-      Ember.run(() => {
-        var endClose = assert.async();
-        setTimeout(function() { endClose(); }, 100);
-      });
-    });
-  });
-});*/

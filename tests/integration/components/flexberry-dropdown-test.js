@@ -231,6 +231,38 @@ test('itemsArray render properly', function(assert) {
   });
 });
 
+function clickOnDropdown(assert, $component, $dropdownMenu, resolve) {
+
+  // Wait animation to check component's state.
+  Ember.run(() => {
+    let animation = assert.async();
+    setTimeout(() => {
+      // Check that component is animating now.
+      assert.strictEqual($dropdownMenu.hasClass('animating'), true, 'Component has class \'animating\'');
+
+      // Tell to test method that asynchronous operation completed.
+      animation();
+
+    }, animationDuration / 2);
+  });
+
+  // Wait for expand animation to be completed & check component's state.
+  Ember.run(() => {
+    let animationCompleted = assert.async();
+    setTimeout(() => {
+      // Check that component is expanded now.
+      assert.strictEqual($component.hasClass('active'), true, 'Component has class \'active\'');
+      assert.strictEqual($dropdownMenu.hasClass('visible'), true, 'Component\'s menu has class \'visible\'');
+
+      // Tell to test method that asynchronous operation completed.
+      animationCompleted();
+
+      // Resolve 'menuAnimationCompleted' promise.
+      resolve();
+    }, animationDuration);
+  });
+}
+
 test('animation dropdown without selecting a value', function(assert) {
   assert.expect(12);
 
@@ -263,34 +295,7 @@ test('animation dropdown without selecting a value', function(assert) {
       $component.click();
     });
 
-    // Wait animation to check component's state.
-    Ember.run(() => {
-      let animation = assert.async();
-      setTimeout(() => {
-        // Check that component is animating now.
-        assert.strictEqual($dropdownMenu.hasClass('animating'), true, 'Component has class \'animating\'');
-
-        // Tell to test method that asynchronous operation completed.
-        animation();
-
-      }, animationDuration / 2);
-    });
-
-    // Wait for expand animation to be completed & check component's state.
-    Ember.run(() => {
-      let animationCompleted = assert.async();
-      setTimeout(() => {
-        // Check that component is expanded now.
-        assert.strictEqual($component.hasClass('active'), true, 'Component has class \'active\'');
-        assert.strictEqual($dropdownMenu.hasClass('visible'), true, 'Component\'s menu has class \'visible\'');
-
-        // Tell to test method that asynchronous operation completed.
-        animationCompleted();
-
-        // Resolve 'menuAnimationCompleted' promise.
-        resolve();
-      }, animationDuration);
-    });
+    clickOnDropdown(assert, $component, $dropdownMenu, resolve);
   });
 
   // Wait animation to be completed (when resolve will be called inside previous timeout).
@@ -317,7 +322,7 @@ test('animation dropdown without selecting a value', function(assert) {
 });
 
 test('animation dropdown with selecting a value', function(assert) {
-  assert.expect(14);
+  assert.expect(15);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -341,99 +346,78 @@ test('animation dropdown with selecting a value', function(assert) {
   assert.strictEqual($dropdownText.hasClass('default'), true, 'Component\'s text has class \'default\'');
   assert.strictEqual(this.get('value'), null, 'Component\'s property binded to \'value\' is equals to null');
 
-  new Ember.RSVP.Promise((resolve, reject) => {
+  let dropdownOpen = new Ember.RSVP.Promise((resolve, reject) => {
     // Try to expand component.
     // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
     Ember.run(() => {
       $component.click();
     });
 
-    // Wait animation to check component's state.
-    Ember.run(() => {
-      let animation = assert.async();
-      setTimeout(() => {
-        // Check that component is animating now.
-        assert.strictEqual($dropdownMenu.hasClass('animating'), true, 'Component has class \'animating\'');
-
-        // Tell to test method that asynchronous operation completed.
-        animation();
-
-      }, animationDuration / 2);
-    });
-
-    // Wait for expand animation to be completed & check component's state.
-    Ember.run(() => {
-      let animationCompleted = assert.async();
-      setTimeout(() => {
-
-        // Tell to test method that asynchronous operation completed.
-        animationCompleted();
-
-        // Resolve 'menuAnimationCompleted' promise.
-        resolve();
-      }, animationDuration);
-    });
+    clickOnDropdown(assert, $component, $dropdownMenu, resolve);
   });
 
-  let itemAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
+  dropdownOpen.then(() => {
 
-    // Try to expand component.
-    // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
-    Ember.run(() => {
-      Ember.$($items[2]).click();
+    let itemAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
+
+      // Try to expand component.
+      // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
+      Ember.run(() => {
+        Ember.$($items[2]).click();
+      });
+
+      // Wait animation to check component's state.
+      Ember.run(() => {
+        let animation = assert.async();
+        setTimeout(() => {
+          // Check that component is animating now.
+          assert.strictEqual($dropdownMenu.hasClass('animating'), true, 'Component\'class \'menu\' has class \'animating\'');
+
+          // Tell to test method that asynchronous operation completed.
+          animation();
+
+        }, animationDuration / 2);
+      });
+
+      // Wait for expand animation to be completed & check component's state.
+      Ember.run(() => {
+        let animationCompleted = assert.async();
+        setTimeout(() => {
+          // Check that component is expanded now.
+          assert.strictEqual($dropdomnItem.hasClass('active'), true, 'Component\'s item has class \'active\'');
+          assert.strictEqual($dropdomnItem.hasClass('selected'), true, 'Component\'s item has class \'selected\'');
+
+          // Tell to test method that asynchronous operation completed.
+          animationCompleted();
+
+          // Resolve 'menuAnimationCompleted' promise.
+          resolve();
+        }, animationDuration);
+      });
     });
 
-    // Wait animation to check component's state.
-    Ember.run(() => {
-      let animation = assert.async();
-      setTimeout(() => {
-        // Check that component is animating now.
-        assert.strictEqual($dropdownMenu.hasClass('animating'), true, 'Component\'class \'menu\' has class \'animating\'');
+    // Wait animation to be completed (when resolve will be called inside previous timeout).
+    // Then try to collapse component.
+    itemAnimationCompleted.then(() => {
+      // Wait for collapse animation to be completed & check component's state.
+      Ember.run(() => {
+        let animationCompleted = assert.async();
+        setTimeout(() => {
+          let $dropdownChangeText = $component.children('div.text');
+          let $dropdownActiveItem = $dropdownMenu.children('div.item.active');
+          let dropdownActiveItemText = $dropdownActiveItem.text();
 
-        // Tell to test method that asynchronous operation completed.
-        animation();
-
-      }, animationDuration / 2);
-    });
-
-    // Wait for expand animation to be completed & check component's state.
-    Ember.run(() => {
-      let animationCompleted = assert.async();
-      setTimeout(() => {
-        // Check that component is expanded now.
-        assert.strictEqual($dropdownMenu.hasClass('visible'), true, 'Component\'s menu has class \'visible\'');
-        assert.strictEqual($dropdomnItem.hasClass('active'), true, 'Component\'s item has class \'active\'');
-        assert.strictEqual($dropdomnItem.hasClass('selected'), true, 'Component\'s item has class \'selected\'');
-
-        // Tell to test method that asynchronous operation completed.
-        animationCompleted();
-
-        // Resolve 'menuAnimationCompleted' promise.
-        resolve();
-      }, animationDuration);
-    });
-  });
-
-  // Wait animation to be completed (when resolve will be called inside previous timeout).
-  // Then try to collapse component.
-  itemAnimationCompleted.then(() => {
-    // Wait for collapse animation to be completed & check component's state.
-    Ember.run(() => {
-      let animationCompleted = assert.async();
-      setTimeout(() => {
-        let $dropdownChangeText = $component.children('div.text');
-        let $dropdownActiveItem = $dropdownMenu.children('div.item.active');
-        let dropdownActiveItemText = $dropdownActiveItem.text();
-
-        // Check that component is expanded now.
-        assert.strictEqual($dropdownText.hasClass('default text'), false, 'Component\'s text hasn\'t class \'default\'');
-        assert.strictEqual($dropdownText.hasClass('text'), true, 'Component\'s text has class \'text\'');
-        assert.strictEqual($dropdownMenu.hasClass('transition'), true, 'Component\'s menu has class \'transition\'');
-        assert.strictEqual($dropdownMenu.hasClass('hidden'), true, 'Component\'s menu has class \'hidden\'');
-        assert.strictEqual($dropdownActiveItem.size(), 1, 'Only one component\'s item is active');
-        assert.strictEqual(Ember.$.trim($dropdownChangeText.text()), dropdownActiveItemText, 'Component\'s default text is changes');
-        assert.strictEqual(this.get('value'), dropdownActiveItemText, 'Component\'s property binded to \'value\' is equals to \'' + dropdownActiveItemText + '\'');        animationCompleted();
-      }, animationDuration);
+          // Check that component is expanded now.
+          assert.strictEqual($dropdownText.hasClass('default text'), false, 'Component\'s text hasn\'t class \'default\'');
+          assert.strictEqual($dropdownText.hasClass('text'), true, 'Component\'s text has class \'text\'');
+          assert.strictEqual($dropdownMenu.hasClass('transition'), true, 'Component\'s menu has class \'transition\'');
+          assert.strictEqual($dropdownMenu.hasClass('hidden'), true, 'Component\'s menu has class \'hidden\'');
+          assert.strictEqual($dropdownActiveItem.size(), 1, 'Only one component\'s item is active');
+          assert.strictEqual(Ember.$.trim($dropdownChangeText.text()), dropdownActiveItemText, 'Component\'s default text is changes');
+          assert.strictEqual(this.get('value'), dropdownActiveItemText, 'Component\'s property binded to \'value\' is equals to \'' + dropdownActiveItemText + '\'');
+          animationCompleted();
+        }, animationDuration);
+      });
     });
   });
 });

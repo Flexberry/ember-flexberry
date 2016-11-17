@@ -317,7 +317,7 @@ test('animation dropdown without selecting a value', function(assert) {
 });
 
 test('animation dropdown with selecting a value', function(assert) {
-  // assert.expect(13);
+  assert.expect(14);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -431,9 +431,44 @@ test('animation dropdown with selecting a value', function(assert) {
         assert.strictEqual($dropdownMenu.hasClass('transition'), true, 'Component\'s menu has class \'transition\'');
         assert.strictEqual($dropdownMenu.hasClass('hidden'), true, 'Component\'s menu has class \'hidden\'');
         assert.strictEqual($dropdownActiveItem.size(), 1, 'Only one component\'s item is active');
-        assert.strictEqual($dropdownChangeText.text(), dropdownActiveItemText, 'Component\'s default text is changes');
+        assert.strictEqual(Ember.$.trim($dropdownChangeText.text()), dropdownActiveItemText, 'Component\'s default text is changes');
         assert.strictEqual(this.get('value'), dropdownActiveItemText, 'Component\'s property binded to \'value\' is equals to \'' + dropdownActiveItemText + '\'');        animationCompleted();
       }, animationDuration);
     });
   });
 });
+
+test('changes in property binded to \'value\' causes changes in <dropdown>', function(assert) {
+  // Create array for testing.
+  let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
+  this.set('itemsArray', itemsArray);
+  this.set('value', null);
+
+  // Render component.
+  this.render(hbs`{{flexberry-dropdown
+    value=value
+    items=itemsArray
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $dropdownMenu = $component.children('div.menu');
+  let $dropdownText = $component.children('div.text');
+  let $items = Ember.$('div.item', $dropdownMenu);
+
+  // Check <dropdown>'s value & binded value for initial emptyness.
+  assert.strictEqual($dropdownText.hasClass('default'), true, 'Component\'s text has class \'default\'');
+  assert.strictEqual(Ember.$.trim($dropdownText.text()), Ember.get(I18nRuLocale, 'components.flexberry-dropdown.placeholder'), 'Component\'s inner <dropdown\'s value is equals to \'\'');
+  assert.strictEqual(this.get('value'), null, 'Component\'s property binded to \'value\' is equals to null');
+
+  // Change property binded to 'value' & check them again.
+  let newValue = itemsArray[0];
+  this.set('value', newValue);
+  let dropdownChangeText = Ember.$($items[0]).text();
+
+  assert.strictEqual(this.get('value'), newValue, 'Component\'s property binded to \'value\' is equals to \'' + newValue + '\'');
+  assert.strictEqual(dropdownChangeText, newValue, 'Component\'s inner <dropdown>\'s value is equals to \'' + newValue + '\'');
+  assert.strictEqual($dropdownText.hasClass('default text'), false, 'Component\'s text hasn\'t class \'default\'');
+  assert.strictEqual($dropdownText.hasClass('text'), true, 'Component\'s text has class \'text\'');
+});
+

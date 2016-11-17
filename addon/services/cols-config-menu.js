@@ -3,6 +3,7 @@
  */
 
 import Ember from 'ember';
+
 /**
  * Service to work with column configuration menu
  *
@@ -12,7 +13,7 @@ import Ember from 'ember';
  */
 export default Ember.Service.extend(Ember.Evented, {
     /**
-    Current application environment.
+      Current application environment.
 
       @property environment
       @type String
@@ -29,61 +30,15 @@ export default Ember.Service.extend(Ember.Evented, {
 
     listNamedSettings: undefined,
 
-    addNamedSettingTrigger: function (namedSeting) {
-      this.trigger('addNamedSetting', namedSeting);
+    addNamedSettingTrigger: function (namedSetting) {
+      this.trigger('addNamedSetting', namedSetting);
     },
 
-    deleteNamedSettingTrigger: function (namedSeting) {
-      this.trigger('deleteNamedSetting', namedSeting);
+    deleteNamedSettingTrigger: function (namedSetting) {
+      this.trigger('deleteNamedSetting', namedSetting);
     },
 
-    resetMenu: function(params) {
-      let rootItem = {
-        icon: 'dropdown icon',
-        iconAlignment: 'right',
-        title: '',
-        items:[]
-      };
-      let createSettitingItem = {
-        icon: 'table icon',
-        iconAlignment: 'left',
-        title: params.createSettitingTitle
-      };
-      rootItem.items[rootItem.items.length] = createSettitingItem;
-      for (let n in this.menus) {
-        let menu = this.menus[n];
-        let titleName = menu.name + 'SettitingTitle';
-        let title = params[titleName];
-        let submenu = { icon: 'angle right icon', iconAlignment: 'right', title: title, items: [] };
-        rootItem.items[rootItem.items.length] = submenu;
-      }
-
-      let setDefaultItem = {
-        icon: 'remove circle icon',
-        iconAlignment: 'left',
-        title: params.setDefaultSettitingTitle
-      };
-      rootItem.items[rootItem.items.length] = setDefaultItem;
-      if (this.environment && this.environment === 'development') {
-        let showDefaultItem = {
-          icon: 'unhide icon',
-          iconAlignment: 'left',
-          title: params.showDefaultSettitingTitle
-        };
-        rootItem.items[rootItem.items.length] = showDefaultItem;
-      }
-
-      this.colsSettingsItems = [rootItem];
-      this.listNamedUserSettings = params.listNamedUserSettings;
-      for (let namedSetting in this.listNamedUserSettings) {
-        this._addNamedSetting(namedSetting);
-      }
-
-      this.sort();
-      return this.colsSettingsItems;
-    },
-
-    _addNamedSetting: function(namedSeting) {
+    _addNamedSetting: function(namedSetting) {
       let menus = this.menus;
       for (let i = 0; i < menus.length; i++) {
         let icon = menus[i].icon + ' icon';
@@ -92,14 +47,14 @@ export default Ember.Service.extend(Ember.Evented, {
         let exist = false;
         for (let j = 0; j < subItems.length; j++) {
           newSubItems[j] = subItems[j];
-          if (subItems[j].title === namedSeting) {
+          if (subItems[j].title === namedSetting) {
             exist = true;
           }
 
         }
 
         if (!exist) {
-          newSubItems[subItems.length] = { title: namedSeting, icon: icon, iconAlignment: 'left' };
+          newSubItems[subItems.length] = { title: namedSetting, icon: icon, iconAlignment: 'left' };
         }
 
         Ember.set(this.colsSettingsItems[0].items[i + 1], 'items', newSubItems);
@@ -113,6 +68,5 @@ export default Ember.Service.extend(Ember.Evented, {
         this.colsSettingsItems[0].items[i + 1].items.sort((a, b) => a.title > b.title);
       }
     }
-
   }
 );

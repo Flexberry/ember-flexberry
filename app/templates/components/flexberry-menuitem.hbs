@@ -1,6 +1,6 @@
 {{#if titleIsBeforeIcon}}
   {{#if item.localeKey}}
-    {{t item.localeKey}}
+    <span>{{t item.localeKey}}</span>
   {{else}}
     <span>{{item.title}}</span>
   {{/if}}
@@ -10,7 +10,7 @@
 {{/if}}
 {{#if (not titleIsBeforeIcon)}}
   {{#if item.localeKey}}
-    {{t item.localeKey}}
+    <span>{{t item.localeKey}}</span>
   {{else}}
     <span>{{item.title}}</span>
   {{/if}}

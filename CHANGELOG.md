@@ -6,12 +6,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 * Remove `_attributeChanged` observer from `object-list-view` component.
+* Remove properties from `olv-toolbar` & `flexberry-simpleolv`: `createSettitingTitle`, `useSettitingTitle`, `editSettitingTitle`, `removeSettitingTitle`, `setDefaultSettitingTitle`, `showDefaultSettitingTitle`.
 
 ### Fixed
 * Fix sorting from colsconfig-dialog if in url has param sort.
+* Now if change locale several time `cols-config-menu` still work.
 
 ### Added
 * Add `localeKey` property of item in `flexberry-menu`.
+
+### Changed
+* Move `resetMenu` method from `col-config-menu` service to `olv-toolbar` & `flexberry-simpleolv`.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

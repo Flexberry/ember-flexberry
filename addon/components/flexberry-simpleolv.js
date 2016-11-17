@@ -955,7 +955,8 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').on('resetFilters', this, this._resetColumnFilters);
 
-    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
+    this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
 
     let eventsBus = this.get('eventsBus');
@@ -1027,7 +1028,8 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').off('resetFilters', this, this._resetColumnFilters);
-    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
 
     this._super(...arguments);
@@ -2061,6 +2063,15 @@ ErrorableControllerMixin, {
   */
   listNamedUserSettings: undefined,
 
+  _listNamedUserSettings: Ember.observer('listNamedUserSettings', function() {
+    let listNamedUserSettings = this.get('listNamedUserSettings');
+    for (let namedSetting in listNamedUserSettings) {
+      this._addNamedSetting(namedSetting);
+    }
+
+    this._sortNamedSetting();
+  }),
+
   /**
     @property colsConfigMenu
     @type Service
@@ -2130,12 +2141,6 @@ ErrorableControllerMixin, {
       }
 
       this.colsSettingsItems = [rootItem];
-      let listNamedUserSettings = this.get('listNamedUserSettings');
-      for (let namedSetting in listNamedUserSettings) {
-        this._addNamedSetting(namedSetting);
-      }
-
-      this._sort();
       return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
   ),
@@ -2228,15 +2233,47 @@ ErrorableControllerMixin, {
     }
   },
 
-  _addNamedSetting(namedSetting) {
+  _updateListNamedUserSettings() {
+    this._resetNamedUserSettings();
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+  },
+
+  _resetNamedUserSettings() {
+    let menus = this.get('menus');
+    for (let i = 0; i < menus.length; i++) {
+      Ember.set(this.colsSettingsItems[0].items[i + 1], 'items', []);
+    }
+  },
+
+  _addNamedSetting(namedSetting) {
+    let menus = this.get('menus');
+    for (let i = 0; i < menus.length; i++) {
+      let icon = menus[i].icon + ' icon';
+      let subItems = this.colsSettingsItems[0].items[i + 1].items;
+      let newSubItems = [];
+      let exist = false;
+      for (let j = 0; j < subItems.length; j++) {
+        newSubItems[j] = subItems[j];
+        if (subItems[j].title === namedSetting) {
+          exist = true;
+        }
+      }
+
+      if (!exist) {
+        newSubItems[subItems.length] = { title: namedSetting, icon: icon, iconAlignment: 'left' };
+      }
+
+      Ember.set(this.colsSettingsItems[0].items[i + 1], 'items', newSubItems);
+    }
+
+    this._sortNamedSetting();
   },
 
   _deleteNamedSetting(namedSetting) {
-    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+    this._updateListNamedUserSettings();
   },
 
-  _sort() {
+  _sortNamedSetting() {
     for (let i = 0; i < this.menus.length; i++) {
       this.colsSettingsItems[0].items[i + 1].items.sort((a, b) => a.title > b.title);
     }

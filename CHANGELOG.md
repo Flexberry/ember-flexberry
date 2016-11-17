@@ -11,12 +11,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Fix sorting from colsconfig-dialog if in url has param sort.
 * Now if change locale several time `cols-config-menu` still work.
+* Fix `col-config-menu` for namedSetting, now can see them.
 
 ### Added
 * Add `localeKey` property of item in `flexberry-menu`.
 
 ### Changed
-* Move `resetMenu` method from `col-config-menu` service to `olv-toolbar` & `flexberry-simpleolv`.
+* Move `resetMenu`, `addNamedSetting` and `sort` methods from `col-config-menu` service to `olv-toolbar` & `flexberry-simpleolv`. `sort` method rename to `sortNamedSetting`.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

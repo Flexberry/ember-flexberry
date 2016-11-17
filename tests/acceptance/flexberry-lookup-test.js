@@ -4,7 +4,7 @@ import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | flexberry lookup');
 
-/*test('visiting flexberry-lookup', function(assert) {
+test('visiting flexberry-lookup', function(assert) {
   assert.expect(3);
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example');
@@ -49,7 +49,7 @@ moduleForAcceptance('Acceptance | flexberry lookup');
       });
     });
   });
-});*/
+});
 
 /*test('visiting flexberry-lookup autocomplete', function(assert) {
   assert.expect(5);
@@ -75,7 +75,7 @@ moduleForAcceptance('Acceptance | flexberry lookup');
   });
 });
 */
-test('visiting flexberry-lookup dropdown', function(assert) {
+/*test('visiting flexberry-lookup dropdown', function(assert) {
   assert.expect(14);
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
@@ -131,4 +131,4 @@ test('visiting flexberry-lookup dropdown', function(assert) {
       }, 5000);
     });
   });
-});
+});*/

@@ -317,15 +317,17 @@ test('animation dropdown without selecting a value', function(assert) {
 });
 
 test('animation dropdown with selecting a value', function(assert) {
-  assert.expect(13);
+  // assert.expect(13);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
   this.set('itemsArray', itemsArray);
+  this.set('value', null);
 
   // Render component.
   this.render(hbs`{{flexberry-dropdown
     items=itemsArray
+    value=value
   }}`);
 
   // Retrieve component.
@@ -334,7 +336,10 @@ test('animation dropdown with selecting a value', function(assert) {
   let $dropdownText = $component.children('div.text');
   let $dropdomnItem = $dropdownMenu.children('div.item');
 
+  let $items = Ember.$('div.item', $dropdownMenu);
+
   assert.strictEqual($dropdownText.hasClass('default'), true, 'Component\'s text has class \'default\'');
+  assert.strictEqual(this.get('value'), null, 'Component\'s property binded to \'value\' is equals to null');
 
   new Ember.RSVP.Promise((resolve, reject) => {
     // Try to expand component.
@@ -371,7 +376,6 @@ test('animation dropdown with selecting a value', function(assert) {
   });
 
   let itemAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
-    let $items = Ember.$('div.item', $dropdownMenu);
 
     // Try to expand component.
     // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
@@ -418,16 +422,17 @@ test('animation dropdown with selecting a value', function(assert) {
       let animationCompleted = assert.async();
       setTimeout(() => {
         let $dropdownChangeText = $component.children('div.text');
+        let $dropdownActiveItem = $dropdownMenu.children('div.item.active');
+        let dropdownActiveItemText = $dropdownActiveItem.text();
 
         // Check that component is expanded now.
         assert.strictEqual($dropdownText.hasClass('default text'), false, 'Component\'s text hasn\'t class \'default\'');
         assert.strictEqual($dropdownText.hasClass('text'), true, 'Component\'s text has class \'text\'');
         assert.strictEqual($dropdownMenu.hasClass('transition'), true, 'Component\'s menu has class \'transition\'');
         assert.strictEqual($dropdownMenu.hasClass('hidden'), true, 'Component\'s menu has class \'hidden\'');
-        assert.strictEqual($dropdomnItem.hasClass('active'), true, 'Component\'s item has class \'active\'');
-        assert.strictEqual($dropdomnItem.hasClass('selected'), true, 'Component\'s item has class \'selected\'');
-        assert.strictEqual($dropdownChangeText.text(), 'Caption3', 'Component\'s default text is chanes');
-        animationCompleted();
+        assert.strictEqual($dropdownActiveItem.size(), 1, 'Only one component\'s item is active');
+        assert.strictEqual($dropdownChangeText.text(), dropdownActiveItemText, 'Component\'s default text is changes');
+        assert.strictEqual(this.get('value'), dropdownActiveItemText, 'Component\'s property binded to \'value\' is equals to \'' + dropdownActiveItemText + '\'');        animationCompleted();
       }, animationDuration);
     });
   });

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.7] - 2016-11-18
 ### Added
 * Add `localeKey` property of item in `flexberry-menu`.
 * Add loader for `object-list-view` and `flexberry-simpleolv` when clicking the head of column to sort records.
@@ -10,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Restore ability to add menu items in row for `flexberry-groupedit` and `flexberry-objectlistview` components using `menuInRowAdditionalItems` property. Now this behavior is similar to `customButtons` property for toolbar.
 * Move `resetMenu`, `addNamedSetting` and `sort` methods from `col-config-menu` service to `olv-toolbar` & `flexberry-simpleolv`. `sort` method renamed to `sortNamedSetting`.
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.6 version.
 
 ### Removed
 * Remove `_attributeChanged` observer from `object-list-view` component.

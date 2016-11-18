@@ -11,24 +11,6 @@ export default Ember.Controller.extend({
   _serializedModelDate: undefined,
 
   /**
-    Serialized min date.
-
-    @property _serializedMinDate
-    @type String
-    @private
-   */
-  _serializedMinDate: undefined,
-
-  /**
-    Serialized max date.
-
-    @property _serializedMaxDate
-    @type String
-    @private
-   */
-  _serializedMaxDate: undefined,
-
-  /**
     Handles changes in serialized model date.
 
     @method _serializedModelDateDidChange
@@ -36,26 +18,6 @@ export default Ember.Controller.extend({
    */
   _serializedModelDateDidChange: Ember.observer('_serializedModelDate', function() {
     Ember.run.once(this, '_changeDateProperty', '_serializedModelDate', 'model.date');
-  }),
-
-  /**
-    Handles changes in min date.
-
-    @method _serializedMinDateDidChange
-    @private
-   */
-  _serializedMinDateDidChange: Ember.observer('_serializedMinDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedMinDate', 'min');
-  }),
-
-  /**
-    Handles changes in serialized max date.
-
-    @method _serializedMaxDateDidChange
-    @private
-   */
-  _serializedMaxDateDidChange: Ember.observer('_serializedMaxDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedMaxDate', 'max');
   }),
 
   /**
@@ -87,12 +49,7 @@ export default Ember.Controller.extend({
       return;
     }
 
-    let momentDate = this.get('moment').moment(serializedDate);
-    if (momentDate.isValid()) {
-      this.set(datePropertyName, momentDate.toDate());
-    } else {
-      this.set(datePropertyName, new Date('invalid'));
-    }
+    this.set(datePropertyName, serializedDate);
   },
 
   /**
@@ -109,31 +66,29 @@ export default Ember.Controller.extend({
       return;
     }
 
-    let momentDate = this.get('moment').moment(date);
-    if (momentDate.isValid()) {
-      this.set(serializedDatePropertyName, momentDate.format('YYYY-MM-DDTHH:MM'));
-    } else {
-      this.set(serializedDatePropertyName, '' + new Date('invalid'));
-    }
+    this.set(serializedDatePropertyName, date);
   },
 
   /**
-   Minimum value of this component.
+    Minimum value of this component.
 
-   @property min
-   @type Date
+    @property min
+    @type Date
+    @default 'today'
    */
-  min: undefined,
+  min: new Date(),
+
   /**
     Maximum value of this component.
 
-   @property max
-   @type Date
+    @property max
+    @type Date
+    @default 'today' + 7 days
    */
-  max: undefined,
+  max: new Date().fp_incr(14),
 
   /**
-    Flag: indicates whether 'flexberry-simpledatetime' component is in 'readonly' mode or not.
+    Flag indicates whether 'flexberry-simpledatetime' component is in 'readonly' mode or not.
 
     @property readonly
     @type Boolean
@@ -174,20 +129,16 @@ export default Ember.Controller.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'min',
       settingType: 'date',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: '_serializedMinDate',
-      bindedControllerPropertieDisplayName: 'min'
+      settingDefaultValue: this._convertDateToString(this.get('min')),
     });
     componentSettingsMetadata.pushObject({
       settingName: 'max',
       settingType: 'date',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: '_serializedMaxDate',
-      bindedControllerPropertieDisplayName: 'max'
+      settingDefaultValue: this._convertDateToString(this.get('max')),
     });
     componentSettingsMetadata.pushObject({
       settingName: 'value',
-      settingType: 'date',
+      settingType: 'datetime',
       settingDefaultValue: undefined,
       bindedControllerPropertieName: '_serializedModelDate',
       bindedControllerPropertieDisplayName: 'model.date'
@@ -200,5 +151,48 @@ export default Ember.Controller.extend({
     });
 
     return componentSettingsMetadata;
-  })
+  }),
+
+  _supportDateType: Ember.computed(function() {
+    if (this._checkInput('date') || this._checkInput('datetime') || this._checkInput('datetime-local')) {
+      return true;
+    }
+
+    return false;
+  }),
+
+  /**
+    Convert Date object to appropriate string value for input.
+
+    @method _convertDateToString
+    @param {Date} value Object of Date.
+    @return {String} Date in string format.
+    @private
+  */
+  _convertDateToString(value) {
+    if (value == null) {
+      return value;
+    }
+
+    if (typeof value !== 'object') {
+      throw new Error('Value must be a Date object.');
+    }
+
+    let momentDate = this.get('moment').moment(value);
+    return momentDate.format('DD.MM.YYYY HH:MM');
+  },
+
+  /**
+    The method checks if some input type is supported by the browser.
+
+    @method _checkInput
+    @param {String} type Type of input.
+    return {Boolean}
+    @private
+  */
+  _checkInput(type) {
+    let input = document.createElement('input');
+    input.setAttribute('type', type);
+    return input.type === type;
+  },
 });

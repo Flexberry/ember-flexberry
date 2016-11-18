@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0-beta.8] - 2016-11-18
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.7 version.
+
 ## [0.8.0-beta.7] - 2016-11-18
 ### Added
 * Add `localeKey` property of item in `flexberry-menu`.

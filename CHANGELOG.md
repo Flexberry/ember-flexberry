@@ -3,14 +3,29 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Add `localeKey` property of item in `flexberry-menu`.
+* Add loader for `object-list-view` and `flexberry-simpleolv` when clicking the head of column to sort records.
+
 ### Changed
 * Restore ability to add menu items in row for `flexberry-groupedit` and `flexberry-objectlistview` components using `menuInRowAdditionalItems` property. Now this behavior is similar to `customButtons` property for toolbar.
+* Move `resetMenu`, `addNamedSetting` and `sort` methods from `col-config-menu` service to `olv-toolbar` & `flexberry-simpleolv`. `sort` method renamed to `sortNamedSetting`.
+
+### Removed
+* Remove `_attributeChanged` observer from `object-list-view` component.
+* Remove properties from `olv-toolbar` & `flexberry-simpleolv`: `createSettitingTitle`, `useSettitingTitle`, `editSettitingTitle`, `removeSettitingTitle`, `setDefaultSettitingTitle`, `showDefaultSettitingTitle`.
 
 ### Fixed
+* Fix sorting in `colsconfig-dialog` if url has `sort` param.
+* Now if locale was changed several times `cols-config-menu` still works.
+* Fix `col-config-menu` for named setting, now users can see them.
 * Using of wrong model to get `id` param when performig transition to parent route after saving and changing deatil model of 2nd level.
-* Now `rowConfig.customClass` property working on mobile.
-* Component `flexberry-simpleolv` not used columns order from user settings.
-* When generating a columns in user settings window for `flexberry-objectlistview` and `flexberry-simpleolv` components, if  is set `enableFilters` property into controller, attempt to add filters for these columns.
+* Now `rowConfig.customClass` property, checkboxes and delete buttons in row are working on mobile.
+* Loader is showing now in mobile template of `flexberry-lookup`.
+* Delete errors are not showing multiple times now if record deletion was unsuccessful in `flexberry-simpleolv` and `object-list-view` components.
+* Menu in row for `flexberry-simpleolv` component is displaying now only if `showEditMenuItemInRow` or `showDeleteMenuItemInRow` options are specified.
+* `flexberry-simpleolv` component was not used columns ordering from user settings.
+* When generating columns in user settings window for `flexberry-objectlistview` and `flexberry-simpleolv` components, if `enableFilters` property is set in controller then it was attempt to add filters for these columns.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

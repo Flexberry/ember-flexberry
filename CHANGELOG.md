@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Using of wrong model to get `id` param when performig transition to parent route after saving and changing deatil model of 2nd level.
 * Now `rowConfig.customClass` property, checkboxes and delete buttons in row are working on mobile.
 * Loader is showing now in mobile template of `flexberry-lookup`.
+* Delete errors are not showing multiple times now if record deletion was unsuccessful in `flexberry-simpleolv` and `object-list-view` components.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

@@ -1135,6 +1135,7 @@ ErrorableControllerMixin, {
 
   _setColumnsUserSettings() {
     this._setColumnWidths();
+    this._setColumnsOrder();
     this._setColumnsSorting();
   },
 

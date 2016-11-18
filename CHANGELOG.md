@@ -24,6 +24,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Loader is showing now in mobile template of `flexberry-lookup`.
 * Delete errors are not showing multiple times now if record deletion was unsuccessful in `flexberry-simpleolv` and `object-list-view` components.
 * Menu in row for `flexberry-simpleolv` component is displaying now only if `showEditMenuItemInRow` or `showDeleteMenuItemInRow` options are specified.
+* `flexberry-simpleolv` component was not used columns ordering from user settings.
+* When generating columns in user settings window for `flexberry-objectlistview` and `flexberry-simpleolv` components, if `enableFilters` property is set in controller then it was attempt to add filters for these columns.
 
 ## [0.8.0-beta.6] - 2016-11-15
 ### Changed

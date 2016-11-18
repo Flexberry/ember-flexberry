@@ -192,14 +192,6 @@ export default ListFormController.extend({
   orderable: true,
 
   /**
-    ext for 'flexberry-simpleolv' component 'singleColumnHeaderTitle' property.
-
-    @property singleColumnHeaderTitle
-    @type String
-   */
-  singleColumnHeaderTitle: undefined,
-
-  /**
     Current records.
 
     @property _records
@@ -395,12 +387,6 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: true,
       bindedControllerPropertieName: 'orderable'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'singleColumnHeaderTitle',
-      settingType: 'string',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: 'singleColumnHeaderTitle'
     });
 
     return componentSettingsMetadata;

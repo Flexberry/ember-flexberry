@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
+import { Query } from 'ember-flexberry-data';
+
+const { StringPredicate } = Query;
 
 export default EditFormController.extend({
   /**
@@ -22,6 +25,24 @@ export default EditFormController.extend({
       this.set('placeholder', t('components.flexberry-lookup.placeholder'));
     }
   }),
+  /**
+    Flag indicates whether 'flexberry-lookup' component is in 'readonly' mode or not.
+
+    @property readonly
+    @type Boolean
+    @default false
+  */
+  tempLimitPredicate: undefined,
+
+      /**
+    Flag indicates whether 'flexberry-lookup' component is in 'readonly' mode or not.
+
+    @property readonly
+    @type Boolean
+    @default false
+  */
+  tempLimitFunction: undefined,
+
   /**
     Flag indicates whether 'flexberry-lookup' component is in 'readonly' mode or not.
 
@@ -186,5 +207,33 @@ export default EditFormController.extend({
     });
 
     return componentSettingsMetadata;
-  })
+  }),
+
+  actions: {
+
+    /**
+      This method set dynamicProperties.lookupLimitPredicate for lookup window.
+
+      @method firstLimitFunction
+     */
+    tempLimitPredicate() {
+      let currentLookupValue = this.get('tempLimitFunction');
+      let limitFunction = new StringPredicate('name').contains(currentLookupValue);
+      this.set('tempLimitPredicate:', limitFunction);
+    },
+  },
+
+  /**
+    Set limit accessible values for lookup.
+
+    @method init
+   */
+  init() {
+    this._super(...arguments);
+    this.set('dynamicProperties',
+    {
+      lookupLimitPredicate: null
+    });
+    this.set('tempLimitFunction', this.get('controller.limitFunction'));
+  }
 });

@@ -128,7 +128,8 @@ test('visiting flexberry-lookup', function(assert) {
         assert.strictEqual($dropdownItem.length === 38, true, 'Component has class flexberry-dropdown');
 
         done();
-      }, 5000);
+      }, 50000);
     });
   });
-});*/
+});
+*/

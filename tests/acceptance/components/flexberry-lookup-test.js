@@ -69,6 +69,10 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
       // Click on whole row wont take an effect.
       let $choosedRecordFirstCell = Ember.$(Ember.$('td', $choosedRecord)[1]);
       $choosedRecordFirstCell.click();
+
+      // Click on modal-dialog close icon.
+      let $modelDilogClose = Ember.$('.close.icon');
+      $modelDilogClose.click();      
     });
 
     // Wait for lookup dialog to be closed.
@@ -141,6 +145,52 @@ module('Acceptance | flexberry-lookup', {
 test('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation', function(assert) {
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
   andThen(function() {
+    let controller = app.__container__.lookup('controller:' + currentRouteName());
+    let model = Ember.get(controller, 'model');
+    let relationName = Ember.get(controller, 'relationName');
+    let displayAttributeName = Ember.get(controller, 'displayAttributeName');
+
+    let $lookup = Ember.$('.flexberry-lookup');
+    let $lookupInput = Ember.$('input', $lookup);
+    assert.strictEqual($lookupInput.val(), '', 'lookup display value is empty by default');
+
+    // Wait for lookup dialog to be opened, choose first record & check component's state.
+    let asyncOperationsCompleted = assert.async();
+    openLookupDialog($lookup).then(($lookupDialog) => {
+      assert.ok($lookupDialog);
+
+      // Lookup dialog successfully opened & data is loaded.
+      // Try to choose first loaded record.
+      return chooseRecordInLookupDialog($lookupDialog, 0);
+    }).then(() => {
+      // First loaded record chosen successfully.
+      // Check that chosen record is now set to related model's 'belongsTo' relation.
+      let chosenRecord = model.get(relationName);
+      let expectedRecord = latestReceivedRecords[0];
+      assert.strictEqual(
+        chosenRecord,
+        expectedRecord,
+        'chosen record is set to model\'s \'' + relationName + '\' relation as expected');
+
+      let chosenRecordDisplayAttribute = chosenRecord.get(displayAttributeName);
+      assert.strictEqual(
+        $lookupInput.val(),
+        chosenRecordDisplayAttribute,
+        'lookup display value is equals to chosen record\'s \'' + displayAttributeName + '\' attribute');
+    }).catch((reason) => {
+      throw new Error(reason);
+    }).finally(() => {
+      asyncOperationsCompleted();
+    });
+  });
+});
+
+test('changes in related model\'s value causes changes in component\'s', function(assert) {
+  visit('components-acceptance-tests/flexberry-lookup/base-operations');
+  andThen(function() {
+
+    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/base-operations');
+
     let controller = app.__container__.lookup('controller:' + currentRouteName());
     let model = Ember.get(controller, 'model');
     let relationName = Ember.get(controller, 'relationName');

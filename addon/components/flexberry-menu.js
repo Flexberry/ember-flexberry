@@ -232,7 +232,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Menu's collapseMenuOnItemClick observer.
-   */
+  */
   _collapseMenuOnItemClickDidChange: Ember.observer('collapseMenuOnItemClick', function() {
     this.$().dropdown({
       action: this._getActionForMenu(this.get('collapseMenuOnItemClick'))
@@ -246,7 +246,7 @@ export default FlexberryBaseComponent.extend({
     @param {Boolean} collapseMenuOnItemClick Flag whether to collapse menu on click or not.
     @return {String} Action name.
     @private
-   */
+  */
   _getActionForMenu(collapseMenuOnItemClick) {
     return collapseMenuOnItemClick ? 'activate' : 'nothing';
   }

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fix incorrect getting of `colsSettingsItems` property in `ovl-toolbar` and `flexberry-simpleolv` components that causes errors when loading or sorting list of records for the first time.
 
 ## [0.8.0-beta.8] - 2016-11-18
 ### Changed

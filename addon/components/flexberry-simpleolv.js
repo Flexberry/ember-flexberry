@@ -2245,7 +2245,7 @@ ErrorableControllerMixin, {
   _resetNamedUserSettings() {
     let menus = this.get('menus');
     for (let i = 0; i < menus.length; i++) {
-      Ember.set(this.colsSettingsItems[0].items[i + 1], 'items', []);
+      Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', []);
     }
   },
 
@@ -2253,7 +2253,7 @@ ErrorableControllerMixin, {
     let menus = this.get('menus');
     for (let i = 0; i < menus.length; i++) {
       let icon = menus[i].icon + ' icon';
-      let subItems = this.colsSettingsItems[0].items[i + 1].items;
+      let subItems = this.get('colsSettingsItems')[0].items[i + 1].items;
       let newSubItems = [];
       let exist = false;
       for (let j = 0; j < subItems.length; j++) {
@@ -2267,7 +2267,7 @@ ErrorableControllerMixin, {
         newSubItems[subItems.length] = { title: namedSetting, icon: icon, iconAlignment: 'left' };
       }
 
-      Ember.set(this.colsSettingsItems[0].items[i + 1], 'items', newSubItems);
+      Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
     }
 
     this._sortNamedSetting();
@@ -2279,7 +2279,7 @@ ErrorableControllerMixin, {
 
   _sortNamedSetting() {
     for (let i = 0; i < this.menus.length; i++) {
-      this.colsSettingsItems[0].items[i + 1].items.sort((a, b) => a.title > b.title);
+      this.get('colsSettingsItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
     }
   }
 });

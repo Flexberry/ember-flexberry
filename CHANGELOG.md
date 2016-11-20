@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.9] - 2016-11-20
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.8 version.
+
 ### Fixed
 * Fix incorrect getting of `colsSettingsItems` property in `ovl-toolbar` and `flexberry-simpleolv` components that causes errors when loading or sorting list of records for the first time.
 

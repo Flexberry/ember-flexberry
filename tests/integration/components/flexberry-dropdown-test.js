@@ -165,6 +165,36 @@ test('readonly mode works properly', function(assert) {
   });
 });
 
+test('needChecksOnValue', function(assert) {
+  assert.expect(2);
+
+  // Create array for testing.
+  let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
+  this.set('itemsArray', itemsArray);
+  this.set('value', null);
+
+  // Render component.
+  this.render(hbs`{{flexberry-dropdown
+    value=value
+    items=itemsArray
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $dropdownMenu = $component.children('div.menu');
+  let $items = Ember.$('div.item', $dropdownMenu);
+
+  assert.strictEqual(this.get('value'), null, 'Component\'s property binded to \'value\' is equals to null');
+
+  // Change property binded to 'value' & check them again.
+  this.set('needChecksOnValue', true);
+  let newValue = itemsArray[3];
+  this.set('value', newValue);
+  let dropdownChangeText = Ember.$($items[0]).text();
+
+  assert.notStrictEqual(dropdownChangeText, newValue);
+});
+
 test('itemsObject render properly', function(assert) {
   assert.expect(4);
 
@@ -334,7 +364,72 @@ test('animation dropdown without selecting a value', function(assert) {
 });
 
 test('animation dropdown with selecting a value', function(assert) {
-  assert.expect(14);
+  assert.expect(10);
+
+  // Create array for testing.
+  let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
+  this.set('itemsArray', itemsArray);
+
+  // Render component.
+  this.render(hbs`{{flexberry-dropdown
+    items=itemsArray
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $dropdownMenu = $component.children('div.menu');
+  let $dropdownText = $component.children('div.text');
+  let $dropdomnItem = $dropdownMenu.children('div.item');
+
+  let $items = Ember.$('div.item', $dropdownMenu);
+
+  assert.strictEqual($dropdownText.hasClass('default'), true, 'Component\'s text has class \'default\'');
+
+  let dropdownOpen = new Ember.RSVP.Promise((resolve, reject) => {
+    // Try to expand component.
+    // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
+    Ember.run(() => {
+      $component.click();
+    });
+
+    clickOnDropdown(assert, resolve, null, $component, $dropdownMenu);
+  });
+
+  dropdownOpen.then(() => {
+
+    let itemAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
+
+      // Try to expand component.
+      // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
+      Ember.run(() => {
+        Ember.$($items[2]).click();
+      });
+
+      clickOnDropdown(assert, resolve, $dropdomnItem, null, null);
+    });
+
+    // Wait animation to be completed (when resolve will be called inside previous timeout).
+    // Then try to collapse component.
+    itemAnimationCompleted.then(() => {
+      // Wait for collapse animation to be completed & check component's state.
+      Ember.run(() => {
+        let animationCompleted = assert.async();
+        setTimeout(() => {
+
+          // Check that component is expanded now.
+          assert.strictEqual($dropdownText.hasClass('default text'), false, 'Component\'s text hasn\'t class \'default\'');
+          assert.strictEqual($dropdownText.hasClass('text'), true, 'Component\'s text has class \'text\'');
+          assert.strictEqual($dropdownMenu.hasClass('transition'), true, 'Component\'s menu has class \'transition\'');
+          assert.strictEqual($dropdownMenu.hasClass('hidden'), true, 'Component\'s menu has class \'hidden\'');
+          animationCompleted();
+        }, animationDuration);
+      });
+    });
+  });
+});
+
+test('changes in inner <dropdown> causes changes in property binded to \'value\'', function(assert) {
+  assert.expect(10);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -393,13 +488,10 @@ test('animation dropdown with selecting a value', function(assert) {
           let dropdownActiveItemText = $dropdownActiveItem.text();
 
           // Check that component is expanded now.
-          assert.strictEqual($dropdownText.hasClass('default text'), false, 'Component\'s text hasn\'t class \'default\'');
-          assert.strictEqual($dropdownText.hasClass('text'), true, 'Component\'s text has class \'text\'');
-          assert.strictEqual($dropdownMenu.hasClass('transition'), true, 'Component\'s menu has class \'transition\'');
-          assert.strictEqual($dropdownMenu.hasClass('hidden'), true, 'Component\'s menu has class \'hidden\'');
           assert.strictEqual($dropdownActiveItem.size(), 1, 'Only one component\'s item is active');
           assert.strictEqual(Ember.$.trim($dropdownChangeText.text()), dropdownActiveItemText, 'Component\'s default text is changes');
-          assert.strictEqual(this.get('value'), dropdownActiveItemText, 'Component\'s property binded to \'value\' is equals to \'' + dropdownActiveItemText + '\'');
+          assert.strictEqual(this.get('value'), dropdownActiveItemText,
+          'Component\'s property binded to \'value\' is equals to \'' + dropdownActiveItemText + '\'');
           animationCompleted();
         }, animationDuration);
       });
@@ -408,6 +500,8 @@ test('animation dropdown with selecting a value', function(assert) {
 });
 
 test('changes in property binded to \'value\' causes changes in <dropdown>', function(assert) {
+  assert.expect(7);
+
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
   this.set('itemsArray', itemsArray);
@@ -427,7 +521,8 @@ test('changes in property binded to \'value\' causes changes in <dropdown>', fun
 
   // Check <dropdown>'s value & binded value for initial emptyness.
   assert.strictEqual($dropdownText.hasClass('default'), true, 'Component\'s text has class \'default\'');
-  assert.strictEqual(Ember.$.trim($dropdownText.text()), Ember.get(I18nRuLocale, 'components.flexberry-dropdown.placeholder'), 'Component\'s inner <dropdown\'s value is equals to \'\'');
+  assert.strictEqual(Ember.$.trim($dropdownText.text()), Ember.get(I18nRuLocale, 'components.flexberry-dropdown.placeholder'),
+  'Component\'s inner <dropdown\'s value is equals to \'\'');
   assert.strictEqual(this.get('value'), null, 'Component\'s property binded to \'value\' is equals to null');
 
   // Change property binded to 'value' & check them again.
@@ -441,3 +536,73 @@ test('changes in property binded to \'value\' causes changes in <dropdown>', fun
   assert.strictEqual($dropdownText.hasClass('text'), true, 'Component\'s text has class \'text\'');
 });
 
+test('onChange mode properly', function(assert) {
+  assert.expect(5);
+
+  // Create array for testing.
+  let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
+  this.set('itemsArray', itemsArray);
+  this.set('value', null);
+
+  let onChangeFlag = null;
+  let onDropdownChangeEventObject = null;
+
+  this.set('actions.onDropdownChange', (e) => {
+    onChangeFlag = true;
+    onDropdownChangeEventObject = e;
+  });
+
+  // Render component.
+  this.render(hbs`{{flexberry-dropdown
+    value=value
+    items=itemsArray
+    onChange = (action \"onDropdownChange\")
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $dropdownMenu = $component.children('div.menu');
+  let $items = Ember.$('div.item', $dropdownMenu);
+
+  let dropdownOpen = new Ember.RSVP.Promise((resolve, reject) => {
+    // Try to expand component.
+    // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
+    Ember.run(() => {
+      $component.click();
+    });
+
+    clickOnDropdown(assert, resolve, null, $component, $dropdownMenu);
+  });
+
+  dropdownOpen.then(() => {
+
+    let itemAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
+
+      // Try to expand component.
+      // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
+      Ember.run(() => {
+        Ember.$($items[2]).click();
+      });
+
+      clickOnDropdown(assert, resolve, null, null, null);
+    });
+
+    // Wait animation to be completed (when resolve will be called inside previous timeout).
+    // Then try to collapse component.
+    itemAnimationCompleted.then(() => {
+      // Wait for collapse animation to be completed & check component's state.
+      Ember.run(() => {
+        let animationCompleted = assert.async();
+        setTimeout(() => {
+          let $dropdownActiveItem = $dropdownMenu.children('div.item.active');
+          let dropdownActiveItemText = $dropdownActiveItem.text();
+
+          // Check that component is expanded now.
+          assert.strictEqual(onChangeFlag, true);
+          assert.strictEqual(onDropdownChangeEventObject, dropdownActiveItemText);
+          animationCompleted();
+        }, animationDuration);
+      });
+    });
+  });
+});

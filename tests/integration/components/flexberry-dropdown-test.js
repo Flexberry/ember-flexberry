@@ -168,11 +168,16 @@ test('readonly mode works properly', function(assert) {
 test('needChecksOnValue', function(assert) {
   assert.expect(3);
 
+  // Create array for testing.
+  let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
+  this.set('itemsArray', itemsArray);
   // Check value not exists.
   this.set('value', null);
 
   // Render component.
   this.render(hbs`{{flexberry-dropdown
+    value=value
+    items=itemsArray
     needChecksOnValue=needChecksOnValue
   }}`);
 
@@ -188,8 +193,8 @@ test('needChecksOnValue', function(assert) {
 
   // Check that errors handled properly.
   this.set('value', newValue);
-  assert.strictEqual(Ember.typeOf(latestLoggerErrorMessage) === 'string', true);
-  assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true);
+  assert.strictEqual(Ember.typeOf(latestLoggerErrorMessage) === 'string', true, 'Check message exists');
+  assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true, 'Invalide value exists');
 });
 
 test('itemsObject render properly', function(assert) {

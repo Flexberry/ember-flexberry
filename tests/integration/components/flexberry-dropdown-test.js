@@ -171,6 +171,7 @@ test('needChecksOnValue', function(assert) {
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
   this.set('itemsArray', itemsArray);
+
   // Check value not exists.
   this.set('value', null);
 

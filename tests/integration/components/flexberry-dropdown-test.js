@@ -168,21 +168,17 @@ test('readonly mode works properly', function(assert) {
 test('needChecksOnValue', function(assert) {
   assert.expect(3);
 
-  // Create array for testing.
-  let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
-  this.set('itemsArray', itemsArray);
+  // Check value not exists.
   this.set('value', null);
 
   // Render component.
   this.render(hbs`{{flexberry-dropdown
-    value=value
-    items=itemsArray
     needChecksOnValue=needChecksOnValue
   }}`);
 
   assert.strictEqual(this.get('value'), null, 'Component\'s property binded to \'value\' is equals to null');
 
-  // Change property binded to 'value' & check them again.
+  // Change property binded to 'value' & check them.
   this.set('needChecksOnValue', true);
   let newValue = 'Caption4';
   let latestLoggerErrorMessage;
@@ -190,6 +186,7 @@ test('needChecksOnValue', function(assert) {
     latestLoggerErrorMessage = message;
   };
 
+  // Check that errors handled properly.
   this.set('value', newValue);
   assert.strictEqual(Ember.typeOf(latestLoggerErrorMessage) === 'string', true);
   assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true);
@@ -261,6 +258,7 @@ test('itemsArray render properly', function(assert) {
   });
 });
 
+// Call animation for component & check that animation handled properly.
 function clickOnDropdown(assert, resolve, $dropdomnItem, $component, $dropdownMenu) {
 
   // Wait animation to check component's state.

@@ -157,6 +157,7 @@ export default FlexberryBaseComponent.extend({
       return;
     }
 
+    // Convert to array.
     let items = this.get('_items');
     if (!Ember.isArray(items)) {
       items = [items];

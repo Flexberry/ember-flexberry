@@ -247,6 +247,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
+            'inheritance-models': {
+              'caption': 'Inheritance models',
+              'title': ''
+            },
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
@@ -557,6 +561,16 @@ Ember.$.extend(true, translations, {
       'flexberry-objectlistview': {
         'limit-function-example': {
           'caption': 'Flexberry-objectlistview. Limit function example'
+        },
+        'inheritance-models': {
+          'caption': 'Flexberry-objectlistview. Inheritance models example',
+          'message': 'Сheck projection in OLV. (ProjectionE=ProjectionL)',
+          'projectionBase': 'Projection \'Base\': Name, E-mail, Birthday',
+          'projectionSuccessorPhone': 'Projection \'Successor phone\': Name, Phone1, Phone2, Phone3',
+          'projectionSuccessorSoc': 'Projection \'Successor social network\': Name, VK, Facebook, Twitter',
+          'buttonRoot': 'Base',
+          'buttonSuccessorPhone': 'Successor phone',
+          'buttonSuccessorSoc': 'Successor social network'
         },
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'

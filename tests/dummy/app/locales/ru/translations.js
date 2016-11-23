@@ -250,6 +250,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Функция ограничения',
               'title': ''
             },
+            'inheritance-models': {
+              'caption': 'Наследуемые модели',
+              'title': ''
+            },
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
@@ -561,6 +565,16 @@ Ember.$.extend(true, translations, {
       'flexberry-objectlistview': {
         'limit-function-example': {
           'caption': 'Flexberry-objectlistview. Функция ограничения'
+        },
+        'inheritance-models': {
+          'caption': 'Flexberry-objectlistview. Пример наследуемых моделей',
+          'message': 'Проверьте представление в OLV. (ПредставлениеE=ПредставлениеL)',
+          'projectionBase': 'Представление \'Предок\': Name, E-mail, Birthday',
+          'projectionSuccessorPhone': 'Представление \'Наследник телефоны\': Name, Phone1, Phone2, Phone3',
+          'projectionSuccessorSoc': 'Представление \'Наследник соц сети\': Name, VK, Facebook, Twitter',
+          'buttonRoot': 'Предок',
+          'buttonSuccessorPhone': 'Наследник телефоны',
+          'buttonSuccessorSoc': 'Наследник соц сети'
         },
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Пример работы с настройками'

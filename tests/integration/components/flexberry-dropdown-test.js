@@ -166,7 +166,7 @@ test('readonly mode works properly', function(assert) {
 });
 
 test('needChecksOnValue', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -177,22 +177,22 @@ test('needChecksOnValue', function(assert) {
   this.render(hbs`{{flexberry-dropdown
     value=value
     items=itemsArray
+    needChecksOnValue=needChecksOnValue
   }}`);
-
-  // Retrieve component.
-  let $component = this.$().children();
-  let $dropdownMenu = $component.children('div.menu');
-  let $items = Ember.$('div.item', $dropdownMenu);
 
   assert.strictEqual(this.get('value'), null, 'Component\'s property binded to \'value\' is equals to null');
 
   // Change property binded to 'value' & check them again.
   this.set('needChecksOnValue', true);
-  let newValue = itemsArray[3];
-  this.set('value', newValue);
-  let dropdownChangeText = Ember.$($items[0]).text();
+  let newValue = 'Caption4';
+  let latestLoggerErrorMessage;
+  Ember.Logger.error = function(message) {
+    latestLoggerErrorMessage = message;
+  };
 
-  assert.notStrictEqual(dropdownChangeText, newValue);
+  this.set('value', newValue);
+  assert.strictEqual(Ember.typeOf(latestLoggerErrorMessage) === 'string', true);
+  assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true);
 });
 
 test('itemsObject render properly', function(assert) {

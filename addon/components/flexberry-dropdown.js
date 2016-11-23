@@ -158,6 +158,10 @@ export default FlexberryBaseComponent.extend({
     }
 
     let items = this.get('_items');
+    if (!Ember.isArray(items)) {
+      items = [items];
+    }
+
     let needChecksOnValue = this.get('needChecksOnValue');
 
     // Convert 'value' and 'items' to strings because flexberry-dropdown interpret selected value as string commonly.

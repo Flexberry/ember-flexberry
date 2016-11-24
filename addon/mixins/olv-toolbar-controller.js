@@ -253,10 +253,6 @@ export default Ember.Mixin.create({
       }
     }
 
-    if (this.get('enableFilters')) {
-      this._addFilterForColumn(column, attr, bindingPath);
-    }
-
     let sortDef;
     let sorting = this.get('sorting');
     if (sorting && (sortDef = sorting[bindingPath])) {

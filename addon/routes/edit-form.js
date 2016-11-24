@@ -2,6 +2,7 @@
   @module ember-flexberry
  */
 
+import Ember from 'ember';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 
@@ -88,7 +89,8 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
    */
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
-    let keptAgregators = controller.get('modelCurrentAgregators');
+    let modelCurrentAgregators = controller.get('modelCurrentAgregators');
+    let keptAgregators = modelCurrentAgregators && Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 
     controller.send('dismissErrorMessages');
     controller.set('modelCurrentAgregatorPathes', undefined);

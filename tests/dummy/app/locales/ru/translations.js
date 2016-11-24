@@ -222,6 +222,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Функция ограничения',
               'title': ''
             },
+            'limit-function-through-dynamic-properties-example': {
+              'caption': 'Функция ограничения через динамические свойства',
+              'title': ''
+            },
             'lookup-block-form-example': {
               'caption': 'Лукап в блочной форме',
               'title': ''
@@ -530,6 +534,13 @@ Ember.$.extend(true, translations, {
         'limit-function-example': {
           'caption': 'Flexberry-lookup. Функция ограничения',
           'titleLookup': 'Мастер'
+        },
+        'limit-function-through-dynamic-properties-example': {
+          'caption': 'Flexberry-lookup. Функция ограничения через динамические свойства',
+          'titleLookup': 'Мастер',
+          'captionFirstLimitFunction': 'Функция ограничения №1',
+          'captionSecondLimitFunction': 'Функция ограничения №2',
+          'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'lookup-block-form-example': {
           'caption': 'Flexberry-lookup. Лукап в блочной форме',

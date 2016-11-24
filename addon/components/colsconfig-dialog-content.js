@@ -30,7 +30,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
    ObjectListView component name.
-   *
+
    @property componentName
    @type {String}
    @default ''
@@ -39,7 +39,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
    ObjectListView setting name.
-   *
+
    @property settingName
    @type {String}
    @default ''
@@ -47,12 +47,12 @@ export default FlexberryBaseComponent.extend({
   settingName: '',
 
   /**
-   changed flag.
-   *
-   @property isChanged
-   @type {Boolean}
-   @default false
-   */
+    Changed flag.
+
+    @property isChanged
+    @type {Boolean}
+    @default false
+  */
   _isChanged: false,
 
   /**
@@ -301,7 +301,7 @@ export default FlexberryBaseComponent.extend({
      Apply settings specified in the interface as DEFAULT values
 
      @method actions.apply
-     */
+    */
     apply: function() {
       let colsConfig = this._getSettings();
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
@@ -314,7 +314,7 @@ export default FlexberryBaseComponent.extend({
       let savePromise = this._getSavePromise(undefined, colsConfig);
       savePromise.then(
         record => {
-          if (router.location.location.hash.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
+          if (router.location.location.search.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
             router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
           } else {
             router.router.refresh();  //Reload current page and records (model) list
@@ -324,10 +324,10 @@ export default FlexberryBaseComponent.extend({
       this.sendAction('close', colsConfig); // close modal window
     },
     /**
-     Save named settings specified in the interface as named values
+      Save named settings specified in the interface as named values
 
-     @method actions.saveColsSetting
-     */
+      @method actions.saveColsSetting
+    */
     saveColsSetting: function() {
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
       if (settingName.length <= 0) {
@@ -352,27 +352,29 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-     Column width is changed
+      Column width is changed
 
-     @method actions.widthChanged
-     */
+      @method actions.widthChanged
+    */
     widthChanged: function() {
       this._changed();
     },
 
     /**
-     Config name is defined
+      Config name is defined
 
-     @method actions.setConfigName
-     */
+      @method actions.setConfigName
+    */
     setConfigName: function() {
       this._changed();
     },
-
   },
 
   _getSavePromise: function(settingName, colsConfig) {
-    return this.get('userSettingsService').saveUserSetting(this.componentName, settingName, colsConfig);
+    return this.get('userSettingsService').saveUserSetting(this.componentName, settingName, colsConfig)
+    .then(result => {
+      this.get('colsConfigMenu').updateNamedSettingTrigger();
+    });
   },
 
   _getSettings: function() {

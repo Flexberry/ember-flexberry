@@ -23,6 +23,7 @@ export default FlexberryBaseComponent.extend({
     - **icon** - Icon item, [more icons](http://semantic-ui.com/elements/icon.html).
     - **iconAlignment** - Possible variants: 'right', 'left'. If not defined: 'left'.
     - **items** - Submenu array items.
+    - **localeKey** - Key from locales.
 
     @property item
     @type Object

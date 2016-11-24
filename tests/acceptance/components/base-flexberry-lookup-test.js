@@ -146,7 +146,7 @@ module('Acceptance | flexberry-lookup', {
   }
 });
 
-test('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation', function(assert) {
+/*test('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation', function(assert) {
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
   andThen(function() {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
@@ -187,9 +187,9 @@ test('changes in component\'s value causes changes in related model\'s specified
       asyncOperationsCompleted();
     });
   });
-});
+});*/
 
-/*test('changes in model\'s value causes changes in component\'s specified \'belongsTo\' model', function(assert) {
+test('changes in model\'s value causes changes in component\'s specified \'belongsTo\' model', function(assert) {
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
   andThen(function() {
 
@@ -248,4 +248,4 @@ test('changes in component\'s value causes changes in related model\'s specified
     }).finally(() => {
       asyncOperationsCompleted();
     });
-});*/
+});

@@ -198,6 +198,10 @@ Ember.$.extend(true, translations, {
             'model-update-example': {
               'caption': 'Model update example',
               'title': ''
+            },
+            'configurate-row-example': {
+              'caption': 'Configurate rows',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -215,7 +219,7 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
-            'limit-function-with-dinamic-properties-example': {
+            'limit-function-through-dynamic-properties-example': {
               'caption': 'Limit function with dinamic properties example',
               'title': ''
             },
@@ -506,6 +510,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Settings example'
         },
+        'configurate-row-example': {
+          'caption': 'Flexberry-groupedit. Configurate rows'
+        },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Model update example',
           'addDetailButton': 'Add detail',
@@ -524,8 +531,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Limit function example',
           'titleLookup': 'Master'
         },
-        'limit-function-with-dinamic-properties-example': {
-          'caption': 'Flexberry-lookup. Limit function with dinamic properties example',
+        'limit-function-through-dynamic-properties-example': {
+          'caption': 'Flexberry-lookup. Limit function through dynamic properties example',
           'titleLookup': 'Master',
           'captionFirstLimitFunction': 'Limit function №1',
           'captionSecondLimitFunction': 'Limit function №2',

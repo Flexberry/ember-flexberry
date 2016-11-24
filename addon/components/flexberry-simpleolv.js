@@ -58,14 +58,6 @@ ErrorableControllerMixin, {
         this.set('contentWithKeys', this.contentForRender);
       }
 
-      // TODO: analyze this observers.
-      let attrsArray = this._getAttributesName();
-      content.forEach((record) => {
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(record, attrName, this, '_attributeChanged');
-        });
-      });
-
       this.set('showLoadingTbodyClass', false);
     } else {
       this.set('rowsInLoadingState', true);
@@ -672,6 +664,14 @@ ErrorableControllerMixin, {
 
   actions: {
     /**
+      Show/hide filters.
+
+      @method actions.toggleStateFilters
+    */
+    toggleStateFilters() {
+      this.toggleProperty('showFilters');
+    },
+    /**
       This action is called when user click on header.
 
       @method actions.headerCellClick
@@ -683,6 +683,8 @@ ErrorableControllerMixin, {
       if (!this.orderable || column.sortable === false) {
         return;
       }
+
+      this.set('showLoadingTbodyClass', true);
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
@@ -714,6 +716,7 @@ ErrorableControllerMixin, {
         }
       }
 
+      this.send('dismissErrorMessages');
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 
@@ -808,6 +811,7 @@ ErrorableControllerMixin, {
     */
     removeFilter() {
       this.set('filterText', null);
+      this.set('filterByAnyMatchText', null);
     },
 
     /**
@@ -818,7 +822,7 @@ ErrorableControllerMixin, {
       @param {String} actionName The name of action
     */
     customButtonAction(actionName) {
-      this.sendAction('customButtonAction', actionName);
+      this.sendAction(actionName);
     },
 
     /**
@@ -952,8 +956,10 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('objectlistviewEventsService').on('resetFilters', this, this._resetColumnFilters);
 
-    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
+    this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
+    this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
 
     let eventsBus = this.get('eventsBus');
@@ -1000,9 +1006,6 @@ ErrorableControllerMixin, {
   didRender() {
     this._super(...arguments);
 
-    this._setColumnWidths();
-    this._setColumnsOrder();
-
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -1027,19 +1030,12 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
-    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
+    this.get('objectlistviewEventsService').off('resetFilters', this, this._resetColumnFilters);
+    this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
 
     this._super(...arguments);
-
-    let content = this.get('content');
-    let attrsArray = this._getAttributesName();
-
-    content.forEach((record) => {
-      attrsArray.forEach((attrName) => {
-        Ember.removeObserver(record, attrName, this, '_attributeChanged');
-      });
-    });
   },
 
   /**
@@ -1138,6 +1134,8 @@ ErrorableControllerMixin, {
   },
 
   _setColumnsUserSettings() {
+    this._setColumnWidths();
+    this._setColumnsOrder();
     this._setColumnsSorting();
   },
 
@@ -1197,6 +1195,20 @@ ErrorableControllerMixin, {
 
       cols.setProperties(sorted);
     });
+  },
+
+  _resetColumnFilters(componentName) {
+    if (this.get('componentName') === componentName) {
+      let columns = this.get('columns');
+      if (!columns) {
+        return;
+      }
+
+      columns.forEach((column) => {
+        column.set('filter.pattern', null);
+        column.set('filter.condition', null);
+      });
+    }
   },
 
   _getUserSettings() {
@@ -1695,11 +1707,6 @@ ErrorableControllerMixin, {
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
         this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
-
-        let attrsArray = this._getAttributesName();
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(modelToAdd, attrName, this, '_attributeChanged');
-        });
       }
     }
   },
@@ -1765,11 +1772,6 @@ ErrorableControllerMixin, {
 
     let componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
-
-    let attrsArray = this._getAttributesName();
-    attrsArray.forEach((attrName) => {
-      Ember.removeObserver(record, attrName, this, '_attributeChanged');
-    });
   },
 
   /**
@@ -1805,7 +1807,11 @@ ErrorableControllerMixin, {
   */
   _filterByAnyMatch(componentName, pattern) {
     if (this.get('componentName') === componentName) {
-      this.sendAction('filterByAnyMatch', pattern);
+      let anyWord = this.get('filterByAnyWord');
+      let allWords = this.get('filterByAllWords');
+      Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
+      let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
+      this.sendAction('filterByAnyMatch', pattern, filterCondition);
     }
   },
 
@@ -1923,19 +1929,13 @@ ErrorableControllerMixin, {
   },
 
   /**
-    That observer is called when change attributes of model.
+    Flag used to display filters.
 
-    @method _attributeChanged
-    @private
+    @property showFilters
+    @type Boolean
+    @default false
   */
-  _attributeChanged(record, attrName) {
-    let rowConfig = record.get('rowConfig');
-    let configurateRow = this.get('configurateRow');
-    if (configurateRow) {
-      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-      configurateRow(rowConfig, record);
-    }
-  },
+  showFilters: Ember.computed.oneWay('filters'),
 
   /**
     Route for edit form by click row.
@@ -2010,6 +2010,24 @@ ErrorableControllerMixin, {
   filterText: null,
 
   /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain any word of search query.
+
+    @property filterByAnyWord
+    @type Boolean
+    @default false
+  */
+  filterByAnyWord: false,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain each of search query word.
+
+    @property filterByAllWords
+    @type Boolean
+    @default false
+  */
+  filterByAllWords: false,
+
+  /**
     The flag to specify whether the delete button is enabled.
 
     @property enableDeleteButton
@@ -2049,47 +2067,14 @@ ErrorableControllerMixin, {
   */
   listNamedUserSettings: undefined,
 
-  /**
-    @property createSettitingTitle
-    @type String
-    @default t('components.olv-toolbar.create-setting-title')
-  */
-  createSettitingTitle: t('components.olv-toolbar.create-setting-title'),
+  _listNamedUserSettings: Ember.observer('listNamedUserSettings', function() {
+    let listNamedUserSettings = this.get('listNamedUserSettings');
+    for (let namedSetting in listNamedUserSettings) {
+      this._addNamedSetting(namedSetting);
+    }
 
-  /**
-    @property useSettitingTitle
-    @type String
-    @default t('components.olv-toolbar.use-setting-title')
-  */
-  useSettitingTitle: t('components.olv-toolbar.use-setting-title'),
-
-  /**
-    @property editSettitingTitle
-    @type String
-    @default t('components.olv-toolbar.edit-setting-title')
-  */
-  editSettitingTitle: t('components.olv-toolbar.edit-setting-title'),
-
-  /**
-    @property removeSettitingTitle
-    @type String
-    @default t('components.olv-toolbar.remove-setting-title')
-  */
-  removeSettitingTitle: t('components.olv-toolbar.remove-setting-title'),
-
-  /**
-    @property setDefaultSettitingTitle
-    @type String
-    @default t('components.olv-toolbar.set-default-setting-title')
-  */
-  setDefaultSettitingTitle: t('components.olv-toolbar.set-default-setting-title'),
-
-  /**
-    @property setDefaultSettitingTitle
-    @type String
-    @default t('components.olv-toolbar.set-default-setting-title')
-  */
-  showDefaultSettitingTitle: t('components.olv-toolbar.show-default-setting-title'),
+    this._sortNamedSetting();
+  }),
 
   /**
     @property colsConfigMenu
@@ -2097,32 +2082,70 @@ ErrorableControllerMixin, {
   */
   colsConfigMenu: Ember.inject.service(),
 
+  menus: [
+    { name: 'use', icon: 'checkmark box' },
+    { name: 'edit', icon: 'setting' },
+    { name: 'remove', icon: 'remove' }
+  ],
+
   /**
     @property colsSettingsItems
     @readOnly
   */
-  colsSettingsItems:  Ember.computed(
-    'createSettitingTitle',
-    'setDefaultSettitingTitle',
-    'showDefaultSettitingTitle',
-    'useSettitingTitle',
-    'editSettitingTitle',
-    'removeSettitingTitle',
-    'listNamedUserSettings',
-    function() {
-      let params = {
-        createSettitingTitle: this.get('createSettitingTitle'),
-        setDefaultSettitingTitle: this.get('setDefaultSettitingTitle'),
-        showDefaultSettitingTitle: this.get('showDefaultSettitingTitle'),
-        useSettitingTitle: this.get('useSettitingTitle'),
-        editSettitingTitle: this.get('editSettitingTitle'),
-        removeSettitingTitle: this.get('removeSettitingTitle'),
-        listNamedUserSettings: this.get('listNamedUserSettings'),
+  colsSettingsItems:  Ember.computed(function() {
+      let i18n = this.get('i18n');
+      let menus = [
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.use-setting-title',
+          items: []
+        },
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.edit-setting-title',
+          items: []
+        },
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.remove-setting-title',
+          items: []
+        }
+      ];
+      let rootItem = {
+        icon: 'dropdown icon',
+        iconAlignment: 'right',
+        title: '',
+        items: [],
+        localeKey: ''
       };
+      let createSettitingItem = {
+        icon: 'table icon',
+        iconAlignment: 'left',
+        title: i18n.t('components.olv-toolbar.create-setting-title'),
+        localeKey: 'components.olv-toolbar.create-setting-title'
+      };
+      rootItem.items[rootItem.items.length] = createSettitingItem;
+      rootItem.items.push(...menus);
 
-      return this.get('userSettingsService').isUserSettingsServiceEnabled ?
-        this.get('colsConfigMenu').resetMenu(params) :
-        [];
+      let setDefaultItem = {
+        icon: 'remove circle icon',
+        iconAlignment: 'left',
+        title: i18n.t('components.olv-toolbar.set-default-setting-title'),
+        localeKey: 'components.olv-toolbar.set-default-setting-title'
+      };
+      rootItem.items[rootItem.items.length] = setDefaultItem;
+      if (this.get('colsConfigMenu').environment && this.get('colsConfigMenu').environment === 'development') {
+        let showDefaultItem = {
+          icon: 'unhide icon',
+          iconAlignment: 'left',
+          title: i18n.t('components.olv-toolbar.show-default-setting-title'),
+          localeKey: 'components.olv-toolbar.show-default-setting-title'
+        };
+        rootItem.items[rootItem.items.length] = showDefaultItem;
+      }
+
+      this.colsSettingsItems = [rootItem];
+      return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
   ),
 
@@ -2214,71 +2237,49 @@ ErrorableControllerMixin, {
     }
   },
 
-  _addNamedSetting(namedSetting) {
+  _updateListNamedUserSettings() {
+    this._resetNamedUserSettings();
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+  },
+
+  _resetNamedUserSettings() {
+    let menus = this.get('menus');
+    for (let i = 0; i < menus.length; i++) {
+      Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', []);
+    }
+  },
+
+  _addNamedSetting(namedSetting) {
+    let menus = this.get('menus');
+    for (let i = 0; i < menus.length; i++) {
+      let icon = menus[i].icon + ' icon';
+      let subItems = this.get('colsSettingsItems')[0].items[i + 1].items;
+      let newSubItems = [];
+      let exist = false;
+      for (let j = 0; j < subItems.length; j++) {
+        newSubItems[j] = subItems[j];
+        if (subItems[j].title === namedSetting) {
+          exist = true;
+        }
+      }
+
+      if (!exist) {
+        newSubItems[subItems.length] = { title: namedSetting, icon: icon, iconAlignment: 'left' };
+      }
+
+      Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
+    }
+
+    this._sortNamedSetting();
   },
 
   _deleteNamedSetting(namedSetting) {
-    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+    this._updateListNamedUserSettings();
   },
 
-  /**
-    Store nested records.
-
-    @property _records
-    @type Ember.NativeArray
-    @default Empty
-    @private
-  */
-  _records: Ember.computed(() => Ember.A()),
-
-  /**
-    Current record.
-    - `key` - Ember GUID for record.
-    - `data` - Instance of DS.Model.
-    - `config` - Object with config for record.
-
-    @property record
-    @type Object
-  */
-  record: Ember.computed(() => ({
-    key: undefined,
-    data: undefined,
-    config: undefined,
-  })),
-
-  /**
-    Store nested records.
-
-    @property records
-    @type Ember.NativeArray
-    @default Empty
-  */
-  records: Ember.computed({
-    get() {
-      return this.get('_records');
-    },
-    set(key, value) {
-      value.then((records) => {
-        records.forEach((record) => {
-          let config = Ember.copy(this.get('defaultRowConfig'));
-          let configurateRow = this.get('configurateRow');
-          if (configurateRow) {
-            Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-            configurateRow(config, record);
-          }
-
-          let newRecord = Ember.Object.create({
-            key: Ember.guidFor(record),
-            data: record,
-            config: config,
-            doRenderData: true
-          });
-
-          this.get('_records').pushObject(newRecord);
-        });
-      });
-      return this.get('records');
-    },
-  }),
+  _sortNamedSetting() {
+    for (let i = 0; i < this.menus.length; i++) {
+      this.get('colsSettingsItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
+    }
+  }
 });

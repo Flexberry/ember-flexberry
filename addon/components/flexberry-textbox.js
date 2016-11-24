@@ -73,5 +73,5 @@ export default FlexberryBaseComponent.extend({
 
     // Initialize properties which defaults could be defined in application configuration.
     this.initProperty({ propertyName: 'placeholder', defaultValue: null });
-  },
+  }
 });

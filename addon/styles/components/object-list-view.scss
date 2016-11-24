@@ -75,6 +75,10 @@ table.object-list-view tbody tr td:first-child button i {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  .ui.input {
+    width: 100%;
+  }
 }
 
 .showing-entries {

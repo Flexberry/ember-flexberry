@@ -240,6 +240,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-groupedit/configurate-row-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.configurate-row-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.configurate-row-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -261,9 +266,9 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.title'),
             children: null
           }, {
-            link: 'components-examples/flexberry-lookup/limit-function-with-dinamic-properties-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-with-dinamic-properties-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-with-dinamic-properties-example.title'),
+            link: 'components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.title'),
             children: null
           }, {
             link: 'components-examples/flexberry-lookup/lookup-block-form-example',

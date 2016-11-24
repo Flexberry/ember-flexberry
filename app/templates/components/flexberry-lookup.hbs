@@ -9,7 +9,7 @@
     isSearchReadOnly=dropdownIsSearch
   }}
 {{else}}
-<div class="ui fluid action input">
+  <div class="ui fluid action input">
     {{input
       type="text"
       class=(concat "lookup-field " (if autocomplete "prompt"))
@@ -17,8 +17,17 @@
       value=displayValue
       readonly=(if (or readonly (not autocomplete)) "readonly")
     }}
-    <button class="ui {{if readonly " read-only"}} {{chooseButtonClass}} button" {{action 'choose' chooseData}}>{{{chooseText}}}</button>
-    <button class="ui {{if readonly " read-only"}} {{removeButtonClass}} button" {{action 'remove' removeData}}>{{{removeText}}}</button>
+    <button
+      class="ui {{if readonly " disabled"}} {{chooseButtonClass}} {{if (and modalIsStartToShow (not modalIsShow)) " loading disabled"}} button"
+      {{action 'choose' chooseData}}
+      onclick={{action 'chooseButtonClick'}}>
+      {{{chooseText}}}
+    </button>
+    <button
+      class="ui {{if readonly " disabled"}} {{removeButtonClass}} {{if (and modalIsStartToShow (not modalIsShow)) " disabled"}} button"
+      {{action 'remove' removeData}}>
+      {{{removeText}}}
+    </button>
   </div>
 {{/if}}
 {{#if (and (not readonly) autocomplete)}}

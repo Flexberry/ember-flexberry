@@ -67,6 +67,12 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   sorting: [],
 
   /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -133,12 +139,14 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
           page: params.page,
           sorting: this.sorting,
           filter: params.filter,
+          filterCondition: this.get('controller.filterCondition'),
           filters: filtersPredicate,
           predicate: limitPredicate,
           hierarchicalAttribute: hierarchicalAttribute,
         };
 
         this.onModelLoadingStarted(queryParameters);
+        this.get('colsConfigMenu').updateNamedSettingTrigger();
 
         // Find by query is always fetching.
         // TODO: support getting from cache with "store.all->filterByProjection".

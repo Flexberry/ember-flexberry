@@ -128,14 +128,6 @@ export default ListFormController.extend({
   deleteButton: false,
 
   /**
-    Flag: indicates whether 'flexberry-simpleolv' component is in 'enableFilters' mode or not.
-
-    @property enableFilters
-    @type Boolean
-   */
-  enableFilters: false,
-
-  /**
     Flag: indicates whether 'flexberry-simpleolv' component is in 'filterButton' mode or not.
 
     @property filterButton
@@ -200,14 +192,6 @@ export default ListFormController.extend({
   orderable: true,
 
   /**
-    ext for 'flexberry-simpleolv' component 'singleColumnHeaderTitle' property.
-
-    @property singleColumnHeaderTitle
-    @type String
-   */
-  singleColumnHeaderTitle: undefined,
-
-  /**
     Current records.
 
     @property _records
@@ -237,10 +221,6 @@ export default ListFormController.extend({
     '  allowColumnResize=allowColumnResize<br>' +
     '  createNewButton=createNewButton<br>' +
     '  deleteButton=deleteButton<br>' +
-    '  enableFilters=enableFilters<br>' +
-    '  filters=filters<br>' +
-    '  applyFilters=(action "applyFilters")<br>' +
-    '  resetFilters=(action "resetFilters")<br>' +
     '  refreshButton=refreshButton<br>' +
     '  filterButton=filterButton<br>' +
     '  showCheckBoxInRow=showCheckBoxInRow<br>' +
@@ -251,6 +231,8 @@ export default ListFormController.extend({
     '  orderable=orderable<br>' +
     '  filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
     '  filterText=filter<br>' +
+    '  filterByAnyWord=filterByAnyWord<br>' +
+    '  filterByAllWords=filterByAllWords<br>' +
     '  sorting=computedSorting<br>' +
     '  sortByColumn=(action \"sortByColumn\")<br>' +
     '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
@@ -347,16 +329,22 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'deleteButton'
     });
     componentSettingsMetadata.pushObject({
-      settingName: 'enableFilters',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'enableFilters'
-    });
-    componentSettingsMetadata.pushObject({
       settingName: 'filterButton',
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'filterButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'filterByAnyWord',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'filterByAnyWord'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'filterByAllWords',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'filterByAllWords'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'refreshButton',
@@ -400,19 +388,7 @@ export default ListFormController.extend({
       settingDefaultValue: true,
       bindedControllerPropertieName: 'orderable'
     });
-    componentSettingsMetadata.pushObject({
-      settingName: 'singleColumnHeaderTitle',
-      settingType: 'string',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: 'singleColumnHeaderTitle'
-    });
 
     return componentSettingsMetadata;
-  }),
-
-  _enableFilters: Ember.observer('enableFilters', function() {
-    if (this.get('enableFilters')) {
-      this.set('refreshButton', true);
-    }
   }),
 });

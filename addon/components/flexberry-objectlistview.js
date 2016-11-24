@@ -235,8 +235,46 @@ export default FlexberryBaseComponent.extend({
   /**
     Additional menu items for dropdown menu in last column of every row.
 
+    @example
+      ```javascript
+      // app/controllers/exapmle.js
+      ...
+      menuItems: [{
+        icon: 'spy icon',
+        title: 'Recruit it',
+        actionName: 'recruit',
+      }],
+      ...
+      actions: {
+        ...
+        recruit(record) {
+          record.set('isSpy', true);
+        },
+        ...
+      },
+      ...
+      ```
+
+      Note: For every action in component you need to pass an additional parameter in the form of `actionName="actionName"`.
+      ```javascript
+      // app/templates/example.hbs
+      ...
+      {{flexberry-groupedit
+        ...
+        menuInRowAdditionalItems=menuItems
+        recruit="recruit"
+        ...
+      }}
+      ...
+      ```
+
+    For in-row menu following properties are used:
+    - {{#crossLink "FlexberryGroupeditComponent/showDeleteMenuItemInRow:property"}}{{/crossLink}},
+    - {{#crossLink "FlexberryGroupeditComponent/showEditMenuItemInRow:property"}}{{/crossLink}},
+    - {{#crossLink "FlexberryGroupeditComponent/menuInRowAdditionalItems:property"}}{{/crossLink}}.
+
     @property menuInRowAdditionalItems
-    @type Boolean
+    @type Array
     @default null
   */
   menuInRowAdditionalItems: null,
@@ -383,6 +421,24 @@ export default FlexberryBaseComponent.extend({
     @default null
   */
   filterText: null,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain any word of search query.
+
+    @property filterByAnyWord
+    @type Boolean
+    @default false
+  */
+  filterByAnyWord: false,
+
+  /**
+    If this option is enabled, search query will be split by words, search will be on lines that contain each of search query word.
+
+    @property filterByAllWords
+    @type Boolean
+    @default false
+  */
+  filterByAllWords: false,
 
   /**
     Array of pages to show.
@@ -569,6 +625,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.previousPage
       @public
+      @param {Action} action Action previous page.
     */
     previousPage(action) {
       if (!action) {
@@ -585,6 +642,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.nextPage
       @public
+      @param {Action} action Action next page.
     */
     nextPage(action) {
       if (!action) {
@@ -601,7 +659,8 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.gotoPage
       @public
-      @param {Number} pageNumber Number of page to go to
+      @param {Action} action Action go to page.
+      @param {Number} pageNumber Number of page to go to.
     */
     gotoPage(action, pageNumber) {
       if (!action) {
@@ -722,10 +781,15 @@ export default FlexberryBaseComponent.extend({
       Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
 
       @method actions.resetFilters
+      @param {Action} action Action reset filters.
     */
-    resetFilters() {
-      throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
+    resetFilters(action) {
+      if (!action) {
+        throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... resetFilters=(action "resetFilters")}}.');
+      }
+
+      action(this.get('componentName'));
     },
 
     /**
@@ -778,7 +842,18 @@ export default FlexberryBaseComponent.extend({
     */
     perPageClick() {
       this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
-    }
+    },
+
+    /**
+      Send action with `actionName` into controller.
+
+      @method actions.sendMenuItemAction
+      @param {String} actionName
+      @param {DS.Model} record
+    */
+    sendMenuItemAction(actionName, record) {
+      this.sendAction(actionName, record);
+    },
   },
 
   /**

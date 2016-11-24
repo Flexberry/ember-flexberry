@@ -59,8 +59,11 @@ export default FlexberryBaseComponent.extend({
   _minAsString: Ember.computed('min', {
     get() {
       let date = this.get('min');
-      let str = this._convertDateToString(date);
-      return str;
+      if (this.get('_supportDateType')) {
+        return this._convertDateToString(date);
+      } else {
+        return date;
+      }
     },
     set(key, value) {
       let date = this._convertStringToDate(value);
@@ -80,8 +83,11 @@ export default FlexberryBaseComponent.extend({
   _maxAsString: Ember.computed('max', {
     get() {
       let date = this.get('max');
-      let str = this._convertDateToString(date);
-      return str;
+      if (this.get('_supportDateType')) {
+        return this._convertDateToString(date);
+      } else {
+        return date;
+      }
     },
     set(key, value) {
       let date = this._convertStringToDate(value);
@@ -147,7 +153,6 @@ export default FlexberryBaseComponent.extend({
   */
   dateFormat: 'Y-m-dTH:iZ',
   timeFormat: 'H:i',
-  defaultDate: null,
   noCalendar: false,
   enableTime: true,
   enableSeconds: false,
@@ -155,12 +160,20 @@ export default FlexberryBaseComponent.extend({
   utc: true,
   altInput: true,
   altFormat: 'd.m.Y H:i',
+  clickOpens: Ember.computed('readonly', function() {
+    if (this.get('readonly')) {
+      return false;
+    }
+
+    return true;
+  }),
 
   /**
     Called when the element of the view has been inserted into the DOM or after the view was re-rendered.
     For more information see [didInsertElement](http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   didInsertElement() {
+    let _this = this;
     this._super(...arguments);
 
     if (!this.get('_supportDateType')) {
@@ -178,6 +191,13 @@ export default FlexberryBaseComponent.extend({
         maxDate: this.get('_maxAsString'),
         altInput: this.get('altInput'),
         altFormat: this.get('altFormat'),
+        clickOpens: this.get('clickOpens'),
+
+        // Needs for support IE.
+        onChange: function(dateObj, dateStr, instance) {
+          let date = _this._convertStringToDate(dateStr);
+          _this.set('value', date);
+        }
       });
     }
   },

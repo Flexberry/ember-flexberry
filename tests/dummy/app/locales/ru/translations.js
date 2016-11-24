@@ -222,8 +222,8 @@ Ember.$.extend(true, translations, {
               'caption': 'Функция ограничения',
               'title': ''
             },
-            'limit-function-with-dinamic-properties-example': {
-              'caption': 'Функция ограничения с динамическими свойсвами',
+            'limit-function-through-dynamic-properties-example': {
+              'caption': 'Функция ограничения через динамические свойства',
               'title': ''
             },
             'lookup-block-form-example': {
@@ -515,7 +515,7 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-groupedit. Пример работы с настройками'
         },
         'configurate-row-example': {
-          'caption': 'Flexberry-groupedit. Настройка столбцов'
+          'caption': 'Flexberry-groupedit. Настройка строк'
         },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Обновление модели',
@@ -535,8 +535,8 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Функция ограничения',
           'titleLookup': 'Мастер'
         },
-        'limit-function-with-dinamic-properties-example': {
-          'caption': 'Flexberry-lookup. Функция ограничения с динамическими свойсвами',
+        'limit-function-through-dynamic-properties-example': {
+          'caption': 'Flexberry-lookup. Функция ограничения через динамические свойства',
           'titleLookup': 'Мастер',
           'captionFirstLimitFunction': 'Функция ограничения №1',
           'captionSecondLimitFunction': 'Функция ограничения №2',

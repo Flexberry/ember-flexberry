@@ -165,7 +165,7 @@ test('readonly mode works properly', function(assert) {
   });
 });
 
-test('needChecksOnValue', function(assert) {
+test('needChecksOnValue mode properly', function(assert) {
   assert.expect(3);
 
   // Create array for testing.

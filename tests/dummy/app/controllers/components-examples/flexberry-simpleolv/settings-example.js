@@ -13,54 +13,6 @@ export default ListFormController.extend({
   _projectionName: 'SuggestionL',
 
   /**
-    Array of available model projections.
-
-    @property _projections
-    @type Object[]
-   */
-  _projections: Ember.computed('model.[]', function() {
-    let records = this.get('model');
-    let modelClass = Ember.get(records, 'length') > 0 ? Ember.get(records, 'firstObject').constructor : {};
-
-    return Ember.get(modelClass, 'projections');
-  }),
-
-  /**
-    Array of available model projections names.
-
-    @property _projectionsNames
-    @type String[]
-   */
-  _projectionsNames: Ember.computed('_projections.[]', function() {
-    let projections = this.get('_projections');
-    if (Ember.isNone(projections)) {
-      return [];
-    }
-
-    return Object.keys(projections);
-  }),
-
-  /**
-    Model projection for 'flexberry-simpleolv' component 'modelProjection' property.
-
-    @property projection
-    @type Object
-   */
-  projection: Ember.computed('_projections.[]', '_projectionName', function() {
-    let projectionName = this.get('_projectionName');
-    if (Ember.isBlank(projectionName)) {
-      return null;
-    }
-
-    let projections = this.get('_projections');
-    if (Ember.isNone(projections)) {
-      return null;
-    }
-
-    return projections[projectionName];
-  }),
-
-  /**
     Name of related edit form route (for 'flexberry-simpleolv' component 'editFormRoute' property).
 
     @property editFormRoute
@@ -128,6 +80,14 @@ export default ListFormController.extend({
   deleteButton: false,
 
   /**
+    Flag: indicates whether 'flexberry-simpleolv' component is in 'enableFilters' mode or not.
+
+    @property enableFilters
+    @type Boolean
+   */
+  enableFilters: true,
+
+  /**
     Flag: indicates whether 'flexberry-simpleolv' component is in 'filterButton' mode or not.
 
     @property filterButton
@@ -192,6 +152,14 @@ export default ListFormController.extend({
   orderable: true,
 
   /**
+    ext for 'flexberry-simpleolv' component 'singleColumnHeaderTitle' property.
+
+    @property singleColumnHeaderTitle
+    @type String
+   */
+  singleColumnHeaderTitle: undefined,
+
+  /**
     Current records.
 
     @property _records
@@ -214,13 +182,17 @@ export default ListFormController.extend({
     '  content=model<br>' +
     '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
     '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '  modelProjection=projection<br>' +
+    '  modelProjection=modelProjection<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
     '  tableStriped=tableStriped<br>' +
     '  allowColumnResize=allowColumnResize<br>' +
     '  createNewButton=createNewButton<br>' +
     '  deleteButton=deleteButton<br>' +
+    '  enableFilters=enableFilters<br>' +
+    '  filters=filters<br>' +
+    '  applyFilters=(action "applyFilters")<br>' +
+    '  resetFilters=(action "resetFilters")<br>' +
     '  refreshButton=refreshButton<br>' +
     '  filterButton=filterButton<br>' +
     '  showCheckBoxInRow=showCheckBoxInRow<br>' +
@@ -252,7 +224,7 @@ export default ListFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
+  componentSettingsMetadata: Ember.computed('i18n.locale', 'model.content', function() {
     let componentSettingsMetadata = Ember.A();
 
     componentSettingsMetadata.pushObject({
@@ -279,8 +251,8 @@ export default ListFormController.extend({
     });
     componentSettingsMetadata.pushObject({
       settingName: 'modelProjection',
-      settingType: 'enumeration',
-      settingAvailableItems: this.get('_projectionsNames'),
+      settingType: 'hasManyArray',
+      settingAvailableItems: this.get('_projectionName'),
       settingDefaultValue: null,
       bindedControllerPropertieName: '_projectionName',
       bindedControllerPropertieDisplayName: 'projection',
@@ -327,6 +299,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'deleteButton'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'enableFilters',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'enableFilters'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'filterButton',
@@ -388,7 +366,27 @@ export default ListFormController.extend({
       settingDefaultValue: true,
       bindedControllerPropertieName: 'orderable'
     });
+    componentSettingsMetadata.pushObject({
+      settingName: 'singleColumnHeaderTitle',
+      settingType: 'string',
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'singleColumnHeaderTitle'
+    });
 
     return componentSettingsMetadata;
+  }),
+
+  showLoadingTbodyClass: Ember.computed('model.content', function() {
+    if (this.get('model.content') === undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  }),
+
+  _enableFilters: Ember.observer('enableFilters', function() {
+    if (this.get('enableFilters')) {
+      this.set('refreshButton', true);
+    }
   }),
 });

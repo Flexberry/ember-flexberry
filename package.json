@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "0.8.0-beta.5",
+  "version": "0.8.0-beta.12",
   "description": "Ember Flexberry Addon",
   "license": "MIT",
   "author": {
@@ -44,7 +44,6 @@
     "ember-data": "~2.4.3",
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^1.0.5",
-    "ember-href-to": "1.9.0",
     "ember-link-action": "0.0.34",
     "ember-load-initializers": "^0.5.1",
     "ember-moment": "6.0.0",
@@ -60,7 +59,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.6",
     "ember-cli-sass": "^5.2.0",
-    "ember-flexberry-data": "0.7.1-beta.4",
+    "ember-flexberry-data": "0.7.1-beta.11",
     "ember-i18n": "4.2.0",
     "ember-truth-helpers": "1.2.0",
     "ember-validations": "~2.0.0-alpha.4",

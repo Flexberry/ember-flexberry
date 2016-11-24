@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
+import { Query } from 'ember-flexberry-data';
+
+const { StringPredicate } = Query;
 
 let openLookupDialog = function($lookup) {
   return new Ember.RSVP.Promise((resolve, reject) => {
@@ -71,6 +74,7 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
       $choosedRecordFirstCell.click();
 
       // Click on modal-dialog close icon.
+      // Сrutch correcting irregular bug
       let $modelDilogClose = Ember.$('.close.icon');
       $modelDilogClose.click();      
     });
@@ -185,20 +189,36 @@ test('changes in component\'s value causes changes in related model\'s specified
   });
 });
 
-test('changes in related model\'s value causes changes in component\'s', function(assert) {
+/*test('changes in model\'s value causes changes in component\'s specified \'belongsTo\' model', function(assert) {
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
   andThen(function() {
 
-    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/base-operations');
-
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let model = Ember.get(controller, 'model');
-    let relationName = Ember.get(controller, 'relationName');
-    let displayAttributeName = Ember.get(controller, 'displayAttributeName');
-
     let $lookup = Ember.$('.flexberry-lookup');
     let $lookupInput = Ember.$('input', $lookup);
-    assert.strictEqual($lookupInput.val(), '', 'lookup display value is empty by default');
+    assert.strictEqual($lookupInput.val() === '', true, 'lookup display value is empty by default');
+
+    let store = app.__container__.lookup('service:store');
+
+    let query = new Query.Builder(store)
+      .from('ember-flexberry-dummy-suggestion-type')
+      .selectByProjection('SettingLookupExampleView');
+
+    store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
+
+      let controller = app.__container__.lookup('controller:' + currentRouteName());
+      let model = Ember.get(controller, 'model');
+      let relationName = Ember.get(controller, 'relationName');
+
+      let suggestionTypesArr = suggestionTypes.toArray();
+
+      let tempName = suggestionTypesArr.objectAt(0);
+
+      model.set('type', tempName);
+      controller.set('model', model);
+
+      assert.strictEqual($lookupInput.val() === '', false, 'lookup display value isn\'t empty');
+    });
+  });
 
     // Wait for lookup dialog to be opened, choose first record & check component's state.
     let asyncOperationsCompleted = assert.async();
@@ -228,5 +248,4 @@ test('changes in related model\'s value causes changes in component\'s', functio
     }).finally(() => {
       asyncOperationsCompleted();
     });
-  });
-});
+});*/

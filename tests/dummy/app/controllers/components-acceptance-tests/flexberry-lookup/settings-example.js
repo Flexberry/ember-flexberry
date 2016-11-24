@@ -32,24 +32,6 @@ export default EditFormController.extend({
     @type Boolean
     @default false
   */
-  tempLimitPredicate: undefined,
-
-      /**
-    Flag indicates whether 'flexberry-lookup' component is in 'readonly' mode or not.
-
-    @property readonly
-    @type Boolean
-    @default false
-  */
-  tempLimitFunction: undefined,
-
-  /**
-    Flag indicates whether 'flexberry-lookup' component is in 'readonly' mode or not.
-
-    @property readonly
-    @type Boolean
-    @default false
-  */
   readonly: false,
 
   /**
@@ -116,124 +98,31 @@ export default EditFormController.extend({
   removeButtonClass: '',
 
   /**
-    Template text for 'flexberry-lookup' component.
 
-    @property componentTemplateText
-    @type String
   */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-lookup<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  value=model.type<br>' +
-    '  projection="SettingLookupExampleView"<br>' +
-    '  displayAttributeName="name"<br>' +
-    '  title="Master"<br>' +
-    '  relatedModel=model<br>' +
-    '  relationName="type"<br>' +
-    '  choose="showLookupDialog"<br>' +
-    '  remove="removeLookupValue"<br>' +
-    '  autocomplete=autocomplete<br>' +
-    '  dropdown=dropdown<br>' +
-    '  chooseText=chooseText<br>' +
-    '  removeText=removeText<br>' +
-    '  chooseButtonClass=chooseButtonClass<br>' +
-    '  removeButtonClass=removeButtonClass<br>' +
-    '}}'),
+  lookupLimitPredicate: undefined,
 
   /**
-    Component settings metadata.
 
-    @property componentSettingsMetadata
-    @type Object[]
   */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    let componentSettingsMetadata = Ember.A();
-    componentSettingsMetadata.pushObject({
-      settingName: 'placeholder',
-      settingType: 'string',
-      settingDefaultValue: this.get('i18n').t('components.flexberry-lookup.placeholder'),
-      bindedControllerPropertieName: 'placeholder'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'readonly',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'readonly'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'title',
-      settingType: 'string',
-      settingDefaultValue: 'Master',
-      bindedControllerPropertieName: 'title'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'autocomplete',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'autocomplete'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'dropdown',
-      settingType: 'boolean',
-      settingDefaultValue: false,
-      bindedControllerPropertieName: 'dropdown'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'chooseText',
-      settingType: 'string',
-      settingDefaultValue: this.get('i18n').t('components.flexberry-lookup.choose-button-text'),
-      bindedControllerPropertieName: 'chooseText'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'removeText',
-      settingType: 'string',
-      settingDefaultValue: '<i class="remove icon"></i>',
-      bindedControllerPropertieName: 'removeText'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'chooseButtonClass',
-      settingType: 'css',
-      settingDefaultValue: '',
-      settingAvailableItems: ['blue basic', 'positive', 'teal colored'],
-      bindedControllerPropertieName: 'chooseButtonClass'
-    });
-    componentSettingsMetadata.pushObject({
-      settingName: 'removeButtonClass',
-      settingType: 'css',
-      settingDefaultValue: '',
-      settingAvailableItems: ['purple basic', 'negative', 'yellow colored'],
-      bindedControllerPropertieName: 'removeButtonClass'
-    });
+  /*suggestionName: undefined,
 
-    return componentSettingsMetadata;
-  }),
 
-  actions: {
-
-    /**
-      This method set dynamicProperties.lookupLimitPredicate for lookup window.
-
-      @method firstLimitFunction
-     */
-    tempLimitPredicate() {
-      let currentLookupValue = this.get('tempLimitFunction');
-      let limitFunction = new StringPredicate('name').contains(currentLookupValue);
-      this.set('tempLimitPredicate:', limitFunction);
-    },
-  },
-
-  /**
-    Set limit accessible values for lookup.
-
-    @method init
-   */
-  init() {
+   init() {
     this._super(...arguments);
-    this.set('dynamicProperties',
-    {
-      lookupLimitPredicate: null
+
+    let store = this.get('store');
+
+    let query = new Query.Builder(store)
+      .from('ember-flexberry-dummy-suggestion-type')
+      .selectByProjection('SuggestionTypeE').top(0);
+
+    store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
+      let suggestionTypesArr = suggestionTypes.toArray();
+      this.set('suggestionName', suggestionTypesArr.objectAt(0).get('name'));
+
+      let limitFunction = new StringPredicate('name').contains(suggestionTypesArr.objectAt(0).get('name'));
+      this.set('lookupLimitPredicate', limitFunction);
     });
-    this.set('tempLimitFunction', this.get('controller.limitFunction'));
-  }
+  }*/
 });

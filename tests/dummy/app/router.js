@@ -74,7 +74,6 @@ Router.map(function() {
   this.route('components-examples/flexberry-simpleolv/custom-filter');
   this.route('components-examples/flexberry-simpleolv/configurate-rows');
   this.route('components-examples/flexberry-simpleolv/selected-rows');
-
   this.route('components-examples/flexberry-simpledatetime/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
@@ -89,7 +88,7 @@ Router.map(function() {
 
   // Components acceptance tests forms.
   this.route('components-acceptance-tests/flexberry-lookup/base-operations');
-  this.route('components-acceptance-tests/flexberry-lookup/settings-example');  
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
 });

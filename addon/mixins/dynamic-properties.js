@@ -240,7 +240,7 @@ export default Ember.Mixin.create({
   didInsertElement() {
     this._super(...arguments);
 
-    // We must now this to handle changes in component's 'class' property.
+    // We must know this to handle changes in component's 'class' property.
     this.set('_componentWrapperIsAvailable', true);
   },
 
@@ -250,7 +250,7 @@ export default Ember.Mixin.create({
   willDestroyElement() {
     this._super(...arguments);
 
-    // We must now this to handle changes in component's 'class' property.
+    // We must know this to handle changes in component's 'class' property.
     this.set('_componentWrapperIsAvailable', false);
   },
 

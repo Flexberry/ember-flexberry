@@ -13,7 +13,15 @@ module.exports = function(defaults) {
       paths: [
         'bower_components/semantic-ui'
       ]
-    }
+    },
+    SemanticUI: {
+      import: {
+        css: false,
+        javascript: false,
+        images: false,
+        fonts: true
+      }
+    },
   });
 
   /*

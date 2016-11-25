@@ -1,7 +1,4 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-import { Query } from 'ember-flexberry-data';
-
-const { StringPredicate } = Query;
 
 export default EditFormRoute.extend({
   /**
@@ -27,21 +24,6 @@ export default EditFormRoute.extend({
 
     @method model
    */
-  /*model(params) {
-    let store = this.get('store');
-
-    let query = new Query.Builder(store)
-      .from('ember-flexberry-dummy-suggestion-type')
-      .selectByProjection('SuggestionTypeE');
-
-    return store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
-      let suggestionTypesArr = suggestionTypes.toArray();
-      let suggestion = suggestionTypesArr.objectAt(0);
-      let base = store.createRecord('ember-flexberry-dummy-suggestion-type');
-      base.set('type',suggestion);
-      return base;
-    });
-  }*/
 
   model(params) {
     let store = this.get('store');

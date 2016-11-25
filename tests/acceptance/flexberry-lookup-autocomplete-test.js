@@ -1,4 +1,5 @@
-/*import { test } from 'qunit';
+/*import Ember from 'ember';
+import { test } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | flexberry lookup test autocomplete');
@@ -21,7 +22,7 @@ test('visiting flexberry-lookup-autocomplete', function(assert) {
 
     assert.strictEqual($lookupField.hasClass('prompt'), true, 'Component\'s wrapper has \'prompt\' css-class');
 
-    let $result= Ember.$('.result');
+    let $result = Ember.$('.result');
 
     assert.strictEqual($result.length === 1, true, 'Component has inner class \'result\'');
   });

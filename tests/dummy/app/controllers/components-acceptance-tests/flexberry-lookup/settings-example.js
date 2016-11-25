@@ -1,9 +1,6 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
-import { Query } from 'ember-flexberry-data';
-
-const { StringPredicate } = Query;
 
 export default EditFormController.extend({
   /**
@@ -96,33 +93,4 @@ export default EditFormController.extend({
     @default 'olive'
   */
   removeButtonClass: '',
-
-  /**
-
-  */
-  lookupLimitPredicate: undefined,
-
-  /**
-
-  */
-  /*suggestionName: undefined,
-
-
-   init() {
-    this._super(...arguments);
-
-    let store = this.get('store');
-
-    let query = new Query.Builder(store)
-      .from('ember-flexberry-dummy-suggestion-type')
-      .selectByProjection('SuggestionTypeE').top(0);
-
-    store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
-      let suggestionTypesArr = suggestionTypes.toArray();
-      this.set('suggestionName', suggestionTypesArr.objectAt(0).get('name'));
-
-      let limitFunction = new StringPredicate('name').contains(suggestionTypesArr.objectAt(0).get('name'));
-      this.set('lookupLimitPredicate', limitFunction);
-    });
-  }*/
 });

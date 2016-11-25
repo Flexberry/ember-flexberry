@@ -1,6 +1,7 @@
-/*import Ember from 'ember';
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
+import { Query } from 'ember-flexberry-data';
 
 let openLookupDialog = function($lookup) {
   return new Ember.RSVP.Promise((resolve, reject) => {
@@ -112,7 +113,7 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
 let app;
 let latestReceivedRecords;
 
-module('Acceptance | flexberry-lookup', {
+module('Acceptance | flexberry-lookup-change-model', {
   beforeEach() {
     // Start application.
     app = startApp();
@@ -143,45 +144,37 @@ module('Acceptance | flexberry-lookup', {
   }
 });
 
-test('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation', function(assert) {
+test('changes in model\'s value causes changes in component\'s specified \'belongsTo\' model', function(assert) {
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
   andThen(function() {
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let model = Ember.get(controller, 'model');
-    let relationName = Ember.get(controller, 'relationName');
-    let displayAttributeName = Ember.get(controller, 'displayAttributeName');
 
     let $lookup = Ember.$('.flexberry-lookup');
     let $lookupInput = Ember.$('input', $lookup);
-    assert.strictEqual($lookupInput.val(), '', 'lookup display value is empty by default');
+    assert.strictEqual($lookupInput.val() === '', true, 'lookup display value is empty by default');
 
-    // Wait for lookup dialog to be opened, choose first record & check component's state.
-    let asyncOperationsCompleted = assert.async();
-    openLookupDialog($lookup).then(($lookupDialog) => {
-      assert.ok($lookupDialog);
+    let controller = app.__container__.lookup('controller:' + currentRouteName());
+    let model = Ember.get(controller, 'model');
 
-      // Lookup dialog successfully opened & data is loaded.
-      // Try to choose first loaded record.
-      return chooseRecordInLookupDialog($lookupDialog, 0);
+    let store = app.__container__.lookup('service:store');
+
+    let suggestionType = undefined;
+
+    let query = new Query.Builder(store)
+      .from('ember-flexberry-dummy-suggestion-type')
+      .selectByProjection('SettingLookupExampleView');
+
+
+    store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
+
+      let suggestionTypesArr = suggestionTypes.toArray();
+
+      suggestionType = suggestionTypesArr.objectAt(0);
+
     }).then(() => {
-      // First loaded record chosen successfully.
-      // Check that chosen record is now set to related model's 'belongsTo' relation.
-      let chosenRecord = model.get(relationName);
-      let expectedRecord = latestReceivedRecords[0];
-      assert.strictEqual(
-        chosenRecord,
-        expectedRecord,
-        'chosen record is set to model\'s \'' + relationName + '\' relation as expected');
 
-      let chosenRecordDisplayAttribute = chosenRecord.get(displayAttributeName);
-      assert.strictEqual(
-        $lookupInput.val(),
-        chosenRecordDisplayAttribute,
-        'lookup display value is equals to chosen record\'s \'' + displayAttributeName + '\' attribute');
-    }).catch((reason) => {
-      throw new Error(reason);
-    }).finally(() => {
-      asyncOperationsCompleted();
+      model.set('type', suggestionType);
+
+      assert.strictEqual($lookupInput.val() === '', false, 'lookup display value isn\'t empty');
     });
   });
-});*/
+});

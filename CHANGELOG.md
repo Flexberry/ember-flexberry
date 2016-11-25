@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0-beta.13] - 2016-11-25
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.12 version.
+
 ## [0.8.0-beta.12] - 2016-11-23
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.7.1-beta.11 version.

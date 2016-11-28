@@ -267,6 +267,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Custom filter',
               'title': ''
             },
+            'hierarchy-example': {
+              'caption': 'Hierarchy example',
+              'title': ''
+            },
             'configurate-rows': {
               'caption': 'Configurate rows',
               'title': ''
@@ -582,6 +586,9 @@ Ember.$.extend(true, translations, {
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'
+        },
+        'hierarchy-example': {
+          'caption': 'Flexberry-objectlistview. Hierarchy example'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'

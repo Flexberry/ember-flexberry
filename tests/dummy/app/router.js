@@ -66,6 +66,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/on-edit-form/user', { path: 'components-examples/flexberry-objectlistview/on-edit-form/user/:id' });
   this.route('components-examples/flexberry-objectlistview/custom-filter');
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
+  this.route('components-examples/flexberry-objectlistview/hierarchy-example');
   this.route('components-examples/flexberry-objectlistview/selected-rows');
 
   this.route('components-examples/flexberry-simpleolv/settings-example');

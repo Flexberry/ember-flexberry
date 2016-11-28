@@ -570,7 +570,16 @@ Ember.$.extend(true, translations, {
           'projectionSuccessorSoc': 'Projection \'Successor social network\': Name, VK, Facebook, Twitter',
           'buttonRoot': 'Base',
           'buttonSuccessorPhone': 'Successor phone',
-          'buttonSuccessorSoc': 'Successor social network'
+          'buttonSuccessorSoc': 'Successor social network',
+          'name-caption': 'Name',
+          'eMail-caption': 'E-Mail',
+          'phone1-caption': 'Phone1',
+          'phone2-caption': 'Phone2',
+          'phone3-caption': 'Phone3',
+          'vK-caption': 'VK',
+          'facebook-caption': 'Facebook',
+          'twitter-caption': 'Twitter',
+          'birthday-caption': 'Birthday'
         },
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'

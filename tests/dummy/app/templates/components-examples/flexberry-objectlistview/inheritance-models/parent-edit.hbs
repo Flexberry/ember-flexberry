@@ -1,4 +1,4 @@
-<h3 class="ui header">{{t "forms.ember-flexberry-dummy-application-user-edit.caption"}}</h3>
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.inheritance-models.caption"}}</h3>
 <form class="ui {{state}} form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
@@ -42,7 +42,7 @@
   <div class="field {{if model.errors.name "error" ""}}">
     {{flexberry-field
       value=model.name
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.name-caption")
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
@@ -50,13 +50,13 @@
   <div class="field {{if model.errors.eMail "error" ""}}">
     {{flexberry-field
       value=model.eMail
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.eMail-caption")
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.eMail pointing="pointing"}}
   </div>
   <div class="field {{if model.errors.birthday "error" ""}}">
-    <label>{{t "forms.ember-flexberry-dummy-application-user-edit.birthday-caption"}}</label>
+    <label>{{t "forms.components-examples.flexberry-objectlistview.inheritance-models.birthday-caption"}}</label>
     {{flexberry-datepicker
       value=model.birthday
       readonly=readonly

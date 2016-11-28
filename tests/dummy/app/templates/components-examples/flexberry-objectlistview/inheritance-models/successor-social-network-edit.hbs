@@ -1,4 +1,4 @@
-<h3 class="ui header">{{t "forms.ember-flexberry-dummy-application-user-edit.caption"}}</h3>
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.inheritance-models.caption"}}</h3>
 <form class="ui {{state}} form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
@@ -42,7 +42,7 @@
   <div class="field {{if model.errors.name "error" ""}}">
     {{flexberry-field
       value=model.name
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.name-caption")
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
@@ -50,7 +50,7 @@
   <div class="field {{if model.errors.vK "error" ""}}">
     {{flexberry-field
       value=model.vK
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.vK-caption")
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.vK-caption")
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.vK pointing="pointing"}}
@@ -58,7 +58,7 @@
   <div class="field {{if model.errors.facebook "error" ""}}">
     {{flexberry-field
       value=model.facebook
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.facebook-caption")
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.facebook-caption")
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.facebook pointing="pointing"}}
@@ -66,7 +66,7 @@
   <div class="field {{if model.errors.twitter "error" ""}}">
     {{flexberry-field
       value=model.twitter
-      label=(t "forms.ember-flexberry-dummy-application-user-edit.twitter-caption")
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.twitter-caption")
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.twitter pointing="pointing"}}

@@ -574,7 +574,16 @@ Ember.$.extend(true, translations, {
           'projectionSuccessorSoc': 'Представление \'Наследник соц сети\': Name, VK, Facebook, Twitter',
           'buttonRoot': 'Предок',
           'buttonSuccessorPhone': 'Наследник телефоны',
-          'buttonSuccessorSoc': 'Наследник соц сети'
+          'buttonSuccessorSoc': 'Наследник соц сети',
+          'name-caption': 'Имя',
+          'eMail-caption': 'E-mail',
+          'phone1-caption': 'Номер телефона 1',
+          'phone2-caption': 'Номер телефона 2',
+          'phone3-caption': 'Номер телефона 3',
+          'vK-caption': 'VK',
+          'facebook-caption': 'Facebook',
+          'twitter-caption': 'Twitter',
+          'birthday-caption': 'Дата рождения',
         },
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Пример работы с настройками'

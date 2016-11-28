@@ -46,7 +46,6 @@ test('it renders properly', function(assert) {
   assert.strictEqual($component.hasClass('flexberry-dropdown'), true, 'Component\'s wrapper has \' flexberry-dropdown\' css-class');
   assert.strictEqual($component.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
   assert.strictEqual($component.hasClass('selection'), true, 'Component\'s wrapper has \'selection\' css-class');
-  assert.strictEqual($component.hasClass('ember-view'), true, 'Component\'s wrapper has \'ember-view\' css-class');
   assert.strictEqual($component.hasClass('dropdown'), true, 'Component\'s wrapper has \'dropdown\' css-class');
   assert.strictEqual($dropdownIcon.hasClass('dropdown icon'), true, 'Component\'s wrapper has \'dropdown icon\' css-class');
   assert.strictEqual($dropdownText.hasClass('default text'), true, 'Component\'s wrapper has \'default text\' css-class');
@@ -77,7 +76,7 @@ test('it renders i18n-ed placeholder', function(assert) {
 
   // Render component.
   this.render(hbs`{{flexberry-dropdown
-    class=class
+    placeholder=placeholder
   }}`);
 
   // Retrieve component.
@@ -166,14 +165,11 @@ test('readonly mode works properly', function(assert) {
 });
 
 test('needChecksOnValue mode properly', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
   this.set('itemsArray', itemsArray);
-
-  // Check value not exists.
-  this.set('value', null);
 
   // Render component.
   this.render(hbs`{{flexberry-dropdown
@@ -181,8 +177,6 @@ test('needChecksOnValue mode properly', function(assert) {
     items=itemsArray
     needChecksOnValue=needChecksOnValue
   }}`);
-
-  assert.strictEqual(this.get('value'), null, 'Component\'s property binded to \'value\' is equals to null');
 
   // Change property binded to 'value' & check them.
   this.set('needChecksOnValue', true);
@@ -198,8 +192,8 @@ test('needChecksOnValue mode properly', function(assert) {
   assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true, 'Invalide value exists');
 });
 
-test('itemsObject render properly', function(assert) {
-  assert.expect(4);
+test('dropdown with items represented by object renders properly', function(assert) {
+  assert.expect(3);
 
   // Create objects for testing.
   let itemsObject = {
@@ -217,14 +211,11 @@ test('itemsObject render properly', function(assert) {
   // Retrieve component.
   let $component = this.$().children();
   let $dropdownMenu = $component.children('div.menu');
-  let $dropdomnItem = $dropdownMenu.children('div.item');
-
-  // Check that  class 'item' in <menu> exist.
-  assert.strictEqual($dropdomnItem.hasClass('item'), true, 'Component\'s has class');
+  let $dropdownItem = $dropdownMenu.children('div.item');
 
   // Check component's captions and objects.
   let itemsObjectKeys = Object.keys(itemsObject);
-  $dropdomnItem.each(function(i) {
+  $dropdownItem.each(function(i) {
     let $item = Ember.$(this);
     let itemKey = itemsObjectKeys[i];
     let itemCaption = itemsObject[itemKey];
@@ -234,8 +225,8 @@ test('itemsObject render properly', function(assert) {
   });
 });
 
-test('itemsArray render properly', function(assert) {
-  assert.expect(4);
+test('dropdown with items represented by array renders properlyy', function(assert) {
+  assert.expect(3);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -249,13 +240,10 @@ test('itemsArray render properly', function(assert) {
   // Retrieve component.
   let $component = this.$().children();
   let $dropdownMenu = $component.children('div.menu');
-  let $dropdomnItem = $dropdownMenu.children('div.item');
-
-  // Check that  class 'item' in <menu> exist.
-  assert.strictEqual($dropdomnItem.hasClass('item'), true, 'Component\'s has class');
+  let $dropdownItem = $dropdownMenu.children('div.item');
 
   // Check component's captions and array.
-  $dropdomnItem.each(function(i) {
+  $dropdownItem.each(function(i) {
     let $item = Ember.$(this);
     let itemCaption = itemsArray[i];
 
@@ -265,7 +253,7 @@ test('itemsArray render properly', function(assert) {
 });
 
 // Call animation for component & check that animation handled properly.
-function clickOnDropdown(assert, resolve, $dropdomnItem, $component, $dropdownMenu) {
+function clickOnDropdown(assert, resolve, $dropdownItem, $component, $dropdownMenu) {
 
   // Wait animation to check component's state.
   Ember.run(() => {
@@ -295,9 +283,9 @@ function clickOnDropdown(assert, resolve, $dropdomnItem, $component, $dropdownMe
         assert.strictEqual($dropdownMenu.hasClass('visible'), true, 'Component\'s menu has class \'visible\'');
       }
 
-      if ($dropdomnItem) {
-        assert.strictEqual($dropdomnItem.hasClass('active'), true, 'Component\'s item has class \'active\'');
-        assert.strictEqual($dropdomnItem.hasClass('selected'), true, 'Component\'s item has class \'selected\'');
+      if ($dropdownItem) {
+        assert.strictEqual($dropdownItem.hasClass('active'), true, 'Component\'s item has class \'active\'');
+        assert.strictEqual($dropdownItem.hasClass('selected'), true, 'Component\'s item has class \'selected\'');
       }
 
       // Tell to test method that asynchronous operation completed.
@@ -310,7 +298,7 @@ function clickOnDropdown(assert, resolve, $dropdomnItem, $component, $dropdownMe
 }
 
 test('animation dropdown without selecting a value', function(assert) {
-  assert.expect(12);
+  assert.expect(11);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -327,7 +315,6 @@ test('animation dropdown without selecting a value', function(assert) {
   let $dropdownMenu = $component.children('div.menu');
 
   // Check that component is collapsed by default.
-  assert.strictEqual($component.hasClass('upward'), false, 'Component hasn\'t class \'upward\'');
   assert.strictEqual($component.hasClass('active'), false, 'Component hasn\'t class \'active\'');
   assert.strictEqual($component.hasClass('visible'), false, 'Component hasn\'t class \'visible\'');
   assert.strictEqual($dropdownText.hasClass('default'), true, 'Component\'s text has class \'default\'');
@@ -383,7 +370,7 @@ test('animation dropdown with selecting a value', function(assert) {
   let $component = this.$().children();
   let $dropdownMenu = $component.children('div.menu');
   let $dropdownText = $component.children('div.text');
-  let $dropdomnItem = $dropdownMenu.children('div.item');
+  let $dropdownItem = $dropdownMenu.children('div.item');
 
   let $items = Ember.$('div.item', $dropdownMenu);
 
@@ -409,7 +396,7 @@ test('animation dropdown with selecting a value', function(assert) {
         Ember.$($items[2]).click();
       });
 
-      clickOnDropdown(assert, resolve, $dropdomnItem, null, null);
+      clickOnDropdown(assert, resolve, $dropdownItem, null, null);
     });
 
     // Wait animation to be completed (when resolve will be called inside previous timeout).
@@ -450,7 +437,7 @@ test('changes in inner <dropdown> causes changes in property binded to \'value\'
   let $component = this.$().children();
   let $dropdownMenu = $component.children('div.menu');
   let $dropdownText = $component.children('div.text');
-  let $dropdomnItem = $dropdownMenu.children('div.item');
+  let $dropdownItem = $dropdownMenu.children('div.item');
 
   let $items = Ember.$('div.item', $dropdownMenu);
 
@@ -477,7 +464,7 @@ test('changes in inner <dropdown> causes changes in property binded to \'value\'
         Ember.$($items[2]).click();
       });
 
-      clickOnDropdown(assert, resolve, $dropdomnItem, null, null);
+      clickOnDropdown(assert, resolve, $dropdownItem, null, null);
     });
 
     // Wait animation to be completed (when resolve will be called inside previous timeout).

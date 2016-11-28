@@ -25,6 +25,19 @@ import EmberResolver from 'ember-resolver';
 */
 export default EmberResolver.extend({
   /**
+    Contains names of type for which need lookup class with prefix received through a {{#crossLink "DeviceService"}}{{/crossLink}}.
+
+    @property resolvingTypes
+    @type Array
+    @default ['component', 'template', 'view']
+  */
+  resolvingTypes: [
+    'component',
+    'template',
+    'view',
+  ],
+
+  /**
     Initializes resolver.
   */
   init() {
@@ -65,7 +78,7 @@ export default EmberResolver.extend({
     let { resolvingType, resolvingPath } = { resolvingType: fullNamePartsArray[0], resolvingPath: fullNamePartsArray[1] };
     let resolvingPathParts = resolvingPath.split('/');
 
-    if (!this._resolveResourceWithoutDeviceTypeDetection(fullName)) {
+    if (this._resolveTypeWithDeviceTypeDetection(resolvingType) && !this._resolveResourceWithoutDeviceTypeDetection(fullName)) {
       let pathPrefixes = device.pathPrefixes(true);
       for (let i = 0, len = pathPrefixes.length; i < len; i++) {
         let pathPrefix = pathPrefixes[i];
@@ -104,5 +117,18 @@ export default EmberResolver.extend({
     }
 
     return false;
+  },
+
+  /**
+    Checks `type` need use prefix received through a {{#crossLink "DeviceService"}}{{/crossLink}} to lookup class this `type` or not.
+
+    @method _resolveTypeWithDeviceTypeDetection
+    @param {String} type
+    @return {Boolean}
+    @private
+  */
+  _resolveTypeWithDeviceTypeDetection(type) {
+    let resolvingTypes = this.get('resolvingTypes');
+    return resolvingTypes.indexOf(type) > -1;
   },
 });

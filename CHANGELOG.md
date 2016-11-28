@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Breaking changes
+* `Resolver` from addon:
+    * Now lookup class based on type device will be executed for only `component`, `template` and `view` types.
+    * If necessary, change types, for which will be determined device type, extend `Resolver` and determine list of types into `resolvingTypes` property.
 
 ## [0.8.0-beta.13] - 2016-11-25
 ### Changed

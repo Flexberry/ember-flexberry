@@ -306,6 +306,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-objectlistview/inheritance-models',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.inheritance-models.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.inheritance-models.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-objectlistview/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.title'),

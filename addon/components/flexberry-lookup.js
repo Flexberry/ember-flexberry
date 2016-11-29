@@ -334,16 +334,6 @@ export default FlexberryBaseComponent.extend({
   value: undefined,
 
   /**
-    Additional observer of value change, updates `displayValue`.
-
-    @method _valueObserver
-    @private
-  */
-  _valueObserver: Ember.observer('value', function() {
-    this.set('displayValue', this._buildDisplayValue());
-  }),
-
-  /**
     Flag indicating whether a modal dialog is open.
 
     @property modalIsShow
@@ -483,6 +473,10 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
+
+    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
+    this.addObserver('value', this, this._valueObserver);
+    this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 
   /**
@@ -546,6 +540,20 @@ export default FlexberryBaseComponent.extend({
     this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
+
+    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
+    this.removeObserver('value', this, this._valueObserver);
+    this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
+  },
+
+  /**
+    Additional observer of value and `relatedModel.relationName` change, updates `displayValue`.
+
+    @method _valueObserver
+    @private
+  */
+  _valueObserver() {
+    this.set('displayValue', this._buildDisplayValue());
   },
 
   /**

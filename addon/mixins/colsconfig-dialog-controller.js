@@ -43,6 +43,7 @@ export default Ember.Mixin.create({
       this.set('_openedModalDialog', undefined);
     }
   },
+
   clear: function() {
     this.set('_openedModalDialog', undefined);
     return this;

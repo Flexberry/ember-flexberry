@@ -84,7 +84,6 @@ export default EditFormController.extend({
       @method actions.save
     */
     save() {
-      this._saveInternalLogic();
       this._super.apply(this, arguments);
     },
 
@@ -97,7 +96,6 @@ export default EditFormController.extend({
       @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after save.
     */
     saveAndClose(skipTransition) {
-      this._saveInternalLogic();
       this._super.apply(this, arguments);
     },
 

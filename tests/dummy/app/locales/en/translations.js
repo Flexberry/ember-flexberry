@@ -219,6 +219,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
+            'limit-function-through-dynamic-properties-example': {
+              'caption': 'Limit function with dinamic properties example',
+              'title': ''
+            },
             'lookup-block-form-example': {
               'caption': 'Lookup block form example',
               'title': ''
@@ -247,6 +251,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
+            'inheritance-models': {
+              'caption': 'Inheritance models',
+              'title': ''
+            },
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
@@ -261,6 +269,10 @@ Ember.$.extend(true, translations, {
             },
             'custom-filter': {
               'caption': 'Custom filter',
+              'title': ''
+            },
+            'hierarchy-example': {
+              'caption': 'Hierarchy example',
               'title': ''
             },
             'configurate-rows': {
@@ -527,6 +539,13 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Limit function example',
           'titleLookup': 'Master'
         },
+        'limit-function-through-dynamic-properties-example': {
+          'caption': 'Flexberry-lookup. Limit function through dynamic properties example',
+          'titleLookup': 'Master',
+          'captionFirstLimitFunction': 'Limit function №1',
+          'captionSecondLimitFunction': 'Limit function №2',
+          'captionClearLimitFunction': 'Clear limit function'
+        },
         'lookup-block-form-example': {
           'caption': 'Flexberry-lookup. Lookup block form example',
           'message': 'This test only works on the mobile site. To start a mobile version should be:',
@@ -558,6 +577,25 @@ Ember.$.extend(true, translations, {
         'limit-function-example': {
           'caption': 'Flexberry-objectlistview. Limit function example'
         },
+        'inheritance-models': {
+          'caption': 'Flexberry-objectlistview. Inheritance models example',
+          'message': 'Сheck projection in OLV. (ProjectionE=ProjectionL)',
+          'projectionBase': 'Projection \'Base\': Name, E-mail, Birthday',
+          'projectionSuccessorPhone': 'Projection \'Successor phone\': Name, Phone1, Phone2, Phone3',
+          'projectionSuccessorSoc': 'Projection \'Successor social network\': Name, VK, Facebook, Twitter',
+          'buttonRoot': 'Base',
+          'buttonSuccessorPhone': 'Successor phone',
+          'buttonSuccessorSoc': 'Successor social network',
+          'name-caption': 'Name',
+          'eMail-caption': 'E-Mail',
+          'phone1-caption': 'Phone1',
+          'phone2-caption': 'Phone2',
+          'phone3-caption': 'Phone3',
+          'vK-caption': 'VK',
+          'facebook-caption': 'Facebook',
+          'twitter-caption': 'Twitter',
+          'birthday-caption': 'Birthday'
+        },
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'
         },
@@ -571,6 +609,9 @@ Ember.$.extend(true, translations, {
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'
+        },
+        'hierarchy-example': {
+          'caption': 'Flexberry-objectlistview. Hierarchy example'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'

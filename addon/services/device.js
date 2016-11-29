@@ -43,11 +43,8 @@ export default Ember.Service.extend(Ember.Evented, {
   init() {
     this._super(...arguments);
 
-    let device = window.device;
-    if (device && device.noConflict) {
-      // No conflict devicejs library reference.
-      let devicejs = device.noConflict();
-
+    let devicejs = window.device;
+    if (devicejs) {
       // Names of devicejs library features.
       let devicejsPropertiesNames = Object.keys(devicejs);
 

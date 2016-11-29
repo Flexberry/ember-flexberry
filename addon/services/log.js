@@ -33,6 +33,17 @@ const joinArguments = function() {
 */
 export default Ember.Service.extend({
   /**
+    Cache containing references to original Logger methods.
+    Cache is needed to restore original methods on service destroy.
+
+    @property _originalMethodsCache
+    @type Object[]
+    @default null
+    @private
+  */
+  _originalMethodsCache: null,
+
+  /**
     Ember data store.
 
     @property store
@@ -229,7 +240,16 @@ export default Ember.Service.extend({
     this._super(...arguments);
 
     let _this = this;
+    let originalMethodsCache = Ember.A();
+    this.set('_originalMethodsCache', originalMethodsCache);
+
     let originalEmberLoggerError = Ember.Logger.error;
+    originalMethodsCache.pushObject({
+      methodOwner: Ember.Logger,
+      methodName: 'error',
+      methodReference: originalEmberLoggerError
+    });
+
     let onError = function(error, rethrowError) {
       let message = error.message || error.toString();
 
@@ -248,7 +268,6 @@ export default Ember.Service.extend({
     };
 
     // Assign Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
-
     Ember.onerror = onError;
     Ember.RSVP.on('error', onError);
 
@@ -259,6 +278,12 @@ export default Ember.Service.extend({
 
     // Extend Ember.Logger.warn logic.
     let originalEmberLoggerWarn = Ember.Logger.warn;
+    originalMethodsCache.pushObject({
+      methodOwner: Ember.Logger,
+      methodName: 'warn',
+      methodReference: originalEmberLoggerWarn
+    });
+
     Ember.Logger.warn = function() {
       originalEmberLoggerWarn(...arguments);
 
@@ -272,6 +297,12 @@ export default Ember.Service.extend({
 
     // Extend Ember.Logger.log logic.
     let originalEmberLoggerLog = Ember.Logger.log;
+    originalMethodsCache.pushObject({
+      methodOwner: Ember.Logger,
+      methodName: 'log',
+      methodReference: originalEmberLoggerLog
+    });
+
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
@@ -280,6 +311,12 @@ export default Ember.Service.extend({
 
     // Extend Ember.Logger.info logic.
     let originalEmberLoggerInfo = Ember.Logger.info;
+    originalMethodsCache.pushObject({
+      methodOwner: Ember.Logger,
+      methodName: 'info',
+      methodReference: originalEmberLoggerInfo
+    });
+
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
@@ -288,11 +325,36 @@ export default Ember.Service.extend({
 
     // Extend Ember.Logger.debug logic.
     let originalEmberLoggerDebug = Ember.Logger.debug;
+    originalMethodsCache.pushObject({
+      methodOwner: Ember.Logger,
+      methodName: 'debug',
+      methodReference: originalEmberLoggerDebug
+    });
+
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
       return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
     };
+  },
+
+  /**
+    Destroys log service.
+  */
+  willDestroy() {
+    this._super(...arguments);
+
+    // Restore original Ember.Logger methods.
+    let originalMethodsCache = this.get('_originalMethodsCache');
+    if (Ember.isArray(originalMethodsCache)) {
+      originalMethodsCache.forEach((cacheEntry) => {
+        Ember.set(cacheEntry.methodOwner, cacheEntry.methodName, cacheEntry.methodReference);
+      });
+    }
+
+    // Cleanup Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
+    Ember.onerror = null;
+    Ember.RSVP.off('error');
   },
 
   /**
@@ -312,7 +374,7 @@ export default Ember.Service.extend({
       category.name === messageCategory.info.name && !this.get('storeInfoMessages') ||
       category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
       category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages')) {
-      return;
+      return new Ember.RSVP.Promise((resolve, reject) => { resolve(); });
     }
 
     let applicationLogProperties = {
@@ -337,15 +399,12 @@ export default Ember.Service.extend({
 
     // Break if message already exists in store (to avoid infinit loop when message is generated while saving itself).
     if (store.peekAll(applicationLogModelName).findBy('message', message) !== undefined) {
-      return;
+      return new Ember.RSVP.Promise((resolve, reject) => { resolve(); });
     }
 
-    return store.createRecord(applicationLogModelName, applicationLogProperties).save().
-      then(
-        result => {return result;},
-
-        // Switch off remote logging on rejection to avoid infinite loop.
-        reason => {this.set('enabled', false);}
-      );
+    return store.createRecord(applicationLogModelName, applicationLogProperties).save().catch((reason) => {
+      // Switch off remote logging on rejection to avoid infinite loop.
+      this.set('enabled', false);
+    });
   },
 });

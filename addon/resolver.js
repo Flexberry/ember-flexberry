@@ -25,7 +25,7 @@ import EmberResolver from 'ember-resolver';
 */
 export default EmberResolver.extend({
   /**
-    Contains names of type for which need lookup class with prefix received through a {{#crossLink "DeviceService"}}{{/crossLink}}.
+    Names of types which needs to be resolved with prefixes received through a {{#crossLink "DeviceService"}}device service{{/crossLink}}.
 
     @property resolvingTypes
     @type Array
@@ -120,7 +120,7 @@ export default EmberResolver.extend({
   },
 
   /**
-    Checks `type` need use prefix received through a {{#crossLink "DeviceService"}}{{/crossLink}} to lookup class this `type` or not.
+    Checks that 'type' needs to be resolved with prefixes received through a {{#crossLink "DeviceService"}}device service{{/crossLink}}.
 
     @method _resolveTypeWithDeviceTypeDetection
     @param {String} type

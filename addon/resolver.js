@@ -27,11 +27,11 @@ export default EmberResolver.extend({
   /**
     Names of types which needs to be resolved with prefixes received through a {{#crossLink "DeviceService"}}device service{{/crossLink}}.
 
-    @property resolvingTypes
+    @property deviceRelatedTypes
     @type Array
     @default ['component', 'template', 'view']
   */
-  resolvingTypes: [
+  deviceRelatedTypes: [
     'component',
     'template',
     'view',
@@ -128,7 +128,8 @@ export default EmberResolver.extend({
     @private
   */
   _resolveTypeWithDeviceTypeDetection(type) {
-    let resolvingTypes = this.get('resolvingTypes');
-    return resolvingTypes.indexOf(type) > -1;
+    let deviceRelatedTypes = this.get('deviceRelatedTypes');
+    Ember.assert(`Property 'deviceRelatedTypes' must be a array.`, Ember.isArray(deviceRelatedTypes));
+    return deviceRelatedTypes.indexOf(type) > -1;
   },
 });

@@ -396,7 +396,7 @@ test('ember-grupedit striped test', function(assert) {
   });
 });
 
-test('ember-grupedit with element by default test', function(assert) {
+test('ember-grupedit element by default test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -427,21 +427,104 @@ test('ember-grupedit with element by default test', function(assert) {
     });
 
     wait().then(() => {
-    /*let $componentListViewContainer = $component.children('.object-list-view-container');
-    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
-    let $componentObjectListViewBody = $componentObjectListView.children('tbody');
-    let $componentObjectListViewTr = $componentObjectListViewBody.children('tr');
-    let $componentObjectListViewTd = $componentObjectListViewTr.children('td');    
-    let $componentObjectListViewFirst = $($componentObjectListViewTd[0]);
-    let $componentObjectListViewFirstCell = $componentObjectListViewFirst.children('div');*/ 
-    let $componentObjectListViewFirstCellAsterisk = $componentObjectListViewFirstCell.children('.asterisk'); 
+    let $componentObjectListViewFirstCellAsterisk = Ember.$('.asterisk', $component);
 
-    let $componentObjectListViewFirstCellAsterisk = Ember.$.children('.asterisk'); 
+    // Check object-list-view <i>.
+    assert.strictEqual($componentObjectListViewFirstCellAsterisk.length === 1, true, 'Component has inner object-list-view-operations blocks');
+    assert.strictEqual($componentObjectListViewFirstCellAsterisk.prop('tagName'), 'I', 'Component\'s inner component block is a <i>');
+    assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('asterisk'), true, 'Component\'s inner object-list-view has \'asterisk\' css-class');
+    assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('small'), true, 'Component\'s inner object-list-view has \'small\' css-class');
+    assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('red'), true, 'Component\'s inner oobject-list-view has \'red\' css-class');
+    assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('icon'), true, 'Component\'s inner object-list-view has \'icon\' css-class');
 
-    // Check object-list-view <td>.
-    assert.strictEqual($componentObjectListViewTd.length === 1, true, 'Component has inner object-list-view-operations blocks');
-    assert.strictEqual($componentObjectListViewTd.prop('tagName'), 'TD', 'Component\'s inner component block is a <th>');
-    assert.strictEqual($componentObjectListViewTd.text().trim(), 'There is no data', 'Component\'s inner component block is a <th>');
-    });    
+    let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column', $component);
+    let $flexberryCheckbox = Ember.$('.flexberry-checkbox', $componentObjectListViewFirstCell);
+
+    assert.ok($flexberryCheckbox, 'Component has flexberry-checkbox in first cell blocks')
+
+    });
+  });
+});
+
+test('ember-grupedit showAsteriskInRow test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          showAsteriskInRow=false
+        }}`);
+
+    // Add record.
+    let $component = this.$().children();
+    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    let $componentButtonAdd = $($componentButtons[0]);
+
+    Ember.run(() => {
+      $componentButtonAdd.click();
+    });
+
+    wait().then(() => {
+    let $componentObjectListViewFirstCell = Ember.$('.asterisk', $component)
+
+    // Check object-list-view <i>.
+    assert.strictEqual($componentObjectListViewFirstCell.length === 0, true, 'Component has small red asterisk blocks');
+    });
+  });
+});
+
+test('ember-grupedit showCheckBoxInRow test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          showCheckBoxInRow=false
+        }}`);
+
+    // Add record.
+    let $component = this.$().children();
+    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    let $componentButtonAdd = $($componentButtons[0]);
+
+    Ember.run(() => {
+      $componentButtonAdd.click();
+    });
+
+
+    wait().then(() => {
+
+      let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column', $component);
+      let $flexberryCheckbox = Ember.$('.flexberry-checkbox', $componentObjectListViewFirstCell);
+
+      assert.ok($flexberryCheckbox, false, 'Component hasn\'t flexberry-checkbox in first cell');
+
+    });
   });
 });

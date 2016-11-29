@@ -6,7 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking changes
 * `Resolver` from addon:
     * Now lookup class based on type device will be executed for only `component`, `template` and `view` types.
-    * If necessary, change types, for which will be determined device type, extend `Resolver` and determine list of types into `resolvingTypes` property.
+    * If necessary, change types, for which will be determined device type, extend `Resolver` and determine list of types into `deviceRelatedTypes` property.
+* Now list of prefixes for class lookup by default contains 'mobile' prefix only, use `prefixForPlatformAndType`, `prefixForOrientation` and `prefixForType` properties from `DeviceService` for added necessary prefixes.
 
 ## [0.8.0-beta.13] - 2016-11-25
 ### Changed

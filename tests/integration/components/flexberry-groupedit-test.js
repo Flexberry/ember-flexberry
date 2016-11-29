@@ -94,6 +94,8 @@ test('it properly rerenders', function(assert) {
 });
 
 test('it properly rerenders by default', function(assert) {
+  assert.expect(67);
+
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -112,6 +114,7 @@ test('it properly rerenders by default', function(assert) {
           modelProjection=proj.attributes.details
           searchForContentChange=searchForContentChange
         }}`);
+
     assert.equal(this.$('.object-list-view').find('tr').length, 2);
 
     let $detailsAtributes = this.get('proj.attributes.details.attributes');
@@ -119,17 +122,16 @@ test('it properly rerenders by default', function(assert) {
 
     let $component = this.$().children();
     let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    //let $componentGroupEditToolbarCall = $componentGroupEditToolbar.attr('length');
 
     // Check groupedit-toolbar <div>.
     assert.strictEqual($componentGroupEditToolbar.length === 1, true, 'Component has inner groupedit-toolbar block');
     assert.strictEqual($componentGroupEditToolbar.prop('tagName'), 'DIV', 'Component\'s inner component block is a <div>');
     assert.strictEqual($componentGroupEditToolbar.hasClass('ember-view'), true, 'Component\'s inner groupedit-toolbar block has \'ember-view\' css-class');
-    assert.strictEqual($componentGroupEditToolbar.hasClass('groupedit-toolbar'), true, 'Component\'s inner groupedit-toolbar block has \'groupedit-toolbar\' css-class');
+    assert.strictEqual($componentGroupEditToolbar.hasClass('groupedit-toolbar'), true, 'Component inner has \'groupedit-toolbar\' css-class');
 
     let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
 
-    // Check title's <div>.
+    // Check button count.
     assert.strictEqual($componentButtons.length === 2, true, 'Component has inner two button blocks');
 
     let $componentButtonAdd = $($componentButtons[0]);
@@ -140,14 +142,30 @@ test('it properly rerenders by default', function(assert) {
     assert.strictEqual($componentButtonAdd.hasClass('ui'), true, 'Component\'s inner groupedit block has \'ui\' css-class');
     assert.strictEqual($componentButtonAdd.hasClass('button'), true, 'Component\'s inner groupedit block has \'button\' css-class');
 
-    let $componentButtonRemove = $componentGroupEditToolbar.children('.disabled');
+    let $componentButtonAddIcon = $componentButtonAdd.children('i');
+
+    // Check buttonAddIcon <i>.
+    assert.strictEqual($componentButtonAddIcon.length === 1, true, 'Component has inner button block');
+    assert.strictEqual($componentButtonAddIcon.prop('tagName'), 'I', 'Component\'s inner groupedit block is a <i>');
+    assert.strictEqual($componentButtonAddIcon.hasClass('plus'), true, 'Component\'s inner groupedit block has \'plus\' css-class');
+    assert.strictEqual($componentButtonAddIcon.hasClass('icon'), true, 'Component\'s inner groupedit block has \'icon\' css-class');
+
+    let $componentButtonRemove = $($componentButtons[1]);
 
     // Check buttonRemove <button>.
     assert.strictEqual($componentButtonRemove.length === 1, true, 'Component has inner button block');
+    assert.strictEqual($componentButtonRemove.prop('tagName'), 'BUTTON', 'Component\'s inner groupedit block is a <button>');
     assert.strictEqual($componentButtonRemove.hasClass('ui'), true, 'Component\'s inner groupedit block has \'ui\' css-class');
     assert.strictEqual($componentButtonRemove.hasClass('button'), true, 'Component\'s inner groupedit block has \'button\' css-class');
     assert.strictEqual($componentButtonRemove.hasClass('disabled'), true, 'Component\'s inner groupedit block has \'disabled\' css-class');
-    
+
+    let $componentButtonRemoveIcon = $componentButtonRemove.children('i');
+
+    // Check componentButtonRemove <i>.
+    assert.strictEqual($componentButtonRemoveIcon.length === 1, true, 'Component has inner button block');
+    assert.strictEqual($componentButtonRemoveIcon.prop('tagName'), 'I', 'Component\'s inner groupedit block is a <i>');
+    assert.strictEqual($componentButtonRemoveIcon.hasClass('minus'), true, 'Component\'s inner groupedit block has \'minus\' css-class');
+    assert.strictEqual($componentButtonRemoveIcon.hasClass('icon'), true, 'Component\'s inner groupedit block has \'icon\' css-class');
 
     let $componentListViewContainer = $component.children('.object-list-view-container');
 
@@ -155,7 +173,7 @@ test('it properly rerenders by default', function(assert) {
     assert.strictEqual($componentListViewContainer.length === 1, true, 'Component has inner list-view-container block');
     assert.strictEqual($componentListViewContainer.prop('tagName'), 'DIV', 'Component\'s inner component block is a <div>');
     assert.strictEqual($componentListViewContainer.hasClass('ember-view'), true, 'Component\'s inner list-view-container block has \'ember-view\' css-class');
-    assert.strictEqual($componentListViewContainer.hasClass('object-list-view-container'), true, 'Component\'s inner list-view-container block has \'object-list-view-container\' css-class');
+    assert.strictEqual($componentListViewContainer.hasClass('object-list-view-container'), true, 'Component has \'object-list-view-container\' css-class');
 
     let $componentJCLRgrips = $componentListViewContainer.children('.JCLRgrips');
 
@@ -169,12 +187,26 @@ test('it properly rerenders by default', function(assert) {
     // Check JCLRgrip <div>.
     assert.strictEqual($componentJCLRgrip.length === 7, true, 'Component has inner JCLRgrip blocks');
 
+    let $componentJCLRgripFirst = $($componentJCLRgrip[0]);
+
+    // Check first JCLRgrip <div>.
+    assert.strictEqual($componentJCLRgripFirst.prop('tagName'), 'DIV', 'Component\'s inner component block is a <div>');
+    assert.strictEqual($componentJCLRgripFirst.hasClass('JCLRgrip'), true, 'Component\'s inner list-view-container block has \'JCLRgrios\' css-class');
+
+    let $componentJCLRgripLast = $($componentJCLRgrip[6]);
+
+    // Check last JCLRgrip <div>.
+    assert.strictEqual($componentJCLRgripLast.length === 1, true, 'Component has inner JCLRgrips blocks');
+    assert.strictEqual($componentJCLRgripLast.prop('tagName'), 'DIV', 'Component\'s inner component block is a <div>');
+    assert.strictEqual($componentJCLRgripLast.hasClass('JCLRgrip'), true, 'Component\'s inner list-view-container block has \'JCLRgrios\' css-class');
+    assert.strictEqual($componentJCLRgripLast.hasClass('JCLRLastGrip'), true, 'Component\'s inner list-view-container block has \'JCLRLastGrip\' css-class');
+
     let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
 
     // Check object-list-view <div>.
     assert.strictEqual($componentObjectListView.length === 1, true, 'Component has inner object-list-view blocks');
     assert.strictEqual($componentObjectListView.prop('tagName'), 'TABLE', 'Component\'s inner component block is a <table>');
-    assert.strictEqual($componentObjectListView.hasClass('object-list-view'), true, 'Component\'s inner object-list-view block has \'object-list-view\' css-class');
+    assert.strictEqual($componentObjectListView.hasClass('object-list-view'), true, 'Component has \'object-list-view\' css-class');
     assert.strictEqual($componentObjectListView.hasClass('ui'), true, 'Component\'s inner object-list-view block has \'ui\' css-class');
     assert.strictEqual($componentObjectListView.hasClass('unstackable'), true, 'Component\'s inner object-list-view block has \'unstackable\' css-class');
     assert.strictEqual($componentObjectListView.hasClass('celled'), true, 'Component\'s inner object-list-view block has \'celled\' css-class');
@@ -190,8 +222,8 @@ test('it properly rerenders by default', function(assert) {
     // Check object-list-view <th>.
     assert.strictEqual($componentObjectListViewThFirstCell.length === 1, true, 'Component has inner object-list-view-operations blocks');
     assert.strictEqual($componentObjectListViewThFirstCell.prop('tagName'), 'TH', 'Component\'s inner component block is a <th>');
-    assert.strictEqual($componentObjectListViewThFirstCell.hasClass('object-list-view-operations'), true, 'Component\'s object-list-view-operations has \'object-list-view-operations\' css-class');
-    assert.strictEqual($componentObjectListViewThFirstCell.hasClass('collapsing'), true, 'Component\'s inner object-list-view-operations has \'collapsing\' css-class');
+    assert.strictEqual($componentObjectListViewThFirstCell.hasClass('object-list-view-operations'), true, 'Component has \'object-list-view-operations\' css-class');
+    assert.strictEqual($componentObjectListViewThFirstCell.hasClass('collapsing'), true, 'Component has \'collapsing\' css-class');
 
     let $componentObjectListViewThs = $componentObjectListViewTr.children('.dt-head-left');
 
@@ -203,23 +235,213 @@ test('it properly rerenders by default', function(assert) {
     // Check object-list-view <th>.
     assert.strictEqual($componentObjectListViewTh.length === 1, true, 'Component has inner object-list-view-operations blocks');
     assert.strictEqual($componentObjectListViewTh.prop('tagName'), 'TH', 'Component\'s inner component block is a <th>');
-    assert.strictEqual($componentObjectListViewTh.hasClass('dt-head-left'), true, 'Component\'s object-list-view-operations has \'object-list-view-operations\' css-class');
+    assert.strictEqual($componentObjectListViewTh.hasClass('dt-head-left'), true, 'Component has \'object-list-view-operations\' css-class');
     assert.strictEqual($componentObjectListViewTh.hasClass('me'), true, 'Component\'s inner object-list-view-operations has \'collapsing\' css-class');
     assert.strictEqual($componentObjectListViewTh.hasClass('class'), true, 'Component\'s inner object-list-view-operations has \'collapsing\' css-class');
-    assert.strictEqual($componentObjectListViewTh.text().trim(), 'Flag', 'Component\'s inner component block is a <th>');
 
-    for (index = 0; index < 6; ++index) {
+    for (let index = 0; index < 6; ++index) {
       assert.strictEqual($componentObjectListViewThs[index].innerText.trim().toLowerCase(), $detailsAtributesArray[index], 'title ok');
     }
+
+    let $componentObjectListViewThDiv = $componentObjectListViewTh.children('div');
+    let $componentObjectListViewThDivSpan = $componentObjectListViewThDiv.children('span');
+
+    // Check object-list-view <span>.
+    assert.strictEqual($componentObjectListViewThDivSpan.length === 1, true, 'Component has inner <span> blocks');
 
     let $componentObjectListViewBody = $componentObjectListView.children('tbody');
     $componentObjectListViewTr = $componentObjectListViewBody.children('tr');
     let $componentObjectListViewTd = $componentObjectListViewTr.children('td');
 
-    // Check object-list-view <th>.
+    // Check object-list-view <td>.
     assert.strictEqual($componentObjectListViewTd.length === 1, true, 'Component has inner object-list-view-operations blocks');
     assert.strictEqual($componentObjectListViewTd.prop('tagName'), 'TD', 'Component\'s inner component block is a <th>');
     assert.strictEqual($componentObjectListViewTd.text().trim(), 'There is no data', 'Component\'s inner component block is a <th>');
 
+  });
+});
+
+test('ember-grupedit placeholder test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+
+    let tempText = 'Temp text.';
+
+    this.set('placeholder', tempText);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          placeholder=placeholder
+        }}`);
+
+    let $component = this.$().children();
+    let $componentListViewContainer = $component.children('.object-list-view-container');
+    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
+    let $componentObjectListViewBody = $componentObjectListView.children('tbody');
+
+    assert.strictEqual($componentObjectListViewBody.text().trim(), tempText, 'Component has placeholder: ' + tempText);
+
+  });
+});
+
+test('ember-grupedit readonly test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          readonly=true
+        }}`);
+    assert.equal(this.$('.object-list-view').find('tr').length, 2);
+
+    // Add record.
+    let $component = this.$().children();
+    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    let $componentButtonAdd = $($componentButtons[0]);
+
+    Ember.run(() => {
+      $componentButtonAdd.click();
+    });
+
+    wait().then(() => {
+      assert.equal(this.$('.object-list-view').find('tr').length, 2);
+    });
+  });
+});
+
+test('ember-grupedit without createNewButton and deleteButton test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          createNewButton=false
+          deleteButton=false
+        }}`);
+
+    // Add record.
+    let $component = this.$().children();
+    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    
+     assert.strictEqual($componentButtons.length === 0, true, 'Component hasn\'t inner two button blocks');
+  });
+});
+
+test('ember-grupedit striped test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          tableStriped=false
+        }}`);
+
+    let $component = this.$().children();
+    let $componentListViewContainer = $component.children('.object-list-view-container');
+    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
+
+    // Check object-list-view <div>.
+    assert.strictEqual($componentObjectListView.hasClass('striped'), false, 'Component\'s inner object-list-view block has \'striped\' css-class');
+    
+  });
+});
+
+test('ember-grupedit with element by default test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+        }}`);
+
+    // Add record.
+    let $component = this.$().children();
+    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    let $componentButtonAdd = $($componentButtons[0]);
+
+    Ember.run(() => {
+      $componentButtonAdd.click();
+    });
+
+    wait().then(() => {
+    /*let $componentListViewContainer = $component.children('.object-list-view-container');
+    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
+    let $componentObjectListViewBody = $componentObjectListView.children('tbody');
+    let $componentObjectListViewTr = $componentObjectListViewBody.children('tr');
+    let $componentObjectListViewTd = $componentObjectListViewTr.children('td');    
+    let $componentObjectListViewFirst = $($componentObjectListViewTd[0]);
+    let $componentObjectListViewFirstCell = $componentObjectListViewFirst.children('div');*/ 
+    let $componentObjectListViewFirstCellAsterisk = $componentObjectListViewFirstCell.children('.asterisk'); 
+
+    let $componentObjectListViewFirstCellAsterisk = Ember.$.children('.asterisk'); 
+
+    // Check object-list-view <td>.
+    assert.strictEqual($componentObjectListViewTd.length === 1, true, 'Component has inner object-list-view-operations blocks');
+    assert.strictEqual($componentObjectListViewTd.prop('tagName'), 'TD', 'Component\'s inner component block is a <th>');
+    assert.strictEqual($componentObjectListViewTd.text().trim(), 'There is no data', 'Component\'s inner component block is a <th>');
+    });    
   });
 });

@@ -28,7 +28,7 @@ moduleForComponent('flexberry-dropdown', 'Integration | Component | flexberry dr
 });
 
 test('it renders properly', function(assert) {
-  assert.expect(15);
+  assert.expect(14);
 
   // Render component.
   this.render(hbs`{{flexberry-dropdown

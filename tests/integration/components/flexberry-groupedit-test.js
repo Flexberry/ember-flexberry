@@ -442,6 +442,14 @@ test('ember-grupedit element by default test', function(assert) {
 
     assert.ok($flexberryCheckbox, 'Component has flexberry-checkbox in first cell blocks')
 
+    let $minusButton = Ember.$('.minus', $componentObjectListViewFirstCell);
+
+    assert.strictEqual($minusButton.length === 0, true, 'Component hasn\'t delete button in first cell');
+
+    let $editMenuButton = Ember.$('.basic.right', $component);
+
+    assert.strictEqual($editMenuButton.length === 0, true, 'Component hasn\'t edit menu in last cell');
+
     });
   });
 });
@@ -517,13 +525,98 @@ test('ember-grupedit showCheckBoxInRow test', function(assert) {
       $componentButtonAdd.click();
     });
 
-
     wait().then(() => {
 
       let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column', $component);
       let $flexberryCheckbox = Ember.$('.flexberry-checkbox', $componentObjectListViewFirstCell);
 
       assert.ok($flexberryCheckbox, false, 'Component hasn\'t flexberry-checkbox in first cell');
+
+      let $componentObjectListViewEditMenu = Ember.$('.basic.right.pointing', $component);
+
+      assert.strictEqual($componentObjectListViewEditMenu.length === 0, true, 'Component hasn\'t edit menu in last cell');
+
+    });
+  });
+});
+
+test('ember-grupedit showDeleteButtonInRow test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          showDeleteButtonInRow=true
+        }}`);
+
+    let $component = this.$().children();
+    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    let $componentButtonAdd = $($componentButtons[0]);
+
+    Ember.run(() => {
+      $componentButtonAdd.click();
+    });
+
+    wait().then(() => {
+
+      let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column', $component);
+      let $minusButton = Ember.$('.minus', $componentObjectListViewFirstCell);
+
+      assert.strictEqual($minusButton, true, 'Component has delete button in first cell');
+
+    });
+  });
+});
+
+test('ember-grupedit showEditMenuItemInRow test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          showEditMenuItemInRow=true
+        }}`);
+
+    let $component = this.$().children();
+    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    let $componentButtonAdd = $($componentButtons[0]);
+
+    Ember.run(() => {
+      $componentButtonAdd.click();
+    });
+
+    wait().then(() => {
+
+      let $editMenuButton = Ember.$('.basic.right', $component);
+      //let $minusButton = Ember.$('.minus', $componentObjectListViewFirstCell);
+
+      //assert.strictEqual($minusButton, true, 'Component has delete button in first cell');
 
     });
   });

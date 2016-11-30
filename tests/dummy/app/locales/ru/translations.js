@@ -254,6 +254,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Функция ограничения',
               'title': ''
             },
+            'inheritance-models': {
+              'caption': 'Наследуемые модели',
+              'title': ''
+            },
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
@@ -268,6 +272,10 @@ Ember.$.extend(true, translations, {
             },
             'custom-filter': {
               'caption': 'Настройка фильтра',
+              'title': ''
+            },
+            'hierarchy-example': {
+              'caption': 'Пример иерархии на списке',
               'title': ''
             },
             'configurate-rows': {
@@ -573,6 +581,25 @@ Ember.$.extend(true, translations, {
         'limit-function-example': {
           'caption': 'Flexberry-objectlistview. Функция ограничения'
         },
+        'inheritance-models': {
+          'caption': 'Flexberry-objectlistview. Пример наследуемых моделей',
+          'message': 'Проверьте представление в OLV. (ПредставлениеE=ПредставлениеL)',
+          'projectionBase': 'Представление \'Предок\': Name, E-mail, Birthday',
+          'projectionSuccessorPhone': 'Представление \'Наследник телефоны\': Name, Phone1, Phone2, Phone3',
+          'projectionSuccessorSoc': 'Представление \'Наследник соц сети\': Name, VK, Facebook, Twitter',
+          'buttonRoot': 'Предок',
+          'buttonSuccessorPhone': 'Наследник телефоны',
+          'buttonSuccessorSoc': 'Наследник соц сети',
+          'name-caption': 'Имя',
+          'eMail-caption': 'E-mail',
+          'phone1-caption': 'Номер телефона 1',
+          'phone2-caption': 'Номер телефона 2',
+          'phone3-caption': 'Номер телефона 3',
+          'vK-caption': 'VK',
+          'facebook-caption': 'Facebook',
+          'twitter-caption': 'Twitter',
+          'birthday-caption': 'Дата рождения',
+        },
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Пример работы с настройками'
         },
@@ -586,6 +613,9 @@ Ember.$.extend(true, translations, {
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Настройка фильтра'
+        },
+        'hierarchy-example': {
+          'caption': 'Flexberry-objectlistview. Пример иерархии на списке'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Раскраска строк'

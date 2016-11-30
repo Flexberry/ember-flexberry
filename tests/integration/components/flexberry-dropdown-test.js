@@ -76,7 +76,7 @@ test('it renders i18n-ed placeholder', function(assert) {
 
   // Render component.
   this.render(hbs`{{flexberry-dropdown
-    placeholder=placeholder
+    class=class
   }}`);
 
   // Retrieve component.
@@ -124,27 +124,19 @@ test('it renders manually defined placeholder', function(assert) {
 });
 
 test('readonly mode works properly', function(assert) {
-  assert.expect(4);
+  assert.expect(2);
 
   // Render component.
   this.render(hbs`{{flexberry-dropdown
-    class=class
+    readonly=true
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
   let $dropdownMenu = $component.children('div.menu');
 
-  // Check that readonly (disabled) attribute doesn't exist yet.
-  assert.strictEqual($component.hasClass('disabled'), false, 'Component\'s hasn\'t readonly');
-
   // Activate readonly mode & check that readonly (disabled) attribute exists now & has value equals to 'readonly'.
-  this.set('class', 'disabled');
   assert.strictEqual($component.hasClass('disabled'), true, 'Component\'s has readonly');
-
-  // Check that readonly (disabled) attribute doesn't exist now.
-  this.set('class', '');
-  assert.strictEqual($component.hasClass('disabled'), false, 'Component\'s hasn\'t readonly');
 
   // Check that component is disabled.
   new Ember.RSVP.Promise((resolve, reject) => {

@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startApp from '../../helpers/start-app';
 import UserSettingsService from 'ember-flexberry/services/user-settings';
-import { Projection } from 'ember-flexberry-data';
+import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/shared/aggregator';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-component';
 
@@ -30,54 +30,13 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
         this.set('currentController', EditFormController.create(App.__container__.ownerInjection()));
       }
     });
-
-  
-
-    var model = Projection.Model.extend({
-      // This property is for flexberry-groupedit component.
-      // Inverse relationship is necessary here.
-      details: DS.hasMany('components-examples/flexberry-groupedit/shared/detail', {
-        inverse: 'aggregator',
-        async: false
-      })
-    });
-
-
-
-    // Edit form projection.
-    model.defineProjection('AggregatorE', 'components-examples/flexberry-groupedit/shared/aggregator', {
-      details: Projection.hasMany('components-examples/flexberry-groupedit/shared/detail', 'Details', {
-        flag: Projection.attr('Flag'),
-        text: Projection.attr('Text'),
-        date: Projection.attr('Date'),
-        enumeration: Projection.attr('Enumeration'),
-        file: Projection.attr('File'),
-        master: Projection.belongsTo('components-examples/flexberry-groupedit/shared/master', 'Master', {
-          text: Projection.attr('Text', {
-            hidden: true
-          })
-        }, {
-          displayMemberPath: 'text'
-        })
-      })
-    });
-
-    // Edit form projection.
-    model.defineProjection('DetailE', 'components-examples/flexberry-groupedit/shared/aggregator', {
-      details: Projection.hasMany('components-examples/flexberry-groupedit/shared/detail', 'Details', {
-        flag: Projection.attr('textarea')
-      })
-    });
-
-    this.set('AggregatorE', model.projections.get('AggregatorE'));
-    this.set('DetailE', model.projections.get('DetailE'));
   },
   afterEach: function() {
     Ember.run(App, 'destroy');
   }
 });
 
-/*test('it renders', function(assert) {
+test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
@@ -86,7 +45,7 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
   Ember.run(() => {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.render(hbs`{{flexberry-groupedit modelProjection=proj content=model.details componentName='my-group-edit'}}`);
     assert.ok(true);
@@ -100,7 +59,7 @@ test('it properly rerenders', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -153,7 +112,7 @@ test('it properly rerenders by default', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -321,7 +280,7 @@ test('ember-grupedit element by default test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -371,16 +330,16 @@ test('ember-grupedit element by default test', function(assert) {
 
     });
   });
-});*/
+});
 
-/*test('ember-grupedit placeholder test', function(assert) {
+test('ember-grupedit placeholder test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -415,7 +374,7 @@ test('ember-grupedit readonly test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -488,7 +447,7 @@ test('ember-grupedit createNewButton and deleteButton test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -518,7 +477,7 @@ test('ember-grupedit striped test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -549,7 +508,7 @@ test('ember-grupedit showAsteriskInRow test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -574,7 +533,7 @@ test('ember-grupedit showAsteriskInRow test', function(assert) {
     });
 
     wait().then(() => {
-    let $componentObjectListViewFirstCell = Ember.$('.asterisk', $component)
+    let $componentObjectListViewFirstCell = Ember.$('.asterisk', $component);
 
     // Check object-list-view <i>.
     assert.strictEqual($componentObjectListViewFirstCell.length === 0, true, 'Component has small red asterisk blocks');
@@ -589,7 +548,7 @@ test('ember-grupedit showCheckBoxInRow test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -633,7 +592,7 @@ test('ember-grupedit showDeleteButtonInRow test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -673,7 +632,7 @@ test('ember-grupedit rowClickable test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -703,7 +662,7 @@ test('ember-grupedit allowColumnResize test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -717,9 +676,6 @@ test('ember-grupedit allowColumnResize test', function(assert) {
           showEditMenuItemInRow=true
           allowColumnResize=false
         }}`);
-
-        let $detailsAtributes = this.get('proj.attributes.details.attributes');
-    let $detailsAtributesArray = Object.keys($detailsAtributes);
 
     let $component = this.$().children();
     let $componentListViewContainer = $component.children('.object-list-view-container');
@@ -742,7 +698,7 @@ test('ember-grupedit showEditMenuItemInRow test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -793,7 +749,7 @@ test('ember-grupedit showDeleteMenuItemInRow test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -844,7 +800,7 @@ test('ember-grupedit showEditMenuItemInRow and showDeleteMenuItemInRow test', fu
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -903,10 +859,9 @@ test('correct embedding components in to objectlistview test', function(assert) 
   Ember.run(() => {
 
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let details = model.get('details');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -946,7 +901,7 @@ test('correct embedding components in to objectlistview test', function(assert) 
     assert.strictEqual($objectlistviewcell6.children('.flexberry-lookup').length === 1, true, 'Flexberry-lookup is embedded properly into object-list-view.');
     });
   });
-});*/
+});
 
 test('change inserted component into edit-form controller test', function(assert) {
   let store = App.__container__.lookup('service:store');
@@ -954,10 +909,9 @@ test('change inserted component into edit-form controller test', function(assert
   Ember.run(() => {
 
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let details = model.get('details');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -988,11 +942,9 @@ test('change inserted component into edit-form controller test', function(assert
     detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
 
     wait().then(() => {
-
       let $component = this.$().children();
       let $textarea = Ember.$('.ember-text-area', $component);
       assert.strictEqual($textarea.length === 1, true, 'flexberry-textarea is embedded properly into object-list-view, after change.');
-
     });
   });
 });
@@ -1004,7 +956,7 @@ test('it properly rerenders', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', this.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
@@ -1038,19 +990,22 @@ test('it properly rerenders', function(assert) {
       wait().then(() => {
         assert.equal(this.$('.object-list-view').find('tr').length, 4, 'details add properly');
 
-        let $componentCheckBoxs = Ember.$('.flexberry-checkbox-input', $component);
+        let $componentCheckBoxs = Ember.$('.flexberry-checkbox', $component);
         let $componentFirstCheckBox = $($componentCheckBoxs[0]);
+        let $componentFirstCheckBoxInput = $componentFirstCheckBox.children('.flexberry-checkbox-input');
 
         Ember.run(() => {
           $componentFirstCheckBox.click();
+          $componentFirstCheckBoxInput.click();
         });
 
         wait().then(() => {
           let $componentButtonRemove = $($componentButtons[1]);
+
           Ember.run(() => {
             $componentButtonRemove.click();
           });
-          
+
           assert.equal(this.$('.object-list-view').find('tr').length, 3, 'details remove properly');
         });
       });

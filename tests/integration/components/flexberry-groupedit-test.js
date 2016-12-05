@@ -417,7 +417,7 @@ test('ember-grupedit readonly test', function(assert) {
         assert.strictEqual($disabledItem.hasClass('read-only'), true, 'Flexberry-checkbox is readonly into object-list-view.');
 
         let $objectlistviewcell2 = $($componentObjectListViewTd[2]);
-        $disabledItem = Ember.$('.ember-view.ember-text-field',$objectlistviewcell2);
+        $disabledItem = Ember.$('.ember-view.ember-text-field', $objectlistviewcell2);
         assert.strictEqual($disabledItem.attr('readonly'), 'readonly', 'Flexberry-textbox is readonly into object-list-view.');
 
         let $objectlistviewcell3 = $($componentObjectListViewTd[3]);
@@ -429,11 +429,11 @@ test('ember-grupedit readonly test', function(assert) {
         assert.strictEqual($disabledItem.hasClass('disabled'), true, 'Flexberry-dropdown is readonly into object-list-view.');
 
         let $objectlistviewcell5 = $($componentObjectListViewTd[5]);
-        $disabledItem = Ember.$('.flexberry-file-add-button',$objectlistviewcell5);
+        $disabledItem = Ember.$('.flexberry-file-add-button', $objectlistviewcell5);
         assert.strictEqual($disabledItem.length === 0, true, 'Flexberry-file is readonly into object-list-view.');
-  
-        let $objectlistviewcell6 = $($componentObjectListViewTd[6]);        
-        $disabledItem = Ember.$('.disabled',$objectlistviewcell6);
+
+        let $objectlistviewcell6 = $($componentObjectListViewTd[6]);
+        $disabledItem = Ember.$('.disabled', $objectlistviewcell6);
         assert.strictEqual($disabledItem.length === 0, false, 'Flexberry-lookup is readonly into object-list-view.');
       });
     });
@@ -466,7 +466,7 @@ test('ember-grupedit createNewButton and deleteButton test', function(assert) {
     let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
     let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
 
-     assert.strictEqual($componentButtons.length === 0, true, 'Component hasn\'t inner two button blocks');
+    assert.strictEqual($componentButtons.length === 0, true, 'Component hasn\'t inner two button blocks');
   });
 });
 
@@ -533,10 +533,10 @@ test('ember-grupedit showAsteriskInRow test', function(assert) {
     });
 
     wait().then(() => {
-    let $componentObjectListViewFirstCell = Ember.$('.asterisk', $component);
+      let $componentObjectListViewFirstCell = Ember.$('.asterisk', $component);
 
-    // Check object-list-view <i>.
-    assert.strictEqual($componentObjectListViewFirstCell.length === 0, true, 'Component has small red asterisk blocks');
+      // Check object-list-view <i>.
+      assert.strictEqual($componentObjectListViewFirstCell.length === 0, true, 'Component has small red asterisk blocks');
     });
   });
 });
@@ -879,26 +879,27 @@ test('correct embedding components in to objectlistview test', function(assert) 
     detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
 
     wait().then(() => {
+      let $component = this.$().children();
+      let $componentListViewContainer = $component.children('.object-list-view-container');
+      let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
+      let $componentObjectListViewBody = $componentObjectListView.children('tbody');
+      let $componentObjectListViewTr = $componentObjectListViewBody.children('tr');
+      let $componentObjectListViewTd = $componentObjectListViewTr.children('td');
 
-    let $component = this.$().children();
-    let $componentListViewContainer = $component.children('.object-list-view-container');
-    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
-    let $componentObjectListViewBody = $componentObjectListView.children('tbody');
-    let $componentObjectListViewTr = $componentObjectListViewBody.children('tr');
-    let $componentObjectListViewTd = $componentObjectListViewTr.children('td');
-
-    let $objectlistviewcell1 = $($componentObjectListViewTd[1]);
-    assert.strictEqual($objectlistviewcell1.children('.flexberry-checkbox').length === 1, true, 'Flexberry-checkbox is embedded properly into object-list-view.');
-    let $objectlistviewcell2 = $($componentObjectListViewTd[2]);
-    assert.strictEqual($objectlistviewcell2.children('.flexberry-textbox').length === 1, true, 'Flexberry-textbox is embedded properly into object-list-view.');
-    let $objectlistviewcell3 = $($componentObjectListViewTd[3]);
-    assert.strictEqual($objectlistviewcell3.children('.ui.icon.input').length === 1, true, 'Calendar is embedded pSroperly into object-list-view.');
-    let $objectlistviewcell4 = $($componentObjectListViewTd[4]);
-    assert.strictEqual($objectlistviewcell4.children('.flexberry-dropdown').length === 1, true, 'Flexberry-dropdown is embedded properly into object-list-view.');
-    let $objectlistviewcell5 = $($componentObjectListViewTd[5]);
-    assert.strictEqual($objectlistviewcell5.children('.flexberry-file').length === 1, true, 'Flexberry-file is embedded properly into object-list-view.');
-    let $objectlistviewcell6 = $($componentObjectListViewTd[6]);
-    assert.strictEqual($objectlistviewcell6.children('.flexberry-lookup').length === 1, true, 'Flexberry-lookup is embedded properly into object-list-view.');
+      let $objectlistviewcell1 = $($componentObjectListViewTd[1]);
+      assert.strictEqual($objectlistviewcell1.children('.flexberry-checkbox').length === 1, true,
+        'Flexberry-checkbox is embedded properly into object-list-view.');
+      let $objectlistviewcell2 = $($componentObjectListViewTd[2]);
+      assert.strictEqual($objectlistviewcell2.children('.flexberry-textbox').length === 1, true,
+        'Flexberry-textbox is embedded properly into object-list-view.');
+      let $objectlistviewcell3 = $($componentObjectListViewTd[3]);
+      assert.strictEqual($objectlistviewcell3.children('.ui.icon.input').length === 1, true, 'Calendar is embedded pSroperly into object-list-view.');
+      let $objectlistviewcell4 = $($componentObjectListViewTd[4]);
+      assert.strictEqual($objectlistviewcell4.children('.flexberry-dropdown').length === 1, true, 'Flexberry-dropdown is embedded properly into object-list-view.');
+      let $objectlistviewcell5 = $($componentObjectListViewTd[5]);
+      assert.strictEqual($objectlistviewcell5.children('.flexberry-file').length === 1, true, 'Flexberry-file is embedded properly into object-list-view.');
+      let $objectlistviewcell6 = $($componentObjectListViewTd[6]);
+      assert.strictEqual($objectlistviewcell6.children('.flexberry-lookup').length === 1, true, 'Flexberry-lookup is embedded properly into object-list-view.');
     });
   });
 });
@@ -920,9 +921,9 @@ test('change inserted component into edit-form controller test', function(assert
       getCellComponent: function(attr, bindingPath) {
         var cellComponent = this._super(...arguments);
 
-          if (attr.caption === 'Text') {
-            cellComponent.componentName = 'flexberry-textarea';
-          }
+        if (attr.caption === 'Text') {
+          cellComponent.componentName = 'flexberry-textarea';
+        }
 
         return cellComponent;
       }

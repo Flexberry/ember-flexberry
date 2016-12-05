@@ -6,18 +6,18 @@ export default EditFormRoute.extend({
 
     @property modelProjection
     @type String
-    @default 'SettingLookupExampleView'
+    @default 'AggregatorE'
    */
-  modelProjection: 'SettingLookupExampleView',
+  modelProjection: 'AggregatorE',
 
   /**
     Name of model to be used as form's record type.
 
     @property modelName
     @type String
-    @default 'ember-flexberry-dummy-suggestion'
+    @default 'components-examples/flexberry-groupedit/shared/aggregator'
    */
-  modelName: 'ember-flexberry-dummy-suggestion',
+  modelName: 'components-examples/flexberry-groupedit/shared/aggregator',
 
   /**
     Returns model related to current route.
@@ -25,9 +25,9 @@ export default EditFormRoute.extend({
     @method model
    */
   model(params) {
-    let store = this.get('store');
+    var store = this.get('store');
 
-    let base = store.createRecord('ember-flexberry-dummy-suggestion');
-    return base;
+    // Empty aggregator without details.
+    return store.createRecord('components-examples/flexberry-groupedit/shared/aggregator', {});
   }
-});ыыы
+});

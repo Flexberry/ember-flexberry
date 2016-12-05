@@ -895,7 +895,8 @@ test('correct embedding components in to objectlistview test', function(assert) 
       let $objectlistviewcell3 = $($componentObjectListViewTd[3]);
       assert.strictEqual($objectlistviewcell3.children('.ui.icon.input').length === 1, true, 'Calendar is embedded pSroperly into object-list-view.');
       let $objectlistviewcell4 = $($componentObjectListViewTd[4]);
-      assert.strictEqual($objectlistviewcell4.children('.flexberry-dropdown').length === 1, true, 'Flexberry-dropdown is embedded properly into object-list-view.');
+      assert.strictEqual($objectlistviewcell4.children('.flexberry-dropdown').length === 1, true,
+        'Flexberry-dropdown is embedded properly into object-list-view.');
       let $objectlistviewcell5 = $($componentObjectListViewTd[5]);
       assert.strictEqual($objectlistviewcell5.children('.flexberry-file').length === 1, true, 'Flexberry-file is embedded properly into object-list-view.');
       let $objectlistviewcell6 = $($componentObjectListViewTd[6]);

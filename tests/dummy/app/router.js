@@ -89,5 +89,5 @@ Router.map(function() {
   // User-setting forms.
   this.route('user-setting-forms/user-setting-delete');
 });
-
+ 
 export default Router;

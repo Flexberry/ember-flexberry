@@ -10,7 +10,7 @@
   }}
 {{else}}
   <div class="ui action input">
-    <div {{action 'choose' chooseData}} class="ui transparent {{if (and modalIsStartToShow (not modalIsShow)) " loading disabled"}} icon input " onclick={{action 'chooseButtonClick'}}>
+    <div {{action 'choose' chooseData}} class="ui transparent {{if (and modalIsStartToShow (not modalIsShow)) " loading disabled"}} icon input ">
       <span class="lookup-field">
         {{#if value}}
           {{#if hasBlock}}

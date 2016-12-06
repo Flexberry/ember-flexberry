@@ -390,7 +390,17 @@ export default FlexberryBaseComponent.extend({
     @type Array
     @readOnly
   */
-  classNameBindings: ['autocompleteClass'],
+  classNameBindings: ['autocompleteClass', 'isActive:active'],
+
+  /**
+    Flag: indicates whether component is active or not.
+    Used to highlight component before data loading operation will be started.
+
+    @property isActive
+    @type Boolean
+    @default false
+  */
+  isActive: false,
 
   /**
     Used to identify lookup on the page.
@@ -431,11 +441,27 @@ export default FlexberryBaseComponent.extend({
       @param {Object} chooseData
     */
     choose(chooseData) {
-      if (this.get('readonly')) {
+      if (this.get('readonly') || this.get('modalIsStartToShow') || this.get('modalIsShow')) {
         return;
       }
 
-      this.sendAction('choose', chooseData);
+      let componentName = this.get('componentName');
+      if (!componentName) {
+        Ember.Logger.warn('`componentName` of flexberry-lookup is undefined.');
+      } else {
+        // Show choose button spinner.
+        this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
+      }
+
+      // Set state to active to add 'active' css-class.
+      this.set('isActive', true);
+
+      // Send 'choose' action after 'active' css-class will be completely added into component's DOM-element.
+      let $component = this.$();
+      Ember.run.after(this, () => { return $component.hasClass('active'); }, () => {
+        this.sendAction('choose', chooseData);
+        this.set('isActive', false);
+      });
     },
 
     /**
@@ -450,17 +476,6 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction('remove', removeData);
-    },
-
-    chooseButtonClick() {
-      let componentName = this.get('componentName');
-      if (!componentName) {
-        Ember.Logger.warn('`componentName` of flexberry-lookup are undefined.');
-        return;
-      }
-
-      this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
-
     }
   },
 
@@ -590,6 +605,7 @@ export default FlexberryBaseComponent.extend({
   _setModalIsHidden(componentName) {
     if (this.get('componentName') === componentName) {
       this.set('modalIsShow', false);
+      this.set('modalIsStartToShow', false);
     }
   },
 

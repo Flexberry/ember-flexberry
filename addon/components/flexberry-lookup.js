@@ -353,6 +353,15 @@ export default FlexberryBaseComponent.extend({
   modalIsStartToShow: false,
 
   /**
+    Flag: indicates whether a modal dialog will be shown soon.
+
+    @property modalIsBeforeToShow
+    @type Boolean
+    @default false
+  */
+  modalIsBeforeToShow: false,
+
+  /**
     Service that triggers lookup events.
 
     @property lookupEventsService
@@ -403,6 +412,17 @@ export default FlexberryBaseComponent.extend({
   isActive: false,
 
   /**
+    Flag: indicates whether component is in blocked state now.
+
+    @property isBlocked
+    @type Boolean
+    @readOnly
+  */
+  isBlocked: Ember.computed('modalIsBeforeToShow', 'modalIsStartToShow', 'modalIsShow', function() {
+    return this.get('modalIsBeforeToShow') || this.get('modalIsStartToShow') || this.get('modalIsShow');
+  }),
+
+  /**
     Used to identify lookup on the page.
 
     @property componentName
@@ -441,9 +461,11 @@ export default FlexberryBaseComponent.extend({
       @param {Object} chooseData
     */
     choose(chooseData) {
-      if (this.get('readonly') || this.get('modalIsStartToShow') || this.get('modalIsShow')) {
+      if (this.get('readonly') || this.get('isBlocked')) {
         return;
       }
+
+      console.log('Choose will be handled now');
 
       let componentName = this.get('componentName');
       if (!componentName) {
@@ -455,6 +477,9 @@ export default FlexberryBaseComponent.extend({
 
       // Set state to active to add 'active' css-class.
       this.set('isActive', true);
+
+      // Signalize that modal dialog will be shown soon.
+      this.set('modalIsBeforeToShow', true);
 
       // Send 'choose' action after 'active' css-class will be completely added into component's DOM-element.
       let $component = this.$();
@@ -579,6 +604,7 @@ export default FlexberryBaseComponent.extend({
   */
   _setModalIsStartToShow(componentName) {
     if (this.get('componentName') === componentName) {
+      this.set('modalIsBeforeToShow', false);
       this.set('modalIsStartToShow', true);
     }
   },
@@ -591,6 +617,7 @@ export default FlexberryBaseComponent.extend({
   */
   _setModalIsVisible(componentName, lookupDialog) {
     if (this.get('componentName') === componentName) {
+      this.set('modalIsBeforeToShow', false);
       this.set('modalIsShow', true);
       this.set('modalIsStartToShow', false);
     }
@@ -604,6 +631,7 @@ export default FlexberryBaseComponent.extend({
   */
   _setModalIsHidden(componentName) {
     if (this.get('componentName') === componentName) {
+      this.set('modalIsBeforeToShow', false);
       this.set('modalIsShow', false);
       this.set('modalIsStartToShow', false);
     }

@@ -766,11 +766,14 @@ export default FlexberryBaseComponent.extend(
       }
 
       if (this.rowClickable) {
-        let $selectedRow = this._getRowByKey(recordWithKey.key);
+        let recordKey = recordWithKey && recordWithKey.key;
+        let recordData = recordWithKey && recordWithKey.data;
+
+        let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
 
-        Ember.run.after(this, () => { return $selectedRow.hasClass('active'); }, () => {
-          this.sendAction('action', recordWithKey ? recordWithKey.data : undefined, {
+        Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
+          this.sendAction('action', recordData, {
             saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
             editOnSeparateRoute: editOnSeparateRoute,
             modelName: this.get('modelProjection').modelName,
@@ -779,11 +782,11 @@ export default FlexberryBaseComponent.extend(
           });
         });
 
-        this._setActiveRecord(recordWithKey.key);
+        this._setActiveRecord(recordKey);
 
         if (!editOnSeparateRoute) {
           // It is necessary only when we will not go to other route on click.
-          this.set('selectedRecord', recordWithKey.data);
+          this.set('selectedRecord', recordData);
         }
       }
     },
@@ -1543,6 +1546,10 @@ export default FlexberryBaseComponent.extend(
   */
   _getRowByKey(key) {
     let row = null;
+    if (Ember.isBlank(key)) {
+      return row;
+    }
+
     this.$('tbody tr').each(function() {
       let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
       if (currentKey === key) {
@@ -1550,6 +1557,7 @@ export default FlexberryBaseComponent.extend(
         return;
       }
     });
+
     return row;
   },
 

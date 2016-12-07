@@ -465,8 +465,6 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
-      console.log('Choose will be handled now');
-
       let componentName = this.get('componentName');
       if (!componentName) {
         Ember.Logger.warn('`componentName` of flexberry-lookup is undefined.');

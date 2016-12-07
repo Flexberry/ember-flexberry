@@ -611,13 +611,18 @@ export default FlexberryBaseComponent.extend({
       @param {Object} record Clicked record
     */
     objectListViewRowClick(record) {
-      if (this.get('componentMode') === 'lookupform') {
-        this.sendAction('action', record);
-      } else {
-        let editFormRoute = this.get('editFormRoute');
-        Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
-        this.sendAction('action', record, editFormRoute);
-      }
+      let $clickedRow = this._getRowByKey(record.key);
+      Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
+        if (this.get('componentMode') === 'lookupform') {
+          this.sendAction('action', record);
+        } else {
+          let editFormRoute = this.get('editFormRoute');
+          Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
+          this.sendAction('action', record, editFormRoute);
+        }
+      });
+
+      this._setActiveRow($clickedRow);
     },
 
     /**
@@ -977,5 +982,41 @@ export default FlexberryBaseComponent.extend({
   */
   didRender() {
     this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
+  },
+
+  /**
+    Get the row by key.
+
+    @method _getRowByKey
+    @private
+  */
+  _getRowByKey(key) {
+    let row = null;
+    this.$('tbody tr').each(function() {
+      let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
+      if (currentKey === key) {
+        row = Ember.$(this);
+        return;
+      }
+    });
+    return row;
+  },
+
+  /**
+    Set the active row.
+
+    @method _setActiveRow
+    @private
+
+    @param {Object} row Table row, which must become active.
+  */
+  _setActiveRow($row) {
+    // Deactivate previously activated row.
+    this.$('tbody tr.active').removeClass('active');
+
+    // Activate specified row.
+    if ($row && $row.addClass) {
+      $row.addClass('active');
+    }
   },
 });

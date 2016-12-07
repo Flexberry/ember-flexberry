@@ -611,7 +611,7 @@ export default FlexberryBaseComponent.extend({
       @param {Object} record Clicked record
     */
     objectListViewRowClick(record) {
-      let $clickedRow = this._getRowByKey(record.key);
+      let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
       Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
         if (this.get('componentMode') === 'lookupform') {
           this.sendAction('action', record);

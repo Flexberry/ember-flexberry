@@ -3,8 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.14] - 2016-12-07
 ### Added
-* Ember.run.after method to run specified logic, after specified condition will be fulfilled.
+* `Ember.run.after` method to run specified logic, after specified condition will be fulfilled.
 
 ### Changed
 * Resolver:
@@ -15,16 +17,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * flexberry-lookup:
     * Add locks preventing from multiple subsequent clicks.
     * Add 'active' CSS-class.
-    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
 * object-list-view:
-    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
 * flexberry-objectlistview:
-    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
 * flexberry-groupedit:
-    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
 * flexberry-simpleolv:
     * Add `active` CSS-class.
-    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
 
 ### Added
 * Add `perPage` saving in `userSettings`.

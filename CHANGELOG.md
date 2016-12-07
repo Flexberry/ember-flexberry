@@ -18,6 +18,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
 * object-list-view:
     * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
+* flexberry-objectlistview:
+    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
+* flexberry-groupedit:
+    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
 * flexberry-simpleolv:
     * Add `active` CSS-class.
     * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.

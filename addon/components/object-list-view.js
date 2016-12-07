@@ -769,7 +769,7 @@ export default FlexberryBaseComponent.extend(
         let $selectedRow = this._getRowByKey(recordWithKey.key);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
 
-        Ember.run.after(this, () => { return editOnSeparateRoute || $selectedRow.hasClass('active'); }, () => {
+        Ember.run.after(this, () => { return $selectedRow.hasClass('active'); }, () => {
           this.sendAction('action', recordWithKey ? recordWithKey.data : undefined, {
             saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
             editOnSeparateRoute: editOnSeparateRoute,
@@ -779,10 +779,11 @@ export default FlexberryBaseComponent.extend(
           });
         });
 
+        this._setActiveRecord(recordWithKey.key);
+
         if (!editOnSeparateRoute) {
           // It is necessary only when we will not go to other route on click.
           this.set('selectedRecord', recordWithKey.data);
-          this._setActiveRecord(recordWithKey.key);
         }
       }
     },

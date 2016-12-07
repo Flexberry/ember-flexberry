@@ -3,11 +3,24 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Breaking changes
-* `Resolver` from addon:
-    * Now lookup class based on type device will be executed for only `component`, `template` and `view` types.
-    * If necessary, change types, for which will be determined device type, extend `Resolver` and determine list of types into `deviceRelatedTypes` property.
-* Now list of prefixes for class lookup by default contains 'mobile' prefix only, use `prefixForPlatformAndType`, `prefixForOrientation` and `prefixForType` properties from `DeviceService` for added necessary prefixes.
+### Added
+* Ember.run.after method to run specified logic, after specified condition will be fulfilled.
+
+### Changed
+* Resolver:
+    * Now, by default, only `component`, `template` and `view` types will be resolved according to current device.
+      If necessary, list of device-related types can be specified in `deviceRelatedTypes` property of `Resolver`.
+    * Now, by default, device-related types will be searched only in 'mobile' subfolders, this behavior can be changed through
+      `prefixForPlatformAndType`, `prefixForOrientation`, `prefixForType` properties of `device` service.
+* flexberry-lookup:
+    * Add locks preventing from multiple subsequent clicks.
+    * Add 'active' CSS-class.
+    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
+* object-list-view:
+    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
+* flexberry-simpleolv:
+    * Add `active` CSS-class.
+    * Add delayed call to async logic through Ember.run.after to allow browser to apply changed styles first.
 
 ## [0.8.0-beta.13] - 2016-11-25
 ### Changed

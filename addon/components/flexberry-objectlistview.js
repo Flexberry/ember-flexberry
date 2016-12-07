@@ -476,6 +476,12 @@ export default FlexberryBaseComponent.extend({
   */
   recordsTotalCount: null,
 
+  perPageValueObserver: Ember.observer('perPageValue', function() {
+    let perPageValue = this.get('perPageValue');
+
+    this.get('userSettingsService').setCurrentPerPage(this.componentName, undefined, perPageValue);
+  }),
+
   /**
     Current interval of records.
 
@@ -977,5 +983,11 @@ export default FlexberryBaseComponent.extend({
   */
   didRender() {
     this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
+    let userSettingsService = this.get('userSettingsService');
+    let perPage = userSettingsService.getCurrentPerPage(this.componentName);
+    if (this.currentController.get('perPage') !== perPage) {
+      this.currentController.set('perPage', perPage);
+      this.set('perPageValue', perPage);
+    }
   },
 });

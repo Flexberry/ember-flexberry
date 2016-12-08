@@ -335,7 +335,7 @@ export default Ember.Service.extend({
    */
   getCurrentPerPage(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'perPage' in currentUserSetting ? currentUserSetting.perPage : 5;
+    return currentUserSetting && 'perPage' in currentUserSetting ? parseInt(currentUserSetting.perPage, 10) : 5;
   },
 
   /**

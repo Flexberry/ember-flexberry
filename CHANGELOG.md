@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fix `perPage` settings in modal.
 
 ## [0.8.0-beta.16] - 2016-12-08
 ### Fixed

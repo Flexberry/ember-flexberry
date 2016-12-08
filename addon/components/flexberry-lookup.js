@@ -675,13 +675,18 @@ export default FlexberryBaseComponent.extend({
       cache: false,
       apiSettings: {
         /**
-         * Mocks call to the data source,
-         * Uses query language and store for loading data explicitly.
-         *
-         * @param {Object} settings
-         * @param {Function} callback
-         */
+          Mocks call to the data source,
+          Uses query language and store for loading data explicitly.
+
+          @param {Object} settings
+          @param {Function} callback
+        */
         responseAsync(settings, callback) {
+          // Prevent async data-request from being sent in readonly mode.
+          if (_this.get('readonly')) {
+            return;
+          }
+
           let builder = new Builder(store, relationModelName)
             .select(displayAttributeName)
             .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);

@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Disabled blue highlight when Touch/Press `flexberry-objectlistview` or `flexberry-simpleolv`.
 * Fix several words search in `flexberry-lookup` modals.
 * Fix `flexberry-textbox` & `flexberry-field` readonly mode.
+* Fix `flexberry-lookup` readonly-mode when autocomplete is enabled.
 * Fix disabling of `flexberry-lookup` component. Now it's not sensitive to double clicks.
 
 ## [0.8.0-beta.15] - 2016-12-08

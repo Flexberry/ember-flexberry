@@ -480,11 +480,10 @@ export default FlexberryBaseComponent.extend({
       this.set('modalIsBeforeToShow', true);
 
       // Send 'choose' action after 'active' css-class will be completely added into component's DOM-element.
-      let $component = this.$();
-      Ember.run.after(this, () => { return $component.hasClass('active'); }, () => {
+      Ember.run.later(() => {
         this.sendAction('choose', chooseData);
         this.set('isActive', false);
-      });
+      }, 300);
     },
 
     /**

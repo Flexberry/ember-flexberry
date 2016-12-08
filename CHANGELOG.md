@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fix several words search in `flexberry-lookup` modals.
 
 ## [0.8.0-beta.14] - 2016-12-07
 ### Added

@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0-beta.15] - 2016-12-08
+### Fixed
+* Error occuring on add record with `flexberry-groupedit`.
+
 ## [0.8.0-beta.14] - 2016-12-07
 ### Added
 * `Ember.run.after` method to run specified logic, after specified condition will be fulfilled.

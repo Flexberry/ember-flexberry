@@ -2,10 +2,6 @@ import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from '../../../../mixins/edit-form-controller-operations-indication';
 
-import { Query } from 'ember-flexberry-data';
-
-const { Builder, StringPredicate } = Query;
-
 export default EditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
    Route name for transition after close edit form.
@@ -20,14 +16,30 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
 
   getCellComponent: null,
 
-  perPageValues: [],
+  /**
+    Name of related to FOLV edit form route.
 
-  customContent: Ember.computed('model.name', function() {
-    let name = this.get('model.name');
-    let builder = new Builder(this.get('store'))
-      .from('ember-flexberry-dummy-suggestion')
-      .selectByProjection('SuggestionL')
-      .where(new StringPredicate('author.name').contains(name));
-    return this.get('store').query('ember-flexberry-dummy-suggestion', builder.build());
-  })
+    @property folvEditFormRoute
+    @type String
+    @default 'ember-flexberry-dummy-localization-edit'
+   */
+  folvEditFormRoute: 'ember-flexberry-dummy-localization-edit',
+
+  /**
+    Name of FOLV model.
+
+    @property folvModelName
+    @type String
+    @default 'ember-flexberry-dummy-localization'
+   */
+  folvModelName: 'ember-flexberry-dummy-localization',
+
+  /**
+    Name of FOLV projection.
+
+    @property folvProjection
+    @type String
+    @default 'LocalizationL'
+   */
+  folvProjection: 'LocalizationL',
 });

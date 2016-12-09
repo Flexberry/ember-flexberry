@@ -155,6 +155,15 @@ export default FlexberryBaseComponent.extend({
   editFormRoute: undefined,
 
   /**
+    Flag indicates whether component on edit form (for FOLV).
+
+    @property onEditForm
+    @type Boolean
+    @default false
+  */
+  onEditForm: false,
+
+  /**
     Primary action for row click.
 
     @property action
@@ -614,9 +623,10 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.objectListViewRowClick
       @public
-      @param {Object} record Clicked record
+      @param {Object} record Clicked record.
+      @param {Object} options Different parameters to handle action.
     */
-    objectListViewRowClick(record) {
+    objectListViewRowClick(record, options) {
       let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
       Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
         if (this.get('componentMode') === 'lookupform') {
@@ -624,7 +634,14 @@ export default FlexberryBaseComponent.extend({
         } else {
           let editFormRoute = this.get('editFormRoute');
           Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
-          this.sendAction('action', record, editFormRoute);
+          if (Ember.isNone(options)) {
+            options = {};
+            options.editFormRoute = editFormRoute;
+          } else {
+            options = Ember.merge(options, { editFormRoute: editFormRoute });
+          }
+
+          this.sendAction('action', record, options);
         }
       });
 

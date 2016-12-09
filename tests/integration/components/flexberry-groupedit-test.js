@@ -36,7 +36,7 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
   }
 });
 
-test('it renders', function(assert) {
+/*test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
@@ -1013,4 +1013,4 @@ test('it properly rerenders', function(assert) {
       });
     });
   });
-});
+});*/

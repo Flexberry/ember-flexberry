@@ -90,7 +90,7 @@ Router.map(function() {
   this.route('user-setting-forms/user-setting-delete');
 
   // Components acceptance tests forms.
-  this.route('components-acceptance-tests/flexberry-groupedit/settings-example');
+  this.route('components-acceptance-tests/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit');
 });
 
 export default Router;

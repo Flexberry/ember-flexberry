@@ -694,7 +694,8 @@ Ember.$.extend(true, translations, {
           'date-caption': 'Date',
           'enumeration-caption': 'Enumeration',
           'file-caption': 'File',
-          'master-caption': 'Master'
+          'master-caption': 'Master',
+          'details-caption': 'Details'
         }
       }
     },

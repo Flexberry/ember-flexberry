@@ -173,6 +173,15 @@ export default FlexberryBaseComponent.extend(
   rowClickable: true,
 
   /**
+    Flag indicates whether component on edit form (for FOLV).
+
+    @property onEditForm
+    @type Boolean
+    @default false
+  */
+  onEditForm: false,
+
+  /**
     Custom classes for table.
 
     @example
@@ -774,6 +783,7 @@ export default FlexberryBaseComponent.extend(
 
         Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
           this.sendAction('action', recordData, {
+            onEditForm: this.get('onEditForm'),
             saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
             editOnSeparateRoute: editOnSeparateRoute,
             modelName: this.get('modelProjection').modelName,
@@ -1785,7 +1795,7 @@ export default FlexberryBaseComponent.extend(
   // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
   _rowsChanged: Ember.observer('content.@each.dirtyType', function() {
     let content = this.get('content');
-    if (content && content.isAny('dirtyType', 'updated')) {
+    if (content && !(content instanceof Ember.RSVP.Promise) && content.isAny('dirtyType', 'updated')) {
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
     }

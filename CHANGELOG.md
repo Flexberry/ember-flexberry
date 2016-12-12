@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-objectlistview`:
+    * Now `flexberry-objectlistview` can be placed on `edit-form`.
 ### Fixed
 * Fix `flexberry-lookup` readonly-mode when autocomplete is enabled.
 * Fix `flexberry-objectlistview` infinite loading when select same per page value.

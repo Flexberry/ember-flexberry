@@ -483,7 +483,7 @@ test('changes in inner <dropdown> causes changes in property binded to \'value\'
 });
 
 test('changes in property binded to \'value\' causes changes in <dropdown>', function(assert) {
-  assert.expect(7);
+  assert.expect(8);
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -511,10 +511,13 @@ test('changes in property binded to \'value\' causes changes in <dropdown>', fun
   // Change property binded to 'value' & check them again.
   let newValue = itemsArray[0];
   this.set('value', newValue);
-  let dropdownChangeText = Ember.$($items[0]).text();
+  let $dropdownActiveItem = $dropdownMenu.children('div.item.active');
+  let $dropdownChangeText = $component.children('div.text');
 
-  assert.strictEqual(this.get('value'), newValue, 'Component\'s property binded to \'value\' is equals to \'' + newValue + '\'');
-  assert.strictEqual(dropdownChangeText, newValue, 'Component\'s inner <dropdown>\'s value is equals to \'' + newValue + '\'');
+  // Check that component is active now.
+  assert.strictEqual($dropdownActiveItem.size(), 1, 'Only one component\'s item is active');
+  assert.strictEqual(Ember.$.trim($dropdownChangeText.text()), $dropdownActiveItem.text(), 'Component\'s default text is changes');
+  assert.strictEqual((Ember.$($items[0]).text()), newValue, 'Component\'s inner <dropdown>\'s value is equals to \'' + newValue + '\'');
   assert.strictEqual($dropdownText.hasClass('default text'), false, 'Component\'s text hasn\'t class \'default\'');
   assert.strictEqual($dropdownText.hasClass('text'), true, 'Component\'s text has class \'text\'');
 });

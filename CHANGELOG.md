@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * Fix `flexberry-lookup` readonly-mode when autocomplete is enabled.
+* Fix `flexberry-objectlistview` infinite loading when select same per page value.
 
 ## [0.8.0-beta.17] - 2016-12-08
 ### Fixed

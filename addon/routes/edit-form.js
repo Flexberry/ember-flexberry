@@ -61,7 +61,8 @@ FlexberryGroupeditRouteMixin, {
   queryParams: {
     page: { refreshModel: false },
     perPage: { refreshModel: false },
-    sort: { refreshModel: false }
+    sort: { refreshModel: false },
+    filter: { refreshModel: false }
   },
 
   /**

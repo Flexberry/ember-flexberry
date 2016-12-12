@@ -3,6 +3,9 @@
 */
 
 import Ember from 'ember';
+import { Query } from 'ember-flexberry-data';
+
+const { Condition, SimplePredicate, ComplexPredicate } = Query;
 
 /**
   Mixin for edit-form-controller for ObjectListView support.
@@ -66,28 +69,48 @@ export default Ember.Mixin.create({
     @type Promise
     @readOnly
   */
-  customFolvContent: Ember.computed('perPage', 'page', 'sorting', function() {
+  customFolvContentObserver: Ember.observer('perPage', 'page', 'sorting', 'filter', 'filters', function() {
+    let _this = this;
     let folvModelName = this.get('folvModelName');
     let folvProjection = this.get('folvProjection');
+    let filtersPredicate = this._filtersPredicate();
+    let perPage = this.get('perPage');
+    let page = this.get('page');
+    let sorting = this.get('sorting');
+    let filter = this.get('filter');
+    let filterCondition = this.get('filterCondition');
+    let params = {};
+    params.perPage = perPage;
+    params.page = page;
+    params.sorting = sorting;
+    params.filter = filter;
+    params.filterCondition = filterCondition;
+    let limitPredicate =
+      this.objectListViewLimitPredicate({ modelName: folvModelName, projectionName: folvProjection, params: params });
     if (folvModelName && folvProjection) {
       let queryParameters = {
         modelName: folvModelName,
         projectionName: folvProjection,
-        perPage: this.get('perPage'),
-        page: this.get('page'),
-        sorting: this.get('sorting'),
+        perPage: perPage,
+        page: page,
+        sorting: sorting,
+        filter: filter,
+        filterCondition: filterCondition,
+        filters: filtersPredicate,
+        predicate: limitPredicate,
 
-        //filter: params.filter,
-        //filterCondition: this.get('controller.filterCondition'),
-        //filters: filtersPredicate,
-        //predicate: limitPredicate,
         //hierarchicalAttribute: hierarchicalAttribute,
       };
-      return this.reloadList(queryParameters);
+      return this.reloadList(queryParameters)
+      .then(records => {
+        _this.set('customFolvContent', records);
+      });
     }
 
-    return undefined;
+    _this.set('customFolvContent', undefined);
   }),
+
+  customFolvContent: undefined,
 
   sort: undefined,
 
@@ -175,4 +198,82 @@ export default Ember.Mixin.create({
 
     return nextIndices;
   },
+
+  /**
+    Return predicate to filter through.
+
+    @example
+      ```javascript
+      // app/routes/example.js
+      ...
+      predicateForFilter(filter) {
+        if (filter.type === 'string' && filter.condition === 'like') {
+          return new StringPredicate(filter.name).contains(filter.pattern);
+        }
+
+        return this._super(...arguments);
+      },
+      ...
+      ```
+
+    @method predicateForFilter
+    @param {Object} filter Object (`{ name, condition, pattern }`) with parameters for filter.
+    @return {BasePredicate|null} Predicate to filter through.
+  */
+  predicateForFilter(filter) {
+    switch (filter.type) {
+      case 'string':
+      case 'number':
+      case 'boolean':
+        return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+
+      default:
+        return null;
+    }
+  },
+
+  /**
+    Return predicate for `QueryBuilder` or `undefined`.
+
+    @method _filtersPredicate
+    @return {BasePredicate|undefined} Predicate for `QueryBuilder` or `undefined`.
+    @private
+  */
+  _filtersPredicate() {
+    let filters = this.get('filters');
+    if (filters) {
+      let predicates = [];
+      for (let filter in filters) {
+        if (filters.hasOwnProperty(filter)) {
+          let predicate = this.predicateForFilter(filters[filter]);
+          if (predicate) {
+            predicates.push(predicate);
+          }
+        }
+      }
+
+      return predicates.length ? predicates.length > 1 ? new ComplexPredicate(Condition.And, ...predicates) : predicates[0] : undefined;
+    }
+
+    return undefined;
+  },
+
+  /**
+    It forms the limit predicate for loaded data.
+
+    By default it returns `undefined`.
+    In order to set specific limit predicate, this method have to be overriden on applied-specific route.
+
+  @method objectListViewLimitPredicate
+  @public
+
+  @param {Object} options Method options
+  @param {String} [options.modelName] Type of records to load
+  @param {String} [options.projectionName] Projection name to load data by
+  @param {String} [options.params] Current route query parameters
+  @return {BasePredicate} The predicate to limit loaded data
+  */
+  objectListViewLimitPredicate(options) {
+    return undefined;
+  }
 });

@@ -259,10 +259,10 @@ export default Ember.Mixin.create({
   },
 
   /**
-    It forms the limit predicate for loaded data.
+    It forms the limit predicate for FOLV loaded data on edit form.
 
     By default it returns `undefined`.
-    In order to set specific limit predicate, this method have to be overriden on applied-specific route.
+    In order to set specific limit predicate, this method have to be overriden on applied-specific controller.
 
   @method objectListViewLimitPredicate
   @public

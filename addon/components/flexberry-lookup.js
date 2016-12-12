@@ -480,11 +480,10 @@ export default FlexberryBaseComponent.extend({
       this.set('modalIsBeforeToShow', true);
 
       // Send 'choose' action after 'active' css-class will be completely added into component's DOM-element.
-      let $component = this.$();
-      Ember.run.after(this, () => { return $component.hasClass('active'); }, () => {
+      Ember.run.later(() => {
         this.sendAction('choose', chooseData);
         this.set('isActive', false);
-      });
+      }, 300);
     },
 
     /**
@@ -676,13 +675,18 @@ export default FlexberryBaseComponent.extend({
       cache: false,
       apiSettings: {
         /**
-         * Mocks call to the data source,
-         * Uses query language and store for loading data explicitly.
-         *
-         * @param {Object} settings
-         * @param {Function} callback
-         */
+          Mocks call to the data source,
+          Uses query language and store for loading data explicitly.
+
+          @param {Object} settings
+          @param {Function} callback
+        */
         responseAsync(settings, callback) {
+          // Prevent async data-request from being sent in readonly mode.
+          if (_this.get('readonly')) {
+            return;
+          }
+
           let builder = new Builder(store, relationModelName)
             .select(displayAttributeName)
             .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);

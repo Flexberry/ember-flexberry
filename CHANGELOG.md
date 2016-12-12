@@ -6,6 +6,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `flexberry-objectlistview`:
     * Now `flexberry-objectlistview` can be placed on `edit-form`.
+### Fixed
+* Fix `flexberry-lookup` readonly-mode when autocomplete is enabled.
+* Fix `flexberry-objectlistview` infinite loading when select same per page value.
+
+## [0.8.0-beta.17] - 2016-12-08
+### Fixed
+* Fix `perPage` settings in modal.
+
+## [0.8.0-beta.16] - 2016-12-08
+### Fixed
+* Disabled blue highlight when Touch/Press `flexberry-objectlistview` or `flexberry-simpleolv`.
+* Fix several words search in `flexberry-lookup` modals.
+* Fix `flexberry-textbox` & `flexberry-field` readonly mode.
+* Fix disabling of `flexberry-lookup` component. Now it's not sensitive to double clicks.
+
+## [0.8.0-beta.15] - 2016-12-08
+### Fixed
+* Error occuring on add record with `flexberry-groupedit`.
 
 ## [0.8.0-beta.14] - 2016-12-07
 ### Added

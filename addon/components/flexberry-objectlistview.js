@@ -476,12 +476,6 @@ export default FlexberryBaseComponent.extend({
   */
   recordsTotalCount: null,
 
-  perPageValueObserver: Ember.observer('perPageValue', function() {
-    let perPageValue = this.get('perPageValue');
-
-    this.get('userSettingsService').setCurrentPerPage(this.componentName, undefined, perPageValue);
-  }),
-
   /**
     Current interval of records.
 
@@ -850,9 +844,14 @@ export default FlexberryBaseComponent.extend({
       Called when click on perPage.
 
       @method actions.perPageClick
+      @param {String} perPageValue Selected perPage value.
     */
-    perPageClick() {
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+    perPageClick(perPageValue) {
+      var userSettings = this.get('userSettingsService');
+      if (parseInt(perPageValue, 10) !== userSettings.getCurrentPerPage(this.componentName)) {
+        userSettings.setCurrentPerPage(this.componentName, undefined, perPageValue);
+        this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      }
     },
 
     /**

@@ -70,7 +70,11 @@ export default Ember.Mixin.create({
     @readOnly
   */
   customFolvContentObserver: Ember.observer('perPage', 'page', 'sorting', 'filter', 'filters', function() {
-    Ember.run.once(this, 'getCustomContent');
+    let _this = this;
+
+    Ember.run(function() {
+      Ember.run.once(_this, 'getCustomContent');
+    });
   }),
 
   getCustomContent() {

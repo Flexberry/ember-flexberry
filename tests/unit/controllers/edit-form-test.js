@@ -19,12 +19,8 @@ moduleFor('controller:edit-form', 'Unit | Controller | edit form', {
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
-  let _this = this;
-
-  Ember.run(function() {
-    let controller = _this.subject();
-    assert.ok(controller);
-  });
+  let controller = this.subject();
+  assert.ok(controller);
 });
 
 test('save hasMany relationships recursively', function(assert) {
@@ -54,11 +50,10 @@ test('save hasMany relationships recursively', function(assert) {
   App.register('model:model2', Model2);
   App.register('model:model3', Model3);
 
-  let _this = this;
+  let controller = this.subject();
+  let store = App.__container__.lookup('service:store');
 
   Ember.run(function() {
-    let controller = _this.subject();
-    let store = App.__container__.lookup('service:store');
     let record = store.createRecord('model1');
     let model21 = store.createRecord('model2');
     let model22 = store.createRecord('model2');

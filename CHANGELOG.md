@@ -15,6 +15,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.8.0-beta.0 version.
 
+### Known issues
+* In `flexberry-objectlistview` changes in per page records count leads to component's hanging in IE.
+
 ## [0.8.0-beta.18] - 2016-12-12
 ### Added
 * `flexberry-objectlistview`:

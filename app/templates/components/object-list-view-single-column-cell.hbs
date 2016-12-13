@@ -1,21 +1,29 @@
 {{#each columns as |column|}}
-  <div class="inline fields {{if (not hasEditableValues) 'readonly'}}">
-  <label>{{column.header}}:</label>
-  {{#if column.cellComponent.componentName}}
-    {{component column.cellComponent.componentName
-    dynamicProperties=column.cellComponent.componentProperties
-    relatedModel=model
-    value=(mut (get model column.propName))
-    readonly=readonly
-    required=required
-    }}
-  {{else}}
-    <div class="oveflow-text">
-      {{get-formatted model column.propName
-        dateFormat=dateFormat
-        moment=moment
-      }}
+  <div class="field {{if (and showValidationMessages (get model (concat "errors." column.propName ".length"))) "error"}}">
+    <label>{{column.header}}:</label>
+    <div class="inline fields {{if (not hasEditableValues) "readonly"}}">
+      {{#if column.cellComponent.componentName}}
+        {{component column.cellComponent.componentName
+          dynamicProperties=column.cellComponent.componentProperties
+          relatedModel=model
+          value=(mut (get model column.propName))
+          readonly=readonly
+          required=required
+        }}
+      {{else}}
+        <div class="oveflow-text">
+          {{get-formatted model column.propName
+            dateFormat=dateFormat
+            moment=moment
+          }}
+        </div>
+      {{/if}}
+      {{#if showValidationMessages}}
+        {{flexberry-validationmessage
+          error=(get model (concat "errors." column.propName))
+          pointing="left pointing"
+        }}
+      {{/if}}
     </div>
-  {{/if}}
   </div>
 {{/each}}

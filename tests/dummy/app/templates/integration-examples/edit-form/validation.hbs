@@ -62,6 +62,7 @@
   <div class="field {{if model.errors.master "error" ""}}">
     <label>{{t "forms.integration-examples.edit-form.validation.master-caption"}}</label>
     {{flexberry-lookup
+      componentName="IntegrationExamplesValidationsMaster"
       value=model.master
       relatedModel=model
       relationName="master"
@@ -72,5 +73,15 @@
       remove=(action "removeLookupValue")
     }}
     {{flexberry-validationmessage error=model.errors.master pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.files "error" ""}}">
+    <label>{{t "forms.integration-examples.edit-form.validation.details-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="IntegrationExamplesEditFormValidationsDetails"
+      content=model.details
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.details
+      orderable=false
+    }}
   </div>
 </form>

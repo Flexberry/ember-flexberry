@@ -197,6 +197,15 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Flag: indicates whether to show validation messages in every row or not.
+
+    @property showValidationMessages
+    @type Boolean
+    @default false
+  */
+  showValidationMessagesInRow: false,
+
+  /**
     Flag indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow

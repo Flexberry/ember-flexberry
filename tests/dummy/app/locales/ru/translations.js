@@ -698,7 +698,8 @@ Ember.$.extend(true, translations, {
           'date-caption': 'Дата',
           'enumeration-caption': 'Перечисление',
           'file-caption': 'Файл',
-          'master-caption': 'Мастер'
+          'master-caption': 'Мастер',
+          'details-caption': 'Детейлы'
         }
       }
     },

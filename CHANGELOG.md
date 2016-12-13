@@ -3,6 +3,97 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0] - 2016-12-13
+### Added
+* Add option `showValidationMessagesInRow` for `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components. Option is `false` by default in `object-list-view` & `flexberry-objectlistview`, but is `true` by default in `flexberry-groupedit`. If `true` then validation message will be shown in each cell containing invalid value.
+* Add records per page count saving in `userSettings` for `flexberry-objectlistview`.
+* Add loader for `flexberry-objectlistview` appearing after clicking on the head of column to sort records.
+* Add `Ember.run.after` extension method into `Ember.run` namespace. Adds ability to rone some logic some after specified condition will be fulfilled.
+* Add locks preventing from multiple subsequent clicks leading to data-requests to `flexberry-lookup` component.
+* Add 'active' CSS-class to `flexberry-lookup` component which was clicked or taped.
+* Add delayed call to async logic to `flexberry-lookup` component using `Ember.run.after` to allow browser to apply changed styles first.
+* Add `active` CSS-class to rows of `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components, which where clicked.
+* Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first to `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components.
+* Add `localeKey` property to each item in `flexberry-menu`.
+* Add support for `relatedModel` change in run time for `flexberry-lookup`.
+* Add `lookup-events` containing methods`lookupDialogOnShowTrigger`, `lookupDialogOnVisibleTrigger`, `lookupDialogOnHiddenTrigger` to comunicate with `flexberry-lookup` components. **NOTE**:  `componenName` property must be defined in `flexberry-lookup`.
+* Add locks preventing from multiple data-requests when user press choose button several times in succession in `flexberry-lookup` component.
+* Add `filterByAnyWord` & `filterByAllWords` options for `flexberry-objectlistview` component. They can be used to configurate `filterByAnyMatch` logic.
+* Add `rollBackModel` parameter to `close` method (as it's optional second parameter) of `edit-form` and `detail-edit-form` controllers. Setting this parameter to `true` allows to rollback model after leaving route (applicable for detail's edit forms).
+* Add `skipTransition` parameter to `delete` method (as it's optionsl first parameter) of `edit-form` controller. Setting this parameter to `true` allows to skip technological call of `transitionToRoute` method.
+* Add `skipTransition` parameter to `saveAndClose`, `close` and `delete` actions (as their optionsl first parameter) of `edit-form` and `detail-edit-form` controllers. Setting this parameter true allows to skip technological call of `transitionToRoute` method.
+* Add `skipTransition` parameter to `save` method (as it's second optional parameter) and `close` method (as its first optional parameter) of `edit-form` controller. Setting this parameter to `true` allows to skip technological call of `transitionToRoute` method.
+* Add model loading hook-methods into `list-form` route: `onModelLoadingStarted`, `onModelLoadingFulfilled`, `onModelLoadingRejected`, `onModelLoadingAlways`.
+* Add `yield` content support for `object-list-view-cell` component.
+* Add `form-load-time-tracker` service to track formsload & render time & `form-load-time-tracker` component to view data from `form-load-time-tracker` service.
+* Add `perf-service` to make performance bottlenecks visible in console timeline.
+* Add async loading & rendering support for `object-list-view` records.
+* Add `flexberry-simpleolv` component which renders it's content faster then `flexberry-objectlistview`.
+* Add semantic-ui settings for `flexberry-dropdown` conmonent & for dropdown mode of  `flexberry-lookup` component.
+* Add locales support for headers of `object-list-view` component.
+* Add `get-formatted` helper.
+* Add support of `developerUserSettings` for `flexberry-groupedit` component placed on `edit-form`.
+* Add `configurateSelectedRows` method to configure selected records in `flexberry-groupedit` & `flexberry-objectlistview` components.
+* Add  ability to display records total count for `flexberry-objectlistview` component.
+* Add `sourceType` property generation into `flexberry-enum` transforms blueprint.
+* Add `ember-cli-sass` addon instalation into default blueprint.
+
+### Changed
+* Update dependency from`ember-flexberry-data` to version 0.8.0.
+* Change application resolver's default behavior. Now, by default, only `component`, `template` and `view` types will be resolved accordingly to current device. If necessary, list of device-related types can be specified in `deviceRelatedTypes` property of application resolver. Also by default, device-related types will be searched only in 'mobile' subfolders, this behavior can be changed through `prefixForPlatformAndType`, `prefixForOrientation`, `prefixForType` properties of `device` service.
+* Restore ability to add menu items in row for `flexberry-groupedit` and `flexberry-objectlistview` components using `menuInRowAdditionalItems` property. Now this behavior is similar to `customButtons` property for toolbar.
+* Move `resetMenu`, `addNamedSetting` and `sort` methods from `col-config-menu` service into `olv-toolbar` & `flexberry-objectlistview`. Also `sort` method is renamed into `sortNamedSetting`.
+* Replace `link-to` with `href-to` helper, alse replce `a` tag with `link-to` helper in `sitemap-node` template, because `link-to` helper has bad performance, `a` tag with `href-to` heper causes full page reload.
+* Rename `headerClickable`property into `orderable` in `object-list-view` component.
+
+### Removed
+* Remove `_attributeChanged` observer from `object-list-view` component.
+* Remove `createSettitingTitle`, `useSettitingTitle`, `editSettitingTitle`, `removeSettitingTitle`, `setDefaultSettitingTitle`, `showDefaultSettitingTitle` properties form `olv-toolbar` & `flexberry-objectlistview` components.
+* Remove `object-list-view-header-cell` component.
+
+###Fixed
+* Fix `flexberry-objectlistview` behavior when it is placed on `edit-form`.
+* Fix `filterCondition` in `list-form` when refreshing page.
+* Fix `flexberry-lookup` readonly-mode when autocomplete is enabled.
+* Fix `flexberry-objectlistview` infinite loading after same per page value is selected.
+* Fix multiple words search mode in `flexberry-lookup` modal dialogs.
+* Fix `flexberry-textbox` & `flexberry-field` readonly mode.
+* Fix `flexberry-lookup` double clicks sensivity.
+* Fix sorting in `flexberry-objectlistview`  `colsconfig-dialog` if form url has `sort` parameter.
+* Fix `flexberry-objectlistview` `cols-config-menu`sensivity to multiple locale changes.
+* Fix named settings displaying in `flexberry-objectlistview` `cols-config-menu`.
+* Fix `id` param receiveing on transition to parent route after saving and/or changing deatil modes of 2nd level.
+* Fix `rowConfig` usage in `object-list-view`, `flexberry-objectlistview`, `flexberry-groupedit`  in mobile mode.
+* Fix loader behavior in mobile mode of `flexberry-lookup`.
+* Fix displaying of deletion errors if record deletion was unsuccessful in `flexberry-objectlistview` & `object-list-view` components.
+* FIx behavior of user settings window in`flexberry-objectlistview` component, with enabled `enableFilters` property.
+* FIx displaying of `flexberry-lookup` choosed value when lookup is embeded into new detail's row in `flexberry-groupedit` component.
+* Fix (with temporally solution) ember problem that  causes an error in `flexberry-validationsummary` component. Problem also was corrected in [this PR](https://github.com/emberjs/ember.js/pull/13333) so temporally solution must be removed after update to ember 2.5.1 or higher.
+* Fix problems with placeholder in `flexberry-simpledatetime` component.
+* Fix transition to detail model's edit form route form agregator's edit form route when agregator's model is not valid and `saveBeforeRouteLeave` option is true.
+* Fix `object-list-view` component behavior with filter parameter added to route's url when `flexberry-lookup`list is also opened.
+* Fix search by``number`, `decimal` and `boolean` values in `flexberry-objectlistview` component.
+* Fix `flexberry-simpledatetime` component behavior in FF and IE.
+* Fix `detail-interaction` service bahavior when closing detail model's edit form.
+* Fix detail models saving logic in offline mode.
+* Fix detail models delete logic in offline mode.
+* Fix rollback logic for unsuccessful delete operations.
+* Fix transition to parent route logic in `detail-edit-form` controller.
+* Fix displaying `flexberry-lookup` value when desktop version of `object-list-view` component is used in mobile mode.
+* Fix aggregator model's reloading if detail model was modified.
+* Fix transition to edit form route when editing record has an `id` and `new` postfix at the same time.
+* Fix displaying of sorting indicator in `object-list-view` component.
+* Fix deprecation warnings which appears after content update in `object-list-view-row` component.
+* Fix `list-form` pagination in offline mode when offline storage doesn't contain any data.
+* Fix cells borders of`object-list-view` component, now text doesn't fall outside of them.
+* Fix `log-service` settings initialization from application config.
+* Fix opening of `detail-edit-form` in `readonly` mode from `edit-form` in `readonly` mode, if `editOnSeparateRoute` setting is enabled in `flexberry-groupedit component`.
+
+### Known issues
+* Changes in per page records count in `flexberry-objectlistview` component leads to it's hanging in IE.
+* Incomprehensible one-way binding of `flexberry-lookup` `value` property in a new detail inside `flexberry-groupedit`.
+
 ## [0.8.0-beta.19] - 2016-12-13
 ### Added
 * Add option `showValidationMessagesInRow` for `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components.

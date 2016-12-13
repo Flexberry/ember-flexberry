@@ -70,6 +70,10 @@ export default Ember.Mixin.create({
     @readOnly
   */
   customFolvContentObserver: Ember.observer('perPage', 'page', 'sorting', 'filter', 'filters', function() {
+    Ember.run.once(this, 'getCustomContent');
+  }),
+
+  getCustomContent() {
     let _this = this;
     let folvModelName = this.get('folvModelName');
     let folvProjection = this.get('folvProjection');
@@ -108,7 +112,7 @@ export default Ember.Mixin.create({
     }
 
     _this.set('customFolvContent', undefined);
-  }),
+  },
 
   customFolvContent: undefined,
 

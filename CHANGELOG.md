@@ -4,7 +4,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+* Fix `filterCondition` when refreshing page.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.8.0-beta.0 version.
+
+## [0.8.0-beta.18] - 2016-12-12
+### Added
+* `flexberry-objectlistview`:
+    * Now `flexberry-objectlistview` can be placed on `edit-form`.
+### Fixed
 * Fix `flexberry-lookup` readonly-mode when autocomplete is enabled.
+* Fix `flexberry-objectlistview` infinite loading when select same per page value.
 
 ### Added
 * Add option `showValidationMessagesInRow` for `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components.

@@ -178,13 +178,36 @@
   <div class="field">
     <h3>{{t "forms.components-examples.flexberry-objectlistview.on-edit-form.caption"}}:</h3>
     {{flexberry-objectlistview
-      content=customContent
-      modelName="ember-flexberry-dummy-suggestion"
-      modelProjection="SuggestionL"
-      rowClickable=false
+      content=customFolvContent
+      modelName=folvModelName
+      onEditForm=true
+      editFormRoute=folvEditFormRoute
+      modelProjection=folvProjection
+      rowClickable=true
       colsConfigButton=false
+      filters=filters
+      applyFilters=(action "applyFilters")
+      resetFilters=(action "resetFilters")
+      componentForFilter=(action "componentForFilter")
+      conditionsByType=(action "conditionsByType")
+      filterButton=true
+      filterText=filter
+      filterByAnyMatch=(action 'filterByAnyMatch')
+      filterByAllWords=true
       showShowingEntries=false
+      sorting=computedSorting
+      orderable=true
+      sortByColumn=(action "sortByColumn")
+      addColumnToSorting=(action "addColumnToSorting")
+      pages=pages
+      perPageValue=perPageValue
       perPageValues=perPageValues
+      recordsTotalCount=recordsTotalCount
+      hasPreviousPage=hasPreviousPage
+      hasNextPage=hasNextPage
+      previousPage=(action "previousPage")
+      gotoPage=(action "gotoPage")
+      nextPage=(action "nextPage")
       componentName="FOLVOnEditFormSuggestionsObjectListView"
     }}
   </div>

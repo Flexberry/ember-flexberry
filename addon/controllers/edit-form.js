@@ -8,6 +8,11 @@ import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
 import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
 import getCurrentAgregator from '../utils/get-current-agregator';
+import PaginatedControllerMixin from '../mixins/paginated-controller';
+import ReloadListMixin from '../mixins/reload-list-mixin';
+import SortableControllerMixin from '../mixins/sortable-controller';
+import LimitedControllerMixin from '../mixins/limited-controller';
+import FolvOnEditControllerMixin from '../mixins/flexberry-objectlistview-on-edit-form-controller';
 
 const { getOwner } = Ember;
 
@@ -40,7 +45,16 @@ const { getOwner } = Ember;
   @uses ErrorableControllerMixin
   @uses FlexberryFileControllerMixin
 */
-export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, FlexberryFileControllerMixin, {
+export default Ember.Controller.extend(
+Ember.Evented,
+FlexberryLookupMixin,
+ErrorableControllerMixin,
+FlexberryFileControllerMixin,
+PaginatedControllerMixin,
+ReloadListMixin,
+SortableControllerMixin,
+LimitedControllerMixin,
+FolvOnEditControllerMixin, {
   /**
     Flag to enable return to agregator's path if possible.
 
@@ -294,6 +308,26 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     */
     close(skipTransition, rollBackModel) {
       this.close(skipTransition, rollBackModel);
+    },
+
+    /**
+      Sorting list by column.
+
+      @method actions.sortByColumn
+      @param {Object} column Column for sorting.
+    */
+    sortByColumn: function(column) {
+      this._super.apply(this, [column, 'sorting']);
+    },
+
+    /**
+      Add column into end list sorting.
+
+      @method actions.addColumnToSorting
+      @param {Object} column Column for sorting.
+    */
+    addColumnToSorting: function(column) {
+      this._super.apply(this, [column, 'sorting']);
     },
   },
 

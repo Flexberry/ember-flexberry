@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [0.8.0-beta.19] - 2016-12-13
+### Added
+* Add option `showValidationMessagesInRow` for `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components.
+  Option is `false` by default in `object-list-view` & `flexberry-objectlistview`, but is `true` by default in `flexberry-groupedit`.
+  If `true` then validation message will be shown in each cell containing invalid value.
+
 ### Fixed
 * Fix `filterCondition` when refreshing page.
 
@@ -16,11 +22,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Fix `flexberry-lookup` readonly-mode when autocomplete is enabled.
 * Fix `flexberry-objectlistview` infinite loading when select same per page value.
-
-### Added
-* Add option `showValidationMessagesInRow` for `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components.
-  Option is `false` by default in `object-list-view` & `flexberry-objectlistview`, but is `true` by default in `flexberry-groupedit`.
-  If `true` then validation message will be shown in each cell containing invalid value.
 
 ## [0.8.0-beta.17] - 2016-12-08
 ### Fixed

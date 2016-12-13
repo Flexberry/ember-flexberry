@@ -151,9 +151,7 @@ test('it renders i18n-ed placeholder', function(assert) {
   assert.expect(2);
 
   // Render component.
-  this.render(hbs`{{flexberry-dropdown
-    class=class
-  }}`);
+  this.render(hbs`{{flexberry-dropdown}}`);
 
   // Retrieve component.
   let $component = this.$().children();
@@ -299,7 +297,7 @@ test('dropdown with items represented by object renders properly', function(asse
   });
 });
 
-test('dropdown with items represented by array renders properlyy', function(assert) {
+test('dropdown with items represented by array renders properly', function(assert) {
   assert.expect(3);
 
   // Create array for testing.

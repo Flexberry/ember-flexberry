@@ -1,0 +1,74 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.inheritance-models.caption"}}</h3>
+<form class="ui {{state}} form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui negative button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+    </div>
+  </div>
+  <div class="field {{if model.errors.name "error" ""}}">
+    {{flexberry-field
+      value=model.name
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.name-caption")
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.vK "error" ""}}">
+    {{flexberry-field
+      value=model.vK
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.vK-caption")
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.vK pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.facebook "error" ""}}">
+    {{flexberry-field
+      value=model.facebook
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.facebook-caption")
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.facebook pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.twitter "error" ""}}">
+    {{flexberry-field
+      value=model.twitter
+      label=(t "forms.components-examples.flexberry-objectlistview.inheritance-models.twitter-caption")
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.twitter pointing="pointing"}}
+  </div>
+</form>

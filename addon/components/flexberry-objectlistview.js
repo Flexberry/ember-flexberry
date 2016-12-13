@@ -155,6 +155,15 @@ export default FlexberryBaseComponent.extend({
   editFormRoute: undefined,
 
   /**
+    Flag indicates whether component on edit form (for FOLV).
+
+    @property onEditForm
+    @type Boolean
+    @default false
+  */
+  onEditForm: false,
+
+  /**
     Primary action for row click.
 
     @property action
@@ -608,16 +617,29 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.objectListViewRowClick
       @public
-      @param {Object} record Clicked record
+      @param {Object} record Clicked record.
+      @param {Object} options Different parameters to handle action.
     */
-    objectListViewRowClick(record) {
-      if (this.get('componentMode') === 'lookupform') {
-        this.sendAction('action', record);
-      } else {
-        let editFormRoute = this.get('editFormRoute');
-        Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
-        this.sendAction('action', record, editFormRoute);
-      }
+    objectListViewRowClick(record, options) {
+      let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
+      Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
+        if (this.get('componentMode') === 'lookupform') {
+          this.sendAction('action', record);
+        } else {
+          let editFormRoute = this.get('editFormRoute');
+          Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
+          if (Ember.isNone(options)) {
+            options = {};
+            options.editFormRoute = editFormRoute;
+          } else {
+            options = Ember.merge(options, { editFormRoute: editFormRoute });
+          }
+
+          this.sendAction('action', record, options);
+        }
+      });
+
+      this._setActiveRow($clickedRow);
     },
 
     /**
@@ -839,9 +861,14 @@ export default FlexberryBaseComponent.extend({
       Called when click on perPage.
 
       @method actions.perPageClick
+      @param {String} perPageValue Selected perPage value.
     */
-    perPageClick() {
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+    perPageClick(perPageValue) {
+      var userSettings = this.get('userSettingsService');
+      if (parseInt(perPageValue, 10) !== userSettings.getCurrentPerPage(this.componentName)) {
+        userSettings.setCurrentPerPage(this.componentName, undefined, perPageValue);
+        this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      }
     },
 
     /**
@@ -977,5 +1004,47 @@ export default FlexberryBaseComponent.extend({
   */
   didRender() {
     this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
+    let userSettingsService = this.get('userSettingsService');
+    let perPage = userSettingsService.getCurrentPerPage(this.componentName);
+    if (this.currentController.get('perPage') !== perPage) {
+      this.currentController.set('perPage', perPage);
+      this.set('perPageValue', perPage);
+    }
+  },
+
+  /**
+    Get the row by key.
+
+    @method _getRowByKey
+    @private
+  */
+  _getRowByKey(key) {
+    let row = null;
+    this.$('tbody tr').each(function() {
+      let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
+      if (currentKey === key) {
+        row = Ember.$(this);
+        return;
+      }
+    });
+    return row;
+  },
+
+  /**
+    Set the active row.
+
+    @method _setActiveRow
+    @private
+
+    @param {Object} row Table row, which must become active.
+  */
+  _setActiveRow($row) {
+    // Deactivate previously activated row.
+    this.$('tbody tr.active').removeClass('active');
+
+    // Activate specified row.
+    if ($row && $row.addClass) {
+      $row.addClass('active');
+    }
   },
 });

@@ -106,10 +106,12 @@ test('readonly mode works properly', function(assert) {
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('readonly')),
     '',
-    'Component\'s inner <input> hasn\'t readonly attribute');
+    'Component\'s inner <input> hasn\'t readonly attribute by default');
 
   // Activate readonly mode & check that <input>'s readonly attribute exists now & has value equals to 'readonly'.
   this.set('readonly', true);
+
+  $fieldInput = Ember.$('.flexberry-textbox input', $component);
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('readonly')),
     'readonly',
@@ -117,6 +119,8 @@ test('readonly mode works properly', function(assert) {
 
   // Check that <input>'s readonly attribute doesn't exist now.
   this.set('readonly', false);
+
+  $fieldInput = Ember.$('.flexberry-textbox input', $component);
   assert.strictEqual(
     Ember.$.trim($fieldInput.attr('readonly')),
     '',
@@ -158,6 +162,39 @@ test('readonly mode works properly with value', function(assert) {
     this.get('value'),
     null,
     'Component\'s property binded to unchanged \'value\'');
+});
+
+test('click on field in readonly mode doesn\'t change value & it\'s type', function(assert) {
+  assert.expect(3);
+
+  // Set <input>'s value' & render component.
+  let value = 123;
+  this.set('value', value);
+  this.render(hbs`{{flexberry-field
+    readonly=true
+    value=value
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $fieldInput = Ember.$('.flexberry-textbox input', $component);
+
+  $fieldInput.click();
+  $fieldInput.change();
+
+  // Check <input>'s value not changed.
+  assert.strictEqual(
+    Ember.$.trim($fieldInput.val()),
+    '' + value,
+    'Component\'s inner <input>\'s value not changed');
+  assert.strictEqual(
+    this.get('value'),
+    value,
+    'Value binded to component\'s \'value\' property is unchanged');
+  assert.strictEqual(
+    Ember.typeOf(this.get('value')),
+    'number',
+    'Value binded to component\'s \'value\' property is still number');
 });
 
 test('it renders i18n-ed placeholder', function(assert) {

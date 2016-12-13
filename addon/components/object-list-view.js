@@ -173,6 +173,15 @@ export default FlexberryBaseComponent.extend(
   rowClickable: true,
 
   /**
+    Flag indicates whether component on edit form (for FOLV).
+
+    @property onEditForm
+    @type Boolean
+    @default false
+  */
+  onEditForm: false,
+
+  /**
     Custom classes for table.
 
     @example
@@ -766,21 +775,29 @@ export default FlexberryBaseComponent.extend(
       }
 
       if (this.rowClickable) {
+        let recordKey = recordWithKey && recordWithKey.key;
+        let recordData = recordWithKey && recordWithKey.data;
+
+        let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
-        if (!editOnSeparateRoute) {
 
-          // It is necessary only when we will not go to other route on click.
-          this.set('selectedRecord', recordWithKey.data);
-          this._setActiveRecord(recordWithKey.key);
-        }
-
-        this.sendAction('action', recordWithKey ? recordWithKey.data : undefined, {
-          saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
-          editOnSeparateRoute: editOnSeparateRoute,
-          modelName: this.get('modelProjection').modelName,
-          detailArray: this.get('content'),
-          readonly: this.get('readonly')
+        Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
+          this.sendAction('action', recordData, {
+            onEditForm: this.get('onEditForm'),
+            saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
+            editOnSeparateRoute: editOnSeparateRoute,
+            modelName: this.get('modelProjection').modelName,
+            detailArray: this.get('content'),
+            readonly: this.get('readonly')
+          });
         });
+
+        this._setActiveRecord(recordKey);
+
+        if (!editOnSeparateRoute) {
+          // It is necessary only when we will not go to other route on click.
+          this.set('selectedRecord', recordData);
+        }
       }
     },
 
@@ -1539,6 +1556,10 @@ export default FlexberryBaseComponent.extend(
   */
   _getRowByKey(key) {
     let row = null;
+    if (Ember.isBlank(key)) {
+      return row;
+    }
+
     this.$('tbody tr').each(function() {
       let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
       if (currentKey === key) {
@@ -1546,6 +1567,7 @@ export default FlexberryBaseComponent.extend(
         return;
       }
     });
+
     return row;
   },
 
@@ -1760,17 +1782,20 @@ export default FlexberryBaseComponent.extend(
     @param {String} key The key of record
   */
   _setActiveRecord(key) {
-    let selectedRow = this._getRowByKey(key);
+    // Hide highlight from previously activated row.
     this.$('tbody tr.active').removeClass('active');
-    if (selectedRow) {
-      selectedRow.addClass('active');
+
+    // Activate specified row.
+    let $selectedRow = this._getRowByKey(key);
+    if ($selectedRow) {
+      $selectedRow.addClass('active');
     }
   },
 
   // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
   _rowsChanged: Ember.observer('content.@each.dirtyType', function() {
     let content = this.get('content');
-    if (content && content.isAny('dirtyType', 'updated')) {
+    if (content && !(content instanceof Ember.RSVP.Promise) && content.isAny('dirtyType', 'updated')) {
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
     }

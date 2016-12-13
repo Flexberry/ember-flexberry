@@ -55,7 +55,7 @@ export default Ember.Mixin.create({
     @type Array
     @default ['lf', 'filter']
    */
-  queryParams: ['filter'],
+  queryParams: ['filter', 'filterCondition'],
 
   /**
     Filters filled in OLV component.

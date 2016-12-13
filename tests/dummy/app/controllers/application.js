@@ -266,6 +266,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/lookup-block-form-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-block-form-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-block-form-example.title'),
@@ -301,6 +306,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-objectlistview/inheritance-models',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.inheritance-models.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.inheritance-models.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-objectlistview/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.title'),
@@ -318,6 +328,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-objectlistview/custom-filter',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/hierarchy-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-example.title'),
             children: null
           }, {
             link: 'components-examples/flexberry-objectlistview/configurate-rows',

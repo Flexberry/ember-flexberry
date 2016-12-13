@@ -132,10 +132,11 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         }
 
         this.sorting = userSettingsService.getCurrentSorting(componentName);
+        this.perPage = userSettingsService.getCurrentPerPage(componentName);
         let queryParameters = {
           modelName: modelName,
           projectionName: projectionName,
-          perPage: params.perPage,
+          perPage: this.perPage,
           page: params.page,
           sorting: this.sorting,
           filter: params.filter,

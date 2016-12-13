@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
+import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 
 /**
   Base route for the Edit Forms.
@@ -32,7 +33,9 @@ import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
   @extends ProjectedModelForm
   @uses FlexberryGroupeditRouteMixin
  */
-export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
+export default ProjectedModelFormRoute.extend(
+FlexberryObjectlistviewRouteMixin,
+FlexberryGroupeditRouteMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
@@ -47,6 +50,20 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
       this._super(transition);
       this.controller.send('routeWillTransition');
     },
+  },
+
+  /**
+    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+
+    @property queryParams
+    @type Object
+   */
+  queryParams: {
+    page: { refreshModel: false },
+    perPage: { refreshModel: false },
+    sort: { refreshModel: false },
+    filter: { refreshModel: false },
+    filterCondition: { refreshModel: false }
   },
 
   /**

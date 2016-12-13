@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Fix `filterCondition` when refreshing page.
 
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.8.0-beta.0 version.
+
 ## [0.8.0-beta.18] - 2016-12-12
 ### Added
 * `flexberry-objectlistview`:

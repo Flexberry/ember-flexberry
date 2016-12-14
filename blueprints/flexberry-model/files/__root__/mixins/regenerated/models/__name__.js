@@ -8,5 +8,7 @@ export let defineBaseModel = function (modelClass) {
   modelClass.reopenClass({
     _parentModelName: '<%= parentModelName %>'
   });
-};<%}%><%if(projections) {%>
-export let defineProjections = function (modelClass) {<%}%><%= projections %><%if(projections) {%>};<%}%>
+};
+<%}%>
+<%if(projections) {%>export let defineProjections = function (modelClass) {<%}%><%= projections %><%if(projections) {%>};
+<%}%>

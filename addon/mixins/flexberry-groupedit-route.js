@@ -105,11 +105,16 @@ export default Ember.Mixin.create({
       };
 
       if (saveBeforeRouteLeave) {
-        this.controller.save(false, true).then(() => {
+        let model = this.controller.get('model');
+        if (!Ember.$.isEmptyObject(model.changedAttributes()) || !Ember.$.isEmptyObject(model.changedBelongsTo())) {
+          this.controller.save(false, true).then(() => {
+            goToOtherRouteFunction();
+          }).catch((errorData) => {
+            this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+          });
+        } else {
           goToOtherRouteFunction();
-        }).catch((errorData) => {
-          this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
-        });
+        }
       } else {
         goToOtherRouteFunction();
       }

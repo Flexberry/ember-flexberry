@@ -70,6 +70,15 @@ export default FlexberryBaseComponent.extend({
   _records: Ember.computed(() => Ember.A()),
 
   /**
+    Flag: indicates whether to show validation messages or not.
+
+    @property showValidationMessagesInRow
+    @type Boolean
+    @default false
+  */
+  showValidationMessagesInRow: false,
+
+  /**
     Flag used to start render row content.
 
     @property doRenderData

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.21] - 2016-12-15
 ### Fixed
 * Redundant saving of agregator when transitioning to detail edit form.
 

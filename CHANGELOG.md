@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [0.8.0-beta.22] - 2016-12-15
+### Added
+* Now `flexberry-groupedit` supports sorting.
 
 ## [0.8.0-beta.21] - 2016-12-15
 ### Fixed

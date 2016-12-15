@@ -33,30 +33,7 @@ export default FlexberryBaseComponent.extend(
   _modelProjection: null,
 
   _contentObserver: Ember.on('init', Ember.observer('content', function() {
-    let content = this.get('content');
-    if (content && !content.isLoading) {
-      this.set('rowsInLoadingState', false);
-      this.set('contentWithKeys', Ember.A());
-      this.set('contentForRender', Ember.A());
-      if (content instanceof Ember.RSVP.Promise) {
-        content.then((items) => {
-          items.forEach((item) => {
-            this._addModel(item);
-          });
-        }).then(()=> {
-          this.set('contentWithKeys', this.contentForRender);
-          this.set('showLoadingTbodyClass', false);
-        });
-      } else {
-        content.forEach((item) => {
-          this._addModel(item);
-        });
-        this.set('contentWithKeys', this.contentForRender);
-        this.set('showLoadingTbodyClass', false);
-      }
-    } else {
-      this.set('rowsInLoadingState', true);
-    }
+    this._setContent(this.get('componentName'));
   })),
 
   /**
@@ -382,7 +359,7 @@ export default FlexberryBaseComponent.extend(
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }
 
-    if (userSettings && userSettings.colsOrder !== undefined) {
+    if (userSettings) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {
         let col = cols[i];
@@ -405,14 +382,26 @@ export default FlexberryBaseComponent.extend(
         namedCols[propName].sortNumber = i + 1;
       }
 
-      ret = [];
-      for (let i = 0; i < userSettings.colsOrder.length; i++) {
-        let userSetting = userSettings.colsOrder[i];
-        if (!userSetting.hide) {
-          let propName = userSetting.propName;
-          let col = namedCols[propName];
-          ret[ret.length] = col;
+      if (userSettings.colsOrder !== undefined) {
+        ret = [];
+        for (let i = 0; i < userSettings.colsOrder.length; i++) {
+          let userSetting = userSettings.colsOrder[i];
+          if (!userSetting.hide) {
+            let propName = userSetting.propName;
+            let col = namedCols[propName];
+            ret[ret.length] = col;
+          }
         }
+      } else {
+        if (this.currentController) {
+          if (this.currentController.userSettings === undefined) {
+            Ember.set(this.currentController, 'userSettings', {});
+          }
+
+          Ember.set(this.currentController.userSettings, 'colsOrder', cols);
+        }
+
+        ret = cols;
       }
     } else {
       if (this.currentController) {
@@ -912,6 +901,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
+    this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
 
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
@@ -1082,6 +1072,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
+    this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
 
     this._super(...arguments);
   },
@@ -1516,6 +1507,63 @@ export default FlexberryBaseComponent.extend(
     }
 
     return component;
+  },
+
+  /**
+    Sets content for component.
+
+    @method _setContent
+    @param {String} componentName Name of the component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  _setContent(componentName, sorting) {
+    if (this.get('componentName') === componentName) {
+      let content = this.get('content');
+      if (content && !content.isLoading) {
+        this.set('rowsInLoadingState', false);
+        this.set('contentWithKeys', Ember.A());
+        this.set('contentForRender', Ember.A());
+        if (content instanceof Ember.RSVP.Promise) {
+          content.then((items) => {
+            items.forEach((item) => {
+              this._addModel(item);
+            });
+          }).then(()=> {
+            this.set('contentWithKeys', this.contentForRender);
+            this.set('showLoadingTbodyClass', false);
+          });
+        } else {
+          content.forEach((item) => {
+            this._addModel(item);
+          });
+          this.set('contentWithKeys', this.contentForRender);
+          this.set('showLoadingTbodyClass', false);
+        }
+      } else {
+        this.set('rowsInLoadingState', true);
+      }
+
+      if (Ember.isArray(sorting)) {
+        let columns = this.get('columns');
+        if (Ember.isArray(columns)) {
+          columns.forEach((column) => {
+            Ember.set(column, 'sorted', false);
+            delete column.sortAscending;
+            delete column.sortNumber;
+            let idPosition = sorting.length;
+            for (let i = 0; i < sorting.length; i++) {
+              if (sorting[i].propName === 'id') {
+                idPosition = i;
+              } else if (column.propName === sorting[i].propName) {
+                Ember.set(column, 'sortAscending', sorting[i].direction === 'asc' ? true : false);
+                Ember.set(column, 'sorted', true);
+                Ember.set(column, 'sortNumber', i > idPosition ? i : i + 1);
+              }
+            }
+          }, this);
+        }
+      }
+    }
   },
 
   /**

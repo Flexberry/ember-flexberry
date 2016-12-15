@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.20] - 2016-12-15
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.2-beta.0 version. This version of `ember-flexberry-data` is not include changes for join records when performing queries in offline mode.
+
 ## [0.8.0-beta.19] - 2016-12-13
 ### Added
 * Add option `showValidationMessagesInRow` for `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components.

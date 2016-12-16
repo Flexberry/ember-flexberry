@@ -3,8 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.0-beta.23] - 2016-12-16
 ### Fixed
 * Fix `flexberry-objectlistview` on `edit-form` predicate which contains model fields.
+* Fix incorrect getting of `developerUserSettings` in `flexberry-groupedit` component.
 
 ## [0.8.0-beta.22] - 2016-12-15
 ### Added

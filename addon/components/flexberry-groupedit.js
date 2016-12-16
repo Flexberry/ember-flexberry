@@ -522,7 +522,7 @@ export default FlexberryBaseComponent.extend({
 
   didInsertElement() {
     let developerUserSettings = this.currentController;
-    developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') : {};
+    developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
     developerUserSettings = developerUserSettings[this.componentName] || {};
     developerUserSettings = developerUserSettings.DEFAULT || {};
     this.set('sorting', developerUserSettings.sorting || []);

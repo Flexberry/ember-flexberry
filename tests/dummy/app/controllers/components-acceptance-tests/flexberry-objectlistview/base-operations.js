@@ -3,42 +3,6 @@ import ListFormController from 'ember-flexberry/controllers/list-form';
 import { translationMacro as t } from 'ember-i18n';
 
 export default ListFormController.extend({
-  /**
-    Name of selected detail's model projection.
-
-    @property _projectionName
-    @type String
-    @private
-   */
-  _projectionName: 'SuggestionL',
-
-  /**
-    Array of available model projections.
-
-    @property _projections
-    @type Object[]
-   */
-  _projections: Ember.computed('model.[]', function() {
-    let records = this.get('model');
-    let modelClass = Ember.get(records, 'length') > 0 ? Ember.get(records, 'firstObject').constructor : {};
-
-    return Ember.get(modelClass, 'projections');
-  }),
-
-  /**
-    Array of available model projections names.
-
-    @property _projectionsNames
-    @type String[]
-   */
-  _projectionsNames: Ember.computed('_projections.[]', function() {
-    let projections = this.get('_projections');
-    if (Ember.isNone(projections)) {
-      return [];
-    }
-
-    return Object.keys(projections);
-  }),
 
   /**
     Model projection for 'flexberry-objectlistview' component 'modelProjection' property.
@@ -46,19 +10,7 @@ export default ListFormController.extend({
     @property projection
     @type Object
    */
-  projection: Ember.computed('_projections.[]', '_projectionName', function() {
-    let projectionName = this.get('_projectionName');
-    if (Ember.isBlank(projectionName)) {
-      return null;
-    }
-
-    let projections = this.get('_projections');
-    if (Ember.isNone(projections)) {
-      return null;
-    }
-
-    return projections[projectionName];
-  }),
+  projection: 'SuggestionL',
 
   /**
     Name of related edit form route (for 'flexberry-objectlistview' component 'editFormRoute' property).
@@ -117,7 +69,7 @@ export default ListFormController.extend({
     @property createNewButton
     @type Boolean
    */
-  createNewButton: false,
+  createNewButton: true,
 
   /**
     Flag for 'flexberry-objectlistview' component 'deleteButton' property.
@@ -125,7 +77,7 @@ export default ListFormController.extend({
     @property deleteButton
     @type Boolean
    */
-  deleteButton: false,
+  deleteButton: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'enableFilters' mode or not.
@@ -133,7 +85,7 @@ export default ListFormController.extend({
     @property enableFilters
     @type Boolean
    */
-  enableFilters: false,
+  enableFilters: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'filterButton' mode or not.
@@ -141,7 +93,7 @@ export default ListFormController.extend({
     @property filterButton
     @type Boolean
    */
-  filterButton: false,
+  filterButton: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'refreshButton' mode or not.
@@ -149,7 +101,7 @@ export default ListFormController.extend({
     @property refreshButton
     @type Boolean
    */
-  refreshButton: false,
+  refreshButton: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showCheckBoxInRow' mode or not.
@@ -157,7 +109,7 @@ export default ListFormController.extend({
     @property showCheckBoxInRow
     @type Boolean
    */
-  showCheckBoxInRow: false,
+  showCheckBoxInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteButtonInRow' mode or not.
@@ -165,7 +117,7 @@ export default ListFormController.extend({
     @property showDeleteButtonInRow
     @type Boolean
    */
-  showDeleteButtonInRow: false,
+  showDeleteButtonInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
@@ -173,7 +125,7 @@ export default ListFormController.extend({
     @property showEditMenuItemInRow
     @type Boolean
    */
-  showEditMenuItemInRow: false,
+  showEditMenuItemInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteMenuItemInRow' mode or not.
@@ -181,7 +133,7 @@ export default ListFormController.extend({
     @property showDeleteMenuItemInRow
     @type Boolean
    */
-  showDeleteMenuItemInRow: false,
+  showDeleteMenuItemInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'rowClickable' mode or not.

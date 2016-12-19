@@ -117,6 +117,8 @@ test('readonly mode works properly', function(assert) {
 
   // Activate readonly mode & check that <input>'s readonly attribute exists now & has value equals to 'readonly'.
   this.set('readonly', true);
+
+  $textboxInput = $component.children('input');
   assert.strictEqual(
     Ember.$.trim($textboxInput.attr('readonly')),
     'readonly',
@@ -124,6 +126,8 @@ test('readonly mode works properly', function(assert) {
 
   // Check that <input>'s readonly attribute doesn't exist now.
   this.set('readonly', false);
+
+  $textboxInput = $component.children('input');
   assert.strictEqual(
     Ember.$.trim($textboxInput.attr('readonly')),
     '',
@@ -165,6 +169,39 @@ test('readonly mode works properly with value', function(assert) {
     this.get('value'),
     null,
     'Component\'s property binded to unchanged \'value\'');
+});
+
+test('click on textbox in readonly mode doesn\'t change value & it\'s type', function(assert) {
+  assert.expect(3);
+
+  // Set <input>'s value' & render component.
+  let value = 123;
+  this.set('value', value);
+  this.render(hbs`{{flexberry-textbox
+    readonly=true
+    value=value
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $textboxInput = $component.children('input');
+
+  $textboxInput.click();
+  $textboxInput.change();
+
+  // Check <input>'s value not changed.
+  assert.strictEqual(
+    Ember.$.trim($textboxInput.val()),
+    '' + value,
+    'Component\'s inner <input>\'s value not changed');
+  assert.strictEqual(
+    this.get('value'),
+    value,
+    'Value binded to component\'s \'value\' property is unchanged');
+  assert.strictEqual(
+    Ember.typeOf(this.get('value')),
+    'number',
+    'Value binded to component\'s \'value\' property is still number');
 });
 
 test('it renders i18n-ed placeholder', function(assert) {

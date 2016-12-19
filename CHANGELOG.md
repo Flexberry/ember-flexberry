@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Shift date ahead, at saving through `flexberry-datepicker` component.
+
 ## [0.8.0-beta.19] - 2016-12-13
 ### Added
 * Add option `showValidationMessagesInRow` for `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components.

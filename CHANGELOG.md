@@ -3,8 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [0.8.0-beta.24] - 2016-12-20
 ### Fixed
-* Fixed zero page number bug.
+* Fix zero page number bug.
+* Fix sorting for `flexberry-gropuedit` component.
 
 ## [0.8.0-beta.23] - 2016-12-16
 ### Fixed

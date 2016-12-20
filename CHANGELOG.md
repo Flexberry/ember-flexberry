@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Wrong getting of page number for lists of records if records count is zero.
+
 ## [0.8.0-beta.19] - 2016-12-13
 ### Added
 * Add option `showValidationMessagesInRow` for `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components.

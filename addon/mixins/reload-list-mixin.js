@@ -86,7 +86,7 @@ export default Ember.Mixin.create({
     }
 
     let perPage = reloadOptions.perPage;
-    let page = reloadOptions.page > 0 ? reloadOptions.page : 1;
+    let page = reloadOptions.page;
     let pageNumber = parseInt(page, 10);
     let perPageNumber = parseInt(perPage, 10);
     Ember.assert('page must be greater than zero.', pageNumber > 0);

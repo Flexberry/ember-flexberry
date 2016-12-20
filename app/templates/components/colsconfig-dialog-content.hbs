@@ -56,6 +56,15 @@
             </th
           ></tr
           ><tr
+          ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.per-page"}}</th
+            ><th>
+              <div class="ui input">
+              <input id="perPageValueInput" size='2' class="perPage" value='{{perPageValue}}' type='input' {{action "perPageChanged"  on="focusOut"}}
+                    >
+                </div>
+            </th
+          ></tr
+          ><tr
             ><th colspan='6'>
               <div class="ui action input">
                 <input id="columnConfigurtionSettingName" type='input' name='configName'

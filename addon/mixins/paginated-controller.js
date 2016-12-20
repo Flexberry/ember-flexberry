@@ -83,14 +83,14 @@ export default Ember.Mixin.create({
   perPageValue: Ember.computed('perPage', {
     get(key) {
       let perPage = this.get('perPage');
-      let perPageValues = this.get('perPageValues');
+      /*let perPageValues = this.get('perPageValues');
       if (perPageValues.indexOf(perPage) === -1) {
         // Если perPage не будет в perPageValues,
         // то в select-е будет выбрано undefined,
         // => perPage изменится undefined, т.к. на нем биндинг.
         perPageValues.push(perPage);
         perPageValues.sort((a, b) => a - b);
-      }
+      }*/
 
       return perPage;
     },

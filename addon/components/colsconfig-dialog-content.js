@@ -64,6 +64,15 @@ export default FlexberryBaseComponent.extend({
    */
   saveColWidthState: false,
 
+  /**
+    Per page value.
+
+    @property perPageValue
+    @type {Int}
+    @default undefined
+  */
+  perPageValue: undefined,
+
   init: function() {
     this._super(...arguments);
     this.modelForDOM = [];
@@ -73,6 +82,7 @@ export default FlexberryBaseComponent.extend({
 
     this.settingName = this.model.settingName;
     this.componentName = this.model.componentName;
+    this.perPageValue = this.model.perPageValue;
     let colDescs = this.model.colDescs;
     for (let i = 0; i < colDescs.length; i++) {
       let colDesc = colDescs[i];
@@ -368,6 +378,15 @@ export default FlexberryBaseComponent.extend({
     setConfigName: function() {
       this._changed();
     },
+
+    /**
+      Per page value is changed
+
+      @method actions.perPageChanged
+    */
+    perPageChanged: function() {
+      this._changed();
+    },
   },
 
   _getSavePromise: function(settingName, colsConfig) {
@@ -410,7 +429,14 @@ export default FlexberryBaseComponent.extend({
       sorting[sorting.length] =  { propName: sortedSetting.propName, direction:  sortedSetting.sortOrder > 0 ? 'asc' : 'desc' };
     }
 
-    colsConfig = { colsOrder: colsOrder, sorting: sorting };  // Set colsConfig Object
+    let perPageElement = Ember.$('#perPageValueInput').get(0);
+    let perPage = parseInt(perPageElement.value, 10);
+
+    if (perPage === isNaN || perPage <= 0) {
+      perPage = 5;
+    }
+
+    colsConfig = { colsOrder: colsOrder, sorting: sorting, perPage: perPage };  // Set colsConfig Object
     if (this.saveColWidthState) {
       colsConfig.columnWidths = widthSetting;
     }

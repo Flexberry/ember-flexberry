@@ -251,6 +251,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
+            'inheritance-models': {
+              'caption': 'Inheritance models',
+              'title': ''
+            },
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
@@ -265,6 +269,10 @@ Ember.$.extend(true, translations, {
             },
             'custom-filter': {
               'caption': 'Custom filter',
+              'title': ''
+            },
+            'hierarchy-example': {
+              'caption': 'Hierarchy example',
               'title': ''
             },
             'configurate-rows': {
@@ -569,6 +577,25 @@ Ember.$.extend(true, translations, {
         'limit-function-example': {
           'caption': 'Flexberry-objectlistview. Limit function example'
         },
+        'inheritance-models': {
+          'caption': 'Flexberry-objectlistview. Inheritance models example',
+          'message': 'Сheck projection in OLV. (ProjectionE=ProjectionL)',
+          'projectionBase': 'Projection \'Base\': Name, E-mail, Birthday',
+          'projectionSuccessorPhone': 'Projection \'Successor phone\': Name, Phone1, Phone2, Phone3',
+          'projectionSuccessorSoc': 'Projection \'Successor social network\': Name, VK, Facebook, Twitter',
+          'buttonRoot': 'Base',
+          'buttonSuccessorPhone': 'Successor phone',
+          'buttonSuccessorSoc': 'Successor social network',
+          'name-caption': 'Name',
+          'eMail-caption': 'E-Mail',
+          'phone1-caption': 'Phone1',
+          'phone2-caption': 'Phone2',
+          'phone3-caption': 'Phone3',
+          'vK-caption': 'VK',
+          'facebook-caption': 'Facebook',
+          'twitter-caption': 'Twitter',
+          'birthday-caption': 'Birthday'
+        },
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'
         },
@@ -578,10 +605,13 @@ Ember.$.extend(true, translations, {
           'custom-button-name': 'Send hello'
         },
         'on-edit-form': {
-          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview custom data sample'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview on edit form'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'
+        },
+        'hierarchy-example': {
+          'caption': 'Flexberry-objectlistview. Hierarchy example'
         },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'
@@ -664,7 +694,8 @@ Ember.$.extend(true, translations, {
           'date-caption': 'Date',
           'enumeration-caption': 'Enumeration',
           'file-caption': 'File',
-          'master-caption': 'Master'
+          'master-caption': 'Master',
+          'details-caption': 'Details'
         }
       }
     },

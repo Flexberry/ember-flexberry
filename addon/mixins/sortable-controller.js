@@ -102,10 +102,11 @@ export default Ember.Mixin.create({
 
       @method actions.sortByColumn
       @param {Object} column Column for sorting.
+      @param {String} sortPath Path to oldSorting.
     */
-    sortByColumn: function(column) {
+    sortByColumn: function(column, sortPath = 'model.sorting') {
       let propName = column.propName;
-      let oldSorting = this.get('model.sorting');
+      let oldSorting = this.get(sortPath);
       let newSorting = [];
       let sortDirection;
       if (oldSorting) {
@@ -131,10 +132,11 @@ export default Ember.Mixin.create({
 
       @method actions.addColumnToSorting
       @param {Object} column Column for sorting.
+      @param {String} sortPath Path to oldSorting.
     */
-    addColumnToSorting: function(column) {
+    addColumnToSorting: function(column, sortPath = 'model.sorting') {
       let propName = column.propName;
-      let oldSorting = this.get('model.sorting');
+      let oldSorting = this.get(sortPath);
       let newSorting = [];
       let changed = false;
 

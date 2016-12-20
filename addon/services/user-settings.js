@@ -326,6 +326,19 @@ export default Ember.Service.extend({
   },
 
   /**
+   Returns current perPageValue .
+
+   @method getCurrentPerPage
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Array}
+   */
+  getCurrentPerPage(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting && 'perPage' in currentUserSetting ? parseInt(currentUserSetting.perPage, 10) : 5;
+  },
+
+  /**
    Returns current colsOrder .
 
    @method getCurrentColsOrder
@@ -375,6 +388,35 @@ export default Ember.Service.extend({
     }
 
     userSetting.columnWidths = columnWidths;
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting(componentName, settingName, userSetting);
+    }
+  },
+
+  /**
+   Set current perPage.
+
+   @method setCurrentPerPage
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @param {Int} perPageValue Per page value.
+   */
+  setCurrentPerPage(componentName, settingName, perPageValue) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let userSetting;
+    if (this.currentAppPage in this.currentUserSettings &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
+    }
+
+    userSetting.perPage = perPageValue;
     if (this.isUserSettingsServiceEnabled) {
       this.saveUserSetting(componentName, settingName, userSetting);
     }

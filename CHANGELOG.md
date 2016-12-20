@@ -3,6 +3,70 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [0.8.0-beta.19] - 2016-12-13
+### Added
+* Add option `showValidationMessagesInRow` for `object-list-view`, `flexberry-objectlistview` & `flexberry-groupedit` components.
+  Option is `false` by default in `object-list-view` & `flexberry-objectlistview`, but is `true` by default in `flexberry-groupedit`.
+  If `true` then validation message will be shown in each cell containing invalid value.
+
+### Fixed
+* Fix `filterCondition` when refreshing page.
+
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.8.0-beta.0 version.
+
+### Known issues
+* In `flexberry-objectlistview` changes in per page records count leads to component's hanging in IE.
+
+## [0.8.0-beta.18] - 2016-12-12
+### Added
+* `flexberry-objectlistview`:
+    * Now `flexberry-objectlistview` can be placed on `edit-form`.
+### Fixed
+* Fix `flexberry-lookup` readonly-mode when autocomplete is enabled.
+* Fix `flexberry-objectlistview` infinite loading when select same per page value.
+
+## [0.8.0-beta.17] - 2016-12-08
+### Fixed
+* Fix `perPage` settings in modal.
+
+## [0.8.0-beta.16] - 2016-12-08
+### Fixed
+* Disabled blue highlight when Touch/Press `flexberry-objectlistview` or `flexberry-simpleolv`.
+* Fix several words search in `flexberry-lookup` modals.
+* Fix `flexberry-textbox` & `flexberry-field` readonly mode.
+* Fix disabling of `flexberry-lookup` component. Now it's not sensitive to double clicks.
+
+## [0.8.0-beta.15] - 2016-12-08
+### Fixed
+* Error occuring on add record with `flexberry-groupedit`.
+
+## [0.8.0-beta.14] - 2016-12-07
+### Added
+* `Ember.run.after` method to run specified logic, after specified condition will be fulfilled.
+
+### Changed
+* Resolver:
+    * Now, by default, only `component`, `template` and `view` types will be resolved according to current device.
+      If necessary, list of device-related types can be specified in `deviceRelatedTypes` property of `Resolver`.
+    * Now, by default, device-related types will be searched only in 'mobile' subfolders, this behavior can be changed through
+      `prefixForPlatformAndType`, `prefixForOrientation`, `prefixForType` properties of `device` service.
+* flexberry-lookup:
+    * Add locks preventing from multiple subsequent clicks.
+    * Add 'active' CSS-class.
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
+* object-list-view:
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
+* flexberry-objectlistview:
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
+* flexberry-groupedit:
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
+* flexberry-simpleolv:
+    * Add `active` CSS-class.
+    * Add delayed call to async logic using `Ember.run.after` to allow browser to apply changed styles first.
+
+### Added
+* Add `perPage` saving in `userSettings`.
 
 ## [0.8.0-beta.13] - 2016-11-25
 ### Changed

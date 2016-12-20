@@ -239,6 +239,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
     @param {String} [options.page] Current page to display on lookup window.
     @param {String} [options.sorting] Current sorting.
     @param {String} [options.filter] Current filter.
+    @param {String} [options.filterCondition] Current filter condition.
     @param {String} [options.predicate] Current limit predicate.
     @param {String} [options.title] Title of modal lookup window.
     @param {String} [options.sizeClass] Size of modal lookup window.
@@ -263,6 +264,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       page: undefined,
       sorting: undefined,
       filter: undefined,
+      filterCondition: undefined,
       predicate: undefined,
 
       title: undefined,
@@ -298,6 +300,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       page: reloadData.page ? reloadData.page : 1,
       sorting: reloadData.sorting ? reloadData.sorting : [],
       filter: reloadData.filter,
+      filterCondition: reloadData.filterCondition,
       predicate: limitPredicate
     };
 
@@ -315,6 +318,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       perPage: queryParameters.perPage,
       page: queryParameters.page,
       filter: reloadData.filter,
+      filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
 
       modelType: reloadData.relatedToType,

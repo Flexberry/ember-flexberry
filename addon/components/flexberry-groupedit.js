@@ -490,9 +490,10 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.set('content', records);
-      let componentName = this.get('componentName');
-      this.get('_groupEditEventsService').geSortApplyTrigger(componentName, this.get('sorting'));
     }
+
+    let componentName = this.get('componentName');
+    this.get('_groupEditEventsService').geSortApplyTrigger(componentName, this.get('sorting'));
   },
 
   /**

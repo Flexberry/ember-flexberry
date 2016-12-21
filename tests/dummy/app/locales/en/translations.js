@@ -127,6 +127,10 @@ Ember.$.extend(true, translations, {
           'settings-example': {
             'caption': 'Settings example',
             'title': ''
+          },
+          'clear-log-form': {
+            'caption': 'Clear log',
+            'title': ''
           }
         },
         lock: {

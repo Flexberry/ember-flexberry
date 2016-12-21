@@ -500,11 +500,17 @@ export default FlexberryBaseComponent.extend({
   sortRecords(records, sortDef, start, end) {
     let recordsSort = records;
     let condition = function(koef) {
-      return sortDef.direction === 'asc' ?
-      recordsSort.objectAt(koef - 1).get(sortDef.propName) > recordsSort.objectAt(koef).get(sortDef.propName) :
-      sortDef.direction === 'desc' ?
-      recordsSort.objectAt(koef - 1).get(sortDef.propName) < recordsSort.objectAt(koef).get(sortDef.propName) :
-      false;
+      let firstProp = recordsSort.objectAt(koef - 1).get(sortDef.propName);
+      let secondProp = recordsSort.objectAt(koef).get(sortDef.propName);
+      if (sortDef.direction === 'asc') {
+        return Ember.isNone(secondProp) && !Ember.isNone(firstProp) ? true : firstProp > secondProp;
+      }
+
+      if (sortDef.direction === 'desc') {
+        return !Ember.isNone(secondProp) && Ember.isNone(firstProp) ? true : firstProp < secondProp;
+      }
+
+      return false;
     };
 
     for (let i = start + 1; i <= end; i++) {

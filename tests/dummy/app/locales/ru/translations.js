@@ -26,7 +26,22 @@ Ember.$.extend(true, translations, {
             'eMail': {
               'caption': 'Почта'
             }
-          }
+          },
+          'editor1': {
+            'caption': 'Редактор',
+            'eMail': {
+              'caption': 'Почта'
+            }
+          },
+          'moderated': {
+            'caption': 'Одобрено'
+          },
+          'type': {
+            'caption': 'Тип предложения'
+          },
+          'commentsCount': {
+            'caption': 'Количество голосов'
+          },
         },
         'SuggestionE': {
           'address': {

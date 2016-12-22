@@ -609,7 +609,8 @@ Ember.$.extend(true, translations, {
           'custom-button-name': 'Передать привет'
         },
         'on-edit-form': {
-          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview на форме редактирования'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview на форме редактирования',
+          'add-button-name': 'Добавить'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Настройка фильтра'

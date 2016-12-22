@@ -467,7 +467,7 @@ export default FlexberryBaseComponent.extend({
 
       let componentName = this.get('componentName');
       if (!componentName) {
-        Ember.Logger.warn('`componentName` of flexberry-lookup is undefined.');
+        Ember.warn('`componentName` of flexberry-lookup is undefined.');
       } else {
         // Show choose button spinner.
         this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
@@ -722,7 +722,7 @@ export default FlexberryBaseComponent.extend({
        */
       onResultsOpen() {
         state = 'opened';
-        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
       },
 
       /**
@@ -733,7 +733,7 @@ export default FlexberryBaseComponent.extend({
        */
       onSelect(result) {
         state = 'selected';
-        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
         _this.set('value', result.instance);
         _this.sendAction(
@@ -761,7 +761,7 @@ export default FlexberryBaseComponent.extend({
         }
 
         state = 'closed';
-        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
       }
     });
   },
@@ -895,7 +895,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (!displayAttributeName) {
-      Ember.Logger.warn('\`displayAttributeName\` is not defined.');
+      Ember.warn('\`displayAttributeName\` is not defined.');
       return '';
     }
 

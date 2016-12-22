@@ -946,6 +946,10 @@ export default FlexberryBaseComponent.extend(
       }
     }
 
+    if (this.get('onEditForm')) {
+      this.get('currentController').getCustomContent();
+    }
+
     let columnWidth;
     if (this.notUseUserSettings) {
       columnWidth = this.get('currentController.developerUserSettings');
@@ -1536,23 +1540,27 @@ export default FlexberryBaseComponent.extend(
   */
   _refreshList(componentName) {
     if (this.get('componentName') === componentName) {
-      if (this.get('enableFilters')) {
-        let filters = {};
-        let hasFilters = false;
-        this.get('columns').forEach((column) => {
-          if (column.filter.pattern && column.filter.condition) {
-            hasFilters = true;
-            filters[column.filter.name] = column.filter;
-          }
-        });
+      if (this.get('onEditForm')) {
+        this.currentController.getCustomContent();
+      } else {
+        if (this.get('enableFilters')) {
+          let filters = {};
+          let hasFilters = false;
+          this.get('columns').forEach((column) => {
+            if (column.filter.pattern && column.filter.condition) {
+              hasFilters = true;
+              filters[column.filter.name] = column.filter;
+            }
+          });
 
-        if (hasFilters) {
-          this.sendAction('applyFilters', filters);
+          if (hasFilters) {
+            this.sendAction('applyFilters', filters);
+          } else {
+            this.get('currentController').send('refreshList');
+          }
         } else {
           this.get('currentController').send('refreshList');
         }
-      } else {
-        this.get('currentController').send('refreshList');
       }
     }
   },

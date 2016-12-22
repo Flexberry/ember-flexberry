@@ -60,7 +60,55 @@ Ember.$.extend(true, translations, {
           }
         }
       }
-    }
+    },
+    'ember-flexberry-dummy-application-user': {
+      'projections': {
+        'ApplicationUserL': {
+          'name': {
+            'caption': 'Имя'
+          },
+          'eMail': {
+            'caption': 'Почта'
+          },
+          'activated': {
+            'caption': 'Учетная запись активирована'
+          },
+          'birthday': {
+            'caption': 'Дата рождения'
+          },
+          'gender': {
+            'caption': 'Пол'
+          },
+          'karma': {
+            'caption': 'Карма'
+          },
+        },
+      }
+    },
+    'ember-flexberry-dummy-localization': {
+      'projections': {
+        'LocalizationL': {
+          'name': {
+            'caption': 'Наименование'
+          },
+        },
+      }
+    },
+    'ember-flexberry-dummy-suggestion-type': {
+      'projections': {
+        'SuggestionTypeL': {
+          'name': {
+            'caption': 'Наименование'
+          },
+          'moderated': {
+            'caption': 'Одобрено'
+          },
+          'parent': {
+            'caption': 'Иерархия'
+          },
+        },
+      }
+    },
   },
 
   'application-name': 'Тестовый стенд ember-flexberry',

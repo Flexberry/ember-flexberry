@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0-beta.25] - 2016-12-22
+### Changed
+* Updated dependency on `ember-flexberry-data` addon to v0.7.2-beta.1 version.
+
+### Fixed
+* Sorting of empty values in `flexberry-gropuedit` component.
+* Refreshing lists on edit forms after adding or deleteing records.
+
 ## [0.8.0-beta.24] - 2016-12-20
 ### Fixed
 * Fix zero page number bug.

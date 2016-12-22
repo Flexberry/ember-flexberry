@@ -12,6 +12,8 @@ export default ListFormController.extend({
    */
   projection: 'SuggestionL',
 
+  modelName: 'ember-flexberry-dummy-suggestion',
+
   /**
     Name of related edit form route (for 'flexberry-objectlistview' component 'editFormRoute' property).
 

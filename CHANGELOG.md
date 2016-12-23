@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Now `object-list-view` header's hint visible only when `orderable=true`.
 
 ## [0.8.0] - 2016-12-13
 ### Added

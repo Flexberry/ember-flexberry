@@ -51,6 +51,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Remove `_attributeChanged` observer from `object-list-view` component.
 * Remove `createSettitingTitle`, `useSettitingTitle`, `editSettitingTitle`, `removeSettitingTitle`, `setDefaultSettitingTitle`, `showDefaultSettitingTitle` properties form `olv-toolbar` & `flexberry-objectlistview` components.
 * Remove `object-list-view-header-cell` component.
+* Remove `new-platform-flexberry-services-lock-edit` form.
 
 ###Fixed
 * Fix `flexberry-objectlistview` behavior when it is placed on `edit-form`.

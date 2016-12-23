@@ -974,8 +974,7 @@ ErrorableControllerMixin, {
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      Ember.Logger.error('Property \'modelProjection\' is undefined.');
-      return [];
+      throw new Error('Property \'modelProjection\' is undefined.');
     }
 
     let cols = this._generateColumns(projection.attributes);
@@ -1294,6 +1293,7 @@ ErrorableControllerMixin, {
       }
 
       let attr = attributes[attrName];
+      Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
         case 'hasMany':
           break;
@@ -1327,9 +1327,6 @@ ErrorableControllerMixin, {
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
-
-        default:
-          Ember.Logger.error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
 

@@ -550,9 +550,7 @@ export default FlexberryBaseComponent.extend({
     let isAutocomplete = this.get('autocomplete');
     let isDropdown = this.get('dropdown');
     if (isAutocomplete && isDropdown) {
-      Ember.Logger.error(
-        'Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
-      return;
+      throw new Error('Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
     }
 
     let cachedDropdownValue = this.get('_cachedDropdownValue');
@@ -654,8 +652,7 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      Ember.Logger.error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
-      return;
+      throw new Error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
     }
 
     let minCharacters = this.get('minCharacters');
@@ -788,8 +785,7 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      Ember.Logger.error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
-      return;
+      throw new Error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
     }
 
     let i18n = _this.get('i18n');
@@ -859,9 +855,9 @@ export default FlexberryBaseComponent.extend({
         let newValue = value;
         if (value) {
           let cachedValues = _this.get('_cachedDropdownValues');
-          if (!cachedValues || cachedValues[value] !== null && !cachedValues[value]) {
-            Ember.Logger.error('Can\'t find selected dropdown value among cached values.');
-          } else {
+          let cachedValuesContainsVlue = cachedValues && (cachedValues[value] === null || cachedValues[value]);
+          Ember.assert('Can\'t find selected dropdown value among cached values.', cachedValuesContainsVlue);
+          if (cachedValuesContainsVlue) {
             newValue = cachedValues[value];
           }
         }

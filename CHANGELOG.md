@@ -89,6 +89,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix cells borders of`object-list-view` component, now text doesn't fall outside of them.
 * Fix `log-service` settings initialization from application config.
 * Fix opening of `detail-edit-form` in `readonly` mode from `edit-form` in `readonly` mode, if `editOnSeparateRoute` setting is enabled in `flexberry-groupedit component`.
+* Fix `i-i-s-caseberry-logging-objects-application-log-l` and `new-platform-flexberry-services-lock-list` templates for use `recordsTotalCount` parameter.
 
 ### Known issues
 * Changes in per page records count in `flexberry-objectlistview` component leads to it's hanging in IE.

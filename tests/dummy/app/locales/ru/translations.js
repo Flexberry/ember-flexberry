@@ -130,6 +130,10 @@ Ember.$.extend(true, translations, {
           'settings-example': {
             'caption': 'Пример работы с настройками',
             'title': ''
+          },
+          'clear-log-form': {
+            'caption': 'Очистка лога',
+            'title': ''
           }
         },
         'lock': {

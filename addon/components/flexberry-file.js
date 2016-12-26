@@ -544,6 +544,7 @@ export default FlexberryBaseComponent.extend({
         Ember.assert(
           `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
           ` Allowed value is a number >= 0.`, Ember.typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0);
+
         // Prevent files greater then maxUploadFileSize.
         if (selectedFile.size > maxUploadFileSize) {
           this.showFileSizeErrorModalDialog(selectedFile.name, selectedFile.size, maxUploadFileSize);

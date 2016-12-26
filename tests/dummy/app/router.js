@@ -34,6 +34,7 @@ Router.map(function() {
   this.route('i-i-s-caseberry-logging-objects-application-log-e', { path: 'i-i-s-caseberry-logging-objects-application-log-e/:id' });
   this.route('i-i-s-caseberry-logging-objects-application-log-e.new', { path: 'i-i-s-caseberry-logging-objects-application-log-e/new' });
   this.route('log-service-examples/settings-example');
+  this.route('log-service-examples/clear-log-form');
 
   // Locks.
   this.route('new-platform-flexberry-services-lock-list');

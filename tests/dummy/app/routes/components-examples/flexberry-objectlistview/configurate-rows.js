@@ -1,3 +1,4 @@
+import { Query } from 'ember-flexberry-data';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 export default ListFormRoute.extend({
@@ -39,5 +40,40 @@ export default ListFormRoute.extend({
     @type String
     @default 'ember-flexberry-dummy-suggestion'
    */
-  modelName: 'ember-flexberry-dummy-suggestion'
+  modelName: 'ember-flexberry-dummy-suggestion',
+
+  /**
+    Returns model related to current route.
+
+    @method model
+   */
+  model(params) {
+    let store = this.get('store');
+
+    let query = new Query.Builder(store)
+        .from('ember-flexberry-dummy-suggestion')
+        .selectByProjection('SuggestionL');
+
+    let list;
+    return this._super(...arguments).then((data) => {
+      list = data;
+
+      return store.query('ember-flexberry-dummy-suggestion', query.build()).then((suggestion) => {
+        let suggestionArr = suggestion.toArray();
+        this.set('configurateRowByAddress', suggestionArr.objectAt(0).get('address'));
+        return list;
+      });
+    });
+  },
+
+  /**
+    Load limit accessible values.
+
+    @method setupController
+   */
+  setupController() {
+    this._super(...arguments);
+
+    this.set('controller.configurateRowByAddress', this.get('configurateRowByAddress'));
+  }
 });

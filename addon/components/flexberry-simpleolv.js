@@ -192,9 +192,10 @@ ErrorableControllerMixin, {
     @type String
     @readOnly
   */
-  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', function() {
+  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', 'allowColumnResize', function() {
     let tableStriped = this.get('tableStriped');
     let rowClickable = this.get('rowClickable');
+    let allowColumnResize = this.get('allowColumnResize');
     let classes = this.get('customTableClass');
 
     if (tableStriped) {
@@ -203,6 +204,10 @@ ErrorableControllerMixin, {
 
     if (rowClickable) {
       classes += ' selectable';
+    }
+
+    if (allowColumnResize) {
+      classes += ' fixed JColResizer';
     }
 
     return classes;
@@ -1014,7 +1019,6 @@ ErrorableControllerMixin, {
     }
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**

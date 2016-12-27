@@ -206,9 +206,10 @@ export default FlexberryBaseComponent.extend(
     @type String
     @readOnly
   */
-  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', function() {
+  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', 'allowColumnResize', function() {
     let tableStriped = this.get('tableStriped');
     let rowClickable = this.get('rowClickable');
+    let allowColumnResize = this.get('allowColumnResize');
     let classes = this.get('customTableClass');
 
     if (tableStriped) {
@@ -217,6 +218,10 @@ export default FlexberryBaseComponent.extend(
 
     if (rowClickable) {
       classes += ' selectable';
+    }
+
+    if (allowColumnResize) {
+      classes += ' fixed JColResizer';
     }
 
     return classes;
@@ -968,9 +973,6 @@ export default FlexberryBaseComponent.extend(
     this.$('.flexberry-dropdown:last').dropdown({
       direction: 'upward'
     });
-
-    // TODO: the last menu needs will be up.
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**
@@ -1079,9 +1081,6 @@ export default FlexberryBaseComponent.extend(
     }
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
-
-    // The last menu needs will be up.
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**

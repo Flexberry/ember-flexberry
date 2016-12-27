@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fix `menuInRow` for `object-list-view`.
+* Fix inability to resize columns in `flexberry-objectlistview`, `flexberry-groupedit` and `flexberry-simpleolv`
+components if `tableStriped`, `rowClickable` or `customTableClass` property was changed.
 
 ## [0.8.0] - 2016-12-13
 ### Added

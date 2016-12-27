@@ -48,26 +48,32 @@ export default ListFormRoute.extend({
     @method model
    */
   model(params) {
+
     let store = this.get('store');
 
     let query = new Query.Builder(store)
-        .from('ember-flexberry-dummy-suggestion')
-        .selectByProjection('SuggestionL');
+      .from('ember-flexberry-dummy-suggestion')
+      .selectByProjection('SuggestionE');
 
     let list;
     return this._super(...arguments).then((data) => {
       list = data;
+      return store.query('ember-flexberry-dummy-suggestion', query.build());
+    }).then((limitdata) => {
+      let limitTypesArr = limitdata.toArray();
+      this.set('configurateRowByAddress', limitTypesArr.objectAt(0).get('address'));
 
-      return store.query('ember-flexberry-dummy-suggestion', query.build()).then((suggestion) => {
-        let suggestionArr = suggestion.toArray();
-        this.set('configurateRowByAddress', suggestionArr.objectAt(0).get('address'));
-        return list;
-      });
+      if (this.get('reloadColl') === 1)
+      {
+        this.refresh();
+      }
+
+      return list;
     });
   },
 
   /**
-    Load limit accessible values.
+    Load strings coloring condition in settigs.
 
     @method setupController
    */

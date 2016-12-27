@@ -124,6 +124,16 @@ export default FlexberryBaseComponent.extend({
   _uploadData: null,
 
   /**
+    Copy of data from jQuery fileupload plugin (contains selected file).
+
+    @property _uploadDataCopy
+    @type Object
+    @default null
+    @private
+  */
+  _uploadDataCopy: null,
+
+  /**
     Current file selected for upload.
 
     @property _selectedFile
@@ -585,6 +595,21 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Changes url in jQuery fileupload when uploadUrl changed.
+  */
+  uploadUrlObserver: Ember.observer('uploadUrl', function() {
+    this.$('.flexberry-file-file-input').fileupload(
+    'option',
+    'url',
+    this.get('uploadUrl'));
+    if (Ember.isNone(this.get('_uploadData'))) {
+      this.set('_uploadData', this.get('_uploadDataCopy'));
+    }
+
+    this.set('_initialValue', null);
+  }),
+
+  /**
     Destroys {{#crossLink "FlexberryFileComponent"}}flexberry-file{{/crossLink}} component.
   */
   willDestroyElement() {
@@ -603,6 +628,7 @@ export default FlexberryBaseComponent.extend({
   */
   removeFile() {
     this.set('_uploadData', null);
+    this.set('_uploadDataCopy', null);
     this.set('value', null);
     this.set('_previewImageAsBase64String', null);
   },
@@ -641,6 +667,7 @@ export default FlexberryBaseComponent.extend({
 
         this.set('value', value);
         this.set('_initialValue', Ember.copy(value, true));
+        this.set('_uploadDataCopy', this.get('_uploadData'));
         this.set('_uploadData', null);
 
         this.sendAction('uploadSuccess', {

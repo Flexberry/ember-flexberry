@@ -47,7 +47,7 @@ test('error works properly', function(assert) {
     Ember.Logger.error('The system generated an error').then(() => {
       ApplicationLogModel.reopen({
         save() {
-          return originalSave;
+          return originalSave();
         }
       });
       assert.strictEqual(savedLogErrorRecord.get('massage'), 'The system generated an error');

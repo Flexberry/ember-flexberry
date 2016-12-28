@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
@@ -42,33 +43,20 @@ export default ListFormRoute.extend({
    */
   modelName: 'ember-flexberry-dummy-suggestion',
 
-  /**
-    Returns model related to current route.
+  beforeModel(params) {
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      let store = this.get('store');
 
-    @method model
-   */
-  model(params) {
+      let query = new Query.Builder(store)
+        .from('ember-flexberry-dummy-suggestion')
+        .top(1)
+        .selectByProjection('SuggestionL');
 
-    let store = this.get('store');
-
-    let query = new Query.Builder(store)
-      .from('ember-flexberry-dummy-suggestion')
-      .selectByProjection('SuggestionE');
-
-    let list;
-    return this._super(...arguments).then((data) => {
-      list = data;
-      return store.query('ember-flexberry-dummy-suggestion', query.build());
-    }).then((limitdata) => {
-      let limitTypesArr = limitdata.toArray();
-      this.set('configurateRowByAddress', limitTypesArr.objectAt(0).get('address'));
-
-      if (this.get('reloadColl') === 1)
-      {
-        this.refresh();
-      }
-
-      return list;
+      store.query('ember-flexberry-dummy-suggestion', query.build()).then((suggestion) => {
+        let suggestionArr = suggestion.toArray();
+        this.set('configurateRowByAddress', suggestionArr.objectAt(0).get('address'));
+        resolve(this._super(...arguments));
+      });
     });
   },
 

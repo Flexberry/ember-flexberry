@@ -244,24 +244,24 @@ test('needChecksOnValue mode properly', function(assert) {
     needChecksOnValue=needChecksOnValue
   }}`);
 
-  // Stub Ember.Logger.error method.
-  let originalLoggerError = Ember.Logger.error;
+  // Stub Ember.onerror method.
+  let originalOnError = Ember.onerror;
 
   // Change property binded to 'value' & check them.
   this.set('needChecksOnValue', true);
   let newValue = 'Caption4';
   let latestLoggerErrorMessage;
-  Ember.Logger.error = function(message) {
-    latestLoggerErrorMessage = message;
+  Ember.onerror = function(error) {
+    latestLoggerErrorMessage = error.message;
   };
 
   // Check that errors handled properly.
   this.set('value', newValue);
   assert.strictEqual(Ember.typeOf(latestLoggerErrorMessage) === 'string', true, 'Check message exists');
-  assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true, 'Invalide value exists');
+  assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true, 'Invalid value exists');
 
   // Restore original method in the and of the test.
-  Ember.Logger.error = originalLoggerError;
+  Ember.onerror = originalOnError;
 });
 
 test('dropdown with items represented by object renders properly', function(assert) {

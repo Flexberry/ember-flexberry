@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * Fix `developerUserSettings` `perPage` ignoring query parameters.
+* Fix `sorting` setting in `developerUserSettings`.
 
 ## [0.8.0] - 2016-12-13
 ### Added

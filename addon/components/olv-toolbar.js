@@ -418,11 +418,8 @@ export default FlexberryBaseComponent.extend({
           let colsConfig = this.listNamedUserSettings[namedSetting];
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
-              if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: colsConfig.perPage || 5 } }); // Show page without sort parameters
-              } else {
-                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: colsConfig.perPage || 5 } });  //Reload current page and records (model) list
-              }
+              let sort = this.get('controller.currentController')._serializeSortingParam(colsConfig.sorting);
+              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
             });
           break;
         case 'setting icon':
@@ -443,11 +440,7 @@ export default FlexberryBaseComponent.extend({
 
           userSettingsService.deleteUserSetting(componentName)
           .then(record => {
-            if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: 5 } }); // Show page without sort parameters
-            } else {
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: 5 } });  //Reload current page and records (model) list
-            }
+            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: 5 } });
           });
           break;
         case 'unhide icon':

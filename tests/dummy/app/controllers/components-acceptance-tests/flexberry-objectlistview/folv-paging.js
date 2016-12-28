@@ -8,7 +8,7 @@ export default ListFormController.extend({
     @property projection
     @type Object
    */
-  projection: 'SuggestionL',
+  projection: 'SuggestionTypeL',
 
   /**
     Name of related edit form route (for 'flexberry-objectlistview' component 'editFormRoute' property).
@@ -16,7 +16,7 @@ export default ListFormController.extend({
     @property editFormRoute
     @type String
    */
-  editFormRoute: 'ember-flexberry-dummy-suggestion-edit',
+  editFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'readonly' mode or not.
@@ -120,7 +120,7 @@ export default ListFormController.extend({
     @property rowClickable
     @type Boolean
    */
-  rowClickable: false,
+  rowClickable: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'orderable' mode or not.

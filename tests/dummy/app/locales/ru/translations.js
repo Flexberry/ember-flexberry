@@ -463,11 +463,11 @@ Ember.$.extend(true, translations, {
         'reject-rsvp-promise-button-message': 'Promise отклонен',
         'ember-assert-button-message': 'Вызван метод Ember.assert',
         'ember-logger-error-button-message': 'Вызван метод Ember.Logger.error',
-        'ember-logger-warn-button-message': 'Вызван метод Ember.Logger.warn',
+        'ember-logger-warn-button-message': 'Вызван метод Ember.warn',
         'ember-deprecate-button-message': 'Вызван метод Ember.deprecate',
         'ember-logger-log-button-message': 'Вызван метод Ember.Logger.log',
-        'ember-logger-info-button-message': 'Вызван метод Ember.logger.info',
-        'ember-logger-debug-button-message': 'Вызван метод Ember.Logger.debug'
+        'ember-logger-info-button-message': 'Вызван метод Ember.Logger.info',
+        'ember-logger-debug-button-message': 'Вызван метод Ember.debug'
       }
     },
 

@@ -124,6 +124,16 @@ export default FlexberryBaseComponent.extend({
   _uploadData: null,
 
   /**
+    Copy of data from jQuery fileupload plugin (contains selected file).
+
+    @property _uploadDataCopy
+    @type Object
+    @default null
+    @private
+  */
+  _uploadDataCopy: null,
+
+  /**
     Current file selected for upload.
 
     @property _selectedFile
@@ -541,18 +551,16 @@ export default FlexberryBaseComponent.extend({
       let maxUploadFileSize = this.get('maxUploadFileSize');
 
       if (!Ember.isNone(maxUploadFileSize)) {
-        if (Ember.typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0) {
-          // Prevent files greater then maxUploadFileSize.
-          if (selectedFile.size > maxUploadFileSize) {
-            this.showFileSizeErrorModalDialog(selectedFile.name, selectedFile.size, maxUploadFileSize);
+        Ember.assert(
+          `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
+          ` Allowed value is a number >= 0.`, Ember.typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0);
 
-            // Break file upload.
-            return;
-          }
-        } else {
-          Ember.Logger.error(
-            `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
-            ` Allowed value is a number >= 0.`);
+        // Prevent files greater then maxUploadFileSize.
+        if (selectedFile.size > maxUploadFileSize) {
+          this.showFileSizeErrorModalDialog(selectedFile.name, selectedFile.size, maxUploadFileSize);
+
+          // Break file upload.
+          return;
         }
       }
 
@@ -585,6 +593,21 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Changes url in jQuery fileupload when uploadUrl changed.
+  */
+  uploadUrlObserver: Ember.observer('uploadUrl', function() {
+    this.$('.flexberry-file-file-input').fileupload(
+    'option',
+    'url',
+    this.get('uploadUrl'));
+    if (Ember.isNone(this.get('_uploadData'))) {
+      this.set('_uploadData', this.get('_uploadDataCopy'));
+    }
+
+    this.set('_initialValue', null);
+  }),
+
+  /**
     Destroys {{#crossLink "FlexberryFileComponent"}}flexberry-file{{/crossLink}} component.
   */
   willDestroyElement() {
@@ -603,6 +626,7 @@ export default FlexberryBaseComponent.extend({
   */
   removeFile() {
     this.set('_uploadData', null);
+    this.set('_uploadDataCopy', null);
     this.set('value', null);
     this.set('_previewImageAsBase64String', null);
   },
@@ -641,6 +665,7 @@ export default FlexberryBaseComponent.extend({
 
         this.set('value', value);
         this.set('_initialValue', Ember.copy(value, true));
+        this.set('_uploadDataCopy', this.get('_uploadData'));
         this.set('_uploadData', null);
 
         this.sendAction('uploadSuccess', {
@@ -804,9 +829,8 @@ export default FlexberryBaseComponent.extend({
     }
 
     let relatedModelOnPropertyType = Ember.typeOf(this.get('relatedModel.on'));
-    if (relatedModelOnPropertyType !== 'function') {
-      Ember.Logger.error(`Wrong type of \`relatedModel.on\` propery: actual type is ${relatedModelOnPropertyType}, but function is expected.`);
-    }
+    Ember.assert(`Wrong type of \`relatedModel.on\` propery: actual type is ${relatedModelOnPropertyType}, but function is expected.`,
+      relatedModelOnPropertyType === 'function');
 
     let relatedModel = this.get('relatedModel');
     relatedModel.on('preSave', this.get('_onRelatedModelPreSave'));
@@ -820,9 +844,8 @@ export default FlexberryBaseComponent.extend({
   */
   _unsubscribeFromRelatedModelPresaveEvent() {
     let relatedModelOffPropertyType = Ember.typeOf(this.get('relatedModel.off'));
-    if (relatedModelOffPropertyType !== 'function') {
-      Ember.Logger.error(`Wrong type of \`relatedModel.off\` propery: actual type is ${relatedModelOffPropertyType}, but function is expected.`);
-    }
+    Ember.assert(`Wrong type of \`relatedModel.off\` propery: actual type is ${relatedModelOffPropertyType}, but function is expected.`,
+      relatedModelOffPropertyType === 'function');
 
     let relatedModel = this.get('relatedModel');
     relatedModel.off('preSave', this.get('_onRelatedModelPreSave'));

@@ -92,7 +92,7 @@ export default Ember.Service.extend(Ember.Evented, {
       this.set('_onOrientationChange', this._onOrientationChange.bind(this));
       Ember.$(window).on('resize orientationchange', this._onOrientationChange);
     } else {
-      Ember.Logger.error('Device service error. Can\'t find device.js entry point.');
+      throw new Error('Device service error. Can\'t find device.js entry point.');
     }
   },
 

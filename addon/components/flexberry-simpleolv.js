@@ -208,9 +208,10 @@ ErrorableControllerMixin, {
     @type String
     @readOnly
   */
-  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', function() {
+  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', 'allowColumnResize', function() {
     let tableStriped = this.get('tableStriped');
     let rowClickable = this.get('rowClickable');
+    let allowColumnResize = this.get('allowColumnResize');
     let classes = this.get('customTableClass');
 
     if (tableStriped) {
@@ -219,6 +220,10 @@ ErrorableControllerMixin, {
 
     if (rowClickable) {
       classes += ' selectable';
+    }
+
+    if (allowColumnResize) {
+      classes += ' fixed JColResizer';
     }
 
     return classes;
@@ -883,9 +888,9 @@ ErrorableControllerMixin, {
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
               if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: colsConfig.perPage || 5 } }); // Show page without sort parameters
               } else {
-                this._router.router.refresh();  //Reload current page and records (model) list
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: colsConfig.perPage || 5 } });  //Reload current page and records (model) list
               }
             });
           break;
@@ -908,9 +913,9 @@ ErrorableControllerMixin, {
           userSettingsService.deleteUserSetting(componentName)
           .then(record => {
             if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: 5 } }); // Show page without sort parameters
             } else {
-              this._router.router.refresh();  //Reload current page and records (model) list
+              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: 5 } });  //Reload current page and records (model) list
             }
           });
           break;
@@ -990,8 +995,7 @@ ErrorableControllerMixin, {
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      Ember.Logger.error('Property \'modelProjection\' is undefined.');
-      return [];
+      throw new Error('Property \'modelProjection\' is undefined.');
     }
 
     let cols = this._generateColumns(projection.attributes);
@@ -1031,6 +1035,8 @@ ErrorableControllerMixin, {
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+
+    this._setCurrentColumnsWidth();
   },
 
   /**
@@ -1267,6 +1273,7 @@ ErrorableControllerMixin, {
         width: currentColumnWidth,
       });
     });
+    this._setCurrentColumnsWidth();
     this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
   },
 
@@ -1294,6 +1301,30 @@ ErrorableControllerMixin, {
   },
 
   /**
+    Set current columns width for currentController.
+
+    @method _setCurrentColumnsWidth
+    @private
+  */
+  _setCurrentColumnsWidth() {
+    if (!Ember.isNone(this.get('currentController'))) {
+      let $columns = this.$('table.object-list-view').find('th');
+      let currentWidths = {};
+      Ember.$.each($columns, (key, item) => {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        Ember.assert('Column property name is not defined', currentPropertyName);
+
+        let currentColumnWidth = currentItem.width();
+        currentColumnWidth = Math.round(currentColumnWidth);
+        currentWidths[currentPropertyName] = currentColumnWidth;
+      });
+
+      this.set('currentController.currentColumnsWidths', currentWidths);
+    }
+  },
+
+  /**
     Generate the columns.
 
     @method _generateColumns
@@ -1310,6 +1341,7 @@ ErrorableControllerMixin, {
       }
 
       let attr = attributes[attrName];
+      Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
         case 'hasMany':
           break;
@@ -1343,9 +1375,6 @@ ErrorableControllerMixin, {
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
-
-        default:
-          Ember.Logger.error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
 

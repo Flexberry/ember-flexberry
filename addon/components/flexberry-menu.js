@@ -122,15 +122,12 @@ export default FlexberryBaseComponent.extend({
     if (configurateItems) {
       let configurateItemsType = Ember.typeOf(configurateItems);
 
-      if (configurateItemsType === 'function') {
-        configurateItems(items);
-      } else {
-        Ember.Logger.error(
-          'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
-          'actual type is \'' +
-          configurateItemsType +
-          '\', but \'function\' is expected.');
-      }
+      Ember.assert(
+        'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
+        'actual type is \'' +
+        configurateItemsType +
+        '\', but \'function\' is expected.', configurateItemsType === 'function');
+      configurateItems(items);
     }
 
     this.set('items', items);

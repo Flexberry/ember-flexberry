@@ -344,6 +344,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Настройка фильтра',
               'title': ''
             },
+            'edit-form-with-detail-list': {
+              'caption': 'Пример списка',
+              'title': ''
+            },
             'hierarchy-example': {
               'caption': 'Пример иерархии на списке',
               'title': ''

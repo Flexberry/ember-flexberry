@@ -344,6 +344,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Custom filter',
               'title': ''
             },
+            'edit-form-with-detail-list': {
+              'caption': 'List example',
+              'title': ''
+            },
             'hierarchy-example': {
               'caption': 'Hierarchy example',
               'title': ''

@@ -872,9 +872,9 @@ ErrorableControllerMixin, {
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
               if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: colsConfig.perPage || 5 } }); // Show page without sort parameters
               } else {
-                this._router.router.refresh();  //Reload current page and records (model) list
+                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: colsConfig.perPage || 5 } });  //Reload current page and records (model) list
               }
             });
           break;
@@ -897,9 +897,9 @@ ErrorableControllerMixin, {
           userSettingsService.deleteUserSetting(componentName)
           .then(record => {
             if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: 5 } }); // Show page without sort parameters
             } else {
-              this._router.router.refresh();  //Reload current page and records (model) list
+              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: 5 } });  //Reload current page and records (model) list
             }
           });
           break;

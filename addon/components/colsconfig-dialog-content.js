@@ -321,10 +321,10 @@ export default FlexberryBaseComponent.extend({
       let savePromise = this._getSavePromise(undefined, colsConfig);
       savePromise.then(
         record => {
-          if (router.location.location.search.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+          if (colsConfig.sorting.length === 0) {
+            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null, perPage: colsConfig.perPage || 5 } }); // Show page without sort parameters
           } else {
-            router.router.refresh();  //Reload current page and records (model) list
+            router.router.transitionTo(router.currentRouteName, { queryParams: { perPage: colsConfig.perPage || 5 } });  //Reload current page and records (model) list
           }
         }
       );

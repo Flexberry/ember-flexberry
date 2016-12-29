@@ -146,38 +146,38 @@ export default FlexberryBaseComponent.extend({
         maxDate: this.maxDate,
         format: this.dateTimeFormat
       },
-      function(start, end, label) {
-        _this._setValue(end);
+      function(start) {
+        _this._setValue(start);
       });
       this.$('i').click(function() {
         _this.$('input').trigger('click');
       });
       this.$('input').on('apply.daterangepicker', function(ev, picker) {
         let currentValue = _this.get('value');
-        let pickerDateString = moment(picker.endDate.toDate()).format(_this.dateTimeFormat);
+        let pickerDateString = moment(picker.startDate.toDate()).format(_this.dateTimeFormat);
 
         // TODO: refactor
         let tmp = !moment(moment(currentValue).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat));
         if (!currentValue || tmp) {
-          _this._setValue(picker.endDate);
+          _this._setValue(picker.startDate);
         }
       });
       this.$('input').on('cancel.daterangepicker', function(ev, picker) {
         let currentInputValueString = _this.$('input').val();
-        let pickerDateString = picker.endDate.format(_this.dateTimeFormat);
+        let pickerDateString = picker.startDate.format(_this.dateTimeFormat);
 
         // TODO: refactor
         let tmp = moment(currentInputValueString, _this.dateTimeFormat);
         let tmp2 = !moment(tmp.format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat));
         if (tmp2) {
-          let oldPickerDateString = picker.endDate._i;
+          let oldPickerDateString = picker.startDate._i;
           if (typeof (oldPickerDateString) === 'string' && currentInputValueString !== oldPickerDateString) {
             _this.$('input').val(oldPickerDateString);
           }
 
           let currentValue = _this.get('value');
           if (!moment(moment(currentValue).format(_this.dateTimeFormat), _this.dateTimeFormat).isSame(moment(pickerDateString, _this.dateTimeFormat))) {
-            _this._setValue(picker.endDate);
+            _this._setValue(picker.startDate);
           }
         }
       });

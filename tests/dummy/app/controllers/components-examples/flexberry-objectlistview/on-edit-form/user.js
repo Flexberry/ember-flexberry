@@ -62,7 +62,35 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     return undefined;
   },
 
+  /**
+    Property to form array of special structures of custom user buttons.
+
+    @property customButtons
+    @type Array
+   */
+  customButtons: Ember.computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    return [{
+      buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.on-edit-form.add-button-name'),
+      buttonAction: 'userButtonAddAction',
+      buttonClasses: 'my-add-user-button add-click-button positive'
+    }];
+  }),
+
   actions: {
+    /**
+      Handler for click on custom user button.
+
+      @method userButtonAddAction
+     */
+    userButtonAddAction: function() {
+      let thisUrl = this.get('target.url');
+      this.transitionToRoute('ember-flexberry-dummy-localization-edit.new')
+      .then((newRoute) => {
+        newRoute.controller.set('parentRoute', thisUrl);
+      });
+    },
+
     componentForFilter(type, relation) {
       switch (type) {
         case 'string': return { name: 'flexberry-textbox', properties: { class: 'compact fluid' } };

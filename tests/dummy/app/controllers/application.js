@@ -146,6 +146,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.log-service-examples.settings-example.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.settings-example.title'),
           children: null
+        }, {
+          link: 'log-service-examples/clear-log-form',
+          caption: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.caption'),
+          title: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.title'),
+          children: null
         }]
       }, {
         link: null,

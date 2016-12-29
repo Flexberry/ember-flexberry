@@ -127,6 +127,10 @@ Ember.$.extend(true, translations, {
           'settings-example': {
             'caption': 'Settings example',
             'title': ''
+          },
+          'clear-log-form': {
+            'caption': 'Clear log',
+            'title': ''
           }
         },
         lock: {
@@ -456,11 +460,11 @@ Ember.$.extend(true, translations, {
         'reject-rsvp-promise-button-message': 'Promise rejected',
         'ember-assert-button-message': 'Ember.assert called',
         'ember-logger-error-button-message': 'Ember.Logger.error called',
-        'ember-logger-warn-button-message': 'Ember.Logger.warn called',
+        'ember-logger-warn-button-message': 'Ember.warn called',
         'ember-deprecate-button-message': 'Ember.deprecate called',
         'ember-logger-log-button-message': 'Ember.Logger.log called',
-        'ember-logger-info-button-message': 'Ember.logger.info called',
-        'ember-logger-debug-button-message': 'Ember.Logger.debug called'
+        'ember-logger-info-button-message': 'Ember.Logger.info called',
+        'ember-logger-debug-button-message': 'Ember.debug called'
       }
     },
 
@@ -605,7 +609,8 @@ Ember.$.extend(true, translations, {
           'custom-button-name': 'Send hello'
         },
         'on-edit-form': {
-          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview on edit form'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview on edit form',
+          'add-button-name': 'Добавить'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'

@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Replace alerts in `colsconfig-dialog` with `ui-messages`.
 * Reduce width of filter button in `flexberry-objectlistview` & `flexberry-groupedit`.
 * Now `colsconfig-dialog` has default cols width values.
+* Changed cursor style for `colsconfig-dialog-content`.
 
 ### Fixed
 * Fix `menuInRow` for `object-list-view`.

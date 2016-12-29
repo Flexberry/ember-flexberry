@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
+* Now `object-list-view` header's hint visible only when `orderable=true`.
 * Replace alerts in `colsconfig-dialog` with `ui-messages`.
 * Reduce width of filter button in `flexberry-objectlistview` & `flexberry-groupedit`.
 * Now `colsconfig-dialog` has default cols width values.

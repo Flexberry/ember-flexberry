@@ -94,6 +94,22 @@ ErrorableControllerMixin, {
     },
   }),
 
+  sortTitle: t('components.object-list-view.header-title-attr'),
+
+  /**
+    Title for table headers.
+
+    @property sortTitleCompute
+    @type String
+  */
+  sortTitleCompute: Ember.computed('orderable', 'sortTitle', function() {
+    if (this.get('orderable')) {
+      return this.get('sortTitle');
+    } else {
+      return '';
+    }
+  }),
+
   /**
     Main model projection. Accepts object projections.
     Needs for support locales of captions.

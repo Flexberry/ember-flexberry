@@ -59,6 +59,22 @@ export default FlexberryBaseComponent.extend(
     }
   })),
 
+  sortTitle: t('components.object-list-view.header-title-attr'),
+
+  /**
+    Title for table headers.
+
+    @property sortTitleCompute
+    @type String
+  */
+  sortTitleCompute: Ember.computed('orderable', 'sortTitle', function() {
+    if (this.get('orderable')) {
+      return this.get('sortTitle');
+    } else {
+      return '';
+    }
+  }),
+
   /**
     Model projection which should be used to display given content.
     Accepts object or name projections.

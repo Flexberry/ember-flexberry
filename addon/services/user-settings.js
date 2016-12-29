@@ -218,7 +218,7 @@ export default Ember.Service.extend({
   setCurrentParams(componentName, params) {
     let appPage = this.currentAppPage;
     let sorting;
-    if ('sort' in params && params.sort) {
+    if ('sort' in params) {
       sorting = this._deserializeSortingParam(params.sort);
     } else {
       sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;

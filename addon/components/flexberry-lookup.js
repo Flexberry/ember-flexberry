@@ -204,7 +204,7 @@ export default FlexberryBaseComponent.extend({
     @property orderBy
     @type String
   */
-   orderBy: undefined,
+  orderBy: undefined,
 
   /**
     Classes by property of autocomplete.

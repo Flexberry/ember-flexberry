@@ -60,9 +60,9 @@ export default FlexberryBaseComponent.extend({
 
    @property saveColWidthState
    @type {Boolean}
-   @default false
+   @default true
    */
-  saveColWidthState: false,
+  saveColWidthState: true,
 
   /**
     Per page value.
@@ -83,6 +83,7 @@ export default FlexberryBaseComponent.extend({
     this.settingName = this.model.settingName;
     this.componentName = this.model.componentName;
     this.perPageValue = this.model.perPageValue;
+    this.saveColWidthState = this.model.saveColWidthState;
     let colDescs = this.model.colDescs;
     for (let i = 0; i < colDescs.length; i++) {
       let colDesc = colDescs[i];
@@ -95,10 +96,6 @@ export default FlexberryBaseComponent.extend({
         } else {
           colDesc.sortOrderdNot = 'selected';
         }
-      }
-
-      if ('columnWidth' in colDesc) {
-        this.saveColWidthState = true;
       }
 
       colDesc.trId = _idPrefix + 'TR_' + i;
@@ -324,10 +321,10 @@ export default FlexberryBaseComponent.extend({
       let savePromise = this._getSavePromise(undefined, colsConfig);
       savePromise.then(
         record => {
-          if (router.location.location.search.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
+          if (colsConfig.sorting.length === 0) {
+            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null, perPage: colsConfig.perPage || 5 } }); // Show page without sort parameters
           } else {
-            router.router.refresh();  //Reload current page and records (model) list
+            router.router.transitionTo(router.currentRouteName, { queryParams: { perPage: colsConfig.perPage || 5 } });  //Reload current page and records (model) list
           }
         }
       );
@@ -341,7 +338,10 @@ export default FlexberryBaseComponent.extend({
     saveColsSetting: function() {
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
       if (settingName.length <= 0) {
-        alert(this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
+        this.set('currentController.message.type', 'warning');
+        this.set('currentController.message.visible', true);
+        this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
+        this.set('currentController.message.message', '');
         return;
       }
 
@@ -350,13 +350,19 @@ export default FlexberryBaseComponent.extend({
       this.get('colsConfigMenu').addNamedSettingTrigger(settingName);
       savePromise.then(
         record => {
-          alert(this.get('i18n').t('components.colsconfig-dialog-content.setting') +
+          this.set('currentController.message.type', 'success');
+          this.set('currentController.message.visible', true);
+          this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.setting') +
             settingName +
             this.get('i18n').t('components.colsconfig-dialog-content.is-saved'));
+          this.set('currentController.message.message', '');
           Ember.$('#columnConfigurtionButtonSave')[0].className += ' disabled';
         },
         error => {
-          alert(this.get('i18n').t('components.colsconfig-dialog-content.have-errors') + JSON.stringify(error));
+          this.set('currentController.message.type', 'error');
+          this.set('currentController.message.visible', true);
+          this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
+          this.set('currentController.message.message', JSON.stringify(error));
         }
       );
     },

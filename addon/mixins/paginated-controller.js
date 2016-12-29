@@ -315,7 +315,8 @@ export default Ember.Mixin.create({
     @private
   */
   _getLastPage(perPage = this.get('perPage'), count = this.get('recordsTotalCount')) {
-    return Math.ceil(count / perPage);
+    let lastPage = Math.ceil(count / perPage);
+    return lastPage > 0 ? lastPage : 1;
   },
 
   /**

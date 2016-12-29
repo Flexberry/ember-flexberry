@@ -71,11 +71,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * FIx behavior of user settings window in`flexberry-objectlistview` component, with enabled `enableFilters` property.
 * FIx displaying of `flexberry-lookup` choosed value when lookup is embeded into new detail's row in `flexberry-groupedit` component.
 * Fix (with temporally solution) ember problem that  causes an error in `flexberry-validationsummary` component. Problem also was corrected in [this PR](https://github.com/emberjs/ember.js/pull/13333) so temporally solution must be removed after update to ember 2.5.1 or higher.
-* Fix problems with placeholder in `flexberry-simpledatetime` component.
 * Fix transition to detail model's edit form route form agregator's edit form route when agregator's model is not valid and `saveBeforeRouteLeave` option is true.
 * Fix `object-list-view` component behavior with filter parameter added to route's url when `flexberry-lookup`list is also opened.
 * Fix search by``number`, `decimal` and `boolean` values in `flexberry-objectlistview` component.
-* Fix `flexberry-simpledatetime` component behavior in FF and IE.
 * Fix `detail-interaction` service bahavior when closing detail model's edit form.
 * Fix detail models saving logic in offline mode.
 * Fix detail models delete logic in offline mode.
@@ -93,7 +91,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix `i-i-s-caseberry-logging-objects-application-log-l` and `new-platform-flexberry-services-lock-list` templates for use `recordsTotalCount` parameter.
 * Fix error handling in `log` service. Now throwing errors and promise errors are handling separately.
 * Fix displaying warning, debug and assert messages in production. Now these types of messages should not be displayed in console.
-
+* `flexberry-simpledatetime` component:
+    * Fix problems with absence of placeholder.
+    * Fix behavior in IE and FF.
+    * Fix two way binding problems in IE and FF.
+    * Fix readonly mode in IE and FF.
+    
 ### Known issues
 * Changes in per page records count in `flexberry-objectlistview` component leads to it's hanging in IE.
 * Incomprehensible one-way binding of `flexberry-lookup` `value` property in a new detail inside `flexberry-groupedit`.

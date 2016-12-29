@@ -38,7 +38,6 @@ Router.map(function() {
 
   // Locks.
   this.route('new-platform-flexberry-services-lock-list');
-  this.route('new-platform-flexberry-services-lock-edit', { path: 'new-platform-flexberry-services-lock-edit/:id' });
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-checkbox/settings-example');

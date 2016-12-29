@@ -1081,6 +1081,8 @@ export default FlexberryBaseComponent.extend(
 
     // The last menu needs will be up.
     Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+
+    this._setCurrentColumnsWidth();
   },
 
   /**
@@ -1206,6 +1208,7 @@ export default FlexberryBaseComponent.extend(
         width: currentColumnWidth,
       });
     });
+    this._setCurrentColumnsWidth();
     this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
   },
 
@@ -1287,6 +1290,30 @@ export default FlexberryBaseComponent.extend(
     }
 
     return columnsBuf;
+  },
+
+  /**
+    Set current columns width for currentController.
+
+    @method _setCurrentColumnsWidth
+    @private
+  */
+  _setCurrentColumnsWidth() {
+    if (!Ember.isNone(this.get('currentController'))) {
+      let $columns = this.$('table.object-list-view').find('th');
+      let currentWidths = {};
+      Ember.$.each($columns, (key, item) => {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        Ember.assert('Column property name is not defined', currentPropertyName);
+
+        let currentColumnWidth = currentItem.width();
+        currentColumnWidth = Math.round(currentColumnWidth);
+        currentWidths[currentPropertyName] = currentColumnWidth;
+      });
+
+      this.set('currentController.currentColumnsWidths', currentWidths);
+    }
   },
 
   /**

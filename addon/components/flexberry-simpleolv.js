@@ -1014,6 +1014,8 @@ ErrorableControllerMixin, {
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+
+    this._setCurrentColumnsWidth();
   },
 
   /**
@@ -1250,6 +1252,7 @@ ErrorableControllerMixin, {
         width: currentColumnWidth,
       });
     });
+    this._setCurrentColumnsWidth();
     this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
   },
 
@@ -1274,6 +1277,30 @@ ErrorableControllerMixin, {
     Ember.assert(
       'There is no tag with attribute \'data-olv-header-property-name\' at column header.', currentPropertyName);
     return currentPropertyName;
+  },
+
+  /**
+    Set current columns width for currentController.
+
+    @method _setCurrentColumnsWidth
+    @private
+  */
+  _setCurrentColumnsWidth() {
+    if (!Ember.isNone(this.get('currentController'))) {
+      let $columns = this.$('table.object-list-view').find('th');
+      let currentWidths = {};
+      Ember.$.each($columns, (key, item) => {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        Ember.assert('Column property name is not defined', currentPropertyName);
+
+        let currentColumnWidth = currentItem.width();
+        currentColumnWidth = Math.round(currentColumnWidth);
+        currentWidths[currentPropertyName] = currentColumnWidth;
+      });
+
+      this.set('currentController.currentColumnsWidths', currentWidths);
+    }
   },
 
   /**

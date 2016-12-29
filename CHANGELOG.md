@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
+* Reduce width of filter button in `flexberry-objectlistview` & `flexberry-groupedit`.
 * Now `colsconfig-dialog` has default cols width values.
 
 ## [0.8.0] - 2016-12-13
@@ -75,8 +76,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix (with temporally solution) ember problem that  causes an error in `flexberry-validationsummary` component. Problem also was corrected in [this PR](https://github.com/emberjs/ember.js/pull/13333) so temporally solution must be removed after update to ember 2.5.1 or higher.
 * Fix transition to detail model's edit form route form agregator's edit form route when agregator's model is not valid and `saveBeforeRouteLeave` option is true.
 * Fix `object-list-view` component behavior with filter parameter added to route's url when `flexberry-lookup`list is also opened.
-* Fix search by``number`, `decimal` and `boolean` values in `flexberry-objectlistview` component.
-* Fix `detail-interaction` service bahavior when closing detail model's edit form.
+* Fix search by `number`, `decimal` and `boolean` values in `flexberry-objectlistview` component.
+* Fix `detail-interaction` service behavior when closing detail model's edit form.
 * Fix detail models saving logic in offline mode.
 * Fix detail models delete logic in offline mode.
 * Fix rollback logic for unsuccessful delete operations.
@@ -87,7 +88,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix displaying of sorting indicator in `object-list-view` component.
 * Fix deprecation warnings which appears after content update in `object-list-view-row` component.
 * Fix `list-form` pagination in offline mode when offline storage doesn't contain any data.
-* Fix cells borders of`object-list-view` component, now text doesn't fall outside of them.
+* Fix cells borders of `object-list-view` component, now text doesn't fall outside of them.
 * Fix `log` service settings initialization from application config.
 * Fix opening of `detail-edit-form` in `readonly` mode from `edit-form` in `readonly` mode, if `editOnSeparateRoute` setting is enabled in `flexberry-groupedit component`.
 * Fix `i-i-s-caseberry-logging-objects-application-log-l` and `new-platform-flexberry-services-lock-list` templates for use `recordsTotalCount` parameter.
@@ -102,6 +103,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Known issues
 * Changes in per page records count in `flexberry-objectlistview` component leads to it's hanging in IE.
 * Incomprehensible one-way binding of `flexberry-lookup` `value` property in a new detail inside `flexberry-groupedit`.
+* Changes in `showCheckBoxInRow` or `showDeleteButtonInRow` properties after adding new record in `flexberry-groupedit` leads to IE crashing.
 
 ## [0.8.0-beta.19] - 2016-12-13
 ### Added

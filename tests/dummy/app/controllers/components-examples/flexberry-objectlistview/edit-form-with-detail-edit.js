@@ -1,5 +1,5 @@
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
-import EditFormControllerOperationsIndicationMixin from '../mixins/edit-form-controller-operations-indication';
+import EditFormControllerOperationsIndicationMixin from '../../../mixins/edit-form-controller-operations-indication';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -7,9 +7,9 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
 
     @property parentRoute
     @type String
-    @default 'edit-form-with-detail-list'
+    @default 'components-examples/flexberry-objectlistview/edit-form-with-detail-list'
    */
-  parentRoute: 'edit-form-with-detail-list',
+  parentRoute: 'components-examples/flexberry-objectlistview/edit-form-with-detail-list',
 
   /**
     Method to get type and attributes of a component,

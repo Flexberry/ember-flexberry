@@ -6,7 +6,7 @@ export default ListFormController.extend({
 
     @property editFormRoute
     @type String
-    @default 'edit-form-with-detail-edit'
+    @default 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit'
    */
-  editFormRoute: 'edit-form-with-detail-edit'
+  editFormRoute: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit'
 });

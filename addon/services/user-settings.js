@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
+import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 const { Builder, SimplePredicate, ComplexPredicate } = Query;
 
@@ -219,7 +220,7 @@ export default Ember.Service.extend({
     let appPage = this.currentAppPage;
     let sorting;
     if ('sort' in params) {
-      sorting = this._deserializeSortingParam(params.sort);
+      sorting = deserializeSortingParam(params.sort);
     } else {
       sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
     }
@@ -763,54 +764,5 @@ export default Ember.Service.extend({
     }
 
     return ret;
-  },
-
-  /**
-   *    Convert string with sorting parameters to object.
-   *
-   *    Expected string type: '+Name1-Name2...', where: '+' and '-' - sorting direction, 'NameX' - property name for soring.
-   *
-   *    @method deserializeSortingParam
-   *    @param {String} paramString String with sorting parameters.
-   *    @returns {Array} Array objects type: { propName: 'NameX', direction: 'asc|desc' }
-   */
-  _deserializeSortingParam(paramString) {
-    let result = [];
-    while (paramString) {
-      let order = paramString.charAt(0);
-      let direction = order === '+' ? 'asc' :  order === '-' ? 'desc' : null;
-      paramString = paramString.substring(1, paramString.length);
-      let nextIndices = this._getNextIndeces(paramString);
-      let nextPosition = Math.min.apply(null, nextIndices);
-      let propName = paramString.substring(0, nextPosition);
-      paramString = paramString.substring(nextPosition);
-
-      if (direction) {
-        result.push({
-          propName: propName,
-          direction: direction
-        });
-      }
-    }
-
-    return result;
-  },
-
-  /**
-   * Return index start next sorting parameters.
-   *
-   * @method _getNextIndeces
-   * @param {String} paramString
-   * @return {Number}
-   * @private
-   */
-  _getNextIndeces(paramString) {
-    let nextIndices = ['+', '-', '!'].map(function(element) {
-      let pos = paramString.indexOf(element);
-      return pos === -1 ? paramString.length : pos;
-    });
-
-    return nextIndices;
   }
-
 });

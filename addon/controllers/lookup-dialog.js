@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import ListFormController from '../controllers/list-form';
 import SortableRouteMixin from '../mixins/sortable-route';
+import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 /**
   Controller to support a modal windows in FlexberryLookup component.
@@ -171,7 +172,7 @@ export default ListFormController.extend(SortableRouteMixin, {
       throw new Error('No reload handler was defined.');
     }
 
-    let sorting = this.deserializeSortingParam(this.get('sort'));
+    let sorting = deserializeSortingParam(this.get('sort'));
     let reloadData = {
       relatedToType: this.get('modelType'),
       projectionName: this.get('projectionName'),

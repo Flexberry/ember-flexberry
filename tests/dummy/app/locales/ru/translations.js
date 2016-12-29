@@ -307,6 +307,10 @@ Ember.$.extend(true, translations, {
             'dropdown-mode-example': {
               'caption': 'Режим dropdown',
               'title': ''
+            },
+            'default-ordering-example': {
+              'caption': 'Сортировка по умолчанию',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -641,7 +645,11 @@ Ember.$.extend(true, translations, {
         },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Режим dropdown'
-        }
+        },
+        'default-ordering-example': {
+          'caption': 'Flexberry-lookup. Сортировка по умолчанию',
+          'titleLookup': 'Мастер'
+        },
       },
       'flexberry-menu': {
         'settings-example': {

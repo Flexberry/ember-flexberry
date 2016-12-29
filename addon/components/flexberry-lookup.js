@@ -8,6 +8,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
+import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 const {
   Builder,
@@ -33,6 +34,7 @@ const {
     <!-- app/templates/post.hbs -->
     ...
     {{flexberry-lookup
+      componentName="AuthorLookup"
       choose="showLookupDialog"
       remove="removeLookupValue"
       value=model.author
@@ -196,6 +198,15 @@ export default FlexberryBaseComponent.extend({
   sorting: 'asc',
 
   /**
+    Ordering condition for list of records to choose.
+    Expected string type: '+Name1-Name2...', where: '+' and '-' - sorting direction, 'NameX' - property name for soring.
+
+    @property orderBy
+    @type String
+  */
+   orderBy: undefined,
+
+  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -277,7 +288,9 @@ export default FlexberryBaseComponent.extend({
     'lookupLimitPredicate',
     'relatedModel',
     '_lookupWindowCustomPropertiesData',
+    'orderBy',
     function() {
+      let ordering = this.get('orderBy') ? this.get('orderBy') : '';
       return {
         projection: this.get('projection'),
         relationName: this.get('relationName'),
@@ -286,6 +299,7 @@ export default FlexberryBaseComponent.extend({
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
         componentName: this.get('componentName'),
+        sorting: deserializeSortingParam(ordering),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')

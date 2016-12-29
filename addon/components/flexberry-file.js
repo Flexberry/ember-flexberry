@@ -551,18 +551,16 @@ export default FlexberryBaseComponent.extend({
       let maxUploadFileSize = this.get('maxUploadFileSize');
 
       if (!Ember.isNone(maxUploadFileSize)) {
-        if (Ember.typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0) {
-          // Prevent files greater then maxUploadFileSize.
-          if (selectedFile.size > maxUploadFileSize) {
-            this.showFileSizeErrorModalDialog(selectedFile.name, selectedFile.size, maxUploadFileSize);
+        Ember.assert(
+          `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
+          ` Allowed value is a number >= 0.`, Ember.typeOf(maxUploadFileSize) === 'number' && maxUploadFileSize >= 0);
 
-            // Break file upload.
-            return;
-          }
-        } else {
-          Ember.Logger.error(
-            `Wrong value of flexberry-file \`maxUploadFileSize\` propery: \`${maxUploadFileSize}\`.` +
-            ` Allowed value is a number >= 0.`);
+        // Prevent files greater then maxUploadFileSize.
+        if (selectedFile.size > maxUploadFileSize) {
+          this.showFileSizeErrorModalDialog(selectedFile.name, selectedFile.size, maxUploadFileSize);
+
+          // Break file upload.
+          return;
         }
       }
 
@@ -831,9 +829,8 @@ export default FlexberryBaseComponent.extend({
     }
 
     let relatedModelOnPropertyType = Ember.typeOf(this.get('relatedModel.on'));
-    if (relatedModelOnPropertyType !== 'function') {
-      Ember.Logger.error(`Wrong type of \`relatedModel.on\` propery: actual type is ${relatedModelOnPropertyType}, but function is expected.`);
-    }
+    Ember.assert(`Wrong type of \`relatedModel.on\` propery: actual type is ${relatedModelOnPropertyType}, but function is expected.`,
+      relatedModelOnPropertyType === 'function');
 
     let relatedModel = this.get('relatedModel');
     relatedModel.on('preSave', this.get('_onRelatedModelPreSave'));
@@ -847,9 +844,8 @@ export default FlexberryBaseComponent.extend({
   */
   _unsubscribeFromRelatedModelPresaveEvent() {
     let relatedModelOffPropertyType = Ember.typeOf(this.get('relatedModel.off'));
-    if (relatedModelOffPropertyType !== 'function') {
-      Ember.Logger.error(`Wrong type of \`relatedModel.off\` propery: actual type is ${relatedModelOffPropertyType}, but function is expected.`);
-    }
+    Ember.assert(`Wrong type of \`relatedModel.off\` propery: actual type is ${relatedModelOffPropertyType}, but function is expected.`,
+      relatedModelOffPropertyType === 'function');
 
     let relatedModel = this.get('relatedModel');
     relatedModel.off('preSave', this.get('_onRelatedModelPreSave'));

@@ -60,9 +60,9 @@ export default FlexberryBaseComponent.extend({
 
    @property saveColWidthState
    @type {Boolean}
-   @default false
+   @default true
    */
-  saveColWidthState: false,
+  saveColWidthState: true,
 
   /**
     Per page value.
@@ -83,6 +83,7 @@ export default FlexberryBaseComponent.extend({
     this.settingName = this.model.settingName;
     this.componentName = this.model.componentName;
     this.perPageValue = this.model.perPageValue;
+    this.saveColWidthState = this.model.saveColWidthState;
     let colDescs = this.model.colDescs;
     for (let i = 0; i < colDescs.length; i++) {
       let colDesc = colDescs[i];
@@ -95,10 +96,6 @@ export default FlexberryBaseComponent.extend({
         } else {
           colDesc.sortOrderdNot = 'selected';
         }
-      }
-
-      if ('columnWidth' in colDesc) {
-        this.saveColWidthState = true;
       }
 
       colDesc.trId = _idPrefix + 'TR_' + i;

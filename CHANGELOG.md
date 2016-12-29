@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix `sorting` setting in `developerUserSettings`.
 * Wrong getting of page number for lists of records if records count is zero.
 * Shift date one day ahead when saving model after choosing date with `flexberry-datepicker` component.
+* Fix `flexberry-objectlistview` on `edit-form` predicate which contains model fields.
 
 ## [0.8.0] - 2016-12-13
 ### Added

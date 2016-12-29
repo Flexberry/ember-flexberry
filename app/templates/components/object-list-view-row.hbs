@@ -28,7 +28,9 @@
       {{/if}}
     </td>
     {{#each columns as |column index|}}
-      <td {{action rowClick record preventDefault=false}}>
+      <td
+        {{action rowClick record preventDefault=false}}
+        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}">
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
             {{#component column.cellComponent.componentName
@@ -55,6 +57,12 @@
               readonly=readonly
               required=required
             }}
+            {{#if showValidationMessages}}
+              {{flexberry-validationmessage
+                error=(get record.data (concat "errors." column.propName))
+                pointing="pointing"
+              }}
+            {{/if}}
           {{/if}}
         {{else}}
           <div class="oveflow-text">
@@ -79,13 +87,13 @@
         <div class="basic right pointing ui icon dropdown button">
           <i class="list layout icon"></i>
           <div class="left menu">
-            {{#if record.rowConfig.canBeSelected}}
+            {{#if showEditMenuItemInRow}}
               <div class="item" {{ action rowClick record }}>
                 <i class="edit icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
               </div>
             {{/if}}
-            {{#if record.rowConfig.canBeDeleted}}
+            {{#if showDeleteMenuItemInRow}}
               <div class="item" {{ action deleteRow record }}>
                 <i class="trash icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
@@ -114,6 +122,7 @@
         menuInRowAdditionalItems=menuInRowAdditionalItems
         showHelperColumn=showHelperColumn
         defaultRowConfig=defaultRowConfig
+        showValidationMessages=showValidationMessages
         showAsteriskInRow=showAsteriskInRow
         showCheckBoxInRow=showCheckBoxInRow
         showDeleteButtonInRow=showDeleteButtonInRow

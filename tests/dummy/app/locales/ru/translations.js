@@ -130,6 +130,10 @@ Ember.$.extend(true, translations, {
           'settings-example': {
             'caption': 'Пример работы с настройками',
             'title': ''
+          },
+          'clear-log-form': {
+            'caption': 'Очистка лога',
+            'title': ''
           }
         },
         'lock': {
@@ -459,11 +463,11 @@ Ember.$.extend(true, translations, {
         'reject-rsvp-promise-button-message': 'Promise отклонен',
         'ember-assert-button-message': 'Вызван метод Ember.assert',
         'ember-logger-error-button-message': 'Вызван метод Ember.Logger.error',
-        'ember-logger-warn-button-message': 'Вызван метод Ember.Logger.warn',
+        'ember-logger-warn-button-message': 'Вызван метод Ember.warn',
         'ember-deprecate-button-message': 'Вызван метод Ember.deprecate',
         'ember-logger-log-button-message': 'Вызван метод Ember.Logger.log',
-        'ember-logger-info-button-message': 'Вызван метод Ember.logger.info',
-        'ember-logger-debug-button-message': 'Вызван метод Ember.Logger.debug'
+        'ember-logger-info-button-message': 'Вызван метод Ember.Logger.info',
+        'ember-logger-debug-button-message': 'Вызван метод Ember.debug'
       }
     },
 
@@ -609,7 +613,8 @@ Ember.$.extend(true, translations, {
           'custom-button-name': 'Передать привет'
         },
         'on-edit-form': {
-          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview на форме редактирования'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview на форме редактирования',
+          'add-button-name': 'Добавить'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Настройка фильтра'
@@ -698,7 +703,8 @@ Ember.$.extend(true, translations, {
           'date-caption': 'Дата',
           'enumeration-caption': 'Перечисление',
           'file-caption': 'Файл',
-          'master-caption': 'Мастер'
+          'master-caption': 'Мастер',
+          'details-caption': 'Детейлы'
         }
       }
     },

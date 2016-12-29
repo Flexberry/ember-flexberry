@@ -25,6 +25,15 @@ export default EditFormRoute.extend({
     @method model
    */
   model(params) {
-    return this.get('store').createRecord('integration-examples/edit-form/validation/base', {});
+    let store = this.get('store');
+
+    // Create base model.
+    let base = store.createRecord('integration-examples/edit-form/validation/base', {});
+
+    // Create detail & add to base model.
+    let detail1 = store.createRecord('integration-examples/edit-form/validation/detail', {});
+    base.get('details').pushObject(detail1);
+
+    return base;
   }
 });

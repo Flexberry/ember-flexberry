@@ -36,6 +36,22 @@ export default FlexberryBaseComponent.extend(
     this._setContent(this.get('componentName'));
   })),
 
+  sortTitle: t('components.object-list-view.header-title-attr'),
+
+  /**
+    Title for table headers.
+
+    @property sortTitleCompute
+    @type String
+  */
+  sortTitleCompute: Ember.computed('orderable', 'sortTitle', function() {
+    if (this.get('orderable')) {
+      return this.get('sortTitle');
+    } else {
+      return '';
+    }
+  }),
+
   /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
@@ -183,9 +199,10 @@ export default FlexberryBaseComponent.extend(
     @type String
     @readOnly
   */
-  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', function() {
+  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', 'allowColumnResize', function() {
     let tableStriped = this.get('tableStriped');
     let rowClickable = this.get('rowClickable');
+    let allowColumnResize = this.get('allowColumnResize');
     let classes = this.get('customTableClass');
 
     if (tableStriped) {
@@ -194,6 +211,10 @@ export default FlexberryBaseComponent.extend(
 
     if (rowClickable) {
       classes += ' selectable';
+    }
+
+    if (allowColumnResize) {
+      classes += ' fixed JColResizer';
     }
 
     return classes;
@@ -219,6 +240,15 @@ export default FlexberryBaseComponent.extend(
     componentName: undefined,
     componentProperties: null,
   },
+
+  /**
+    Flag: indicates whether to show validation messages in every row or not.
+
+    @property showValidationMessages
+    @type Boolean
+    @default false
+  */
+  showValidationMessagesInRow: false,
 
   /**
     Flag indicates whether to show asterisk icon in first column of every changed row.
@@ -342,8 +372,7 @@ export default FlexberryBaseComponent.extend(
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      Ember.Logger.error('Property \'modelProjection\' is undefined.');
-      return [];
+      throw new Error('Property \'modelProjection\' is undefined.');
     }
 
     let cols = this._generateColumns(projection.attributes);
@@ -927,6 +956,10 @@ export default FlexberryBaseComponent.extend(
       }
     }
 
+    if (this.get('onEditForm')) {
+      this.get('currentController').getCustomContent();
+    }
+
     let columnWidth;
     if (this.notUseUserSettings) {
       columnWidth = this.get('currentController.developerUserSettings');
@@ -945,9 +978,6 @@ export default FlexberryBaseComponent.extend(
     this.$('.flexberry-dropdown:last').dropdown({
       direction: 'upward'
     });
-
-    // TODO: the last menu needs will be up.
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
   },
 
   /**
@@ -1059,6 +1089,8 @@ export default FlexberryBaseComponent.extend(
 
     // The last menu needs will be up.
     Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+
+    this._setCurrentColumnsWidth();
   },
 
   /**
@@ -1185,6 +1217,7 @@ export default FlexberryBaseComponent.extend(
         width: currentColumnWidth,
       });
     });
+    this._setCurrentColumnsWidth();
     this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
   },
 
@@ -1228,6 +1261,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let attr = attributes[attrName];
+      Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
         case 'hasMany':
           break;
@@ -1261,13 +1295,34 @@ export default FlexberryBaseComponent.extend(
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
-
-        default:
-          Ember.Logger.error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
 
     return columnsBuf;
+  },
+
+  /**
+    Set current columns width for currentController.
+
+    @method _setCurrentColumnsWidth
+    @private
+  */
+  _setCurrentColumnsWidth() {
+    if (!Ember.isNone(this.get('currentController'))) {
+      let $columns = this.$('table.object-list-view').find('th');
+      let currentWidths = {};
+      Ember.$.each($columns, (key, item) => {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        Ember.assert('Column property name is not defined', currentPropertyName);
+
+        let currentColumnWidth = currentItem.width();
+        currentColumnWidth = Math.round(currentColumnWidth);
+        currentWidths[currentPropertyName] = currentColumnWidth;
+      });
+
+      this.set('currentController.currentColumnsWidths', currentWidths);
+    }
   },
 
   /**
@@ -1575,23 +1630,27 @@ export default FlexberryBaseComponent.extend(
   */
   _refreshList(componentName) {
     if (this.get('componentName') === componentName) {
-      if (this.get('enableFilters')) {
-        let filters = {};
-        let hasFilters = false;
-        this.get('columns').forEach((column) => {
-          if (column.filter.pattern && column.filter.condition) {
-            hasFilters = true;
-            filters[column.filter.name] = column.filter;
-          }
-        });
+      if (this.get('onEditForm')) {
+        this.currentController.getCustomContent();
+      } else {
+        if (this.get('enableFilters')) {
+          let filters = {};
+          let hasFilters = false;
+          this.get('columns').forEach((column) => {
+            if (column.filter.pattern && column.filter.condition) {
+              hasFilters = true;
+              filters[column.filter.name] = column.filter;
+            }
+          });
 
-        if (hasFilters) {
-          this.sendAction('applyFilters', filters);
+          if (hasFilters) {
+            this.sendAction('applyFilters', filters);
+          } else {
+            this.get('currentController').send('refreshList');
+          }
         } else {
           this.get('currentController').send('refreshList');
         }
-      } else {
-        this.get('currentController').send('refreshList');
       }
     }
   },

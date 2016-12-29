@@ -143,6 +143,7 @@ export default Ember.Mixin.create({
       }
 
       let attr = attributes[attrName];
+      Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
         case 'hasMany':
           break;
@@ -176,9 +177,6 @@ export default Ember.Mixin.create({
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
-
-        default:
-          Ember.Logger.error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
 

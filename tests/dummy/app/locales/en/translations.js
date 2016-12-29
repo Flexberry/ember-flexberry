@@ -26,12 +26,33 @@ Ember.$.extend(true, translations, {
             'eMail': {
               'caption': 'Email'
             }
-          }
+          },
+          'editor1': {
+            'caption': 'Editor',
+            'eMail': {
+              'caption': 'Email'
+            }
+          },
+          'moderated': {
+            'caption': 'Moderated'
+          },
+          'type': {
+            'caption': 'Type'
+          },
+          'commentsCount': {
+            'caption': 'Comments count'
+          },
         },
         'SuggestionE': {
+          'address': {
+            'caption': 'Address'
+          },
           'userVotes': {
+            'name': {
+              'caption': 'Name'
+            },
             'voteType': {
-              'caption': 'Vote Type'
+              'caption': 'Vote type'
             },
             'applicationUser': {
               'caption': 'Application User',
@@ -42,7 +63,55 @@ Ember.$.extend(true, translations, {
           }
         }
       }
-    }
+    },
+    'ember-flexberry-dummy-application-user': {
+      'projections': {
+        'ApplicationUserL': {
+          'name': {
+            'caption': 'Name'
+          },
+          'eMail': {
+            'caption': 'E-mail'
+          },
+          'activated': {
+            'caption': 'Activated'
+          },
+          'birthday': {
+            'caption': 'Birthday'
+          },
+          'gender': {
+            'caption': 'Gender'
+          },
+          'karma': {
+            'caption': 'Karma'
+          },
+        },
+      }
+    },
+    'ember-flexberry-dummy-localization': {
+      'projections': {
+        'LocalizationL': {
+          'name': {
+            'caption': 'Name'
+          },
+        },
+      }
+    },
+    'ember-flexberry-dummy-suggestion-type': {
+      'projections': {
+        'SuggestionTypeL': {
+          'name': {
+            'caption': 'Name'
+          },
+          'moderated': {
+            'caption': 'Moderated'
+          },
+          'parent': {
+            'caption': 'Parent'
+          },
+        },
+      }
+    },
   },
 
   'application-name': 'Test stand for ember-flexberry',

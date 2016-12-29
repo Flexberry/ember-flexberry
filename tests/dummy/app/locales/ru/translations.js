@@ -26,18 +26,36 @@ Ember.$.extend(true, translations, {
             'eMail': {
               'caption': 'Почта'
             }
-          }
+          },
+          'editor1': {
+            'caption': 'Редактор',
+            'eMail': {
+              'caption': 'Почта'
+            }
+          },
+          'moderated': {
+            'caption': 'Одобрено'
+          },
+          'type': {
+            'caption': 'Тип предложения'
+          },
+          'commentsCount': {
+            'caption': 'Количество голосов'
+          },
         },
         'SuggestionE': {
           'address': {
             'caption': 'Адрес'
           },
           'userVotes': {
+            'name': {
+              'caption': 'Наименование'
+            },
             'voteType': {
               'caption': 'Тип голосования'
             },
             'applicationUser': {
-              'caption': 'Пользователь',
+              'caption': 'Пользователь приложения',
               'eMail': {
                 'caption': 'Почта'
               }
@@ -45,7 +63,55 @@ Ember.$.extend(true, translations, {
           }
         }
       }
-    }
+    },
+    'ember-flexberry-dummy-application-user': {
+      'projections': {
+        'ApplicationUserL': {
+          'name': {
+            'caption': 'Имя'
+          },
+          'eMail': {
+            'caption': 'Почта'
+          },
+          'activated': {
+            'caption': 'Учетная запись активирована'
+          },
+          'birthday': {
+            'caption': 'Дата рождения'
+          },
+          'gender': {
+            'caption': 'Пол'
+          },
+          'karma': {
+            'caption': 'Карма'
+          },
+        },
+      }
+    },
+    'ember-flexberry-dummy-localization': {
+      'projections': {
+        'LocalizationL': {
+          'name': {
+            'caption': 'Наименование'
+          },
+        },
+      }
+    },
+    'ember-flexberry-dummy-suggestion-type': {
+      'projections': {
+        'SuggestionTypeL': {
+          'name': {
+            'caption': 'Наименование'
+          },
+          'moderated': {
+            'caption': 'Одобрено'
+          },
+          'parent': {
+            'caption': 'Иерархия'
+          },
+        },
+      }
+    },
   },
 
   'application-name': 'Тестовый стенд ember-flexberry',

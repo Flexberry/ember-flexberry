@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Wrong getting of page number for lists of records if records count is zero.
 * Shift date one day ahead when saving model after choosing date with `flexberry-datepicker` component.
 * Fix `flexberry-objectlistview` on `edit-form` predicate which contains model fields.
+* Redundant saving of agregator when transitioning to detail edit form.
 
 ## [0.8.0] - 2016-12-13
 ### Added

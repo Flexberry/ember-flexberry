@@ -17,6 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix `developerUserSettings`'s `perPage` ignoring query parameters.
 * Fix `sorting` setting in `developerUserSettings`.
 * Wrong getting of page number for lists of records if records count is zero.
+* Shift date one day ahead when saving model after choosing date with `flexberry-datepicker` component.
 
 ## [0.8.0] - 2016-12-13
 ### Added

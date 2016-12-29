@@ -15,12 +15,20 @@ export default Ember.Mixin.create({
     componentProperties: null,
   },
 
+  /**
+    Columns widtghs for current component.
+
+  @property {Object} currentColumnsWidths
+*/
+  currentColumnsWidths: undefined,
+
   actions: {
     showConfigDialog: function(componentName, settingName) {
       let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
       let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
       let perPageValue = this.get('_userSettingsService').getCurrentPerPage(componentName, settingName);
+      let saveColWidthState = false;
       let propName;
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
@@ -71,10 +79,19 @@ export default Ember.Mixin.create({
       }
 
       let namedColWidth = {};
-      for (let i = 0; i < columnWidths.length; i++) {
-        colDesc = columnWidths[i];
-        propName = colDesc.propName;
-        namedColWidth[propName] = colDesc.width;
+
+      if (Ember.isNone(settingName)) {
+        namedColWidth = this.get('currentColumnsWidths') || {};
+      } else {
+        for (let i = 0; i < columnWidths.length; i++) {
+          colDesc = columnWidths[i];
+          propName = colDesc.propName;
+          namedColWidth[propName] = colDesc.width;
+        }
+      }
+
+      if (columnWidths.length > 0) {
+        saveColWidthState = true;
       }
 
       for (let i = 0; i < colsOrder.length; i++) {
@@ -120,8 +137,8 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settingName, perPageValue: perPageValue } },
-                loadingParams);
+                { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settingName, perPageValue: perPageValue,
+                saveColWidthState: saveColWidthState } }, loadingParams);
     }
 
   },
@@ -143,6 +160,7 @@ export default Ember.Mixin.create({
       }
 
       let attr = attributes[attrName];
+      Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
         case 'hasMany':
           break;
@@ -176,9 +194,6 @@ export default Ember.Mixin.create({
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
-
-        default:
-          Ember.Logger.error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
 

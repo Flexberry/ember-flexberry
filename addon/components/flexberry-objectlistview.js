@@ -507,7 +507,7 @@ export default FlexberryBaseComponent.extend({
     let recordsTotalCount = this.get('recordsTotalCount');
     if (recordsTotalCount === null && this.get('showShowingEntries')) {
       this.set('showShowingEntries', false);
-      Ember.Logger.error('Property \'recordsTotalCount\' is undefined.');
+      throw new Error('Property \'recordsTotalCount\' is undefined.');
     }
 
     let currentStartRecords = null;
@@ -1013,12 +1013,6 @@ export default FlexberryBaseComponent.extend({
   */
   didRender() {
     this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
-    let userSettingsService = this.get('userSettingsService');
-    let perPage = userSettingsService.getCurrentPerPage(this.componentName);
-    if (this.currentController.get('perPage') !== perPage) {
-      this.currentController.set('perPage', perPage);
-      this.set('perPageValue', perPage);
-    }
   },
 
   /**

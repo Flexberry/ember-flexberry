@@ -46,13 +46,13 @@
       <div class="basic right pointing ui icon dropdown button">
         <i class="list layout icon"></i>
         <div class="left menu">
-          {{#if record.rowConfig.canBeSelected}}
+          {{#if showEditMenuItemInRow}}
             <div class="item" {{ action rowClick record }}>
               <i class="edit icon"></i>
               <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
             </div>
           {{/if}}
-          {{#if record.rowConfig.canBeDeleted}}
+          {{#if showDeleteMenuItemInRow}}
             <div class="item" {{ action deleteRow record }}>
               <i class="trash icon"></i>
               <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>

@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * Now `flexberry-groupedit` supports sorting.
+* Ability to set default ordering for `flexberry-lookup` component.
 
 ### Changed
 * Now `object-list-view` header's hint visible only when `orderable=true`.

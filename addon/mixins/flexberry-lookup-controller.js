@@ -6,6 +6,7 @@ import Ember from 'ember';
 
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import { Query } from 'ember-flexberry-data';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 const { BasePredicate } = Query;
 
@@ -102,7 +103,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
         modelToLookup: undefined,
         sizeClass: undefined,
         lookupWindowCustomPropertiesData: undefined,
-        componentName: undefined
+        componentName: undefined,
+        sorting: undefined
       }, chooseData);
 
       let projectionName = options.projection;
@@ -121,6 +123,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let componentName = options.componentName;
 
       let model = modelToLookup ? modelToLookup : this.get('model');
+      let sorting = options.sorting ? options.sorting : [];
 
       // Get ember static function to get relation by name.
       let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
@@ -145,7 +148,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
         perPage: this.get('lookupModalWindowPerPage'),
         page: 1,
-        sorting: [],
+        sorting: sorting,
         filter: undefined,
         predicate: limitPredicate,
 
@@ -317,6 +320,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       perPage: queryParameters.perPage,
       page: queryParameters.page,
+      sort: serializeSortingParam(queryParameters.sorting, controller.get('sortDefaultValue')),
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,

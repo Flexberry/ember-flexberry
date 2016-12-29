@@ -4,6 +4,12 @@ import { translationMacro as t } from 'ember-i18n';
 export default Ember.Mixin.create({
   queryParams: ['sort'],
   sort: null,
+  message: {
+    caption: '',
+    type: 'error',
+    visible: false,
+    message: ''
+  },
 
   /**
    * Current opened modal window.

@@ -338,7 +338,10 @@ export default FlexberryBaseComponent.extend({
     saveColsSetting: function() {
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
       if (settingName.length <= 0) {
-        alert(this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
+        this.set('currentController.message.type', 'warning');
+        this.set('currentController.message.visible', true);
+        this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
+        this.set('currentController.message.message', '');
         return;
       }
 
@@ -347,13 +350,19 @@ export default FlexberryBaseComponent.extend({
       this.get('colsConfigMenu').addNamedSettingTrigger(settingName);
       savePromise.then(
         record => {
-          alert(this.get('i18n').t('components.colsconfig-dialog-content.setting') +
+          this.set('currentController.message.type', 'success');
+          this.set('currentController.message.visible', true);
+          this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.setting') +
             settingName +
             this.get('i18n').t('components.colsconfig-dialog-content.is-saved'));
+          this.set('currentController.message.message', '');
           Ember.$('#columnConfigurtionButtonSave')[0].className += ' disabled';
         },
         error => {
-          alert(this.get('i18n').t('components.colsconfig-dialog-content.have-errors') + JSON.stringify(error));
+          this.set('currentController.message.type', 'error');
+          this.set('currentController.message.visible', true);
+          this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
+          this.set('currentController.message.message', JSON.stringify(error));
         }
       );
     },

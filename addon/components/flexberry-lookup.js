@@ -467,7 +467,7 @@ export default FlexberryBaseComponent.extend({
 
       let componentName = this.get('componentName');
       if (!componentName) {
-        Ember.Logger.warn('`componentName` of flexberry-lookup is undefined.');
+        Ember.warn('`componentName` of flexberry-lookup is undefined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.component-name-is-not-defined' });
       } else {
         // Show choose button spinner.
         this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
@@ -550,9 +550,7 @@ export default FlexberryBaseComponent.extend({
     let isAutocomplete = this.get('autocomplete');
     let isDropdown = this.get('dropdown');
     if (isAutocomplete && isDropdown) {
-      Ember.Logger.error(
-        'Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
-      return;
+      throw new Error('Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
     }
 
     let cachedDropdownValue = this.get('_cachedDropdownValue');
@@ -654,8 +652,7 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      Ember.Logger.error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
-      return;
+      throw new Error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
     }
 
     let minCharacters = this.get('minCharacters');
@@ -722,7 +719,7 @@ export default FlexberryBaseComponent.extend({
        */
       onResultsOpen() {
         state = 'opened';
-        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
       },
 
       /**
@@ -733,7 +730,7 @@ export default FlexberryBaseComponent.extend({
        */
       onSelect(result) {
         state = 'selected';
-        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
         _this.set('value', result.instance);
         _this.sendAction(
@@ -761,7 +758,7 @@ export default FlexberryBaseComponent.extend({
         }
 
         state = 'closed';
-        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
       }
     });
   },
@@ -788,8 +785,7 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      Ember.Logger.error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
-      return;
+      throw new Error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
     }
 
     let i18n = _this.get('i18n');
@@ -859,9 +855,9 @@ export default FlexberryBaseComponent.extend({
         let newValue = value;
         if (value) {
           let cachedValues = _this.get('_cachedDropdownValues');
-          if (!cachedValues || cachedValues[value] !== null && !cachedValues[value]) {
-            Ember.Logger.error('Can\'t find selected dropdown value among cached values.');
-          } else {
+          let cachedValuesContainsVlue = cachedValues && (cachedValues[value] === null || cachedValues[value]);
+          Ember.assert('Can\'t find selected dropdown value among cached values.', cachedValuesContainsVlue);
+          if (cachedValuesContainsVlue) {
             newValue = cachedValues[value];
           }
         }
@@ -895,7 +891,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (!displayAttributeName) {
-      Ember.Logger.warn('\`displayAttributeName\` is not defined.');
+      Ember.warn('\`displayAttributeName\` is not defined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.display-attribute-name-is-not-defined' });
       return '';
     }
 

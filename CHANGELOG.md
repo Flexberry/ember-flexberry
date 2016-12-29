@@ -46,6 +46,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Move `resetMenu`, `addNamedSetting` and `sort` methods from `col-config-menu` service into `olv-toolbar` & `flexberry-objectlistview`. Also `sort` method is renamed into `sortNamedSetting`.
 * Replace `link-to` with `href-to` helper, alse replce `a` tag with `link-to` helper in `sitemap-node` template, because `link-to` helper has bad performance, `a` tag with `href-to` heper causes full page reload.
 * Rename `headerClickable`property into `orderable` in `object-list-view` component.
+* Overriden methods of `Ember.Logger` in `log` service now trigger corresponding events instead of returning promises.
 
 ### Removed
 * Remove `_attributeChanged` observer from `object-list-view` component.
@@ -87,9 +88,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix deprecation warnings which appears after content update in `object-list-view-row` component.
 * Fix `list-form` pagination in offline mode when offline storage doesn't contain any data.
 * Fix cells borders of`object-list-view` component, now text doesn't fall outside of them.
-* Fix `log-service` settings initialization from application config.
+* Fix `log` service settings initialization from application config.
 * Fix opening of `detail-edit-form` in `readonly` mode from `edit-form` in `readonly` mode, if `editOnSeparateRoute` setting is enabled in `flexberry-groupedit component`.
 * Fix `i-i-s-caseberry-logging-objects-application-log-l` and `new-platform-flexberry-services-lock-list` templates for use `recordsTotalCount` parameter.
+* Fix error handling in `log` service. Now throwing errors and promise errors are handling separately.
+* Fix displaying warning, debug and assert messages in production. Now these types of messages should not be displayed in console.
 
 ### Known issues
 * Changes in per page records count in `flexberry-objectlistview` component leads to it's hanging in IE.

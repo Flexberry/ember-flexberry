@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-menu` component was not responded to changing properties for root items.
 * Fix `developerUserSettings`'s `perPage` ignoring query parameters.
 * Fix `sorting` setting in `developerUserSettings`.
+* Wrong getting of page number for lists of records if records count is zero.
 
 ## [0.8.0] - 2016-12-13
 ### Added

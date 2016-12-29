@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0-beta.27] - 2016-12-29
+### Fixed
+* Default ordering for `flexberry-lookup` component is not applying after changing current list page.
+
 ## [0.8.0-beta.26] - 2016-12-29
 ### Added
 * Ability to set default ordering for `flexberry-lookup` component.

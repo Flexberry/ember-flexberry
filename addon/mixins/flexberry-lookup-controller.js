@@ -6,6 +6,7 @@ import Ember from 'ember';
 
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import { Query } from 'ember-flexberry-data';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 const { BasePredicate } = Query;
 
@@ -319,6 +320,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       perPage: queryParameters.perPage,
       page: queryParameters.page,
+      sort: serializeSortingParam(queryParameters.sorting, controller.get('sortDefaultValue')),
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,

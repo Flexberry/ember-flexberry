@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Changed cursor style for `colsconfig-dialog-content`.
 
 ## [0.8.0] - 2016-12-13
 ### Added

@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0-beta.26] - 2016-12-29
+### Added
+* Ability to set default ordering for `flexberry-lookup` component.
+
 ## [0.8.0-beta.25] - 2016-12-22
 ### Changed
 * Updated dependency on `ember-flexberry-data` addon to v0.7.2-beta.1 version.

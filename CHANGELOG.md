@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix `menuInRow` for `object-list-view`.
 * Fix inability to resize columns in `flexberry-objectlistview`, `flexberry-groupedit` and `flexberry-simpleolv` components if `tableStriped`, `rowClickable` or `customTableClass` property was changed.
 * Fix file download in `flexberry-file` when `uploadUrl` was changed.
+* `flexberry-menu` component was not responded to changing properties for root items.
 
 ## [0.8.0] - 2016-12-13
 ### Added

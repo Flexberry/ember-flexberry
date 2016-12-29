@@ -48,11 +48,14 @@ Ember.$.extend(true, translations, {
             'caption': 'Адрес'
           },
           'userVotes': {
+            'name': {
+              'caption': 'Наименование'
+            },
             'voteType': {
               'caption': 'Тип голосования'
             },
             'applicationUser': {
-              'caption': 'Пользователь',
+              'caption': 'Пользователь приложения',
               'eMail': {
                 'caption': 'Почта'
               }

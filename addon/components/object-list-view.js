@@ -388,7 +388,10 @@ export default FlexberryBaseComponent.extend(
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }
 
-    if (userSettings) {
+    let onEditForm = this.get('onEditForm');
+
+    // TODO: add userSettings support on edit form.
+    if (userSettings && !onEditForm) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {
         let col = cols[i];

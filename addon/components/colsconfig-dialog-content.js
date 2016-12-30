@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 const { getOwner } = Ember;
 const _idPrefix = 'ColDesc';
 
@@ -321,11 +322,8 @@ export default FlexberryBaseComponent.extend({
       let savePromise = this._getSavePromise(undefined, colsConfig);
       savePromise.then(
         record => {
-          if (colsConfig.sorting.length === 0) {
-            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null, perPage: colsConfig.perPage || 5 } }); // Show page without sort parameters
-          } else {
-            router.router.transitionTo(router.currentRouteName, { queryParams: { perPage: colsConfig.perPage || 5 } });  //Reload current page and records (model) list
-          }
+          let sort = serializeSortingParam(colsConfig.sorting);
+          router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
         }
       );
       this.sendAction('close', colsConfig); // close modal window

@@ -116,6 +116,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
 
     Ember.assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
       nComponents === 1);
+    userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];

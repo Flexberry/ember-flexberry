@@ -6,7 +6,7 @@
   @param {String} sortDefaultValue Default value for sorting parameters.
   @returns {String} String with sorting parameters.
 */
-export default function serializeSortingParam(sorting, sortDefaultValue) {
+export default function serializeSortingParam(sorting, sortDefaultValue = null) {
   return sorting.map(function(element) {
     return (element.direction === 'asc' ? '+' : element.direction === 'desc' ? '-' : '!') + element.propName;
   }).join('') || sortDefaultValue;

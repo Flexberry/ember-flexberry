@@ -36,6 +36,15 @@ export default Ember.Service.extend({
   isUserSettingsServiceEnabled: false,
 
   /**
+    User settings for all pages defined by developer
+
+    @property defaultDeveloperUserSettings
+    @type Object
+    @default {}
+   */
+  defaultDeveloperUserSettings: {},
+
+  /**
     Current Application name.
 
     @property appName
@@ -193,6 +202,30 @@ export default Ember.Service.extend({
   },
 
   /**
+    Set initial userSetting for current webPage, defined by application developer
+
+    @method setDefaultDeveloperUserSettings
+    @param {Object} developerUserSettings.
+   */
+  setDefaultDeveloperUserSettings(developerUserSettings) {
+    for (let componentName in developerUserSettings) {
+      let componentSettings = developerUserSettings[componentName];
+      for (let settingName in componentSettings) {
+        if (!('sorting' in componentSettings[settingName])) {
+          componentSettings[settingName].sorting = [];
+        }
+      }
+
+      if (!(defaultSettingName in componentSettings)) {
+        componentSettings[defaultSettingName] = { sorting: [] };
+      }
+    }
+
+    let appPage = this.currentAppPage;
+    this.defaultDeveloperUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
+  },
+
+  /**
    Get list components Names.
 
    @method getListComponentNames
@@ -219,7 +252,7 @@ export default Ember.Service.extend({
   setCurrentParams(componentName, params) {
     let appPage = this.currentAppPage;
     let sorting;
-    if ('sort' in params) {
+    if ('sort' in params && params.sort) {
       sorting = deserializeSortingParam(params.sort);
     } else {
       sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
@@ -308,6 +341,27 @@ export default Ember.Service.extend({
       settingName in this.currentUserSettings[this.currentAppPage][componentName]
     ) {
       ret = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    }
+
+    return ret;
+  },
+
+  /**
+   Returns default developer user settings for component.
+
+   @method getDefaultDeveloperUserSetting
+   @param {String} componentName Name of component.
+   @return {Object}
+   */
+  getDefaultDeveloperUserSetting(componentName) {
+    let settingName = defaultSettingName;
+
+    let ret;
+    if (this.currentAppPage in  this.defaultDeveloperUserSettings &&
+      componentName in this.defaultDeveloperUserSettings[this.currentAppPage] &&
+      settingName in this.defaultDeveloperUserSettings[this.currentAppPage][componentName]
+    ) {
+      ret = this.defaultDeveloperUserSettings[this.currentAppPage][componentName][settingName];
     }
 
     return ret;

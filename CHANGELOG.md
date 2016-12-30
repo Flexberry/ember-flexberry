@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Changed cursor style for `colsconfig-dialog-content`.
 
 ### Fixed
+* Fix `developerUserSettings` reset.
 * Fix `menuInRow` for `object-list-view`.
 * Fix inability to resize columns in `flexberry-objectlistview`, `flexberry-groupedit` and `flexberry-simpleolv` components if `tableStriped`, `rowClickable` or `customTableClass` property was changed.
 * Fix file download in `flexberry-file` when `uploadUrl` was changed.
@@ -119,7 +120,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix behavior in IE and FF.
     * Fix two way binding problems in IE and FF.
     * Fix readonly mode in IE and FF.
-    
+
 ### Known issues
 * Changes in per page records count in `flexberry-objectlistview` component leads to it's hanging in IE.
 * Incomprehensible one-way binding of `flexberry-lookup` `value` property in a new detail inside `flexberry-groupedit`.

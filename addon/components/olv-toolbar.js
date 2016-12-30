@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 const { getOwner } = Ember;
 
 /**
@@ -418,7 +419,7 @@ export default FlexberryBaseComponent.extend({
           let colsConfig = this.listNamedUserSettings[namedSetting];
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
-              let sort = this.get('controller.currentController')._serializeSortingParam(colsConfig.sorting);
+              let sort = serializeSortingParam(colsConfig.sorting);
               this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
             });
           break;
@@ -438,9 +439,11 @@ export default FlexberryBaseComponent.extend({
             break;
           }
 
-          userSettingsService.deleteUserSetting(componentName)
+          let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+          userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
           .then(record => {
-            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: 5 } });
+            let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
+            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
           });
           break;
         case 'unhide icon':

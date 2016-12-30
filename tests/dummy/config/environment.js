@@ -48,7 +48,7 @@ module.exports = function(environment) {
         storeDebugMessages: true,
         storeDeprecationMessages: true,
         storePromiseErrors: true,
-        showPromiseErrors: false,
+        showPromiseErrors: true,
       },
 
       perf: {

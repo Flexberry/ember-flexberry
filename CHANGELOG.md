@@ -27,6 +27,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix `flexberry-objectlistview` on `edit-form` predicate which contains model fields.
 * Redundant saving of agregator when transitioning to detail edit form.
 * Fix `allowColumnResize` in `flexberry-simpleolv`.
+* Fix reduntant confirm dialog in `colsconfig-dialog`.
+* Option `rowClickable` for `flexberry-simpleolv` component lives up to its name.
 
 ## [0.8.0] - 2016-12-13
 ### Added

@@ -69,7 +69,7 @@
               <div class="ui action input">
                 <input id="columnConfigurtionSettingName" type='input' name='configName'
                   placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'
-                  {{action "setConfigName" n on="focusOut"}}>
+                  {{action "setConfigName" n on="change"}}>
                 <div id="columnConfigurtionButtonSave" class="ui small button disabled" {{action 'saveColsSetting'}}>
                   {{t "components.colsconfig-dialog-content.save"}}
                 </div>

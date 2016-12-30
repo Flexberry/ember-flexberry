@@ -1152,7 +1152,9 @@ ErrorableControllerMixin, {
       }
     });
 
-    this._reinitResizablePlugin();
+    if (this.get('allowColumnResize')) {
+      this._reinitResizablePlugin();
+    }
   },
 
   _setColumnsUserSettings() {

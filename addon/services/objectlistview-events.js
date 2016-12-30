@@ -151,5 +151,18 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   resetFiltersTrigger(componentName) {
     this.trigger('resetFilters', componentName);
+  },
+
+  /**
+    Trigger for "geSortApply" event in object-list-view.
+    Event name: geSortApply.
+
+    @method geSortApplyTrigger
+
+    @param {String} componentName The name of object-list-view component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  geSortApplyTrigger(componentName, sorting) {
+    this.trigger('geSortApply', componentName, sorting);
   }
 });

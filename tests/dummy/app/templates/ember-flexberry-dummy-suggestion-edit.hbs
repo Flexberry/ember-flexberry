@@ -136,7 +136,7 @@
       content=model.files
       mainModelProjection=modelProjection
       modelProjection=modelProjection.attributes.files
-      orderable=false
+      orderable=true
       readonly=readonly
       configurateRow=(action 'configurateRow')
     }}
@@ -149,7 +149,7 @@
       content=model.userVotes
       mainModelProjection=modelProjection
       modelProjection=modelProjection.attributes.userVotes
-      orderable=false
+      orderable=true
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
@@ -166,7 +166,7 @@
       editOnSeparateRoute=true
       editFormRoute=commentsEditRoute
       saveBeforeRouteLeave=true
-      orderable=false
+      orderable=true
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.comments pointing="pointing"}}

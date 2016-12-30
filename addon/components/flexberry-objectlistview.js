@@ -630,25 +630,27 @@ export default FlexberryBaseComponent.extend({
       @param {Object} options Different parameters to handle action.
     */
     objectListViewRowClick(record, options) {
-      let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
-      Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
-        if (this.get('componentMode') === 'lookupform') {
-          this.sendAction('action', record);
-        } else {
-          let editFormRoute = this.get('editFormRoute');
-          Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
-          if (Ember.isNone(options)) {
-            options = {};
-            options.editFormRoute = editFormRoute;
+      if (this.get('rowClickable') && !this.get('readonly')) {
+        let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
+        Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
+          if (this.get('componentMode') === 'lookupform') {
+            this.sendAction('action', record);
           } else {
-            options = Ember.merge(options, { editFormRoute: editFormRoute });
+            let editFormRoute = this.get('editFormRoute');
+            Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
+            if (Ember.isNone(options)) {
+              options = {};
+              options.editFormRoute = editFormRoute;
+            } else {
+              options = Ember.merge(options, { editFormRoute: editFormRoute });
+            }
+
+            this.sendAction('action', record, options);
           }
+        });
 
-          this.sendAction('action', record, options);
-        }
-      });
-
-      this._setActiveRow($clickedRow);
+        this._setActiveRow($clickedRow);
+      }
     },
 
     /**

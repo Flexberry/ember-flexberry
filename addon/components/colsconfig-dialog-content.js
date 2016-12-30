@@ -355,6 +355,7 @@ export default FlexberryBaseComponent.extend({
             this.get('i18n').t('components.colsconfig-dialog-content.is-saved'));
           this.set('currentController.message.message', '');
           Ember.$('#columnConfigurtionButtonSave')[0].className += ' disabled';
+          this._isChanged = false;
         },
         error => {
           this.set('currentController.message.type', 'error');

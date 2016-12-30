@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Shift date one day ahead when saving model after choosing date with `flexberry-datepicker` component.
 * Fix `flexberry-objectlistview` on `edit-form` predicate which contains model fields.
 * Redundant saving of agregator when transitioning to detail edit form.
+* Fix `allowColumnResize` in `flexberry-simpleolv`.
 * Fix reduntant confirm dialog in `colsconfig-dialog`.
 * Option `rowClickable` for `flexberry-simpleolv` component lives up to its name.
 

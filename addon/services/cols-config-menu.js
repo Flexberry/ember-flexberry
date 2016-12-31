@@ -7,7 +7,7 @@ import Ember from 'ember';
 /**
  * Service to work with column configuration menu
  *
- * @class DetailInterationService
+ * @class ColsConfigMenuService
  * @extends Ember.Service
  * @public
  */

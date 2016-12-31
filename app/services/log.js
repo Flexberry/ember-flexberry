@@ -51,4 +51,18 @@ if (Ember.typeOf(storeDeprecationMessages) === 'boolean') {
   });
 }
 
+let storePromiseErrors = Ember.get(config, 'APP.log.storePromiseErrors');
+if (Ember.typeOf(storePromiseErrors) === 'boolean') {
+  LogService.reopen({
+    storePromiseErrors: storePromiseErrors
+  });
+}
+
+let showPromiseErrors = Ember.get(config, 'APP.log.showPromiseErrors');
+if (Ember.typeOf(showPromiseErrors) === 'boolean') {
+  LogService.reopen({
+    showPromiseErrors: showPromiseErrors
+  });
+}
+
 export default LogService;

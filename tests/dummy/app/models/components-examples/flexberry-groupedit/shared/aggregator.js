@@ -28,6 +28,14 @@ Model.defineProjection('AggregatorE', 'components-examples/flexberry-groupedit/s
   })
 });
 
+// Edit form projection for test 'configurate row'.
+Model.defineProjection('ConfigurateRowView', 'components-examples/flexberry-groupedit/shared/aggregator', {
+  details: Projection.hasMany('components-examples/flexberry-groupedit/shared/detail', 'Details', {
+    flag: Projection.attr('Flag'),
+    text: Projection.attr('Text')
+  })
+});
+
 // Projection for testing displaying changes on GE after manual model update.
 Model.defineProjection('ManualModelUpdateView', 'components-examples/flexberry-groupedit/shared/aggregator', {
   details: Projection.hasMany('components-examples/flexberry-groupedit/shared/detail', 'Details', {

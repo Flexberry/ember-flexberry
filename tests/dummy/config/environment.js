@@ -2,6 +2,12 @@
 
 module.exports = function(environment) {
   var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
+
+  if (environment === 'development-loc') {
+    // Use `ember s -e development-loc` command for local backend usage.
+    backendUrl = 'http://localhost:6501';
+  }
+
   var ENV = {
     modulePrefix: 'dummy',
     environment: environment,
@@ -34,7 +40,19 @@ module.exports = function(environment) {
         enabled: true,
 
         // Flag: indicates whether to store error messages or not.
-        storeErrorMessages: true
+        storeErrorMessages: true,
+
+        storeWarnMessages: true,
+        storeLogMessages: false,
+        storeInfoMessages: true,
+        storeDebugMessages: true,
+        storeDeprecationMessages: true,
+        storePromiseErrors: true,
+        showPromiseErrors: true,
+      },
+
+      perf: {
+        enabled: false,
       },
 
       // Settings lock.

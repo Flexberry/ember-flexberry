@@ -235,11 +235,12 @@ var ModelBlueprint = (function () {
             }
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
-            projections.push("  model.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
+            projections.push("  modelClass.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
         }
         return "\n" + projections.join("\n") + "\n";
     };
     return ModelBlueprint;
 }());
-exports.__esModule = true;
-exports["default"] = ModelBlueprint;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = ModelBlueprint;
+//# sourceMappingURL=ModelBlueprint.js.map

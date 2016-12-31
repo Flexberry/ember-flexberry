@@ -53,6 +53,10 @@ export default ListFormController.extend({
     }
 
     let projections = this.get('_projections');
+    if ((Ember.isNone(projections)) && (this.get('model.content') === undefined)) {
+      return {}; // модель не загрузилась ещё, свойство пересчитывается, потому что грузится страница.
+    }
+
     if (Ember.isNone(projections)) {
       return null;
     }
@@ -251,6 +255,8 @@ export default ListFormController.extend({
     '  orderable=orderable<br>' +
     '  filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
     '  filterText=filter<br>' +
+    '  filterByAnyWord=filterByAnyWord<br>' +
+    '  filterByAllWords=filterByAllWords<br>' +
     '  sorting=computedSorting<br>' +
     '  sortByColumn=(action \"sortByColumn\")<br>' +
     '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
@@ -270,7 +276,7 @@ export default ListFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
+  componentSettingsMetadata: Ember.computed('i18n.locale', 'model.content', function() {
     let componentSettingsMetadata = Ember.A();
 
     componentSettingsMetadata.pushObject({
@@ -359,6 +365,18 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'filterButton'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'filterByAnyWord',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'filterByAnyWord'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'filterByAllWords',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'filterByAllWords'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'refreshButton',
       settingType: 'boolean',
       settingDefaultValue: false,
@@ -408,6 +426,14 @@ export default ListFormController.extend({
     });
 
     return componentSettingsMetadata;
+  }),
+
+  showLoadingTbodyClass: Ember.computed('model.content', function() {
+    if (this.get('model.content') === undefined) {
+      return true;
+    } else {
+      return false;
+    }
   }),
 
   _enableFilters: Ember.observer('enableFilters', function() {

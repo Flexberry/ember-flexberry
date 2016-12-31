@@ -2,138 +2,118 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   /**
-    Serialized model date.
+    Datetime picker type.
 
-    @property _serializedModelDate
+    @property type
     @type String
-    @private
-   */
-  _serializedModelDate: undefined,
+    @default 'datetime-local'
+  */
+  type: 'datetime-local',
 
   /**
-    Serialized min date.
+    Enabled default date value.
 
-    @property _serializedMinDate
-    @type String
+    @property _value
+    @type Boolean
+    @default false
     @private
-   */
-  _serializedMinDate: undefined,
+  */
+  _value: false,
 
   /**
-    Serialized max date.
+    Store real date value.
 
-    @property _serializedMaxDate
-    @type String
-    @private
-   */
-  _serializedMaxDate: undefined,
+    @property __value
+    @type Date
+  */
+  __value: undefined,
 
   /**
-    Handles changes in serialized model date.
+    Instead of `model.date` value.
 
-    @method _serializedModelDateDidChange
-    @private
-   */
-  _serializedModelDateDidChange: Ember.observer('_serializedModelDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedModelDate', 'model.date');
+    @property value
+    @type Date
+  */
+  value: Ember.computed('_value', '__value', {
+    get() {
+      let value = this.get('__value');
+      if (value === undefined) {
+        return this.get('_value') ? new Date() : undefined;
+      } else {
+        return value;
+      }
+    },
+    set(key, value) {
+      if (typeof value === 'boolean') {
+        return this.set('_value', value) ? new Date() : undefined;
+      } else {
+        return this.set('__value', value);
+      }
+    },
   }),
 
   /**
-    Handles changes in min date.
+    Enabled min date value.
 
-    @method _serializedMinDateDidChange
+    @property _min
+    @type Boolean
+    @default true
     @private
-   */
-  _serializedMinDateDidChange: Ember.observer('_serializedMinDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedMinDate', 'min');
+  */
+  _min: true,
+
+  /**
+    Minimum value of this component.
+
+    @property min
+    @type Date
+    @default 'seven days under'
+  */
+  min: Ember.computed('_min', {
+    get() {
+      let min = new Date();
+      min.setDate(min.getDate() - 7);
+      return this.get('_min') ? min : null;
+    },
+    set(key, value) {
+      let min = new Date();
+      min.setDate(min.getDate() - 7);
+      return this.set('_min', value) ? min : null;
+    },
   }),
 
   /**
-    Handles changes in serialized max date.
+    Enabled max date value.
 
-    @method _serializedMaxDateDidChange
+    @property _max
+    @type Boolean
+    @default true
     @private
-   */
-  _serializedMaxDateDidChange: Ember.observer('_serializedMaxDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedMaxDate', 'max');
-  }),
+  */
+  _max: true,
 
-  /**
-    Handles changes in model date.
-
-    @method _modelDateDidChange
-    @private
-   */
-  _modelDateDidChange: Ember.observer('model.date', function() {
-    Ember.run.once(this, '_changeSerializedDateProperty', '_serializedModelDate', 'model.date');
-  }),
-
-  /**
-    Handles changes in some of the serialized date properties.
-
-    @method _changeDateProperty
-    @param {String} serializedDatePropertyName Name of serialized date property.
-    @param {Date} datePropertyName Name of date property which need to be parsed.
-    @private
-   */
-  _changeDateProperty(serializedDatePropertyName, datePropertyName) {
-    let serializedDate = this.get(serializedDatePropertyName);
-    if (Ember.typeOf(serializedDate) === 'undefined') {
-      return;
-    }
-
-    if (serializedDate === '') {
-      this.set(datePropertyName, null);
-      return;
-    }
-
-    let momentDate = this.get('moment').moment(serializedDate);
-    if (momentDate.isValid()) {
-      this.set(datePropertyName, momentDate.toDate());
-    } else {
-      this.set(datePropertyName, new Date('invalid'));
-    }
-  },
-
-  /**
-    Handles changes in some of the date properties.
-
-    @method _changeSerializedDateProperty
-    @param {String} serializedDatePropertyName Name of serialized date property which need to be changed.
-    @param {Date} datePropertyName Name of date property which contains value.
-    @private
-   */
-  _changeSerializedDateProperty(serializedDatePropertyName, datePropertyName) {
-    let date = this.get(datePropertyName);
-    if (date === null || Ember.typeOf(date) === 'undefined') {
-      return;
-    }
-
-    let momentDate = this.get('moment').moment(date);
-    if (momentDate.isValid()) {
-      this.set(serializedDatePropertyName, momentDate.format('YYYY-MM-DDTHH:MM'));
-    } else {
-      this.set(serializedDatePropertyName, '' + new Date('invalid'));
-    }
-  },
-
-  /**
-   Minimum value of this component.
-
-   @property min
-   @type Date
-   */
-  min: undefined,
   /**
     Maximum value of this component.
 
-   @property max
-   @type Date
+    @property max
+    @type Date
+    @default 'seven days older'
    */
-  max: undefined,
+  max: Ember.computed('_max', {
+    get() {
+      let max = new Date();
+      max.setDate(max.getDate() + 7);
+      return this.get('_max') ? max : null;
+    },
+    set(key, value) {
+      let max = new Date();
+      max.setDate(max.getDate() + 7);
+      return this.set('_max', value) ? max : null;
+    },
+  }),
 
   /**
-    Flag: indicates whether 'flexberry-simpledatetime' component is in 'readonly' mode or not.
+    Flag indicates whether 'flexberry-simpledatetime' component is in 'readonly' mode or not.
 
     @property readonly
     @type Boolean
@@ -148,7 +128,7 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-simpledatetime<br>' +
-    '  type=\"datetime-local\"<br>' +
+    '  type=type<br>' +
     '  value=model.date<br>' +
     '  min=min<br>' +
     '  max=max<br>' +
@@ -166,30 +146,29 @@ export default Ember.Controller.extend({
 
     componentSettingsMetadata.pushObject({
       settingName: 'type',
-      settingType: 'string',
-      settingValue: 'datetime-local',
-      settingDefaultValue: undefined,
-      settingIsWithoutUI: true
+      settingType: 'enumeration',
+      settingAvailableItems: ['datetime-local', 'datetime', 'date'],
+      settingDefaultValue: 'datetime-local',
+      bindedControllerPropertieName: 'type',
+      bindedControllerPropertieDisplayName: 'type',
     });
     componentSettingsMetadata.pushObject({
       settingName: 'min',
-      settingType: 'date',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: '_serializedMinDate',
-      bindedControllerPropertieDisplayName: 'min'
+      settingType: 'boolean',
+      settingDefaultValue: this.get('min'),
+      bindedControllerPropertieName: 'min',
     });
     componentSettingsMetadata.pushObject({
       settingName: 'max',
-      settingType: 'date',
-      settingDefaultValue: undefined,
-      bindedControllerPropertieName: '_serializedMaxDate',
-      bindedControllerPropertieDisplayName: 'max'
+      settingType: 'boolean',
+      settingDefaultValue: this.get('max'),
+      bindedControllerPropertieName: 'max',
     });
     componentSettingsMetadata.pushObject({
       settingName: 'value',
-      settingType: 'date',
+      settingType: 'boolean',
       settingDefaultValue: undefined,
-      bindedControllerPropertieName: '_serializedModelDate',
+      bindedControllerPropertieName: 'value',
       bindedControllerPropertieDisplayName: 'model.date'
     });
     componentSettingsMetadata.pushObject({
@@ -200,5 +179,5 @@ export default Ember.Controller.extend({
     });
 
     return componentSettingsMetadata;
-  })
+  }),
 });

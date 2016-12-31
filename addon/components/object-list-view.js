@@ -32,6 +32,26 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
+  _contentObserver: Ember.on('init', Ember.observer('content', function() {
+    this._setContent(this.get('componentName'));
+  })),
+
+  sortTitle: t('components.object-list-view.header-title-attr'),
+
+  /**
+    Title for table headers.
+
+    @property sortTitleCompute
+    @type String
+  */
+  sortTitleCompute: Ember.computed('orderable', 'sortTitle', function() {
+    if (this.get('orderable')) {
+      return this.get('sortTitle');
+    } else {
+      return '';
+    }
+  }),
+
   /**
     Model projection which should be used to display given content.
     Accepts object or name projections.
@@ -146,6 +166,15 @@ export default FlexberryBaseComponent.extend(
   rowClickable: true,
 
   /**
+    Flag indicates whether component on edit form (for FOLV).
+
+    @property onEditForm
+    @type Boolean
+    @default false
+  */
+  onEditForm: false,
+
+  /**
     Custom classes for table.
 
     @example
@@ -170,9 +199,10 @@ export default FlexberryBaseComponent.extend(
     @type String
     @readOnly
   */
-  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', function() {
+  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', 'allowColumnResize', function() {
     let tableStriped = this.get('tableStriped');
     let rowClickable = this.get('rowClickable');
+    let allowColumnResize = this.get('allowColumnResize');
     let classes = this.get('customTableClass');
 
     if (tableStriped) {
@@ -181,6 +211,10 @@ export default FlexberryBaseComponent.extend(
 
     if (rowClickable) {
       classes += ' selectable';
+    }
+
+    if (allowColumnResize) {
+      classes += ' fixed JColResizer';
     }
 
     return classes;
@@ -196,18 +230,6 @@ export default FlexberryBaseComponent.extend(
   appConfigSettingsPath: 'APP.components.objectListView',
 
   /**
-    Default cell component that will be used to display values in columns headers.
-
-    @property {Object} headerCellComponent
-    @property {String} [headerCellComponent.componentName='object-list-view-header-cell']
-    @property {String} [headerCellComponent.componentProperties=null]
-  */
-  headerCellComponent: {
-    componentName: 'object-list-view-header-cell',
-    componentProperties: null,
-  },
-
-  /**
     Default cell component that will be used to display values in columns cells.
 
     @property {Object} cellComponent
@@ -215,12 +237,21 @@ export default FlexberryBaseComponent.extend(
     @property {String} [cellComponent.componentProperties=null]
   */
   cellComponent: {
-    componentName: 'object-list-view-cell',
+    componentName: undefined,
     componentProperties: null,
   },
 
   /**
-    Flag: indicates whether to show asterisk icon in first column of every changed row.
+    Flag: indicates whether to show validation messages in every row or not.
+
+    @property showValidationMessages
+    @type Boolean
+    @default false
+  */
+  showValidationMessagesInRow: false,
+
+  /**
+    Flag indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
     @type Boolean
@@ -252,7 +283,7 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @default false
   */
-  notUseUserSettings:false,
+  notUseUserSettings: false,
 
   /**
     Flag indicates whether to show helper column or not.
@@ -267,12 +298,12 @@ export default FlexberryBaseComponent.extend(
     'showDeleteButtonInRow',
     'modelProjection',
     function() {
-    if (this.get('modelProjection')) {
-      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
-    } else {
-      return false;
-    }
-  }),
+      if (this.get('modelProjection')) {
+        return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+      } else {
+        return false;
+      }
+    }),
 
   /**
     Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
@@ -336,24 +367,31 @@ export default FlexberryBaseComponent.extend(
     @type Object[]
     @readOnly
   */
-  columns: Ember.computed('modelProjection', 'enableFilters', function() {
+  columns: Ember.computed('modelProjection', 'enableFilters', 'content', function() {
     let ret;
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      Ember.Logger.error('Property \'modelProjection\' is undefined.');
-      return [];
+      throw new Error('Property \'modelProjection\' is undefined.');
     }
 
     let cols = this._generateColumns(projection.attributes);
+    let userSettings;
     if (this.notUseUserSettings === true) {
-      // flexberry-groupedit and lookup-dialog-content set this flag to true and don't use userSettings.
+
+      // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
       // In future release backend can save userSettings for each olv.
-      return cols;
+      userSettings = this.get('currentController.developerUserSettings');
+      userSettings = userSettings ? userSettings[this.get('componentName')] : undefined;
+      userSettings = userSettings ? userSettings.DEFAULT : undefined;
+    } else {
+      userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }
 
-    let userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
-    if (userSettings && userSettings.colsOrder !== undefined) {
+    let onEditForm = this.get('onEditForm');
+
+    // TODO: add userSettings support on edit form.
+    if (userSettings && !onEditForm) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {
         let col = cols[i];
@@ -376,14 +414,26 @@ export default FlexberryBaseComponent.extend(
         namedCols[propName].sortNumber = i + 1;
       }
 
-      ret = [];
-      for (let i = 0; i < userSettings.colsOrder.length; i++) {
-        let userSetting = userSettings.colsOrder[i];
-        if (!userSetting.hide) {
-          let propName = userSetting.propName;
-          let col = namedCols[propName];
-          ret[ret.length] = col;
+      if (userSettings.colsOrder !== undefined) {
+        ret = [];
+        for (let i = 0; i < userSettings.colsOrder.length; i++) {
+          let userSetting = userSettings.colsOrder[i];
+          if (!userSetting.hide) {
+            let propName = userSetting.propName;
+            let col = namedCols[propName];
+            ret[ret.length] = col;
+          }
         }
+      } else {
+        if (this.currentController) {
+          if (this.currentController.userSettings === undefined) {
+            Ember.set(this.currentController, 'userSettings', {});
+          }
+
+          Ember.set(this.currentController.userSettings, 'colsOrder', cols);
+        }
+
+        ret = cols;
       }
     } else {
       if (this.currentController) {
@@ -461,6 +511,53 @@ export default FlexberryBaseComponent.extend(
   */
   contentWithKeys: null,
 
+  contentForRender: null,
+
+  /**
+    Flag indicates whether row by row loading mode on.
+
+    @property useRowByRowLoading
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoading: false,
+
+  /**
+    Flag indicates whether to show row by row loading in progress.
+
+    @property rowByRowLoadingProgress
+    @type Boolean
+    @default false
+  */
+  rowByRowLoadingProgress: false,
+
+  /**
+    Flag indicates whether to use bottom row by row loading progress while rows in loading state.
+
+    @property useRowByRowLoadingProgress
+    @type Boolean
+    @default false
+  */
+  useRowByRowLoadingProgress: false,
+
+  /**
+    Flag indicates whether some rows are not loaded yet.
+
+    @property rowsInLoadingState
+    @type Boolean
+    @default false
+  */
+  rowsInLoadingState: false,
+
+  /**
+    Class loading for tbody.
+
+    @property showLoadingTbodyClass
+    @type Boolean
+    @defaul false
+  */
+  showLoadingTbodyClass: false,
+
   /**
     Flag indicates whether content is defined.
 
@@ -478,17 +575,17 @@ export default FlexberryBaseComponent.extend(
     @property placeholder
     @type String
     @default 't('components.object-list-view.placeholder')'
-   */
+  */
   placeholder: t('components.object-list-view.placeholder'),
 
   /**
     Flag indicates whether table headers are clickable.
 
-    @property headerClickable
+    @property orderable
     @type Boolean
     @default false
   */
-  headerClickable: false,
+  orderable: false,
 
   /**
     Dictionary with sorting data related to columns.
@@ -565,12 +662,52 @@ export default FlexberryBaseComponent.extend(
       ```
     @method configurateRow
 
-    @param {Object} config Settings for row.
+    @param {Object} rowConfig Settings for row.
                             See {{#crossLink "ObjectListView/defaultRowConfig:property"}}{{/crossLink}}
                             property for details
     @param {DS.Model} record The record in row.
   */
   configurateRow: undefined,
+
+  /**
+    Hook for configurate selected rows.
+
+    @example
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-objectlistview
+        ...
+        configurateSelectedRows=(action "configurateSelectedRows")
+        ...
+      }}
+      ```
+
+      ```js
+      // app/controllers/employees.js
+      import ListFormController from './list-form';
+
+      export default ListFormController.extend({
+        actions: {
+          configurateSelectedRows(selectedRecords) {
+            // do something
+          }
+        }
+      });
+      ```
+    @method configurateSelectedRows
+
+    @param {DS.Model[]} selectedRecords All selected records.
+  */
+  configurateSelectedRows: undefined,
+
+  selectedRowsChanged: Ember.observer('selectedRecords.@each', function() {
+    let selectedRecords = this.get('selectedRecords');
+    let configurateSelectedRows = this.get('configurateSelectedRows');
+    if (configurateSelectedRows) {
+      Ember.assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
+      configurateSelectedRows(selectedRecords);
+    }
+  }),
 
   /**
     Default settings for rows.
@@ -641,6 +778,7 @@ export default FlexberryBaseComponent.extend(
   componentName: '',
 
   actions: {
+
     /**
       This action is called when user click on row.
 
@@ -650,24 +788,37 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     rowClick(recordWithKey, e) {
+      let editOnSeparateRoute = this.get('editOnSeparateRoute');
       if (this.get('readonly')) {
-        return;
+        if (!editOnSeparateRoute) {
+          return;
+        }
       }
 
       if (this.rowClickable) {
+        let recordKey = recordWithKey && recordWithKey.key;
+        let recordData = recordWithKey && recordWithKey.data;
+
+        let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
+
+        Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
+          this.sendAction('action', recordData, {
+            onEditForm: this.get('onEditForm'),
+            saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
+            editOnSeparateRoute: editOnSeparateRoute,
+            modelName: this.get('modelProjection').modelName,
+            detailArray: this.get('content'),
+            readonly: this.get('readonly')
+          });
+        });
+
+        this._setActiveRecord(recordKey);
+
         if (!editOnSeparateRoute) {
           // It is necessary only when we will not go to other route on click.
-          this.set('selectedRecord', recordWithKey.data);
-          this._setActiveRecord(recordWithKey.key);
+          this.set('selectedRecord', recordData);
         }
-
-        this.sendAction('action', recordWithKey ? recordWithKey.data : undefined, {
-          saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
-          editOnSeparateRoute: editOnSeparateRoute,
-          modelName: this.get('modelProjection').modelName,
-          detailArray: this.get('content'),
-        });
       }
     },
 
@@ -680,9 +831,11 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on column.
     */
     headerCellClick(column, e) {
-      if (!this.headerClickable || column.sortable === false) {
+      if (!this.orderable || column.sortable === false) {
         return;
       }
+
+      this.set('showLoadingTbodyClass', true);
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
@@ -711,6 +864,7 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
+      this.send('dismissErrorMessages');
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 
@@ -744,89 +898,15 @@ export default FlexberryBaseComponent.extend(
 
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
-    },
-
-    /**
-      Configurate items menu in row.
-
-      @method actions.menuInRowConfigurateItems
-      @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {Object} menuItems Menu items in row
-    */
-    menuInRowConfigurateItems(recordWithKey, menuItems) {
-      let menuInRowSubItems = [];
-      if (this.get('showEditMenuItemInRow') && recordWithKey.rowConfig.canBeSelected) {
-        menuInRowSubItems.push({
-          icon: 'edit icon',
-          title: this.get('i18n').t('components.object-list-view.menu-in-row.edit-menu-item-title') || 'Edit record',
-          isEditItem: true,
-        });
-      }
-
-      if (this.get('showDeleteMenuItemInRow') && recordWithKey.rowConfig.canBeDeleted) {
-        menuInRowSubItems.push({
-          icon: 'trash icon',
-          title: this.get('i18n').t('components.object-list-view.menu-in-row.delete-menu-item-title') || 'Delete record',
-          isDeleteItem: true,
-        });
-      }
-
-      if (this.get('menuInRowHasAdditionalItems')) {
-        menuInRowSubItems.push(...this.get('menuInRowAdditionalItems'));
-      }
-
-      menuItems.push({
-        icon: 'list layout icon',
-        itemsAlignment: 'left',
-        items: menuInRowSubItems,
-      });
-    },
-
-    /**
-      This action is called when user click on item menu.
-
-      @method actions.menuInRowItemClick
-      @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on item menu
-    */
-    menuInRowItemClick(recordWithKey, e) {
-      if (this.get('readonly')) {
-        return;
-      }
-
-      if (!e.item) {
-        return;
-      }
-
-      if (e.item.isDeleteItem) {
-        this.send('deleteRow', recordWithKey);
-        return;
-      }
-
-      if (e.item.isEditItem) {
-        this.send('rowClick', recordWithKey);
-        return;
-      }
-
-      // Call onClick handler if it is specified in the given menu item.
-      if (e.item && Ember.typeOf(e.item.onClick) === 'function') {
-        e.modelKey = recordWithKey.key;
-        e.model = recordWithKey.data;
-
-        e.item.onClick.call(e.currentTarget, e);
-      }
     }
   },
 
   /**
     An overridable method called when objects are instantiated.
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
-   */
+  */
   init() {
     this._super(...arguments);
-
     Ember.assert('ObjectListView must have componentName attribute.', this.get('componentName'));
 
     if (!this.get('disableHierarchicalMode')) {
@@ -843,39 +923,26 @@ export default FlexberryBaseComponent.extend(
     }
 
     this.set('selectedRecords', Ember.A());
-    this.set('contentWithKeys', Ember.A());
-
-    this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
-    this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
-    this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
-    this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
-
-    let content = this.get('content');
-    if (content) {
-      if (content.get('isFulfilled') === false) {
-        content.then((items) => {
-          items.forEach((item) => {
-            this._addModel(item);
-          });
-        });
-      } else {
-        content.forEach((item) => {
-          this._addModel(item);
-        });
-      }
-    }
 
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
       this.addObserver('content.[]', this, this._contentDidChange);
     }
 
-    let attrsArray = this._getAttributesName();
-    content.forEach((record) => {
-      attrsArray.forEach((attrName) => {
-        Ember.addObserver(record, attrName, this, '_attributeChanged');
+    this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
+    this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
+    this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
+    this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
+
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.on('showLoadingTbodyClass', (componentName, showLoadingTbodyClass) => {
+        if (componentName === this.get('componentName')) {
+          this.set('showLoadingTbodyClass', showLoadingTbodyClass);
+        }
       });
-    });
+    }
   },
 
   /**
@@ -885,11 +952,6 @@ export default FlexberryBaseComponent.extend(
   didInsertElement() {
     this._super(...arguments);
 
-    if (!(this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow'))) {
-      this.$('thead tr th:eq(1)').css('border-left', 'none');
-      this.$('tbody tr').find('td:eq(1)').css('border-left', 'none');
-    }
-
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -897,7 +959,20 @@ export default FlexberryBaseComponent.extend(
       }
     }
 
-    let columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+    if (this.get('onEditForm')) {
+      this.get('currentController').getCustomContent();
+    }
+
+    let columnWidth;
+    if (this.notUseUserSettings) {
+      columnWidth = this.get('currentController.developerUserSettings');
+      columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
+      columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
+      columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
+    } else {
+      columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+    }
+
     if (columnWidth !== undefined) {
       this._setColumnWidths(columnWidth);
     }
@@ -906,10 +981,27 @@ export default FlexberryBaseComponent.extend(
     this.$('.flexberry-dropdown:last').dropdown({
       direction: 'upward'
     });
-
-    // The last flexberry-menu need will be up.
-    this.$('.flexberry-menu:last').addClass('bottom');
   },
+
+  /**
+    Flag indicates whether columns resizable plugin already was initialized.
+
+    @property _colResizableInit
+    @type Boolean
+    @default false
+    @private
+  */
+  _colResizableInit: false,
+
+  /**
+    Field contains index for already rendered row.
+
+    @property _colResizableInit
+    @type Number
+    @default -1
+    @private
+  */
+  _renderedRowIndex: -1,
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
@@ -918,13 +1010,90 @@ export default FlexberryBaseComponent.extend(
   didRender() {
     this._super(...arguments);
 
-    let $currentTable = this.$('table.object-list-view');
-    if (this.get('allowColumnResize')) {
-      $currentTable.addClass('fixed');
-      this._reinitResizablePlugin();
+    // Start row by row rendering at first row.
+    if (this.get('useRowByRowLoading')) {
+      let contentForRender = this.get('contentForRender');
+      if (contentForRender) {
+        let contentLength = contentForRender.get('length');
+        if (contentLength > 0) {
+          let renderedRowIndex = this.get('_renderedRowIndex') + 1;
+
+          if (renderedRowIndex >= contentLength) {
+
+            // Remove long loading spinners.
+            this.set('rowByRowLoadingProgress', false);
+            this.set('showLoadingTbodyClass', false);
+
+            this.set('_renderedRowIndex', -1);
+
+            if (this.rowClickable) {
+              let key = this._getModelKey(this.selectedRecord);
+              if (key) {
+                this._setActiveRecord(key);
+              }
+            }
+
+            let columnWidth;
+            if (this.notUseUserSettings) {
+              columnWidth = this.get('currentController.developerUserSettings');
+              columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
+              columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
+              columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
+            } else {
+              columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+            }
+
+            if (columnWidth !== undefined) {
+              this._setColumnWidths(columnWidth);
+            }
+
+            let $currentTable = this.$('table.object-list-view');
+            if (this.get('allowColumnResize')) {
+              $currentTable.addClass('fixed');
+              this._reinitResizablePlugin();
+            } else {
+              $currentTable.colResizable({ disable: true });
+            }
+          } else {
+            // Start render row.
+            let modelWithKey = contentForRender[renderedRowIndex];
+            if (!modelWithKey.get('doRenderData')) {
+              modelWithKey.set('doRenderData', true);
+              this.set('_renderedRowIndex', renderedRowIndex);
+
+              if (renderedRowIndex === 0) {
+                if (this.get('useRowByRowLoadingProgress')) {
+                  // Set loading progress.
+                  this.set('rowByRowLoadingProgress', true);
+                }
+              }
+            }
+          }
+        }
+      }
     } else {
-      $currentTable.colResizable({ disable: true });
+
+      if (!this._colResizableInit) {
+        let $currentTable = this.$('table.object-list-view');
+        if (this.get('allowColumnResize')) {
+          $currentTable.addClass('fixed');
+          this._reinitResizablePlugin();
+        } else {
+          $currentTable.colResizable({ disable: true });
+        }
+
+        this.set('_colResizableInit', true);
+      }
+
+      this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     }
+
+    this.$('.object-list-view-menu > .ui.dropdown').dropdown();
+
+    // The last menu needs will be up.
+    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+
+    this._setCurrentColumnsWidth();
   },
 
   /**
@@ -938,17 +1107,9 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
+    this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
 
     this._super(...arguments);
-
-    let content = this.get('content');
-    let attrsArray = this._getAttributesName();
-
-    content.forEach((record) => {
-      attrsArray.forEach((attrName) => {
-        Ember.removeObserver(record, attrName, this, '_attributeChanged');
-      });
-    });
   },
 
   /**
@@ -957,6 +1118,11 @@ export default FlexberryBaseComponent.extend(
   */
   willDestroyElement() {
     this._super(...arguments);
+
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.off('showLoadingTbodyClass');
+    }
   },
 
   /**
@@ -974,7 +1140,7 @@ export default FlexberryBaseComponent.extend(
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode:'flex',
+      resizeMode: 'flex',
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);
@@ -1036,6 +1202,7 @@ export default FlexberryBaseComponent.extend(
     @param {Object} eventParams Parameters of the end of column resizing
   */
   _afterColumnResize(eventParams) {
+
     // Send info to service with user settings.
     let userWidthSettings = [];
     let $columns = this.$(eventParams.currentTarget).find('th');
@@ -1053,6 +1220,7 @@ export default FlexberryBaseComponent.extend(
         width: currentColumnWidth,
       });
     });
+    this._setCurrentColumnsWidth();
     this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
   },
 
@@ -1075,7 +1243,7 @@ export default FlexberryBaseComponent.extend(
     }
 
     Ember.assert(
-      'There is no tag with attribute \'data-olv-header-property-name\' at column header.', currentPropertyName);
+    'There is no tag with attribute \'data-olv-header-property-name\' at column header.', currentPropertyName);
     return currentPropertyName;
   },
 
@@ -1096,6 +1264,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let attr = attributes[attrName];
+      Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
         case 'hasMany':
           break;
@@ -1105,7 +1274,7 @@ export default FlexberryBaseComponent.extend(
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
 
-            if (column.cellComponent.componentName === 'object-list-view-cell') {
+            if (column.cellComponent.componentName === undefined) {
               if (attr.options.displayMemberPath) {
                 column.propName += '.' + attr.options.displayMemberPath;
               } else {
@@ -1129,13 +1298,34 @@ export default FlexberryBaseComponent.extend(
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
-
-        default:
-          Ember.Logger.error(`Unknown kind of projection attribute: ${attr.kind}`);
       }
     }
 
     return columnsBuf;
+  },
+
+  /**
+    Set current columns width for currentController.
+
+    @method _setCurrentColumnsWidth
+    @private
+  */
+  _setCurrentColumnsWidth() {
+    if (!Ember.isNone(this.get('currentController'))) {
+      let $columns = this.$('table.object-list-view').find('th');
+      let currentWidths = {};
+      Ember.$.each($columns, (key, item) => {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        Ember.assert('Column property name is not defined', currentPropertyName);
+
+        let currentColumnWidth = currentItem.width();
+        currentColumnWidth = Math.round(currentColumnWidth);
+        currentWidths[currentPropertyName] = currentColumnWidth;
+      });
+
+      this.set('currentController.currentColumnsWidths', currentWidths);
+    }
   },
 
   /**
@@ -1173,6 +1363,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _createColumn(attr, attrName, bindingPath) {
+
     // We get the 'getCellComponent' function directly from the controller,
     // and do not pass this function as a component attrubute,
     // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
@@ -1377,6 +1568,63 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
+    Sets content for component.
+
+    @method _setContent
+    @param {String} componentName Name of the component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  _setContent(componentName, sorting) {
+    if (this.get('componentName') === componentName) {
+      let content = this.get('content');
+      if (content && !content.isLoading) {
+        this.set('rowsInLoadingState', false);
+        this.set('contentWithKeys', Ember.A());
+        this.set('contentForRender', Ember.A());
+        if (content instanceof Ember.RSVP.Promise) {
+          content.then((items) => {
+            items.forEach((item) => {
+              this._addModel(item);
+            });
+          }).then(()=> {
+            this.set('contentWithKeys', this.contentForRender);
+            this.set('showLoadingTbodyClass', false);
+          });
+        } else {
+          content.forEach((item) => {
+            this._addModel(item);
+          });
+          this.set('contentWithKeys', this.contentForRender);
+          this.set('showLoadingTbodyClass', false);
+        }
+      } else {
+        this.set('rowsInLoadingState', true);
+      }
+
+      if (Ember.isArray(sorting)) {
+        let columns = this.get('columns');
+        if (Ember.isArray(columns)) {
+          columns.forEach((column) => {
+            Ember.set(column, 'sorted', false);
+            delete column.sortAscending;
+            delete column.sortNumber;
+            let idPosition = sorting.length;
+            for (let i = 0; i < sorting.length; i++) {
+              if (sorting[i].propName === 'id') {
+                idPosition = i;
+              } else if (column.propName === sorting[i].propName) {
+                Ember.set(column, 'sortAscending', sorting[i].direction === 'asc' ? true : false);
+                Ember.set(column, 'sorted', true);
+                Ember.set(column, 'sortNumber', i > idPosition ? i : i + 1);
+              }
+            }
+          }, this);
+        }
+      }
+    }
+  },
+
+  /**
     Refresh list with the entered filter.
 
     @method _refreshList
@@ -1385,23 +1633,27 @@ export default FlexberryBaseComponent.extend(
   */
   _refreshList(componentName) {
     if (this.get('componentName') === componentName) {
-      if (this.get('enableFilters')) {
-        let filters = {};
-        let hasFilters = false;
-        this.get('columns').forEach((column) => {
-          if (column.filter.pattern && column.filter.condition) {
-            hasFilters = true;
-            filters[column.filter.name] = column.filter;
-          }
-        });
+      if (this.get('onEditForm')) {
+        this.currentController.getCustomContent();
+      } else {
+        if (this.get('enableFilters')) {
+          let filters = {};
+          let hasFilters = false;
+          this.get('columns').forEach((column) => {
+            if (column.filter.pattern && column.filter.condition) {
+              hasFilters = true;
+              filters[column.filter.name] = column.filter;
+            }
+          });
 
-        if (hasFilters) {
-          this.sendAction('applyFilters', filters);
+          if (hasFilters) {
+            this.sendAction('applyFilters', filters);
+          } else {
+            this.get('currentController').send('refreshList');
+          }
         } else {
           this.get('currentController').send('refreshList');
         }
-      } else {
-        this.get('currentController').send('refreshList');
       }
     }
   },
@@ -1414,6 +1666,10 @@ export default FlexberryBaseComponent.extend(
   */
   _getRowByKey(key) {
     let row = null;
+    if (Ember.isBlank(key)) {
+      return row;
+    }
+
     this.$('tbody tr').each(function() {
       let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
       if (currentKey === key) {
@@ -1421,6 +1677,7 @@ export default FlexberryBaseComponent.extend(
         return;
       }
     });
+
     return row;
   },
 
@@ -1431,6 +1688,10 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _getModelKey(record) {
+    if (!this.get('contentWithKeys')) {
+      return null;
+    }
+
     let modelWithKeyItem = this.get('contentWithKeys').findBy('data', record);
     return modelWithKeyItem ? modelWithKeyItem.key : null;
   },
@@ -1479,7 +1740,15 @@ export default FlexberryBaseComponent.extend(
       configurateRow(rowConfig, record);
     }
 
-    this.get('contentWithKeys').pushObject(modelWithKey);
+    if (this.get('useRowByRowLoading')) {
+      let modelIndex = this.get('contentForRender.length');
+      modelWithKey.set('modelIndex', modelIndex);
+      modelWithKey.set('doRenderData', false);
+    } else {
+      modelWithKey.set('doRenderData', true);
+    }
+
+    this.get('contentForRender').pushObject(modelWithKey);
 
     return key;
   },
@@ -1496,6 +1765,7 @@ export default FlexberryBaseComponent.extend(
   _addRow(componentName) {
     if (componentName === this.get('componentName')) {
       if (this.get('editOnSeparateRoute')) {
+
         // Depending on settings current model has to be saved before adding detail.
         this.send('rowClick', undefined, undefined);
       } else {
@@ -1505,11 +1775,6 @@ export default FlexberryBaseComponent.extend(
         this._addModel(modelToAdd);
         this.get('content').addObject(modelToAdd);
         this.get('objectlistviewEventsService').rowAddedTrigger(componentName, modelToAdd);
-
-        let attrsArray = this._getAttributesName();
-        attrsArray.forEach((attrName) => {
-          Ember.addObserver(modelToAdd, attrName, this, '_attributeChanged');
-        });
       }
     }
   },
@@ -1566,18 +1831,15 @@ export default FlexberryBaseComponent.extend(
     let key = this._getModelKey(record);
     this._removeModelWithKey(key);
 
-    this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord() : record.deleteRecord()).catch((reason) => {
+    this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
+      this.sendAction('saveAgregator');
+    }) : record.deleteRecord()).catch((reason) => {
       this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
-      record.rollbackAttributes();
+      record.rollbackAll();
     });
 
     let componentName = this.get('componentName');
     this.get('objectlistviewEventsService').rowDeletedTrigger(componentName, record, immediately);
-
-    let attrsArray = this._getAttributesName();
-    attrsArray.forEach((attrName) => {
-      Ember.removeObserver(record, attrName, this, '_attributeChanged');
-    });
   },
 
   /**
@@ -1612,7 +1874,13 @@ export default FlexberryBaseComponent.extend(
     @param {String} pattern The pattern to filter objects
   */
   _filterByAnyMatch(componentName, pattern) {
-    this.sendAction('filterByAnyMatch', pattern);
+    if (this.get('componentName') === componentName) {
+      let anyWord = this.get('filterByAnyWord');
+      let allWords = this.get('filterByAllWords');
+      Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
+      let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
+      this.sendAction('filterByAnyMatch', pattern, filterCondition);
+    }
   },
 
   /**
@@ -1624,15 +1892,20 @@ export default FlexberryBaseComponent.extend(
     @param {String} key The key of record
   */
   _setActiveRecord(key) {
-    let selectedRow = this._getRowByKey(key);
+    // Hide highlight from previously activated row.
     this.$('tbody tr.active').removeClass('active');
-    selectedRow.addClass('active');
+
+    // Activate specified row.
+    let $selectedRow = this._getRowByKey(key);
+    if ($selectedRow) {
+      $selectedRow.addClass('active');
+    }
   },
 
   // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
   _rowsChanged: Ember.observer('content.@each.dirtyType', function() {
     let content = this.get('content');
-    if (content && content.isAny('dirtyType', 'updated')) {
+    if (content && !(content instanceof Ember.RSVP.Promise) && content.isAny('dirtyType', 'updated')) {
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
     }
@@ -1668,6 +1941,7 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _contentDidChange() {
+
     // Property changing displays automatically.
     let content = this.get('content');
     let contentWithKeys = this.get('contentWithKeys');
@@ -1724,20 +1998,5 @@ export default FlexberryBaseComponent.extend(
     }
 
     return attrsArray;
-  },
-
-  /**
-    That observer is called when change attributes of model.
-
-    @method _attributeChanged
-    @private
-  */
-  _attributeChanged(record, attrName) {
-    let rowConfig = record.get('rowConfig');
-    let configurateRow = this.get('configurateRow');
-    if (configurateRow) {
-      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
-      configurateRow(rowConfig, record);
-    }
   },
 });

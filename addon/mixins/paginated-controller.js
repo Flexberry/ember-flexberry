@@ -30,6 +30,7 @@ import Ember from 'ember';
     {{flexberry-objectlistview
       ...
       pages=pages
+      recordsTotalCount=recordsTotalCount
       perPageValue=perPageValue
       perPageValues=perPageValues
       hasPreviousPage=hasPreviousPage
@@ -52,7 +53,7 @@ export default Ember.Mixin.create({
     @property page
     @type Number
     @default 1
-   */
+  */
   page: 1,
 
   /**
@@ -61,7 +62,7 @@ export default Ember.Mixin.create({
     @property perPage
     @type Number
     @default 5
-   */
+  */
   perPage: 5,
 
   /**
@@ -70,7 +71,7 @@ export default Ember.Mixin.create({
     @property perPageValues
     @type Array
     @default [5, 10, 20, 50]
-   */
+  */
   perPageValues: [5, 10, 20, 50],
 
   /**
@@ -78,18 +79,18 @@ export default Ember.Mixin.create({
 
     @property perPageValue
     @type Number
-   */
+  */
   perPageValue: Ember.computed('perPage', {
     get(key) {
       let perPage = this.get('perPage');
-      let perPageValues = this.get('perPageValues');
+      /*let perPageValues = this.get('perPageValues');
       if (perPageValues.indexOf(perPage) === -1) {
         // Если perPage не будет в perPageValues,
         // то в select-е будет выбрано undefined,
         // => perPage изменится undefined, т.к. на нем биндинг.
         perPageValues.push(perPage);
         perPageValues.sort((a, b) => a - b);
-      }
+      }*/
 
       return perPage;
     },
@@ -121,7 +122,7 @@ export default Ember.Mixin.create({
     @property recordsTotalCount
     @type Number
     @readOnly
-   */
+  */
   recordsTotalCount: Ember.computed('model', function() {
     return this.get('model.meta.count');
   }),
@@ -132,7 +133,7 @@ export default Ember.Mixin.create({
     @property hasNextPage
     @type Boolean
     @readOnly
-   */
+  */
   hasNextPage: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
     let page = this.get('page');
     let lastPage = this._getLastPage();
@@ -145,7 +146,7 @@ export default Ember.Mixin.create({
     @property hasPreviousPage
     @type Boolean
     @readOnly
-   */
+  */
   hasPreviousPage: Ember.computed('page', function() {
     return this.get('page') > 1;
   }),
@@ -161,7 +162,7 @@ export default Ember.Mixin.create({
     @property pages
     @type Array
     @readOnly
-   */
+  */
   pages: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
     let page = this.get('page');
     let lastPage = this._getLastPage();
@@ -229,7 +230,7 @@ export default Ember.Mixin.create({
     @property queryParams
     @type Array
     @default ['page', 'perPage']
-   */
+  */
   queryParams: ['page', 'perPage'],
 
   actions: {
@@ -238,7 +239,7 @@ export default Ember.Mixin.create({
 
       @method actions.gotoPage
       @param {Number} pageNum Number of page.
-     */
+    */
     gotoPage(pageNum) {
       let num = this._checkPageNumber(pageNum);
       this.set('page', num);
@@ -248,7 +249,7 @@ export default Ember.Mixin.create({
       Transition to next page.
 
       @method actions.nextPage
-     */
+    */
     nextPage() {
       let page = this.get('page');
       let nextPage = this._checkPageNumber(page + 1);
@@ -259,7 +260,7 @@ export default Ember.Mixin.create({
       Transition to previous page.
 
       @method actions.previousPage
-     */
+    */
     previousPage() {
       let page = this.get('page');
       let prevPage = this._checkPageNumber(page - 1);
@@ -270,7 +271,7 @@ export default Ember.Mixin.create({
       Transition to last page.
 
       @method actions.lastPage
-     */
+    */
     lastPage() {
       let lastPage = this._getLastPage();
       this.set('page', lastPage);
@@ -280,7 +281,7 @@ export default Ember.Mixin.create({
       Transition to first page.
 
       @method actions.firstPage
-     */
+    */
     firstPage() {
       this.set('page', 1);
     },
@@ -294,7 +295,7 @@ export default Ember.Mixin.create({
     @param {Number} pageNumber Number of page.
     @param {Boolean} isEllipsis If `true` this page not showing in list.
     @private
-   */
+  */
   _addPageNumberIntoArray(arr, pageNumber, isEllipsis) {
     let page = this.get('page');
     arr.push({
@@ -312,9 +313,10 @@ export default Ember.Mixin.create({
     @param {Number} count Total count records.
     @return {Number} Number last page.
     @private
-   */
+  */
   _getLastPage(perPage = this.get('perPage'), count = this.get('recordsTotalCount')) {
-    return Math.ceil(count / perPage);
+    let lastPage = Math.ceil(count / perPage);
+    return lastPage > 0 ? lastPage : 1;
   },
 
   /**
@@ -324,7 +326,7 @@ export default Ember.Mixin.create({
     @param {Number} pageNum Number of page.
     @return {Boolean} If page exists, return `pageNum`, else, return `lastPage`.
     @private
-   */
+  */
   _checkPageNumber(pageNum) {
     const firstPage = 1;
     let lastPage = this._getLastPage();

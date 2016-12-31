@@ -16,6 +16,12 @@ let Model = Projection.Model.extend({
     async: false
   }),
 
+  // This property is for flexberry-groupedit component.
+  details: DS.hasMany('integration-examples/edit-form/validation/detail', {
+    inverse: 'aggregator',
+    async: false
+  }),
+
   // Model validation rules.
   validations: {
     flag: {
@@ -100,6 +106,11 @@ Model.defineProjection('BaseE', 'integration-examples/edit-form/validation/base'
     })
   }, {
     displayMemberPath: 'text'
+  }),
+  details: Projection.hasMany('integration-examples/edit-form/validation/detail', 'details', {
+    flag: Projection.attr('Flag'),
+    number: Projection.attr('Number'),
+    text: Projection.attr('Text')
   })
 });
 

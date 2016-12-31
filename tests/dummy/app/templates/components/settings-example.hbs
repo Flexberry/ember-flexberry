@@ -12,7 +12,7 @@
         <th>{{t "components.settings-example.component-current-settings-caption"}}</th>
         <th>{{t "components.settings-example.component-default-settings-caption"}}</th>
       </tr></thead>
-      <tbody>
+      <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
         {{#each componentSettingsMetadata as |settingMetadata|}}
         <tr>
           <td>
@@ -51,7 +51,7 @@
                   {{/if}}
 
                   {{#if (or (eq settingMetadata.settingType "date") (eq settingMetadata.settingType "datetime"))}}
-                    {{input
+                    {{flexberry-simpledatetime
                       type="datetime-local"
                       value=(mut (get controllerProperties settingMetadata.bindedControllerPropertieName))
                     }}

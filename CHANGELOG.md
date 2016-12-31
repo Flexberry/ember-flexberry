@@ -167,6 +167,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Only one `flexberry-objectlistview` or `flexberry-groupedit` component could be used on particular form.
 * List of values of `flexberry-dropdown` component are not showing over scroll bar when the component is embedded into `flexberry-groupedit` and there is not enough space to show these values over table rows.
 * `flexberry-datepicker` eats too much memory, working slowly and slows down the application (especially when using multiple `flexberry-datepicker` components on form).
+* Blueprints are not generating inheritance of serializers correctly. Also blueprints are not generating stuff for supporting offline mode in application.
 
 ## [0.6.1] - 2016-09-16
 ### Removed

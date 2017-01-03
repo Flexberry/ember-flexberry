@@ -7,23 +7,23 @@ import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-co
 /**
   Flexberry checkbox component with [Semantic UI checkbox](http://semantic-ui.com/modules/checkbox.html) style.
 
-  Usage:
-  templates/my-form.hbs
-  ```handlebars
-  {{flexberry-checkbox
-    value=model.flag
-    onChange=(action "onModelFlagChange")
-  }}
-  ```
+  @example
+    templates/my-form.hbs
+    ```handlebars
+    {{flexberry-checkbox
+      value=model.flag
+      onChange=(action "onModelFlagChange")
+    }}
+    ```
 
-  controllers/my-form.js
-  ```javascript
-  actions: {
-    onModelFlagChange(e) {
-      console.log('Model flag changed: ', e.checked);
+    controllers/my-form.js
+    ```javascript
+    actions: {
+      onModelFlagChange(e) {
+        console.log('Model flag changed: ', e.checked);
+      }
     }
-  }
-  ```
+    ```
 
   @class FlexberryCheckboxComponent
   @extends FlexberryBaseComponent
@@ -33,9 +33,11 @@ export default FlexberryBaseComponent.extend({
     Component's wrapping <div> CSS-classes names.
 
     Any other CSS-classes can be added through component's 'class' property.
-    ```handlebars
-    {{flexberry-checkbox class="toggle" value=model.flag}}
-    ```
+
+    @example
+      ```handlebars
+      {{flexberry-checkbox class="toggle" value=model.flag}}
+      ```
 
     @property classNames
     @type String[]

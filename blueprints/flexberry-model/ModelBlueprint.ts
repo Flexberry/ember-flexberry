@@ -22,8 +22,6 @@ class SortedPair{
 
 export default class ModelBlueprint {
   model: string;
-  validations: string;
-  initFunction: string;
   serializerAttrs: string;
   parentModelName: string;
   parentClassName: string;
@@ -41,15 +39,12 @@ export default class ModelBlueprint {
     let modelFile = path.join(modelsDir, options.file);
     let content: string = stripBom(fs.readFileSync(modelFile, "utf8"));
     let model: metadata.Model = JSON.parse(content);
-    let jsModel = this.getJSForModel(model);
     this.parentModelName = model.parentModelName;
     this.parentClassName = model.parentClassName;
     this.className = model.className;
     this.serializerAttrs = this.getSerializerAttrs(model);
     this.projections = this.getJSForProjections(model, modelsDir);
-    this.model = jsModel["properties"];
-    this.validations = jsModel["validations"];
-    this.initFunction = jsModel["initFunction"];
+    this.model = this.getJSForModel(model);
     this.name = options.entity.name;
     this.needsAllModels = this.getNeedsAllModels(modelsDir);
     this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
@@ -90,7 +85,7 @@ export default class ModelBlueprint {
     return "    "+attrs.join(",\n    ");
   }
 
-  getJSForModel(model: metadata.Model): { [id: string] : string; } {
+  getJSForModel(model: metadata.Model): string {
     let attrs: string[] = [], validations: string[] = [];
     let templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
     let templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
@@ -118,20 +113,18 @@ export default class ModelBlueprint {
     if(validations.length===0){
       validationsFunc="";
     }
-    validationsFunc = TAB + "getValidations: function () {\n" + 
-    TAB + TAB + "let parentValidations = this._super();\n" + 
-    TAB + TAB + "let thisValidations = {\n" + 
-    validationsFunc + TAB + TAB + "};\n" + 
-    TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" + 
-    TAB + "},\n";
-    let result: { [id: string] : string; } = {};
-    result["properties"] = TAB + attrs.join(",\n" + TAB);
-    result["validations"] =  validationsFunc;
-    result["initFunction"] = TAB + "init: function () {\n" + 
-    TAB + TAB + "this.set('validations', this.getValidations());\n" + 
-    TAB + TAB + "this._super.apply(this, arguments);\n" + 
-    TAB + "},\n";
-    return result;
+    validationsFunc = "getValidations: function () {\n" +
+    TAB + TAB + "let parentValidations = this._super();\n" +
+    TAB + TAB + "let thisValidations = {\n" +
+    validationsFunc + TAB + TAB + "};\n" +
+    TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+    TAB + "}";
+    let initFunction = "init: function () {\n" +
+    TAB + TAB + "this.set('validations', this.getValidations());\n" +
+    TAB + TAB + "this._super.apply(this, arguments);\n" +
+    TAB + "}";
+    attrs.push(validationsFunc, initFunction);
+    return TAB + attrs.join(",\n" + TAB);
   }
 
   joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string, level: number): SortedPair {
@@ -247,7 +240,7 @@ export default class ModelBlueprint {
       }
       projAttrs=lodash.sortBy(projAttrs,["index"]);
       let attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
-      projections.push(`  model.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
+      projections.push(`  modelClass.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
     }
     return `\n${projections.join("\n")}\n`;
   }

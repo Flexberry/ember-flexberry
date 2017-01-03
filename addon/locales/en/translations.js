@@ -17,14 +17,7 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Block list',
-    },
-
-    'new-platform-flexberry-services-lock-edit': {
-      caption: 'Lock object',
-      'lockKey-caption': 'Key locked object',
-      'userName-caption': 'User locked object',
-      'lockDate-caption': 'Date lock',
-    },
+    }
   },
 
   'components': {
@@ -95,7 +88,12 @@ export default {
     },
 
     'flexberry-objectlistview': {
-      'placeholder': 'There is no data'
+      'placeholder': 'There is no data',
+      'showing-entries': {
+        'showing': 'Showing ',
+        'of': ' of ',
+        'entries': ' entries'
+      }
     },
 
     'flexberry-groupedit': {
@@ -109,6 +107,8 @@ export default {
 
     'object-list-view': {
       'placeholder': 'There is no data',
+      'loading-text': 'Loading data...',
+      'header-title-attr': 'Click to change ordering, Ctrl+Click to append ordering for this column',
       'single-column-header-title': 'Model properties',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',
@@ -153,8 +153,19 @@ export default {
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',
       'use-without-save': 'Use this settings without saving in setting ',
-      'save': 'Save'
-    }
+      'save': 'Save',
+      'have-errors': 'When you save a configuration errors occurred: ',
+      'setting': 'Setting ',
+      'is-saved': ' is saved',
+      'col-width-on': 'Enable setting column widths',
+      'per-page': 'Records count on page'
+    },
+
+    'form-load-time-tracker': {
+      'load-time': 'Load time',
+      'render-time': 'Render time',
+    },
+
   },
 
   'models': {

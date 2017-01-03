@@ -24,15 +24,12 @@ var ModelBlueprint = (function () {
         var modelFile = path.join(modelsDir, options.file);
         var content = stripBom(fs.readFileSync(modelFile, "utf8"));
         var model = JSON.parse(content);
-        var jsModel = this.getJSForModel(model);
         this.parentModelName = model.parentModelName;
         this.parentClassName = model.parentClassName;
         this.className = model.className;
         this.serializerAttrs = this.getSerializerAttrs(model);
         this.projections = this.getJSForProjections(model, modelsDir);
-        this.model = jsModel["properties"];
-        this.validations = jsModel["validations"];
-        this.initFunction = jsModel["initFunction"];
+        this.model = this.getJSForModel(model);
         this.name = options.entity.name;
         this.needsAllModels = this.getNeedsAllModels(modelsDir);
         this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
@@ -104,20 +101,18 @@ var ModelBlueprint = (function () {
         if (validations.length === 0) {
             validationsFunc = "";
         }
-        validationsFunc = TAB + "getValidations: function () {\n" +
+        validationsFunc = "getValidations: function () {\n" +
             TAB + TAB + "let parentValidations = this._super();\n" +
             TAB + TAB + "let thisValidations = {\n" +
             validationsFunc + TAB + TAB + "};\n" +
             TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-            TAB + "},\n";
-        var result = {};
-        result["properties"] = TAB + attrs.join(",\n" + TAB);
-        result["validations"] = validationsFunc;
-        result["initFunction"] = TAB + "init: function () {\n" +
+            TAB + "}";
+        var initFunction = "init: function () {\n" +
             TAB + TAB + "this.set('validations', this.getValidations());\n" +
             TAB + TAB + "this._super.apply(this, arguments);\n" +
-            TAB + "},\n";
-        return result;
+            TAB + "}";
+        attrs.push(validationsFunc, initFunction);
+        return TAB + attrs.join(",\n" + TAB);
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
@@ -240,11 +235,12 @@ var ModelBlueprint = (function () {
             }
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
-            projections.push("  model.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
+            projections.push("  modelClass.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
         }
         return "\n" + projections.join("\n") + "\n";
     };
     return ModelBlueprint;
 }());
-exports.__esModule = true;
-exports["default"] = ModelBlueprint;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = ModelBlueprint;
+//# sourceMappingURL=ModelBlueprint.js.map

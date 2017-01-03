@@ -8,7 +8,22 @@ export default Ember.Controller.extend({
       if (e.currentTarget) {
         this.set('currentItem', clickedMenuItem.data('flexberry-menuitem.item'));
       } else {
-        this.set('currentItem', clickedMenu.data('flexberry-menu'));
+        let selectMenu = Ember.$.trim(e.delegateTarget.innerText);
+        let selectValue;
+        if (selectMenu === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon1').toString()) {
+          selectValue = 'itemsLeft';
+        }
+
+        if (selectMenu === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon2').toString()) {
+          selectValue = 'itemsRight';
+        }
+
+        if (selectMenu === this.get('i18n').t('forms.components-examples.flexberry-menu.settings-example.titleIcon3').toString()) {
+          selectValue = 'itemsSubmenu';
+        }
+
+        let selectElement = this.get(selectValue)[0];
+        this.set('currentItem', selectElement);
       }
 
       clickedMenu.popup({

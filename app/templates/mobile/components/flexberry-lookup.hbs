@@ -6,10 +6,13 @@
     readonly=(if readonly "readonly")
     needChecksOnValue=false
     isSearch=true
+    isSearchReadOnly=dropdownIsSearch
   }}
 {{else}}
   <div class="ui action input">
-    <div {{action 'choose' chooseData}} class="ui transparent icon input">
+    <div
+      {{action "choose" chooseData}}
+      class="ui transparent {{if (or readonly isBlocked) " disabled"}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} icon input ">
       <span class="lookup-field">
         {{#if value}}
           {{#if hasBlock}}
@@ -26,7 +29,7 @@
       {{/unless}}
     </div>
     {{#unless readonly}} 
-      <button class="ui icon {{removeButtonClass}} button" {{action 'remove' removeData}}>
+      <button class="ui icon {{removeButtonClass}} {{if (or readonly isBlocked) " disabled"}} button" {{action "remove" removeData}}>
         <i class="remove icon" ></i>
       </button>
     {{/unless}}

@@ -26,12 +26,33 @@ Ember.$.extend(true, translations, {
             'eMail': {
               'caption': 'Email'
             }
-          }
+          },
+          'editor1': {
+            'caption': 'Editor',
+            'eMail': {
+              'caption': 'Email'
+            }
+          },
+          'moderated': {
+            'caption': 'Moderated'
+          },
+          'type': {
+            'caption': 'Type'
+          },
+          'commentsCount': {
+            'caption': 'Comments count'
+          },
         },
         'SuggestionE': {
+          'address': {
+            'caption': 'Address'
+          },
           'userVotes': {
+            'name': {
+              'caption': 'Name'
+            },
             'voteType': {
-              'caption': 'Vote Type'
+              'caption': 'Vote type'
             },
             'applicationUser': {
               'caption': 'Application User',
@@ -42,7 +63,55 @@ Ember.$.extend(true, translations, {
           }
         }
       }
-    }
+    },
+    'ember-flexberry-dummy-application-user': {
+      'projections': {
+        'ApplicationUserL': {
+          'name': {
+            'caption': 'Name'
+          },
+          'eMail': {
+            'caption': 'E-mail'
+          },
+          'activated': {
+            'caption': 'Activated'
+          },
+          'birthday': {
+            'caption': 'Birthday'
+          },
+          'gender': {
+            'caption': 'Gender'
+          },
+          'karma': {
+            'caption': 'Karma'
+          },
+        },
+      }
+    },
+    'ember-flexberry-dummy-localization': {
+      'projections': {
+        'LocalizationL': {
+          'name': {
+            'caption': 'Name'
+          },
+        },
+      }
+    },
+    'ember-flexberry-dummy-suggestion-type': {
+      'projections': {
+        'SuggestionTypeL': {
+          'name': {
+            'caption': 'Name'
+          },
+          'moderated': {
+            'caption': 'Moderated'
+          },
+          'parent': {
+            'caption': 'Parent'
+          },
+        },
+      }
+    },
   },
 
   'application-name': 'Test stand for ember-flexberry',
@@ -127,6 +196,10 @@ Ember.$.extend(true, translations, {
           'settings-example': {
             'caption': 'Settings example',
             'title': ''
+          },
+          'clear-log-form': {
+            'caption': 'Clear log',
+            'title': ''
           }
         },
         lock: {
@@ -198,6 +271,10 @@ Ember.$.extend(true, translations, {
             'model-update-example': {
               'caption': 'Model update example',
               'title': ''
+            },
+            'configurate-row-example': {
+              'caption': 'Configurate rows',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -215,6 +292,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
+            'limit-function-through-dynamic-properties-example': {
+              'caption': 'Limit function with dinamic properties example',
+              'title': ''
+            },
             'lookup-block-form-example': {
               'caption': 'Lookup block form example',
               'title': ''
@@ -225,6 +306,10 @@ Ember.$.extend(true, translations, {
             },
             'dropdown-mode-example': {
               'caption': 'Dropdown mode example',
+              'title': ''
+            },
+            'default-ordering-example': {
+              'caption': 'Default ordering example',
               'title': ''
             }
           },
@@ -243,6 +328,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Limit function example',
               'title': ''
             },
+            'inheritance-models': {
+              'caption': 'Inheritance models',
+              'title': ''
+            },
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
@@ -259,8 +348,20 @@ Ember.$.extend(true, translations, {
               'caption': 'Custom filter',
               'title': ''
             },
+            'edit-form-with-detail-list': {
+              'caption': 'List example',
+              'title': ''
+            },
+            'hierarchy-example': {
+              'caption': 'Hierarchy example',
+              'title': ''
+            },
             'configurate-rows': {
               'caption': 'Configurate rows',
+              'title': ''
+            },
+            'selected-rows': {
+              'caption': 'Selected rows',
               'title': ''
             }
           },
@@ -363,6 +464,12 @@ Ember.$.extend(true, translations, {
       'author-validation-message-caption': 'Author is required'
     },
 
+    'ember-flexberry-dummy-comment-vote-edit': {
+      'caption': 'User Vote',
+      'voteType-caption': 'Vote type',
+      'applicationUser-caption': 'Application user',
+    },
+
     'ember-flexberry-dummy-localization-edit': {
       'caption': 'Localization',
       'name-caption': 'Name',
@@ -430,11 +537,11 @@ Ember.$.extend(true, translations, {
         'reject-rsvp-promise-button-message': 'Promise rejected',
         'ember-assert-button-message': 'Ember.assert called',
         'ember-logger-error-button-message': 'Ember.Logger.error called',
-        'ember-logger-warn-button-message': 'Ember.Logger.warn called',
+        'ember-logger-warn-button-message': 'Ember.warn called',
         'ember-deprecate-button-message': 'Ember.deprecate called',
         'ember-logger-log-button-message': 'Ember.Logger.log called',
-        'ember-logger-info-button-message': 'Ember.logger.info called',
-        'ember-logger-debug-button-message': 'Ember.Logger.debug called'
+        'ember-logger-info-button-message': 'Ember.Logger.info called',
+        'ember-logger-debug-button-message': 'Ember.debug called'
       }
     },
 
@@ -492,6 +599,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-groupedit. Settings example'
         },
+        'configurate-row-example': {
+          'caption': 'Flexberry-groupedit. Configurate rows'
+        },
         'model-update-example': {
           'caption': 'Flexberry-groupedit. Model update example',
           'addDetailButton': 'Add detail',
@@ -510,6 +620,13 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Limit function example',
           'titleLookup': 'Master'
         },
+        'limit-function-through-dynamic-properties-example': {
+          'caption': 'Flexberry-lookup. Limit function through dynamic properties example',
+          'titleLookup': 'Master',
+          'captionFirstLimitFunction': 'Limit function №1',
+          'captionSecondLimitFunction': 'Limit function №2',
+          'captionClearLimitFunction': 'Clear limit function'
+        },
         'lookup-block-form-example': {
           'caption': 'Flexberry-lookup. Lookup block form example',
           'message': 'This test only works on the mobile site. To start a mobile version should be:',
@@ -527,7 +644,11 @@ Ember.$.extend(true, translations, {
         },
         'dropdown-mode-example': {
           'caption': 'Flexberry-lookup. Dropdown mode example'
-        }
+        },
+        'default-ordering-example': {
+          'caption': 'Flexberry-lookup. Default ordering example',
+          'titleLookup': 'Master'
+        },
       },
       'flexberry-menu': {
         'settings-example': {
@@ -541,6 +662,25 @@ Ember.$.extend(true, translations, {
         'limit-function-example': {
           'caption': 'Flexberry-objectlistview. Limit function example'
         },
+        'inheritance-models': {
+          'caption': 'Flexberry-objectlistview. Inheritance models example',
+          'message': 'Сheck projection in OLV. (ProjectionE=ProjectionL)',
+          'projectionBase': 'Projection \'Base\': Name, E-mail, Birthday',
+          'projectionSuccessorPhone': 'Projection \'Successor phone\': Name, Phone1, Phone2, Phone3',
+          'projectionSuccessorSoc': 'Projection \'Successor social network\': Name, VK, Facebook, Twitter',
+          'buttonRoot': 'Base',
+          'buttonSuccessorPhone': 'Successor phone',
+          'buttonSuccessorSoc': 'Successor social network',
+          'name-caption': 'Name',
+          'eMail-caption': 'E-Mail',
+          'phone1-caption': 'Phone1',
+          'phone2-caption': 'Phone2',
+          'phone3-caption': 'Phone3',
+          'vK-caption': 'VK',
+          'facebook-caption': 'Facebook',
+          'twitter-caption': 'Twitter',
+          'birthday-caption': 'Birthday'
+        },
         'settings-example': {
           'caption': 'Flexberry-objectlistview. Settings example'
         },
@@ -550,13 +690,45 @@ Ember.$.extend(true, translations, {
           'custom-button-name': 'Send hello'
         },
         'on-edit-form': {
-          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview custom data sample'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview on edit form',
+          'add-button-name': 'Добавить'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'
         },
+        'hierarchy-example': {
+          'caption': 'Flexberry-objectlistview. Hierarchy example'
+        },
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Configurate rows'
+        },
+        'selected-rows': {
+          'caption': 'Flexberry-objectlistview. Setected rows'
+        }
+      },
+      'flexberry-simpleolv': {
+        'limit-function-example': {
+          'caption': 'Flexberry-simpleolv. Limit function example'
+        },
+        'settings-example': {
+          'caption': 'Flexberry-simpleolv. Settings example'
+        },
+        'toolbar-custom-buttons-example': {
+          'caption': 'Flexberry-simpleolv. Custom buttons on toolbar',
+          'custom-message': 'Hello!',
+          'custom-button-name': 'Send hello'
+        },
+        'on-edit-form': {
+          'caption': 'Flexberry-simpleolv. FlexberryObjectlistview custom data sample'
+        },
+        'custom-filter': {
+          'caption': 'Flexberry-simpleolv. Custom filter'
+        },
+        'configurate-rows': {
+          'caption': 'Flexberry-simpleolv. Configurate rows'
+        },
+        'selected-rows': {
+          'caption': 'Flexberry-simpleolv. Setected rows'
         }
       },
       'flexberry-simpledatetime': {
@@ -608,7 +780,8 @@ Ember.$.extend(true, translations, {
           'date-caption': 'Date',
           'enumeration-caption': 'Enumeration',
           'file-caption': 'File',
-          'master-caption': 'Master'
+          'master-caption': 'Master',
+          'details-caption': 'Details'
         }
       }
     },

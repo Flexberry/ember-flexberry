@@ -25,6 +25,19 @@ import EmberResolver from 'ember-resolver';
 */
 export default EmberResolver.extend({
   /**
+    Names of types which needs to be resolved with prefixes received through a {{#crossLink "DeviceService"}}device service{{/crossLink}}.
+
+    @property deviceRelatedTypes
+    @type Array
+    @default ['component', 'template', 'view']
+  */
+  deviceRelatedTypes: [
+    'component',
+    'template',
+    'view',
+  ],
+
+  /**
     Initializes resolver.
   */
   init() {
@@ -65,7 +78,7 @@ export default EmberResolver.extend({
     let { resolvingType, resolvingPath } = { resolvingType: fullNamePartsArray[0], resolvingPath: fullNamePartsArray[1] };
     let resolvingPathParts = resolvingPath.split('/');
 
-    if (!this._resolveResourceWithoutDeviceTypeDetection(fullName)) {
+    if (this._resolveTypeWithDeviceTypeDetection(resolvingType) && !this._resolveResourceWithoutDeviceTypeDetection(fullName)) {
       let pathPrefixes = device.pathPrefixes(true);
       for (let i = 0, len = pathPrefixes.length; i < len; i++) {
         let pathPrefix = pathPrefixes[i];
@@ -100,9 +113,23 @@ export default EmberResolver.extend({
   _resolveResourceWithoutDeviceTypeDetection(fullName) {
     if (this.namespace && this.namespace.resolveWithoutDeviceTypeDetection && Ember.isArray(this.namespace.resolveWithoutDeviceTypeDetection)) {
       let resourceTypesToApplyOriginResolving = this.namespace.resolveWithoutDeviceTypeDetection;
-      return resourceTypesToApplyOriginResolving.contains(fullName);
+      return resourceTypesToApplyOriginResolving.indexOf(fullName) > -1;
     }
 
     return false;
+  },
+
+  /**
+    Checks that 'type' needs to be resolved with prefixes received through a {{#crossLink "DeviceService"}}device service{{/crossLink}}.
+
+    @method _resolveTypeWithDeviceTypeDetection
+    @param {String} type
+    @return {Boolean}
+    @private
+  */
+  _resolveTypeWithDeviceTypeDetection(type) {
+    let deviceRelatedTypes = this.get('deviceRelatedTypes');
+    Ember.assert(`Property 'deviceRelatedTypes' must be a array.`, Ember.isArray(deviceRelatedTypes));
+    return deviceRelatedTypes.indexOf(type) > -1;
   },
 });

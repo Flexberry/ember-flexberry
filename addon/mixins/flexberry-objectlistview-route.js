@@ -22,8 +22,48 @@ export default Ember.Mixin.create({
 
       @param {Ember.Object} record Record related to clicked table row
     */
-    objectListViewRowClick(record, editFormRoute) {
-      this.transitionTo(editFormRoute, record.get('id'));
+    objectListViewRowClick(record, options) {
+      let methodOptions = {
+        saveBeforeRouteLeave: false,
+        editOnSeparateRoute: false,
+        onEditForm: false,
+        modelName: undefined,
+        detailArray: undefined,
+        editFormRoute: undefined,
+        readonly: false
+      };
+      methodOptions = Ember.merge(methodOptions, options);
+      let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
+      let onEditForm = methodOptions.onEditForm;
+      let editFormRoute = methodOptions.editFormRoute;
+      if (!editFormRoute) {
+        throw new Error('Detail\'s edit form route is undefined.');
+      }
+
+      let recordId = record.get('id') || record.get('data.id');
+      let thisUrl = this.get('router.url');
+      if (!onEditForm) {
+        this.transitionTo(editFormRoute, recordId)
+        .then((newRoute) => {
+          newRoute.controller.set('parentRoute', thisUrl);
+        });
+      } else {
+        if (saveBeforeRouteLeave) {
+          this.controller.save(false, true).then(() => {
+            this.transitionTo(editFormRoute, recordId)
+            .then((newRoute) => {
+              newRoute.controller.set('parentRoute', thisUrl);
+            });
+          }).catch((errorData) => {
+            this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+          });
+        } else {
+          this.transitionTo(editFormRoute, recordId)
+          .then((newRoute) => {
+            newRoute.controller.set('parentRoute', thisUrl);
+          });
+        }
+      }
     },
 
     /**
@@ -34,6 +74,10 @@ export default Ember.Mixin.create({
     */
     refreshList() {
       this.refresh();
+    },
+
+    saveAgregator(agregatorModel) {
+      return false;
     }
   },
 

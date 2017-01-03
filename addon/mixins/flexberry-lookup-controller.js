@@ -6,6 +6,7 @@ import Ember from 'ember';
 
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import { Query } from 'ember-flexberry-data';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 const { BasePredicate } = Query;
 
@@ -101,7 +102,9 @@ export default Ember.Mixin.create(ReloadListMixin, {
         predicate: undefined,
         modelToLookup: undefined,
         sizeClass: undefined,
-        lookupWindowCustomPropertiesData: undefined
+        lookupWindowCustomPropertiesData: undefined,
+        componentName: undefined,
+        sorting: undefined
       }, chooseData);
 
       let projectionName = options.projection;
@@ -117,8 +120,10 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let modelToLookup = options.modelToLookup;
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
       let sizeClass = options.sizeClass;
+      let componentName = options.componentName;
 
       let model = modelToLookup ? modelToLookup : this.get('model');
+      let sorting = options.sorting ? options.sorting : [];
 
       // Get ember static function to get relation by name.
       let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
@@ -143,7 +148,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
         perPage: this.get('lookupModalWindowPerPage'),
         page: 1,
-        sorting: [],
+        sorting: sorting,
         filter: undefined,
         predicate: limitPredicate,
 
@@ -154,7 +159,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
           propName: relationName
         },
         currentLookupRow: model.get(relationName),
-        customPropertiesData: lookupWindowCustomPropertiesData
+        customPropertiesData: lookupWindowCustomPropertiesData,
+        componentName: componentName
       };
 
       this._reloadModalData(this, reloadData);
@@ -206,7 +212,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let modelToLookup = options.modelToLookup;
       let model = modelToLookup ? modelToLookup : this.get('model');
 
-      Ember.Logger.debug(`Flexberry Lookup Mixin::updateLookupValue ${options.relationName}`);
+      Ember.debug(`Flexberry Lookup Mixin::updateLookupValue ${options.relationName}`);
       model.set(options.relationName, options.newRelationValue);
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
@@ -236,15 +242,17 @@ export default Ember.Mixin.create(ReloadListMixin, {
     @param {String} [options.page] Current page to display on lookup window.
     @param {String} [options.sorting] Current sorting.
     @param {String} [options.filter] Current filter.
+    @param {String} [options.filterCondition] Current filter condition.
     @param {String} [options.predicate] Current limit predicate.
     @param {String} [options.title] Title of modal lookup window.
     @param {String} [options.sizeClass] Size of modal lookup window.
     @param {String} [options.saveTo] Options to save selected lookup value.
     @param {String} [options.currentLookupRow] Current lookup value.
     @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
+    @param {String} [options.componentName] Component name of lookup component.
   */
   _reloadModalData(currentContext, options) {
-    var lookupSettings = currentContext.get('lookupSettings');
+    let lookupSettings = currentContext.get('lookupSettings');
     Ember.assert('Lookup settings are undefined.', lookupSettings);
     Ember.assert('Lookup template is undefined.', lookupSettings.template);
     Ember.assert('Lookup content template is undefined.', lookupSettings.contentTemplate);
@@ -259,13 +267,15 @@ export default Ember.Mixin.create(ReloadListMixin, {
       page: undefined,
       sorting: undefined,
       filter: undefined,
+      filterCondition: undefined,
       predicate: undefined,
 
       title: undefined,
       sizeClass: undefined,
       saveTo: undefined,
       currentLookupRow: undefined,
-      customPropertiesData: undefined
+      customPropertiesData: undefined,
+      componentName: undefined
     }, options);
 
     Ember.assert('Reload data are not defined fully.',
@@ -293,6 +303,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       page: reloadData.page ? reloadData.page : 1,
       sorting: reloadData.sorting ? reloadData.sorting : [],
       filter: reloadData.filter,
+      filterCondition: reloadData.filterCondition,
       predicate: limitPredicate
     };
 
@@ -305,10 +316,13 @@ export default Ember.Mixin.create(ReloadListMixin, {
       saveTo: reloadData.saveTo,
       currentLookupRow: reloadData.currentLookupRow,
       customPropertiesData: reloadData.customPropertiesData,
+      componentName: reloadData.componentName,
 
       perPage: queryParameters.perPage,
       page: queryParameters.page,
+      sort: serializeSortingParam(queryParameters.sorting, controller.get('sortDefaultValue')),
       filter: reloadData.filter,
+      filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
 
       modelType: reloadData.relatedToType,
@@ -323,7 +337,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
     controller.set('reloadObserverIsActive', true);
 
-    var loadingParams = {
+    let loadingParams = {
       view: lookupSettings.template,
       outlet: 'modal-content'
     };

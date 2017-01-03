@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import ListFormController from '../controllers/list-form';
 import SortableRouteMixin from '../mixins/sortable-route';
+import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 /**
   Controller to support a modal windows in FlexberryLookup component.
@@ -113,6 +114,14 @@ export default ListFormController.extend(SortableRouteMixin, {
   */
   reloadObserverIsActive: false,
 
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: Ember.inject.service('lookup-events'),
+
   actions: {
     /**
       Handlers OLV row click, Save selected row to object master property and close modal window.
@@ -133,6 +142,7 @@ export default ListFormController.extend(SortableRouteMixin, {
     */
     createdModalDialog(modalDialog) {
       this.set('_openedModalDialog', modalDialog);
+      this.get('lookupEventsService').lookupDialogOnVisibleTrigger(this.get('componentName'), modalDialog);
     },
 
     /**
@@ -162,7 +172,7 @@ export default ListFormController.extend(SortableRouteMixin, {
       throw new Error('No reload handler was defined.');
     }
 
-    let sorting = this.deserializeSortingParam(this.get('sort'));
+    let sorting = deserializeSortingParam(this.get('sort'));
     let reloadData = {
       relatedToType: this.get('modelType'),
       projectionName: this.get('projectionName'),
@@ -171,13 +181,15 @@ export default ListFormController.extend(SortableRouteMixin, {
       page: this.get('page'),
       sorting: sorting,
       filter: this.get('filter'),
+      filterCondition: this.get('filterCondition'),
       predicate: this.get('predicate'),
 
       title: this.get('title'),
       sizeClass: this.get('sizeClass'),
       saveTo: this.get('saveTo'),
       currentLookupRow: this.get('currentLookupRow'),
-      customPropertiesData: this.get('customPropertiesData')
+      customPropertiesData: this.get('customPropertiesData'),
+      componentName: this.get('componentName')
     };
 
     reloadDataHandler(this.get('reloadContext'), reloadData);
@@ -203,6 +215,7 @@ export default ListFormController.extend(SortableRouteMixin, {
       this.set('page', undefined);
       this.set('sort', undefined);
       this.set('filter', undefined);
+      this.set('filterCondition', undefined);
       this.set('predicate', undefined);
     }
 
@@ -222,7 +235,7 @@ export default ListFormController.extend(SortableRouteMixin, {
     @private
   */
   _selectMaster(master) {
-    var saveTo = this.get('saveTo');
+    let saveTo = this.get('saveTo');
     if (!saveTo) {
       throw new Error('Don\'t know where to save - no saveTo data defined.');
     }
@@ -245,5 +258,7 @@ export default ListFormController.extend(SortableRouteMixin, {
       openedDialog.modal('hide');
       this.set('_openedModalDialog', undefined);
     }
+
+    this.get('lookupEventsService').lookupDialogOnHiddenTrigger(this.get('componentName'));
   },
 });

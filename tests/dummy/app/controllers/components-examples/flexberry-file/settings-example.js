@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
+import config from 'dummy/config/environment';
 
 export default EditFormController.extend({
   /**
@@ -35,7 +36,7 @@ export default EditFormController.extend({
     @property uploadUrl
     @type String
    */
-  uploadUrl: null,
+  uploadUrl: config.APP.components.flexberryFile.uploadUrl,
 
   /**
     Max upload file size (in bytes) for 'flexberry-file' component 'maxUploadFileSize' property.
@@ -179,7 +180,7 @@ export default EditFormController.extend({
       settingName: 'inputClass',
       settingType: 'css',
       settingDefaultValue: '',
-      settingAvailableItems: ['fluid input', 'transparent input', 'mini input', 'huge input', 'input error'],
+      settingAvailableItems: ['fluid input', 'transparent input', 'mini input', 'huge input', 'field error'],
       bindedControllerPropertieName: 'inputClass'
     });
     componentSettingsMetadata.pushObject({

@@ -9,4 +9,17 @@
 .loading-message {
   text-align: center;
   color: #aaa;
-} 
+}
+
+#example {
+  .flexberry-content {
+    padding: 3em 0;
+  }
+}
+
+#example-mobile {
+  .flexberry-content {
+    padding: 6em 10px 2em;
+    border-bottom: none;
+  }
+}

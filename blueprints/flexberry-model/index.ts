@@ -27,10 +27,9 @@ module.exports = {
   locals: function(options) {
     let modelBlueprint = new ModelBlueprint(this, options);
     return lodash.defaults({
-      parentModelName: modelBlueprint.parentModelName,//
-      parentClassName: modelBlueprint.parentClassName,//
+      parentModelName: modelBlueprint.parentModelName,// for use in files\__root__\mixins\regenerated\models\__name__.js
+      parentClassName: modelBlueprint.parentClassName,// for use in files\__root__\mixins\regenerated\models\__name__.js
       model: modelBlueprint.model,// for use in files\__root__\mixins\regenerated\models\__name__.js
-      validations: modelBlueprint.validations,// for use in files\__root__\mixins\regenerated\models\__name__.js
       projections: modelBlueprint.projections,// for use in files\__root__\mixins\regenerated\models\__name__.js
       serializerAttrs: modelBlueprint.serializerAttrs,// for use in files\__root__\mixins\regenerated\serializers\__name__.js
       name: modelBlueprint.name,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js

@@ -1,0 +1,17 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.hierarchy-example.caption"}}</h3>
+<form class="ui form">
+  <div class="field">
+    {{flexberry-objectlistview
+      content=model
+      modelName="ember-flexberry-dummy-suggestion-type"
+      modelProjection=modelProjection
+      editFormRoute=editFormRoute
+      orderable=false
+      showShowingEntries=false
+      componentName="suggestionTypeLocalizedTypesObjectListView"
+      colsConfigButton=false
+      disableHierarchicalMode=false
+      showCheckBoxInRow=true
+    }}
+  </div>
+</form>

@@ -2,8 +2,10 @@
   @module ember-flexberry
  */
 
+import Ember from 'ember';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
+import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 
 /**
   Base route for the Edit Forms.
@@ -31,7 +33,9 @@ import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
   @extends ProjectedModelForm
   @uses FlexberryGroupeditRouteMixin
  */
-export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
+export default ProjectedModelFormRoute.extend(
+FlexberryObjectlistviewRouteMixin,
+FlexberryGroupeditRouteMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
@@ -46,6 +50,20 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
       this._super(transition);
       this.controller.send('routeWillTransition');
     },
+  },
+
+  /**
+    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+
+    @property queryParams
+    @type Object
+   */
+  queryParams: {
+    page: { refreshModel: false },
+    perPage: { refreshModel: false },
+    sort: { refreshModel: false },
+    filter: { refreshModel: false },
+    filterCondition: { refreshModel: false }
   },
 
   /**
@@ -68,10 +86,10 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
     let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
-    let needReload = !(modelCurrentNotSaved || (modelSelectedDetail && modelSelectedDetail.get('hasDirtyAttributes')));
+    let needReload = !!(modelCurrentNotSaved || (modelSelectedDetail && modelSelectedDetail.get('hasDirtyAttributes')));
 
     // TODO: now 'findRecord' at ember-flexberry-projection not support 'reload: false' flag.
-    let findRecordParameters = needReload ? { reload: needReload, projection: modelProjName } : undefined;
+    let findRecordParameters = { reload: needReload, projection: modelProjName };
 
     // :id param defined in router.js
     return this.store.findRecord(modelName, params.id, findRecordParameters);
@@ -88,7 +106,8 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
    */
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
-    let keptAgregators = controller.get('modelCurrentAgregators');
+    let modelCurrentAgregators = controller.get('modelCurrentAgregators');
+    let keptAgregators = modelCurrentAgregators && Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 
     controller.send('dismissErrorMessages');
     controller.set('modelCurrentAgregatorPathes', undefined);
@@ -113,9 +132,8 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
 
     // Roll back all found agregators and its has-many relations.
     modelsToRollBack.forEach(function(processedModel) {
-      controller.rollbackHasManyRelationships(processedModel);
       if (processedModel) {
-        processedModel.rollbackAttributes();
+        processedModel.rollbackAll();
       }
     });
   },
@@ -137,6 +155,7 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     let proj = modelClass.projections.get(modelProjName);
     controller.set('modelProjection', proj);
     controller.set('routeName', this.get('routeName'));
+    controller.set('developerUserSettings', this.get('developerUserSettings'));
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');

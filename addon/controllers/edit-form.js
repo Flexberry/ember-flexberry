@@ -6,6 +6,13 @@ import Ember from 'ember';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
+import needSaveCurrentAgregator from '../utils/need-save-current-agregator';
+import getCurrentAgregator from '../utils/get-current-agregator';
+import PaginatedControllerMixin from '../mixins/paginated-controller';
+import ReloadListMixin from '../mixins/reload-list-mixin';
+import SortableControllerMixin from '../mixins/sortable-controller';
+import LimitedControllerMixin from '../mixins/limited-controller';
+import FolvOnEditControllerMixin from '../mixins/flexberry-objectlistview-on-edit-form-controller';
 
 const { getOwner } = Ember;
 
@@ -15,21 +22,21 @@ const { getOwner } = Ember;
   This class re-exports to the application as `/controllers/edit-form`.
   So, you can inherit from `./edit-form`, even if file `app/controllers/edit-form.js` is not presented in the application.
 
-  Example:
-  ```javascript
-  // app/controllers/employee.js
-  import EditFormController from './edit-form';
-  export default EditFormController.extend({
-  });
-  ```
+  @example
+    ```javascript
+    // app/controllers/employee.js
+    import EditFormController from './edit-form';
+    export default EditFormController.extend({
+    });
+    ```
 
-  If you want to add some common logic on all Edit Forms, you can override `app/controllers/edit-form.js` as follows:
-  ```javascript
-  // app/controllers/edit-form.js
-  import EditFormController from 'ember-flexberry/controllers/edit-form';
-  export default EditFormController.extend({
-  });
-  ```
+    If you want to add some common logic on all Edit Forms, you can override `app/controllers/edit-form.js` as follows:
+    ```javascript
+    // app/controllers/edit-form.js
+    import EditFormController from 'ember-flexberry/controllers/edit-form';
+    export default EditFormController.extend({
+    });
+    ```
 
   @class EditFormController
   @extends <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
@@ -38,7 +45,16 @@ const { getOwner } = Ember;
   @uses ErrorableControllerMixin
   @uses FlexberryFileControllerMixin
 */
-export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, ErrorableControllerMixin, FlexberryFileControllerMixin, {
+export default Ember.Controller.extend(
+Ember.Evented,
+FlexberryLookupMixin,
+ErrorableControllerMixin,
+FlexberryFileControllerMixin,
+PaginatedControllerMixin,
+ReloadListMixin,
+SortableControllerMixin,
+LimitedControllerMixin,
+FolvOnEditControllerMixin, {
   /**
     Flag to enable return to agregator's path if possible.
 
@@ -72,6 +88,14 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     @default false
   */
   readonly: false,
+
+  /**
+    State form. A form is in different states: loading, success, error.
+
+    @property state
+    @type String
+  */
+  state: undefined,
 
   /**
     Readonly HTML attribute following to the `readonly` query param. According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
@@ -143,34 +167,43 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
   */
   queryParams: ['readonly'],
 
+  /**
+    Object with developer user settings.
+
+    @property developerUserSettings
+    @type Object
+    @default undefined
+  */
+  developerUserSettings: undefined,
+
   actions: {
     /**
       Default action for button 'Save'.
       You can override this action to add custom logic.
 
-      Example:
-      ```javascript
-      // app/controllers/your-controller.js
-      ...
-      actions: {
+      @example
+        ```javascript
+        // app/controllers/your-controller.js
         ...
-        save() {
-          if (confirm('You sure?')) {
-            this.save();
+        actions: {
+          ...
+          save() {
+            if (confirm('You sure?')) {
+              this.save();
+            }
           }
+          ...
         }
         ...
-      }
-      ...
-      onSaveActionFulfilled() {
-        alert('Save successful!');
-      }
-      ...
-      onSaveActionRejected() {
-        alert('Save failed!');
-      }
-      ...
-      ```
+        onSaveActionFulfilled() {
+          alert('Save successful!');
+        }
+        ...
+        onSaveActionRejected() {
+          alert('Save failed!');
+        }
+        ...
+        ```
 
       @method actions.save
     */
@@ -182,95 +215,119 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
       Default action for button 'Save and close'.
       You can override this action to add custom logic.
 
-      Example:
-      ```javascript
-      // app/controllers/your-controller.js
-      ...
-      actions: {
+      @example
+        ```javascript
+        // app/controllers/your-controller.js
         ...
-        saveAndClose() {
-          if (confirm('You sure?')) {
-            this.save(true);
+        actions: {
+          ...
+          saveAndClose() {
+            if (confirm('You sure?')) {
+              this.save(true);
+            }
           }
+          ...
         }
         ...
-      }
-      ...
-      onSaveActionFulfilled() {
-        alert('Save successful!');
-      }
-      ...
-      onSaveActionRejected() {
-        alert('Save failed!');
-      }
-      ...
-      ```
+        onSaveActionFulfilled() {
+          alert('Save successful!');
+        }
+        ...
+        onSaveActionRejected() {
+          alert('Save failed!');
+        }
+        ...
+        ```
 
       @method actions.saveAndClose
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after save.
     */
-    saveAndClose() {
-      this.save(true);
+    saveAndClose(skipTransition) {
+      this.save(true, skipTransition);
     },
 
     /**
       Default action for button 'Delete'.
       You can override this action to add custom logic.
 
-      Example:
-      ```javascript
-      // app/controllers/your-controller.js
-      ...
-      actions: {
+      @example
+        ```javascript
+        // app/controllers/your-controller.js
         ...
-        delete() {
-          if (confirm('You sure?')) {
-            this.delete();
+        actions: {
+          ...
+          delete() {
+            if (confirm('You sure?')) {
+              this.delete(false);
+            }
           }
+          ...
         }
         ...
-      }
-      ...
-      onDeleteActionFulfilled() {
-        alert('Successful delete!');
-        this.close();
-      }
-      ...
-      onDeleteActionRejected() {
-        alert('Failed delete!');
-      }
-      ...
-      ```
+        onDeleteActionFulfilled() {
+          alert('Successful delete!');
+          this.close();
+        }
+        ...
+        onDeleteActionRejected() {
+          alert('Failed delete!');
+        }
+        ...
+        ```
 
       @method actions.delete
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
     */
-    delete() {
-      this.delete();
+    delete(skipTransition) {
+      this.delete(skipTransition);
     },
 
     /**
       Default action for button 'Close'.
       You can override this action to add custom logic.
 
-      Example:
-      ```javascript
-      // app/controllers/your-controller.js
-      ...
-      actions: {
+      @example
+        ```javascript
+        // app/controllers/your-controller.js
         ...
-        close() {
-          if (confirm('You sure?')) {
-            this.close();
+        actions: {
+          ...
+          close() {
+            if (confirm('You sure?')) {
+              this.close();
+            }
           }
+          ...
         }
         ...
-      }
-      ...
-      ```
+        ```
 
       @method actions.close
+      @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+      @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
     */
-    close() {
-      this.close();
+    close(skipTransition, rollBackModel) {
+      this.close(skipTransition, rollBackModel);
+    },
+
+    /**
+      Sorting list by column.
+
+      @method actions.sortByColumn
+      @param {Object} column Column for sorting.
+    */
+    sortByColumn: function(column) {
+      this._super.apply(this, [column, 'sorting']);
+    },
+
+    /**
+      Add column into end list sorting.
+
+      @method actions.addColumnToSorting
+      @param {Object} column Column for sorting.
+    */
+    addColumnToSorting: function(column) {
+      this._super.apply(this, [column, 'sorting']);
     },
   },
 
@@ -279,28 +336,51 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     @method save
     @param {Boolean} close If `true`, then save and close.
+    @param {Boolean} skipTransition If `true`, then transition after save process will be skipped.
     @return {Promise}
   */
-  save(close) {
+  save(close, skipTransition) {
     this.send('dismissErrorMessages');
 
     this.onSaveActionStarted();
+    this.set('state', 'loading');
+
+    let _this = this;
+
+    let afterSaveModelFunction = () => {
+      _this.set('state', 'success');
+      _this.onSaveActionFulfilled();
+      if (close) {
+        _this.set('state', '');
+        _this.close(skipTransition);
+      } else if (!skipTransition) {
+        let routeName = _this.get('routeName');
+        if (routeName.indexOf('.new') > 0) {
+          let qpars = {};
+          let queryParams = _this.get('queryParams');
+          queryParams.forEach(function(item, i, params) {
+            qpars[item] = this.get(item);
+          }, _this);
+          let transitionQuery = {};
+          transitionQuery.queryParams = qpars;
+          _this.transitionToRoute(routeName.slice(0, -4), _this.get('model'), transitionQuery);
+        }
+      }
+    };
 
     let savePromise = this.get('model').save().then((model) => {
-      return this._saveHasManyRelationships(model).then(() => {
-        this.onSaveActionFulfilled();
-        if (close) {
-          this.close();
-        } else {
-          let routeName = this.get('routeName');
-          if (routeName.indexOf('.new') > 0)
-          {
-            this.transitionToRoute(routeName.slice(0, -4), this.get('model'));
-          }
-        }
-      });
+      let agragatorModel = getCurrentAgregator.call(this);
+      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+        return this._saveHasManyRelationships(model).then(() => {
+          return agragatorModel.save().then(afterSaveModelFunction);
+        });
+      } else {
+        return this._saveHasManyRelationships(model).then(afterSaveModelFunction);
+      }
     }).catch((errorData) => {
+      this.set('state', 'error');
       this.onSaveActionRejected(errorData);
+      return Ember.RSVP.reject(errorData);
     }).finally((data) => {
       this.onSaveActionAlways(data);
     });
@@ -312,29 +392,39 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Delete object, if successful transition to parent route.
 
     @method delete
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped after delete.
     @return {Promise}
   */
-  delete() {
+  delete(skipTransition) {
     this.send('dismissErrorMessages');
 
     this.onDeleteActionStarted();
+    this.set('state', 'loading');
 
     let model = this.get('model');
     let deletePromise = null;
+    let deleteOperation = () => {
+      let agragatorModel = getCurrentAgregator.call(this);
+      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+        return agragatorModel.save().then(() => {
+          this.onDeleteActionFulfilled(skipTransition);
+        });
+      } else {
+        this.onDeleteActionFulfilled(skipTransition);
+      }
+    };
+
     if (this.get('destroyHasManyRelationshipsOnModelDestroy')) {
       deletePromise = this.destroyHasManyRelationships(model).then(() => {
-        return model.destroyRecord().then(() => {
-          this.onDeleteActionFulfilled();
-        });
+        return model.destroyRecord().then(deleteOperation);
       });
     } else {
-      deletePromise = model.destroyRecord().then(() => {
-        this.onDeleteActionFulfilled();
-      });
+      deletePromise = model.destroyRecord().then(deleteOperation);
     }
 
     deletePromise.catch((errorData) => {
-      model.rollbackAttributes();
+      model.rollbackAll();
+      this.set('state', 'error');
       this.onDeleteActionRejected(errorData);
     }).finally((data) => {
       this.onDeleteActionAlways(data);
@@ -347,21 +437,27 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Сlose edit form and transition to parent route.
 
     @method close
+    @param {Boolean} skipTransition If `true`, then transition during close form process will be skipped.
+    @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
-  close() {
+  close(skipTransition, rollBackModel) {
+    this.set('state', '');
     this.onCloseActionStarted();
-    this.transitionToParentRoute();
+    if (!skipTransition) {
+      this.transitionToParentRoute(skipTransition, rollBackModel);
+    }
   },
 
   /**
     This method will be invoked before save operation will be called.
     Override this method to add some custom logic on save operation start.
 
-    ```javascript
-    onSaveActionStarted() {
-      alert('Save operation started!');
-    }
-    ```
+    @example
+      ```javascript
+      onSaveActionStarted() {
+        alert('Save operation started!');
+      }
+      ```
     @method onSaveActionStarted.
   */
   onSaveActionStarted() {
@@ -371,11 +467,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked when save operation successfully completed.
     Override this method to add some custom logic on save operation success.
 
-    ```javascript
-    onSaveActionFulfilled() {
-      alert('Save operation succeed!');
-    }
-    ```
+    @example
+      ```javascript
+      onSaveActionFulfilled() {
+        alert('Save operation succeed!');
+      }
+      ```
     @method onSaveActionFulfilled.
   */
   onSaveActionFulfilled() {
@@ -385,11 +482,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked when save operation completed, but failed.
     Override this method to add some custom logic on save operation fail.
 
-    ```javascript
-    onSaveActionRejected() {
-      alert('Save operation failed!');
-    }
-    ```
+    @example
+      ```javascript
+      onSaveActionRejected() {
+        alert('Save operation failed!');
+      }
+      ```
     @method onSaveActionRejected.
     @param {Object} errorData Data about save operation fail.
   */
@@ -402,11 +500,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     regardless of save promise's state (was it fulfilled or rejected).
     Override this method to add some custom logic on save operation completion.
 
-    ```js
-    onSaveActionAlways(data) {
-      alert('Save operation completed!');
-    }
-    ```
+    @example
+      ```js
+      onSaveActionAlways(data) {
+        alert('Save operation completed!');
+      }
+      ```
 
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
@@ -418,11 +517,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked before delete operation will be called.
     Override this method to add custom logic on delete operation start.
 
-    ```javascript
-    onDeleteActionStarted() {
-      alert('Delete operation started!');
-    }
-    ```
+    @example
+      ```javascript
+      onDeleteActionStarted() {
+        alert('Delete operation started!');
+      }
+      ```
     @method onDeleteActionStarted.
   */
   onDeleteActionStarted() {
@@ -432,27 +532,30 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked when delete operation successfully completed.
     Override this method to add some custom logic on delete operation success.
 
-    ```javascript
-    onDeleteActionFulfilled() {
-      alert('Delete operation succeed!');
-      this.close();
-    }
-    ```
+    @example
+      ```javascript
+      onDeleteActionFulfilled() {
+        alert('Delete operation succeed!');
+        this.close(false);
+      }
+      ```
     @method onDeleteActionFulfilled.
+    @param {Boolean} skipTransition If `true`, then transition during close form process (default behavior) will be skipped.
   */
-  onDeleteActionFulfilled() {
-    this.close();
+  onDeleteActionFulfilled(skipTransition) {
+    this.close(skipTransition);
   },
 
   /**
     This method will be invoked when delete operation completed, but failed.
     Override this method to add some custom logic on delete operation fail.
 
-    ```javascript
-    onDeleteActionRejected() {
-      alert('Delete operation failed!');
-    }
-    ```
+    @example
+      ```javascript
+      onDeleteActionRejected() {
+        alert('Delete operation failed!');
+      }
+      ```
     @method onDeleteActionRejected.
     @param {Object} errorData Data about delete operation fail.
   */
@@ -465,11 +568,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     regardless of save promise's state (was it fulfilled or rejected).
     Override this method to add some custom logic on delete operation completion.
 
-    ```js
-    onDeleteActionAlways(data) {
-      alert('Delete operation completed!');
-    }
-    ```
+    @example
+      ```js
+      onDeleteActionAlways(data) {
+        alert('Delete operation completed!');
+      }
+      ```
 
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
@@ -481,11 +585,12 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     This method will be invoked before close method will be called.
     Override this method to add custom logic on close method start.
 
-    ```javascript
-    onCloseActionStarted() {
-      alert('Form will be closed right now!');
-    }
-    ```
+    @example
+      ```javascript
+      onCloseActionStarted() {
+        alert('Form will be closed right now!');
+      }
+      ```
     @method onDeleteActionStarted.
   */
   onCloseActionStarted() {
@@ -495,14 +600,17 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Method transition to parent route (corresponding list form).
 
     @method transitionToParentRoute
+    @param {Boolean} skipTransition If `true`, then transition will be skipped.
   */
-  transitionToParentRoute() {
-    // TODO: нужно учитывать пэйджинг.
-    // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
-    // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
-    let parentRoute = this.get('parentRoute');
-    Ember.assert('Parent route must be defined.', parentRoute);
-    this.transitionToRoute(parentRoute);
+  transitionToParentRoute(skipTransition) {
+    if (!skipTransition) {
+      // TODO: нужно учитывать пэйджинг.
+      // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
+      // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
+      let parentRoute = this.get('parentRoute');
+      Ember.assert('Parent route must be defined.', parentRoute);
+      this.transitionToRoute(parentRoute);
+    }
   },
 
   /**
@@ -534,7 +642,7 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
 
     // Handle order attributes (they must be readonly).
     if (modelAttrOptions && modelAttrOptions.isOrderAttribute) {
-      cellComponent.componentName = 'object-list-view-cell';
+      cellComponent.componentName = undefined;
     }
 
     switch (modelAttr.type) {
@@ -584,6 +692,16 @@ export default Ember.Controller.extend(Ember.Evented, FlexberryLookupMixin, Erro
     Ember.deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
     model.rollbackHasMany();
   },
+
+  /**
+    Service that lets interact between agregator's and detail's form.
+
+    @property flexberryDetailInteractionService
+    @type Ember.Service
+    @readOnly
+    @private
+  */
+  _flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
 
   /**
     Save dirty hasMany relationships in the `model` recursively.

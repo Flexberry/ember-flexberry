@@ -3,10 +3,34 @@
   onChange=(action 'onChange')
   onHide=(action 'onShowHide')
   onShow=(action 'onShowHide')
+  on=on
+  allowReselection=allowReselection
+  allowAdditions=allowAdditions
+  hideAdditions=hideAdditions
+  minCharacters=minCharacters
+  match=match
+  selectOnKeydown=selectOnKeydown
+  forceSelection=forceSelection
+  allowCategorySelection=allowCategorySelection
+  direction=direction
+  keepOnScreen=keepOnScreen
+  context=context
+  fullTextSearch=fullTextSearch
+  preserveHTML=preserveHTML
+  sortSelect=sortSelect
+  showOnFocus=showOnFocus
+  allowTab=allowTab
+  transition=transition
+  duration=duration
 }}
-  {{#if isSearch}}
+  {{#if (and isSearch isSearchReadOnly)}}
     <input class="search" autocomplete="off">
   {{/if}}
+
+  {{#if (and isSearch (not isSearchReadOnly))}}
+    <input class="search" autocomplete="off" readonly>
+  {{/if}}
+
   <i class="dropdown icon"></i>
   {{#if showPlaceholder}}
     <div class="default text">{{placeholder}}</div>

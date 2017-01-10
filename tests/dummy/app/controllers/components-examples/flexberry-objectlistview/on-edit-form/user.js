@@ -24,7 +24,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     @type String
     @default 'ember-flexberry-dummy-localization-edit'
    */
-  folvEditFormRoute: 'ember-flexberry-dummy-localization-edit',
+  folvEditFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
 
   /**
     Name of FOLV model.
@@ -33,7 +33,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     @type String
     @default 'ember-flexberry-dummy-localization'
    */
-  folvModelName: 'ember-flexberry-dummy-localization',
+  folvModelName: 'ember-flexberry-dummy-suggestion-type',
 
   /**
     Name of FOLV projection.
@@ -42,7 +42,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     @type String
     @default 'LocalizationL'
    */
-  folvProjection: 'LocalizationL',
+  folvProjection: 'SuggestionTypeL',
 
   objectListViewLimitPredicate: function(options) {
     let methodOptions = Ember.merge({
@@ -55,7 +55,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     methodOptions.projectionName === this.get('folvProjection')) {
       let limitFunction = new ComplexPredicate('or',
         new StringPredicate('name').contains('1'),
-        new StringPredicate('name').contains('Тест'));
+        new StringPredicate('name').contains('Type'));
       return limitFunction;
     }
 

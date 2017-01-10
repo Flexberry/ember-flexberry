@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-objectlistview` component:
+    * Add hierarchy support on `edit-form`.
+    * Add hierarchy indent setting.
 
 ## [0.8.0] - 2016-12-31
 ### Added

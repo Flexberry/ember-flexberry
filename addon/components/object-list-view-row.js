@@ -171,7 +171,7 @@ export default FlexberryBaseComponent.extend({
         result = this.get('defaultLeftPadding');
       }
 
-      return result
+      return result;
     },
     set(key, value) {
       if (value !== undefined) {

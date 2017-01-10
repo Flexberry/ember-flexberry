@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-objectlistview` component:
+    * Add hierarchy support on `edit-form`.
+    * Add `defaultLeftPadding` property as padding value in each level of hierarchy (in pixels).
+
+### Changed
+* `flexberry-objectlistview` component:
+    * Change hierarchy indent setting (`hierarchicalIndent` property) to `Number` type (in pixels).
 
 ## [0.8.0] - 2016-12-31
 ### Added

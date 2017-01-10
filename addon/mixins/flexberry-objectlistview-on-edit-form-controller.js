@@ -6,7 +6,7 @@ import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
-const { Condition, SimplePredicate, ComplexPredicate } = Query;
+const { Condition, SimplePredicate, ComplexPredicate, Builder } = Query;
 
 /**
   Mixin for edit-form-controller for ObjectListView support.
@@ -88,6 +88,11 @@ export default Ember.Mixin.create({
     let sorting = this.get('sorting');
     let filter = this.get('filter');
     let filterCondition = this.get('filterCondition');
+    let hierarchicalAttribute;
+    if (this.get('inHierarchicalMode')) {
+      hierarchicalAttribute = this.get('hierarchicalAttribute');
+    }
+
     let params = {};
     params.perPage = perPage;
     params.page = page;
@@ -107,8 +112,7 @@ export default Ember.Mixin.create({
         filterCondition: filterCondition,
         filters: filtersPredicate,
         predicate: limitPredicate,
-
-        //hierarchicalAttribute: hierarchicalAttribute,
+        hierarchicalAttribute: hierarchicalAttribute,
       };
       return this.reloadList(queryParameters)
       .then(records => {
@@ -236,5 +240,35 @@ export default Ember.Mixin.create({
   */
   objectListViewLimitPredicate(options) {
     return undefined;
-  }
+  },
+
+  actions: {
+    /**
+      Set in `property` for `target` promise that load nested records.
+      @method actions.loadRecordsById
+      @param {String} id Record ID.
+      @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {String} property Property name into {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+    */
+    loadRecordsById(id, target, property) {
+      let hierarchicalAttribute = this.get('hierarchicalAttribute');
+      let modelName = this.get('folvModelName');
+      let projectionName = this.get('folvProjection');
+      let builder = new Builder(this.store)
+        .from(modelName)
+        .selectByProjection(projectionName)
+        .where(hierarchicalAttribute, 'eq', id);
+
+      Ember.set(target, property, this.store.query(modelName, builder.build()));
+    },
+
+    /**
+      Switch hierarchical mode.
+      @method actions.switchHierarchicalMode
+    */
+    switchHierarchicalMode() {
+      this.toggleProperty('inHierarchicalMode');
+      this.getCustomContent();
+    },
+  },
 });

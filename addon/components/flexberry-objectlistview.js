@@ -112,10 +112,10 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Indent to indicate hierarchy, can be used HTML.
+    Indent in pixels to indicate hierarchy.
 
     @property hierarchicalIndent
-    @type String
+    @type Number
   */
   hierarchicalIndent: undefined,
 
@@ -127,6 +127,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   disableHierarchicalMode: false,
+
+ /**
+    Default left padding in cells.
+
+    @property defaultLeftPadding
+    @type Number
+    @default 10
+  */
+  defaultLeftPadding: 10,
 
   /**
     Text to be displayed in table body, if content is not defined or empty.

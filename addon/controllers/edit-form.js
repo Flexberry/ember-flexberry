@@ -13,6 +13,7 @@ import ReloadListMixin from '../mixins/reload-list-mixin';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
 import FolvOnEditControllerMixin from '../mixins/flexberry-objectlistview-on-edit-form-controller';
+import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
 
 const { getOwner } = Ember;
 
@@ -44,6 +45,12 @@ const { getOwner } = Ember;
   @uses FlexberryLookupMixin
   @uses ErrorableControllerMixin
   @uses FlexberryFileControllerMixin
+  @uses PaginatedControllerMixin
+  @uses ReloadListMixin
+  @uses SortableControllerMixin
+  @uses LimitedControllerMixin
+  @uses FlexberryObjectlistviewHierarchicalControllerMixin
+  @uses FolvOnEditControllerMixin
 */
 export default Ember.Controller.extend(
 Ember.Evented,
@@ -54,6 +61,7 @@ PaginatedControllerMixin,
 ReloadListMixin,
 SortableControllerMixin,
 LimitedControllerMixin,
+FlexberryObjectlistviewHierarchicalControllerMixin,
 FolvOnEditControllerMixin, {
   /**
     Flag to enable return to agregator's path if possible.

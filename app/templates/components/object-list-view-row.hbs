@@ -30,7 +30,8 @@
     {{#each columns as |column index|}}
       <td
         {{action rowClick record preventDefault=false}}
-        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}">
+        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}"
+        style="padding-left:{{if (and (not index) inHierarchicalMode) hierarchicalIndent defaultLeftPadding}}px;">
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
             {{#component column.cellComponent.componentName
@@ -41,7 +42,6 @@
               required=required
             }}
               {{#if (and (not index) inHierarchicalMode)}}
-                {{hierarchicalIndent}}
                 {{#if hasRecords}}
                   <button class="ui button icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
                     <i class="{{if _expanded "minus" "plus"}} icon"></i>
@@ -67,7 +67,6 @@
         {{else}}
           <div class="oveflow-text">
             {{#if (and (not index) inHierarchicalMode)}}
-              {{hierarchicalIndent}}
               {{#if hasRecords}}
                 <button class="ui button icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
                   <i class="{{if _expanded "minus" "plus"}} icon"></i>
@@ -134,6 +133,7 @@
         deleteRow=deleteRow
         _currentLevel=_currentLevel
         hierarchicalIndent=_hierarchicalIndent
+        defaultLeftPadding=defaultLeftPadding
       }}
     {{/each}}
   {{/if}}

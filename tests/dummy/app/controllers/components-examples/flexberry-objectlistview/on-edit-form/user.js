@@ -22,7 +22,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
 
     @property folvEditFormRoute
     @type String
-    @default 'ember-flexberry-dummy-localization-edit'
+    @default 'ember-flexberry-dummy-suggestion-type-edit'
    */
   folvEditFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
 
@@ -31,7 +31,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
 
     @property folvModelName
     @type String
-    @default 'ember-flexberry-dummy-localization'
+    @default 'ember-flexberry-dummy-suggestion-type'
    */
   folvModelName: 'ember-flexberry-dummy-suggestion-type',
 
@@ -40,7 +40,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
 
     @property folvProjection
     @type String
-    @default 'LocalizationL'
+    @default 'SuggestionTypeL'
    */
   folvProjection: 'SuggestionTypeL',
 
@@ -85,7 +85,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
      */
     userButtonAddAction: function() {
       let thisUrl = this.get('target.url');
-      this.transitionToRoute('ember-flexberry-dummy-localization-edit.new')
+      this.transitionToRoute(this.get('folvEditFormRoute') + '.new')
       .then((newRoute) => {
         newRoute.controller.set('parentRoute', thisUrl);
       });

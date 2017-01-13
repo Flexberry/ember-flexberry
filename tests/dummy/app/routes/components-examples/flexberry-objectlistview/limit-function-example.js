@@ -85,7 +85,7 @@ export default ListFormRoute.extend({
       params: undefined
     }, options);
 
-    if (methodOptions.modelName === this.get('modelName') && 
+    if (methodOptions.modelName === this.get('modelName') &&
       methodOptions.projectionName === this.get('modelProjection')) {
 
       let limitFunctionText = this.get('controller.limitFunction');

@@ -22,27 +22,27 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
 
     @property folvEditFormRoute
     @type String
-    @default 'ember-flexberry-dummy-localization-edit'
+    @default 'ember-flexberry-dummy-suggestion-type-edit'
    */
-  folvEditFormRoute: 'ember-flexberry-dummy-localization-edit',
+  folvEditFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
 
   /**
     Name of FOLV model.
 
     @property folvModelName
     @type String
-    @default 'ember-flexberry-dummy-localization'
+    @default 'ember-flexberry-dummy-suggestion-type'
    */
-  folvModelName: 'ember-flexberry-dummy-localization',
+  folvModelName: 'ember-flexberry-dummy-suggestion-type',
 
   /**
     Name of FOLV projection.
 
     @property folvProjection
     @type String
-    @default 'LocalizationL'
+    @default 'SuggestionTypeL'
    */
-  folvProjection: 'LocalizationL',
+  folvProjection: 'SuggestionTypeL',
 
   objectListViewLimitPredicate: function(options) {
     let methodOptions = Ember.merge({
@@ -55,14 +55,42 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     methodOptions.projectionName === this.get('folvProjection')) {
       let limitFunction = new ComplexPredicate('or',
         new StringPredicate('name').contains('1'),
-        new StringPredicate('name').contains('Тест'));
+        new StringPredicate('name').contains('Type'));
       return limitFunction;
     }
 
     return undefined;
   },
 
+  /**
+    Property to form array of special structures of custom user buttons.
+
+    @property customButtons
+    @type Array
+   */
+  customButtons: Ember.computed('i18n.locale', function() {
+    let i18n = this.get('i18n');
+    return [{
+      buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.on-edit-form.add-button-name'),
+      buttonAction: 'userButtonAddAction',
+      buttonClasses: 'my-add-user-button add-click-button positive'
+    }];
+  }),
+
   actions: {
+    /**
+      Handler for click on custom user button.
+
+      @method userButtonAddAction
+     */
+    userButtonAddAction: function() {
+      let thisUrl = this.get('target.url');
+      this.transitionToRoute(this.get('folvEditFormRoute') + '.new')
+      .then((newRoute) => {
+        newRoute.controller.set('parentRoute', thisUrl);
+      });
+    },
+
     componentForFilter(type, relation) {
       switch (type) {
         case 'string': return { name: 'flexberry-textbox', properties: { class: 'compact fluid' } };

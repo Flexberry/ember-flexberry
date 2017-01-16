@@ -40,7 +40,7 @@ Ember.$.extend(true, translations, {
             'caption': 'Тип предложения'
           },
           'commentsCount': {
-            'caption': 'Количество голосов'
+            'caption': 'Количество комментариев'
           },
         },
         'SuggestionE': {

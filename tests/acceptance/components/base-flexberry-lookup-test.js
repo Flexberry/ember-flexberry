@@ -1,6 +1,7 @@
-/*import Ember from 'ember';
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
+import { Query } from 'ember-flexberry-data';
 
 let openLookupDialog = function($lookup) {
   return new Ember.RSVP.Promise((resolve, reject) => {
@@ -8,7 +9,7 @@ let openLookupDialog = function($lookup) {
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
-    let timeout = 10000;
+    let timeout = 1000;
 
     let $lookupChooseButton = Ember.$('.lookup-choose-button', $lookup);
 
@@ -58,7 +59,7 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
-    let timeout = 10000;
+    let timeout = 1000;
 
     let $records = Ember.$('.content table.object-list-view tbody tr', $lookupDialog);
     let $choosedRecord = Ember.$($records[recordIndex]);
@@ -112,7 +113,7 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
 let app;
 let latestReceivedRecords;
 
-module('Acceptance | flexberry-lookup', {
+module('Acceptance | flexberry-lookup-base', {
   beforeEach() {
     // Start application.
     app = startApp();
@@ -184,4 +185,43 @@ test('changes in component\'s value causes changes in related model\'s specified
       asyncOperationsCompleted();
     });
   });
-});*/
+});
+
+test('changes in model\'s value causes changes in component\'s specified \'belongsTo\' model', function(assert) {
+  visit('components-acceptance-tests/flexberry-lookup/base-operations');
+  andThen(function() {
+
+    let $lookup = Ember.$('.flexberry-lookup');
+    let $lookupInput = Ember.$('input', $lookup);
+    assert.strictEqual($lookupInput.val() === '', true, 'lookup display value is empty by default');
+
+    let controller = app.__container__.lookup('controller:' + currentRouteName());
+    let model = Ember.get(controller, 'model');
+    let store = app.__container__.lookup('service:store');
+    let suggestionType;
+
+    let query = new Query.Builder(store)
+      .from('ember-flexberry-dummy-suggestion-type')
+      .selectByProjection('SettingLookupExampleView');
+
+    store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
+
+      let suggestionTypesArr = suggestionTypes.toArray();
+
+      suggestionType = suggestionTypesArr.objectAt(0);
+
+    }).then(() => {
+
+      model.set('type', suggestionType);
+
+      let done = assert.async();
+
+      setTimeout(function() {
+        $lookupInput = Ember.$('input', $lookup);
+        assert.strictEqual($lookupInput.val() === suggestionType.get('name'), true, 'lookup display value isn\'t empty');
+        done();
+      }, 100);
+
+    });
+  });
+});

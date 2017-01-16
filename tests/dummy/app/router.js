@@ -109,6 +109,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-projection');
 });
 
 export default Router;

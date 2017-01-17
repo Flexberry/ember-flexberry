@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
-import { executeTest } from './execute-folv-test';
+import { executeTest, loadingList } from './execute-folv-test';
 
 let checkSortingList = (store, assert, projection, $olv, ordr)=>{
   return new Ember.RSVP.Promise((resolve) => {
@@ -22,48 +22,6 @@ let checkSortingList = (store, assert, projection, $olv, ordr)=>{
   });
 };
 
-export function appendSort($ctrlForClick) {
-  return new Ember.RSVP.Promise((resolve, reject) => {
-    let checkIntervalId;
-    let checkIntervalSucceed = false;
-    let checkInterval = 500;
-    let timeout = 10000;
-
-    Ember.run(() => {
-      $ctrlForClick.click();
-    });
-
-    Ember.run(() => {
-      checkIntervalId = window.setInterval(() => {
-        let $list = Ember.$('.object-list-view-container');
-          let $records = Ember.$('table.object-list-view tbody tr', $list);
-          if ($records.length === 0) {
-            // Data isn't loaded yet.
-            return;
-        }
-        // Data is loaded.
-        // Stop interval & resolve promise.
-        window.clearInterval(checkIntervalId);
-        checkIntervalSucceed = true;
-        resolve($list);
-      }, checkInterval);
-    });
-
-    // Set wait timeout.
-    Ember.run(() => {
-      window.setTimeout(() => {
-        if (checkIntervalSucceed) {
-          return;
-        }
-        // Time is out.
-        // Stop intervals & reject promise.
-        window.clearInterval(checkIntervalId);
-        reject('editForm load operation is timed out');
-      }, timeout);
-    });
-  });
-}
-
 executeTest('check sorting', (store, assert, app) => {
   assert.expect(11);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
@@ -84,7 +42,7 @@ executeTest('check sorting', (store, assert, app) => {
         // Check sortihg icon in the first column. Sorting icon is not added.
         assert.equal( getTh(0).children[0].children.length, 1, 'no sorting icon in the first column' );
 
-        appendSort(getTh(0)).then(($list) => {
+        loadingList(getTh(0),'.object-list-view-container','table.object-list-view tbody tr').then(($list) => {
           let ord = () => { return Ember.$(getTh(0).children[0].children[1].children[0]); };
 
           assert.ok($list);
@@ -94,7 +52,7 @@ executeTest('check sorting', (store, assert, app) => {
           checkSortingList(store, assert,  projectionName, $olv, 'address asc').then((isTrue) => {
             assert.ok(isTrue, 'sorting applied');
             let done2 = assert.async();
-            appendSort(getTh(0)).then(($list) => {
+            loadingList(getTh(0),'.object-list-view-container','table.object-list-view tbody tr').then(($list) => {
               assert.ok($list);
               assert.equal( ord().attr('title'), 'Order descending', 'title is Order descending' );
               assert.equal( Ember.$.trim(ord().text()), String.fromCharCode('9660')+'1', 'sorting symbol changed' );

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest, openEditForm } from './execute-folv-test';
+import { executeTest, loadingList } from './execute-folv-test';
 
 executeTest('check goto editform', (store, assert, app) => {
   assert.expect(5);
@@ -24,7 +24,7 @@ executeTest('check goto editform', (store, assert, app) => {
       controller.set('rowClickable', true);
       Ember.run.later((function() {
 
-        openEditForm($cell, path).then(($editForm) => {
+        loadingList($cell, 'form', '.field').then(($editForm) => {
           assert.ok($editForm, 'edit form open');
           assert.equal(currentPath(), 'ember-flexberry-dummy-suggestion-edit', 'edit form path');
         }).catch((reason) => {

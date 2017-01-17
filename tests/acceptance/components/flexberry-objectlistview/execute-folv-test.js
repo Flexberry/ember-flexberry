@@ -35,7 +35,7 @@ export function executeTest(testName, callback) {
   test(testName, (assert) => callback(store, assert, app));
 };
 
-export function openEditForm($ctrlForClick, path) {
+export function loadingList($ctrlForClick, list, records) {
   return new Ember.RSVP.Promise((resolve, reject) => {
     let checkIntervalId;
     let checkIntervalSucceed = false;
@@ -48,9 +48,9 @@ export function openEditForm($ctrlForClick, path) {
 
     Ember.run(() => {
       checkIntervalId = window.setInterval(() => {
-        let $editForm = Ember.$('form');
-        let $fields = Ember.$('.field', $editForm);
-        if ($fields.length === 0) {
+        let $list = Ember.$(list);
+        let $records = Ember.$(records, $list);
+        if ($records.length === 0) {
           // Data isn't loaded yet.
           return;
         }
@@ -58,7 +58,7 @@ export function openEditForm($ctrlForClick, path) {
         // Stop interval & resolve promise.
         window.clearInterval(checkIntervalId);
         checkIntervalSucceed = true;
-        resolve($editForm);
+        resolve($list);
       }, checkInterval);
     });
 

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest, openEditForm } from './execute-folv-test';
+import { executeTest, loadingList } from './execute-folv-test';
 
 executeTest('check goto new form', (store, assert) => {
   assert.expect(3);
@@ -12,7 +12,7 @@ executeTest('check goto new form', (store, assert) => {
 
     let asyncOperationsCompleted = assert.async();
 
-    openEditForm($toolBarButtons[1], path).then(($editForm) => {
+    loadingList($toolBarButtons[1], 'form', '.field').then(($editForm) => {
       assert.ok($editForm, 'edit form open');
       assert.equal(currentPath(), 'ember-flexberry-dummy-suggestion-edit.new', 'new form open');
     }).catch((reason) => {

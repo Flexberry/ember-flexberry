@@ -285,4 +285,15 @@ Model.defineProjection('FlexberryObjectlistviewCustomFilter', 'ember-flexberry-d
   }),
 });
 
+// Projection for lookup default ordering example.
+Model.defineProjection('DefaultOrderingExampleView', 'ember-flexberry-dummy-suggestion', {
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
 export default Model;

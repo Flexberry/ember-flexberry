@@ -146,6 +146,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.log-service-examples.settings-example.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.settings-example.title'),
           children: null
+        }, {
+          link: 'log-service-examples/clear-log-form',
+          caption: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.caption'),
+          title: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.title'),
+          children: null
         }]
       }, {
         link: null,
@@ -285,6 +290,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/default-ordering-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.default-ordering-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.default-ordering-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -328,6 +338,12 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-objectlistview/custom-filter',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.title'),
+            children: null
+          }, {
+          }, {
+            link: 'components-examples/flexberry-objectlistview/edit-form-with-detail-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.edit-form-with-detail-list.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.edit-form-with-detail-list.title'),
             children: null
           }, {
             link: 'components-examples/flexberry-objectlistview/hierarchy-example',

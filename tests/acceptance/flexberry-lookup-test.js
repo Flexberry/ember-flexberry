@@ -141,7 +141,7 @@ test('flexberry-lookup projection test', function(assert) {
       var done = assert.async();
       setTimeout(function() {
 
-        let $lookupSearch = Ember.$('.content table.object-list-view');      
+        let $lookupSearch = Ember.$('.content table.object-list-view');
         let $lookupSearchThead = $lookupSearch.children('thead');
         let $lookupSearchTr = $lookupSearchThead.children('tr');
         let $lookupHeaders = $lookupSearchTr.children('th');

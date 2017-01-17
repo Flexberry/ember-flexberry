@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import moduleForAcceptance from './execute-folv-test';
+import {executeTest} from './execute-folv-test';
 
-moduleForAcceptance('check paging', (store, assert) => {
-
+executeTest('check paging', (store, assert) => {
   assert.expect(9);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   visit(path);
@@ -10,7 +9,7 @@ moduleForAcceptance('check paging', (store, assert) => {
     assert.equal(currentPath(), path);
     let $folvPerPageButton = Ember.$('.flexberry-dropdown.compact');
     let $menu = Ember.$('.menu', $folvPerPageButton);
-    let trTableBody = function(){ return $(Ember.$('tr', 'tbody', '.object-list-view-container')).length.toString(); };
+    let trTableBody = function(){ return $(Ember.$("table.object-list-view tbody tr")).length.toString(); };
     let activeItem = function(){ return $(Ember.$(".item.active.selected", $menu)).attr("data-value"); };
 
     // The list should be more than 5 items.

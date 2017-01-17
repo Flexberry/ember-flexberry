@@ -12,6 +12,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-objectlistview` component:
     * Change hierarchy indent setting (`hierarchicalIndent` property) to `Number` type (in pixels).
 
+###Fixed
+* `flexberry-objectlistview` component:
+    * Fix columns compute when `modelProjection` is `undefined`.
+
 ## [0.8.0] - 2016-12-31
 ### Added
 * `flexberry-simpleolv` component which renders it's content faster then `flexberry-objectlistview`. Component is inherited from `flexberry-objectlistview` component and has same functionality.

@@ -49,7 +49,7 @@ module.exports = {
     });
 
     app.import('bower_components/flatpickr-calendar/dist/flatpickr.min.css');
-    app.import('bower_components/flatpickr-calendar/src/flatpickr.l10n.ru.js');
+    app.import('bower_components/flatpickr-calendar/src/l10n/ru.js');
 
     app.import({
       development: 'bower_components/devicejs/lib/device.js',

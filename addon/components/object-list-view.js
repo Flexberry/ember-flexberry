@@ -136,6 +136,15 @@ export default FlexberryBaseComponent.extend(
   sortByColumn: 'sortByColumn',
 
   /**
+    Default left padding in cells.
+
+    @property defaultLeftPadding
+    @type Number
+    @default 10
+  */
+  defaultLeftPadding: 10,
+
+  /**
     Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
 
     If flag is enabled component compares current detail array with used on component,
@@ -372,7 +381,7 @@ export default FlexberryBaseComponent.extend(
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      throw new Error('Property \'modelProjection\' is undefined.');
+      return [];
     }
 
     let cols = this._generateColumns(projection.attributes);

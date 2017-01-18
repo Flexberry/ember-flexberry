@@ -30,7 +30,7 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { SOLVsuggestionTypeObjectListView: { } },
+  developerUserSettings: { SOLVSuggestionTypeObjectListView: { } },
 
   /**
     Name of model to be used as list's records types.

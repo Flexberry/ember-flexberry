@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.1] - 2017-01-18
 ### Added
 * `flexberry-objectlistview` component:
     * Add hierarchy support on `edit-form`.
@@ -13,10 +15,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Change hierarchy indent setting (`hierarchicalIndent` property) to `Number` type (in pixels).
 * Update `flatpickr-calendar` dependency to 2.3.4.
 
-### Fixed
-* Fix `readonly` mode for `simpledatetime` on mobile.
-
 ###Fixed
+* `flexberry-simpledatetime` component:
+    * Fix `readonly` mode.
 * `flexberry-objectlistview` component:
     * Fix columns compute when `modelProjection` is `undefined`.
 

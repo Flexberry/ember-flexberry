@@ -11,6 +11,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * `flexberry-objectlistview` component:
     * Change hierarchy indent setting (`hierarchicalIndent` property) to `Number` type (in pixels).
+* Update `flatpickr-calendar` dependency to 2.3.4.
+
+### Fixed
+* Fix `readonly` mode for `simpledatetime` on mobile.
 
 ## [0.8.0] - 2016-12-31
 ### Added

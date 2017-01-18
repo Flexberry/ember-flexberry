@@ -251,7 +251,15 @@ export default FlexberryBaseComponent.extend({
     }
 
     this.set('_flatpickr', this.$('.flatpickr').flatpickr(options));
+    this.$('.flatpickr').attr('readonly', this.get('readonly'));
   },
+
+  /**
+    Sets readonly attr for flatpickr.
+  */
+  readonlyObserver: Ember.observer('readonly', function() {
+    this.$('.flatpickr').attr('readonly', this.get('readonly'));
+  }),
 
   /**
     Destroy Flatpickr instance.

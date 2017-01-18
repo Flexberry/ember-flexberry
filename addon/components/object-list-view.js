@@ -381,7 +381,7 @@ export default FlexberryBaseComponent.extend(
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      throw new Error('Property \'modelProjection\' is undefined.');
+      return [];
     }
 
     let cols = this._generateColumns(projection.attributes);

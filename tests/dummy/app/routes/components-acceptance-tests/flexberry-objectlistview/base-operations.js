@@ -8,7 +8,7 @@ export default ListFormRoute.extend({
     @type String
     @default 'SuggestionL'
    */
-  modelProjection: 'SuggestionL',
+  modelProjection: 'SuggestionE',
 
   /**
   developerUserSettings.

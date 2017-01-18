@@ -16,15 +16,6 @@ export function executeTest(testName, callback) {
       let applicationController = app.__container__.lookup('controller:application');
       applicationController.set('isInAcceptanceTestMode', true);
       store = app.__container__.lookup('service:store');
-      // let originalQueryMethod = store.query;
-      // store.query = function(...args) {
-      //
-      //   // Call original method & remember returned records.
-      //   return originalQueryMethod.apply(this, args).then((records) => {
-      //     latestReceivedRecords = records.toArray();
-      //     return records;
-      //   });
-      // };
     },
 
     afterEach() {

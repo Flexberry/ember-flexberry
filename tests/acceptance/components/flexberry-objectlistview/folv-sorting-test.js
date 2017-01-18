@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 import { executeTest, loadingList } from './execute-folv-test';
 
-let checkSortingList = (store, assert, projection, $olv, ordr)=>{
+let checkSortingList = (store, assert, projection, $olv, ordr) => {
   return new Ember.RSVP.Promise((resolve) => {
     Ember.run(() => {
       let modelName = projection.modelName;

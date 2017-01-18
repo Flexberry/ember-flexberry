@@ -9,8 +9,8 @@ executeTest('check paging', (store, assert) => {
     assert.equal(currentPath(), path);
     let $folvPerPageButton = Ember.$('.flexberry-dropdown.compact');
     let $menu = Ember.$('.menu', $folvPerPageButton);
-    let trTableBody = function(){ return $(Ember.$("table.object-list-view tbody tr")).length.toString(); };
-    let activeItem = function(){ return $(Ember.$(".item.active.selected", $menu)).attr("data-value"); };
+    let trTableBody = () => { return $(Ember.$("table.object-list-view tbody tr")).length.toString(); };
+    let activeItem =  () =>{ return $(Ember.$(".item.active.selected", $menu)).attr("data-value"); };
 
     // check paging.
     let $basicButtons = Ember.$('.ui.button','.ui.basic.buttons');
@@ -32,8 +32,8 @@ executeTest('check paging', (store, assert) => {
     // The list should be more than 5 items.
     assert.equal(activeItem(), trTableBody(), "equal perPage and visible element count");
     $folvPerPageButton.click();
-    let timeout = 3000;
-    Ember.run.later((function() {
+    let timeout = 500;
+    Ember.run.later(( () => {
       let menuIsVisible = $menu.hasClass("visible");
       assert.strictEqual(menuIsVisible, true, "menu is visible");
       let $choosedIthem = Ember.$(".item", $menu);

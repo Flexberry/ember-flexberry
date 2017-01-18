@@ -8,7 +8,7 @@ export default ListFormController.extend({
     @property projection
     @type Object
    */
-  projection: 'SuggestionL',
+  projection: 'SuggestionE',
 
   /**
     Name of related edit form route (for 'flexberry-objectlistview' component 'editFormRoute' property).
@@ -146,5 +146,20 @@ export default ListFormController.extend({
     @protected
     @readOnly
   */
-  records: []
+  records: [],
+
+  getCellComponent: function(attr, bindingPath, modelClass) {
+    if (attr.kind === 'attr') {
+      switch (bindingPath) {
+        case 'date':
+          return {
+            componentName: 'object-list-view-cell',
+            componentProperties: {
+              dateFormat: 'YYYY-MM-DD'
+            }
+          };
+      }
+    }
+    return this._super(...arguments);
+  }
 });

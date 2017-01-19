@@ -134,6 +134,12 @@ module('Acceptance | flexberry-lookup-base', {
         return records;
       });
     };
+
+    /*// test double for the external chose action
+    this.set('externalAction', (actual) => {
+      let expected = { comment: 'You are not a wizard!' };
+      assert.deepEqual(actual, expected, 'submitted value is passed to external action');
+    });*/
   },
 
   afterEach() {
@@ -142,10 +148,10 @@ module('Acceptance | flexberry-lookup-base', {
 
     // Destroy application.
     Ember.run(app, 'destroy');
-  }
+  },
 });
 
-test('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation', function(assert) {
+/*test('changes in component\'s value causes changes in related model\'s specified \'belongsTo\' relation', function(assert) {
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
   andThen(function() {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
@@ -286,4 +292,65 @@ test('flexberry-lookup limit function test', function(assert) {
       });
     });
   });
+});*/
+
+test('flexberry-lookup check actions', function(assert) {
+  let controller = app.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/setting-example-actions');
+
+  let $onChoseData = null;
+  Ember.set(controller, 'actions.externalChoseAction', (e) => {
+    $onChoseData = e;
+  });
+
+  visit('components-acceptance-tests/flexberry-lookup/setting-example-actions');
+  andThen(function() {
+
+    let model = Ember.get(controller, 'model');
+    let relationName = Ember.get(controller, 'relationName');
+    let displayAttributeName = Ember.get(controller, 'displayAttributeName');
+
+    let $lookup = Ember.$('.flexberry-lookup');
+    let $lookupInput = Ember.$('input', $lookup);
+
+    // Wait for lookup dialog to be opened, choose first record & check component's state.
+    let asyncOperationsCompleted = assert.async();
+    openLookupDialog($lookup).then(($lookupDialog) => {
+
+      // Lookup dialog successfully opened & data is loaded.
+      // Try to choose first loaded record.
+      return chooseRecordInLookupDialog($lookupDialog, 0);
+    }).then(() => {
+
+      // First loaded record chosen successfully.
+      // Check that chosen record is now set to related model's 'belongsTo' relation.
+      let chosenRecord = model.get(relationName);
+      let expectedRecord = latestReceivedRecords[0];
+
+      assert.strictEqual(
+        Ember.get($onChoseData, 'checked'),
+        true,
+        'Component sends \'onChange\' action with \'checked\' property equals to \'true\' after first click'
+      );
+
+      let chosenRecordDisplayAttribute = chosenRecord.get(displayAttributeName);
+      
+      asyncOperationsCompleted();
+    }).catch((reason) => {
+      throw new Error(reason);
+    }).finally(() => {
+      asyncOperationsCompleted();
+    });
+  });
 });
+
+/*test('flexberry-lookup relation name test', function(assert) {
+  visit('components-acceptance-tests/flexberry-lookup/setting-example-actions');
+  andThen(function() {
+    let controller = app.__container__.lookup('controller:' + currentRouteName());
+    let relationName = Ember.get(controller, 'relationName');
+    assert.strictEqual(
+      relationName,
+      'Temp relation name',
+      'relationName: \'' + relationName + '\' as expected');
+  });
+});*/

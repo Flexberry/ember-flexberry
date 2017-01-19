@@ -111,6 +111,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-projection');
   this.route('components-acceptance-tests/flexberry-lookup/limit-function-example');
+  this.route('components-acceptance-tests/flexberry-lookup/setting-example-actions');
 });
 
 export default Router;

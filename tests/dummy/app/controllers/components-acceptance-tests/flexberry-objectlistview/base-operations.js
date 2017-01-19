@@ -160,6 +160,7 @@ export default ListFormController.extend({
           };
       }
     }
+
     return this._super(...arguments);
   }
 });

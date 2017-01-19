@@ -5,10 +5,10 @@ import startApp from '../../../helpers/start-app';
 export function executeTest(testName, callback) {
   let app;
   let store;
-  let latestReceivedRecords;
 
   module('Acceptance | flexberry-objectlistview | ' + testName, {
     beforeEach() {
+
       // Start application.
       app = startApp();
 
@@ -24,7 +24,7 @@ export function executeTest(testName, callback) {
   });
 
   test(testName, (assert) => callback(store, assert, app));
-};
+}
 
 export function loadingList($ctrlForClick, list, records) {
   return new Ember.RSVP.Promise((resolve, reject) => {
@@ -42,9 +42,11 @@ export function loadingList($ctrlForClick, list, records) {
         let $list = Ember.$(list);
         let $records = Ember.$(records, $list);
         if ($records.length === 0) {
+
           // Data isn't loaded yet.
           return;
         }
+
         // Data is loaded.
         // Stop interval & resolve promise.
         window.clearInterval(checkIntervalId);
@@ -59,6 +61,7 @@ export function loadingList($ctrlForClick, list, records) {
         if (checkIntervalSucceed) {
           return;
         }
+
         // Time is out.
         // Stop intervals & reject promise.
         window.clearInterval(checkIntervalId);
@@ -66,4 +69,4 @@ export function loadingList($ctrlForClick, list, records) {
       }, timeout);
     });
   });
-};
+}

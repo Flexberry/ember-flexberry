@@ -9,13 +9,11 @@ executeTest('check goto editform', (store, assert, app) => {
     assert.equal(currentPath(), path);
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let $trTableBody = Ember.$('tr', 'tbody', '.object-list-view-container');
-
-    assert.equal(currentPath(), path, 'edit form not open');
-
-    let asyncOperationsCompleted = assert.async();
+    let $folvContainer = Ember.$('.object-list-view-container');
+    let $trTableBody = Ember.$('table.object-list-view tbody tr', $folvContainer);
     let $cell = $trTableBody[0].children[1];
 
+    assert.equal(currentPath(), path, 'edit form not open');
     $cell.click();
 
     let timeout = 2000;
@@ -23,8 +21,8 @@ executeTest('check goto editform', (store, assert, app) => {
       assert.equal(currentPath(), path, 'edit form not open');
       controller.set('rowClickable', true);
       Ember.run.later((function() {
-
-        loadingList($cell, 'form', '.field').then(($editForm) => {
+        let asyncOperationsCompleted = assert.async();
+        loadingList($cell, 'form.flexberry-vertical-form', '.field').then(($editForm) => {
           assert.ok($editForm, 'edit form open');
           assert.equal(currentPath(), 'ember-flexberry-dummy-suggestion-edit', 'edit form path');
         }).catch((reason) => {

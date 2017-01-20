@@ -6,6 +6,7 @@ import Ember from 'ember';
 
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import { Query } from 'ember-flexberry-data';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 const { BasePredicate } = Query;
 
@@ -102,7 +103,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
         modelToLookup: undefined,
         sizeClass: undefined,
         lookupWindowCustomPropertiesData: undefined,
-        componentName: undefined
+        componentName: undefined,
+        sorting: undefined
       }, chooseData);
 
       let projectionName = options.projection;
@@ -121,6 +123,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let componentName = options.componentName;
 
       let model = modelToLookup ? modelToLookup : this.get('model');
+      let sorting = options.sorting ? options.sorting : [];
 
       // Get ember static function to get relation by name.
       let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
@@ -145,7 +148,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
         perPage: this.get('lookupModalWindowPerPage'),
         page: 1,
-        sorting: [],
+        sorting: sorting,
         filter: undefined,
         predicate: limitPredicate,
 
@@ -209,7 +212,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let modelToLookup = options.modelToLookup;
       let model = modelToLookup ? modelToLookup : this.get('model');
 
-      Ember.Logger.debug(`Flexberry Lookup Mixin::updateLookupValue ${options.relationName}`);
+      Ember.debug(`Flexberry Lookup Mixin::updateLookupValue ${options.relationName}`);
       model.set(options.relationName, options.newRelationValue);
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
@@ -239,6 +242,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
     @param {String} [options.page] Current page to display on lookup window.
     @param {String} [options.sorting] Current sorting.
     @param {String} [options.filter] Current filter.
+    @param {String} [options.filterCondition] Current filter condition.
     @param {String} [options.predicate] Current limit predicate.
     @param {String} [options.title] Title of modal lookup window.
     @param {String} [options.sizeClass] Size of modal lookup window.
@@ -263,6 +267,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       page: undefined,
       sorting: undefined,
       filter: undefined,
+      filterCondition: undefined,
       predicate: undefined,
 
       title: undefined,
@@ -298,6 +303,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       page: reloadData.page ? reloadData.page : 1,
       sorting: reloadData.sorting ? reloadData.sorting : [],
       filter: reloadData.filter,
+      filterCondition: reloadData.filterCondition,
       predicate: limitPredicate
     };
 
@@ -314,7 +320,9 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       perPage: queryParameters.perPage,
       page: queryParameters.page,
+      sort: serializeSortingParam(queryParameters.sorting, controller.get('sortDefaultValue')),
       filter: reloadData.filter,
+      filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
 
       modelType: reloadData.relatedToType,

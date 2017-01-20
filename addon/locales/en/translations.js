@@ -17,14 +17,7 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Block list',
-    },
-
-    'new-platform-flexberry-services-lock-edit': {
-      caption: 'Lock object',
-      'lockKey-caption': 'Key locked object',
-      'userName-caption': 'User locked object',
-      'lockDate-caption': 'Date lock',
-    },
+    }
   },
 
   'components': {
@@ -164,7 +157,8 @@ export default {
       'have-errors': 'When you save a configuration errors occurred: ',
       'setting': 'Setting ',
       'is-saved': ' is saved',
-      'col-width-on': 'Enable setting column widths'
+      'col-width-on': 'Enable setting column widths',
+      'per-page': 'Records count on page'
     },
 
     'form-load-time-tracker': {

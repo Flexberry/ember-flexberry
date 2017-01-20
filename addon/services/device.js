@@ -14,6 +14,33 @@ import Ember from 'ember';
 */
 export default Ember.Service.extend(Ember.Evented, {
   /**
+    If set as `true`, into prefixes for paths, returned by `pathPrefixes` function, will be added prefix in format: 'platformName-deviceType'.
+
+    @property prefixForPlatformAndType
+    @type Boolean
+    @default false
+  */
+  prefixForPlatformAndType: false,
+
+  /**
+    If set as `true`, each prefix for paths, returned by `pathPrefixes` function, will be duplicated in format: 'prefix-currentOrientation'.
+
+    @property prefixForOrientation
+    @type Boolean
+    @default false
+  */
+  prefixForOrientation: false,
+
+  /**
+    If set as `true`, into prefixes for paths, returned by `pathPrefixes` function, will be added prefix in format: 'deviceType'.
+
+    @property prefixForType
+    @type Boolean
+    @default false
+  */
+  prefixForType: false,
+
+  /**
     Device service cache.
 
     @property {Object} _cache
@@ -54,11 +81,18 @@ export default Ember.Service.extend(Ember.Evented, {
         this.set(propertieName, devicejs[propertieName]);
       }
 
+      let app = Ember.getOwner(this).application;
+      if (app.deviceService) {
+        this.set('prefixForType', !!app.deviceService.prefixForType);
+        this.set('prefixForOrientation', !!app.deviceService.prefixForOrientation);
+        this.set('prefixForPlatformAndType', !!app.deviceService.prefixForPlatformAndType);
+      }
+
       // Attach orientation change handler.
       this.set('_onOrientationChange', this._onOrientationChange.bind(this));
       Ember.$(window).on('resize orientationchange', this._onOrientationChange);
     } else {
-      Ember.Logger.error('Device service error. Can\'t find device.js entry point.');
+      throw new Error('Device service error. Can\'t find device.js entry point.');
     }
   },
 
@@ -187,14 +221,19 @@ export default Ember.Service.extend(Ember.Evented, {
 
     // Path prefix with platform and device type: 'ipad', 'android-tablet', 'windows-phone', etc.
     let pathPrefixWithPlatformAndType = '';
-    if (this.ios()) {
-      pathPrefixWithPlatformAndType = this.ipad() ? 'ipad' : this.ipod() ? 'ipod' : 'iphone';
-    } else if (!(Ember.isBlank(platform) || Ember.isBlank(type))) {
-      pathPrefixWithPlatformAndType = platform + '-' + type;
+    if (this.get('prefixForPlatformAndType')) {
+      if (this.ios()) {
+        pathPrefixWithPlatformAndType = this.ipad() ? 'ipad' : this.ipod() ? 'ipod' : 'iphone';
+      } else if (!(Ember.isBlank(platform) || Ember.isBlank(type))) {
+        pathPrefixWithPlatformAndType = platform + '-' + type;
+      }
     }
 
     // Path prefix with device type only: 'tablet', 'phone', 'tv' etc.
-    let pathPrefixWithType = type;
+    let pathPrefixWithType;
+    if (this.get('prefixForType')) {
+      pathPrefixWithType = type;
+    }
 
     // Path prefix with common type only: 'mobile' for both tablets and phones etc.
     let pathPrefixCommon = this.mobile() || this.tablet() ? 'mobile' : '';
@@ -219,7 +258,10 @@ export default Ember.Service.extend(Ember.Evented, {
       }
 
       for (let i = 0, len = pathPrefixesWithoutOrientation.length; i < len; i++) {
-        pathPrefixes[orientation].push(pathPrefixesWithoutOrientation[i] + '-' + orientation);
+        if (this.get('prefixForOrientation')) {
+          pathPrefixes[orientation].push(pathPrefixesWithoutOrientation[i] + '-' + orientation);
+        }
+
         pathPrefixes[orientation].push(pathPrefixesWithoutOrientation[i]);
       }
     }

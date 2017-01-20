@@ -113,15 +113,15 @@ export default class ModelBlueprint {
     if(validations.length===0){
       validationsFunc="";
     }
-    validationsFunc = "getValidations: function () {\n" + 
-    TAB + TAB + "let parentValidations = this._super();\n" + 
-    TAB + TAB + "let thisValidations = {\n" + 
-    validationsFunc + TAB + TAB + "};\n" + 
-    TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" + 
+    validationsFunc = "getValidations: function () {\n" +
+    TAB + TAB + "let parentValidations = this._super();\n" +
+    TAB + TAB + "let thisValidations = {\n" +
+    validationsFunc + TAB + TAB + "};\n" +
+    TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
     TAB + "}";
-    let initFunction = "init: function () {\n" + 
-    TAB + TAB + "this.set('validations', this.getValidations());\n" + 
-    TAB + TAB + "this._super.apply(this, arguments);\n" + 
+    let initFunction = "init: function () {\n" +
+    TAB + TAB + "this.set('validations', this.getValidations());\n" +
+    TAB + TAB + "this._super.apply(this, arguments);\n" +
     TAB + "}";
     attrs.push(validationsFunc, initFunction);
     return TAB + attrs.join(",\n" + TAB);
@@ -240,7 +240,7 @@ export default class ModelBlueprint {
       }
       projAttrs=lodash.sortBy(projAttrs,["index"]);
       let attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
-      projections.push(`  model.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
+      projections.push(`  modelClass.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
     }
     return `\n${projections.join("\n")}\n`;
   }

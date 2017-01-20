@@ -17,14 +17,7 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Список блокировок',
-    },
-
-    'new-platform-flexberry-services-lock-edit': {
-      caption: 'Объект блокировки',
-      'lockKey-caption': 'Ключ заблокированного объекта',
-      'userName-caption': 'Заблокировавший пользователь',
-      'lockDate-caption': 'Дата блокировки',
-    },
+    }
   },
 
   'components': {
@@ -165,7 +158,8 @@ export default {
       'have-errors': 'При сохранении настройки возникли ошибки: ',
       'setting': 'Настройка ',
       'is-saved': ' сохранена',
-      'col-width-on': 'Включить настройку ширины столбцов'
+      'col-width-on': 'Включить настройку ширины столбцов',
+      'per-page': 'Записей на странице'
     },
 
     'form-load-time-tracker': {

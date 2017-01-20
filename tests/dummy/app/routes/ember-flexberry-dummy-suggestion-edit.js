@@ -34,13 +34,20 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   developerUserSettings: {
     suggestionUserVotesGroupEdit: {
       'DEFAULT': {
-        'columnWidths': [{ 'propName': 'voteType', 'width': 133 }, { 'propName': 'author', 'width': 348 }, { 'propName': 'author.eMail', 'width': 531 }]
+        'columnWidths': [{ 'propName': 'voteType', 'width': 133 }, { 'propName': 'author', 'width': 348 }, { 'propName': 'author.eMail', 'width': 531 }],
+        'sorting': [{ 'propName': 'author', 'direction': 'asc' }]
       }
     },
     filesGroupEdit: {
       'DEFAULT': {
         'columnWidths': [{ 'propName': 'order', 'width': 140 }, { 'propName': 'file', 'width': 893 }],
-        'colsOrder': [{ 'propName': 'file' }, { 'propName': 'order' }]
+        'colsOrder': [{ 'propName': 'file' }, { 'propName': 'order' }],
+        'sorting': [{ 'propName': 'order', 'direction': 'desc' }]
+      }
+    },
+    suggestionCommentsGroupEdit: {
+      'DEFAULT': {
+        'sorting': [{ 'propName': 'votes', 'direction': 'asc' }, { 'propName': 'moderated', 'direction': 'desc' }, { 'propName': 'text', 'direction': 'asc' }]
       }
     }
   },

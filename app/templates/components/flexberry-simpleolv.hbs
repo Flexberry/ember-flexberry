@@ -20,7 +20,7 @@
     </button>
   {{/if}}
   {{#if enableFilters}}
-    <div class="ui icon input buttons">
+    <div class="ui icon buttons">
       <button class="ui button {{buttonClass}} {{if showFilters "active"}}" {{action "toggleStateFilters"}}>
         <i class="filter icon"></i>
       </button>
@@ -114,7 +114,7 @@
         {{#each columns as |column|}}
           {{#unless column.hide}}
             <th class="dt-head-left me class" onclick={{ action "headerCellClick" column }}>
-              <div data-olv-header-property-name={{column.propName}} title={{t "components.object-list-view.header-title-attr"}}>
+              <div data-olv-header-property-name={{column.propName}} title={{sortTitleCompute}}>
                 <span>
                 {{#if column.keyLocale}}
                   {{t column.keyLocale}}
@@ -292,7 +292,7 @@
     <button class="ui {{unless hasNextPage 'disabled'}} button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
   </div>
   <div class="right menu">
-    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick")}}
+    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}
   </div>
 </div>
 {{#if showShowingEntries}}

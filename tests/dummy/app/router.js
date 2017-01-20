@@ -110,8 +110,9 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-projection');
-  this.route('components-acceptance-tests/flexberry-lookup/limit-function-example');
-  this.route('components-acceptance-tests/flexberry-lookup/setting-example-actions');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-actions');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
 });
 
 export default Router;

@@ -201,10 +201,12 @@ test('changes in model\'s value causes changes in component\'s specified \'belon
     let store = app.__container__.lookup('service:store');
     let suggestionType;
 
+    // Create limit for query.
     let query = new Query.Builder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SettingLookupExampleView');
 
+    // Load olv data.
     store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
 
       let suggestionTypesArr = suggestionTypes.toArray();
@@ -213,6 +215,7 @@ test('changes in model\'s value causes changes in component\'s specified \'belon
 
     }).then(() => {
 
+      // Change data in the model.
       model.set('type', suggestionType);
 
       let done = assert.async();
@@ -247,11 +250,13 @@ test('flexberry-lookup limit function test', function(assert) {
     let limitType = controller.limitType;
     let queryPredicate = new StringPredicate('name').contains(limitType);
 
+    // Create limit for query.
     let query = new Query.Builder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SettingLookupExampleView')
       .where(queryPredicate);
 
+    // Load olv data.
     store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
 
       let suggestionTypesArr = suggestionTypes.toArray();
@@ -272,6 +277,7 @@ test('flexberry-lookup limit function test', function(assert) {
           assert.strictEqual(suggestionModelLength >= $suggestionTableLength, true,
             'Сorrect number of values restrictions limiting function');
 
+          // Сomparison data in the model and olv table.
           for (let i = 0; i < $suggestionTableLength; i++) {
             let suggestionType = suggestionTypesArr.objectAt(i);
             let suggestionTypeName = suggestionType.get('name');
@@ -295,6 +301,7 @@ test('flexberry-lookup actions test', function(assert) {
 
   let controller = app.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
 
+  // Remap remove action.
   let $onRemoveData;
   Ember.set(controller, 'actions.externalRemoveAction', (actual) => {
     $onRemoveData = actual;
@@ -302,6 +309,7 @@ test('flexberry-lookup actions test', function(assert) {
     assert.strictEqual($onRemoveData.relationName, 'type', 'Component sends \'remove\' with actual relationName');
   });
 
+  // Remap chose action.
   let $onChooseData;
   Ember.set(controller, 'actions.externalChooseAction', (actual) => {
     $onChooseData = actual;

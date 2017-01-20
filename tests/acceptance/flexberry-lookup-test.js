@@ -15,12 +15,14 @@ test('flexberry-lookup open flexberry-modal test', function(assert) {
 
       assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example');
 
+      // Open lookup chose olv.
       let $lookupButtouChoose = Ember.$('.lookup-choose-button');
 
       Ember.run(() => {
         $lookupButtouChoose.click();
       });
 
+      // Set wait timeout.
       Ember.run(() => {
         var done = assert.async();
         setTimeout(function() {
@@ -28,14 +30,9 @@ test('flexberry-lookup open flexberry-modal test', function(assert) {
           let $modal = Ember.$('.flexberry-modal');
           let $modalHeader = Ember.$('.header');
 
+          // Check olv title.
           assert.strictEqual($modal.length === 1, true, 'Component open flexberry-modal block');
           assert.strictEqual($modalHeader.text().trim(), 'Temp title', 'Component flexberry-modal has title');
-
-          //First record name
-          //let $records = Ember.$('.content table.object-list-view tbody tr');
-          //let $record = Ember.$($records[0]);
-          //let $recordFirstCell = Ember.$(Ember.$('td', $record)[1]);
-          //assert.strictEqual($recordFirstCell.text().trim(), 'per', 'LimitFunction works correctly');
 
           done();
           resolve();
@@ -44,14 +41,11 @@ test('flexberry-lookup open flexberry-modal test', function(assert) {
     });
 
     expandAnimationCompleted.then(() => {
+
+      // Close lookup chose olv.
       Ember.run(() => {
         let $modalCloseIcon = Ember.$('.close.icon');
         $modalCloseIcon.click();
-      });
-
-      Ember.run(() => {
-        var endClose = assert.async();
-        setTimeout(function() { endClose(); }, 1000);
       });
     });
   });
@@ -133,6 +127,7 @@ test('flexberry-lookup projection test', function(assert) {
 
     let $lookupButtouChoose = Ember.$('.lookup-choose-button');
 
+    // Click choose button.
     Ember.run(() => {
       $lookupButtouChoose.click();
     });
@@ -146,6 +141,7 @@ test('flexberry-lookup projection test', function(assert) {
         let $lookupSearchTr = $lookupSearchThead.children('tr');
         let $lookupHeaders = $lookupSearchTr.children('th');
 
+        // Check count at table header.
         assert.strictEqual($lookupHeaders.length === 3, true, 'Component has SuggestionTypeE projection');
 
         done();

@@ -276,11 +276,11 @@ test('flexberry-lookup limit function test', function(assert) {
             let suggestionType = suggestionTypesArr.objectAt(i);
             let suggestionTypeName = suggestionType.get('name');
 
-            let cell = $($lookupRows[3*i+1]);
-            let cellDiv = cell.children('div');
-            let cellText = cellDiv.text().trim();
+            let $cell = $($lookupRows[3 * i + 1]);
+            let $cellDiv = $cell.children('div');
+            let $cellText = $cellDiv.text().trim();
 
-            assert.strictEqual(suggestionTypeName === cellText, true, 'Сorrect data at lookup\'s olv');
+            assert.strictEqual(suggestionTypeName === $cellText, true, 'Сorrect data at lookup\'s olv');
           }
 
           done();
@@ -299,7 +299,7 @@ test('flexberry-lookup actions test', function(assert) {
   Ember.set(controller, 'actions.externalRemoveAction', (actual) => {
     $onRemoveData = actual;
     assert.notEqual($onRemoveData, undefined, 'Component sends \'remove\' action after first click');
-    assert.strictEqual($onRemoveData.relationName, "type", 'Component sends \'remove\' with actual relationName');
+    assert.strictEqual($onRemoveData.relationName, 'type', 'Component sends \'remove\' with actual relationName');
   });
 
   let $onChooseData;

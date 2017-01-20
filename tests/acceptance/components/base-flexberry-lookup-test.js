@@ -269,7 +269,7 @@ test('flexberry-lookup limit function test', function(assert) {
 
           assert.expect(2 + $suggestionTableLength);
 
-          assert.strictEqual( suggestionModelLength >= $suggestionTableLength, true,
+          assert.strictEqual(suggestionModelLength >= $suggestionTableLength, true,
             'Сorrect number of values restrictions limiting function');
 
           for (let i = 0; i < $suggestionTableLength; i++) {
@@ -282,6 +282,7 @@ test('flexberry-lookup limit function test', function(assert) {
 
             assert.strictEqual(suggestionTypeName === cellText, true, 'Сorrect data at lookup\'s olv');
           }
+
           done();
         }, 2000);
       });
@@ -305,9 +306,9 @@ test('flexberry-lookup actions test', function(assert) {
   Ember.set(controller, 'actions.externalChooseAction', (actual) => {
     $onChooseData = actual;
     assert.notEqual($onChooseData, undefined, 'Component sends \'choose\' action after first click');
-    assert.strictEqual($onChooseData.componentName, "flexberry-lookup",
+    assert.strictEqual($onChooseData.componentName, 'flexberry-lookup',
      'Component sends \'choose\' with actual componentName');
-    assert.strictEqual($onChooseData.projection, "SettingLookupExampleView",
+    assert.strictEqual($onChooseData.projection, 'SettingLookupExampleView',
      'Component sends \'choose\' with actual projection');
   });
 

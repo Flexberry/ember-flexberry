@@ -18,12 +18,12 @@
       readonly=(if (or readonly (not autocomplete)) "readonly")
     }}
     <button
-      class="ui {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+      class="ui lookup-choose-button  {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
       {{action "choose" chooseData}}>
       {{{chooseText}}}
     </button>
     <button
-      class="ui {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
+      class="ui lookup-clear-button{{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       {{action "remove" removeData}}>
       {{{removeText}}}
     </button>

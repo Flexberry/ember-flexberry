@@ -10,7 +10,7 @@ let openLookupDialog = function($lookup) {
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
-    let timeout = 1000;
+    let timeout = 2000;
 
     let $lookupChooseButton = Ember.$('.lookup-choose-button', $lookup);
 
@@ -60,7 +60,7 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
-    let timeout = 1000;
+    let timeout = 2000;
 
     let $records = Ember.$('.content table.object-list-view tbody tr', $lookupDialog);
     let $choosedRecord = Ember.$($records[recordIndex]);
@@ -341,5 +341,104 @@ test('flexberry-lookup relation name test', function(assert) {
       relationName,
       'Temp relation name',
       'relationName: \'' + relationName + '\' as expected');
+  });
+});
+
+test('flexberry-lookup projection test', function(assert) {
+  assert.expect(2);
+
+  visit('components-acceptance-tests/flexberry-lookup/settings-example-projection');
+
+  andThen(function() {
+    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-projection');
+
+    let $lookupButtouChoose = Ember.$('.lookup-choose-button');
+
+    // Click choose button.
+    Ember.run(() => {
+      $lookupButtouChoose.click();
+    });
+
+    Ember.run(() => {
+      var done = assert.async();
+      setTimeout(function() {
+
+        let $lookupSearch = Ember.$('.content table.object-list-view');
+        let $lookupSearchThead = $lookupSearch.children('thead');
+        let $lookupSearchTr = $lookupSearchThead.children('tr');
+        let $lookupHeaders = $lookupSearchTr.children('th');
+
+        // Check count at table header.
+        assert.strictEqual($lookupHeaders.length === 3, true, 'Component has SuggestionTypeE projection');
+
+        done();
+      }, 1000);
+    });
+  });
+});
+
+test('visiting flexberry-lookup dropdown', function(assert) {
+  assert.expect(13);
+
+  visit('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
+
+  andThen(function() {
+
+    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
+
+    // Retrieve component, it's inner <input>.
+    let $lookupSearch = Ember.$('.lookup-field');
+    let $lookupButtonChoose = Ember.$('.lookup-choose-button');
+    let $lookupButtonClear = Ember.$('.lookup-remove-button');
+
+    assert.strictEqual($lookupSearch.length === 0, true, 'Component has n\'t flexberry-lookup');
+    assert.strictEqual($lookupButtonChoose.length === 0, true, 'Component has n\'t button choose');
+    assert.strictEqual($lookupButtonClear.length === 0, true, 'Component has n\'t button remove');
+
+    // Retrieve component, it's inner <input>.
+    let $dropdown = Ember.$('.flexberry-dropdown.search.selection');
+    let $dropdownSearch = $dropdown.children('.search');
+    let $dropdownIcon = $dropdown.children('.dropdown.icon');
+    let $dropdownMenu = $dropdown.children('.menu');
+    let $deopdownText = $dropdown.children('.text');
+
+    assert.strictEqual($dropdown.length === 1, true, 'Component has class flexberry-dropdown');
+    assert.strictEqual($dropdown.hasClass('search'), true, 'Component\'s wrapper has \'search\' css-class');
+    assert.strictEqual($dropdown.hasClass('selection'), true, 'Component\'s wrapper has \'selection\' css-class');
+    assert.strictEqual($dropdown.hasClass('ember-view'), true, 'Component\'s wrapper has \'ember-view\' css-class');
+    assert.strictEqual($dropdown.hasClass('dropdown'), true, 'Component\'s wrapper has \'dropdown\' css-class');
+
+    assert.strictEqual($dropdownSearch.length === 1, true, 'Component has class search');
+
+    assert.strictEqual($dropdownIcon.length === 1, true, 'Component has class dropdown and icon');
+
+    assert.strictEqual($deopdownText.length === 1, true, 'Component has class text');
+
+    assert.strictEqual($dropdownMenu.length === 1, true, 'Component has class menu');
+
+  });
+});
+
+test('visiting flexberry-lookup autocomplete', function(assert) {
+  assert.expect(5);
+
+  visit('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
+
+  andThen(function() {
+
+    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
+
+    let $lookup = Ember.$('.flexberry-lookup');
+
+    assert.strictEqual($lookup.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
+    assert.strictEqual($lookup.hasClass('search'), true, 'Component\'s wrapper has \'search\' css-class');
+
+    let $lookupField = Ember.$('.lookup-field');
+
+    assert.strictEqual($lookupField.hasClass('prompt'), true, 'Component\'s wrapper has \'prompt\' css-class');
+
+    let $result = Ember.$('.result');
+
+    assert.strictEqual($result.length === 1, true, 'Component has inner class \'result\'');
   });
 });

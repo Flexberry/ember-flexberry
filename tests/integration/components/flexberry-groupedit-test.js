@@ -36,7 +36,7 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
   }
 });
 
-/*test('it renders', function(assert) {
+test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
@@ -52,7 +52,7 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
   });
 });
 
-test('it properly rerenders', function(assert) {
+/*test('it properly rerenders', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -97,6 +97,70 @@ test('it properly rerenders', function(assert) {
           wait().then(() => {
             assert.equal(this.$('.object-list-view').find('tr').length, 3);
           });
+        });
+      });
+    });
+  });
+});
+
+test('it properly rerenders', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+        }}`);
+    assert.equal(this.$('.object-list-view').find('tr').length, 2);
+
+    // Add record.
+    let detailModel = this.get('model.details');
+    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
+    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
+
+    wait().then(() => {
+      assert.equal(this.$('.object-list-view').find('tr').length, 3);
+
+      let $component = this.$().children();
+      let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+      let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+      let $componentButtonAdd = $($componentButtons[0]);
+
+      Ember.run(() => {
+        $componentButtonAdd.click();
+      });
+
+      wait().then(() => {
+        assert.equal(this.$('.object-list-view').find('tr').length, 4, 'details add properly');
+
+        let $componentCheckBoxs = Ember.$('.flexberry-checkbox', $component);
+        let $componentFirstCheckBox = $($componentCheckBoxs[0]);
+        let $componentFirstCheckBoxInput = $componentFirstCheckBox.children('.flexberry-checkbox-input');
+
+        Ember.run(() => {
+          $componentFirstCheckBox.click();
+          $componentFirstCheckBoxInput.click();
+        });
+
+        wait().then(() => {
+          let $componentButtonRemove = $($componentButtons[1]);
+
+          Ember.run(() => {
+            $componentButtonRemove.click();
+          });
+
+          assert.equal(this.$('.object-list-view').find('tr').length, 3, 'details remove properly');
         });
       });
     });
@@ -440,6 +504,37 @@ test('ember-grupedit readonly test', function(assert) {
   });
 });
 
+test('ember-grupedit striped test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          tableStriped=false
+        }}`);
+
+    let $component = this.$().children();
+    let $componentListViewContainer = $component.children('.object-list-view-container');
+    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
+
+    // Check object-list-view <div>.
+    assert.strictEqual($componentObjectListView.hasClass('striped'), false, 'Component\'s inner object-list-view block has \'striped\' css-class');
+
+  });
+});
+
 test('ember-grupedit createNewButton and deleteButton test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
@@ -470,7 +565,7 @@ test('ember-grupedit createNewButton and deleteButton test', function(assert) {
   });
 });
 
-test('ember-grupedit striped test', function(assert) {
+test('ember-grupedit allowColumnResize test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -488,16 +583,21 @@ test('ember-grupedit striped test', function(assert) {
           componentName=componentName
           modelProjection=proj.attributes.details
           searchForContentChange=searchForContentChange
-          tableStriped=false
+          showEditMenuItemInRow=true
+          allowColumnResize=false
         }}`);
 
     let $component = this.$().children();
     let $componentListViewContainer = $component.children('.object-list-view-container');
+    let $componentJCLRgrips = $componentListViewContainer.children('.JCLRgrips');
+
+    // Check JCLRgrips <div>.
+    assert.strictEqual($componentJCLRgrips.length === 0, true, 'Component hasn\'t inner JCLRgrips blocks');
+
     let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
 
     // Check object-list-view <div>.
-    assert.strictEqual($componentObjectListView.hasClass('striped'), false, 'Component\'s inner object-list-view block has \'striped\' css-class');
-
+    assert.strictEqual($componentObjectListView.hasClass('JColResizer'), false, 'Component\'s inner object-list-view block hasn\'t \'JColResizer\' css-class');
   });
 });
 
@@ -625,72 +725,6 @@ test('ember-grupedit showDeleteButtonInRow test', function(assert) {
   });
 });
 
-test('ember-grupedit rowClickable test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
-          rowClickable=true
-        }}`);
-
-    let $component = this.$().children();
-    let $componentListViewContainer = $component.children('.object-list-view-container');
-    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
-
-    // Check object-list-view <div>.
-    assert.strictEqual($componentObjectListView.hasClass('selectable'), true, 'Component\'s inner object-list-view block has \'selectable\' css-class');
-  });
-});
-
-test('ember-grupedit allowColumnResize test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
-          showEditMenuItemInRow=true
-          allowColumnResize=false
-        }}`);
-
-    let $component = this.$().children();
-    let $componentListViewContainer = $component.children('.object-list-view-container');
-    let $componentJCLRgrips = $componentListViewContainer.children('.JCLRgrips');
-
-    // Check JCLRgrips <div>.
-    assert.strictEqual($componentJCLRgrips.length === 0, true, 'Component hasn\'t inner JCLRgrips blocks');
-
-    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
-
-    // Check object-list-view <div>.
-    assert.strictEqual($componentObjectListView.hasClass('JColResizer'), false, 'Component\'s inner object-list-view block hasn\'t \'JColResizer\' css-class');
-  });
-});
-
 test('ember-grupedit showEditMenuItemInRow test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
@@ -776,7 +810,7 @@ test('ember-grupedit showDeleteMenuItemInRow test', function(assert) {
       let $editMenuButton = Ember.$('.basic.right', $component);
       let $editMenuItem = Ember.$('.item', $editMenuButton);
 
-      assert.strictEqual($editMenuItem.length === 1, true, 'Component has edit menu item in last cell');
+      assert.strictEqual($editMenuItem.length === 1, true, 'Component has delete menu item in last cell');
 
       let $editMenuItemIcon = $editMenuItem.children('.trash');
 
@@ -850,6 +884,36 @@ test('ember-grupedit showEditMenuItemInRow and showDeleteMenuItemInRow test', fu
       assert.strictEqual($editMenuItemSpan.text().trim(), 'Edit recordDelete record', 'Component has edit menu and delete menu item in last cell');
 
     });
+  });
+});
+
+test('ember-grupedit rowClickable test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+          rowClickable=true
+        }}`);
+
+    let $component = this.$().children();
+    let $componentListViewContainer = $component.children('.object-list-view-container');
+    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
+
+    // Check object-list-view <div>.
+    assert.strictEqual($componentObjectListView.hasClass('selectable'), true, 'Component\'s inner object-list-view block has \'selectable\' css-class');
   });
 });
 
@@ -951,66 +1015,92 @@ test('change inserted component into edit-form controller test', function(assert
   });
 });
 
-test('it properly rerenders', function(assert) {
+test('ember-grupedit buttonClass test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
+    let tempButtonClass = 'temp button class';
 
     this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
+    this.set('buttonClass', tempButtonClass);
     this.render(
       hbs`
         {{flexberry-groupedit
           content=model.details
           componentName=componentName
           modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
+          rowClickable=true
+          buttonClass=buttonClass
         }}`);
-    assert.equal(this.$('.object-list-view').find('tr').length, 2);
 
-    // Add record.
-    let detailModel = this.get('model.details');
-    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
-    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
+    let $component = this.$().children();
+    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    let $button = $($componentButtons[0]);
 
-    wait().then(() => {
-      assert.equal(this.$('.object-list-view').find('tr').length, 3);
+    assert.strictEqual($button.hasClass(tempButtonClass), true, 'Button has class ' + tempButtonClass);
+  });
+});
 
-      let $component = this.$().children();
-      let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-      let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-      let $componentButtonAdd = $($componentButtons[0]);
+test('ember-grupedit customTableClass test', function(assert) {
+  let store = App.__container__.lookup('service:store');
 
-      Ember.run(() => {
-        $componentButtonAdd.click();
-      });
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+    let myCustomTableClass = 'tempcustomTableClass';
 
-      wait().then(() => {
-        assert.equal(this.$('.object-list-view').find('tr').length, 4, 'details add properly');
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('customTableClass', myCustomTableClass);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          rowClickable=true
+          customTableClass=customTableClass
+        }}`);
 
-        let $componentCheckBoxs = Ember.$('.flexberry-checkbox', $component);
-        let $componentFirstCheckBox = $($componentCheckBoxs[0]);
-        let $componentFirstCheckBoxInput = $componentFirstCheckBox.children('.flexberry-checkbox-input');
+    let $component = this.$().children();
+    let $componentObjectListViewConteiner = $component.children('.object-list-view-container');
+    let $componentObjectListView = $componentObjectListViewConteiner.children('.object-list-view');
 
-        Ember.run(() => {
-          $componentFirstCheckBox.click();
-          $componentFirstCheckBoxInput.click();
-        });
-
-        wait().then(() => {
-          let $componentButtonRemove = $($componentButtons[1]);
-
-          Ember.run(() => {
-            $componentButtonRemove.click();
-          });
-
-          assert.equal(this.$('.object-list-view').find('tr').length, 3, 'details remove properly');
-        });
-      });
-    });
+    assert.strictEqual($componentObjectListView.hasClass(myCustomTableClass), true, 'Table has class ' + myCustomTableClass);
   });
 });*/
+
+test('ember-grupedit orderable test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+    let myCustomTableClass = 'tempcustomTableClass';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('orderable', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          orderable=orderable
+        }}`);
+
+    let $component = this.$().children();
+    let $componentObjectListViewConteiner = $component.children('.object-list-view-container');
+    let $componentObjectListView = $componentObjectListViewConteiner.children('.object-list-view');
+
+    assert.strictEqual($componentObjectListView.hasClass(myCustomTableClass), true, 'Table has class ' + myCustomTableClass);
+  });
+});

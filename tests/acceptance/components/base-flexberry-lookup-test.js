@@ -10,7 +10,7 @@ let openLookupDialog = function($lookup) {
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
-    let timeout = 2000;
+    let timeout = 4000;
 
     let $lookupChooseButton = Ember.$('.lookup-choose-button', $lookup);
 
@@ -60,7 +60,7 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
-    let timeout = 2000;
+    let timeout = 4000;
 
     let $records = Ember.$('.content table.object-list-view tbody tr', $lookupDialog);
     let $choosedRecord = Ember.$($records[recordIndex]);

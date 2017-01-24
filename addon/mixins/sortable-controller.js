@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support
@@ -102,10 +103,11 @@ export default Ember.Mixin.create({
 
       @method actions.sortByColumn
       @param {Object} column Column for sorting.
+      @param {String} sortPath Path to oldSorting.
     */
-    sortByColumn: function(column) {
+    sortByColumn: function(column, sortPath = 'model.sorting') {
       let propName = column.propName;
-      let oldSorting = this.get('model.sorting');
+      let oldSorting = this.get(sortPath);
       let newSorting = [];
       let sortDirection;
       if (oldSorting) {
@@ -122,7 +124,7 @@ export default Ember.Mixin.create({
 
       newSorting.push({ propName: propName, direction: sortDirection });
 
-      let sortQueryParam = this._serializeSortingParam(newSorting);
+      let sortQueryParam = serializeSortingParam(newSorting, this.get('sortDefaultValue'));
       this.set('sort', sortQueryParam);
     },
 
@@ -131,10 +133,11 @@ export default Ember.Mixin.create({
 
       @method actions.addColumnToSorting
       @param {Object} column Column for sorting.
+      @param {String} sortPath Path to oldSorting.
     */
-    addColumnToSorting: function(column) {
+    addColumnToSorting: function(column, sortPath = 'model.sorting') {
       let propName = column.propName;
-      let oldSorting = this.get('model.sorting');
+      let oldSorting = this.get(sortPath);
       let newSorting = [];
       let changed = false;
 
@@ -152,7 +155,7 @@ export default Ember.Mixin.create({
         newSorting.push({ propName: propName, direction: 'asc' });
       }
 
-      let sortQueryParam = this._serializeSortingParam(newSorting);
+      let sortQueryParam = serializeSortingParam(newSorting, this.get('sortDefaultValue'));
       this.set('sort', sortQueryParam);
     }
   },
@@ -177,19 +180,5 @@ export default Ember.Mixin.create({
       default: ret = 'asc';
     }
     return ret;
-  },
-
-  /**
-    Convert object with sorting parameters into string.
-
-    @method _serializeSortingParam
-    @param {Object} sorting Object with sorting parameters.
-    @returns {String} String with sorting parameters.
-    @private
-  */
-  _serializeSortingParam: function(sorting) {
-    return sorting.map(function(element) {
-      return (element.direction === 'asc' ? '+' : element.direction === 'desc' ? '-' : '!') + element.propName;
-    }).join('') || this.get('sortDefaultValue');
   },
 });

@@ -26,6 +26,15 @@ import { translationMacro as t } from 'ember-i18n';
 */
 export default FlexberryBaseComponent.extend({
   /**
+    Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
+
+    @property _groupEditEventsService
+    @type Service
+    @private
+  */
+  _groupEditEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
     Name of action to handle row click.
     Action will be send out of the component.
 
@@ -271,6 +280,15 @@ export default FlexberryBaseComponent.extend({
   searchForContentChange: false,
 
   /**
+    Flag: indicates whether to show validation messages in every row or not.
+
+    @property showValidationMessages
+    @type Boolean
+    @default false
+  */
+  showValidationMessagesInRow: true,
+
+  /**
     Flag: indicates whether to show asterisk icon in first column of every changed row.
 
     @property showAsteriskInRow
@@ -326,17 +344,7 @@ export default FlexberryBaseComponent.extend({
   showEditMenuItemInRow: false,
 
   /**
-    Dictionary with sorting data related to columns.
-
-    @example
-    When the component is placed on edit form then this property is initiated as:
-    ```handlebars
-     { {flexberry-groupedit
-       ...
-       sorting=computedSorting)} }
-    ```
-
-    where {{#crossLink "SortableControllerMixin/computedSorting:property"}}computedSorting is property of SortableControllerMixin{{/crossLink}}.
+    Array with sorting data.
 
     @property sorting
     @type Object
@@ -357,47 +365,61 @@ export default FlexberryBaseComponent.extend({
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @example
-      If sorting is used then there has to be declaration:
-      ```
-      {{flexberry-groupedit
-        ...
-        orderable=true
-        sorting=computedSorting
-        sortByColumn=(action "sortByColumn")
-        addColumnToSorting=(action "addColumnToSorting")
-      }}
-      ```
-
       @method actions.sortByColumn
       @param {Object} column Column to sort by.
     */
     sortByColumn(column) {
-      throw new Error('No handler for sortByColumn action set for flexberry-groupedit. ' +
-                      'Set handler like {{flexberry-groupedit ... sortByColumn=(action "sortByColumn")}}.');
+      let sortAscending = column.sortAscending;
+      let columnName = column.propName;
+      if (Ember.isNone(sortAscending)) {
+        this.set('sorting', [{ propName: columnName, direction: 'asc' }]);
+      } else if (sortAscending) {
+        this.set('sorting', [{ propName: columnName, direction: 'desc' }]);
+      } else {
+        this.set('sorting', []);
+      }
     },
 
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
-      @example
-      If sorting is used then there has to be declaration:
-      ```
-      {{flexberry-groupedit
-        ...
-        orderable=true
-        sorting=computedSorting
-        sortByColumn=(action "sortByColumn")
-        addColumnToSorting=(action "addColumnToSorting")
-      }}
-      ```
-
       @method actions.addColumnToSorting
       @param {Object} column Column to add sorting by.
     */
     addColumnToSorting(column) {
-      throw new Error('No handler for addColumnToSorting action set for flexberry-groupedit. ' +
-                      'Set handler like {{flexberry-groupedit ... addColumnToSorting=(action "addColumnToSorting")}}.');
+      let sortAscending = column.sortAscending;
+      let columnName = column.propName;
+      let sorting = this.get('sorting') || [];
+      for (let i = 0; i < sorting.length; i++) {
+        if (sorting[i].propName === 'id') {
+          sorting.splice(i, 1);
+          break;
+        }
+      }
+
+      if (Ember.isNone(sortAscending)) {
+        sorting.push({ propName: columnName, direction: 'asc' });
+        this.sortingFunction();
+      } else if (sortAscending) {
+        for (let i = 0; i < sorting.length; i++) {
+          if (sorting[i].propName === columnName) {
+            sorting[i].direction = 'desc';
+            break;
+          }
+        }
+
+        this.sortingFunction();
+      } else {
+        for (let i = 0; i < sorting.length; i++) {
+          if (sorting[i].propName === columnName) {
+            sorting.splice(i, 1);
+            sorting.push({ propName: 'id', direction: 'asc' });
+            break;
+          }
+        }
+
+        this.sortingFunction();
+      }
     },
 
     /**
@@ -428,6 +450,98 @@ export default FlexberryBaseComponent.extend({
     sendMenuItemAction(actionName, record) {
       this.sendAction(actionName, record);
     },
+  },
+
+  sortingObserver: Ember.observer('sorting', function() {
+    this.sortingFunction();
+  }),
+
+  /**
+    Sorting records and trigger `geSortApply` action.
+
+    @method sortingFunction
+  */
+  sortingFunction() {
+    let records = this.get('content');
+    if (Ember.isArray(records) && records.length > 1) {
+      let sorting = this.get('sorting') || [];
+      if (sorting.length === 0) {
+        sorting = [{ propName: 'id', direction: 'asc' }];
+      }
+
+      for (let i = 0; i < sorting.length; i++) {
+        let sort = sorting[i];
+        if (i === 0) {
+          records = this.sortRecords(records, sort, 0, records.length - 1);
+        } else {
+          let index = 0;
+          for (let j = 1; j < records.length; j++) {
+            for (let sortIndex = 0; sortIndex <  i; sortIndex++) {
+              if (records.objectAt(j).get(sorting[sortIndex].propName) !== records.objectAt(j - 1).get(sorting[sortIndex].propName)) {
+                records = this.sortRecords(records, sort, index, j - 1);
+                index = j;
+                break;
+              }
+            }
+          }
+
+          records = this.sortRecords(records, sort, index, records.length - 1);
+        }
+      }
+
+      this.set('content', records);
+    }
+
+    let componentName = this.get('componentName');
+    this.get('_groupEditEventsService').geSortApplyTrigger(componentName, this.get('sorting'));
+  },
+
+  /**
+    Client-side sorting for groupEdit content.
+
+    @method sortRecords
+    @param {Array} records Records for sorting.
+    @param {Object} sortDef Sorting definition.
+    @param {Int} start First index in records.
+    @param {Int} end Last index in records.
+    @return {Array} Sorted records.
+  */
+  sortRecords(records, sortDef, start, end) {
+    let recordsSort = records;
+    let condition = function(koef) {
+      let firstProp = recordsSort.objectAt(koef - 1).get(sortDef.propName);
+      let secondProp = recordsSort.objectAt(koef).get(sortDef.propName);
+      if (sortDef.direction === 'asc') {
+        return Ember.isNone(secondProp) && !Ember.isNone(firstProp) ? true : firstProp > secondProp;
+      }
+
+      if (sortDef.direction === 'desc') {
+        return !Ember.isNone(secondProp) && Ember.isNone(firstProp) ? true : firstProp < secondProp;
+      }
+
+      return false;
+    };
+
+    for (let i = start + 1; i <= end; i++) {
+      for (let j = i; j > start && condition(j); j--) {
+        let canonRecord = recordsSort.canonicalState[j];
+        let currentRecord = recordsSort.currentState[j];
+        recordsSort.canonicalState[j] = recordsSort.canonicalState[j - 1];
+        recordsSort.currentState[j] = recordsSort.currentState[j - 1];
+        recordsSort.canonicalState[j - 1] = canonRecord;
+        recordsSort.currentState[j - 1] = currentRecord;
+      }
+    }
+
+    return recordsSort;
+  },
+
+  didInsertElement() {
+    let developerUserSettings = this.currentController;
+    developerUserSettings = developerUserSettings ? developerUserSettings.get('developerUserSettings') || {} : {};
+    developerUserSettings = developerUserSettings[this.componentName] || {};
+    developerUserSettings = developerUserSettings.DEFAULT || {};
+    this.set('sorting', developerUserSettings.sorting || []);
   },
 
   /**

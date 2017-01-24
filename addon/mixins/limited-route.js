@@ -58,7 +58,8 @@ export default Ember.Mixin.create({
     @type Object
   */
   queryParams: {
-    filter: { refreshModel: true }
+    filter: { refreshModel: true },
+    filterCondition: { refreshModel: true }
   },
 
   /**

@@ -34,10 +34,10 @@ Router.map(function() {
   this.route('i-i-s-caseberry-logging-objects-application-log-e', { path: 'i-i-s-caseberry-logging-objects-application-log-e/:id' });
   this.route('i-i-s-caseberry-logging-objects-application-log-e.new', { path: 'i-i-s-caseberry-logging-objects-application-log-e/new' });
   this.route('log-service-examples/settings-example');
+  this.route('log-service-examples/clear-log-form');
 
   // Locks.
   this.route('new-platform-flexberry-services-lock-list');
-  this.route('new-platform-flexberry-services-lock-edit', { path: 'new-platform-flexberry-services-lock-edit/:id' });
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-checkbox/settings-example');
@@ -58,6 +58,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-lookup/lookup-block-form-example');
   this.route('components-examples/flexberry-lookup/lookup-in-modal');
   this.route('components-examples/flexberry-lookup/dropdown-mode-example');
+  this.route('components-examples/flexberry-lookup/default-ordering-example');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');
@@ -81,6 +82,11 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/on-edit-form');
   this.route('components-examples/flexberry-objectlistview/on-edit-form/user', { path: 'components-examples/flexberry-objectlistview/on-edit-form/user/:id' });
   this.route('components-examples/flexberry-objectlistview/custom-filter');
+  this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-list');
+  this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
+  { path: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-edit.new',
+  { path: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit/new' });
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
   this.route('components-examples/flexberry-objectlistview/hierarchy-example');
   this.route('components-examples/flexberry-objectlistview/selected-rows');

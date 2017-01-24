@@ -51,18 +51,8 @@ let expandCollapseTogglerWithStateChecks = function(assert, captions) {
       $componentTitle.click();
     });
 
-    // Wait animation to check component's state.
-    Ember.run(() => {
-      let animation = assert.async();
-      setTimeout(() => {
-        // Check that component is animating now.
-        assert.strictEqual($componentContent.hasClass('animating'), true);
-
-        // Tell to test method that asynchronous operation completed.
-        animation();
-
-      }, animationDuration / 2);
-    });
+    // Check that component is animating now.
+    assert.strictEqual($componentContent.hasClass('animating'), true);
 
     // Wait for expand animation to be completed & check component's state.
     Ember.run(() => {

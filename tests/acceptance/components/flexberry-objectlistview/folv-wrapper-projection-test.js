@@ -1,16 +1,17 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
+import { executeTest, checkSortingList } from './execute-folv-test';
 
 executeTest('check wrapper and projection', (store, assert, app) => {
-  assert.expect(3);
+  assert.expect(6);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
-  visit(path);
+  visit(path + '?perPage=1000');
   andThen(function() {
     assert.equal(currentPath(), path);
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let projectionName = function(){ return Ember.get(controller, 'modelProjection'); };
+    let projectionName = () => { return Ember.get(controller, 'modelProjection'); };
 
+    let $olv = Ember.$('.object-list-view ');
     let $folvContainer = Ember.$('.object-list-view-container');
     let $tableInFolvContainer = Ember.$('table', $folvContainer);
     assert.equal($tableInFolvContainer.length, 1, 'folv table in container exist');
@@ -18,14 +19,35 @@ executeTest('check wrapper and projection', (store, assert, app) => {
     let $tableBody = Ember.$('tbody', '.object-list-view-container');
     assert.equal($tableBody.length, 1, 'tbody in table exist');
 
-    let dtHeadTable = function(){ return Ember.$('.dt-head-left.me.class', 'thead', $tableInFolvContainer); };
-    // assert.equal(dtHeadTable().length, Object.keys(projectionName().attributes).length, 'the number of columns in the table corresponds to the projection');
+    let dtHeadTable = Ember.$('.dt-head-left.me.class', 'thead', $tableInFolvContainer);
 
-    controller.set('modelProjection', 'SettingLookupExampleView');
-    let timeout = 2000;
-    Ember.run.later((function() {
-      // not work.
-      assert.equal(dtHeadTable().length, Object.keys(projectionName().attributes).length, 'the number of columns in the table corresponds to the projection');
+    let done = assert.async();
+    checkSortingList(store, assert,  projectionName(), $olv, null).then((isTrue) => {
+      assert.ok(isTrue, 'records are displayed correctly');
+      done();
+    });
+
+    let i18n = app.__container__.lookup('service:i18n');
+    i18n.set('locale', 'en');
+
+    let timeout = 1000;
+    Ember.run.later((() => {
+
+      // Check projectionName.
+      let attrs = projectionName().attributes;
+      let flag = true;
+
+      Object.keys(attrs).forEach((element, index, array) => {
+        if (attrs[element].kind !== 'hasMany') {
+          flag = flag && (Ember.$.trim(dtHeadTable[index].innerText) === attrs[element].caption);
+        }
+      });
+      assert.ok(flag, 'projection = columns names');
+
+      let newProjectionName = 'SettingLookupExampleView';
+      controller.set('modelProjection', newProjectionName);
+      assert.equal(projectionName(), newProjectionName, 'projection name is changed');
     }), timeout);
+
   });
 });

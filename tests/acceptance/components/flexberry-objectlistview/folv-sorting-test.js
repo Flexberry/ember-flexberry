@@ -1,30 +1,8 @@
 import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
-import { executeTest, loadingList } from './execute-folv-test';
+import { executeTest, loadingList, checkSortingList } from './execute-folv-test';
 
 var olvContainerClass = '.object-list-view-container';
 var trTableClass = 'table.object-list-view tbody tr';
-
-let checkSortingList = (store, assert, projection, $olv, ordr) => {
-  return new Ember.RSVP.Promise((resolve) => {
-    Ember.run(() => {
-      let modelName = projection.modelName;
-      let builder = new Query.Builder(store).from(modelName).selectByProjection(projection.projectionName);
-      builder = !ordr ? builder : builder.orderBy(ordr);
-      store.query(modelName, builder.build()).then((records) => {
-        let recordsArr = records.toArray();
-        let $tr = Ember.$(trTableClass).toArray();
-
-        let isTrue = $tr.reduce((sum, current, i) => {
-          let expectVal = !recordsArr[i].get('address') ? '' : recordsArr[i].get('address');
-          return sum && (Ember.$.trim(current.children[1].innerText) === expectVal);
-        }, true);
-
-        resolve(isTrue);
-      });
-    });
-  });
-};
 
 executeTest('check sorting', (store, assert, app) => {
   assert.expect(11);

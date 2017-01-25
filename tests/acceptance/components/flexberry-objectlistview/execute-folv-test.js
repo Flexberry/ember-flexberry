@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
+import { Query } from 'ember-flexberry-data';
 import startApp from '../../../helpers/start-app';
 
 export function executeTest(testName, callback) {
@@ -26,6 +27,7 @@ export function executeTest(testName, callback) {
   test(testName, (assert) => callback(store, assert, app));
 }
 
+// Function for waiting list loading.
 export function loadingList($ctrlForClick, list, records) {
   return new Ember.RSVP.Promise((resolve, reject) => {
     let checkIntervalId;
@@ -67,6 +69,27 @@ export function loadingList($ctrlForClick, list, records) {
         window.clearInterval(checkIntervalId);
         reject('editForm load operation is timed out');
       }, timeout);
+    });
+  });
+}
+
+export function checkSortingList(store, assert, projection, $olv, ordr) {
+  return new Ember.RSVP.Promise((resolve) => {
+    Ember.run(() => {
+      let modelName = projection.modelName;
+      let builder = new Query.Builder(store).from(modelName).selectByProjection(projection.projectionName);
+      builder = !ordr ? builder : builder.orderBy(ordr);
+      store.query(modelName, builder.build()).then((records) => {
+        let recordsArr = records.toArray();
+        let $tr = Ember.$('table.object-list-view tbody tr').toArray();
+
+        let isTrue = $tr.reduce((sum, current, i) => {
+          let expectVal = !recordsArr[i].get('address') ? '' : recordsArr[i].get('address');
+          return sum && (Ember.$.trim(current.children[1].innerText) === expectVal);
+        }, true);
+
+        resolve(isTrue);
+      });
     });
   });
 }

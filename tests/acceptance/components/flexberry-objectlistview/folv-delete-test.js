@@ -25,7 +25,7 @@ executeTest('check delete and checked', (store, assert, app) => {
     let trTableClass = 'table.object-list-view tbody tr';
 
     let $folvContainer = Ember.$(olvContainerClass);
-    let $rows = () => { return Ember.$(trTableClass, $folvContainer).toArray(); } ;
+    let $rows = () => { return Ember.$(trTableClass, $folvContainer).toArray(); };
 
     // Check that the records have been added.
     let recordIsForDeleting = $rows().reduce((sum, current) => {
@@ -39,7 +39,7 @@ executeTest('check delete and checked', (store, assert, app) => {
     // Delete via a row button.
     $rows().forEach((element, i, arr) => {
       let nameRecord = Ember.$.trim(element.children[1].innerText);
-      if (nameRecord.indexOf(textForRecordBtnInRow) >= 0){
+      if (nameRecord.indexOf(textForRecordBtnInRow) >= 0) {
         let $firstCell = element.children[0].children[1];
         let $deleteBtnInRow = $firstCell.children[1].children[0];
         $deleteBtnInRow.click();
@@ -60,14 +60,15 @@ executeTest('check delete and checked', (store, assert, app) => {
       let $firstCell = current.children[0].children[1];
       let checkboxInRow = $firstCell.children[0].children[0];
       let checked = true;
-      if (nameRecord.indexOf(textForRecordToolBarBtn) >= 0){
+      if (nameRecord.indexOf(textForRecordToolBarBtn) >= 0) {
         checkboxInRow.click();
         checked = (checkboxInRow.className.indexOf('checked') >= 0);
       }
+
       return sum && checked;
     }, true);
 
-    assert.ok(recordIsChecked, 'Each entry begins with \'' + textForRecordToolBarBtn +'\' is checked');
+    assert.ok(recordIsChecked, 'Each entry begins with \'' + textForRecordToolBarBtn + '\' is checked');
 
     let $toolBar = Ember.$('.ui.secondary.menu')[0];
     let $deleteButton = $toolBar.children[2];
@@ -80,7 +81,7 @@ executeTest('check delete and checked', (store, assert, app) => {
         return nameRecord.indexOf(textForRecordToolBarBtn) < 0;
       });
 
-      assert.ok(recordsIsDelete, 'Each entry begins with \''+ textForRecordToolBarBtn +'\' is delete with button in toolbar button');
+      assert.ok(recordsIsDelete, 'Each entry begins with \'' + textForRecordToolBarBtn + '\' is delete with button in toolbar button');
 
     }).catch((reason) => {
       throw new Error(reason);

@@ -2,20 +2,11 @@ import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
 
 executeTest('check locale change', (store, assert, app) => {
-  assert.expect(12);
+  assert.expect(11);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
   andThen(() => {
     assert.equal(currentPath(), path);
-
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let projectionName = Ember.get(controller, 'modelProjection');
-
-    let $folvContainer = Ember.$('.object-list-view-container');
-    let $tableInFolvContainer = Ember.$('table.object-list-view thead tr', $folvContainer);
-    let dtHeadTable = () => { return Ember.$('th.dt-head-left.me.class', $tableInFolvContainer); };
-
-    let thArray = dtHeadTable();
 
     let $toolBar = Ember.$('.ui.secondary.menu')[0];
     let $toolBarButtons = $toolBar.children;
@@ -37,16 +28,6 @@ executeTest('check locale change', (store, assert, app) => {
       assert.equal($toolBarButtons[1].innerText, 'Add', 'button create');
       assert.equal($toolBarButtons[2].innerText, 'Delete', 'button delete');
       assert.equal($($toolBarButtons[2]).hasClass('disabled'), true, 'button delete is disabled');
-
-      let attrs = projectionName.attributes;
-      let flag = true;
-
-      Object.keys(attrs).forEach((element, index, array) => {
-        if (attrs[element].kind !== 'hasMany') {
-          flag = flag && (Ember.$.trim(thArray[index].innerText) === attrs[element].caption);
-        }
-      });
-      assert.ok(flag, 'projection = columns names');
     }), timeout);
 
   });

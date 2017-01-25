@@ -122,6 +122,15 @@ test('debug works properly', function(assert) {
   let done = assert.async();
   assert.expect(1);
 
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+     savedLogRecord = this;
+     return Ember.RSVP.resolve(savedLogRecord);
+   };
+
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
   logService.enabled = true;
@@ -132,6 +141,9 @@ test('debug works properly', function(assert) {
     // Check results asyncronously.
     let savedMessageContainsDebugMessage = savedLogRecord.get('message').indexOf(debugMessage) > -1;
     assert.ok(savedMessageContainsDebugMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 

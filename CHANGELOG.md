@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-dropdown` component:
+    * Fix hanging in IE when change `perPageValue`.
 
 ## [0.8.1] - 2017-01-18
 ### Added

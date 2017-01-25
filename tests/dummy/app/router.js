@@ -111,7 +111,7 @@ Router.map(function() {
   this.route('user-setting-forms/user-setting-delete');
 
   // Components acceptance tests forms.
-  this.route('components-acceptance-tests/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit');
+  this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test');
 });
 
 export default Router;

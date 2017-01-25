@@ -52,7 +52,7 @@ test('it renders', function(assert) {
   });
 });
 
-/*test('it properly rerenders', function(assert) {
+test('it properly rerenders', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -421,10 +421,7 @@ test('ember-grupedit placeholder test', function(assert) {
           placeholder=placeholder
         }}`);
 
-    let $component = this.$().children();
-    let $componentListViewContainer = $component.children('.object-list-view-container');
-    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
-    let $componentObjectListViewBody = $componentObjectListView.children('tbody');
+    let $componentObjectListViewBody = Ember.$('tbody');
 
     assert.strictEqual($componentObjectListViewBody.text().trim(), tempText, 'Component has placeholder: ' + tempText);
 
@@ -453,10 +450,7 @@ test('ember-grupedit readonly test', function(assert) {
         }}`);
 
     // Add record.
-    let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-    let $componentButtonAdd = $($componentButtons[0]);
+    let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
       $componentButtonAdd.click();
@@ -464,16 +458,12 @@ test('ember-grupedit readonly test', function(assert) {
 
     wait().then(() => {
 
-      // Add record.
       let detailModel = this.get('model.details');
       detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
 
       wait().then(() => {
-        let $componentListViewContainer = $component.children('.object-list-view-container');
-        let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
-        let $componentObjectListViewBody = $componentObjectListView.children('tbody');
-        let $componentObjectListViewTr = $componentObjectListViewBody.children('tr');
-        let $componentObjectListViewTd = $componentObjectListViewTr.children('td');
+        let $componentObjectListView = Ember.$('.object-list-view');        
+        let $componentObjectListViewTd = $componentObjectListView.children('tbody').children('tr').children('td');
 
         let $disabledItem;
         let $objectlistviewcell1 = $($componentObjectListViewTd[1]);
@@ -525,9 +515,7 @@ test('ember-grupedit striped test', function(assert) {
           tableStriped=false
         }}`);
 
-    let $component = this.$().children();
-    let $componentListViewContainer = $component.children('.object-list-view-container');
-    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
+    let $componentObjectListView = Ember.$('.object-list-view');   
 
     // Check object-list-view <div>.
     assert.strictEqual($componentObjectListView.hasClass('striped'), false, 'Component\'s inner object-list-view block has \'striped\' css-class');
@@ -557,9 +545,7 @@ test('ember-grupedit createNewButton and deleteButton test', function(assert) {
           deleteButton=false
         }}`);
 
-    let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    let $componentButtons = Ember.$('.ui.button');
 
     assert.strictEqual($componentButtons.length === 0, true, 'Component hasn\'t inner two button blocks');
   });
@@ -587,14 +573,12 @@ test('ember-grupedit allowColumnResize test', function(assert) {
           allowColumnResize=false
         }}`);
 
-    let $component = this.$().children();
-    let $componentListViewContainer = $component.children('.object-list-view-container');
-    let $componentJCLRgrips = $componentListViewContainer.children('.JCLRgrips');
+    let $componentJCLRgrips = $(Ember.$('.JCLRgrips')[0]);
 
     // Check JCLRgrips <div>.
     assert.strictEqual($componentJCLRgrips.length === 0, true, 'Component hasn\'t inner JCLRgrips blocks');
 
-    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
+    let $componentObjectListView = $(Ember.$('.object-list-view')[0]);
 
     // Check object-list-view <div>.
     assert.strictEqual($componentObjectListView.hasClass('JColResizer'), false, 'Component\'s inner object-list-view block hasn\'t \'JColResizer\' css-class');
@@ -624,16 +608,14 @@ test('ember-grupedit showAsteriskInRow test', function(assert) {
 
     // Add record.
     let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-    let $componentButtonAdd = $($componentButtons[0]);
+    let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
       $componentButtonAdd.click();
     });
 
     wait().then(() => {
-      let $componentObjectListViewFirstCell = Ember.$('.asterisk', $component);
+      let $componentObjectListViewFirstCell = Ember.$('.asterisk');
 
       // Check object-list-view <i>.
       assert.strictEqual($componentObjectListViewFirstCell.length === 0, true, 'Component has small red asterisk blocks');
@@ -664,21 +646,18 @@ test('ember-grupedit showCheckBoxInRow test', function(assert) {
 
     // Add record.
     let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-    let $componentButtonAdd = $($componentButtons[0]);
+    let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
       $componentButtonAdd.click();
     });
 
     wait().then(() => {
-      let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column', $component);
-      let $flexberryCheckbox = Ember.$('.flexberry-checkbox', $componentObjectListViewFirstCell);
+      let $flexberryCheckbox = Ember.$('.flexberry-checkbox');
 
       assert.ok($flexberryCheckbox, false, 'Component hasn\'t flexberry-checkbox in first cell');
 
-      let $componentObjectListViewEditMenu = Ember.$('.basic.right.pointing', $component);
+      let $componentObjectListViewEditMenu = Ember.$('.basic.right.pointing');
 
       assert.strictEqual($componentObjectListViewEditMenu.length === 0, true, 'Component hasn\'t edit menu in last cell');
     });
@@ -707,16 +686,14 @@ test('ember-grupedit showDeleteButtonInRow test', function(assert) {
         }}`);
 
     let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-    let $componentButtonAdd = $($componentButtons[0]);
+    let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
       $componentButtonAdd.click();
     });
 
     wait().then(() => {
-      let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column', $component);
+      let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column');
       let $minusButton = Ember.$('.minus', $componentObjectListViewFirstCell);
 
       assert.strictEqual($minusButton.length === 1, true, 'Component has delete button in first cell');
@@ -747,9 +724,7 @@ test('ember-grupedit showEditMenuItemInRow test', function(assert) {
         }}`);
 
     let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-    let $componentButtonAdd = $($componentButtons[0]);
+    let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
       $componentButtonAdd.click();
@@ -798,9 +773,7 @@ test('ember-grupedit showDeleteMenuItemInRow test', function(assert) {
         }}`);
 
     let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-    let $componentButtonAdd = $($componentButtons[0]);
+    let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
       $componentButtonAdd.click();
@@ -850,9 +823,7 @@ test('ember-grupedit showEditMenuItemInRow and showDeleteMenuItemInRow test', fu
         }}`);
 
     let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-    let $componentButtonAdd = $($componentButtons[0]);
+    let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
       $componentButtonAdd.click();
@@ -908,9 +879,7 @@ test('ember-grupedit rowClickable test', function(assert) {
           rowClickable=true
         }}`);
 
-    let $component = this.$().children();
-    let $componentListViewContainer = $component.children('.object-list-view-container');
-    let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
+    let $componentObjectListView = Ember.$('.object-list-view'); 
 
     // Check object-list-view <div>.
     assert.strictEqual($componentObjectListView.hasClass('selectable'), true, 'Component\'s inner object-list-view block has \'selectable\' css-class');
@@ -943,12 +912,8 @@ test('correct embedding components in to objectlistview test', function(assert) 
     detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
 
     wait().then(() => {
-      let $component = this.$().children();
-      let $componentListViewContainer = $component.children('.object-list-view-container');
-      let $componentObjectListView = $componentListViewContainer.children('.object-list-view');
-      let $componentObjectListViewBody = $componentObjectListView.children('tbody');
-      let $componentObjectListViewTr = $componentObjectListViewBody.children('tr');
-      let $componentObjectListViewTd = $componentObjectListViewTr.children('td');
+      let $componentObjectListView = Ember.$('.object-list-view');
+      let $componentObjectListViewTd = $componentObjectListView.children('tbody').children('tr').children('td');
 
       let $objectlistviewcell1 = $($componentObjectListViewTd[1]);
       assert.strictEqual($objectlistviewcell1.children('.flexberry-checkbox').length === 1, true,
@@ -1037,12 +1002,9 @@ test('ember-grupedit buttonClass test', function(assert) {
           buttonClass=buttonClass
         }}`);
 
-    let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-    let $button = $($componentButtons[0]);
+    let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
-    assert.strictEqual($button.hasClass(tempButtonClass), true, 'Button has class ' + tempButtonClass);
+    assert.strictEqual($componentButtonAdd.hasClass(tempButtonClass), true, 'Button has class ' + tempButtonClass);
   });
 });
 
@@ -1068,13 +1030,11 @@ test('ember-grupedit customTableClass test', function(assert) {
           customTableClass=customTableClass
         }}`);
 
-    let $component = this.$().children();
-    let $componentObjectListViewConteiner = $component.children('.object-list-view-container');
-    let $componentObjectListView = $componentObjectListViewConteiner.children('.object-list-view');
+    let $componentObjectListView = Ember.$('.object-list-view');
 
     assert.strictEqual($componentObjectListView.hasClass(myCustomTableClass), true, 'Table has class ' + myCustomTableClass);
   });
-});*/
+});
 
 test('ember-grupedit orderable test', function(assert) {
   let store = App.__container__.lookup('service:store');
@@ -1082,7 +1042,6 @@ test('ember-grupedit orderable test', function(assert) {
   Ember.run(() => {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
-    let myCustomTableClass = 'tempcustomTableClass';
 
     this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
@@ -1097,10 +1056,192 @@ test('ember-grupedit orderable test', function(assert) {
           orderable=orderable
         }}`);
 
-    let $component = this.$().children();
-    let $componentObjectListViewConteiner = $component.children('.object-list-view-container');
-    let $componentObjectListView = $componentObjectListViewConteiner.children('.object-list-view');
+    let $componentObjectListView = Ember.$('.object-list-view');
+    let $componentObjectListViewTh = $componentObjectListView.children('thead').children('tr').children('th');
+    let $componentOlvFirstHead = $($componentObjectListViewTh[1]);
 
-    assert.strictEqual($componentObjectListView.hasClass(myCustomTableClass), true, 'Table has class ' + myCustomTableClass);
+    Ember.run(() => {
+      $componentOlvFirstHead.click();
+    });
+
+    let $componentOlvFirstDiv = $componentOlvFirstHead.children('div');
+    let $orderIcon = $componentOlvFirstDiv.children('div');
+
+    assert.strictEqual($orderIcon.length === 1, true, 'Table has order');
   });
 });
+
+/*test('ember-grupedit cellComponent test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+    let cellComponent = [{
+      componentName: 'flexberry-checkbox',
+      componentProperties: null
+    }];
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('cellComponent', cellComponent);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          cellComponent=cellComponent
+        }}`);
+
+    *let $componentOlvFirstDiv = $componentOlvFirstHead.children('div');
+    let $orderIcon = $componentOlvFirstDiv.children('div');*
+
+    assert.strictEqual(1 === 1, true, 'Table has order');
+
+    let done = assert.async();
+    setTimeout(function() {
+      done();
+    }, 100000);
+  });
+});*/
+
+test('ember-grupedit menuInRowAdditionalItems without standart element test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+    let tempMenuInRowAdditionalItems = [{
+      icon: 'remove icon',
+      title: 'Temp menu item',
+      actionName: 'tempAction',
+    }];
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('menuInRowAdditionalItems', tempMenuInRowAdditionalItems);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          menuInRowAdditionalItems=menuInRowAdditionalItems
+        }}`);
+
+    let controller = App.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
+
+    let addButton = $(Ember.$('.ui.button')[0]);
+
+    Ember.run(() => {
+      addButton.click();
+    });
+
+    let componentOLVMenu =  Ember.$('.basic.right');
+    let componentOLVMenuItem = componentOLVMenu.children('div').children('.item');
+
+    assert.strictEqual(componentOLVMenuItem.length === 1, true, 'Component OLVMenuItem has only adding item');
+    assert.strictEqual(componentOLVMenuItem.text().trim() === 'Temp menu item', true, 'Component OLVMenuItem text is \'Temp menu item\'');
+
+    let componentOLVMenuItemIcon = componentOLVMenuItem.children('.icon');
+
+    assert.strictEqual(componentOLVMenuItemIcon.hasClass('icon'), true, 'Component OLVMenuItemIcon has class icon');
+    assert.strictEqual(componentOLVMenuItemIcon.hasClass('remove'), true, 'Component OLVMenuItemIcon has class remove');
+
+    //Add action test.
+  });
+});
+
+test('ember-grupedit menuInRowAdditionalItems with standart element test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+    let tempMenuInRowAdditionalItems = [{
+      icon: 'remove icon',
+      title: 'Temp menu item',
+      actionName: 'tempAction',
+    }];
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('menuInRowAdditionalItems', tempMenuInRowAdditionalItems);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          menuInRowAdditionalItems=menuInRowAdditionalItems
+          showEditMenuItemInRow=true
+          showDeleteMenuItemInRow=true
+        }}`);
+
+    let addButton = $(Ember.$('.ui.button')[0]);
+
+    Ember.run(() => {
+      addButton.click();
+    });
+
+    let componentOLVMenu =  Ember.$('.basic.right');
+    let componentOLVMenuItem = componentOLVMenu.children('div').children('.item');
+
+    assert.strictEqual(componentOLVMenuItem.length === 3, true, 'Component OLVMenuItem has standart and adding items');
+  });
+});
+
+test('ember-grupedit model projection test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('ConfigurateRowView'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+        }}`);
+
+    let componentOLV = Ember.$('.object-list-view');
+    let componentOLVThead = componentOLV.children('thead').children('tr').children('th');
+
+    assert.strictEqual(componentOLVThead.length === 3, true, 'Component has \'ConfigurateRowView\' projection');
+  });
+});
+
+/*test('ember-grupedit main model projection test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          mainModelProjection=proj
+        }}`);
+
+    let done = assert.async();
+    setTimeout(function() {
+      done();
+    }, 100000);
+  });
+});*/

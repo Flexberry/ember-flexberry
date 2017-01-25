@@ -18,6 +18,17 @@ test('error works properly', function(assert) {
   let done = assert.async();
   assert.expect(1);
 
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+     savedLogRecord = this;
+     return new Ember.RSVP.Promise((resolve, reject) => {
+       resolve();
+     });
+   };
+
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
   logService.enabled = true;
@@ -33,12 +44,26 @@ test('error works properly', function(assert) {
   // Call to Ember.Logger.error.
   Ember.run(() => {
     Ember.Logger.error(errorMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 
 test('warn works properly', function(assert) {
   let done = assert.async();
   assert.expect(1);
+
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+     savedLogRecord = this;
+     return new Ember.RSVP.Promise((resolve, reject) => {
+       resolve();
+     });
+   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -56,12 +81,26 @@ test('warn works properly', function(assert) {
   // Call to Ember.warn.
   Ember.run(() => {
     Ember.warn(warnMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 
 test('info works properly', function(assert) {
   let done = assert.async();
   assert.expect(1);
+
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+     savedLogRecord = this;
+     return new Ember.RSVP.Promise((resolve, reject) => {
+       resolve();
+     });
+   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -78,6 +117,9 @@ test('info works properly', function(assert) {
   // Call to Ember.Logger.info.
   Ember.run(() => {
     Ember.Logger.info(infoMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 
@@ -108,6 +150,17 @@ test('log works properly', function(assert) {
   let done = assert.async();
   assert.expect(1);
 
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+     savedLogRecord = this;
+     return new Ember.RSVP.Promise((resolve, reject) => {
+       resolve();
+     });
+   };
+
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
   logService.enabled = true;
@@ -123,12 +176,26 @@ test('log works properly', function(assert) {
   // Call to Ember.Logger.log.
   Ember.run(() => {
     Ember.Logger.log(logMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 
 test('deprecate works properly', function(assert) {
   let done = assert.async();
   assert.expect(1);
+
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+     savedLogRecord = this;
+     return new Ember.RSVP.Promise((resolve, reject) => {
+       resolve();
+     });
+   };
 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
@@ -146,6 +213,9 @@ test('deprecate works properly', function(assert) {
   // Call to Ember.deprecate.
   Ember.run(() => {
     Ember.deprecate(deprecationMessage, false, { id: 'ember-flexberry-debug.feature-logger-deprecate-test', until: '0' });
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 

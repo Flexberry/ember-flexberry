@@ -24,9 +24,7 @@ test('error works properly', function(assert) {
   let savedLogRecord;
   DS.Model.prototype.save = function() {
      savedLogRecord = this;
-     return new Ember.RSVP.Promise((resolve, reject) => {
-       resolve();
-     });
+     return Ember.RSVP.resolve(savedLogRecord);
    };
 
   // Get log-service instance & enable errors logging.
@@ -38,15 +36,15 @@ test('error works properly', function(assert) {
   logService.on('error', this, (savedLogRecord) => {
     // Check results asyncronously.
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), errorMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.error.
   Ember.run(() => {
     Ember.Logger.error(errorMessage);
-
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 
@@ -60,9 +58,7 @@ test('warn works properly', function(assert) {
   let savedLogRecord;
   DS.Model.prototype.save = function() {
      savedLogRecord = this;
-     return new Ember.RSVP.Promise((resolve, reject) => {
-       resolve();
-     });
+     return Ember.RSVP.resolve(savedLogRecord);
    };
 
   // Get log-service instance & enable errors logging.
@@ -75,15 +71,15 @@ test('warn works properly', function(assert) {
     // Check results asyncronously.
     let savedMessageContainsWarnMessage = savedLogRecord.get('message').indexOf(warnMessage) > -1;
     assert.ok(savedMessageContainsWarnMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.warn.
   Ember.run(() => {
     Ember.warn(warnMessage);
-
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 
@@ -97,9 +93,7 @@ test('info works properly', function(assert) {
   let savedLogRecord;
   DS.Model.prototype.save = function() {
      savedLogRecord = this;
-     return new Ember.RSVP.Promise((resolve, reject) => {
-       resolve();
-     });
+     return Ember.RSVP.resolve(savedLogRecord);
    };
 
   // Get log-service instance & enable errors logging.
@@ -111,6 +105,9 @@ test('info works properly', function(assert) {
   logService.on('info', this, (savedLogRecord) => {
     // Check results asyncronously.
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), infoMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
@@ -118,8 +115,6 @@ test('info works properly', function(assert) {
   Ember.run(() => {
     Ember.Logger.info(infoMessage);
 
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 
@@ -156,9 +151,7 @@ test('log works properly', function(assert) {
   let savedLogRecord;
   DS.Model.prototype.save = function() {
      savedLogRecord = this;
-     return new Ember.RSVP.Promise((resolve, reject) => {
-       resolve();
-     });
+     return Ember.RSVP.resolve(savedLogRecord);
    };
 
   // Get log-service instance & enable errors logging.
@@ -170,15 +163,15 @@ test('log works properly', function(assert) {
   logService.on('log', this, (savedLogRecord) => {
     // Check results asyncronously.
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), logMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.Logger.log.
   Ember.run(() => {
     Ember.Logger.log(logMessage);
-
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 
@@ -192,9 +185,7 @@ test('deprecate works properly', function(assert) {
   let savedLogRecord;
   DS.Model.prototype.save = function() {
      savedLogRecord = this;
-     return new Ember.RSVP.Promise((resolve, reject) => {
-       resolve();
-     });
+     return Ember.RSVP.resolve(savedLogRecord);
    };
 
   // Get log-service instance & enable errors logging.
@@ -207,15 +198,15 @@ test('deprecate works properly', function(assert) {
     // Check results asyncronously.
     let savedMessageContainsDeprecationMessage = savedLogRecord.get('message').indexOf(deprecationMessage) > -1;
     assert.ok(savedMessageContainsDeprecationMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
     done();
   });
 
   // Call to Ember.deprecate.
   Ember.run(() => {
     Ember.deprecate(deprecationMessage, false, { id: 'ember-flexberry-debug.feature-logger-deprecate-test', until: '0' });
-
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
   });
 });
 

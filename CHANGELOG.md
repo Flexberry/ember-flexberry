@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+* `flexberry-dropdown` component:
+    * Fix hanging in IE when change `perPageValue`.
 * `flexberry-objectlistview` component:
     * Fix selected rows count reset on `init`.
 * `flexberry-simpleolv` component:

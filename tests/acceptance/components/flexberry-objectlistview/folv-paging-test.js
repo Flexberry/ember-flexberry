@@ -9,18 +9,19 @@ executeTest('check paging', (store, assert) => {
     assert.equal(currentPath(), path);
     let $folvPerPageButton = Ember.$('.flexberry-dropdown.compact');
     let $menu = Ember.$('.menu', $folvPerPageButton);
-    let trTableBody = () => { return $(Ember.$("table.object-list-view tbody tr")).length.toString(); };
-    let activeItem =  () =>{ return $(Ember.$(".item.active.selected", $menu)).attr("data-value"); };
+    let trTableBody = () => { return $(Ember.$('table.object-list-view tbody tr')).length.toString(); };
+
+    let activeItem =  () => { return $(Ember.$('.item.active.selected', $menu)).attr('data-value'); };
 
     // check paging.
-    let $basicButtons = Ember.$('.ui.button','.ui.basic.buttons');
+    let $basicButtons = Ember.$('.ui.button', '.ui.basic.buttons');
     assert.equal($($basicButtons[0]).hasClass('disabled'), true, 'button prev is disabled');
     assert.equal($($basicButtons[1]).hasClass('active'), true, 'page 1 is active');
 
     let done1 = assert.async();
-    loadingList($basicButtons[2], '.object-list-view-container','table.object-list-view tbody tr').then(($list) => {
+    loadingList($basicButtons[2], '.object-list-view-container', 'table.object-list-view tbody tr').then(($list) => {
       assert.ok($list);
-      let $basicButtons = Ember.$('.ui.button','.ui.basic.buttons');
+      let $basicButtons = Ember.$('.ui.button', '.ui.basic.buttons');
       assert.equal($($basicButtons[1]).hasClass('active'), false, 'page 1 is not active');
       assert.equal($($basicButtons[2]).hasClass('active'), true, 'page 2 is active');
     }).catch((reason) => {
@@ -30,19 +31,20 @@ executeTest('check paging', (store, assert) => {
     });
 
     // The list should be more than 5 items.
-    assert.equal(activeItem(), trTableBody(), "equal perPage and visible element count");
+    assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
     $folvPerPageButton.click();
     let timeout = 500;
-    Ember.run.later(( () => {
-      let menuIsVisible = $menu.hasClass("visible");
-      assert.strictEqual(menuIsVisible, true, "menu is visible");
-      let $choosedIthem = Ember.$(".item", $menu);
+    Ember.run.later((() => {
+      let menuIsVisible = $menu.hasClass('visible');
+      assert.strictEqual(menuIsVisible, true, 'menu is visible');
+      let $choosedIthem = Ember.$('.item', $menu);
       let done = assert.async();
-      loadingList($choosedIthem[1], '.object-list-view-container','table.object-list-view tbody tr').then(($list) => {
+      loadingList($choosedIthem[1], '.object-list-view-container', 'table.object-list-view tbody tr').then(($list) => {
         assert.ok($list);
-        assert.equal(activeItem(), $($choosedIthem[1]).attr("data-value"), "equal");
+        assert.equal(activeItem(), $($choosedIthem[1]).attr('data-value'), 'equal');
+
         // The list should be more than 10 items
-        assert.equal(activeItem(), trTableBody(), "equal perPage and visible element count");
+        assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
       }).catch((reason) => {
         throw new Error(reason);
       }).finally(() => {

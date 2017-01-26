@@ -709,14 +709,14 @@ export default FlexberryBaseComponent.extend(
   */
   configurateSelectedRows: undefined,
 
-  selectedRowsChanged: Ember.observer('selectedRecords.@each', function() {
+  selectedRowsChanged: Ember.on('init', Ember.observer('selectedRecords.@each', function() {
     let selectedRecords = this.get('selectedRecords');
     let configurateSelectedRows = this.get('configurateSelectedRows');
     if (configurateSelectedRows) {
       Ember.assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
     }
-  }),
+  })),
 
   /**
     Default settings for rows.

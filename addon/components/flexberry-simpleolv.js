@@ -134,6 +134,16 @@ ErrorableControllerMixin, {
   allowColumnResize: true,
 
   /**
+    Flag indicates whether columns resizable plugin already was initialized.
+
+    @property _colResizableInit
+    @type Boolean
+    @default false
+    @private
+  */
+  _colResizableInit: false,
+
+  /**
     Table add column to sorting action name.
 
     @property addColumnToSorting
@@ -1031,6 +1041,18 @@ ErrorableControllerMixin, {
       if (key) {
         this._setActiveRecord(key);
       }
+    }
+
+    if (!this._colResizableInit) {
+      let $currentTable = this.$('table.object-list-view');
+      if (this.get('allowColumnResize')) {
+        $currentTable.addClass('fixed');
+        this._reinitResizablePlugin();
+      } else {
+        $currentTable.colResizable({ disable: true });
+      }
+
+      this.set('_colResizableInit', true);
     }
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();

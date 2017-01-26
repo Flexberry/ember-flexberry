@@ -48,6 +48,15 @@ export default FlexberryBaseComponent.extend(
   hasEditableValues: false,
 
   /**
+    Flag: indicates whether to show validation messages or not.
+
+    @property showValidationMessages
+    @type Boolean
+    @default false
+  */
+  showValidationMessages: true,
+
+  /**
     An overridable method called when objects are instantiated.
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
     Initializes {{#crossLink "ObjectListViewSingleColumnCellComponent"}}object-list-view-single-column-cell{{/crossLink}} component.

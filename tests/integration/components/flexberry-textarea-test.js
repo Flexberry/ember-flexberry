@@ -370,22 +370,25 @@ test('rows mode works properly', function(assert) {
   let $component = this.$().children();
   let $textareaInput = $component.children('textarea');
 
-  //Generate a random value 'rows' and convert to a string.
-  let rowsValue = '' + (Math.floor(Math.random() * 10));
+  // Retrieve default rows count for current browser.
+  let defaultRowsCount = $textareaInput.prop('rows');
 
-  // Check that <textarea>'s rows attribute.
+  // Generate random rows count >= 2.
+  let rowsValue = Math.floor(Math.random() * 10) + 2;
+
+  // Check that <textarea>'s rows attribute is equals to specified value.
   this.set('rows', rowsValue);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('rows')),
+    $textareaInput.prop('rows'),
     rowsValue,
-    'Component\'s inner <textarea>\'s value \'rows\' is equals to \'' + rowsValue + '\'');
+    'Component\'s inner <textarea>\'s value \'rows\' is equals to ' + rowsValue);
 
-  // Check that <textarea>'s hasn\'t value rows attribute.
+  // Check that <textarea>'s rows count is switched to default value.
   this.set('rows', null);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('rows')),
-    '0',
-    'Component\'s inner <textarea> hasn\'t value rows attribute');
+    $textareaInput.prop('rows'),
+    defaultRowsCount,
+    'Component\'s inner <textarea>\'s rows count is switched to default value');
 });
 
 test('cols mode works properly', function(assert) {
@@ -401,21 +404,24 @@ test('cols mode works properly', function(assert) {
   let $component = this.$().children();
   let $textareaInput = $component.children('textarea');
 
-  //Generate a random value 'cols' and convert to a string.
-  let colsValue = '' + (Math.floor(Math.random() * 10));
+  // Retrieve default rows count for current browser.
+  let defaultColsCount = $textareaInput.prop('cols');
 
-  // Check that <textarea>'s cols attribute.
+  // Generate random cols count >= 20.
+  let colsValue = Math.floor(Math.random() * 10) + 20;
+
+  // Check that <textarea>'s cols attribute is equals to specified value.
   this.set('cols', colsValue);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('cols')),
+    $textareaInput.prop('cols'),
     colsValue,
-    'Component\'s inner <textarea>\'s value \'cols\' is equals to \'' + colsValue + '\'');
+    'Component\'s inner <textarea>\'s value \'cols\' is equals to ' + colsValue);
 
-  // Check that <textarea>'s hasn\'t value cols attribute.
+  // Check that <textarea>'s cols count is switched to default value.
   this.set('cols', null);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('cols')),
-    '0',
+    $textareaInput.prop('cols'),
+    defaultColsCount,
     'Component\'s inner <textarea> hasn\'t value cols attribute');
 });
 

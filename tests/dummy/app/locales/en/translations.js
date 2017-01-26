@@ -608,7 +608,7 @@ Ember.$.extend(true, translations, {
           'custom-button-name': 'Send hello'
         },
         'on-edit-form': {
-          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview custom data sample'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview on edit form'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'
@@ -697,7 +697,8 @@ Ember.$.extend(true, translations, {
           'date-caption': 'Date',
           'enumeration-caption': 'Enumeration',
           'file-caption': 'File',
-          'master-caption': 'Master'
+          'master-caption': 'Master',
+          'details-caption': 'Details'
         }
       }
     },

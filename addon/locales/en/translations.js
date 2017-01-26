@@ -164,7 +164,8 @@ export default {
       'have-errors': 'When you save a configuration errors occurred: ',
       'setting': 'Setting ',
       'is-saved': ' is saved',
-      'col-width-on': 'Enable setting column widths'
+      'col-width-on': 'Enable setting column widths',
+      'per-page': 'Records count on page'
     },
 
     'form-load-time-tracker': {

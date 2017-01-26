@@ -96,7 +96,10 @@ export default Ember.Component.extend({
     this.get('validationProperties').forEach((property) => {
       // TODO: Delete after update Ember on 2.5.1 and up.
       if (property !== 'toString') {
-        messages.addObjects(this.get('errors.' + property));
+        let errorMessages = this.get('errors.' + property);
+        errorMessages.forEach((errorMessage) => {
+          messages.pushObject(errorMessage);
+        });
       }
     });
 

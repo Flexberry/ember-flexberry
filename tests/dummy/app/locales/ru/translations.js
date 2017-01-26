@@ -609,7 +609,7 @@ Ember.$.extend(true, translations, {
           'custom-button-name': 'Передать привет'
         },
         'on-edit-form': {
-          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview пример произвольных данных'
+          'caption': 'Flexberry-objectlistview. FlexberryObjectlistview на форме редактирования'
         },
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Настройка фильтра'
@@ -698,7 +698,8 @@ Ember.$.extend(true, translations, {
           'date-caption': 'Дата',
           'enumeration-caption': 'Перечисление',
           'file-caption': 'Файл',
-          'master-caption': 'Мастер'
+          'master-caption': 'Мастер',
+          'details-caption': 'Детейлы'
         }
       }
     },

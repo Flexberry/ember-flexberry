@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-objectlistview` component:
     * Fix selected rows count reset on `init`.
+* `flexberry-simpleolv` component:
+    * Fix `colResizable` plugin init when `model` was overrided.
 
 ## [0.8.1] - 2017-01-18
 ### Added

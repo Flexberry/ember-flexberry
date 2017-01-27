@@ -4,6 +4,7 @@ import { executeTest, loadingList, checkSortingList } from './execute-folv-test'
 var olvContainerClass = '.object-list-view-container';
 var trTableClass = 'table.object-list-view tbody tr';
 
+// Need to add sort by multiple columns.
 executeTest('check sorting', (store, assert, app) => {
   assert.expect(11);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';

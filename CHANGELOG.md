@@ -4,6 +4,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.2] - 2017-01-26
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.1.
+
+### Fixed
+* `flexberry-dropdown` component:
+    * Fix hanging in IE when change `perPageValue`.
+* `flexberry-objectlistview` component:
+    * Fix selected rows count reset on `init`.
+* `flexberry-simpleolv` component:
+    * Fix `colResizable` plugin init when `model` was overrided.
+
 ## [0.8.1] - 2017-01-18
 ### Added
 * `flexberry-objectlistview` component:

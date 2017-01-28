@@ -4,6 +4,35 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.2] - 2017-01-26
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.1.
+
+### Fixed
+* `flexberry-dropdown` component:
+    * Fix hanging in IE when change `perPageValue`.
+* `flexberry-objectlistview` component:
+    * Fix selected rows count reset on `init`.
+* `flexberry-simpleolv` component:
+    * Fix `colResizable` plugin init when `model` was overrided.
+
+## [0.8.1] - 2017-01-18
+### Added
+* `flexberry-objectlistview` component:
+    * Add hierarchy support on `edit-form`.
+    * Add `defaultLeftPadding` property as padding value in each level of hierarchy (in pixels).
+
+### Changed
+* `flexberry-objectlistview` component:
+    * Change hierarchy indent setting (`hierarchicalIndent` property) to `Number` type (in pixels).
+* Update `flatpickr-calendar` dependency to 2.3.4.
+
+###Fixed
+* `flexberry-simpledatetime` component:
+    * Fix `readonly` mode.
+* `flexberry-objectlistview` component:
+    * Fix columns compute when `modelProjection` is `undefined`.
+
 ## [0.8.0] - 2016-12-31
 ### Added
 * `flexberry-simpleolv` component which renders it's content faster then `flexberry-objectlistview`. Component is inherited from `flexberry-objectlistview` component and has same functionality.

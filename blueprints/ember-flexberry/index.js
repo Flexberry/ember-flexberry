@@ -29,6 +29,7 @@ module.exports = {
       return _this.addPackagesToProject([
         { name: 'dexie', target: '1.4.2' },
         { name: 'node-uuid', target: '1.4.7' },
+        { name: 'xml2js', target: '0.4.17' },
         { name: 'inflection', target: '1.10.0' }
       ]);
     });

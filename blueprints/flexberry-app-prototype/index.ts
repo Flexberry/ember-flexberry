@@ -40,9 +40,9 @@ class PrototypeBlueprint {
     this.odataFeedUrl = options.odataFeedUrl;
     this.options = options;
     this.promise = Promise.resolve();
-    this.promise = this.getOdataMetadata(this.metadataDir, this.odataFeedUrl);
+    //this.promise = this.getOdataMetadata(this.metadataDir, this.odataFeedUrl);
     this.promise = this.getContent(this.metadataDir, this.odataFeedUrl);
-    this.promise = this.parseXmlMetadata(this.metadataDir);
+    // this.promise = this.parseXmlMetadata(this.metadataDir);
     this.promise = this.promise;
   }
 
@@ -64,10 +64,12 @@ class PrototypeBlueprint {
 
   getContent(metadataDir, odataFeedUrl) {
     let url = odataFeedUrl + '/$metadata';
-    let writeToFileName = path.join('./', metadataDir, '/odataMetadata.xml');
+    let writeToFileName = path.join('./', metadataDir, '/odataMetadata.json');
+
+    this.options.ui.writeLine(`Get OData metadata from ${odataFeedUrl} and write it to ${writeToFileName}`);
 
     return new Promise((resolve, reject) => {
-      const lib = url.startsWith('https') ? https : http;
+      const lib = url.lastIndexOf('https', 0) === 0 ? https : http;
       const request = lib.get(url, (response) => {
         if (response.statusCode < 200 || response.statusCode > 299) {
           reject(new Error(`Failed to load OData metadata from ${url}, status code: ` + response.statusCode));
@@ -75,8 +77,23 @@ class PrototypeBlueprint {
         const body = [];
         response.on('data', (chunk) => body.push(chunk));
         response.on('end', () => {
-          fs.writeFileSync(writeToFileName, body.join(''));
-          resolve(true)
+
+          // fs.writeFileSync(writeToFileName, body.join(''));
+
+          let xml = body.join('');
+          xml2js.parseString(xml, function (err, result) {
+              if (err){
+                reject(err);
+              } else {
+                fs.writeFileSync(writeToFileName, JSON.stringify(result, null, ' '));
+
+                // TODO: parse xml metadata https://www.npmjs.com/package/xml2js
+
+                resolve(true);
+              }
+          });
+
+          // resolve(true)
         });
       });
       request.on('error', (err) => reject(err));

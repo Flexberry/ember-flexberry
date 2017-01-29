@@ -1,11 +1,11 @@
 "use strict";
 var fs = require("fs");
-var path = require('path');
+var path = require("path");
 var Blueprint = require('ember-cli/lib/models/blueprint');
 var Promise = require('ember-cli/lib/ext/promise');
-var http = require('http');
-var https = require('https');
-var xml2js = require('xml2js');
+var http = require("http");
+var https = require("https");
+var xml2js = require("xml2js");
 module.exports = {
     description: 'Prototyping flexberry applications by external metadata.',
     availableOptions: [
@@ -26,9 +26,9 @@ var PrototypeBlueprint = (function () {
         this.odataFeedUrl = options.odataFeedUrl;
         this.options = options;
         this.promise = Promise.resolve();
-        this.promise = this.getOdataMetadata(this.metadataDir, this.odataFeedUrl);
+        //this.promise = this.getOdataMetadata(this.metadataDir, this.odataFeedUrl);
         this.promise = this.getContent(this.metadataDir, this.odataFeedUrl);
-        this.promise = this.parseXmlMetadata(this.metadataDir);
+        // this.promise = this.parseXmlMetadata(this.metadataDir);
         this.promise = this.promise;
     }
     PrototypeBlueprint.prototype.getOdataMetadata = function (metadataDir, odataFeedUrl) {
@@ -50,18 +50,30 @@ var PrototypeBlueprint = (function () {
     ;
     PrototypeBlueprint.prototype.getContent = function (metadataDir, odataFeedUrl) {
         var url = odataFeedUrl + '/$metadata';
-        var writeToFileName = path.join('./', metadataDir, '/odataMetadata.xml');
+        var writeToFileName = path.join('./', metadataDir, '/odataMetadata.json');
+        this.options.ui.writeLine("Get OData metadata from " + odataFeedUrl + " and write it to " + writeToFileName);
         return new Promise(function (resolve, reject) {
-            var lib = url.startsWith('https') ? https : http;
+            var lib = url.lastIndexOf('https', 0) === 0 ? https : http;
             var request = lib.get(url, function (response) {
                 if (response.statusCode < 200 || response.statusCode > 299) {
-                    reject(new Error(("Failed to load OData metadata from " + url + ", status code: ") + response.statusCode));
+                    reject(new Error("Failed to load OData metadata from " + url + ", status code: " + response.statusCode));
                 }
                 var body = [];
                 response.on('data', function (chunk) { return body.push(chunk); });
                 response.on('end', function () {
-                    fs.writeFileSync(writeToFileName, body.join(''));
-                    resolve(true);
+                    // fs.writeFileSync(writeToFileName, body.join(''));
+                    var xml = body.join('');
+                    xml2js.parseString(xml, function (err, result) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            fs.writeFileSync(writeToFileName, JSON.stringify(result, null, ' '));
+                            // TODO: parse xml metadata https://www.npmjs.com/package/xml2js
+                            resolve(true);
+                        }
+                    });
+                    // resolve(true)
                 });
             });
             request.on('error', function (err) { return reject(err); });

@@ -1,5 +1,5 @@
 "use strict";
-var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
+var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
 module.exports = {
     description: 'Generates an ember-data model for flexberry.',
     availableOptions: [

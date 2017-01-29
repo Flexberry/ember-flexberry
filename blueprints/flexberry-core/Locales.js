@@ -9,8 +9,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var stripBom = require("strip-bom");
 var fs = require("fs");
-var path = require('path');
-var lodash = require('lodash');
+var path = require("path");
+var lodash = require("lodash");
 var TAB = "  ";
 var Locales = (function () {
     function Locales(entityName, currentLocale) {
@@ -53,10 +53,10 @@ var Locales = (function () {
     };
     Locales.prototype.getLodashVariablesWithSuffix = function (suffix) {
         var lodashVariables = {};
-        lodashVariables[("" + this.currentLocale + suffix)] = this.getProperties(this.currentLocale);
+        lodashVariables["" + this.currentLocale + suffix] = this.getProperties(this.currentLocale);
         for (var _i = 0, _a = this.locales; _i < _a.length; _i++) {
             var locale = _a[_i];
-            lodashVariables[("" + locale + suffix)] = this.getProperties(locale);
+            lodashVariables["" + locale + suffix] = this.getProperties(locale);
         }
         return lodashVariables;
     };
@@ -73,7 +73,7 @@ exports.default = Locales;
 var ApplicationMenuLocales = (function (_super) {
     __extends(ApplicationMenuLocales, _super);
     function ApplicationMenuLocales(currentLocale) {
-        _super.call(this, "", currentLocale);
+        return _super.call(this, "", currentLocale) || this;
     }
     ApplicationMenuLocales.prototype.getProperties = function (locale) {
         return "" + this.translations[locale].join(",\n");
@@ -84,7 +84,7 @@ exports.ApplicationMenuLocales = ApplicationMenuLocales;
 var ModelLocales = (function (_super) {
     __extends(ModelLocales, _super);
     function ModelLocales(model, modelsDir, currentLocale) {
-        _super.call(this, "", currentLocale);
+        var _this = _super.call(this, "", currentLocale) || this;
         var projections = [];
         var projectionsOtherLocales = [];
         var projName;
@@ -96,11 +96,11 @@ var ModelLocales = (function (_super) {
             var projAttrs = [];
             for (var _b = 0, _c = proj.attrs; _b < _c.length; _b++) {
                 var attr = _c[_b];
-                projAttrs.push(this.declareProjAttr(attr, 4));
+                projAttrs.push(_this.declareProjAttr(attr, 4));
             }
             for (var _d = 0, _e = proj.belongsTo; _d < _e.length; _d++) {
                 var belongsTo = _e[_d];
-                projAttrs.push(this.joinProjBelongsTo(belongsTo, 4));
+                projAttrs.push(_this.joinProjBelongsTo(belongsTo, 4));
             }
             for (var _f = 0, _g = proj.hasMany; _f < _g.length; _f++) {
                 var hasMany = _g[_f];
@@ -112,19 +112,19 @@ var ModelLocales = (function (_super) {
                 if (detailProj) {
                     for (var _h = 0, _j = detailProj.attrs; _h < _j.length; _h++) {
                         var detailAttr = _j[_h];
-                        hasManyAttrs.push(this.declareProjAttr(detailAttr, 5));
+                        hasManyAttrs.push(_this.declareProjAttr(detailAttr, 5));
                     }
                     for (var _k = 0, _l = detailProj.belongsTo; _k < _l.length; _k++) {
                         var detailBelongsTo = _l[_k];
-                        hasManyAttrs.push(this.joinProjBelongsTo(detailBelongsTo, 5));
+                        hasManyAttrs.push(_this.joinProjBelongsTo(detailBelongsTo, 5));
                     }
                     for (var _m = 0, _o = detailProj.hasMany; _m < _o.length; _m++) {
                         var detailHasMany = _o[_m];
-                        hasManyAttrs.push(this.joinProjHasMany(detailHasMany, modelsDir, 5));
+                        hasManyAttrs.push(_this.joinProjHasMany(detailHasMany, modelsDir, 5));
                     }
                 }
                 hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
-                hasManyAttrs.unshift(new SortedPair(-1, "        caption: '" + this.escapeValue(hasMany.caption) + "'", "        caption: '" + hasMany.name + "'"));
+                hasManyAttrs.unshift(new SortedPair(-1, "        caption: '" + _this.escapeValue(hasMany.caption) + "'", "        caption: '" + hasMany.name + "'"));
                 var attrsStr_1 = lodash.map(hasManyAttrs, "str").join(",\n        ");
                 var attrsStrOtherLocales_1 = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n        ");
                 projAttrs.push(new SortedPair(Number.MAX_VALUE, hasMany.name + ": {\n" + attrsStr_1 + "\n      }", hasMany.name + ": {\n" + attrsStrOtherLocales_1 + "\n      }"));
@@ -132,8 +132,9 @@ var ModelLocales = (function (_super) {
             projAttrs = lodash.sortBy(projAttrs, ["index"]);
             var attrsStr = lodash.map(projAttrs, "str").join(",\n      ");
             var attrsStrOtherLocales = lodash.map(projAttrs, "strOtherLocales").join(",\n      ");
-            this.push(proj.name + ": {\n      " + attrsStr + "\n    }", proj.name + ": {\n      " + attrsStrOtherLocales + "\n    }");
+            _this.push(proj.name + ": {\n      " + attrsStr + "\n    }", proj.name + ": {\n      " + attrsStrOtherLocales + "\n    }");
         }
+        return _this;
     }
     ModelLocales.prototype.getProperties = function (locale) {
         var translation = this.translations[locale].join(",\n    ");

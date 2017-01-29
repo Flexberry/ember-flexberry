@@ -1,6 +1,6 @@
 "use strict";
 var fs = require("fs");
-var path = require('path');
+var path = require("path");
 var stripBom = require("strip-bom");
 module.exports = {
     description: 'Generates an ember-data enum for flexberry.',

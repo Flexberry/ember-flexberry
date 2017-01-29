@@ -1,9 +1,9 @@
 "use strict";
-var child_process = require('child_process');
+var child_process = require("child_process");
 var stripBom = require("strip-bom");
 var Blueprint = require('ember-cli/lib/models/blueprint');
 var Promise = require('ember-cli/lib/ext/promise');
-var lodash = require('lodash');
+var lodash = require("lodash");
 module.exports = {
     description: 'Generates all entities for flexberry.',
     availableOptions: [
@@ -52,11 +52,11 @@ var ElapsedTime = (function () {
         ElapsedTime.groups.push(new ElapsedTime(caption, startTime));
         return Date.now();
     };
-    ElapsedTime.groups = [];
-    ElapsedTime.formatter = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 0 });
-    ElapsedTime.formatterFrac = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 1, minimumFractionDigits: 1 });
     return ElapsedTime;
 }());
+ElapsedTime.groups = [];
+ElapsedTime.formatter = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 0 });
+ElapsedTime.formatterFrac = new Intl.NumberFormat('ru-RU', { minimumIntegerDigits: 2, maximumFractionDigits: 1, minimumFractionDigits: 1 });
 var ApplicationBlueprint = (function () {
     function ApplicationBlueprint(blueprint, options) {
         if (options.metadataDir === undefined) {
@@ -108,7 +108,7 @@ var ApplicationBlueprint = (function () {
         console.log(cmd);
         return child_process.execSync(cmd, { stdio: ["inherit", "inherit", "inherit"] });
     };
-    ApplicationBlueprint.start = Date.now();
     return ApplicationBlueprint;
 }());
+ApplicationBlueprint.start = Date.now();
 //# sourceMappingURL=index.js.map

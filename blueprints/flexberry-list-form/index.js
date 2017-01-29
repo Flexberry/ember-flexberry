@@ -3,10 +3,10 @@
 /// <reference path='../typings/MetadataClasses.d.ts' />
 "use strict";
 var fs = require("fs");
-var path = require('path');
-var lodash = require('lodash');
+var path = require("path");
+var lodash = require("lodash");
 var stripBom = require("strip-bom");
-var Locales_1 = require('../flexberry-core/Locales');
+var Locales_1 = require("../flexberry-core/Locales");
 module.exports = {
     description: 'Generates an ember list-form for flexberry.',
     availableOptions: [

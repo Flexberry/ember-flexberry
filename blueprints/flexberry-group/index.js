@@ -1,7 +1,7 @@
 "use strict";
-var lodash = require('lodash');
+var lodash = require("lodash");
 var fs = require("fs");
-var path = require('path');
+var path = require("path");
 var stripBom = require("strip-bom");
 var Promise = require('ember-cli/lib/ext/promise');
 var Blueprint = require('ember-cli/lib/models/blueprint');
@@ -75,7 +75,7 @@ var GroupBlueprint = (function () {
         if (folderJsFiles === void 0) { folderJsFiles = undefined; }
         metadataSubDir = path.join(this.metadataDir, metadataSubDir);
         var list = fs.readdirSync(metadataSubDir);
-        var _loop_1 = function(file) {
+        var _loop_1 = function (file) {
             var entityName = path.parse(file).name;
             if (notOverwrite && this_1.fileExists(folderJsFiles + "/" + entityName + ".js"))
                 return "continue";
@@ -120,8 +120,7 @@ var GroupBlueprint = (function () {
         var this_1 = this;
         for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
             var file = list_1[_i];
-            var state_1 = _loop_1(file);
-            if (state_1 === "continue") continue;
+            _loop_1(file);
         }
     };
     GroupBlueprint.prototype.fileExists = function (path) {
@@ -134,7 +133,7 @@ var GroupBlueprint = (function () {
         }
         return true;
     };
-    GroupBlueprint.groupOptions = [];
     return GroupBlueprint;
 }());
+GroupBlueprint.groupOptions = [];
 //# sourceMappingURL=index.js.map

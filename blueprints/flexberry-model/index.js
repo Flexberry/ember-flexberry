@@ -2,8 +2,8 @@
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 "use strict";
-var ModelBlueprint_1 = require('./ModelBlueprint');
-var lodash = require('lodash');
+var ModelBlueprint_1 = require("./ModelBlueprint");
+var lodash = require("lodash");
 module.exports = {
     description: 'Generates an ember-data model for flexberry.',
     availableOptions: [

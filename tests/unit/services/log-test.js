@@ -16,7 +16,7 @@ module('Unit | Service | log', {
 
 test('error works properly', function(assert) {
   let done = assert.async();
-  assert.expect(8);
+  assert.expect(9);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -46,6 +46,8 @@ test('error works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), errorProcessId);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), errorMessage);
+    let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
+    assert.ok(formattedMessageIsOk);
 
     // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
     DS.Model.prototype.save = originalSaveMethod;
@@ -60,7 +62,7 @@ test('error works properly', function(assert) {
 
 test('warn works properly', function(assert) {
   let done = assert.async();
-  assert.expect(8);
+  assert.expect(9);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -91,6 +93,8 @@ test('warn works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
     let savedMessageContainsWarnMessage = savedLogRecord.get('message').indexOf(warnMessage) > -1;
     assert.ok(savedMessageContainsWarnMessage);
+    let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
+    assert.ok(formattedMessageIsOk);
 
     // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
     DS.Model.prototype.save = originalSaveMethod;
@@ -105,7 +109,7 @@ test('warn works properly', function(assert) {
 
 test('log works properly', function(assert) {
   let done = assert.async();
-  assert.expect(8);
+  assert.expect(9);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -135,6 +139,8 @@ test('log works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), logProcessId);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), logMessage);
+    let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
+    assert.ok(formattedMessageIsOk);
 
     // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
     DS.Model.prototype.save = originalSaveMethod;
@@ -149,7 +155,7 @@ test('log works properly', function(assert) {
 
 test('info works properly', function(assert) {
   let done = assert.async();
-  assert.expect(8);
+  assert.expect(9);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -179,6 +185,8 @@ test('info works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), infoProcessId);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), infoMessage);
+    let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
+    assert.ok(formattedMessageIsOk);
 
     // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
     DS.Model.prototype.save = originalSaveMethod;
@@ -194,7 +202,7 @@ test('info works properly', function(assert) {
 
 test('debug works properly', function(assert) {
   let done = assert.async();
-  assert.expect(8);
+  assert.expect(9);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -225,6 +233,8 @@ test('debug works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
     let savedMessageContainsDebugMessage = savedLogRecord.get('message').indexOf(debugMessage) > -1;
     assert.ok(savedMessageContainsDebugMessage);
+    let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
+    assert.ok(formattedMessageIsOk);
 
     // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
     DS.Model.prototype.save = originalSaveMethod;
@@ -239,7 +249,7 @@ test('debug works properly', function(assert) {
 
 test('deprecate works properly', function(assert) {
   let done = assert.async();
-  assert.expect(8);
+  assert.expect(9);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -270,6 +280,8 @@ test('deprecate works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
     let savedMessageContainsDeprecationMessage = savedLogRecord.get('message').indexOf(deprecationMessage) > -1;
     assert.ok(savedMessageContainsDeprecationMessage);
+    let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
+    assert.ok(formattedMessageIsOk);
 
     // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
     DS.Model.prototype.save = originalSaveMethod;
@@ -353,7 +365,7 @@ test('throwing exceptions logs properly', function(assert) {
 
 test('promise errors logs properly', function(assert) {
   let done = assert.async();
-  assert.expect(8);
+  assert.expect(9);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -389,7 +401,8 @@ test('promise errors logs properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), promiseErrorMessage);
 
-    //assert.strictEqual(Ember.$.trim(savedLogRecord.get('formattedMessage')), );
+    let formattedMessageContainsPromiseErrorMessage = savedLogRecord.get('formattedMessage').indexOf(promiseErrorMessage) > -1;
+    assert.ok(formattedMessageContainsPromiseErrorMessage);
 
     //Restore default QUnitAdapter.exception method
     Ember.Test.adapter.exception = oldTestAdapterException;

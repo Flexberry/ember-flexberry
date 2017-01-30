@@ -54,7 +54,8 @@ var PrototypeBlueprint = (function () {
         this.options.ui.writeLine("Get OData metadata from " + odataFeedUrl + " and write it to " + writeToFileName);
         return new Promise(function (resolve, reject) {
             var lib = url.lastIndexOf('https', 0) === 0 ? https : http;
-            var request = lib.get(url, function (response) {
+            //      const request = lib.get(url, (response) => {
+            var request = http.get(url, function (response) {
                 if (response.statusCode < 200 || response.statusCode > 299) {
                     reject(new Error("Failed to load OData metadata from " + url + ", status code: " + response.statusCode));
                 }
@@ -70,6 +71,28 @@ var PrototypeBlueprint = (function () {
                         else {
                             fs.writeFileSync(writeToFileName, JSON.stringify(result, null, ' '));
                             // TODO: parse xml metadata https://www.npmjs.com/package/xml2js
+                            var schema = result["edmx:Edmx"]["edmx:DataServices"][0]["Schema"];
+                            for (var i = 0; i < schema.length; i++) {
+                                var namespace = schema[i]["$"]["Namespace"];
+                                var entityTypes = schema[i]["EntityType"];
+                                if (entityTypes) {
+                                    for (var j = 0; j < entityTypes.length; j++) {
+                                        var entityType = entityTypes[j];
+                                        var modelName = entityType["$"]["Name"];
+                                        var modelFilePath = path.join('./', metadataDir, 'models', '/' + modelName + '.json');
+                                        fs.writeFileSync(modelFilePath, JSON.stringify(entityType, null, ' '));
+                                    }
+                                }
+                                var enumTypes = schema[i]["EnumType"];
+                                if (enumTypes) {
+                                    for (var j = 0; j < enumTypes.length; j++) {
+                                        var enumType = enumTypes[j];
+                                        var enumName = enumType["$"]["Name"];
+                                        var enumFilePath = path.join('./', metadataDir, 'enums', '/' + enumName + '.json');
+                                        fs.writeFileSync(enumFilePath, JSON.stringify(enumType, null, ' '));
+                                    }
+                                }
+                            }
                             resolve(true);
                         }
                     });

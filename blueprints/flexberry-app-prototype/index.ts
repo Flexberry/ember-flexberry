@@ -70,7 +70,8 @@ class PrototypeBlueprint {
 
     return new Promise((resolve, reject) => {
       const lib = url.lastIndexOf('https', 0) === 0 ? https : http;
-      const request = lib.get(url, (response) => {
+//      const request = lib.get(url, (response) => {
+      const request = http.get(url, (response) => {
         if (response.statusCode < 200 || response.statusCode > 299) {
           reject(new Error(`Failed to load OData metadata from ${url}, status code: ` + response.statusCode));
         }
@@ -88,6 +89,30 @@ class PrototypeBlueprint {
                 fs.writeFileSync(writeToFileName, JSON.stringify(result, null, ' '));
 
                 // TODO: parse xml metadata https://www.npmjs.com/package/xml2js
+                let schema = result["edmx:Edmx"]["edmx:DataServices"][0]["Schema"];
+                for (let i = 0; i < schema.length; i++) {
+                  let namespace = schema[i]["$"]["Namespace"];
+                  let entityTypes = schema[i]["EntityType"];
+
+                  if (entityTypes) {
+                    for (let j = 0; j < entityTypes.length; j++) {
+                      let entityType = entityTypes[j];
+                      let modelName = entityType["$"]["Name"];
+                      let modelFilePath = path.join('./', metadataDir, 'models', '/'+ modelName +'.json');
+                      fs.writeFileSync(modelFilePath, JSON.stringify(entityType, null, ' '));
+                    }
+                  }
+                  let enumTypes = schema[i]["EnumType"];
+
+                  if (enumTypes) {
+                    for (let j = 0; j < enumTypes.length; j++) {
+                      let enumType = enumTypes[j];
+                      let enumName = enumType["$"]["Name"];
+                      let enumFilePath = path.join('./', metadataDir, 'enums', '/'+ enumName +'.json');
+                      fs.writeFileSync(enumFilePath, JSON.stringify(enumType, null, ' '));
+                    }
+                  }
+                }
 
                 resolve(true);
               }

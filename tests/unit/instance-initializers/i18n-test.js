@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import I18nInstanceInitializer from 'dummy/instance-initializers/i18n';
+import I18nInstanceInitializer from 'ember-flexberry/instance-initializers/i18n';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import destroyApp from '../../helpers/destroy-app';
@@ -18,16 +18,31 @@ module('Unit | Instance Initializer | i18n', {
   }
 });
 
-test('it works', function(assert) {
+test('It works', function(assert) {
   assert.expect(1);
   I18nInstanceInitializer.initialize(appInstance);
   assert.ok(true);
 });
 
-test('add true logic', function(assert) {
-  assert.expect(3);
+test('Add true logic', function(assert) {
+  assert.expect(2);
+  assert.strictEqual(appInstance.__container__.factoryCache['service:i18n'], undefined);
   I18nInstanceInitializer.initialize(appInstance);
-  assert.strictEqual(appInstance.__registry__._normalizeCache['service:i18n'], 'service:i18n');
-  assert.strictEqual(appInstance.__registry__._normalizeCache['config:environment'], 'config:environment');
-  assert.strictEqual(appInstance.__registry__._normalizeCache['service:moment'], 'service:moment');
+  assert.strictEqual(appInstance.__container__.factoryCache['service:i18n']._toString, 'dummy@service:i18n:');
+});
+
+test('Configures i18n service for locale \'ru\'', function(assert) {
+  assert.expect(1);
+
+  window.navigator.languages[0] = 'ru';
+  I18nInstanceInitializer.initialize(appInstance);
+  assert.strictEqual(appInstance.__container__.cache['service:i18n'].locale, 'ru');
+});
+
+test('Configures i18n service for locale \'en\'', function(assert) {
+  assert.expect(1);
+
+  window.navigator.languages[0] = 'en';
+  I18nInstanceInitializer.initialize(appInstance);
+  assert.strictEqual(appInstance.__container__.cache['service:i18n'].locale, 'en');
 });

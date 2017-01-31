@@ -31,18 +31,10 @@ test('Add true logic', function(assert) {
   assert.strictEqual(appInstance.__container__.factoryCache['service:i18n']._toString, 'dummy@service:i18n:');
 });
 
-test('Configures i18n service for locale \'ru\'', function(assert) {
+test('Configures i18n service for locale', function(assert) {
   assert.expect(1);
 
-  window.navigator.languages[0] = 'ru';
+  var controlValue = window.navigator.languages ? window.navigator.languages[0] : (window.navigator.language || window.navigator.userLanguage);
   I18nInstanceInitializer.initialize(appInstance);
-  assert.strictEqual(appInstance.__container__.cache['service:i18n'].locale, 'ru');
-});
-
-test('Configures i18n service for locale \'en\'', function(assert) {
-  assert.expect(1);
-
-  window.navigator.languages[0] = 'en';
-  I18nInstanceInitializer.initialize(appInstance);
-  assert.strictEqual(appInstance.__container__.cache['service:i18n'].locale, 'en');
+  assert.strictEqual(appInstance.__container__.cache['service:i18n'].locale, controlValue);
 });

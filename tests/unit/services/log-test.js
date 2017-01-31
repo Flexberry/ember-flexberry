@@ -60,6 +60,42 @@ test('error works properly', function(assert) {
   });
 });
 
+test('error works properly when logService disabled', function(assert) {
+  let done = assert.async();
+  assert.expect(1);
+
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  DS.Model.prototype.save = function() {
+    throw new Error('Log is disabled, DB isn\'t changed');
+  };
+
+  // Get log-service instance & enable errors logging.
+  let logService = app.__container__.lookup('service:log');
+  logService.enabled = false;
+  logService.storeErrorMessages = true;
+  let errorMessage = 'The system generated an error';
+
+  logService.on('error', this, (savedLogRecord) => {
+    // Check results asyncronously.
+    if (savedLogRecord) {
+      throw new Error('Log is disabled, DB isn\'t changed');
+    } else {
+      assert.ok(true, 'Check log call');
+    }
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
+    done();
+  });
+
+  // Call to Ember.Logger.error.
+  Ember.run(() => {
+    Ember.Logger.error(errorMessage);
+  });
+});
+
 test('warn works properly', function(assert) {
   let done = assert.async();
   assert.expect(9);
@@ -296,7 +332,7 @@ test('deprecate works properly', function(assert) {
 
 test('assert works properly', function(assert) {
   let done = assert.async();
-  assert.expect(1);
+  assert.expect(9);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -312,11 +348,23 @@ test('assert works properly', function(assert) {
   logService.enabled = true;
   logService.storeErrorMessages = true;
   let assertMessage = 'The system generated an error';
+  let assertMachineName = location.hostname;
+  let assertAppDomainName = window.navigator.userAgent;
+  let assertProcessId = document.location.href;
 
   logService.on('error', this, (savedLogRecord) => {
     // Check results asyncronously.
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'ERROR');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '1');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), assertMachineName);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), assertAppDomainName);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), assertProcessId);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
     let savedMessageContainsAssertMessage = savedLogRecord.get('message').indexOf(assertMessage) > -1;
     assert.ok(savedMessageContainsAssertMessage);
+    let formattedMessageContainsAssertMessage = savedLogRecord.get('formattedMessage').indexOf(assertMessage) > -1;
+    assert.ok(formattedMessageContainsAssertMessage);
 
     // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
     DS.Model.prototype.save = originalSaveMethod;
@@ -331,7 +379,7 @@ test('assert works properly', function(assert) {
 
 test('throwing exceptions logs properly', function(assert) {
   let done = assert.async();
-  assert.expect(1);
+  assert.expect(9);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -347,10 +395,22 @@ test('throwing exceptions logs properly', function(assert) {
   logService.enabled = true;
   logService.storeErrorMessages = true;
   let errorMessage = 'The system thrown an exception';
+  let errorMachineName = location.hostname;
+  let errorAppDomainName = window.navigator.userAgent;
+  let errorProcessId = document.location.href;
 
   logService.on('error', this, (savedLogRecord) => {
     // Check results asyncronously.
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('category')), 'ERROR');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('eventId')), '0');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('priority')), '1');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), errorMachineName);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), errorAppDomainName);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), errorProcessId);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), errorMessage);
+    let formattedMessageContainsErrorMessage = savedLogRecord.get('formattedMessage').indexOf(errorMessage) > -1;
+    assert.ok(formattedMessageContainsErrorMessage);
 
     // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
     DS.Model.prototype.save = originalSaveMethod;

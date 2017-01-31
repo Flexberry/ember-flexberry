@@ -4,36 +4,30 @@ import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | flexberry groupedit');
 
-
 test('visiting flexberry-groupedit', function(assert) {
 
-  visit('components-acceptance-tests/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit');
+  visit('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test');
 
   andThen(function() {
-    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-groupedit/ember-flexberry-dummy-suggestion-edit');
+    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test');
 
     wait().then(() => {
 
       let $button = Ember.$('.button');
       $button = $($button[0]);
 
+      let field = Ember.$('.field');
+
       Ember.run(() => {
-        $button.click();
+        $(field[0]).click();
       });
 
-      wait().then(() => {
-
-        $button = Ember.$('.button');
-        $button = $($button[5]);
-
-        Ember.run(() => {
-          $button.click();
-        });
-
-        wait().then(() => {
-          assert.ok(true);
-        });
-    });
+      let done = assert.async();
+      setTimeout(function() {
+        let tempTextHeader = Ember.$('.tempText');
+        assert.strictEqual(tempTextHeader.text().trim(), 'Temp text for test', 'Component open current edit form route');
+        done();
+      }, 1000);
     });
   });
 });

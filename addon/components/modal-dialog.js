@@ -124,7 +124,7 @@ export default Ember.Component.extend({
           Ember.run(() => {
             _this.sendAction('close');
 
-          // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
+            // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
             Ember.$(this).remove();
             _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
           });

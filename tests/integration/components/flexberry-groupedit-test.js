@@ -406,7 +406,6 @@ test('ember-grupedit placeholder test', function(assert) {
     this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
 
     let tempText = 'Temp text.';
 
@@ -417,14 +416,13 @@ test('ember-grupedit placeholder test', function(assert) {
           content=model.details
           componentName=componentName
           modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
           placeholder=placeholder
         }}`);
 
-    let $componentObjectListViewBody = Ember.$('tbody');
+    let $componentObjectListView = Ember.$('.object-list-view');
+    let $componentObjectListViewBody = $componentObjectListView.children('tbody');
 
     assert.strictEqual($componentObjectListViewBody.text().trim(), tempText, 'Component has placeholder: ' + tempText);
-
   });
 });
 
@@ -462,7 +460,7 @@ test('ember-grupedit readonly test', function(assert) {
       detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
 
       wait().then(() => {
-        let $componentObjectListView = Ember.$('.object-list-view');        
+        let $componentObjectListView = Ember.$('.object-list-view');
         let $componentObjectListViewTd = $componentObjectListView.children('tbody').children('tr').children('td');
 
         let $disabledItem;
@@ -515,7 +513,7 @@ test('ember-grupedit striped test', function(assert) {
           tableStriped=false
         }}`);
 
-    let $componentObjectListView = Ember.$('.object-list-view');   
+    let $componentObjectListView = Ember.$('.object-list-view');
 
     // Check object-list-view <div>.
     assert.strictEqual($componentObjectListView.hasClass('striped'), false, 'Component\'s inner object-list-view block has \'striped\' css-class');
@@ -523,7 +521,7 @@ test('ember-grupedit striped test', function(assert) {
   });
 });
 
-test('ember-grupedit createNewButton and deleteButton test', function(assert) {
+test('ember-grupedit off createNewButton and deleteButton test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -545,7 +543,8 @@ test('ember-grupedit createNewButton and deleteButton test', function(assert) {
           deleteButton=false
         }}`);
 
-    let $componentButtons = Ember.$('.ui.button');
+    let $component = this.$().children();
+    let $componentButtons = Ember.$('.ui.button', $component);
 
     assert.strictEqual($componentButtons.length === 0, true, 'Component hasn\'t inner two button blocks');
   });
@@ -607,7 +606,6 @@ test('ember-grupedit showAsteriskInRow test', function(assert) {
         }}`);
 
     // Add record.
-    let $component = this.$().children();
     let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
@@ -645,7 +643,6 @@ test('ember-grupedit showCheckBoxInRow test', function(assert) {
         }}`);
 
     // Add record.
-    let $component = this.$().children();
     let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
@@ -685,7 +682,6 @@ test('ember-grupedit showDeleteButtonInRow test', function(assert) {
           showDeleteButtonInRow=true
         }}`);
 
-    let $component = this.$().children();
     let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
@@ -879,7 +875,7 @@ test('ember-grupedit rowClickable test', function(assert) {
           rowClickable=true
         }}`);
 
-    let $componentObjectListView = Ember.$('.object-list-view'); 
+    let $componentObjectListView = Ember.$('.object-list-view');
 
     // Check object-list-view <div>.
     assert.strictEqual($componentObjectListView.hasClass('selectable'), true, 'Component\'s inner object-list-view block has \'selectable\' css-class');
@@ -1082,6 +1078,10 @@ test('ember-grupedit orderable test', function(assert) {
       componentProperties: null
     }];
 
+    EditFormController.reopen({
+      getCellComponent: undefined
+    });
+
     this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
@@ -1094,9 +1094,6 @@ test('ember-grupedit orderable test', function(assert) {
           modelProjection=proj.attributes.details
           cellComponent=cellComponent
         }}`);
-
-    *let $componentOlvFirstDiv = $componentOlvFirstHead.children('div');
-    let $orderIcon = $componentOlvFirstDiv.children('div');*
 
     assert.strictEqual(1 === 1, true, 'Table has order');
 
@@ -1132,12 +1129,12 @@ test('ember-grupedit menuInRowAdditionalItems without standart element test', fu
           menuInRowAdditionalItems=menuInRowAdditionalItems
         }}`);
 
-    let controller = App.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
+    //let controller = App.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
 
-    let addButton = $(Ember.$('.ui.button')[0]);
+    let $addButton = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
-      addButton.click();
+      $addButton.click();
     });
 
     let componentOLVMenu =  Ember.$('.basic.right');
@@ -1182,10 +1179,10 @@ test('ember-grupedit menuInRowAdditionalItems with standart element test', funct
           showDeleteMenuItemInRow=true
         }}`);
 
-    let addButton = $(Ember.$('.ui.button')[0]);
+    let $addButton = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
-      addButton.click();
+      $addButton.click();
     });
 
     let componentOLVMenu =  Ember.$('.basic.right');
@@ -1227,7 +1224,7 @@ test('ember-grupedit model projection test', function(assert) {
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorEWithName'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.render(

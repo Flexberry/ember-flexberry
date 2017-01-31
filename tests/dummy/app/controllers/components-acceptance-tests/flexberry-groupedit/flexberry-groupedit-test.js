@@ -18,7 +18,7 @@ export default BaseEditFormController.extend({
     @type String
     @default 'ember-flexberry-dummy-comment-edit'
    */
-  commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
+  commentsEditRoute: 'ember-flexberry-dummy-comment-edit-test',
 
   /**
     Method to get type and attributes of a component,

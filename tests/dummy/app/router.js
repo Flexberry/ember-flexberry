@@ -112,6 +112,11 @@ Router.map(function() {
 
   // Components acceptance tests forms.
   this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test');
+
+  this.route('components-acceptance-tests/flexberry-groupedit/ember-flexberry-dummy-comment-edit');
+
+  this.route('ember-flexberry-dummy-comment-edit-test', { path: 'ember-flexberry-dummy-comment-edit-test/:id' });
+  this.route('ember-flexberry-dummy-comment-edit-test.new', { path: 'ember-flexberry-dummy-comment-edit-test/new' });
 });
 
 export default Router;

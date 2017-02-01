@@ -9,7 +9,7 @@ import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-co
 
 let App;
 
-moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry groupedit', {
+moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry groupedits', {
   integration: true,
 
   beforeEach: function () {
@@ -36,59 +36,7 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
   }
 });
 
-/*test('change inserted component into edit-form controller test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
-
-    EditFormController.reopen({
-      getCellComponent: function(attr, bindingPath) {
-        var cellComponent = this._super(...arguments);
-
-        if (attr.caption === 'Text') {
-          cellComponent.componentName = 'flexberry-textarea';
-        }
-
-        return cellComponent;
-      }
-    });
-
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
-        }}`);
-
-    // Add record.
-    let detailModel = this.get('model.details');
-    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
-
-    wait().then(() => {
-      let $component = this.$().children();
-      let $textarea = Ember.$('.ember-text-area', $component);
-      assert.strictEqual($textarea.length === 1, true, 'flexberry-textarea is embedded properly into object-list-view, after change.');
-
-      EditFormController.reopen({
-        getCellComponent: function(attr, bindingPath) {
-          return this._super(...arguments);
-        }
-      });
-    });
-  });
-});*/
-
-/*test('ember-grupedit cellComponent test', function(assert) {
+test('ember-grupedit cellComponent test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -134,7 +82,7 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
       }
     });
   });
-});*/
+});
 
 /*test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
@@ -1030,6 +978,58 @@ test('correct embedding components in to objectlistview test', function(assert) 
   });
 });
 
+test('change inserted component into edit-form controller test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+
+    EditFormController.reopen({
+      getCellComponent: function(attr, bindingPath) {
+        var cellComponent = this._super(...arguments);
+
+        if (attr.caption === 'Text') {
+          cellComponent.componentName = 'flexberry-textarea';
+        }
+
+        return cellComponent;
+      }
+    });
+
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+        }}`);
+
+    // Add record.
+    let detailModel = this.get('model.details');
+    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
+
+    wait().then(() => {
+      let $component = this.$().children();
+      let $textarea = Ember.$('.ember-text-area', $component);
+      assert.strictEqual($textarea.length === 1, true, 'flexberry-textarea is embedded properly into object-list-view, after change.');
+
+      EditFormController.reopen({
+        getCellComponent: function(attr, bindingPath) {
+          return this._super(...arguments);
+        }
+      });
+    });
+  });
+});
+
 test('ember-grupedit buttonClass test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
@@ -1234,14 +1234,14 @@ test('ember-grupedit model projection test', function(assert) {
   });
 });*/
 
-test('ember-grupedit main model projection test', function(assert) {
+/*test('ember-grupedit main model projection test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
-    let model = store.createRecord('aggregator');
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
 
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('proj', AggregatorModel.projections.get('AggregatorEWithName'));
     this.set('model', model);
     this.set('componentName', testComponentName);
     this.render(
@@ -1258,4 +1258,4 @@ test('ember-grupedit main model projection test', function(assert) {
       done();
     }, 100000);
   });
-});
+});*/

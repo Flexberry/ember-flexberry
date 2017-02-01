@@ -60,42 +60,6 @@ test('error works properly', function(assert) {
   });
 });
 
-test('error works properly when logService disabled', function(assert) {
-  let done = assert.async();
-  assert.expect(1);
-
-  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
-  let originalSaveMethod = DS.Model.prototype.save;
-
-  DS.Model.prototype.save = function() {
-    throw new Error('Log is disabled, DB isn\'t changed');
-  };
-
-  // Get log-service instance & enable errors logging.
-  let logService = app.__container__.lookup('service:log');
-  logService.enabled = false;
-  logService.storeErrorMessages = true;
-  let errorMessage = 'The system generated an error';
-
-  logService.on('error', this, (savedLogRecord) => {
-    // Check results asyncronously.
-    if (savedLogRecord) {
-      throw new Error('Log is disabled, DB isn\'t changed');
-    } else {
-      assert.ok(true, 'Check log call');
-    }
-
-    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
-    DS.Model.prototype.save = originalSaveMethod;
-    done();
-  });
-
-  // Call to Ember.Logger.error.
-  Ember.run(() => {
-    Ember.Logger.error(errorMessage);
-  });
-});
-
 test('warn works properly', function(assert) {
   let done = assert.async();
   assert.expect(9);
@@ -475,5 +439,42 @@ test('promise errors logs properly', function(assert) {
   // Throwing an exception.
   Ember.run(() => {
     Ember.RSVP.reject(promiseErrorMessage);
+  });
+});
+
+test('logService works properly when it\'s disabled', function(assert) {
+  let done = assert.async();
+  assert.expect(1);
+
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  DS.Model.prototype.save = function() {
+    savedLogRecord = this;
+    return Ember.RSVP.resolve(savedLogRecord);
+  };
+
+  // Get log-service instance & enable errors logging.
+  let logService = app.__container__.lookup('service:log');
+  logService.enabled = false;
+  logService.storeErrorMessages = true;
+  let errorMessage = 'The system generated an error';
+
+  logService.on('error', this, (savedLogRecord) => {
+    // Check results asyncronously.
+    if (savedLogRecord) {
+      throw new Error('Log is disabled, DB isn\'t changed');
+    } else {
+      assert.ok(true, 'Check log call, DB isn\'t changed');
+    }
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
+    done();
+  });
+
+  // Call to Ember.Logger.error.
+  Ember.run(() => {
+    Ember.Logger.error(errorMessage);
   });
 });

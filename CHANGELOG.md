@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.3] - 2017-01-31
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix infinite click in mobile mode.
+
 ## [0.8.2] - 2017-01-26
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.8.1.

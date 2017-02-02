@@ -653,7 +653,7 @@ test('deprecate works properly', function(assert) {
   });
 });
 
-test('logService works properly when storeDeprecationMessages', function(assert) {
+test('logService works properly when storeDeprecationMessages disabled', function(assert) {
   let done = assert.async();
   assert.expect(1);
 
@@ -772,6 +772,78 @@ test('assert works properly', function(assert) {
   });
 });
 
+test('logService works properly when storeErrorMessages for assert disabled', function(assert) {
+  let done = assert.async();
+  assert.expect(1);
+
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+     savedLogRecord = this;
+     return Ember.RSVP.resolve(savedLogRecord);
+   };
+
+  // Get log-service instance & enable errors logging.
+  let logService = app.__container__.lookup('service:log');
+  logService.enabled = true;
+  logService.storeErrorMessages = false;
+  let assertMessage = 'The system generated an error';
+
+  logService.on('error', this, (savedLogRecord) => {
+    // Check results asyncronously.
+    assert.notOk(savedLogRecord);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
+    done();
+  });
+
+  // Call to Ember.assert.
+  Ember.run(() => {
+    Ember.assert(assertMessage, false);
+  });
+});
+
+test('logService for assert works properly when it\'s disabled', function(assert) {
+  let done = assert.async();
+  assert.expect(1);
+
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+    savedLogRecord = this;
+    return Ember.RSVP.resolve(savedLogRecord);
+  };
+
+  // Get log-service instance & enable errors logging.
+  let logService = app.__container__.lookup('service:log');
+  logService.enabled = false;
+  logService.storeErrorMessages = true;
+  let assertMessage = 'The system generated an error';
+
+  logService.on('error', this, (savedLogRecord) => {
+    // Check results asyncronously.
+    if (savedLogRecord) {
+      throw new Error('Log is disabled, DB isn\'t changed');
+    } else {
+      assert.ok(true, 'Check log call, DB isn\'t changed');
+    }
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
+    done();
+  });
+
+  // Call to Ember.assert.
+  Ember.run(() => {
+    Ember.assert(assertMessage, false);
+  });
+});
+
 test('throwing exceptions logs properly', function(assert) {
   let done = assert.async();
   assert.expect(9);
@@ -806,6 +878,78 @@ test('throwing exceptions logs properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), errorMessage);
     let formattedMessageContainsErrorMessage = savedLogRecord.get('formattedMessage').indexOf(errorMessage) > -1;
     assert.ok(formattedMessageContainsErrorMessage);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
+    done();
+  });
+
+  // Throwing an exception.
+  Ember.run(() => {
+    throw new Error(errorMessage);
+  });
+});
+
+test('logService works properly when storeErrorMessages for throw disabled', function(assert) {
+  let done = assert.async();
+  assert.expect(1);
+
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+     savedLogRecord = this;
+     return Ember.RSVP.resolve(savedLogRecord);
+   };
+
+  // Get log-service instance & enable errors logging.
+  let logService = app.__container__.lookup('service:log');
+  logService.enabled = true;
+  logService.storeErrorMessages = false;
+  let errorMessage = 'The system thrown an exception';
+
+  logService.on('error', this, (savedLogRecord) => {
+    // Check results asyncronously.
+    assert.notOk(savedLogRecord);
+
+    // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
+    DS.Model.prototype.save = originalSaveMethod;
+    done();
+  });
+
+  // Throwing an exception.
+  Ember.run(() => {
+    throw new Error(errorMessage);
+  });
+});
+
+test('logService for throw works properly when it\'s disabled', function(assert) {
+  let done = assert.async();
+  assert.expect(1);
+
+  // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
+  let originalSaveMethod = DS.Model.prototype.save;
+
+  let savedLogRecord;
+  DS.Model.prototype.save = function() {
+    savedLogRecord = this;
+    return Ember.RSVP.resolve(savedLogRecord);
+  };
+
+  // Get log-service instance & enable errors logging.
+  let logService = app.__container__.lookup('service:log');
+  logService.enabled = false;
+  logService.storeErrorMessages = true;
+  let assertMessage = 'The system generated an error';
+
+  logService.on('error', this, (savedLogRecord) => {
+    // Check results asyncronously.
+    if (savedLogRecord) {
+      throw new Error('Log is disabled, DB isn\'t changed');
+    } else {
+      assert.ok(true, 'Check log call, DB isn\'t changed');
+    }
 
     // Restore save method of i-i-s-caseberry-logging-objects-application-log base model.
     DS.Model.prototype.save = originalSaveMethod;

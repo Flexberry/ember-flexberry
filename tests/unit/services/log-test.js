@@ -228,7 +228,7 @@ test('logService for warn works properly when it\'s disabled', function(assert) 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
   logService.enabled = false;
-  logService.storeErrorMessages = true;
+  logService.storeWarnMessages = true;
   let warnMessage = 'The system generated an warn';
 
   logService.on('warn', this, (savedLogRecord) => {
@@ -346,7 +346,7 @@ test('logService for log works properly when it\'s disabled', function(assert) {
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
   logService.enabled = false;
-  logService.storeErrorMessages = true;
+  logService.storeLogMessages = true;
   let logMessage = 'Logging log message';
 
   logService.on('log', this, (savedLogRecord) => {
@@ -465,7 +465,7 @@ test('logService for info works properly when it\'s disabled', function(assert) 
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
   logService.enabled = false;
-  logService.storeErrorMessages = true;
+  logService.storeInfoMessages = true;
   let infoMessage = 'Logging info message';
 
   logService.on('info', this, (savedLogRecord) => {
@@ -584,7 +584,7 @@ test('logService for debug works properly when it\'s disabled', function(assert)
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
   logService.enabled = false;
-  logService.storeErrorMessages = true;
+  logService.storeDebugMessages = true;
   let debugMessage = 'Logging debug message';
 
   logService.on('debug', this, (savedLogRecord) => {
@@ -703,7 +703,7 @@ test('logService for deprecate works properly when it\'s disabled', function(ass
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
   logService.enabled = false;
-  logService.storeErrorMessages = true;
+  logService.storeDeprecationMessages = true;
   let deprecationMessage = 'The system generated an deprecation';
 
   logService.on('deprecation', this, (savedLogRecord) => {
@@ -1075,7 +1075,7 @@ test('logService for promise works properly when it\'s disabled', function(asser
   // Get log-service instance & enable errors logging.
   let logService = app.__container__.lookup('service:log');
   logService.enabled = false;
-  logService.storeErrorMessages = true;
+  logService.storePromiseErrors = true;
   let promiseErrorMessage = 'Promise error';
 
   logService.on('promise', this, (savedLogRecord) => {

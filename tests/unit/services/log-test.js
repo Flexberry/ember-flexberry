@@ -941,7 +941,7 @@ test('logService for throw works properly when it\'s disabled', function(assert)
   let logService = app.__container__.lookup('service:log');
   logService.enabled = false;
   logService.storeErrorMessages = true;
-  let assertMessage = 'The system generated an error';
+  let errorMessage = 'The system thrown an exception';
 
   logService.on('error', this, (savedLogRecord) => {
     // Check results asyncronously.

@@ -396,6 +396,14 @@ Ember.$.extend(true, translations, {
               'caption': 'Пример работы с настройками',
               'title': ''
             }
+          },
+          'ui-message': {
+            'caption': 'ui-message',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
           }
         },
         'integration-examples': {
@@ -751,6 +759,11 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Пример работы с настройками',
           'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
+        }
+      },
+      'ui-message': {
+        'settings-example': {
+          'caption': 'Ui-message. Пример работы с настройками',
         }
       }
     },

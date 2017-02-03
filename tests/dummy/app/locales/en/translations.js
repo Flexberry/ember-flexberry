@@ -396,6 +396,14 @@ Ember.$.extend(true, translations, {
               'caption': 'Settings example',
               'title': ''
             }
+          },
+          'ui-message': {
+            'caption': 'ui-message',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
           }
         },
         'integration-examples': {
@@ -750,6 +758,11 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Settings example',
           'togglerContent': 'Some expandable/collapsable content'
+        }
+      },
+      'ui-message': {
+        'settings-example': {
+          'caption': 'Ui-message. Settings example',
         }
       }
     },

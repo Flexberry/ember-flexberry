@@ -1,0 +1,24 @@
+<h3 class="ui header">{{t "forms.components-examples.ui-message.settings-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
+    }}
+      {{#ui-message
+        caption=caption
+        visible=true
+        type=type
+        color=color
+        size=size
+        icon=icon
+        message=message
+        closeable=true
+        onShow=(action "onSuccessShow")
+        onHide=(action "onSuccessHide")
+        }}
+      {{/ui-message}}
+    {{/settings-example}}
+  </div>
+</form>

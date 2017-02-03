@@ -112,6 +112,7 @@ Router.map(function() {
 
   // Components acceptance tests forms.
   this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-form-route');
+  this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-cell-component');
   this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-on-separete-route');
   this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-on');
   this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-off');

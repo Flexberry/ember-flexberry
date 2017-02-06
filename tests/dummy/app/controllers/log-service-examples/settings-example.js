@@ -221,14 +221,14 @@ export default ApplicationLogListFormController.extend({
     { componentName: 'my-component',  componentProperties: { ... } }.
   */
   getCellComponent: function(attr, bindingPath, modelClass) {
-    if (bindingPath=='timestamp'){
+    if (bindingPath === 'timestamp') {
       return {
         componentName: 'object-list-view-cell',
         componentProperties: {
           dateFormat: 'DD.MM.YYYY, hh:mm:ss'
         }
-      }
-    };
+      };
+    }
 
     return this._super(...arguments);
   },

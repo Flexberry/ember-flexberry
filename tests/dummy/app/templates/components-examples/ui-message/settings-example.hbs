@@ -1,24 +1,56 @@
 <h3 class="ui header">{{t "forms.components-examples.ui-message.settings-example.caption"}}</h3>
-<form class="ui form flexberry-vertical-form" role="form">
-  <div class="field">
-    {{#settings-example
-      controllerProperties=this
-      componentSettingsMetadata=componentSettingsMetadata
-      componentTemplateText=componentTemplateText
-    }}
+    <div class="field">
       {{#ui-message
-        caption=caption
-        visible=true
-        type=type
-        color=color
-        size=size
-        icon=icon
-        message=message
+        caption='Результат проверки'
+        type='success'
+        message='Операция выполнена успешно'
         closeable=true
-        onShow=(action "onSuccessShow")
-        onHide=(action "onSuccessHide")
-        }}
+      }}
       {{/ui-message}}
-    {{/settings-example}}
+      {{#ui-message
+        caption='Результат проверки'
+        type='positive'
+        message='Операция выполнена успешно'
+      }}
+      {{/ui-message}}
+      {{#ui-message
+        caption='Результат проверки'
+        type='error'
+        message='Операция не выполнена'
+        closeable=true
+      }}
+      {{/ui-message}}
+      {{#ui-message
+        caption='Результат проверки'
+        type='negative'
+        message='Операция не выполнена'
+      }}
+      {{/ui-message}}
+      {{#ui-message
+        caption='Результат проверки'
+        type='warning'
+        message='Частично выполнено'
+        closeable=true
+        title='Ой!'
+      }}
+      {{/ui-message}}
+      {{#ui-message
+        caption='Результат проверки'
+        type='info'
+        attached=true
+        size='small'
+        icon='alarm icon'
+        message='Обратите внимание!'
+        closeable=true
+      }}
+      {{/ui-message}}
+      {{#ui-message
+        caption='Результат проверки'
+        type='error'
+        color='violet'
+        icon='paw icon'
+        compact=true
+        message='Операция не выполнена'
+      }}
+      {{/ui-message}}
   </div>
-</form>

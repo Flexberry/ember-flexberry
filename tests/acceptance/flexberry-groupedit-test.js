@@ -74,7 +74,8 @@ test('flexberry-grupedit editOnSeparateRoute test', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-on-separete-route');
 
-    wait().then(() => {
+     let done = assert.async();
+      setTimeout(function() {
 
       let $field = Ember.$('.field');
       let $firstFild = $($field[0]);
@@ -82,7 +83,8 @@ test('flexberry-grupedit editOnSeparateRoute test', function(assert) {
 
       // Сheck availability of component in the field.
       assert.strictEqual($firstFildComponent.length === 1, true, 'Component editOnSeparateRoute currently work');
-    });
+      done();
+    }, 1000);
   });
 });
 

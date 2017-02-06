@@ -32,11 +32,9 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
 
         if(!editFormControllerCopy)
         {
-
           editFormControllerCopy = EditFormController.create(App.__container__.ownerInjection());
 
           editFormControllerCellComponent = editFormControllerCopy.getCellComponent;
-
         }
 
         this.set('currentController', editFormControllerCopy);
@@ -46,6 +44,154 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
   afterEach: function() {
     Ember.run(App, 'destroy');
   }
+});
+
+/*test('ember-grupedit cellComponent test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+    let tempCellComponent = {
+      componentName: 'flexberry-checkbox',
+      componentProperties: null
+    };
+
+    EditFormController.reopen({
+      getCellComponent: undefined
+    });
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('cellComponent',  tempCellComponent);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          cellComponent=cellComponent
+          searchForContentChange=searchForContentChange
+        }}`);
+
+    // Add record.
+    let $addButton = $(Ember.$('.ui.button')[0]);
+
+    Ember.run(() => {
+      $addButton.click();
+    });
+
+    // Check count cell with checkbox.
+    let $textarea = Ember.$('.flexberry-checkbox');
+    assert.strictEqual($textarea.length === 7, true, 'All cell have flexberry-checkbox component');
+
+  });
+});
+
+test('ember-grupedit cellComponent test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+    let tempCellComponent = {
+      componentName: 'flexberry-checkbox',
+      componentProperties: null
+    };
+
+    EditFormController.reopen({
+      getCellComponent: undefined
+    });
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('cellComponent',  tempCellComponent);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          cellComponent=cellComponent
+          searchForContentChange=searchForContentChange
+        }}`);
+
+    // Add record.
+    let $addButton = $(Ember.$('.ui.button')[0]);
+
+    Ember.run(() => {
+      $addButton.click();
+    });
+
+    // Check count cell with checkbox.
+    let $textarea = Ember.$('.flexberry-checkbox');
+    assert.strictEqual($textarea.length === 7, true, 'All cell have flexberry-checkbox component');
+
+    EditFormController.reopen({
+      getCellComponent: editFormControllerCopy.getCellComponent
+    });
+  });
+});*/
+
+test('ember-grupedit element by default test', function(assert) {
+  let store = App.__container__.lookup('service:store');
+
+  Ember.run(() => {
+    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
+    let testComponentName = 'my-test-component-to-count-rerender';
+
+    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
+    this.set('model', model);
+    this.set('componentName', testComponentName);
+    this.set('searchForContentChange', true);
+    this.render(
+      hbs`
+        {{flexberry-groupedit
+          content=model.details
+          componentName=componentName
+          modelProjection=proj.attributes.details
+          searchForContentChange=searchForContentChange
+        }}`);
+
+    // Add record.
+    let $component = this.$().children();
+    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
+    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
+    let $componentButtonAdd = $($componentButtons[0]);
+
+    Ember.run(() => {
+      $componentButtonAdd.click();
+    });
+
+    wait().then(() => {
+      let $componentObjectListViewFirstCellAsterisk = Ember.$('.asterisk', $component);
+
+      // Check object-list-view <i>.
+      assert.strictEqual($componentObjectListViewFirstCellAsterisk.length === 1, true, 'Component has inner object-list-view-operations blocks');
+      assert.strictEqual($componentObjectListViewFirstCellAsterisk.prop('tagName'), 'I', 'Component\'s inner component block is a <i>');
+      assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('asterisk'),
+        true, 'Component\'s inner object-list-view has \'asterisk\' css-class');
+      assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('small'), true, 'Component\'s inner object-list-view has \'small\' css-class');
+      assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('red'), true, 'Component\'s inner oobject-list-view has \'red\' css-class');
+      assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('icon'), true, 'Component\'s inner object-list-view has \'icon\' css-class');
+
+      let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column', $component);
+      let $flexberryCheckbox = Ember.$('.flexberry-checkbox', $componentObjectListViewFirstCell);
+
+      assert.ok($flexberryCheckbox, 'Component has flexberry-checkbox in first cell blocks');
+
+      let $minusButton = Ember.$('.minus', $componentObjectListViewFirstCell);
+
+      assert.strictEqual($minusButton.length === 0, true, 'Component hasn\'t delete button in first cell');
+
+      let $editMenuButton = Ember.$('.basic.right', $component);
+
+      assert.strictEqual($editMenuButton.length === 0, true, 'Component hasn\'t edit menu in last cell');
+
+    });
+  });
 });
 
 test('it renders', function(assert) {
@@ -346,119 +492,6 @@ test('it properly rerenders by default', function(assert) {
     assert.strictEqual($componentObjectListViewTd.prop('tagName'), 'TD', 'Component\'s inner component block is a <th>');
     assert.strictEqual($componentObjectListViewTd.text().trim(), 'There is no data', 'Component\'s inner component block is a <th>');
 
-  });
-});
-
-test('change inserted component into edit-form controller test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
-
-    editFormControllerCopy.getCellComponent = function(attr, bindingPath) {
-        var cellComponent = this._super(...arguments);
-
-        if (attr.caption === 'Text') {
-          cellComponent.componentName = 'flexberry-textarea';
-        }
-
-        return cellComponent;
-      }
-
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
-        }}`);
-
-    // Add record.
-    let detailModel = this.get('model.details');
-    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
-
-    wait().then(() => {
-
-      let $component = this.$().children();
-      let $textarea = Ember.$('.ember-text-area', $component);
-      assert.strictEqual($textarea.length === 1, true, 'flexberry-textarea is embedded properly into object-list-view, after change.');
-
-      //editFormControllerCopy.getCellComponent = editFormControllerCellComponent;
-
-      /*EditFormController.reopen({
-        getCellComponent: function(attr, bindingPath) {
-          let per = this._super(...arguments);
-          return per;
-        }
-      });*/
-    });
-  });
-});
-
-test('ember-grupedit element by default test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
-        }}`);
-
-    // Add record.
-    let $component = this.$().children();
-    let $componentGroupEditToolbar = $component.children('.groupedit-toolbar');
-    let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-    let $componentButtonAdd = $($componentButtons[0]);
-
-    Ember.run(() => {
-      $componentButtonAdd.click();
-    });
-
-    wait().then(() => {
-      let $componentObjectListViewFirstCellAsterisk = Ember.$('.asterisk', $component);
-
-      // Check object-list-view <i>.
-      assert.strictEqual($componentObjectListViewFirstCellAsterisk.length === 1, true, 'Component has inner object-list-view-operations blocks');
-      assert.strictEqual($componentObjectListViewFirstCellAsterisk.prop('tagName'), 'I', 'Component\'s inner component block is a <i>');
-      assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('asterisk'),
-        true, 'Component\'s inner object-list-view has \'asterisk\' css-class');
-      assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('small'), true, 'Component\'s inner object-list-view has \'small\' css-class');
-      assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('red'), true, 'Component\'s inner oobject-list-view has \'red\' css-class');
-      assert.strictEqual($componentObjectListViewFirstCellAsterisk.hasClass('icon'), true, 'Component\'s inner object-list-view has \'icon\' css-class');
-
-      let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column', $component);
-      let $flexberryCheckbox = Ember.$('.flexberry-checkbox', $componentObjectListViewFirstCell);
-
-      assert.ok($flexberryCheckbox, 'Component has flexberry-checkbox in first cell blocks');
-
-      let $minusButton = Ember.$('.minus', $componentObjectListViewFirstCell);
-
-      assert.strictEqual($minusButton.length === 0, true, 'Component hasn\'t delete button in first cell');
-
-      let $editMenuButton = Ember.$('.basic.right', $component);
-
-      assert.strictEqual($editMenuButton.length === 0, true, 'Component hasn\'t edit menu in last cell');
-
-    });
   });
 });
 
@@ -1230,49 +1263,3 @@ test('ember-grupedit main model projection test', function(assert) {
     assert.strictEqual($componentOlvFirstHead.text().trim() === 'Temp text for test', true, 'Header has text \'Temp text for test\'');
   });
 });
-
-/*test('ember-grupedit cellComponent test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-    let tempCellComponent = {
-      componentName: 'flexberry-checkbox',
-      componentProperties: null
-    };
-
-    EditFormController.reopen({
-      getCellComponent: undefined
-    });
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('cellComponent',  tempCellComponent);
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          cellComponent=cellComponent
-          searchForContentChange=searchForContentChange
-        }}`);
-
-    // Add record.
-    let $addButton = $(Ember.$('.ui.button')[0]);
-
-    Ember.run(() => {
-      $addButton.click();
-    });
-
-    // Check count cell with checkbox.
-    let $textarea = Ember.$('.flexberry-checkbox');
-    assert.strictEqual($textarea.length === 7, true, 'All cell have flexberry-checkbox component');
-
-    EditFormController.reopen({
-      getCellComponent: editFormControllerCopy.getCellComponent()
-    });
-  });
-});*/

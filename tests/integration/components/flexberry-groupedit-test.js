@@ -34,58 +34,69 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
         {
           editFormControllerCopy = EditFormController.create(App.__container__.ownerInjection());
 
-          editFormControllerCellComponent = editFormControllerCopy.getCellComponent;
+          editFormControllerCellComponent = editFormControllerCopy.getCellComponent; // undefined
         }
 
         this.set('currentController', editFormControllerCopy);
       }
     });
   },
+
   afterEach: function() {
     Ember.run(App, 'destroy');
   }
 });
 
-/*test('ember-grupedit cellComponent test', function(assert) {
+/*test('change inserted component into edit-form controller test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
+
     let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
     let testComponentName = 'my-test-component-to-count-rerender';
-    let tempCellComponent = {
-      componentName: 'flexberry-checkbox',
-      componentProperties: null
-    };
-
-    EditFormController.reopen({
-      getCellComponent: undefined
-    });
 
     this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.set('componentName', testComponentName);
-    this.set('cellComponent',  tempCellComponent);
+    this.set('searchForContentChange', true);
+
+    EditFormController.reopen({
+      getCellComponent: function(attr, bindingPath, modelClass) {
+        var cellComponent = this._super(...arguments);
+
+        if (attr.caption === 'Text') {
+          cellComponent.componentName = 'flexberry-textarea';
+        }
+
+        return cellComponent;
+      }
+    });
+
     this.render(
       hbs`
         {{flexberry-groupedit
           content=model.details
           componentName=componentName
           modelProjection=proj.attributes.details
-          cellComponent=cellComponent
           searchForContentChange=searchForContentChange
         }}`);
 
     // Add record.
-    let $addButton = $(Ember.$('.ui.button')[0]);
+    let detailModel = this.get('model.details');
+    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
 
-    Ember.run(() => {
-      $addButton.click();
+    wait().then(() => {
+
+      let $component = this.$().children();
+      let $textarea = Ember.$('.ember-text-area', $component);
+      assert.strictEqual($textarea.length === 1, true, 'flexberry-textarea is embedded properly into object-list-view, after change.');
+
+      EditFormController.reopen({
+        getCellComponent: function(attr, bindingPath, modelClass) {
+          this._super(...arguments);
+        }
+      });
     });
-
-    // Check count cell with checkbox.
-    let $textarea = Ember.$('.flexberry-checkbox');
-    assert.strictEqual($textarea.length === 7, true, 'All cell have flexberry-checkbox component');
-
   });
 });
 
@@ -130,7 +141,9 @@ test('ember-grupedit cellComponent test', function(assert) {
     assert.strictEqual($textarea.length === 7, true, 'All cell have flexberry-checkbox component');
 
     EditFormController.reopen({
-      getCellComponent: editFormControllerCopy.getCellComponent
+      getCellComponent: function(attr, bindingPath, modelClass) {
+        this._super(...arguments);
+      }
     });
   });
 });*/
@@ -589,8 +602,8 @@ test('ember-grupedit readonly test', function(assert) {
         $disabledItem = Ember.$('.disabled', $objectlistviewcell6);
         assert.strictEqual($disabledItem.length === 0, false, 'Flexberry-lookup is readonly into object-list-view.');
 
-          done();
-      }, 500);
+        done();
+      }, 1000);
     });
   });
 });

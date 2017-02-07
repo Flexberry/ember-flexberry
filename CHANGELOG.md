@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Removed
+* `ui-message` component: attribute `title`.
 
 ## [0.8.3] - 2017-01-31
 ### Fixed

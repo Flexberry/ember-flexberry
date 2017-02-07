@@ -1,41 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  actions: {
-    /**
-      Handler for success ui-message component 'onShow' action.
-
-      @method actions.onSuccessShow
-     */
-    onSuccessShow() {
-    },
-
-    /**
-      Handler for success ui-message component 'onHide' action.
-
-      @method actions.onSuccessHide
-     */
-    onSuccessHide() {
-      this.set('showFormSuccess', undefined);
-    },
-
-    /**
-      Handler for error ui-message component 'onShow' action.
-
-      @method actions.onErrorShow
-     */
-    onErrorShow() {
-    },
-
-    /**
-      Handler for error ui-message component 'onHide' action.
-
-      @method actions.onErrorHide
-     */
-    onErrorHide() {
-      this.set('showFormError', undefined);
-    }
-  },
 
   module: 'message',
 

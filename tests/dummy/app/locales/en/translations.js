@@ -763,6 +763,11 @@ Ember.$.extend(true, translations, {
       'ui-message': {
         'settings-example': {
           'caption': 'Ui-message. Settings example',
+          'captionMessage': 'Result of checking',
+          'messageError': 'Operation is failed',
+          'messageSuccess': 'Operation is success',
+          'messageWarning': 'Partially implemented',
+          'messageInfo': 'Note!'
         }
       }
     },

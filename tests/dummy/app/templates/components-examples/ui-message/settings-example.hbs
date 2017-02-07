@@ -1,56 +1,57 @@
 <h3 class="ui header">{{t "forms.components-examples.ui-message.settings-example.caption"}}</h3>
-    <div class="field">
-      {{#ui-message
-        caption='Результат проверки'
-        type='success'
-        message='Операция выполнена успешно'
-        closeable=true
-      }}
-      {{/ui-message}}
-      {{#ui-message
-        caption='Результат проверки'
-        type='positive'
-        message='Операция выполнена успешно'
-      }}
-      {{/ui-message}}
-      {{#ui-message
-        caption='Результат проверки'
-        type='error'
-        message='Операция не выполнена'
-        closeable=true
-      }}
-      {{/ui-message}}
-      {{#ui-message
-        caption='Результат проверки'
-        type='negative'
-        message='Операция не выполнена'
-      }}
-      {{/ui-message}}
-      {{#ui-message
-        caption='Результат проверки'
-        type='warning'
-        message='Частично выполнено'
-        closeable=true
-        title='Ой!'
-      }}
-      {{/ui-message}}
-      {{#ui-message
-        caption='Результат проверки'
-        type='info'
-        attached=true
-        size='small'
-        icon='alarm icon'
-        message='Обратите внимание!'
-        closeable=true
-      }}
-      {{/ui-message}}
-      {{#ui-message
-        caption='Результат проверки'
-        type='error'
-        color='violet'
-        icon='paw icon'
-        compact=true
-        message='Операция не выполнена'
-      }}
-      {{/ui-message}}
-  </div>
+<div class="content">
+  {{#ui-message
+    caption=(t "forms.components-examples.ui-message.settings-example.captionMessage")
+    type='success'
+    message=(t "forms.components-examples.ui-message.settings-example.messageSuccess")
+    closeable=true
+  }}
+  {{/ui-message}}
+  {{#ui-message
+    caption=(t "forms.components-examples.ui-message.settings-example.captionMessage")
+    type='positive'
+    message=(t "forms.components-examples.ui-message.settings-example.messageSuccess")
+    icon='paw icon'
+  }}
+  {{/ui-message}}
+  {{#ui-message
+    caption=(t "forms.components-examples.ui-message.settings-example.captionMessage")
+    type='error'
+    message=(t "forms.components-examples.ui-message.settings-example.messageError")
+    closeable=true
+    floating=true
+  }}
+  {{/ui-message}}
+  {{#ui-message
+    caption=(t "forms.components-examples.ui-message.settings-example.captionMessage")
+    type='negative'
+    message=(t "forms.components-examples.ui-message.settings-example.messageError")
+    attached=true
+  }}
+  {{/ui-message}}
+  {{#ui-message
+    caption=(t "forms.components-examples.ui-message.settings-example.captionMessage")
+    type='warning'
+    message=(t "forms.components-examples.ui-message.settings-example.messageWarning")
+    closeable=true
+    attached=true
+  }}
+  {{/ui-message}}
+  {{#ui-message
+    caption=(t "forms.components-examples.ui-message.settings-example.captionMessage")
+    type='info'
+    size='small'
+    icon='alarm icon'
+    message=(t "forms.components-examples.ui-message.settings-example.messageInfo")
+    closeable=true
+  }}
+  {{/ui-message}}
+  {{#ui-message
+    caption=(t "forms.components-examples.ui-message.settings-example.captionMessage")
+    type='info'
+    color='violet'
+    message=(t "forms.components-examples.ui-message.settings-example.messageError")
+    compact=true
+  }}
+  {{/ui-message}}
+</div>

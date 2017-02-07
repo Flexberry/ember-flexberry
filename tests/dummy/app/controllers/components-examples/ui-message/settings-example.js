@@ -124,16 +124,6 @@ export default Ember.Controller.extend({
   /**
     Message title.
 
-    @property title
-    @type String
-    @default null
-    @deprecated Use `caption`.
-  */
-  title: null,
-
-  /**
-    Message title.
-
     @property caption
     @type String
     @default null

@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-groupedit` component:
     * Fix check `hasMany` changes on route leave.
+* `flexberry-lookup` component:
+    * Fix `placeholder` in dropdown mode.
 
 ## [0.8.3] - 2017-01-31
 ### Fixed

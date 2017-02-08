@@ -884,7 +884,7 @@ export default FlexberryBaseComponent.extend({
             newRelationValue: newValue
           });
       }
-    }).dropdown('set text', _this.get('displayValue'));
+    });
   },
 
   /**

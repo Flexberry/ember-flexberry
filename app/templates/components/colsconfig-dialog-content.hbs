@@ -37,7 +37,7 @@
               </div>
             </td
             ><td class="{{if colDesc.hide 'disabled' ''}}">
-            <div class="ui input {{if (or colDesc.hide (not saveColWidthState)) 'disabled' ''}}">
+            <div class="ui input {{if (or colDesc.hide (or exportParams.isExportExcel (not saveColWidthState))) 'disabled' ''}}">
             <input id="{{colDesc.columnWidthId}}" size='2' class="columnWidth" value='{{colDesc.columnWidth}}' type='input' {{action "widthChanged"  on="focusOut"}}
                   >
               </div>
@@ -46,7 +46,7 @@
 {{/each}}
         </tbody
         ><tfoot class="full-width"
-          ><tr
+          ><tr class="{{if exportParams.isExportExcel 'hidden' ''}}"
           ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.col-width-on"}}</th
             ><th>
               {{flexberry-checkbox
@@ -55,7 +55,7 @@
               }}
             </th
           ></tr
-          ><tr
+          ><tr class="{{if exportParams.isExportExcel 'hidden' ''}}"
           ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.per-page"}}</th
             ><th>
               <div class="ui input">
@@ -74,7 +74,7 @@
                   {{t "components.colsconfig-dialog-content.save"}}
                 </div>
               </div>
-                <div id="columnConfigurtionButtonUse" class="ui right floated button" {{action 'apply'}}>{{t "components.colsconfig-dialog-content.use"}}</div>
+                <div id="columnConfigurtionButtonUse" class="ui right floated button" {{action 'apply'}}>{{if exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</div>
             </th
           ></tr
         ></tfoot
@@ -86,4 +86,5 @@
         caption=caption
         message=message
       }}
+      <a class="hidden download-anchor"></a>
 </div>

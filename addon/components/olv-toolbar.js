@@ -83,6 +83,15 @@ export default FlexberryBaseComponent.extend({
   colsConfigButton: true,
 
   /**
+    Flag indicates whether to show exportExcelButton button at toolbar.
+
+    @property exportExcelButton
+    @type Boolean
+    @default false
+  */
+  exportExcelButton: false,
+
+  /**
     Flag to use filter button at toolbar.
 
     @property filterButton
@@ -387,6 +396,17 @@ export default FlexberryBaseComponent.extend({
     showConfigDialog(settingName) {
       Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
       this.get('modelController').send('showConfigDialog', this.componentName, settingName);
+    },
+
+    /**
+      Action to show export dialog.
+
+      @method actions.showExportDialog
+      @public
+    */
+    showExportDialog(settingName) {
+      Ember.assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('modelController').send('showConfigDialog', this.componentName, settingName, true);
     },
 
     /**

@@ -23,7 +23,7 @@ export default Ember.Mixin.create({
   currentColumnsWidths: undefined,
 
   actions: {
-    showConfigDialog: function(componentName, settingName) {
+    showConfigDialog: function(componentName, settingName, isExportExcel = false) {
       let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
       let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
@@ -124,6 +124,14 @@ export default Ember.Mixin.create({
         colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 });
       }
 
+      let exportParams = {};
+      if (isExportExcel) {
+        exportParams.queryParams = this.get('queryParams');
+        exportParams.isExportExcel = true;
+      }
+
+      let store = this.get('store');
+
       let controller = this.get('colsconfigController');
 
       let loadingParams = {
@@ -138,7 +146,7 @@ export default Ember.Mixin.create({
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
                 { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settingName, perPageValue: perPageValue,
-                saveColWidthState: saveColWidthState } }, loadingParams);
+                saveColWidthState: saveColWidthState, exportParams: exportParams, store: store } }, loadingParams);
     }
 
   },

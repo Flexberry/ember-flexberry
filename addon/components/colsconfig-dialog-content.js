@@ -74,6 +74,24 @@ export default FlexberryBaseComponent.extend({
   */
   perPageValue: undefined,
 
+  /**
+    Params for export excel.
+
+    @property exportParams
+    @type {Object}
+    @default {}
+  */
+  exportParams: {},
+
+  /**
+    Current store.
+
+    @property store
+    @type {Object}
+    @default undefined
+  */
+  store: undefined,
+
   init: function() {
     this._super(...arguments);
     this.modelForDOM = [];
@@ -85,6 +103,8 @@ export default FlexberryBaseComponent.extend({
     this.componentName = this.model.componentName;
     this.perPageValue = this.model.perPageValue;
     this.saveColWidthState = this.model.saveColWidthState;
+    this.exportParams = this.model.exportParams;
+    this.set('store', this.model.store);
     let colDescs = this.model.colDescs;
     for (let i = 0; i < colDescs.length; i++) {
       let colDesc = colDescs[i];
@@ -311,22 +331,34 @@ export default FlexberryBaseComponent.extend({
      @method actions.apply
     */
     apply: function() {
-      let colsConfig = this._getSettings();
-      let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
-      if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
-        return;
-      }
-
-      //Save colsConfig in userSettings as DEFAULT
-      let router = getOwner(this).lookup('router:main');
-      let savePromise = this._getSavePromise(undefined, colsConfig);
-      savePromise.then(
-        record => {
-          let sort = serializeSortingParam(colsConfig.sorting);
-          router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+      if (!this.exportParams.queryParams) {
+        let colsConfig = this._getSettings();
+        let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
+        if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
+          return;
         }
-      );
-      this.sendAction('close', colsConfig); // close modal window
+
+        //Save colsConfig in userSettings as DEFAULT
+        let router = getOwner(this).lookup('router:main');
+        let savePromise = this._getSavePromise(undefined, colsConfig);
+        savePromise.then(
+          record => {
+            let sort = serializeSortingParam(colsConfig.sorting);
+            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+          }
+        );
+        this.sendAction('close', colsConfig); // close modal window
+      } else {
+        let store = this.get('store');
+        let adapter = store.adapterFor(this.exportParams.queryParams.modelName);
+        let url = adapter.buildExportExcelURL(store, this._getCurrentQuery());
+        let anchor = Ember.$('.download-anchor');
+        if (!Ember.isNone(anchor)) {
+          anchor.prop('href', url);
+          anchor.prop('download', 'list.xlsx');
+          anchor.get(0).click();
+        }
+      }
     },
     /**
       Save named settings specified in the interface as named values
@@ -392,6 +424,32 @@ export default FlexberryBaseComponent.extend({
     perPageChanged: function() {
       this._changed();
     },
+  },
+
+  /**
+    Gets current query for export excel
+
+    @method _getCurrentQuery
+  */
+  _getCurrentQuery: function() {
+    let query = this.exportParams.queryParams;
+    let settings = this._getSettings();
+    query.skip = undefined;
+    query.top = undefined;
+    query.projectionName = undefined;
+    query.order._clause = [];
+    query.select = ['id'];
+    settings.colsOrder.map(col => {
+      if (!col.hide) {
+        query.select.push(col.propName);
+      }
+    });
+
+    settings.sorting.map(sort => {
+      query.order._clause.push({ direction: sort.direction, name: sort.propName });
+    });
+
+    return query;
   },
 
   _getSavePromise: function(settingName, colsConfig) {

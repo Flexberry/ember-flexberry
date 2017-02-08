@@ -152,6 +152,7 @@ export default {
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',
+      'export': 'Unload',
       'use-without-save': 'Use this settings without saving in setting ',
       'save': 'Save',
       'have-errors': 'When you save a configuration errors occurred: ',

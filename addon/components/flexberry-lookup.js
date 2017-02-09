@@ -884,7 +884,7 @@ export default FlexberryBaseComponent.extend({
             newRelationValue: newValue
           });
       }
-    }).dropdown('set text', _this.get('displayValue'));
+    });
   },
 
   /**
@@ -898,10 +898,7 @@ export default FlexberryBaseComponent.extend({
     let selectedModel = this.get('value');
     let displayAttributeName = this.get('displayAttributeName');
     if (!selectedModel) {
-      this.set('placeholder', t('components.flexberry-lookup.placeholder'));
       return '';
-    } else {
-      this.set('placeholder', '');
     }
 
     if (!displayAttributeName) {

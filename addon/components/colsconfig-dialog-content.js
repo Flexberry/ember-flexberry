@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import OrderByClause from 'ember-flexberry-data/query/order-by-clause';
 const { getOwner } = Ember;
 const _idPrefix = 'ColDesc';
 
@@ -434,19 +435,20 @@ export default FlexberryBaseComponent.extend({
   _getCurrentQuery: function() {
     let query = this.exportParams.queryParams;
     let settings = this._getSettings();
+    let sortString = '';
+    settings.sorting.map(sort => {
+      sortString += `${sort.propName} ${sort.direction},`;
+    });
+    sortString = sortString.slice(0, -1);
+    query.order = Ember.isBlank(sortString) ? undefined : new OrderByClause(sortString);
     query.skip = undefined;
     query.top = undefined;
     query.projectionName = undefined;
-    query.order._clause = [];
     query.select = ['id'];
     settings.colsOrder.map(col => {
       if (!col.hide) {
         query.select.push(col.propName);
       }
-    });
-
-    settings.sorting.map(sort => {
-      query.order._clause.push({ direction: sort.direction, name: sort.propName });
     });
 
     return query;

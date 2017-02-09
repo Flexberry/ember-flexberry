@@ -23,7 +23,7 @@ export default Ember.Mixin.create({
   currentColumnsWidths: undefined,
 
   actions: {
-    showConfigDialog: function(componentName, settingName, isExportExcel = false) {
+    showConfigDialog: function(componentName, settingName, isExportExcel = false, immediateExport = false) {
       let colsOrder = this.get('_userSettingsService').getCurrentColsOrder(componentName, settingName);
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
       let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
@@ -128,6 +128,7 @@ export default Ember.Mixin.create({
       if (isExportExcel) {
         exportParams.queryParams = this.get('queryParams');
         exportParams.isExportExcel = true;
+        exportParams.immediateExport = immediateExport;
       }
 
       let store = this.get('store');

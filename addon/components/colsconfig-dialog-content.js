@@ -136,6 +136,10 @@ export default FlexberryBaseComponent.extend({
     firstButtonUp.addClass('disabled'); // Disable first button up
     let lastButtondown = Ember.$('#ColDescRowDown_' + (this.modelForDOM.length - 1));
     lastButtondown.addClass('disabled'); // Disable last button down
+    if (this.exportParams.queryParams && this.exportParams.isExportExcel && this.exportParams.immediateExport) {
+      this.exportParams.immediateExport = false;
+      this.actions.apply.call(this);
+    }
   },
 
   actions: {

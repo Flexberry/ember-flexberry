@@ -241,6 +241,49 @@ export default FlexberryBaseComponent.extend({
   ),
 
   /**
+    @property exportExcelItems
+    @readOnly
+  */
+  exportExcelItems:  Ember.computed(function() {
+      let i18n = this.get('i18n');
+      let menus = [
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.use-setting-title',
+          items: []
+        },
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.edit-setting-title',
+          items: []
+        },
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.remove-setting-title',
+          items: []
+        }
+      ];
+      let rootItem = {
+        icon: 'dropdown icon',
+        iconAlignment: 'right',
+        title: '',
+        items: [],
+        localeKey: ''
+      };
+      let createSettitingItem = {
+        icon: 'file excel outline icon',
+        iconAlignment: 'left',
+        title: i18n.t('components.olv-toolbar.create-setting-title'),
+        localeKey: 'components.olv-toolbar.create-setting-title'
+      };
+      rootItem.items[rootItem.items.length] = createSettitingItem;
+      rootItem.items.push(...menus);
+
+      return [rootItem];
+    }
+  ),
+
+  /**
     Flag shows enable-state of delete button.
     If there are selected rows button is enabled. Otherwise - not.
 
@@ -404,9 +447,9 @@ export default FlexberryBaseComponent.extend({
       @method actions.showExportDialog
       @public
     */
-    showExportDialog(settingName) {
+    showExportDialog(settingName, immediateExport) {
       Ember.assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
-      this.get('modelController').send('showConfigDialog', this.componentName, settingName, true);
+      this.get('modelController').send('showConfigDialog', this.componentName, settingName, true, immediateExport);
     },
 
     /**
@@ -470,6 +513,46 @@ export default FlexberryBaseComponent.extend({
           let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
           let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
           this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
+          break;
+      }
+    },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onExportMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onExportMenuItemClick(e) {
+      let iTags = Ember.$(e.currentTarget).find('i');
+      let namedSettingSpans = Ember.$(e.currentTarget).find('span');
+      if (iTags.length <= 0 || namedSettingSpans.length <= 0) {
+        return;
+      }
+
+      this._router = getOwner(this).lookup('router:main');
+      let className = iTags.get(0).className;
+      let namedSetting = namedSettingSpans.get(0).innerText;
+      let componentName  =  this.componentName;
+      let userSettingsService = this.get('userSettingsService');
+
+      switch (className) {
+        case 'file excel outline icon':
+          this.send('showExportDialog');
+          break;
+        case 'checkmark box icon':
+          this.send('showExportDialog', namedSetting, true);
+          break;
+        case 'setting icon':
+          this.send('showExportDialog', namedSetting);
+          break;
+        case 'remove icon':
+          userSettingsService.deleteUserSetting(componentName, namedSetting)
+          .then(result => {
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
+            alert('Настройка ' + namedSetting + ' удалена');
+          });
           break;
       }
     },
@@ -551,6 +634,7 @@ export default FlexberryBaseComponent.extend({
     let menus = this.get('menus');
     for (let i = 0; i < menus.length; i++) {
       Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', []);
+      Ember.set(this.get('exportExcelItems')[0].items[i + 1], 'items', []);
     }
   },
 
@@ -558,7 +642,7 @@ export default FlexberryBaseComponent.extend({
     let menus = this.get('menus');
     for (let i = 0; i < menus.length; i++) {
       let icon = menus[i].icon + ' icon';
-      let subItems = this.get('colsSettingsItems')[0].items[i + 1].items;
+      let subItems = this.get('exportExcelItems')[0].items[i + 1].items;
       let newSubItems = [];
       let exist = false;
       for (let j = 0; j < subItems.length; j++) {
@@ -573,6 +657,7 @@ export default FlexberryBaseComponent.extend({
       }
 
       Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
+      Ember.set(this.get('exportExcelItems')[0].items[i + 1], 'items', newSubItems);
     }
 
     this._sortNamedSetting();
@@ -585,6 +670,7 @@ export default FlexberryBaseComponent.extend({
   _sortNamedSetting() {
     for (let i = 0; i < this.menus.length; i++) {
       this.get('colsSettingsItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
+      this.get('exportExcelItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
     }
   }
 });

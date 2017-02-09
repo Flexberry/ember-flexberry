@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.8.5] - 2017-02-09
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.3.
+
 ### Fixed
 * `flexberry-lookup` component:
     * Fix `placeholder` in dropdown mode.

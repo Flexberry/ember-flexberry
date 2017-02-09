@@ -9,8 +9,7 @@ import EditFormController from 'ember-flexberry/controllers/edit-form';
 import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-component';
 
 let App;
-let editFormControllerCopy;
-let editFormControllerCellComponent;
+let editFormController;
 
 moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry groupedit', {
   integration: true,
@@ -26,28 +25,20 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
       isUserSettingsServiceEnabled: false
     });
 
-    FlexberryBaseComponent.reopen({
-      init() {
-        this._super(...arguments);
-
-        if(!editFormControllerCopy)
-        {
-          editFormControllerCopy = EditFormController.create(App.__container__.ownerInjection());
-
-          editFormControllerCellComponent = editFormControllerCopy.getCellComponent; // undefined
-        }
-
-        this.set('currentController', editFormControllerCopy);
-      }
-    });
+    // Override base component's reference to current controller.
+    editFormController = EditFormController.create(App.__container__.ownerInjection());
+    FlexberryBaseComponent.prototype.currentController = editFormController;
   },
 
   afterEach: function() {
+    // Restore base component's reference to current controller to its initial state.
+    FlexberryBaseComponent.prototype.currentController = null;
+
     Ember.run(App, 'destroy');
   }
 });
 
-/*test('change inserted component into edit-form controller test', function(assert) {
+test('change inserted component into edit-form controller test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -60,42 +51,35 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
     this.set('componentName', testComponentName);
     this.set('searchForContentChange', true);
 
-    EditFormController.reopen({
-      getCellComponent: function(attr, bindingPath, modelClass) {
-        var cellComponent = this._super(...arguments);
+    // Override getCellComponent method in current controller's instance.
+    editFormController.set('getCellComponent', function(attr, bindingPath, modelClass) {
+      // Instead of call to this._super(...arguments);
+      let superClassGetCellComponent = EditFormController.prototype.getCellComponent;
+      let cellComponent = superClassGetCellComponent.apply(this, arguments);
 
-        if (attr.caption === 'Text') {
-          cellComponent.componentName = 'flexberry-textarea';
-        }
-
-        return cellComponent;
+      if (attr.caption === 'Text') {
+        cellComponent.componentName = 'flexberry-textarea';
       }
+
+      return cellComponent;
     });
 
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
-        }}`);
+    this.render(hbs`
+      {{flexberry-groupedit
+        content=model.details
+        componentName=componentName
+        modelProjection=proj.attributes.details
+        searchForContentChange=searchForContentChange
+      }}`);
 
     // Add record.
     let detailModel = this.get('model.details');
     detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
 
     wait().then(() => {
-
       let $component = this.$().children();
       let $textarea = Ember.$('.ember-text-area', $component);
       assert.strictEqual($textarea.length === 1, true, 'flexberry-textarea is embedded properly into object-list-view, after change.');
-
-      EditFormController.reopen({
-        getCellComponent: function(attr, bindingPath, modelClass) {
-          this._super(...arguments);
-        }
-      });
     });
   });
 });
@@ -111,9 +95,8 @@ test('ember-grupedit cellComponent test', function(assert) {
       componentProperties: null
     };
 
-    EditFormController.reopen({
-      getCellComponent: undefined
-    });
+    // Remove getCellComponent method from current controller's instance to force groupedit use componennt defined in its cellComponent property.
+    editFormController.set('getCellComponent', null);
 
     this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
@@ -139,16 +122,10 @@ test('ember-grupedit cellComponent test', function(assert) {
     // Check count cell with checkbox.
     let $textarea = Ember.$('.flexberry-checkbox');
     assert.strictEqual($textarea.length === 7, true, 'All cell have flexberry-checkbox component');
-
-    EditFormController.reopen({
-      getCellComponent: function(attr, bindingPath, modelClass) {
-        this._super(...arguments);
-      }
-    });
   });
-});*/
+});
 
-test('ember-grupedit element by default test', function(assert) {
+/*test('ember-grupedit element by default test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -1275,4 +1252,4 @@ test('ember-grupedit main model projection test', function(assert) {
 
     assert.strictEqual($componentOlvFirstHead.text().trim() === 'Temp text for test', true, 'Header has text \'Temp text for test\'');
   });
-});
+});*/

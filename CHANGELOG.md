@@ -4,6 +4,43 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.6] - 2017-02-09
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.4.
+
+## [0.8.5] - 2017-02-09
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.3.
+
+### Fixed
+* `flexberry-lookup` component:
+    * Fix `placeholder` in dropdown mode.
+
+## [0.8.4] - 2017-02-07
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.2.
+
+### Fixed
+* `flexberry-groupedit` component:
+    * Fix check `hasMany` relationships changes on route leave.
+
+## [0.8.3] - 2017-01-31
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix infinite click in mobile mode.
+
+## [0.8.2] - 2017-01-26
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.1.
+
+### Fixed
+* `flexberry-dropdown` component:
+    * Fix hanging in IE when change `perPageValue`.
+* `flexberry-objectlistview` component:
+    * Fix selected rows count reset on `init`.
+* `flexberry-simpleolv` component:
+    * Fix `colResizable` plugin init when `model` was overrided.
+
 ## [0.8.1] - 2017-01-18
 ### Added
 * `flexberry-objectlistview` component:

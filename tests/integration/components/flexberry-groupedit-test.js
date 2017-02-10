@@ -536,40 +536,37 @@ test('ember-grupedit readonly test', function(assert) {
           readonly=true
         }}`);
 
+    let detailModel = this.get('model.details');
+    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
 
+    wait().then(() => {
+      let $componentObjectListView = Ember.$('.object-list-view');
+      let $componentObjectListViewTd = $componentObjectListView.children('tbody').children('tr').children('td');
 
-      let detailModel = this.get('model.details');
-      detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
+      let $disabledItem;
+      let $objectlistviewcell1 = $($componentObjectListViewTd[1]);
+      $disabledItem = $objectlistviewcell1.children('.flexberry-checkbox');
+      assert.strictEqual($disabledItem.hasClass('read-only'), true, 'Flexberry-checkbox is readonly into object-list-view.');
 
-      wait().then(() => {
+      let $objectlistviewcell2 = $($componentObjectListViewTd[2]);
+      $disabledItem = Ember.$('.ember-view.ember-text-field', $objectlistviewcell2);
+      assert.strictEqual($disabledItem.attr('readonly'), 'readonly', 'Flexberry-textbox is readonly into object-list-view.');
 
-        let $componentObjectListView = Ember.$('.object-list-view');
-        let $componentObjectListViewTd = $componentObjectListView.children('tbody').children('tr').children('td');
+      let $objectlistviewcell3 = $($componentObjectListViewTd[3]);
+      $disabledItem = Ember.$('.ember-view.ember-text-field', $objectlistviewcell3);
+      assert.strictEqual($disabledItem.attr('readonly'), 'readonly', 'Calendar is readonly into object-list-view.');
 
-        let $disabledItem;
-        let $objectlistviewcell1 = $($componentObjectListViewTd[1]);
-        $disabledItem = $objectlistviewcell1.children('.flexberry-checkbox');
-        assert.strictEqual($disabledItem.hasClass('read-only'), true, 'Flexberry-checkbox is readonly into object-list-view.');
+      let $objectlistviewcell4 = $($componentObjectListViewTd[4]);
+      $disabledItem = $objectlistviewcell4.children('.flexberry-dropdown');
+      assert.strictEqual($disabledItem.hasClass('disabled'), true, 'Flexberry-dropdown is readonly into object-list-view.');
 
-        let $objectlistviewcell2 = $($componentObjectListViewTd[2]);
-        $disabledItem = Ember.$('.ember-view.ember-text-field', $objectlistviewcell2);
-        assert.strictEqual($disabledItem.attr('readonly'), 'readonly', 'Flexberry-textbox is readonly into object-list-view.');
+      let $objectlistviewcell5 = $($componentObjectListViewTd[5]);
+      $disabledItem = Ember.$('.flexberry-file-add-button', $objectlistviewcell5);
+      assert.strictEqual($disabledItem.length === 0, true, 'Flexberry-file is readonly into object-list-view.');
 
-        let $objectlistviewcell3 = $($componentObjectListViewTd[3]);
-        $disabledItem = Ember.$('.ember-view.ember-text-field', $objectlistviewcell3);
-        assert.strictEqual($disabledItem.attr('readonly'), 'readonly', 'Calendar is readonly into object-list-view.');
-
-        let $objectlistviewcell4 = $($componentObjectListViewTd[4]);
-        $disabledItem = $objectlistviewcell4.children('.flexberry-dropdown');
-        assert.strictEqual($disabledItem.hasClass('disabled'), true, 'Flexberry-dropdown is readonly into object-list-view.');
-
-        let $objectlistviewcell5 = $($componentObjectListViewTd[5]);
-        $disabledItem = Ember.$('.flexberry-file-add-button', $objectlistviewcell5);
-        assert.strictEqual($disabledItem.length === 0, true, 'Flexberry-file is readonly into object-list-view.');
-
-        let $objectlistviewcell6 = $($componentObjectListViewTd[6]);
-        $disabledItem = Ember.$('.disabled', $objectlistviewcell6);
-        assert.strictEqual($disabledItem.length === 0, false, 'Flexberry-lookup is readonly into object-list-view.');
+      let $objectlistviewcell6 = $($componentObjectListViewTd[6]);
+      $disabledItem = Ember.$('.disabled', $objectlistviewcell6);
+      assert.strictEqual($disabledItem.length === 0, false, 'Flexberry-lookup is readonly into object-list-view.');
     });
   });
 });

@@ -125,7 +125,7 @@ test('ember-grupedit cellComponent test', function(assert) {
   });
 });
 
-/*test('ember-grupedit element by default test', function(assert) {
+test('ember-grupedit element by default test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -1252,4 +1252,4 @@ test('ember-grupedit main model projection test', function(assert) {
 
     assert.strictEqual($componentOlvFirstHead.text().trim() === 'Temp text for test', true, 'Header has text \'Temp text for test\'');
   });
-});*/
+});

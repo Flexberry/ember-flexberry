@@ -252,16 +252,16 @@ export default Ember.Component.extend({
   },
 
   /**
-    Send 'onShow' action with component itself as an argument.
+  Processing 'visible' flags status.
+   */
 
-    @method _show
-    @private
-  */
-  show() {
-    this.set('visible', true);
-
-    this.sendAction('onShow', this);
-  },
+  _didVisibilityChange: Ember.observer('visible', function() {
+    if (this.get('visible')) {
+      this.sendAction('onShow');
+    } else {
+      this.sendAction('onHide');
+    }
+  }),
 
   /**
     Send 'onHide' action with component itself as an argument.
@@ -271,7 +271,5 @@ export default Ember.Component.extend({
   */
   _hide() {
     this.set('visible', false);
-
-    this.sendAction('onHide', this);
   },
 });

@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Removed
 * `ui-message` component: attribute `title`.
+### Added
+* `ui-message` component: observer `_didVisibilityChange`.
+
 
 ## [0.8.3] - 2017-01-31
 ### Fixed

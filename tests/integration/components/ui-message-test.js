@@ -160,22 +160,30 @@ test('attached renders properly', function(assert) {
 });
 
 test('visible renders properly', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   // Render component.
   this.render(hbs`{{ui-message
     class=class
     visible=true
+    closeable=true
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
+  let $closeableIcon = $component.children('i');
 
   // Check wrapper <div>.
-  assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css class');
+  assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css class \'hidden\'');
+
+  Ember.run(() => {
+    $closeableIcon.click();
+  });
+
+  assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper has css class \'hidden\'');
 
   this.set('visible', true);
-  assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css class');
+  assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css class \'hidden\'');
 });
 
 test('closeable renders properly', function(assert) {
@@ -240,4 +248,32 @@ test('icon renders properly', function(assert) {
   assert.strictEqual($captionText.hasClass('header'), true, 'Component\'s wrapper has css class');
   assert.strictEqual(Ember.$.trim($captionText.text()), 'My caption', 'Text component\'s caption right');
   assert.strictEqual(Ember.$.trim($massageText.text()), 'My message', 'Text component\'s caption right');
+});
+
+test('component sends \'onHide\' action', function(assert) {
+  assert.expect(2);
+
+  let messageClose = false;
+  let onVisibleChenged;
+  this.set('actions.onClose', (e) => {
+    messageClose = true;
+    onVisibleChenged = e;
+  });
+
+  // Render component.
+  this.render(hbs`{{ui-message
+    class=class
+    closeable=true
+    onHide=(action \"onClose\")
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $closeableIcon = $component.children('i');
+
+  Ember.run(() => {
+    $closeableIcon.click();
+    assert.strictEqual(messageClose, true, 'Component closed');
+    assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper hasn\'t css class \'hidden\'');
+  });
 });

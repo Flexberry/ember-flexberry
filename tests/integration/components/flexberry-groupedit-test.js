@@ -536,20 +536,12 @@ test('ember-grupedit readonly test', function(assert) {
           readonly=true
         }}`);
 
-    // Add record.
-    let $componentButtonAdd = $(Ember.$('.ui.button')[0]);
 
-    Ember.run(() => {
-      $componentButtonAdd.click();
-    });
-
-    wait().then(() => {
 
       let detailModel = this.get('model.details');
       detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
 
-      let done = assert.async();
-      setTimeout(function() {
+      wait().then(() => {
 
         let $componentObjectListView = Ember.$('.object-list-view');
         let $componentObjectListViewTd = $componentObjectListView.children('tbody').children('tr').children('td');
@@ -565,7 +557,7 @@ test('ember-grupedit readonly test', function(assert) {
 
         let $objectlistviewcell3 = $($componentObjectListViewTd[3]);
         $disabledItem = Ember.$('.ember-view.ember-text-field', $objectlistviewcell3);
-        assert.strictEqual($disabledItem.attr('readonly'), true, 'Calendar is readonly into object-list-view.');
+        assert.strictEqual($disabledItem.attr('readonly'), 'readonly', 'Calendar is readonly into object-list-view.');
 
         let $objectlistviewcell4 = $($componentObjectListViewTd[4]);
         $disabledItem = $objectlistviewcell4.children('.flexberry-dropdown');
@@ -578,9 +570,6 @@ test('ember-grupedit readonly test', function(assert) {
         let $objectlistviewcell6 = $($componentObjectListViewTd[6]);
         $disabledItem = Ember.$('.disabled', $objectlistviewcell6);
         assert.strictEqual($disabledItem.length === 0, false, 'Flexberry-lookup is readonly into object-list-view.');
-
-        done();
-      }, 1000);
     });
   });
 });

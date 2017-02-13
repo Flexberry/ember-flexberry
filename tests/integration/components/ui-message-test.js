@@ -254,10 +254,8 @@ test('component sends \'onHide\' action', function(assert) {
   assert.expect(2);
 
   let messageClose = false;
-  let onVisibleChenged;
-  this.set('actions.onClose', (e) => {
+  this.set('actions.onClose', () => {
     messageClose = true;
-    onVisibleChenged = e;
   });
 
   // Render component.
@@ -273,7 +271,9 @@ test('component sends \'onHide\' action', function(assert) {
 
   Ember.run(() => {
     $closeableIcon.click();
-    assert.strictEqual(messageClose, true, 'Component closed');
-    assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper hasn\'t css class \'hidden\'');
+    setTimeout(() => {
+      assert.strictEqual(messageClose, true, 'Component closed');
+      assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper hasn\'t css class \'hidden\'');
+    });
   });
 });

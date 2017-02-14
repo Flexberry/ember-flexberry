@@ -1,25 +1,15 @@
-import Ember from 'ember';
 import { test, moduleFor } from 'ember-qunit';
 import startApp from '../../helpers/start-app';
+import destroyApp from '../../helpers/destroy-app';
 
 let application;
 
 moduleFor('service:device', 'Unit | Service | Device', {
   beforeEach() {
-    Ember.run(() => {
-      window.navigator.__defineGetter__('userAgent', function () {
-          return "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/14A456 Safari/602.1"
-      });
-      window.navigator.__defineGetter__('appName', function () {
-          return "Netscape"
-      });
-      application = startApp();
-    });
+    application = startApp();
   },
-  setup() {
-    Ember.Component.reopen({
-      device: Ember.inject.service('device')
-    })
+  afterEach() {
+    destroyApp(application);
   }
 });
 
@@ -69,23 +59,4 @@ test('work method orientation(false)', function(assert) {
   let service = this.subject(application.__container__.ownerInjection());
   let result = service.orientation(false);
   assert.strictEqual(result, 'portrait');
-});
-
-test('work method platform(false)', function(assert) {
-  assert.expect(1);
-
-  $.getScript('/assets/bower_components/devicejs/lib/device.js')
-    .done(function( script, textStatus ) {
-      let service = this.subject(application.__container__.ownerInjection());
-      let result = service.platform(false);
-    })
-    .fail(function( jqxhr, settings, exception ) {
-      let service = this.subject(application.__container__.ownerInjection());
-      let result = service.platform(false);
-  });
-
-  let service = this.subject(application.__container__.ownerInjection());
-  let result = service.platform(false);
-  
-  assert.strictEqual(result, 'ios');
 });

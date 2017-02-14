@@ -165,7 +165,7 @@ test('visible renders properly', function(assert) {
   // Render component.
   this.render(hbs`{{ui-message
     class=class
-    visible=true
+    visible=visible
     closeable=true
   }}`);
 
@@ -173,15 +173,17 @@ test('visible renders properly', function(assert) {
   let $component = this.$().children();
   let $closeableIcon = $component.children('i');
 
-  // Check wrapper <div>.
+  // Component is visible.
   assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css class \'hidden\'');
 
+  // The component is hidden by the Close button.
   Ember.run(() => {
     $closeableIcon.click();
   });
 
   assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper has css class \'hidden\'');
 
+  // Component is visible again.
   this.set('visible', true);
   assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css class \'hidden\'');
 });
@@ -251,7 +253,7 @@ test('icon renders properly', function(assert) {
 });
 
 test('component sends \'onHide\' action', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   let messageClose = false;
   this.set('actions.onClose', () => {
@@ -269,6 +271,10 @@ test('component sends \'onHide\' action', function(assert) {
   let $component = this.$().children();
   let $closeableIcon = $component.children('i');
 
+  // The component is visible.
+  assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper has css class \'hidden\'');
+
+  // The component is hidden by the Close button.
   Ember.run(() => {
     $closeableIcon.click();
     setTimeout(() => {
@@ -279,7 +285,7 @@ test('component sends \'onHide\' action', function(assert) {
 });
 
 test('component sends \'onShow\' action', function(assert) {
-  assert.expect(2);
+  assert.expect(4);
 
   let messageVisible = false;
   this.set('actions.onVisible', () => {
@@ -290,14 +296,19 @@ test('component sends \'onShow\' action', function(assert) {
   this.render(hbs`{{ui-message
     class=class
     closeable=true
-    visible=false
+    visible=visible
     onShow=(action \"onVisible\")
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
-  let $closeableIcon = $component.children('i');
 
+  // The component is hidden.
+  this.set('visible', false);
+  assert.strictEqual(messageVisible, false, 'Component is not visible');
+  assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper hasn\'t css class \'hidden\'');
+
+  // The component is visible.
   this.set('visible', true);
   assert.strictEqual(messageVisible, true, 'Component is visible');
   assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css class \'hidden\'');

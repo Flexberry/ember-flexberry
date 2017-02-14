@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { test, moduleForComponent } from 'ember-qunit';
 import startApp from '../helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
@@ -48,6 +49,8 @@ let resotreOriginalDevice = function() {
   window.navigator.__defineGetter__('appName', function () {
     return originalNavigatorUserAgent;
   });
+
+  //fso.DeleteFlie('../../vendor/devicejs/devicejs.script');
 };
 
 moduleForComponent('service:device', 'Integration | Service | Device', {
@@ -82,4 +85,41 @@ test('work method platform(false)', function(assert) {
   assert.strictEqual(platform, 'ios');
 
   $scriptContainer.remove();
+});
+
+test('work method type(false)', function(assert) {
+  assert.expect(1);
+
+  stubDevice('iphone');
+
+  let $testPage = this.$();
+  let $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
+  $testPage.append($scriptContainer);
+
+  // Force devicejs to run it's initialization again & read stubbed device-related properties.
+  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
+  $scriptContainer.append($devicejsScript);
+
+  let service = application.__container__.lookup('service:device');
+
+  let result = service.type(false);
+  assert.strictEqual(result, 'phone');
+});
+
+test('work method pathPrefixes(false)', function(assert) {
+  assert.expect(1);
+
+  stubDevice('iphone');
+
+  let $testPage = this.$();
+  let $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
+  $testPage.append($scriptContainer);
+
+  // Force devicejs to run it's initialization again & read stubbed device-related properties.
+  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
+  $scriptContainer.append($devicejsScript);
+
+  let service = application.__container__.lookup('service:device');
+  let result = service.pathPrefixes(false);
+  assert.strictEqual(Ember.$.trim(result), 'mobile');
 });

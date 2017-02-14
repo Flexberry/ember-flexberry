@@ -273,7 +273,32 @@ test('component sends \'onHide\' action', function(assert) {
     $closeableIcon.click();
     setTimeout(() => {
       assert.strictEqual(messageClose, true, 'Component closed');
-      assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper hasn\'t css class \'hidden\'');
+      assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper has css class \'hidden\'');
     });
   });
+});
+
+test('component sends \'onShow\' action', function(assert) {
+  assert.expect(2);
+
+  let messageVisible = false;
+  this.set('actions.onVisible', () => {
+    messageVisible = true;
+  });
+
+  // Render component.
+  this.render(hbs`{{ui-message
+    class=class
+    closeable=true
+    visible=false
+    onShow=(action \"onVisible\")
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $closeableIcon = $component.children('i');
+
+  this.set('visible', true);
+  assert.strictEqual(messageVisible, true, 'Component is visible');
+  assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper hasn\'t css class \'hidden\'');
 });

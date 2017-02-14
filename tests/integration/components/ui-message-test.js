@@ -272,7 +272,7 @@ test('component sends \'onHide\' action', function(assert) {
   let $closeableIcon = $component.children('i');
 
   // The component is visible.
-  assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper has css class \'hidden\'');
+  assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper has css class \'hidden\'');
 
   // The component is hidden by the Close button.
   Ember.run(() => {

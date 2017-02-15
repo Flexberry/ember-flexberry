@@ -239,8 +239,8 @@ test('icon renders properly', function(assert) {
   // Retrieve component.
   let $component = this.$().children();
   let $messageIcon = $component.children('i');
-  let $captionDiv = $component.children('div');
-  let $captionText = $captionDiv.children('div');
+  let $captionDiv = $component.children('div.content');
+  let $captionText = $captionDiv.children('div.header');
   let $massageText = $captionDiv.children('p');
 
   assert.strictEqual($component.hasClass('icon'), true, 'Component\'s wrapper has css class');
@@ -272,15 +272,17 @@ test('component sends \'onHide\' action', function(assert) {
   let $closeableIcon = $component.children('i');
 
   // The component is visible.
-  assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper has css class \'hidden\'');
+  assert.strictEqual($component.hasClass('hidden'), false, 'Component\'s wrapper has\'t css class \'hidden\'');
 
   // The component is hidden by the Close button.
   Ember.run(() => {
+    let done = assert.async();
     $closeableIcon.click();
     setTimeout(() => {
       assert.strictEqual(messageClose, true, 'Component closed');
       assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper has css class \'hidden\'');
-    });
+      done();
+    }, 50);
   });
 });
 
@@ -306,7 +308,7 @@ test('component sends \'onShow\' action', function(assert) {
   // The component is hidden.
   this.set('visible', false);
   assert.strictEqual(messageVisible, false, 'Component is not visible');
-  assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper hasn\'t css class \'hidden\'');
+  assert.strictEqual($component.hasClass('hidden'), true, 'Component\'s wrapper hasn css class \'hidden\'');
 
   // The component is visible.
   this.set('visible', true);

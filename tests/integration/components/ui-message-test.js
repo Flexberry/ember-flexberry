@@ -11,8 +11,7 @@ test('it renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
-  }}`);
+    }}`);
 
   // Retrieve component.
   let $component = this.$().children();
@@ -27,29 +26,29 @@ test('size renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
+    size=size
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
 
-  // Check component's additional CSS-classes.
-  let additioanlCssClasses = 'small large huge massive';
-  this.set('class', additioanlCssClasses);
+  // Check component's syze's types.
+  let syzeTypes = 'small large huge massive';
+  this.set('size', syzeTypes);
 
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  Ember.A(syzeTypes.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
-    'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
+    'Component\'s wrapper has css class \'' + cssClassName + '\'');
   });
 
-  this.set('class', '');
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  this.set('size', '');
+  Ember.A(syzeTypes.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
-    'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
+    'Component\'s wrapper hasn\'t css class \'' + cssClassName + '\'');
   });
 });
 
@@ -58,29 +57,29 @@ test('type renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
+    type=type
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
 
-  // Check component's additional CSS-classes.
-  let additioanlCssClasses = 'warning info positive success negative error';
-  this.set('class', additioanlCssClasses);
+  // Check component's type's CSS-classes.
+  let typeCssClasses = 'warning info positive success negative error';
+  this.set('type', typeCssClasses);
 
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  Ember.A(typeCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
-    'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
+    'Component\'s wrapper has css class \'' + cssClassName + '\'');
   });
 
-  this.set('class', '');
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  this.set('type', '');
+  Ember.A(typeCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
-    'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
+    'Component\'s wrapper hasn\'t css class \'' + cssClassName + '\'');
   });
 });
 
@@ -89,29 +88,29 @@ test('color renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
+    color=color
   }}`);
 
   // Retrieve component.
   let $component = this.$().children();
 
-  // Check component's additional CSS-classes.
-  let additioanlCssClasses = 'red orange yellow olive green teal blue violet purple pink brown black';
-  this.set('class', additioanlCssClasses);
+  // Check component's color's CSS-classes.
+  let colorCssClasses = 'red orange yellow olive green teal blue violet purple pink brown black';
+  this.set('color', colorCssClasses);
 
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  Ember.A(colorCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
-    'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
+    'Component\'s wrapper has css class \'' + cssClassName + '\'');
   });
 
-  this.set('class', '');
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  this.set('color', '');
+  Ember.A(colorCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
-    'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
+    'Component\'s wrapper hasn\'t css class \'' + cssClassName + '\'');
   });
 });
 
@@ -120,7 +119,6 @@ test('floating renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
     floating=floating
   }}`);
 
@@ -142,7 +140,6 @@ test('attached renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
     attached=attached
   }}`);
 
@@ -164,7 +161,6 @@ test('visible renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
     visible=visible
     closeable=true
   }}`);
@@ -193,7 +189,6 @@ test('closeable renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
     closeable=true
   }}`);
 
@@ -210,7 +205,6 @@ test('caption & massage renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
     caption='My caption'
     message='My message'
   }}`);
@@ -230,7 +224,6 @@ test('icon renders properly', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
     icon='icon paw'
     caption='My caption'
     message='My message'
@@ -262,7 +255,6 @@ test('component sends \'onHide\' action', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
     closeable=true
     onHide=(action \"onClose\")
   }}`);
@@ -296,7 +288,6 @@ test('component sends \'onShow\' action', function(assert) {
 
   // Render component.
   this.render(hbs`{{ui-message
-    class=class
     closeable=true
     visible=visible
     onShow=(action \"onVisible\")

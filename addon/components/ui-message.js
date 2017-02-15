@@ -268,7 +268,7 @@ export default Ember.Component.extend({
   }),
 
   /**
-    Send 'onHide' action with component itself as an argument.
+    Argument 'onHide' action.
 
     @method _hide
     @private

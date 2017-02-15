@@ -252,7 +252,11 @@ export default Ember.Component.extend({
   },
 
   /**
-  Processing 'visible' flags status.
+  Observes 'visible' property.
+  Sends actions 'onShow' & 'onHide'.
+
+  @method _didVisibilityChange
+  @private
    */
 
   _didVisibilityChange: Ember.observer('visible', function() {

@@ -243,37 +243,24 @@ export default Ember.Component.extend({
   didInsertElement() {
     let isCloseable = this.get('closeable');
     if (isCloseable) {
-      // Inside 'click'-callback 'this' would refer to a jQuery-object.
-      let _this = this;
-      _this.$('.close').on('click', function() {
-        _this._hide();
+      this.$('.close').on('click', () => {
+        this.set('visible', false);
       });
     }
   },
 
   /**
-  Observes 'visible' property.
-  Sends actions 'onShow' & 'onHide'.
+    Observes 'visible' property.
+    Sends actions 'onShow' & 'onHide'.
 
-  @method _didVisibilityChange
-  @private
-   */
-
+    @method _didVisibilityChange
+    @private
+  */
   _didVisibilityChange: Ember.observer('visible', function() {
     if (this.get('visible')) {
       this.sendAction('onShow');
     } else {
       this.sendAction('onHide');
     }
-  }),
-
-  /**
-    Argument 'onHide' action.
-
-    @method _hide
-    @private
-  */
-  _hide() {
-    this.set('visible', false);
-  },
+  })
 });

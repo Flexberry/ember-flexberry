@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Removed
+* `ui-message` component: attribute `title`.
+### Changed
+* `ui-message` component: `onShow` & `onHide` actions now sent on every change in visible property.
+
 
 ## [0.8.6] - 2017-02-09
 ### Changed

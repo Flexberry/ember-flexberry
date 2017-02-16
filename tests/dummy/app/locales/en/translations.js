@@ -54,10 +54,38 @@ Ember.$.extend(true, translations, {
             'voteType': {
               'caption': 'Vote type'
             },
-            'applicationUser': {
+            'author': {
               'caption': 'Application User',
               'eMail': {
                 'caption': 'Email'
+              }
+            }
+          },
+          'files': {
+            'order': {
+              'caption': 'Order'
+            },
+            'file': {
+              'caption': 'File',
+            }
+          },
+          'comments': {
+            'name': {
+              'caption': 'Name'
+            },
+            'text': {
+              'caption': 'Text'
+            },
+            'votes': {
+              'caption': 'Votes',
+            },
+            'moderated': {
+              'caption': 'Moderated',
+            },
+            'author': {
+              'caption': 'Application User',
+              'eMail': {
+                'caption': 'Mail'
               }
             }
           }
@@ -110,6 +138,22 @@ Ember.$.extend(true, translations, {
             'caption': 'Parent'
           },
         },
+        'SuggestionTypeE': {
+          'name': {
+            'caption': 'Name'
+          },
+          'localizedTypes': {
+            'name': {
+              'caption': 'Name'
+            },
+            'localization': {
+              'caption': 'Localization',
+              'name': {
+                'caption': 'Name'
+              }
+            }
+          },
+        }
       }
     },
   },

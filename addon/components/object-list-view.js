@@ -136,6 +136,15 @@ export default FlexberryBaseComponent.extend(
   sortByColumn: 'sortByColumn',
 
   /**
+    Default left padding in cells.
+
+    @property defaultLeftPadding
+    @type Number
+    @default 10
+  */
+  defaultLeftPadding: 10,
+
+  /**
     Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
 
     If flag is enabled component compares current detail array with used on component,
@@ -372,7 +381,7 @@ export default FlexberryBaseComponent.extend(
     let projection = this.get('modelProjection');
 
     if (!projection) {
-      throw new Error('Property \'modelProjection\' is undefined.');
+      return [];
     }
 
     let cols = this._generateColumns(projection.attributes);
@@ -388,7 +397,10 @@ export default FlexberryBaseComponent.extend(
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }
 
-    if (userSettings) {
+    let onEditForm = this.get('onEditForm');
+
+    // TODO: add userSettings support on edit form.
+    if (userSettings && !onEditForm) {
       let namedCols = {};
       for (let i = 0; i < cols.length; i++) {
         let col = cols[i];
@@ -697,14 +709,14 @@ export default FlexberryBaseComponent.extend(
   */
   configurateSelectedRows: undefined,
 
-  selectedRowsChanged: Ember.observer('selectedRecords.@each', function() {
+  selectedRowsChanged: Ember.on('init', Ember.observer('selectedRecords.@each', function() {
     let selectedRecords = this.get('selectedRecords');
     let configurateSelectedRows = this.get('configurateSelectedRows');
     if (configurateSelectedRows) {
       Ember.assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
     }
-  }),
+  })),
 
   /**
     Default settings for rows.

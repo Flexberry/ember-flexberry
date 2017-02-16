@@ -45,6 +45,7 @@ export default FlexberryBaseComponent.extend({
   allowTab: true,
   transition: 'auto',
   duration: 200,
+  action: 'select',
 
   /**
     Flag indicates whether to make checks on selected value or not.

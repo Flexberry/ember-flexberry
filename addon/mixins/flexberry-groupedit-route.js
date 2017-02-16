@@ -106,7 +106,8 @@ export default Ember.Mixin.create({
 
       if (saveBeforeRouteLeave) {
         let model = this.controller.get('model');
-        let isModelChanged = !Ember.$.isEmptyObject(model.changedAttributes()) || !Ember.$.isEmptyObject(model.changedBelongsTo());
+        let isModelChanged = !Ember.$.isEmptyObject(model.changedAttributes()) ||
+         !Ember.$.isEmptyObject(model.changedBelongsTo()) || !Ember.$.isEmptyObject(model.changedHasMany());
         let isModelNew = model.get('isNew');
         if (isModelNew || isModelChanged) {
           this.controller.save(false, true).then(() => {

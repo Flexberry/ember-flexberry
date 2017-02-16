@@ -198,6 +198,14 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-simpledatetime'],
 
   /**
+    If true, then onClick calling flatpickr.open().
+
+    @property canClick
+    @type Bool
+  */
+  canClick: true,
+
+  /**
     Called when the element of the view is going to be destroyed. Override this function to do any teardown that requires an element, like removing event listeners.
     [More info](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
 
@@ -215,7 +223,8 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   click() {
-    if (!this.get('currentTypeSupported') && !this.get('readonly')) {
+    if (this.get('canClick') && !this.get('currentTypeSupported') && !this.get('readonly')) {
+      this.set('canClick', false);
       this.get('_flatpickr').open();
     }
   },
@@ -239,6 +248,9 @@ export default FlexberryBaseComponent.extend({
           this.set('_valueAsDate', dates[dates.length - 1]);
         }
       },
+      onClose: () => {
+        this.set('canClick', true);
+      },
     };
 
     let type = this.get('type');
@@ -251,7 +263,15 @@ export default FlexberryBaseComponent.extend({
     }
 
     this.set('_flatpickr', this.$('.flatpickr').flatpickr(options));
+    this.$('.flatpickr').attr('readonly', this.get('readonly'));
   },
+
+  /**
+    Sets readonly attr for flatpickr.
+  */
+  readonlyObserver: Ember.observer('readonly', function() {
+    this.$('.flatpickr').attr('readonly', this.get('readonly'));
+  }),
 
   /**
     Destroy Flatpickr instance.

@@ -22,27 +22,27 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
 
     @property folvEditFormRoute
     @type String
-    @default 'ember-flexberry-dummy-localization-edit'
+    @default 'ember-flexberry-dummy-suggestion-type-edit'
    */
-  folvEditFormRoute: 'ember-flexberry-dummy-localization-edit',
+  folvEditFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
 
   /**
     Name of FOLV model.
 
     @property folvModelName
     @type String
-    @default 'ember-flexberry-dummy-localization'
+    @default 'ember-flexberry-dummy-suggestion-type'
    */
-  folvModelName: 'ember-flexberry-dummy-localization',
+  folvModelName: 'ember-flexberry-dummy-suggestion-type',
 
   /**
     Name of FOLV projection.
 
     @property folvProjection
     @type String
-    @default 'LocalizationL'
+    @default 'SuggestionTypeL'
    */
-  folvProjection: 'LocalizationL',
+  folvProjection: 'SuggestionTypeL',
 
   objectListViewLimitPredicate: function(options) {
     let methodOptions = Ember.merge({
@@ -55,7 +55,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     methodOptions.projectionName === this.get('folvProjection')) {
       let limitFunction = new ComplexPredicate('or',
         new StringPredicate('name').contains('1'),
-        new StringPredicate('name').contains('Тест'));
+        new StringPredicate('name').contains('Type'));
       return limitFunction;
     }
 
@@ -85,7 +85,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
      */
     userButtonAddAction: function() {
       let thisUrl = this.get('target.url');
-      this.transitionToRoute('ember-flexberry-dummy-localization-edit.new')
+      this.transitionToRoute(this.get('folvEditFormRoute') + '.new')
       .then((newRoute) => {
         newRoute.controller.set('parentRoute', thisUrl);
       });

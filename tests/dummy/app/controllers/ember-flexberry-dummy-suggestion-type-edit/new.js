@@ -1,1 +1,1 @@
-export { default } from '../edit-form-with-detail-edit';
+export { default } from '../ember-flexberry-dummy-suggestion-type-edit';

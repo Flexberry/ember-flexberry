@@ -83,7 +83,7 @@ export default ListFormController.extend({
     @property configurateRowByAddress
     @type String
    */
-  configurateRowByAddress: 'Street, 200',
+  configurateRowByAddress: undefined,
 
   _configurateRowByAddress: Ember.observer('configurateRowByAddress', function() {
     let rowConfig = { customClass: '' };
@@ -116,7 +116,7 @@ export default ListFormController.extend({
     componentSettingsMetadata.pushObject({
       settingName: 'configurateRowByAddress',
       settingType: 'string',
-      settingDefaultValue: 'Street, 200',
+      settingDefaultValue: undefined,
       bindedControllerPropertieName: 'configurateRowByAddress'
     });
 

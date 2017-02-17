@@ -40,34 +40,53 @@ export default ListFormRoute.extend({
     @property modelName
     @type String
     @default 'ember-flexberry-dummy-suggestion'
-   */
+  */
   modelName: 'ember-flexberry-dummy-suggestion',
 
+  /**
+    Name of first existing address in ember-flexberry-dummy-suggestion records.
+
+    @property firstExistingAddress
+    @type String
+    @default null
+  */
+  firstExistingAddress: null,
+
+  /**
+    Performs loading of some existing address before model will be loaded.
+  */
   beforeModel(params) {
+    if (this.get('controller.configurateRowByAddress')) {
+      return;
+    }
+
     return new Ember.RSVP.Promise((resolve, reject) => {
       let store = this.get('store');
 
       let query = new Query.Builder(store)
         .from('ember-flexberry-dummy-suggestion')
-        .top(1)
-        .selectByProjection('SuggestionL');
+        .select('address')
+        .where('address', Query.FilterOperator.Neq, null)
+        .top(1);
 
       store.query('ember-flexberry-dummy-suggestion', query.build()).then((suggestion) => {
         let suggestionArr = suggestion.toArray();
-        this.set('configurateRowByAddress', suggestionArr.objectAt(0).get('address'));
-        resolve(this._super(...arguments));
+        this.set('firstExistingAddress', suggestionArr.objectAt(0).get('address'));
+        resolve();
+      }).catch((reason) => {
+        reject(reason);
       });
     });
   },
 
   /**
-    Load strings coloring condition in settigs.
-
-    @method setupController
+    Setups controller properties.
    */
   setupController() {
     this._super(...arguments);
 
-    this.set('controller.configurateRowByAddress', this.get('configurateRowByAddress'));
+    if (!this.get('controller.configurateRowByAddress')) {
+      this.set('controller.configurateRowByAddress', this.get('firstExistingAddress'));
+    }
   }
 });

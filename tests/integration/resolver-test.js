@@ -1,11 +1,14 @@
-import Ember from 'ember';
 import { test, moduleForComponent } from 'ember-qunit';
 import startApp from '../helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
+import DeviceInstanceInitializer from 'ember-flexberry/instance-initializers/device';
+import hbs from 'htmlbars-inline-precompile';
 
 let application;
+let appInstance;
 let originalNavigatorUserAgent;
 let originalNavigatorAppName;
+var withPlatformPath;
 
 let stubDevice = function(desiredDevice) {
   var stubbedNavigatorUserAgent;
@@ -49,15 +52,15 @@ let resotreOriginalDevice = function() {
   window.navigator.__defineGetter__('appName', function () {
     return originalNavigatorUserAgent;
   });
-
 };
 
-moduleForComponent('service:device', 'Integration | Service | Device', {
+moduleForComponent('Resolver', 'Integration | Resolver', {
   integration: true,
   beforeEach() {
     storeOriginalDevice();
 
     application = startApp();
+    appInstance = application.buildInstance();
   },
   afterEach() {
     resotreOriginalDevice();
@@ -66,7 +69,21 @@ moduleForComponent('service:device', 'Integration | Service | Device', {
   }
 });
 
-test('work method platform(false)', function(assert) {
+let registerMochModule = function() {
+  withPlatformPath = Object({
+      subObj1: 'template:mobile/my-form'
+    });
+  var noPlatformImPath = Object({
+      subObj1: 'template:my-form'
+    });
+
+    application.register('template:mobile/my-form', hbs`template:mobile/my-form`);
+    application.register('template:my-form', hbs`template:my-form`);
+    application.__registry__.resolver._moduleRegistry._entries['dummy/templates/mobile/my-form'] = withPlatformPath;
+    application.__registry__.resolver._moduleRegistry._entries['dummy/templates/my-form'] = noPlatformImPath;
+}
+
+test('work resolver', function(assert) {
   assert.expect(1);
 
   stubDevice('iphone');
@@ -79,46 +96,12 @@ test('work method platform(false)', function(assert) {
   let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
   $scriptContainer.append($devicejsScript);
 
-  let service = application.__container__.lookup('service:device');
-  let platform = service.platform(false);
-  assert.strictEqual(platform, 'ios');
+  registerMochModule();
+  DeviceInstanceInitializer.initialize(appInstance);
+
+
+  let result = application.__container__.lookup('template:my-form');
+  assert.strictEqual(result.subObj1, 'template:mobile/my-form');
 
   $scriptContainer.remove();
-});
-
-test('work method type(false)', function(assert) {
-  assert.expect(1);
-
-  stubDevice('iphone');
-
-  let $testPage = this.$();
-  let $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
-  $testPage.append($scriptContainer);
-
-  // Force devicejs to run it's initialization again & read stubbed device-related properties.
-  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
-  $scriptContainer.append($devicejsScript);
-
-  let service = application.__container__.lookup('service:device');
-
-  let result = service.type(false);
-  assert.strictEqual(result, 'phone');
-});
-
-test('work method pathPrefixes(false)', function(assert) {
-  assert.expect(1);
-
-  stubDevice('iphone');
-
-  let $testPage = this.$();
-  let $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
-  $testPage.append($scriptContainer);
-
-  // Force devicejs to run it's initialization again & read stubbed device-related properties.
-  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
-  $scriptContainer.append($devicejsScript);
-
-  let service = application.__container__.lookup('service:device');
-  let result = service.pathPrefixes(false);
-  assert.strictEqual(Ember.$.trim(result), 'mobile');
 });

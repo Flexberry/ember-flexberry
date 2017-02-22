@@ -3,8 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-toogler` component:
+    * Add `hasResizableOLV` flag indicates when component need to initialize `colResizable` plugin.
+
 ### Removed
 * `ui-message` component: attribute `title`.
+
 ### Changed
 * `ui-message` component: `onShow` & `onHide` actions now sent on every change in visible property.
 

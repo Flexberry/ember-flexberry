@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * `ui-message` component: `onShow` & `onHide` actions now sent on every change in visible property.
+* Update `jquery.colResizable` plugin to version 1.6.
 
 
 ## [0.8.6] - 2017-02-09

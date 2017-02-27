@@ -144,6 +144,11 @@ export default FlexberryBaseComponent.extend(
   */
   defaultLeftPadding: 10,
 
+  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+  }),
+
   /**
     Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
 
@@ -1149,7 +1154,7 @@ export default FlexberryBaseComponent.extend(
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode: 'flex',
+      /*resizeMode: 'fit',*/
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);

@@ -110,6 +110,11 @@ ErrorableControllerMixin, {
     }
   }),
 
+  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+  }),
+
   /**
     Main model projection. Accepts object projections.
     Needs for support locales of captions.

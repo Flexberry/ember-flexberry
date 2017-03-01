@@ -110,6 +110,8 @@ export default {
       'loading-text': 'Loading data...',
       'header-title-attr': 'Click to change ordering, Ctrl+Click to append ordering for this column',
       'single-column-header-title': 'Model properties',
+      'sort-ascending': 'Order ascending',
+      'sort-descending': 'Order descending',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',
         'delete-menu-item-title': 'Delete record'

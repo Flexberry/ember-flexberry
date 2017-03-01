@@ -110,6 +110,8 @@ export default {
       'loading-text': 'Данные загружаются...',
       'header-title-attr': 'Нажмите, чтобы изменить порядок, Ctrl+Click чтобы добавить упорядочение для этого столбца',
       'single-column-header-title': 'Свойства модели',
+      'sort-ascending': 'По возрастанию',
+      'sort-descending': 'По убыванию',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',
         'delete-menu-item-title': 'Удалить запись'

@@ -3,9 +3,39 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.0-beta.0] - 2017-02-22
+### Added
+* `flexberry-toogler` component:
+    * Add `hasResizableOLV` flag indicates when component need to initialize `colResizable` plugin.
+* Add localization for sort order in list components.
+
+### Changed
+* `ui-message` component: `onShow` & `onHide` actions now sent on every change in visible property.
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.0.
+
+### Removed
+* `ui-message` component: attribute `title`.
+
+## [0.8.6] - 2017-02-09
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.4.
+
+## [0.8.5] - 2017-02-09
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.3.
+
+### Fixed
+* `flexberry-lookup` component:
+    * Fix `placeholder` in dropdown mode.
+
+## [0.8.4] - 2017-02-07
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.8.2.
+
 ### Fixed
 * `flexberry-groupedit` component:
-    * Fix check `hasMany` changes on route leave.
+    * Fix check `hasMany` relationships changes on route leave.
 
 ## [0.8.3] - 2017-01-31
 ### Fixed

@@ -1109,13 +1109,42 @@ ErrorableControllerMixin, {
   */
   _reinitResizablePlugin() {
     let $currentTable = this.$('table.object-list-view');
+    let cols = this.get('columns');
+    let helper = this.get('showHelperColumn');
+    let menu = this.get('showMenuColumn');
+    let disabledColumns = [];
+    let unresizableColumns;
+    if (this.notUseUserSettings) {
+      unresizableColumns = this.get('currentController.developerUserSettings');
+      unresizableColumns = unresizableColumns ? unresizableColumns[this.get('componentName')] : undefined;
+      unresizableColumns = unresizableColumns ? unresizableColumns.DEFAULT : undefined;
+      unresizableColumns = unresizableColumns ? unresizableColumns.unresizableColumns || [] : [];
+    } else {
+      unresizableColumns = this.get('userSettingsService').getUnresizeableColumns(this.componentName) || [];
+    }
+
+    if (helper && unresizableColumns.indexOf('OlvRowToolbar') > -1) {
+      disabledColumns.push(0);
+    }
+
+    if (menu && unresizableColumns.indexOf('OlvRowMenu') > -1) {
+      disabledColumns.push(helper ? cols.length : cols.length - 1);
+    }
+
+    for (let i = 0; i < cols.length; i++) {
+      let col = cols[i];
+      if (col.unresizable) {
+        disabledColumns.push(i);
+        disabledColumns.push(helper ? i + 1 : i - 1);
+      }
+    }
 
     // Disable plugin and then init it again.
     $currentTable.colResizable({ disable: true });
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode: 'flex',
+      disabledColumns: disabledColumns,
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);
@@ -1188,6 +1217,7 @@ ErrorableControllerMixin, {
     this._setColumnWidths();
     this._setColumnsOrder();
     this._setColumnsSorting();
+    this._setUnresizableColumns();
   },
 
   /**
@@ -1246,6 +1276,24 @@ ErrorableControllerMixin, {
 
       cols.setProperties(sorted);
     });
+  },
+
+  _setUnresizableColumns() {
+    let columns = this.get('columns');
+    if (!columns) {
+      return;
+    }
+
+    let userSettings = this.get('_userSettings');
+    if (userSettings && userSettings.unresizableColumns === undefined) {
+      userSettings.unresizableColumns = [];
+    }
+
+    columns.forEach((cols) => {
+      cols.unresizable = userSettings.unresizableColumns.indexOf(cols.propName) > -1;
+    });
+
+    this._reinitResizablePlugin();
   },
 
   _resetColumnFilters(componentName) {

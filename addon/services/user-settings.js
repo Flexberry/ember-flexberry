@@ -381,6 +381,19 @@ export default Ember.Service.extend({
   },
 
   /**
+   Returns current unresizable columns.
+
+   @method getUnresizeableColumns
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Array}
+   */
+  getUnresizeableColumns(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting && 'unresizableColumns' in currentUserSetting ? currentUserSetting.unresizableColumns : [];
+  },
+
+  /**
    Returns current perPageValue .
 
    @method getCurrentPerPage

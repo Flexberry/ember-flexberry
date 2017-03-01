@@ -402,6 +402,13 @@ export default FlexberryBaseComponent.extend(
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }
 
+    if (userSettings && userSettings.unresizableColumns) {
+      for (let i = 0; i < cols.length; i++) {
+        let col = cols[i];
+        col.unresizable = userSettings.unresizableColumns.indexOf(col.propName) > -1;
+      }
+    }
+
     let onEditForm = this.get('onEditForm');
 
     // TODO: add userSettings support on edit form.
@@ -1148,13 +1155,42 @@ export default FlexberryBaseComponent.extend(
   */
   _reinitResizablePlugin() {
     let $currentTable = this.$('table.object-list-view');
+    let cols = this.get('columns');
+    let helper = this.get('showHelperColumn');
+    let menu = this.get('showMenuColumn');
+    let disabledColumns = [];
+    let unresizableColumns;
+    if (this.notUseUserSettings) {
+      unresizableColumns = this.get('currentController.developerUserSettings');
+      unresizableColumns = unresizableColumns ? unresizableColumns[this.get('componentName')] : undefined;
+      unresizableColumns = unresizableColumns ? unresizableColumns.DEFAULT : undefined;
+      unresizableColumns = unresizableColumns ? unresizableColumns.unresizableColumns || [] : [];
+    } else {
+      unresizableColumns = this.get('userSettingsService').getUnresizeableColumns(this.componentName) || [];
+    }
+
+    if (helper && unresizableColumns.indexOf('OlvRowToolbar') > -1) {
+      disabledColumns.push(0);
+    }
+
+    if (menu && unresizableColumns.indexOf('OlvRowMenu') > -1) {
+      disabledColumns.push(helper ? cols.length : cols.length - 1);
+    }
+
+    for (let i = 0; i < cols.length; i++) {
+      let col = cols[i];
+      if (col.unresizable) {
+        disabledColumns.push(i);
+        disabledColumns.push(helper ? i + 1 : i - 1);
+      }
+    }
 
     // Disable plugin and then init it again.
     $currentTable.colResizable({ disable: true });
 
     $currentTable.colResizable({
       minWidth: 50,
-      /*resizeMode: 'fit',*/
+      disabledColumns: disabledColumns,
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);

@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-toogler` component:
     * Add `hasResizableOLV` flag indicates when component need to initialize `colResizable` plugin.
 * Add localization for sort order in list components.
+* Add `unresizableColumns` settings in `user-settings` for list components.
 
 ### Removed
 * `ui-message` component: attribute `title`.

@@ -160,7 +160,10 @@ export default {
       'setting': 'Setting ',
       'is-saved': ' is saved',
       'col-width-on': 'Enable setting column widths',
-      'per-page': 'Records count on page'
+      'per-page': 'Records count on page',
+      'unresizable': 'Unresizable columns',
+      'unresizable-row-toolbar': 'Unresizable row-toolbar column',
+      'unresizable-row-menu': 'Unresizable row-menu column'
     },
 
     'form-load-time-tracker': {

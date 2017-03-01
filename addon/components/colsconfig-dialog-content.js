@@ -74,6 +74,24 @@ export default FlexberryBaseComponent.extend({
   */
   perPageValue: undefined,
 
+  /**
+    Flag indicates whether or not rowToolbar column is resizable.
+
+    @property unresizableRowToolbar
+    @type {Boolean}
+    @default false
+  */
+  unresizableRowToolbar: false,
+
+  /**
+    Flag indicates whether or not rowMenu column is resizable.
+
+    @property unresizableRowMenu
+    @type {Boolean}
+    @default false
+  */
+  unresizableRowMenu: false,
+
   init: function() {
     this._super(...arguments);
     this.modelForDOM = [];
@@ -85,6 +103,8 @@ export default FlexberryBaseComponent.extend({
     this.componentName = this.model.componentName;
     this.perPageValue = this.model.perPageValue;
     this.saveColWidthState = this.model.saveColWidthState;
+    this.unresizableRowToolbar = this.model.unresizableRowToolbar;
+    this.unresizableRowMenu = this.model.unresizableRowMenu;
     let colDescs = this.model.colDescs;
     for (let i = 0; i < colDescs.length; i++) {
       let colDesc = colDescs[i];
@@ -407,6 +427,15 @@ export default FlexberryBaseComponent.extend({
     let colsOrder = [];
     let sortSettings = [];
     let widthSetting = [];
+    let unresizableColumns = [];
+
+    if (this.get('unresizableRowToolbar')) {
+      unresizableColumns.push('OlvRowToolbar');
+    }
+
+    if (this.get('unresizableRowMenu')) {
+      unresizableColumns.push('OlvRowMenu');
+    }
 
     //Set sortSettings and colsOrder array
     for (let i = 0; i < trs.length; i++) {  // Iterate TR list
@@ -425,6 +454,10 @@ export default FlexberryBaseComponent.extend({
           widthSetting[widthSetting.length] = { propName: colDesc.propName, width: width };
         }
       }
+
+      if (colDesc.unresizable) {
+        unresizableColumns.push(colDesc.propName);
+      }
     }
 
     let sortedSettings = sortSettings.sort((a, b) => a.sortPriority - b.sortPriority);  // Sort sortSettings
@@ -441,7 +474,7 @@ export default FlexberryBaseComponent.extend({
       perPage = 5;
     }
 
-    colsConfig = { colsOrder: colsOrder, sorting: sorting, perPage: perPage };  // Set colsConfig Object
+    colsConfig = { colsOrder: colsOrder, sorting: sorting, perPage: perPage, unresizableColumns: unresizableColumns };  // Set colsConfig Object
     if (this.saveColWidthState) {
       colsConfig.columnWidths = widthSetting;
     }

@@ -55,6 +55,15 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   colsconfigController: Ember.inject.controller('colsconfig-dialog'),
 
   /**
+    Object with developer user settings.
+
+    @property developerUserSettings
+    @type Object
+    @default undefined
+  */
+  developerUserSettings: undefined,
+
+  /**
     Method to get type and attributes of component, which will be embeded in object-list-view cell.
 
     @method getCellComponent

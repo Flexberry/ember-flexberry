@@ -7,7 +7,6 @@
           ><th title='{{t "components.colsconfig-dialog-content.column-name"}}' style="cursor:default">{{t "components.colsconfig-dialog-content.column-name"}}</th
           ><th class="sort-direction" title='{{t "components.colsconfig-dialog-content.sort-direction"}}' style="cursor:default"><nobr><i class="large sort content ascending icon"></i><i class="large sort content descending icon"></i></nobr></th
           ><th class="sort-priority" title="{{t "components.colsconfig-dialog-content.sort-priority"}}" style="cursor:default"><i class='large ordered list icon'></i></th
-          ><th class="column-unresizable" title="{{t "components.colsconfig-dialog-content.unresizable"}}" style="cursor:default"><i class='large resize horizontal icon'></i></th
           ><th class="column-width" title="{{t "components.colsconfig-dialog-content.column-width"}}" style="cursor:default"><i class='large text width icon'></i></th
           ></tr
         ></thead
@@ -38,13 +37,7 @@
               </div>
             </td
             ><td class="{{if colDesc.hide 'disabled' ''}}">
-                {{flexberry-checkbox
-                  class="unresizable-value"
-                  value=colDesc.unresizable
-                }}
-            </td
-            ><td class="{{if colDesc.hide 'disabled' ''}}">
-              <div class="ui input {{if (or colDesc.hide (not saveColWidthState)) 'disabled' ''}}">
+              <div class="ui input {{if (or colDesc.hide (or colDesc.fixed (not saveColWidthState))) 'disabled' ''}}">
                 <input id="{{colDesc.columnWidthId}}" size='2' class="columnWidth" value='{{colDesc.columnWidth}}' type='input' {{action "widthChanged"  on="focusOut"}}>
               </div>
             </td
@@ -54,23 +47,7 @@
         </tbody
         ><tfoot class="full-width"
           ><tr
-            ><th colspan='5'style='text-align:right'>{{t "components.colsconfig-dialog-content.unresizable-row-toolbar"}}</th
-              ><th>
-                {{flexberry-checkbox
-                  value=unresizableRowToolbar
-                }}
-              </th><th></th
-          ></tr
-          ><tr
-            ><th colspan='5'style='text-align:right'>{{t "components.colsconfig-dialog-content.unresizable-row-menu"}}</th
-              ><th>
-                {{flexberry-checkbox
-                  value=unresizableRowMenu
-                }}
-              </th><th></th
-          ></tr
-          ><tr
-          ><th colspan='6' style='text-align:right'>{{t "components.colsconfig-dialog-content.col-width-on"}}</th
+          ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.col-width-on"}}</th
             ><th>
               {{flexberry-checkbox
                 class="toggle"
@@ -79,7 +56,7 @@
             </th
           ></tr
           ><tr
-          ><th colspan='6' style='text-align:right'>{{t "components.colsconfig-dialog-content.per-page"}}</th
+          ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.per-page"}}</th
             ><th>
               <div class="ui input">
               <input id="perPageValueInput" size='2' class="perPage" value='{{perPageValue}}' type='input' {{action "perPageChanged"  on="focusOut"}}
@@ -88,7 +65,7 @@
             </th
           ></tr
           ><tr
-            ><th colspan='7'>
+            ><th colspan='6'>
               <div class="ui action input">
                 <input id="columnConfigurtionSettingName" type='input' name='configName'
                   placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'

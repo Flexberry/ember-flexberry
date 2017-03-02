@@ -278,5 +278,6 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
+    controller.set('developerUserSettings', this.get('developerUserSettings'));
   }
 });

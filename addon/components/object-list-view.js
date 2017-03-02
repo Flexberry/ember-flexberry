@@ -402,13 +402,6 @@ export default FlexberryBaseComponent.extend(
       userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
     }
 
-    if (userSettings && userSettings.unresizableColumns) {
-      for (let i = 0; i < cols.length; i++) {
-        let col = cols[i];
-        col.unresizable = userSettings.unresizableColumns.indexOf(col.propName) > -1;
-      }
-    }
-
     let onEditForm = this.get('onEditForm');
 
     // TODO: add userSettings support on edit form.
@@ -1159,27 +1152,28 @@ export default FlexberryBaseComponent.extend(
     let helper = this.get('showHelperColumn');
     let menu = this.get('showMenuColumn');
     let disabledColumns = [];
-    let unresizableColumns;
+    let fixedColumns;
     if (this.notUseUserSettings) {
-      unresizableColumns = this.get('currentController.developerUserSettings');
-      unresizableColumns = unresizableColumns ? unresizableColumns[this.get('componentName')] : undefined;
-      unresizableColumns = unresizableColumns ? unresizableColumns.DEFAULT : undefined;
-      unresizableColumns = unresizableColumns ? unresizableColumns.unresizableColumns || [] : [];
+      fixedColumns = this.get('currentController.developerUserSettings');
+      fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
+      fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+      fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+      fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
     } else {
-      unresizableColumns = this.get('userSettingsService').getUnresizeableColumns(this.componentName) || [];
+      fixedColumns = this.get('userSettingsService').getFixedColumns(this.componentName);
     }
 
-    if (helper && unresizableColumns.indexOf('OlvRowToolbar') > -1) {
+    if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
       disabledColumns.push(0);
     }
 
-    if (menu && unresizableColumns.indexOf('OlvRowMenu') > -1) {
+    if (menu && fixedColumns.indexOf('OlvRowMenu') > -1) {
       disabledColumns.push(helper ? cols.length : cols.length - 1);
     }
 
     for (let i = 0; i < cols.length; i++) {
       let col = cols[i];
-      if (col.unresizable) {
+      if (fixedColumns.indexOf(col.propName) > -1) {
         disabledColumns.push(i);
         disabledColumns.push(helper ? i + 1 : i - 1);
       }
@@ -1222,9 +1216,10 @@ export default FlexberryBaseComponent.extend(
       let width = userColumnInfo.width;
 
       Ember.assert('Property name is not defined at saved user setting.', propName);
-      Ember.assert('Column width is not defined at saved user setting.', width !== undefined);
 
-      hashedUserSetting[propName] = width;
+      if (width !== undefined) {
+        hashedUserSetting[propName] = width;
+      }
     });
 
     let $columns = this.$('table.object-list-view').find('th');
@@ -1264,10 +1259,12 @@ export default FlexberryBaseComponent.extend(
       // There can be fractional values potentially.
       let currentColumnWidth = currentItem.width();
       currentColumnWidth = Math.round(currentColumnWidth);
+      let fixedColumns = this.get('userSettingsService').getFixedColumns();
 
       userWidthSettings.push({
         propName: currentPropertyName,
         width: currentColumnWidth,
+        fixed: fixedColumns.indexOf(currentPropertyName) > -1
       });
     });
     this._setCurrentColumnsWidth();

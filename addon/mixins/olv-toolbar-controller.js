@@ -28,7 +28,7 @@ export default Ember.Mixin.create({
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
       let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
       let perPageValue = this.get('_userSettingsService').getCurrentPerPage(componentName, settingName);
-      let unresizableColumns = this.get('_userSettingsService').getUnresizeableColumns(componentName, settingName);
+      let fixedColumns = this.get('_userSettingsService').getFixedColumns(componentName);
       let saveColWidthState = false;
       let propName;
       let colDesc;  //Column description
@@ -39,7 +39,7 @@ export default Ember.Mixin.create({
       for (let i = 0; i < colList.length; i++) {
         colDesc = colList[i];
         propName = colDesc.propName;
-        colDesc.unresizable = unresizableColumns.indexOf(propName) > -1;
+        colDesc.fixed = fixedColumns.indexOf(propName) > -1;
         namedColList[propName] = colDesc;
       }
 
@@ -105,9 +105,9 @@ export default Ember.Mixin.create({
         }
 
         let name = namedColList[propName].header;
-        let unresizable = namedColList[propName].unresizable;
+        let fixed = namedColList[propName].fixed;
         delete namedColList[propName];
-        colDesc = { name: name, propName: propName, hide: colOrder.hide, unresizable: unresizable };
+        colDesc = { name: name, propName: propName, hide: colOrder.hide, fixed: fixed };
         if (propName in namedSorting) {
           let sortColumn = namedSorting[propName];
           colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
@@ -124,11 +124,8 @@ export default Ember.Mixin.create({
       }
 
       for (propName in namedColList) {
-        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0, unresizable: namedColList[propName].unresizable });
+        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0, fixed: namedColList[propName].fixed });
       }
-
-      let unresizableRowToolbar = unresizableColumns.indexOf('OlvRowToolbar') > -1;
-      let unresizableRowMenu = unresizableColumns.indexOf('OlvRowMenu') > -1;
 
       let controller = this.get('colsconfigController');
 
@@ -144,7 +141,7 @@ export default Ember.Mixin.create({
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
                 { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settingName, perPageValue: perPageValue,
-                saveColWidthState: saveColWidthState,  unresizableRowToolbar: unresizableRowToolbar, unresizableRowMenu: unresizableRowMenu } }, loadingParams);
+                saveColWidthState: saveColWidthState } }, loadingParams);
     }
 
   },

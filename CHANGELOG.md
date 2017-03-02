@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* Add `unresizableColumns` settings in `user-settings` for list components.
+* Add `fixed` settings for columns in `developerUserSettings` for list components.
 
 ### Changed
 * Update `jquery.colResizable` plugin to version 1.6.

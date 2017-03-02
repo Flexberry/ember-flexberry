@@ -162,9 +162,7 @@ export default {
       'is-saved': ' сохранена',
       'col-width-on': 'Включить настройку ширины столбцов',
       'per-page': 'Записей на странице',
-      'unresizable': 'Фиксированная ширина',
-      'unresizable-row-toolbar': 'Фиксированная ширина столбца инструментов',
-      'unresizable-row-menu': 'Фиксированная ширина столбца меню'
+      'unresizable': 'Фиксированная ширина'
     },
 
     'form-load-time-tracker': {

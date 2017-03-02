@@ -1113,27 +1113,28 @@ ErrorableControllerMixin, {
     let helper = this.get('showHelperColumn');
     let menu = this.get('showMenuColumn');
     let disabledColumns = [];
-    let unresizableColumns;
+    let fixedColumns;
     if (this.notUseUserSettings) {
-      unresizableColumns = this.get('currentController.developerUserSettings');
-      unresizableColumns = unresizableColumns ? unresizableColumns[this.get('componentName')] : undefined;
-      unresizableColumns = unresizableColumns ? unresizableColumns.DEFAULT : undefined;
-      unresizableColumns = unresizableColumns ? unresizableColumns.unresizableColumns || [] : [];
+      fixedColumns = this.get('currentController.developerUserSettings');
+      fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
+      fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+      fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+      fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
     } else {
-      unresizableColumns = this.get('userSettingsService').getUnresizeableColumns(this.componentName) || [];
+      fixedColumns = this.get('userSettingsService').getFixedColumns(this.componentName);
     }
 
-    if (helper && unresizableColumns.indexOf('OlvRowToolbar') > -1) {
+    if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
       disabledColumns.push(0);
     }
 
-    if (menu && unresizableColumns.indexOf('OlvRowMenu') > -1) {
+    if (menu && fixedColumns.indexOf('OlvRowMenu') > -1) {
       disabledColumns.push(helper ? cols.length : cols.length - 1);
     }
 
     for (let i = 0; i < cols.length; i++) {
       let col = cols[i];
-      if (col.unresizable) {
+      if (fixedColumns.indexOf(col.propName) > -1) {
         disabledColumns.push(i);
         disabledColumns.push(helper ? i + 1 : i - 1);
       }
@@ -1191,9 +1192,10 @@ ErrorableControllerMixin, {
       let width = userColumnInfo.width;
 
       Ember.assert('Property name is not defined at saved user setting.', propName);
-      Ember.assert('Column width is not defined at saved user setting.', width !== undefined);
 
-      hashedUserSetting[propName] = width;
+      if (width !== undefined) {
+        hashedUserSetting[propName] = width;
+      }
     });
 
     let $columns = $objectListView.find('th');
@@ -1214,10 +1216,9 @@ ErrorableControllerMixin, {
   },
 
   _setColumnsUserSettings() {
-    this._setColumnWidths();
     this._setColumnsOrder();
     this._setColumnsSorting();
-    this._setUnresizableColumns();
+    this._setColumnWidths();
   },
 
   /**
@@ -1278,24 +1279,6 @@ ErrorableControllerMixin, {
     });
   },
 
-  _setUnresizableColumns() {
-    let columns = this.get('columns');
-    if (!columns) {
-      return;
-    }
-
-    let userSettings = this.get('_userSettings');
-    if (userSettings && userSettings.unresizableColumns === undefined) {
-      userSettings.unresizableColumns = [];
-    }
-
-    columns.forEach((cols) => {
-      cols.unresizable = userSettings.unresizableColumns.indexOf(cols.propName) > -1;
-    });
-
-    this._reinitResizablePlugin();
-  },
-
   _resetColumnFilters(componentName) {
     if (this.get('componentName') === componentName) {
       let columns = this.get('columns');
@@ -1340,6 +1323,7 @@ ErrorableControllerMixin, {
       let currentItem = this.$(item);
       let currentPropertyName = this._getColumnPropertyName(currentItem);
       Ember.assert('Column property name is not defined', currentPropertyName);
+      let fixedColumns = this.get('userSettingsService').getFixedColumns();
 
       // There can be fractional values potentially.
       let currentColumnWidth = currentItem.width();
@@ -1348,6 +1332,7 @@ ErrorableControllerMixin, {
       userWidthSettings.push({
         propName: currentPropertyName,
         width: currentColumnWidth,
+        fixed: fixedColumns.indexOf(currentPropertyName) > -1
       });
     });
     this._setCurrentColumnsWidth();

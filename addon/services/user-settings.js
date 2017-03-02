@@ -381,16 +381,18 @@ export default Ember.Service.extend({
   },
 
   /**
-   Returns current unresizable columns.
+   Returns current fixed columns.
 
-   @method getUnresizeableColumns
+   @method getFixedColumns
    @param {String} componentName Name of component.
-   @param {String} settingName Name of setting.
    @return {Array}
    */
-  getUnresizeableColumns(componentName, settingName) {
-    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
-    return currentUserSetting && 'unresizableColumns' in currentUserSetting ? currentUserSetting.unresizableColumns : [];
+  getFixedColumns(componentName) {
+    let fixedColumns = this.getDefaultDeveloperUserSetting(componentName);
+    fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+
+    return fixedColumns;
   },
 
   /**

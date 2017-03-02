@@ -34,7 +34,8 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   developerUserSettings: {
     suggestionUserVotesGroupEdit: {
       'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true }, { 'propName': 'voteType', 'width': 133 }, { 'propName': 'author', 'width': 348 }, { 'propName': 'author.eMail', 'width': 531 }],
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true }, { 'propName': 'voteType', 'width': 133 },
+		{ 'propName': 'author', 'width': 348 }, { 'propName': 'author.eMail', 'width': 531 }],
         'sorting': [{ 'propName': 'author', 'direction': 'asc' }]
       }
     },

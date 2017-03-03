@@ -1152,16 +1152,11 @@ export default FlexberryBaseComponent.extend(
     let helper = this.get('showHelperColumn');
     let menu = this.get('showMenuColumn');
     let disabledColumns = [];
-    let fixedColumns;
-    if (this.notUseUserSettings) {
-      fixedColumns = this.get('currentController.developerUserSettings');
-      fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
-      fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
-      fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
-      fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
-    } else {
-      fixedColumns = this.get('userSettingsService').getFixedColumns(this.componentName);
-    }
+    let fixedColumns = this.get('currentController.defaultDeveloperUserSettings');
+    fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
 
     if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
       disabledColumns.push(0);
@@ -1259,12 +1254,10 @@ export default FlexberryBaseComponent.extend(
       // There can be fractional values potentially.
       let currentColumnWidth = currentItem.width();
       currentColumnWidth = Math.round(currentColumnWidth);
-      let fixedColumns = this.get('userSettingsService').getFixedColumns();
 
       userWidthSettings.push({
         propName: currentPropertyName,
-        width: currentColumnWidth,
-        fixed: fixedColumns.indexOf(currentPropertyName) > -1
+        width: currentColumnWidth
       });
     });
     this._setCurrentColumnsWidth();

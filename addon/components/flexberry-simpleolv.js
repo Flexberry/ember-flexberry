@@ -139,16 +139,6 @@ ErrorableControllerMixin, {
   allowColumnResize: true,
 
   /**
-    Flag indicates whether columns resizable plugin already was initialized.
-
-    @property _colResizableInit
-    @type Boolean
-    @default false
-    @private
-  */
-  _colResizableInit: false,
-
-  /**
     Table add column to sorting action name.
 
     @property addColumnToSorting
@@ -1048,16 +1038,12 @@ ErrorableControllerMixin, {
       }
     }
 
-    if (!this._colResizableInit) {
-      let $currentTable = this.$('table.object-list-view');
-      if (this.get('allowColumnResize')) {
-        $currentTable.addClass('fixed');
-        this._reinitResizablePlugin();
-      } else {
-        $currentTable.colResizable({ disable: true });
-      }
-
-      this.set('_colResizableInit', true);
+    let $currentTable = this.$('table.object-list-view');
+    if (this.get('allowColumnResize')) {
+      $currentTable.addClass('fixed');
+      this._reinitResizablePlugin();
+    } else {
+      $currentTable.colResizable({ disable: true });
     }
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
@@ -1113,16 +1099,11 @@ ErrorableControllerMixin, {
     let helper = this.get('showHelperColumn');
     let menu = this.get('showMenuColumn');
     let disabledColumns = [];
-    let fixedColumns;
-    if (this.notUseUserSettings) {
-      fixedColumns = this.get('currentController.developerUserSettings');
-      fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
-      fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
-      fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
-      fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
-    } else {
-      fixedColumns = this.get('userSettingsService').getFixedColumns(this.componentName);
-    }
+    let fixedColumns = this.get('currentController.defaultDeveloperUserSettings');
+    fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
 
     if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
       disabledColumns.push(0);
@@ -1323,7 +1304,6 @@ ErrorableControllerMixin, {
       let currentItem = this.$(item);
       let currentPropertyName = this._getColumnPropertyName(currentItem);
       Ember.assert('Column property name is not defined', currentPropertyName);
-      let fixedColumns = this.get('userSettingsService').getFixedColumns();
 
       // There can be fractional values potentially.
       let currentColumnWidth = currentItem.width();
@@ -1331,8 +1311,7 @@ ErrorableControllerMixin, {
 
       userWidthSettings.push({
         propName: currentPropertyName,
-        width: currentColumnWidth,
-        fixed: fixedColumns.indexOf(currentPropertyName) > -1
+        width: currentColumnWidth
       });
     });
     this._setCurrentColumnsWidth();

@@ -381,21 +381,6 @@ export default Ember.Service.extend({
   },
 
   /**
-   Returns current fixed columns.
-
-   @method getFixedColumns
-   @param {String} componentName Name of component.
-   @return {Array}
-   */
-  getFixedColumns(componentName) {
-    let fixedColumns = this.getDefaultDeveloperUserSetting(componentName);
-    fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
-    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
-
-    return fixedColumns;
-  },
-
-  /**
    Returns current perPageValue .
 
    @method getCurrentPerPage

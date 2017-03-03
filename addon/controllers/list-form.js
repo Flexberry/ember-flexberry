@@ -64,6 +64,15 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   developerUserSettings: undefined,
 
   /**
+    Object with default developer user settings.
+
+    @property defaultDeveloperUserSettings
+    @type Object
+    @default undefined
+  */
+  defaultDeveloperUserSettings: undefined,
+
+  /**
     Method to get type and attributes of component, which will be embeded in object-list-view cell.
 
     @method getCellComponent

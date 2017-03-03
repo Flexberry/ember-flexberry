@@ -28,7 +28,11 @@ export default Ember.Mixin.create({
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
       let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
       let perPageValue = this.get('_userSettingsService').getCurrentPerPage(componentName, settingName);
-      let fixedColumns = this.get('_userSettingsService').getFixedColumns(componentName);
+      let fixedColumns = this.get('defaultDeveloperUserSettings');
+      fixedColumns = fixedColumns ? fixedColumns[componentName] : undefined;
+      fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+      fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+      fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
       let saveColWidthState = false;
       let propName;
       let colDesc;  //Column description

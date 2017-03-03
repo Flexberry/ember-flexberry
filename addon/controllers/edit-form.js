@@ -178,6 +178,15 @@ FolvOnEditControllerMixin, {
   */
   developerUserSettings: undefined,
 
+  /**
+    Object with default developer user settings.
+
+    @property defaultDeveloperUserSettings
+    @type Object
+    @default undefined
+  */
+  defaultDeveloperUserSettings: undefined,
+
   actions: {
     /**
       Default action for button 'Save'.

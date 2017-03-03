@@ -422,7 +422,7 @@ export default FlexberryBaseComponent.extend({
         let colWidthElement = this._getEventElement('ColumnWidth', index);
         let width = parseInt(colWidthElement.value, 10);
         if (width !== isNaN && width >= 0) {
-          widthSetting[widthSetting.length] = { propName: colDesc.propName, width: width, fixed: colDesc.fixed };
+          widthSetting[widthSetting.length] = { propName: colDesc.propName, width: width };
         }
       }
     }

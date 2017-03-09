@@ -131,6 +131,7 @@ export default {
       'filter-by-any-match-placeholder': 'Поиск...',
       'create-setting-title': 'Новая настройка',
       'use-setting-title': 'Применить',
+      'export-title': 'Выгрузить',
       'edit-setting-title': 'Редактировать',
       'remove-setting-title': 'Удалить',
       'set-default-setting-title': 'Установка по умолчанию',
@@ -145,6 +146,7 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Настроить отображение столбцов',
+      'export-title': 'Экспорт в Excel',
       'dont-show-columns': 'Не отображать столбцы',
       'columns-order': 'Определить порядок столбцов',
       'column-name': 'Название столбца',
@@ -162,7 +164,9 @@ export default {
       'setting': 'Настройка ',
       'is-saved': ' сохранена',
       'col-width-on': 'Включить настройку ширины столбцов',
-      'per-page': 'Записей на странице'
+      'per-page': 'Записей на странице',
+      'det-separate-rows': 'Поля списков в отдельные строки',
+      'det-separate-cols': 'Поля списков в отдельные столбцы'
     },
 
     'form-load-time-tracker': {

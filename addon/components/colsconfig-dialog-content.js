@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
-import OrderByClause from 'ember-flexberry-data/query/order-by-clause';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import ODataAdapter from 'ember-flexberry-data/query/odata-adapter';
 const { getOwner } = Ember;
 const _idPrefix = 'ColDesc';
 
@@ -336,7 +337,7 @@ export default FlexberryBaseComponent.extend({
      @method actions.apply
     */
     apply: function() {
-      if (!this.exportParams.queryParams) {
+      if (!this.exportParams.isExportExcel) {
         let colsConfig = this._getSettings();
         let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
         if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
@@ -356,7 +357,7 @@ export default FlexberryBaseComponent.extend({
       } else {
         let store = this.get('store');
         let adapter = store.adapterFor(this.exportParams.queryParams.modelName);
-        let url = adapter.buildExportExcelURL(store, this._getCurrentQuery());
+        let url = adapter.buildExportExcelURL(store, this._getCurrentQuery(), this.exportParams.detSeparateCols, this.exportParams.detSeparateRows);
         let anchor = Ember.$('.download-anchor');
         if (!Ember.isNone(anchor)) {
           anchor.prop('href', url);
@@ -429,6 +430,24 @@ export default FlexberryBaseComponent.extend({
     perPageChanged: function() {
       this._changed();
     },
+
+    /**
+      DetSeparateCols value is changed
+
+      @method actions.detSeparateColsChange
+    */
+    detSeparateColsChange: function() {
+      this._changed();
+    },
+
+    /**
+      DetSeparateRows value is changed
+
+      @method actions.detSeparateRowsChange
+    */
+    detSeparateRowsChange: function() {
+      this._changed();
+    },
   },
 
   /**
@@ -437,29 +456,30 @@ export default FlexberryBaseComponent.extend({
     @method _getCurrentQuery
   */
   _getCurrentQuery: function() {
-    let query = this.exportParams.queryParams;
     let settings = this._getSettings();
+    let select = settings.colsOrder.filter(({ hide }) => !hide).map(({ propName }) => propName);
     let sortString = '';
+    let modelName = this.exportParams.queryParams.modelName;
     settings.sorting.map(sort => {
       sortString += `${sort.propName} ${sort.direction},`;
     });
     sortString = sortString.slice(0, -1);
-    query.order = Ember.isBlank(sortString) ? undefined : new OrderByClause(sortString);
-    query.skip = undefined;
-    query.top = undefined;
-    query.projectionName = undefined;
-    query.select = ['id'];
-    settings.colsOrder.map(col => {
-      if (!col.hide) {
-        query.select.push(col.propName);
-      }
-    });
+    let builder = new QueryBuilder(this.get('store'), modelName);
+    let adapter = new ODataAdapter('123', this.get('store'));
+    builder.selectByProjection(this.exportParams.projectionName, true);
+    let colsOrder = select.map(propName => adapter._getODataAttributeName(modelName, propName).replace('/', '.')).join();
+    if (sortString) {
+      builder.orderBy(sortString);
+    }
+
+    let query = builder.build();
+    query.colsOrder = colsOrder;
 
     return query;
   },
 
   _getSavePromise: function(settingName, colsConfig) {
-    return this.get('userSettingsService').saveUserSetting(this.componentName, settingName, colsConfig)
+    return this.get('userSettingsService').saveUserSetting(this.componentName, settingName, colsConfig, this.exportParams.isExportExcel)
     .then(result => {
       this.get('colsConfigMenu').updateNamedSettingTrigger();
     });
@@ -508,6 +528,11 @@ export default FlexberryBaseComponent.extend({
     colsConfig = { colsOrder: colsOrder, sorting: sorting, perPage: perPage };  // Set colsConfig Object
     if (this.saveColWidthState) {
       colsConfig.columnWidths = widthSetting;
+    }
+
+    if (this.exportParams.isExportExcel) {
+      colsConfig.detSeparateRows = this.exportParams.detSeparateRows;
+      colsConfig.detSeparateCols = this.exportParams.detSeparateCols;
     }
 
     return colsConfig;

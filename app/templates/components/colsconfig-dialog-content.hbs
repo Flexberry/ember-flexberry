@@ -24,7 +24,7 @@
             </td
             ><td class="{{if colDesc.hide 'disabled' ''}}">{{colDesc.name}}</td
             ><td
-              ><select class="ui compact dropdown selection icon button {{if colDesc.hide 'disabled' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n on='change'}}>
+              ><select class="ui compact dropdown selection icon button {{if colDesc.hide 'disabled' ''}} {{if colDesc.isHasMany 'hidden' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n on='change'}}>
                 <option selected='{{colDesc.sortOrderNot}}' value='0'>-</option>
                 <option selected='{{colDesc.sortOrderAsc}}' value='1'>▲</option>
                 <option selected='{{colDesc.sortOrderDesc}}' value='-1'>▼</option>
@@ -45,8 +45,24 @@
           ></tr>
 {{/each}}
         </tbody
-        ><tfoot class="full-width"
-          ><tr class="{{if exportParams.isExportExcel 'hidden' ''}}"
+        ><tfoot class="full-width">
+          {{#if exportParams.isExportExcel}}
+          <tr
+            ><th colspan='6'>
+              {{flexberry-checkbox
+                label=(t "components.colsconfig-dialog-content.det-separate-cols")
+                value=exportParams.detSeparateCols
+                onChange=(action "detSeparateColsChange")
+              }}
+              {{flexberry-checkbox
+                label=(t "components.colsconfig-dialog-content.det-separate-rows")
+                value=exportParams.detSeparateRows
+                onChange=(action "detSeparateRowsChange")
+              }}
+            </th
+          ></tr>
+          {{/if}}
+          <tr class="{{if exportParams.isExportExcel 'hidden' ''}}"
           ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.col-width-on"}}</th
             ><th>
               {{flexberry-checkbox

@@ -32,8 +32,21 @@ export default Ember.Mixin.create({
       let propName;
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
-      let projectionAttributes = this.modelProjection.attributes;
-      let colList = this._generateColumns(projectionAttributes);
+      let projectionAttributes;
+      if (isExportExcel) {
+        let modelName = this.get('queryParams.modelName');
+        let exportExcelProjectionName = this.get('exportExcelProjection');
+        Ember.assert('Property exportExcelProjection is not defined in controller.', exportExcelProjectionName);
+
+        let exportExcelProjection = this.store.modelFor(modelName).projections.get(exportExcelProjectionName);
+        Ember.assert(`Projection "${exportExcelProjectionName}" is not defined in model "${modelName}".`, exportExcelProjection);
+
+        projectionAttributes = exportExcelProjection.attributes;
+      } else {
+        projectionAttributes = this.modelProjection.attributes;
+      }
+
+      let colList = this._generateColumns(projectionAttributes, isExportExcel);
       let namedColList = {};
       for (let i = 0; i < colList.length; i++) {
         colDesc = colList[i];
@@ -103,8 +116,9 @@ export default Ember.Mixin.create({
         }
 
         let name = namedColList[propName].header;
+        let isHasMany = namedColList[propName].isHasMany;
         delete namedColList[propName];
-        colDesc = { name: name, propName: propName, hide: colOrder.hide };
+        colDesc = { name: name, propName: propName, hide: colOrder.hide, isHasMany: isHasMany };
         if (propName in namedSorting) {
           let sortColumn = namedSorting[propName];
           colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
@@ -121,14 +135,23 @@ export default Ember.Mixin.create({
       }
 
       for (propName in namedColList) {
-        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 });
+        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0, isHasMany: namedColList[propName].isHasMany });
       }
 
-      let exportParams = {};
+      let exportParams = { isExportExcel: false };
+      let settName = settingName;
       if (isExportExcel) {
         exportParams.queryParams = this.get('queryParams');
         exportParams.isExportExcel = true;
         exportParams.immediateExport = immediateExport;
+        exportParams.projectionName = this.get('exportExcelProjection');
+        exportParams.detSeparateCols = this.get('_userSettingsService').getDetSeparateCols(componentName, settingName);
+        exportParams.detSeparateRows = this.get('_userSettingsService').getDetSeparateRows(componentName, settingName);
+        if (settName) {
+          settName = settName.split('/');
+          settName.shift();
+          settName = settName.join('/');
+        }
       }
 
       let store = this.get('store');
@@ -146,7 +169,7 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settingName, perPageValue: perPageValue,
+                { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settName, perPageValue: perPageValue,
                 saveColWidthState: saveColWidthState, exportParams: exportParams, store: store } }, loadingParams);
     }
 
@@ -158,7 +181,7 @@ export default Ember.Mixin.create({
     @method _generateColumns
     @private
   */
-  _generateColumns(attributes, columnsBuf, relationshipPath) {
+  _generateColumns(attributes, isExportExcel, columnsBuf, relationshipPath) {
     columnsBuf = columnsBuf || [];
     relationshipPath = relationshipPath || '';
 
@@ -172,6 +195,12 @@ export default Ember.Mixin.create({
       Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
         case 'hasMany':
+          if (isExportExcel && !attr.options.hidden) {
+            let bindingPath = currentRelationshipPath + attrName;
+            let column = this._createColumn(attr, attrName, bindingPath, true);
+            columnsBuf.push(column);
+          }
+
           break;
 
         case 'belongsTo':
@@ -191,7 +220,7 @@ export default Ember.Mixin.create({
           }
 
           currentRelationshipPath += attrName + '.';
-          this._generateColumns(attr.attributes, columnsBuf, currentRelationshipPath);
+          this._generateColumns(attr.attributes, isExportExcel, columnsBuf, currentRelationshipPath);
           break;
 
         case 'attr':
@@ -243,7 +272,7 @@ export default Ember.Mixin.create({
     @method _createColumn
     @private
   */
-  _createColumn(attr, attrName, bindingPath) {
+  _createColumn(attr, attrName, bindingPath, isHasMany = false) {
     // We get the 'getCellComponent' function directly from the controller,
     // and do not pass this function as a component attrubute,
     // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
@@ -264,6 +293,7 @@ export default Ember.Mixin.create({
       header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
+      isHasMany: isHasMany,
     };
 
     if (valueFromLocales) {

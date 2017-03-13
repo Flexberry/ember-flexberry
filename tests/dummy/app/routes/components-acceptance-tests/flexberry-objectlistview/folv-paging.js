@@ -30,7 +30,16 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { FOLVSettingExampleObjectListView: { } },
+  developerUserSettings: { FOLVPagingObjectListView: {
+        "DEFAULT": {
+        "sorting": [
+        {
+          "propName": "name",
+          "direction": "asc",
+          "sortPriority": 1
+        }
+        ]}
+   } },
 
   /**
     Name of model to be used as list's records types.

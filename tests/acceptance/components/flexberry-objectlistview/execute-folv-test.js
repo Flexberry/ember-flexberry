@@ -73,7 +73,7 @@ export function loadingList($ctrlForClick, list, records) {
   });
 }
 
-export function checkSortingList(store, assert, projection, $olv, ordr) {
+export function checkSortingList(store, projection, $olv, ordr) {
   return new Ember.RSVP.Promise((resolve) => {
     Ember.run(() => {
       let modelName = projection.modelName;

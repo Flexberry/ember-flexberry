@@ -23,12 +23,12 @@ executeTest('check sorting', (store, assert, app) => {
       let done = assert.async();
 
       // Check sortihg in the first column. Sorting is not append.
-      checkSortingList(store, assert,  projectionName, $olv, null).then((isTrue) => {
+      checkSortingList(store, projectionName, $olv, null).then((isTrue) => {
         assert.ok(isTrue, 'sorting is not applied');
 
         // Check sortihg icon in the first column. Sorting icon is not added.
         assert.equal(getTh(0).children[0].children.length, 1, 'no sorting icon in the first column');
-
+        let done1 = assert.async();
         loadingList(getTh(0), olvContainerClass, trTableClass).then(($list) => {
           let ord = () => { return Ember.$(getTh(0).children[0].children[1].children[0]); };
 
@@ -36,29 +36,29 @@ executeTest('check sorting', (store, assert, app) => {
           assert.equal(ord().attr('title'), 'Order ascending', 'title is Order ascending');
           assert.equal(Ember.$.trim(ord().text()), String.fromCharCode('9650') + '1', 'sorting symbol added');
 
-          let done1 = assert.async();
-          checkSortingList(store, assert,  projectionName, $olv, 'address asc').then((isTrue) => {
+          let done2 = assert.async();
+          checkSortingList(store, projectionName, $olv, 'address asc').then((isTrue) => {
             assert.ok(isTrue, 'sorting applied');
-            let done2 = assert.async();
+            let done3 = assert.async();
             loadingList(getTh(0), olvContainerClass, trTableClass).then(($list) => {
 
               assert.ok($list);
               assert.equal(ord().attr('title'), 'Order descending', 'title is Order descending');
               assert.equal(Ember.$.trim(ord().text()), String.fromCharCode('9660') + '1', 'sorting symbol changed');
 
-              let done3 = assert.async();
-              checkSortingList(store, assert,  projectionName, $olv, 'address desc').then((isTrue) => {
+              let done4 = assert.async();
+              checkSortingList(store, projectionName, $olv, 'address desc').then((isTrue) => {
                 assert.ok(isTrue, 'sorting applied');
-                done3();
+                done4();
               });
             }).finally(() => {
-              done2();
+              done3();
             });
-            done1();
+            done2();
           });
-        }).finally(() => {
-          done();
+          done1();
         });
+        done();
       });
     });
   });

@@ -22,7 +22,7 @@ executeTest('check wrapper and projection', (store, assert, app) => {
     let dtHeadTable = Ember.$('.dt-head-left.me.class', 'thead', $tableInFolvContainer);
 
     let done = assert.async();
-    checkSortingList(store, assert,  projectionName(), $olv, null).then((isTrue) => {
+    checkSortingList(store, projectionName(), $olv, null).then((isTrue) => {
       assert.ok(isTrue, 'records are displayed correctly');
       done();
     });

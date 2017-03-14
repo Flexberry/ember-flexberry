@@ -5,7 +5,7 @@ import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import { Query } from 'ember-flexberry-data';
 const { Builder } = Query;
 
-executeTest('check delete and checked', (store, assert, app) => {
+executeTest('check delete button in row', (store, assert, app) => {
   assert.expect(4);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   let modelName = 'ember-flexberry-dummy-suggestion-type';
@@ -55,16 +55,18 @@ executeTest('check delete and checked', (store, assert, app) => {
           });
 
           assert.ok(recordsIsDeleteBtnInRow, 'Each entry begins with \'' + uuid + '\' is delete with button in row');
-
-          // Check that the records have been removed into store.
-          let builder2 = new Builder(store).from(modelName).where('name', Query.FilterOperator.Eq, uuid).count();
-          store.query(modelName, builder2.build()).then((result) => {
-            assert.notOk(result.meta.count, 'record \'' + uuid + '\'not found in store');
-          });
         });
         done();
       });
       done1();
+    });
+
+    // Check that the records have been removed into store.
+    let builder2 = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid).count();
+    let done2 = assert.async();
+    store.query(modelName, builder2.build()).then((result) => {
+      assert.notOk(result.meta.count, 'record \'' + uuid + '\'not found in store');
+      done2();
     });
   });
 });

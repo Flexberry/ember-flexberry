@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
+
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 import I18nEnLocale from 'ember-flexberry/locales/en/translations';
 
@@ -8,15 +9,22 @@ executeTest('check locale change', (store, assert, app) => {
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
   andThen(() => {
-
-    // Set 'ru' as current locale.
-    let i18n = app.__container__.lookup('service:i18n');
-    i18n.set('locale', 'ru');
-
     assert.equal(currentPath(), path);
 
-    let $toolBar = Ember.$('.ui.secondary.menu')[0];
-    let $toolBarButtons = $toolBar.children;
+    function loadingLocales(locale) {
+      return new Ember.RSVP.Promise((resolve) => {
+        let i18n = app.__container__.lookup('service:i18n');
+
+        Ember.run(() => {
+          i18n.set('locale', locale);
+        });
+
+        let timeout = 500;
+        Ember.run.later((() => {
+          resolve({ msg: 'ok' });
+        }), timeout);
+      });
+    }
 
     function toolbarBtnTextAssert(currentLocale) {
       assert.notEqual($toolBarButtons.length, 0, 'buttons in toolbar exists');
@@ -26,15 +34,15 @@ executeTest('check locale change', (store, assert, app) => {
       assert.equal($($toolBarButtons[2]).hasClass('disabled'), true, 'button delete is disabled');
     }
 
-    toolbarBtnTextAssert(I18nRuLocale);
+    let $toolBar = Ember.$('.ui.secondary.menu')[0];
+    let $toolBarButtons = $toolBar.children;
 
-    // En
-    i18n.set('locale', 'en');
-
-    let timeout = 2000;
-    Ember.run.later((() => {
-      toolbarBtnTextAssert(I18nEnLocale);
-    }), timeout);
-
+    // Set 'ru' as current locale.
+    loadingLocales('ru').then(() => {
+      toolbarBtnTextAssert(I18nRuLocale);
+      loadingLocales('en').then(() => {
+        toolbarBtnTextAssert(I18nEnLocale);
+      });
+    });
   });
 });

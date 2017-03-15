@@ -17,11 +17,11 @@ executeTest('check paging', (store, assert) => {
     let builder = new Builder(store).from(modelName).count();
     let done = assert.async();
     store.query(modelName, builder.build()).then((result) => {
-      let howAddRec = 53 - result.meta.count;
+      let howAddRec = 12 - result.meta.count;
       let newRecords = Ember.A();
 
       for (let i = 0; i < howAddRec; i++) {
-        newRecords.pushObject(store.createRecord('ember-flexberry-dummy-suggestion-type', { name: uuid }));
+        newRecords.pushObject(store.createRecord(modelName, { name: uuid }));
       }
 
       let done1 = assert.async();
@@ -74,28 +74,26 @@ executeTest('check paging', (store, assert) => {
 
               // The list should be more than 10 items
               assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
-
-              let builder1 = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid);
-              let done4 = assert.async();
-              store.query(modelName, builder1.build()).then((results) => {
-                results.content.forEach(function(item) {
-                  item.deleteRecord(); // => DELETE to /posts/2
-                  item.save();
-                });
-                done4();
-              });
             }).catch((reason) => {
               throw new Error(reason);
             }).finally(() => {
               done3();
-
             });
           }), timeout);
-
         });
         done1();
       });
       done();
+    });
+
+    let builder1 = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid);
+    let done4 = assert.async();
+    store.query(modelName, builder1.build()).then((results) => {
+      results.content.forEach(function(item) {
+        item.deleteRecord();
+        item.save();
+      });
+      done4();
     });
   });
 });

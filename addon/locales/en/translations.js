@@ -131,6 +131,7 @@ export default {
       'filter-by-any-match-placeholder': 'Search...',
       'create-setting-title': 'New setting',
       'use-setting-title': 'Use',
+      'export-title': 'Unload',
       'edit-setting-title': 'Edit',
       'remove-setting-title': 'Remove',
       'set-default-setting-title': 'Default setting',
@@ -144,6 +145,7 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Customize the display of colums',
+      'export-title': 'Export in Excel',
       'dont-show-columns': 'Do not display columns',
       'columns-order': 'Specify the order of the columns',
       'column-name': 'Column name',
@@ -154,13 +156,16 @@ export default {
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',
+      'export': 'Unload',
       'use-without-save': 'Use this settings without saving in setting ',
       'save': 'Save',
       'have-errors': 'When you save a configuration errors occurred: ',
       'setting': 'Setting ',
       'is-saved': ' is saved',
       'col-width-on': 'Enable setting column widths',
-      'per-page': 'Records count on page'
+      'per-page': 'Records count on page',
+      'det-separate-rows': 'List\'s properties in separate rows',
+      'det-separate-cols': 'List\'s properties in separate columns'
     },
 
     'form-load-time-tracker': {

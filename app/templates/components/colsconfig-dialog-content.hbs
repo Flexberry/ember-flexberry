@@ -37,11 +37,11 @@
               </div>
             </td
             ><td class="{{if colDesc.hide 'disabled' ''}}">
-            <div class="ui input {{if (or colDesc.hide (or exportParams.isExportExcel (not saveColWidthState))) 'disabled' ''}}">
-            <input id="{{colDesc.columnWidthId}}" size='2' class="columnWidth" value='{{colDesc.columnWidth}}' type='input' {{action "widthChanged"  on="focusOut"}}
-                  >
+              <div class="ui input {{if (or colDesc.hide (or exportParams.isExportExcel (or colDesc.fixed (not saveColWidthState)))) 'disabled' ''}}">
+                <input id="{{colDesc.columnWidthId}}" size='2' class="columnWidth" value='{{colDesc.columnWidth}}' type='input' {{action "widthChanged"  on="focusOut"}}>
               </div>
             </td
+
           ></tr>
 {{/each}}
         </tbody

@@ -166,7 +166,8 @@ export default {
       'col-width-on': 'Включить настройку ширины столбцов',
       'per-page': 'Записей на странице',
       'det-separate-rows': 'Поля списков в отдельные строки',
-      'det-separate-cols': 'Поля списков в отдельные столбцы'
+      'det-separate-cols': 'Поля списков в отдельные столбцы',
+      'unresizable': 'Фиксированная ширина'
     },
 
     'form-load-time-tracker': {

@@ -110,6 +110,11 @@ ErrorableControllerMixin, {
     }
   }),
 
+  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+  }),
+
   /**
     Main model projection. Accepts object projections.
     Needs for support locales of captions.
@@ -132,16 +137,6 @@ ErrorableControllerMixin, {
     @default true
   */
   allowColumnResize: true,
-
-  /**
-    Flag indicates whether columns resizable plugin already was initialized.
-
-    @property _colResizableInit
-    @type Boolean
-    @default false
-    @private
-  */
-  _colResizableInit: false,
 
   /**
     Table add column to sorting action name.
@@ -1043,16 +1038,12 @@ ErrorableControllerMixin, {
       }
     }
 
-    if (!this._colResizableInit) {
-      let $currentTable = this.$('table.object-list-view');
-      if (this.get('allowColumnResize')) {
-        $currentTable.addClass('fixed');
-        this._reinitResizablePlugin();
-      } else {
-        $currentTable.colResizable({ disable: true });
-      }
-
-      this.set('_colResizableInit', true);
+    let $currentTable = this.$('table.object-list-view');
+    if (this.get('allowColumnResize')) {
+      $currentTable.addClass('fixed');
+      this._reinitResizablePlugin();
+    } else {
+      $currentTable.colResizable({ disable: true });
     }
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
@@ -1104,13 +1095,38 @@ ErrorableControllerMixin, {
   */
   _reinitResizablePlugin() {
     let $currentTable = this.$('table.object-list-view');
+    let cols = this.get('columns');
+    let helper = this.get('showHelperColumn');
+    let menu = this.get('showMenuColumn');
+    let disabledColumns = [];
+    let fixedColumns = this.get('currentController.defaultDeveloperUserSettings');
+    fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+
+    if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
+      disabledColumns.push(0);
+    }
+
+    if (menu && fixedColumns.indexOf('OlvRowMenu') > -1) {
+      disabledColumns.push(helper ? cols.length : cols.length - 1);
+    }
+
+    for (let i = 0; i < cols.length; i++) {
+      let col = cols[i];
+      if (fixedColumns.indexOf(col.propName) > -1) {
+        disabledColumns.push(i);
+        disabledColumns.push(helper ? i + 1 : i - 1);
+      }
+    }
 
     // Disable plugin and then init it again.
     $currentTable.colResizable({ disable: true });
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode: 'flex',
+      disabledColumns: disabledColumns,
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);
@@ -1157,9 +1173,10 @@ ErrorableControllerMixin, {
       let width = userColumnInfo.width;
 
       Ember.assert('Property name is not defined at saved user setting.', propName);
-      Ember.assert('Column width is not defined at saved user setting.', width !== undefined);
 
-      hashedUserSetting[propName] = width;
+      if (width !== undefined) {
+        hashedUserSetting[propName] = width;
+      }
     });
 
     let $columns = $objectListView.find('th');
@@ -1180,9 +1197,9 @@ ErrorableControllerMixin, {
   },
 
   _setColumnsUserSettings() {
-    this._setColumnWidths();
     this._setColumnsOrder();
     this._setColumnsSorting();
+    this._setColumnWidths();
   },
 
   /**
@@ -1294,7 +1311,7 @@ ErrorableControllerMixin, {
 
       userWidthSettings.push({
         propName: currentPropertyName,
-        width: currentColumnWidth,
+        width: currentColumnWidth
       });
     });
     this._setCurrentColumnsWidth();

@@ -161,7 +161,8 @@ export default {
       'setting': 'Настройка ',
       'is-saved': ' сохранена',
       'col-width-on': 'Включить настройку ширины столбцов',
-      'per-page': 'Записей на странице'
+      'per-page': 'Записей на странице',
+      'unresizable': 'Фиксированная ширина'
     },
 
     'form-load-time-tracker': {

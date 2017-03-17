@@ -51,7 +51,7 @@
       <tr>
         <td rowspan="2" class="{{unless (and showHelperColumn hasContent) 'hidden'}}"></td>
         {{#each columns as |column|}}
-          <td>
+          <td style={{defaultPaddingStyle}}>
             {{#if column.filter.conditions}}
               {{component "flexberry-dropdown"
                 value=column.filter.condition
@@ -69,7 +69,7 @@
       </tr>
       <tr>
         {{#each columns as |column|}}
-          <td>
+          <td style={{defaultPaddingStyle}}>
             {{#if column.filter.component.name}}
               {{component column.filter.component.name
                 value=column.filter.pattern

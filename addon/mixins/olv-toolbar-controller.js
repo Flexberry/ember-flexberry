@@ -28,6 +28,11 @@ export default Ember.Mixin.create({
       let sorting = this.get('_userSettingsService').getCurrentSorting(componentName, settingName);
       let columnWidths = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName);
       let perPageValue = this.get('_userSettingsService').getCurrentPerPage(componentName, settingName);
+      let fixedColumns = this.get('defaultDeveloperUserSettings');
+      fixedColumns = fixedColumns ? fixedColumns[componentName] : undefined;
+      fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+      fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+      fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
       let saveColWidthState = false;
       let propName;
       let colDesc;  //Column description
@@ -38,6 +43,7 @@ export default Ember.Mixin.create({
       for (let i = 0; i < colList.length; i++) {
         colDesc = colList[i];
         propName = colDesc.propName;
+        colDesc.fixed = fixedColumns.indexOf(propName) > -1;
         namedColList[propName] = colDesc;
       }
 
@@ -103,8 +109,9 @@ export default Ember.Mixin.create({
         }
 
         let name = namedColList[propName].header;
+        let fixed = namedColList[propName].fixed;
         delete namedColList[propName];
-        colDesc = { name: name, propName: propName, hide: colOrder.hide };
+        colDesc = { name: name, propName: propName, hide: colOrder.hide, fixed: fixed };
         if (propName in namedSorting) {
           let sortColumn = namedSorting[propName];
           colDesc.sortOrder = sortColumn.direction === 'asc' ? 1 : -1;
@@ -121,7 +128,7 @@ export default Ember.Mixin.create({
       }
 
       for (propName in namedColList) {
-        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0 });
+        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0, fixed: namedColList[propName].fixed });
       }
 
       let controller = this.get('colsconfigController');

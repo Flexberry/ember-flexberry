@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Add `fixed` settings for columns in `developerUserSettings` for list components.
+
+### Changed
+* Update `jquery.colResizable` plugin to version 1.6.
 
 ## [0.9.0-beta.0] - 2017-02-22
 ### Added

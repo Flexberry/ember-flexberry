@@ -3,13 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.0-beta.1] - 2017-03-18
 ### Added
 * `olv-toolbar` component:
     * Add default value for `modelController`. It's needed when using `olv-toolbar` component separately (apart from list components).
 * Add export excel feature for list components.
-* Add `fixed` settings for columns in `developerUserSettings` for list components.
+* Add `fixed` setting for columns in `developerUserSettings` for list components.
 
 ### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.1.
 * Update `jquery.colResizable` plugin to version 1.6.
 
 ### Fixed

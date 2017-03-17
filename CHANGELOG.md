@@ -4,11 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* `olv-toolbar` component:
+    * Add default value for `modelController`. It's needed when using `olv-toolbar` component separately (apart from list components).
 * Add export excel feature for list components.
 * Add `fixed` settings for columns in `developerUserSettings` for list components.
 
 ### Changed
 * Update `jquery.colResizable` plugin to version 1.6.
+>>>>>>> develop
 
 ## [0.9.0-beta.0] - 2017-02-22
 ### Added

@@ -612,6 +612,10 @@ export default FlexberryBaseComponent.extend({
     let infoModalDialog = this.$('.olv-toolbar-info-modal-dialog');
     infoModalDialog.modal('setting', 'closable', true);
     this.set('_infoModalDialog', infoModalDialog);
+    let modelController = this.get('modelController');
+    if (Ember.isNone(modelController)) {
+      this.set('modelController', this.get('currentController'));
+    }
   },
 
   /**

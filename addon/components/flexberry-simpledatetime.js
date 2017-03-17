@@ -111,8 +111,16 @@ export default FlexberryBaseComponent.extend({
   value: Ember.computed('_valueAsString', '_valueAsDate', 'currentTypeSupported', {
     get() {
       if (this.get('currentTypeSupported')) {
+        if (this.get('type') === 'date') {
+          return this._convertDateToLocal(this.get('_valueAsString'));
+        }
+
         return this._convertStringToDate(this.get('_valueAsString'));
       } else {
+        if (this.get('type') === 'date') {
+          return this._convertDateToLocal(this.get('_valueAsDate'));
+        }
+
         return this.get('_valueAsDate');
       }
     },
@@ -337,4 +345,22 @@ export default FlexberryBaseComponent.extend({
 
     return moment(value).toDate();
   },
+
+  /**
+    Converts date (without time) to local date.
+
+    @method _convertDateToLocal
+    @param {String|Date} value Date without timezone shift.
+    @return {Date} Object of Date.
+    @private
+  */
+  _convertDateToLocal(value) {
+    let momentDate = moment(value);
+    let hours = momentDate.utcOffset() / 60;
+    momentDate.hours(hours);
+    momentDate.minutes(0);
+    momentDate.seconds(0);
+
+    return momentDate.toDate();
+  }
 });

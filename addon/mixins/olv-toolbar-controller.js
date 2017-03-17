@@ -142,7 +142,8 @@ export default Ember.Mixin.create({
       }
 
       for (propName in namedColList) {
-        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0, isHasMany: namedColList[propName].isHasMany, fixed: namedColList[propName].fixed });
+        colDescs.push({ propName: propName, name: namedColList[propName].header, hide: false, sortOrder: 0,
+          isHasMany: namedColList[propName].isHasMany, fixed: namedColList[propName].fixed });
       }
 
       let exportParams = { isExportExcel: false };

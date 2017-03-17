@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* Add export excel feature for list components.
 * Add `fixed` settings for columns in `developerUserSettings` for list components.
 
 ### Changed

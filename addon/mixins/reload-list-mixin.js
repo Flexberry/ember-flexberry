@@ -124,7 +124,9 @@ export default Ember.Mixin.create({
       builder.where(resultPredicate);
     }
 
-    this.set('controller.queryParams', builder.build());
+    if (this.get('controller')) {
+      this.set('controller.queryParams', builder.build());
+    }
 
     return store.query(modelName, builder.build());
   },

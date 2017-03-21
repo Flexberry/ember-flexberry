@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.0-beta.2] - 2017-03-21
+### Fixed
+* `reload-list` mixin:
+    * Сontroller is unaccessible in some cases inside `reloadList` method. So we added corresponding checks.
+
 ## [0.9.0-beta.1] - 2017-03-18
 ### Added
 * `olv-toolbar` component:

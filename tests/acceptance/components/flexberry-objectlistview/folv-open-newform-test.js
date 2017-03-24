@@ -1,5 +1,7 @@
 import Ember from 'ember';
-import { executeTest, loadingList } from './execute-folv-test';
+import { executeTest } from './execute-folv-test';
+import { loadingList } from './folv-tests-functions';
+
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 
 executeTest('check goto new form', (store, assert, app) => {

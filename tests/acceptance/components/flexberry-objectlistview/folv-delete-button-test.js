@@ -1,5 +1,7 @@
 import Ember from 'ember';
-import { executeTest, loadingList } from './execute-folv-test';
+import { executeTest } from './execute-folv-test';
+import { loadingList } from './folv-tests-functions';
+
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 import { Query } from 'ember-flexberry-data';

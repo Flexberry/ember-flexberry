@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import { executeTest, loadingList } from './execute-folv-test';
+import { executeTest } from './execute-folv-test';
+import { loadingList } from './folv-tests-functions';
 
 executeTest('check goto editform', (store, assert, app) => {
   assert.expect(5);

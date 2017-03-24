@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import { executeTest, checkSortingList } from './execute-folv-test';
+import { executeTest } from './execute-folv-test';
+import { checkSortingList } from './folv-tests-functions';
 
 executeTest('check wrapper and projection', (store, assert, app) => {
   assert.expect(6);

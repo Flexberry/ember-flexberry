@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import { executeTest, loadingList, checkSortingList } from './execute-folv-test';
+import { executeTest } from './execute-folv-test';
+import { loadingList, checkSortingList } from './folv-tests-functions';
 
 var olvContainerClass = '.object-list-view-container';
 var trTableClass = 'table.object-list-view tbody tr';
@@ -17,7 +18,7 @@ executeTest('check sorting', (store, assert, app) => {
     let projectionName = Ember.get(controller, 'modelProjection');
 
     let $olv = Ember.$('.object-list-view ');
-    let getTh = (item) => { return Ember.$('th.dt-head-left', $olv)[item]; };
+    let $thead = Ember.$('th.dt-head-left', $olv)[0];
 
     Ember.run(() => {
       let done = assert.async();
@@ -27,24 +28,30 @@ executeTest('check sorting', (store, assert, app) => {
         assert.ok(isTrue, 'sorting is not applied');
 
         // Check sortihg icon in the first column. Sorting icon is not added.
-        assert.equal(getTh(0).children[0].children.length, 1, 'no sorting icon in the first column');
+        assert.equal($thead.children[0].children.length, 1, 'no sorting icon in the first column');
         let done1 = assert.async();
-        loadingList(getTh(0), olvContainerClass, trTableClass).then(($list) => {
-          let ord = () => { return Ember.$(getTh(0).children[0].children[1].children[0]); };
+        loadingList($thead, olvContainerClass, trTableClass).then(($list) => {
+          let $thead = Ember.$('th.dt-head-left', $olv)[0];
+          let $ord = Ember.$('.object-list-view-order-icon', $thead);
+          let $divOrd = Ember.$('div', $ord);
 
           assert.ok($list);
-          assert.equal(ord().attr('title'), 'Order ascending', 'title is Order ascending');
-          assert.equal(Ember.$.trim(ord().text()), String.fromCharCode('9650') + '1', 'sorting symbol added');
+          assert.equal($divOrd.attr('title'), 'Order ascending', 'title is Order ascending');
+          assert.equal(Ember.$.trim($divOrd.text()), String.fromCharCode('9650') + '1', 'sorting symbol added');
 
           let done2 = assert.async();
           checkSortingList(store, projectionName, $olv, 'address asc').then((isTrue) => {
             assert.ok(isTrue, 'sorting applied');
             let done3 = assert.async();
-            loadingList(getTh(0), olvContainerClass, trTableClass).then(($list) => {
+            loadingList($thead, olvContainerClass, trTableClass).then(($list) => {
+              let $thead = Ember.$('th.dt-head-left', $olv)[0];
+              let $ord = Ember.$('.object-list-view-order-icon', $thead);
+              let $divOrd = Ember.$('div', $ord);
 
               assert.ok($list);
-              assert.equal(ord().attr('title'), 'Order descending', 'title is Order descending');
-              assert.equal(Ember.$.trim(ord().text()), String.fromCharCode('9660') + '1', 'sorting symbol changed');
+
+              assert.equal($divOrd.attr('title'), 'Order descending', 'title is Order descending');
+              assert.equal(Ember.$.trim($divOrd.text()), String.fromCharCode('9660') + '1', 'sorting symbol changed');
 
               let done4 = assert.async();
               checkSortingList(store, projectionName, $olv, 'address desc').then((isTrue) => {

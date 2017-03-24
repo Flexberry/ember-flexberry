@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
-import { Query } from 'ember-flexberry-data';
 import startApp from '../../../helpers/start-app';
 
 export function executeTest(testName, callback) {
@@ -25,71 +24,4 @@ export function executeTest(testName, callback) {
   });
 
   test(testName, (assert) => callback(store, assert, app));
-}
-
-// Function for waiting list loading.
-export function loadingList($ctrlForClick, list, records) {
-  return new Ember.RSVP.Promise((resolve, reject) => {
-    let checkIntervalId;
-    let checkIntervalSucceed = false;
-    let checkInterval = 500;
-    let timeout = 10000;
-
-    Ember.run(() => {
-      $ctrlForClick.click();
-    });
-
-    Ember.run(() => {
-      checkIntervalId = window.setInterval(() => {
-        let $list = Ember.$(list);
-        let $records = Ember.$(records, $list);
-        if ($records.length === 0) {
-
-          // Data isn't loaded yet.
-          return;
-        }
-
-        // Data is loaded.
-        // Stop interval & resolve promise.
-        window.clearInterval(checkIntervalId);
-        checkIntervalSucceed = true;
-        resolve($list);
-      }, checkInterval);
-    });
-
-    // Set wait timeout.
-    Ember.run(() => {
-      window.setTimeout(() => {
-        if (checkIntervalSucceed) {
-          return;
-        }
-
-        // Time is out.
-        // Stop intervals & reject promise.
-        window.clearInterval(checkIntervalId);
-        reject('editForm load operation is timed out');
-      }, timeout);
-    });
-  });
-}
-
-export function checkSortingList(store, projection, $olv, ordr) {
-  return new Ember.RSVP.Promise((resolve) => {
-    Ember.run(() => {
-      let modelName = projection.modelName;
-      let builder = new Query.Builder(store).from(modelName).selectByProjection(projection.projectionName);
-      builder = !ordr ? builder : builder.orderBy(ordr);
-      store.query(modelName, builder.build()).then((records) => {
-        let recordsArr = records.toArray();
-        let $tr = Ember.$('table.object-list-view tbody tr').toArray();
-
-        let isTrue = $tr.reduce((sum, current, i) => {
-          let expectVal = !recordsArr[i].get('address') ? '' : recordsArr[i].get('address');
-          return sum && (Ember.$.trim(current.children[1].innerText) === expectVal);
-        }, true);
-
-        resolve(isTrue);
-      });
-    });
-  });
 }

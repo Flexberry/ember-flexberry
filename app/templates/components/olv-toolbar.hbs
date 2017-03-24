@@ -19,7 +19,7 @@
   </button>
 {{/if}}
 {{#if enableFilters}}
-  <div class="ui icon input buttons">
+  <div class="ui icon buttons">
     <button class="ui button {{buttonClass}} {{if showFilters "active"}}" {{action toggleStateFilters}}>
       <i class="filter icon"></i>
     </button>
@@ -44,6 +44,17 @@
     <button class="ui {{buttonClass}} icon button" {{action "removeFilter"}}>
       <i class="remove icon"></i>
     </button>
+  </div>
+{{/if}}
+{{#if exportExcelButton}}
+  <div class="ui buttons">
+    <button class="ui button icon {{buttonClass}}" {{action "showExportDialog"}}>
+      <i class="large file excel outline icon"></i>
+    </button>
+    {{flexberry-menu
+      items=exportExcelItems
+      onItemClick=(action "onExportMenuItemClick")
+    }}
   </div>
 {{/if}}
 {{#if colsConfigButton}}

@@ -1,6 +1,6 @@
 {{#if doRenderData}}
   <tr class="{{record.rowConfig.customClass}}">
-    <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}">
+    <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
       <div class="hidden">{{record.key}}</div>
       {{#if showHelperColumn}}
         <div class="object-list-view-helper-column-cell">
@@ -30,7 +30,8 @@
     {{#each columns as |column index|}}
       <td
         {{action rowClick record preventDefault=false}}
-        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}">
+        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}"
+        style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
             {{#component column.cellComponent.componentName
@@ -41,7 +42,6 @@
               required=required
             }}
               {{#if (and (not index) inHierarchicalMode)}}
-                {{hierarchicalIndent}}
                 {{#if hasRecords}}
                   <button class="ui button icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
                     <i class="{{if _expanded "minus" "plus"}} icon"></i>
@@ -67,7 +67,6 @@
         {{else}}
           <div class="oveflow-text">
             {{#if (and (not index) inHierarchicalMode)}}
-              {{hierarchicalIndent}}
               {{#if hasRecords}}
                 <button class="ui button icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
                   <i class="{{if _expanded "minus" "plus"}} icon"></i>
@@ -83,17 +82,17 @@
       </td>
     {{/each}}
     {{#if showMenuColumn}}
-      <td class="object-list-view-menu">
+      <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
         <div class="basic right pointing ui icon dropdown button">
           <i class="list layout icon"></i>
           <div class="left menu">
-            {{#if record.rowConfig.canBeSelected}}
+            {{#if showEditMenuItemInRow}}
               <div class="item" {{ action rowClick record }}>
                 <i class="edit icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
               </div>
             {{/if}}
-            {{#if record.rowConfig.canBeDeleted}}
+            {{#if showDeleteMenuItemInRow}}
               <div class="item" {{ action deleteRow record }}>
                 <i class="trash icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
@@ -134,6 +133,7 @@
         deleteRow=deleteRow
         _currentLevel=_currentLevel
         hierarchicalIndent=_hierarchicalIndent
+        defaultLeftPadding=defaultLeftPadding
       }}
     {{/each}}
   {{/if}}

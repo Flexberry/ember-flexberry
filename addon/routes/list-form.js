@@ -116,6 +116,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
 
     Ember.assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
       nComponents === 1);
+    userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
@@ -133,6 +134,19 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
 
         this.sorting = userSettingsService.getCurrentSorting(componentName);
         this.perPage = userSettingsService.getCurrentPerPage(componentName);
+        if (this.perPage !== params.perPage) {
+          if (params.perPage !== 5) {
+            this.perPage = params.perPage;
+            userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
+          } else {
+            if (this.sorting.length === 0) {
+              this.transitionTo(this.currentRouteName, { queryParams: { sort: null, perPage: this.perPage || 5 } }); // Show page without sort parameters
+            } else {
+              this.transitionTo(this.currentRouteName, { queryParams: { perPage: this.perPage || 5 } });  //Reload current page and records (model) list
+            }
+          }
+        }
+
         let queryParameters = {
           modelName: modelName,
           projectionName: projectionName,
@@ -264,5 +278,9 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
+    controller.set('developerUserSettings', this.get('developerUserSettings'));
+    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    }
   }
 });

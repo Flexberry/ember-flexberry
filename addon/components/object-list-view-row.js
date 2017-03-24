@@ -23,14 +23,14 @@ export default FlexberryBaseComponent.extend({
   _expanded: false,
 
   /**
-    Store the string for building hierarchical indent.
+    Stores the number of pixels to isolate one level of hierarchy.
 
     @property _hierarchicalIndent
-    @type String
-    @default '&nbsp;'
+    @type Number
+    @default 10
     @private
   */
-  _hierarchicalIndent: '&nbsp;',
+  _hierarchicalIndent: 10,
 
   /**
     Level nesting by default.
@@ -86,6 +86,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   doRenderData: false,
+
+  /**
+    Default left padding in cells.
+
+    @property defaultLeftPadding
+    @type Number
+    @default 10
+  */
+  defaultLeftPadding: 10,
 
   /**
     Current record.
@@ -157,22 +166,31 @@ export default FlexberryBaseComponent.extend({
   */
   hierarchicalIndent: Ember.computed({
     get() {
-      let indent = '';
-      let hierarchicalIndent = this.get('_hierarchicalIndent');
-      let currentLevel = this.get('_currentLevel');
-      for (let i = 0; i < currentLevel; i++) {
-        indent += hierarchicalIndent;
+      let result = (this.get('_currentLevel')) * this.get('_hierarchicalIndent') + this.get('defaultLeftPadding');
+      if (this.get('_currentLevel') === 0) {
+        result = this.get('defaultLeftPadding');
       }
 
-      return Ember.String.htmlSafe(indent);
+      return result;
     },
     set(key, value) {
       if (value !== undefined) {
-        this.set('_hierarchicalIndent', Ember.String.htmlSafe(value).toString());
+        this.set('_hierarchicalIndent', +value);
       }
 
       return this.get('hierarchicalIndent');
     },
+  }),
+
+  hierarchicalIndentStyle: Ember.computed('_hierarchicalIndent', 'defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    let hierarchicalIndent = this.get('hierarchicalIndent');
+    return Ember.String.htmlSafe(`padding-left:${hierarchicalIndent}px !important; padding-right:${defaultLeftPadding}px !important;`);
+  }),
+
+  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
   }),
 
   /**
@@ -183,6 +201,15 @@ export default FlexberryBaseComponent.extend({
     @default ''
   */
   tagName: '',
+
+  /**
+    Flag indicates that record's hierarchy for this row is loaded.
+
+    @property recordsLoaded
+    @type Boolean
+    @default false
+  */
+  recordsLoaded: false,
 
   actions: {
     /**
@@ -216,16 +243,18 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-    Setup a view, but do not finish waking it up. [More info](http://emberjs.com/api/classes/Ember.Component.html#method_init).
+    Called after a component has been rendered, both on initial render and in subsequent rerenders.
+    [More info](http://emberjs.com/api/classes/Ember.Component.html#event_didRender).
 
-    @method init
+    @method didRender
   */
-  init() {
-    this._super(...arguments);
-
-    let id = this.get('record.data.id');
-    if (id && this.get('inHierarchicalMode')) {
-      this.sendAction('loadRecords', id, this, 'records');
+  didRender() {
+    if (!this.get('recordsLoaded')) {
+      let id = this.get('record.data.id');
+      if (id && this.get('inHierarchicalMode')) {
+        this.set('recordsLoaded', true);
+        this.sendAction('loadRecords', id, this, 'records');
+      }
     }
-  }
+  },
 });

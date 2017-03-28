@@ -282,5 +282,9 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }
+
+    if (controller.get('state') === 'loading') {
+      controller.set('state', '');
+    }
   }
 });

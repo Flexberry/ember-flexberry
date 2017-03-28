@@ -73,6 +73,14 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   defaultDeveloperUserSettings: undefined,
 
   /**
+    State form. A form is in different states: loading, success, error.
+
+    @property state
+    @type String
+  */
+  state: undefined,
+
+  /**
     Method to get type and attributes of component, which will be embeded in object-list-view cell.
 
     @method getCellComponent

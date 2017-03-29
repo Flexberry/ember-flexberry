@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Add spinner for list components when redirecting to `editFormRoute`.
 
 ## [0.9.0-beta.2] - 2017-03-21
 ### Fixed

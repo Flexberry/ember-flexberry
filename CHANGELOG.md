@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Add spinner for list components when redirecting to `editFormRoute`.
+
 ### Fixed
 * Fix `modelName` receiving for export excel
 

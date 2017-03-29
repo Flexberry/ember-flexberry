@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Add spinner for list components when redirecting to `editFormRoute`.
 
 ### Fixed
-* Fix `modelName` receiving for export excel
+* Fix `modelName` getting in `olv-toolbar` controller when exporting data to Excel.
 
 ## [0.9.0-beta.2] - 2017-03-21
 ### Fixed

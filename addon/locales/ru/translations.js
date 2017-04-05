@@ -17,14 +17,7 @@ export default {
 
     'new-platform-flexberry-services-lock-list': {
       caption: 'Список блокировок',
-    },
-
-    'new-platform-flexberry-services-lock-edit': {
-      caption: 'Объект блокировки',
-      'lockKey-caption': 'Ключ заблокированного объекта',
-      'userName-caption': 'Заблокировавший пользователь',
-      'lockDate-caption': 'Дата блокировки',
-    },
+    }
   },
 
   'components': {
@@ -114,7 +107,11 @@ export default {
 
     'object-list-view': {
       'placeholder': 'Нет данных',
+      'loading-text': 'Данные загружаются...',
+      'header-title-attr': 'Нажмите, чтобы изменить порядок, Ctrl+Click чтобы добавить упорядочение для этого столбца',
       'single-column-header-title': 'Свойства модели',
+      'sort-ascending': 'По возрастанию',
+      'sort-descending': 'По убыванию',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',
         'delete-menu-item-title': 'Удалить запись'
@@ -134,6 +131,7 @@ export default {
       'filter-by-any-match-placeholder': 'Поиск...',
       'create-setting-title': 'Новая настройка',
       'use-setting-title': 'Применить',
+      'export-title': 'Выгрузить',
       'edit-setting-title': 'Редактировать',
       'remove-setting-title': 'Удалить',
       'set-default-setting-title': 'Установка по умолчанию',
@@ -148,6 +146,7 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Настроить отображение столбцов',
+      'export-title': 'Экспорт в Excel',
       'dont-show-columns': 'Не отображать столбцы',
       'columns-order': 'Определить порядок столбцов',
       'column-name': 'Название столбца',
@@ -158,9 +157,23 @@ export default {
       'setting-name': 'Название настройки',
       'enter-setting-name': 'Введите название настройки',
       'use': 'Применить',
+      'export': 'Выгрузить',
       'use-without-save': 'Применить данные установки без сохранения в настройке ',
-      'save': 'Сохранить'
-    }
+      'save': 'Сохранить',
+      'have-errors': 'При сохранении настройки возникли ошибки: ',
+      'setting': 'Настройка ',
+      'is-saved': ' сохранена',
+      'col-width-on': 'Включить настройку ширины столбцов',
+      'per-page': 'Записей на странице',
+      'det-separate-rows': 'Поля списков в отдельные строки',
+      'det-separate-cols': 'Поля списков в отдельные столбцы',
+      'unresizable': 'Фиксированная ширина'
+    },
+
+    'form-load-time-tracker': {
+      'load-time': 'Время загрузки',
+      'render-time': 'Время отрисовки',
+    },
 
   },
 

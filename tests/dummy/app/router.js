@@ -34,10 +34,10 @@ Router.map(function() {
   this.route('i-i-s-caseberry-logging-objects-application-log-e', { path: 'i-i-s-caseberry-logging-objects-application-log-e/:id' });
   this.route('i-i-s-caseberry-logging-objects-application-log-e.new', { path: 'i-i-s-caseberry-logging-objects-application-log-e/new' });
   this.route('log-service-examples/settings-example');
+  this.route('log-service-examples/clear-log-form');
 
   // Locks.
   this.route('new-platform-flexberry-services-lock-list');
-  this.route('new-platform-flexberry-services-lock-edit', { path: 'new-platform-flexberry-services-lock-edit/:id' });
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-checkbox/settings-example');
@@ -50,26 +50,60 @@ Router.map(function() {
   this.route('components-examples/flexberry-file/settings-example');
   this.route('components-examples/flexberry-groupedit/settings-example');
   this.route('components-examples/flexberry-groupedit/model-update-example');
+  this.route('components-examples/flexberry-groupedit/configurate-row-example');
   this.route('components-examples/flexberry-lookup/settings-example');
   this.route('components-examples/flexberry-lookup/customizing-window-example');
   this.route('components-examples/flexberry-lookup/limit-function-example');
+  this.route('components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example');
   this.route('components-examples/flexberry-lookup/lookup-block-form-example');
   this.route('components-examples/flexberry-lookup/lookup-in-modal');
   this.route('components-examples/flexberry-lookup/dropdown-mode-example');
+  this.route('components-examples/flexberry-lookup/default-ordering-example');
   this.route('components-examples/flexberry-menu/settings-example');
   this.route('components-examples/flexberry-objectlistview/settings-example');
   this.route('components-examples/flexberry-objectlistview/toolbar-custom-buttons-example');
+  this.route('components-examples/flexberry-objectlistview/inheritance-models');
+  this.route('components-examples/flexberry-objectlistview/inheritance-models/parent-list');
+  this.route('components-examples/flexberry-objectlistview/inheritance-models/parent-edit',
+    { path: 'components-examples/flexberry-objectlistview/inheritance-models/parent-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/inheritance-models/parent-edit.new',
+    { path: 'components-examples/flexberry-objectlistview/inheritance-models/parent-edit/new' });
+  this.route('components-examples/flexberry-objectlistview/inheritance-models/successor-phone-list');
+  this.route('components-examples/flexberry-objectlistview/inheritance-models/successor-phone-edit',
+    { path: 'components-examples/flexberry-objectlistview/inheritance-models/successor-phone-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/inheritance-models/successor-phone-edit.new',
+    { path: 'components-examples/flexberry-objectlistview/inheritance-models/successor-phone-edit/new' });
+  this.route('components-examples/flexberry-objectlistview/inheritance-models/successor-social-network-list');
+  this.route('components-examples/flexberry-objectlistview/inheritance-models/successor-social-network-edit',
+    { path: 'components-examples/flexberry-objectlistview/inheritance-models/successor-social-network-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/inheritance-models/successor-social-network-edit.new',
+    { path: 'components-examples/flexberry-objectlistview/inheritance-models/successor-social-network-edit/new' });
   this.route('components-examples/flexberry-objectlistview/limit-function-example');
   this.route('components-examples/flexberry-objectlistview/on-edit-form');
   this.route('components-examples/flexberry-objectlistview/on-edit-form/user', { path: 'components-examples/flexberry-objectlistview/on-edit-form/user/:id' });
   this.route('components-examples/flexberry-objectlistview/custom-filter');
+  this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-list');
+  this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-edit',
+  { path: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-edit.new',
+  { path: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit/new' });
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
-  this.route('components-examples/flexberry-objectlistview/selected-rows');  
   this.route('components-examples/flexberry-objectlistview/object-list-view-resize');
+  this.route('components-examples/flexberry-objectlistview/hierarchy-example');
+  this.route('components-examples/flexberry-objectlistview/selected-rows');
+  this.route('components-examples/flexberry-simpleolv/settings-example');
+  this.route('components-examples/flexberry-simpleolv/toolbar-custom-buttons-example');
+  this.route('components-examples/flexberry-simpleolv/limit-function-example');
+  this.route('components-examples/flexberry-simpleolv/on-edit-form');
+  this.route('components-examples/flexberry-simpleolv/on-edit-form/user', { path: 'components-examples/flexberry-simpleolv/on-edit-form/user/:id' });
+  this.route('components-examples/flexberry-simpleolv/custom-filter');
+  this.route('components-examples/flexberry-simpleolv/configurate-rows');
+  this.route('components-examples/flexberry-simpleolv/selected-rows');
   this.route('components-examples/flexberry-simpledatetime/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');
+  this.route('components-examples/ui-message/settings-example');
 
   // Integration examples routes.
   this.route('integration-examples/edit-form/readonly-mode');

@@ -92,6 +92,8 @@
       remove=(action "removeLookupValue")
       dropdown=true
       readonly=readonly
+      direction="upward"
+      componentName="SuggestionEditType"
     }}
     {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
   </div>
@@ -107,6 +109,7 @@
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
       readonly=readonly
+      componentName="SuggestionEditAuthor"
     }}
     {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
   </div>
@@ -122,6 +125,7 @@
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
       readonly=readonly
+      componentName="SuggestionEditEditor1"
     }}
     {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
   </div>
@@ -132,7 +136,7 @@
       content=model.files
       mainModelProjection=modelProjection
       modelProjection=modelProjection.attributes.files
-      orderable=false
+      orderable=true
       readonly=readonly
       configurateRow=(action 'configurateRow')
     }}
@@ -145,7 +149,7 @@
       content=model.userVotes
       mainModelProjection=modelProjection
       modelProjection=modelProjection.attributes.userVotes
-      orderable=false
+      orderable=true
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
@@ -162,7 +166,7 @@
       editOnSeparateRoute=true
       editFormRoute=commentsEditRoute
       saveBeforeRouteLeave=true
-      orderable=false
+      orderable=true
       readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.comments pointing="pointing"}}

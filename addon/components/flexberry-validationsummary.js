@@ -65,7 +65,8 @@ export default Ember.Component.extend({
     this.set('validationProperties', new Ember.A());
 
     for (let propertyName in errors) {
-      if (errors.hasOwnProperty(propertyName)) {
+      // TODO: Delete after update Ember on 2.5.1 and up.
+      if (errors.hasOwnProperty(propertyName) && propertyName !== 'toString') {
         this.get('validationProperties').push(propertyName);
         errors.addObserver(propertyName + '.[]', this, 'changeMessages');
       }
@@ -92,9 +93,15 @@ export default Ember.Component.extend({
   changeMessages() {
     let messages = new Ember.A();
 
-    this.get('validationProperties').forEach(property =>
-      messages.addObjects(this.get('errors.' + property))
-    );
+    this.get('validationProperties').forEach((property) => {
+      // TODO: Delete after update Ember on 2.5.1 and up.
+      if (property !== 'toString') {
+        let errorMessages = this.get('errors.' + property);
+        errorMessages.forEach((errorMessage) => {
+          messages.pushObject(errorMessage);
+        });
+      }
+    });
 
     this.set('isVisible', !!messages.length);
     this.set('messages', messages);

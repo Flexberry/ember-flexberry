@@ -5,9 +5,10 @@
       controllerProperties=this
       componentSettingsMetadata=componentSettingsMetadata
       componentTemplateText=componentTemplateText
+      showLoadingTbodyClass=showLoadingTbodyClass
     }}
       {{flexberry-objectlistview
-        colsConfigButton=true
+        colsConfigButton=colsConfigButton
         content=model
         modelName="ember-flexberry-dummy-suggestion"
         editFormRoute='ember-flexberry-dummy-suggestion-edit'
@@ -33,6 +34,8 @@
         singleColumnHeaderTitle=singleColumnHeaderTitle
         filterByAnyMatch=(action "filterByAnyMatch")
         filterText=filter
+        filterByAnyWord=filterByAnyWord
+        filterByAllWords=filterByAllWords
         sorting=computedSorting
         sortByColumn=(action "sortByColumn")
         addColumnToSorting=(action "addColumnToSorting")

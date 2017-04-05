@@ -4,6 +4,7 @@
 
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
+import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 const { Builder, SimplePredicate, ComplexPredicate } = Query;
 
@@ -33,6 +34,15 @@ export default Ember.Service.extend({
     @default false
   */
   isUserSettingsServiceEnabled: false,
+
+  /**
+    User settings for all pages defined by developer
+
+    @property defaultDeveloperUserSettings
+    @type Object
+    @default {}
+   */
+  defaultDeveloperUserSettings: {},
 
   /**
     Current Application name.
@@ -87,6 +97,14 @@ export default Ember.Service.extend({
     @default {}
     */
   currentUserSettings:{},
+
+  init() {
+    this._super(...arguments);
+    let appConfig = Ember.getOwner(this)._lookupFactory('config:environment');
+    if (!Ember.isNone(appConfig.APP.useUserSettingsService)) {
+      this.set('isUserSettingsServiceEnabled', appConfig.APP.useUserSettingsService);
+    }
+  },
 
   /**
    Set current Web Page.
@@ -184,6 +202,30 @@ export default Ember.Service.extend({
   },
 
   /**
+    Set initial userSetting for current webPage, defined by application developer
+
+    @method setDefaultDeveloperUserSettings
+    @param {Object} developerUserSettings.
+   */
+  setDefaultDeveloperUserSettings(developerUserSettings) {
+    for (let componentName in developerUserSettings) {
+      let componentSettings = developerUserSettings[componentName];
+      for (let settingName in componentSettings) {
+        if (!('sorting' in componentSettings[settingName])) {
+          componentSettings[settingName].sorting = [];
+        }
+      }
+
+      if (!(defaultSettingName in componentSettings)) {
+        componentSettings[defaultSettingName] = { sorting: [] };
+      }
+    }
+
+    let appPage = this.currentAppPage;
+    this.defaultDeveloperUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
+  },
+
+  /**
    Get list components Names.
 
    @method getListComponentNames
@@ -211,7 +253,7 @@ export default Ember.Service.extend({
     let appPage = this.currentAppPage;
     let sorting;
     if ('sort' in params && params.sort) {
-      sorting = this._deserializeSortingParam(params.sort);
+      sorting = deserializeSortingParam(params.sort);
     } else {
       sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
     }
@@ -226,7 +268,7 @@ export default Ember.Service.extend({
     @return {Boolean}
    */
   exists() {
-    let ret = this.currentAppPage in  this.currentUserSettings;
+    let ret = this.currentAppPage in this.currentUserSettings;
     return ret;
   },
 
@@ -249,26 +291,37 @@ export default Ember.Service.extend({
    *   @method getListCurrentUserSetting
    *   @return {String}
    */
-  getListCurrentUserSetting(componentName) {
-    let ret = [];
+  getListCurrentUserSetting(componentName, isExportExcel) {
+    let ret = {};
     if (this.currentAppPage in  this.currentUserSettings &&
       componentName in this.currentUserSettings[this.currentAppPage]
     ) {
-      ret = this.currentUserSettings[this.currentAppPage][componentName];
+      let sets = this.currentUserSettings[this.currentAppPage][componentName];
+
+      for (let settingName in sets) {
+        let settingNameSplit = settingName.split('/');
+        if (isExportExcel && settingNameSplit[0] === 'ExportExcel') {
+          ret[settingName] = sets[settingName];
+        }
+
+        if (!isExportExcel && settingNameSplit[0] !== 'ExportExcel') {
+          ret[settingName] = sets[settingName];
+        }
+      }
     }
 
     return ret;
   },
 
   /**
-   Returns current list of named userSetting.
+    Returns current list of named userSetting.
 
-   @method getListCurrentNamedUserSetting
-   @return {String}
-   */
-  getListCurrentNamedUserSetting(componentName) {
+    @method getListCurrentNamedUserSetting
+    @return {String}
+  */
+  getListCurrentNamedUserSetting(componentName, isExportExcel) {
     let ret = {};
-    let listCurrentUserSetting = this.getListCurrentUserSetting(componentName);
+    let listCurrentUserSetting = this.getListCurrentUserSetting(componentName, isExportExcel);
     for (let settingName in listCurrentUserSetting) {
       if (settingName === defaultSettingName) {
         continue;
@@ -305,6 +358,27 @@ export default Ember.Service.extend({
   },
 
   /**
+   Returns default developer user settings for component.
+
+   @method getDefaultDeveloperUserSetting
+   @param {String} componentName Name of component.
+   @return {Object}
+   */
+  getDefaultDeveloperUserSetting(componentName) {
+    let settingName = defaultSettingName;
+
+    let ret;
+    if (this.currentAppPage in  this.defaultDeveloperUserSettings &&
+      componentName in this.defaultDeveloperUserSettings[this.currentAppPage] &&
+      settingName in this.defaultDeveloperUserSettings[this.currentAppPage][componentName]
+    ) {
+      ret = this.defaultDeveloperUserSettings[this.currentAppPage][componentName][settingName];
+    }
+
+    return ret;
+  },
+
+  /**
    Returns current sorting .
 
    @method getCurrentSorting
@@ -315,6 +389,19 @@ export default Ember.Service.extend({
   getCurrentSorting(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
     return currentUserSetting && 'sorting' in currentUserSetting ? currentUserSetting.sorting : [];
+  },
+
+  /**
+   Returns current perPageValue .
+
+   @method getCurrentPerPage
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Array}
+   */
+  getCurrentPerPage(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting && 'perPage' in currentUserSetting ? parseInt(currentUserSetting.perPage, 10) : 5;
   },
 
   /**
@@ -341,6 +428,32 @@ export default Ember.Service.extend({
   getCurrentColumnWidths(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
     return currentUserSetting && 'columnWidths' in currentUserSetting ? currentUserSetting.columnWidths : undefined;
+  },
+
+  /**
+   Returns current detSeparateCols.
+
+   @method getDetSeparateCols
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Boolean}
+   */
+  getDetSeparateCols(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting && 'detSeparateCols' in currentUserSetting ? currentUserSetting.detSeparateCols : false;
+  },
+
+  /**
+   Returns current detSeparateRows.
+
+   @method getDetSeparateRows
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Boolean}
+   */
+  getDetSeparateRows(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting && 'detSeparateRows' in currentUserSetting ? currentUserSetting.detSeparateRows : false;
   },
 
   /**
@@ -373,6 +486,35 @@ export default Ember.Service.extend({
   },
 
   /**
+   Set current perPage.
+
+   @method setCurrentPerPage
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @param {Int} perPageValue Per page value.
+   */
+  setCurrentPerPage(componentName, settingName, perPageValue) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let userSetting;
+    if (this.currentAppPage in this.currentUserSettings &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
+    }
+
+    userSetting.perPage = perPageValue;
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting(componentName, settingName, userSetting);
+    }
+  },
+
+  /**
    Deletes given user setting from storage.
 
    @method deleteUserSetting
@@ -381,9 +523,13 @@ export default Ember.Service.extend({
    @param {String} settingName Setting name to search by.
    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array
    */
-  deleteUserSetting(componentName, settingName) {
+  deleteUserSetting(componentName, settingName, isExportExcel) {
     if (settingName === undefined) {
       settingName = defaultSettingName;
+    }
+
+    if (isExportExcel) {
+      settingName = 'ExportExcel/' + settingName;
     }
 
     Ember.assert('deleteUserSetting:: componentName name is not defined for user setting getting.', componentName);
@@ -418,9 +564,13 @@ export default Ember.Service.extend({
    @param {String} userSetting User setting data to save.
    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} Save operation promise.
    */
-  saveUserSetting(componentName, settingName, userSetting) {
+  saveUserSetting(componentName, settingName, userSetting, isExportExcel) {
     if (settingName === undefined) {
       settingName = defaultSettingName;
+    }
+
+    if (isExportExcel) {
+      settingName = 'ExportExcel/' + settingName;
     }
 
     Ember.assert('saveUserSetting:: componentName is not defined for user setting saving.', componentName);
@@ -713,51 +863,5 @@ export default Ember.Service.extend({
     }
 
     return ret;
-  },
-
-  /**
-   *    Convert string with sorting parameters to object.
-   *
-   *    Expected string type: '+Name1-Name2...', where: '+' and '-' - sorting direction, 'NameX' - property name for soring.
-   *
-   *    @method deserializeSortingParam
-   *    @param {String} paramString String with sorting parameters.
-   *    @returns {Array} Array objects type: { propName: 'NameX', direction: 'asc|desc' }
-   */
-  _deserializeSortingParam(paramString) {
-    let result = [];
-    while (paramString) {
-      let direction = paramString.charAt(0) === '+' ? 'asc' : 'desc';
-      paramString = paramString.substring(1, paramString.length);
-      let nextIndices = this._getNextIndeces(paramString);
-      let nextPosition = Math.min.apply(null, nextIndices);
-      let propName = paramString.substring(0, nextPosition);
-      paramString = paramString.substring(nextPosition);
-
-      result.push({
-        propName: propName,
-        direction: direction
-      });
-    }
-
-    return result;
-  },
-
-  /**
-   * Return index start next sorting parameters.
-   *
-   * @method _getNextIndeces
-   * @param {String} paramString
-   * @return {Number}
-   * @private
-   */
-  _getNextIndeces(paramString) {
-    let nextIndices = ['+', '-'].map(function(element) {
-      let pos = paramString.indexOf(element);
-      return pos === -1 ? paramString.length : pos;
-    });
-
-    return nextIndices;
   }
-
 });

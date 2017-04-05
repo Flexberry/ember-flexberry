@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support
@@ -102,10 +103,11 @@ export default Ember.Mixin.create({
 
       @method actions.sortByColumn
       @param {Object} column Column for sorting.
+      @param {String} sortPath Path to oldSorting.
     */
-    sortByColumn: function(column) {
+    sortByColumn: function(column, sortPath = 'model.sorting') {
       let propName = column.propName;
-      let oldSorting = this.get('model.sorting');
+      let oldSorting = this.get(sortPath);
       let newSorting = [];
       let sortDirection;
       if (oldSorting) {
@@ -120,11 +122,9 @@ export default Ember.Mixin.create({
         sortDirection = 'asc';
       }
 
-      if (sortDirection !== 'none') {
-        newSorting.push({ propName: propName, direction: sortDirection });
-      }
+      newSorting.push({ propName: propName, direction: sortDirection });
 
-      let sortQueryParam = this._serializeSortingParam(newSorting);
+      let sortQueryParam = serializeSortingParam(newSorting, this.get('sortDefaultValue'));
       this.set('sort', sortQueryParam);
     },
 
@@ -133,20 +133,18 @@ export default Ember.Mixin.create({
 
       @method actions.addColumnToSorting
       @param {Object} column Column for sorting.
+      @param {String} sortPath Path to oldSorting.
     */
-    addColumnToSorting: function(column) {
+    addColumnToSorting: function(column, sortPath = 'model.sorting') {
       let propName = column.propName;
-      let oldSorting = this.get('model.sorting');
+      let oldSorting = this.get(sortPath);
       let newSorting = [];
       let changed = false;
 
       for (let i = 0; i < oldSorting.length; i++) {
         if (oldSorting[i].propName === propName) {
           let newDirection = this._getNextSortDirection(oldSorting[i].direction);
-          if (newDirection !== 'none') {
-            newSorting.push({ propName: propName, direction: newDirection });
-          }
-
+          newSorting.push({ propName: propName, direction: newDirection });
           changed = true;
         } else {
           newSorting.push(oldSorting[i]);
@@ -157,7 +155,7 @@ export default Ember.Mixin.create({
         newSorting.push({ propName: propName, direction: 'asc' });
       }
 
-      let sortQueryParam = this._serializeSortingParam(newSorting);
+      let sortQueryParam = serializeSortingParam(newSorting, this.get('sortDefaultValue'));
       this.set('sort', sortQueryParam);
     }
   },
@@ -171,20 +169,16 @@ export default Ember.Mixin.create({
     @private
   */
   _getNextSortDirection: function(currentDirection) {
-    return currentDirection === 'asc' ? 'desc' : 'none';
-  },
-
-  /**
-    Convert object with sorting parameters into string.
-
-    @method _serializeSortingParam
-    @param {Object} sorting Object with sorting parameters.
-    @returns {String} String with sorting parameters.
-    @private
-  */
-  _serializeSortingParam: function(sorting) {
-    return sorting.map(function(element) {
-      return (element.direction === 'asc' ? '+' : '-') + element.propName;
-    }).join('') || this.get('sortDefaultValue');
+    let ret;
+    switch (currentDirection) {
+      case 'asc':
+        ret = 'desc';
+        break;
+      case 'desc':
+        ret = 'none';
+        break;
+      default: ret = 'asc';
+    }
+    return ret;
   },
 });

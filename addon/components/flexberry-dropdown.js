@@ -23,6 +23,31 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Semantic-ui settings.
+    For more information see [semantic-ui](http://semantic-ui.com/modules/dropdown.html#/settings)
+  */
+  on: 'click',
+  allowReselection: false,
+  allowAdditions: false,
+  hideAdditions: true,
+  minCharacters: 1,
+  match: 'both',
+  selectOnKeydown: true,
+  forceSelection: true,
+  allowCategorySelection: false,
+  direction: 'auto',
+  keepOnScreen: true,
+  context: 'windows',
+  fullTextSearch: false,
+  preserveHTML: true,
+  sortSelect: false,
+  showOnFocus: true,
+  allowTab: true,
+  transition: 'auto',
+  duration: 200,
+  action: 'select',
+
+  /**
     Flag indicates whether to make checks on selected value or not.
 
     It has `false` value when component loads data by request by semantic processes.
@@ -127,29 +152,28 @@ export default FlexberryBaseComponent.extend({
   /**
     Handles changes in available items & selected item (including changes on component initialization).
   */
-  itemsOrValueDidChange: Ember.on('init', Ember.observer('_items.[]', 'value', function() {
+  itemsOrValueDidChange: Ember.on('init', Ember.observer('_items', 'value', function() {
     let destroyHasBeenCalled = this.get('destroyHasBeenCalled');
     if (destroyHasBeenCalled) {
       return;
     }
 
-    let items = this.get('_items');
-    let needChecksOnValue = this.get('needChecksOnValue');
-
-    // Convert 'value' and 'items' to strings because flexberry-dropdown interpret selected value as string commonly.
-    let value = !Ember.isNone(this.get('value')) ? this.get('value') : null;
+    // Convert 'value' and 'items' into strings because flexberry-dropdown interpret selected value as string commonly.
+    let value = this.get('value');
     let stringValue = !Ember.isNone(value) ? value.toString() : null;
 
-    let valueIsExist = false;
-    for (let key in items) {
-      if (items[key] === stringValue) {
-        valueIsExist = true;
-        break;
+    if (this.get('needChecksOnValue')) {
+      let items = this.get('_items') || {};
+      let itemsArray = Ember.A();
+      for (let key in items) {
+        if (items.hasOwnProperty(key)) {
+          itemsArray.pushObject(items[key]);
+        }
       }
-    }
 
-    if (needChecksOnValue && !Ember.isNone(stringValue) && !valueIsExist) {
-      Ember.Logger.error(`Wrong value of flexberry-dropdown \`value\` property: \`${value}\`. Allowed values are: [\`${items.join(`\`, \``)}\`].`);
+      if (!Ember.isBlank(stringValue) && !itemsArray.contains(stringValue)) {
+        throw new Error(`Wrong value of flexberry-dropdown \`value\` property: \`${stringValue}\`. Allowed values are: [\`${itemsArray.join(`\`, \``)}\`].`);
+      }
     }
 
     let dropdownDomElement = this.get('dropdownDomElement');
@@ -263,8 +287,7 @@ export default FlexberryBaseComponent.extend({
     For more information see [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */
   willDestroyElement() {
-    this.set('destroyHasBeenCalled', true);
-
     this._super(...arguments);
+    this.set('destroyHasBeenCalled', true);
   }
 });

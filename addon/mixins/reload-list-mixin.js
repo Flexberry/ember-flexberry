@@ -53,6 +53,7 @@ export default Ember.Mixin.create({
       page: undefined,
       sorting: undefined,
       filter: undefined,
+      filterCondition: undefined,
       filters: undefined,
       predicate: undefined,
       hierarchicalAttribute: undefined,
@@ -109,7 +110,8 @@ export default Ember.Mixin.create({
     }
 
     let filter = reloadOptions.filter;
-    let filterPredicate = filter ? this._getFilterPredicate(projection, { filter: filter }) : undefined;
+    let filterCondition = reloadOptions.filterCondition;
+    let filterPredicate = filter ? this._getFilterPredicate(projection, { filter, filterCondition }) : undefined;
     let resultPredicate = (limitPredicate && filterPredicate) ?
                           new ComplexPredicate(Condition.And, limitPredicate, filterPredicate) :
                           (limitPredicate ?
@@ -120,6 +122,10 @@ export default Ember.Mixin.create({
 
     if (resultPredicate) {
       builder.where(resultPredicate);
+    }
+
+    if (this.get('controller')) {
+      this.set('controller.queryParams', builder.build());
     }
 
     return store.query(modelName, builder.build());
@@ -168,21 +174,50 @@ export default Ember.Mixin.create({
     @param {Boolean} [attribute.options.displayMemberPath] Flag, indicate that this attribute uses for display relationship.
     @param {String} attribute.type Type of attribute, example `string` or `number`.
     @param {String} filter Pattern for search.
+    @param {String} filterCondition Condition for predicate, can be `or` or `and`.
     @return {BasePredicate|null} Object class of `BasePredicate` or `null`, if not need filter.
     @for ListFormRoute
   */
-  predicateForAttribute(attribute, filter) {
+  predicateForAttribute(attribute, filter, filterCondition) {
     if (attribute.options.hidden && !attribute.options.displayMemberPath) {
       return null;
     }
 
     switch (attribute.type) {
       case 'string':
+        let words = filter.trim().replace(/\s+/g, ' ').split(' ');
+        if (filterCondition && words.length > 1) {
+          let predicates = words.map(word => new StringPredicate(attribute.name).contains(word));
+          return new ComplexPredicate(filterCondition, ...predicates);
+        }
+
         return new StringPredicate(attribute.name).contains(filter);
 
       case 'number':
         if (isFinite(filter)) {
-          return new SimplePredicate(attribute.name, 'eq', filter);
+          return new SimplePredicate(attribute.name, 'eq', +filter);
+        }
+
+        return null;
+
+      case 'decimal':
+        filter = filter.replace(',', '.');
+        if (isFinite(filter)) {
+          return new SimplePredicate(attribute.name, 'eq', +filter);
+        }
+
+        return null;
+
+      case 'boolean':
+        let yes = ['TRUE', 'True', 'true', 'YES', 'Yes', 'yes', 'ДА', 'Да', 'да', '1', '+'];
+        let no = ['False', 'False', 'false', 'NO', 'No', 'no', 'НЕТ', 'Нет', 'нет', '0', '-'];
+
+        if (yes.indexOf(filter) > 0) {
+          return new SimplePredicate(attribute.name, 'eq', 'true');
+        }
+
+        if (no.indexOf(filter) > 0) {
+          return new SimplePredicate(attribute.name, 'eq', 'false');
         }
 
         return null;
@@ -208,7 +243,7 @@ export default Ember.Mixin.create({
     if (params.filter) {
       let attributes = this._attributesForFilter(modelProjection, this.store);
       attributes.forEach((attribute) => {
-        let predicate = this.predicateForAttribute(attribute, params.filter);
+        let predicate = this.predicateForAttribute(attribute, params.filter, params.filterCondition);
         if (predicate) {
           predicates.push(predicate);
         }

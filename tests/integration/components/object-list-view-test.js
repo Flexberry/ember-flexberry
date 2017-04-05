@@ -32,6 +32,6 @@ test('columns renders', function(assert) {
     this.set('proj', AggregatorModel.projections.get('AggregatorE'));
     this.set('model', model);
     this.render(hbs`{{object-list-view modelProjection=proj content=model.details componentName="someName"}}`);
-    assert.notEqual(this.$('thead tr th').length, 0);
+    assert.notEqual(this.$().text().trim(), '');
   });
 });

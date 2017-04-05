@@ -17,7 +17,7 @@ executeTest('check goto editform', (store, assert, app) => {
     assert.equal(currentPath(), path, 'edit form not open');
     $cell.click();
 
-    let timeout = 2000;
+    let timeout = 500;
     Ember.run.later((function() {
       assert.equal(currentPath(), path, 'edit form not open');
       controller.set('rowClickable', true);

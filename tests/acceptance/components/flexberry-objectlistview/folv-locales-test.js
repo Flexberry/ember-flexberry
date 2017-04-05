@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
+import { loadingLocales } from './folv-tests-functions';
 
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 import I18nEnLocale from 'ember-flexberry/locales/en/translations';
@@ -10,21 +11,6 @@ executeTest('check locale change', (store, assert, app) => {
   visit(path);
   andThen(() => {
     assert.equal(currentPath(), path);
-
-    function loadingLocales(locale) {
-      return new Ember.RSVP.Promise((resolve) => {
-        let i18n = app.__container__.lookup('service:i18n');
-
-        Ember.run(() => {
-          i18n.set('locale', locale);
-        });
-
-        let timeout = 500;
-        Ember.run.later((() => {
-          resolve({ msg: 'ok' });
-        }), timeout);
-      });
-    }
 
     function toolbarBtnTextAssert(currentLocale) {
       assert.notEqual($toolBarButtons.length, 0, 'buttons in toolbar exists');
@@ -38,9 +24,9 @@ executeTest('check locale change', (store, assert, app) => {
     let $toolBarButtons = $toolBar.children;
 
     // Set 'ru' as current locale.
-    loadingLocales('ru').then(() => {
+    loadingLocales('ru', app).then(() => {
       toolbarBtnTextAssert(I18nRuLocale);
-      loadingLocales('en').then(() => {
+      loadingLocales('en', app).then(() => {
         toolbarBtnTextAssert(I18nEnLocale);
       });
     });

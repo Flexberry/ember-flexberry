@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
-import { checkSortingList } from './folv-tests-functions';
+import { checkSortingList, loadingLocales } from './folv-tests-functions';
 
 executeTest('check wrapper and projection', (store, assert, app) => {
   assert.expect(6);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
-  visit(path + '?perPage=1000');
+  visit(path);
   andThen(function() {
     assert.equal(currentPath(), path);
 
@@ -28,11 +28,7 @@ executeTest('check wrapper and projection', (store, assert, app) => {
       done();
     });
 
-    let i18n = app.__container__.lookup('service:i18n');
-    i18n.set('locale', 'en');
-
-    let timeout = 1000;
-    Ember.run.later((() => {
+    loadingLocales('en', app).then(() => {
 
       // Check projectionName.
       let attrs = projectionName().attributes;
@@ -50,7 +46,7 @@ executeTest('check wrapper and projection', (store, assert, app) => {
 
       // Ember.get(controller, 'modelProjection') returns only the name of the projection when it replaced.
       assert.equal(projectionName(), newProjectionName, 'projection name is changed');
-    }), timeout);
+    });
 
   });
 });

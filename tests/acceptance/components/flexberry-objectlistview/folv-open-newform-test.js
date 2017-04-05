@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
-import { loadingList } from './folv-tests-functions';
+import { loadingList, loadingLocales } from './folv-tests-functions';
 
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 
@@ -11,11 +11,7 @@ executeTest('check goto new form', (store, assert, app) => {
   andThen(function() {
 
     // Set 'ru' as current locale.
-    let i18n = app.__container__.lookup('service:i18n');
-    i18n.set('locale', 'ru');
-
-    let timeout = 500;
-    Ember.run.later((() => {
+    loadingLocales('ru', app).then(() => {
       assert.equal(currentPath(), path);
       let $toolBar = Ember.$('.ui.secondary.menu')[0];
       let $toolBarButtons = $toolBar.children;
@@ -31,6 +27,6 @@ executeTest('check goto new form', (store, assert, app) => {
       }).finally(() => {
         asyncOperationsCompleted();
       });
-    }), timeout);
+    });
   });
 });

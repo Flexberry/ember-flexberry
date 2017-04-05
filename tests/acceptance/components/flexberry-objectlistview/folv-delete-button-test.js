@@ -89,12 +89,8 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
               assert.notOk(result.meta.count, 'records \'' + uuid + '\'not found in store');
               done3();
             });
-          }).catch((reason) => {
-            throw new Error(reason);
-          }).finally(() => {
             done();
           });
-
         });
         done1();
       });

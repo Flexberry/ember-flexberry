@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import { executeTest} from './execute-folv-test';
-import { loadingList, deleteRecords, addRecords } from './folv-tests-functions';
+import { loadingList, addRecords, deleteRecords } from './folv-tests-functions';
 
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
-executeTest('check paging dropdown', (store, assert) => {
+executeTest('check paging dropdown', (store, assert, app) => {
   assert.expect(7);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   let modelName = 'ember-flexberry-dummy-suggestion-type';
@@ -19,6 +19,7 @@ executeTest('check paging dropdown', (store, assert) => {
       visit(path);
       andThen(function() {
         assert.equal(currentPath(), path);
+
         let $folvPerPageButton = Ember.$('.flexberry-dropdown.compact');
         let $menu = Ember.$('.menu', $folvPerPageButton);
         let trTableBody = () => { return $(Ember.$('table.object-list-view tbody tr')).length.toString(); };

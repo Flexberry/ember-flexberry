@@ -38,8 +38,8 @@ export default Ember.Mixin.create({
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
       let projectionAttributes;
+      let modelName = this.get('modelProjection.modelName');
       if (isExportExcel) {
-        let modelName = this.get('modelProjection.modelName');
         let exportExcelProjectionName = this.get('exportExcelProjection');
         Ember.assert('Property exportExcelProjection is not defined in controller.', exportExcelProjectionName);
 
@@ -177,8 +177,9 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settName, perPageValue: perPageValue,
-                saveColWidthState: saveColWidthState, exportParams: exportParams, store: store } }, loadingParams);
+                { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
+                settingName: settName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
+                exportParams: exportParams, store: store } }, loadingParams);
     }
 
   },

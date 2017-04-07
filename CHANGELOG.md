@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `user-settings` service:
+    * Fix `userSettings` updating.
+* `flexberry-simpleolv` component:
+    * Fix columns width applying from `userSettings`.
+* `olv-toolbar` component:
+    * Fix `userSettings` names getting on first render.
 
 ## [0.9.0-beta.3] - 2017-03-29
 ### Added

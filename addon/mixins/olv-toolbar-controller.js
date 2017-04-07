@@ -152,6 +152,7 @@ export default Ember.Mixin.create({
         exportParams.queryParams = this.get('queryParams');
         exportParams.isExportExcel = true;
         exportParams.immediateExport = immediateExport;
+        exportParams.predicate = this.get('resultPredicate');
         exportParams.projectionName = this.get('exportExcelProjection');
         exportParams.detSeparateCols = this.get('_userSettingsService').getDetSeparateCols(componentName, settingName);
         exportParams.detSeparateRows = this.get('_userSettingsService').getDetSeparateRows(componentName, settingName);

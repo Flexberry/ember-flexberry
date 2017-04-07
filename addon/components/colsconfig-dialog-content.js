@@ -487,6 +487,10 @@ export default FlexberryBaseComponent.extend({
       builder.orderBy(sortString);
     }
 
+    if (this.exportParams.predicate) {
+      builder.where(this.exportParams.predicate);
+    }
+
     if (this.exportParams.isExportExcel) {
       builder.ofDataType('blob');
       let customQueryParams = { colsOrder: colsOrder, exportExcel: this.exportParams.isExportExcel,

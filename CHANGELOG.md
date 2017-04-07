@@ -3,8 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.0-beta.4] - 2017-04-07
 ### Added
 * Add getting current `limitFunction` from data object's list when exporting data to Excel.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.2.
 
 ### Fixed
 * Fix autorization problems when exporting data to Excel.

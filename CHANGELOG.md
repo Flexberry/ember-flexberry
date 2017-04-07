@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Add `limitFunction` for export excel.
+
+### Fixed
+* Fix export excel autorization error.
 
 ## [0.9.0-beta.3] - 2017-03-29
 ### Added

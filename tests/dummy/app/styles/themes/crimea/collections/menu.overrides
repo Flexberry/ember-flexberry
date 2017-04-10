@@ -1,0 +1,15 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.ui.menu > .brand.item {
+    background:none!important;
+}
+
+.ui.menu > .brand.item:hover {
+    color: #545454!important;
+}
+
+.stackable > .ui.message {
+    background-color: #dcebfc!important;
+}

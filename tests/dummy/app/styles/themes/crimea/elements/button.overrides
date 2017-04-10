@@ -1,0 +1,27 @@
+/*******************************
+           Overrides
+*******************************/
+
+.ui.primary.button > .icon {
+  color: #FFFFFF;
+}
+
+.ui.icon.button:hover{
+  color: #FFFFFF!important;
+}
+
+.ui.button:hover {
+  color: #FFFFFF!important;
+  border:1px solid #94cea8;
+}
+
+.ui.button{
+  padding: 0px 20px;
+  height: 35px;
+  text-align: center;
+  border-radius: 5px;
+}
+.large.table.icon {
+  margin-top: -4px;
+}
+

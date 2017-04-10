@@ -8,7 +8,20 @@ module.exports = function(defaults) {
       enabled: true,
       esnext: true,
       configPath: './.jscsrc'
-    }
+    },
+    lessOptions: {
+      paths: [
+        'bower_components/semantic-ui'
+      ]
+    },
+    SemanticUI: {
+      import: {
+        css: false,
+        javascript: true,
+        images: false,
+        fonts: true
+      }
+    },
   });
 
   /*

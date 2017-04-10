@@ -471,7 +471,6 @@ export default FlexberryBaseComponent.extend({
   */
   _getCurrentQuery: function() {
     let settings = this._getSettings();
-    let select = settings.colsOrder.filter(({ hide }) => !hide).map(({ propName }) => propName);
     let sortString = '';
     let modelName = this.modelName;
     settings.sorting.map(sort => {
@@ -482,7 +481,9 @@ export default FlexberryBaseComponent.extend({
     let builder = new QueryBuilder(store, modelName);
     let adapter = new ODataAdapter('123', store);
     builder.selectByProjection(this.exportParams.projectionName, true);
-    let colsOrder = select.map(propName => adapter._getODataAttributeName(modelName, propName).replace(/\//g, '.')).join();
+    let colsOrder = settings.colsOrder.filter(({ hide }) => !hide)
+      .map(column => adapter._getODataAttributeName(modelName, column.propName).replace(/\//g, '.') + '/' + column.name || column.propName)
+      .join();
     if (sortString) {
       builder.orderBy(sortString);
     }
@@ -522,7 +523,7 @@ export default FlexberryBaseComponent.extend({
       let tr = trs[i];
       let index = this._getIndexFromId(tr.id);  // get index of initial (model) order
       let colDesc = this.model.colDescs[index];  // Model for this tr
-      colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide };  //Set colsOrder element
+      colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide, name: colDesc.name.toString() };  //Set colsOrder element
       if (colDesc.sortPriority !== undefined) { // Sort priority defined
         sortSettings[sortSettings.length] = { propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority }; //Add sortSetting element
       }

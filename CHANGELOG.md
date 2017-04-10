@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fix column names in exported excel file.
 
 ## [0.9.0-beta.4] - 2017-04-07
 ### Added

@@ -2,21 +2,24 @@ import ListFormController from 'ember-flexberry/controllers/list-form';
 
 export default ListFormController.extend({
 
+  /**
+    Flag indicates that component have to check on model changes and display it.
+
+    @property searchForContentChange
+    @type Boolean
+    @default true
+  */
+  searchForContentChange: true,
 
   actions: {
-    /**
-      Adds detail to the end of the array.
-
-      @method actions.addDetail.
-    */
-    addSigner() {
+    addRecord() {
       let store = this.get('store');
-      let detailModel = this.get('model');
+      let model = this.get('model');
       let newRecord = store.createRecord('ember-flexberry-dummy-suggestion',
       {
-        text: "itemsCounterkgkgkgk"
+        text: 'modelRecord'
       });
-      detailModel.addObject(newRecord);
+      model.addObject(newRecord);
     },
   },
 

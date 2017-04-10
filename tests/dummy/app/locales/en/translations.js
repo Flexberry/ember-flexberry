@@ -407,6 +407,10 @@ Ember.$.extend(true, translations, {
             'selected-rows': {
               'caption': 'Selected rows',
               'title': ''
+            },
+            'object-list-view-resize': {
+              'caption': 'Columns markup',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -756,6 +760,11 @@ Ember.$.extend(true, translations, {
         },
         'selected-rows': {
           'caption': 'Flexberry-objectlistview. Setected rows'
+        },
+        'object-list-view-resize': {
+          'caption': 'Flexberry-objectlistview. Columns markup',
+          'button-сaption': 'Add',
+          'title': ''
         }
       },
       'flexberry-simpleolv': {

@@ -776,11 +776,13 @@ Ember.$.extend(true, translations, {
         'configurate-rows': {
           'caption': 'Flexberry-objectlistview. Раскраска строк'
         },
-        'object-list-view-resize': {
-          'caption': 'Flexberry-objectlistview. Разметка столбцов'
-        },
         'selected-rows': {
           'caption': 'Flexberry-objectlistview. Выбранные строки'
+        },
+        'object-list-view-resize': {
+          'caption': 'Flexberry-objectlistview. Разметка столбцов',
+          'button-сaption': 'Добавить',
+          'title': ''
         }
       },
       'flexberry-simpleolv': {

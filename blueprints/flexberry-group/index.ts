@@ -10,6 +10,7 @@ const Promise = require('ember-cli/lib/ext/promise');
 
 const Blueprint = require('ember-cli/lib/models/blueprint');
 
+
 module.exports = {
 
   description: 'Generates an group of entities for flexberry.',
@@ -51,6 +52,12 @@ class GroupBlueprint {
     this.promise = Promise.resolve();
     this.setMainBlueprint(this.blueprintName);
     switch (this.blueprintName) {
+      case 'transform':
+        this.emberGenerate("objects");
+        break;
+      case 'transform-test':
+        this.emberGenerate("objects");
+        break;
       case 'controller-test':
         this.emberGenerate("list-forms");
         this.emberGenerate("edit-forms");
@@ -74,6 +81,12 @@ class GroupBlueprint {
       case 'flexberry-model-init':
         this.emberGenerate("models", true, projectTypeName + "/models");
         break;
+      case 'flexberry-object':
+        this.emberGenerate("objects");
+        break;
+      case 'flexberry-object-init':
+        this.emberGenerate("objects", true, projectTypeName + "/objects");
+        break;
       case 'flexberry-serializer-init':
         this.emberGenerate("models", true, projectTypeName + "/serializers");
         break;
@@ -94,10 +107,12 @@ class GroupBlueprint {
 
   emberGenerate(metadataSubDir: string, notOverwrite = false, folderJsFiles=undefined) {
     metadataSubDir = path.join(this.metadataDir, metadataSubDir);
+    if (!fs.existsSync(metadataSubDir))
+      return;
     let list = fs.readdirSync(metadataSubDir);
     for (let file of list) {
       let entityName = path.parse(file).name;
-      if (notOverwrite && this.fileExists(`${folderJsFiles}/${entityName}.js`))
+      if (notOverwrite && fs.existsSync(`${folderJsFiles}/${entityName}.js`))
         continue;
       let groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
       GroupBlueprint.groupOptions.push(groupOptions);
@@ -108,6 +123,9 @@ class GroupBlueprint {
 
         let middlePaths;
         switch (this.blueprintName) {
+          case 'flexberry-object':
+            middlePaths = ["object", "transform"];
+            break;
           case 'flexberry-enum':
             middlePaths = ["enum", "transform"];
             break;
@@ -140,16 +158,6 @@ class GroupBlueprint {
         return Promise.all(promises);
       }.bind(this));
     }
-  }
-
-  fileExists(path: string): boolean {
-    try {
-      fs.statSync(path);
-    } catch (e) {
-      if (e.code === "ENOENT")
-        return false;
-    }
-    return true
   }
 
 }

@@ -89,6 +89,10 @@ class ApplicationBlueprint {
     this.metadataDir = options.metadataDir;
     this.options = options;
     this.promise = Promise.resolve();
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-object-init");
+    this.promise = this.emberGenerateFlexberryGroup("flexberry-object");
+    this.promise = this.emberGenerateFlexberryGroup("transform");
+    this.promise = this.emberGenerateFlexberryGroup("transform-test");
     this.promise = this.emberGenerateFlexberryGroup("controller-test");
     this.promise = this.emberGenerateFlexberryGroup("route-test");
     this.promise = this.emberGenerateFlexberryGroup("flexberry-model");

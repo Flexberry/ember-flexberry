@@ -65,7 +65,7 @@
 @h3 : 1.28rem;
 @h4 : 1.071rem;
 @h5 : 1rem;
-@fullHeight:  89vh!important;
+@fullHeight:  83vh!important;
 
 .full.height {
     min-height: @fullHeight;
@@ -815,28 +815,4 @@
 @offWhiteActive        : darken(@offWhite, 5);
 @darkWhiteActive       : darken(@darkWhite, 5);
 
-/**ScrollBar**/
-::-webkit-scrollbar {
-    height: 8px;
-    width: 9px;
-    background: #dcebfc!important;
-    cursor: pointer !important;
-    border:1px solid rgba(34, 36, 38, 0.1);
-}
 
-::-webkit-scrollbar-thumb {
-    background: #7ba7d9;
-    -webkit-border-radius: 1ex;
-    cursor: pointer;
-}
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: #7ba7d9;
-        -webkit-border-radius: 1ex;
-        cursor: pointer;
-    }
-
-::-webkit-scrollbar-corner {
-    background: white;
-    cursor: pointer;
-}

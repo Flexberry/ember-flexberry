@@ -1,3 +1,32 @@
 /*******************************
          Theme Overrides
 *******************************/
+.ui.sidebar {
+    position: absolute!important;
+    top: 124px;
+    float: left;
+
+}
+.page-header-caption a{
+    background: none;
+    color: #fff;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 24px;
+    border-radius: 0px;
+    box-shadow: none;
+}
+.page-header-caption a:hover{
+    color: #fff!important;
+}
+.page-header-caption {
+    display: flex;
+    align-items: center;
+}
+.ui.attached.menu {
+    border-bottom: none!important;
+}
+.flex-container {
+    width: 100%!important;
+    justify-content: space-between;
+}

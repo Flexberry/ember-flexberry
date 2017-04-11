@@ -159,7 +159,7 @@
 @invertedStripedBackground: rgba(255, 255, 255, 0.05);
 
 /* Selectable */
-@selectableBackground: @transparentBlack;
+@selectableBackground: #d4e2f2;
 @selectableTextColor: @selectedTextColor;
 @selectableInvertedBackground: @transparentWhite;
 @selectableInvertedTextColor: @invertedSelectedTextColor;

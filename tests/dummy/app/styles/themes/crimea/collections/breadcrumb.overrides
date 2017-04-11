@@ -20,3 +20,7 @@
 .showing-entries {
     color: #777;
 }
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .ui.disabled {
+    color: #999!important;
+    opacity: 1!important;
+}

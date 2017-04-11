@@ -1,0 +1,6 @@
+.ui.celled.table tr th {
+    color: #777;
+}
+.ui.celled.table tr td {
+    color: #555;
+}

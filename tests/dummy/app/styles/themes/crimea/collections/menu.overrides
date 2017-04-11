@@ -13,3 +13,7 @@
 .stackable > .ui.message {
     background-color: #dcebfc!important;
 }
+.ui.vertical.inverted.menu .menu .item,
+.ui.vertical.inverted.menu .menu .item a:not(.ui) {
+    font-size:13px;;
+}

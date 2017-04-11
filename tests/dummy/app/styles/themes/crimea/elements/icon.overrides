@@ -31,17 +31,17 @@ for instance `lemon icon` not `lemon outline icon` since there is only one lemon
 *******************************/
 
 /* Web Content */
-i.icon.search:before { content: "\f002"; }
+i.icon.search:before {content: "\e803"; font-size: 20px; }
 i.icon.mail.outline:before { content: "\f003"; }
 i.icon.external:before { content: "\f08e"; }
 i.icon.signal:before { content: "\f012"; }
-i.icon.setting:before { content: "\f013"; }
+i.icon.setting:before { content: "\e817"; }
 i.icon.home:before { content: "\f015"; }
 i.icon.inbox:before { content: "\f01c"; }
 i.icon.browser:before { content: "\f022"; }
 i.icon.tag:before { content: "\f02b"; }
 i.icon.tags:before { content: "\f02c"; }
-i.icon.calendar:before { content: "\f073"; }
+i.icon.calendar:before { content: "\e81c";}
 i.icon.comment:before { content: "\f075"; }
 i.icon.comments:before { content: "\f086"; }
 i.icon.shop:before { content: "\f07a"; }
@@ -84,7 +84,7 @@ i.icon.paint.brush:before { content: "\f1fc"; }
 i.icon.heartbeat:before { content: "\f21e"; }
 
 /* User Actions */
-i.icon.download:before { content: "\f019"; }
+i.icon.download:before { content: "\e822"; }
 i.icon.repeat:before { content: "\f01e"; }
 i.icon.refresh:before { content: "\f021"; }
 i.icon.lock:before { content: "\f023"; }
@@ -100,7 +100,7 @@ i.icon.mail.forward:before { content: "\f064"; }
 i.icon.share:before { content: "\f064"; }
 i.icon.expand:before { content: "\f065"; }
 i.icon.compress:before { content: "\f066"; }
-i.icon.unhide:before { content: "\f06e"; }
+i.icon.unhide:before { content: "\e829"; font-family: "Icons"; }
 i.icon.hide:before { content: "\f070"; }
 i.icon.random:before { content: "\f074"; }
 i.icon.retweet:before { content: "\f079"; }
@@ -113,7 +113,7 @@ i.icon.call.square:before { content: "\f098"; }
 i.icon.remove.bookmark:before { content: "\f097"; }
 i.icon.unlock:before { content: "\f09c"; }
 i.icon.configure:before { content: "\f0ad"; }
-i.icon.filter:before { content: "\f0b0"; }
+i.icon.filter:before { content: "\e809"; font-size: 18px; }
 i.icon.wizard:before { content: "\f0d0"; }
 i.icon.undo:before { content: "\f0e2"; }
 i.icon.exchange:before { content: "\f0ec"; }
@@ -176,7 +176,7 @@ i.icon.neuter:before { content: "\f22c"; }
 
 /* View Adjustment */
 i.icon.grid.layout:before { content: "\f00a"; }
-i.icon.list.layout:before { content: "\f00b"; }
+i.icon.list.layout:before { content: "\"; font-size: 12px; }
 i.icon.block.layout:before { content: "\f009"; }
 i.icon.zoom:before { content: "\f00e"; }
 i.icon.zoom.out:before { content: "\f010"; }
@@ -240,18 +240,23 @@ i.icon.square:before { content: "\f0c8"; }
 
 /* Item Selection */
 i.icon.checkmark:before { content: "\f00c"; }
-i.icon.remove:before { content: "\f00d"; }
+i.icon.remove:before { content: "\e814"; font-size: 20px; }
+i.icon.remove:hover { color: #ff4800!important; }
 i.icon.checkmark.box:before { content: "\f046"; }
 i.icon.move:before { content: "\f047"; }
 i.icon.add.circle:before { content: "\f055"; }
 i.icon.minus.circle:before { content: "\f056"; }
-i.icon.remove.circle:before { content: "\f057"; }
+i.icon.remove.circle:before { content: "\e816"; font-family: 'Icons'; }
 i.icon.check.circle:before { content: "\f058"; }
 i.icon.remove.circle.outline:before { content: "\f05c"; }
 i.icon.check.circle.outline:before { content: "\f05d"; }
-i.icon.plus:before { content: "\f067"; }
-i.icon.minus:before { content: "\f068"; }
-i.icon.add.square:before { content: "\f0fe"; }
+i.icon.plus:before { content: "\e833";; }
+i.icon.minus:before { content: "\e834";
+    font-size: 2px;
+    position: relative;
+    left: 4px;
+    top: -3px; }
+i.icon.add.square:before { content: "\e833"; }
 i.icon.radio:before { content: "\f10c"; }
 i.icon.selected.radio:before { content: "\f192"; }
 i.icon.minus.square:before { content: "\f146"; }
@@ -281,8 +286,8 @@ i.icon.arrow.left:before { content: "\f060"; }
 i.icon.arrow.right:before { content: "\f061"; }
 i.icon.arrow.up:before { content: "\f062"; }
 i.icon.arrow.down:before { content: "\f063"; }
-i.icon.chevron.up:before { content: "\f077"; }
-i.icon.chevron.down:before { content: "\f078"; }
+i.icon.chevron.up:before { content: "\e820"; }
+i.icon.chevron.down:before { content: "\e81f"; }
 i.icon.pointing.right:before { content: "\f0a4"; }
 i.icon.pointing.left:before { content: "\f0a5"; }
 i.icon.pointing.up:before { content: "\f0a6"; }
@@ -321,7 +326,7 @@ i.icon.toggle.left:before { content: "\f191"; }
 /* Computer */
 i.icon.power:before { content: "\f011"; }
 i.icon.trash:before { content: "\f1f8"; }
-i.icon.trash.outline:before { content: "\f014"; }
+i.icon.trash.outline:before { content: "\e814"; }
 i.icon.disk.outline:before { content: "\f0a0"; }
 i.icon.desktop:before { content: "\f108"; }
 i.icon.laptop:before { content: "\f109"; }
@@ -344,7 +349,7 @@ i.icon.folder.outline:before { content: "\f114"; }
 i.icon.folder.open.outline:before { content: "\f115"; }
 i.icon.file.pdf.outline:before { content: "\f1c1"; }
 i.icon.file.word.outline:before { content: "\f1c2"; }
-i.icon.file.excel.outline:before { content: "\f1c3"; }
+i.icon.file.excel.outline:before { content: "\e80a"; font-size:20px; }
 i.icon.file.powerpoint.outline:before { content: "\f1c4"; }
 i.icon.file.image.outline:before { content: "\f1c5"; }
 i.icon.file.archive.outline:before { content: "\f1c6"; }
@@ -430,7 +435,7 @@ i.icon.train:before { content: "\f238"; }
 i.icon.subway:before { content: "\f239"; }
 
 /* Tables */
-i.icon.table:before { content: "\f0ce";  }
+i.icon.table:before { content: "\e819"; opacity: 0.8;  }
 i.icon.columns:before { content: "\f0db"; }
 i.icon.sort:before { content: "\f0dc"; }
 i.icon.sort.ascending:before { content: "\f0de"; }
@@ -599,7 +604,7 @@ i.icon.like:before { content: "\f004"; }
 i.icon.favorite:before { content: "\f005"; }
 i.icon.video:before { content: "\f008"; }
 i.icon.check:before { content: "\f00c"; }
-i.icon.close:before { content: "\f00d"; }
+i.icon.close:before { content: "\e806"; }
 i.icon.cancel:before { content: "\f00d"; }
 i.icon.delete:before { content: "\f00d"; }
 i.icon.x:before { content: "\f00d"; }
@@ -666,7 +671,7 @@ i.icon.wrench:before { content: "\f0ad"; }
 i.icon.briefcase:before { content: "\f0b1"; }
 i.icon.group:before { content: "\f0c0"; }
 i.icon.flask:before { content: "\f0c3"; }
-i.icon.sidebar:before { content: "\f0c9"; }
+i.icon.sidebar:before { content: "\e800"; }
 i.icon.bars:before { content: "\f0c9"; }
 i.icon.list.ul:before { content: "\f0ca"; }
 i.icon.list.ol:before { content: "\f0cb"; }
@@ -753,3 +758,159 @@ i.icon.mars.stroke.horizontal:before { content: "\f22b"; }
 i.icon.facebook.official { content: "\f230"; }
 i.icon.pinterest.official { content: "\f231"; }
 i.icon.bed:before { content: "\f236"; }
+
+.ui.menu .ui.dropdown .menu > .active.item i.icon:before {
+    color: #fff!important;
+}
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:before{
+    content: "\e81a";
+    font-family: 'Icons';
+    visibility: visible;
+}
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:before{
+    content: "\e81b";
+    font-family: 'Icons';
+    visibility: visible;
+}
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child{
+    visibility: hidden;
+}
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child{
+    visibility: hidden;
+}
+.ui.secondary.menu.no-margin.ember-view > button:first-child:before {
+    content: "\e807";
+    font-family: 'Icons';
+    visibility: visible;
+    font-size: 21px;
+    color: #94cea8;
+}
+.ui.secondary.menu.no-margin.ember-view > button:first-child {
+    border: none!important;
+    visibility: hidden;
+    width: 25px;
+    padding: 0px;
+    display: flex;
+}
+.ui.secondary.menu.no-margin.ember-view > button:nth-child(2) {
+    color: #fff;
+    background: #7dd4b4;
+    border: 1px solid #7dd4b4;
+}
+.ui.secondary.menu.no-margin.ember-view > button:nth-child(2):hover {
+    color: #fff;
+    background: #94cea8;
+    border: 1px solid #94cea8;
+}
+.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:before {
+    content: "\e807";
+    font-family: 'Icons';
+    visibility: visible;
+    font-size: 21px;
+    color: #94cea8;
+}
+.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child {
+    border: none!important;
+    visibility: hidden;
+    width: 25px;
+    padding: 0px;
+    display: flex;
+}
+.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2) {
+    color: #fff;
+    background: #7dd4b4;
+    border: 1px solid #7dd4b4;
+}
+.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2):hover {
+    color: #fff;
+    background: #94cea8;
+    border: 1px solid #94cea8;
+}
+.ui.secondary.menu.no-margin.ember-view > button:nth-child(3):before {
+    content: "\e814";
+    font-family: 'Icons';
+    visibility: visible;
+    font-size: 21px;
+}
+.ui.secondary.menu.no-margin.ember-view > button:nth-child(3) {
+    border: none!important;
+    visibility: hidden;
+    width: 25px;
+    padding-left: 10px;
+    display: flex;
+}
+.page-header-userbar a:before {
+    margin: 0 0 0 15px;
+    font-size: 16px;
+    visibility: visible;
+    vertical-align: middle;
+    font-family: 'Icons';
+    content: "\e81e";
+}
+.page-header-userbar a {
+    visibility: hidden;
+    margin: 0px;
+}
+.menu.transition.visible > a:nth-child(2) > i.angle.right.icon:before{
+    content: "\e815";
+    font-family: 'Icons';
+}
+.menu.transition.visible > a:nth-child(2) > .menu.transition > .menuitem > .icon:before {
+    content: "\e815";
+    font-family: 'Icons';
+}
+.menu.transition.visible > a:nth-child(3) > i.angle.right.icon:before{
+    content: "\e810";
+    font-family: 'Icons';
+}
+.menu.transition.visible > a:nth-child(3) > .menu.transition > .menuitem > .icon:before {
+    content: "\e810";
+    font-family: 'Icons';
+}
+.menu.transition.visible > a:nth-child(4) > i.angle.right.icon:before{
+    content: "\e814";
+    font-family: 'Icons';
+}
+.flexberry-edit-panel > button:first-child:before {
+    content: "\e80c";
+    font-family: 'Icons';
+    color: #7ba7d9!important;
+    font-size: 21px;
+    padding-right:10px;
+}
+.flexberry-edit-panel > button:nth-child(2):before {
+    content: "\e80d";
+    font-family: 'Icons';
+    color: #7ba7d9!important;
+    font-size: 21px;
+    padding-right:10px;
+}
+.flexberry-edit-panel > button:nth-child(3):before {
+    content: "\e814";
+    font-family: 'Icons';
+    color: #7ba7d9!important;
+    font-size: 21px;
+    padding-right:10px;
+}
+.flexberry-edit-panel > button:nth-child(3){
+    background: none!important;
+}
+.flexberry-edit-panel > button:nth-child(4):before {
+    content: "\e806";
+    font-family: 'Icons';
+    color: #7ba7d9!important;
+    font-size: 17px;
+    padding-right:10px;
+}
+  
+button:before:hover {
+    color: #fff!important;
+}
+.remove.icon:before:hover {
+    color: #ff4800!important;
+}
+
+
+
+
+

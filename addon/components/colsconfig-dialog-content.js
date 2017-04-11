@@ -23,6 +23,15 @@ export default FlexberryBaseComponent.extend({
   colsConfigMenu: Ember.inject.service(),
 
   /**
+   Service that triggers objectlistview events.
+
+   @property objectlistviewEvents
+   @type {Class}
+   @default Ember.inject.service()
+   */
+  objectlistviewEvents: Ember.inject.service(),
+
+  /**
    Model with added DOM elements.
 
    @property modelForDOM
@@ -48,6 +57,14 @@ export default FlexberryBaseComponent.extend({
    @default ''
    */
   settingName: '',
+
+  /**
+    Form state. A form is in different states: loading, success, error.
+
+    @property state
+    @type String
+  */
+  state: '',
 
   /**
     Changed flag.
@@ -147,7 +164,7 @@ export default FlexberryBaseComponent.extend({
     firstButtonUp.addClass('disabled'); // Disable first button up
     let lastButtondown = Ember.$('#ColDescRowDown_' + (this.modelForDOM.length - 1));
     lastButtondown.addClass('disabled'); // Disable last button down
-    if (this.exportParams.queryParams && this.exportParams.isExportExcel && this.exportParams.immediateExport) {
+    if (this.exportParams.isExportExcel && this.exportParams.immediateExport) {
       this.exportParams.immediateExport = false;
       this.actions.apply.call(this);
     }
@@ -365,6 +382,8 @@ export default FlexberryBaseComponent.extend({
         );
         this.sendAction('close', colsConfig); // close modal window
       } else {
+        let _this = this;
+        _this.set('state', 'loading');
         let store = this.get('store.onlineStore') || this.get('store');
         let adapter = store.adapterFor(this.modelName);
         let currentQuery = this._getCurrentQuery();
@@ -376,7 +395,10 @@ export default FlexberryBaseComponent.extend({
             anchor.prop('href', downloadUrl);
             anchor.prop('download', 'list.xlsx');
             anchor.get(0).click();
+            _this.set('state', '');
           }
+        }).catch(() => {
+          _this.set('state', '');
         });
       }
     },
@@ -488,8 +510,9 @@ export default FlexberryBaseComponent.extend({
       builder.orderBy(sortString);
     }
 
-    if (this.exportParams.predicate) {
-      builder.where(this.exportParams.predicate);
+    let limitFunction = this.get('objectlistviewEvents').getLimitFunction();
+    if (limitFunction) {
+      builder.where(limitFunction);
     }
 
     if (this.exportParams.isExportExcel) {

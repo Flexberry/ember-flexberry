@@ -42,6 +42,9 @@ Ember.$.extend(true, translations, {
           'commentsCount': {
             'caption': 'Comments count'
           },
+          'comments': {
+            'caption': 'Comments'
+          },
         },
         'SuggestionE': {
           'address': {

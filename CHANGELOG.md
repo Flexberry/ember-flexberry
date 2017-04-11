@@ -3,15 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Added
-* Add spinner for export excel form.
-* Add localization for column names in exported excel file.
 
-### Fixed
-* Fix wrong limit function applying in some cases for export excel.
+## [0.9.0-beta.5] - 2017-04-11
+### Added
+* Add spinner for export to Excel form.
+* Add localization for column names in exported excel file.
 
 ### Changed
 * Now `exportExcelProjection` by default equals list's `modelProjection`.
+
+### Fixed
+* Fix wrong limit function applying in some cases for exporting data to Excel.
 
 ## [0.9.0-beta.4] - 2017-04-07
 ### Added

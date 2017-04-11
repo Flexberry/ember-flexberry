@@ -600,6 +600,12 @@ export default Ember.Service.extend({
             prevUserSetting = {};
           }
 
+          for (let settingName in prevUserSetting) {
+            if (Ember.isNone(userSetting[settingName])) {
+              delete prevUserSetting[settingName];
+            }
+          }
+
           for (let settingName in userSetting) {
             prevUserSetting[settingName] = userSetting[settingName];
           }

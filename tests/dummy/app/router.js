@@ -111,6 +111,10 @@ Router.map(function() {
 
   // User-setting forms.
   this.route('user-setting-forms/user-setting-delete');
+
+  // Components acceptance tests forms.
+  this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
+  this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
 });
 
 export default Router;

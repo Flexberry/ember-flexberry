@@ -23,6 +23,15 @@ export default FlexberryBaseComponent.extend({
   colsConfigMenu: Ember.inject.service(),
 
   /**
+   Service that triggers objectlistview events.
+
+   @property objectlistviewEvents
+   @type {Class}
+   @default Ember.inject.service()
+   */
+  objectlistviewEvents: Ember.inject.service(),
+
+  /**
    Model with added DOM elements.
 
    @property modelForDOM
@@ -48,6 +57,14 @@ export default FlexberryBaseComponent.extend({
    @default ''
    */
   settingName: '',
+
+  /**
+    Form state. A form is in different states: loading, success, error.
+
+    @property state
+    @type String
+  */
+  state: '',
 
   /**
     Changed flag.
@@ -147,7 +164,7 @@ export default FlexberryBaseComponent.extend({
     firstButtonUp.addClass('disabled'); // Disable first button up
     let lastButtondown = Ember.$('#ColDescRowDown_' + (this.modelForDOM.length - 1));
     lastButtondown.addClass('disabled'); // Disable last button down
-    if (this.exportParams.queryParams && this.exportParams.isExportExcel && this.exportParams.immediateExport) {
+    if (this.exportParams.isExportExcel && this.exportParams.immediateExport) {
       this.exportParams.immediateExport = false;
       this.actions.apply.call(this);
     }
@@ -365,6 +382,8 @@ export default FlexberryBaseComponent.extend({
         );
         this.sendAction('close', colsConfig); // close modal window
       } else {
+        let _this = this;
+        _this.set('state', 'loading');
         let store = this.get('store.onlineStore') || this.get('store');
         let adapter = store.adapterFor(this.modelName);
         let currentQuery = this._getCurrentQuery();
@@ -376,7 +395,10 @@ export default FlexberryBaseComponent.extend({
             anchor.prop('href', downloadUrl);
             anchor.prop('download', 'list.xlsx');
             anchor.get(0).click();
+            _this.set('state', '');
           }
+        }).catch(() => {
+          _this.set('state', '');
         });
       }
     },
@@ -471,7 +493,6 @@ export default FlexberryBaseComponent.extend({
   */
   _getCurrentQuery: function() {
     let settings = this._getSettings();
-    let select = settings.colsOrder.filter(({ hide }) => !hide).map(({ propName }) => propName);
     let sortString = '';
     let modelName = this.modelName;
     settings.sorting.map(sort => {
@@ -482,13 +503,16 @@ export default FlexberryBaseComponent.extend({
     let builder = new QueryBuilder(store, modelName);
     let adapter = new ODataAdapter('123', store);
     builder.selectByProjection(this.exportParams.projectionName, true);
-    let colsOrder = select.map(propName => adapter._getODataAttributeName(modelName, propName).replace(/\//g, '.')).join();
+    let colsOrder = settings.colsOrder.filter(({ hide }) => !hide)
+      .map(column => adapter._getODataAttributeName(modelName, column.propName).replace(/\//g, '.') + '/' + column.name || column.propName)
+      .join();
     if (sortString) {
       builder.orderBy(sortString);
     }
 
-    if (this.exportParams.predicate) {
-      builder.where(this.exportParams.predicate);
+    let limitFunction = this.get('objectlistviewEvents').getLimitFunction();
+    if (limitFunction) {
+      builder.where(limitFunction);
     }
 
     if (this.exportParams.isExportExcel) {
@@ -522,7 +546,7 @@ export default FlexberryBaseComponent.extend({
       let tr = trs[i];
       let index = this._getIndexFromId(tr.id);  // get index of initial (model) order
       let colDesc = this.model.colDescs[index];  // Model for this tr
-      colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide };  //Set colsOrder element
+      colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide, name: colDesc.name.toString() };  //Set colsOrder element
       if (colDesc.sortPriority !== undefined) { // Sort priority defined
         sortSettings[sortSettings.length] = { propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority }; //Add sortSetting element
       }

@@ -4,7 +4,7 @@ import { loadingList, loadingLocales } from './folv-tests-functions';
 
 executeTest('date format', (store, assert, app) => {
   assert.expect(7);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
+  let path = 'components-acceptance-tests/flexberry-objectlistview/date-format';
   visit(path);
   andThen(() => {
     assert.equal(currentPath(), path);

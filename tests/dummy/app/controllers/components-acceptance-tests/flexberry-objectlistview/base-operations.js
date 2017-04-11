@@ -4,6 +4,7 @@ export default ListFormController.extend({
 
   /**
     Model projection for 'flexberry-objectlistview' component 'modelProjection' property.
+
     @property projection
     @type Object
    */
@@ -11,6 +12,7 @@ export default ListFormController.extend({
 
   /**
     Name of related edit form route (for 'flexberry-objectlistview' component 'editFormRoute' property).
+
     @property editFormRoute
     @type String
    */
@@ -18,6 +20,7 @@ export default ListFormController.extend({
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'readonly' mode or not.
+
     @property readonly
     @type Boolean
    */
@@ -25,6 +28,7 @@ export default ListFormController.extend({
 
   /**
     Flag for 'flexberry-objectlistview' component 'tableStriped' property.
+
     @property tableStriped
     @type Boolean
    */
@@ -32,6 +36,7 @@ export default ListFormController.extend({
 
   /**
     Flag for 'flexberry-objectlistview' component 'allowColumnResize' property.
+
     @property allowColumnResize
     @type Boolean
    */
@@ -39,6 +44,7 @@ export default ListFormController.extend({
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'createNewButton' mode or not.
+
     @property createNewButton
     @type Boolean
    */
@@ -46,6 +52,7 @@ export default ListFormController.extend({
 
   /**
     Flag for 'flexberry-objectlistview' component 'deleteButton' property.
+
     @property deleteButton
     @type Boolean
    */
@@ -53,6 +60,7 @@ export default ListFormController.extend({
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'enableFilters' mode or not.
+
     @property enableFilters
     @type Boolean
    */
@@ -60,6 +68,7 @@ export default ListFormController.extend({
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'filterButton' mode or not.
+
     @property filterButton
     @type Boolean
    */
@@ -67,6 +76,7 @@ export default ListFormController.extend({
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'refreshButton' mode or not.
+
     @property refreshButton
     @type Boolean
    */
@@ -74,13 +84,39 @@ export default ListFormController.extend({
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showCheckBoxInRow' mode or not.
+
     @property showCheckBoxInRow
     @type Boolean
    */
   showCheckBoxInRow: true,
 
   /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteButtonInRow' mode or not.
+
+    @property showDeleteButtonInRow
+    @type Boolean
+   */
+  showDeleteButtonInRow: true,
+
+  /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
+
+    @property showEditMenuItemInRow
+    @type Boolean
+   */
+  showEditMenuItemInRow: true,
+
+  /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteMenuItemInRow' mode or not.
+
+    @property showDeleteMenuItemInRow
+    @type Boolean
+   */
+  showDeleteMenuItemInRow: true,
+
+  /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'rowClickable' mode or not.
+
     @property rowClickable
     @type Boolean
    */
@@ -88,13 +124,15 @@ export default ListFormController.extend({
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'orderable' mode or not.
+
     @property orderable
     @type Boolean
    */
   orderable: true,
 
   /**
-    ext for 'flexberry-objectlistview' component 'singleColumnHeaderTitle' property.
+    Тext for 'flexberry-objectlistview' component 'singleColumnHeaderTitle' property.
+
     @property singleColumnHeaderTitle
     @type String
    */
@@ -102,10 +140,27 @@ export default ListFormController.extend({
 
   /**
     Current records.
+
     @property _records
     @type Object[]
     @protected
     @readOnly
   */
-  records: []
+  records: [],
+
+  getCellComponent: function(attr, bindingPath, modelClass) {
+    if (attr.kind === 'attr') {
+      switch (bindingPath) {
+        case 'date':
+          return {
+            componentName: 'object-list-view-cell',
+            componentProperties: {
+              dateFormat: 'YYYY-MM-DD'
+            }
+          };
+      }
+    }
+
+    return this._super(...arguments);
+  }
 });

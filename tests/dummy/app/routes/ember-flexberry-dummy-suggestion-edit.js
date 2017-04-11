@@ -34,7 +34,8 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   developerUserSettings: {
     suggestionUserVotesGroupEdit: {
       'DEFAULT': {
-        'columnWidths': [{ 'propName': 'voteType', 'width': 133 }, { 'propName': 'author', 'width': 348 }, { 'propName': 'author.eMail', 'width': 531 }],
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true }, { 'propName': 'voteType', 'width': 133 },
+		{ 'propName': 'author', 'width': 348 }, { 'propName': 'author.eMail', 'width': 531 }],
         'sorting': [{ 'propName': 'author', 'direction': 'asc' }]
       }
     },
@@ -47,7 +48,8 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
     },
     suggestionCommentsGroupEdit: {
       'DEFAULT': {
-        'sorting': [{ 'propName': 'votes', 'direction': 'asc' }, { 'propName': 'moderated', 'direction': 'desc' }, { 'propName': 'text', 'direction': 'asc' }]
+        'columnWidths': [{ 'propName': 'votes', 'fixed': true }],
+        'sorting': [{ 'propName': 'votes', 'direction': 'asc' }, { 'propName': 'moderated', 'direction': 'desc' }, { 'propName': 'text', 'direction': 'asc' }],
       }
     }
   },

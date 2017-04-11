@@ -40,7 +40,7 @@ Ember.$.extend(true, translations, {
             'caption': 'Тип предложения'
           },
           'commentsCount': {
-            'caption': 'Количество голосов'
+            'caption': 'Количество комментариев'
           },
         },
         'SuggestionE': {
@@ -54,7 +54,35 @@ Ember.$.extend(true, translations, {
             'voteType': {
               'caption': 'Тип голосования'
             },
-            'applicationUser': {
+            'author': {
+              'caption': 'Пользователь приложения',
+              'eMail': {
+                'caption': 'Почта'
+              }
+            }
+          },
+          'files': {
+            'order': {
+              'caption': 'Номер'
+            },
+            'file': {
+              'caption': 'Файл',
+            }
+          },
+          'comments': {
+            'name': {
+              'caption': 'Наименование'
+            },
+            'text': {
+              'caption': 'Текст'
+            },
+            'votes': {
+              'caption': 'Голоса',
+            },
+            'moderated': {
+              'caption': 'Одобрено',
+            },
+            'author': {
               'caption': 'Пользователь приложения',
               'eMail': {
                 'caption': 'Почта'
@@ -110,6 +138,39 @@ Ember.$.extend(true, translations, {
             'caption': 'Иерархия'
           },
         },
+        'SuggestionTypeE': {
+          'localizedTypes': {
+            'name': {
+              'caption': 'Наименование'
+            },
+            'localization': {
+              'caption': 'Локализация',
+              'name': {
+                'caption': 'Наименование'
+              }
+            }
+          },
+        }
+      }
+    },
+    'ember-flexberry-dummy-comment': {
+      'projections': {
+        'CommentE': {
+          'text': {
+            'caption': 'Текст комментария'
+          },
+          'userVotes': {
+            'voteType': {
+              'caption': 'Тип голосования'
+            },
+            'applicationUser': {
+              'caption': 'Пользователь',
+              'name': {
+                'caption': 'Наименование'
+              }
+            }
+          },
+        }
       }
     },
   },
@@ -391,6 +452,14 @@ Ember.$.extend(true, translations, {
           },
           'flexberry-toggler': {
             'caption': 'flexberry-toggler',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'ui-message': {
+            'caption': 'ui-message',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -751,6 +820,16 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Пример работы с настройками',
           'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
+        }
+      },
+      'ui-message': {
+        'settings-example': {
+          'caption': 'Ui-message. Пример работы с настройками',
+          'captionMessage': 'Результат проверки',
+          'messageError': 'Операция не выполнена',
+          'messageSuccess': 'Операция выполнена успешно',
+          'messageWarning': 'Частично выполнено',
+          'messageInfo': 'Обратите внимание!'
         }
       }
     },

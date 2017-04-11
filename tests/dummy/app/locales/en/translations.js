@@ -54,10 +54,38 @@ Ember.$.extend(true, translations, {
             'voteType': {
               'caption': 'Vote type'
             },
-            'applicationUser': {
+            'author': {
               'caption': 'Application User',
               'eMail': {
                 'caption': 'Email'
+              }
+            }
+          },
+          'files': {
+            'order': {
+              'caption': 'Order'
+            },
+            'file': {
+              'caption': 'File',
+            }
+          },
+          'comments': {
+            'name': {
+              'caption': 'Name'
+            },
+            'text': {
+              'caption': 'Text'
+            },
+            'votes': {
+              'caption': 'Votes',
+            },
+            'moderated': {
+              'caption': 'Moderated',
+            },
+            'author': {
+              'caption': 'Application User',
+              'eMail': {
+                'caption': 'Mail'
               }
             }
           }
@@ -110,6 +138,22 @@ Ember.$.extend(true, translations, {
             'caption': 'Parent'
           },
         },
+        'SuggestionTypeE': {
+          'name': {
+            'caption': 'Name'
+          },
+          'localizedTypes': {
+            'name': {
+              'caption': 'Name'
+            },
+            'localization': {
+              'caption': 'Localization',
+              'name': {
+                'caption': 'Name'
+              }
+            }
+          },
+        }
       }
     },
   },
@@ -391,6 +435,14 @@ Ember.$.extend(true, translations, {
           },
           'flexberry-toggler': {
             'caption': 'flexberry-toggler',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'ui-message': {
+            'caption': 'ui-message',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -750,6 +802,16 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Settings example',
           'togglerContent': 'Some expandable/collapsable content'
+        }
+      },
+      'ui-message': {
+        'settings-example': {
+          'caption': 'Ui-message. Settings example',
+          'captionMessage': 'Result of checking',
+          'messageError': 'Operation is failed',
+          'messageSuccess': 'Operation is success',
+          'messageWarning': 'Partially implemented',
+          'messageInfo': 'Note!'
         }
       }
     },

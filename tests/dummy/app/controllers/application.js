@@ -16,6 +16,16 @@ export default Ember.Controller.extend({
   },
 
   /**
+    Flag: indicates that form to which controller is related designed for acceptance tests &
+    all additional markup in application.hbs mustn't be rendered.
+
+    @property isInAcceptanceTestMode
+    @type Boolean
+    @default false
+  */
+  isInAcceptanceTestMode: false,
+
+  /**
     Currernt addon version.
 
     @property addonVersion
@@ -447,6 +457,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-toggler/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.ui-message.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.ui-message.title'),
+          children: [{
+            link: 'components-examples/ui-message/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.ui-message.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.ui-message.settings-example.title'),
             children: null
           }]
         }]

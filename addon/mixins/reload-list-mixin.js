@@ -119,9 +119,14 @@ export default Ember.Mixin.create({
                             (filterPredicate ?
                               filterPredicate :
                               undefined));
+    this.set('resultPredicate', resultPredicate);
 
     if (resultPredicate) {
       builder.where(resultPredicate);
+    }
+
+    if (this.get('controller')) {
+      this.set('controller.queryParams', builder.build());
     }
 
     return store.query(modelName, builder.build());

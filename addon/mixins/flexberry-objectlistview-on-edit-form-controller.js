@@ -44,6 +44,15 @@ export default Ember.Mixin.create({
   folvProjection: undefined,
 
   /**
+    Result predicate with all restrictions for olv.
+
+    @property resultPredicate
+    @type BasePredicate
+    @default null
+   */
+  resultPredicate: null,
+
+  /**
     Total count of FOLV records.
 
     @property recordsTotalCount

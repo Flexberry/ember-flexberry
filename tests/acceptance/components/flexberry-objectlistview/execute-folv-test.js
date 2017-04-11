@@ -5,6 +5,7 @@ import startApp from '../../../helpers/start-app';
 export function executeTest(testName, callback) {
   let app;
   let store;
+  let userSettingsService;
 
   module('Acceptance | flexberry-objectlistview | ' + testName, {
     beforeEach() {
@@ -16,6 +17,13 @@ export function executeTest(testName, callback) {
       let applicationController = app.__container__.lookup('controller:application');
       applicationController.set('isInAcceptanceTestMode', true);
       store = app.__container__.lookup('service:store');
+
+      userSettingsService = app.__container__.lookup('service:user-settings');
+      let getCurrentPerPage = function() {
+        return 5;
+      };
+
+      userSettingsService.set('getCurrentPerPage', getCurrentPerPage);
     },
 
     afterEach() {

@@ -4,6 +4,62 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.0-beta.4] - 2017-04-07
+### Added
+* Add getting current `limitFunction` from data object's list when exporting data to Excel.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.2.
+
+### Fixed
+* Fix autorization problems when exporting data to Excel.
+* `user-settings` service:
+    * Fix `userSettings` updating.
+* `flexberry-simpleolv` component:
+    * Fix columns width applying from `userSettings`.
+* `olv-toolbar` component:
+    * Fix `userSettings` names getting on first render.
+
+## [0.9.0-beta.3] - 2017-03-29
+### Added
+* Add spinner for list components when redirecting to `editFormRoute`.
+
+### Fixed
+* Fix `modelName` getting in `olv-toolbar` controller when exporting data to Excel.
+
+## [0.9.0-beta.2] - 2017-03-21
+### Fixed
+* `reload-list` mixin:
+    * Сontroller is unaccessible in some cases inside `reloadList` method. So we added corresponding checks.
+
+## [0.9.0-beta.1] - 2017-03-18
+### Added
+* `olv-toolbar` component:
+    * Add default value for `modelController`. It's needed when using `olv-toolbar` component separately (apart from list components).
+* Add export excel feature for list components.
+* Add `fixed` setting for columns in `developerUserSettings` for list components.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.1.
+* Update `jquery.colResizable` plugin to version 1.6.
+
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix wrong timezone storing when using component to choose date without time.
+
+## [0.9.0-beta.0] - 2017-02-22
+### Added
+* `flexberry-toogler` component:
+    * Add `hasResizableOLV` flag indicates when component need to initialize `colResizable` plugin.
+* Add localization for sort order in list components.
+
+### Changed
+* `ui-message` component: `onShow` & `onHide` actions now sent on every change in visible property.
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.0.
+
+### Removed
+* `ui-message` component: attribute `title`.
+
 ## [0.8.6] - 2017-02-09
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.8.4.

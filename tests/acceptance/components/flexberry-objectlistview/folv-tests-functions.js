@@ -47,6 +47,7 @@ export function loadingList($ctrlForClick, list, records) {
   });
 }
 
+// Function for check sorting.
 export function checkSortingList(store, projection, $olv, ordr) {
   return new Ember.RSVP.Promise((resolve) => {
     Ember.run(() => {
@@ -68,6 +69,7 @@ export function checkSortingList(store, projection, $olv, ordr) {
   });
 }
 
+// Function for addition records.
 export function addRecords(store, modelName, uuid) {
   let promises = Ember.A();
   let listCount = 55;
@@ -90,6 +92,7 @@ export function addRecords(store, modelName, uuid) {
   return Ember.RSVP.Promise.all(promises);
 }
 
+// Function for deleting records.
 export function deleteRecords(store, modelName, uuid, assert) {
   Ember.run(() => {
     let done = assert.async();
@@ -104,6 +107,7 @@ export function deleteRecords(store, modelName, uuid, assert) {
   });
 }
 
+// Function for waiting loading list.
 export function loadingLocales(locale, app) {
   return new Ember.RSVP.Promise((resolve) => {
     let i18n = app.__container__.lookup('service:i18n');

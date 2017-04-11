@@ -1,3 +1,7 @@
+{{#if isInAcceptanceTestMode}}
+  {{outlet}}
+  {{outlet "modal"}}
+{{else}}
 {{#ui-sidebar class="inverted vertical menu" dimPage=false}}
   <a class="item"
      href="https://github.com/flexberry"
@@ -17,13 +21,13 @@
   <div class="full height" style="min-height: 90vh">
     <div class="ui top attached">
       <div class="ui attached menu">
-        <div class="ui container">          
+        <div class="ui container">
           <a {{action 'toggleSidebar'}}
              class="launch icon item"
              title={{t "forms.application.header.menu.sitemap-button.title"}}>
             {{t "forms.application.header.menu.sitemap-button.caption"}}
             <i class="sidebar icon"></i>
-          </a>          
+          </a>
           <div class="right item">
             <label style="margin-right: 5px;">
               {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
@@ -86,3 +90,4 @@
     </div>
   </div>
 </div>
+{{/if}}

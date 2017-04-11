@@ -16,6 +16,16 @@ export default Ember.Controller.extend({
   },
 
   /**
+    Flag: indicates that form to which controller is related designed for acceptance tests &
+    all additional markup in application.hbs mustn't be rendered.
+
+    @property isInAcceptanceTestMode
+    @type Boolean
+    @default false
+  */
+  isInAcceptanceTestMode: false,
+
+  /**
     Currernt addon version.
 
     @property addonVersion

@@ -133,11 +133,15 @@ export default Ember.Mixin.create({
     */
     filterByAnyMatch(pattern, filterCondition) {
       if (this.get('filter') !== pattern) {
-        this.setProperties({
-          filterCondition: filterCondition,
-          filter: pattern,
-          page: 1
-        });
+        this.set('state', 'loading');
+        let _this = this;
+        Ember.run.later((function() {
+          _this.setProperties({
+            filterCondition: filterCondition,
+            filter: pattern,
+            page: 1
+          });
+        }), 50);
       }
     },
   },

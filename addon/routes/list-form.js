@@ -177,6 +177,9 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         this.onModelLoadingRejected(errorData);
       }).finally((data) => {
         this.onModelLoadingAlways(data);
+        if (this.get('controller.state') === 'loading') {
+          this.get('controller').set('state', '');
+        }
       });
 
     if (this.get('controller') === undefined) {
@@ -282,10 +285,6 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     controller.set('resultPredicate', this.get('resultPredicate'));
     if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
-    }
-
-    if (controller.get('state') === 'loading') {
-      controller.set('state', '');
     }
   }
 });

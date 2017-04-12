@@ -840,8 +840,15 @@ ErrorableControllerMixin, {
       @public
     */
     removeFilter() {
-      this.set('filterText', null);
-      this.set('filterByAnyMatchText', null);
+      let _this = this;
+      if (_this.get('filterText') || _this.get('filterByAnyMatchText')) {
+        _this.get('currentController').set('state', 'loading');
+      }
+
+      Ember.run.later((function() {
+        _this.set('filterText', null);
+        _this.set('filterByAnyMatchText', null);
+      }), 50);
     },
 
     /**

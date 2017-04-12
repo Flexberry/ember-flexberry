@@ -2,9 +2,9 @@ import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
 import { loadingList, loadingLocales } from './folv-tests-functions';
 
-executeTest('date format', (store, assert, app) => {
-  assert.expect(7);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/date-format';
+executeTest('date format moment L', (store, assert, app) => {
+  assert.expect(6);
+  let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
   andThen(() => {
     assert.equal(currentPath(), path);
@@ -12,13 +12,10 @@ executeTest('date format', (store, assert, app) => {
       let olvContainerClass = '.object-list-view-container';
       let trTableClass = 'table.object-list-view tbody tr';
 
-      let controller = app.__container__.lookup('controller:application');
       let moment = app.__container__.lookup('service:moment');
 
-      let getCellComponent = Ember.get(controller, 'getCellComponent');
       let momentValue = Ember.get(moment, 'defaultFormat');
 
-      assert.notOk(getCellComponent, 'method \'getCellComponent\' is null');
       assert.equal(momentValue, 'L', 'moment value is \'L\' ');
 
       let $folvContainer = Ember.$(olvContainerClass);

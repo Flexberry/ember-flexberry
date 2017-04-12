@@ -1,36 +1,88 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
+import { loadingList, loadingLocales } from './folv-tests-functions';
+import I18nEnLocale from 'ember-flexberry/locales/en/translations';
 
 executeTest('check getCellComponent', (store, assert, app) => {
-  assert.expect(2);
-  let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
+  assert.expect(7);
+  let path = 'components-acceptance-tests/flexberry-objectlistview/date-format';
   visit(path);
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $folvContainer = Ember.$('.object-list-view-container');
-    let $table = Ember.$('table.object-list-view', $folvContainer);
+    // Set 'ru' as current locale.
+    loadingLocales('en', app).then(() => {
 
-    let $firstRow =  Ember.$('tbody tr', $table)[0];
-    let $headRow = Ember.$('thead tr', $table)[0].children;
+      let olvContainerClass = '.object-list-view-container';
+      let trTableClass = 'table.object-list-view tbody tr';
 
-    let indexDate = () => {
-      let toReturn;
-      Object.keys($headRow).forEach((element, index, array) => {
-        if (Ember.$.trim($headRow[element].innerText) === 'Date') {
-          toReturn = index;
-          return false;
-        }
-      });
-      return toReturn;
-    };
+      let controller = app.__container__.lookup('controller:' + currentRouteName());
 
-    let $dateCell = Ember.$.trim($firstRow.children[indexDate()].innerText);
-    let myRe = /[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])/;
+      let $folvContainer = Ember.$('.object-list-view-container');
+      let $table = Ember.$('table.object-list-view', $folvContainer);
 
-    // Date format most be YYYY-MM-DD.
-    let myArray = myRe.exec($dateCell);
+      let $headRow = Ember.$('thead tr', $table)[0].children;
 
-    assert.ok(myArray[0], 'date format is \'YYYY-MM-DD\' ');
+      let indexDate = () => {
+        let toReturn;
+        Object.keys($headRow).forEach((element, index, array) => {
+          if (Ember.$.trim($headRow[element].innerText) === 'Date') {
+            toReturn = index;
+            return false;
+          }
+        });
+        return toReturn;
+      };
+
+      let $dateCell = () => { return Ember.$.trim(Ember.$('tbody tr', $table)[0].children[indexDate()].innerText); };
+
+      let myRe = /[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])/;
+
+      // Date format most be YYYY-MM-DD.
+      let myArray = myRe.exec($dateCell());
+
+      let result = myArray ? myArray[0] : null;
+      assert.ok(result, 'date format is \'YYYY-MM-DD\' ');
+
+      controller.set('dateFormat', '2');
+      let $toolBar = Ember.$('.ui.secondary.menu')[0];
+      let $toolBarButtons = $toolBar.children;
+      let $refreshButton = $toolBarButtons[0];
+      assert.equal($refreshButton.innerText, Ember.get(I18nEnLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
+
+      let done = assert.async();
+
+      let timeout = 1000;
+      Ember.run.later((() => {
+        loadingList($refreshButton, olvContainerClass, trTableClass).then(($list) => {
+          assert.ok($list, 'list loaded');
+
+          // Date format most be DD.MM.YYYY, hh:mm:ss.
+          let reDateTime = /(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d\, ([0-1]\d|2[0-3])(:[0-5]\d){2}$/;
+          let arrayDateTime = reDateTime.exec($dateCell());
+
+          let resultDateTime = arrayDateTime ? arrayDateTime[0] : null;
+          assert.ok(resultDateTime, 'date format is \'DD.MM.YYYY, hh:mm:ss\' ');
+          controller.set('dateFormat', '3');
+
+          Ember.run.later((() => {
+            let done1 = assert.async();
+            loadingList($refreshButton, olvContainerClass, trTableClass).then(($list) => {
+              assert.ok($list, 'list loaded');
+
+              // Date format most be II (example Sep 4 1986).
+              let reDateString = /[a-zA-Z]{3} ([1-9]|[12][0-9]|3[01])\, (19|20)\d\d/;
+              let arrayDateString = reDateString.exec($dateCell());
+
+              let resultDateString = arrayDateString ? arrayDateString[0] : null;
+              assert.ok(resultDateString, 'date format is \'ll\' ');
+              done1();
+            });
+          }), timeout);
+
+          done();
+        });
+      }), timeout);
+    });
   });
 });

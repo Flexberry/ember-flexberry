@@ -8,7 +8,6 @@ import lodash = require('lodash');
 const stripBom = require("strip-bom");
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
-const existsSync = require('exists-sync');
 const walkSync = require('walk-sync');
 
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
     if (this._files) { return this._files; }
     this._super._files = null;
     var filesPath = path.join(this.path, 'files');
-    if (existsSync(filesPath)) {
+    if (fs.existsSync(filesPath)) {
       this._files = walkSync(filesPath);
     } else {
       this._files = [];

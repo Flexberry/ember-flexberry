@@ -7,7 +7,6 @@ var path = require('path');
 var lodash = require('lodash');
 var stripBom = require("strip-bom");
 var Locales_1 = require('../flexberry-core/Locales');
-var existsSync = require('exists-sync');
 var walkSync = require('walk-sync');
 module.exports = {
     description: 'Generates an ember list-form for flexberry.',
@@ -25,7 +24,7 @@ module.exports = {
         }
         this._super._files = null;
         var filesPath = path.join(this.path, 'files');
-        if (existsSync(filesPath)) {
+        if (fs.existsSync(filesPath)) {
             this._files = walkSync(filesPath);
         }
         else {

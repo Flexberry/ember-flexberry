@@ -8,7 +8,6 @@ import lodash = require('lodash');
 const stripBom = require("strip-bom");
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
-const walkSync = require('walk-sync');
 
 module.exports = {
   description: 'Generates an ember list-form for flexberry.',

@@ -7,7 +7,6 @@ var path = require('path');
 var lodash = require('lodash');
 var stripBom = require("strip-bom");
 var Locales_1 = require('../flexberry-core/Locales');
-var walkSync = require('walk-sync');
 module.exports = {
     description: 'Generates an ember list-form for flexberry.',
     availableOptions: [

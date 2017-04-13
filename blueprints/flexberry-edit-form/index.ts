@@ -8,7 +8,6 @@ import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
-const walkSync = require('walk-sync');
 
 const componentMaps = [
   { name: "flexberry-file", types: ["file"] },

@@ -96,7 +96,10 @@ class GroupBlueprint {
     metadataSubDir = path.join(this.metadataDir, metadataSubDir);
     let list = fs.readdirSync(metadataSubDir);
     for (let file of list) {
-      let entityName = path.parse(file).name;
+      let pp: path.ParsedPath = path.parse(file);
+      if (pp.ext != ".json")
+        continue;
+      let entityName = pp.name;
       if (notOverwrite && this.fileExists(`${folderJsFiles}/${entityName}.js`))
         continue;
       let groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });

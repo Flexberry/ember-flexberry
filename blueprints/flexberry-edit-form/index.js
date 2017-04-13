@@ -29,13 +29,9 @@ module.exports = {
             return this._files;
         }
         this._super._files = null;
-        var filesPath = path.join(this.path, 'files');
-        if (fs.existsSync(filesPath)) {
-            this._files = walkSync(filesPath);
-        }
-        else {
-            this._files = [];
-        }
+        this._super.path = this.path;
+        this._files = this._super.files();
+        this._super._files = null;
         if (this.options.dummy) {
             lodash.remove(this._files, function (v) { return v === "app/templates/__name__.hbs"; });
         }

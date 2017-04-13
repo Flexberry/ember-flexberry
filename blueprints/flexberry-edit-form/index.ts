@@ -8,6 +8,7 @@ import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
+const Blueprint = require('ember-cli/lib/models/blueprint');
 
 const componentMaps = [
   { name: "flexberry-file", types: ["file"] },
@@ -16,7 +17,6 @@ const componentMaps = [
   { name: "flexberry-field", types: ["string", "number", "decimal"] }
 ];
 
-
 module.exports = {
   description: 'Generates an ember edit-form for flexberry.',
 
@@ -24,6 +24,21 @@ module.exports = {
     { name: 'file', type: String },
     { name: 'metadata-dir', type: String }
   ],
+
+  supportsAddon: function () {
+    return false;
+  },
+
+  files: function () {
+    this._super.path = this.path;
+    let f = this._super.files();
+    if (this.options.dummy) {
+      lodash.remove(f, function (v) { return v === "app/templates/__name__.hbs"; });
+    } else {
+      lodash.remove(f, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+    }
+    return f;
+  },
 
   /**
    * Blueprint Hook locals.
@@ -54,6 +69,9 @@ module.exports = {
     );
   }
 };
+
+
+
 
 class EditFormBlueprint {
   locales: Locales;

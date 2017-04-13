@@ -7,6 +7,7 @@ var fs = require("fs");
 var path = require('path');
 var lodash = require('lodash');
 var Locales_1 = require('../flexberry-core/Locales');
+var Blueprint = require('ember-cli/lib/models/blueprint');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -19,6 +20,20 @@ module.exports = {
         { name: 'file', type: String },
         { name: 'metadata-dir', type: String }
     ],
+    supportsAddon: function () {
+        return false;
+    },
+    files: function () {
+        this._super.path = this.path;
+        var f = this._super.files();
+        if (this.options.dummy) {
+            lodash.remove(f, function (v) { return v === "app/templates/__name__.hbs"; });
+        }
+        else {
+            lodash.remove(f, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+        }
+        return f;
+    },
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.

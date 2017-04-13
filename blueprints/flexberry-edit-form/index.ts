@@ -16,7 +16,6 @@ const componentMaps = [
   { name: "flexberry-field", types: ["string", "number", "decimal"] }
 ];
 
-
 module.exports = {
   description: 'Generates an ember edit-form for flexberry.',
 
@@ -24,6 +23,26 @@ module.exports = {
     { name: 'file', type: String },
     { name: 'metadata-dir', type: String }
   ],
+
+  supportsAddon: function () {
+    return false;
+  },
+
+  _files: null,
+
+  files: function () {
+    if (this._files) { return this._files; }
+    this._super._files = null;
+    this._super.path = this.path;
+    this._files = this._super.files();
+    this._super._files = null;
+    if (this.options.dummy) {
+      lodash.remove(this._files, function (v) { return v === "app/templates/__name__.hbs"; });
+    } else {
+      lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+    }
+    return this._files;
+  },
 
   /**
    * Blueprint Hook locals.
@@ -54,6 +73,9 @@ module.exports = {
     );
   }
 };
+
+
+
 
 class EditFormBlueprint {
   locales: Locales;

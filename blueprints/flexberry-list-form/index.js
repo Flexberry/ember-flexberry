@@ -13,6 +13,26 @@ module.exports = {
         { name: 'file', type: String },
         { name: 'metadata-dir', type: String }
     ],
+    supportsAddon: function () {
+        return false;
+    },
+    _files: null,
+    files: function () {
+        if (this._files) {
+            return this._files;
+        }
+        this._super._files = null;
+        this._super.path = this.path;
+        this._files = this._super.files();
+        this._super._files = null;
+        if (this.options.dummy) {
+            lodash.remove(this._files, function (v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
+        }
+        else {
+            lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs" || v === "tests/dummy/app/templates/__name__/loading.hbs"; });
+        }
+        return this._files;
+    },
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.

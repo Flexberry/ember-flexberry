@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Add support generation ember object.
+
+## [0.9.0-beta.6] - 2017-04-12
+### Added
+* Add spinner for searching in list components.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.3.
 
 ## [0.9.0-beta.5] - 2017-04-11
 ### Added

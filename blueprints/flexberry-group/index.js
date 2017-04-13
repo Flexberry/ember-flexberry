@@ -28,6 +28,12 @@ var GroupBlueprint = (function () {
         this.promise = Promise.resolve();
         this.setMainBlueprint(this.blueprintName);
         switch (this.blueprintName) {
+            case 'transform':
+                this.emberGenerate("objects");
+                break;
+            case 'transform-test':
+                this.emberGenerate("objects");
+                break;
             case 'controller-test':
                 this.emberGenerate("list-forms");
                 this.emberGenerate("edit-forms");
@@ -50,6 +56,12 @@ var GroupBlueprint = (function () {
                 break;
             case 'flexberry-model-init':
                 this.emberGenerate("models", true, projectTypeName + "/models");
+                break;
+            case 'flexberry-object':
+                this.emberGenerate("objects");
+                break;
+            case 'flexberry-object-init':
+                this.emberGenerate("objects", true, projectTypeName + "/objects");
                 break;
             case 'flexberry-serializer-init':
                 this.emberGenerate("models", true, projectTypeName + "/serializers");
@@ -74,10 +86,12 @@ var GroupBlueprint = (function () {
         if (notOverwrite === void 0) { notOverwrite = false; }
         if (folderJsFiles === void 0) { folderJsFiles = undefined; }
         metadataSubDir = path.join(this.metadataDir, metadataSubDir);
+        if (!fs.existsSync(metadataSubDir))
+            return;
         var list = fs.readdirSync(metadataSubDir);
         var _loop_1 = function(file) {
             var entityName = path.parse(file).name;
-            if (notOverwrite && this_1.fileExists(folderJsFiles + "/" + entityName + ".js"))
+            if (notOverwrite && fs.existsSync(folderJsFiles + "/" + entityName + ".js"))
                 return "continue";
             var groupOptions = lodash.merge({}, this_1.options, { entity: { name: entityName } });
             GroupBlueprint.groupOptions.push(groupOptions);
@@ -87,6 +101,9 @@ var GroupBlueprint = (function () {
                 }
                 var middlePaths;
                 switch (this.blueprintName) {
+                    case 'flexberry-object':
+                        middlePaths = ["object", "transform"];
+                        break;
                     case 'flexberry-enum':
                         middlePaths = ["enum", "transform"];
                         break;
@@ -123,16 +140,6 @@ var GroupBlueprint = (function () {
             var state_1 = _loop_1(file);
             if (state_1 === "continue") continue;
         }
-    };
-    GroupBlueprint.prototype.fileExists = function (path) {
-        try {
-            fs.statSync(path);
-        }
-        catch (e) {
-            if (e.code === "ENOENT")
-                return false;
-        }
-        return true;
     };
     GroupBlueprint.groupOptions = [];
     return GroupBlueprint;

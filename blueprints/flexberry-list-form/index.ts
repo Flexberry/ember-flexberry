@@ -8,6 +8,8 @@ import lodash = require('lodash');
 const stripBom = require("strip-bom");
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
+const existsSync = require('exists-sync');
+const walkSync = require('walk-sync');
 
 module.exports = {
   description: 'Generates an ember list-form for flexberry.',
@@ -21,16 +23,25 @@ module.exports = {
     return false;
   },
 
+  _files: null,
+
   files: function () {
-    this._super.path = this.path;
-    let f = this._super.files();
-    if (this.options.dummy) {
-      lodash.remove(f, function (v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
+    if (this._files) { return this._files; }
+    this._super._files = null;
+    var filesPath = path.join(this.path, 'files');
+    if (existsSync(filesPath)) {
+      this._files = walkSync(filesPath);
     } else {
-      lodash.remove(f, function (v) { return v === "tests/dummy/app/templates/__name__.hbs" || v === "tests/dummy/app/templates/__name__/loading.hbs"; });
+      this._files = [];
     }
-    return f;
+    if (this.options.dummy) {
+      lodash.remove(this._files, function (v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
+    } else {
+      lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs" || v === "tests/dummy/app/templates/__name__/loading.hbs"; });
+    }
+    return this._files;
   },
+
 
   /**
    * Blueprint Hook locals.

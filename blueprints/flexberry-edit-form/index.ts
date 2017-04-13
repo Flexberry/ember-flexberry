@@ -8,7 +8,8 @@ import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
-const Blueprint = require('ember-cli/lib/models/blueprint');
+const existsSync = require('exists-sync');
+const walkSync = require('walk-sync');
 
 const componentMaps = [
   { name: "flexberry-file", types: ["file"] },
@@ -29,15 +30,23 @@ module.exports = {
     return false;
   },
 
+  _files: null,
+
   files: function () {
-    this._super.path = this.path;
-    let f = this._super.files();
-    if (this.options.dummy) {
-      lodash.remove(f, function (v) { return v === "app/templates/__name__.hbs"; });
+    if (this._files) { return this._files; }
+    this._super._files = null;
+    var filesPath = path.join(this.path, 'files');
+    if (existsSync(filesPath)) {
+      this._files = walkSync(filesPath);
     } else {
-      lodash.remove(f, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+      this._files = [];
     }
-    return f;
+    if (this.options.dummy) {
+      lodash.remove(this._files, function (v) { return v === "app/templates/__name__.hbs"; });
+    } else {
+      lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+    }
+    return this._files;
   },
 
   /**

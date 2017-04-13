@@ -7,7 +7,8 @@ var fs = require("fs");
 var path = require('path');
 var lodash = require('lodash');
 var Locales_1 = require('../flexberry-core/Locales');
-var Blueprint = require('ember-cli/lib/models/blueprint');
+var existsSync = require('exists-sync');
+var walkSync = require('walk-sync');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -23,16 +24,26 @@ module.exports = {
     supportsAddon: function () {
         return false;
     },
+    _files: null,
     files: function () {
-        this._super.path = this.path;
-        var f = this._super.files();
-        if (this.options.dummy) {
-            lodash.remove(f, function (v) { return v === "app/templates/__name__.hbs"; });
+        if (this._files) {
+            return this._files;
+        }
+        this._super._files = null;
+        var filesPath = path.join(this.path, 'files');
+        if (existsSync(filesPath)) {
+            this._files = walkSync(filesPath);
         }
         else {
-            lodash.remove(f, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+            this._files = [];
         }
-        return f;
+        if (this.options.dummy) {
+            lodash.remove(this._files, function (v) { return v === "app/templates/__name__.hbs"; });
+        }
+        else {
+            lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+        }
+        return this._files;
     },
     /**
      * Blueprint Hook locals.

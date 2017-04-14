@@ -10,6 +10,9 @@ module.exports = {
     availableOptions: [
         { name: 'metadata-dir', type: String }
     ],
+    supportsAddon: function () {
+        return false;
+    },
     install: function (options) {
         var groupBlueprint = new GroupBlueprint(this, options);
         return groupBlueprint.promise;

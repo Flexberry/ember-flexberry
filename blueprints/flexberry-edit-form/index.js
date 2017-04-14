@@ -197,11 +197,14 @@ var EditFormBlueprint = (function () {
         var listForms = fs.readdirSync(listFormsDir);
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
             var form = listForms_1[_i];
+            var pp = path.parse(form);
+            if (pp.ext != ".json")
+                continue;
             var listFormFile = path.join(listFormsDir, form);
             var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
             var listForm = JSON.parse(content);
             if (this.options.entity.name === listForm.editForm) {
-                parentRoute = path.parse(form).name;
+                parentRoute = pp.name;
             }
         }
         return parentRoute;

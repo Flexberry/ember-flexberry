@@ -216,11 +216,14 @@ class EditFormBlueprint {
     let listFormsDir = path.join(this.options.metadataDir, "list-forms");
     let listForms = fs.readdirSync(listFormsDir);
     for (let form of listForms) {
+      let pp: path.ParsedPath = path.parse(form);
+      if (pp.ext != ".json")
+        continue;
       let listFormFile = path.join(listFormsDir, form);
       let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
       let listForm: metadata.ListForm = JSON.parse(content);
       if (this.options.entity.name === listForm.editForm) {
-        parentRoute = path.parse(form).name;
+        parentRoute = pp.name;
       }
     }
     return parentRoute;

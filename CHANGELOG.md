@@ -3,14 +3,19 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.0-beta.7] - 2017-04-14
 ### Added
 * Blueprints:
     * Add support ember objects and transforms generation (from classes with "type" stereotype in Flexberry Designer's class diagrams).
 
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.4
+
 ### Fixed
 * Blueprints:
-    * Fix wrong path of tempates generating when process was started with `--dummy` option.
-    * Fix generation addon errors.
+    * Fix wrong path of tempates generation when process was started with `--dummy` option.
+    * Fix generation to addon errors.
 * Fix spinner for searching in list components.
 
 ## [0.9.0-beta.6] - 2017-04-12

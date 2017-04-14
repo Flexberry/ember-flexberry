@@ -56,7 +56,10 @@ export default class ModelBlueprint {
     let listEnums = fs.readdirSync(enumsDir);
     let enums: string[] = [];
     for (let e of listEnums) {
-      enums.push(`    'transform:${path.parse(e).name}'`);
+      let pp: path.ParsedPath = path.parse(e);
+      if (pp.ext != ".json")
+        continue;
+      enums.push(`    'transform:${pp.name}'`);
     }
     return enums.join(",\n");
   }
@@ -65,11 +68,13 @@ export default class ModelBlueprint {
     let listModels = fs.readdirSync(modelsDir);
     let models: string[] = [];
     for (let model of listModels) {
-      models.push(`    'model:${path.parse(model).name}'`);
+      let pp: path.ParsedPath = path.parse(model);
+      if (pp.ext != ".json")
+        continue;
+      models.push(`    'model:${pp.name}'`);
     }
     return models.join(",\n");
   }
-
 
   getSerializerAttrs(model: metadata.Model): string {
     let attrs: string[] = [];

@@ -41,7 +41,10 @@ var ModelBlueprint = (function () {
         var enums = [];
         for (var _i = 0, listEnums_1 = listEnums; _i < listEnums_1.length; _i++) {
             var e = listEnums_1[_i];
-            enums.push("    'transform:" + path.parse(e).name + "'");
+            var pp = path.parse(e);
+            if (pp.ext != ".json")
+                continue;
+            enums.push("    'transform:" + pp.name + "'");
         }
         return enums.join(",\n");
     };
@@ -50,7 +53,10 @@ var ModelBlueprint = (function () {
         var models = [];
         for (var _i = 0, listModels_1 = listModels; _i < listModels_1.length; _i++) {
             var model = listModels_1[_i];
-            models.push("    'model:" + path.parse(model).name + "'");
+            var pp = path.parse(model);
+            if (pp.ext != ".json")
+                continue;
+            models.push("    'model:" + pp.name + "'");
         }
         return models.join(",\n");
     };

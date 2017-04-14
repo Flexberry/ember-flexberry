@@ -9,6 +9,10 @@ module.exports = {
     { name: 'metadata-dir', type: String }
   ],
 
+  supportsAddon: function () {
+    return false;
+  },
+
   /**
    * Blueprint Hook locals.
    * Use locals to add custom template variables. The method receives one argument: options.

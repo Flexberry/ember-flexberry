@@ -10,6 +10,9 @@ module.exports = {
     availableOptions: [
         { name: 'metadata-dir', type: String }
     ],
+    supportsAddon: function () {
+        return false;
+    },
     install: function (options) {
         var groupBlueprint = new GroupBlueprint(this, options);
         return groupBlueprint.promise;
@@ -90,7 +93,10 @@ var GroupBlueprint = (function () {
             return;
         var list = fs.readdirSync(metadataSubDir);
         var _loop_1 = function(file) {
-            var entityName = path.parse(file).name;
+            var pp = path.parse(file);
+            if (pp.ext != ".json")
+                return "continue";
+            var entityName = pp.name;
             if (notOverwrite && fs.existsSync(folderJsFiles + "/" + entityName + ".js"))
                 return "continue";
             var groupOptions = lodash.merge({}, this_1.options, { entity: { name: entityName } });

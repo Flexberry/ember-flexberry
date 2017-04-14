@@ -13,6 +13,9 @@ module.exports = {
     availableOptions: [
         { name: 'metadata-dir', type: String }
     ],
+    supportsAddon: function () {
+        return false;
+    },
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.
@@ -64,10 +67,13 @@ var CoreBlueprint = (function () {
         var inflectorIrregular = [];
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
             var formFileName = listForms_1[_i];
+            var pp = path.parse(formFileName);
+            if (pp.ext != ".json")
+                continue;
             var listFormFile = path.join(listFormsDir, formFileName);
             var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
             var listForm = JSON.parse(content);
-            var listFormName = path.parse(formFileName).name;
+            var listFormName = pp.name;
             routes.push("  this.route('" + listFormName + "');");
             routes.push("  this.route('" + listForm.editForm + "', { path: '" + listForm.editForm + "/:id' });");
             routes.push("  this.route('" + listForm.newForm + ".new', { path: '" + listForm.newForm + "/new' });");
@@ -76,19 +82,25 @@ var CoreBlueprint = (function () {
         }
         for (var _a = 0, editForms_1 = editForms; _a < editForms_1.length; _a++) {
             var formFileName = editForms_1[_a];
+            var pp = path.parse(formFileName);
+            if (pp.ext != ".json")
+                continue;
             var editFormFile = path.join(editFormsDir, formFileName);
             var content = stripBom(fs.readFileSync(editFormFile, "utf8"));
             var editForm = JSON.parse(content);
-            var editFormName = path.parse(formFileName).name;
+            var editFormName = pp.name;
             importProperties.push("import " + editForm.name + "Form from './forms/" + editFormName + "';");
             formsImportedProperties.push("    '" + editFormName + "': " + editForm.name + "Form");
         }
         for (var _b = 0, models_1 = models; _b < models_1.length; _b++) {
             var modelFileName = models_1[_b];
+            var pp = path.parse(modelFileName);
+            if (pp.ext != ".json")
+                continue;
             var modelFile = path.join(modelsDir, modelFileName);
             var content = stripBom(fs.readFileSync(modelFile, "utf8"));
             var model = JSON.parse(content);
-            var modelName = path.parse(modelFileName).name;
+            var modelName = pp.name;
             var LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
             var irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
             importProperties.push("import " + model.name + "Model from './models/" + modelName + "';");

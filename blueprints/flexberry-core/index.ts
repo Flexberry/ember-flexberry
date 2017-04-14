@@ -17,6 +17,10 @@ module.exports = {
     { name: 'metadata-dir', type: String }
   ],
 
+  supportsAddon: function () {
+    return false;
+  },
+
   /**
    * Blueprint Hook locals.
    * Use locals to add custom template variables. The method receives one argument: options.
@@ -81,10 +85,13 @@ class CoreBlueprint {
     let modelsImportedProperties = [];
     let inflectorIrregular = [];
     for (let formFileName of listForms) {
+      let pp: path.ParsedPath = path.parse(formFileName);
+      if (pp.ext != ".json")
+        continue;
       let listFormFile = path.join(listFormsDir, formFileName);
       let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
       let listForm: metadata.ListForm = JSON.parse(content);
-      let listFormName = path.parse(formFileName).name;
+      let listFormName = pp.name;
       routes.push(`  this.route('${listFormName}');`);
       routes.push(`  this.route('${listForm.editForm}', { path: '${listForm.editForm}/:id' });`);
       routes.push(`  this.route('${listForm.newForm}.new', { path: '${listForm.newForm}/new' });`);
@@ -92,18 +99,24 @@ class CoreBlueprint {
       formsImportedProperties.push(`    '${listFormName}': ${listForm.name}Form`);
     }
     for (let formFileName of editForms) {
+      let pp: path.ParsedPath = path.parse(formFileName);
+      if (pp.ext != ".json")
+        continue;
       let editFormFile = path.join(editFormsDir, formFileName);
       let content = stripBom(fs.readFileSync(editFormFile, "utf8"));
       let editForm: metadata.EditForm = JSON.parse(content);
-      let editFormName = path.parse(formFileName).name;
+      let editFormName = pp.name;
       importProperties.push(`import ${editForm.name}Form from './forms/${editFormName}';`);
       formsImportedProperties.push(`    '${editFormName}': ${editForm.name}Form`);
     }
     for (let modelFileName of models) {
+      let pp: path.ParsedPath = path.parse(modelFileName);
+      if (pp.ext != ".json")
+        continue;
       let modelFile = path.join(modelsDir, modelFileName);
       let content = stripBom(fs.readFileSync(modelFile, "utf8"));
       let model: metadata.Model = JSON.parse(content);
-      let modelName = path.parse(modelFileName).name;
+      let modelName = pp.name;
       let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
       let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
       importProperties.push(`import ${model.name}Model from './models/${modelName}';`);

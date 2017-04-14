@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Blueprints:
     * Fix wrong path of tempates generating when process was started with `--dummy` option.
+    * Fix generation addon errors.
 * Fix spinner for searching in list components.
 
 ## [0.9.0-beta.6] - 2017-04-12

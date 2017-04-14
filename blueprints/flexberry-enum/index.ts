@@ -15,7 +15,9 @@ module.exports = {
     { name: 'metadata-dir', type: String }
   ],
 
-
+  supportsAddon: function () {
+    return false;
+  },
 
   /**
    * Blueprint Hook locals.

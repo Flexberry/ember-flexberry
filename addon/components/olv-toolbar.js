@@ -437,7 +437,7 @@ export default FlexberryBaseComponent.extend({
     */
     removeFilter() {
       let _this = this;
-      if (_this.get('filterText') || _this.get('filterByAnyMatchText')) {
+      if (_this.get('filterText')) {
         _this.get('currentController').set('state', 'loading');
       }
 

@@ -10,7 +10,7 @@ executeTest('check getCellComponent', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    // Set 'ru' as current locale.
+    // Set 'en' as current locale.
     loadingLocales('en', app).then(() => {
 
       let olvContainerClass = '.object-list-view-container';
@@ -50,10 +50,9 @@ executeTest('check getCellComponent', (store, assert, app) => {
       let $refreshButton = $toolBarButtons[0];
       assert.equal($refreshButton.innerText, Ember.get(I18nEnLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
 
-      let done = assert.async();
-
-      let timeout = 1000;
+      let timeout = 500;
       Ember.run.later((() => {
+        let done = assert.async();
         loadingList($refreshButton, olvContainerClass, trTableClass).then(($list) => {
           assert.ok($list, 'list loaded');
 
@@ -65,6 +64,7 @@ executeTest('check getCellComponent', (store, assert, app) => {
           assert.ok(resultDateTime, 'date format is \'DD.MM.YYYY, hh:mm:ss\' ');
           controller.set('dateFormat', '3');
 
+          let done2 = assert.async();
           Ember.run.later((() => {
             let done1 = assert.async();
             loadingList($refreshButton, olvContainerClass, trTableClass).then(($list) => {
@@ -78,8 +78,8 @@ executeTest('check getCellComponent', (store, assert, app) => {
               assert.ok(resultDateString, 'date format is \'ll\' ');
               done1();
             });
+            done2();
           }), timeout);
-
           done();
         });
       }), timeout);

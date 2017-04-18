@@ -12,7 +12,7 @@
     </div>
 </div> 
   {{#ui-sidebar class="inverted vertical menu" dimPage=false}}
-  <a class="item"
+  <a class="item" 
     href={{addonVersionHref}}
     target="_blank"
     title={{t "forms.application.sitemap.application-version.title"}}>
@@ -20,16 +20,15 @@
   </a>
   {{render "sitemap" sitemap}}
 {{/ui-sidebar}}
-<div id="example" class="pusher">
-   <div>
-    <div class="ui top attached">
+ <div class="ui top attached">
     <div class="ui attached menu">
       <div class="ui container flex-container">          
-        <a {{action 'toggleSidebar'}}
+        <a {{action 'toggleSidebar' 'hiddenSidebar' }}
             class="launch icon item"
             title={{t "forms.application.header.menu.sitemap-button.title"}}>
           {{t "forms.application.header.menu.sitemap-button.caption"}}
-          <i class="sidebar icon"></i>
+          <i class="sidebar icon text-menu-1"><span class="text_menu ">Показать меню</span><span class="text_menu hidden-menu text-menu-2">Скрыть меню</span></i>
+          <i class="sidebar icon hidden-menu text-menu-2 hidden-text"><span class="text_menu hidden-text">Скрыть меню</span></i>
         </a>      
         <div class="item">
           <label style="margin-right: 5px;">
@@ -56,8 +55,10 @@
       </div>
     </div>
   </div>
+<div id="example" class="pusher" {{action 'hiddenMenu'}}>
+   <div>
    </div>
-  <div class="full height" style="min-height: 90vh">
+  <div class="full height" style="min-height: 90vh" >
     <div class="flexberry-content ui attached segment">
       <div class="ui main container">
         <div class="stackable grid container">
@@ -95,5 +96,4 @@
       </div>
     </div>
   </div>
-
 

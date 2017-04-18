@@ -86,6 +86,12 @@ i.icon.remove:before:hover {
 .ui.positive.buttons .button, .ui.positive.button {
     background: none!important;
 }
+.stackable.grid.container p:last-child .ui.positive.button {
+   background: #7dd4b4!important;
+}
+.stackable.grid.container p:last-child .ui.negative.button {
+   background: #ff4800!important;
+}
 .ui.negative.buttons .button:hover, .ui.negative.button:hover   {
     background: #DB2828!important;
     opacity: 0.8;
@@ -105,6 +111,76 @@ i.icon.remove:before:hover {
 .ui.buttons:not(.basic):not(.inverted) {
     box-shadow: none;
     width: 75px;
-    margin-left: -19px;
+    margin-left: -10px;
+}
+.ui.econdary.menu.no-margin > .ui.basic > button:hover:before {
+  color: #ff4800!important;
+}
+.ui.econdary.menu.no-margin > .ui.basic > .ui.button:hover {
+  color: #ff4800!important;
+}
+.ui.small.button {
+  border: none;
+}
+.ember-view.groupedit-toolbar > button:hover {
+  background: #fff!important;
+  color: #7dd4b4!important;
+  border-color: #7dd4b4!important;
+}
+.ember-view.groupedit-toolbar > button:hover i.icon:before {
+  color: #7dd4b4!important;
+}
+.ui.action.input > button:hover i.search:before {
+  color: #7dd4b4!important;
+}
+.cell .button:hover{
+  background: #fff!important;
+}
+.cell .button:hover i.icon:before {
+  color: #7dd4b4!important;
+}
+.ui.form.flexberry-vertical-form .field .ember-view .ui.fluid button:first-child {
+  content: "\e800";
+  visibility: hidden;
+}
+.ui.basic.green.buttons .button, .ui.basic.green.button {
+  box-shadow: none!important;
+}
+.ui.basic.green.buttons .button, .ui.basic.green.button:hover {
+  box-shadow: none!important;
+}
+#columnConfigurtionButtonSave {
+  border: 1px solid #7ba7d9;
+}
+#columnConfigurtionButtonSave:hover {
+  border: 1px solid #94cea8;
+}
+#columnConfigurtionButtonUse {
+  display: flex;
+  align-items: center;
+}
+.ui.icon.tiny.button:hover i.icon.chevron.down:before {
+  color: #fff!important;
+}
+.ui.icon.tiny.button:hover i.icon.chevron.up:before {
+  color: #fff!important;
+}
+.ui.ui-delete.button:hover {
+  border: 1px solid #ff4800!important;
+}
+.ui.ui-delete.button:hover i.icon.minus:before{
+  color: #ff4800!important;
+}
+.icon.button:hover .i.icon.table:before {
+  color: #7ba7d9!important;
+}
+.all-del-user-button {
+  border: 1px solid #7ba7d9!important;
+  color: #7ba7d9!important;
+}
+.all-del-user-button:hover {
+  border: 1px solid #94cea8!important;
+  background: #94cea8!important;
+  color: #fff!important;
 }
 

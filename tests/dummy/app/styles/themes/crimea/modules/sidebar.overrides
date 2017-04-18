@@ -3,8 +3,10 @@
 *******************************/
 .ui.sidebar {
     position: absolute!important;
-    top: 124px;
+    top: 180px;
     float: left;
+    box-shadow: none!important;
+    border-radius: 5px !important;
 
 }
 .page-header-caption a{
@@ -29,4 +31,52 @@
 .flex-container {
     width: 100%!important;
     justify-content: space-between;
+}
+.ui.top.attached {
+    margin: 5px;
+    border-radius: 5px!important;
+}
+.ui.left.sidebar {
+    width: 260px;
+}
+.inverted.vertical.menu.sidebar {
+    left: 0px!important;
+    height: 75.7vh!important;
+
+}
+.ui .attached .menu {
+    border: none!important;
+}
+.ui.attached.menu:not(.tabular) {
+    border: none!important;
+    border-radius: 5px;
+}
+.ui.menu .item:before {
+    background: none;
+}
+.ui.menu:not(.vertical) .item {
+    border-left: none!important;
+}
+#example .flexberry-content {
+    border: none;
+}
+.ui.attached.menu > .flex-container > .item {
+    padding:0px 30px!important;
+}
+.launch.icon.item:hover {
+    background: none!important;
+}
+.launch.icon.item:hover:before {
+    color: #fff!important;
+}
+.text_menu {
+    margin-left:15px;
+    color: #7ba7d9;
+    font-size: 15px;
+}
+.hidden-text {
+    color: #888!important;
+}
+.hidden-menu {
+    display: none!important;
 }

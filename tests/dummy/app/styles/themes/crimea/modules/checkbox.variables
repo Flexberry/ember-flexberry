@@ -2,7 +2,8 @@
             Checkbox
 *******************************/
 
-@checkboxSize: 17px;
+@checkboxSizeWidth: 18px;
+@checkboxSizeHeight: 18px;
 @checkboxColor: @textColor;
 @checkboxLineHeight: @checkboxSize;
 

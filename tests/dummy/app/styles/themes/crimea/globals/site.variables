@@ -65,7 +65,7 @@
 @h3 : 1.28rem;
 @h4 : 1.071rem;
 @h5 : 1rem;
-@fullHeight:  83vh!important;
+@fullHeight:  80vh!important;
 
 .full.height {
     min-height: @fullHeight;
@@ -336,8 +336,10 @@
 --------------------*/
 
 /* For source only. Modified in gulp for dist */
-@imagePath : '../../themes/default/assets/images';
-@fontPath  : '../../themes/default/assets/fonts';
+@imagePath_1 : '../../themes/default/assets/images';
+@fontPath_1  : '../../themes/default/assets/fonts';
+@imagePath : '../../themes/crimea/assets/images';
+@fontPath  : '../../themes/crimea/assets/fonts';
 
 /*-------------------
        Em Sizes

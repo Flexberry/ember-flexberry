@@ -14,3 +14,34 @@
     bottom: 0px;
     z-index: 99;
 }
+.daterangepicker .calendar td {
+    color: #7ba7d9;
+}
+.daterangepicker .calendar th, {
+    color: #888;
+}
+.daterangepicker .calendar th, .daterangepicker .calendar td {
+    padding: 0px;
+    min-width:25px;
+}
+.daterangepicker .calendar td:hover {
+    background: #dcebfc!important;
+}
+.month > select {
+    color: #7ba7d9!important;
+    font-size: 1em!important;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover {
+     background: #7ba7d9!important;
+     color: #fff!important;
+}
+.ui.loader:before {
+  border: 0.2em solid #CCE2FF!important;
+}
+.ui.loader:after {
+  border-color: #7ba7d9 transparent transparent!important;
+}
+.daterangepicker td.available:hover,
+ .daterangepicker th.available:hover {
+     background: none!important;
+ }

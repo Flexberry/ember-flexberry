@@ -22,7 +22,16 @@ module.exports = function(defaults) {
         fonts: true
       }
     },
-  });
+
+});
+
+app.import('vendor/font-icon.css');
+app.import('vendor/fonts/icons.eot', { destDir: 'assets/fonts' });
+app.import('vendor/fonts/icons.otf', { destDir: 'assets/fonts' });
+app.import('vendor/fonts/icons.svg', { destDir: 'assets/fonts' });
+app.import('vendor/fonts/icons.ttf', { destDir: 'assets/fonts' });
+app.import('vendor/fonts/icons.woff', { destDir: 'assets/fonts' });
+app.import('vendor/fonts/icons.woff2', { destDir: 'assets/fonts' });
 
   /*
     This build file specifies the options for the dummy test app of this
@@ -30,7 +39,6 @@ module.exports = function(defaults) {
     This build file does *not* influence how the addon or the app using it
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
-
   if (app.env !== 'production') {
     app.import('bower_components/jquery-mockjax/jquery.mockjax.js');
   }

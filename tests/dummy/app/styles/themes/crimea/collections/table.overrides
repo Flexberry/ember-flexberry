@@ -4,3 +4,15 @@
 .ui.celled.table tr td {
     color: #555;
 }
+.ui.celled.table tr td:first-child {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.ui.table tr.active, .ui.table td.active {
+    background: #f1f7ff!important;
+}
+table tr:hover {
+    background: #f1f7ffimportant;
+}
+

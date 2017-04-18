@@ -16,6 +16,17 @@
   url("@{fontPath}/@{fontName}.svg#icons") format('svg')
 ;
 
+@fontName_1: 'crimea';
+@fallbackSRC_1: url("@{fontPath_1}/@{fontName_1}.eot");
+@src_1:
+  url("@{fontPath_1}/@{fontName_1}.eot?#iefix") format('embedded-opentype'),
+  url("@{fontPath_1}/@{fontName_1}.woff2") format('woff2'),
+  url("@{fontPath_1}/@{fontName_1}.woff") format('woff'),
+  url("@{fontPath_1}/@{fontName_1}.ttf") format('truetype'),
+  url("@{fontPath_1}/@{fontName_1}.svg#icons") format('svg')
+;
+
+
 @opacity: 1;
 @width: @iconWidth;
 @height: 1em;

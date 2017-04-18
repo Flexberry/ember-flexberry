@@ -12,8 +12,20 @@ export default Ember.Controller.extend({
     */
     toggleSidebar() {
       Ember.$('.ui.sidebar').sidebar('toggle');
-    }
-  },
+        if ($(".sidebar.icon.text-menu-1").hasClass('hidden-menu')) {
+         	$(".sidebar.icon.text-menu-1").removeClass('hidden-menu');
+		    	$(".sidebar.icon.text-menu-2").addClass('hidden-menu');
+        }
+        else
+        {$(".sidebar.icon.text-menu-1").addClass('hidden-menu');
+			  $(".sidebar.icon.text-menu-2").removeClass('hidden-menu');}
+      Ember.$('.ui.sidebar').sidebar({onHide: function() {
+        $(".sidebar.icon.text-menu-1").removeClass('hidden-menu');
+        $(".sidebar.icon.text-menu-2").addClass('hidden-menu');
+        
+      }}); 
+    }  
+    },
 
   /**
     Currernt addon version.

@@ -47,9 +47,8 @@
   background: #fff;
   position: relative;
   border-radius: 4px;
-  top: -3px;
-  left: -2px;
-  border: 1px solid #7ba7d9;
+  top: 0px;
+  left: -25px;
   background: #f1f8ff;
 }
 .ui.checkbox label:after{
@@ -57,9 +56,23 @@
   font-family: 'Icons';
   color: #7ba7d9;
   border-color: #7ba7d9;
-  font-size: 15px;
+  font-size: 15.8px;
   border-left: none;
-  width: 16px;
+  width: 14px;
+}
+.ui.checkbox .box:before,
+.ui.checkbox label:before {
+  border-color: #7ba7d9;
+  border-radius: 4px;
+}
+i.icon.trash.outline:hover:before {
+  color: #ff4800!important;
+}
+i.outline.icon:hover:before {
+  color: #7dd4b4!important;
+}
+label.button:hover {
+  background: #fff!important;
 }
 
 

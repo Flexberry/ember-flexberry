@@ -17,3 +17,6 @@
 .ui.vertical.inverted.menu .menu .item a:not(.ui) {
     font-size:13px;;
 }
+.ui.menu .item {
+    padding: 0.72857143em 1.14285714em;
+}

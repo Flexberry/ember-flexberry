@@ -21,8 +21,7 @@ export default Ember.Controller.extend({
 			  $(".sidebar.icon.text-menu-2").removeClass('hidden-menu');}
       Ember.$('.ui.sidebar').sidebar({onHide: function() {
         $(".sidebar.icon.text-menu-1").removeClass('hidden-menu');
-        $(".sidebar.icon.text-menu-2").addClass('hidden-menu');
-        
+        $(".sidebar.icon.text-menu-2").addClass('hidden-menu');  
       }}); 
     }  
     },

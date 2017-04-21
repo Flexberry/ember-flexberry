@@ -5,6 +5,8 @@
 var stripBom = require("strip-bom");
 var fs = require("fs");
 var path = require('path');
+var Blueprint = require('ember-cli/lib/models/blueprint');
+var AddonBlueprint_1 = require('../flexberry-addon/AddonBlueprint');
 module.exports = {
     description: 'Generates an ember object for flexberry.',
     availableOptions: [
@@ -13,6 +15,11 @@ module.exports = {
     ],
     supportsAddon: function () {
         return false;
+    },
+    afterInstall: function (options) {
+        if (this.project.isEmberCLIAddon()) {
+            AddonBlueprint_1.default.install(options, ["object", "transform"]);
+        }
     },
     /**
      * Blueprint Hook locals.

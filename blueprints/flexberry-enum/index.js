@@ -2,6 +2,8 @@
 var fs = require("fs");
 var path = require('path');
 var stripBom = require("strip-bom");
+var Blueprint = require('ember-cli/lib/models/blueprint');
+var AddonBlueprint_1 = require('../flexberry-addon/AddonBlueprint');
 module.exports = {
     description: 'Generates an ember-data enum for flexberry.',
     availableOptions: [
@@ -10,6 +12,11 @@ module.exports = {
     ],
     supportsAddon: function () {
         return false;
+    },
+    afterInstall: function (options) {
+        if (this.project.isEmberCLIAddon()) {
+            AddonBlueprint_1.default.install(options, ["enum", "transform"]);
+        }
     },
     /**
      * Blueprint Hook locals.

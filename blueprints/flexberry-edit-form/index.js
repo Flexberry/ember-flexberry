@@ -7,6 +7,8 @@ var fs = require("fs");
 var path = require('path');
 var lodash = require('lodash');
 var Locales_1 = require('../flexberry-core/Locales');
+var Blueprint = require('ember-cli/lib/models/blueprint');
+var AddonBlueprint_1 = require('../flexberry-addon/AddonBlueprint');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -38,6 +40,11 @@ module.exports = {
             lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
         }
         return this._files;
+    },
+    afterInstall: function (options) {
+        if (this.project.isEmberCLIAddon()) {
+            AddonBlueprint_1.default.install(options, ["controller", "route"]);
+        }
     },
     /**
      * Blueprint Hook locals.

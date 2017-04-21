@@ -8,6 +8,8 @@ import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
+const Blueprint = require('ember-cli/lib/models/blueprint');
+import AddonBlueprint from '../flexberry-addon/AddonBlueprint';
 
 const componentMaps = [
   { name: "flexberry-file", types: ["file"] },
@@ -42,6 +44,12 @@ module.exports = {
       lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
     }
     return this._files;
+  },
+
+  afterInstall: function (options) {
+    if (this.project.isEmberCLIAddon()) {
+      AddonBlueprint.install(options, ["controller", "route"]);
+    }
   },
 
   /**

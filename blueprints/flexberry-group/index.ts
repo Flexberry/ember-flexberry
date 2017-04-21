@@ -123,47 +123,7 @@ class GroupBlueprint {
         continue;
       let groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
       GroupBlueprint.groupOptions.push(groupOptions);
-      this.promise = this.promise.then(GroupBlueprint.funCallback).then(function() {
-        if( !( this.options.project.pkg.keywords && this.options.project.pkg.keywords["0"] === "ember-addon" )) {
-          return;
-        }
-
-        let middlePaths;
-        switch (this.blueprintName) {
-          case 'flexberry-object':
-            middlePaths = ["object", "transform"];
-            break;
-          case 'flexberry-enum':
-            middlePaths = ["enum", "transform"];
-            break;
-          case 'flexberry-list-form':
-            middlePaths = ["controller", "route"];
-            break;
-          case 'flexberry-edit-form':
-            middlePaths = ["controller", "route"];
-            break;
-          case 'flexberry-model':
-            middlePaths = ["model", "serializer"];
-            break;
-          default:
-            return;
-        }
-
-        let promises = [];
-        for (let middlePath of middlePaths) {
-          let flexberryAddon = Blueprint.lookup("flexberry-addon", {
-            ui: undefined,
-            analytics: undefined,
-            project: undefined,
-            paths: ["node_modules/ember-flexberry/blueprints"]
-          });
-
-          let addonBlueprintOptions = lodash.merge({}, groupOptions, { installingAddon: true, middlePath: middlePath, originBlueprintName: middlePath });
-
-          promises.push( flexberryAddon["install"](addonBlueprintOptions));
-        }
-        return Promise.all(promises);
-      }.bind(this));
+      this.promise = this.promise.then(GroupBlueprint.funCallback);
     }
   }
 

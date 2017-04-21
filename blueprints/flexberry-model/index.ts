@@ -4,6 +4,8 @@
 
 import ModelBlueprint from './ModelBlueprint';
 import lodash = require('lodash');
+const Blueprint = require('ember-cli/lib/models/blueprint');
+import AddonBlueprint from '../flexberry-addon/AddonBlueprint';
 
 module.exports = {
 
@@ -16,6 +18,12 @@ module.exports = {
 
   supportsAddon: function () {
     return false;
+  },
+
+  afterInstall: function (options) {
+    if (this.project.isEmberCLIAddon()) {
+      AddonBlueprint.install(options, ["model", "serializer"]);
+    }
   },
 
   /**

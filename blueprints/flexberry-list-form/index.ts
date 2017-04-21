@@ -8,6 +8,8 @@ import lodash = require('lodash');
 const stripBom = require("strip-bom");
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
+const Blueprint = require('ember-cli/lib/models/blueprint');
+import AddonBlueprint from '../flexberry-addon/AddonBlueprint';
 
 module.exports = {
   description: 'Generates an ember list-form for flexberry.',
@@ -37,6 +39,11 @@ module.exports = {
     return this._files;
   },
 
+  afterInstall: function (options) {
+    if (this.project.isEmberCLIAddon()) {
+      AddonBlueprint.install(options, ["controller", "route"]);
+    }
+  },
 
   /**
    * Blueprint Hook locals.

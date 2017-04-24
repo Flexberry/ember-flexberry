@@ -96,7 +96,15 @@ export default class ModelBlueprint {
     let templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
     let attr: metadata.DSattr;
     for (attr of model.attrs) {
-      attrs.push(`${attr.name}: DS.attr('${attr.type}')`);
+      let comment = "";
+      if (!attr.stored) {
+        comment =
+          "/**\n" +
+          TAB + TAB + "Non-stored property.\n\n" +
+          TAB + TAB + "@property " + attr.name + "\n" +
+          TAB + "*/\n" + TAB;
+      }
+      attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}')`);
       if (attr.notNull) {
         if (attr.type === "date") {
           validations.push(attr.name + ": { datetime: true }");
@@ -104,6 +112,24 @@ export default class ModelBlueprint {
           validations.push(attr.name + ": { presence: true }");
         }
       }
+      if (attr.stored)
+        continue;
+      let methodToSetNotStoredProperty =
+        "/**\n" +
+        TAB + TAB + "Method to set non-stored property.\n\n" +
+        TAB + TAB + "@method _" + attr.name + "Compute\n" +
+        TAB + TAB + "@example\n" +
+        TAB + TAB + TAB + "```javascript\n" +
+        TAB + TAB + TAB + "_" + attr.name + "Changed: Ember.on('init', Ember.observer('" + attr.name + "', function() {\n" +
+        TAB + TAB + TAB + TAB + "Ember.run.once(this, '_" + attr.name + "Compute');\n" +
+        TAB + TAB + TAB + "}))\n" +
+        TAB + TAB + TAB + "```\n" +
+        TAB + "*/\n" +
+        TAB + "_" + attr.name + "Compute: function() {\n" +
+        TAB + TAB + "let result = null;\n" +
+        TAB + TAB + "this.set('" + attr.name + "', result);\n" +
+        TAB + "}";
+      attrs.push(methodToSetNotStoredProperty);
     }
     let belongsTo: metadata.DSbelongsTo;
     for (belongsTo of model.belongsTo) {
@@ -118,16 +144,18 @@ export default class ModelBlueprint {
     if(validations.length===0){
       validationsFunc="";
     }
-    validationsFunc = "getValidations: function () {\n" +
-    TAB + TAB + "let parentValidations = this._super();\n" +
-    TAB + TAB + "let thisValidations = {\n" +
-    validationsFunc + TAB + TAB + "};\n" +
-    TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-    TAB + "}";
-    let initFunction = "init: function () {\n" +
-    TAB + TAB + "this.set('validations', this.getValidations());\n" +
-    TAB + TAB + "this._super.apply(this, arguments);\n" +
-    TAB + "}";
+    validationsFunc =
+      "getValidations: function () {\n" +
+      TAB + TAB + "let parentValidations = this._super();\n" +
+      TAB + TAB + "let thisValidations = {\n" +
+      validationsFunc + TAB + TAB + "};\n" +
+      TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+      TAB + "}";
+    let initFunction =
+      "init: function () {\n" +
+      TAB + TAB + "this.set('validations', this.getValidations());\n" +
+      TAB + TAB + "this._super.apply(this, arguments);\n" +
+      TAB + "}";
     attrs.push(validationsFunc, initFunction);
     return TAB + attrs.join(",\n" + TAB);
   }

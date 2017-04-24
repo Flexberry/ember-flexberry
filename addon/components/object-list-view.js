@@ -802,6 +802,7 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     rowClick(recordWithKey, e) {
+
       let editOnSeparateRoute = this.get('editOnSeparateRoute');
       if (this.get('readonly')) {
         if (!editOnSeparateRoute) {
@@ -815,16 +816,19 @@ export default FlexberryBaseComponent.extend(
 
         let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
+        let params = {
+          onEditForm: this.get('onEditForm'),
+          saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
+          editOnSeparateRoute: editOnSeparateRoute,
+          modelName: this.get('modelProjection').modelName,
+          detailArray: this.get('content'),
+          readonly: this.get('readonly'),
+          originalEvent: e.currentTarget,
+          goToEditForm: true
+        };
 
         Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
-          this.sendAction('action', recordData, {
-            onEditForm: this.get('onEditForm'),
-            saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
-            editOnSeparateRoute: editOnSeparateRoute,
-            modelName: this.get('modelProjection').modelName,
-            detailArray: this.get('content'),
-            readonly: this.get('readonly')
-          });
+          this.sendAction('action', recordData, params);
         });
 
         this._setActiveRecord(recordKey);

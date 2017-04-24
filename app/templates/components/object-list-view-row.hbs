@@ -29,7 +29,7 @@
     </td>
     {{#each columns as |column index|}}
       <td
-        {{action rowClick record preventDefault=false}}
+        onclick={{action rowClick record preventDefault=false}}
         class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}

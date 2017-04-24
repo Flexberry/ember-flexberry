@@ -38,6 +38,7 @@ export default Ember.Mixin.create({
       if (!goToEditForm) {
         return;
       }
+
       let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
       let onEditForm = methodOptions.onEditForm;
       let editFormRoute = methodOptions.editFormRoute;

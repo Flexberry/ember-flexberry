@@ -48,7 +48,7 @@ export default ListFormRoute.extend({
         cellIndex--;
       }
 
-      var nameColumn = $('thead tr').find('th:eq('+ cellIndex +') div:eq(0) span:eq(0)').text().trim();
+      var nameColumn = $('thead tr').find('th:eq(' + cellIndex + ') div:eq(0) span:eq(0)').text().trim();
       if (nameColumn === 'File') {
         params.goToEditForm = false;
       }

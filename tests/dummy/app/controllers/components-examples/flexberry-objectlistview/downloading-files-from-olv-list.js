@@ -23,7 +23,6 @@ export default ListFormController.extend({
    */
   getCellComponent: function(attr, bindingPath, model) {
     var cellComponent = this._super(...arguments);
-
     if (bindingPath === 'file') {
       cellComponent = {
         componentName: 'flexberry-file',
@@ -35,6 +34,7 @@ export default ListFormController.extend({
         }
       };
     }
+
     return cellComponent;
   }
 });

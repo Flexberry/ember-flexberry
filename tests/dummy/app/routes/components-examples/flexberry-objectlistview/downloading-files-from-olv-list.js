@@ -47,12 +47,13 @@ export default ListFormRoute.extend({
       if ($('tbody tr').find('td:eq(0)').hasClass('hidden')) {
         cellIndex--;
       }
+
       var nameColumn = $('thead tr').find('th:eq('+ cellIndex +') div:eq(0) span:eq(0)').text().trim();
-      if (nameColumn === 'File')
-      {
+      if (nameColumn === 'File') {
         params.goToEditForm = false;
       }
+
       this._super(...arguments);
-    },
+    }
   }
 });

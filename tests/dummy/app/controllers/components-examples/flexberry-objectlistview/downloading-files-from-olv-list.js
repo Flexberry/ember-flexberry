@@ -25,16 +25,16 @@ export default ListFormController.extend({
     var cellComponent = this._super(...arguments);
 
     if (bindingPath === 'file') {
-        cellComponent = {
-          componentName: 'flexberry-file',
-          componentProperties: {
-            readonly: true,
-            showUploadButton: false,
-            showModalDialogOnUploadError: true,
-            showModalDialogOnDownloadError: true,
-          }
-        };
-      }
+      cellComponent = {
+        componentName: 'flexberry-file',
+        componentProperties: {
+          readonly: true,
+          showUploadButton: false,
+          showModalDialogOnUploadError: true,
+          showModalDialogOnDownloadError: true,
+        }
+      };
+    }
     return cellComponent;
   }
 });

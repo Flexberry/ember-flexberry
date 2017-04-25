@@ -82,7 +82,15 @@ var ModelBlueprint = (function () {
         var attr;
         for (var _i = 0, _a = model.attrs; _i < _a.length; _i++) {
             attr = _a[_i];
-            attrs.push(attr.name + ": DS.attr('" + attr.type + "')");
+            var comment = "";
+            if (!attr.stored) {
+                comment =
+                    "/**\n" +
+                        TAB + TAB + "Non-stored property.\n\n" +
+                        TAB + TAB + ("@property " + attr.name + "\n") +
+                        TAB + "*/\n" + TAB;
+            }
+            attrs.push("" + comment + attr.name + ": DS.attr('" + attr.type + "')");
             if (attr.notNull) {
                 if (attr.type === "date") {
                     validations.push(attr.name + ": { datetime: true }");
@@ -91,6 +99,26 @@ var ModelBlueprint = (function () {
                     validations.push(attr.name + ": { presence: true }");
                 }
             }
+            if (attr.stored)
+                continue;
+            var methodToSetNotStoredProperty = "/**\n" +
+                TAB + TAB + "Method to set non-stored property.\n" +
+                TAB + TAB + "Please, use code below in model class (outside of this mixin) otherwise it will be replaced during regeneration of models.\n" +
+                TAB + TAB + ("Please, implement '" + attr.name + "Compute' method in model class (outside of this mixin) if you want to compute value of '" + attr.name + "' property.\n\n") +
+                TAB + TAB + ("@method _" + attr.name + "Compute\n") +
+                TAB + TAB + "@private\n" +
+                TAB + TAB + "@example\n" +
+                TAB + TAB + TAB + "```javascript\n" +
+                TAB + TAB + TAB + ("_" + attr.name + "Changed: Ember.on('init', Ember.observer('" + attr.name + "', function() {\n") +
+                TAB + TAB + TAB + TAB + ("Ember.run.once(this, '_" + attr.name + "Compute');\n") +
+                TAB + TAB + TAB + "}))\n" +
+                TAB + TAB + TAB + "```\n" +
+                TAB + "*/\n" +
+                TAB + ("_" + attr.name + "Compute: function() {\n") +
+                TAB + TAB + ("let result = (this." + attr.name + "Compute && typeof this." + attr.name + "Compute === 'function') ? this." + attr.name + "Compute() : null;\n") +
+                TAB + TAB + ("this.set('" + attr.name + "', result);\n") +
+                TAB + "}";
+            attrs.push(methodToSetNotStoredProperty);
         }
         var belongsTo;
         for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
@@ -107,12 +135,13 @@ var ModelBlueprint = (function () {
         if (validations.length === 0) {
             validationsFunc = "";
         }
-        validationsFunc = "getValidations: function () {\n" +
-            TAB + TAB + "let parentValidations = this._super();\n" +
-            TAB + TAB + "let thisValidations = {\n" +
-            validationsFunc + TAB + TAB + "};\n" +
-            TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-            TAB + "}";
+        validationsFunc =
+            "getValidations: function () {\n" +
+                TAB + TAB + "let parentValidations = this._super();\n" +
+                TAB + TAB + "let thisValidations = {\n" +
+                validationsFunc + TAB + TAB + "};\n" +
+                TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+                TAB + "}";
         var initFunction = "init: function () {\n" +
             TAB + TAB + "this.set('validations', this.getValidations());\n" +
             TAB + TAB + "this._super.apply(this, arguments);\n" +

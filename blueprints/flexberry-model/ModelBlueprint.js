@@ -73,7 +73,7 @@ var ModelBlueprint = (function () {
         if (attrs.length === 0) {
             return "";
         }
-        return "    " + attrs.join(",\n    ");
+        return "      " + attrs.join(",\n      ");
     };
     ModelBlueprint.prototype.getJSForModel = function (model) {
         var attrs = [], validations = [];

@@ -101,7 +101,7 @@ export default class ModelBlueprint {
         comment =
           "/**\n" +
           TAB + TAB + "Non-stored property.\n\n" +
-          TAB + TAB + "@property " + attr.name + "\n" +
+          TAB + TAB + `@property ${attr.name}\n` +
           TAB + "*/\n" + TAB;
       }
       attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}')`);
@@ -116,18 +116,21 @@ export default class ModelBlueprint {
         continue;
       let methodToSetNotStoredProperty =
         "/**\n" +
-        TAB + TAB + "Method to set non-stored property.\n\n" +
-        TAB + TAB + "@method _" + attr.name + "Compute\n" +
+        TAB + TAB + "Method to set non-stored property.\n" +
+        TAB + TAB + "Please, use code below in model class (outside of this mixin) otherwise it will be replaced during regeneration of models.\n" +
+        TAB + TAB + `Please, implement '${attr.name}Compute' method in model class (outside of this mixin) if you want to compute value of '${attr.name}' property.\n\n` +
+        TAB + TAB + `@method _${attr.name}Compute\n` +
+        TAB + TAB + "@private\n" +
         TAB + TAB + "@example\n" +
         TAB + TAB + TAB + "```javascript\n" +
-        TAB + TAB + TAB + "_" + attr.name + "Changed: Ember.on('init', Ember.observer('" + attr.name + "', function() {\n" +
-        TAB + TAB + TAB + TAB + "Ember.run.once(this, '_" + attr.name + "Compute');\n" +
+        TAB + TAB + TAB + `_${attr.name}Changed: Ember.on('init', Ember.observer('${attr.name}', function() {\n` +
+        TAB + TAB + TAB + TAB + `Ember.run.once(this, '_${attr.name}Compute');\n` +
         TAB + TAB + TAB + "}))\n" +
         TAB + TAB + TAB + "```\n" +
         TAB + "*/\n" +
-        TAB + "_" + attr.name + "Compute: function() {\n" +
-        TAB + TAB + "let result = null;\n" +
-        TAB + TAB + "this.set('" + attr.name + "', result);\n" +
+        TAB + `_${attr.name}Compute: function() {\n` +
+        TAB + TAB + `let result = (this.${attr.name}Compute && typeof this.${attr.name}Compute === 'function') ? this.${attr.name}Compute() : null;\n` +
+        TAB + TAB + `this.set('${attr.name}', result);\n` +
         TAB + "}";
       attrs.push(methodToSetNotStoredProperty);
     }

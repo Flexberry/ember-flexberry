@@ -146,5 +146,39 @@ export default ListFormController.extend({
     @protected
     @readOnly
   */
-  records: []
+  records: [],
+
+  dateFormat: '1',
+
+  getCellComponent: function(attr, bindingPath, modelClass) {
+    if (attr.kind === 'attr') {
+      if (bindingPath === 'date') {
+        switch (this.dateFormat) {
+          case '1':
+            return {
+              componentName: 'object-list-view-cell',
+              componentProperties: {
+                dateFormat: 'YYYY-MM-DD'
+              }
+            };
+          case '2':
+            return {
+              componentName: 'object-list-view-cell',
+              componentProperties: {
+                dateFormat: 'DD.MM.YYYY, hh:mm:ss'
+              }
+            };
+          case '3':
+            return {
+              componentName: 'object-list-view-cell',
+              componentProperties: {
+                dateFormat: 'll'
+              }
+            };
+        }
+      }
+    }
+
+    return this._super(...arguments);
+  }
 });

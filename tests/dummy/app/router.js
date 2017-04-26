@@ -114,6 +114,7 @@ Router.map(function() {
   // Components acceptance tests forms.
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
+  this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
 });
 
 export default Router;

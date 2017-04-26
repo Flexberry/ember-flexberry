@@ -87,7 +87,7 @@ export default class ModelBlueprint {
     if(attrs.length===0){
       return "";
     }
-    return "    "+attrs.join(",\n    ");
+    return "      "+attrs.join(",\n      ");
   }
 
   getJSForModel(model: metadata.Model): string {

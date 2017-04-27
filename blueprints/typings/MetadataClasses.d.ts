@@ -63,6 +63,7 @@ declare module "MetadataClasses" {
         public hasMany: DShasMany[];
         public projections: ProjectionForModel[];
         public stored: boolean;
+        public offline: boolean;
     }
     export class DSattr {
         

@@ -23,6 +23,7 @@ class SortedPair{
 export default class ModelBlueprint {
   model: string;
   serializerAttrs: string;
+  offlineSerializerAttrs: string;
   parentModelName: string;
   parentClassName: string;
   className: string;
@@ -36,13 +37,12 @@ export default class ModelBlueprint {
     if (!options.file) {
       options.file = options.entity.name + ".json";
     }
-    let modelFile = path.join(modelsDir, options.file);
-    let content: string = stripBom(fs.readFileSync(modelFile, "utf8"));
-    let model: metadata.Model = JSON.parse(content);
+    let model: metadata.Model = ModelBlueprint.loadModel(modelsDir, options.file);
     this.parentModelName = model.parentModelName;
     this.parentClassName = model.parentClassName;
     this.className = model.className;
     this.serializerAttrs = this.getSerializerAttrs(model);
+    this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);
     this.projections = this.getJSForProjections(model, modelsDir);
     this.model = this.getJSForModel(model);
     this.name = options.entity.name;
@@ -50,6 +50,13 @@ export default class ModelBlueprint {
     this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
     let modelLocales = new ModelLocales(model, modelsDir, "ru");
     this.lodashVariables = modelLocales.getLodashVariablesProperties();
+  }
+
+  static loadModel(modelsDir: string, modelFileName: string): metadata.Model {
+    let modelFile = path.join(modelsDir, modelFileName);
+    let content = stripBom(fs.readFileSync(modelFile, "utf8"));
+    let model: metadata.Model = JSON.parse(content);
+    return model;
   }
 
   getNeedsAllEnums(enumsDir: string): string {
@@ -88,6 +95,20 @@ export default class ModelBlueprint {
       return "";
     }
     return "      "+attrs.join(",\n      ");
+  }
+
+  getOfflineSerializerAttrs(model: metadata.Model): string {
+    let attrs: string[] = [];
+    for (let belongsTo of model.belongsTo) {
+      attrs.push(belongsTo.name + ": { serialize: 'id', deserialize: 'records' }");
+    }
+    for (let hasMany of model.hasMany) {
+      attrs.push(hasMany.name + ": { serialize: 'ids', deserialize: 'records' }");
+    }
+    if (attrs.length === 0) {
+      return "";
+    }
+    return "      " + attrs.join(",\n      ");
   }
 
   getJSForModel(model: metadata.Model): string {
@@ -165,8 +186,7 @@ export default class ModelBlueprint {
 
   joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string, level: number): SortedPair {
     let hasManyAttrs: SortedPair[] = [];
-    let modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
-    let hasManyModel: metadata.Model = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+    let hasManyModel: metadata.Model = ModelBlueprint.loadModel(modelsDir, detailHasMany.relatedTo + ".json");
     let hasManyProj = lodash.find(hasManyModel.projections, function(pr: metadata.ProjectionForModel) { return pr.name === detailHasMany.projectionName; });
     if (hasManyProj) {
       for (let attr of hasManyProj.attrs) {
@@ -253,8 +273,7 @@ export default class ModelBlueprint {
       }
       for (let hasMany of proj.hasMany) {
         let hasManyAttrs: SortedPair[] = [];
-        let modelFile = path.join(modelsDir, hasMany.relatedTo + ".json");
-        let detailModel: metadata.Model = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+        let detailModel: metadata.Model = ModelBlueprint.loadModel(modelsDir, hasMany.relatedTo + ".json");
         projName = hasMany.projectionName;
         let detailProj = lodash.find(detailModel.projections, function(pr: metadata.ProjectionForModel) { return pr.name === projName; });
         if (detailProj) {

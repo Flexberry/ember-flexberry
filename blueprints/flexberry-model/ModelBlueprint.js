@@ -21,13 +21,12 @@ var ModelBlueprint = (function () {
         if (!options.file) {
             options.file = options.entity.name + ".json";
         }
-        var modelFile = path.join(modelsDir, options.file);
-        var content = stripBom(fs.readFileSync(modelFile, "utf8"));
-        var model = JSON.parse(content);
+        var model = ModelBlueprint.loadModel(modelsDir, options.file);
         this.parentModelName = model.parentModelName;
         this.parentClassName = model.parentClassName;
         this.className = model.className;
         this.serializerAttrs = this.getSerializerAttrs(model);
+        this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);
         this.projections = this.getJSForProjections(model, modelsDir);
         this.model = this.getJSForModel(model);
         this.name = options.entity.name;
@@ -36,6 +35,12 @@ var ModelBlueprint = (function () {
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru");
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
     }
+    ModelBlueprint.loadModel = function (modelsDir, modelFileName) {
+        var modelFile = path.join(modelsDir, modelFileName);
+        var content = stripBom(fs.readFileSync(modelFile, "utf8"));
+        var model = JSON.parse(content);
+        return model;
+    };
     ModelBlueprint.prototype.getNeedsAllEnums = function (enumsDir) {
         var listEnums = fs.readdirSync(enumsDir);
         var enums = [];
@@ -69,6 +74,21 @@ var ModelBlueprint = (function () {
         for (var _b = 0, _c = model.hasMany; _b < _c.length; _b++) {
             var hasMany = _c[_b];
             attrs.push(hasMany.name + ": { serialize: false, deserialize: 'records' }");
+        }
+        if (attrs.length === 0) {
+            return "";
+        }
+        return "      " + attrs.join(",\n      ");
+    };
+    ModelBlueprint.prototype.getOfflineSerializerAttrs = function (model) {
+        var attrs = [];
+        for (var _i = 0, _a = model.belongsTo; _i < _a.length; _i++) {
+            var belongsTo = _a[_i];
+            attrs.push(belongsTo.name + ": { serialize: 'id', deserialize: 'records' }");
+        }
+        for (var _b = 0, _c = model.hasMany; _b < _c.length; _b++) {
+            var hasMany = _c[_b];
+            attrs.push(hasMany.name + ": { serialize: 'ids', deserialize: 'records' }");
         }
         if (attrs.length === 0) {
             return "";
@@ -151,8 +171,7 @@ var ModelBlueprint = (function () {
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
-        var modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
-        var hasManyModel = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+        var hasManyModel = ModelBlueprint.loadModel(modelsDir, detailHasMany.relatedTo + ".json");
         var hasManyProj = lodash.find(hasManyModel.projections, function (pr) { return pr.name === detailHasMany.projectionName; });
         if (hasManyProj) {
             for (var _i = 0, _a = hasManyProj.attrs; _i < _a.length; _i++) {
@@ -246,8 +265,7 @@ var ModelBlueprint = (function () {
             for (var _f = 0, _g = proj.hasMany; _f < _g.length; _f++) {
                 var hasMany = _g[_f];
                 var hasManyAttrs = [];
-                var modelFile = path.join(modelsDir, hasMany.relatedTo + ".json");
-                var detailModel = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+                var detailModel = ModelBlueprint.loadModel(modelsDir, hasMany.relatedTo + ".json");
                 projName = hasMany.projectionName;
                 var detailProj = lodash.find(detailModel.projections, function (pr) { return pr.name === projName; });
                 if (detailProj) {

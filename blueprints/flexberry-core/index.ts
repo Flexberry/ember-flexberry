@@ -8,6 +8,7 @@ import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import { ApplicationMenuLocales } from '../flexberry-core/Locales';
+import ModelBlueprint from '../flexberry-model/ModelBlueprint';
 const TAB = "  ";
 
 module.exports = {
@@ -113,9 +114,7 @@ class CoreBlueprint {
       let pp: path.ParsedPath = path.parse(modelFileName);
       if (pp.ext != ".json")
         continue;
-      let modelFile = path.join(modelsDir, modelFileName);
-      let content = stripBom(fs.readFileSync(modelFile, "utf8"));
-      let model: metadata.Model = JSON.parse(content);
+      let model: metadata.Model = ModelBlueprint.loadModel(modelsDir, modelFileName);
       let modelName = pp.name;
       let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
       let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();

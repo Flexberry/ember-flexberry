@@ -1,4 +1,4 @@
-import { Model as <%= className %>Mixin <%if (projections) {%>, defineProjections <%}%><%if (parentModelName) {%>, defineBaseModel <%}%> } from
+import { Model as <%= className %>Mixin<%if (projections) {%>, defineProjections <%}%><%if (parentModelName) {%>, defineBaseModel <%}%> } from
   '../mixins/regenerated/models/<%= name %>';
 import <%if(parentModelName) {%><%= parentClassName %>Model from './<%= parentModelName %>';<%}else{%>{ Projection } from 'ember-flexberry-data';<%}%>
 let Model = <%if(parentModelName) {%><%= parentClassName %>Model.extend<%}else{%>Projection.Model.extend<%}%>(<%= className %>Mixin, {

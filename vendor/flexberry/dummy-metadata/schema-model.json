@@ -32,6 +32,9 @@
             "string",
             "null"
           ]
+        },
+        "stored": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -39,7 +42,8 @@
         "type",
         "flexberryType",
         "notNull",
-        "defaultValue"
+        "defaultValue",
+        "stored"
       ]
     },
     "DSbelongsTo": {
@@ -398,6 +402,12 @@
       "items": {
         "$ref": "#/definitions/ProjectionForModel"
       }
+    },
+    "stored": {
+      "type": "boolean"
+    },
+    "offline": {
+      "type": "boolean"
     }
   },
   "required": [
@@ -409,6 +419,8 @@
     "attrs",
     "belongsTo",
     "hasMany",
-    "projections"
+    "projections",
+    "stored",
+    "offline"
   ]
 }

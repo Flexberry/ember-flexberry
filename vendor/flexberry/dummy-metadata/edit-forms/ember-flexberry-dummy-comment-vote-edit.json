@@ -1,0 +1,30 @@
+﻿{
+  "propertyLookup": [
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "ApplicationUser",
+      "projection": "ApplicationUserL",
+      "detailModelName": null
+    },
+    {
+      "master": null,
+      "displayAttributeName": null,
+      "required": false,
+      "relationName": "Comment",
+      "projection": "",
+      "detailModelName": null
+    }
+  ],
+  "caption": null,
+  "name": "EmberFlexberryDummyCommentVoteEdit",
+  "className": "CommentVoteEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-comment-vote",
+      "modelProjection": "CommentVoteE"
+    }
+  ]
+}

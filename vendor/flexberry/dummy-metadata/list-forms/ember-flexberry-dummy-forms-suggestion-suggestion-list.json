@@ -1,0 +1,14 @@
+﻿{
+  "newForm": "ember-flexberry-dummy-forms-suggestion-suggestion-edit",
+  "editForm": "ember-flexberry-dummy-forms-suggestion-suggestion-edit",
+  "caption": "Suggestions",
+  "name": "EmberFlexberryDummyFormsSuggestionSuggestionList",
+  "className": "SuggestionList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-post-suggestion",
+      "modelProjection": "SuggestionL"
+    }
+  ]
+}

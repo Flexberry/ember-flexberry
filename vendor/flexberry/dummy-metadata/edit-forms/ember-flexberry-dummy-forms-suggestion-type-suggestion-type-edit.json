@@ -26,7 +26,7 @@
     }
   ],
   "caption": "Suggestion type",
-  "name": "EmberFlexberryDummySuggestionTypeEdit",
+  "name": "EmberFlexberryDummyFormsSuggestionTypeSuggestionTypeEdit",
   "className": "SuggestionTypeEdit",
   "attrs": [],
   "projections": [

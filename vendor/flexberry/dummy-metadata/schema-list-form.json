@@ -32,6 +32,9 @@
             "string",
             "null"
           ]
+        },
+        "stored": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -39,7 +42,8 @@
         "type",
         "flexberryType",
         "notNull",
-        "defaultValue"
+        "defaultValue",
+        "stored"
       ]
     },
     "ProjectionForForm": {

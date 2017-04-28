@@ -9,28 +9,28 @@
       "title": "Application",
       "children": [
         {
-          "link": "ember-flexberry-dummy-application-user-list",
+          "link": "ember-flexberry-dummy-forms-application-user-application-user-list",
           "menuName": null,
           "caption": "Application Users",
           "title": "",
           "children": null
         },
         {
-          "link": "ember-flexberry-dummy-localization-list",
+          "link": "ember-flexberry-dummy-forms-localization-localization-list",
           "menuName": null,
           "caption": "Localizations",
           "title": "",
           "children": null
         },
         {
-          "link": "ember-flexberry-dummy-suggestion-list",
+          "link": "ember-flexberry-dummy-forms-suggestion-suggestion-list",
           "menuName": null,
           "caption": "Suggestions",
           "title": "",
           "children": null
         },
         {
-          "link": "ember-flexberry-dummy-suggestion-type-list",
+          "link": "ember-flexberry-dummy-forms-suggestion-type-suggestion-type-list",
           "menuName": null,
           "caption": "Suggestion types",
           "title": "",

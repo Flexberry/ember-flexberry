@@ -58,12 +58,12 @@
     }
   ],
   "caption": "Suggestion",
-  "name": "EmberFlexberryDummySuggestionEdit",
+  "name": "EmberFlexberryDummyFormsSuggestionSuggestionEdit",
   "className": "SuggestionEdit",
   "attrs": [],
   "projections": [
     {
-      "modelName": "ember-flexberry-dummy-suggestion",
+      "modelName": "ember-flexberry-dummy-post-suggestion",
       "modelProjection": "SuggestionE"
     }
   ]

@@ -25,14 +25,25 @@ module.exports = function(defaults) {
 
 });
 
-app.import('vendor/font-icon.css');
-app.import('vendor/fonts/icons.eot', { destDir: 'assets/fonts' });
-app.import('vendor/fonts/icons.otf', { destDir: 'assets/fonts' });
-app.import('vendor/fonts/icons.svg', { destDir: 'assets/fonts' });
-app.import('vendor/fonts/icons.ttf', { destDir: 'assets/fonts' });
-app.import('vendor/fonts/icons.woff', { destDir: 'assets/fonts' });
-app.import('vendor/fonts/icons.woff2', { destDir: 'assets/fonts' });
-
+  app.import('vendor/font-icon.css');
+  app.import('vendor/fonts/icons.eot', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/icons.otf', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/icons.svg', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/icons.ttf', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/icons.woff', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/icons.woff2', { destDir: 'assets/fonts' });
+  app.import('vendor/serviceImages/close.png', { 
+    destDir: 'assets/serviceImages' 
+  });
+    app.import('vendor/serviceImages/close-hover.png', { 
+    destDir: 'assets/serviceImages' 
+  });
+   app.import('vendor/serviceImages/Plus.png', { 
+    destDir: 'assets/serviceImages' 
+  });
+    app.import('vendor/serviceImages/Minus.png', { 
+    destDir: 'assets/serviceImages' 
+  });
   /*
     This build file specifies the options for the dummy test app of this
     addon, located in `/tests/dummy`

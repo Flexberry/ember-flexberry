@@ -94,7 +94,7 @@
 }
 .ui.selection.dropdown {
     border: none;
-    border-bottom: 1px solid #b1cae8;
+    border-bottom: 1px solid #b1cae8!important;
     border-radius: 0px!important;
     outline: none;
 }
@@ -104,6 +104,9 @@
 }
 .ui.icon.dropdown > .icon.dropdown:before {
   font-size:20px;
+}
+.ui.selection.dropdown:hover {
+    color: #b1cae8!important;
 }
 
    

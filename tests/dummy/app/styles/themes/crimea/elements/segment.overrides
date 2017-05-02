@@ -1,13 +1,12 @@
 /*******************************
          Theme Overrides
 *******************************/
-.ui.vertical.footer.segment {
-    padding: 0px;
-}
 .ui.vertical.footer.segment > .flex-container > .ui.text.menu  {
     margin: 0px;
     padding: 0px 30px;
     background-color: #eee;
+    display: flex!important;
+    justify-content: space-between!important
 }
 .ui.vertical.footer.segment > .flex-container {
     position: fixed;

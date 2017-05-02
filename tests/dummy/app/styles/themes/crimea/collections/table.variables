@@ -132,7 +132,7 @@
 
 /* Active */
 @activeColor: @textColor;
-@activeBackgroundColor: #E0E0E0;
+@activeBackgroundColor: #f1f7ff;
 @activeBoxShadow: @stateMarkerWidth 0px 0px @activeColor inset;
 
 @activeBackgroundHover: #EFEFEF;
@@ -159,7 +159,7 @@
 @invertedStripedBackground: rgba(255, 255, 255, 0.05);
 
 /* Selectable */
-@selectableBackground: #d4e2f2;
+@selectableBackground: #f5f8ff;
 @selectableTextColor: @selectedTextColor;
 @selectableInvertedBackground: @transparentWhite;
 @selectableInvertedTextColor: @invertedSelectedTextColor;

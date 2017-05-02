@@ -445,3 +445,5 @@
 @mediumWidth: 15rem;
 @largeWidth: 18rem;
 @hugeWidth: 20rem;
+
+@backgroundMenu: #4f73b0;

@@ -100,7 +100,7 @@ i.icon.mail.forward:before { content: "\f064"; }
 i.icon.share:before { content: "\f064"; }
 i.icon.expand:before { content: "\f065"; }
 i.icon.compress:before { content: "\f066"; }
-i.icon.unhide:before { content: "\e829"; font-family: "Icons"; }
+i.icon.unhide:before { content: "\f06e";font-family: "Crimea"; }
 i.icon.hide:before { content: "\f070"; font-family: 'Crimea'; }
 i.icon.random:before { content: "\f074"; }
 i.icon.retweet:before { content: "\f079"; }
@@ -113,7 +113,7 @@ i.icon.call.square:before { content: "\f098"; }
 i.icon.remove.bookmark:before { content: "\f097"; }
 i.icon.unlock:before { content: "\f09c"; }
 i.icon.configure:before { content: "\f0ad"; }
-i.icon.filter:before { content: "\e809"; font-size: 18px; }
+i.icon.filter:before { content: "\e809"; font-size: 19.5px; }
 i.icon.wizard:before { content: "\f0d0"; }
 i.icon.undo:before { content: "\f0e2"; }
 i.icon.exchange:before { content: "\f0ec"; }
@@ -246,7 +246,7 @@ i.icon.checkmark.box:before { content: "\f046"; }
 i.icon.move:before { content: "\f047"; }
 i.icon.add.circle:before { content: "\f055"; }
 i.icon.minus.circle:before { content: "\f056"; }
-i.icon.remove.circle:before { content: "\f013"; font-family: 'Crimea'; }
+i.icon.remove.circle:before { content: "\f013"; font-family: 'Crimea'; font-size: 16px; }
 i.icon.remove.circle:hover:before { color: #7ba7d9!important; }
 i.icon.check.circle:before { content: "\f058"; }
 i.icon.remove.circle.outline:before { content: "\f05c"; }
@@ -283,8 +283,10 @@ i.icon.arrow.circle.outline.down:before { content: "\f01a"; }
 i.icon.arrow.circle.outline.up:before { content: "\f01b"; }
 i.icon.chevron.left:before { content: "\f053"; }
 i.icon.chevron.right:before { content: "\f054"; }
-i.icon.arrow.left:before { content: "\f060"; font-family: 'crimea';}
-i.icon.arrow.right:before { content: "\f061"; font-family: 'crimea';}
+i.icon.arrow.left:before { content: "\f104"; font-family: 'crimea'; font-size: 20px;}
+i.icon.arrow.right:before { content: "\f105"; font-family: 'crimea'; font-size: 20px;}
+i.icon.arrow.left:hover:before { color: #ff4800!important;}
+i.icon.arrow.right:hover:before { color: #ff4800!important;}
 i.icon.arrow.up:before { content: "\f062"; }
 i.icon.arrow.down:before { content: "\f063"; }
 i.icon.chevron.up:before { content: "\e820"; }
@@ -306,7 +308,7 @@ i.icon.angle.double.right:before { content: "\f101"; }
 i.icon.angle.double.up:before { content: "\f102"; }
 i.icon.angle.double.down:before { content: "\f103"; }
 i.icon.angle.left:before { content: "\f104"; }
-i.icon.angle.right:before { content: "\f105"; }
+i.icon.angle.right:before { content: "\f105"; font-family: 'Crimea'; font-size: 16px;}
 i.icon.angle.up:before { content: "\f106"; }
 i.icon.angle.down:before { content: "\f107"; }
 i.icon.chevron.circle.left:before { content: "\f137"; }
@@ -673,7 +675,7 @@ i.icon.wrench:before { content: "\f0ad"; }
 i.icon.briefcase:before { content: "\f0b1"; }
 i.icon.group:before { content: "\f0c0"; }
 i.icon.flask:before { content: "\f0c3"; }
-i.icon.sidebar:before { content: "\e800";}
+i.icon.sidebar:before { content: "\e800"; color: #fff}
 i.icon.bars:before { content: "\f0c9"; }
 i.icon.list.ul:before { content: "\f0ca"; }
 i.icon.list.ol:before { content: "\f0cb"; }
@@ -860,25 +862,23 @@ i.icon.bed:before { content: "\f236"; }
     visibility: hidden;
     margin: 0px;
 }
-.menu.transition.visible > a:nth-child(2) > i.angle.right.icon:before{
+.menu.transition.visible > a:nth-child(2) >
+.menu.transition.visible > .flexberry-menuitem
+ > i.icon.checkmark.box:before {
     content: "\e815";
     font-family: 'Icons';
 }
-.menu.transition.visible > a:nth-child(2) > .menu.transition > .menuitem > .icon:before {
-    content: "\e815";
-    font-family: 'Icons';
-}
-.menu.transition.visible > a:nth-child(3) > i.angle.right.icon:before{
+
+.menu.transition.visible > a:nth-child(3)
+ > .menu.transition > .flexberry-menuitem > i.icon.setting:before {
     content: "\e810";
     font-family: 'Icons';
 }
-.menu.transition.visible > a:nth-child(3) > .menu.transition > .menuitem > .icon:before {
-    content: "\e810";
-    font-family: 'Icons';
-}
-.menu.transition.visible > a:nth-child(4) > i.angle.right.icon:before{
+.menu.transition.visible > a:nth-child(4)
+ > .menu.transition > .flexberry-menuitem > i.icon.remove:before {
     content: "\e814";
     font-family: 'Icons';
+    font-size:16px;
 }
 .flexberry-edit-panel > button:first-child:before {
     content: "\e80c";
@@ -904,13 +904,20 @@ i.icon.bed:before { content: "\f236"; }
 .flexberry-edit-panel > button:nth-child(3){
     background: none!important;
 }
-.flexberry-edit-panel > button:nth-child(4):before {
-    content: "\e806";
-    font-family: 'Icons';
-    color: #7ba7d9!important;
-    font-size: 17px;
-    padding-right:10px;
-} 
+.flexberry-edit-panel > button:nth-child(4) {
+    position: absolute;
+    border: none!important;
+    width: 43px;
+    height: 43px;
+    right: -2px;
+    top: -33px;
+    color: #fff!important;
+    font-size: 0px!important;
+    background: url(../assets/serviceImages//close.png)center no-repeat;
+}
+.flexberry-edit-panel > button:nth-child(4):hover {
+     background: url(../assets/serviceImages//close-hover.png)center no-repeat;
+}
 button:before:hover {
     color: #fff!important;
 }
@@ -944,7 +951,7 @@ button:before:hover {
     display:none;
 }
 i.icon.text-menu-2:before {
-    color: #888!important;
+    color: #91a7cd!important;
 }
 .ui-change {
     visibility: hidden;
@@ -956,6 +963,7 @@ i.icon.text-menu-2:before {
     font-family: 'Icons';
     visibility: visible;
     color: #7ba7d9;
+    font-size: 13px!important;
 }
 .ui-change:hover:before {
     color: #ff4800!important;
@@ -988,6 +996,27 @@ i.icon.text-menu-2:before {
     border: 1px solid #7ba7d9!important;
     justify-content: center;
     padding: 0.8571em 1.284em 0.8571em!important;
+}
+i.icon.calendar:hover:before {
+    color: #ff4800!important;
+}
+
+.flexberry-lookup > .ui.fluid > button > i.icon.remove:before {
+    content: "\e806";
+    font-family: 'Icons';
+    font-size: 13px !important;
+}
+.flexberry-file-add-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+}
+.flexberry-file-remove-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+}
+.flexberry-file-download-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+}
+.flexberry-file-upload-button.ui.icon.button {
+    margin: 0px 2.5px!important;
 }
 
 

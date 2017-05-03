@@ -11,6 +11,6 @@ executeTest('check default value', (store, assert, app) => {
 
     let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
 
-    assert.equal($validationLablesContainer.length, 11, "All components have default value");
+    assert.equal($validationLablesContainer.length, 11, 'All components have default value');
   });
 });

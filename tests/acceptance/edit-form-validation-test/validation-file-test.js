@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
-executeTest('check operation lookup', (store, assert, app) => {
+executeTest('check operation file', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
 
@@ -9,17 +9,18 @@ executeTest('check operation lookup', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationFieldNumericTextbox = Ember.$(Ember.$('.field.error')[7]);
+    let $validationFieldNumericTextbox = Ember.$(Ember.$('.field.error')[6]);
     let $validationFlexberryErrorLable = $validationFieldNumericTextbox.children('.label');
 
     assert.equal($validationFlexberryErrorLable.text().trim(), "Master is required", "Lookup have default value");
 
-    let $validationFlexberryLookupButtons = Ember.$('.ui.button');
-    let $validationFlexberryLookupButton = Ember.$($validationFlexberryLookupButtons[2]);
+    /*let $validationFlexberryFile = Ember.$('.flexberry-file');
 
     Ember.run(() => {
-      $validationFlexberryLookupButton.click();
-    });
+      let tempFile = { fileName: 'Ждём НГ.png', fileSize: '27348', fileMimeType: '27348'};
+      $validationFlexberryFile.value = tempFile;
+    });*/
+
 
     let done = assert.async();
 

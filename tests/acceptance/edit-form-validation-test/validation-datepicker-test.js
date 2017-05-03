@@ -18,8 +18,6 @@ executeTest('check operation datepicker', (store, assert, app) => {
 
     Ember.run(() => {
       $validationDataField.click();
-      let $validationDate = $validationDataField.children('.menu');
-
       let $validationDateButton = Ember.$('.available');
       $validationDateButton = Ember.$($validationDateButton[16]);
       $validationDateButton.click();

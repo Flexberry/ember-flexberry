@@ -10,9 +10,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add generation of serializers when inheriting models.
 * Add `readonly-cell` helper. It can specify `readonly` property for each cell of list components.
 
-### Changed
-* Set `ember-cli-htmlbars-inline-precompile` version to 0.3.6.
-
 ## [0.9.0-beta.7] - 2017-04-14
 ### Added
 * Blueprints:

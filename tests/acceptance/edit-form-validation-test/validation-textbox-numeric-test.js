@@ -9,7 +9,7 @@ executeTest('check operation numeric textbox', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationFieldNumericTextbox = Ember.$(Ember.$('.field.error')[1]);
+    let $validationFieldNumericTextbox = Ember.$(Ember.$('.field.error')[2]);
     let $validationFlexberryTextbox = $validationFieldNumericTextbox.children('.flexberry-textbox');
     let $validationFlexberryErrorLable = $validationFieldNumericTextbox.children('.label');
 

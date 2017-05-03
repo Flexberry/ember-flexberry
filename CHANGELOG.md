@@ -9,6 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add generation not stored properties of models.
     * Add generation of serializers when inheriting models.
 
+### Fixed
+* `colsconfig-dialog-content` component:
+    * Fix semantic styles for sort direction dropdown.
+
 ## [0.9.0-beta.7] - 2017-04-14
 ### Added
 * Blueprints:

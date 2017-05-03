@@ -66,7 +66,7 @@ executeTest('check complete all tests', (store, assert, app) => {
     Ember.run(() => {
       let tempFile = { fileName: 'Ждём НГ.png', fileSize: '27348', fileMimeType: '27348'};
       $validationFlexberryFile.value = tempFile;
-    });
+    });*/
 
     let done = assert.async();
 
@@ -75,6 +75,6 @@ executeTest('check complete all tests', (store, assert, app) => {
       let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
       assert.equal($validationLablesContainer.length, 11, "All components have default value");
       done();
-    }, 20000);*/
+    }, 20000);
   });
 });

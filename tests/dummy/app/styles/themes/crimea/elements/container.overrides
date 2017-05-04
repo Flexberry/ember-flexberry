@@ -21,3 +21,6 @@
 .ui.attached.segment {
     width: 100%!important;
 }
+.hidden {
+    display: none;
+}

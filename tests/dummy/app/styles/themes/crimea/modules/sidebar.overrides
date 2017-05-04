@@ -7,7 +7,10 @@
     float: left;
     box-shadow: none!important;
     border-radius: 5px !important;
-
+}
+body.pushable {
+    background: #fff!important;
+    overflow: hidden;
 }
 .page-header-caption a{
     background: none;
@@ -44,6 +47,7 @@
     left: 0px!important;
     height: 85.3vh!important;
     position: fixed!important;
+    background: #f1f7ff!important;
 }
 .ui .attached .menu {
     border: none!important;
@@ -141,4 +145,7 @@ div.subMenu a{
 .fixed-sidebar{
     position: fixed!important;
     top: 45px!important;
+}
+.pushable > .pusher:after {
+    background: none!important;
 }

@@ -20,6 +20,7 @@
   height: 35px;
   text-align: center;
   border-radius: 5px;
+  border: 1px #7ba7d9 solid;
 }
 .large.table.icon {
   margin-top: -4px!important;

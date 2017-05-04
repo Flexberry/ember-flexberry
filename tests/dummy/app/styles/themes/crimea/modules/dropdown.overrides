@@ -26,6 +26,7 @@
 
 .ui.dropdown > .dropdown.icon {
   width: auto;
+  color: #7ba7d9!important;
 }
 .ui.dropdown > .dropdown.icon:before {
   content: '\f0d7';

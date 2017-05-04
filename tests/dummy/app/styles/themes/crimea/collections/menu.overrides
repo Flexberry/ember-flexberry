@@ -21,3 +21,10 @@
 .ui.menu .item {
     padding: 0.72857143em 1.14285714em;
 }
+.ui.menu > .grid, .ui.menu > .container {
+    background: #4f73b0!important;
+}
+.ui.vertical.inverted.menu .item .menu a.item:hover,
+ .ui.vertical.inverted.menu .item .menu .link.item:hover {
+     color: #ff4800;
+ }

@@ -20,7 +20,7 @@
 .ui.checkbox input:checked ~ label:after {
   content: '\e805';
   color: #7ba7d9;
-  left: -25px;
+  left: -27px;
   color: #7ba7d9!important;
 }
 
@@ -53,7 +53,7 @@
 }
 .ui.checkbox label:after{
   content: '\e805';
-  font-family: 'Icons';
+  font-family: 'Crim';
   color: #7ba7d9;
   border-color: #7ba7d9;
   font-size: 15.8px;

@@ -35,7 +35,7 @@ input[type="checkbox"]:after {
 
 input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
     content: '\e805';
-    font-family: 'Icons';
+    font-family: 'Crim';
     color: #7ba7d9;
     border-color: #7ba7d9;
     font-size: 15px;

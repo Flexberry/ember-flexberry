@@ -19,18 +19,23 @@ executeTest('check detail\'s components', (store, assert, app) => {
     let $validationFlexberryOLVTextbox1 = Ember.$($validationFlexberryTextboxs[2]);
     let $validationFlexberryOLVTextbox2 = Ember.$($validationFlexberryTextboxs[3]);
 
+    let $validationFlexberryTextboxInner1 = $validationFlexberryOLVTextbox1.children('input');
+    let $validationFlexberryTextboxInner2 = $validationFlexberryOLVTextbox2.children('input');
+
+    let $validationField1 = Ember.$($validationLablesContainer[8]);
+    let $validationField2 = Ember.$($validationLablesContainer[9]);
+    let $validationField3 = Ember.$($validationLablesContainer[10]);
+
     Ember.run(() => {
       $validationFlexberryOLVCheckbox.click();
-      $validationFlexberryOLVTextbox1.text("12311");
-      $validationFlexberryOLVTextbox2.text("Простой текст");
+
+      $validationFlexberryTextboxInner1[0].value = "1";
+      $validationFlexberryTextboxInner1.change();
+
+      $validationFlexberryTextboxInner2[0].value = "12345";
+      $validationFlexberryTextboxInner2.change();
     });
 
-    let done = assert.async();
-
-    setTimeout(function() {
-      $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
-      assert.equal($validationLablesContainer.length, 9, "Detail have curently value");
-      done();
-    }, 2000);
+    assert.ok($validationField1.text().trim() === "" && $validationField2.text().trim() === "" && $validationField3.text().trim() === "", "All components have default value");
   });
 });

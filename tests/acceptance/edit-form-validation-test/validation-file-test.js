@@ -9,24 +9,25 @@ executeTest('check operation file', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationFieldNumericTextbox = Ember.$(Ember.$('.field.error')[6]);
-    let $validationFlexberryErrorLable = $validationFieldNumericTextbox.children('.label');
+    let $validationFieldFile = Ember.$(Ember.$('.field.error')[6]);
+    let $validationFlexberryErrorLable = $validationFieldFile.children('.label');
 
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Master is required", "Lookup have default value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), "File is required", "Flexberry file have default value");
 
-    /*let $validationFlexberryFile = Ember.$('.flexberry-file');
+    let $validationFlexberryFile = Ember.$('.flexberry-file');
 
-    Ember.run(() => {
+    /*Ember.run(() => {
       let tempFile = { fileName: 'Ждём НГ.png', fileSize: '27348', fileMimeType: '27348'};
-      $validationFlexberryFile.value = tempFile;
+      $validationFlexberryFile[0].value = tempFile;
     });*/
 
 
     let done = assert.async();
 
     setTimeout(function() {
-      assert.equal($validationFlexberryErrorLable.text().trim(), "", "Lookup have value");
+      assert.equal($validationFlexberryErrorLable.text().trim(), "", "Flexberry file have value");
+      $validationFlexberryFile = Ember.$('.flexberry-file');
       done();
-    }, 1000);
+    }, 30000);
   });
 });

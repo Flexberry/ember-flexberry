@@ -10,13 +10,15 @@ executeTest('check operation textarea', (store, assert, app) => {
     assert.equal(currentPath(), path);
 
     let $validationFieldNumericTextbox = Ember.$(Ember.$('.field.error')[3]);
-    let $validationFlexberryTextarea = $validationFieldNumericTextbox.children('.flexberry-textarea');
+    let $validationFlexberryTextarea = Ember.$('.flexberry-textarea');
+    let $validationFlexberryTextboxInner= $validationFlexberryTextarea.children('textarea');
     let $validationFlexberryErrorLable = $validationFieldNumericTextbox.children('.label');
 
     assert.equal($validationFlexberryErrorLable.text().trim(), "Long text is required", "Textarea have default value");
 
     Ember.run(() => {
-      $validationFlexberryTextarea.text = "1";
+      $validationFlexberryTextboxInner.val("1");
+      $validationFlexberryTextboxInner.change();
     });
 
     assert.equal($validationFlexberryErrorLable.text().trim(), "", "Textarea have default value");

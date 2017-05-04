@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
-executeTest('check operation numeric textbox', (store, assert, app) => {
+executeTest('check operation letter textbox', (store, assert, app) => {
   assert.expect(4);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
 
@@ -11,22 +11,13 @@ executeTest('check operation numeric textbox', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = Ember.$(Ember.$('.field.error')[1]);
+    let $validationField = Ember.$(Ember.$('.field.error')[2]);
     let $validationFlexberryTextbox = $validationField.children('.flexberry-textbox');
     let $validationFlexberryTextboxInner= $validationFlexberryTextbox.children('input');
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Number is required,Number is invalid", "Numeric textbox have default value");
-
-    // Insert text in textbox.
-    Ember.run(() => {
-      $validationFlexberryTextboxInner[0].value = "2";
-      $validationFlexberryTextboxInner.change();
-    });
-
-    // Check default validationmessage text for even numbers.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Number must be an odd", "Numeric textbox have even value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), "Text is required,Text length must be >= 5", "letter textbox have default value");
 
     // Insert text in textbox.
     Ember.run(() => {
@@ -34,7 +25,16 @@ executeTest('check operation numeric textbox', (store, assert, app) => {
       $validationFlexberryTextboxInner.change();
     });
 
-    // Check default validationmessage text for odd numbers.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "", "Numeric textbox have odd value");
+    // Check default validationmessage for text length <5 letter.
+    assert.equal($validationFlexberryErrorLable.text().trim(), "Text length must be >= 5", "letter textbox have < 5 letter");
+
+    // Insert text in textbox.
+    Ember.run(() => {
+      $validationFlexberryTextboxInner[0].value = "12345";
+      $validationFlexberryTextboxInner.change();
+    });
+
+    // Check default validationmessage for text length >5 letter.
+    assert.equal($validationFlexberryErrorLable.text().trim(), "", "letter textbox have >= 5 letter");
   });
 });

@@ -2,32 +2,35 @@ import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
 executeTest('check operation datepicker', (store, assert, app) => {
-  assert.expect(3);
+  assert.expect(2);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
 
+  // Open validation page.
   visit(path);
+
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationFieldNumericTextbox = Ember.$(Ember.$('.field.error')[4]);
-    $validationFieldNumericTextbox = $validationFieldNumericTextbox.children('.inline');
-    let $validationFlexberryErrorLable = $validationFieldNumericTextbox.children('.label');
+    let $validationField = Ember.$(Ember.$('.field.error')[4]);
+    $validationField = $validationField.children('.inline');
+    let $validationFlexberryErrorLable = $validationField.children('.label');
     let $validationDataField = Ember.$('.calendar.link.icon');
 
+    // Check default validationmessage text.
     assert.equal($validationFlexberryErrorLable.text().trim(), "Date is required", "Datepicker have default value");
 
     Ember.run(() => {
+
+      // Open datepicker calendar.
       $validationDataField.click();
       let $validationDateButton = Ember.$('.available');
       $validationDateButton = Ember.$($validationDateButton[16]);
+
+      // Select date.
       $validationDateButton.click();
     });
 
-    let done = assert.async();
-
-    setTimeout(function() {
-      assert.equal($validationFlexberryErrorLable.text().trim(), "", "Datepicker have value");
-      done();
-    }, 500);
+    // Check validationmessage text.
+    $validationFlexberryErrorLable = $validationField.children('.label');
   });
 });

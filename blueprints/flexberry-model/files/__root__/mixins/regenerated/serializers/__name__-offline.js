@@ -7,8 +7,8 @@ export let Serializer = Ember.Mixin.create({
 <%= offlineSerializerAttrs %>
     };
 
-  return Ember.$.extend(true, {}, parentAttrs, attrs);
-},
+    return Ember.$.extend(true, {}, parentAttrs, attrs);
+  },
   init: function () {
     this.set('attrs', this.getAttrs());
     this._super(...arguments);

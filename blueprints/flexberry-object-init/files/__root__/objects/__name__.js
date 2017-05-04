@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { ObjectMix as <%= className %>Mixin } from
   '../mixins/regenerated/objects/<%= name %>';
 

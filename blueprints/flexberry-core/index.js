@@ -76,8 +76,8 @@ var CoreBlueprint = (function () {
             var listForm = JSON.parse(content);
             var listFormName = pp.name;
             routes.push("  this.route('" + listFormName + "');");
-            routes.push("  this.route('" + listForm.editForm + "', { path: '" + listForm.editForm + "/:id' });");
-            routes.push("  this.route('" + listForm.newForm + ".new', { path: '" + listForm.newForm + "/new' });");
+            routes.push("  this.route('" + listForm.editForm + "',\n  { path: '" + listForm.editForm + "/:id' });");
+            routes.push("  this.route('" + listForm.newForm + ".new',\n  { path: '" + listForm.newForm + "/new' });");
             importProperties.push("import " + listForm.name + "Form from './forms/" + listFormName + "';");
             formsImportedProperties.push("    '" + listFormName + "': " + listForm.name + "Form");
         }

@@ -17,15 +17,15 @@ executeTest('check operation textarea', (store, assert, app) => {
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Long text is required", "Textarea have default value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Long text is required', 'Textarea have default value');
 
     // Insert text in textarea.
     Ember.run(() => {
-      $validationFlexberryTextboxInner.val("1");
+      $validationFlexberryTextboxInner.val('1');
       $validationFlexberryTextboxInner.change();
     });
 
     // Validationmessage must be empty.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "", "Textarea have default value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Textarea have default value');
   });
 });

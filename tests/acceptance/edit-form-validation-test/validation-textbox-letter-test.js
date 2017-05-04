@@ -17,24 +17,24 @@ executeTest('check operation letter textbox', (store, assert, app) => {
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Text is required,Text length must be >= 5", "letter textbox have default value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Text is required,Text length must be >= 5', 'letter textbox have default value');
 
     // Insert text in textbox.
     Ember.run(() => {
-      $validationFlexberryTextboxInner[0].value = "1";
+      $validationFlexberryTextboxInner[0].value = '1';
       $validationFlexberryTextboxInner.change();
     });
 
     // Check default validationmessage for text length <5 letter.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Text length must be >= 5", "letter textbox have < 5 letter");
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Text length must be >= 5', 'letter textbox have < 5 letter');
 
     // Insert text in textbox.
     Ember.run(() => {
-      $validationFlexberryTextboxInner[0].value = "12345";
+      $validationFlexberryTextboxInner[0].value = '12345';
       $validationFlexberryTextboxInner.change();
     });
 
     // Check default validationmessage for text length >5 letter.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "", "letter textbox have >= 5 letter");
+    assert.equal($validationFlexberryErrorLable.text().trim(), '', 'letter textbox have >= 5 letter');
   });
 });

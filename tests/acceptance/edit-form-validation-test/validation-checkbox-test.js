@@ -16,20 +16,20 @@ executeTest('check operation checkbox', (store, assert, app) => {
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Flag is required,Flag must be 'true' only", "Checkbox's label have default value by default");
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Flag is required,Flag must be \'true\' only', 'Checkbox\'s label have default value by default');
 
     Ember.run(() => {
       $validationFlexberryCheckbox.click();
     });
 
     // Check validationmessage text afther first click.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "", "Checkbox's label havn't value after first click");
+    assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Checkbox\'s label havn\'t value after first click');
 
     Ember.run(() => {
       $validationFlexberryCheckbox.click();
     });
 
-    // Check validationmessage text = "Flag must be 'true' only" afther first click.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Flag must be 'true' only", "Checkbox's label have value after second click");
+    // Check validationmessage text = 'Flag must be 'true' only' afther first click.
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Flag must be \'true\' only', 'Checkbox\'s label have value after second click');
   });
 });

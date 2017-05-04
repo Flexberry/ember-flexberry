@@ -17,7 +17,7 @@ executeTest('check operation datepicker', (store, assert, app) => {
     let $validationDataField = Ember.$('.calendar.link.icon');
 
     // Check default validationmessage text.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Date is required", "Datepicker have default value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Date is required', 'Datepicker have default value');
 
     Ember.run(() => {
 

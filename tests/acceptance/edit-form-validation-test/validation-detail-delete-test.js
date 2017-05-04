@@ -13,7 +13,7 @@ executeTest('check detail delete', (store, assert, app) => {
 
     // Сounting the number of validationmessage.
     let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
-    assert.equal($validationLablesContainer.length, 11, "All components have default value");
+    assert.equal($validationLablesContainer.length, 11, 'All components have default value');
 
     let $validationFlexberryCheckboxs = Ember.$('.flexberry-checkbox');
     let $validationFlexberryCheckbox = Ember.$($validationFlexberryCheckboxs[1]);
@@ -27,6 +27,6 @@ executeTest('check detail delete', (store, assert, app) => {
 
     // Сounting the number of validationmessage = 8 afther detail delete.
     $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
-    assert.equal($validationLablesContainer.length, 8, "Detail was deleted without errors");
+    assert.equal($validationLablesContainer.length, 8, 'Detail was deleted without errors');
   });
 });

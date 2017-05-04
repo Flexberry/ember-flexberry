@@ -12,7 +12,7 @@ executeTest('check detail\'s components', (store, assert, app) => {
 
     // Сounting the number of validationmessage.
     let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
-    assert.equal($validationLablesContainer.length, 11, "All components have default value");
+    assert.equal($validationLablesContainer.length, 11, 'All components have default value');
 
     let $validationFlexberryCheckboxs = Ember.$('.flexberry-checkbox');
     let $validationFlexberryOLVCheckbox = Ember.$($validationFlexberryCheckboxs[2]);
@@ -34,14 +34,14 @@ executeTest('check detail\'s components', (store, assert, app) => {
     Ember.run(() => {
       $validationFlexberryOLVCheckbox.click();
 
-      $validationFlexberryTextboxInner1[0].value = "1";
+      $validationFlexberryTextboxInner1[0].value = '1';
       $validationFlexberryTextboxInner1.change();
 
-      $validationFlexberryTextboxInner2[0].value = "12345";
+      $validationFlexberryTextboxInner2[0].value = '12345';
       $validationFlexberryTextboxInner2.change();
     });
 
     // Validationmessage must be empty.
-    assert.ok($validationField1.text().trim() === "" && $validationField2.text().trim() === "" && $validationField3.text().trim() === "", "All components have default value");
+    assert.ok($validationField1.text().trim() === '' && $validationField2.text().trim() === '' && $validationField3.text().trim() === '', 'All components have default value');
   });
 });

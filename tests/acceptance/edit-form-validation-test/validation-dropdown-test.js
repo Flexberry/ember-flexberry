@@ -16,7 +16,7 @@ executeTest('check operation dropdown', (store, assert, app) => {
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Enumeration is required", "Dropdown have default value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Enumeration is required', 'Dropdown have default value');
 
     Ember.run(() => {
 
@@ -31,6 +31,6 @@ executeTest('check operation dropdown', (store, assert, app) => {
     });
 
     // Validationmessage must be empty.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "", "Dropdown have value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Dropdown have value');
   });
 });

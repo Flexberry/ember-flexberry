@@ -15,7 +15,7 @@ executeTest('check operation lookup', (store, assert, app) => {
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Master is required", "Lookup have default value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Master is required', 'Lookup have default value');
 
     let $validationFlexberryLookupButtons = Ember.$('.ui.button');
     let $validationFlexberryLookupButton = Ember.$($validationFlexberryLookupButtons[2]);
@@ -29,7 +29,7 @@ executeTest('check operation lookup', (store, assert, app) => {
 
     // Waiting for the action complete.
     setTimeout(function() {
-      assert.equal($validationFlexberryErrorLable.text().trim(), "", "Lookup have value");
+      assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Lookup have value');
       done();
     }, 1000);
   });

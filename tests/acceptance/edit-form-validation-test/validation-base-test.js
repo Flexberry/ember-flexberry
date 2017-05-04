@@ -4,7 +4,7 @@ import { executeTest} from './execute-validation-test';
 executeTest('check default value', (store, assert, app) => {
   assert.expect(2);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
-  
+
   // Open validation page.
   visit(path);
 

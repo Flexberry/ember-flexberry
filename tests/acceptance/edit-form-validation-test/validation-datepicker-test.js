@@ -23,15 +23,11 @@ executeTest('check operation datepicker', (store, assert, app) => {
       $validationDateButton.click();
     });
 
-    assert.equal($validationFlexberryErrorLable.text().trim(), "", "Datepicker have value");
-
     let done = assert.async();
 
     setTimeout(function() {
-
-      let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
-      assert.equal($validationLablesContainer.length, 11, "All components have default value");
+      assert.equal($validationFlexberryErrorLable.text().trim(), "", "Datepicker have value");
       done();
-    }, 20000);
+    }, 500);
   });
 });

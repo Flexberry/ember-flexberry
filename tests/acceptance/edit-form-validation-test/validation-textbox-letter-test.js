@@ -13,7 +13,7 @@ executeTest('check operation letter textbox', (store, assert, app) => {
 
     let $validationField = Ember.$(Ember.$('.field.error')[2]);
     let $validationFlexberryTextbox = $validationField.children('.flexberry-textbox');
-    let $validationFlexberryTextboxInner= $validationFlexberryTextbox.children('input');
+    let $validationFlexberryTextboxInner = $validationFlexberryTextbox.children('input');
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.

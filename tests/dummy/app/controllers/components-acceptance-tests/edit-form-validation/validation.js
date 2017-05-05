@@ -17,6 +17,13 @@ export default EditFormController.extend({
       this.get('model').set('master', master);
 
       this.get('lookupEvents').lookupDialogOnHiddenTrigger('IntegrationExamplesValidationsMaster');
+    },
+
+    /**
+      Handles click on flexberry-file's add button.
+    */
+    addButtonClick() {
+      //let per = 0;
     }
   }
 });

@@ -13,7 +13,6 @@ executeTest('check complete all tests', (store, assert, app) => {
 
     let $validationDataField = Ember.$('.calendar.link.icon');
 
-
     Ember.run(() => {
       // Open datepicker calendar.
       $validationDataField.click();
@@ -35,7 +34,6 @@ executeTest('check complete all tests', (store, assert, app) => {
     let $validationFlexberryCheckboxs = Ember.$('.flexberry-checkbox');
     let $validationFlexberryCheckbox = Ember.$($validationFlexberryCheckboxs[0]);
     let $validationFlexberryOLVCheckbox = Ember.$($validationFlexberryCheckboxs[2]);
-
 
     Ember.run(() => {
       $validationFlexberryCheckbox.click();
@@ -65,11 +63,11 @@ executeTest('check complete all tests', (store, assert, app) => {
 
     // Insert text in textbox and textarea.
     Ember.run(() => {
-      $validationFlexberryTextbox1.text = "12311";
-      $validationFlexberryTextbox2.text("Простой текст");
-      $validationFlexberryOLVTextbox1.text("12311");
-      $validationFlexberryOLVTextbox2.text("Простой текст");
-      $validationFlexberryTextarea.text("Простой текст");
+      $validationFlexberryTextbox1.text = '12311';
+      $validationFlexberryTextbox2.text('Простой текст');
+      $validationFlexberryOLVTextbox1.text('12311');
+      $validationFlexberryOLVTextbox2.text('Простой текст');
+      $validationFlexberryTextarea.text('Простой текст');
     });
 
     let done = assert.async();
@@ -77,8 +75,8 @@ executeTest('check complete all tests', (store, assert, app) => {
     // Сounting the number of validationmessage.
     setTimeout(function() {
       let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
-      assert.equal($validationLablesContainer.length, 11, "All components have default value");
+      assert.equal($validationLablesContainer.length, 11, 'All components have default value');
       done();
-    }, 20000);
+    }, 2000);
   });
 });

@@ -13,28 +13,28 @@ executeTest('check operation numeric textbox', (store, assert, app) => {
 
     let $validationField = Ember.$(Ember.$('.field.error')[1]);
     let $validationFlexberryTextbox = $validationField.children('.flexberry-textbox');
-    let $validationFlexberryTextboxInner= $validationFlexberryTextbox.children('input');
+    let $validationFlexberryTextboxInner = $validationFlexberryTextbox.children('input');
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Number is required,Number is invalid", "Numeric textbox have default value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Number is required,Number is invalid', 'Numeric textbox have default value');
 
     // Insert text in textbox.
     Ember.run(() => {
-      $validationFlexberryTextboxInner[0].value = "2";
+      $validationFlexberryTextboxInner[0].value = '2';
       $validationFlexberryTextboxInner.change();
     });
 
     // Check default validationmessage text for even numbers.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "Number must be an odd", "Numeric textbox have even value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), 'Number must be an odd', 'Numeric textbox have even value');
 
     // Insert text in textbox.
     Ember.run(() => {
-      $validationFlexberryTextboxInner[0].value = "1";
+      $validationFlexberryTextboxInner[0].value = '1';
       $validationFlexberryTextboxInner.change();
     });
 
     // Check default validationmessage text for odd numbers.
-    assert.equal($validationFlexberryErrorLable.text().trim(), "", "Numeric textbox have odd value");
+    assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Numeric textbox have odd value');
   });
 });

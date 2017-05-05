@@ -13,7 +13,7 @@ executeTest('check operation textarea', (store, assert, app) => {
 
     let $validationField = Ember.$(Ember.$('.field.error')[3]);
     let $validationFlexberryTextarea = Ember.$('.flexberry-textarea');
-    let $validationFlexberryTextboxInner= $validationFlexberryTextarea.children('textarea');
+    let $validationFlexberryTextboxInner = $validationFlexberryTextarea.children('textarea');
     let $validationFlexberryErrorLable = $validationField.children('.label');
 
     // Check default validationmessage text.

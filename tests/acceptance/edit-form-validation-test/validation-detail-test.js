@@ -33,15 +33,17 @@ executeTest('check detail\'s components', (store, assert, app) => {
     // Data insertion.
     Ember.run(() => {
       $validationFlexberryOLVCheckbox.click();
-
       $validationFlexberryTextboxInner1[0].value = '1';
       $validationFlexberryTextboxInner1.change();
-
       $validationFlexberryTextboxInner2[0].value = '12345';
       $validationFlexberryTextboxInner2.change();
     });
 
     // Validationmessage must be empty.
-    assert.ok($validationField1.text().trim() === '' && $validationField2.text().trim() === '' && $validationField3.text().trim() === '', 'All components have default value');
+    assert.ok(
+      $validationField1.text().trim() === '' &&
+      $validationField2.text().trim() === '' &&
+      $validationField3.text().trim() === '',
+      'All components have default value');
   });
 });

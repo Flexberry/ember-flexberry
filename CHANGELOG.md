@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add support reexport for addon.
     * Add generation not stored properties of models.
     * Add generation of serializers when inheriting models.
+    * Add generation offline serializers.
 
 ## [0.9.0-beta.7] - 2017-04-14
 ### Added

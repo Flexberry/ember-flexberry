@@ -5,7 +5,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * Blueprints:
-    * Add generation of serializers when inheriting models.
     * Add generation offline serializers.
 
 ## [0.9.0-beta.8] - 2017-05-05

@@ -170,6 +170,11 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
+  didInsertElement: function() {
+    this._super(...arguments);
+    this.$('.sort-direction-dropdown').dropdown();
+  },
+
   actions: {
     /**
      Invert column visibility (On/Off)

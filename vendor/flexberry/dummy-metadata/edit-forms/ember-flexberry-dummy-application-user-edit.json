@@ -1,7 +1,7 @@
 ﻿{
   "propertyLookup": [],
   "caption": "Application user",
-  "name": "EmberFlexberryDummyFormsApplicationUserApplicationUserEdit",
+  "name": "EmberFlexberryDummyApplicationUserEdit",
   "className": "ApplicationUserEdit",
   "attrs": [],
   "projections": [

@@ -58,7 +58,7 @@
     }
   ],
   "caption": "Suggestion",
-  "name": "EmberFlexberryDummyFormsSuggestionSuggestionEdit",
+  "name": "EmberFlexberryDummySuggestionEdit",
   "className": "SuggestionEdit",
   "attrs": [],
   "projections": [

@@ -34,7 +34,7 @@
     }
   ],
   "caption": "Comment edit",
-  "name": "EmberFlexberryDummyFormsCommentCommentEdit",
+  "name": "EmberFlexberryDummyCommentEdit",
   "className": "CommentEdit",
   "attrs": [],
   "projections": [

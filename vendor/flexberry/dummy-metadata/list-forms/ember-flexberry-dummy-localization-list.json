@@ -1,8 +1,8 @@
 ﻿{
-  "newForm": "ember-flexberry-dummy-forms-localization-localization-edit",
-  "editForm": "ember-flexberry-dummy-forms-localization-localization-edit",
+  "newForm": "ember-flexberry-dummy-localization-edit",
+  "editForm": "ember-flexberry-dummy-localization-edit",
   "caption": "Localization",
-  "name": "EmberFlexberryDummyFormsLocalizationLocalizationList",
+  "name": "EmberFlexberryDummyLocalizationList",
   "className": "LocalizationList",
   "attrs": [],
   "projections": [

@@ -1,7 +1,7 @@
 ﻿{
   "propertyLookup": [],
   "caption": "Localization",
-  "name": "EmberFlexberryDummyFormsLocalizationLocalizationEdit",
+  "name": "EmberFlexberryDummyLocalizationEdit",
   "className": "LocalizationEdit",
   "attrs": [],
   "projections": [

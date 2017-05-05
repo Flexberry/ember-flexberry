@@ -1,8 +1,8 @@
 ﻿{
-  "newForm": "ember-flexberry-dummy-forms-suggestion-suggestion-edit",
-  "editForm": "ember-flexberry-dummy-forms-suggestion-suggestion-edit",
+  "newForm": "ember-flexberry-dummy-suggestion-edit",
+  "editForm": "ember-flexberry-dummy-suggestion-edit",
   "caption": "Suggestions",
-  "name": "EmberFlexberryDummyFormsSuggestionSuggestionList",
+  "name": "EmberFlexberryDummySuggestionList",
   "className": "SuggestionList",
   "attrs": [],
   "projections": [

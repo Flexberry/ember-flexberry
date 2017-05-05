@@ -31,7 +31,8 @@ var ModelBlueprint = (function () {
         this.model = this.getJSForModel(model);
         this.name = options.entity.name;
         this.needsAllModels = this.getNeedsAllModels(modelsDir);
-        this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
+        this.needsAllEnums = this.getNeedsTransforms(path.join(options.metadataDir, "enums"));
+        this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru");
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
     }
@@ -41,17 +42,17 @@ var ModelBlueprint = (function () {
         var model = JSON.parse(content);
         return model;
     };
-    ModelBlueprint.prototype.getNeedsAllEnums = function (enumsDir) {
-        var listEnums = fs.readdirSync(enumsDir);
-        var enums = [];
-        for (var _i = 0, listEnums_1 = listEnums; _i < listEnums_1.length; _i++) {
-            var e = listEnums_1[_i];
+    ModelBlueprint.prototype.getNeedsTransforms = function (dir) {
+        var list = fs.readdirSync(dir);
+        var transforms = [];
+        for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
+            var e = list_1[_i];
             var pp = path.parse(e);
             if (pp.ext != ".json")
                 continue;
-            enums.push("    'transform:" + pp.name + "'");
+            transforms.push("    'transform:" + pp.name + "'");
         }
-        return enums.join(",\n");
+        return transforms.join(",\n");
     };
     ModelBlueprint.prototype.getNeedsAllModels = function (modelsDir) {
         var listModels = fs.readdirSync(modelsDir);

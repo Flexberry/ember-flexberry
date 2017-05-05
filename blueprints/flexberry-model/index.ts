@@ -65,7 +65,8 @@ module.exports = {
       offlineSerializerAttrs: modelBlueprint.offlineSerializerAttrs,// for use in files\__root__\mixins\regenerated\serializers\__name__-offline.js
       name: modelBlueprint.name,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
       needsAllModels: modelBlueprint.needsAllModels,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
-      needsAllEnums: modelBlueprint.needsAllEnums// for use in files\tests\unit\serializers\__name__.js
+      needsAllEnums: modelBlueprint.needsAllEnums,// for use in files\tests\unit\serializers\__name__.js
+      needsAllObjects: modelBlueprint.needsAllObjects// for use in files\tests\unit\serializers\__name__.js
       },
       modelBlueprint.lodashVariables
     );

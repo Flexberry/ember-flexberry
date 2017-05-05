@@ -31,6 +31,7 @@ export default class ModelBlueprint {
   name: string;
   needsAllModels: string;
   needsAllEnums: string;
+  needsAllObjects: string;
   lodashVariables: {};
   constructor(blueprint, options) {
     let modelsDir = path.join(options.metadataDir, "models");
@@ -47,7 +48,8 @@ export default class ModelBlueprint {
     this.model = this.getJSForModel(model);
     this.name = options.entity.name;
     this.needsAllModels = this.getNeedsAllModels(modelsDir);
-    this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
+    this.needsAllEnums = this.getNeedsTransforms(path.join(options.metadataDir, "enums"));
+    this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
     let modelLocales = new ModelLocales(model, modelsDir, "ru");
     this.lodashVariables = modelLocales.getLodashVariablesProperties();
   }
@@ -59,16 +61,16 @@ export default class ModelBlueprint {
     return model;
   }
 
-  getNeedsAllEnums(enumsDir: string): string {
-    let listEnums = fs.readdirSync(enumsDir);
-    let enums: string[] = [];
-    for (let e of listEnums) {
+  getNeedsTransforms(dir: string): string {
+    let list = fs.readdirSync(dir);
+    let transforms: string[] = [];
+    for (let e of list) {
       let pp: path.ParsedPath = path.parse(e);
       if (pp.ext != ".json")
         continue;
-      enums.push(`    'transform:${pp.name}'`);
+      transforms.push(`    'transform:${pp.name}'`);
     }
-    return enums.join(",\n");
+    return transforms.join(",\n");
   }
 
   getNeedsAllModels(modelsDir: string): string {

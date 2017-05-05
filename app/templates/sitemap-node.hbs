@@ -3,9 +3,9 @@
     {{partial "sitemap-node-content"}}
   {{/link-to}}
 {{else}}
-  <div class="item item-menu" {{action 'subMenuEl' bubbles=false}}>
-    <img class="item-plus" src="../assets/serviceImages//Plus.png" alt="Развернуть " style="border-width:0;">
-    <img class="item-minus hidden-menu" src="../assets/serviceImages//Minus.png" alt="Свернуть " style="border-width:0;">
+  <div class="item item-menu">
+    <img class="item-plus" src="../assets/serviceImages//Plus.png" alt="Развернуть " style="border-width:0;" onclick={{action 'subMenuEl' bubbles=false}}>
+    <img class="item-minus hidden-menu" src="../assets/serviceImages//Minus.png" alt="Свернуть " style="border-width:0;" onclick={{action 'subMenuEl' bubbles=false}}>
     {{partial "sitemap-node-content"}}
   </div>
 {{/if}}

@@ -1156,7 +1156,16 @@ export default FlexberryBaseComponent.extend(
     fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
     fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
     fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    let fixedColumnsWidth = fixedColumns.filter(({ width }) => width);
     fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+    for (let k = 0; k < fixedColumnsWidth.length; k++) {
+      if (fixedColumnsWidth[k].propName === 'OlvRowMenu') {
+        this.$('.object-list-view-menu').css({ 'width': + fixedColumnsWidth[k].width +'px'});
+      }
+      if (fixedColumnsWidth[k].propName === 'OlvRowToolbar') {
+        this.$('.object-list-view-operations').css({'width': + fixedColumnsWidth[k].width +'px'});
+      }  
+    }
 
     if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
       disabledColumns.push(0);

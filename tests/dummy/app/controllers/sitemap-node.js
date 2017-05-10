@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
     hideSidebar: function() {
       Ember.$('.ui.sidebar').sidebar('hide');
     },
-    subMenuEl(event){ 
+    subMenuEl(event) {
       let $this =  $(event.currentTarget).parent().find('.subMenu:first');
       if ($this.hasClass('hidden-menu')) {
         $this.removeClass('hidden-menu');

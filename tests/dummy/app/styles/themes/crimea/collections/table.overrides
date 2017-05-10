@@ -13,12 +13,6 @@ table tr:hover {
 tr {
     cursor: pointer;
 }
-.object-list-view-operations.collapsing {
-    width: 70px!important;
-}
-.object-list-view-menu.collapsing {
-    width: 62px!important;
-}
 .basic.right.pointing.ui.icon.dropdown.button {
     box-shadow: none;
 }

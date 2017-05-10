@@ -61,13 +61,30 @@ executeTest('check complete all tests', (store, assert, app) => {
     let $validationFlexberryOLVTextbox2 = Ember.$($validationFlexberryTextboxs[3]);
     let $validationFlexberryTextarea = Ember.$('.flexberry-textarea');
 
+    let $validationFlexberryTextboxInner1 = $validationFlexberryTextbox1.children('input');
+    let $validationFlexberryTextboxInner2 = $validationFlexberryTextbox2.children('input');
+    let $validationFlexberryOLVTextboxInner1 = $validationFlexberryOLVTextbox1.children('input');
+    let $validationFlexberryOLVTextboxInner2 = $validationFlexberryOLVTextbox2.children('input');
+    let $validationFlexberryTextAreaInner = $validationFlexberryTextarea.children('textarea');
+
     // Insert text in textbox and textarea.
     Ember.run(() => {
-      $validationFlexberryTextbox1.text = '12311';
-      $validationFlexberryTextbox2.text('Простой текст');
-      $validationFlexberryOLVTextbox1.text('12311');
-      $validationFlexberryOLVTextbox2.text('Простой текст');
-      $validationFlexberryTextarea.text('Простой текст');
+      $validationFlexberryTextboxInner1[0].value = '1';
+      $validationFlexberryTextboxInner1.change();
+      $validationFlexberryTextboxInner2[0].value = '12345';
+      $validationFlexberryTextboxInner2.change();
+      $validationFlexberryTextAreaInner.val('1');
+      $validationFlexberryTextAreaInner.change();
+      $validationFlexberryOLVTextboxInner1[0].value = '1';
+      $validationFlexberryOLVTextboxInner1.change();
+      $validationFlexberryOLVTextboxInner2[0].value = '12345';
+      $validationFlexberryOLVTextboxInner2.change();
+    });
+
+    let $validationFlexberryFileAddButton = Ember.$('.add.outline');
+
+    Ember.run(() => {
+      $validationFlexberryFileAddButton.click();
     });
 
     let done = assert.async();
@@ -75,8 +92,17 @@ executeTest('check complete all tests', (store, assert, app) => {
     // Сounting the number of validationmessage.
     setTimeout(function() {
       let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
-      assert.equal($validationLablesContainer.length, 11, 'All components have default value');
+      let $validationMessage = true;
+
+      for (let i = 0; i < 10; i++) {
+        if ($validationLablesContainer[i].textContent.trim() !== '')
+        {
+          $validationMessage = false;
+        }
+      }
+
+      assert.ok($validationMessage, 'All components have correct value, All validationmessage disabled');
       done();
-    }, 2000);
+    }, 5000);
   });
 });

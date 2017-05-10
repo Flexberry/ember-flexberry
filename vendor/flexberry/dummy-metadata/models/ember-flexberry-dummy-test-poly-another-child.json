@@ -1,14 +1,14 @@
 ﻿{
-  "name": "EmberFlexberryDummyTestPolyChild",
-  "modelName": "ember-flexberry-dummy-test-poly-child",
-  "className": "TestPolyChild",
+  "name": "EmberFlexberryDummyTestPolyAnotherChild",
+  "modelName": "ember-flexberry-dummy-test-poly-another-child",
+  "className": "TestPolyAnotherChild",
   "parentModelName": "ember-flexberry-dummy-test-poly-base",
   "parentClassName": "TestPolyBase",
   "attrs": [
     {
-      "name": "childPole",
-      "type": "number",
-      "flexberryType": "int",
+      "name": "childAnotherPole",
+      "type": "boolean",
+      "flexberryType": "bool",
       "notNull": false,
       "defaultValue": "",
       "stored": true
@@ -18,8 +18,8 @@
   "hasMany": [],
   "projections": [
     {
-      "name": "TestPolyChildEdit",
-      "modelName": "ember-flexberry-dummy-test-poly-child",
+      "name": "TestPolyAnotherChildEdit",
+      "modelName": "ember-flexberry-dummy-test-poly-another-child",
       "attrs": [
         {
           "name": "pole",
@@ -28,7 +28,7 @@
           "index": 0
         },
         {
-          "name": "childPole",
+          "name": "childAnotherPole",
           "caption": "",
           "hidden": false,
           "index": 1
@@ -38,18 +38,18 @@
       "hasMany": []
     },
     {
-      "name": "TestPolyChildList",
-      "modelName": "ember-flexberry-dummy-test-poly-child",
+      "name": "TestPolyAnotherChildList",
+      "modelName": "ember-flexberry-dummy-test-poly-another-child",
       "attrs": [
         {
           "name": "pole",
-          "caption": "Pole",
+          "caption": "",
           "hidden": false,
           "index": 0
         },
         {
-          "name": "childPole",
-          "caption": "ChildPole",
+          "name": "childAnotherPole",
+          "caption": "",
           "hidden": false,
           "index": 1
         }

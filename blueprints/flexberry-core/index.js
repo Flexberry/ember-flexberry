@@ -7,6 +7,7 @@ var fs = require("fs");
 var path = require('path');
 var lodash = require('lodash');
 var Locales_1 = require('../flexberry-core/Locales');
+var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
 var TAB = "  ";
 module.exports = {
     description: 'Generates core entities for flexberry.',
@@ -75,8 +76,8 @@ var CoreBlueprint = (function () {
             var listForm = JSON.parse(content);
             var listFormName = pp.name;
             routes.push("  this.route('" + listFormName + "');");
-            routes.push("  this.route('" + listForm.editForm + "', { path: '" + listForm.editForm + "/:id' });");
-            routes.push("  this.route('" + listForm.newForm + ".new', { path: '" + listForm.newForm + "/new' });");
+            routes.push("  this.route('" + listForm.editForm + "',\n  { path: '" + listForm.editForm + "/:id' });");
+            routes.push("  this.route('" + listForm.newForm + ".new',\n  { path: '" + listForm.newForm + "/new' });");
             importProperties.push("import " + listForm.name + "Form from './forms/" + listFormName + "';");
             formsImportedProperties.push("    '" + listFormName + "': " + listForm.name + "Form");
         }
@@ -97,9 +98,7 @@ var CoreBlueprint = (function () {
             var pp = path.parse(modelFileName);
             if (pp.ext != ".json")
                 continue;
-            var modelFile = path.join(modelsDir, modelFileName);
-            var content = stripBom(fs.readFileSync(modelFile, "utf8"));
-            var model = JSON.parse(content);
+            var model = ModelBlueprint_1.default.loadModel(modelsDir, modelFileName);
             var modelName = pp.name;
             var LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
             var irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();

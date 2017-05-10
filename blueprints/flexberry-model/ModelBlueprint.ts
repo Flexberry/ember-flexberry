@@ -23,6 +23,7 @@ class SortedPair{
 export default class ModelBlueprint {
   model: string;
   serializerAttrs: string;
+  offlineSerializerAttrs: string;
   parentModelName: string;
   parentClassName: string;
   className: string;
@@ -30,38 +31,46 @@ export default class ModelBlueprint {
   name: string;
   needsAllModels: string;
   needsAllEnums: string;
+  needsAllObjects: string;
   lodashVariables: {};
   constructor(blueprint, options) {
     let modelsDir = path.join(options.metadataDir, "models");
     if (!options.file) {
       options.file = options.entity.name + ".json";
     }
-    let modelFile = path.join(modelsDir, options.file);
-    let content: string = stripBom(fs.readFileSync(modelFile, "utf8"));
-    let model: metadata.Model = JSON.parse(content);
+    let model: metadata.Model = ModelBlueprint.loadModel(modelsDir, options.file);
     this.parentModelName = model.parentModelName;
     this.parentClassName = model.parentClassName;
     this.className = model.className;
     this.serializerAttrs = this.getSerializerAttrs(model);
+    this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);
     this.projections = this.getJSForProjections(model, modelsDir);
     this.model = this.getJSForModel(model);
     this.name = options.entity.name;
     this.needsAllModels = this.getNeedsAllModels(modelsDir);
-    this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
+    this.needsAllEnums = this.getNeedsTransforms(path.join(options.metadataDir, "enums"));
+    this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
     let modelLocales = new ModelLocales(model, modelsDir, "ru");
     this.lodashVariables = modelLocales.getLodashVariablesProperties();
   }
 
-  getNeedsAllEnums(enumsDir: string): string {
-    let listEnums = fs.readdirSync(enumsDir);
-    let enums: string[] = [];
-    for (let e of listEnums) {
+  static loadModel(modelsDir: string, modelFileName: string): metadata.Model {
+    let modelFile = path.join(modelsDir, modelFileName);
+    let content = stripBom(fs.readFileSync(modelFile, "utf8"));
+    let model: metadata.Model = JSON.parse(content);
+    return model;
+  }
+
+  getNeedsTransforms(dir: string): string {
+    let list = fs.readdirSync(dir);
+    let transforms: string[] = [];
+    for (let e of list) {
       let pp: path.ParsedPath = path.parse(e);
       if (pp.ext != ".json")
         continue;
-      enums.push(`    'transform:${pp.name}'`);
+      transforms.push(`    'transform:${pp.name}'`);
     }
-    return enums.join(",\n");
+    return transforms.join(",\n");
   }
 
   getNeedsAllModels(modelsDir: string): string {
@@ -88,6 +97,20 @@ export default class ModelBlueprint {
       return "";
     }
     return "      "+attrs.join(",\n      ");
+  }
+
+  getOfflineSerializerAttrs(model: metadata.Model): string {
+    let attrs: string[] = [];
+    for (let belongsTo of model.belongsTo) {
+      attrs.push(belongsTo.name + ": { serialize: 'id', deserialize: 'records' }");
+    }
+    for (let hasMany of model.hasMany) {
+      attrs.push(hasMany.name + ": { serialize: 'ids', deserialize: 'records' }");
+    }
+    if (attrs.length === 0) {
+      return "";
+    }
+    return "      " + attrs.join(",\n      ");
   }
 
   getJSForModel(model: metadata.Model): string {
@@ -165,8 +188,7 @@ export default class ModelBlueprint {
 
   joinProjHasMany(detailHasMany: metadata.ProjHasMany, modelsDir: string, level: number): SortedPair {
     let hasManyAttrs: SortedPair[] = [];
-    let modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
-    let hasManyModel: metadata.Model = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+    let hasManyModel: metadata.Model = ModelBlueprint.loadModel(modelsDir, detailHasMany.relatedTo + ".json");
     let hasManyProj = lodash.find(hasManyModel.projections, function(pr: metadata.ProjectionForModel) { return pr.name === detailHasMany.projectionName; });
     if (hasManyProj) {
       for (let attr of hasManyProj.attrs) {
@@ -253,8 +275,7 @@ export default class ModelBlueprint {
       }
       for (let hasMany of proj.hasMany) {
         let hasManyAttrs: SortedPair[] = [];
-        let modelFile = path.join(modelsDir, hasMany.relatedTo + ".json");
-        let detailModel: metadata.Model = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+        let detailModel: metadata.Model = ModelBlueprint.loadModel(modelsDir, hasMany.relatedTo + ".json");
         projName = hasMany.projectionName;
         let detailProj = lodash.find(detailModel.projections, function(pr: metadata.ProjectionForModel) { return pr.name === projName; });
         if (detailProj) {

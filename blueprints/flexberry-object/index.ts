@@ -7,8 +7,7 @@ import fs = require("fs");
 import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
-const Blueprint = require('ember-cli/lib/models/blueprint');
-import AddonBlueprint from '../flexberry-addon/AddonBlueprint';
+import CommonUtils from '../flexberry-common/CommonUtils';
 
 module.exports = {
 
@@ -25,7 +24,7 @@ module.exports = {
 
   afterInstall: function (options) {
     if (this.project.isEmberCLIAddon()) {
-      AddonBlueprint.install(options, ["object", "transform"]);
+      CommonUtils.installFlexberryAddon(options, ["object", "transform"]);
     }
   },
 

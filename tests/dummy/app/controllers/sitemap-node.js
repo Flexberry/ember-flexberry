@@ -5,6 +5,11 @@ export default Ember.Controller.extend({
     hideSidebar: function() {
       Ember.$('.ui.sidebar').sidebar('hide');
     },
+    /**
+      Expand menu items by click.
+
+      @method actions.subMenuEl
+    */
     subMenuEl(event) {
       let $this =  $(event.currentTarget).parent().find('.subMenu:first');
       if ($this.hasClass('hidden-menu')) {

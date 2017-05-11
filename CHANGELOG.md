@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Blueprints:
     * Add generation offline serializers.
+    * Add generation mobile templates.
 
 ## [0.9.0-beta.8] - 2017-05-05
 ### Added

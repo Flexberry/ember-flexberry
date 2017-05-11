@@ -9,6 +9,7 @@ import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import { ApplicationMenuLocales } from '../flexberry-core/Locales';
 import ModelBlueprint from '../flexberry-model/ModelBlueprint';
+import CommonUtils from '../flexberry-common/CommonUtils';
 const TAB = "  ";
 
 module.exports = {
@@ -20,6 +21,20 @@ module.exports = {
 
   supportsAddon: function () {
     return false;
+  },
+
+  _files: null,
+
+  files: function () {
+    if (this._files) { return this._files; }
+    let sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
+    let sitemap: metadata.Sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
+    if (sitemap.mobile) {
+      this._files = CommonUtils.getFilesForGeneration(this);
+    } else {
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs"; });
+    }
+    return this._files;
   },
 
   /**

@@ -10,10 +10,13 @@
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     }
   ],
   "belongsTo": [],
   "hasMany": [],
-  "projections": []
+  "projections": [],
+  "stored": false,
+  "offline": true
 }

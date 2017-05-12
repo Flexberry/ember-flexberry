@@ -1,0 +1,14 @@
+﻿{
+  "newForm": "ember-flexberry-dummy-test-poly-another-child-edit",
+  "editForm": "ember-flexberry-dummy-test-poly-another-child-edit",
+  "caption": "Test polymorphic another child class",
+  "name": "EmberFlexberryDummyTestPolyAnotherChildList",
+  "className": "TestPolyAnotherChildList",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-test-poly-another-child",
+      "modelProjection": "TestPolyAnotherChildList"
+    }
+  ]
+}

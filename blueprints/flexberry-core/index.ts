@@ -8,6 +8,8 @@ import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import { ApplicationMenuLocales } from '../flexberry-core/Locales';
+import ModelBlueprint from '../flexberry-model/ModelBlueprint';
+import CommonUtils from '../flexberry-common/CommonUtils';
 const TAB = "  ";
 
 module.exports = {
@@ -19,6 +21,20 @@ module.exports = {
 
   supportsAddon: function () {
     return false;
+  },
+
+  _files: null,
+
+  files: function () {
+    if (this._files) { return this._files; }
+    let sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
+    let sitemap: metadata.Sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
+    if (sitemap.mobile) {
+      this._files = CommonUtils.getFilesForGeneration(this);
+    } else {
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs"; });
+    }
+    return this._files;
   },
 
   /**
@@ -93,8 +109,8 @@ class CoreBlueprint {
       let listForm: metadata.ListForm = JSON.parse(content);
       let listFormName = pp.name;
       routes.push(`  this.route('${listFormName}');`);
-      routes.push(`  this.route('${listForm.editForm}', { path: '${listForm.editForm}/:id' });`);
-      routes.push(`  this.route('${listForm.newForm}.new', { path: '${listForm.newForm}/new' });`);
+      routes.push(`  this.route('${listForm.editForm}',\n  { path: '${listForm.editForm}/:id' });`);
+      routes.push(`  this.route('${listForm.newForm}.new',\n  { path: '${listForm.newForm}/new' });`);
       importProperties.push(`import ${listForm.name}Form from './forms/${listFormName}';`);
       formsImportedProperties.push(`    '${listFormName}': ${listForm.name}Form`);
     }
@@ -113,9 +129,7 @@ class CoreBlueprint {
       let pp: path.ParsedPath = path.parse(modelFileName);
       if (pp.ext != ".json")
         continue;
-      let modelFile = path.join(modelsDir, modelFileName);
-      let content = stripBom(fs.readFileSync(modelFile, "utf8"));
-      let model: metadata.Model = JSON.parse(content);
+      let model: metadata.Model = ModelBlueprint.loadModel(modelsDir, modelFileName);
       let modelName = pp.name;
       let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
       let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();

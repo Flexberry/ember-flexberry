@@ -5,9 +5,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * Blueprints:
+    * Add generation offline serializers.
+    * Add generation mobile templates.
+
+## [0.9.0-beta.8] - 2017-05-05
+### Added
+* Add `readonly-cell` helper. It can specify `readonly` property for each cell of list components.
+* Blueprints:
     * Add support reexport for addon.
-    * Add generation not stored properties of models.
-    * Add generation of serializers when inheriting models.
+    * Add generation non-stored properties of models.
+
+### Changed
+* Blueprints:
+    * Now serializers are generating correctly in case of inheriting of models.
+
+### Fixed
+* `colsconfig-dialog-content` component:
+    * Fix semantic styles for sort direction dropdown.
 
 ## [0.9.0-beta.7] - 2017-04-14
 ### Added

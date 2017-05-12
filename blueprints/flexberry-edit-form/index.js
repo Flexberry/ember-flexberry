@@ -7,8 +7,8 @@ var fs = require("fs");
 var path = require('path');
 var lodash = require('lodash');
 var Locales_1 = require('../flexberry-core/Locales');
-var Blueprint = require('ember-cli/lib/models/blueprint');
-var AddonBlueprint_1 = require('../flexberry-addon/AddonBlueprint');
+var CommonUtils_1 = require('../flexberry-common/CommonUtils');
+var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -29,21 +29,17 @@ module.exports = {
         if (this._files) {
             return this._files;
         }
-        this._super._files = null;
-        this._super.path = this.path;
-        this._files = this._super.files();
-        this._super._files = null;
         if (this.options.dummy) {
-            lodash.remove(this._files, function (v) { return v === "app/templates/__name__.hbs"; });
+            this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "app/templates/__name__.hbs"; });
         }
         else {
-            lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+            this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
         }
         return this._files;
     },
     afterInstall: function (options) {
         if (this.project.isEmberCLIAddon()) {
-            AddonBlueprint_1.default.install(options, ["controller", "route"]);
+            CommonUtils_1.default.installFlexberryAddon(options, ["controller", "route"]);
         }
     },
     /**
@@ -110,9 +106,7 @@ var EditFormBlueprint = (function () {
         return this.readSnippetFile(componentName, "hbs");
     };
     EditFormBlueprint.prototype.loadModel = function (modelName) {
-        var modelFile = path.join(this.modelsDir, modelName + ".json");
-        var content = stripBom(fs.readFileSync(modelFile, "utf8"));
-        var model = JSON.parse(content);
+        var model = ModelBlueprint_1.default.loadModel(this.modelsDir, modelName + ".json");
         return model;
     };
     EditFormBlueprint.prototype.findAttr = function (model, attrName) {

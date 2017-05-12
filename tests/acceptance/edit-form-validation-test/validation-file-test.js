@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import { executeTest} from './execute-validation-test';
-//import startApp from '../../helpers/start-app';
+import {executeTest} from './execute-validation-test';
+import startApp from '../../helpers/start-app';
 
 executeTest('check operation file', (store, assert, app) => {
   assert.expect(2);
@@ -8,15 +8,18 @@ executeTest('check operation file', (store, assert, app) => {
 
   visit(path);
   andThen(() => {
-    //let tempFile = { fileName: 'Ждём НГ.png', fileSize: '27348', fileMimeType: '27348' };
+    assert.equal(currentPath(), path);
 
-    // let app = startApp();
-    // let applicationController = app.__container__.lookup('controller:' + path);
-    // applicationController.set('isInAcceptanceTestMode', true);
+    let tempFile = { fileName: 'Ждём НГ.png', fileSize: '27348', fileMimeType: '27348' };
+    let app = startApp();
+    //let applicationController = app.__container__.lookup('controller:' + path);
+
+
+    let controller = app.__container__.lookup('controller:' + path);
+    let model = Ember.get(controller, 'model');
 
     //applicationController.model.set('file', tempFile);
 
-    assert.equal(currentPath(), path);
 
     let $validationFieldFile = Ember.$(Ember.$('.field.error')[6]);
     let $validationFlexberryErrorLable = $validationFieldFile.children('.label');
@@ -29,6 +32,14 @@ executeTest('check operation file', (store, assert, app) => {
       $validationFlexberryFileAddButton.click();
     });
 
-    // assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Flexberry file have value');
+    let done = assert.async();
+
+    // Сounting the number of validationmessage.
+    setTimeout(function() {
+      app = startApp();
+      applicationController = app.__container__.lookup('controller:' + path);
+      assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Flexberry file have value');
+      done();
+    }, 10000);
   });
 });

@@ -222,23 +222,25 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _setValue(dateFromPicker) {
-    let valueFromInput = this.$('input').val();
-    if (valueFromInput === '' && !dateFromPicker.isValid()) {
-      this._setEmptyValue();
-    } else {
-      let dateToSet = this._getDateToSet(dateFromPicker);
-      let currentValue = this.get('value');
+    Ember.run(() => {
+      let valueFromInput = this.$('input').val();
+      if (valueFromInput === '' && !dateFromPicker.isValid()) {
+        this._setEmptyValue();
+      } else {
+        let dateToSet = this._getDateToSet(dateFromPicker);
+        let currentValue = this.get('value');
 
-      // TODO: refactor
-      let tmp = moment(dateToSet).format(this.dateTimeFormat);
-      let tmp2 = !moment(tmp, this.dateTimeFormat).isSame(moment(moment(currentValue).format(this.dateTimeFormat), this.dateTimeFormat));
-      if (currentValue === null || tmp2) {
-        this.set('value', dateToSet);
-        this._setProperOffsetToCalendar();
+        // TODO: refactor
+        let tmp = moment(dateToSet).format(this.dateTimeFormat);
+        let tmp2 = !moment(tmp, this.dateTimeFormat).isSame(moment(moment(currentValue).format(this.dateTimeFormat), this.dateTimeFormat));
+        if (currentValue === null || tmp2) {
+          this.set('value', dateToSet);
+          this._setProperOffsetToCalendar();
+        }
       }
-    }
 
-    this._setCalendarEnabledState();
+      this._setCalendarEnabledState();
+    });
   },
 
   /**

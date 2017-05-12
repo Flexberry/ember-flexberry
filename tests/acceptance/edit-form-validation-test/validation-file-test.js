@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
-import startApp from '../../helpers/start-app';
+//import startApp from '../../helpers/start-app';
 
 executeTest('check operation file', (store, assert, app) => {
   assert.expect(2);

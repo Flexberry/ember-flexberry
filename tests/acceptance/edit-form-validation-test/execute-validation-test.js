@@ -28,6 +28,8 @@ export function executeTest(testName, callback) {
 
     afterEach() {
       Ember.run(app, 'destroy');
+      let daterangepicker = Ember.$('.daterangepicker');
+      daterangepicker.remove();
     }
   });
 

@@ -24,7 +24,7 @@ executeTest('check operation datepicker', (store, assert, app) => {
       // Open datepicker calendar.
       $validationDateField.click();
       let $validationDateButton = Ember.$('.available');
-      $validationDateButton = Ember.$($validationDateButton[16]);
+      $validationDateButton = Ember.$($validationDateButton[18]);
 
       // Select date.
       $validationDateButton.click();
@@ -38,6 +38,6 @@ executeTest('check operation datepicker', (store, assert, app) => {
     setTimeout(function() {
       assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Datepicker have value');
       done();
-    }, 1000);
+    }, 2000);
   });
 });

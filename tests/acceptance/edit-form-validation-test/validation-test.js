@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
 executeTest('check complete all tests', (store, assert, app) => {
-  assert.expect(2);
+  assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
 
   // Open validation page.
@@ -100,6 +100,12 @@ executeTest('check complete all tests', (store, assert, app) => {
           $validationMessage = false;
         }
       }
+
+      let $validationSixteenWide = Ember.$('.list');
+      let $validationLi = $validationSixteenWide.children('li');
+
+      // Сounting the number of validationmessage.
+      assert.equal($validationLi.length, 0, 'All components have default value in sixteenWide');
 
       assert.ok($validationMessage, 'All components have correct value, All validationmessage disabled');
       done();

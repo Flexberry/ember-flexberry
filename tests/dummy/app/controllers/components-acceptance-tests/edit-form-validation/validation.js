@@ -13,17 +13,15 @@ export default EditFormController.extend({
     */
     showLookupDialog() {
       // Create new master & add to model.
+
       let master = this.get('store').createRecord('integration-examples/edit-form/validation/master', { text: 'Master text' });
       this.get('model').set('master', master);
 
       this.get('lookupEvents').lookupDialogOnHiddenTrigger('IntegrationExamplesValidationsMaster');
-    },
 
-    /**
-      Handles click on flexberry-file's add button.
-    */
-    addButtonClick() {
-      //let per = 0;
+      // Create temp file and add to model.
+      let tempFile = { fileName: 'Ждём НГ.png', fileSize: '27348', fileMimeType: '27348' };
+      this.get('model').set('file', tempFile);
     }
   }
 });

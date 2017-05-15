@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprints:
     * Add generation offline serializers.
     * Add generation mobile templates.
+* Ability to set width for fixed columns in list components.
 
 ## [0.9.0-beta.8] - 2017-05-05
 ### Added

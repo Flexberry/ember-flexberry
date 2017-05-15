@@ -28,6 +28,16 @@ export default Ember.Controller.extend({
   },
 
   /**
+    Flag: indicates that form to which controller is related designed for acceptance tests &
+    all additional markup in application.hbs mustn't be rendered.
+
+    @property isInAcceptanceTestMode
+    @type Boolean
+    @default false
+  */
+  isInAcceptanceTestMode: false,
+
+  /**
     Currernt addon version.
 
     @property addonVersion
@@ -371,6 +381,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-objectlistview/selected-rows',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/object-list-view-resize',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.title'),
             children: null
           }]
         }, {

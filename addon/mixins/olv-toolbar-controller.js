@@ -38,9 +38,9 @@ export default Ember.Mixin.create({
       let colDesc;  //Column description
       let colDescs = [];  //Columns description
       let projectionAttributes;
+      let modelName = this.get('modelProjection.modelName');
       if (isExportExcel) {
-        let modelName = this.get('modelProjection.modelName');
-        let exportExcelProjectionName = this.get('exportExcelProjection');
+        let exportExcelProjectionName = this.get('exportExcelProjection') || this.get('modelProjection.projectionName');
         Ember.assert('Property exportExcelProjection is not defined in controller.', exportExcelProjectionName);
 
         let exportExcelProjection = this.store.modelFor(modelName).projections.get(exportExcelProjectionName);
@@ -146,13 +146,11 @@ export default Ember.Mixin.create({
           isHasMany: namedColList[propName].isHasMany, fixed: namedColList[propName].fixed });
       }
 
-      let exportParams = { isExportExcel: false };
+      let exportParams = { isExportExcel: isExportExcel };
       let settName = settingName;
       if (isExportExcel) {
-        exportParams.queryParams = this.get('queryParams');
-        exportParams.isExportExcel = true;
         exportParams.immediateExport = immediateExport;
-        exportParams.projectionName = this.get('exportExcelProjection');
+        exportParams.projectionName = this.get('exportExcelProjection') || this.get('modelProjection.projectionName');
         exportParams.detSeparateCols = this.get('_userSettingsService').getDetSeparateCols(componentName, settingName);
         exportParams.detSeparateRows = this.get('_userSettingsService').getDetSeparateRows(componentName, settingName);
         if (settName) {
@@ -177,8 +175,9 @@ export default Ember.Mixin.create({
         outlet: 'modal-content'
       };
       this.send('showModalDialog', 'colsconfig-dialog-content',
-                { controller: controller, model: { colDescs: colDescs, componentName: componentName, settingName: settName, perPageValue: perPageValue,
-                saveColWidthState: saveColWidthState, exportParams: exportParams, store: store } }, loadingParams);
+                { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
+                settingName: settName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
+                exportParams: exportParams, store: store } }, loadingParams);
     }
 
   },

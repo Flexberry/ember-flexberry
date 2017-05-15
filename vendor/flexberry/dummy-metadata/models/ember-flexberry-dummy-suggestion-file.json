@@ -6,54 +6,60 @@
   "parentClassName": null,
   "attrs": [
     {
-      "name": "order",
-      "type": "number",
-      "flexberryType": "int",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "file",
-      "type": "file",
-      "flexberryType": "WebFile",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
       "name": "createTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "creator",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editor",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "order",
+      "type": "number",
+      "flexberryType": "int",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "file",
+      "type": "file",
+      "flexberryType": "WebFile",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
     }
   ],
   "belongsTo": [
     {
-      "polymorphic": false,
+      "polymorphic": true,
       "presence": true,
       "name": "suggestion",
-      "relatedTo": "ember-flexberry-dummy-suggestion",
+      "relatedTo": "ember-flexberry-dummy-post-suggestion",
       "inverse": "files"
     }
   ],
@@ -107,11 +113,13 @@
           "index": 2,
           "caption": "",
           "name": "suggestion",
-          "relatedTo": "ember-flexberry-dummy-suggestion",
+          "relatedTo": "ember-flexberry-dummy-post-suggestion",
           "inverse": null
         }
       ],
       "hasMany": []
     }
-  ]
+  ],
+  "stored": true,
+  "offline": true
 }

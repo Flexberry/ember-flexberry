@@ -1,6 +1,7 @@
 ﻿{
   "applicationCaption": "Dummy",
   "applicationTitle": "Dummy",
+  "mobile": true,
   "items": [
     {
       "link": null,

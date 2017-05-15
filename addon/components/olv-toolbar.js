@@ -436,8 +436,15 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     removeFilter() {
-      this.set('filterText', null);
-      this.set('filterByAnyMatchText', null);
+      let _this = this;
+      if (_this.get('filterText')) {
+        _this.get('currentController').set('state', 'loading');
+      }
+
+      Ember.run.later((function() {
+        _this.set('filterText', null);
+        _this.set('filterByAnyMatchText', null);
+      }), 50);
     },
 
     /**
@@ -620,6 +627,8 @@ export default FlexberryBaseComponent.extend({
     if (Ember.isNone(modelController)) {
       this.set('modelController', this.get('currentController'));
     }
+
+    this._updateListNamedUserSettings();
   },
 
   /**

@@ -3,6 +3,74 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Add generation offline serializers.
+    * Add generation mobile templates.
+* Ability to set width for fixed columns in list components.
+
+## [0.9.0-beta.8] - 2017-05-05
+### Added
+* Add `readonly-cell` helper. It can specify `readonly` property for each cell of list components.
+* Blueprints:
+    * Add support reexport for addon.
+    * Add generation non-stored properties of models.
+
+### Changed
+* Blueprints:
+    * Now serializers are generating correctly in case of inheriting of models.
+
+### Fixed
+* `colsconfig-dialog-content` component:
+    * Fix semantic styles for sort direction dropdown.
+
+## [0.9.0-beta.7] - 2017-04-14
+### Added
+* Blueprints:
+    * Add support ember objects and transforms generation (from classes with "type" stereotype in Flexberry Designer's class diagrams).
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.4
+
+### Fixed
+* Blueprints:
+    * Fix wrong path of tempates generation when process was started with `--dummy` option.
+    * Fix generation to addon errors.
+* Fix spinner for searching in list components.
+
+## [0.9.0-beta.6] - 2017-04-12
+### Added
+* Add spinner for searching in list components.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.3.
+
+## [0.9.0-beta.5] - 2017-04-11
+### Added
+* Add spinner for export to Excel form.
+* Add localization for column names in exported excel file.
+
+### Changed
+* Now `exportExcelProjection` by default equals list's `modelProjection`.
+
+### Fixed
+* Fix wrong limit function applying in some cases for exporting data to Excel.
+
+## [0.9.0-beta.4] - 2017-04-07
+### Added
+* Add getting current `limitFunction` from data object's list when exporting data to Excel.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.2.
+
+### Fixed
+* Fix autorization problems when exporting data to Excel.
+* `user-settings` service:
+    * Fix `userSettings` updating.
+* `flexberry-simpleolv` component:
+    * Fix columns width applying from `userSettings`.
+* `olv-toolbar` component:
+    * Fix `userSettings` names getting on first render.
 
 ## [0.9.0-beta.3] - 2017-03-29
 ### Added

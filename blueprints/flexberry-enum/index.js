@@ -2,12 +2,21 @@
 var fs = require("fs");
 var path = require('path');
 var stripBom = require("strip-bom");
+var CommonUtils_1 = require('../flexberry-common/CommonUtils');
 module.exports = {
     description: 'Generates an ember-data enum for flexberry.',
     availableOptions: [
         { name: 'file', type: String },
         { name: 'metadata-dir', type: String }
     ],
+    supportsAddon: function () {
+        return false;
+    },
+    afterInstall: function (options) {
+        if (this.project.isEmberCLIAddon()) {
+            CommonUtils_1.default.installFlexberryAddon(options, ["enum", "transform"]);
+        }
+    },
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.

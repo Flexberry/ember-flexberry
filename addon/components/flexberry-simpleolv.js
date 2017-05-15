@@ -557,6 +557,13 @@ ErrorableControllerMixin, {
             if (record.get('isMyFavoriteRecord')) {
               Ember.set(rowConfig, 'customClass', 'my-fav-record');
             }
+
+            let readonlyColumns = [];
+            if (record.get('isNameColumnReadonly')) {
+              readonlyColumns.push('name');
+            }
+
+            Ember.set(rowConfig, 'readonlyColumns', readonlyColumns);
           }
         }
       });
@@ -840,8 +847,15 @@ ErrorableControllerMixin, {
       @public
     */
     removeFilter() {
-      this.set('filterText', null);
-      this.set('filterByAnyMatchText', null);
+      let _this = this;
+      if (_this.get('filterText')) {
+        _this.get('currentController').set('state', 'loading');
+      }
+
+      Ember.run.later((function() {
+        _this.set('filterText', null);
+        _this.set('filterByAnyMatchText', null);
+      }), 50);
     },
 
     /**
@@ -1094,13 +1108,7 @@ ErrorableControllerMixin, {
       }
     }
 
-    let $currentTable = this.$('table.object-list-view');
-    if (this.get('allowColumnResize')) {
-      $currentTable.addClass('fixed');
-      this._reinitResizablePlugin();
-    } else {
-      $currentTable.colResizable({ disable: true });
-    }
+    this._setColumnWidths();
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
@@ -1159,7 +1167,18 @@ ErrorableControllerMixin, {
     fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
     fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
     fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    let fixedColumnsWidth = fixedColumns.filter(({ width }) => width);
     fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+    for (let k = 0; k < fixedColumnsWidth.length; k++) {
+      if (fixedColumnsWidth[k].propName === 'OlvRowMenu') {
+        this.$('.object-list-view-menu').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+      }
+
+      if (fixedColumnsWidth[k].propName === 'OlvRowToolbar') {
+        this.$('.object-list-view-operations').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+      }
+    }
+
     if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
       disabledColumns.push(0);
     }

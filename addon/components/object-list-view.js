@@ -823,7 +823,7 @@ export default FlexberryBaseComponent.extend(
           modelName: this.get('modelProjection').modelName,
           detailArray: this.get('content'),
           readonly: this.get('readonly'),
-          originalEvent: e.currentTarget,
+          originalEvent: Ember.$.event.fix(e),
           goToEditForm: true
         };
 

@@ -35,7 +35,7 @@ export default Ember.Mixin.create({
       };
       methodOptions = Ember.merge(methodOptions, options);
       let goToEditForm = methodOptions.goToEditForm;
-      if (!goToEditForm) {
+      if (goToEditForm === false) {
         return;
       }
 

@@ -43,12 +43,14 @@ export default ListFormRoute.extend({
 
   actions: {
     objectListViewRowClick(record, params) {
-      var cellIndex = params.originalEvent.cellIndex;
-      if ($('tbody tr').find('td:eq(0)').hasClass('hidden')) {
+      var cellIndex = params.originalEvent.currentTarget.cellIndex;
+      var $tBodyTable = $(params.originalEvent.currentTarget.closest('tbody'));
+      if ($tBodyTable.find('tr').find('td:eq(0)').hasClass('hidden')) {
         cellIndex--;
       }
 
-      var nameColumn = $('thead tr').find('th:eq(' + cellIndex + ') div:eq(0) span:eq(0)').text().trim();
+      var $table = $(params.originalEvent.currentTarget.closest('table'));
+      var nameColumn = $table.find('thead tr').find('th:eq(' + cellIndex + ') div:eq(0) span:eq(0)').text().trim();
       if (nameColumn === 'File') {
         params.goToEditForm = false;
       }

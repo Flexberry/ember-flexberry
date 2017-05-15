@@ -8,6 +8,7 @@ var path = require('path');
 var lodash = require('lodash');
 var Locales_1 = require('../flexberry-core/Locales');
 var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
+var CommonUtils_1 = require('../flexberry-common/CommonUtils');
 var TAB = "  ";
 module.exports = {
     description: 'Generates core entities for flexberry.',
@@ -16,6 +17,21 @@ module.exports = {
     ],
     supportsAddon: function () {
         return false;
+    },
+    _files: null,
+    files: function () {
+        if (this._files) {
+            return this._files;
+        }
+        var sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
+        var sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
+        if (sitemap.mobile) {
+            this._files = CommonUtils_1.default.getFilesForGeneration(this);
+        }
+        else {
+            this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs"; });
+        }
+        return this._files;
     },
     /**
      * Blueprint Hook locals.

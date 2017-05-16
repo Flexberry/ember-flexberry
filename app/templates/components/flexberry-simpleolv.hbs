@@ -48,6 +48,17 @@
       </button>
     </div>
   {{/if}}
+  {{#if exportExcelButton}}
+    <div class="ui buttons">
+      <button class="ui icon button" {{action "showExportDialog"}}>
+        <i class="large file excel outline icon"></i>
+      </button>
+      {{flexberry-menu
+        items=exportExcelItems
+        onItemClick=(action "onExportMenuItemClick")
+      }}
+    </div>
+  {{/if}}
   {{#if colsConfigButton}}
     <div class="ui buttons">
       <button class="ui icon button" {{action "showConfigDialog"}}>
@@ -125,11 +136,11 @@
                 {{#if column.sorted}}
                   <div style="float:right;">
                     {{#if column.sortAscending}}
-                      <div title="Order ascending">
+                      <div title="{{t 'components.object-list-view.sort-ascending'}}">
                       ▲{{column.sortNumber}}
                       </div>
                     {{else}}
-                      <div title="Order descending">
+                      <div title="{{t 'components.object-list-view.sort-descending'}}">
                       ▼{{column.sortNumber}}
                       </div>
                     {{/if}}
@@ -150,7 +161,7 @@
           <td rowspan="2" class="{{unless (and showHelperColumn hasContent) 'hidden'}}"></td>
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td>
+              <td style={{defaultPaddingStyle}}>
                 {{#if column.filter.conditions}}
                   {{component "flexberry-dropdown"
                     value=column.filter.condition
@@ -170,7 +181,7 @@
         <tr>
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td>
+              <td style={{defaultPaddingStyle}}>
                 {{#if column.filter.component.name}}
                   {{component column.filter.component.name
                     value=column.filter.pattern
@@ -198,7 +209,7 @@
         {{else}}
           {{#each contentWithKeys key="key" as |record|}}
               <tr class="{{record.rowConfig.customClass}}">
-                <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}">
+                <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
                   <div class="hidden">{{record.key}}</div>
                   {{#if showHelperColumn}}
                     <div class="object-list-view-helper-column-cell">
@@ -217,7 +228,7 @@
                       {{/if}}
                       {{#if showDeleteButtonInRow}}
                         <div class="cell">
-                          <button class="ui {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}>
+                          <button class="ui ui-delete {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}>
                             <i class="minus icon"></i>
                           </button>
                         </div>
@@ -227,13 +238,13 @@
                 </td>
                 {{#each columns as |column|}}
                   {{#unless column.hide}}
-                    <td {{action "objectListViewRowClick" record preventDefault=false}}>
+                    <td {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
                       {{#if column.cellComponent.componentName}}
                         {{component column.cellComponent.componentName
                           dynamicProperties=column.cellComponent.componentProperties
                           relatedModel=record.data
                           value=(mut (get record.data column.propName))
-                          readonly=readonly
+                          readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
                           required=required
                         }}
                       {{else}}
@@ -248,7 +259,7 @@
                   {{/unless}}
                 {{/each}}
                 {{#if showMenuColumn}}
-                  <td class="object-list-view-menu">
+                  <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
                     <div class="basic right pointing ui icon dropdown button">
                       <i class="list layout icon"></i>
                       <div class="left menu">

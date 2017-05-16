@@ -12,8 +12,30 @@ export default Ember.Controller.extend({
     */
     toggleSidebar() {
       Ember.$('.ui.sidebar').sidebar('toggle');
+      if ($('.inverted.vertical.menu').hasClass('visible')) {
+        $('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+        $('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+      } else {
+        $('.sidebar.icon.text-menu-1').addClass('hidden-menu');
+        $('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
+      }
+
+      Ember.$('.ui.sidebar').sidebar({ onHide: function() {
+        $('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+        $('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+      } });
     }
   },
+
+  /**
+    Flag: indicates that form to which controller is related designed for acceptance tests &
+    all additional markup in application.hbs mustn't be rendered.
+
+    @property isInAcceptanceTestMode
+    @type Boolean
+    @default false
+  */
+  isInAcceptanceTestMode: false,
 
   /**
     Currernt addon version.
@@ -360,6 +382,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/object-list-view-resize',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -438,6 +465,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-toggler/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.ui-message.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.ui-message.title'),
+          children: [{
+            link: 'components-examples/ui-message/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.ui-message.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.ui-message.settings-example.title'),
             children: null
           }]
         }]

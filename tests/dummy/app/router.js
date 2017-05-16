@@ -88,6 +88,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-edit.new',
   { path: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit/new' });
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
+  this.route('components-examples/flexberry-objectlistview/object-list-view-resize');
   this.route('components-examples/flexberry-objectlistview/hierarchy-example');
   this.route('components-examples/flexberry-objectlistview/selected-rows');
   this.route('components-examples/flexberry-simpleolv/settings-example');
@@ -102,6 +103,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');
+  this.route('components-examples/ui-message/settings-example');
 
   // Integration examples routes.
   this.route('integration-examples/edit-form/readonly-mode');
@@ -109,6 +111,11 @@ Router.map(function() {
 
   // User-setting forms.
   this.route('user-setting-forms/user-setting-delete');
+
+  // Components acceptance tests forms.
+  this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
+  this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
+  this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
 });
 
 export default Router;

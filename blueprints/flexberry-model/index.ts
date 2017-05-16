@@ -4,6 +4,9 @@
 
 import ModelBlueprint from './ModelBlueprint';
 import lodash = require('lodash');
+import path = require('path');
+import metadata = require('MetadataClasses');
+import CommonUtils from '../flexberry-common/CommonUtils';
 
 module.exports = {
 
@@ -13,6 +16,33 @@ module.exports = {
     { name: 'file', type: String },
     { name: 'metadata-dir', type: String }
   ],
+
+  supportsAddon: function () {
+    return false;
+  },
+
+  _files: null,
+
+  files: function () {
+    if (this._files) { return this._files; }
+    let modelsDir = path.join(this.options.metadataDir, "models");
+    if (!this.options.file) {
+      this.options.file = this.options.entity.name + ".json";
+    }
+    let model: metadata.Model = ModelBlueprint.loadModel(modelsDir, this.options.file);
+    if (!model.offline) {
+      this._files = CommonUtils.getFilesForGeneration(this, function(v) { return v === "__root__/mixins/regenerated/serializers/__name__-offline.js"; });
+    } else {
+      this._files = CommonUtils.getFilesForGeneration(this);
+    }
+    return this._files;
+  },
+
+  afterInstall: function (options) {
+    if (this.project.isEmberCLIAddon()) {
+      CommonUtils.installFlexberryAddon(options, ["model", "serializer"]);
+    }
+  },
 
   /**
    * Blueprint Hook locals.
@@ -32,9 +62,11 @@ module.exports = {
       model: modelBlueprint.model,// for use in files\__root__\mixins\regenerated\models\__name__.js
       projections: modelBlueprint.projections,// for use in files\__root__\mixins\regenerated\models\__name__.js
       serializerAttrs: modelBlueprint.serializerAttrs,// for use in files\__root__\mixins\regenerated\serializers\__name__.js
+      offlineSerializerAttrs: modelBlueprint.offlineSerializerAttrs,// for use in files\__root__\mixins\regenerated\serializers\__name__-offline.js
       name: modelBlueprint.name,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
       needsAllModels: modelBlueprint.needsAllModels,// for use in files\tests\unit\models\__name__.js, files\tests\unit\serializers\__name__.js
-      needsAllEnums: modelBlueprint.needsAllEnums// for use in files\tests\unit\serializers\__name__.js
+      needsAllEnums: modelBlueprint.needsAllEnums,// for use in files\tests\unit\serializers\__name__.js
+      needsAllObjects: modelBlueprint.needsAllObjects// for use in files\tests\unit\serializers\__name__.js
       },
       modelBlueprint.lodashVariables
     );

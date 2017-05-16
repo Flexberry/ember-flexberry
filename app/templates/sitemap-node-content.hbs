@@ -1,6 +1,6 @@
-{{model.caption}}
+<span onclick={{action 'subMenuEl' bubbles=false}}>{{model.caption}}</span>
 {{#if model.children.length}}
-  <div class="menu">
+  <div class="menu subMenu hidden-menu" >
     {{#each model.children as |child|}}
       {{render "sitemap-node" child}}
     {{/each}}

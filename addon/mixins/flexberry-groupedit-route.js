@@ -68,6 +68,8 @@ export default Ember.Mixin.create({
         throw new Error('Detail\'s edit form route is undefined.');
       }
 
+      _this.controller.set('state', 'loading');
+
       let goToOtherRouteFunction = function() {
         if (!record)
         {
@@ -94,9 +96,11 @@ export default Ember.Mixin.create({
 
         if (record.get('isNew')) {
           let newModelPath = _this.newRoutePath(editFormRoute);
-          _this.transitionTo(newModelPath).then((newRoute) => {
-            newRoute.controller.set('readonly', methodOptions.readonly);
-          });
+          Ember.run.later((function() {
+            _this.transitionTo(newModelPath).then((newRoute) => {
+              newRoute.controller.set('readonly', methodOptions.readonly);
+            });
+          }), 50);
         } else {
           _this.transitionTo(editFormRoute, record.get('id')).then((newRoute) => {
             newRoute.controller.set('readonly', methodOptions.readonly);
@@ -106,7 +110,8 @@ export default Ember.Mixin.create({
 
       if (saveBeforeRouteLeave) {
         let model = this.controller.get('model');
-        let isModelChanged = !Ember.$.isEmptyObject(model.changedAttributes()) || !Ember.$.isEmptyObject(model.changedBelongsTo());
+        let isModelChanged = !Ember.$.isEmptyObject(model.changedAttributes()) ||
+         !Ember.$.isEmptyObject(model.changedBelongsTo()) || !Ember.$.isEmptyObject(model.changedHasMany());
         let isModelNew = model.get('isNew');
         if (isModelNew || isModelChanged) {
           this.controller.save(false, true).then(() => {

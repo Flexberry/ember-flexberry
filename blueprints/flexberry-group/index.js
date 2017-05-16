@@ -10,6 +10,9 @@ module.exports = {
     availableOptions: [
         { name: 'metadata-dir', type: String }
     ],
+    supportsAddon: function () {
+        return false;
+    },
     install: function (options) {
         var groupBlueprint = new GroupBlueprint(this, options);
         return groupBlueprint.promise;
@@ -28,6 +31,12 @@ var GroupBlueprint = (function () {
         this.promise = Promise.resolve();
         this.setMainBlueprint(this.blueprintName);
         switch (this.blueprintName) {
+            case 'transform':
+                this.emberGenerate("objects");
+                break;
+            case 'transform-test':
+                this.emberGenerate("objects");
+                break;
             case 'controller-test':
                 this.emberGenerate("list-forms");
                 this.emberGenerate("edit-forms");
@@ -50,6 +59,12 @@ var GroupBlueprint = (function () {
                 break;
             case 'flexberry-model-init':
                 this.emberGenerate("models", true, projectTypeName + "/models");
+                break;
+            case 'flexberry-object':
+                this.emberGenerate("objects");
+                break;
+            case 'flexberry-object-init':
+                this.emberGenerate("objects", true, projectTypeName + "/objects");
                 break;
             case 'flexberry-serializer-init':
                 this.emberGenerate("models", true, projectTypeName + "/serializers");
@@ -74,65 +89,21 @@ var GroupBlueprint = (function () {
         if (notOverwrite === void 0) { notOverwrite = false; }
         if (folderJsFiles === void 0) { folderJsFiles = undefined; }
         metadataSubDir = path.join(this.metadataDir, metadataSubDir);
+        if (!fs.existsSync(metadataSubDir))
+            return;
         var list = fs.readdirSync(metadataSubDir);
-        var _loop_1 = function(file) {
-            var entityName = path.parse(file).name;
-            if (notOverwrite && this_1.fileExists(folderJsFiles + "/" + entityName + ".js"))
-                return "continue";
-            var groupOptions = lodash.merge({}, this_1.options, { entity: { name: entityName } });
-            GroupBlueprint.groupOptions.push(groupOptions);
-            this_1.promise = this_1.promise.then(GroupBlueprint.funCallback).then(function () {
-                if (!(this.options.project.pkg.keywords && this.options.project.pkg.keywords["0"] === "ember-addon")) {
-                    return;
-                }
-                var middlePaths;
-                switch (this.blueprintName) {
-                    case 'flexberry-enum':
-                        middlePaths = ["enum", "transform"];
-                        break;
-                    case 'flexberry-list-form':
-                        middlePaths = ["controller", "route"];
-                        break;
-                    case 'flexberry-edit-form':
-                        middlePaths = ["controller", "route"];
-                        break;
-                    case 'flexberry-model':
-                        middlePaths = ["model", "serializer"];
-                        break;
-                    default:
-                        return;
-                }
-                var promises = [];
-                for (var _i = 0, middlePaths_1 = middlePaths; _i < middlePaths_1.length; _i++) {
-                    var middlePath = middlePaths_1[_i];
-                    var flexberryAddon = Blueprint.lookup("flexberry-addon", {
-                        ui: undefined,
-                        analytics: undefined,
-                        project: undefined,
-                        paths: ["node_modules/ember-flexberry/blueprints"]
-                    });
-                    var addonBlueprintOptions = lodash.merge({}, groupOptions, { installingAddon: true, middlePath: middlePath, originBlueprintName: middlePath });
-                    promises.push(flexberryAddon["install"](addonBlueprintOptions));
-                }
-                return Promise.all(promises);
-            }.bind(this_1));
-        };
-        var this_1 = this;
         for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
             var file = list_1[_i];
-            var state_1 = _loop_1(file);
-            if (state_1 === "continue") continue;
+            var pp = path.parse(file);
+            if (pp.ext != ".json")
+                continue;
+            var entityName = pp.name;
+            if (notOverwrite && fs.existsSync(folderJsFiles + "/" + entityName + ".js"))
+                continue;
+            var groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
+            GroupBlueprint.groupOptions.push(groupOptions);
+            this.promise = this.promise.then(GroupBlueprint.funCallback);
         }
-    };
-    GroupBlueprint.prototype.fileExists = function (path) {
-        try {
-            fs.statSync(path);
-        }
-        catch (e) {
-            if (e.code === "ENOENT")
-                return false;
-        }
-        return true;
     };
     GroupBlueprint.groupOptions = [];
     return GroupBlueprint;

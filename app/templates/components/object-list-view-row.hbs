@@ -1,6 +1,6 @@
 {{#if doRenderData}}
   <tr class="{{record.rowConfig.customClass}}">
-    <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}">
+    <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
       <div class="hidden">{{record.key}}</div>
       {{#if showHelperColumn}}
         <div class="object-list-view-helper-column-cell">
@@ -19,7 +19,9 @@
           {{/if}}
           {{#if showDeleteButtonInRow}}
             <div class="cell">
-              <button class="ui {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action deleteRow record}}>
+              <button
+                class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button"
+                {{action deleteRow record}}>
                 <i class="minus icon"></i>
               </button>
             </div>
@@ -31,14 +33,14 @@
       <td
         {{action rowClick record preventDefault=false}}
         class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}"
-        style="padding-left:{{if (and (not index) inHierarchicalMode) hierarchicalIndent defaultLeftPadding}}px;">
+        style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
             {{#component column.cellComponent.componentName
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
-              readonly=readonly
+              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
               required=required
             }}
               {{#if (and (not index) inHierarchicalMode)}}
@@ -54,7 +56,7 @@
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
-              readonly=readonly
+              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
               required=required
             }}
             {{#if showValidationMessages}}
@@ -82,7 +84,7 @@
       </td>
     {{/each}}
     {{#if showMenuColumn}}
-      <td class="object-list-view-menu">
+      <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
         <div class="basic right pointing ui icon dropdown button">
           <i class="list layout icon"></i>
           <div class="left menu">

@@ -144,6 +144,11 @@ export default FlexberryBaseComponent.extend(
   */
   defaultLeftPadding: 10,
 
+  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+  }),
+
   /**
     Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
 
@@ -665,6 +670,13 @@ export default FlexberryBaseComponent.extend(
             if (record.get('isMyFavoriteRecord')) {
               Ember.set(rowConfig, 'customClass', 'my-fav-record');
             }
+
+            let readonlyColumns = [];
+            if (record.get('isNameColumnReadonly')) {
+              readonlyColumns.push('name');
+            }
+
+            Ember.set(rowConfig, 'readonlyColumns', readonlyColumns);
           }
         }
       });
@@ -709,14 +721,14 @@ export default FlexberryBaseComponent.extend(
   */
   configurateSelectedRows: undefined,
 
-  selectedRowsChanged: Ember.observer('selectedRecords.@each', function() {
+  selectedRowsChanged: Ember.on('init', Ember.observer('selectedRecords.@each', function() {
     let selectedRecords = this.get('selectedRecords');
     let configurateSelectedRows = this.get('configurateSelectedRows');
     if (configurateSelectedRows) {
       Ember.assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
     }
-  }),
+  })),
 
   /**
     Default settings for rows.
@@ -1143,13 +1155,48 @@ export default FlexberryBaseComponent.extend(
   */
   _reinitResizablePlugin() {
     let $currentTable = this.$('table.object-list-view');
+    let cols = this.get('columns');
+    let helper = this.get('showHelperColumn');
+    let menu = this.get('showMenuColumn');
+    let disabledColumns = [];
+    let fixedColumns = this.get('currentController.defaultDeveloperUserSettings');
+    fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    let fixedColumnsWidth = fixedColumns.filter(({ width }) => width);
+    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+    for (let k = 0; k < fixedColumnsWidth.length; k++) {
+      if (fixedColumnsWidth[k].propName === 'OlvRowMenu') {
+        this.$('.object-list-view-menu').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+      }
+
+      if (fixedColumnsWidth[k].propName === 'OlvRowToolbar') {
+        this.$('.object-list-view-operations').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+      }
+    }
+
+    if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
+      disabledColumns.push(0);
+    }
+
+    if (menu && fixedColumns.indexOf('OlvRowMenu') > -1) {
+      disabledColumns.push(helper ? cols.length : cols.length - 1);
+    }
+
+    for (let i = 0; i < cols.length; i++) {
+      let col = cols[i];
+      if (fixedColumns.indexOf(col.propName) > -1) {
+        disabledColumns.push(i);
+        disabledColumns.push(helper ? i + 1 : i - 1);
+      }
+    }
 
     // Disable plugin and then init it again.
     $currentTable.colResizable({ disable: true });
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode: 'flex',
+      disabledColumns: disabledColumns,
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);
@@ -1181,9 +1228,10 @@ export default FlexberryBaseComponent.extend(
       let width = userColumnInfo.width;
 
       Ember.assert('Property name is not defined at saved user setting.', propName);
-      Ember.assert('Column width is not defined at saved user setting.', width !== undefined);
 
-      hashedUserSetting[propName] = width;
+      if (width !== undefined) {
+        hashedUserSetting[propName] = width;
+      }
     });
 
     let $columns = this.$('table.object-list-view').find('th');
@@ -1226,7 +1274,7 @@ export default FlexberryBaseComponent.extend(
 
       userWidthSettings.push({
         propName: currentPropertyName,
-        width: currentColumnWidth,
+        width: currentColumnWidth
       });
     });
     this._setCurrentColumnsWidth();

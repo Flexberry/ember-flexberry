@@ -111,8 +111,16 @@ export default FlexberryBaseComponent.extend({
   value: Ember.computed('_valueAsString', '_valueAsDate', 'currentTypeSupported', {
     get() {
       if (this.get('currentTypeSupported')) {
+        if (this.get('type') === 'date') {
+          return this._convertDateToLocal(this.get('_valueAsString'));
+        }
+
         return this._convertStringToDate(this.get('_valueAsString'));
       } else {
+        if (this.get('type') === 'date') {
+          return this._convertDateToLocal(this.get('_valueAsDate'));
+        }
+
         return this.get('_valueAsDate');
       }
     },
@@ -198,6 +206,14 @@ export default FlexberryBaseComponent.extend({
   classNames: ['flexberry-simpledatetime'],
 
   /**
+    If true, then onClick calling flatpickr.open().
+
+    @property canClick
+    @type Bool
+  */
+  canClick: true,
+
+  /**
     Called when the element of the view is going to be destroyed. Override this function to do any teardown that requires an element, like removing event listeners.
     [More info](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement).
 
@@ -215,7 +231,8 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   click() {
-    if (!this.get('currentTypeSupported') && !this.get('readonly')) {
+    if (this.get('canClick') && !this.get('currentTypeSupported') && !this.get('readonly')) {
+      this.set('canClick', false);
       this.get('_flatpickr').open();
     }
   },
@@ -238,6 +255,9 @@ export default FlexberryBaseComponent.extend({
         if (dates.length) {
           this.set('_valueAsDate', dates[dates.length - 1]);
         }
+      },
+      onClose: () => {
+        this.set('canClick', true);
       },
     };
 
@@ -325,4 +345,22 @@ export default FlexberryBaseComponent.extend({
 
     return moment(value).toDate();
   },
+
+  /**
+    Converts date (without time) to local date.
+
+    @method _convertDateToLocal
+    @param {String|Date} value Date without timezone shift.
+    @return {Date} Object of Date.
+    @private
+  */
+  _convertDateToLocal(value) {
+    let momentDate = moment(value);
+    let hours = momentDate.utcOffset() / 60;
+    momentDate.hours(hours);
+    momentDate.minutes(0);
+    momentDate.seconds(0);
+
+    return momentDate.toDate();
+  }
 });

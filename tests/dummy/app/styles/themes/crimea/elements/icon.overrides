@@ -95,7 +95,8 @@ i.icon.print:before { content: "\f02f"; }
 i.icon.write:before { content: "\f040"; }
 i.icon.theme:before { content: "\f043"; }
 i.icon.adjust:before { content: "\f042"; }
-i.icon.edit:before { content: "\f044"; }
+i.icon.edit:before { content: "\e810"; font-family: 'Crim'; }
+i.icon.edit:hover:before { color: #ff4800!important; }
 i.icon.external.share:before { content: "\f045"; }
 i.icon.ban:before { content: "\f05e"; }
 i.icon.mail.forward:before { content: "\f064"; }
@@ -330,7 +331,8 @@ i.icon.toggle.left:before { content: "\f191"; }
 
 /* Computer */
 i.icon.power:before { content: "\f011"; }
-i.icon.trash:before { content: "\f1f8"; }
+i.icon.trash:before { content: "\e814"; }
+i.icon.trash:hover:before { color: #ff4800!important; }
 i.icon.trash.outline:before { content: "\e814"; }
 i.icon.disk.outline:before { content: "\f0a0"; }
 i.icon.desktop:before { content: "\f108"; }

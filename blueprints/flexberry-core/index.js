@@ -116,7 +116,7 @@ var CoreBlueprint = (function () {
                 continue;
             var model = ModelBlueprint_1.default.loadModel(modelsDir, modelFileName);
             var modelName = pp.name;
-            var LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
+            var LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([А-ЯЁA-Z][а-яёa-z\d]*$)/;
             var irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
             importProperties.push("import " + model.name + "Model from './models/" + modelName + "';");
             modelsImportedProperties.push("    '" + modelName + "': " + model.name + "Model");

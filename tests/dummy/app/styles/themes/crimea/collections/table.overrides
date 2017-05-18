@@ -22,3 +22,18 @@ tr {
 .basic.right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
     color: #fff!important;
 }
+.object-list-view-menu {
+    overflow: initial!important;
+}
+.ui.dropdown .menu > .item:hover {
+    background: none!important;
+}
+.ui.basic.button:focus {
+    background: none!umportant;
+}
+.basic.right.pointing.ui.icon.dropdown.button:focus {
+    background: #94cea8!important;
+}
+.left.menu.transition.visible:hover {
+    background: #f5f8ff !important;
+}

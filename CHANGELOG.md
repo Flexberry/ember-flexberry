@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add generation mobile templates.
 * Ability to set width for fixed columns in list components.
 
+### Fixed
+* Fix export excel file download for Internet Explorer.
+
 ## [0.9.0-beta.8] - 2017-05-05
 ### Added
 * Add `readonly-cell` helper. It can specify `readonly` property for each cell of list components.

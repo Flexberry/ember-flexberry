@@ -3,15 +3,19 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Blueprints:
+    * Changed regular expression in `flexberry-core` for cyrillic support.
+
+## [0.9.0-beta.9] - 2017-05-19
 ### Added
 * Blueprints:
     * Add generation offline serializers.
     * Add generation mobile templates.
 * Ability to set width for fixed columns in list components.
 
-### Changed
-* Blueprints:
-    * Changed regular expression in `flexberry-core` for cyrillic support.
+### Fixed
+* Fix export excel file download for Internet Explorer.
 
 ## [0.9.0-beta.8] - 2017-05-05
 ### Added

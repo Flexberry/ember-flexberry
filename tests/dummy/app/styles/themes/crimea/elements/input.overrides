@@ -14,4 +14,5 @@ input {
  .ui.action.input:not([class*="left action"]) > .button, 
  .ui.action.input:not([class*="left action"]) > .buttons > .button {
     border: 1px solid #7ba7d9;
+    box-shadow: none;
 }

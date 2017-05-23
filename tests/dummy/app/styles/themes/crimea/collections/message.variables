@@ -37,6 +37,7 @@
 @headerDistance: 0rem;
 @headerMargin: -@headerLineHeightOffset 0em @headerDistance 0em;
 @headerParagraphDistance: 0.25em;
+@headerFont: 'Roboto'!important;
 
 /* Paragraph */
 @messageTextOpacity: 0.85;

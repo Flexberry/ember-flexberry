@@ -81,7 +81,7 @@
 
 /* Input Focus */
 @inputFocusBackground: @inputBackground;
-@inputFocusBorderColor: @focusedFormBorderColor;
+@inputFocusBorderColor: 1px solid rgba(0,0,0,0.12)!important;
 @inputFocusColor: @selectedTextColor;
 @inputFocusBoxShadow: @inputFocusPointerSize 0em 0em 0em @selectedBorderColor inset;
 @inputFocusBorderRadius: @inputBorderRadius;

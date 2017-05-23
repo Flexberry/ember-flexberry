@@ -2,17 +2,20 @@
          Theme Overrides
 *******************************/
 
-.ui.menu > .brand.item {
-    background:none!important;
+.ui.menu > .item.lang:hover {
+    color: #545454!important;
 }
-
 .ui.menu > .brand.item:hover {
     color: #545454!important;
 }
-
+.ui.menu > .right.menu:hover a.item {
+    color: #545454!important;
+}
 .stackable > .ui.message {
-    background-color: #dcebfc!important;
     top: 70px;
+    -webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
 }
 .ui.vertical.inverted.menu .menu .item,
 .ui.vertical.inverted.menu .menu .item a:not(.ui) {
@@ -20,11 +23,54 @@
 }
 .ui.menu .item {
     padding: 0.72857143em 1.14285714em;
+    padding: 32.5px 21px;
+}
+.ui.menu .item-menu {
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.ui.menu .item {
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.ui.menu .item-menu .subMenu .item-menu {
+    border-bottom: none!important;
+    margin-left: -5px;
+    width: 251px;
+}
+.ui.menu .item-menu .subMenu .item {
+    margin-left: -5px;
+    width: 251px!important;
+}
+.ui.menu .item-menu .subMenu .item-menu {
+    margin-left: -5px;
+    width: 251px!important;
+}
+.ui.menu .item:hover {
+    color: rgba(0,0,0,0.54)!important;
 }
 .ui.menu > .grid, .ui.menu > .container {
-    background: #4f73b0!important;
+    background: none;
 }
 .ui.vertical.inverted.menu .item .menu a.item:hover,
  .ui.vertical.inverted.menu .item .menu .link.item:hover {
-     color: #ff4800;
+    color: rgba(0,0,0,0.54);
  }
+ .ui.inverted.menu .active.item {
+    background: #f5f5f5!important;
+}
+.ui.menu .right {
+    color: #eeeeee!important;
+}
+.ui.right.floated.tiny.compact.button {
+    color: #000!important;
+}
+.ui.right.floated.tiny.compact.button:hover {
+    background: rgba(0, 0, 0, 0.016) !important;
+}
+.ui.right.floated.tiny.compact.primary.button {
+    webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+.ui.right.floated.tiny.compact.primary.button:hover {
+    background: rgba(0, 0, 0, 0.016) !important;
+}

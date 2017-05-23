@@ -4,43 +4,70 @@
 .ui.vertical.footer.segment > .flex-container > .ui.text.menu  {
     margin: 0px;
     padding: 0px 30px;
-    background-color: #eee;
     display: flex!important;
     justify-content: space-between!important
 }
 .ui.vertical.footer.segment > .flex-container {
-    position: fixed;
     bottom: 0px;
     z-index: 99;
 }
 .daterangepicker .calendar td {
-    color: #7ba7d9;
+    color: #000;
+    font-size: 13px;
+}
+.daterangepicker td.available:hover, .daterangepicker th.available:hover {
+    background: none!important;
 }
 .daterangepicker .calendar th, {
-    color: #888;
+    color: #fff;
+    font-weight: 400;
 }
 .daterangepicker .calendar th, .daterangepicker .calendar td {
     padding: 0px;
-    min-width:25px;
+    min-width: 35px;
+    height: 35px;
 }
 .daterangepicker .calendar td:hover {
-    background: #dcebfc!important;
+    background: #ef5350!important;
+    color: #fff;
+    border-radius: 200px 200px 200px 200px!important;;
+    -moz-border-radius: 200px 200px 200px 200px!important;;
+    -webkit-border-radius: 200px 200px 200px 200px!important;
 }
 .month > select {
-    color: #7ba7d9!important;
+    color: #000!important;
     font-size: 1em!important;
 }
 .daterangepicker td.active, .daterangepicker td.active:hover {
-     background: #7ba7d9!important;
-     color: #fff!important;
+    background: #ef5350!important;
+    color: #fff!important;
+    border-radius: 200px 200px 200px 200px!important;;
+    -moz-border-radius: 200px 200px 200px 200px!important;;
+    -webkit-border-radius: 200px 200px 200px 200px!important;
 }
 .ui.loader:before {
-  border: 0.2em solid #CCE2FF!important;
+    border: 0.2em solid #CCE2FF!important;
 }
 .ui.loader:after {
-  border-color: #7ba7d9 transparent transparent!important;
+    border-color: #7ba7d9 transparent transparent!important;
 }
-.daterangepicker td.available:hover,
- .daterangepicker th.available:hover {
-     background: none!important;
- }
+.daterangepicker.opensright:after {
+    display:none;
+}
+.daterangepicker.opensright:before {
+    display: none;
+}
+.ui.segment {
+    background: none!important;
+}
+.ui.vertical.footer.segment > .ui.container {
+    background: #070e21;
+    position: fixed;
+}
+.ui.vertical.footer.segment {
+    padding: 0px!important;
+}
+.ui.secondary.menu.no-margin {
+    width: auto;
+    float: right;
+}

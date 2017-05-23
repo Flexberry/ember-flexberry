@@ -11,3 +11,7 @@
     overflow: auto!important;
     height: 618px!important;
 }
+.ui.modal > .close {
+    top: 0px!important;
+    right: 0px!important;
+}

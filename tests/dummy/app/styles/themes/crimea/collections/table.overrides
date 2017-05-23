@@ -1,26 +1,32 @@
 .ui.celled.table tr th {
-    color: #777;
+    color: #000;
+    opacity: 0.54;
+    font-size: 12px;
 }
 .ui.celled.table tr td {
-    color: #555;
+    color: #000;
+    font-size: 15px;
 }
 .ui.table tr.active, .ui.table td.active {
-    background: #f1f7ff!important;
+    background: rgba(0,0,0,0.12)!important;
 }
-table tr:hover {
-    background: #f1f7ffimportant;
-}
+/*table tr:hover {
+    background-color: rgba(197, 225, 165, 0.54) !important;
+}*/
 tr {
     cursor: pointer;
 }
 .basic.right.pointing.ui.icon.dropdown.button {
-    box-shadow: none;
-}
-.basic.right.pointing.ui.icon.dropdown.button:hover {
-    background: #94cea8!important;
+    background: #eee!important;
+    border: 1px solid #eee!important;
+    color: #000!important;
+    font-weight: 600;
+    webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
 .basic.right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
-    color: #fff!important;
+    color: #000!important;
 }
 .object-list-view-menu {
     overflow: initial!important;
@@ -31,9 +37,19 @@ tr {
 .ui.basic.button:focus {
     background: none!umportant;
 }
-.basic.right.pointing.ui.icon.dropdown.button:focus {
-    background: #94cea8!important;
-}
 .left.menu.transition.visible:hover {
     background: #f5f8ff !important;
+}
+.ui.table {
+    border-radius: 0px!important;
+    -webkit-box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.2);
+}
+.ui.striped.table > tr:nth-child(2n):hover,
+.ui.striped.table tbody tr:nth-child(2n):hover {
+    background-color: rgba(197, 225, 165, 0.54) !important;
+}
+.ui.selectable.table tbody tr:hover, .ui.table tbody tr td.selectable:hover {
+    background: rgba(197, 225, 165, 0.54) !important;
 }

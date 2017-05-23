@@ -44,7 +44,6 @@ input[type="checkbox"]:after {
     top: -3px;
     left: -2px;
     border: 1px solid rgba(0,0,0,0.54);;
-    background: #f1f8ff;
 } 
 input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
     content: '\e805';
@@ -68,4 +67,7 @@ option {
     background: none!important;
     font-size: 16px;
     opacity: 0.54;
+}
+input:focus {
+    border: 1px solid rgba(0,0,0,0.54)!important;
 }

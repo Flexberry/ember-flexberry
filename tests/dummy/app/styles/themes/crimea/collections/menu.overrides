@@ -74,3 +74,6 @@
 .ui.right.floated.tiny.compact.primary.button:hover {
     background: rgba(0, 0, 0, 0.016) !important;
 }
+.ui.menu {
+    margin: 2rem 0em;
+}

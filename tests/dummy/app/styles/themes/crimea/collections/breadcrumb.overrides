@@ -20,7 +20,7 @@
 .showing-entries {
     color: #777;
     width: auto;
-    margin: 1.6em 0px;
+    margin: 2.6em 0px;
     float: right;
 }
 .ui.secondary.menu.no-margin > .ui.basic.buttons > .ui.disabled {

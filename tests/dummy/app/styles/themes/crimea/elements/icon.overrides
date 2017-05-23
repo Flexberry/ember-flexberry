@@ -850,6 +850,7 @@ i.icon.bed:before { content: "\f236"; }
     color: #fff;
     background: #94cea8;
     border: 1px solid #94cea8;
+    background: rgba(0, 0, 0, 0.016) !important;
 }
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):before {
     content: "\e814";

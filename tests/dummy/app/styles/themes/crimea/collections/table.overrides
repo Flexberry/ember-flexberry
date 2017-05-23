@@ -7,6 +7,15 @@
     color: #000;
     font-size: 15px;
 }
+.ui.table.object-list-view td {
+    overflow: inherit;
+}
+.oveflow-text {
+    overflow: hidden;
+}
+.ember-view.ember-text-field[placeholder="(нет значения)"]{
+    width: 60px;
+}
 .ui.table tr.active, .ui.table td.active {
     background: rgba(0,0,0,0.12)!important;
 }

@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Blueprints:
+    * Changed regular expression in `flexberry-core` for cyrillic support.
 
 ## [0.9.0-beta.9] - 2017-05-19
 ### Added

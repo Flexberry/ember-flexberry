@@ -131,7 +131,7 @@ class CoreBlueprint {
         continue;
       let model: metadata.Model = ModelBlueprint.loadModel(modelsDir, modelFileName);
       let modelName = pp.name;
-      let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
+      let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([А-ЯЁA-Z][а-яёa-z\d]*$)/;
       let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
       importProperties.push(`import ${model.name}Model from './models/${modelName}';`);
       modelsImportedProperties.push(`    '${modelName}': ${model.name}Model`);

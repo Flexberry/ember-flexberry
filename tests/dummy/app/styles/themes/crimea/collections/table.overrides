@@ -22,3 +22,9 @@ tr {
 .basic.right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
     color: #fff!important;
 }
+.ui.table.object-list-view td {
+    overflow: inherit;
+}
+.oveflow-text {
+    overflow: hidden;
+}

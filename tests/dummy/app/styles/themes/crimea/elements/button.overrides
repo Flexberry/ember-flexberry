@@ -118,6 +118,10 @@ i.icon.remove:before:hover {
 }
 .ui.small.button {
   border: none;
+  font-size: 12px!important;
+}
+.ui.small.button:hover {
+  background: #d01919!important;
 }
 .ember-view.groupedit-toolbar > button:hover {
   background: #fff!important;
@@ -185,5 +189,13 @@ i.icon.remove:before:hover {
 }
 
 .daterangepicker .next .right.arrow.icon {
-   margin-left:10px!important;
+  margin-left:10px!important;
+}
+.ui.ui-delete.button {
+  padding: 0px 9px!important;
+  height: 30px!important;
+}
+.ui.ui-add.button {
+  padding: 0px 9px!important;
+  height: 30px!important;
 }

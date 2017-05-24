@@ -786,15 +786,13 @@ Ember.$.extend(true, translations, {
         'selected-rows': {
           'caption': 'Flexberry-objectlistview. Выбранные строки'
         },
-<<<<<<< HEAD
         'downloading-files-from-olv-list': {
           'caption': 'Flexberry-objectlistview. Скачивание файлов со списка'
-=======
+        },
         'object-list-view-resize': {
           'caption': 'Flexberry-objectlistview. Разметка столбцов',
           'button-сaption': 'Добавить',
           'title': ''
->>>>>>> develop
         }
       },
       'flexberry-simpleolv': {

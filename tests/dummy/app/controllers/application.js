@@ -375,6 +375,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/object-list-view-resize',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.title'),
+            children: null
           }]
         }, {
           link: null,

@@ -46,6 +46,12 @@
   .ui.table thead th {
     text-align: center;
   }
+  .sort-direction-cell {
+    overflow: visible !important;
+  }
+  .sort-direction-dropdown {
+    width: 100%;
+  }
   td>.input {
     width: 100%;
   }

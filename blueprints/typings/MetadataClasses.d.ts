@@ -63,6 +63,7 @@ declare module "MetadataClasses" {
         public hasMany: DShasMany[];
         public projections: ProjectionForModel[];
         public stored: boolean;
+        public offline: boolean;
     }
     export class DSattr {
         
@@ -125,6 +126,7 @@ declare module "MetadataClasses" {
         public applicationCaption: string;
         public applicationTitle: string;
         public items: SitemapItem[];
+        public mobile: boolean;
     }
     export class SitemapItem {
         

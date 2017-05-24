@@ -8,8 +8,7 @@ import lodash = require('lodash');
 const stripBom = require("strip-bom");
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
-const Blueprint = require('ember-cli/lib/models/blueprint');
-import AddonBlueprint from '../flexberry-addon/AddonBlueprint';
+import CommonUtils from '../flexberry-common/CommonUtils';
 
 module.exports = {
   description: 'Generates an ember list-form for flexberry.',
@@ -25,23 +24,19 @@ module.exports = {
 
   _files: null,
 
-  files: function () {
+  files: function() {
     if (this._files) { return this._files; }
-    this._super._files = null;
-    this._super.path = this.path;
-    this._files = this._super.files();
-    this._super._files = null;
     if (this.options.dummy) {
-      lodash.remove(this._files, function (v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
+      this._files=CommonUtils.getFilesForGeneration(this, function(v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
     } else {
-      lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs" || v === "tests/dummy/app/templates/__name__/loading.hbs"; });
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs" || v === "tests/dummy/app/templates/__name__/loading.hbs"; });
     }
     return this._files;
   },
 
   afterInstall: function (options) {
     if (this.project.isEmberCLIAddon()) {
-      AddonBlueprint.install(options, ["controller", "route"]);
+      CommonUtils.installFlexberryAddon(options, ["controller", "route"]);
     }
   },
 

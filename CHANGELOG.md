@@ -3,9 +3,34 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Blueprints:
+    * Changed regular expression in `flexberry-core` for cyrillic support.
+
+## [0.9.0-beta.9] - 2017-05-19
 ### Added
 * Blueprints:
+    * Add generation offline serializers.
+    * Add generation mobile templates.
+* Ability to set width for fixed columns in list components.
+
+### Fixed
+* Fix export excel file download for Internet Explorer.
+
+## [0.9.0-beta.8] - 2017-05-05
+### Added
+* Add `readonly-cell` helper. It can specify `readonly` property for each cell of list components.
+* Blueprints:
     * Add support reexport for addon.
+    * Add generation non-stored properties of models.
+
+### Changed
+* Blueprints:
+    * Now serializers are generating correctly in case of inheriting of models.
+
+### Fixed
+* `colsconfig-dialog-content` component:
+    * Fix semantic styles for sort direction dropdown.
 
 ## [0.9.0-beta.7] - 2017-04-14
 ### Added

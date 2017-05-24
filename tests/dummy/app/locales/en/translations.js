@@ -415,6 +415,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Downloading files from the list',
               'title': ''
             },
+            'object-list-view-resize': {
+              'caption': 'Columns markup',
+              'title': ''
+            }
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',
@@ -764,8 +768,15 @@ Ember.$.extend(true, translations, {
         'selected-rows': {
           'caption': 'Flexberry-objectlistview. Setected rows'
         },
+<<<<<<< HEAD
         'downloading-files-from-olv-list': {
           'caption': 'Flexberry-objectlistview. Downloading files from the list'
+=======
+        'object-list-view-resize': {
+          'caption': 'Flexberry-objectlistview. Columns markup',
+          'button-сaption': 'Add',
+          'title': ''
+>>>>>>> develop
         }
       },
       'flexberry-simpleolv': {

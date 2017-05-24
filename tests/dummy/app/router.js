@@ -88,6 +88,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/edit-form-with-detail-edit.new',
   { path: 'components-examples/flexberry-objectlistview/edit-form-with-detail-edit/new' });
   this.route('components-examples/flexberry-objectlistview/configurate-rows');
+  this.route('components-examples/flexberry-objectlistview/object-list-view-resize');
   this.route('components-examples/flexberry-objectlistview/hierarchy-example');
   this.route('components-examples/flexberry-objectlistview/selected-rows');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-list');
@@ -118,6 +119,7 @@ Router.map(function() {
   // Components acceptance tests forms.
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
+  this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
 });
 
 export default Router;

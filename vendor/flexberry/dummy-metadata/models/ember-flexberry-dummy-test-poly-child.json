@@ -10,7 +10,8 @@
       "type": "number",
       "flexberryType": "int",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     }
   ],
   "belongsTo": [],
@@ -56,5 +57,7 @@
       "belongsTo": [],
       "hasMany": []
     }
-  ]
+  ],
+  "stored": true,
+  "offline": true
 }

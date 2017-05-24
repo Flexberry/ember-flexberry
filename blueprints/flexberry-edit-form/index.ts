@@ -8,8 +8,8 @@ import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
-const Blueprint = require('ember-cli/lib/models/blueprint');
-import AddonBlueprint from '../flexberry-addon/AddonBlueprint';
+import CommonUtils from '../flexberry-common/CommonUtils';
+import ModelBlueprint from '../flexberry-model/ModelBlueprint';
 
 const componentMaps = [
   { name: "flexberry-file", types: ["file"] },
@@ -34,21 +34,17 @@ module.exports = {
 
   files: function () {
     if (this._files) { return this._files; }
-    this._super._files = null;
-    this._super.path = this.path;
-    this._files = this._super.files();
-    this._super._files = null;
     if (this.options.dummy) {
-      lodash.remove(this._files, function (v) { return v === "app/templates/__name__.hbs"; });
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "app/templates/__name__.hbs"; });
     } else {
-      lodash.remove(this._files, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
     }
     return this._files;
   },
 
   afterInstall: function (options) {
     if (this.project.isEmberCLIAddon()) {
-      AddonBlueprint.install(options, ["controller", "route"]);
+      CommonUtils.installFlexberryAddon(options, ["controller", "route"]);
     }
   },
 
@@ -131,9 +127,7 @@ class EditFormBlueprint {
   }
 
   loadModel(modelName: string): metadata.Model {
-    let modelFile = path.join(this.modelsDir, modelName + ".json");
-    let content = stripBom(fs.readFileSync(modelFile, "utf8"));
-    let model: metadata.Model = JSON.parse(content);
+    let model: metadata.Model = ModelBlueprint.loadModel(this.modelsDir, modelName + ".json");
     return model;
   }
 

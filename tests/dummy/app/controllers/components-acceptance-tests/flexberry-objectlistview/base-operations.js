@@ -131,7 +131,7 @@ export default ListFormController.extend({
   orderable: true,
 
   /**
-    ext for 'flexberry-objectlistview' component 'singleColumnHeaderTitle' property.
+    Тext for 'flexberry-objectlistview' component 'singleColumnHeaderTitle' property.
 
     @property singleColumnHeaderTitle
     @type String
@@ -146,21 +146,5 @@ export default ListFormController.extend({
     @protected
     @readOnly
   */
-  records: [],
-
-  getCellComponent: function(attr, bindingPath, modelClass) {
-    if (attr.kind === 'attr') {
-      switch (bindingPath) {
-        case 'date':
-          return {
-            componentName: 'object-list-view-cell',
-            componentProperties: {
-              dateFormat: 'YYYY-MM-DD'
-            }
-          };
-      }
-    }
-
-    return this._super(...arguments);
-  }
+  records: []
 });

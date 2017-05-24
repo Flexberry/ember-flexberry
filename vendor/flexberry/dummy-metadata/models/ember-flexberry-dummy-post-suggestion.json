@@ -1,86 +1,96 @@
 ﻿{
-  "name": "EmberFlexberryDummySuggestion",
-  "modelName": "ember-flexberry-dummy-suggestion",
+  "name": "EmberFlexberryDummyPostSuggestion",
+  "modelName": "ember-flexberry-dummy-post-suggestion",
   "className": "Suggestion",
   "parentModelName": null,
   "parentClassName": null,
   "attrs": [
     {
-      "name": "address",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "text",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "date",
-      "type": "date",
-      "flexberryType": "DateTime",
-      "notNull": false,
-      "defaultValue": "Now"
-    },
-    {
-      "name": "votes",
-      "type": "number",
-      "flexberryType": "long",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "moderated",
-      "type": "boolean",
-      "flexberryType": "bool",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
       "name": "createTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "creator",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editor",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "address",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "date",
+      "type": "date",
+      "flexberryType": "DateTime",
+      "notNull": false,
+      "defaultValue": "Now",
+      "stored": true
+    },
+    {
+      "name": "votes",
+      "type": "number",
+      "flexberryType": "long",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "moderated",
+      "type": "boolean",
+      "flexberryType": "bool",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "commentsCount",
       "type": "number",
       "flexberryType": "int",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": false
     }
   ],
   "belongsTo": [
     {
       "polymorphic": false,
       "presence": true,
-      "name": "editor1",
+      "name": "author",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     },
@@ -94,12 +104,17 @@
     {
       "polymorphic": false,
       "presence": true,
-      "name": "author",
+      "name": "editor1",
       "relatedTo": "ember-flexberry-dummy-application-user",
       "inverse": null
     }
   ],
   "hasMany": [
+    {
+      "name": "userVotes",
+      "relatedTo": "ember-flexberry-dummy-vote",
+      "inverse": "suggestion"
+    },
     {
       "name": "files",
       "relatedTo": "ember-flexberry-dummy-suggestion-file",
@@ -109,17 +124,12 @@
       "name": "comments",
       "relatedTo": "ember-flexberry-dummy-comment",
       "inverse": "suggestion"
-    },
-    {
-      "name": "userVotes",
-      "relatedTo": "ember-flexberry-dummy-vote",
-      "inverse": "suggestion"
     }
   ],
   "projections": [
     {
       "name": "AuditView",
-      "modelName": "ember-flexberry-dummy-suggestion",
+      "modelName": "ember-flexberry-dummy-post-suggestion",
       "attrs": [
         {
           "name": "address",
@@ -220,7 +230,7 @@
     },
     {
       "name": "SuggestionE",
-      "modelName": "ember-flexberry-dummy-suggestion",
+      "modelName": "ember-flexberry-dummy-post-suggestion",
       "attrs": [
         {
           "name": "address",
@@ -365,7 +375,7 @@
     },
     {
       "name": "SuggestionL",
-      "modelName": "ember-flexberry-dummy-suggestion",
+      "modelName": "ember-flexberry-dummy-post-suggestion",
       "attrs": [
         {
           "name": "address",
@@ -500,5 +510,7 @@
         }
       ]
     }
-  ]
+  ],
+  "stored": true,
+  "offline": true
 }

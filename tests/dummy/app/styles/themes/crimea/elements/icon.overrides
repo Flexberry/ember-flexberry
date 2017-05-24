@@ -808,7 +808,16 @@ i.icon.bed:before { content: "\f236"; }
 }
 .ui.secondary.menu.no-margin.ember-view > button:first-child {
     border: none!important;
-    visibility: hidden;
+    font-size: 0px;
+    width: 25px;
+    padding: 0px;
+    display: flex;
+    background: none!important;
+    box-shadow: none;
+}
+.ui.secondary.menu.no-margin.ember-view > button:first-child:hover {
+    border: none!important;
+    font-size: 0px;
     width: 25px;
     padding: 0px;
     display: flex;
@@ -861,10 +870,15 @@ i.icon.bed:before { content: "\f236"; }
 }
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3) {
     border: none!important;
-    visibility: hidden;
+    font-size: 0px;
+    background: none!important;
+    box-shadow: none;
     width: 25px;
     padding-left: 10px;
     display: flex;
+}
+.ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover {
+    background: none!important;
 }
 .page-header-userbar a:before {
     margin: 0 0 0 15px;

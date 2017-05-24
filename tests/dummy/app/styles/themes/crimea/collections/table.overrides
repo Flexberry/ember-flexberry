@@ -62,3 +62,12 @@ tr {
 .ui.selectable.table tbody tr:hover, .ui.table tbody tr td.selectable:hover {
     background: rgba(197, 225, 165, 0.54) !important;
 }
+.ui.celled.table tr.positive:first-child td {
+    overflow: hidden!important;
+}
+.ui.celled.table tr[class=""]:first-child td {
+     overflow: hidden!important;
+}
+.ui.celled.table tr:first-child td:last-child {
+     overflow: inherit!important;
+}

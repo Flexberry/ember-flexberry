@@ -480,7 +480,11 @@ Ember.$.extend(true, translations, {
             'caption': 'Settings deletion',
             'title': ''
           }
-        }
+        },
+        'components-acceptance-tests': {
+          'caption': 'Acceptance tests',
+          'title': '',
+        },
       }
     },
 

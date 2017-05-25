@@ -476,7 +476,7 @@ test('selectionStart mode works properly', function(assert) {
   $textareaInput.change();
 
   //Generate a random value 'selectionStart' and convert to a string.
-  let selectionStartValue = (Math.floor(Math.random() * 10));
+  let selectionStartValue = (Math.floor(Math.random() * 10 + 1));
 
   // Check that <textarea>'s selectionStart attribute.
   this.set('selectionStart', selectionStartValue);
@@ -513,7 +513,7 @@ test('selectionEnd mode works properly', function(assert) {
   $textareaInput.change();
 
   //Generate a random value 'selectionEnd' and convert to a string.
-  let selectionEndValue = (Math.floor(Math.random() * 10));
+  let selectionEndValue = (Math.floor(Math.random() * 10 + 1));
 
   // Check that <textarea>'s selectionEnd attribute.
   this.set('selectionEnd', selectionEndValue);

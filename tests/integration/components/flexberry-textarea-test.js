@@ -485,9 +485,6 @@ test('selectionStart mode works properly', function(assert) {
   let done = assert.async();
   setTimeout(function() {
     $this.set('selectionStart', selectionStartValue);
-    let per = $textareaInput.prop('selectionStart');
-    let per2 = $textareaInput[0].selectionStart;
-
     assert.strictEqual(
       $textareaInput.prop('selectionStart'),
       selectionStartValue,
@@ -527,8 +524,6 @@ test('selectionEnd mode works properly', function(assert) {
 
   // Check that <textarea>'s selectionEnd attribute.
   this.set('selectionEnd', selectionEndValue);
-  let per = $textareaInput.prop('selectionEnd');
-  let per2 = $textareaInput[0].selectionEnd;
   assert.strictEqual(
     $textareaInput.prop('selectionEnd'),
     selectionEndValue,

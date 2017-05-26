@@ -25,7 +25,7 @@ moduleForComponent('flexberry-textarea', 'Integration | Component | flexberry-te
   }
 });
 
-/*test('it renders properly', function(assert) {
+test('it renders properly', function(assert) {
   assert.expect(10);
 
   // Render component.
@@ -320,7 +320,7 @@ test('spellcheck mode works properly', function(assert) {
     Ember.$.trim($textareaInput.attr('spellcheck')),
     'false',
     'Component\'s inner <textarea> hasn\'t spellcheck attribute');
-});*/
+});
 
 test('wrap mode works properly', function(assert) {
   assert.expect(3);
@@ -334,13 +334,6 @@ test('wrap mode works properly', function(assert) {
   // Retrieve component.
   let $component = this.$().children();
   let $textareaInput = $component.children('textarea');
-  
-  // Check that <textarea>'s wrap attribute 'soft'.
-  this.set('wrap', 'soft');
-  assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('wrap')),
-    'soft',
-    'Component\'s inner <textarea> wrap attribute \'soft\'');
 
   // Check that <textarea>'s wrap attribute 'hard'.
   this.set('wrap', 'hard');
@@ -349,15 +342,23 @@ test('wrap mode works properly', function(assert) {
     'hard',
     'Component\'s inner <textarea> wrap attribute \'hard\'');
 
+  // Check that <textarea>'s wrap attribute 'soft'.
+  this.set('wrap', 'soft');
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('wrap')),
+    'soft',
+    'Component\'s inner <textarea> wrap attribute \'soft\'');
+
   // Check that <textarea>'s wrap attribute 'off'.
   this.set('wrap', 'off');
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('wrap')),
     'off',
     'Component\'s inner <textarea> wrap attribute \'off\'');
+
 });
 
-/*test('rows mode works properly', function(assert) {
+test('rows mode works properly', function(assert) {
   assert.expect(2);
 
   // Render component.
@@ -384,7 +385,7 @@ test('wrap mode works properly', function(assert) {
     'Component\'s inner <textarea>\'s value \'rows\' is equals to ' + rowsValue);
 
   // Check that <textarea>'s rows count is switched to default value.
-  this.set('rows', null);
+  this.set('rows', 2);
   assert.strictEqual(
     $textareaInput.prop('rows'),
     defaultRowsCount,
@@ -418,7 +419,7 @@ test('cols mode works properly', function(assert) {
     'Component\'s inner <textarea>\'s value \'cols\' is equals to ' + colsValue);
 
   // Check that <textarea>'s cols count is switched to default value.
-  this.set('cols', null);
+  this.set('cols', 20);
   assert.strictEqual(
     $textareaInput.prop('cols'),
     defaultColsCount,
@@ -636,4 +637,4 @@ test('changes in property binded to \'value\' causes changes in inner <textarea>
     this.get('value'),
     newValue,
     'Component\'s property binded to \'value\' is equals to \'' + newValue + '\'');
-});*/
+});

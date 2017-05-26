@@ -5,47 +5,57 @@
 .ui.primary.button > .icon {
   color: #FFFFFF;
 }
-
 .ui.icon.button:hover{
-  color: #FFFFFF!important;
+  color: #000!important;
 }
-
 .ui.button:hover {
-  color: #FFFFFF!important;
+  color: #000!important;
   border:1px solid #94cea8;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
-
 .ui.button{
   padding: 0px 18px;
   height: 35px;
   text-align: center;
-  border-radius: 5px;
-  border: 1px #7ba7d9 solid;
+  border-radius: 2px;
+  background: #eee!important;
+  border: 1px solid #eee!important;
+  color: #000!important;
+  font-weight: 600;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
 .large.table.icon {
   margin-top: -4px!important;
 }
 .ui.buttons > .ui.button:not(.basic):not(.inverted),
- .ui.buttons:not(.basic):not(.inverted) > .button {
-   border: none;
-   background: none!important;
-   padding: 0.7400em 1.284em 0.8571em!important;
+.ui.buttons:not(.basic):not(.inverted) > .button {
+  border: none!important;
+  background: none!important;
+  padding: 0.7400em 1.284em 0.8571em!important;
  }
  .ui.basic.buttons .active.button {
-   color: #999!important;
-   font-weight: 700;
-   padding: 0.7400em 1.284em 0.8571em!important;
+  color: #999!important;
+  font-weight: 700;
+  padding: 0.7400em 1.284em 0.8571em!important;
  }
- .ui.basic.green.button {
+.ui.basic.green.button {
    border: none;
  }
- .ui.negative.button {
-   outline: none;
-   border: none;
+.ui.negative.button {
+  outline: none;
+  border: none;
 }
 .ui.positive.buttons .button, .ui.positive.button {
   outline: none;
-  border: none;
+  background: #eee!important;
+  border: 1px solid #eee!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
 .ui.fluid.action.input > button {
   border: none!important;
@@ -80,35 +90,36 @@ i.icon.remove:before:hover {
   color: #999!important;
 }
 .flexberry-edit-panel > button {
-    border: 1px solid #7ba7d9!important;
-    color: #3f65a4!important;
+  border: 1px solid #7ba7d9!important;
+  color: #3f65a4!important;
 } 
 .ui.negative.buttons .button, .ui.negative.button,   
 .ui.positive.buttons .button, .ui.positive.button {
-    background: none!important;
+  background: none!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
 .stackable.grid.container p:last-child .ui.positive.button {
-   background: #7dd4b4!important;
+  background: #7dd4b4!important;
 }
 .stackable.grid.container p:last-child .ui.negative.button {
-   background: #ff4800!important;
+  background: #ff4800!important;
 }
 .ui.negative.buttons .button:hover, .ui.negative.button:hover   {
-    background: #DB2828!important;
-    opacity: 0.8;
-    border:1px solid #DB2828!important;
+  background: rgba(243, 154, 47,0.54)!important;
+  border: 1px solid  rgba(243, 154, 47,0.54)!important;
 }
 .ui.positive.buttons .button, .ui.positive.button:hover {
-    background: #94cea8!important;
-    border: 1px solid #94cea8!important;
+  background: rgba(0,0,0,0.016)!important;
 }
 .ui.positive.button:hover .flexberry-edit-panel > button:before{
-    color: #fff!important;
+  color: #fff!important;
 }
 .ui.buttons:not(.basic):not(.inverted) {
-    box-shadow: none;
-    width: 75px;
-    margin-left: -10px;
+  box-shadow: none;
+  width: 75px;
+  margin-left: -10px;
 }
 .ui.econdary.menu.no-margin > .ui.basic > button:hover:before {
   color: #ff4800!important;
@@ -118,6 +129,14 @@ i.icon.remove:before:hover {
 }
 .ui.small.button {
   border: none;
+  background: #eee!important;
+  font-size: 14px!important;
+}
+.ui.small.button:hover {
+  background: rgba(0, 0, 0, 0.016)!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2)!important;
+  -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2)!important;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2)!important;
 }
 .ember-view.groupedit-toolbar > button:hover {
   background: #fff!important;
@@ -157,7 +176,7 @@ i.icon.remove:before:hover {
   align-items: center;
 }
 .ui.icon.tiny.button:hover i.icon.chevron.down:before {
-  color: #fff!important;
+  color: #000!important;
 }
 .ui.icon.tiny.button:hover i.icon.chevron.up:before {
   color: #fff!important;
@@ -183,7 +202,6 @@ i.icon.remove:before:hover {
 .daterangepicker .prev .left.arrow.icon {
   margin-left:-10px!important;
 }
-
 .daterangepicker .next .right.arrow.icon {
   margin-left:10px!important;
 }
@@ -195,3 +213,4 @@ i.icon.remove:before:hover {
   padding: 0px 9px!important;
   height: 30px!important;
 }
+

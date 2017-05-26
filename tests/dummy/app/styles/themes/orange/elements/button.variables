@@ -43,3 +43,5 @@
 
 @labeledIconBackgroundColor: rgba(85, 172, 238, 0.05);
 @labeledIconBorder: rgba(0, 0, 0, 0.1);
+@positiveColorDown: #eee!important;
+@basicTextColor: rgba(0, 0, 0, 0.6) !important;

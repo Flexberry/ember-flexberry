@@ -58,7 +58,7 @@
 @labelActiveColor: @selectedTextColor;
 @checkboxActiveBackground: @white;
 @checkboxActiveBorderColor: @selectedBorderColor;
-@checkboxActiveCheckColor: @selectedTextColor;
+@checkboxActiveCheckColor: rgba(0, 0, 0, 0.54);;
 @checkboxActiveCheckOpacity: 1;
 
 /* Active Focus */
@@ -161,7 +161,7 @@
   left @sliderTransitionDuration @defaultEasing
 ;
 
-@toggleLaneBackground: @transparentBlack;
+@toggleLaneBackground: rgba(255,255,255,0.54)!important;
 @toggleLaneHeight: @toggleHandleSize;
 @toggleLaneVerticalOffset: 0rem;
 @toggleOffOffset: -0.05rem;
@@ -178,7 +178,7 @@
 @toggleOffLabelColor: @checkboxColor;
 
 @toggleOnLabelColor: @selectedTextColor;
-@toggleOnLaneColor: #7ba7d9;
+@toggleOnLaneColor: #f5f5f5;
 
 @toggleOnFocusLaneColor: #7ba7d9 !important;
 @toggleOnFocusLabelColor: @toggleOnLabelColor;

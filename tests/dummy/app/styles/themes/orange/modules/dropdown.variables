@@ -129,7 +129,7 @@
 @selectionHorizontalPadding: @inputHorizontalPadding;
 @selectionBorderEmWidth:  @relative1px;
 @selectionMinHeight: @inputLineHeight + (@selectionVerticalPadding * 2) - @selectionBorderEmWidth;
-@selectionBackground: @inputBackground;
+@selectionBackground: none;
 @selectionDisplay: inline-block;
 @selectionIconDistance: @inputHorizontalPadding + @glyphWidth + 0.5em;
 @selectionPadding: @selectionVerticalPadding @selectionIconDistance @selectionVerticalPadding @selectionHorizontalPadding;
@@ -199,7 +199,7 @@
 @selectionVisibleTextFontWeight: normal;
 @selectionVisibleTextColor: @hoveredTextColor;
 
-@selectionVisibleBorderColor: @focusedFormMutedBorderColor;
+@selectionVisibleBorderColor: rgba(0,0,0,0.42)!important;
 @selectionVisibleBoxShadow: @raisedShadow;
 @selectionVisibleMenuBoxShadow: @raisedShadow;
 
@@ -294,7 +294,7 @@
 @activeItemColor: @selectedTextColor;
 
 /* Selected */
-@selectedBackground: #f1f7ff!important;
+@selectedBackground: #fafafa!important;
 @selectedColor: @selectedTextColor;
 
 /* Error */

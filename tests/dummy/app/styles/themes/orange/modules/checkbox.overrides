@@ -12,23 +12,21 @@
 /* Checkmark */
 .ui.checkbox label:after,
 .ui.checkbox .box:after {
-  font-family: 'Checkbox';
+    font-family: 'Checkbox';
 }
 
 /* Checked */
 .ui.checkbox input:checked ~ .box:after,
 .ui.checkbox input:checked ~ label:after {
-  content: '\e805';
-  color: #7ba7d9;
-  left: -27px;
-  color: #7ba7d9!important;
+    content: '\e805';
+    left: -26px;
 }
 
 /* Indeterminate */
 .ui.checkbox input:indeterminate ~ .box:after,
 .ui.checkbox input:indeterminate ~ label:after {
-  font-size: 12px;
-  color: #7ba7d9!important;
+    font-size: 12px;
+    color: #7ba7d9!important;
 }
 
 
@@ -39,40 +37,34 @@
 */
 
 .ui.checkbox label:after {
-  content: "";
-  display: inline-block;
-  font-size: 16px;
-  height: 16px;
-  width: 17px;
-  background: #fff;
-  position: relative;
-  border-radius: 4px;
-  top: 0px;
-  left: -25px;
-  background: #f1f8ff;
+    content: "";
+    display: inline-block;
+    font-size: 16px;
+    height: 16px;
+    width: 17px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+    top: 0px;
+    left: -25px;
+    background: #f1f8ff;
 }
 .ui.checkbox label:after{
-  content: '\e805';
-  font-family: 'Crim';
-  color: #7ba7d9;
-  border-color: #7ba7d9;
-  font-size: 15.8px;
-  border-left: none;
-  width: 14px;
+    content: '\e805';
+    font-family: 'Crim';
+    color: #7ba7d9;
+    border-color: #7ba7d9;
+    font-size: 15.8px;
+    border-left: none;
+    width: 14px;
 }
 .ui.checkbox .box:before,
 .ui.checkbox label:before {
-  border-color: #7ba7d9;
-  border-radius: 4px;
-}
-i.icon.trash.outline:hover:before {
-  color: #ff4800!important;
-}
-i.outline.icon:hover:before {
-  color: #7dd4b4!important;
+    border-color: rgba(34, 36, 38, 0.35)!important;
+    border-radius: 4px;
 }
 label.button:hover {
-  background: #fff!important;
+    background: #fff!important;
 }
 
 

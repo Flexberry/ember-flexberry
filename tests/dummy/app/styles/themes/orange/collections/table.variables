@@ -47,7 +47,7 @@
 @headerVerticalPadding: @relativeSmall;
 @headerHorizontalPadding: @cellHorizontalPadding;
 @headerFontStyle: none;
-@headerFontWeight: bold;
+@headerFontWeight: 400;
 @headerTextTransform: none;
 @headerBoxShadow: none;
 
@@ -132,7 +132,7 @@
 
 /* Active */
 @activeColor: @textColor;
-@activeBackgroundColor: #f1f7ff;
+/*@activeBackgroundColor: rgba(0, 0, 0, 0.12)!important;*/
 @activeBoxShadow: @stateMarkerWidth 0px 0px @activeColor inset;
 
 @activeBackgroundHover: #EFEFEF;
@@ -155,12 +155,12 @@
 ;
 
 /* Striped */
-@stripedBackground: rgba(0, 0, 50, 0.02);
-@invertedStripedBackground: rgba(255, 255, 255, 0.05);
+@stripedBackground: #fff!important;
+@invertedStripedBackground: #fff!important;
 
 /* Selectable */
-@selectableBackground: #f5f8ff;
-@selectableTextColor: @selectedTextColor;
+@selectableBackground: rgba(197,225,165,0.54);
+@selectableTextColor: rgba(197, 225, 165, 0.54) !important;
 @selectableInvertedBackground: @transparentWhite;
 @selectableInvertedTextColor: @invertedSelectedTextColor;
 

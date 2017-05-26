@@ -10,7 +10,7 @@
 @fontSmoothing     : antialiased;
 
 @headerFont        : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-@pageFont          : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@pageFont          : 'Roboto';
 
 @googleFontName    : @fontName;
 @importGoogleFonts : true;

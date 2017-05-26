@@ -384,34 +384,34 @@
 @invertedHeaderBackground: #4f73b0!important;
 
 @invertedItemBackground: transparent;
-@invertedItemTextColor: #3f65a4;
+@invertedItemTextColor: #000;
 
 /* Inverted Sub Menu */
 @invertedSubMenuBackground: transparent;
-@invertedSubMenuColor: #7ba7d9;
+@invertedSubMenuColor: #000;
 
 /* Inverted Hover */
 @invertedHoverBackground: @transparentWhite;
-@invertedHoverColor: #ff4800;
+@invertedHoverColor: rgba(0,0,0,0.54);
 
 @invertedSubMenuHoverBackground: transparent;
 @invertedSubMenuHoverColor: @invertedSelectedTextColor;
 
 /* Pressed */
 @invertedMenuPressedBackground: @transparentWhite;
-@invertedMenuPressedColor: @invertedSelectedTextColor;
+@invertedMenuPressedColor: #000;
 
 /* Inverted Active */
 @invertedActiveBackground: #dcebfc;
-@invertedActiveColor: #3f65a4;
+@invertedActiveColor: rgba(0,0,0,0.87);
 @invertedArrowActiveColor: #3D3E3F;
 
 /* Inverted Active Hover  */
 @invertedActiveHoverBackground: @invertedActiveBackground;
-@invertedActiveHoverColor: #ff4800;
+@invertedActiveHoverColor: rgba(0,0,0,0.54);;
 @invertedArrowActiveHoverColor: @invertedArrowActiveColor;
 
-@invertedSubMenuActiveBackground: #dcebfc!important;;
+@invertedSubMenuActiveBackground: #f5f5f5!important;;
 @invertedSubMenuActiveColor: @white;
 
 /* Inverted Menu Divider */

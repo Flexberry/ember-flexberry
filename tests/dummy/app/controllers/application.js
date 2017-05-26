@@ -15,14 +15,17 @@ export default Ember.Controller.extend({
       if ($('.inverted.vertical.menu').hasClass('visible')) {
         $('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
         $('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        $('.bgw-opacity').addClass('hidden');
       } else {
         $('.sidebar.icon.text-menu-1').addClass('hidden-menu');
         $('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
+        $('.bgw-opacity').removeClass('hidden');
       }
 
       Ember.$('.ui.sidebar').sidebar({ onHide: function() {
         $('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
         $('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        $('.bgw-opacity').addClass('hidden');
       } });
     }
   },

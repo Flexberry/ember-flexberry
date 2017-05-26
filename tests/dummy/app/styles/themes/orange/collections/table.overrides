@@ -1,0 +1,73 @@
+.ui.celled.table tr th {
+    color: #000;
+    opacity: 0.54;
+    font-size: 12px;
+}
+.ui.celled.table tr td {
+    color: #000;
+    font-size: 15px;
+}
+.ui.table.object-list-view td {
+    overflow: inherit;
+}
+.oveflow-text {
+    overflow: hidden;
+}
+.ember-view.ember-text-field[placeholder="(нет значения)"]{
+    width: 60px;
+}
+.ui.table tr.active, .ui.table td.active {
+    background: rgba(0,0,0,0.12)!important;
+}
+/*table tr:hover {
+    background-color: rgba(197, 225, 165, 0.54) !important;
+}*/
+tr {
+    cursor: pointer;
+}
+.basic.right.pointing.ui.icon.dropdown.button {
+    background: #eee!important;
+    border: 1px solid #eee!important;
+    color: #000!important;
+    font-weight: 600;
+    webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+.basic.right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
+    color: #000!important;
+}
+.object-list-view-menu {
+    overflow: initial!important;
+}
+.ui.dropdown .menu > .item:hover {
+    background: none!important;
+}
+.ui.basic.button:focus {
+    background: none!umportant;
+}
+.left.menu.transition.visible:hover {
+    background: #f5f8ff !important;
+}
+.ui.table {
+    border-radius: 0px!important;
+    -webkit-box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.2);
+}
+.ui.striped.table > tr:nth-child(2n):hover,
+.ui.striped.table tbody tr:nth-child(2n):hover {
+    background-color: rgba(197, 225, 165, 0.54) !important;
+}
+.ui.selectable.table tbody tr:hover, .ui.table tbody tr td.selectable:hover {
+    background: rgba(197, 225, 165, 0.54) !important;
+}
+.ui.celled.table tr.positive:first-child td {
+    overflow: hidden!important;
+}
+.ui.celled.table tr[class=""]:first-child td {
+     overflow: hidden!important;
+}
+.ui.celled.table tr:first-child td:last-child {
+     overflow: inherit!important;
+}

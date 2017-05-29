@@ -7,7 +7,7 @@ export function executeTest(testName, callback) {
   let store;
   let userSettingsService;
 
-  module('Acceptance | freadonly-test | ' + testName, {
+  module('Acceptance | readonly-test | ' + testName, {
     beforeEach() {
 
       // Start application.

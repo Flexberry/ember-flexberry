@@ -355,7 +355,6 @@ test('wrap mode works properly', function(assert) {
     Ember.$.trim($textareaInput.attr('wrap')),
     'off',
     'Component\'s inner <textarea> wrap attribute \'off\'');
-
 });
 
 test('rows mode works properly', function(assert) {
@@ -385,7 +384,7 @@ test('rows mode works properly', function(assert) {
     'Component\'s inner <textarea>\'s value \'rows\' is equals to ' + rowsValue);
 
   // Check that <textarea>'s rows count is switched to default value.
-  this.set('rows', 2);
+  this.set('rows', null);
   assert.strictEqual(
     $textareaInput.prop('rows'),
     defaultRowsCount,
@@ -419,7 +418,7 @@ test('cols mode works properly', function(assert) {
     'Component\'s inner <textarea>\'s value \'cols\' is equals to ' + colsValue);
 
   // Check that <textarea>'s cols count is switched to default value.
-  this.set('cols', 20);
+  this.set('cols', null);
   assert.strictEqual(
     $textareaInput.prop('cols'),
     defaultColsCount,

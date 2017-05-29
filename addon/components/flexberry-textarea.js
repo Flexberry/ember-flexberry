@@ -68,10 +68,11 @@ export default FlexberryBaseComponent.extend({
     },
     set(key, value) {
       // IE does not handle null values.
-      if(value === null || value === undefined)
+      if (value === null || value === undefined)
       {
         return 2;
       }
+
       return value;
     }
   }),
@@ -87,10 +88,11 @@ export default FlexberryBaseComponent.extend({
     },
     set(key, value) {
       // IE does not handle null values.
-      if(value === null || value === undefined)
+      if (value === null || value === undefined)
       {
         return 20;
       }
+
       return value;
     }
   }),

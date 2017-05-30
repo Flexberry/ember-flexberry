@@ -76,6 +76,12 @@ export default FlexberryBaseComponent.extend({
     Initializes DOM-related component's properties.
   */
   didInsertElement() {
+
+    if (this.get('value') === undefined)
+    {
+      this.set('value', null);
+    }
+
     this._super(...arguments);
 
     // Initialize Semantic UI checkbox.

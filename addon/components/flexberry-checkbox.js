@@ -3,6 +3,7 @@
 */
 
 import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-component';
+import Ember from 'ember';
 
 /**
   Flexberry checkbox component with [Semantic UI checkbox](http://semantic-ui.com/modules/checkbox.html) style.
@@ -29,6 +30,18 @@ import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-co
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    Initializes component.
+  */
+  init() {
+    this._super(...arguments);
+
+    if (Ember.isNone(this.get('value')))
+    {
+      this.set('value', false);
+    }
+  },
+
   /**
     Component's wrapping <div> CSS-classes names.
 
@@ -76,12 +89,6 @@ export default FlexberryBaseComponent.extend({
     Initializes DOM-related component's properties.
   */
   didInsertElement() {
-
-    if (this.get('value') === undefined)
-    {
-      this.set('value', null);
-    }
-
     this._super(...arguments);
 
     // Initialize Semantic UI checkbox.

@@ -22,8 +22,11 @@ module.exports = function(defaults) {
         fonts: true
       }
     },
-
-});
+    babel: {
+      optional: ['es6.spec.symbols'],
+      includePolyfill: true
+    }
+  });
 
   app.import('vendor/font-icon.css');
   app.import('vendor/fonts/icons.eot', { destDir: 'assets/fonts' });
@@ -38,17 +41,17 @@ module.exports = function(defaults) {
   app.import('vendor/fonts/crim.ttf', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.woff', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.woff2', { destDir: 'assets/fonts' });
-  app.import('vendor/serviceImages/close.png', { 
-    destDir: 'assets/serviceImages' 
+  app.import('vendor/serviceImages/close.png', {
+    destDir: 'assets/serviceImages'
   });
-    app.import('vendor/serviceImages/close-hover.png', { 
-    destDir: 'assets/serviceImages' 
+    app.import('vendor/serviceImages/close-hover.png', {
+    destDir: 'assets/serviceImages'
   });
-   app.import('vendor/serviceImages/Plus.png', { 
-    destDir: 'assets/serviceImages' 
+   app.import('vendor/serviceImages/Plus.png', {
+    destDir: 'assets/serviceImages'
   });
-    app.import('vendor/serviceImages/Minus.png', { 
-    destDir: 'assets/serviceImages' 
+    app.import('vendor/serviceImages/Minus.png', {
+    destDir: 'assets/serviceImages'
   });
   /*
     This build file specifies the options for the dummy test app of this

@@ -12,7 +12,7 @@
     padding: 10px;
 }
 .ui.secondary.menu.no-margin > .ui.basic.buttons > button:hover  {
-    color: rgba(0,0,0,0.87)!important;
+    color: #f39a2e!important;
 }
 .ui.secondary.menu.no-margin > .ui.basic.buttons > button.active {
     color: #999!important;

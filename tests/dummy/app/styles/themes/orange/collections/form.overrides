@@ -26,6 +26,7 @@
 .ui.form input[type="search"]:focus, .ui.form input[type="tel"]:focus,
 .ui.form input[type="time"]:focus, .ui.form input[type="text"]:focus,
 .ui.form input[type="url"]:focus {
+    border: none!important;
     border-bottom: 2px solid rgba(0,0,0,0.87)!important;
     color: rgb(0, 0, 0) !important;
     opacity: 0.87!important;

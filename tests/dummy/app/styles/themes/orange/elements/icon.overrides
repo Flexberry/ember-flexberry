@@ -33,7 +33,7 @@ for instance `lemon icon` not `lemon outline icon` since there is only one lemon
 /* Web Content */
 i.icon {font-family: 'Crim';}
 i.icon:before {color: #000!important; opacity: 0.54!important; }
-i.icon:hover:before {color: #000!important; opacity: 1!important; }
+i.icon:hover:before {color: #f39a2e!important; opacity: 1!important; }
 i.icon.search:before {content: "\e803"; font-size: 20px; }
 i.icon.mail.outline:before { content: "\f003"; }
 i.icon.external:before { content: "\f08e"; }
@@ -60,7 +60,8 @@ i.icon.lab:before { content: "\f0c3"; }
 i.icon.mail:before { content: "\f0e0"; }
 i.icon.idea:before { content: "\f0eb"; }
 i.icon.dashboard:before { content: "\f0e4"; }
-i.icon.sitemap:before { content: "\f0e8"; }
+i.icon.sitemap:before { content: "\f0e8"; font-family: 'Crimea';}
+i.icon.sitemap:hover:before { color: #fff;}
 i.icon.alarm:before { content: "\f0f3"; font-family: 'crimea'; }
 i.icon.terminal:before { content: "\f120"; }
 i.icon.code:before { content: "\f121"; }
@@ -259,7 +260,12 @@ i.icon.minus:before { content: "\e834";
     font-size: 2px;
     position: relative;
     left: 4px;
-    top: -3px; }
+    top: -3px;
+    color: #000!important;
+    opacity: 0.54!important;}
+i.icon.minus:hover:before {
+    color: #fff!important;
+    opacity: 1!important;}
 i.icon.add.square:before { content: "\e833"; }
 i.icon.radio:before { content: "\f10c"; }
 i.icon.selected.radio:before { content: "\f192"; }
@@ -778,7 +784,7 @@ i.icon.bed:before { content: "\f236"; }
     color: rgba(0,0,0,0.54);
 }
 .ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:hover:before{
-    color: rgba(0,0,0,0.87);
+    color: #f39a2e!important;
 }
 .ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:before{
     content: "\f105";
@@ -788,7 +794,7 @@ i.icon.bed:before { content: "\f236"; }
     color: rgba(0,0,0,0.54);
 }
 .ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:hover:before{
-    color: rgba(0,0,0,0.87);
+    color: #f39a2e!important;
 }
 .ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child{
     visibility: hidden;
@@ -804,7 +810,7 @@ i.icon.bed:before { content: "\f236"; }
     color: rgba(0, 0, 0, 0.54);
 }
 .ui.secondary.menu.no-margin.ember-view > button:first-child:hover:before {
-    color: rgba(0, 0, 0, 1)!important;
+    color: #f39a2e!important;
 }
 .ui.secondary.menu.no-margin.ember-view > button:first-child {
     border: none!important;
@@ -828,17 +834,23 @@ i.icon.bed:before { content: "\f236"; }
     border: 1px solid #94cea8;
 }    
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(2):hover {
-    color: #fff;
-    background: #7dd4b4;
+    color: #fff!important;
+    background: #f39a2e!important;
     border: 1px solid #7dd4b4;
-    background: rgba(0, 0, 0, 0.016) !important;
+    border-radius: 2px;
+    border: 1px solid #f39a2e!important;
+    webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+    box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
 }
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:before {
     content: "\e807";
     font-family: 'Crim';
     visibility: visible;
     font-size: 21px;
-    color: rgba(0,0,0,0.54);
+}
+.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:hover:before {
+    color: #f39a2e!important;
 }
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:hover:before {
      color: rgb(0,0,0);
@@ -856,10 +868,14 @@ i.icon.bed:before { content: "\f236"; }
     border: 1px solid #7dd4b4;
 }
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2):hover {
-    color: #fff;
-    background: #94cea8;
-    border: 1px solid #94cea8;
-    background: rgba(0, 0, 0, 0.016) !important;
+    background: #f39a2e!important;
+    border: 1px solid #7dd4b4;
+    border-radius: 2px;
+    border: 1px solid #f39a2e!important;
+    webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+    box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
+    color: #fff!important;
 }
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):before {
     content: "\e814";
@@ -867,6 +883,9 @@ i.icon.bed:before { content: "\f236"; }
     visibility: visible;
     font-size: 21px;
     color: rgba(0,0,0,0.44);
+}
+.ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover:before {
+    color: #f39a2e!important;
 }
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3) {
     border: none!important;
@@ -981,10 +1000,10 @@ button:before:hover {
     color: #000!important; opacity: 1!important; 
 }
 .ui.buttons .ui.icon.button:hover .large.icon:before {
-     color: #000000!important;
+     color: #f39a2e!important;
 }
 .ui.positive.button:hover:before {
-    color: rgba(0,0,0,0.54)!important;
+    color: #fff!important;
 } 
 .ui.negative.button:hover:before {
     color: #fff!important;
@@ -1049,7 +1068,7 @@ button:before:hover {
     padding: 0.8571em 1.284em 0.8571em!important;
 }
 i.icon.calendar:hover:before {
-    color: #000!important; opacity: 1!important; 
+    color: #f39a2e!important; opacity: 1!important; 
 }
 
 .flexberry-lookup > .ui.fluid > button > i.icon.remove:before {

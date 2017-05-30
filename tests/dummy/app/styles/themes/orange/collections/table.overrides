@@ -1,4 +1,4 @@
-.ui.celled.table tr th {
+.ui.celled.table thead tr {
     color: #000;
     opacity: 0.54;
     font-size: 12px;
@@ -34,8 +34,22 @@ tr {
     -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
+.basic.right.pointing.ui.icon.dropdown.button:hover {
+    color: #fff!important;
+    background: #f39a2e!important;
+    border: 1px solid #7dd4b4;
+    border-radius: 2px;
+    border: 1px solid #f39a2e!important;
+    webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+    box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
+}
+.basic.right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before{
+    color: #fff!important;
+}
 .basic.right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
-    color: #000!important;
+    color: #fff!important;
+    opacity:1;
 }
 .object-list-view-menu {
     overflow: initial!important;
@@ -71,3 +85,24 @@ tr {
 .ui.celled.table tr:first-child td:last-child {
      overflow: inherit!important;
 }
+.JCLRgrip {
+    top: 65px!important;
+}
+.left.menu.transition.visible .item:hover {
+    background: #e0e0e0 !important;
+}
+.ui.tiny.buttons .button:hover, .ui.tiny.buttons .or, .ui.tiny.button:hover {
+    font-size: 0.85714286rem;
+    color: #fff!important;
+    background: #f39a2e!important;
+    opacity: 1;
+    border: 1px solid #7dd4b4;
+    border-radius: 2px;
+    border: 1px solid #f39a2e!important;
+    webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+    box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
+} 
+.sort-direction-cell {
+    overflow: inherit!important;
+}   

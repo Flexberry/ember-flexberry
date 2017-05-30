@@ -6,14 +6,17 @@
   color: #FFFFFF;
 }
 .ui.icon.button:hover{
-  color: #000!important;
+  color: #f39a2e!important;
 }
 .ui.button:hover {
-  color: #000!important;
-  border:1px solid #94cea8;
-  webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  color: #fff!important;
+  background: #f39a2e!important;
+  border: 1px solid #7dd4b4;
+  border-radius: 2px;
+  border: 1px solid #f39a2e!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
 }
 .ui.button{
   padding: 0px 18px;
@@ -95,10 +98,10 @@ i.icon.remove:before:hover {
 } 
 .ui.negative.buttons .button, .ui.negative.button,   
 .ui.positive.buttons .button, .ui.positive.button {
-  background: none!important;
   webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  background: #eee!important;
 }
 .stackable.grid.container p:last-child .ui.positive.button {
   background: #7dd4b4!important;
@@ -107,13 +110,26 @@ i.icon.remove:before:hover {
   background: #ff4800!important;
 }
 .ui.negative.buttons .button:hover, .ui.negative.button:hover   {
-  background: rgba(243, 154, 47,0.54)!important;
-  border: 1px solid  rgba(243, 154, 47,0.54)!important;
+  color: #fff!important;
+  background: #f39a2e!important;
+  border: 1px solid #7dd4b4;
+  border-radius: 2px;
+  border: 1px solid #f39a2e!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
 }
 .ui.positive.buttons .button, .ui.positive.button:hover {
-  background: rgba(0,0,0,0.016)!important;
+  color: #fff!important;
+  background: #f39a2e!important;
+  border: 1px solid #7dd4b4;
+  border-radius: 2px;
+  border: 1px solid #f39a2e!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
 }
-.ui.positive.button:hover .flexberry-edit-panel > button:before{
+.ui.positive.button:hover .flexberry-edit-panel > button:before {
   color: #fff!important;
 }
 .ui.buttons:not(.basic):not(.inverted) {
@@ -144,10 +160,11 @@ i.icon.remove:before:hover {
   border-color: #7dd4b4!important;
 }
 .ember-view.groupedit-toolbar > button:hover i.icon:before {
-  color: #7dd4b4!important;
+  color: #fff!important;
+  opacity: 1;
 }
 .ui.action.input > button:hover i.search:before {
-  color: #7dd4b4!important;
+  color: #f39a2e!important;
 }
 .cell .button:hover{
   background: #fff!important;
@@ -169,14 +186,36 @@ i.icon.remove:before:hover {
   border: 1px solid #7ba7d9;
 }
 #columnConfigurtionButtonSave:hover {
+  color: #fff!important;
+  background: #f39a2e!important;
+  opacity: 1;
+  border: 1px solid #7dd4b4;
+  border-radius: 2px;
+  border: 1px solid #f39a2e!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
+}
+#columnConfigurtionButtonSave:hover {
   border: 1px solid #94cea8;
 }
 #columnConfigurtionButtonUse {
   display: flex;
   align-items: center;
 }
+#columnConfigurtionButtonUse:hover {
+  color: #fff!important;
+  background: #f39a2e!important;
+  opacity: 1;
+  border: 1px solid #7dd4b4;
+  border-radius: 2px;
+  border: 1px solid #f39a2e!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
+}
 .ui.icon.tiny.button:hover i.icon.chevron.down:before {
-  color: #000!important;
+  color: #fff!important;
 }
 .ui.icon.tiny.button:hover i.icon.chevron.up:before {
   color: #fff!important;
@@ -185,7 +224,7 @@ i.icon.remove:before:hover {
   border: 1px solid #ff4800!important;
 }
 .ui.ui-delete.button:hover i.icon.minus:before{
-  color: #ff4800!important;
+  color: #fff!important;
 }
 .icon.button:hover .i.icon.table:before {
   color: #7ba7d9!important;
@@ -212,5 +251,33 @@ i.icon.remove:before:hover {
 .ui.ui-add.button {
   padding: 0px 9px!important;
   height: 30px!important;
+}
+.ui.ui-delete.button:hover {
+  color: #fff!important;
+  background: #f39a2e!important;
+  border: 1px solid #7dd4b4;
+  border-radius: 2px;
+  border: 1px solid #f39a2e!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
+}
+.ui.ui-add.button:hover {
+  color: #fff!important;
+  background: #f39a2e!important;
+  border: 1px solid #7dd4b4;
+  border-radius: 2px;
+  border: 1px solid #f39a2e!important;
+  webkit-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
+  box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
+}
+.ui.ui-delete.button:hover i.icon.plus:before{
+  color: #fff!important;
+  opacity: 1!important;
+}
+.ui.ui-add.button:hover i.icon.minus:before {
+  color: #fff!important;
+  opacity: 1!important;
 }
 

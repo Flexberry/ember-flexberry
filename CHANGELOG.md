@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Blueprints:
     * Changed regular expression in `flexberry-core` for cyrillic support.
+* Changed componenet `flexberry-darepicker` classNames: add class `flexberry-datepicker`.
+* Component's template:
+  * Changed readonly attribute for `flexberry-darepicker`.
+  * Changed button's classes.
 
 ## [0.9.0-beta.9] - 2017-05-19
 ### Added

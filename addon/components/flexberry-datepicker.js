@@ -104,7 +104,7 @@ export default FlexberryBaseComponent.extend({
     @type Array
     @readOnly
   */
-  classNames: ['ui', 'icon', 'input'],
+  classNames: ['ui', 'icon', 'input', 'flexberry-datepicker'],
 
   /**
     Init component when DOM is ready.

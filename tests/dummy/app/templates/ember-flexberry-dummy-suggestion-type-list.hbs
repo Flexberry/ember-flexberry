@@ -1,5 +1,5 @@
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-type-list.caption"}}</h3>
-<div class="row">
+<div class="ui {{state}} row form">
   {{flexberry-simpleolv
     content=model
     modelName="ember-flexberry-dummy-suggestion-type"
@@ -7,6 +7,7 @@
     editFormRoute=editFormRoute
     createNewButton=true
     refreshButton=true
+    exportExcelButton=true
     sorting=computedSorting
     orderable=true
     pages=pages

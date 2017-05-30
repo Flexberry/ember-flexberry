@@ -1,11 +1,16 @@
 import Ember from 'ember';
 
 export let Serializer = Ember.Mixin.create({
-  attrs: {
+  getAttrs: function () {
+    let parentAttrs = this._super();
+    let attrs = {
 <%= serializerAttrs %>
+    };
+
+    return Ember.$.extend(true, {}, parentAttrs, attrs);
   },
-  /**
-  * Field name where object identifier is kept.
-  */
-  primaryKey: '__PrimaryKey'
+  init: function () {
+    this.set('attrs', this.getAttrs());
+    this._super(...arguments);
+  }
 });

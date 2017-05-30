@@ -6,39 +6,44 @@
   "parentClassName": null,
   "attrs": [
     {
-      "name": "voteType",
-      "type": "ember-flexberry-dummy-vote-type",
-      "flexberryType": "VoteType",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
       "name": "createTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "creator",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editor",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "voteType",
+      "type": "ember-flexberry-dummy-vote-type",
+      "flexberryType": "VoteType",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
     }
   ],
   "belongsTo": [
@@ -50,10 +55,10 @@
       "inverse": null
     },
     {
-      "polymorphic": false,
+      "polymorphic": true,
       "presence": true,
       "name": "suggestion",
-      "relatedTo": "ember-flexberry-dummy-suggestion",
+      "relatedTo": "ember-flexberry-dummy-post-suggestion",
       "inverse": "userVotes"
     }
   ],
@@ -116,7 +121,7 @@
           "index": 1,
           "caption": "",
           "name": "suggestion",
-          "relatedTo": "ember-flexberry-dummy-suggestion",
+          "relatedTo": "ember-flexberry-dummy-post-suggestion",
           "inverse": null
         },
         {
@@ -142,5 +147,7 @@
       ],
       "hasMany": []
     }
-  ]
+  ],
+  "stored": true,
+  "offline": true
 }

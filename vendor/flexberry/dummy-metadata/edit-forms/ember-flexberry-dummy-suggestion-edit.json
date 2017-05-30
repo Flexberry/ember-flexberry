@@ -63,7 +63,7 @@
   "attrs": [],
   "projections": [
     {
-      "modelName": "ember-flexberry-dummy-suggestion",
+      "modelName": "ember-flexberry-dummy-post-suggestion",
       "modelProjection": "SuggestionE"
     }
   ]

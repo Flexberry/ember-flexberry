@@ -46,6 +46,17 @@
     </button>
   </div>
 {{/if}}
+{{#if exportExcelButton}}
+  <div class="ui buttons">
+    <button class="ui button icon {{buttonClass}}" {{action "showExportDialog"}}>
+      <i class="large file excel outline icon"></i>
+    </button>
+    {{flexberry-menu
+      items=exportExcelItems
+      onItemClick=(action "onExportMenuItemClick")
+    }}
+  </div>
+{{/if}}
 {{#if colsConfigButton}}
   <div class="ui buttons">
     <button class="ui icon button" {{action "showConfigDialog"}}>

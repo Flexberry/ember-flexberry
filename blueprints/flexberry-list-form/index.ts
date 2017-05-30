@@ -8,6 +8,7 @@ import lodash = require('lodash');
 const stripBom = require("strip-bom");
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
+import CommonUtils from '../flexberry-common/CommonUtils';
 
 module.exports = {
   description: 'Generates an ember list-form for flexberry.',
@@ -16,6 +17,28 @@ module.exports = {
     { name: 'file', type: String },
     { name: 'metadata-dir', type: String }
   ],
+
+  supportsAddon: function () {
+    return false;
+  },
+
+  _files: null,
+
+  files: function() {
+    if (this._files) { return this._files; }
+    if (this.options.dummy) {
+      this._files=CommonUtils.getFilesForGeneration(this, function(v) { return v === "app/templates/__name__.hbs" || v === "app/templates/__name__/loading.hbs"; });
+    } else {
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs" || v === "tests/dummy/app/templates/__name__/loading.hbs"; });
+    }
+    return this._files;
+  },
+
+  afterInstall: function (options) {
+    if (this.project.isEmberCLIAddon()) {
+      CommonUtils.installFlexberryAddon(options, ["controller", "route"]);
+    }
+  },
 
   /**
    * Blueprint Hook locals.

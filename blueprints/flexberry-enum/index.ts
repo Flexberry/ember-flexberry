@@ -5,6 +5,8 @@ import metadata = require('MetadataClasses');
 import fs = require("fs");
 import path = require('path');
 const stripBom = require("strip-bom");
+import lodash = require('lodash');
+import CommonUtils from '../flexberry-common/CommonUtils';
 
 module.exports = {
 
@@ -15,7 +17,15 @@ module.exports = {
     { name: 'metadata-dir', type: String }
   ],
 
+  supportsAddon: function () {
+    return false;
+  },
 
+  afterInstall: function (options) {
+    if (this.project.isEmberCLIAddon()) {
+      CommonUtils.installFlexberryAddon(options, ["enum", "transform"]);
+    }
+  },
 
   /**
    * Blueprint Hook locals.

@@ -76,6 +76,15 @@ export default Ember.Mixin.create({
   filter: null,
 
   /**
+    Result predicate with all restrictions for olv.
+
+    @property resultPredicate
+    @type BasePredicate
+    @default null
+   */
+  resultPredicate: null,
+
+  /**
     Condition for predicate uses at filter by any match, can be `or` or `and`.
 
     @property filterCondition
@@ -124,11 +133,15 @@ export default Ember.Mixin.create({
     */
     filterByAnyMatch(pattern, filterCondition) {
       if (this.get('filter') !== pattern) {
-        this.setProperties({
-          filterCondition: filterCondition,
-          filter: pattern,
-          page: 1
-        });
+        this.set('state', 'loading');
+        let _this = this;
+        Ember.run.later((function() {
+          _this.setProperties({
+            filterCondition: filterCondition,
+            filter: pattern,
+            page: 1
+          });
+        }), 50);
       }
     },
   },

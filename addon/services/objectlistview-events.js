@@ -3,6 +3,7 @@
  */
 
 import Ember from 'ember';
+import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Service for triggering objectlistview events.
@@ -164,5 +165,35 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   geSortApplyTrigger(componentName, sorting) {
     this.trigger('geSortApply', componentName, sorting);
+  },
+
+  /**
+    Current limit function for OLV.
+
+    @property currentLimitFunction
+    @type BasePredicate
+    @default undefined
+  */
+  currentLimitFunction: undefined,
+
+  /**
+    Sets current limit function for OLV.
+
+    @method setLimitFunction
+
+    @param {BasePredicate} limitFunction Current limit function.
+  */
+  setLimitFunction(limitFunction) {
+    this.set('currentLimitFunction', limitFunction instanceof BasePredicate ? limitFunction : undefined);
+  },
+
+  /**
+    Gets current limit function for OLV.
+
+    @method getLimitFunction
+    @return {BasePredicate} Current limit function.
+  */
+  getLimitFunction() {
+    return this.get('currentLimitFunction');
   }
 });

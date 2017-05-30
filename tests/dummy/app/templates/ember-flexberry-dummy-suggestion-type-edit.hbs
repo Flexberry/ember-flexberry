@@ -74,6 +74,7 @@
     <label>{{t "forms.ember-flexberry-dummy-suggestion-type-edit.localized-types-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionTypeLocalizedTypesGroupEdit"
+      mainModelProjection=modelProjection
       content=model.localizedTypes
       modelProjection=modelProjection.attributes.localizedTypes
       orderable=false

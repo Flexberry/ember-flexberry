@@ -110,6 +110,11 @@ ErrorableControllerMixin, {
     }
   }),
 
+  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+  }),
+
   /**
     Main model projection. Accepts object projections.
     Needs for support locales of captions.
@@ -132,16 +137,6 @@ ErrorableControllerMixin, {
     @default true
   */
   allowColumnResize: true,
-
-  /**
-    Flag indicates whether columns resizable plugin already was initialized.
-
-    @property _colResizableInit
-    @type Boolean
-    @default false
-    @private
-  */
-  _colResizableInit: false,
 
   /**
     Table add column to sorting action name.
@@ -562,6 +557,13 @@ ErrorableControllerMixin, {
             if (record.get('isMyFavoriteRecord')) {
               Ember.set(rowConfig, 'customClass', 'my-fav-record');
             }
+
+            let readonlyColumns = [];
+            if (record.get('isNameColumnReadonly')) {
+              readonlyColumns.push('name');
+            }
+
+            Ember.set(rowConfig, 'readonlyColumns', readonlyColumns);
           }
         }
       });
@@ -800,8 +802,12 @@ ErrorableControllerMixin, {
     */
     createNew() {
       let editFormRoute = this.get('editFormRoute');
+      Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
       let currentController = this.get('currentController');
-      currentController.transitionToRoute(editFormRoute + '.new');
+      currentController.set('state', 'loading');
+      Ember.run.later((function() {
+        currentController.transitionToRoute(editFormRoute + '.new');
+      }), 50);
     },
 
     /**
@@ -841,8 +847,15 @@ ErrorableControllerMixin, {
       @public
     */
     removeFilter() {
-      this.set('filterText', null);
-      this.set('filterByAnyMatchText', null);
+      let _this = this;
+      if (_this.get('filterText')) {
+        _this.get('currentController').set('state', 'loading');
+      }
+
+      Ember.run.later((function() {
+        _this.set('filterText', null);
+        _this.set('filterByAnyMatchText', null);
+      }), 50);
     },
 
     /**
@@ -865,6 +878,18 @@ ErrorableControllerMixin, {
     showConfigDialog(settingName) {
       Ember.assert('showConfigDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
       this.get('currentController').send('showConfigDialog', this.componentName, settingName);
+    },
+
+    /**
+      Action to show export dialog.
+
+      @method actions.showExportDialog
+      @public
+    */
+    showExportDialog(settingName, immediateExport) {
+      let settName = settingName ? 'ExportExcel/' + settingName : settingName;
+      Ember.assert('showExportDialog:: componentName is not defined in flexberry-objectlistview component', this.componentName);
+      this.get('currentController').send('showConfigDialog', this.componentName, settName, true, immediateExport);
     },
 
     /**
@@ -933,6 +958,46 @@ ErrorableControllerMixin, {
           let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
           let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
           this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
+          break;
+      }
+    },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onExportMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onExportMenuItemClick(e) {
+      let iTags = Ember.$(e.currentTarget).find('i');
+      let namedSettingSpans = Ember.$(e.currentTarget).find('span');
+      if (iTags.length <= 0 || namedSettingSpans.length <= 0) {
+        return;
+      }
+
+      this._router = getOwner(this).lookup('router:main');
+      let className = iTags.get(0).className;
+      let namedSetting = namedSettingSpans.get(0).innerText;
+      let componentName  =  this.componentName;
+      let userSettingsService = this.get('userSettingsService');
+
+      switch (className) {
+        case 'file excel outline icon':
+          this.send('showExportDialog');
+          break;
+        case 'checkmark box icon':
+          this.send('showExportDialog', namedSetting, true);
+          break;
+        case 'setting icon':
+          this.send('showExportDialog', namedSetting);
+          break;
+        case 'remove icon':
+          userSettingsService.deleteUserSetting(componentName, namedSetting, true)
+          .then(result => {
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
+            alert('Настройка ' + namedSetting + ' удалена');
+          });
           break;
       }
     },
@@ -1043,17 +1108,7 @@ ErrorableControllerMixin, {
       }
     }
 
-    if (!this._colResizableInit) {
-      let $currentTable = this.$('table.object-list-view');
-      if (this.get('allowColumnResize')) {
-        $currentTable.addClass('fixed');
-        this._reinitResizablePlugin();
-      } else {
-        $currentTable.colResizable({ disable: true });
-      }
-
-      this.set('_colResizableInit', true);
-    }
+    this._setColumnWidths();
 
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
     Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
@@ -1104,13 +1159,48 @@ ErrorableControllerMixin, {
   */
   _reinitResizablePlugin() {
     let $currentTable = this.$('table.object-list-view');
+    let cols = this.get('columns');
+    let helper = this.get('showHelperColumn');
+    let menu = this.get('showMenuColumn');
+    let disabledColumns = [];
+    let fixedColumns = this.get('currentController.defaultDeveloperUserSettings');
+    fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    let fixedColumnsWidth = fixedColumns.filter(({ width }) => width);
+    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+    for (let k = 0; k < fixedColumnsWidth.length; k++) {
+      if (fixedColumnsWidth[k].propName === 'OlvRowMenu') {
+        this.$('.object-list-view-menu').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+      }
+
+      if (fixedColumnsWidth[k].propName === 'OlvRowToolbar') {
+        this.$('.object-list-view-operations').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+      }
+    }
+
+    if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
+      disabledColumns.push(0);
+    }
+
+    if (menu && fixedColumns.indexOf('OlvRowMenu') > -1) {
+      disabledColumns.push(helper ? cols.length : cols.length - 1);
+    }
+
+    for (let i = 0; i < cols.length; i++) {
+      let col = cols[i];
+      if (fixedColumns.indexOf(col.propName) > -1) {
+        disabledColumns.push(i);
+        disabledColumns.push(helper ? i + 1 : i - 1);
+      }
+    }
 
     // Disable plugin and then init it again.
     $currentTable.colResizable({ disable: true });
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode: 'flex',
+      disabledColumns: disabledColumns,
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);
@@ -1157,9 +1247,10 @@ ErrorableControllerMixin, {
       let width = userColumnInfo.width;
 
       Ember.assert('Property name is not defined at saved user setting.', propName);
-      Ember.assert('Column width is not defined at saved user setting.', width !== undefined);
 
-      hashedUserSetting[propName] = width;
+      if (width !== undefined) {
+        hashedUserSetting[propName] = width;
+      }
     });
 
     let $columns = $objectListView.find('th');
@@ -1180,9 +1271,9 @@ ErrorableControllerMixin, {
   },
 
   _setColumnsUserSettings() {
-    this._setColumnWidths();
     this._setColumnsOrder();
     this._setColumnsSorting();
+    this._setColumnWidths();
   },
 
   /**
@@ -1294,7 +1385,7 @@ ErrorableControllerMixin, {
 
       userWidthSettings.push({
         propName: currentPropertyName,
-        width: currentColumnWidth,
+        width: currentColumnWidth
       });
     });
     this._setCurrentColumnsWidth();
@@ -2061,6 +2152,15 @@ ErrorableControllerMixin, {
   colsConfigButton: true,
 
   /**
+    Flag indicates whether to show exportExcelButton button at toolbar.
+
+    @property exportExcelButton
+    @type Boolean
+    @default false
+  */
+  exportExcelButton: false,
+
+  /**
     Flag to use filter button at toolbar.
 
     @property filterButton
@@ -2146,6 +2246,23 @@ ErrorableControllerMixin, {
   }),
 
   /**
+    @property listNamedExportSettings
+  */
+  listNamedExportSettings: undefined,
+
+  _listNamedExportSettings: Ember.observer('listNamedExportSettings', function() {
+    let listNamedExportSettings = this.get('listNamedExportSettings');
+    for (let namedSetting in listNamedExportSettings) {
+      let settName = namedSetting.split('/');
+      settName.shift();
+      settName = settName.join('/');
+      this._addNamedSetting(settName, true);
+    }
+
+    this._sortNamedSetting(true);
+  }),
+
+  /**
     @property colsConfigMenu
     @type Service
   */
@@ -2215,6 +2332,49 @@ ErrorableControllerMixin, {
 
       this.colsSettingsItems = [rootItem];
       return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
+    }
+  ),
+
+  /**
+    @property exportExcelItems
+    @readOnly
+  */
+  exportExcelItems:  Ember.computed(function() {
+      let i18n = this.get('i18n');
+      let menus = [
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.export-title',
+          items: []
+        },
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.edit-setting-title',
+          items: []
+        },
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.remove-setting-title',
+          items: []
+        }
+      ];
+      let rootItem = {
+        icon: 'dropdown icon',
+        iconAlignment: 'right',
+        title: '',
+        items: [],
+        localeKey: ''
+      };
+      let createSettitingItem = {
+        icon: 'file excel outline icon',
+        iconAlignment: 'left',
+        title: i18n.t('components.olv-toolbar.create-setting-title'),
+        localeKey: 'components.olv-toolbar.create-setting-title'
+      };
+      rootItem.items[rootItem.items.length] = createSettitingItem;
+      rootItem.items.push(...menus);
+
+      return [rootItem];
     }
   ),
 
@@ -2309,20 +2469,23 @@ ErrorableControllerMixin, {
   _updateListNamedUserSettings() {
     this._resetNamedUserSettings();
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+    Ember.set(this, 'listNamedExportSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName, true));
   },
 
   _resetNamedUserSettings() {
     let menus = this.get('menus');
     for (let i = 0; i < menus.length; i++) {
       Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', []);
+      Ember.set(this.get('exportExcelItems')[0].items[i + 1], 'items', []);
     }
   },
 
-  _addNamedSetting(namedSetting) {
+  _addNamedSetting(namedSetting, isExportExcel) {
     let menus = this.get('menus');
     for (let i = 0; i < menus.length; i++) {
       let icon = menus[i].icon + ' icon';
-      let subItems = this.get('colsSettingsItems')[0].items[i + 1].items;
+      let subItems = isExportExcel ? this.get('exportExcelItems')[0].items[i + 1].items :
+        this.get('colsSettingsItems')[0].items[i + 1].items;
       let newSubItems = [];
       let exist = false;
       for (let j = 0; j < subItems.length; j++) {
@@ -2336,19 +2499,27 @@ ErrorableControllerMixin, {
         newSubItems[subItems.length] = { title: namedSetting, icon: icon, iconAlignment: 'left' };
       }
 
-      Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
+      if (isExportExcel) {
+        Ember.set(this.get('exportExcelItems')[0].items[i + 1], 'items', newSubItems);
+      } else {
+        Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
+      }
     }
 
-    this._sortNamedSetting();
+    this._sortNamedSetting(isExportExcel);
   },
 
   _deleteNamedSetting(namedSetting) {
     this._updateListNamedUserSettings();
   },
 
-  _sortNamedSetting() {
+  _sortNamedSetting(isExportExcel) {
     for (let i = 0; i < this.menus.length; i++) {
-      this.get('colsSettingsItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
+      if (isExportExcel) {
+        this.get('exportExcelItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
+      } else {
+        this.get('colsSettingsItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
+      }
     }
   }
 });

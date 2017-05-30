@@ -1,0 +1,13 @@
+﻿{
+  "propertyLookup": [],
+  "caption": null,
+  "name": "EmberFlexberryDummyChildLevel2Edit",
+  "className": "ChildLevel2Edit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-child-level2",
+      "modelProjection": "AllProps2"
+    }
+  ]
+}

@@ -22,7 +22,7 @@ testem.log
 .tern-port
 .dir-locals.el
 /blueprints/.vscode
-**/tsconfig.json
+/tsconfig.json
 /blueprints/.editorconfig
 /.vscode
 

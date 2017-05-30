@@ -8,6 +8,8 @@ import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import Locales from '../flexberry-core/Locales';
+import CommonUtils from '../flexberry-common/CommonUtils';
+import ModelBlueprint from '../flexberry-model/ModelBlueprint';
 
 const componentMaps = [
   { name: "flexberry-file", types: ["file"] },
@@ -16,7 +18,6 @@ const componentMaps = [
   { name: "flexberry-field", types: ["string", "number", "decimal"] }
 ];
 
-
 module.exports = {
   description: 'Generates an ember edit-form for flexberry.',
 
@@ -24,6 +25,28 @@ module.exports = {
     { name: 'file', type: String },
     { name: 'metadata-dir', type: String }
   ],
+
+  supportsAddon: function () {
+    return false;
+  },
+
+  _files: null,
+
+  files: function () {
+    if (this._files) { return this._files; }
+    if (this.options.dummy) {
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "app/templates/__name__.hbs"; });
+    } else {
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+    }
+    return this._files;
+  },
+
+  afterInstall: function (options) {
+    if (this.project.isEmberCLIAddon()) {
+      CommonUtils.installFlexberryAddon(options, ["controller", "route"]);
+    }
+  },
 
   /**
    * Blueprint Hook locals.
@@ -54,6 +77,9 @@ module.exports = {
     );
   }
 };
+
+
+
 
 class EditFormBlueprint {
   locales: Locales;
@@ -101,9 +127,7 @@ class EditFormBlueprint {
   }
 
   loadModel(modelName: string): metadata.Model {
-    let modelFile = path.join(this.modelsDir, modelName + ".json");
-    let content = stripBom(fs.readFileSync(modelFile, "utf8"));
-    let model: metadata.Model = JSON.parse(content);
+    let model: metadata.Model = ModelBlueprint.loadModel(this.modelsDir, modelName + ".json");
     return model;
   }
 
@@ -194,11 +218,14 @@ class EditFormBlueprint {
     let listFormsDir = path.join(this.options.metadataDir, "list-forms");
     let listForms = fs.readdirSync(listFormsDir);
     for (let form of listForms) {
+      let pp: path.ParsedPath = path.parse(form);
+      if (pp.ext != ".json")
+        continue;
       let listFormFile = path.join(listFormsDir, form);
       let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
       let listForm: metadata.ListForm = JSON.parse(content);
       if (this.options.entity.name === listForm.editForm) {
-        parentRoute = path.parse(form).name;
+        parentRoute = pp.name;
       }
     }
     return parentRoute;

@@ -493,6 +493,15 @@ Ember.$.extend(true, translations, {
       'delete-error-message-caption': 'Delete operation failed'
     },
 
+    'list-form': {
+      'delete-success-message-caption': 'Delete operation succeed',
+      'delete-success-message': 'Object deleted',
+      'delete-error-message-caption': 'Delete operation failed',
+      'load-success-message-caption': 'Load operation succeed',
+      'load-success-message': 'Object loaded',
+      'load-error-message-caption': 'Load operation failed'
+    },
+
     'ember-flexberry-dummy-application-user-edit': {
       'caption': 'Application user',
       'name-caption': 'Name',

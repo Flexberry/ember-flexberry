@@ -1870,6 +1870,8 @@ export default FlexberryBaseComponent.extend(
     @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
   */
   _deleteRecord(record, immediately) {
+    let _this = this.get('currentController');
+    _this.onDeleteActionStarted();
     let beforeDeleteRecord = this.get('beforeDeleteRecord');
     if (beforeDeleteRecord) {
       Ember.assert('beforeDeleteRecord must be a function', typeof beforeDeleteRecord === 'function');
@@ -1890,9 +1892,12 @@ export default FlexberryBaseComponent.extend(
 
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
+      _this.onDeleteActionFulfilled();
     }) : record.deleteRecord()).catch((reason) => {
-      this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
+      _this.onDeleteActionRejected(reason, record);
       record.rollbackAll();
+    }).finally((data) => {
+      _this.onDeleteActionAlways(data);
     });
 
     let componentName = this.get('componentName');

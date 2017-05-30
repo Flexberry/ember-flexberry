@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* Blueprints:
+    * Now `custom-inflector-rules` generates capitalized plural words. 
 
 ## [0.9.0-beta.10] - 2017-05-29
 ### Changed

@@ -3,7 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.0-beta.10] - 2017-05-29
 ### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.5
 * Blueprints:
     * Changed regular expression in `flexberry-core` for cyrillic support.
 

@@ -43,15 +43,9 @@ export default ListFormRoute.extend({
 
   actions: {
     objectListViewRowClick(record, params) {
-      var cellIndex = params.originalEvent.currentTarget.cellIndex;
-      var $tBodyTable = $(params.originalEvent.currentTarget.closest('tbody'));
-      if ($tBodyTable.find('tr').find('td:eq(0)').hasClass('hidden')) {
-        cellIndex--;
-      }
-
-      var $table = $(params.originalEvent.currentTarget.closest('table'));
-      var nameColumn = $table.find('thead tr').find('th:eq(' + cellIndex + ') div:eq(0) span:eq(0)').text().trim();
-      if (nameColumn === 'File') {
+      // Prevent transition to edit form if cell containing 'flexberry-file' component has been clicked,
+      // and click target isn't cell itself (so target is some element of 'flexberry-file' component).
+      if (params.column && params.column.cellComponent.componentName === 'flexberry-file' && params.originalEvent.target.tagName.toLowerCase() !== 'td') {
         params.goToEditForm = false;
       }
 

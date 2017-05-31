@@ -496,16 +496,6 @@ export default Ember.Controller.extend({
           title: i18n.t('forms.application.sitemap.user-setting-forms.user-setting-delete.title'),
           children: null
         }]
-      }, {
-        link: null,
-        caption: i18n.t('forms.application.sitemap.components-acceptance-tests.caption'),
-        title: i18n.t('forms.application.sitemap.components-acceptance-tests.title'),
-        children: [{
-          link: 'components-acceptance-tests/edit-form-readonly',
-          caption: i18n.t('forms.application.sitemap.integration-examples.edit-form.readonly-mode.caption'),
-          title: i18n.t('forms.application.sitemap.integration-examples.edit-form.readonly-mode.title'),
-          children: null
-        }]
       }]
     };
   })

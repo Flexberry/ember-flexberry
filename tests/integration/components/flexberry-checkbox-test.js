@@ -89,7 +89,7 @@ test('Component renders it\'s label properly', function(assert) {
 });
 
 test('Changes in checkbox causes changes in binded value', function(assert) {
-  assert.expect(9);
+  assert.expect(12);
 
   this.render(hbs`{{flexberry-checkbox value=flag}}`);
 
@@ -101,6 +101,7 @@ test('Changes in checkbox causes changes in binded value', function(assert) {
   assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' before first click');
   assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before first click');
   assert.strictEqual(Ember.typeOf(this.get('flag')), 'undefined', 'Component\'s binded value is \'undefined\' before first click');
+  assert.strictEqual($checkboxInput.attr('checked'), undefined, 'Component hasn\'t attribute \'checked\' before first click');
 
   // Imitate click on component (change it's state to checked) & check it's state again.
   // Sometimes ember recognizes programmatical imitations of UI-events as asynchrony, so we should wrap them into Ember.run.
@@ -109,6 +110,7 @@ test('Changes in checkbox causes changes in binded value', function(assert) {
     assert.strictEqual($component.hasClass('checked'), true, 'Component has css-class \'checked\' after click');
     assert.strictEqual($checkboxInput.prop('checked'), true, 'Component\'s inner checkbox <input> is checked after click');
     assert.strictEqual(this.get('flag'), true, 'Component\'s binded value is \'true\' after click');
+    assert.strictEqual($checkboxInput.attr('checked'), 'checked', 'Component has attribute \'checked\' after click');
   });
 
   // Imitate click on component again (change it's state to unchecked) & check it's state again.
@@ -118,11 +120,12 @@ test('Changes in checkbox causes changes in binded value', function(assert) {
     assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' after second click');
     assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked after second click');
     assert.strictEqual(this.get('flag'), false, 'Component\'s binded value is \'false\' after second click');
+    assert.strictEqual($checkboxInput.attr('checked'), undefined, 'Component hasn\'t attribute \'checked\' after second click');
   });
 });
 
 test('Changes in in binded value causes changes in checkbox', function(assert) {
-  assert.expect(7);
+  assert.expect(10);
 
   this.render(hbs`{{flexberry-checkbox value=flag}}`);
 
@@ -134,16 +137,19 @@ test('Changes in in binded value causes changes in checkbox', function(assert) {
   assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' by default');
   assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked by default');
   assert.strictEqual(Ember.typeOf(this.get('flag')), 'undefined', 'Component\'s binded value is \'undefined\' by default');
+  assert.strictEqual($checkboxInput.attr('checked'), undefined, 'Component hasn\'t attribute \'checked\' by default');
 
   // Change binded value to 'true' & check component's state again (it must be checked).
   this.set('flag', true);
   assert.strictEqual($component.hasClass('checked'), true, 'Component has css-class \'checked\' after binded value changed to \'true\'');
   assert.strictEqual($checkboxInput.prop('checked'), true, 'Component\'s inner checkbox <input> is checked after binded value changed to \'true\'');
+  assert.strictEqual($checkboxInput.attr('checked'), 'checked', 'Component has attribute \'checked\' after binded value changed to \'true\'');
 
   // Change binded value to 'false' & check component's state again (it must be unchecked).
   this.set('flag', false);
   assert.strictEqual($component.hasClass('checked'), false, 'Component hasn\'t css-class \'checked\' after binded value changed to \'false\'');
   assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked after binded value changed to \'false\'');
+  assert.strictEqual($checkboxInput.attr('checked'), undefined, 'Component hasn\'t attribute \'checked\' after binded value changed to \'false\'');
 });
 
 test('Component sends \'onChange\' action', function(assert) {

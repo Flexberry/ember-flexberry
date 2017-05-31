@@ -207,6 +207,7 @@ class EditFormBlueprint {
         belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
         belongsToAttr.readonly="true";
         belongsToAttr.type=attr.type;
+        this.locales.setupEditFormAttribute(belongsToAttr);
         this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
       }
       this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);

@@ -29,7 +29,7 @@
     </td>
     {{#each columns as |column index|}}
       <td
-        {{action rowClick record preventDefault=false}}
+        onclick={{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
         class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
@@ -87,7 +87,7 @@
           <i class="list layout icon"></i>
           <div class="left menu">
             {{#if showEditMenuItemInRow}}
-              <div class="item" {{ action rowClick record }}>
+              <div class="item" {{action "onRowClick" record (hash column=null columnIndex=null)}}>
                 <i class="edit icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
               </div>

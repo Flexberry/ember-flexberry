@@ -16,7 +16,7 @@
         <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
       {{/if}}
       {{#each columns as |column|}}
-        <th class="dt-head-left me class" onclick={{ action "headerCellClick" column }}>
+        <th class="dt-head-left me class" onclick={{action "headerCellClick" column }}>
           <div data-olv-header-property-name={{column.propName}} title={{sortTitleCompute}}>
             <span>
             {{#if column.keyLocale}}
@@ -26,7 +26,7 @@
             {{/if}}
             </span>
             {{#if column.sorted}}
-              <div class="object-list-view-order-icon" style="float:right;"> 
+              <div class="object-list-view-order-icon" style="float:right;">
                 {{#if column.sortAscending}}
                   <div title="{{t 'components.object-list-view.sort-ascending'}}">
                   ▲{{column.sortNumber}}

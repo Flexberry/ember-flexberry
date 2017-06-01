@@ -7,10 +7,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprints:
     * Changed regular expression in `flexberry-core` for cyrillic support.
 * Changed componenet `flexberry-darepicker` classNames: add class `flexberry-datepicker`.
+* Changed componenet `flexberry-simpledatetime`: remove readonlyObserver.
 * Component's template:
   * Changed readonly attribute for `flexberry-darepicker`.
-  * Changed button's classes `flexberry-darepicker`.
-  * Changed button's classes `groupedit-toolbar`.
+  * Add readonly attribute for `flexberry-simpledatetime`.
+  * Add button's classes `flexberry-darepicker`.
+  * Add button's classes `groupedit-toolbar`.
 
 ## [0.9.0-beta.9] - 2017-05-19
 ### Added

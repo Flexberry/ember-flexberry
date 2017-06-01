@@ -2,11 +2,10 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
-export function executeTest(testName, callback) {
-  let app;
-  let store;
+let app;
+const path = 'components-acceptance-tests/edit-form-readonly';
 
-  module('Acceptance | readonly-test | ' + testName, {
+module('Acceptance | edit-form | readonly-mode ', {
     beforeEach() {
 
       // Start application.
@@ -15,7 +14,6 @@ export function executeTest(testName, callback) {
       // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
       let applicationController = app.__container__.lookup('controller:application');
       applicationController.set('isInAcceptanceTestMode', true);
-      store = app.__container__.lookup('service:store');
     },
 
     afterEach() {
@@ -23,17 +21,13 @@ export function executeTest(testName, callback) {
     }
   });
 
-  test(testName, (assert) => callback(store, assert, app));
-}
-
-executeTest('controller is render properly', (store, assert, app) => {
+test('controller is render properly', (assert) => {
   assert.expect(3);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
-    assert.equal(currentPath(), path, 'Path for edit-form-readonly-test is correctly');
     let controller = app.__container__.lookup('controller:' + currentRouteName());
+    assert.equal(currentPath(), path, 'Path for edit-form-readonly-test is correctly');
     assert.strictEqual(controller.get('readonly'), true, 'Controller\'s flag \'readonly\' is enabled');
 
     controller.set('readonly', false);
@@ -41,9 +35,8 @@ executeTest('controller is render properly', (store, assert, app) => {
   });
 });
 
-executeTest('flexbery-checkbox on readonly editform', (store, assert, app) => {
+test('flexbery-checkbox on readonly editform', (assert) => {
   assert.expect(2);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
@@ -58,9 +51,8 @@ executeTest('flexbery-checkbox on readonly editform', (store, assert, app) => {
   });
 });
 
-executeTest('flexbery-textbox on readonly editform', (store, assert, app) => {
+test('flexbery-textbox on readonly editform', (assert) => {
   assert.expect(2);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
@@ -76,9 +68,8 @@ executeTest('flexbery-textbox on readonly editform', (store, assert, app) => {
   });
 });
 
-executeTest('flexberry-textarea on readonly editform', (store, assert, app) => {
+test('flexberry-textarea on readonly editform', (assert) => {
   assert.expect(2);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
@@ -94,15 +85,14 @@ executeTest('flexberry-textarea on readonly editform', (store, assert, app) => {
   });
 });
 
-executeTest('flexberry-datepicker on readonly editform', (store, assert, app) => {
+test('flexberry-datepicker on readonly editform', (assert) => {
   assert.expect(4);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
     let $datepicker = Ember.$('.not-in-groupedit .flexberry-datepicker');
-    let $datepickerInput = $datepicker.children('input.ember-text-field');
+    let $datepickerInput = $datepicker.children('input');
     assert.strictEqual(Ember.$.trim($datepickerInput.attr('readonly')), 'readonly', 'Time is readonly');
 
     let $button = $datepicker.children('.calendar');
@@ -116,15 +106,14 @@ executeTest('flexberry-datepicker on readonly editform', (store, assert, app) =>
   });
 });
 
-executeTest('flexberry-simpledatetime on readonly editform', (store, assert, app) => {
+test('flexberry-simpledatetime on readonly editform', (assert) => {
   assert.expect(2);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
     let $simpledatetime = Ember.$('.not-in-groupedit .flexberry-simpledatetime');
-    let $simpledatetimeInput = $simpledatetime.children('input.ember-text-field');
+    let $simpledatetimeInput = $simpledatetime.children('input');
     assert.strictEqual(Ember.$.trim($simpledatetimeInput.attr('readonly')), 'readonly', 'Time is readonly');
 
     controller.set('readonly', false);
@@ -134,9 +123,8 @@ executeTest('flexberry-simpledatetime on readonly editform', (store, assert, app
   });
 });
 
-executeTest('flexberry-dropdown on readonly editform', (store, assert, app) => {
+test('flexberry-dropdown on readonly editform', (assert) => {
   assert.expect(2);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
@@ -151,14 +139,12 @@ executeTest('flexberry-dropdown on readonly editform', (store, assert, app) => {
   });
 });
 
-executeTest('flexberry-file on readonly edit form', (store, assert, app) => {
+test('flexberry-file on readonly edit form', (assert) => {
   assert.expect(7);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-
     let $file = Ember.$('div.input input.flexberry-file-filename-input');
     assert.strictEqual(Ember.$.trim($file.attr('readonly')), 'readonly', 'Flexberry-file is readonly');
 
@@ -183,9 +169,8 @@ executeTest('flexberry-file on readonly edit form', (store, assert, app) => {
   });
 });
 
-executeTest('flexberry-lookup on readonly edit form', (store, assert, app) => {
+test('flexberry-lookup on readonly edit form', (assert) => {
   assert.expect(6);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
@@ -208,9 +193,8 @@ executeTest('flexberry-lookup on readonly edit form', (store, assert, app) => {
   });
 });
 
-executeTest('flexberry-lookup as dropdown on readonly edit form', (store, assert, app) => {
+test('flexberry-lookup as dropdown on readonly edit form', (assert) => {
   assert.expect(2);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
@@ -226,14 +210,13 @@ executeTest('flexberry-lookup as dropdown on readonly edit form', (store, assert
   });
 });
 
-executeTest('flexberry-groupedit on readonly edit form', (store, assert, app) => {
+test('flexberry-groupedit on readonly edit form', (assert) => {
   assert.expect(2);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let $groupedit = Ember.$('.object-list-view-container .JColResizer');
+    let $groupedit = Ember.$('.object-list-view-container table');
     assert.strictEqual($groupedit.hasClass('readonly'), true, 'Groupedit is readonly');
 
     controller.set('readonly', false);
@@ -243,14 +226,12 @@ executeTest('flexberry-groupedit on readonly edit form', (store, assert, app) =>
   });
 });
 
-executeTest('flexberry-groupedit\'s button on readonly edit form', (store, assert, app) => {
+test('flexberry-groupedit\'s button on readonly edit form', (assert) => {
   assert.expect(6);
-  let path = 'components-acceptance-tests/edit-form-readonly';
 
   visit(path);
   andThen(() => {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-
     let $addButton = Ember.$('.groupedit-toolbar .add-button');
     assert.strictEqual(Ember.$.trim($addButton.attr('disabled')), 'disabled', 'Flexberry-groupedit\'s button \'Add\' is readonly');
 

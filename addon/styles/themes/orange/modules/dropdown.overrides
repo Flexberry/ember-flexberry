@@ -71,11 +71,8 @@
 .ui.selection.active.dropdown {
     box-shadow:none!important;
 }
-.ui.menu .ui.dropdown .menu > .item:hover {
-    background: none!important;
-}
 .ui.menu .ui.dropdown .menu > .active.item {
-    background: rgba(0,0,0,0.54)!important;
+    background: #e0e0e0 !important;
     color: #fff!important;
     border-radius: 0px;
 }
@@ -111,5 +108,8 @@
 }
 .ui.icon.dropdown > .icon.dropdown:before {
     font-size:20px;
+}
+.menu.transition.visible a:hover{
+    background: #e0e0e0 !important;
 }
 

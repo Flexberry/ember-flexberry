@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   * Add button's classes `flexberry-datepicker`.
   * Add button's classes `groupedit-toolbar`.
   * Add button's classes `flexberry-lookup`.
+  * Add left menu item's classes `object-list-view-row`.
 
 ## [0.9.0-beta.9] - 2017-05-19
 ### Added

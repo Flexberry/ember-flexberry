@@ -87,13 +87,13 @@
           <i class="list layout icon"></i>
           <div class="left menu">
             {{#if showEditMenuItemInRow}}
-              <div class="item" {{ action rowClick record }}>
+              <div class="item {{if readonly "disabled"}} edit-menu" {{ action rowClick record }}>
                 <i class="edit icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
               </div>
             {{/if}}
             {{#if showDeleteMenuItemInRow}}
-              <div class="item" {{ action deleteRow record }}>
+              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action deleteRow record }}>
                 <i class="trash icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
               </div>

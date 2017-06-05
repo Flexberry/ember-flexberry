@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Blueprints:
     * Fix master fields caption generation on `edit-forms`.
+    * Fix `offline-serializers` generation.
 
 ### Changed
 * Blueprints:

@@ -280,4 +280,10 @@ i.icon.remove:before:hover {
   color: #fff!important;
   opacity: 1!important;
 }
+.ember-view.no-margin.menu.secondary.ui > button:first-child::before {
+  height: 0px!important;
+}
+.ember-view.no-margin.menu.secondary.ui > button:nth-child(3)::before {
+  height: 0px!important;
+}
 

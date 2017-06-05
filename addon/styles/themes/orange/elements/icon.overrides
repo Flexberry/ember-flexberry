@@ -857,10 +857,12 @@ i.icon.bed:before { content: "\f236"; }
 }
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child {
     border: none!important;
-    visibility: hidden;
     width: 25px;
     padding: 0px;
     display: flex;
+    font-size: 0px;
+    box-shadow: none;
+    background: none!important;
 }
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2) {
     color: #fff;
@@ -899,7 +901,7 @@ i.icon.bed:before { content: "\f236"; }
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover {
     background: none!important;
 }
-.page-header-userbar a:before {
+.page-header-userbar a:after {
     margin: 0 0 0 15px;
     font-size: 16px;
     visibility: visible;
@@ -907,12 +909,12 @@ i.icon.bed:before { content: "\f236"; }
     font-family: 'Crim';
     content: "\e81e";
 }
-.page-header-userbar a:hover:before {
+.page-header-userbar a:hover:after {
     color: #000!important; opacity: 1!important; 
 }
 .page-header-userbar a {
-    visibility: hidden;
     margin: 0px;
+    margin: 0 25px 0px 0px;
 }
 .menu.transition.visible > a:nth-child(2) >
 .menu.transition.visible > .flexberry-menuitem

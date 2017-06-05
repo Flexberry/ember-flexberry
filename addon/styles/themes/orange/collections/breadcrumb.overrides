@@ -29,4 +29,6 @@
 }
 div.ui.secondary.menu.no-margin:first-child {
      float: left!important;
+     display: flex;
+     align-items: center;
 }

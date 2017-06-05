@@ -286,4 +286,9 @@ i.icon.remove:before:hover {
 .ember-view.no-margin.menu.secondary.ui > button:nth-child(3)::before {
   height: 0px!important;
 }
-
+.ui.positive.buttons .button:focus, .ui.positive.button:focus {
+  background: #eee!important;
+}
+.ui.negative.buttons .button:focus, .ui.negative.button:focus {
+  background: #eee!important;
+}

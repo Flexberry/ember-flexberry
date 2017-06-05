@@ -808,25 +808,28 @@ i.icon.bed:before { content: "\f236"; }
     visibility: visible;
     font-size: 21px;
     color: rgba(0, 0, 0, 0.54);
+    position: relative;
+    top: 3px;
+    left: -5px;
 }
 .ui.secondary.menu.no-margin.ember-view > button:first-child:hover:before {
     color: #f39a2e!important;
+
 }
 .ui.secondary.menu.no-margin.ember-view > button:first-child {
     border: none!important;
     font-size: 0px;
     width: 25px;
     padding: 0px;
-    display: flex;
     background: none!important;
     box-shadow: none;
+    height: 0px !important;
 }
 .ui.secondary.menu.no-margin.ember-view > button:first-child:hover {
     border: none!important;
     font-size: 0px;
     width: 25px;
     padding: 0px;
-    display: flex;
 }
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(2) {
     color: #fff;
@@ -885,6 +888,8 @@ i.icon.bed:before { content: "\f236"; }
     visibility: visible;
     font-size: 21px;
     color: rgba(0,0,0,0.44);
+    position: relative;
+    top: 4px;
 }
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover:before {
     color: #f39a2e!important;
@@ -896,7 +901,6 @@ i.icon.bed:before { content: "\f236"; }
     box-shadow: none;
     width: 25px;
     padding-left: 10px;
-    display: flex;
 }
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover {
     background: none!important;
@@ -915,6 +919,7 @@ i.icon.bed:before { content: "\f236"; }
 .page-header-userbar a {
     margin: 0px;
     margin: 0 25px 0px 0px;
+    height: 10px!important;
 }
 .menu.transition.visible > a:nth-child(2) >
 .menu.transition.visible > .flexberry-menuitem
@@ -979,7 +984,8 @@ i.icon.bed:before { content: "\f236"; }
     top: -33px;
     color: #fff!important;
     font-size: 0px!important;
-    visibility: hidden;
+    background: none!important;
+    box-shadow: none;
 }
 .flexberry-edit-panel > button:nth-child(4):before {
     content: "\e806";
@@ -993,7 +999,10 @@ i.icon.bed:before { content: "\f236"; }
     color: #f39a2e!important;
 }
 .flexberry-edit-panel > button:nth-child(4):hover {
-     background: url(../assets/serviceImages/close-hover.png)center no-repeat;
+    background: url(../assets/serviceImages/close-hover.png)center no-repeat;
+    background: none!important;
+    border: none!important;
+    box-shadow: none!important;
 }
 button:before:hover {
     color: #fff!important;

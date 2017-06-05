@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Blueprints:
+    * Add some files to generation for `offline` support.
+
 ### Fixed
 * Blueprints:
     * Fix master fields caption generation on `edit-forms`.

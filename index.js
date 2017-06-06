@@ -48,7 +48,10 @@ module.exports = {
       production:  'bower_components/flatpickr-calendar/dist/flatpickr.min.js'
     });
 
-    app.import('bower_components/semantic-ui/dist/semantic.js');
+    app.import({
+      development: 'bower_components/semantic-ui/dist/semantic.js',
+      production:  'bower_components/semantic-ui/dist/semantic.min.js'
+    });
 
     app.import('bower_components/flatpickr-calendar/dist/flatpickr.min.css');
     app.import('bower_components/flatpickr-calendar/src/l10n/ru.js');

@@ -1,4 +1,4 @@
-import EditFormController from 'ember-flexberry/controllers/edit-form';
+ import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
   /**
@@ -30,6 +30,33 @@ export default EditFormController.extend({
         displayAttributeName: 'text',
         title: 'Master',
         relationName: 'master',
+        choose: 'showLookupDialog',
+        remove: 'removeLookupValue'
+      };
+    }
+
+    if (bindingPath === 'longText') {
+      return {
+        componentName: 'flexberry-textarea',
+        componentProperties: {
+        }
+      };
+    }
+
+    if (bindingPath === 'time') {
+      return {
+        componentName: 'flexberry-simpledatetime',
+        componentProperties: {
+        }
+      };
+    }
+
+    if (attr.kind === 'belongsTo' && bindingPath === 'masterDropdown') {
+      cellComponent.componentProperties = {
+        projection: 'MasterDropdownL',
+        displayAttributeName: 'text',
+        title: 'Master dropdown',
+        relationName: 'masterDropdown',
         choose: 'showLookupDialog',
         remove: 'removeLookupValue'
       };

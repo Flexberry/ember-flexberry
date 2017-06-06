@@ -78,7 +78,7 @@ test('flexbery-textbox on readonly editform', (assert) => {
 });
 
 test('flexberry-textarea on readonly editform', (assert) => {
-  assert.expect(2);
+  assert.expect(4);
 
   visit(path);
   andThen(() => {
@@ -87,9 +87,14 @@ test('flexberry-textarea on readonly editform', (assert) => {
     let $textareaInput = $textarea.children('textarea');
     assert.strictEqual(Ember.$.trim($textareaInput.attr('readonly')), 'readonly', 'Textarea is readonly');
 
+    let $textareaFGE = Ember.$('.in-groupedit .flexberry-textarea');
+    let $textareaInputFGE = $textareaFGE.children('textarea');
+    assert.strictEqual(Ember.$.trim($textareaInputFGE.attr('readonly')), 'readonly', 'Groupedit\'s textarea is readonly');
+
     controller.set('readonly', false);
     Ember.run.scheduleOnce('afterRender', () => {
       assert.strictEqual(Ember.$.trim($textareaInput.attr('readonly')), '', 'Textarea don\'t readonly');
+      assert.strictEqual(Ember.$.trim($textareaInputFGE.attr('readonly')), '', 'Groupedit\'s textarea don\'t readonly');
     });
   });
 });

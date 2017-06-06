@@ -866,6 +866,7 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 0px;
     box-shadow: none;
     background: none!important;
+    height: 0px!important;
 }
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2) {
     color: #fff;
@@ -1034,9 +1035,9 @@ button:before:hover {
     display:none;
 }
 .ui-change {
-    visibility: hidden;
-    width: 35px!important;
+    font-size: 0px!important;
     margin-left: 5px!important;
+    width: 35px!important;
 }
 .ui-change:before {
     content: "";
@@ -1081,7 +1082,6 @@ button:before:hover {
 i.icon.calendar:hover:before {
     color: #f39a2e!important; opacity: 1!important; 
 }
-
 .flexberry-lookup > .ui.fluid > button > i.icon.remove:before {
     content: "\e806";
     font-family: 'Crim';
@@ -1099,6 +1099,19 @@ i.icon.calendar:hover:before {
 .flexberry-file-upload-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
+.ui.button:hover .filter.icon:before {
+    color: #f39a2e!important;
+    opacity: 1!important;
+}
+.ui.button:hover .remove.icon:before {
+    color: #f39a2e!important;
+    opacity: 1!important;
+}
+.ui.button:hover .dropdown.icon:before {
+    color: #f39a2e!important;
+    opacity: 1!important;
+}
+
 
 
 

@@ -37,15 +37,16 @@
 .sidebar.icon.text-menu-1 {
     margin-left: 15px!important;
 }
-.bgw-head-calendar {
+.daterangepicker table thead {
     height: 80px;
     position: relative;
     background: url('../assets/serviceImages/bgw-head-calendar.png');
-    width: 253px;
+    width: 264px;
 }
 .calendar.first.single.right {
     position: absolute;
     top: 0px;
+    z-index: 99;
 }
 .daterangepicker .calendar-date {
     background: none;
@@ -53,8 +54,25 @@
 .daterangepicker.dropdown-menu.single.opensright {
     height: 300px;
     padding: 0px;
+    width: 270px!important;
 }
 .daterangepicker .ui.dropdown.monthselect,
 .daterangepicker .ui.dropdown.yearselect {
     color: #fff!important;
  }
+.daterangepicker.opensright .ranges,
+.daterangepicker.opensright .calendar,
+.daterangepicker.openscenter .ranges,
+.daterangepicker.openscenter .calendar {
+    margin: 0px!important;
+    padding: 0px!important;
+}
+.daterangepicker table {
+    width: 269px!important; 
+}
+.daterangepicker table tr th {
+    border-radius: 0px!important;
+}
+.daterangepicker .calendar.single .calendar-date {
+    padding: 0px!important;
+}

@@ -1,9 +1,11 @@
 /*******************************
         Global Overrides
 *******************************/
+
 .bgw-fix {
     position: relative;
 }
+
 .background-logo {
     position: fixed;
     display: flex;
@@ -16,14 +18,17 @@
     -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
 }
-.background-logo a{
+
+.background-logo a {
     background: #fff;
     border-radius: 15px;
     margin: 5px;
-}   
-.background-logo a img{
+}
+
+.background-logo a img {
     padding: 7px 0px;
 }
+
 .bgw-opacity {
     min-height: 90vh !important;
     width: 100%;
@@ -31,6 +36,7 @@
     position: absolute;
     z-index: 999;
 }
+
 /**ScrollBar**/
 ::-webkit-scrollbar {
     height: 8px;
@@ -57,6 +63,7 @@
     background: white;
     cursor: pointer;
 }
+
 .page-header-userbar {
     display: flex;
     position: absolute;
@@ -65,21 +72,27 @@
     align-items: center;
     font-size: 14px;
     color: #fff;
+    top: 0px;
 }
-.page-header-userbar a{
+
+.page-header-userbar a {
     background: none;
     color: #fff;
     box-shadow: none;
 }
+
 lang {
     padding: 0px!important;
 }
+
 #example .full .ui.attached.segment {
     background: #f5f5f5!important;
 }
+
 .right.item:hover label {
     color: #fff!important;
 }
+
 .full.height {
     overflow: auto;
 }

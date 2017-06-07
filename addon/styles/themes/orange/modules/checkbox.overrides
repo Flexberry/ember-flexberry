@@ -31,11 +31,11 @@
 
 /*  UTF Reference
 .check:before { content: '\e800'; }
-.dash:before  { content: '\e801'; }
+.dash:before { content: '\e801'; }
 .plus:before { content: '\e802'; }
 */
 
-.ui.checkbox label:after{
+.ui.checkbox label:after {
     content: '\e805';
     font-family: 'Crim';
     font-size: 15.8px;

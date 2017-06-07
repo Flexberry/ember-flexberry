@@ -776,32 +776,39 @@ i.icon.bed:before { content: "\f236"; }
 .ui.menu .ui.dropdown .menu > .active.item i.icon:before {
     color: #fff!important;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:before{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:before {
     content: "\f104";
     font-family: 'crimea';
     font-size: 21px;
     visibility: visible;
     color: rgba(0,0,0,0.54);
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:hover:before{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:hover:before {
     color: #f39a2e!important;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:before{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:before {
     content: "\f105";
     font-family: 'crimea';
     font-size: 21px;
     visibility: visible;
     color: rgba(0,0,0,0.54);
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:hover:before{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:hover:before {
     color: #f39a2e!important;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child {
     visibility: hidden;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child {
     visibility: hidden;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:first-child:before {
     content: "\e807";
     font-family: 'Crim';
@@ -812,10 +819,11 @@ i.icon.bed:before { content: "\f236"; }
     top: 3px;
     left: -5px;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:first-child:hover:before {
     color: #f39a2e!important;
-
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:first-child {
     border: none!important;
     font-size: 0px;
@@ -825,17 +833,20 @@ i.icon.bed:before { content: "\f236"; }
     box-shadow: none;
     height: 0px !important;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:first-child:hover {
     border: none!important;
     font-size: 0px;
     width: 25px;
     padding: 0px;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(2) {
     color: #fff;
     background: #94cea8;
     border: 1px solid #94cea8;
-}    
+}
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(2):hover {
     color: #fff!important;
     background: #f39a2e!important;
@@ -846,18 +857,22 @@ i.icon.bed:before { content: "\f236"; }
     -moz-box-shadow: 0px 4px 20px 0px rgba(243, 154, 46,0.2);
     box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:before {
     content: "\e807";
     font-family: 'Crim';
     visibility: visible;
     font-size: 21px;
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:hover:before {
     color: #f39a2e!important;
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:hover:before {
      color: rgb(0,0,0);
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child {
     border: none!important;
     width: 25px;
@@ -868,11 +883,13 @@ i.icon.bed:before { content: "\f236"; }
     background: none!important;
     height: 0px!important;
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2) {
     color: #fff;
     background: #7dd4b4;
     border: 1px solid #7dd4b4;
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2):hover {
     background: #f39a2e!important;
     border: 1px solid #7dd4b4;
@@ -883,6 +900,7 @@ i.icon.bed:before { content: "\f236"; }
     box-shadow: 0px 2px 5px 0px rgba(243, 154, 46,0.2);
     color: #fff!important;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):before {
     content: "\e814";
     font-family: 'Crim';
@@ -895,6 +913,7 @@ i.icon.bed:before { content: "\f236"; }
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover:before {
     color: #f39a2e!important;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3) {
     border: none!important;
     font-size: 0px;
@@ -903,9 +922,11 @@ i.icon.bed:before { content: "\f236"; }
     width: 25px;
     padding-left: 10px;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover {
     background: none!important;
 }
+
 .page-header-userbar a:after {
     margin: 0 0 0 15px;
     font-size: 16px;
@@ -917,41 +938,49 @@ i.icon.bed:before { content: "\f236"; }
 .page-header-userbar a:hover:after {
     color: #000!important; opacity: 1!important; 
 }
+
 .page-header-userbar a {
     margin: 0px;
     margin: 0 25px 0px 0px;
     height: 10px!important;
 }
+
 .menu.transition.visible > a:nth-child(2) >
 .menu.transition.visible > .flexberry-menuitem
  > i.icon.checkmark.box:before {
     content: "\e815";
     font-family: 'Crim';
 }
+
 .menu.transition.visible > a:nth-child(2) >
 .menu.transition.visible > .flexberry-menuitem
- > i.icon.checkmark.box:hover:before {
+> i.icon.checkmark.box:hover:before {
     color: #f39a2e!important;
 }
+
 .menu.transition.visible > a:nth-child(3)
- > .menu.transition > .flexberry-menuitem > i.icon.setting:before {
+> .menu.transition > .flexberry-menuitem > i.icon.setting:before {
     content: "\e810";
     font-family: 'Crim';
 }
+
 .menu.transition.visible > a:nth-child(3)
- > .menu.transition > .flexberry-menuitem > i.icon.setting:hover:before {
+> .menu.transition > .flexberry-menuitem > i.icon.setting:hover:before {
     color: #f39a2e!important;
 }
+
 .menu.transition.visible > a:nth-child(4)
- > .menu.transition > .flexberry-menuitem > i.icon.remove:before {
+> .menu.transition > .flexberry-menuitem > i.icon.remove:before {
     content: "\e814";
     font-family: 'Crim';
     font-size:16px;
 }
+
 .menu.transition.visible > a:nth-child(4)
- > .menu.transition > .flexberry-menuitem > i.icon.remove:hover:before {
+> .menu.transition > .flexberry-menuitem > i.icon.remove:hover:before {
     color: #f39a2e!important;
 }
+
 .flexberry-edit-panel > button:first-child:before {
     content: "\e80c";
     font-family: 'Crim';
@@ -959,6 +988,7 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 18px;
     padding-right:10px;
 }
+
 .flexberry-edit-panel > button:nth-child(2):before {
     content: "\e80d";
     font-family: 'Crim';
@@ -966,6 +996,7 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 18px;
     padding-right:10px;
 }
+
 .flexberry-edit-panel > button:nth-child(3):before {
     content: "\e814";
     font-family: 'Crim';
@@ -973,9 +1004,11 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 18px;
     padding-right:10px;
 }
+
 .flexberry-edit-panel > button:nth-child(3){
     background: none!important;
 }
+
 .flexberry-edit-panel > button:nth-child(4) {
     position: absolute;
     border: none!important;
@@ -988,6 +1021,7 @@ i.icon.bed:before { content: "\f236"; }
     background: none!important;
     box-shadow: none;
 }
+
 .flexberry-edit-panel > button:nth-child(4):before {
     content: "\e806";
     visibility: visible;
@@ -996,49 +1030,62 @@ i.icon.bed:before { content: "\f236"; }
     font-family: "Crim";
     color: rgba(0,0,0,0.54);
 }
+
 .flexberry-edit-panel > button:nth-child(4):hover:before {
     color: #f39a2e!important;
 }
+
 .flexberry-edit-panel > button:nth-child(4):hover {
     background: url(../assets/serviceImages/close-hover.png)center no-repeat;
     background: none!important;
     border: none!important;
     box-shadow: none!important;
 }
+
 button:before:hover {
     color: #fff!important;
 }
+
 .remove.icon:before:hover {
     color: #000!important; opacity: 1!important; 
 }
+
 .ui.buttons .ui.icon.button:hover .large.icon:before {
-     color: #f39a2e!important;
+    color: #f39a2e!important;
 }
+
 .ui.positive.button:hover:before {
     color: #fff!important;
-} 
+}
+
 .ui.negative.button:hover:before {
     color: #fff!important;
-} 
+}
+
 .remove.icon:hover:before {
     color: #f39a2e!important; opacity: 1!important; 
 }
+
 .flexberry-lookup > .ui.fluid.action.input > .ui.button:first-child {
     visibility: hidden!important;
 }
-.flexberry-lookup > .ui.fluid.action.input > .ui.button:first-child:before{
+
+.flexberry-lookup > .ui.fluid.action.input > .ui.button:first-child:before {
     content: "";
     font-family: "Icons";
     visibility: visible;
 }
+
 .asterisk.small.red.icon.transparent {
     display:none;
 }
+
 .ui-change {
     font-size: 0px!important;
     margin-left: 5px!important;
     width: 35px!important;
 }
+
 .ui-change:before {
     content: "";
     font-family: 'Crim';
@@ -1047,31 +1094,39 @@ button:before:hover {
     opacity: 0.54!important;
     font-size: 13px!important;
 }
+
 .ui-change:hover:before {
     color: #f39a2e!important;
     opacity: 1!important;
 }
+
 .launch:hover .ui.menu.item:before {
     color: #000000!important;
 }
+
 .text_menu:hover .ui.menu.item:before {
     color: #000000!important;
 }
+
 .disabled:before {
     opacity: 1!important; 
     color: #999!important;
 }
+
 .crimean-theme .ui.secondary.menu button:nth-child(3):before {
     visibility: hidden!important;
 }
+
 .crimean-theme .ui.secondary.menu button:nth-child(3) {
     visibility: visible!important;
     width: auto!important;
 }
+
 .crimean-theme .ui.secondary.menu button:nth-child(1):before {
     visibility: hidden!important;
     display:none;
 }
+
 .crimean-theme > .menu.no-margin.ember-view > button:first-child {
     visibility: visible!important;
     width: auto!important;
@@ -1079,34 +1134,43 @@ button:before:hover {
     justify-content: center;
     padding: 0.8571em 1.284em 0.8571em!important;
 }
+
 i.icon.calendar:hover:before {
     color: #f39a2e!important; opacity: 1!important; 
 }
+
 .flexberry-lookup > .ui.fluid > button > i.icon.remove:before {
     content: "\e806";
     font-family: 'Crim';
     font-size: 13px !important;
 }
+
 .flexberry-file-add-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
+
 .flexberry-file-remove-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
+
 .flexberry-file-download-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
+
 .flexberry-file-upload-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
+
 .ui.button:hover .filter.icon:before {
     color: #f39a2e!important;
     opacity: 1!important;
 }
+
 .ui.button:hover .remove.icon:before {
     color: #f39a2e!important;
     opacity: 1!important;
 }
+
 .ui.button:hover .dropdown.icon:before {
     color: #f39a2e!important;
     opacity: 1!important;

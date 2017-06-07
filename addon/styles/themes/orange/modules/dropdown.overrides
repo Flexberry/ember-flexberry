@@ -23,38 +23,48 @@
     font-style: normal;
     text-align: center;
 }
+
 .ui.dropdown > .dropdown.icon {
     width: auto;
     color: #7ba7d9!important;
 }
+
 .ui.dropdown > .dropdown.icon:before {
     content: '\f0d7';
 }
+
 /* Sub Menu */
 .ui.dropdown .menu .item .dropdown.icon:before {
     content: '\f0da'/*rtl:'\f0d9'*/;
 }
+
 .ui.dropdown .item .left.dropdown.icon:before,
 .ui.dropdown .left.menu .item .dropdown.icon:before {
     content: "\f0d9"/*rtl:"\f0da"*/;
 }
+
 /* Vertical Menu Dropdown */
 .ui.vertical.menu .dropdown.item > .dropdown.icon:before {
     content: "\f0da"/*rtl:"\f0d9"*/;
 }
+
 /* Icons for Reference
 .dropdown.down.icon {
     content: "\f0d7";
 }
+
 .dropdown.up.icon {
     content: "\f0d8";
 }
+
 .dropdown.left.icon {
     content: "\f0d9";
 }
+
 .dropdown.icon.icon {
     content: "\f0da";
 }
+
 */
 .ui.compact.selection.dropdown {
     border: none;
@@ -64,18 +74,22 @@
     font-weight: 400;
     height: 10px;
 }
+
 .item.lang .ui.compact.selection.dropdown {
     background: #fff!important;
     border: 1px solid rgba(0,0,0,0.54)!important;
 }
+
 .ui.selection.active.dropdown {
     box-shadow:none!important;
 }
+
 .ui.menu .ui.dropdown .menu > .active.item {
     background: #e0e0e0 !important;
     color: #fff!important;
     border-radius: 0px;
 }
+
 .ui.form .field > .selection.dropdown {
     border: none;
     border-bottom: 1px solid rgba(0,0,0,0.42);
@@ -84,32 +98,39 @@
     outline: none;
     box-shadow: none;
 }
+
 .ui.form .field > .selection.dropdown:hover {
     box-shadow: none;
 }
+
 .ui.fluid.dropdown {
     border: none;
     border-bottom: 1px solid #b1cae8;
     border-radius: 0px!important;
     outline: none;
 }
+
 .ui.selection.dropdown .menu > .item:hover {
     background: #f5f5f5!important;
 }
+
 .ui.selection.dropdown {
     border: none!important;
     border-bottom: 1px solid rgba(0,0,0,0.12)!important;
     border-radius: 0px!important;
     outline: none;
 }
+
 .ui.dropdown.icon.button > .dropdown.icon {
     margin-left: -30px;
     margin-top: -4px;
 }
+
 .ui.icon.dropdown > .icon.dropdown:before {
     font-size:20px;
 }
-.menu.transition.visible a:hover{
+
+.menu.transition.visible a:hover {
     background: #e0e0e0 !important;
 }
 

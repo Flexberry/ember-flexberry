@@ -21,10 +21,6 @@ module.exports = function(defaults) {
         images: false,
         fonts: true
       }
-    },
-    babel: {
-      optional: ['es6.spec.symbols'],
-      includePolyfill: true
     }
   });
 

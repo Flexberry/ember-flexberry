@@ -1,11 +1,17 @@
 /*******************************
         Global Overrides
 *******************************/
+
 .bgw-fix {
     position: relative;
 }
+
 .background-logo {
     position: fixed;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -13,13 +19,15 @@
     z-index: 999;
     width: 100%;
 }
-.background-logo a{
+
+.background-logo a {
     background: #fff;
     border-radius: 15px;
     box-shadow: 1px 1px 10px #3f65a4;
     margin: 5px;
-}   
-.background-logo a img{
+}
+
+.background-logo a img {
     padding: 7px 0px;
 }
 
@@ -49,6 +57,7 @@
     background: white;
     cursor: pointer;
 }
+
 .page-header-userbar {
     display: flex;
     position: absolute;
@@ -57,11 +66,13 @@
     font-size: 14px;
     color: #fff;
 }
+
 .page-header-userbar a{
     background: none;
     color: #fff;
     box-shadow: none;
 }
+
 lang {
     padding: 0px!important;
 }

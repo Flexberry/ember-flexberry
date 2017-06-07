@@ -20,10 +20,12 @@ export default Ember.Controller.extend({
         Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
       }
 
-      Ember.$('.ui.sidebar').sidebar({ onHide: function() {
-        Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
-        Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
-      } });
+      Ember.$('.ui.sidebar').sidebar({
+        onHide: function() {
+          Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+          Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        }
+      });
     }
   },
 

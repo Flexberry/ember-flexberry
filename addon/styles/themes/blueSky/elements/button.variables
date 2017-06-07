@@ -2,7 +2,7 @@
    Global Variables
 --------------------*/
 
-@pageFont: Helvetica Neue, Helvetica, Arial, sans-serif;
+@pageFont: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 @textColor: #3f65a4;
 @blue: #55ACEE;
 @borderLeft: 1px solid rgba(123, 167, 217, 1);

@@ -770,22 +770,27 @@ i.icon.bed:before { content: "\f236"; }
 .ui.menu .ui.dropdown .menu > .active.item i.icon:before {
     color: #fff!important;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:before{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:before {
     content: "\e81a";
     font-family: 'Crim';
     visibility: visible;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:before{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:before {
     content: "\e81b";
     font-family: 'Crim';
     visibility: visible;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child {
     visibility: hidden;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child{
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child {
     visibility: hidden;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:first-child:before {
     content: "\e807";
     font-family: 'Crim';
@@ -793,9 +798,11 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 21px;
     color: #94cea8;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:first-child:hover:before {
     color: #94cea8!important;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:first-child {
     border: none!important;
     font-size: 0px;
@@ -803,19 +810,23 @@ i.icon.bed:before { content: "\f236"; }
     padding: 0px;
     display: flex;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:first-child:hover {
     background: none!important;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(2) {
     color: #fff;
     background: #94cea8;
     border: 1px solid #94cea8;
-}    
+}
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(2):hover {
     color: #fff;
      background: #7dd4b4;
     border: 1px solid #7dd4b4;
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:before {
     content: "\e807";
     font-family: 'Crim';
@@ -823,6 +834,7 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 21px;
     color: #94cea8;
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child {
     border: none!important;
     visibility: hidden;
@@ -830,16 +842,19 @@ i.icon.bed:before { content: "\f236"; }
     padding: 0px;
     display: flex;
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2) {
     color: #fff;
     background: #7dd4b4;
     border: 1px solid #7dd4b4;
 }
+
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2):hover {
     color: #fff;
     background: #94cea8;
     border: 1px solid #94cea8;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):before {
     content: "\e814";
     font-family: 'Crim';
@@ -847,9 +862,11 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 21px;
     color: #7ba7d9;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover:before {
     color: #ff4800!important;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3) {
     border: none!important;
     font-size: 0px;
@@ -857,10 +874,12 @@ i.icon.bed:before { content: "\f236"; }
     padding-left: 10px;
     display: flex;
 }
+
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover {
     background: none;
     border:none!important;
 }
+
 .page-header-userbar a:before {
     margin: 0 0 0 15px;
     font-size: 16px;
@@ -869,31 +888,36 @@ i.icon.bed:before { content: "\f236"; }
     font-family: 'Crim';
     content: "\e81e";
 }
+
 .page-header-userbar a:hover:before {
     color: #ff4800;
 }
+
 .page-header-userbar a {
     visibility: hidden;
     margin: 0px;
 }
+
 .menu.transition.visible > a:nth-child(2) >
 .menu.transition.visible > .flexberry-menuitem
- > i.icon.checkmark.box:before {
+> i.icon.checkmark.box:before {
     content: "\e815";
     font-family: 'Crim';
 }
 
 .menu.transition.visible > a:nth-child(3)
- > .menu.transition > .flexberry-menuitem > i.icon.setting:before {
+> .menu.transition > .flexberry-menuitem > i.icon.setting:before {
     content: "\e810";
     font-family: 'Crim';
 }
+
 .menu.transition.visible > a:nth-child(4)
- > .menu.transition > .flexberry-menuitem > i.icon.remove:before {
+> .menu.transition > .flexberry-menuitem > i.icon.remove:before {
     content: "\e814";
     font-family: 'Crim';
     font-size:16px;
 }
+
 .flexberry-edit-panel > button:first-child:before {
     content: "\e80c";
     font-family: 'Crim';
@@ -901,6 +925,7 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 21px;
     padding-right:10px;
 }
+
 .flexberry-edit-panel > button:nth-child(2):before {
     content: "\e80d";
     font-family: 'Crim';
@@ -908,6 +933,7 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 21px;
     padding-right:10px;
 }
+
 .flexberry-edit-panel > button:nth-child(3):before {
     content: "\e814";
     font-family: 'Crim';
@@ -915,9 +941,11 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 21px;
     padding-right:10px;
 }
+
 .flexberry-edit-panel > button:nth-child(3){
     background: none!important;
 }
+
 .flexberry-edit-panel > button:nth-child(4) {
     position: absolute;
     border: none!important;
@@ -929,49 +957,63 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 0px!important;
     background: url(../assets/serviceImages/close.png)center no-repeat;
 }
+
 .flexberry-edit-panel > button:nth-child(4):hover {
      background: url(../assets/serviceImages/close-hover.png)center no-repeat;
 }
+
 button:before:hover {
     color: #fff!important;
 }
+
 .remove.icon:before:hover {
     color: #ff4800!important;
 }
+
 .ui.buttons .ui.icon.button:hover .large.icon:before {
      color: #7ba7d9!important;
 }
+
 .ui.positive.button:hover:before {
     color: #fff!important;
-} 
+}
+
 .ui.negative.button:hover:before {
     color: #fff!important;
-} 
+}
+
 .remove.icon:hover:before {
     color: #ff4800!important;
 }
+
 .flexberry-lookup > .ui.fluid.action.input > .ui.button:first-child {
     visibility: hidden!important;
 }
+
 .flexberry-lookup > .ui.fluid.action.input > .ui.button:first-child:before{
     content: "";
     font-family: "Icons";
     visibility: visible;
 }
+
 .field .flexberry-edit-panel > button:hover:before {
     color: #fff!important;
 }
+
 .asterisk.small.red.icon.transparent {
     display:none;
 }
+
 i.icon.text-menu-2:before {
     color: #91a7cd!important;
 }
+
 .ui-change {
     visibility: hidden;
     width: 35px!important;
     margin-left: 5px!important;
 }
+
 .ui-change:before {
     content: "";
     font-family: 'Crim';
@@ -979,31 +1021,39 @@ i.icon.text-menu-2:before {
     color: #7ba7d9;
     font-size: 13px!important;
 }
+
 .ui-change:hover:before {
     color: #ff4800!important;
     opacity: 1!important;
 }
+
 .launch:hover .ui.menu.item:before {
     color: #7ba7d9!important;
 }
+
 .text_menu:hover .ui.menu.item:before {
     color: #7ba7d9!important;
 }
+
 .disabled:before {
     opacity: 1!important; 
     color: #999!important;
 }
+
 .crimean-theme .ui.secondary.menu button:nth-child(3):before {
     visibility: hidden!important;
 }
+
 .crimean-theme .ui.secondary.menu button:nth-child(3) {
     visibility: visible!important;
     width: auto!important;
 }
+
 .crimean-theme .ui.secondary.menu button:nth-child(1):before {
     visibility: hidden!important;
     display:none;
 }
+
 .crimean-theme > .menu.no-margin.ember-view > button:first-child {
     visibility: visible!important;
     width: auto!important;
@@ -1011,6 +1061,7 @@ i.icon.text-menu-2:before {
     justify-content: center;
     padding: 0.8571em 1.284em 0.8571em!important;
 }
+
 i.icon.calendar:hover:before {
     color: #ff4800!important;
 }
@@ -1023,12 +1074,15 @@ i.icon.calendar:hover:before {
 .flexberry-file-add-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
+
 .flexberry-file-remove-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
+
 .flexberry-file-download-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
+
 .flexberry-file-upload-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }

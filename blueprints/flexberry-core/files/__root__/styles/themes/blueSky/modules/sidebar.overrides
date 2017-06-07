@@ -1,0 +1,185 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.ui.sidebar {
+    position: absolute!important;
+    top: 90px;
+    float: left;
+    box-shadow: none!important;
+    border-radius: 5px !important;
+}
+
+body.pushable {
+    background: #fff!important;
+    overflow: hidden;
+}
+
+.page-header-caption a{
+    background: none;
+    color: #fff;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 24px;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+.page-header-caption a:hover{
+    color: #fff!important;
+}
+
+.page-header-caption {
+    display: flex;
+    align-items: center;
+}
+
+.ui.attached.menu {
+    border-bottom: none!important;
+}
+
+.flex-container {
+    width: 100%!important;
+    justify-content: space-between;
+}
+
+.ui.top.attached {
+    margin: 5px;
+    border-radius: 5px!important;
+    width: 250px;
+}
+
+.ui.left.sidebar {
+    width: 260px;
+}
+
+.inverted.vertical.menu.sidebar {
+    left: 0px!important;
+    height: 85.3vh!important;
+    position: fixed!important;
+    background: #f1f7ff!important;
+}
+
+.ui .attached .menu {
+    border: none!important;
+    background: none;
+}
+
+.launch.icon.item {
+    box-shadow: none;
+    padding: 0px!important;
+    width: 150px;
+}
+
+.ui.attached.menu:not(.tabular) {
+    border: none!important;
+    border-radius: 5px;
+}
+
+.ui.menu .item:before {
+    background: none;
+}
+
+.ui.menu:not(.vertical) .item {
+    border-left: none!important;
+}
+
+#example .flexberry-content {
+    border: none;
+}
+
+.ui.attached.menu > .flex-container > .item {
+    padding:0px!important;
+}
+
+.launch.icon.item:hover {
+    background: none!important;
+}
+
+.launch.icon.item:hover:before {
+    color: #fff!important;
+}
+.text_menu {
+    margin-left:15px;
+    color: #fff;
+    font-size: 15px;
+}
+
+.hidden-text {
+    color: #91a7cd!important;
+}
+
+.hidden-menu {
+    display: none!important;
+}
+.logo {
+    width: 70px;
+}
+
+img.item-plus {
+    width: 16px!important;
+    border-radius: 0px!important;
+    margin-right: 5px!important;
+    margin-bottom: 1px!important;
+    cursor: pointer;
+}
+
+img.item-minus {
+    width: 16px!important;
+    border-radius: 0px!important;
+    margin-right: 5px!important;
+    margin-bottom: 1px!important;
+    cursor: pointer;
+}
+
+div.subMenu a{
+    padding-left:50px!important;
+}
+
+.item-menu{
+    cursor: pointer;
+}
+
+.ui.vertical.menu > .item:first-child {
+    padding-left:40px!important;
+}
+
+.ui.vertical.menu > .item:nth-child(2) {
+    padding-left:40px!important;
+}
+
+.menu.subMenu > .item-menu >.item-minus {
+    float: left;
+    margin-left: 23px!important;
+}
+
+.menu.subMenu > .item-menu >.item-plus {
+    float: left;
+    margin-left: 23px!important;
+}
+
+.item-menu > .menu.subMenu >.item-menu > .subMenu > a{
+        padding-left: 59px!important;
+}
+
+.enable-menu {
+    display: block!important;
+}
+
+.fixed-menu {
+    position: fixed;
+    top: 0px;
+    margin: 0px;
+    width: 260px;
+    border-radius: 0px!important;
+    z-index: 999;
+}
+
+.fixed-sidebar{
+    position: fixed!important;
+    top: 45px!important;
+}
+
+.pushable > .pusher:after {
+    background: none!important;
+}

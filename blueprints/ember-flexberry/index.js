@@ -12,12 +12,13 @@ module.exports = {
     return this.addBowerPackagesToProject([
       { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
       { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
+      { name: 'semantic-ui', source: 'git://github.com/Flexberry/Semantic-UI.git', target: 'fixed-abort' },
       { name: 'blueimp-file-upload', target: '9.11.2' },
       { name: 'devicejs', target: '0.2.7' }
     ]).then(function() {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'semantic-ui-ember', target: '0.9.3' },
+          { name: 'semantic-ui-ember', source: 'git://github.com/Flexberry/Semantic-UI-Ember.git', target: 'version-0.9.3' },
           { name: 'ember-moment', target: '6.0.0' },
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'ember-cli-less', target: '1.5.4' },

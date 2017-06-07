@@ -14,22 +14,19 @@ module('Unit | Instance Initializer | Device', {
       appInstance = application.buildInstance();
     });
   },
-
   afterEach() {
-    Ember.run(appInstance, 'destroy');
     destroyApp(appInstance);
+    destroyApp(application);
   }
 });
 
-test('it works', function(assert) {
-  assert.expect(1);
-  DeviceInstanceInitializer.initialize(appInstance);
-  assert.ok(true);
-});
-
-test('Add true logic', function(assert) {
+test('Inject device service into application resolver', function(assert) {
   assert.expect(2);
-  assert.strictEqual(appInstance.__container__.factoryCache['service:device'], undefined);
+
+  let applicationResolver = appInstance.application.__registry__.resolver;
+  let deviceService = appInstance.lookup('service:device');
+
+  assert.notStrictEqual(applicationResolver.get('device'), deviceService);
   DeviceInstanceInitializer.initialize(appInstance);
-  assert.strictEqual(appInstance.__container__.factoryCache['service:device']._toString, 'dummy@service:device:');
+  assert.strictEqual(applicationResolver.get('device'), deviceService);
 });

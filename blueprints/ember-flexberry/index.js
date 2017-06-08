@@ -23,7 +23,7 @@ module.exports = {
       "      enabled: true,\n" +
       "      esnext: true,\n" +
       "      configPath: './.jscsrc'\n" +
-      "    }," +
+      "    },\n" +
       "    lessOptions: {\n" +
       "      paths: [\n" +
       "        'bower_components/semantic-ui'\n" +

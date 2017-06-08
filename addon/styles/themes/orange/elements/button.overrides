@@ -123,14 +123,6 @@ i.icon.remove:before:hover {
     background: #eee!important;
 }
 
-.stackable.grid.container p:last-child .ui.positive.button {
-    background: #7dd4b4!important;
-}
-
-.stackable.grid.container p:last-child .ui.negative.button {
-    background: #ff4800!important;
-}
-
 .ui.negative.buttons .button:hover, .ui.negative.button:hover {
     color: #fff!important;
     background: #f39a2e!important;
@@ -353,3 +345,39 @@ i.icon.remove:before:hover {
 .ui.negative.buttons .button:focus, .ui.negative.button:focus {
     background: #eee!important;
 }
+
+.ui.red.button:hover {
+    background: red!important;
+    border: 1px solid red!important;
+}
+
+.ui.small.blue.button:hover {
+    background: blue!important;
+    border: 1px solid blue!important;
+}
+
+.ui.small.orange.button:hover {
+    background: orange!important;
+    border: 1px solid orange!important;
+}
+
+.ui.small.green.button:hover {
+    background: green!important;
+    border: 1px solid green!important;
+}
+
+.ui.small.teal.button:hover {
+    background: teal!important;
+    border: 1px solid teal!important;
+}
+
+.ui.small.yellow.button:hover {
+    background: yellow!important;
+    border: 1px solid yellow!important;
+}
+
+.ui.secondary.menu.no-margin.ember-view > .red button:nth-child(3):hover {
+    background: red!important;
+    border: 1px solid red!important;
+}
+

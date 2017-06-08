@@ -2,41 +2,41 @@
 module.exports = {
   afterInstall: function() {
     var _this = this;
-    var imports = "  app.import('vendor/font-icon.css');\n" +
-      "  app.import('vendor/fonts/icons.eot', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/icons.otf', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/icons.svg', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/icons.ttf', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/icons.woff', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/icons.woff2', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/crim.eot', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/crim.otf', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/crim.svg', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/crim.ttf', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/crim.woff', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/fonts/crim.woff2', { destDir: 'assets/fonts' });\n" +
-      "  app.import('vendor/serviceImages/close.png', { destDir: 'assets/serviceImages' });\n" +
-      "  app.import('vendor/serviceImages/close-hover.png', { destDir: 'assets/serviceImages' });\n" +
-      "  app.import('vendor/serviceImages/Plus.png', { destDir: 'assets/serviceImages' });\n" +
-      "  app.import('vendor/serviceImages/Minus.png', { destDir: 'assets/serviceImages' });\n";
-    var options = "    jscsOptions: {\n" +
-      "      enabled: true,\n" +
-      "      esnext: true,\n" +
-      "      configPath: './.jscsrc'\n" +
-      "    },\n" +
-      "    lessOptions: {\n" +
-      "      paths: [\n" +
-      "        'bower_components/semantic-ui'\n" +
-      "      ]\n" +
-      "    },\n" +
-      "    SemanticUI: {\n" +
-      "      import: {\n" +
-      "        css: false,\n" +
-      "        javascript: true,\n" +
-      "        images: false,\n" +
-      "        fonts: true\n" +
-      "      }\n" +
-      "    }\n";
+    var imports = '  app.import(\'vendor/font-icon.css\');\n' +
+      '  app.import(\'vendor/fonts/icons.eot\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/icons.otf\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/icons.svg\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/icons.ttf\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/icons.woff\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/icons.woff2\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/crim.eot\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/crim.otf\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/crim.svg\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/crim.ttf\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/crim.woff\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/crim.woff2\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/serviceImages/close.png\', { destDir: \'assets/serviceImages\' });\n' +
+      '  app.import(\'vendor/serviceImages/close-hover.png\', { destDir: \'assets/serviceImages\' });\n' +
+      '  app.import(\'vendor/serviceImages/Plus.png\', { destDir: \'assets/serviceImages\' });\n' +
+      '  app.import(\'vendor/serviceImages/Minus.png\', { destDir: \'assets/serviceImages\' });\n';
+    var options = '    jscsOptions: {\n' +
+      '      enabled: true,\n' +
+      '      esnext: true,\n' +
+      '      configPath: \'./.jscsrc\'\n' +
+      '    },\n' +
+      '    lessOptions: {\n' +
+      '      paths: [\n' +
+      '        \'bower_components/semantic-ui\'\n' +
+      '      ]\n' +
+      '    },\n' +
+      '    SemanticUI: {\n' +
+      '      import: {\n' +
+      '        css: false,\n' +
+      '        javascript: true,\n' +
+      '        images: false,\n' +
+      '        fonts: true\n' +
+      '      }\n' +
+      '    }\n';
 
     /*
       Following packages should be installed as dependencies of `ember-flexberry-data`:
@@ -45,25 +45,33 @@ module.exports = {
     */
 
     return this.insertIntoFile(
-      "ember-cli-build.js",
+      'ember-cli-build.js',
       imports,
       {
-        before: "  return app.toTree();\n"
+        before: '  return app.toTree();\n'
       }
     ).then(function() {
       return _this.insertIntoFile(
-        "ember-cli-build.js",
+        'ember-cli-build.js',
         options,
         {
-          after: "  var app = new EmberApp(defaults, {\n"
+          after: '  var app = new EmberApp(defaults, {\n'
         }
       );
     }).then(function() {
       return _this.insertIntoFile(
-        "ember-cli-build.js",
+        'ember-cli-build.js',
         options,
         {
-          after: "  var app = new EmberAddon(defaults, {\n"
+          after: '  var app = new EmberAddon(defaults, {\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
+        'app/index.html',
+        '    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
+        {
+          after: '    <script src="assets/dummy.js"></script>\n'
         }
       );
     }).then(function() {

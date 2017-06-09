@@ -31,10 +31,22 @@ Ember.$.extend(true, translations, {
           'user-settings-service-checkbox': {
             caption: 'Использовать сервис сохранения пользовательских настроек'
           },
+          'show-menu': {
+            caption: 'Показать меню'
+          },
+          'hide-menu': {
+            caption: 'Скрыть меню'
+          },
           'language-dropdown': {
             caption: 'Язык приложения',
             placeholder: 'Выберите язык'
           }
+        },
+        'login': {
+          caption: 'Вход'
+        },
+        'logout': {
+          caption: 'Выход'
         }
       },
 

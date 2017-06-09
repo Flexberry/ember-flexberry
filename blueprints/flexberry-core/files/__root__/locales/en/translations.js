@@ -31,10 +31,22 @@ Ember.$.extend(true, translations, {
           'user-settings-service-checkbox': {
             caption: 'Use service to save user settings'
           },
+          'show-menu': {
+            caption: 'Show menu'
+          },
+          'hide-menu': {
+            caption: 'Hide menu'
+          },
           'language-dropdown': {
             caption: 'Application language',
             placeholder: 'Choose language'
           }
+        },
+        'login': {
+          caption: 'Login'
+        },
+        'logout': {
+          caption: 'Logout'
         }
       },
 

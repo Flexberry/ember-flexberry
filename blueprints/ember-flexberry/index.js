@@ -48,14 +48,14 @@ module.exports = {
       'ember-cli-build.js',
       imports,
       {
-        before: '  return app.toTree();\n'
+        before: 'return app.toTree();\n'
       }
     ).then(function() {
       return _this.insertIntoFile(
         'ember-cli-build.js',
         options,
         {
-          after: '  var app = new EmberApp(defaults, {\n'
+          after: 'var app = new EmberApp(defaults, {\n'
         }
       );
     }).then(function() {
@@ -63,7 +63,7 @@ module.exports = {
         'ember-cli-build.js',
         options,
         {
-          after: '  var app = new EmberAddon(defaults, {\n'
+          after: 'var app = new EmberAddon(defaults, {\n'
         }
       );
     }).then(function() {
@@ -71,7 +71,23 @@ module.exports = {
         'app/index.html',
         '    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
         {
-          after: '    <script src="assets/dummy.js"></script>\n'
+          after: '<script src="assets/dummy.js"></script>\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
+        'tests/index.html',
+        '    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
+        {
+          after: '<script src="assets/dummy.js"></script>\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
+        'tests/dummy/app/index.html',
+        '    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
+        {
+          after: '<script src="assets/dummy.js"></script>\n'
         }
       );
     }).then(function() {

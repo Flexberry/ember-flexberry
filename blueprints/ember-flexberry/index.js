@@ -141,7 +141,7 @@ module.exports = {
       'ember-cli-build.js',
       imports,
       {
-        before: '\nreturn app.toTree();\n'
+        before: '\n  return app.toTree();\n'
       }
     ).then(function() {
       return _this.insertIntoFile(
@@ -212,7 +212,7 @@ module.exports = {
         'config/environment.js',
         env4,
         {
-          before: '\nif (environment === \'development\') {\n'
+          before: '\n  if (environment === \'development\') {\n'
         }
       );
     }).then(function() {

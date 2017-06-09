@@ -20,7 +20,7 @@
 .ui.checkbox input:checked ~ label:after {
   content: '\e805';
   color: #7ba7d9;
-  left: -27px;
+  left: 0px;
   color: #7ba7d9!important;
 }
 
@@ -45,16 +45,14 @@
     height: 16px;
     width: 17px;
     background: #fff;
-    position: relative;
     border-radius: 4px;
     top: 0px;
-    left: -25px;
     background: #f1f8ff;
 }
 
 .ui.checkbox label:after{
     content: '\e805';
-    font-family: 'Crim';
+    font-family: 'Crimean';
     color: #7ba7d9;
     border-color: #7ba7d9;
     font-size: 15.8px;
@@ -70,10 +68,6 @@
 
 i.icon.trash.outline:hover:before {
     color: #ff4800!important;
-}
-
-i.outline.icon:hover:before {
-    color: #7dd4b4!important;
 }
 
 label.button:hover {

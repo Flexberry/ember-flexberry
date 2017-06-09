@@ -32,7 +32,6 @@ module.exports = function(defaults) {
   app.import('vendor/fonts/icons.woff', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/icons.woff2', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.eot', { destDir: 'assets/fonts' });
-  app.import('vendor/fonts/crim.otf', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.svg', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.ttf', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.woff', { destDir: 'assets/fonts' });

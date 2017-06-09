@@ -12,5 +12,5 @@
 
 .ui.modal > .content {
     overflow: auto!important;
-    height: 618px!important;
+    max-height: 618px!important;
 }

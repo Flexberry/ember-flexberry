@@ -9,8 +9,7 @@
 @font-face {
   font-family: 'Crimean';
   src: url("./fonts/crim.eot");
-  src: url("./fonts/crim.otf") format('otf'),
-	   url("./fonts/crim.woff2") format('woff2'),
+  src: url("./fonts/crim.woff2") format('woff2'),
 	   url("./fonts/crim.woff") format('woff'),
 	   url("./fonts/crim.ttf") format('truetype'),
 	   url("./fonts/crim.svg#icons") format('svg');

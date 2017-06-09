@@ -42,10 +42,10 @@ Ember.$.extend(true, translations, {
             placeholder: 'Выберите язык'
           }
         },
-        'login': {
+        login: {
           caption: 'Вход'
         },
-        'logout': {
+        logout: {
           caption: 'Выход'
         }
       },

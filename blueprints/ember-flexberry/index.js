@@ -69,25 +69,25 @@ module.exports = {
     }).then(function() {
       return _this.insertIntoFile(
         'app/index.html',
-        '    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
+        '\n    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
         {
-          after: '<script src="assets/dummy.js"></script>\n'
+          after: '{{content-for "body"}}\n'
         }
       );
     }).then(function() {
       return _this.insertIntoFile(
         'tests/index.html',
-        '    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
+        '\n    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
         {
-          after: '<script src="assets/dummy.js"></script>\n'
+          after: '{{content-for "test-body"}}\n'
         }
       );
     }).then(function() {
       return _this.insertIntoFile(
         'tests/dummy/app/index.html',
-        '    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
+        '\n    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
         {
-          after: '<script src="assets/dummy.js"></script>\n'
+          after: '{{content-for "body"}}\n'
         }
       );
     }).then(function() {

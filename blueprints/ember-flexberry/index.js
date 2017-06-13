@@ -38,10 +38,10 @@ module.exports = {
       '    }\n';
 
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
-      '  var backendUrl = \'http://localhost:26071\';\n\n' +
+      '  var backendUrl = \'http://localhost:6500\';\n\n' +
       '  if (environment === \'development-loc\') {\n' +
       '    // Use `ember s -e development-loc` command for local backend usage.\n' +
-      '    backendUrl = \'http://localhost:26071\';\n' +
+      '    backendUrl = \'http://localhost:6500\';\n' +
       '  }\n\n';
 
     var env2 = '      LOG_STACKTRACE_ON_DEPRECATION: false,\n';

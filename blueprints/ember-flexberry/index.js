@@ -169,6 +169,14 @@ module.exports = {
       );
     }).then(function() {
       return _this.insertIntoFile(
+        'app/index.html',
+        '<link rel="icon" href="assets/images/favicon.ico">\n',
+        {
+          after: '<link rel="stylesheet" href="assets/ember-app.css">\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
         'tests/index.html',
         '\n    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
         {
@@ -181,6 +189,14 @@ module.exports = {
         '\n    <script src="//cdn.polyfill.io/v1/polyfill.js?features=es6"></script>',
         {
           after: '{{content-for "body"}}\n'
+        }
+      );
+    }).then(function() {
+      return _this.insertIntoFile(
+        'tests/dummy/app/index.html',
+        '<link rel="icon" href="assets/images/favicon.ico">\n',
+        {
+          after: '<link rel="stylesheet" href="assets/dummy.css">\n'
         }
       );
     }).then(function() {

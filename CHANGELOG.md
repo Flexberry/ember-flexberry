@@ -5,9 +5,32 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * Blueprints:
+    * Add some files to generation for `offline` support.
+
+### Fixed
+* Blueprints:
+    * Fix master fields caption generation on `edit-forms`.
+    * Fix `offline-serializers` generation.
+
+### Changed
+* Blueprints:
+    * Now `custom-inflector-rules` generates capitalized plural words.
+
+## [0.9.0-beta.10] - 2017-05-29
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.5
+* Blueprints:
+    * Changed regular expression in `flexberry-core` for cyrillic support.
+
+## [0.9.0-beta.9] - 2017-05-19
+### Added
+* Blueprints:
     * Add generation offline serializers.
     * Add generation mobile templates.
 * Ability to set width for fixed columns in list components.
+
+### Fixed
+* Fix export excel file download for Internet Explorer.
 
 ## [0.9.0-beta.8] - 2017-05-05
 ### Added

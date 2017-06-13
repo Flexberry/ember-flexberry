@@ -240,6 +240,21 @@ export default FlexberryBaseComponent.extend({
     removeLookupValue(removeData) {
       this.get('currentController').send('removeLookupValue', removeData);
     },
+
+    /**
+      Handles rows clicks and sends 'rowClick' action outside.
+
+      @method actions.onRowClick
+      @param {Object} record Record related to clicked row.
+      @param {Object} params Additional parameters describing clicked row.
+      @param {Object} params.column Column in row wich owns the clicked cell.
+      @param {Number} params.columnIndex Index of column in row wich owns the clicked cell.
+      @param {Object} e Click event object.
+    */
+    onRowClick(record, params, e) {
+      Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      this.sendAction('rowClick', record, params);
+    }
   },
 
   /**

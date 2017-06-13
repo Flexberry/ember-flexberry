@@ -805,10 +805,15 @@ export default FlexberryBaseComponent.extend(
 
       @method actions.rowClick
       @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
+      @param {Object} recordWithKey Object containing record related to clicked row and it's key.
+      @param {Object} recordWithKey.key Key of record related to clicked row
+      @param {Object} recordWithKey.data Record related to clicked row.
+      @param {Object} params Additional parameters describing clicked row.
+      @param {Object} params.column Column in row wich owns the clicked cell.
+      @param {Number} params.columnIndex Index of column in row wich owns the clicked cell.
+      @param {jQuery.Event} params.originalEvent Сlick event object.
     */
-    rowClick(recordWithKey, e) {
+    rowClick(recordWithKey, params) {
       let editOnSeparateRoute = this.get('editOnSeparateRoute');
       if (this.get('readonly')) {
         if (!editOnSeparateRoute) {
@@ -822,16 +827,18 @@ export default FlexberryBaseComponent.extend(
 
         let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
+        Ember.$.extend(params, {
+          onEditForm: this.get('onEditForm'),
+          saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
+          editOnSeparateRoute: editOnSeparateRoute,
+          modelName: this.get('modelProjection').modelName,
+          detailArray: this.get('content'),
+          readonly: this.get('readonly'),
+          goToEditForm: true
+        });
 
         Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
-          this.sendAction('action', recordData, {
-            onEditForm: this.get('onEditForm'),
-            saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
-            editOnSeparateRoute: editOnSeparateRoute,
-            modelName: this.get('modelProjection').modelName,
-            detailArray: this.get('content'),
-            readonly: this.get('readonly')
-          });
+          this.sendAction('action', recordData, params);
         });
 
         this._setActiveRecord(recordKey);

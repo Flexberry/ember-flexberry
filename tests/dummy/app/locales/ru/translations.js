@@ -428,6 +428,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Выбранные строки',
               'title': ''
             },
+            'downloading-files-from-olv-list': {
+              'caption': 'Пример скачивания файлов со списка',
+              'title': ''
+            },
             'object-list-view-resize': {
               'caption': 'Разметка столбцов',
               'title': ''
@@ -781,6 +785,9 @@ Ember.$.extend(true, translations, {
         },
         'selected-rows': {
           'caption': 'Flexberry-objectlistview. Выбранные строки'
+        },
+        'downloading-files-from-olv-list': {
+          'caption': 'Flexberry-objectlistview. Скачивание файлов со списка'
         },
         'object-list-view-resize': {
           'caption': 'Flexberry-objectlistview. Разметка столбцов',

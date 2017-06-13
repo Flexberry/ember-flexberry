@@ -30,9 +30,15 @@ export default Ember.Mixin.create({
         modelName: undefined,
         detailArray: undefined,
         editFormRoute: undefined,
-        readonly: false
+        readonly: false,
+        goToEditForm: undefined
       };
       methodOptions = Ember.merge(methodOptions, options);
+      let goToEditForm = methodOptions.goToEditForm;
+      if (goToEditForm === false) {
+        return;
+      }
+
       let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
       let onEditForm = methodOptions.onEditForm;
       let editFormRoute = methodOptions.editFormRoute;

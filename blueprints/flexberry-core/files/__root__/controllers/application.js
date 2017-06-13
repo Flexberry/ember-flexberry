@@ -15,9 +15,68 @@ export default Ember.Controller.extend({
       ]
     };
   }),
+
+  /**
+    Locales supported by application.
+
+    @property locales
+    @type String[]
+    @default ['ru', 'en']
+  */
+  locales: ['ru', 'en'],
+
+  /**
+    Handles changes in userSettingsService.isUserSettingsServiceEnabled.
+
+    @method _userSettingsServiceChanged
+    @private
+  */
+  _userSettingsServiceChanged: Ember.observer('userSettingsService.isUserSettingsServiceEnabled', function() {
+    this.get('target.router').refresh();
+  }),
+
+  /**
+    Initializes controller.
+  */
+  init() {
+    this._super(...arguments);
+
+    let i18n = this.get('i18n');
+    if (Ember.isNone(i18n)) {
+      return;
+    }
+
+    // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.
+    let shortCurrentLocale = this.get('i18n.locale').split('-')[0];
+    let availableLocales = Ember.A(this.get('locales'));
+
+    // Force current locale to be one of available,
+    // if browser's current language is not supported by dummy application,
+    // or if browser's current locale is long value like 'ru-RU', 'en-GB', etc.
+    if (!availableLocales.contains(shortCurrentLocale)) {
+      i18n.set('locale', 'en');
+    } else {
+      i18n.set('locale', shortCurrentLocale);
+    }
+  },
+
   actions: {
     toggleSidebar() {
       Ember.$('.ui.sidebar').sidebar('toggle');
+      if (Ember.$('.inverted.vertical.menu').hasClass('visible')) {
+        Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+      } else {
+        Ember.$('.sidebar.icon.text-menu-1').addClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
+      }
+
+      Ember.$('.ui.sidebar').sidebar({
+        onHide: function() {
+          Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+          Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        }
+      });
     }
   }
 });

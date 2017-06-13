@@ -1,0 +1,63 @@
+/*******************************
+         Theme Overrides
+
+*******************************/
+.ui.form select {
+    border: none;
+    border-bottom: 1px solid #b1cae8;
+    border-radius: 0px;
+    outline: none;
+}
+
+.ui.form input:not([type]), .ui.form input[type="date"],
+.ui.form input[type="datetime-local"], .ui.form input[type="email"],
+.ui.form input[type="number"], .ui.form input[type="password"],
+.ui.form input[type="search"], .ui.form input[type="tel"],
+.ui.form input[type="time"], .ui.form input[type="text"],
+.ui.form input[type="url"] {
+    border: none;
+    border-bottom: 1px solid #b1cae8;
+    border-radius: 0px!important;
+    outline: none;
+}
+
+input[type="checkbox"]:after {
+    content: "";
+    display: inline-block;
+    font-size: 16px;
+    height: 16px;
+    width: 17px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+    top: -3px;
+    left: -2px;
+    border: 1px solid #7ba7d9;
+    background: #f1f8ff;
+}
+
+input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
+    content: '\e805';
+    font-family: 'Crimean';
+    color: #7ba7d9;
+    border-color: #7ba7d9;
+    font-size: 15px;
+    border-left: none;
+    width: 16px;
+}
+
+.ui.form textarea, .ui.form input[type="checkbox"] {
+    margin: 5px;
+}
+
+select {
+    color: #b1cae8!important;
+}
+
+option {
+    color: rgba(0, 0, 0, 0.87)!important;
+}
+
+.ui.form .fields .field .ui.input input, .ui.form .field .ui.input input {
+    background: none!important;
+}

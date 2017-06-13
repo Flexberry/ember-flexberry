@@ -4,12 +4,12 @@
   </button>
 {{/if}}
 {{#if createNewButton}}
-  <button class="ui {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button" {{action "createNew"}}>
+  <button class="ui create-button {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button" {{action "createNew"}}>
     {{t "components.olv-toolbar.add-button-text"}}
   </button>
 {{/if}}
 {{#if deleteButton}}
-  <button class="ui {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button" {{action "delete"}}>
+  <button class="ui delete-button {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button" {{action "delete"}}>
     {{t "components.olv-toolbar.delete-button-text"}}
   </button>
 {{/if}}

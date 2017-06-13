@@ -1,0 +1,257 @@
+/*******************************
+           Overrides
+*******************************/
+
+.ui.primary.button > .icon {
+    color: #FFFFFF;
+}
+
+.ui.icon.button:hover {
+    color: #FFFFFF!important;
+}
+
+.ui.button:hover {
+  color: #FFFFFF!important;
+  border:1px solid #94cea8;
+}
+
+.ui.button {
+    padding: 0px 18px;
+    height: 35px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px #7ba7d9 solid;
+}
+
+.large.table.icon {
+    margin-top: -4px!important;
+}
+
+.ui.buttons > .ui.button:not(.basic):not(.inverted),
+.ui.buttons:not(.basic):not(.inverted) > .button {
+    border: none;
+    background: none!important;
+    padding: 0.7400em 1.284em 0.8571em!important;
+}
+
+.ui.basic.buttons .active.button {
+    color: #999!important;
+    font-weight: 700;
+    padding: 0.7400em 1.284em 0.8571em!important;
+}
+
+ .ui.basic.green.button {
+    border: none;
+}
+
+.ui.negative.button {
+    outline: none;
+    border: none;
+}
+
+.ui.positive.buttons .button, .ui.positive.button {
+    outline: none;
+    border: none;
+}
+
+.ui.fluid.action.input > button {
+    border: none!important;
+    background: none;
+    padding: 0px;
+}
+
+.ui.fluid > button:before:first-child {
+    content: "\e807";
+    color: red;
+}
+
+.ui.fluid.action.input > button:hover {
+    color: #7ba7d9!important
+}
+
+.ui.fluid.action.input:hover {
+    background: none;
+}
+
+i.icon.remove:before:hover {
+    color: #ff4800!important;
+}
+
+.flexberry-dropdown.compact.selection.selection.dropdown > .ui.dropdown > .dropdown.icon:before {
+    font-size:15px!important;
+}
+
+.ui.action.input > button {
+    background: none!important;
+}
+
+.ui.action.input > button:last-child {
+    border: none!important;
+    background: none!important;
+}
+
+.ui.buttons .disabled.button {
+    color: #999!important;
+}
+
+.flexberry-edit-panel > button {
+    border: 1px solid #7ba7d9!important;
+    color: #3f65a4!important;
+}
+
+.ui.negative.buttons .button, .ui.negative.button,
+.ui.positive.buttons .button, .ui.positive.button {
+    background: none!important;
+}
+
+.stackable.grid.container p:last-child .ui.positive.button {
+    background: #7dd4b4!important;
+}
+
+.stackable.grid.container p:last-child .ui.negative.button {
+   background: #ff4800!important;
+}
+
+.ui.negative.buttons .button:hover, .ui.negative.button:hover   {
+    background: #DB2828!important;
+    opacity: 0.8;
+    border:1px solid #DB2828!important;
+}
+
+.ui.positive.buttons .button, .ui.positive.button:hover {
+    background: #94cea8!important;
+    border: 1px solid #94cea8!important;
+}
+
+.ui.positive.button:hover .flexberry-edit-panel > button:before{
+    color: #fff!important;
+}
+
+.ui.buttons:not(.basic):not(.inverted) {
+    box-shadow: none;
+    width: 75px;
+    margin-left: -10px;
+}
+
+.ui.econdary.menu.no-margin > .ui.basic > button:hover:before {
+    color: #ff4800!important;
+}
+
+.ui.econdary.menu.no-margin > .ui.basic > .ui.button:hover {
+    color: #ff4800!important;
+}
+
+.ui.small.button {
+    border: none;
+    font-size: 12px!important;
+}
+
+.ui.small.button:hover {
+    background: #d01919!important;
+}
+
+.ember-view.groupedit-toolbar > button:hover {
+    background: #fff!important;
+    color: #7dd4b4!important;
+    border-color: #7dd4b4!important;
+}
+
+.ember-view.groupedit-toolbar > button:hover i.icon:before {
+    color: #7dd4b4!important;
+}
+
+.ui.action.input > button:hover i.search:before {
+    color: #7dd4b4!important;
+}
+
+.cell .button:hover{
+    background: #fff!important;
+}
+
+.cell .button:hover i.icon:before {
+    color: #7dd4b4!important;
+}
+
+.ui.form.flexberry-vertical-form .field .ember-view .ui.fluid button:first-child {
+    content: "\e800";
+    visibility: hidden;
+}
+
+.ui.basic.green.buttons .button, .ui.basic.green.button {
+    box-shadow: none!important;
+}
+
+.ui.basic.green.buttons .button, .ui.basic.green.button:hover {
+    box-shadow: none!important;
+}
+
+#columnConfigurtionButtonSave {
+    border: 1px solid #7ba7d9;
+}
+
+#columnConfigurtionButtonSave:hover {
+    border: 1px solid #94cea8;
+}
+
+#columnConfigurtionButtonUse {
+    display: flex;
+    align-items: center;
+}
+
+.ui.icon.tiny.button:hover i.icon.chevron.down:before {
+    color: #fff!important;
+}
+
+.ui.icon.tiny.button:hover i.icon.chevron.up:before {
+    color: #fff!important;
+}
+
+.ui.ui-delete.button:hover {
+    border: 1px solid #ff4800!important;
+}
+
+.ui.ui-delete.button:hover i.icon.minus:before{
+    color: #ff4800!important;
+}
+
+.icon.button:hover .i.icon.table:before {
+    color: #7ba7d9!important;
+}
+
+.all-del-user-button {
+   border: 1px solid #7ba7d9!important;
+    color: #7ba7d9!important;
+}
+
+.all-del-user-button:hover {
+    border: 1px solid #94cea8!important;
+    background: #94cea8!important;
+    color: #fff!important;
+}
+
+.daterangepicker .prev .left.arrow.icon {
+    margin-left:-10px!important;
+}
+
+.daterangepicker .next .right.arrow.icon {
+    margin-left:10px!important;
+}
+
+.ui.ui-delete.button {
+    padding: 0px 9px!important;
+    height: 30px!important;
+}
+
+.ui.ui-add.button {
+    padding: 0px 9px!important;
+    height: 30px!important;
+}
+
+#columnConfigurtionButtonUse {
+    background-color: #94cea8!important;
+}
+
+#columnConfigurtionButtonSave {
+    background-color: #94cea8!important;
+}
+

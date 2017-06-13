@@ -19,7 +19,9 @@
           {{/if}}
           {{#if showDeleteButtonInRow}}
             <div class="cell">
-              <button class="ui object-list-view-row-delete-button {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action deleteRow record}}>
+              <button
+                class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button"
+                {{action deleteRow record}}>
                 <i class="minus icon"></i>
               </button>
             </div>

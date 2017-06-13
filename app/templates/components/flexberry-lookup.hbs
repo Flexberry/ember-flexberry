@@ -17,8 +17,8 @@
       value=displayValue
       readonly=(if (or readonly (not autocomplete)) "readonly")
     }}
-    <button
-      class="ui {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+    <button 
+      class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
       {{action "choose" chooseData}}>
       {{{chooseText}}}
     </button>

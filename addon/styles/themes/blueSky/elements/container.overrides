@@ -1,0 +1,33 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.stackable.grid.container {
+    margin-top: 70px;
+}
+
+.ui.main.container {
+    margin-top: -70px!important;
+    margin-bottom: 50px;
+}
+
+.item.lang {
+    padding: 0px!important;
+}
+
+#example {
+    padding-top: 80px!important;
+}
+
+.full.height {
+    height: 87.2vh!important;
+    overflow: auto;
+}
+
+.ui.attached.segment {
+    width: 100%!important;
+}
+
+.hidden {
+    display: none;
+}

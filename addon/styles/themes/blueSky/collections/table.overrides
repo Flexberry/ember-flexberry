@@ -1,0 +1,68 @@
+.ui.celled.table tr th {
+    color: #777;
+}
+
+.ui.celled.table tr td {
+    color: #555;
+}
+
+.ui.table tr.active, .ui.table td.active {
+    background: #f1f7ff!important;
+}
+
+table tr:hover {
+    background: #f1f7ffimportant;
+}
+
+tr {
+    cursor: pointer;
+}
+
+.basic.right.pointing.ui.icon.dropdown.button {
+    box-shadow: none;
+}
+
+.basic.right.pointing.ui.icon.dropdown.button:hover {
+    background: #94cea8!important;
+}
+
+.basic.right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
+    color: #fff!important;
+}
+
+.ui.table.object-list-view tr:first-child td {
+    overflow: inherit;
+}
+
+.ui.table.object-list-view tr.positive:first-child td{
+    overflow: hidden;
+}
+
+.ui.table.object-list-view tr[class=""]:first-child td{
+    overflow: hidden;
+}
+
+.oveflow-text {
+    overflow: hidden;
+}
+
+.object-list-view-menu {
+    overflow: initial!important;
+}
+
+.ui.dropdown .menu > .item:hover {
+    background: none!important;
+}
+
+.ui.basic.button:focus {
+    background: none!umportant;
+}
+
+.basic.right.pointing.ui.icon.dropdown.button:focus {
+    background: #94cea8!important;
+}
+
+.left.menu.transition.visible:hover {
+    background: #f5f8ff !important;
+}
+

@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * Blueprints:
     * Add some files to generation for `offline` support.
+    * Add generation of `blueSky` theme for applications. This theme will be used as default theme for generated applications.
 
 ### Fixed
 * Blueprints:

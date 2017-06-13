@@ -5,8 +5,7 @@ import DeviceInstanceInitializer from 'ember-flexberry/instance-initializers/dev
 
 let application;
 let appInstance;
-let originalNavigatorUserAgent;
-let originalNavigatorAppName;
+let stubbedNavigatorUserAgent;
 
 let cleanCache = function(deviceService) {
   deviceService.set('_cache.orientation', null);
@@ -17,68 +16,30 @@ let cleanCache = function(deviceService) {
 };
 
 let stubDevice = function(desiredDevice) {
-  var stubbedNavigatorUserAgent;
-  var stubbedNavigatoAppName;
 
   switch (desiredDevice) {
     case 'iphone':
       stubbedNavigatorUserAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) ' +
         'Version/10.0 Mobile/14A456 Safari/602.1';
-      stubbedNavigatoAppName = 'Netscape1';
       break;
     case 'ipad':
       stubbedNavigatorUserAgent = 'Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) ' +
         'Version/4.0.4 Mobile/7B314 Safari/531.21.10';
-      stubbedNavigatoAppName = 'Netscape2';
       break;
     case 'android':
       stubbedNavigatorUserAgent = 'Mozilla/5.0 (Linux; U; Android 4.1.2; en-us; SCH-I925 Build/JZO54K) AppleWebKit/534.30 (KHTML, like Gecko) ' +
         'Version/4.0 Safari/534.30';
-      stubbedNavigatoAppName = 'Netscape3';
       break;
   }
-
-  if (stubbedNavigatorUserAgent) {
-    window.navigator.__defineGetter__('userAgent', function () {
-      return stubbedNavigatorUserAgent;
-    });
-  }
-
-  if (stubbedNavigatoAppName) {
-    window.navigator.__defineGetter__('appName', function () {
-      return stubbedNavigatoAppName;
-    });
-  }
-};
-
-let storeOriginalDevice = function() {
-  if (!originalNavigatorUserAgent) {
-    originalNavigatorUserAgent = window.navigator.userAgent;
-  }
-
-  if (!originalNavigatorAppName) {
-    originalNavigatorAppName =  window.navigator.appName;
-  }
-};
-
-let resotreOriginalDevice = function() {
-  window.navigator.__defineGetter__('userAgent', function () {
-    return originalNavigatorUserAgent;
-  });
-  window.navigator.__defineGetter__('appName', function () {
-    return originalNavigatorUserAgent;
-  });
 };
 
 moduleForComponent('Resolver', 'Integration | Resolver', {
   integration: true,
   beforeEach() {
-    storeOriginalDevice();
     application = startApp();
     appInstance = application.buildInstance();
   },
   afterEach() {
-    resotreOriginalDevice();
     destroyApp(appInstance);
     destroyApp(application);
   }
@@ -89,16 +50,10 @@ test('Resolver, use template for portrait', function(assert) {
 
   stubDevice('iphone');
 
-  let $testPage = this.$();
-  var $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
-  $testPage.append($scriptContainer);
-
-  // Force devicejs to run it's initialization again & read stubbed device-related properties.
-  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
-  $scriptContainer.append($devicejsScript);
-
   // Device settings.
   let deviceService = appInstance.lookup('service:device');
+  deviceService.changeUserAgent(stubbedNavigatorUserAgent);
+
   cleanCache(deviceService);
   deviceService.prefixForPlatformAndType = true;
   deviceService.prefixForOrientation = true;
@@ -108,8 +63,7 @@ test('Resolver, use template for portrait', function(assert) {
 
   let result = application.__container__.lookup('template:components/resolver-test');
   assert.strictEqual(result.meta.moduleName.toString(), 'dummy/templates/iphone-portrait/components/resolver-test.hbs');
-
-  $scriptContainer.remove();
+  deviceService.changeUserAgent();
 });
 
 test('Resolver, use template for landscape', function(assert) {
@@ -117,16 +71,10 @@ test('Resolver, use template for landscape', function(assert) {
 
   stubDevice('iphone');
 
-  let $testPage = this.$();
-  let $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
-  $testPage.append($scriptContainer);
-
-  // Force devicejs to run it's initialization again & read stubbed device-related properties.
-  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
-  $scriptContainer.append($devicejsScript);
-
   // Device settings.
   let deviceService = appInstance.lookup('service:device');
+  deviceService.changeUserAgent(stubbedNavigatorUserAgent);
+
   cleanCache(deviceService);
   deviceService.prefixForPlatformAndType = true;
   deviceService.prefixForOrientation = true;
@@ -136,8 +84,7 @@ test('Resolver, use template for landscape', function(assert) {
 
   let result = application.__container__.lookup('template:components/resolver-test');
   assert.strictEqual(result.meta.moduleName.toString(), 'dummy/templates/iphone-landscape/components/resolver-test.hbs');
-
-  $scriptContainer.remove();
+  deviceService.changeUserAgent();
 });
 
 test('Resolver, use template for any screen orientation', function(assert) {
@@ -145,24 +92,17 @@ test('Resolver, use template for any screen orientation', function(assert) {
 
   stubDevice('ipad');
 
-  let $testPage = this.$();
-  let $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
-  $testPage.append($scriptContainer);
-
-  // Force devicejs to run it's initialization again & read stubbed device-related properties.
-  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
-  $scriptContainer.append($devicejsScript);
-
   // Device settings.
   let deviceService = appInstance.lookup('service:device');
+  deviceService.changeUserAgent(stubbedNavigatorUserAgent);
+
   cleanCache(deviceService);
   deviceService.prefixForPlatformAndType = true;
   DeviceInstanceInitializer.initialize(appInstance);
 
   let result = application.__container__.lookup('template:components/resolver-test');
   assert.strictEqual(result.meta.moduleName.toString(), 'dummy/templates/ipad/components/resolver-test.hbs');
-
-  $scriptContainer.remove();
+  deviceService.changeUserAgent();
 });
 
 test('Resolver, use template from mobile folder', function(assert) {
@@ -170,24 +110,17 @@ test('Resolver, use template from mobile folder', function(assert) {
 
   stubDevice('android');
 
-  let $testPage = this.$();
-  let $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
-  $testPage.append($scriptContainer);
-
-  // Force devicejs to run it's initialization again & read stubbed device-related properties.
-  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
-  $scriptContainer.append($devicejsScript);
-
   // Device settings.
   let deviceService = appInstance.lookup('service:device');
+  deviceService.changeUserAgent(stubbedNavigatorUserAgent);
+
   cleanCache(deviceService);
   deviceService.prefixForPlatformAndType = true;
   DeviceInstanceInitializer.initialize(appInstance);
 
   let result = application.__container__.lookup('template:components/resolver-test');
   assert.strictEqual(result.meta.moduleName.toString(), 'dummy/templates/mobile/components/resolver-test.hbs');
-
-  $scriptContainer.remove();
+  deviceService.changeUserAgent();
 });
 
 test('Using resolver settings deviceRelatedTypes', function(assert) {
@@ -195,16 +128,9 @@ test('Using resolver settings deviceRelatedTypes', function(assert) {
 
   stubDevice('android');
 
-  let $testPage = this.$();
-  let $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
-  $testPage.append($scriptContainer);
-
-  // Force devicejs to run it's initialization again & read stubbed device-related properties.
-  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
-  $scriptContainer.append($devicejsScript);
-
   // Device settings.
   let deviceService = appInstance.lookup('service:device');
+  deviceService.changeUserAgent(stubbedNavigatorUserAgent);
   cleanCache(deviceService);
   DeviceInstanceInitializer.initialize(appInstance);
 
@@ -231,7 +157,7 @@ test('Using resolver settings deviceRelatedTypes', function(assert) {
     }
   }
 
-  $scriptContainer.remove();
+  deviceService.changeUserAgent();
 });
 
 test('Using resolver settings resolveWithoutDeviceTypeDetection', function(assert) {
@@ -239,16 +165,10 @@ test('Using resolver settings resolveWithoutDeviceTypeDetection', function(asser
 
   stubDevice('android');
 
-  let $testPage = this.$();
-  let $scriptContainer = $('<div>').attr('id', 'deviceJsScriptContainer');
-  $testPage.append($scriptContainer);
-
-  // Force devicejs to run it's initialization again & read stubbed device-related properties.
-  let $devicejsScript = $('<script>').attr('type', 'text/javascript').attr('src', '/assets/devicejs.script');
-  $scriptContainer.append($devicejsScript);
-
   // Device settings.
   let deviceService = appInstance.lookup('service:device');
+  deviceService.changeUserAgent(stubbedNavigatorUserAgent);
+
   cleanCache(deviceService);
   DeviceInstanceInitializer.initialize(appInstance);
 
@@ -266,6 +186,5 @@ test('Using resolver settings resolveWithoutDeviceTypeDetection', function(asser
 
   // Return default resolveWithoutDeviceTypeDetection settings.
   applicationResolver.namespace.set('resolveWithoutDeviceTypeDetection', undefined);
-
-  $scriptContainer.remove();
+  deviceService.changeUserAgent();
 });

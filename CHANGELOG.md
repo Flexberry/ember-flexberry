@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `devicejs`:
+    * Add public function changeUserAgent for test.
+
+### Changed
+* Now `devicejs` import from vendor.
+
+### Removed
+* `devicejs` from bower.json.
 
 ## [0.9.0-beta.10] - 2017-05-29
 ### Changed

@@ -34,6 +34,13 @@
 
   // Main functions
   // --------------
+  device.changeUserAgent = function (stringUserAgent) {
+    if (stringUserAgent === undefined) {
+      userAgent = window.navigator.userAgent.toLowerCase();
+    } else {
+      userAgent = stringUserAgent.toLowerCase();
+    }
+  };
 
   device.ios = function () {
     return device.iphone() || device.ipod() || device.ipad();

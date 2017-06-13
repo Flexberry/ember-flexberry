@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
     hideSidebar: function() {
       Ember.$('.ui.sidebar').sidebar('hide');
     },
+
     /**
       Expand menu items by click.
 
@@ -21,6 +22,6 @@ export default Ember.Controller.extend({
         Ember.$(event.target).parent().find('.item-minus:first').addClass('hidden-menu');
         Ember.$(event.target).parent().find('.item-plus:first').removeClass('hidden-menu');
       }
-    },
+    }
   }
 });

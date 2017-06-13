@@ -246,3 +246,12 @@ i.icon.remove:before:hover {
     padding: 0px 9px!important;
     height: 30px!important;
 }
+
+#columnConfigurtionButtonUse {
+    background-color: #94cea8!important;
+}
+
+#columnConfigurtionButtonSave {
+    background-color: #94cea8!important;
+}
+

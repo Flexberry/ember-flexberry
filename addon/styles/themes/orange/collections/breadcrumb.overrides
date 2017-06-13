@@ -4,29 +4,37 @@
 .ui.secondary.menu.no-margin > .ui.basic.buttons  {
     border: none!important;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button  {
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button {
     border: none!important;
     background: none!important;
     font-size: 14px;
     color: rgba(0,0,0,0.54)!important;
     padding: 10px;
 }
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:hover  {
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:hover {
     color: #f39a2e!important;
 }
+
 .ui.secondary.menu.no-margin > .ui.basic.buttons > button.active {
     color: #999!important;
 }
+
 .showing-entries {
     color: #777;
     width: auto;
     margin: 2.6em 0px;
     float: right;
 }
+
 .ui.secondary.menu.no-margin > .ui.basic.buttons > .ui.disabled {
     color: #999!important;
     opacity: 1!important;
 }
+
 div.ui.secondary.menu.no-margin:first-child {
-     float: left!important;
+    float: left!important;
+    display: flex;
+    align-items: center;
 }

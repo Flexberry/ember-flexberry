@@ -381,3 +381,16 @@ i.icon.remove:before:hover {
     border: 1px solid red!important;
 }
 
+.ui-delete {
+    webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2)!important;
+    -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2)!important;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2)!important;
+}
+
+i.icon.add.square:hover:before {
+    color: #fff!important;
+}
+
+flexberry-file-add-button.ui.icon:hover i.icon.add.square:before {
+    color: #fff!important;
+}

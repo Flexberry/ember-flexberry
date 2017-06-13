@@ -82,6 +82,7 @@
 
 .ui.vertical.footer.segment {
     padding: 0px!important;
+    z-index: 9999;
 }
 
 .ui.secondary.menu.no-margin {

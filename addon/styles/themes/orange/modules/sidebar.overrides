@@ -135,7 +135,7 @@ body.pushable {
 
 .item-plus:before {
     content: "\e833";
-    font-family: "Crim";
+    font-family: "Crimean";
     font-size: 9px;
     position: relative;
     color: rgba(243, 154, 46, 0.84);
@@ -167,7 +167,7 @@ img.item-minus {
 
 .item-minus:before {
     content: "\e834";
-    font-family: "Crim";
+    font-family: "Crimean";
     font-size: 1.4px;
     position: relative;
     color: rgba(243, 154, 46, 0.84);

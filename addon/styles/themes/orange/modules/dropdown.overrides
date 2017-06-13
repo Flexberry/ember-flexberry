@@ -134,3 +134,8 @@
     background: #e0e0e0 !important;
 }
 
+.ui.selection.active.dropdown .menu {
+    border: none;
+    border-radius: 0px;
+}
+

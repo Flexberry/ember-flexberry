@@ -12,6 +12,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Blueprints:
     * Fix master fields caption generation on `edit-forms`.
     * Fix `offline-serializers` generation.
+* Localization:
+    * Now default locale set in `environment.js` is not ignored.
+    * If application is not support current browser languale (when default locale is not set) then `en` locale will be used for application.
 
 ### Changed
 * Blueprints:

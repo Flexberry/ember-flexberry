@@ -117,7 +117,7 @@ i.icon.call.square:before { content: "\f098"; }
 i.icon.remove.bookmark:before { content: "\f097"; }
 i.icon.unlock:before { content: "\f09c"; }
 i.icon.configure:before { content: "\f0ad"; }
-i.icon.filter:before { content: "\e809"; font-size: 19.5px; }
+i.icon.filter:before { content: "\e809"; font-size: 19.5px; font-family: 'Crimean';}
 i.icon.wizard:before { content: "\f0d0"; }
 i.icon.undo:before { content: "\f0e2"; }
 i.icon.exchange:before { content: "\f0ec"; }
@@ -904,6 +904,15 @@ i.icon.bed:before { content: "\f236"; }
     color: #fff!important;
 }
 
+.ui.secondary.menu.no-margin.ember-view > button:nth-child(3):before {
+    content: "\e814";
+    font-family: 'Crimean';
+    visibility: visible;
+    font-size: 21px;
+    color: rgba(0,0,0,0.44);
+    position: relative;
+    top: 4px;
+}
 .ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover:before {
     color: #f39a2e!important;
 }
@@ -913,6 +922,7 @@ i.icon.bed:before { content: "\f236"; }
     font-size: 0px;
     background: none!important;
     box-shadow: none;
+    width: 25px;
     padding-left: 10px;
 }
 

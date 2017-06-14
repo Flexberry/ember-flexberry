@@ -40,8 +40,8 @@ export function initialize(applicationInstance) {
     currentLocale = 'en';
   }
 
-  // If default locale is set then it should be applied during initialization of `i18n` service.
-  if (currentLocale !== defaultLocale) {
+  let i18nLocale = i18n.get('locale');
+  if (currentLocale !== i18nLocale) {
     i18n.set('locale', currentLocale);
   }
 }

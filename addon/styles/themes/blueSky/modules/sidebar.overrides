@@ -60,7 +60,12 @@ body.pushable {
     background: #f1f7ff!important;
 }
 
-.ui .attached .menu {
+.mobile.inverted.vertical.menu.sidebar {
+    height: 87.6vh!important;
+    top: 4em;
+}
+
+.ui.attached.menu {
     border: none!important;
     background: none;
 }
@@ -69,6 +74,10 @@ body.pushable {
     box-shadow: none;
     padding: 0px!important;
     width: 150px;
+}
+
+.launch.icon.item.mobile {
+    width: 90px!important;
 }
 
 .ui.attached.menu:not(.tabular) {

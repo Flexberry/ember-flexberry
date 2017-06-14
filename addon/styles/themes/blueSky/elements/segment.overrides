@@ -16,6 +16,10 @@
     z-index: 99;
 }
 
+.ui.vertical.footer.segment > .second-floor {
+    bottom: 40px!important;
+}
+
 .daterangepicker .calendar td {
     color: #7ba7d9;
 }

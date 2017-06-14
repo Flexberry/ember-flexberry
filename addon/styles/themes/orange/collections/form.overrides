@@ -21,6 +21,7 @@
     border-radius: 0px!important;
     outline: none;
     background: none;
+    opacity: 0.54;
 }
 
 .ui.form input:not([type]):focus, .ui.form input[type="date"]:focus,

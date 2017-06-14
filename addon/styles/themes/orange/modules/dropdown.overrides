@@ -136,6 +136,6 @@
 
 .ui.selection.active.dropdown .menu {
     border: none;
-    border-radius: 0px;
+    border-radius: 2px;
 }
 

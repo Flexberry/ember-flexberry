@@ -943,8 +943,7 @@ i.icon.bed:before { content: "\f236"; }
 }
 
 .page-header-userbar a {
-    margin: 0px;
-    margin: 0 25px 0px 0px;
+    margin: 0px 25px 0px 0px;
     height: 10px!important;
 }
 

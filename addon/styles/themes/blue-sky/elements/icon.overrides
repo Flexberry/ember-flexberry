@@ -891,7 +891,7 @@ i.icon.bed:before { content: "\f236"; }
     border:none!important;
 }
 
-.page-header-userbar a:before {
+.page-header-userbar a:after {
     margin: 0 0 0 15px;
     font-size: 16px;
     visibility: visible;
@@ -900,13 +900,12 @@ i.icon.bed:before { content: "\f236"; }
     content: "\e81e";
 }
 
-.page-header-userbar a:hover:before {
+.page-header-userbar a:hover:after {
     color: #ff4800;
 }
 
 .page-header-userbar a {
-    visibility: hidden;
-    margin: 0px;
+    margin: 0px 25px 0px 0px;
 }
 
 .menu.transition.visible > a:nth-child(2) >

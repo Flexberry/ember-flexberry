@@ -939,7 +939,7 @@ i.icon.bed:before { content: "\f236"; }
     content: "\e81e";
 }
 .page-header-userbar a:hover:after {
-    color: #000!important; opacity: 1!important; 
+    color: #000!important; opacity: 1!important;
 }
 
 .page-header-userbar a {
@@ -1039,7 +1039,6 @@ i.icon.bed:before { content: "\f236"; }
 }
 
 .flexberry-edit-panel > button:nth-child(4):hover {
-    background: url(../assets/serviceImages/close-hover.png)center no-repeat;
     background: none!important;
     border: none!important;
     box-shadow: none!important;
@@ -1050,7 +1049,7 @@ button:before:hover {
 }
 
 .remove.icon:before:hover {
-    color: #000!important; opacity: 1!important; 
+    color: #000!important; opacity: 1!important;
 }
 
 .ui.buttons .ui.icon.button:hover .large.icon:before {
@@ -1066,7 +1065,7 @@ button:before:hover {
 }
 
 .remove.icon:hover:before {
-    color: #f39a2e!important; opacity: 1!important; 
+    color: #f39a2e!important; opacity: 1!important;
 }
 
 .flexberry-lookup > .ui.fluid.action.input > .ui.button:first-child {
@@ -1112,7 +1111,7 @@ button:before:hover {
 }
 
 .disabled:before {
-    opacity: 1!important; 
+    opacity: 1!important;
     color: #999!important;
 }
 
@@ -1139,7 +1138,7 @@ button:before:hover {
 }
 
 i.icon.calendar:hover:before {
-    color: #f39a2e!important; opacity: 1!important; 
+    color: #f39a2e!important; opacity: 1!important;
 }
 
 .flexberry-lookup > .ui.fluid > button > i.icon.remove:before {

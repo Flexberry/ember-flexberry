@@ -14,10 +14,12 @@ module.exports = {
       '  app.import(\'vendor/fonts/crim.ttf\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/fonts/crim.woff\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/fonts/crim.woff2\', { destDir: \'assets/fonts\' });\n' +
-      '  app.import(\'vendor/serviceImages/close.png\', { destDir: \'assets/serviceImages\' });\n' +
-      '  app.import(\'vendor/serviceImages/close-hover.png\', { destDir: \'assets/serviceImages\' });\n' +
-      '  app.import(\'vendor/serviceImages/Plus.png\', { destDir: \'assets/serviceImages\' });\n' +
-      '  app.import(\'vendor/serviceImages/Minus.png\', { destDir: \'assets/serviceImages\' });\n';
+      '  app.import(\'vendor/serviceImages/close.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
+      '  app.import(\'vendor/serviceImages/close-hover.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
+      '  app.import(\'vendor/serviceImages/plus.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
+      '  app.import(\'vendor/serviceImages/minus.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
+      '  app.import(\'vendor/serviceImages/header-bgw.png\', { destDir: \'assets/themes/orange/assets/images\' });\n' +
+      '  app.import(\'vendor/serviceImages/bgw-head-calendar.png\', { destDir: \'assets/themes/orange/assets/images\' });\n';
     var options = '    jscsOptions: {\n' +
       '      enabled: true,\n' +
       '      esnext: true,\n' +

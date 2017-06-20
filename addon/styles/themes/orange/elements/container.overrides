@@ -26,7 +26,7 @@
 
 .ui.attached.segment {
     width: 100%!important;
-    margin-left: 0px!important; 
+    margin-left: 0px!important;
 }
 
 .hidden {
@@ -51,7 +51,7 @@
 
 .daterangepicker table thead {
     position: relative;
-    background: url('../assets/serviceImages/bgw-head-calendar.png');
+    background: url('@{imagePath}/bgw-head-calendar.png');
     width: 264px;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .daterangepicker table {
-    width: 269px!important; 
+    width: 269px!important;
 }
 
 .daterangepicker table tr th {

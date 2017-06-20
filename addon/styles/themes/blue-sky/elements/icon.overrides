@@ -966,11 +966,11 @@ i.icon.bed:before { content: "\f236"; }
     top: -33px;
     color: #fff!important;
     font-size: 0px!important;
-    background: url(../assets/serviceImages/close.png)center no-repeat;
+    background: url("@{imagePath}/close.png") center no-repeat;
 }
 
 .flexberry-edit-panel > button:nth-child(4):hover {
-     background: url(../assets/serviceImages/close-hover.png)center no-repeat;
+     background: url("@{imagePath}/close-hover.png") center no-repeat;
 }
 
 button:before:hover {
@@ -1048,7 +1048,7 @@ i.icon.text-menu-2:before {
 }
 
 .disabled:before {
-    opacity: 1!important; 
+    opacity: 1!important;
     color: #999!important;
 }
 

@@ -8,7 +8,7 @@ div.item-plus {
     border-radius: 3px!important;
     margin-right: 10px!important;
     margin-bottom: 1px!important;
-    background: url('../assets/serviceImages/Plus.png') center no-repeat;
+    background: url("@{imagePath}/plus.png") center no-repeat;
     cursor: pointer;
     float: left;
     position: relative;
@@ -21,7 +21,7 @@ div.item-minus {
     border-radius: 3px!important;
     margin-right: 10px!important;
     margin-bottom: 1px!important;
-    background: url('../assets/serviceImages/Minus.png') center no-repeat;;
+    background: url("@{imagePath}/minus.png") center no-repeat;;
     cursor: pointer;
     float: left;
     position: relative;

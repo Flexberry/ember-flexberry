@@ -11,7 +11,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background: url("../assets/serviceImages/header-bgw.png");
+    background: url("@{imagePath}/header-bgw.png");
     z-index: 999;
     width: 100%;
     -webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);

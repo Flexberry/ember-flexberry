@@ -1,0 +1,98 @@
+/*******************************
+        Global Overrides
+*******************************/
+
+.bgw-fix {
+    position: relative;
+}
+
+.background-logo {
+    position: fixed;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: url("../assets/serviceImages/header-bgw.png");
+    z-index: 999;
+    width: 100%;
+    -webkit-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+}
+
+.background-logo a {
+    background: #fff;
+    border-radius: 15px;
+    margin: 5px;
+}
+
+.background-logo a img {
+    padding: 7px 0px;
+}
+
+.bgw-opacity {
+    min-height: 90vh !important;
+    width: 100%;
+    background: rgba(0,0,0,0.40);
+    position: absolute;
+    z-index: 999;
+}
+
+/**ScrollBar**/
+::-webkit-scrollbar {
+    height: 8px;
+    width: 9px;
+    /*background: #dcebfc!important;*/
+    cursor: pointer !important;
+    /*border:1px solid rgba(34, 36, 38, 0.1);*/
+    -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #f39a2e;
+    -webkit-border-radius: 1ex;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #f39a2e;;
+    -webkit-border-radius: 1ex;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-corner {
+    background: white;
+    cursor: pointer;
+}
+
+.page-header-userbar {
+    display: flex;
+    position: absolute;
+    right: 0px;
+    height: 100%;
+    align-items: center;
+    font-size: 14px;
+    color: #fff;
+    top: 0px;
+}
+
+.page-header-userbar a {
+    background: none;
+    color: #fff;
+    box-shadow: none;
+}
+
+lang {
+    padding: 0px!important;
+}
+
+#example .full .ui.attached.segment {
+    background: #f5f5f5!important;
+}
+
+.right.item:hover label {
+    color: #fff!important;
+}
+
+.full.height {
+    overflow: auto;
+}

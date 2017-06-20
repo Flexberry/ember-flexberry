@@ -1,0 +1,97 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.stackable.grid.container {
+    margin-top: 70px;
+}
+
+.ui.main.container {
+    margin-top: -70px!important;
+    margin-bottom: 50px;
+}
+
+.item.lang {
+    padding: 0px!important;
+}
+
+#example {
+    padding-top: 80px!important;
+    overflow: initial!important;
+}
+
+.full.height {
+    height: 87.2vh!important;
+}
+
+.ui.attached.segment {
+    width: 100%!important;
+    margin-left: 0px!important; 
+}
+
+.hidden {
+    display: none;
+}
+
+.brand.item {
+    color: #fff!important;
+}
+
+.item.lang {
+    color: #fff!important;
+}
+
+.right.menu a{
+    color: #fff!important;
+}
+
+.sidebar.icon.text-menu-1 {
+    margin-left: 15px!important;
+}
+
+.daterangepicker table thead {
+    position: relative;
+    background: url('../assets/serviceImages/bgw-head-calendar.png');
+    width: 264px;
+}
+
+.calendar.first.single.right {
+    position: absolute;
+    top: 0px;
+    z-index: 99;
+}
+
+.daterangepicker .calendar-date {
+    background: none;
+}
+
+.daterangepicker.dropdown-menu.single.opensright {
+    height: 314px;
+    padding: 0px;
+    width: 270px!important;
+}
+
+.daterangepicker .ui.dropdown.monthselect,
+.daterangepicker .ui.dropdown.yearselect {
+    color: #fff!important;
+ }
+
+.daterangepicker.opensright .ranges,
+.daterangepicker.opensright .calendar,
+.daterangepicker.openscenter .ranges,
+.daterangepicker.openscenter .calendar {
+    margin: 0px!important;
+    padding: 0px!important;
+}
+
+.daterangepicker table {
+    width: 269px!important; 
+}
+
+.daterangepicker table tr th {
+    border-radius: 0px!important;
+}
+
+.daterangepicker .calendar.single .calendar-date {
+    padding: 0px!important;
+}

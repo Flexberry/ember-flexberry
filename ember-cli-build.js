@@ -48,6 +48,12 @@ module.exports = function(defaults) {
     app.import('vendor/serviceImages/Minus.png', {
     destDir: 'assets/serviceImages'
   });
+  app.import('vendor/serviceImages/header-bgw.png', { 
+    destDir: 'assets/serviceImages' 
+  });
+      app.import('vendor/serviceImages/bgw-head-calendar.png', { 
+    destDir: 'assets/serviceImages' 
+  });
   /*
     This build file specifies the options for the dummy test app of this
     addon, located in `/tests/dummy`

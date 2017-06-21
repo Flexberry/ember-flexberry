@@ -1,0 +1,29 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+div.item-plus {
+    width: 16px!important;
+    height: 16px;
+    border-radius: 3px!important;
+    margin-right: 10px!important;
+    margin-bottom: 1px!important;
+    background: url("@{imagePath}/plus.png") center no-repeat;
+    cursor: pointer;
+    float: left;
+    position: relative;
+    top: -2px;
+}
+
+div.item-minus {
+    width: 16px!important;
+    height: 16px;
+    border-radius: 3px!important;
+    margin-right: 10px!important;
+    margin-bottom: 1px!important;
+    background: url("@{imagePath}/minus.png") center no-repeat;;
+    cursor: pointer;
+    float: left;
+    position: relative;
+    top: -2px;
+}

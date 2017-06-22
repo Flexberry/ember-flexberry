@@ -112,6 +112,8 @@ Router.map(function() {
   // Integration examples routes.
   this.route('integration-examples/edit-form/readonly-mode');
   this.route('integration-examples/edit-form/validation');
+  this.route('integration-examples/pseudodetailes/pseudodetailes-list');
+  this.route('integration-examples/pseudodetailes/pseudodetailes-edit', { path: 'integration-examples/edit-form/pseudodetailes/pseudodetailes-edit/:id' });
 
   // User-setting forms.
   this.route('user-setting-forms/user-setting-delete');

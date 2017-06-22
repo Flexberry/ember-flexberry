@@ -487,6 +487,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Validation',
               'title': ''
             }
+          },
+          'pseudodetailes': {
+            'caption': 'Pseudodetailes',
+            'title': ''
           }
         },
         'user-setting-forms': {
@@ -876,6 +880,10 @@ Ember.$.extend(true, translations, {
           'master-caption': 'Master',
           'details-caption': 'Details'
         }
+      },
+
+      'pseudodetailes':{
+        'caption': 'Integration examples. Pseudodetailes'
       }
     },
     'user-setting-forms': {

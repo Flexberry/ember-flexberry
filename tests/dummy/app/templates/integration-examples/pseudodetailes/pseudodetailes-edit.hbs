@@ -1,0 +1,71 @@
+<h3 class="ui header">{{t "forms.integration-examples.pseudodetailes.caption"}}</h3>
+<form class="ui {{state}} form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "save"}}>{{t "forms.edit-form.save-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui positive button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless (and model.isNew (or (not hasParentRoute) (and hasParentRoute saveBeforeRouteLeave)))}}
+          <button type="submit" class="ui negative button" {{action "delete"}}>{{t "forms.edit-form.delete-button-text"}}</button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}--></button>
+    </div>
+  </div>
+  <div class="field {{if model.errors.name "error" ""}}">
+    {{flexberry-field
+      value=model.name
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.name-caption")
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.eMail "error" ""}}">
+    {{flexberry-field
+      value=model.eMail
+      label=(t "forms.ember-flexberry-dummy-application-user-edit.eMail-caption")
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.eMail pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.userVotes "error" ""}}">
+    <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
+    {{flexberry-groupedit
+        componentName="suggestionUserVotesGroupEdit"
+        modelName='ember-flexberry-dummy-vote'
+        content=votes
+        modelProjection='VoteE'
+        rowClickable=true
+        cellComponent=getCellComponent
+        configurateRow=(action 'configurateVotesRow')
+    }}
+    {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
+  </div>
+</form>

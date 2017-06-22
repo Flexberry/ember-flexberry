@@ -48,6 +48,12 @@ Model.defineProjection('ApplicationUserE', 'ember-flexberry-dummy-application-us
   karma: Projection.attr('Karma')
 });
 
+// Edit form projection.
+Model.defineProjection('ApplicationUserPseudodetailE', 'ember-flexberry-dummy-application-user', {
+  name: Projection.attr('Name'),
+  eMail: Projection.attr('E-mail')
+});
+
 // List form projection.
 Model.defineProjection('ApplicationUserL', 'ember-flexberry-dummy-application-user', {
   name: Projection.attr('Name'),
@@ -56,6 +62,12 @@ Model.defineProjection('ApplicationUserL', 'ember-flexberry-dummy-application-us
   birthday: Projection.attr('Birthday'),
   gender: Projection.attr('Gender'),
   karma: Projection.attr('Karma')
+});
+
+// List form projection.
+Model.defineProjection('ApplicationUserPseudodetailL', 'ember-flexberry-dummy-application-user', {
+  name: Projection.attr('Name'),
+  eMail: Projection.attr('E-mail')
 });
 
 export default Model;

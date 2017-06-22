@@ -502,6 +502,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.integration-examples.edit-form.validation.title'),
             children: null
           }]
+        }, {
+          link: 'integration-examples/pseudodetailes/pseudodetailes-list',
+          caption: i18n.t('forms.application.sitemap.integration-examples.pseudodetailes.caption'),
+          title: i18n.t('forms.application.sitemap.integration-examples.pseudodetailes.title'),
+          children: null
         }]
       }, {
         link: null,

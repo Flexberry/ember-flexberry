@@ -504,6 +504,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Валидация',
               'title': ''
             }
+          },
+          'pseudodetailes': {
+            'caption': 'Псевдодетейлы',
+            'title': ''
           }
         },
         'user-setting-forms': {
@@ -894,6 +898,10 @@ Ember.$.extend(true, translations, {
           'master-caption': 'Мастер',
           'details-caption': 'Детейлы'
         }
+      },
+
+      'pseudodetailes':{
+        'caption': 'Integration examples. Псевдодетейлы'
       }
     },
     'user-setting-forms': {

@@ -190,7 +190,7 @@
 --------------------*/
 
 /*---  Colors  ---*/
-@red              : #DB2828;
+@red              : #ff4800;
 @orange           : #F2711C;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
@@ -814,5 +814,3 @@
 @whiteActive           : darken(@white, 5);
 @offWhiteActive        : darken(@offWhite, 5);
 @darkWhiteActive       : darken(@darkWhite, 5);
-
-

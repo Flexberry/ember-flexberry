@@ -16,3 +16,7 @@ input {
 .ui.action.input:not([class*="left action"]) > .buttons > .button {
     border: 1px solid #7ba7d9;
 }
+
+.ui.action.input {
+    margin-left: 8px;
+}

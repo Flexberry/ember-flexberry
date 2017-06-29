@@ -31,7 +31,7 @@
 .ui.buttons:not(.basic):not(.inverted) > .button {
     border: none;
     background: none!important;
-    padding: 0.7400em 1.284em 0.8571em!important;
+    padding: 0.7400em 0.8571em!important;
 }
 
 .ui.basic.buttons .active.button {
@@ -258,4 +258,8 @@ i.icon.remove:before:hover {
 div.ui.secondary.menu.no-margin:first-child {
     display: flex;
     align-items: center;
+}
+
+.ui.buttons .or {
+    display: none;
 }

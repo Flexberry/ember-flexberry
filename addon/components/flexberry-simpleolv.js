@@ -1895,6 +1895,12 @@ ErrorableControllerMixin, {
     }
   },
 
+  _rowsDeleted(componentName, count) {
+    if (componentName === this.get('componentName')) {
+      this.set('isDeleteButtonEnabled', false);
+    }
+  },
+
   /**
     Delete the record.
 

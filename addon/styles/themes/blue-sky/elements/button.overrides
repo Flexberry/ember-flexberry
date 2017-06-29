@@ -15,6 +15,10 @@
   border:1px solid #94cea8;
 }
 
+.ui.button:focus {
+  background-color: #cacbcd;
+}
+
 .ui.button {
     padding: 0px 18px;
     height: 35px;
@@ -191,6 +195,7 @@ i.icon.remove:before:hover {
 
 #columnConfigurtionButtonSave:hover {
     border: 1px solid #94cea8;
+    background-color: #94cea8!important;
 }
 
 #columnConfigurtionButtonUse {
@@ -248,10 +253,6 @@ i.icon.remove:before:hover {
 }
 
 #columnConfigurtionButtonUse {
-    background-color: #94cea8!important;
-}
-
-#columnConfigurtionButtonSave {
     background-color: #94cea8!important;
 }
 

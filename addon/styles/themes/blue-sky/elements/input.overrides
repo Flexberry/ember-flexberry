@@ -5,8 +5,8 @@
     height: 35px;
 }
 
-.ui.input {
-    display: -webkit-box;
+.ui.action.input {
+  display: -webkit-box;
 }
 
 input {

@@ -3,6 +3,24 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* BlueSky theme:
+    * Fix lookup dialog pager visibility.
+
+## [0.9.0-beta.12] - 2017-06-21
+### Added
+* Blueprints:
+    * Add generation of `orange` theme for applications.
+
+### Changed
+    * `blueSky` theme renamed to `blue-sky`.
+    * Now apps are importing themes from addon, themes are not generating to apps.
+
+### Fixed
+* Fix menu sidebar script to not apply on other sidebars.
+* Fix `blue-sky` theme for displaying in IE.
+
+## [0.9.0-beta.11] - 2017-06-14
 ### Added
 * Blueprints:
     * Add some files to generation for `offline` support.

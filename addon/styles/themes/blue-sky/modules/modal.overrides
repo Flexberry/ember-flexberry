@@ -1,0 +1,12 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.flexberry-modal.small {
+    height: 700px!important;
+}
+
+.ui.modal > .content {
+    overflow: auto!important;
+    max-height: 618px!important;
+}

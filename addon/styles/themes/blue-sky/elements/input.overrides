@@ -4,6 +4,11 @@
 .ui.action.input:not([class*="left action"]) > input {
     height: 35px;
 }
+
+.ui.action.input {
+  display: -webkit-box;
+}
+
 input {
     border: none;
     border-bottom: 1px solid #b1cae8;

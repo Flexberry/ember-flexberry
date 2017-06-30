@@ -31,3 +31,8 @@
 .hidden {
     display: none;
 }
+
+.object-list-view-container {
+    height: auto;
+    overflow: auto;
+}

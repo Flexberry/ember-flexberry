@@ -660,6 +660,20 @@ export default FlexberryBaseComponent.extend({
     }
   },
 
+  /**
+    Handler for "Olv rows deleted" event in objectlistview.
+
+    @method _rowsDeleted
+
+    @param {String} componentName The name of objectlistview component
+    @param {Integer} count Number of deleted records
+  */
+  _rowsDeleted(componentName, count) {
+    if (componentName === this.get('componentName')) {
+      this.set('isDeleteButtonEnabled', false);
+    }
+  },
+
   _updateListNamedUserSettings() {
     this._resetNamedUserSettings();
     Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));

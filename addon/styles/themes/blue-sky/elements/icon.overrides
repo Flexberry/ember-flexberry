@@ -116,7 +116,8 @@ i.icon.call.square:before { content: "\f098"; }
 i.icon.remove.bookmark:before { content: "\f097"; }
 i.icon.unlock:before { content: "\f09c"; }
 i.icon.configure:before { content: "\f0ad"; }
-i.icon.filter:before { content: "\e809"; font-size: 19.5px; font-family: 'Crimean'; }
+i.icon.filter:before { content: "\e809"; font-size: 19.5px; font-family: 'Crimean'; opacity: 0.8; }
+i.icon.filter:hover:before { content: "\e809"; font-size: 19.5px; font-family: 'Crimean';  opacity: 1;}
 i.icon.wizard:before { content: "\f0d0"; }
 i.icon.undo:before { content: "\f0e2"; }
 i.icon.exchange:before { content: "\f0ec"; }
@@ -328,7 +329,6 @@ i.icon.toggle.left:before { content: "\f191"; }
 /* Computer */
 i.icon.power:before { content: "\f011"; }
 i.icon.trash:before { content: "\e814"; font-family: 'Crimean'; }
-i.icon.trash:hover:before { color: #ff4800!important; }
 i.icon.trash.outline:before { content: "\e814"; }
 i.icon.disk.outline:before { content: "\f0a0"; }
 i.icon.desktop:before { content: "\f108"; }
@@ -767,10 +767,6 @@ i.icon.bed:before { content: "\f236"; }
     color: #fff!important;
 }
 
-.ui.icon.button:hover i.outline.icon:before {
-    color: #7dd4b4!important;
-}
-
 .ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:before {
     content: "\e81a";
     font-family: 'Crimean';
@@ -796,12 +792,12 @@ i.icon.bed:before { content: "\f236"; }
     font-family: 'Crimean';
     visibility: visible;
     font-size: 21px;
-    color: #94cea8;
+    color: #7dd4b4;
     opacity: 0.8;
 }
 
 .refresh-button:hover:before {
-    color: #94cea8;
+    color: #7dd4b4;
     opacity: 1;
 }
 
@@ -819,6 +815,12 @@ i.icon.bed:before { content: "\f236"; }
     color: #fff;
     background: #7dd4b4;
     border: 1px solid #7dd4b4;
+}
+
+.delete-button:hover {
+    color: #fff;
+    background-color: #ff6d14 !important;
+    border: 1px solid #ff6d14 !important;
 }
 
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2):hover {
@@ -846,10 +848,6 @@ i.icon.bed:before { content: "\f236"; }
     vertical-align: middle;
     font-family: 'Crimean';
     content: "\e81e";
-}
-
-.page-header-userbar a:hover:after {
-    color: #ff4800;
 }
 
 .page-header-userbar a {
@@ -994,21 +992,54 @@ i.icon.calendar:hover:before {
     font-family: 'Crimean';
     font-size: 13px !important;
 }
+
+/** FileControl buttons section start **/
+
 .flexberry-file-add-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
-
+.flexberry-file-add-button.ui.icon.button:hover::before {
+    color: #7dd4b4 !important;
+}
+.flexberry-file-add-button.ui.icon.button:hover {
+    border-color: #7dd4b4 !important;
+    color: #7dd4b4 !important;
+}
+.ui.icon.button:hover i.add.outline.icon:before {
+    color: #7dd4b4 !important;
+}
 .flexberry-file-remove-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
-
+.flexberry-file-remove-button.ui.icon.button:hover {
+    border-color: @red !important;
+    color: @red !important;
+}
+.ui.icon.button:hover i.trash.outline.icon:before {
+    color: @red !important;
+}
 .flexberry-file-download-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
-
+.flexberry-file-download-button.ui.icon.button:hover {
+    border-color: #3c87dc !important;
+    color: #3c87dc!important;
+}
+.ui.icon.button:hover i.download.outline.icon:before {
+    color: #3c87dc !important;
+}
 .flexberry-file-upload-button.ui.icon.button {
     margin: 0px 2.5px!important;
 }
+.flexberry-file-upload-button.ui.icon.button:hover {
+    border-color: #3c87dc !important;
+    color: #3c87dc !important;
+}
+.ui.icon.button:hover i.upload.outline.icon:before {
+    color: #3c87dc !important;
+}
+
+/** FileControl buttons section end **/
 
 i.plus.icon {
     position: relative;
@@ -1042,7 +1073,3 @@ i.minus.icon {
     font-size: 21px;
     padding-right: 10px;
 }
-
-
-
-

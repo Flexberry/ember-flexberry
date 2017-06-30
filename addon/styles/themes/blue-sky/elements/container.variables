@@ -12,19 +12,19 @@
 
 /* Devices */
 @mobileMinimumGutter: 0em;
-@mobileWidth: auto;
+@mobileWidth: 90%;
 @mobileGutter: 1em;
 
 @tabletMinimumGutter: (@emSize  * 1);
-@tabletWidth: @tabletBreakpoint - (@tabletMinimumGutter * 2) - @scrollbarWidth;
+@tabletWidth: 90%;
 @tabletGutter: auto;
 
 @computerMinimumGutter: (@emSize  * 1.5);
-@computerWidth: @computerBreakpoint - (@computerMinimumGutter * 2) - @scrollbarWidth;
+@computerWidth: 90%;
 @computerGutter: auto;
 
 @largeMonitorMinimumGutter: (@emSize  * 2);
-@largeMonitorWidth: @largeMonitorBreakpoint - (@largeMonitorMinimumGutter * 2) - @scrollbarWidth;
+@largeMonitorWidth: 90%;
 @largeMonitorGutter: auto;
 
 /* Coupling (Add Negative Margin to container size) */

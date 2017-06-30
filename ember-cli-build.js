@@ -39,20 +39,20 @@ module.exports = function(defaults) {
   app.import('vendor/serviceImages/close.png', {
     destDir: 'assets/themes/blue-sky/assets/images'
   });
-    app.import('vendor/serviceImages/close-hover.png', {
+  app.import('vendor/serviceImages/close-hover.png', {
     destDir: 'assets/themes/blue-sky/assets/images'
   });
-   app.import('vendor/serviceImages/plus.png', {
+  app.import('vendor/serviceImages/plus.png', {
     destDir: 'assets/themes/blue-sky/assets/images'
   });
-    app.import('vendor/serviceImages/minus.png', {
+  app.import('vendor/serviceImages/minus.png', {
     destDir: 'assets/themes/blue-sky/assets/images'
   });
-  app.import('vendor/serviceImages/header-bgw.png', { 
-    destDir: 'assets/themes/orange/assets/images' 
+  app.import('vendor/serviceImages/header-bgw.png', {
+    destDir: 'assets/themes/orange/assets/images'
   });
-      app.import('vendor/serviceImages/bgw-head-calendar.png', { 
-    destDir: 'assets/themes/orange/assets/images' 
+  app.import('vendor/serviceImages/bgw-head-calendar.png', {
+    destDir: 'assets/themes/orange/assets/images'
   });
   /*
     This build file specifies the options for the dummy test app of this

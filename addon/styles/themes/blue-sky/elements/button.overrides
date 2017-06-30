@@ -15,7 +15,12 @@
   border:1px solid #94cea8;
 }
 
+.ui.button:focus {
+  background-color: #cacbcd;
+}
+
 .ui.button {
+    color: #7ba7d9;
     padding: 0px 18px;
     height: 35px;
     text-align: center;
@@ -113,9 +118,9 @@ i.icon.remove:before:hover {
 }
 
 .ui.negative.buttons .button:hover, .ui.negative.button:hover   {
-    background: #DB2828!important;
+    background: @red !important;
     opacity: 0.8;
-    border:1px solid #DB2828!important;
+    border:1px solid @red !important;
 }
 
 .ui.positive.buttons .button, .ui.positive.button:hover {
@@ -191,6 +196,7 @@ i.icon.remove:before:hover {
 
 #columnConfigurtionButtonSave:hover {
     border: 1px solid #94cea8;
+    background-color: #94cea8!important;
 }
 
 #columnConfigurtionButtonUse {
@@ -250,10 +256,6 @@ i.icon.remove:before:hover {
 }
 
 #columnConfigurtionButtonUse {
-    background-color: #94cea8!important;
-}
-
-#columnConfigurtionButtonSave {
     background-color: #94cea8!important;
 }
 

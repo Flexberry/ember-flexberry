@@ -2,10 +2,6 @@
          Theme Overrides
 *******************************/
 
-#lookup-list .ui.bottom .ui.secondary.menu {
-    display: none!important;
-}
-
 .flexberry-modal.small {
     height: 700px!important;
 }

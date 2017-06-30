@@ -27,6 +27,10 @@
 .ui.dropdown > .dropdown.icon {
     width: auto;
     color: #7ba7d9!important;
+    opacity: 0.8;
+}
+.ui.dropdown > .dropdown.icon:hover {
+    opacity: 1;
 }
 .ui.dropdown > .dropdown.icon:before {
     content: '\f0d7';
@@ -71,7 +75,7 @@
     box-shadow:none!important;
 }
 .ui.menu .ui.dropdown .menu > .item:hover {
-    background: none!important;
+    background: #f5f8ff!important;
 }
 
 .ui.menu .ui.dropdown .menu > .active.item {
@@ -117,4 +121,3 @@
 .ui.selection.dropdown:hover {
     color: #b1cae8!important;
 }
-

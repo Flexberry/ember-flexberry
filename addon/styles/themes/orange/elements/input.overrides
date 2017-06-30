@@ -6,10 +6,6 @@
     height: 35px;
 }
 
-.ui.input {
-    display: -webkit-box;
-}
-
 input {
     border: none;
     border-bottom: 1px solid #b1cae8;

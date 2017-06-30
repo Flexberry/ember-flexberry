@@ -7,6 +7,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix delete button disabling after deletion on lists.
 * BlueSky theme:
     * Fix lookup dialog pager visibility.
+    * Fix buttons imposition on each other in list's toolbar.
+
+### Changed
+* BlueSky theme:
+    * Increase forms width.
 
 ## [0.9.0-beta.12] - 2017-06-21
 ### Added

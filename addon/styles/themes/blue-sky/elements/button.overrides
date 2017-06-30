@@ -20,7 +20,6 @@
     height: 35px;
     text-align: center;
     border-radius: 5px;
-    border: 1px #7ba7d9 solid;
 }
 
 .large.table.icon {
@@ -95,13 +94,14 @@ i.icon.remove:before:hover {
 }
 
 .flexberry-edit-panel > button {
-    border: 1px solid #7ba7d9!important;
     color: #3f65a4!important;
 }
 
 .ui.negative.buttons .button, .ui.negative.button,
 .ui.positive.buttons .button, .ui.positive.button {
     background: none!important;
+    border: 1px solid #7ba7d9;
+    color: #3f65a4;
 }
 
 .stackable.grid.container p:last-child .ui.positive.button {
@@ -240,11 +240,13 @@ i.icon.remove:before:hover {
 .ui.ui-delete.button {
     padding: 0px 9px!important;
     height: 30px!important;
+    border: 1px solid #7ba7d9!important;
 }
 
 .ui.ui-add.button {
     padding: 0px 9px!important;
     height: 30px!important;
+    border: 1px solid #7ba7d9!important;
 }
 
 #columnConfigurtionButtonUse {
@@ -262,4 +264,98 @@ div.ui.secondary.menu.no-margin:first-child {
 
 .ui.buttons .or {
     display: none;
+}
+
+.refresh-button {
+    border: none!important;
+    font-size: 0px!important;
+    width: 25px;
+    padding: 0px 5px 0px 0px!important;
+    height: 0px!important;
+}
+
+.refresh-button:hover {
+    background: none;
+}
+
+.create-button:hover {
+    color: #fff;
+    background: #7dd4b4;
+}
+
+.create-button {
+    border: 1px solid #7ba7d9!important;
+}
+
+.delete-button {
+    border:none!important;
+    font-size: 0px!important;;
+    padding-left: 10px!important;
+    height: 0px!important;
+}
+
+.delete-button:hover {
+    background: none;
+    border:none!important;
+}
+
+.delete-button:hover {
+    color: #fff;
+    background-color: #DB2828!important;
+}
+
+.close-button {
+    position: absolute;
+    border: none!important;
+    width: 43px;
+    height: 43px;
+    right: -2px;
+    top: -33px;
+    font-size: 0px!important;
+    background: url("@{imagePath}/close.png") center no-repeat!important;
+}
+
+.close-button:hover {
+    background: url("@{imagePath}/close-hover.png") center no-repeat!important;
+}
+
+.hierarchical-button:hover {
+    background-color: #fff!important;
+    background: none;
+    border: none!important;
+}
+
+.ui.right.floated.tiny.compact.button {
+    border: 1px solid #7ba7d9!important;
+}
+
+.ui.right.floated.tiny.compact.button:hover {
+    border: 1px solid #94cea8!important;
+}
+
+.ui.right.floated.tiny.primary.compact.button:hover {
+    border: 1px solid #7ba7d9!important;
+}
+
+.my-test-user-button {
+     border: 1px solid #7ba7d9!important;
+}
+
+.my-test-user-button:hover {
+     border: 1px solid #94cea8!important;
+}
+
+.basic.right.pointing.ui.icon.dropdown.button {
+    border: 1px solid #7ba7d9!important;
+}
+
+.basic.right.pointing.ui.icon.dropdown.button:hover {
+    border: 1px solid #94cea8!important;
+}
+.theme-button {
+    border: 1px solid #7ba7d9!important;
+}
+
+.theme-button:hover {
+    border: 1px solid #94cea8!important;
 }

@@ -1,20 +1,20 @@
 {{#if refreshButton}}
-  <button class="ui {{buttonClass}} button" {{action "refresh"}}>
+  <button class="ui refresh-button{{buttonClass}} button" {{action "refresh"}}>
     {{t "components.olv-toolbar.refresh-button-text"}}
   </button>
 {{/if}}
 {{#if createNewButton}}
-  <button class="ui create-button {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button" {{action "createNew"}}>
+  <button class="ui create-button{{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button" {{action "createNew"}}>
     {{t "components.olv-toolbar.add-button-text"}}
   </button>
 {{/if}}
 {{#if deleteButton}}
-  <button class="ui delete-button {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button" {{action "delete"}}>
+  <button class="ui delete-button{{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button" {{action "delete"}}>
     {{t "components.olv-toolbar.delete-button-text"}}
   </button>
 {{/if}}
 {{#if availableHierarchicalMode}}
-  <button class="ui button icon {{buttonClass}} {{if inHierarchicalMode "active"}}" {{action switchHierarchicalMode}}>
+  <button class="ui button icon hierarchical-button{{buttonClass}} {{if inHierarchicalMode "active"}}" {{action switchHierarchicalMode}}>
     <i class="sitemap icon"></i>
   </button>
 {{/if}}
@@ -38,7 +38,7 @@
       placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
       value=filterByAnyMatchText enter="filterByAnyMatch"
     }}
-    <button class="ui {{buttonClass}} icon button" {{action "filterByAnyMatch"}}>
+    <button class="ui search-button {{buttonClass}} icon button" {{action "filterByAnyMatch"}}>
       <i class="search icon"></i>
     </button>
     <button class="ui {{buttonClass}} icon button" {{action "removeFilter"}}>
@@ -48,7 +48,7 @@
 {{/if}}
 {{#if exportExcelButton}}
   <div class="ui buttons">
-    <button class="ui button icon {{buttonClass}}" {{action "showExportDialog"}}>
+    <button class="ui button icon export-button {{buttonClass}}" {{action "showExportDialog"}}>
       <i class="large file excel outline icon"></i>
     </button>
     {{flexberry-menu
@@ -59,7 +59,7 @@
 {{/if}}
 {{#if colsConfigButton}}
   <div class="ui buttons">
-    <button class="ui icon button" {{action "showConfigDialog"}}>
+    <button class="ui icon button config-button" {{action "showConfigDialog"}}>
       <i class="large table icon"></i>
     </button>
     {{#if colsSettingsItems}}

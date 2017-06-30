@@ -791,29 +791,18 @@ i.icon.bed:before { content: "\f236"; }
     visibility: hidden;
 }
 
-.ui.secondary.menu.no-margin.ember-view > button:first-child:before {
+.refresh-button:before {
     content: "\e807";
     font-family: 'Crimean';
     visibility: visible;
     font-size: 21px;
     color: #94cea8;
+    opacity: 0.8;
 }
 
-.ui.secondary.menu.no-margin.ember-view > button:first-child:hover:before {
-    color: #94cea8!important;
-}
-
-.ui.secondary.menu.no-margin.ember-view > button:first-child {
-    border: none!important;
-    font-size: 0px;
-    width: 25px;
-    padding: 0px;
-    display: flex;
-    height: 0px!important;
-}
-
-.ui.secondary.menu.no-margin.ember-view > button:first-child:hover {
-    background: none!important;
+.refresh-button:hover:before {
+    color: #94cea8;
+    opacity: 1;
 }
 
 .create-button {
@@ -826,37 +815,10 @@ i.icon.bed:before { content: "\f236"; }
     border: 1px solid #94cea8!important;
 }
 
-.ui.secondary.menu.no-margin.ember-view > button:nth-child(2):hover {
-    color: #fff;
-     background: #7dd4b4;
-}
-
-.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child:before {
-    content: "\e807";
-    font-family: 'Crimean';
-    visibility: visible;
-    font-size: 21px;
-    color: #94cea8;
-}
-
-.ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:first-child {
-    border: none!important;
-    visibility: hidden;
-    width: 25px;
-    padding: 0px;
-    display: flex;
-}
-
 .create-button {
     color: #fff;
     background: #7dd4b4;
     border: 1px solid #7dd4b4;
-}
-
-.delete-button:hover {
-    color: #fff;
-    background-color: #DB2828!important;
-    border: 1px solid #DB2828!important;
 }
 
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2):hover {
@@ -865,7 +827,7 @@ i.icon.bed:before { content: "\f236"; }
     border: 1px solid #94cea8;
 }
 
-.ui.secondary.menu.no-margin.ember-view > button:nth-child(3):before {
+.delete-button:before {
     content: "\e814";
     font-family: 'Crimean';
     visibility: visible;
@@ -873,22 +835,8 @@ i.icon.bed:before { content: "\f236"; }
     color: #7ba7d9;
 }
 
-.ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover:before {
+.delete-button:hover:before {
     color: #ff4800!important;
-}
-
-.ui.secondary.menu.no-margin.ember-view > button:nth-child(3) {
-    border: none!important;
-    font-size: 0px;
-    width: 25px;
-    padding-left: 10px;
-    display: flex;
-    height: 0px!important;
-}
-
-.ui.secondary.menu.no-margin.ember-view > button:nth-child(3):hover {
-    background: none;
-    border:none!important;
 }
 
 .page-header-userbar a:after {
@@ -928,48 +876,12 @@ i.icon.bed:before { content: "\f236"; }
     font-size:16px;
 }
 
-.flexberry-edit-panel > button:first-child:before {
+.save-button:before {
     content: "\e80c";
     font-family: 'Crimean';
     color: #7ba7d9!important;
     font-size: 21px;
     padding-right:10px;
-}
-
-.flexberry-edit-panel > button:nth-child(2):before {
-    content: "\e80d";
-    font-family: 'Crimean';
-    color: #7ba7d9!important;
-    font-size: 21px;
-    padding-right:10px;
-}
-
-.flexberry-edit-panel > button:nth-child(3):before {
-    content: "\e814";
-    font-family: 'Crimean';
-    color: #7ba7d9!important;
-    font-size: 21px;
-    padding-right:10px;
-}
-
-.flexberry-edit-panel > button:nth-child(3){
-    background: none!important;
-}
-
-.flexberry-edit-panel > button:nth-child(4) {
-    position: absolute;
-    border: none!important;
-    width: 43px;
-    height: 43px;
-    right: -2px;
-    top: -33px;
-    color: #fff!important;
-    font-size: 0px!important;
-    background: url("@{imagePath}/close.png") center no-repeat;
-}
-
-.flexberry-edit-panel > button:nth-child(4):hover {
-     background: url("@{imagePath}/close-hover.png") center no-repeat;
 }
 
 button:before:hover {
@@ -1106,6 +1018,29 @@ i.plus.icon {
 i.minus.icon {
     position: relative;
     left: 5px;
+}
+
+.hierarchical-button > .sitemap.icon:before {
+    opacity: 0.8;
+}
+
+.hierarchical-button > .sitemap.icon:hover:before {
+    opacity: 1;
+}
+.save-close-button:before {
+    content: "\e80d";
+    font-family: 'Crimean';
+    color: #7ba7d9!important;
+    font-size: 21px;
+    padding-right: 10px;
+}
+
+.save-del-button:before {
+    content: "\e814";
+    font-family: 'Crimean';
+    color: #7ba7d9!important;
+    font-size: 21px;
+    padding-right: 10px;
 }
 
 

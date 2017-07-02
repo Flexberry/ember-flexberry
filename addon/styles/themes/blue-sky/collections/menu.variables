@@ -399,7 +399,7 @@
 
 /* Pressed */
 @invertedMenuPressedBackground: @transparentWhite;
-@invertedMenuPressedColor: @invertedSelectedTextColor;
+@invertedMenuPressedColor: #ff4800;
 
 /* Inverted Active */
 @invertedActiveBackground: #dcebfc;

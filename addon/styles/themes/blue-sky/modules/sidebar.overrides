@@ -44,7 +44,7 @@ body.pushable {
 }
 
 .ui.top.attached {
-    margin: 5px;
+    margin: 20px 5px;
     border-radius: 5px!important;
     width: 250px;
 }
@@ -149,12 +149,8 @@ div.subMenu a{
     cursor: pointer;
 }
 
-.ui.vertical.menu > .item:first-child {
-    padding-left:40px!important;
-}
-
-.ui.vertical.menu > .item:nth-child(2) {
-    padding-left:40px!important;
+.ui.vertical.menu > a {
+    padding-left:43px!important;
 }
 
 .menu.subMenu > .item-menu >.item-minus {

@@ -5,8 +5,9 @@
     height: 35px;
 }
 
-.ui.action.input {
+.ui.secondary.menu .ui.action.input {
   display: -webkit-box;
+  margin-left: 8px;
 }
 
 input {

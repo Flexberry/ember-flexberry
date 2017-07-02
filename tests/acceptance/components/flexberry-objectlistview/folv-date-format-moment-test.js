@@ -18,7 +18,7 @@ executeTest('date format moment L', (store, assert, app) => {
       let $toolBar = Ember.$('.ui.secondary.menu')[0];
       let $toolBarButtons = $toolBar.children;
       let $refreshButton = $toolBarButtons[0];
-      assert.equal($refreshButton.innerText, Ember.get(I18nRuLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
+      assert.equal($refreshButton.innerText.trim(), Ember.get(I18nRuLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
 
       let done = assert.async();
       loadingList($refreshButton, olvContainerClass, trTableClass).then(($list) => {

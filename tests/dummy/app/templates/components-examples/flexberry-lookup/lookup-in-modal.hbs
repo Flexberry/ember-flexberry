@@ -1,8 +1,8 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.caption"}}</h3>
 
 <form class="ui form flexberry-vertical-form" role="form">
-  <button class="ui button" {{action 'modalWindow'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModal"}}</button>
-  <button class="ui button" {{action 'modalWindowDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModalDouble"}}</button>
+  <button class="ui button theme-button" {{action 'modalWindow'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModal"}}</button>
+  <button class="ui button theme-button" {{action 'modalWindowDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonModalDouble"}}</button>
 </form>
 
 {{#ui-modal id="repeat-window"}}
@@ -21,7 +21,7 @@
           remove=(action "removeLookupValue")
         }}
       </div>
-      <button class="ui button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
+      <button class="ui button theme-button" {{action 'logOut'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
 {{/ui-modal}}
@@ -42,7 +42,7 @@
           readonly=readonly
         }}
       </div>
-      <button class="ui button" {{action 'logOutDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
+      <button class="ui button theme-button" {{action 'logOutDouble'}}>{{t "forms.components-examples.flexberry-lookup.lookup-in-modal.buttonClose"}}</button>
     </div>
   </div>
 {{/ui-modal}}

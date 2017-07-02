@@ -26,7 +26,7 @@
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-        <button type="submit" class="ui positive button" {{action 'save'}}>
+        <button type="submit save-button" class="ui positive button" {{action 'save'}}>
           {{t "forms.edit-form.save-button-text"}}
         </button>
         {{#unless model.isNew}}
@@ -35,7 +35,7 @@
           </button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>
+      <button type="submit" class="ui button close-button" {{action 'close'}}>
         {{t "forms.edit-form.close-button-text"}}
       </button>
     </div>

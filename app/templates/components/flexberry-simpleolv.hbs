@@ -1,6 +1,6 @@
 <div class="ui secondary menu no-margin ">
   {{#if refreshButton}}
-    <button class="ui {{buttonClass}} button" {{action "refresh"}}>
+    <button class="ui refresh-button {{buttonClass}} button" {{action "refresh"}}>
       {{t "components.olv-toolbar.refresh-button-text"}}
     </button>
   {{/if}}
@@ -40,10 +40,10 @@
         placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
         value=filterByAnyMatchText enter="filterByAnyMatch"
       }}
-      <button class="ui {{buttonClass}} icon button" {{action "filterByAnyMatch"}}>
+      <button class="ui {{buttonClass}} icon button theme-button" {{action "filterByAnyMatch"}}>
         <i class="search icon"></i>
       </button>
-      <button class="ui {{buttonClass}} icon button" {{action "removeFilter"}}>
+      <button class="ui {{buttonClass}} icon button theme-button" {{action "removeFilter"}}>
         <i class="remove icon"></i>
       </button>
     </div>

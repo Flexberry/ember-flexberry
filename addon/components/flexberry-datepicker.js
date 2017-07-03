@@ -88,6 +88,15 @@ export default FlexberryBaseComponent.extend({
   */
   minDate: undefined,
 
+    /**
+    Display the date from the bottom by default.
+
+    @property drops
+    @type Date
+  */
+ 
+  drops: 'down',
+
   /**
     The latest date a user may select.
 
@@ -125,6 +134,7 @@ export default FlexberryBaseComponent.extend({
       this.$('input').val(startDate.format(this.dateTimeFormat));
     }
 
+    let drops = this.get('drops');
     let readonly = this.get('readonly');
     let _this = this;
     let i18n = _this.get('i18n');
@@ -144,7 +154,8 @@ export default FlexberryBaseComponent.extend({
         timePickerSeconds: true,
         minDate: this.minDate,
         maxDate: this.maxDate,
-        format: this.dateTimeFormat
+        format: this.dateTimeFormat,
+        drops: drops
       },
       function(start) {
         _this._setValue(start);

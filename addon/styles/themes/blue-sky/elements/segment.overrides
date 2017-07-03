@@ -50,8 +50,3 @@
 .ui.loader:after {
     border-color: #7ba7d9 transparent transparent!important;
 }
-
-.daterangepicker td.available:hover,
-.daterangepicker th.available:hover {
-     background: none!important;
-}

@@ -827,6 +827,7 @@ export default FlexberryBaseComponent.extend(
 
         let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
+        params = params || {};
         Ember.$.extend(params, {
           onEditForm: this.get('onEditForm'),
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),

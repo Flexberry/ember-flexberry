@@ -251,9 +251,13 @@ export default FlexberryBaseComponent.extend({
       @param {Number} params.columnIndex Index of column in row wich owns the clicked cell.
       @param {Object} e Click event object.
     */
-    onRowClick(record, params, e) {
-      Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+    onRowClick(record, params) {
+      Ember.set(params, 'originalEvent', Ember.$.event.fix(event));
       this.sendAction('rowClick', record, params);
+    },
+
+    click(event) {
+      return true;
     }
   },
 

@@ -1004,11 +1004,6 @@ export default FlexberryBaseComponent.extend(
     if (columnWidth !== undefined) {
       this._setColumnWidths(columnWidth);
     }
-
-    // TODO: resolve this problem.
-    this.$('.flexberry-dropdown:last').dropdown({
-      direction: 'upward'
-    });
   },
 
   /**

@@ -25,6 +25,7 @@
     height: 35px;
     text-align: center;
     border-radius: 5px;
+    margin: 0px 5px;
 }
 
 .large.table.icon {
@@ -90,7 +91,6 @@ i.icon.remove:before:hover {
 }
 
 .ui.action.input > button:last-child {
-    border: none!important;
     background: none!important;
 }
 
@@ -134,8 +134,6 @@ i.icon.remove:before:hover {
 
 .ui.buttons:not(.basic):not(.inverted) {
     box-shadow: none;
-    width: 75px;
-    margin-left: -10px;
 }
 
 .ui.econdary.menu.no-margin > .ui.basic > button:hover:before {
@@ -244,14 +242,16 @@ i.icon.remove:before:hover {
 }
 
 .ui.ui-delete.button {
-    padding: 0px 9px!important;
+    padding: 0px!important;
     height: 30px!important;
+    width: 30px;
     border: 1px solid #7ba7d9!important;
 }
 
 .ui.ui-add.button {
-    padding: 0px 9px!important;
+    padding: 0px!important;
     height: 30px!important;
+    width: 30px;
     border: 1px solid #7ba7d9!important;
 }
 
@@ -361,3 +361,22 @@ div.ui.secondary.menu.no-margin:first-child {
 .theme-button:hover {
     border: 1px solid #94cea8!important;
 }
+
+.ui.secondary.menu > .ui.action.input {
+    margin: 0 10px;
+}
+
+.filter-active {
+    border: 1px solid #7ba7d9;
+    height: 35px;
+}
+
+.removeFilter-button {
+     border-left: 1px solid #7ba7d9!important;
+    height: 33px;
+}
+
+.ui.secondary.menu > .ui.action.input > .filter-button {
+    border-right: none!important;
+}
+

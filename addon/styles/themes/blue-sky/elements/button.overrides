@@ -16,7 +16,7 @@
 }
 
 .ui.button:focus {
-  background-color: #cacbcd;
+  background: @white !important;
 }
 
 .ui.button {
@@ -160,6 +160,10 @@ i.icon.remove:before:hover {
 }
 
 .ember-view.groupedit-toolbar > button:hover i.icon:before {
+    color: #7dd4b4!important;
+}
+
+.ui.button.icon.mini.compact:hover i.icon:before {
     color: #7dd4b4!important;
 }
 

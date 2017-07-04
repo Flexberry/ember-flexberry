@@ -37,7 +37,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
         'columnWidths': [
           { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
           { 'propName': 'voteType', 'width': 133 },
-	        { 'propName': 'author', 'width': 348 },
+          { 'propName': 'author', 'width': 348 },
           { 'propName': 'author.eMail', 'width': 531 }
         ],
         'sorting': [{ 'propName': 'author', 'direction': 'asc' }]

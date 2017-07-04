@@ -75,6 +75,15 @@ table.object-list-view tbody tr td .object-list-view-helper-column-cell {
 table.object-list-view tbody tr td .object-list-view-helper-column-cell .asterisk-cell {
   float: left;
 }
+
 table.object-list-view tbody tr td .object-list-view-helper-column-cell .asterisk-cell i.asterisk {
   vertical-align: text-top;
+}
+
+.object-list-view-helper-column-cell div.cell {
+    float: left;
+}
+
+.object-list-view-helper-column  {
+    padding: 0px 7px!important;
 }

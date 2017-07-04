@@ -948,6 +948,23 @@ i.icon.text-menu-2:before {
     opacity: 1!important;
 }
 
+.ui.icon.button > .plus.icon {
+  margin-right: 1em;
+}
+
+.ui.icon.button > .minus.icon {
+  margin-right: 1em;
+  left: 3px;
+}
+
+.ui.button.icon.mini.compact {
+  border: 1px solid #7ba7d9;
+  &:hover {
+    border-color: #7dd4b4;
+    background: @white;
+  }
+}
+
 .launch:hover .ui.menu.item:before {
     color: #7ba7d9!important;
 }
@@ -968,19 +985,6 @@ i.icon.text-menu-2:before {
 .crimean-theme .ui.secondary.menu button:nth-child(3) {
     visibility: visible!important;
     width: auto!important;
-}
-
-.crimean-theme .ui.secondary.menu button:nth-child(1):before {
-    visibility: hidden!important;
-    display:none;
-}
-
-.crimean-theme > .menu.no-margin.ember-view > button:first-child {
-    visibility: visible!important;
-    width: auto!important;
-    border: 1px solid #7ba7d9!important;
-    justify-content: center;
-    padding: 0.8571em 1.284em 0.8571em!important;
 }
 
 i.icon.calendar:hover:before {

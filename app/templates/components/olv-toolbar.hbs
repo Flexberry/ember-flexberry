@@ -19,13 +19,13 @@
   </button>
 {{/if}}
 {{#if enableFilters}}
-  <div class="ui icon buttons">
+  <div class="ui icon buttons filter-active">
     <button class="ui button {{buttonClass}} {{if showFilters "active"}}" {{action toggleStateFilters}}>
       <i class="filter icon"></i>
     </button>
     {{#if filters}}
       <div class="or" data-text="&bull;"></div>
-      <button class="ui button {{buttonClass}}" {{action resetFilters}}>
+      <button class="ui button removeFilter-button{{buttonClass}}" {{action resetFilters}}>
         <i class="remove icon"></i>
       </button>
     {{/if}}
@@ -33,15 +33,15 @@
 {{/if}}
 {{#if filterButton}}
   <div class="ui action input">
-    {{input
+    <div class="block-action-input">{{input
       type="text"
       placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
       value=filterByAnyMatchText enter="filterByAnyMatch"
-    }}
-    <button class="ui search-button {{buttonClass}} icon button" {{action "filterByAnyMatch"}}>
+    }}</div>
+    <button class="ui search-button theme-button filter-button{{buttonClass}} icon button" {{action "filterByAnyMatch"}}>
       <i class="search icon"></i>
     </button>
-    <button class="ui {{buttonClass}} icon button" {{action "removeFilter"}}>
+    <button class="ui {{buttonClass}} icon button theme-button" {{action "removeFilter"}}>
       <i class="remove icon"></i>
     </button>
   </div>

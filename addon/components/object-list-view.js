@@ -827,6 +827,7 @@ export default FlexberryBaseComponent.extend(
 
         let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
+        params = params || {};
         Ember.$.extend(params, {
           onEditForm: this.get('onEditForm'),
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
@@ -1004,11 +1005,6 @@ export default FlexberryBaseComponent.extend(
     if (columnWidth !== undefined) {
       this._setColumnWidths(columnWidth);
     }
-
-    // TODO: resolve this problem.
-    this.$('.flexberry-dropdown:last').dropdown({
-      direction: 'upward'
-    });
   },
 
   /**

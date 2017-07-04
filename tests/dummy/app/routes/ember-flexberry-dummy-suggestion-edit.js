@@ -34,21 +34,21 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   developerUserSettings: {
     suggestionUserVotesGroupEdit: {
       'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 82 }, { 'propName': 'voteType', 'width': 133 },
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'voteType', 'width': 133 },
 		{ 'propName': 'author', 'width': 348 }, { 'propName': 'author.eMail', 'width': 531 }],
         'sorting': [{ 'propName': 'author', 'direction': 'asc' }]
       }
     },
     filesGroupEdit: {
       'DEFAULT': {
-        'columnWidths': [{ 'propName': 'order', 'width': 140 }, { 'propName': 'file', 'width': 893 }],
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'order', 'width': 140 }, { 'propName': 'file', 'width': 893 }],
         'colsOrder': [{ 'propName': 'file' }, { 'propName': 'order' }],
         'sorting': [{ 'propName': 'order', 'direction': 'desc' }]
       }
     },
     suggestionCommentsGroupEdit: {
       'DEFAULT': {
-        'columnWidths': [{ 'propName': 'votes', 'fixed': true }],
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'votes', 'fixed': true }],
         'sorting': [{ 'propName': 'votes', 'direction': 'asc' }, { 'propName': 'moderated', 'direction': 'desc' }, { 'propName': 'text', 'direction': 'asc' }],
       }
     }

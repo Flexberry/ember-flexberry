@@ -34,6 +34,14 @@ tr {
     overflow: inherit;
 }
 
+.ui.table.object-list-view tr.positive:first-child td{
+    overflow: hidden;
+}
+
+.ui.table.object-list-view tr[class=""]:first-child td{
+    overflow: hidden;
+}
+
 .oveflow-text {
     overflow: hidden;
 }
@@ -56,4 +64,17 @@ tr {
 
 .left.menu.transition.visible:hover {
     background: #f5f8ff !important;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .asterisk-cell {
+  float: left;
+}
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .asterisk-cell i.asterisk {
+  vertical-align: text-top;
 }

@@ -19,6 +19,16 @@ export default EditFormRoute.extend({
    */
   modelName: 'components-examples/flexberry-groupedit/shared/aggregator',
 
+  developerUserSettings: { aggregatorDetailsGroupedit:
+    {
+      "DEFAULT": {
+        "columnWidths": [{ "propName": "OlvRowToolbar", "width": 65 }],
+        "sorting": [{ "propName": "flag", "direction": "desc", "sortPriority": 1 }]
+      }
+    }
+
+  },
+
   /**
     Returns model related to current route.
 

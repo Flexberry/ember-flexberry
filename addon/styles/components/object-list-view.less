@@ -25,17 +25,23 @@ table.object-list-view tbody tr td:first-child button {
 }
 
 table.object-list-view tbody tr td .object-list-view-helper-column-cell {
-  display: table !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .asterisk-cell {
+  float: left;
+}
+
+table.object-list-view tbody tr td .object-list-view-helper-column-cell .asterisk-cell i.asterisk {
+  vertical-align: text-top;
 }
 
 table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell {
   display: table-cell !important;
   vertical-align: middle !important;
   padding: 0 0 0 5px !important;
-}
-
-table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell:first-child {
-  padding: 0 !important;
 }
 
 table.object-list-view tbody tr td .object-list-view-helper-column-cell .cell i.asterisk {

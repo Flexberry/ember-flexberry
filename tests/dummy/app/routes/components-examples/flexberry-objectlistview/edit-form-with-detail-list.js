@@ -33,8 +33,8 @@ export default ListFormRoute.extend({
   developerUserSettings: {
     suggestionTypeLocalizedTypesObjectListView:
       {
-        "DEFAULT": {
-          "columnWidths": [{ "propName": "OlvRowToolbar", 'fixed': true, "width": 100 }, {"propName": "OlvRowMenu", 'fixed': true, "width": 65 }]
+        'DEFAULT': {
+          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 100 }, {'propName': 'OlvRowMenu', 'fixed': true, 'width': 65 }]
       }
     }
 

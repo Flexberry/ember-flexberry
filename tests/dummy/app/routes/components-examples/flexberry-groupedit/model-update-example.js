@@ -21,9 +21,9 @@ export default EditFormRoute.extend({
 
   developerUserSettings: { aggregatorDetailsGroupedit:
     {
-      "DEFAULT": {
-        "columnWidths": [{ "propName": "OlvRowToolbar", "width": 100 }],
-        "sorting": [{ "propName": "flag", "direction": "desc", "sortPriority": 1 }]
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'width': 100 }],
+        'sorting': [{ 'propName': 'flag', 'direction': 'desc', 'sortPriority': 1 }]
       }
     }
 

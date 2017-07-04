@@ -19,7 +19,7 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @default 'ember-flexberry-dummy-suggestion-type'
    */
   modelName: 'ember-flexberry-dummy-suggestion-type',
-  
+
   /**
   developerUserSettings.
   {

@@ -56,7 +56,7 @@ export default EditFormRoute.extend({
   developerUserSettings: {
     aggregatorDetailsGroupedit: {
       'DEFAULT': {
-          'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }]
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }]
       }
     }
   },

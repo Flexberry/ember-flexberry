@@ -254,10 +254,6 @@ export default FlexberryBaseComponent.extend({
     onRowClick(record, params) {
       Ember.set(params, 'originalEvent', Ember.$.event.fix(event));
       this.sendAction('rowClick', record, params);
-    },
-
-    click(event) {
-      return true;
     }
   },
 

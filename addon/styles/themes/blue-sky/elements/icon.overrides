@@ -970,19 +970,6 @@ i.icon.text-menu-2:before {
     width: auto!important;
 }
 
-.crimean-theme .ui.secondary.menu button:nth-child(1):before {
-    visibility: hidden!important;
-    display:none;
-}
-
-.crimean-theme > .menu.no-margin.ember-view > button:first-child {
-    visibility: visible!important;
-    width: auto!important;
-    border: 1px solid #7ba7d9!important;
-    justify-content: center;
-    padding: 0.8571em 1.284em 0.8571em!important;
-}
-
 i.icon.calendar:hover:before {
     color: #ff4800!important;
 }

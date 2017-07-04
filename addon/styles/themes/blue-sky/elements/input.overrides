@@ -5,11 +5,6 @@
     height: 35px;
 }
 
-.ui.secondary.menu .ui.action.input {
-  display: -webkit-box;
-  margin-left: 8px;
-}
-
 input {
     border: none;
     border-bottom: 1px solid #b1cae8;
@@ -22,3 +17,22 @@ input {
 .ui.action.input:not([class*="left action"]) > .buttons > .button {
     border: 1px solid #7ba7d9;
 }
+
+
+.block-action-input {
+    width: 100%;
+}
+
+.block-action-input input{
+    height: 35px;
+    width: 100%!important;
+}
+
+.ui.action.input:not([class*="left action"]) input:focus {
+    border-right-color: #fff!important;
+}
+
+.filter-button{
+    border-right-color: #fff!important;
+}
+

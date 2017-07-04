@@ -34,14 +34,6 @@ tr {
     overflow: inherit;
 }
 
-.ui.table.object-list-view tr.positive:first-child td{
-    overflow: hidden;
-}
-
-.ui.table.object-list-view tr[class=""]:first-child td{
-    overflow: hidden;
-}
-
 .oveflow-text {
     overflow: hidden;
 }

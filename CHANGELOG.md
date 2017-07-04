@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * Fix delete button disabling after deletion on lists.
+* Fix dropdown's overflow on list components.
+* Fix groupEdit's adding new row on separate route.
 * BlueSky theme:
     * Fix lookup dialog pager visibility.
     * Fix buttons imposition on each other in list's toolbar.

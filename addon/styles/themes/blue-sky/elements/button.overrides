@@ -16,7 +16,7 @@
 }
 
 .ui.button:focus {
-  background: #fff !important;
+  background: @white !important;
 }
 
 .ui.button {
@@ -127,42 +127,11 @@ i.icon.remove:before:hover {
     margin: 2px 15px!important;
 }
 
-.delete-deteil {
-    border: 1px solid #7ba7d9!important;;
-}
-
-.delete-deteil:hover {
-    background-color: #ff4800!important;
-    border: 1px solid #ff4800!important;
-}
-
 #columnConfigurtionButtonUse:hover {
     border: 1px solid #94cea8!important;
 }
 
 .all-del-user-button:hover {
-    background-color: #ff4800!important;
-    border: 1px solid #ff4800!important;
-}
-
-.refresh-counts {
-    border: 1px solid #7ba7d9!important;
-}
-
-.refresh-counts:hover {
-    border: 1px solid #94cea8!important;
-}
-
-.clear-all-log {
-    border: 1px solid #7ba7d9!important;
-}
-
-.clear-all-log:hover {
-    background-color: #ff4800!important;
-    border: 1px solid #ff4800!important;
-}
-
-.clear-all-log:focus {
     background-color: #ff4800!important;
     border: 1px solid #ff4800!important;
 }

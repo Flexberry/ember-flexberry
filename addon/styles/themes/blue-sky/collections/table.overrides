@@ -34,12 +34,21 @@ tr {
     overflow: inherit;
 }
 
-.ui.table.object-list-view tr.positive:first-child td{
-    overflow: hidden;
+.object-list-view-container {
+  margin: 1em 0;
+  max-width: 100%;
+  overflow: auto;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+
+  .object-list-view {
+    margin: 0;
+  }
 }
 
-.ui.table.object-list-view tr[class=""]:first-child td{
-    overflow: hidden;
+table.object-list-view.selectable tbody,
+table.object-list-view.selectable thead {
+  cursor: pointer;
 }
 
 .oveflow-text {

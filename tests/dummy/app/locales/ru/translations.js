@@ -364,6 +364,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Настройка окна',
               'title': ''
             },
+            'hierarchy-olv-in-lookup-example': {
+              'caption': 'Пример иерархического OLV-а в lookup-e',
+              'title': ''
+            },
             'limit-function-example': {
               'caption': 'Функция ограничения',
               'title': ''
@@ -707,6 +711,10 @@ Ember.$.extend(true, translations, {
         },
         'customizing-window-example': {
           'caption': 'Flexberry-lookup. Настройка окна',
+          'titleLookup': 'Мастер'
+        },
+        'hierarchy-olv-in-lookup-example': {
+          'caption': 'Flexberry-lookup. Пример иерархического OLV-а в lookup-e',
           'titleLookup': 'Мастер'
         },
         'limit-function-example': {

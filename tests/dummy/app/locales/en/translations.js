@@ -347,6 +347,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Window customization',
               'title': ''
             },
+            'hierarchy-olv-in-lookup-example': {
+              'caption': 'Example hierarchical OLV in lookup',
+              'title': ''
+            },
             'limit-function-example': {
               'caption': 'Limit function example',
               'title': ''
@@ -689,6 +693,10 @@ Ember.$.extend(true, translations, {
         },
         'customizing-window-example': {
           'caption': 'Flexberry-lookup. Window customization',
+          'titleLookup': 'Master'
+        },
+        'hierarchy-olv-in-lookup-example': {
+          'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',
           'titleLookup': 'Master'
         },
         'limit-function-example': {

@@ -30,7 +30,7 @@ tr {
     color: #fff!important;
 }
 
-.ui.table.object-list-view tr:first-child td {
+.ui.table.object-list-view tr td {
     overflow: inherit;
 }
 

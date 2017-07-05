@@ -817,12 +817,6 @@ i.icon.bed:before { content: "\f236"; }
     border: 1px solid #7dd4b4;
 }
 
-.delete-button:hover {
-    color: #fff;
-    background-color: #ff6d14 !important;
-    border: 1px solid #ff6d14 !important;
-}
-
 .ember-view.flexberry-simpleolv > .ui.secondary.menu.no-margin > button:nth-child(2):hover {
     color: #fff;
     background: #94cea8;

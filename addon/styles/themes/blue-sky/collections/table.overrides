@@ -30,7 +30,7 @@ tr {
     color: #fff!important;
 }
 
-.ui.table.object-list-view tr:first-child td {
+.ui.table.object-list-view tr td {
     overflow: inherit;
 }
 
@@ -81,18 +81,4 @@ table.object-list-view.selectable thead {
 
 .object-list-view-helper-column  {
     padding: 0px 7px!important;
-}
-
-table.object-list-view tbody tr td .object-list-view-helper-column-cell {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-table.object-list-view tbody tr td .object-list-view-helper-column-cell .asterisk-cell {
-  float: left;
-}
-
-table.object-list-view tbody tr td .object-list-view-helper-column-cell .asterisk-cell i.asterisk {
-  vertical-align: text-top;
 }

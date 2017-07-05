@@ -3,17 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.0-beta.13] - 2017-07-05
 ### Fixed
 * Fix delete button disabling after deletion on lists.
 * Fix dropdown's overflow on list components.
 * Fix groupEdit's adding new row on separate route.
-* BlueSky theme:
-    * Fix lookup dialog pager visibility.
-    * Fix buttons imposition on each other in list's toolbar.
-
-### Changed
-* BlueSky theme:
-    * Increase forms width.
+* Fix `blue-sky` theme styles.
 
 ## [0.9.0-beta.12] - 2017-06-21
 ### Added

@@ -102,11 +102,58 @@ i.icon.remove:before:hover {
     color: #3f65a4!important;
 }
 
-.ui.negative.buttons .button, .ui.negative.button,
-.ui.positive.buttons .button, .ui.positive.button {
+.save-button, .save-close-button,
+.save-del-button {
     background: none!important;
-    border: 1px solid #7ba7d9;
+    border: 1px solid #7ba7d9!important;
     color: #3f65a4;
+}
+
+#columnConfigurtionButtonUse {
+    border: 1px solid #7ba7d9;
+}
+
+.ui.icon.tiny.button {
+    border: 1px solid;
+    margin: 2px 15px!important;
+}
+
+.ui.button.icon.hierarchical-button.active {
+    background: none!important;
+}
+
+.ui.icon.tiny.button.no-margin{
+    border: 1px solid;
+    margin: 2px 15px!important;
+}
+
+#columnConfigurtionButtonUse:hover {
+    border: 1px solid #94cea8!important;
+}
+
+.all-del-user-button:hover {
+    background-color: #ff4800!important;
+    border: 1px solid #ff4800!important;
+}
+
+.save-button:hover, .save-close-button:hover {
+    background: #94cea8!important;
+    border: 1px solid #94cea8!important;
+}
+
+.save-del-button:hover {
+    background-color: #ff4800!important;
+    border: 1px solid #ff4800!important;
+}
+
+.ui.positive.buttons .button, .ui.positive.button {
+    background: #94cea8!important;
+    border: 1px solid #94cea8!important;
+}
+
+.ui.positive.buttons .button:focus, .ui.positive.button:focus {
+    background: #94cea8!important;
+    border: 1px solid #94cea8!important;
 }
 
 .stackable.grid.container p:last-child .ui.positive.button {
@@ -229,12 +276,6 @@ i.icon.remove:before:hover {
 .all-del-user-button {
    border: 1px solid #7ba7d9!important;
     color: #7ba7d9!important;
-}
-
-.all-del-user-button:hover {
-    border: 1px solid #94cea8!important;
-    background: #94cea8!important;
-    color: #fff!important;
 }
 
 .daterangepicker .prev .left.arrow.icon {

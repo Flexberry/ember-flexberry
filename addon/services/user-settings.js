@@ -625,8 +625,15 @@ export default Ember.Service.extend({
       });
     return ret;
   },
-
   /**
+    @property currentUser
+    @type String
+    @default 'admin'
+    @for EditFormRoute
+    */
+    userName: 'admin',
+  /**
+
     Returns current user name.
     Method must be overridden if application uses some authentication.
 
@@ -635,7 +642,8 @@ export default Ember.Service.extend({
   */
   getCurrentUser() {
     // TODO: add mechanism to return current user.
-    return '';
+    let user = this.get('userName');
+    return user;
   },
 
   /**
@@ -871,3 +879,5 @@ export default Ember.Service.extend({
     return ret;
   }
 });
+
+

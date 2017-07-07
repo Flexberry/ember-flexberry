@@ -626,12 +626,12 @@ export default Ember.Service.extend({
     return ret;
   },
   /**
-    @property currentUser
+    @property userName
     @type String
     @default 'admin'
-    @for EditFormRoute
-    */
-    userName: 'admin',
+    @for _userSettingsService
+  **/
+  userName: 'admin',
   /**
 
     Returns current user name.

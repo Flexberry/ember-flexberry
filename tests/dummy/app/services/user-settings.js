@@ -3,10 +3,10 @@ import UserSettingsService from 'ember-flexberry/services/user-settings';
 export default UserSettingsService.extend({
 
   /**
-    @property currentUser
+    @property userName
     @type String
     @default 'admin'
-    @for EditFormRoute
+    @for _userSettingsService
   **/
   userName: 'admin',
   /**
@@ -22,7 +22,4 @@ export default UserSettingsService.extend({
     let user = this.get('userName');
     return user;
   }
-
 });
-
-

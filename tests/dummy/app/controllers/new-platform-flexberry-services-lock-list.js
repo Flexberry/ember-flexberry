@@ -57,11 +57,11 @@ export default NewPlatformFlexberryServicesLockListController.extend({
     */
     changeUserName() {
       let i18n = this.get('i18n');
-      let openService = this.get('_userSettingsService');
-      let currentUserName = openService.getCurrentUser();
+      let userSettingsService = this.get('_userSettingsService');
+      let currentUserName = userSettingsService.getCurrentUser();
       let newUserName = window.prompt(i18n.t('forms.new-platform-flexberry-services-lock-list.enter-new-user-name'), currentUserName);
       if (typeof newUserName === 'string') {
-        openService.set('userName', newUserName);
+        userSettingsService.set('userName', newUserName);
       }
     },
 

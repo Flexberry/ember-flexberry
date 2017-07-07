@@ -642,8 +642,7 @@ export default Ember.Service.extend({
   */
   getCurrentUser() {
     // TODO: add mechanism to return current user.
-    let user = this.get('userName');
-    return user;
+    return '';
   },
 
   /**

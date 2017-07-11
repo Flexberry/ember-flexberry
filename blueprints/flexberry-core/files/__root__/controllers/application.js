@@ -62,7 +62,10 @@ export default Ember.Controller.extend({
 
   actions: {
     toggleSidebar() {
-      Ember.$('.ui.sidebar.main.menu').sidebar({
+      let sidebar = Ember.$('.ui.sidebar.main.menu');
+      sidebar.sidebar({
+        closable: false,
+        dimPage: false,
         onHide: function() {
           Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
           Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
@@ -74,6 +77,12 @@ export default Ember.Controller.extend({
       } else {
         Ember.$('.sidebar.icon.text-menu-1').addClass('hidden-menu');
         Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
+      }
+      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
+        Ember.$('.full.height').animate({ 'width' : '100%'}, 500);
+      } else {
+        let newWidth = Ember.$('.full.height').css( 'width', 'calc(100% - ' + sidebar.width() + 'px)');
+        Ember.$('.full.height').animate({ 'width' : newWidth}, 400);
       }
     }
   }

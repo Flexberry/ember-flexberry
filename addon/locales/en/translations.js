@@ -114,8 +114,13 @@ export default {
       'sort-descending': 'Order descending',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',
+        'add-menu-item-title': 'Add record',
         'delete-menu-item-title': 'Delete record'
-      }
+      },
+      'hierarchy-buttons': {
+        'plus-button-title': 'Expand',
+        'minus-button-title': 'Collapse',
+      },
     },
 
     'object-list-view-cell': {
@@ -128,6 +133,12 @@ export default {
       'refresh-button-text': 'Refresh',
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
+      'hierarchy-button-text': 'On/off hierarchy',
+      'filter-button-text': 'Add filter',
+      'remove-filter-button-text': 'Reset filter',
+      'search-button-text': 'Search',
+      'clear-search-button-text': 'Clear search',
+      'export-excel-button-text': 'Export to Excel',
       'filter-by-any-match-placeholder': 'Search...',
       'create-setting-title': 'New setting',
       'use-setting-title': 'Use',
@@ -141,6 +152,11 @@ export default {
       'copy': 'Copy',
       'copied': 'Copied',
       'ctrlc': 'Press Ctrl/C to copy'
+    },
+
+    'groupedit-toolbar': {
+      'add-button-text': 'Add',
+      'delete-button-text': 'Delete'
     },
 
     'colsconfig-dialog-content': {

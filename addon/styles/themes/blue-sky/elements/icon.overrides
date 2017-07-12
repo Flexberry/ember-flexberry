@@ -255,7 +255,7 @@ i.icon.remove.circle:hover:before { color: #7ba7d9!important; }
 i.icon.check.circle:before { content: "\f058"; }
 i.icon.remove.circle.outline:before { content: "\f05c"; }
 i.icon.check.circle.outline:before { content: "\f05d"; }
-i.icon.plus:before { content: "\e833"; position: relative; font-family: 'Crimean';}
+i.icon.plus:before { content: "\e833"; position: relative; font-family: 'Crimean'; }
 i.icon.minus:before { content: "\e834"; font-size: 2px; position: relative; top: -3px; font-family: 'Crimean'; }
 i.icon.add.square:before { content: "\e833"; font-family: 'Crimean'; }
 i.icon.radio:before { content: "\f10c"; }
@@ -450,6 +450,9 @@ i.icon.sort.content.ascending:before { content: "\f160";}
 i.icon.sort.content.descending:before { content: "\f161";}
 i.icon.sort.numeric.ascending:before { content: "\f162";}
 i.icon.sort.numeric.descending:before { content: "\f163";}
+.ui.button.icon.mini.compact > .minus.icon:before { content: "\e834"; font-size: 1px; position: relative; top: -3px; font-family: 'Crimean'; }
+.ui.button.icon.mini.compact > .plus.icon:before { content: "\e833"; position: relative; font-family: 'Crimean'; font-size: 9px; }
+
 
 /* Text Editor */
 i.icon.font:before { content: "\f031"; }
@@ -767,23 +770,23 @@ i.icon.bed:before { content: "\f236"; }
     color: #fff!important;
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:before {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .prev-page-button:before {
     content: "\e81a";
     font-family: 'Crimean';
     visibility: visible;
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:before {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .next-page-button:before {
     content: "\e81b";
     font-family: 'Crimean';
     visibility: visible;
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .prev-page-button {
     visibility: hidden;
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .next-page-button {
     visibility: hidden;
 }
 
@@ -948,15 +951,31 @@ i.icon.text-menu-2:before {
 
 .ui.icon.button > .minus.icon {
   margin-right: 1em;
-  left: 3px;
 }
 
 .ui.button.icon.mini.compact {
   border: 1px solid #7ba7d9;
+  padding: 0px;
+  height: 22px;
   &:hover {
     border-color: #7dd4b4;
     background: @white;
   }
+}
+
+.ui.button.icon.mini.compact > .minus.icon:before {
+  content: "\e834";
+  font-size: 1px;
+  position: relative;
+  top: -3px;
+  font-family: 'Crimean';
+}
+
+.ui.button.icon.mini.compact > .plus.icon:before {
+  content: "\e833";
+  position: relative;
+  font-family: 'Crimean';
+  font-size: 9px;
 }
 
 .launch:hover .ui.menu.item:before {

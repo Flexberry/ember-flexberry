@@ -24,6 +24,7 @@
     padding: 0px 18px;
     height: 35px;
     text-align: center;
+    border: 1px solid #7ba7d9;
     border-radius: 5px;
     margin: 0px 5px;
 }
@@ -116,6 +117,10 @@ i.icon.remove:before:hover {
 .ui.icon.tiny.button {
     border: 1px solid;
     margin: 2px 15px!important;
+}
+
+.ui.button.icon.hierarchical-button {
+    border: 0px;
 }
 
 .ui.button.icon.hierarchical-button.active {
@@ -414,14 +419,22 @@ div.ui.secondary.menu.no-margin:first-child {
 .filter-active {
     border: 1px solid #7ba7d9;
     height: 35px;
+    border-radius: 5px;
 }
 
 .removeFilter-button {
-     border-left: 1px solid #7ba7d9!important;
-    height: 33px;
+    border-left: 1px solid #7ba7d9!important;
+    height: 33px !important;
 }
 
 .ui.secondary.menu > .ui.action.input > .filter-button {
-    border-right: none!important;
+    border: 0px !important;
+    border-bottom: 1px solid #b1cae8 !important;
+    border-radius: 0px;
 }
 
+.ui.secondary.menu > .ui.action.input > .clear-search-button {
+    border: 0px !important;
+    border-bottom: 1px solid #b1cae8 !important;
+    border-radius: 0px;
+}

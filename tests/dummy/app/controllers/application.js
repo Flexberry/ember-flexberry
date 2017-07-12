@@ -20,6 +20,7 @@ export default Ember.Controller.extend({
           Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
         }
       }).sidebar('toggle');
+
       if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
         Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
         Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
@@ -29,11 +30,12 @@ export default Ember.Controller.extend({
         Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
         $('.bgw-opacity').removeClass('hidden');
       }
+
       if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.full.height').animate({ 'width' : '100%'}, 500);
+        Ember.$('.full.height').animate({ 'width': '100%' }, 500);
       } else {
-        let newWidth = Ember.$('.full.height').css( 'width', 'calc(100% - ' + sidebar.width() + 'px)');
-        Ember.$('.full.height').animate({ 'width' : newWidth}, 800);
+        let newWidth = Ember.$('.full.height').css('width', 'calc(100% - ' + sidebar.width() + 'px)');
+        Ember.$('.full.height').animate({ 'width': newWidth }, 500);
       }
     }
   },

@@ -1092,7 +1092,8 @@ export default FlexberryBaseComponent.extend(
                 }
               }
             }
-          this._reinitResizablePlugin();
+
+            this._reinitResizablePlugin();
           }
         }
       }

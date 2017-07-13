@@ -100,11 +100,11 @@ export default Ember.Controller.extend({
       if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
         Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
         Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
-        $('.bgw-opacity').addClass('hidden');
+        Ember.$('.bgw-opacity').addClass('hidden');
       } else {
         Ember.$('.sidebar.icon.text-menu-1').addClass('hidden-menu');
         Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
-        $('.bgw-opacity').removeClass('hidden');
+        Ember.$('.bgw-opacity').removeClass('hidden');
       }
     }
   }

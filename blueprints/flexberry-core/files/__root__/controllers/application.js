@@ -86,6 +86,26 @@ export default Ember.Controller.extend({
         let newWidth = Ember.$('.full.height').css('width', 'calc(100% - ' + sidebar.width() + 'px)');
         Ember.$('.full.height').animate({ width: newWidth }, 500);
       }
+    },
+
+    toggleSidebarMobile() {
+      let sidebar = Ember.$('.ui.sidebar.main.menu');
+      sidebar.sidebar({
+        onHide: function() {
+          Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+          Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        }
+      }).sidebar('toggle');
+
+      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
+        Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        $('.bgw-opacity').addClass('hidden');
+      } else {
+        Ember.$('.sidebar.icon.text-menu-1').addClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
+        $('.bgw-opacity').removeClass('hidden');
+      }
     }
   }
 });

@@ -49,7 +49,9 @@
   <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
     {{#if showFilters}}
       <tr>
-        <td rowspan="1"></td>
+        {{#if showHelperColumn}}
+          <td rowspan="1"></td>
+        {{/if}}
         {{#each columns as |column|}}
           <td style={{defaultPaddingStyle}}>
             {{#if column.filter.conditions}}
@@ -68,7 +70,9 @@
         {{/if}}
       </tr>
       <tr>
-        <td rowspan="1"></td>
+        {{#if showHelperColumn}}
+          <td rowspan="1"></td>
+        {{/if}}
         {{#each columns as |column|}}
           <td style={{defaultPaddingStyle}}>
             {{#if column.filter.component.name}}

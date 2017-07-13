@@ -27,7 +27,7 @@
     <button
       class="ui button icon hierarchical-button {{buttonClass}} {{if inHierarchicalMode "active"}}"
       title={{t "components.olv-toolbar.hierarchy-button-text"}}
-      {{action switchHierarchicalMode}}>
+      {{action "switchHierarchicalMode"}}>
         <i class="sitemap icon"></i>
     </button>
   {{/if}}
@@ -36,7 +36,7 @@
       <button
         class="ui button {{buttonClass}} {{if showFilters "active"}}"
         title={{t "components.olv-toolbar.filter-button-text"}}
-        {{action toggleStateFilters}}>
+        {{action "toggleStateFilters"}}>
           <i class="filter icon"></i>
       </button>
       {{#if filters}}
@@ -154,7 +154,7 @@
     <thead>
       <tr>
         {{#if showHelperColumn}}
-          <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+          <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar"></th>
         {{/if}}
         {{#each columns as |column|}}
           {{#unless column.hide}}
@@ -192,7 +192,9 @@
     <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
       {{#if showFilters}}
         <tr>
-          <td rowspan="2" class="{{unless (and showHelperColumn hasContent) 'hidden'}}"></td>
+          {{#if showHelperColumn}}
+            <td rowspan="1"></td>
+          {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
               <td style={{defaultPaddingStyle}}>
@@ -209,10 +211,13 @@
             {{/unless}}
           {{/each}}
           {{#if showMenuColumn}}
-            <td rowspan="2"></td>
+            <td rowspan="1"></td>
           {{/if}}
         </tr>
         <tr>
+          {{#if showHelperColumn}}
+            <td rowspan="1"></td>
+          {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
               <td style={{defaultPaddingStyle}}>
@@ -225,6 +230,9 @@
               </td>
             {{/unless}}
           {{/each}}
+          {{#if showMenuColumn}}
+            <td rowspan="1"></td>
+          {{/if}}
         </tr>
       {{/if}}
       {{#if rowsInLoadingState}}

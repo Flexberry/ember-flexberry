@@ -61,3 +61,7 @@ option {
 .ui.form .fields .field .ui.input input, .ui.form .field .ui.input input {
     background: none!important;
 }
+
+.ui.loading.form:after {
+    border-color: #7ba7d9 #CCE2FF #CCE2FF #CCE2FF!important;
+}

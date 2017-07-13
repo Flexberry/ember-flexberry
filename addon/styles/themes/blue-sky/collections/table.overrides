@@ -82,3 +82,5 @@ table.object-list-view.selectable thead {
 .object-list-view-helper-column  {
     padding: 0px 7px!important;
 }
+
+

@@ -104,7 +104,7 @@
   {{#each customButtons as |customButton|}}
     <button
       class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
-      title={{t "components.olv-toolbar.custom-button-text"}}
+      title={{if customButton.buttonTitle customButton.buttonTitle}}
       {{action "customButtonAction" customButton.buttonAction}}>
       {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
     </button>

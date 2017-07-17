@@ -114,8 +114,13 @@ export default {
       'sort-descending': 'По убыванию',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',
+        'add-menu-item-title': 'Добавить запись',
         'delete-menu-item-title': 'Удалить запись'
-      }
+      },
+      'hierarchy-buttons': {
+        'plus-button-title': 'Раскрыть',
+        'minus-button-title': 'Свернуть',
+      },
     },
 
     'object-list-view-cell': {
@@ -128,6 +133,12 @@ export default {
       'refresh-button-text': 'Обновить',
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
+      'hierarchy-button-text': 'Вкл/выкл иерархии',
+      'filter-button-text': 'Добавить фильтр',
+      'remove-filter-button-text': 'Сбросить фильтр',
+      'search-button-text': 'Поиск',
+      'clear-search-button-text': 'Очистить поиск',
+      'export-excel-button-text': 'Экспорт в Excel',
       'filter-by-any-match-placeholder': 'Поиск...',
       'create-setting-title': 'Новая настройка',
       'use-setting-title': 'Применить',
@@ -142,6 +153,11 @@ export default {
       'copy': 'Копировать',
       'copied': 'Скопировано',
       'ctrlc': 'Нажмите Ctrl/C для копирования'
+    },
+
+    'groupedit-toolbar': {
+      'add-button-text': 'Добавить',
+      'delete-button-text': 'Удалить'
     },
 
     'colsconfig-dialog-content': {

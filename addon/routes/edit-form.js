@@ -74,7 +74,7 @@ FlexberryGroupeditRouteMixin, {
     @param {Object} params
     @param {Object} transition
    */
-  model(params, transition) {
+  model: function(params, transition) {
     this._super.apply(this, arguments);
 
     let modelName = this.get('modelName');
@@ -87,6 +87,38 @@ FlexberryGroupeditRouteMixin, {
     let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
     let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
     let needReload = !!(modelCurrentNotSaved || (modelSelectedDetail && modelSelectedDetail.get('hasDirtyAttributes')));
+
+    let webPage = transition.targetName;
+    let userSettingsService = this.get('userSettingsService');
+    userSettingsService.setCurrentWebPage(webPage);
+    let developerUserSettings = this.get('developerUserSettings');
+    Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+
+    let nComponents = 0;
+    let componentName;
+    for (componentName in developerUserSettings) {
+      let componentDesc = developerUserSettings[componentName];
+      switch (typeof componentDesc) {
+        case 'string':
+          developerUserSettings[componentName] = JSON.parse(componentDesc);
+          break;
+        case 'object':
+          break;
+        default:
+          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+            'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
+      }
+      nComponents += 1;
+    }
+
+    if (nComponents === 0) {
+      Ember.assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
+    }
+
+    Ember.assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
+      nComponents === 1);
+    userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
+    userSettingsService.setDeveloperUserSettings(developerUserSettings);
 
     // TODO: now 'findRecord' at ember-flexberry-projection not support 'reload: false' flag.
     let findRecordParameters = { reload: needReload, projection: modelProjName };
@@ -153,6 +185,7 @@ FlexberryGroupeditRouteMixin, {
     let modelClass = model.constructor;
     let modelProjName = this.get('modelProjection');
     let proj = modelClass.projections.get(modelProjName);
+    controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
     controller.set('routeName', this.get('routeName'));
     controller.set('developerUserSettings', this.get('developerUserSettings'));

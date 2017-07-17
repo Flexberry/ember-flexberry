@@ -1218,6 +1218,10 @@ ErrorableControllerMixin, {
   */
   _setColumnWidths() {
     let $objectListView = this.$('table.object-list-view');
+    let $columns = $objectListView.find('th');
+    let kollColums = $columns.length;
+    let sumWidthTable = 0;
+    let kollElements = 0;
     if (!$objectListView) {
       // Table will not rendered yet.
       return;
@@ -1251,9 +1255,14 @@ ErrorableControllerMixin, {
       if (width !== undefined) {
         hashedUserSetting[propName] = width;
       }
-    });
 
-    let $columns = $objectListView.find('th');
+      kollElements++;
+      sumWidthTable += hashedUserSetting[propName];
+    });
+    let diffKoll = kollColums - kollElements;
+    let generalSumWidth = (100 * diffKoll) + sumWidthTable;
+    $objectListView.css({ 'width': generalSumWidth + 'px' });
+
     Ember.$.each($columns, (key, item) => {
       let currentItem = this.$(item);
       let currentPropertyName = this._getColumnPropertyName(currentItem);
@@ -1263,6 +1272,7 @@ ErrorableControllerMixin, {
       if (savedColumnWidth) {
         currentItem.width(savedColumnWidth);
       }
+
     });
 
     if (this.get('allowColumnResize')) {

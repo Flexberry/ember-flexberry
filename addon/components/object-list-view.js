@@ -1222,6 +1222,10 @@ export default FlexberryBaseComponent.extend(
       return;
     }
 
+    let $columns = this.$('table.object-list-view').find('th');
+    let kollColums = $columns.length;
+    let sumWidthTable = 0;
+    let kollElements = 0;
     let hashedUserSetting = {};
     userSetting.forEach(item => {
       let userColumnInfo = Ember.merge({
@@ -1231,15 +1235,19 @@ export default FlexberryBaseComponent.extend(
 
       let propName = userColumnInfo.propName;
       let width = userColumnInfo.width;
-
       Ember.assert('Property name is not defined at saved user setting.', propName);
 
       if (width !== undefined) {
         hashedUserSetting[propName] = width;
       }
-    });
 
-    let $columns = this.$('table.object-list-view').find('th');
+      kollElements++;
+      sumWidthTable += hashedUserSetting[propName];
+    });
+    let diffKoll = kollColums - kollElements;
+    let generalSumWidth = (100 * diffKoll) + sumWidthTable;
+    this.$('table.object-list-view').css({ 'width': generalSumWidth + 'px' });
+
     Ember.$.each($columns, (key, item) => {
       let currentItem = this.$(item);
       let currentPropertyName = this._getColumnPropertyName(currentItem);
@@ -1249,6 +1257,7 @@ export default FlexberryBaseComponent.extend(
       if (savedColumnWidth) {
         currentItem.width(savedColumnWidth);
       }
+
     });
 
     this._reinitResizablePlugin();

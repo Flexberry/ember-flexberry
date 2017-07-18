@@ -32,7 +32,7 @@
     </td>
     {{#each columns as |column index|}}
       <td
-        {{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
+        onclick={{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
         class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
@@ -46,8 +46,8 @@
             }}
               {{#if (and (not index) inHierarchicalMode)}}
                 {{#if hasRecords}}
-                  <button class="ui button icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
-                    <i class="{{if _expanded "minus" "plus"}} icon"></i>
+                  <button class="ui button hierarchy-expand icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
+                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
                   </button>
                 {{/if}}
               {{/if}}
@@ -72,11 +72,11 @@
             {{#if (and (not index) inHierarchicalMode)}}
               {{#if hasRecords}}
                 <button
-                  class="ui button icon mini compact {{buttonClass}}"
+                  class="ui button hierarchy-expand icon mini compact {{buttonClass}}"
                   title={{if _expanded (t "components.object-list-view.hierarchy-buttons.minus-button-title")
                    (t "components.object-list-view.hierarchy-buttons.plus-button-title")}}
                   {{action "expand" bubbles=false}}>
-                    <i class="{{if _expanded "minus" "plus"}} icon"></i>
+                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
                 </button>
               {{/if}}
             {{/if}}

@@ -792,6 +792,7 @@ ErrorableControllerMixin, {
     */
     refresh() {
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
+      this.set('showLoadingTbodyClass', true);
     },
 
     /**
@@ -838,6 +839,8 @@ ErrorableControllerMixin, {
     filterByAnyMatch() {
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, this.get('filterByAnyMatchText'));
+      this.set('showLoadingTbodyClass', true);
+      this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
     /**
@@ -856,6 +859,10 @@ ErrorableControllerMixin, {
         _this.set('filterText', null);
         _this.set('filterByAnyMatchText', null);
       }), 50);
+      this.set('showLoadingTbodyClass', true);
+      if (_this.get('filterText') === null) {
+        this.set('showLoadingTbodyClass', false);
+      }
     },
 
     /**

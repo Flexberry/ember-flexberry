@@ -2236,7 +2236,8 @@ ErrorableControllerMixin, {
       {
         buttonName: '...', // Button displayed name.
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...' // Css classes for button.
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...' // Button title.
       }
       ```
 

@@ -84,7 +84,7 @@
 {{#unless _inHierarchicalMode}}
   <div class="ui secondary menu no-margin">
     <div class="ui basic buttons">
-      <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
+      <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}
           <div class="ui button">...</div>
@@ -96,7 +96,7 @@
           {{/if}}
         {{/if}}
       {{/each}}
-      <button class="ui {{unless hasNextPage 'disabled'}} button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
+      <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
     </div>
     <div class="right menu">
       {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}

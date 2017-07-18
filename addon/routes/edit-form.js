@@ -115,8 +115,6 @@ FlexberryGroupeditRouteMixin, {
       Ember.assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
     }
 
-    Ember.assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
-      nComponents === 1);
     userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
     userSettingsService.setDeveloperUserSettings(developerUserSettings);
 

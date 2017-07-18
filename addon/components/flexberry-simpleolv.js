@@ -1086,6 +1086,8 @@ ErrorableControllerMixin, {
   didInsertElement() {
     this._super(...arguments);
 
+    Ember.$(window).resize(Ember.$.proxy(this._setColumnWidths, this));
+
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -1144,6 +1146,7 @@ ErrorableControllerMixin, {
   willDestroyElement() {
     this._super(...arguments);
 
+    Ember.$(window).unbind('resize', this._setColumnWidths);
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
       eventsBus.off('showLoadingTbodyClass');
@@ -1218,11 +1221,12 @@ ErrorableControllerMixin, {
   */
   _setColumnWidths() {
     let $table = this.$('table.object-list-view');
-    let $columns = $table.find('th');
     if (!$table) {
       // Table will not rendered yet.
       return;
     }
+
+    let $columns = $table.find('th');
 
     if (this.get('allowColumnResize')) {
       $table.addClass('fixed');
@@ -1262,7 +1266,7 @@ ErrorableControllerMixin, {
         }
       }
 
-      tableWidth += padding + (setting.width || 100);
+      tableWidth += padding + (setting.width || 150);
       if (currentPropertyName === 'OlvRowToolbar') {
         olvRowToolbarWidth = setting.width;
       }
@@ -1271,7 +1275,7 @@ ErrorableControllerMixin, {
         olvRowMenuWidth = setting.width;
       }
 
-      hashedUserSetting[setting.propName] = setting.width || 100;
+      hashedUserSetting[setting.propName] = setting.width || 150;
     });
 
     let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);

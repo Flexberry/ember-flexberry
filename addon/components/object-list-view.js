@@ -981,6 +981,7 @@ export default FlexberryBaseComponent.extend(
   didInsertElement() {
     this._super(...arguments);
 
+    Ember.$(window).resize(Ember.$.proxy(this._setColumnWidths, this));
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -992,17 +993,7 @@ export default FlexberryBaseComponent.extend(
       this.get('currentController').getCustomContent();
     }
 
-    let columnWidth;
-    if (this.notUseUserSettings) {
-      columnWidth = this.get('currentController.developerUserSettings');
-      columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
-      columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
-      columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
-    } else {
-      columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
-    }
-
-    this._setColumnWidths(columnWidth);
+    this._setColumnWidths();
   },
 
   /**
@@ -1055,17 +1046,7 @@ export default FlexberryBaseComponent.extend(
               }
             }
 
-            let columnWidth;
-            if (this.notUseUserSettings) {
-              columnWidth = this.get('currentController.developerUserSettings');
-              columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
-              columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
-              columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
-            } else {
-              columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
-            }
-
-            this._setColumnWidths(columnWidth);
+            this._setColumnWidths();
 
             let $currentTable = this.$('table.object-list-view');
             if (this.get('allowColumnResize')) {
@@ -1141,6 +1122,7 @@ export default FlexberryBaseComponent.extend(
   willDestroyElement() {
     this._super(...arguments);
 
+    Ember.$(window).unbind('resize', this._setColumnWidths);
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
       eventsBus.off('showLoadingTbodyClass');
@@ -1213,7 +1195,17 @@ export default FlexberryBaseComponent.extend(
 
     @param {Array} userSetting User setting to apply to control
   */
-  _setColumnWidths(userSetting) {
+  _setColumnWidths() {
+    let userSetting;
+    if (this.notUseUserSettings) {
+      userSetting = this.get('currentController.developerUserSettings');
+      userSetting = userSetting ? userSetting[this.get('componentName')] : undefined;
+      userSetting = userSetting ? userSetting.DEFAULT : undefined;
+      userSetting = userSetting ? userSetting.columnWidths : undefined;
+    } else {
+      userSetting = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+    }
+
     userSetting = Ember.isArray(userSetting) ? Ember.A(userSetting) : Ember.A();
 
     let $table = this.$('table.object-list-view');
@@ -1246,7 +1238,7 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
-      tableWidth += padding + (setting.width || 100);
+      tableWidth += padding + (setting.width || 150);
       if (currentPropertyName === 'OlvRowToolbar') {
         olvRowToolbarWidth = setting.width;
       }
@@ -1255,7 +1247,7 @@ export default FlexberryBaseComponent.extend(
         olvRowMenuWidth = setting.width;
       }
 
-      hashedUserSetting[setting.propName] = setting.width || 100;
+      hashedUserSetting[setting.propName] = setting.width || 150;
     });
 
     let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);

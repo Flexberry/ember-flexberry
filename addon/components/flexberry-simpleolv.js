@@ -1086,6 +1086,8 @@ ErrorableControllerMixin, {
   didInsertElement() {
     this._super(...arguments);
 
+    Ember.$(window).resize(Ember.$.proxy(this._setColumnWidths, this));
+
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -1144,6 +1146,7 @@ ErrorableControllerMixin, {
   willDestroyElement() {
     this._super(...arguments);
 
+    Ember.$(window).unbind('resize', this._setColumnWidths);
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
       eventsBus.off('showLoadingTbodyClass');
@@ -1217,43 +1220,68 @@ ErrorableControllerMixin, {
     @param {Array} userSetting User setting to apply to control
   */
   _setColumnWidths() {
-    let $objectListView = this.$('table.object-list-view');
-    if (!$objectListView) {
+    let $table = this.$('table.object-list-view');
+    if (!$table) {
       // Table will not rendered yet.
       return;
     }
 
+    let $columns = $table.find('th');
+
     if (this.get('allowColumnResize')) {
-      $objectListView.addClass('fixed');
+      $table.addClass('fixed');
       this._reinitResizablePlugin();
     } else {
-      $objectListView.colResizable({ disable: true });
+      $table.colResizable({ disable: true });
     }
 
     let userSettings = this.get('_userSettings');
 
-    if (!userSettings || (userSettings && !Ember.isArray(userSettings.columnWidths))) {
-      return;
-    }
-
+    let userSetting = !userSettings || (userSettings && !Ember.isArray(userSettings.columnWidths)) ?  Ember.A() : Ember.A(userSettings.columnWidths);
     let hashedUserSetting = {};
-    userSettings.columnWidths.forEach(item => {
-      let userColumnInfo = Ember.merge({
-        propName: undefined,
-        width: undefined
-      }, item);
+    let tableWidth = 0;
+    let olvRowMenuWidth = 0;
+    let olvRowToolbarWidth = 0;
+    let padding = (this.get('defaultLeftPadding') || 0) * 2;
 
-      let propName = userColumnInfo.propName;
-      let width = userColumnInfo.width;
+    Ember.$.each($columns, (key, item) => {
+      let currentItem = this.$(item);
+      let currentPropertyName = this._getColumnPropertyName(currentItem);
+      Ember.assert('Column property name is not defined', currentPropertyName);
 
-      Ember.assert('Property name is not defined at saved user setting.', propName);
+      let setting = userSetting.filter(sett => (sett.propName === currentPropertyName) && !Ember.isBlank(sett.width));
+      setting = setting.length > 0 ? setting[0] : undefined;
+      if (!setting) {
+        setting = {};
+        setting.propName = currentPropertyName;
+        if (currentPropertyName === 'OlvRowMenu') {
+          setting.width = 68 - padding;
+        }
 
-      if (width !== undefined) {
-        hashedUserSetting[propName] = width;
+        if (currentPropertyName === 'OlvRowToolbar') {
+          let checkbox = this.get('showCheckBoxInRow');
+          let delButton = this.get('showDeleteButtonInRow');
+
+          setting.width = (checkbox && delButton ? 100 : delButton ? 70 : 65) - padding;
+        }
       }
+
+      tableWidth += padding + (setting.width || 150);
+      if (currentPropertyName === 'OlvRowToolbar') {
+        olvRowToolbarWidth = setting.width;
+      }
+
+      if (currentPropertyName === 'OlvRowMenu') {
+        olvRowMenuWidth = setting.width;
+      }
+
+      hashedUserSetting[setting.propName] = setting.width || 150;
     });
 
-    let $columns = $objectListView.find('th');
+    let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);
+    let containerWidth = $table[0].parentElement.clientWidth - 5;
+    let widthCondition = containerWidth > tableWidth;
+    $table.css({ 'width': (widthCondition ? containerWidth : tableWidth) + 'px' });
     Ember.$.each($columns, (key, item) => {
       let currentItem = this.$(item);
       let currentPropertyName = this._getColumnPropertyName(currentItem);
@@ -1261,7 +1289,12 @@ ErrorableControllerMixin, {
 
       let savedColumnWidth = hashedUserSetting[currentPropertyName];
       if (savedColumnWidth) {
-        currentItem.width(savedColumnWidth);
+        if (widthCondition && currentPropertyName !== 'OlvRowToolbar' && currentPropertyName !== 'OlvRowMenu') {
+          savedColumnWidth = (savedColumnWidth + padding) / (tableWidth - helperColumnsWidth) * (containerWidth - helperColumnsWidth) - 1;
+          currentItem.width(savedColumnWidth - padding);
+        } else {
+          currentItem.width(savedColumnWidth);
+        }
       }
     });
 

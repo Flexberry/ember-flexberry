@@ -34,5 +34,14 @@ export default Ember.Mixin.create({
 
       Ember.set(target, property, this.store.query(modelName, builder.build()));
     },
+
+    objectListViewRowClick(record, params) {
+      // Prevent transition to edit form if click target is hierarchy expand button.
+      if (params.originalEvent && Ember.$(params.originalEvent.target).hasClass('hierarchy-expand')) {
+        params.goToEditForm = false;
+      }
+
+      this._super(...arguments);
+    }
   },
 });

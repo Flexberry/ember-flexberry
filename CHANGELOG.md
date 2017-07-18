@@ -4,6 +4,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.0-beta.14] - 2017-07-18
+### Added
+* Add titles for component's buttons.
+
+### Fixed
+* Fix transition to `editForm` in FireFox.
+* Fix filter columns shifts to left, when filter result is empty.
+* Fix default buttons styles for `blue-sky` theme.
+* Fix vertical scroll in list's components.
+* Fix list's components width computing.
+
+### Changed
+* Change icons for remove filter and remove search buttons.
+* Now locks gets userName from `UserSettingsService`.
+
 ## [0.9.0-beta.13] - 2017-07-05
 ### Fixed
 * Fix delete button disabling after deletion on lists.

@@ -625,13 +625,7 @@ export default Ember.Service.extend({
       });
     return ret;
   },
-  /**
-    @property userName
-    @type String
-    @default 'admin'
-    @for _userSettingsService
-  **/
-  userName: 'admin',
+
   /**
 
     Returns current user name.
@@ -878,4 +872,3 @@ export default Ember.Service.extend({
     return ret;
   }
 });
-

@@ -8,6 +8,7 @@ export default UserSettingsService.extend({
     @for _userSettingsService
   **/
   userName: 'admin',
+
   /**
     Returns current user name.
     Method must be overridden if application uses some authentication.
@@ -16,9 +17,7 @@ export default UserSettingsService.extend({
     @return {String} Current user name.
   */
   getCurrentUser() {
-    // TODO: add mechanism to return current user.
     let user = this.get('userName');
     return user;
   }
 });
-

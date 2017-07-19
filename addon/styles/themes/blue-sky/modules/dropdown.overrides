@@ -74,11 +74,11 @@
 .ui.selection.active.dropdown {
     box-shadow:none!important;
 }
-.ui.menu .ui.dropdown .menu > .item:hover {
+.ui.dropdown .menu > .item:hover {
     background: #f5f8ff!important;
 }
 
-.ui.menu .ui.dropdown .menu > .active.item {
+.ui.dropdown .menu > .active.item {
     background: #5998ff!important;
     color: #fff!important;
     border-radius: 0px;

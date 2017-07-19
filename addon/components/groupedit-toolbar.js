@@ -4,6 +4,8 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import serializeSortingParam from '../utils/serialize-sorting-param';
+const { getOwner } = Ember;
 
 /**
   Toolbar component for {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
@@ -12,6 +14,14 @@ import FlexberryBaseComponent from './flexberry-base-component';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    Controller for model.
+
+    @property modelController
+    @type Object
+  */
+  modelController: null,
+
   /**
     Service that triggers {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}} events.
 
@@ -40,6 +50,14 @@ export default FlexberryBaseComponent.extend({
     @readOnly
   */
   classNames: ['groupedit-toolbar'],
+  /**
+    Used to link to objectListView with same componentName.
+
+    @property componentName
+    @type String
+    @default ''
+  */
+  componentName: '',
 
   /**
     Boolean property to show or hide add button in toolbar.
@@ -60,6 +78,124 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   deleteButton: true,
+
+  /**
+    @property listNamedUserSettings
+  */
+  listNamedUserSettings: undefined,
+
+  _listNamedUserSettings: Ember.observer('listNamedUserSettings', function() {
+    let listNamedUserSettings = this.get('listNamedUserSettings');
+    for (let namedSetting in listNamedUserSettings) {
+      this._addNamedSetting(namedSetting);
+    }
+  }),
+
+  /**
+    Flag to use colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default true
+    @readOnly
+  */
+  colsConfigButton: true,
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  menus: [
+    { name: 'use', icon: 'checkmark box' },
+    { name: 'edit', icon: 'setting' },
+    { name: 'remove', icon: 'remove' }
+  ],
+
+  /**
+    @property colsSettingsItems
+    @readOnly
+  */
+  colsSettingsItems:  Ember.computed(function() {
+      let i18n = this.get('i18n');
+      let menus = [
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.use-setting-title',
+          items: []
+        },
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.edit-setting-title',
+          items: []
+        },
+        { icon: 'angle right icon',
+          iconAlignment: 'right',
+          localeKey: 'components.olv-toolbar.remove-setting-title',
+          items: []
+        }
+      ];
+      let rootItem = {
+        icon: 'dropdown icon',
+        iconAlignment: 'right',
+        title: '',
+        items: [],
+        localeKey: ''
+      };
+      let createSettitingItem = {
+        icon: 'table icon',
+        iconAlignment: 'left',
+        title: i18n.t('components.olv-toolbar.create-setting-title'),
+        localeKey: 'components.olv-toolbar.create-setting-title'
+      };
+      rootItem.items[rootItem.items.length] = createSettitingItem;
+      rootItem.items.push(...menus);
+
+      let setDefaultItem = {
+        icon: 'remove circle icon',
+        iconAlignment: 'left',
+        title: i18n.t('components.olv-toolbar.set-default-setting-title'),
+        localeKey: 'components.olv-toolbar.set-default-setting-title'
+      };
+      rootItem.items[rootItem.items.length] = setDefaultItem;
+      if (this.get('colsConfigMenu').environment && this.get('colsConfigMenu').environment === 'development') {
+        let showDefaultItem = {
+          icon: 'unhide icon',
+          iconAlignment: 'left',
+          title: i18n.t('components.olv-toolbar.show-default-setting-title'),
+          localeKey: 'components.olv-toolbar.show-default-setting-title'
+        };
+        rootItem.items[rootItem.items.length] = showDefaultItem;
+      }
+
+      this.colsSettingsItems = [rootItem];
+
+      return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
+    }
+  ),
+
+  /**
+   Shows info modal dialog.
+
+   @method showInfoModalDialog
+   @param {String} infoCaption Info caption (window header caption).
+   @param {String} infoContent Info content (window body content).
+   @returns {String} Info content.
+   */
+  showInfoModalDialog(infoCaption, infoContent) {
+    let infoModalDialog = this.get('_infoModalDialog');
+    if (infoModalDialog && infoModalDialog.modal) {
+      this.set('_infoModalDialogCaption', infoCaption);
+      this.set('_infoModalDialogContent', infoContent);
+      infoModalDialog.modal('show');
+    }
+
+    let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
+    oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
+    oLVToolbarInfoCopyButton.removeClass('disabled');
+    return infoContent;
+  },
 
   actions: {
     /**
@@ -98,6 +234,104 @@ export default FlexberryBaseComponent.extend({
 
       let componentName = this.get('componentName');
       this.get('_groupEditEventsService').deleteRowsTrigger(componentName);
+    },
+
+    /**
+      Remove filter from url.
+
+      @method actions.removeFilter
+      @public
+    */
+    removeFilter() {
+      let _this = this;
+      if (_this.get('filterText')) {
+        _this.get('currentController').set('state', 'loading');
+      }
+
+      Ember.run.later((function() {
+        _this.set('filterText', null);
+        _this.set('filterByAnyMatchText', null);
+      }), 50);
+    },
+
+    /**
+      Action to show confis dialog.
+
+      @method actions.showConfigDialog
+      @public
+    */
+    showConfigDialog(settingName) {
+      Ember.assert('showConfigDialog:: componentName is not defined in flexberry-groupedit component', this.componentName);
+      this.get('modelController').send('showConfigDialog', this.componentName, settingName, this.get('modelProjection'));
+    },
+
+    /**
+      Handler click on flexberry-menu.
+
+      @method actions.onMenuItemClick
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on menu item
+    */
+    onMenuItemClick(e) {
+      let iTags = Ember.$(e.currentTarget).find('i');
+      let namedSettingSpans = Ember.$(e.currentTarget).find('span');
+      if (iTags.length <= 0 || namedSettingSpans.length <= 0) {
+        return;
+      }
+
+      this._router = getOwner(this).lookup('router:main');
+      let className = iTags.get(0).className;
+      let namedSetting = namedSettingSpans.get(0).innerText;
+      let componentName  =  this.componentName;
+      let userSettingsService = this.get('userSettingsService');
+
+      switch (className) {
+        case 'table icon':
+          this.send('showConfigDialog');
+          break;
+        case 'checkmark box icon':
+
+          //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
+          let colsConfig = this.listNamedUserSettings[namedSetting];
+          userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig);
+          break;
+        case 'setting icon':
+          this.send('showConfigDialog', namedSetting);
+          break;
+        case 'remove icon':
+          userSettingsService.deleteUserSetting(componentName, namedSetting)
+          .then(result => {
+            this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
+            alert('Настройка ' + namedSetting + ' удалена');
+          });
+          break;
+        case 'remove circle icon':
+          if (!userSettingsService.haveDefaultUserSetting(componentName)) {
+            alert('No default usersettings');
+            break;
+          }
+
+          let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+          userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
+          .then(record => {
+            let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
+            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+          });
+          break;
+        case 'unhide icon':
+          let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
+          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
+          this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
+          break;
+      }
+    },
+
+    copyJSONContent(event) {
+      Ember.$('#OLVToolbarInfoContent').select();
+      let copied = document.execCommand('copy');
+      let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
+      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
+      oLVToolbarInfoCopyButton.addClass('disabled');
     }
   },
 
@@ -118,6 +352,26 @@ export default FlexberryBaseComponent.extend({
 
     this.get('_groupEditEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('_groupEditEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
+
+    this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
+    this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
+    this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    // Initialize SemanticUI modal dialog, and remember it in a component property,
+    // because after call to infoModalDialog.modal its html will disappear from DOM.
+    let infoModalDialog = this.$('.olv-toolbar-info-modal-dialog');
+    infoModalDialog.modal('setting', 'closable', true);
+    this.set('_infoModalDialog', infoModalDialog);
+    let modelController = this.get('modelController');
+    if (Ember.isNone(modelController)) {
+      this.set('modelController', this.get('currentController'));
+    }
+
+    this._updateListNamedUserSettings();
   },
 
   /**
@@ -130,6 +384,9 @@ export default FlexberryBaseComponent.extend({
   willDestroy() {
     this.get('_groupEditEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('_groupEditEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
+    this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
     this._super(...arguments);
   },
 
@@ -162,5 +419,39 @@ export default FlexberryBaseComponent.extend({
     if (componentName === this.get('componentName')) {
       this.set('_isDeleteRowsEnabled', false);
     }
-  }
+  },
+
+  _updateListNamedUserSettings() {
+    this._resetNamedUserSettings();
+    Ember.set(this, 'listNamedUserSettings', this.get('userSettingsService').getListCurrentNamedUserSetting(this.componentName));
+  },
+
+  _resetNamedUserSettings() {
+    let menus = this.get('menus');
+    for (let i = 0; i < menus.length; i++) {
+      Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', []);
+    }
+  },
+
+  _addNamedSetting(namedSetting) {
+    let menus = this.get('menus');
+    for (let i = 0; i < menus.length; i++) {
+      let icon = menus[i].icon + ' icon';
+      let subItems = this.get('colsSettingsItems')[0].items[i + 1].items;
+      let newSubItems = [];
+      let exist = false;
+      for (let j = 0; j < subItems.length; j++) {
+        newSubItems[j] = subItems[j];
+        if (subItems[j].title === namedSetting) {
+          exist = true;
+        }
+      }
+
+      if (!exist) {
+        newSubItems[subItems.length] = { title: namedSetting, icon: icon, iconAlignment: 'left' };
+      }
+
+      Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
+    }
+  },
 });

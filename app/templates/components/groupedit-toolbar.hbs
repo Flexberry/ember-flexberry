@@ -14,3 +14,19 @@
       <i class="minus icon"></i>
   </button>
 {{/if}}
+{{#if colsConfigButton}}
+  <div class="ui buttons">
+    <button
+      class="ui icon button config-button"
+      title={{t "components.colsconfig-dialog-content.title"}}
+      {{action "showConfigDialog"}}>
+        <i class="large table icon"></i>
+    </button>
+    {{#if colsSettingsItems}}
+      {{flexberry-menu
+        items=colsSettingsItems
+        onItemClick=(action "onMenuItemClick")
+      }}
+    {{/if}}
+  </div>
+{{/if}}

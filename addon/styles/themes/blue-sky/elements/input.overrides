@@ -38,3 +38,8 @@ input {
 .filter-button{
     border-right-color: #fff!important;
 }
+
+.flatpickr.flatpickr-input {
+    letter-spacing: 3px;
+}
+

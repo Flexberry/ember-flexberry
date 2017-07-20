@@ -25,6 +25,7 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+
   /**
     Store current value as Date object.
 
@@ -247,6 +248,7 @@ export default FlexberryBaseComponent.extend({
     let options = {
       altInput: true,
       time_24hr: true,
+      allowInput: true,
       clickOpens: false,
       minDate: this.get('min'),
       maxDate: this.get('max'),
@@ -271,6 +273,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     this.set('_flatpickr', this.$('.flatpickr').flatpickr(options));
+    this.$('.flatpickr').mask('99.99.9999 99:99');
     this.$('.flatpickr').attr('readonly', this.get('readonly'));
   },
 

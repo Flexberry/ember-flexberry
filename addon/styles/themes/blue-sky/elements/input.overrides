@@ -43,3 +43,7 @@ input {
     letter-spacing: 3px;
 }
 
+.flatpickr {
+    display: none;
+}
+

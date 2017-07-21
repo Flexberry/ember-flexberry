@@ -273,7 +273,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     this.set('_flatpickr', this.$('.flatpickr').flatpickr(options));
-    this.$('.flatpickr').mask('99.99.9999 99:99');
+    this.$('.flatpickr').mask(type === 'date' ? '99.99.9999' : '99.99.9999 99:99');
     this.$('.flatpickr').attr('readonly', this.get('readonly'));
   },
 
@@ -282,6 +282,13 @@ export default FlexberryBaseComponent.extend({
   */
   readonlyObserver: Ember.observer('readonly', function() {
     this.$('.flatpickr').attr('readonly', this.get('readonly'));
+  }),
+
+  /**
+    Sets type for flatpickr.
+  */
+  changeTypeObserver: Ember.observer('type', function() {
+    this._flatpickrCreate();
   }),
 
   /**

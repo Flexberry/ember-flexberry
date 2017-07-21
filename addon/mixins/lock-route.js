@@ -113,7 +113,7 @@ export default Ember.Mixin.create({
                 this._openReadOnly(answer, resolve, reject);
               });
             });
-          } else if (lock.get('userName') === this.get('userName')) {
+          } else if (lock.get('userName') === this.get('_userSettingsService').getCurrentUser()) {
             this.set('_currentLock', lock);
             resolve();
           } else {

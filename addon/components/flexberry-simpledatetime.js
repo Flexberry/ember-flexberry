@@ -355,12 +355,12 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _convertDateToLocal(value) {
-    let momentDate = moment(value);
-    let hours = momentDate.utcOffset() / 60;
-    momentDate.hours(hours);
-    momentDate.minutes(0);
-    momentDate.seconds(0);
-
-    return momentDate.toDate();
+    let dateToSet = value;
+    dateToSet.setHours(13);
+    dateToSet.setUTCHours(11);
+    dateToSet.setUTCMinutes(0);
+    dateToSet.setUTCSeconds(0);
+    dateToSet.setUTCMilliseconds(0);
+    return dateToSet;
   }
 });

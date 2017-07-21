@@ -90,7 +90,6 @@ export default Ember.Mixin.create({
       let namedColWidth = {};
 
       // if (Ember.isNone(settingName)) {
-      //   //namedColWidth = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName) || {};
       //   namedColWidth = this.get('currentColumnsWidths') || {};
       // } else {
       //   for (let i = 0; i < columnWidths.length; i++) {

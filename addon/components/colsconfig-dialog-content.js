@@ -383,10 +383,9 @@ export default FlexberryBaseComponent.extend({
         savePromise.then(
           record => {
             let sort = serializeSortingParam(colsConfig.sorting);
-            if(!this.groupEdit) {
+            if (!this.groupEdit) {
               router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
-            }
-            else {
+            } else {
               this.get('objectlistviewEvents').geSortApplyTrigger(this.componentName, sort);
               this.get('objectlistviewEvents').geColumnWidth(this.componentName);
             }

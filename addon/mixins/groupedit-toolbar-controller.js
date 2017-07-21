@@ -89,14 +89,20 @@ export default Ember.Mixin.create({
 
       let namedColWidth = {};
 
-      if (Ember.isNone(settingName)) {
-        namedColWidth = this.get('currentColumnsWidths') || {};
-      } else {
-        for (let i = 0; i < columnWidths.length; i++) {
-          colDesc = columnWidths[i];
-          propName = colDesc.propName;
-          namedColWidth[propName] = colDesc.width;
-        }
+      // if (Ember.isNone(settingName)) {
+      //   //namedColWidth = this.get('_userSettingsService').getCurrentColumnWidths(componentName, settingName) || {};
+      //   namedColWidth = this.get('currentColumnsWidths') || {};
+      // } else {
+      //   for (let i = 0; i < columnWidths.length; i++) {
+      //     colDesc = columnWidths[i];
+      //     propName = colDesc.propName;
+      //     namedColWidth[propName] = colDesc.width;
+      //   }
+      // }
+      for (let i = 0; i < columnWidths.length; i++) {
+        colDesc = columnWidths[i];
+        propName = colDesc.propName;
+        namedColWidth[propName] = colDesc.width;
       }
 
       if (columnWidths.length > 0) {
@@ -123,6 +129,11 @@ export default Ember.Mixin.create({
         } else {
           colDesc.sortOrder = 0;
         }
+
+        // let propMasterName = propName.split('.',1);
+        // if (propMasterName in namedColWidth) {
+        //   colDesc.columnWidth = namedColWidth[propMasterName];
+        // }
 
         if (propName in namedColWidth) {
           colDesc.columnWidth = namedColWidth[propName];
@@ -153,7 +164,7 @@ export default Ember.Mixin.create({
       this.send('showModalDialog', 'colsconfig-dialog-content',
                 { controller: controller, model: { modelName: modelName, colDescs: colDescs, componentName: componentName,
                 settingName: settingName, perPageValue: perPageValue, saveColWidthState: saveColWidthState,
-                exportParams: false, store: store } }, loadingParams);
+                exportParams: false, store: store , groupEdit: true } }, loadingParams);
     }
 
   },

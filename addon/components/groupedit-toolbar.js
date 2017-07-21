@@ -122,17 +122,17 @@ export default FlexberryBaseComponent.extend({
       let menus = [
         { icon: 'angle right icon',
           iconAlignment: 'right',
-          localeKey: 'components.olv-toolbar.use-setting-title',
+          localeKey: 'components.groupedit-toolbar.use-setting-title',
           items: []
         },
         { icon: 'angle right icon',
           iconAlignment: 'right',
-          localeKey: 'components.olv-toolbar.edit-setting-title',
+          localeKey: 'components.groupedit-toolbar.edit-setting-title',
           items: []
         },
         { icon: 'angle right icon',
           iconAlignment: 'right',
-          localeKey: 'components.olv-toolbar.remove-setting-title',
+          localeKey: 'components.groupedit-toolbar.remove-setting-title',
           items: []
         }
       ];
@@ -146,8 +146,8 @@ export default FlexberryBaseComponent.extend({
       let createSettitingItem = {
         icon: 'table icon',
         iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.create-setting-title'),
-        localeKey: 'components.olv-toolbar.create-setting-title'
+        title: i18n.t('components.groupedit-toolbar.create-setting-title'),
+        localeKey: 'components.groupedit-toolbar.create-setting-title'
       };
       rootItem.items[rootItem.items.length] = createSettitingItem;
       rootItem.items.push(...menus);
@@ -155,16 +155,16 @@ export default FlexberryBaseComponent.extend({
       let setDefaultItem = {
         icon: 'remove circle icon',
         iconAlignment: 'left',
-        title: i18n.t('components.olv-toolbar.set-default-setting-title'),
-        localeKey: 'components.olv-toolbar.set-default-setting-title'
+        title: i18n.t('components.groupedit-toolbar.set-default-setting-title'),
+        localeKey: 'components.groupedit-toolbar.set-default-setting-title'
       };
       rootItem.items[rootItem.items.length] = setDefaultItem;
       if (this.get('colsConfigMenu').environment && this.get('colsConfigMenu').environment === 'development') {
         let showDefaultItem = {
           icon: 'unhide icon',
           iconAlignment: 'left',
-          title: i18n.t('components.olv-toolbar.show-default-setting-title'),
-          localeKey: 'components.olv-toolbar.show-default-setting-title'
+          title: i18n.t('components.groupedit-toolbar.show-default-setting-title'),
+          localeKey: 'components.groupedit-toolbar.show-default-setting-title'
         };
         rootItem.items[rootItem.items.length] = showDefaultItem;
       }
@@ -191,9 +191,9 @@ export default FlexberryBaseComponent.extend({
       infoModalDialog.modal('show');
     }
 
-    let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
-    oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.olv-toolbar.copy');
-    oLVToolbarInfoCopyButton.removeClass('disabled');
+    let groupeditToolbarInfoCopyButton = Ember.$('#groupeditToolbarInfoCopyButton');
+    groupeditToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t('components.groupedit-toolbar.copy');
+    groupeditToolbarInfoCopyButton.removeClass('disabled');
     return infoContent;
   },
 
@@ -293,7 +293,12 @@ export default FlexberryBaseComponent.extend({
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
           let colsConfig = this.listNamedUserSettings[namedSetting];
-          userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig);
+          userSettingsService.saveUserSetting(componentName, undefined, colsConfig)
+          .then(record => {
+            let sort = serializeSortingParam(colsConfig.sorting);
+            this.get('_groupEditEventsService').geSortApplyTrigger(componentName, sort);
+            this.get('_groupEditEventsService').geColumnWidth(componentName);
+          });
           break;
         case 'setting icon':
           this.send('showConfigDialog', namedSetting);
@@ -315,23 +320,24 @@ export default FlexberryBaseComponent.extend({
           userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
           .then(record => {
             let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+            this.get('_groupEditEventsService').geSortApplyTrigger(componentName, sort);
+            this.get('_groupEditEventsService').geColumnWidth(componentName);
           });
           break;
         case 'unhide icon':
           let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
-          let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
+          let caption = this.get('i18n').t('components.groupedit-toolbar.show-setting-caption') + this._router.currentPath + '.js';
           this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
           break;
       }
     },
 
     copyJSONContent(event) {
-      Ember.$('#OLVToolbarInfoContent').select();
+      Ember.$('#groupeditToolbarInfoContent').select();
       let copied = document.execCommand('copy');
-      let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
-      oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
-      oLVToolbarInfoCopyButton.addClass('disabled');
+      let groupeditToolbarInfoCopyButton = Ember.$('#groupeditToolbarInfoCopyButton');
+      groupeditToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.groupedit-toolbar.copied' : 'components.olv-toolbar.ctrlc');
+      groupeditToolbarInfoCopyButton.addClass('disabled');
     }
   },
 
@@ -354,7 +360,7 @@ export default FlexberryBaseComponent.extend({
     this.get('_groupEditEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
 
     this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
-    this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
+    this.get('colsConfigMenu').on('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
   },
 
@@ -363,7 +369,7 @@ export default FlexberryBaseComponent.extend({
 
     // Initialize SemanticUI modal dialog, and remember it in a component property,
     // because after call to infoModalDialog.modal its html will disappear from DOM.
-    let infoModalDialog = this.$('.olv-toolbar-info-modal-dialog');
+    let infoModalDialog = this.$('.groupedit-toolbar-info-modal-dialog');
     infoModalDialog.modal('setting', 'closable', true);
     this.set('_infoModalDialog', infoModalDialog);
     let modelController = this.get('modelController');
@@ -385,7 +391,7 @@ export default FlexberryBaseComponent.extend({
     this.get('_groupEditEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('_groupEditEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
     this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
-    this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
+    this.get('colsConfigMenu').off('addNamedSetting', this, this._addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
     this._super(...arguments);
   },
@@ -453,5 +459,9 @@ export default FlexberryBaseComponent.extend({
 
       Ember.set(this.get('colsSettingsItems')[0].items[i + 1], 'items', newSubItems);
     }
+  },
+
+  _deleteNamedSetting(namedSetting) {
+    this._updateListNamedUserSettings();
   },
 });

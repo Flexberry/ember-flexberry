@@ -963,6 +963,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
+    this.get('objectlistviewEventsService').on('geColumnWidthApply', this, this.geWidth);
 
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
@@ -1111,6 +1112,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
+    this.get('objectlistviewEventsService').off('geColumnWidthApply', this, this.geWidth);
 
     this._super(...arguments);
   },
@@ -1646,6 +1648,12 @@ export default FlexberryBaseComponent.extend(
     }
 
     return component;
+  },
+
+  geWidth(componentName) {
+    if (this.get('componentName') === componentName) {
+      this._setColumnWidths();
+    }
   },
 
   /**

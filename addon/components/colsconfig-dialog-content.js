@@ -133,6 +133,7 @@ export default FlexberryBaseComponent.extend({
     this.saveColWidthState = this.model.saveColWidthState;
     this.exportParams = this.model.exportParams;
     this.modelName = this.model.modelName;
+    this.groupEdit = this.model.groupEdit;
     this.set('store', this.model.store);
     let colDescs = this.model.colDescs;
     for (let i = 0; i < colDescs.length; i++) {
@@ -382,7 +383,13 @@ export default FlexberryBaseComponent.extend({
         savePromise.then(
           record => {
             let sort = serializeSortingParam(colsConfig.sorting);
-            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+            if(!this.groupEdit) {
+              router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+            }
+            else {
+              this.get('objectlistviewEvents').geSortApplyTrigger(this.componentName, sort);
+              this.get('objectlistviewEvents').geColumnWidth(this.componentName);
+            }
           }
         );
         this.sendAction('close', colsConfig); // close modal window

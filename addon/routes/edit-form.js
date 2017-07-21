@@ -6,6 +6,7 @@ import Ember from 'ember';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
+import ReloadListMixin from '../mixins/reload-list-mixin';
 
 /**
   Base route for the Edit Forms.
@@ -35,7 +36,8 @@ import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistvie
  */
 export default ProjectedModelFormRoute.extend(
 FlexberryObjectlistviewRouteMixin,
-FlexberryGroupeditRouteMixin, {
+FlexberryGroupeditRouteMixin,
+ReloadListMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
@@ -65,6 +67,21 @@ FlexberryGroupeditRouteMixin, {
     filter: { refreshModel: false },
     filterCondition: { refreshModel: false }
   },
+
+  /**
+    Current sorting.
+
+    @property sorting
+    @type Array
+    @default []
+  */
+  sorting: [],
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
 
   /**
     A hook you can implement to convert the URL into the model for this route.
@@ -116,7 +133,32 @@ FlexberryGroupeditRouteMixin, {
     }
 
     userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
-    userSettingsService.setDeveloperUserSettings(developerUserSettings);
+    // let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName);
+    // userSettingsService.setDeveloperUserSettings(currentUserSetting);
+    let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
+    let listComponentNames = userSettingsService.getListComponentNames();
+    componentName = listComponentNames[0];
+    userSettingPromise
+      .then(currectPageUserSettings => {
+        if (params) {
+          userSettingsService.setCurrentParams(componentName, params);
+        }
+
+        this.sorting = userSettingsService.getCurrentSorting(componentName);
+        this.perPage = userSettingsService.getCurrentPerPage(componentName);
+        if (this.perPage !== params.perPage) {
+          if (params.perPage !== 5) {
+            this.perPage = params.perPage;
+            userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
+          } else {
+            if (this.sorting.length === 0) {
+              this.transitionTo(this.currentRouteName, { queryParams: { sort: null, perPage: this.perPage || 5 } }); // Show page without sort parameters
+            } else {
+              this.transitionTo(this.currentRouteName, { queryParams: { perPage: this.perPage || 5 } });  //Reload current page and records (model) list
+            }
+          }
+        }
+    });
 
     // TODO: now 'findRecord' at ember-flexberry-projection not support 'reload: false' flag.
     let findRecordParameters = { reload: needReload, projection: modelProjName };

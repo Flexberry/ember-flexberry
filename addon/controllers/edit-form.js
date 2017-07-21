@@ -155,6 +155,15 @@ ColsConfigDialogMixin, {
   lookupController: Ember.inject.controller('lookup-dialog'),
 
   /**
+    Controller to show colsconfig modal window.
+
+    @property lookupController
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('colsconfig-dialog')
+  */
+  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+
+  /**
     Flag to cancel rollback of model on controller resetting.
     Flag is set for interaction of agregator's and detail's routes.
 

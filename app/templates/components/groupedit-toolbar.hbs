@@ -30,3 +30,30 @@
     {{/if}}
   </div>
 {{/if}}
+<div class="groupedit-toolbar-info-modal-dialog ui small basic modal">
+  <div class="ui icon header">
+    <i class="olvt icon"></i>
+    {{_infoModalDialogCaption}}
+  </div>
+  <div class="center aligned ui grid">
+  <button
+    class="ui icon button"
+    title={{t "components.groupedit-toolbar.copy"}}
+    {{action "copyJSONContent"}}
+    id='groupeditToolbarInfoCopyButton'>
+      <i class="copy icon"></i>
+      {{t "components.groupedit-toolbar.copy"}}
+  </button>
+  <div class="actions">
+    <div class="groupedit-toolbar-info-modal-dialog-ok-button ui approve green inverted button" >
+      <i class="remove icon"></i>
+      {{t "components.groupedit-toolbar.close"}}
+    </div>
+  </div>
+  </div>
+  <div class="ui form">
+    <div class="groupedit-toolbar-info-modal-dialog-content center aligned ui field">
+      <textarea id='groupeditToolbarInfoContent' cols='80' rows='20'>{{_infoModalDialogContent}}</textarea>
+    </div>
+  </div>
+</div>

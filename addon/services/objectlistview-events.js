@@ -167,6 +167,9 @@ export default Ember.Service.extend(Ember.Evented, {
     this.trigger('geSortApply', componentName, sorting);
   },
 
+  geColumnWidth(componentName) {
+    this.trigger('geColumnWidthApply', componentName);
+  },
   /**
     Current limit function for OLV.
 

@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "0.9.0-beta.13",
+  "version": "0.9.0-beta.14",
   "description": "Ember Flexberry Addon",
   "license": "MIT",
   "author": {
@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "ember-cli-babel": "^5.1.6",
-    "ember-flexberry-data": "0.9.0-beta.5",
+    "ember-flexberry-data": "0.9.0-beta.6",
     "ember-i18n": "4.2.0",
     "ember-truth-helpers": "1.2.0",
     "ember-validations": "~2.0.0-alpha.4",

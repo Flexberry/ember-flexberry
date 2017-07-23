@@ -143,7 +143,8 @@ export default FlexberryBaseComponent.extend({
       {
         buttonName: '...', // Button displayed name.
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...' // Css classes for button.
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...' // Button title.
       }
       ```
 
@@ -380,6 +381,8 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     refresh() {
+      let currentController = this.get('currentController');
+      currentController.set('state', 'loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 

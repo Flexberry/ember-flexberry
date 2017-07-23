@@ -380,8 +380,9 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     refresh() {
+      let currentController = this.get('currentController');
+      currentController.set('state', 'loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
     },
 
     /**
@@ -428,8 +429,6 @@ export default FlexberryBaseComponent.extend({
     filterByAnyMatch() {
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, this.get('filterByAnyMatchText'));
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
-      this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
     /**
@@ -448,10 +447,6 @@ export default FlexberryBaseComponent.extend({
         _this.set('filterText', null);
         _this.set('filterByAnyMatchText', null);
       }), 50);
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
-      if (_this.get('filterText') === null) {
-        this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), false);
-      }
     },
 
     /**

@@ -109,6 +109,7 @@ export default Ember.Mixin.create({
     */
     applyFilters(filters) {
       this.set('filters', filters);
+      this.set('state', 'loading');
       this.send('refreshList');
     },
 
@@ -120,6 +121,7 @@ export default Ember.Mixin.create({
     */
     resetFilters(componentName) {
       this.set('filters', null);
+      this.set('state', 'loading');
       this.send('refreshList');
       this.get('objectlistviewEventsService').resetFiltersTrigger(componentName);
     },

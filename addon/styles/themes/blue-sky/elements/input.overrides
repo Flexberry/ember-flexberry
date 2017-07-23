@@ -42,8 +42,3 @@ input {
 .flatpickr.flatpickr-input {
     letter-spacing: 3px;
 }
-
-.flatpickr {
-    display: none;
-}
-

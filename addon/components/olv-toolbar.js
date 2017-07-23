@@ -381,6 +381,8 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     refresh() {
+      let currentController = this.get('currentController');
+      currentController.set('state', 'loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 

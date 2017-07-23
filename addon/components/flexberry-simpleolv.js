@@ -784,6 +784,7 @@ ErrorableControllerMixin, {
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
     },
+
     /**
       Handles action from object-list-view when no handler for this component is defined.
 
@@ -791,6 +792,8 @@ ErrorableControllerMixin, {
       @public
     */
     refresh() {
+      let currentController = this.get('currentController');
+      currentController.set('state', 'loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 

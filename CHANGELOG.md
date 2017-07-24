@@ -4,6 +4,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.0-beta.15] - 2017-07-24
+### Added
+* Now list components use `DatePredicate` for filtering dates.
+* Add user input for `flexberry-simpledatetime`.
+* Add filters applying spinner.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.6.
+
+### Known issues
+* Now there is no way for filtering by timeless date in backend requests, therefore timeless date fields on backend must have 11:00:00.000 time in UTC.
+
 ## [0.9.0-beta.14] - 2017-07-18
 ### Added
 * Add titles for component's buttons.

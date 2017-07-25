@@ -250,9 +250,9 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
-    Validation data and time.
+    Validation date and time.
 
-    @method _validationData
+    @method _validationDateTime
     @private
   */
   _validationDateTime() {

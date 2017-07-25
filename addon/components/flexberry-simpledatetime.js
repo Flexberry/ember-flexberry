@@ -250,6 +250,37 @@ export default FlexberryBaseComponent.extend({
   },
 
   /**
+    Validation data and time.
+
+    @method _validationData
+    @private
+  */
+  _validationDateTime() {
+    let dateIsValid = true;
+    let inputValue = this.$('.custom-flatpickr')[0].value;
+    let date = this.get('type') === 'date' ? moment(inputValue, 'DD.MM.YYYY') : moment(inputValue, 'DD.MM.YYYY HH:mm');
+    if (date.isValid()) {
+      let dateArray = inputValue.match(/(\d+)/g) || [];
+      if (dateArray.length > 0) {
+        let dateValid = date.date() === Number(dateArray[0]) && (date.month() + 1) === Number(dateArray[1]) && date.year() === Number(dateArray[2]);
+        dateIsValid = this.get('type') === 'date' ? dateValid : dateValid && date.hours() === Number(dateArray[3]) &&
+          date.minutes() === Number(dateArray[4]);
+      }
+    } else {
+      dateIsValid = false;
+    }
+
+    if (dateIsValid) {
+      this.get('_flatpickr').setDate(date.toDate());
+    } else {
+      this.get('_flatpickr').clear();
+    }
+
+    this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
+    this.$('.custom-flatpickr').blur();
+    return false;
+  },
+  /**
     Create Flatpickr instance, and save it into `_flatpickr` property.
 
     @method _flatpickrCreate
@@ -289,32 +320,12 @@ export default FlexberryBaseComponent.extend({
     this.$('.custom-flatpickr').mask(type === 'date' ? '99.99.9999' : '99.99.9999 99:99');
     this.$('.custom-flatpickr').keydown(Ember.$.proxy(function(e) {
       if (e.which === 13) {
-        let dateIsValid = true;
-        let inputValue = this.$('.custom-flatpickr')[0].value;
-        let date = this.get('type') === 'date' ? moment(inputValue, 'DD.MM.YYYY') : moment(inputValue, 'DD.MM.YYYY HH:mm');
-        if (date.isValid()) {
-          let dateArray = inputValue.match(/(\d+)/g) || [];
-          if (dateArray.length > 0) {
-            let dateValid = date.date() === Number(dateArray[0]) && (date.month() + 1) === Number(dateArray[1]) && date.year() === Number(dateArray[2]);
-            dateIsValid = this.get('type') === 'date' ? dateValid : dateValid && date.hours() === Number(dateArray[3]) &&
-              date.minutes() === Number(dateArray[4]);
-          }
-        } else {
-          dateIsValid = false;
-        }
-
-        if (dateIsValid) {
-          this.get('_flatpickr').setDate(date.toDate());
-        } else {
-          this.get('_flatpickr').clear();
-        }
-
-        this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
-        this.$('.custom-flatpickr').blur();
-        return false;
+        this._validationDateTime();
       }
     }, this));
-
+    this.$('.custom-flatpickr').blur(Ember.$.proxy(function (e) {
+      this._validationDateTime();
+    }, this));
     this.$('.flatpickr').attr('readonly', this.get('readonly'));
   },
 

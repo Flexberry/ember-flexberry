@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix date and time validation when changing focus.
 
 ## [0.9.0-beta.15] - 2017-07-24
 ### Added
@@ -25,6 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix filter columns shifts to left, when filter result is empty.
 * Fix default buttons styles for `blue-sky` theme.
 * Fix vertical scroll in list's components.
+* Fix list's components width computing.
 * Fix list's components width computing.
 
 ### Changed

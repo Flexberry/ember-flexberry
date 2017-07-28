@@ -400,7 +400,7 @@ export default FlexberryBaseComponent.extend(
       userSettings = userSettings ? userSettings[userSettingName] : undefined;
       userSettings = userSettings ? userSettings.DEFAULT : undefined;
     } else {
-      userSettings = this.get('userSettingsService').getCurrentUserSetting(userSettingName);
+      userSettings = this.get('userSettingsService').getCurrentUserSetting(userSettingName); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
     }
 
     let onEditForm = this.get('onEditForm');
@@ -413,11 +413,20 @@ export default FlexberryBaseComponent.extend(
         delete col.sorted;
         delete col.sortNumber;
         delete col.sortAscending;
+        delete col.width;
         let propName = col.propName;
         namedCols[propName] = col;
       }
 
-      // TODO: Add col.width from user settings (also in hbs).
+      // Set columns width.
+      for (let i = 0; i < cols.length; i++) {
+        let col = cols[i];
+        let propName = col.propName;
+
+        let setting = userSettings.columnWidths.filter(sett => (sett.propName === propName) && !Ember.isBlank(sett.width));
+
+        col.width = setting.width || 150; // TODO: in method _setColumnWidths() used magical focus for compute this width
+      }
 
       if (userSettings.sorting === undefined) {
         userSettings.sorting = [];

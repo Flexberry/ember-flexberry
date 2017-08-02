@@ -35,7 +35,7 @@
   -@cornerIconStroke  @cornerIconStroke 0 @white,
    @cornerIconStroke  @cornerIconStroke 0 @white
 ;
-@cornerIconInvertedShadow: #7ba7d9;
+@cornerIconInvertedShadow: @blue;
 
 @small: @relativeSmall;
 @medium: 1em;
@@ -43,4 +43,4 @@
 @big: 2em;
 @huge: 4em;
 @massive: 8em;
-@colorIcon : #7ba7d9;
+@colorIcon : @blue;

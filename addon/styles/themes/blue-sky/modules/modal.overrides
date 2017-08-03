@@ -10,3 +10,8 @@
     overflow: auto!important;
     max-height: 618px!important;
 }
+
+.ui.modal > .close {
+    top: 0rem;
+    right: -0.2rem;
+}

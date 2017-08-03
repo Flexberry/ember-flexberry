@@ -780,7 +780,7 @@ i.icon.bed:before { content: "\f236"; }
     color: #fff!important;
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:before {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > prev-page-button:before {
     content: "\f104";
     font-family: 'Icons';
     font-size: 21px;
@@ -788,11 +788,11 @@ i.icon.bed:before { content: "\f236"; }
     color: rgba(0,0,0,0.54);
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child:hover:before {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > prev-page-button:hover:before {
     color: #f39a2e!important;
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:before {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > next-page-button:before {
     content: "\f105";
     font-family: 'Icons';
     font-size: 21px;
@@ -800,15 +800,15 @@ i.icon.bed:before { content: "\f236"; }
     color: rgba(0,0,0,0.54);
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child:hover:before {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > next-page-button:hover:before {
     color: #f39a2e!important;
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:first-child {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > prev-page-button {
     visibility: hidden;
 }
 
-.ui.secondary.menu.no-margin > .ui.basic.buttons > button:last-child {
+.ui.secondary.menu.no-margin > .ui.basic.buttons > next-page-button {
     visibility: hidden;
 }
 

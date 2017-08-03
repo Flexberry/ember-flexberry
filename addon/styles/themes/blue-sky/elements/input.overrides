@@ -26,6 +26,9 @@ input {
 .block-action-input input{
     height: 35px;
     width: 100%!important;
+    border: none !important;
+    border-bottom: 1px solid #b1cae8 !important;
+    border-radius: 0px!important;
 }
 
 .ui.action.input:not([class*="left action"]) input:focus {
@@ -36,3 +39,6 @@ input {
     border-right-color: #fff!important;
 }
 
+.flatpickr.flatpickr-input {
+    letter-spacing: 3px;
+}

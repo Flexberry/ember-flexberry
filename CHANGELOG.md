@@ -3,6 +3,37 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix date and time validation when changing focus.
+
+## [0.9.0-beta.15] - 2017-07-24
+### Added
+* Now list components use `DatePredicate` for filtering dates.
+* Add user input for `flexberry-simpledatetime`.
+* Add filters applying spinner.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0-beta.6.
+
+### Known issues
+* Now there is no way for filtering by timeless date in backend requests, therefore timeless date fields on backend must have 11:00:00.000 time in UTC.
+
+## [0.9.0-beta.14] - 2017-07-18
+### Added
+* Add titles for component's buttons.
+
+### Fixed
+* Fix transition to `editForm` in FireFox.
+* Fix filter columns shifts to left, when filter result is empty.
+* Fix default buttons styles for `blue-sky` theme.
+* Fix vertical scroll in list's components.
+* Fix list's components width computing.
+* Fix list's components width computing.
+
+### Changed
+* Change icons for remove filter and remove search buttons.
+* Now locks gets userName from `UserSettingsService`.
 
 ## [0.9.0-beta.13] - 2017-07-05
 ### Fixed

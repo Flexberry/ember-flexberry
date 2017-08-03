@@ -17,13 +17,15 @@
       value=displayValue
       readonly=(if (or readonly (not autocomplete)) "readonly")
     }}
-    <button 
+    <button
       class="ui ui-change {{if (or readonly isBlocked) " disabled"}} {{chooseButtonClass}} {{if (or modalIsBeforeToShow modalIsStartToShow) " loading"}} button"
+      title={{t "components.flexberry-lookup.choose-button-text"}}
       {{action "choose" chooseData}}>
       {{{chooseText}}}
     </button>
     <button
       class="ui {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
+      title={{t "components.flexberry-lookup.remove-button-text"}}
       {{action "remove" removeData}}>
       {{{removeText}}}
     </button>

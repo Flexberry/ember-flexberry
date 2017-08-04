@@ -81,10 +81,9 @@ export default Ember.Controller.extend({
       }
 
       if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.full.height').animate({ width: '100%' }, 500);
+        Ember.$('.full.height').css({ 'transition': 'width 0.45s ease-in-out 0s', 'width': '100%' });
       } else {
-        let newWidth = Ember.$('.full.height').css('width', 'calc(100% - ' + sidebar.width() + 'px)');
-        Ember.$('.full.height').animate({ width: newWidth }, 500);
+        Ember.$('.full.height').css({ 'transition': 'width 0.3s ease-in-out 0s', 'width': 'calc(100% - ' + sidebar.width() + 'px)' });
       }
     },
 

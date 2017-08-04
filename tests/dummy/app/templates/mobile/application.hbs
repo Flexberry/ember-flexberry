@@ -1,3 +1,12 @@
+{{#ui-sidebar class="mobile inverted vertical main menu"}}
+  <a class="item"
+    href={{addonVersionHref}}
+    target="_blank"
+    title={{t "forms.application.sitemap.application-version.title"}}>
+    {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
+  </a>
+  {{render "sitemap" sitemap}}
+{{/ui-sidebar}}
 <div class="bgw-fix">
   <div class="background-logo">
     <div class="ui attached menu mobile">
@@ -46,15 +55,6 @@
 <div id="example-mobile" class="pusher">
   <div class="full height" style="min-height: 94.8vh!important;" >
     <div class="flexberry-content ui attached segment">
-    {{#ui-sidebar class="mobile inverted vertical main menu"}}
-      <a class="item"
-        href={{addonVersionHref}}
-        target="_blank"
-        title={{t "forms.application.sitemap.application-version.title"}}>
-        {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
-      </a>
-      {{render "sitemap" sitemap}}
-    {{/ui-sidebar}}
       <div class="ui main container">
         <div class="stackable grid container">
           {{outlet}}

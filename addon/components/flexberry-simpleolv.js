@@ -33,7 +33,6 @@ ErrorableControllerMixin, {
   _contentObserver: Ember.on('init', Ember.observer('content', function() {
     let content = this.get('content');
     if (content && !content.isLoading) {
-      this.set('rowsInLoadingState', false);
       this.set('contentWithKeys', Ember.A());
       this.set('contentForRender', Ember.A());
 
@@ -59,8 +58,6 @@ ErrorableControllerMixin, {
       }
 
       this.set('showLoadingTbodyClass', false);
-    } else {
-      this.set('rowsInLoadingState', true);
     }
   })),
 
@@ -440,15 +437,6 @@ ErrorableControllerMixin, {
   contentWithKeys: null,
 
   contentForRender: null,
-
-  /**
-    Flag indicates whether some rows are not loaded yet.
-
-    @property rowsInLoadingState
-    @type Boolean
-    @default false
-  */
-  rowsInLoadingState: false,
 
   /**
     Class loading for tbody.

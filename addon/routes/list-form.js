@@ -82,6 +82,10 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   */
   model: function(params, transition) {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
+
+    let controller = this.controllerFor(this.routeName);
+    controller.set('state', 'loading');
+
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -127,7 +131,6 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         }
 
         let hierarchicalAttribute;
-        let controller = this.controllerFor(this.routeName);
         if (controller.get('inHierarchicalMode')) {
           hierarchicalAttribute = controller.get('hierarchicalAttribute');
         }

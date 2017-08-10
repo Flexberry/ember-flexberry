@@ -1,0 +1,25 @@
+<h3>{{t 'forms.ember-flexberry-dummy-study-record-obj-list.caption'}}</h3>
+<div class="ui {{state}} row form">
+  {{flexberry-objectlistview
+    modelName="ember-flexberry-dummy-study-record"
+    modelProjection=modelProjection
+    editFormRoute=editFormRoute
+    content=model
+    createNewButton=true
+    refreshButton=true
+    sorting=computedSorting
+    orderable=true
+    sortByColumn=(action "sortByColumn")
+    addColumnToSorting=(action "addColumnToSorting")
+    pages=pages
+    perPageValue=perPageValue
+    perPageValues=perPageValues
+    recordsTotalCount=recordsTotalCount
+    hasPreviousPage=hasPreviousPage
+    hasNextPage=hasNextPage
+    previousPage=(action "previousPage")
+    gotoPage=(action "gotoPage")
+    nextPage=(action "nextPage")
+    componentName="EmberFlexberryDummyStudyRecordObjList"
+  }}
+</div>

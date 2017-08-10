@@ -6,6 +6,15 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  //Displaying multiple types
+  this.route('ember-flexberry-dummy-study-record-s-list');
+  this.route('ember-flexberry-dummy-study-record-obj-list');
+  this.route('ember-flexberry-dummy-student-record-edit', { path: 'ember-flexberry-dummy-student-record-edit/:id' });
+  this.route('ember-flexberry-dummy-student-record-edit.new', { path: 'ember-flexberry-dummy-student-record-edit/new' });
+
+  this.route('ember-flexberry-dummy-graduate-record-edit', { path: 'ember-flexberry-dummy-graduate-record-edit/:id' });
+  this.route('ember-flexberry-dummy-graduate-record-edit.new', { path: 'ember-flexberry-dummy-graduate-record-edit/new' });
+
   // Edit forms & list forms.
   this.route('ember-flexberry-dummy-application-user-list');
   this.route('ember-flexberry-dummy-application-user-edit', { path: 'ember-flexberry-dummy-application-user-edit/:id' });

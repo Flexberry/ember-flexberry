@@ -176,6 +176,108 @@ Ember.$.extend(true, translations, {
         }
       }
     },
+    'ember-flexberry-dummy-study-record':{
+      'projections': {
+        'StudyRecordE': {
+          'uniquelD': {
+            'caption': 'uniquelD'
+          },
+          'objectPK': {
+            'caption': 'objectPK'
+          },
+          'showName': {
+            'caption': 'showName'
+          }
+        },
+        'StudyRecordL': {
+          'uniquelD': {
+            'caption': 'uniquelD'
+          },
+          'objectPK': {
+            'caption': 'objectPK'
+          },
+          'showName': {
+            'caption': 'showName'
+          }
+        }
+      }
+    },
+    'ember-flexberry-dummy-graduate-record':{
+      'projections': {
+        'GraduateRecordE': {
+          'grFIO': {
+            'caption': 'ФИО'
+          },
+          'grYearGrad': {
+            'caption': 'Год выпуска'
+          },
+          'uniquelD': {
+            'caption': 'uniquelD'
+          },
+          'objectPK': {
+            'caption': 'objectPK'
+          },
+          'showName': {
+            'caption': 'showName'
+          }
+        },
+        'GraduateRecordL': {
+          'grFIO': {
+            'caption': 'ФИО'
+          },
+          'grYearGrad': {
+            'caption': 'Год выпуска'
+          },
+          'uniquelD': {
+            'caption': 'uniquelD'
+          },
+          'objectPK': {
+            'caption': 'objectPK'
+          },
+          'showName': {
+            'caption': 'showName'
+          }
+        }
+      }
+    },
+    'ember-flexberry-dummy-student-record':{
+      'projections': {
+        'StudentRecordE': {
+          'srFIO': {
+            'caption': 'ФИО'
+          },
+          'srCours': {
+            'caption': 'Номер курса'
+          },
+          'uniquelD': {
+            'caption': 'uniquelD'
+          },
+          'objectPK': {
+            'caption': 'objectPK'
+          },
+          'showName': {
+            'caption': 'showName'
+          }
+        },
+        'StudentRecordL': {
+          'srFIO': {
+            'caption': 'ФИО'
+          },
+          'srCours': {
+            'caption': 'Номер курса'
+          },
+          'uniquelD': {
+            'caption': 'uniquelD'
+          },
+          'objectPK': {
+            'caption': 'objectPK'
+          },
+          'showName': {
+            'caption': 'showName'
+          }
+        }
+      }
+    }
   },
 
   'application-name': 'Тестовый стенд ember-flexberry',
@@ -447,6 +549,10 @@ Ember.$.extend(true, translations, {
             'object-list-view-resize': {
               'caption': 'Разметка столбцов',
               'title': ''
+            },
+            'example-flexberry-simpleolv': {
+              'caption': 'Отображение нескольких типов',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -609,6 +715,32 @@ Ember.$.extend(true, translations, {
 
     'ember-flexberry-dummy-suggestion-type-list': {
       'caption': 'Типы предложений'
+    },
+
+    'ember-flexberry-dummy-student-record-edit':{
+      'caption': 'Данные о студенте',
+      'srFIO-caption': 'ФИО',
+      'srCours-caption': 'Номер курса',
+      'uniquelD-caption': 'uniquelD',
+      'objectPK-caption': 'objectPK',
+      'showName-caption': 'showName'
+    },
+
+    'ember-flexberry-dummy-graduate-record-edit':{
+      'caption': 'Данные о выпускнике',
+      'grFIO-caption': 'ФИО',
+      'grYearGrad-caption': 'Год выпуска',
+      'uniquelD-caption': 'uniquelD',
+      'objectPK-caption': 'objectPK',
+      'showName-caption': 'showName'
+    },
+
+    'ember-flexberry-dummy-study-record-s-list': {
+      'caption': 'Flexberry-simpleolv. Отображение нескольких типов'
+    },
+
+    'ember-flexberry-dummy-study-record-obj-list':{
+      'caption': 'Flexberry-objectlistview. Отображение нескольких типов'
     },
 
     'log-service-examples': {

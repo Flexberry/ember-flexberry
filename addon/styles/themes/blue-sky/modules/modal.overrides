@@ -6,10 +6,6 @@
     height: 700px!important;
 }
 
-.ui.modal > .content {
-    max-height: 618px!important;
-}
-
 .ui.modal > .close {
     top: 0rem;
     right: -0.2rem;
@@ -17,6 +13,7 @@
 
 .ui.modal > .content {
     overflow: initial!important;
+    max-height: 618px!important;
 }
 
 .ui.modal .content .object-list-view-container{

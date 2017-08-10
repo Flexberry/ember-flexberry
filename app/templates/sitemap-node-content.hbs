@@ -1,4 +1,4 @@
-<span onclick={{action 'subMenuEl' bubbles=false}}>{{model.caption}}</span>
+<div class="title-item-menu"onclick={{action 'subMenuEl' bubbles=false}}>{{model.caption}}</div>
 {{#if model.children.length}}
   <div class="menu subMenu hidden-menu" >
     {{#each model.children as |child|}}

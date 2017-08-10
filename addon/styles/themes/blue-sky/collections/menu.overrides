@@ -21,7 +21,7 @@
 }
 
 .ui.menu .item {
-    padding: 0.72857143em 1.14285714em;
+    padding: 0.72857143em 0 0.72857143em 1.14285714em;
 }
 
 .ui.menu > .grid, .ui.menu > .container {

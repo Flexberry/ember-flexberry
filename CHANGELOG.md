@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Manage animation of `flexberry-toggler` component through `duration` property.
+
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix date and time validation when changing focus.
 
 ## [0.9.0-beta.15] - 2017-07-24
 ### Added

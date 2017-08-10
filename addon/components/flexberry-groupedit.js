@@ -112,6 +112,15 @@ export default FlexberryBaseComponent.extend({
   deleteButton: true,
 
   /**
+    Flag indicates whether to show colsConfigButton button at toolbar.
+
+    @property colsConfigButton
+    @type Boolean
+    @default false
+  */
+  colsConfigButton: true,
+
+  /**
     Route of edit form.
 
     @example

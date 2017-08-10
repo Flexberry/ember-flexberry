@@ -6,6 +6,7 @@ import Ember from 'ember';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
+import ReloadListMixin from '../mixins/reload-list-mixin';
 
 /**
   Base route for the Edit Forms.
@@ -35,7 +36,8 @@ import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistvie
  */
 export default ProjectedModelFormRoute.extend(
 FlexberryObjectlistviewRouteMixin,
-FlexberryGroupeditRouteMixin, {
+FlexberryGroupeditRouteMixin,
+ReloadListMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
@@ -67,6 +69,21 @@ FlexberryGroupeditRouteMixin, {
   },
 
   /**
+    Current sorting.
+
+    @property sorting
+    @type Array
+    @default []
+  */
+  sorting: [],
+
+  /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -74,7 +91,7 @@ FlexberryGroupeditRouteMixin, {
     @param {Object} params
     @param {Object} transition
    */
-  model(params, transition) {
+  model: function(params, transition) {
     this._super.apply(this, arguments);
 
     let modelName = this.get('modelName');
@@ -87,6 +104,61 @@ FlexberryGroupeditRouteMixin, {
     let modelCurrentNotSaved = flexberryDetailInteractionService.get('modelCurrentNotSaved');
     let modelSelectedDetail = flexberryDetailInteractionService.get('modelSelectedDetail');
     let needReload = !!(modelCurrentNotSaved || (modelSelectedDetail && modelSelectedDetail.get('hasDirtyAttributes')));
+
+    let webPage = transition.targetName;
+    let userSettingsService = this.get('userSettingsService');
+    userSettingsService.setCurrentWebPage(webPage);
+    let developerUserSettings = this.get('developerUserSettings');
+    Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+
+    let nComponents = 0;
+    let componentName;
+    for (componentName in developerUserSettings) {
+      let componentDesc = developerUserSettings[componentName];
+      switch (typeof componentDesc) {
+        case 'string':
+          developerUserSettings[componentName] = JSON.parse(componentDesc);
+          break;
+        case 'object':
+          break;
+        default:
+          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+            'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
+      }
+      nComponents += 1;
+    }
+
+    if (nComponents === 0) {
+      Ember.assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
+    }
+
+    userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
+    // let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName);
+    // userSettingsService.setDeveloperUserSettings(currentUserSetting);
+    let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
+    let listComponentNames = userSettingsService.getListComponentNames();
+    componentName = listComponentNames[0];
+    userSettingPromise
+      .then(currectPageUserSettings => {
+        if (params) {
+          userSettingsService.setCurrentParams(componentName, params);
+        }
+
+        this.sorting = userSettingsService.getCurrentSorting(componentName);
+        this.perPage = userSettingsService.getCurrentPerPage(componentName);
+        if (this.perPage !== params.perPage) {
+          if (params.perPage !== 5) {
+            this.perPage = params.perPage;
+            userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
+          } else {
+            if (this.sorting.length === 0) {
+              this.transitionTo(this.currentRouteName, { queryParams: { sort: null, perPage: this.perPage || 5 } }); // Show page without sort parameters
+            } else {
+              this.transitionTo(this.currentRouteName, { queryParams: { perPage: this.perPage || 5 } });  //Reload current page and records (model) list
+            }
+          }
+        }
+    });
 
     // TODO: now 'findRecord' at ember-flexberry-projection not support 'reload: false' flag.
     let findRecordParameters = { reload: needReload, projection: modelProjName };
@@ -153,6 +225,7 @@ FlexberryGroupeditRouteMixin, {
     let modelClass = model.constructor;
     let modelProjName = this.get('modelProjection');
     let proj = modelClass.projections.get(modelProjName);
+    controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
     controller.set('routeName', this.get('routeName'));
     controller.set('developerUserSettings', this.get('developerUserSettings'));

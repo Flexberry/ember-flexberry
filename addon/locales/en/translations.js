@@ -156,7 +156,18 @@ export default {
 
     'groupedit-toolbar': {
       'add-button-text': 'Add',
-      'delete-button-text': 'Delete'
+      'delete-button-text': 'Delete',
+      'create-setting-title': 'New setting',
+      'use-setting-title': 'Use',
+      'edit-setting-title': 'Edit',
+      'remove-setting-title': 'Remove',
+      'set-default-setting-title': 'Default setting',
+      'show-default-setting-title': 'Show settings',
+      'show-setting-caption': 'To set this settings by default you can copy and init property developerUserSettings in /app/routes/',
+      'close': 'Close',
+      'copy': 'Copy',
+      'copied': 'Copied',
+      'ctrlc': 'Press Ctrl/C to copy'
     },
 
     'colsconfig-dialog-content': {

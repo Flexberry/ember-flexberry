@@ -14,6 +14,8 @@ import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
 import FolvOnEditControllerMixin from '../mixins/flexberry-objectlistview-on-edit-form-controller';
 import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
+import FlexberryGroupeditToolbarController from '../mixins/groupedit-toolbar-controller';
+import ColsConfigDialogMixin from '../mixins/colsconfig-dialog-controller';
 
 const { getOwner } = Ember;
 
@@ -56,7 +58,9 @@ ReloadListMixin,
 SortableControllerMixin,
 LimitedControllerMixin,
 FlexberryObjectlistviewHierarchicalControllerMixin,
-FolvOnEditControllerMixin, {
+FolvOnEditControllerMixin,
+FlexberryGroupeditToolbarController,
+ColsConfigDialogMixin, {
   /**
     Flag to enable return to agregator's path if possible.
 
@@ -149,6 +153,15 @@ FolvOnEditControllerMixin, {
     @default LookupDialog
   */
   lookupController: Ember.inject.controller('lookup-dialog'),
+
+  /**
+    Controller to show colsconfig modal window.
+
+    @property lookupController
+    @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
+    @default Ember.inject.controller('colsconfig-dialog')
+  */
+  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
 
   /**
     Flag to cancel rollback of model on controller resetting.

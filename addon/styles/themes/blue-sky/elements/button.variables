@@ -4,17 +4,17 @@
 
 @pageFont: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 @textColor: #3f65a4;
-@blue: #55ACEE;
-@borderLeft: 1px solid rgba(123, 167, 217, 1);
+@borderLeft: 1px solid @blue;
 
 /*-------------------
    Button Variables
 --------------------*/
 
 @backgroundColor: #FFF;
+@backgroundGreenColor: @green;
 @backgroundImage: linear-gradient(@white, @backgroundColor);
 @borderBoxShadowColor: #E1E8ED;
-@borderColor: 1px solid rgba(123, 167, 217, 1);
+@borderColor: 1px solid @blue;
 
 @textTransform: none;
 @fontWeight: 400;
@@ -32,10 +32,10 @@
         States
 --------------------*/
 
-@hoverBackgroundColor: #94cea8;;
+@hoverBackgroundColor: @green;
 @hoverBackgroundImage: none;
 @hoverColor: #FFF;
-@borderHover: 1px solid #94cea8;
+@borderHover: 1px solid @green;
 
 @downBackgroundColor: #E1E8ED;
 @downColor: #292F33;

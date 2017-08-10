@@ -3,10 +3,15 @@
 
 *******************************/
 .ui.form select {
+    color: @blue;
     border: none;
-    border-bottom: 1px solid #b1cae8;
+    border-bottom: 1px solid @paleBlue;
     border-radius: 0px;
     outline: none;
+}
+
+.ui.form select:hover {
+    color: @brightBlue;
 }
 
 .ui.form input:not([type]), .ui.form input[type="date"],
@@ -16,8 +21,8 @@
 .ui.form input[type="time"], .ui.form input[type="text"],
 .ui.form input[type="url"] {
     border: none;
-    border-bottom: 1px solid #b1cae8;
-    border-radius: 0px!important;
+    border-bottom: 1px solid @paleBlue;
+    border-radius: 0px;
     outline: none;
 }
 
@@ -32,18 +37,22 @@ input[type="checkbox"]:after {
     border-radius: 4px;
     top: -3px;
     left: -2px;
-    border: 1px solid #7ba7d9;
+    border: 1px solid @blue;
     background: #f1f8ff;
 }
 
 input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
     content: '\e805';
     font-family: 'Crimean';
-    color: #7ba7d9;
-    border-color: #7ba7d9;
+    color: @blue;
+    border-color: @blue;
     font-size: 15px;
     border-left: none;
     width: 16px;
+}
+
+.ui.form textarea {
+    border-color: @blue;
 }
 
 .ui.form textarea, .ui.form input[type="checkbox"] {
@@ -51,17 +60,21 @@ input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
 }
 
 select {
-    color: #b1cae8!important;
+    color: @blue;
+}
+
+select:hover {
+    color: @paleBlue;
 }
 
 option {
-    color: rgba(0, 0, 0, 0.87)!important;
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .ui.form .fields .field .ui.input input, .ui.form .field .ui.input input {
-    background: none!important;
+    background: none;
 }
 
 .ui.loading.form:after {
-    border-color: #7ba7d9 #CCE2FF #CCE2FF #CCE2FF!important;
+    border-color: @blue #CCE2FF #CCE2FF #CCE2FF;
 }

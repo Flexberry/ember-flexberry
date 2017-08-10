@@ -125,3 +125,8 @@
 .ui.selection.dropdown:hover {
     color: @paleBlue;
 }
+
+.menu.transition.hidden {
+    display: block!important;
+    visibility: hidden!important;
+}

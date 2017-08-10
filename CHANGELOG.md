@@ -32,7 +32,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix default buttons styles for `blue-sky` theme.
 * Fix vertical scroll in list's components.
 * Fix list's components width computing.
-* Fix list's components width computing.
 
 ### Changed
 * Change icons for remove filter and remove search buttons.

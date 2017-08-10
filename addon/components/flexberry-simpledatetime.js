@@ -271,15 +271,18 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (dateIsValid) {
-      this.get('_flatpickr').setDate(date.toDate());
+      if (!moment(this.get('_valueAsDate')).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
+        this.get('_flatpickr').setDate(date.toDate());
+        this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
+      }
     } else {
-      this.get('_flatpickr').clear();
+      if (!Ember.isBlank(inputValue)) {
+        this.get('_flatpickr').clear();
+        this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
+      }
     }
-
-    this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
-    this.$('.custom-flatpickr').blur();
-    return false;
   },
+
   /**
     Create Flatpickr instance, and save it into `_flatpickr` property.
 
@@ -320,7 +323,8 @@ export default FlexberryBaseComponent.extend({
     this.$('.custom-flatpickr').mask(type === 'date' ? '99.99.9999' : '99.99.9999 99:99');
     this.$('.custom-flatpickr').keydown(Ember.$.proxy(function(e) {
       if (e.which === 13) {
-        this._validationDateTime();
+        this.$('.custom-flatpickr').blur();
+        return false;
       }
     }, this));
     this.$('.custom-flatpickr').blur(Ember.$.proxy(function (e) {

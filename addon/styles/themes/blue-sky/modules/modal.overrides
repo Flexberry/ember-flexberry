@@ -6,12 +6,25 @@
     height: 700px!important;
 }
 
-.ui.modal > .content {
-    overflow: auto!important;
-    max-height: 618px!important;
-}
-
 .ui.modal > .close {
     top: 0rem;
     right: -0.2rem;
+}
+
+.ui.modal > .content {
+    overflow: initial!important;
+    max-height: 618px!important;
+}
+
+.ui.modal .content .object-list-view-container{
+    height: 300px!important;
+}
+
+.ui.modal .content .ui.secondary.menu.no-margin.ember-view{
+    display: none;
+}
+
+.ui.modal .content .flexberry-colsconfig.content {
+    height: 585px;
+    overflow: auto!important;
 }

@@ -24,7 +24,7 @@
       {{{chooseText}}}
     </button>
     <button
-      class="ui {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
+      class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
       title={{t "components.flexberry-lookup.remove-button-text"}}
       {{action "remove" removeData}}>
       {{{removeText}}}

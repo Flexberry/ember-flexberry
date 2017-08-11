@@ -388,7 +388,7 @@
 
 /* Inverted Sub Menu */
 @invertedSubMenuBackground: transparent;
-@invertedSubMenuColor: #7ba7d9;
+@invertedSubMenuColor: @blue;
 
 /* Inverted Hover */
 @invertedHoverBackground: @transparentWhite;

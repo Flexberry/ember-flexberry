@@ -7,30 +7,38 @@
 }
 
 .ui.icon.button:hover {
-    color: #FFFFFF!important;
+    color: #FFFFFF;
 }
 
 .ui.button:hover {
-  color: #FFFFFF!important;
-  border:1px solid #94cea8;
+  color: #FFFFFF;
+  border: 1px solid @blue;
+  background: @blue;
 }
 
 .ui.button:focus {
-  background: @white !important;
+  color: @blue;
+  border:1px solid @blue;
+  background: @white;
+}
+
+.ui.button:active {
+  color: @blue;
+  border:1px solid @blue;
 }
 
 .ui.button {
-    color: #7ba7d9;
+    color: @blue;
     padding: 0px 18px;
     height: 35px;
     text-align: center;
-    border: 1px solid #7ba7d9;
+    border: 1px solid @blue;
     border-radius: 5px;
     margin: 0px 5px;
 }
 
-.large.table.icon, .large.file.excel {
-    margin-top: -4px!important;
+.ui.icon.button > .large.table.icon, .large.file.excel {
+    margin-top: -4px;
 }
 
 .ui.buttons > .ui.button:not(.basic):not(.inverted),
@@ -61,9 +69,24 @@
 }
 
 .ui.fluid.action.input > button {
-    border: none!important;
+    border: none;
     background: none;
     padding: 0px;
+}
+
+.ui.fluid.action.input .ui.button.ui-change {
+    position: absolute;
+    right: 20px;
+}
+
+.ui.fluid.action.input .ui.button.ui-clear {
+    position: absolute;
+    right: 0px;
+}
+
+.ui.fluid.action.input .ui.loading.button.ui-change {
+    position: absolute;
+    right: 27px;
 }
 
 .ui.fluid > button:before:first-child {
@@ -72,7 +95,7 @@
 }
 
 .ui.fluid.action.input > button:hover {
-    color: #7ba7d9!important
+    color: @blue
 }
 
 .ui.fluid.action.input:hover {
@@ -80,108 +103,116 @@
 }
 
 i.icon.remove:before:hover {
-    color: #ff4800!important;
+    color: @red;
 }
 
 .flexberry-dropdown.compact.selection.selection.dropdown > .ui.dropdown > .dropdown.icon:before {
-    font-size:15px!important;
+    font-size:15px;
 }
 
 .ui.action.input > button {
-    background: none!important;
+    background: none;
 }
 
 .ui.action.input > button:last-child {
-    background: none!important;
+    background: none;
 }
 
 .ui.buttons .disabled.button {
-    color: #999!important;
+    color: #999;
 }
 
-.flexberry-edit-panel > button {
-    color: #3f65a4!important;
-}
-
-.save-button, .save-close-button,
-.save-del-button {
-    background: none!important;
-    border: 1px solid #7ba7d9!important;
+.ui.button .flexberry-edit-panel > button {
     color: #3f65a4;
 }
 
-#columnConfigurtionButtonUse {
-    border: 1px solid #7ba7d9;
+.ui.button.save-button, .ui.button.save-close-button,
+.ui.button.save-del-button {
+    background: none;
+    border: 1px solid @blue;
+    color: #3f65a4;
 }
 
 .ui.icon.tiny.button {
     border: 1px solid;
-    margin: 2px 15px!important;
+    margin: 2px 15px;
 }
 
 .ui.button.icon.hierarchical-button {
     border: 0px;
 }
 
+.ui.button.icon.hierarchical-button:hover {
+    background: @white;
+}
+
 .ui.button.icon.hierarchical-button.active {
-    background: none!important;
+    background: none;
+}
+
+.ui.button.icon.remove-button:hover {
+    border-color: @red;
 }
 
 .ui.icon.tiny.button.no-margin{
     border: 1px solid;
-    margin: 2px 15px!important;
+    margin: 2px 15px;
+}
+
+#columnConfigurtionButtonUse {
+    display: flex;
+    align-items: center;
+    background-color: @green;
+    border: 1px solid @blue;
 }
 
 #columnConfigurtionButtonUse:hover {
-    border: 1px solid #94cea8!important;
+    border: 1px solid @green;
 }
 
-.all-del-user-button:hover {
-    background-color: #ff4800!important;
-    border: 1px solid #ff4800!important;
+.ui.button.save-button:hover, .ui.button.save-close-button:hover {
+    background: @green;
+    border: 1px solid @green;
+    color: @white;
 }
 
-.save-button:hover, .save-close-button:hover {
-    background: #94cea8!important;
-    border: 1px solid #94cea8!important;
-}
-
-.save-del-button:hover {
-    background-color: #ff4800!important;
-    border: 1px solid #ff4800!important;
+.ui.button.save-del-button:hover {
+    background-color: @red;
+    border: 1px solid @red;
+    color: @white;
 }
 
 .ui.positive.buttons .button, .ui.positive.button {
-    background: #94cea8!important;
-    border: 1px solid #94cea8!important;
+    background: @green;
+    border: 1px solid @green;
 }
 
 .ui.positive.buttons .button:focus, .ui.positive.button:focus {
-    background: #94cea8!important;
-    border: 1px solid #94cea8!important;
+    background: @green;
+    border: 1px solid @green;
 }
 
 .stackable.grid.container p:last-child .ui.positive.button {
-    background: #7dd4b4!important;
+    background: @backgroundGreenColor;
 }
 
 .stackable.grid.container p:last-child .ui.negative.button {
-   background: #ff4800!important;
+   background: @red;
 }
 
 .ui.negative.buttons .button:hover, .ui.negative.button:hover   {
-    background: @red !important;
+    background: @red ;
     opacity: 0.8;
-    border:1px solid @red !important;
+    border:1px solid @red ;
 }
 
 .ui.positive.buttons .button, .ui.positive.button:hover {
-    background: #94cea8!important;
-    border: 1px solid #94cea8!important;
+    background: @green;
+    border: 1px solid @green;
 }
 
 .ui.positive.button:hover .flexberry-edit-panel > button:before{
-    color: #fff!important;
+    color: #fff;
 }
 
 .ui.buttons:not(.basic):not(.inverted) {
@@ -189,46 +220,50 @@ i.icon.remove:before:hover {
 }
 
 .ui.econdary.menu.no-margin > .ui.basic > button:hover:before {
-    color: #ff4800!important;
+    color: @red;
 }
 
 .ui.econdary.menu.no-margin > .ui.basic > .ui.button:hover {
-    color: #ff4800!important;
+    color: @red;
 }
 
 .ui.small.button {
     border: none;
-    font-size: 12px!important;
+    font-size: 12px;
 }
 
 .ui.small.button:hover {
-    background: #d01919!important;
+    background: #d01919;
 }
 
 .ember-view.groupedit-toolbar > button:hover {
-    background: #fff!important;
-    color: #7dd4b4!important;
-    border-color: #7dd4b4!important;
+    background: #fff;
+    color: @green;
+    border-color: @green;
 }
 
 .ember-view.groupedit-toolbar > button:hover i.icon:before {
-    color: #7dd4b4!important;
+    color: @green;
 }
 
 .ui.button.icon.mini.compact:hover i.icon:before {
-    color: #7dd4b4!important;
+    color: @green;
 }
 
 .ui.action.input > button:hover i.search:before {
-    color: #7dd4b4!important;
+    color: @brightBlue;
+}
+
+.ui.action.input > button:hover i.remove:before {
+    color: @red;
 }
 
 .cell .button:hover{
-    background: #fff!important;
+    background: #fff;
 }
 
 .cell .button:hover i.icon:before {
-    color: #7dd4b4!important;
+    color: @green;
 }
 
 .ui.form.flexberry-vertical-form .field .ember-view .ui.fluid button:first-child {
@@ -237,76 +272,65 @@ i.icon.remove:before:hover {
 }
 
 .ui.basic.green.buttons .button, .ui.basic.green.button {
-    box-shadow: none!important;
+    box-shadow: none;
 }
 
 .ui.basic.green.buttons .button, .ui.basic.green.button:hover {
-    box-shadow: none!important;
+    box-shadow: none;
 }
 
 #columnConfigurtionButtonSave {
-    border: 1px solid #7ba7d9;
+    border: 1px solid @blue;
 }
 
 #columnConfigurtionButtonSave:hover {
-    border: 1px solid #94cea8;
-    background-color: #94cea8!important;
-}
-
-#columnConfigurtionButtonUse {
-    display: flex;
-    align-items: center;
+    border: 1px solid @green;
+    background-color: @green;
 }
 
 .ui.icon.tiny.button:hover i.icon.chevron.down:before {
-    color: #fff!important;
+    color: #fff;
 }
 
 .ui.icon.tiny.button:hover i.icon.chevron.up:before {
-    color: #fff!important;
+    color: #fff;
 }
 
 .ui.ui-delete.button:hover {
-    border: 1px solid #ff4800!important;
+    border: 1px solid @red;
 }
 
 .ui.ui-delete.button:hover i.icon.minus:before{
-    color: #ff4800!important;
+    color: @red;
 }
 
 .icon.button:hover .i.icon.table:before {
-    color: #7ba7d9!important;
+    color: @blue;
 }
 
-.all-del-user-button {
-   border: 1px solid #7ba7d9!important;
-    color: #7ba7d9!important;
+.ui.button.all-del-user-button {
+   border: 1px solid @blue;
+    color: @blue;
 }
 
-.daterangepicker .prev .left.arrow.icon {
-    margin-left:-10px!important;
-}
-
-.daterangepicker .next .right.arrow.icon {
-    margin-left:10px!important;
+.ui.button.all-del-user-button:hover {
+    background-color: @red;
+    border: 1px solid @red;
+    color: @white;
 }
 
 .ui.ui-delete.button {
-    padding: 0px!important;
-    height: 30px!important;
+    padding: 0px;
+    height: 30px;
     width: 30px;
-    border: 1px solid #7ba7d9!important;
+    border: 1px solid @blue;
 }
 
 .ui.ui-add.button {
-    padding: 0px!important;
-    height: 30px!important;
+    padding: 0px;
+    height: 30px;
     width: 30px;
-    border: 1px solid #7ba7d9!important;
-}
-
-#columnConfigurtionButtonUse {
-    background-color: #94cea8!important;
+    border: 1px solid @blue;
 }
 
 div.ui.secondary.menu.no-margin:first-child {
@@ -318,123 +342,121 @@ div.ui.secondary.menu.no-margin:first-child {
     display: none;
 }
 
-.refresh-button {
-    border: none!important;
-    font-size: 0px!important;
+.ui.button.refresh-button {
+    border: none;
+    font-size: 0px;
     width: 25px;
-    padding: 0px 5px 0px 0px!important;
-    height: 0px!important;
+    padding: 0px 5px 0px 0px;
+    height: 0px;
 }
 
-.refresh-button:hover {
+.ui.button.refresh-button:hover {
     background: none;
 }
 
-.create-button:hover {
+.ui.button.create-button:hover {
     color: #fff;
-    background: #7dd4b4;
+    background: @green;
+    border-color: @green;
 }
 
-.create-button {
-    border: 1px solid #7ba7d9!important;
+.ui.button.delete-button {
+    border:none;
+    font-size: 0px;;
+    padding-left: 10px;
+    height: 0px;
 }
 
-.delete-button {
-    border:none!important;
-    font-size: 0px!important;;
-    padding-left: 10px!important;
-    height: 0px!important;
-}
-
-.delete-button:hover {
+.ui.button.delete-button:hover {
     background: none;
-    border:none!important;
-}
-
-.delete-button:hover {
+    border:none;
     color: #fff;
-    background-color: #DB2828!important;
+    background-color: #DB2828;
 }
 
-.close-button {
+.ui.button.close-button {
     position: absolute;
-    border: none!important;
+    border: none;
     width: 43px;
     height: 43px;
     right: -2px;
     top: -33px;
-    font-size: 0px!important;
-    background: url("@{imagePath}/close.png") center no-repeat!important;
+    font-size: 0px;
+    background: url("@{imagePath}/close.png") center no-repeat;
 }
 
-.close-button:hover {
-    background: url("@{imagePath}/close-hover.png") center no-repeat!important;
+.ui.button.close-button:hover {
+    background: url("@{imagePath}/close-hover.png") center no-repeat;
 }
 
 .hierarchical-button:hover {
-    background-color: #fff!important;
+    background-color: #fff;
     background: none;
-    border: none!important;
+    border: none;
 }
 
 .ui.right.floated.tiny.compact.button {
-    border: 1px solid #7ba7d9!important;
+    border: 1px solid @blue;
 }
 
-.ui.right.floated.tiny.compact.button:hover {
-    border: 1px solid #94cea8!important;
+.ui.right.floated.tiny.compact.secondary.button,
+.ui.right.floated.tiny.compact.secondary.button:hover,
+.ui.right.floated.tiny.compact.secondary.button:focus {
+    background-color: #6299d9;
+    border-color: #6299d9;
 }
 
 .ui.right.floated.tiny.primary.compact.button:hover {
-    border: 1px solid #7ba7d9!important;
+    border: 1px solid @blue;
 }
 
 .my-test-user-button {
-     border: 1px solid #7ba7d9!important;
+     border: 1px solid @blue;
 }
 
 .my-test-user-button:hover {
-     border: 1px solid #94cea8!important;
+     border: 1px solid @green;
 }
 
 .basic.right.pointing.ui.icon.dropdown.button {
-    border: 1px solid #7ba7d9!important;
+    border: 1px solid @blue;
 }
 
 .basic.right.pointing.ui.icon.dropdown.button:hover {
-    border: 1px solid #94cea8!important;
+    border: 1px solid @blue;
 }
+
 .theme-button {
-    border: 1px solid #7ba7d9!important;
+    border: 1px solid @blue;
 }
 
 .theme-button:hover {
-    border: 1px solid #94cea8!important;
+    border: 1px solid @green;
 }
 
 .ui.secondary.menu > .ui.action.input {
     margin: 0 10px;
 }
 
-.filter-active {
-    border: 1px solid #7ba7d9;
+.ui.buttons.filter-active {
+    border: 1px solid @blue;
     height: 35px;
     border-radius: 5px;
 }
 
-.removeFilter-button {
-    border-left: 1px solid #7ba7d9!important;
-    height: 33px !important;
+.ui.buttons.removeFilter-button {
+    border-left: 1px solid @blue;
+    height: 33px ;
 }
 
 .ui.secondary.menu > .ui.action.input > .search-button {
-    border: 0px !important;
-    border-bottom: 1px solid #b1cae8 !important;
+    border: 0px ;
+    border-bottom: 1px solid @paleBlue;
     border-radius: 0px;
 }
 
 .ui.secondary.menu > .ui.action.input > .clear-search-button {
-    border: 0px !important;
-    border-bottom: 1px solid #b1cae8 !important;
+    border: 0px ;
+    border-bottom: 1px solid @paleBlue;
     border-radius: 0px;
 }

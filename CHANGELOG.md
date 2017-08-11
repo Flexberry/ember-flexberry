@@ -3,9 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Manage animation of `flexberry-toggler` component through `duration` property.
+
 ### Fixed
 * `flexberry-simpledatetime` component:
     * Fix date and time validation when changing focus.
+* `blue-sky` theme:
+    * Fix pager dropdown overflow in modal window.
+
+### Changed
+* Own loader from `object-list-view` and `flexberry-simpleolv` components replaced by loader on route template level.
 
 ### Changed
 * Change content width while sidebar is toggling.
@@ -31,7 +39,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix filter columns shifts to left, when filter result is empty.
 * Fix default buttons styles for `blue-sky` theme.
 * Fix vertical scroll in list's components.
-* Fix list's components width computing.
 * Fix list's components width computing.
 
 ### Changed

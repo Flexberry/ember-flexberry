@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Manage animation of `flexberry-toggler` component through `duration` property.
+
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix date and time validation when changing focus.
+* `blue-sky` theme:
+    * Fix pager dropdown overflow in modal window.
+
+### Changed
+* Own loader from `object-list-view` and `flexberry-simpleolv` components replaced by loader on route template level.
 
 ## [0.9.0-beta.15] - 2017-07-24
 ### Added

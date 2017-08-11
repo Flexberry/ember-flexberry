@@ -19,16 +19,16 @@
 .ui.checkbox input:checked ~ .box:after,
 .ui.checkbox input:checked ~ label:after {
   content: '\e805';
-  color: #7ba7d9;
+  color: @blue;
   left: 0px;
-  color: #7ba7d9!important;
+  color: @blue!important;
 }
 
 /* Indeterminate */
 .ui.checkbox input:indeterminate ~ .box:after,
 .ui.checkbox input:indeterminate ~ label:after {
   font-size: 12px;
-  color: #7ba7d9!important;
+  color: @blue!important;
 }
 
 
@@ -53,8 +53,8 @@
 .ui.checkbox label:after{
     content: '\e805';
     font-family: 'Crimean';
-    color: #7ba7d9;
-    border-color: #7ba7d9;
+    color: @blue;
+    border-color: @blue;
     font-size: 15.8px;
     border-left: none;
     width: 14px;
@@ -62,7 +62,7 @@
 
 .ui.checkbox .box:before,
 .ui.checkbox label:before {
-    border-color: #7ba7d9;
+    border-color: @blue;
     border-radius: 4px;
 }
 
@@ -73,7 +73,3 @@ i.icon.trash.outline:hover:before {
 label.button:hover {
     background: #fff!important;
 }
-
-
-
-

@@ -178,9 +178,9 @@
 @toggleOffLabelColor: @checkboxColor;
 
 @toggleOnLabelColor: @selectedTextColor;
-@toggleOnLaneColor: #7ba7d9;
+@toggleOnLaneColor: @blue;
 
-@toggleOnFocusLaneColor: #7ba7d9 !important;
+@toggleOnFocusLaneColor: @blue !important;
 @toggleOnFocusLabelColor: @toggleOnLabelColor;
 
 

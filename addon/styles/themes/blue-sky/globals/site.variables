@@ -190,13 +190,15 @@
 --------------------*/
 
 /*---  Colors  ---*/
-@red              : #ff4800;
+@red              : #FF7500;
 @orange           : #F2711C;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
-@green            : #21BA45;
+@green            : #7dd4b4;
 @teal             : #00B5AD;
-@blue             : #2185D0;
+@blue             : #7ba7d9;
+@brightBlue       : #3c87dc;
+@paleBlue         : #b1cae8;
 @violet           : #6435C9;
 @purple           : #A333C8;
 @pink             : #E03997;
@@ -209,7 +211,7 @@
 @lightOrange      : #FF851B;
 @lightYellow      : #FFE21F;
 @lightOlive       : #D9E778;
-@lightGreen       : #2ECC40;
+@lightGreen       : #a4e1cb;
 @lightTeal        : #6DFFFF;
 @lightBlue        : #54C8FF;
 @lightViolet      : #A291FB;

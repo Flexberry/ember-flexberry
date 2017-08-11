@@ -88,13 +88,6 @@
         {{/if}}
       </tr>
     {{/if}}
-    {{#if rowsInLoadingState}}
-      <tr>
-        <td colspan="{{colspan}}" style="text-align:center;">
-          <div class="ui active centered inline loader"></div> {{t "components.object-list-view.loading-text"}}
-        </td>
-      </tr>
-    {{/if}}
     {{#unless content}}
       <tr>
         <td colspan="{{colspan}}" style="text-align:center;">

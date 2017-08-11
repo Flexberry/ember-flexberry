@@ -555,15 +555,6 @@ export default FlexberryBaseComponent.extend(
   useRowByRowLoadingProgress: false,
 
   /**
-    Flag indicates whether some rows are not loaded yet.
-
-    @property rowsInLoadingState
-    @type Boolean
-    @default false
-  */
-  rowsInLoadingState: false,
-
-  /**
     Class loading for tbody.
 
     @property showLoadingTbodyClass
@@ -1659,7 +1650,6 @@ export default FlexberryBaseComponent.extend(
     if (this.get('componentName') === componentName) {
       let content = this.get('content');
       if (content && !content.isLoading) {
-        this.set('rowsInLoadingState', false);
         this.set('contentWithKeys', Ember.A());
         this.set('contentForRender', Ember.A());
         if (content instanceof Ember.RSVP.Promise) {
@@ -1678,8 +1668,6 @@ export default FlexberryBaseComponent.extend(
           this.set('contentWithKeys', this.contentForRender);
           this.set('showLoadingTbodyClass', false);
         }
-      } else {
-        this.set('rowsInLoadingState', true);
       }
 
       if (Ember.isArray(sorting)) {

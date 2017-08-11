@@ -5,19 +5,16 @@
     height: 35px;
 }
 
+.ui.action.input:not([class*="left action"]) > .button:last-child {
+    border-radius: 0px;
+}
+
 input {
     border: none;
-    border-bottom: 1px solid #b1cae8;
+    border-bottom: 1px solid @paleBlue;
     border-radius: 0px!important;
     outline: none;
 }
-
-.ui.action.input:not([class*="left action"]) > .dropdown,
-.ui.action.input:not([class*="left action"]) > .button,
-.ui.action.input:not([class*="left action"]) > .buttons > .button {
-    border: 1px solid #7ba7d9;
-}
-
 
 .block-action-input {
     width: 100%;
@@ -27,7 +24,7 @@ input {
     height: 35px;
     width: 100%!important;
     border: none !important;
-    border-bottom: 1px solid #b1cae8 !important;
+    border-bottom: 1px solid @paleBlue !important;
     border-radius: 0px!important;
 }
 

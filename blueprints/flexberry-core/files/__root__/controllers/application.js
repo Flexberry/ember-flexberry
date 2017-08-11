@@ -60,15 +60,27 @@ export default Ember.Controller.extend({
     }
   },
 
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
   actions: {
     toggleSidebar() {
       let sidebar = Ember.$('.ui.sidebar.main.menu');
+      let objectlistviewEventsService = this.get('objectlistviewEventsService');
       sidebar.sidebar({
         closable: false,
         dimPage: false,
         onHide: function() {
           Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
           Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        },
+        onHidden: function() {
+          objectlistviewEventsService.updateWidthTrigger();
         }
       }).sidebar('toggle');
 
@@ -89,10 +101,14 @@ export default Ember.Controller.extend({
 
     toggleSidebarMobile() {
       let sidebar = Ember.$('.ui.sidebar.main.menu');
+      let objectlistviewEventsService = this.get('objectlistviewEventsService');
       sidebar.sidebar({
         onHide: function() {
           Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
           Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        },
+        onHidden: function() {
+          objectlistviewEventsService.updateWidthTrigger();
         }
       }).sidebar('toggle');
 

@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-simpledatetime` component:
     * Fix date and time validation when changing focus.
 
+### Changed
+* Change content width while sidebar is toggling.
+
 ## [0.9.0-beta.15] - 2017-07-24
 ### Added
 * Now list components use `DatePredicate` for filtering dates.

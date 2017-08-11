@@ -1,5 +1,5 @@
 {{#if model.link}}
-{{#link-to model.link class="item" title=model.title}}
+{{#link-to model.link class="item" title=model.title invokeAction=(action 'hideSidebar')}}
     {{partial "sitemap-node-content"}}
   {{/link-to}}
 {{else}}

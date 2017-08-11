@@ -2,10 +2,14 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   actions: {
-    hideSidebar: function() {
+    /**
+      Hide Sidebar by clicking submenu item.
+
+      @method actions.subMenuEl
+    */
+    hideSidebar() {
       Ember.$('.ui.sidebar').sidebar('hide');
     },
-
     /**
       Expand menu items by click.
 

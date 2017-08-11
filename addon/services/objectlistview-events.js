@@ -168,6 +168,19 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "updateWidth" event in object-list-view.
+    Event name: updateWidth.
+
+    @method updateWidth
+
+    @param {String} componentName The name of object-list-view component
+    (can be undefined for update all components widths).
+  */
+  updateWidthTrigger(componentName) {
+    this.trigger('updateWidth', componentName);
+  },
+
+  /**
     Current limit function for OLV.
 
     @property currentLimitFunction

@@ -2,12 +2,15 @@
   {{outlet}}
   {{outlet "modal"}}
 {{else}}
+{{#ui-sidebar class="inverted vertical main menu"}}
+  {{render "sitemap" sitemap}}
+{{/ui-sidebar}}
 <div class="bgw-fix">
   <div class="background-logo">
     <div class="ui top attached">
       <div class="ui attached menu">
         <div class="ui container flex-container">
-          <a {{action 'toggleSidebar'}}
+          <a {{action 'toggleSidebarMobile'}}
             class="launch icon item"
             title={{t "forms.application.header.menu.sitemap-button.title"}}>
             {{t "forms.application.header.menu.sitemap-button.caption"}}
@@ -33,9 +36,6 @@
 <div id="example" class="pusher">
   <div class="full height" style="min-height: 90vh" >
     <div class="flexberry-content ui attached segment">
-    {{#ui-sidebar class="inverted vertical main menu" dimPage=false}}
-      {{render "sitemap" sitemap}}
-    {{/ui-sidebar}}
       <div class="ui main container">
         <div class="stackable grid container">
           {{outlet}}

@@ -15,6 +15,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Own loader from `object-list-view` and `flexberry-simpleolv` components replaced by loader on route template level.
 
+### Changed
+* Change content width while sidebar is toggling.
+
 ## [0.9.0-beta.15] - 2017-07-24
 ### Added
 * Now list components use `DatePredicate` for filtering dates.

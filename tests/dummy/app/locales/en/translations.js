@@ -705,7 +705,7 @@ Ember.$.extend(true, translations, {
     'ember-flexberry-dummy-study-record-obj-list':{
       'caption': 'Flexberry-objectlistview. Displaying multiple types'
     },
-    
+
     'ember-flexberry-dummy-study-record-s-list': {
       'caption': 'Flexberry-simpleolv. Displaying multiple types'
     },

@@ -191,6 +191,26 @@ export default {
       'render-time': 'Время отрисовки',
     },
 
+    'flexberry-dialog': {
+      'approve-button': {
+        'caption': 'Ок'
+      },
+      'deny-button': {
+        'caption': 'Отмена'
+      }
+    },
+
+    'flexberry-jsonarea': {
+      'placeholder': '(Введите JSON-строку)',
+      'parse-error': {
+        'caption': 'Ошибка парсинга введенной JSON-строки'
+      }
+    },
+
+    'flexberry-tree': {
+      'placeholder': 'Вершины дерева не заданы'
+    },
+
   },
 
   'models': {

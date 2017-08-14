@@ -1,0 +1,37 @@
+{{!--
+  See https://github.com/ciena-blueplanet/ember-block-slots#usage
+  {{yield}} is required here to make yield-slots available.
+--}}
+{{yield}}
+
+{{#yield-slot "header"}}
+  {{#if _hasHeader}}
+    <div class="{{flexberryClassNames.header}}">
+      {{yield}}
+    </div>
+  {{/if}}
+{{/yield-slot}}
+{{#if _hasContent}}
+  {{#each nodes as |node|}}
+    {{flexberry-treenode
+      caption=node.caption
+      nodes=node.nodes
+      dynamicProperties=node.dynamicProperties
+      dynamicActions=node.dynamicActions
+    }}
+  {{/each}}
+  {{#yield-slot "content"}}
+    {{yield}}
+  {{/yield-slot}}
+{{else if _isRoot}}
+  <div class="{{flexberryClassNames.placeholder}} title">
+    {{placeholder}}
+  </div>
+{{/if}}
+{{#yield-slot "footer"}}
+  {{#if _hasFooter}}
+    <div class="{{flexberryClassNames.footer}}">
+      {{yield}}
+    </div>
+  {{/if}}
+{{/yield-slot}}

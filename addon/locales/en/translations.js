@@ -189,6 +189,26 @@ export default {
       'render-time': 'Render time',
     },
 
+    'flexberry-dialog': {
+      'approve-button': {
+        'caption': 'Ok'
+      },
+      'deny-button': {
+        'caption': 'Cancel'
+      }
+    },
+
+    'flexberry-jsonarea': {
+      'placeholder': '(Enter JSON-string)',
+      'parse-error': {
+        'caption': 'Error while parsing entered JSON-string'
+      }
+    },
+
+    'flexberry-tree': {
+      'placeholder': 'Tree nodes are not defined'
+    }
+
   },
 
   'models': {

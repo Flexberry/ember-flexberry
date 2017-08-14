@@ -285,8 +285,24 @@ Ember.$.extend(true, translations, {
         'components-examples': {
           'caption': 'Примеры компонентов',
           'title': '',
+          'flexberry-button': {
+            'caption': 'flexberry-button',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-checkbox': {
             'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-ddau-checkbox': {
+            'caption': 'flexberry-ddau-checkbox',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -481,6 +497,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-tree': {
+            'caption': 'flexberry-tree',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -645,9 +669,19 @@ Ember.$.extend(true, translations, {
     },
 
     'components-examples': {
+      'flexberry-button': {
+        'settings-example': {
+          'caption': 'Пример работы с настройками flexberry-button'
+        }
+      },
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Пример работы с настройками'
+        }
+      },
+      'flexberry-ddau-checkbox': {
+        'settings-example': {
+          'caption': 'Пример работы с настройками flexberry-ddau-checkbox'
         }
       },
       'flexberry-datepicker': {
@@ -851,6 +885,14 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Пример работы с настройками',
           'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
+        }
+      },
+      'flexberry-tree': {
+        'settings-example': {
+          'caption': 'Пример работы с настройками flexberry-tree',
+          'json-tree-tab-caption': 'Дерево заданное JSON-объектом',
+          'json-tree-latest-clicked-node-caption': 'Настройки последней кликнутой вершины дерева',
+          'json-tree-latest-clicked-node-placeholder': 'Кликните на любую вершину дерева, чтобы отобразить её настройки'
         }
       },
       'ui-message': {

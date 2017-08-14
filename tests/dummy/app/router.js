@@ -40,7 +40,9 @@ Router.map(function() {
   this.route('new-platform-flexberry-services-lock-list');
 
   // Components examples routes (sorted by component's names).
+  this.route('components-examples/flexberry-button/settings-example');
   this.route('components-examples/flexberry-checkbox/settings-example');
+  this.route('components-examples/flexberry-ddau-checkbox/settings-example');
   this.route('components-examples/flexberry-datepicker/settings-example');
   this.route('components-examples/flexberry-dropdown/settings-example');
   this.route('components-examples/flexberry-dropdown/conditional-render-example');
@@ -107,6 +109,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');
+  this.route('components-examples/flexberry-tree/settings-example');
   this.route('components-examples/ui-message/settings-example');
 
   // Integration examples routes.

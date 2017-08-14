@@ -1,0 +1,38 @@
+{{#if _showErrorMessage}}
+  <div class="row">
+    <div class="sexteen wide column">
+      {{ui-message
+        type="error"
+        closeable=true
+        visible=_showErrorMessage
+        caption=_errorMessageCaption
+        message=_errorMessage
+        onShow=(action "onErrorMessageShow")
+        onHide=(action "onErrorMessageHide")
+      }}
+    </div>
+  </div>
+{{/if}}
+
+{{#if (not readonly)}}
+  <div class="row">
+    <div class="sexteen wide column">
+      {{flexberry-button
+        class=(concat flexberryClassNames.editButton " fluid" (if _isEditing " positive"))
+        iconClass=(if _isEditing "checkmark icon" "edit icon")
+        click=(action "onEditButtonClick")
+      }}
+    </div>
+  </div>
+{{/if}}
+
+<div class="row">
+  <div class="sexteen wide column">
+    {{flexberry-textarea
+      class=(concat flexberryClassNames.textarea " fluid")
+      placeholder=placeholder
+      value=_jsonText
+      readonly=(not _isEditing)
+    }}
+  </div>
+</div>

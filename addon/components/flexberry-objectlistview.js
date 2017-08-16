@@ -513,6 +513,24 @@ export default FlexberryBaseComponent.extend({
   recordsTotalCount: null,
 
   /**
+    Width columns OLV.
+
+    @property widthColumnListForms
+    @type String
+    @default 150
+  */
+  widthColumnListForms: 150,
+
+  /**
+    Width change OLV.
+
+    @property widthChangeOLV
+    @type String
+    @default false
+  */
+   widthChangeOLV: false,
+
+  /**
     Current interval of records.
 
     @property currentIntervalRecords

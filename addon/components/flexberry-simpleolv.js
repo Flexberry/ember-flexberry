@@ -204,6 +204,24 @@ ErrorableControllerMixin, {
   customTableClass: '',
 
   /**
+    Width columns OLV.
+
+    @property widthColumnListForms
+    @type int
+    @default 150
+  */
+  widthColumnListForms: 150,
+
+   /**
+    Width change OLV.
+
+    @property widthChangeOLV
+    @type String
+    @default false
+  */
+   widthChangeOLV: false,
+
+  /**
     Classes for table.
 
     @property tableClass
@@ -1044,7 +1062,7 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').on('resetFilters', this, this._resetColumnFilters);
-    this.get('objectlistviewEventsService').on('updateWidth', this, this._setColumnWidths);
+    this.get('objectlistviewEventsService').on('updateWidth', this, this._onHiddenTestOLV);
 
     this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
@@ -1068,6 +1086,13 @@ ErrorableControllerMixin, {
     let cols = this._generateColumns(projection.attributes);
     if (cols) {
       this.set('columns', cols);
+    }
+  },
+
+   _onHiddenTestOLV(onHidden) {
+    let widthChangeLF = this.get('widthChangeOLV');
+    if (widthChangeLF === false || onHidden === true) {
+      this._setColumnWidths();
     }
   },
 
@@ -1237,6 +1262,7 @@ ErrorableControllerMixin, {
       let olvRowMenuWidth = 0;
       let olvRowToolbarWidth = 0;
       let padding = (this.get('defaultLeftPadding') || 0) * 2;
+      let widthCollumnLF = this.get('widthColumnListForms');
 
       Ember.$.each($columns, (key, item) => {
         let currentItem = this.$(item);
@@ -1260,7 +1286,7 @@ ErrorableControllerMixin, {
           }
         }
 
-        tableWidth += padding + (setting.width || 150);
+        tableWidth += padding + (setting.width || widthCollumnLF);
         if (currentPropertyName === 'OlvRowToolbar') {
           olvRowToolbarWidth = setting.width;
         }
@@ -1269,7 +1295,7 @@ ErrorableControllerMixin, {
           olvRowMenuWidth = setting.width;
         }
 
-        hashedUserSetting[setting.propName] = setting.width || 150;
+        hashedUserSetting[setting.propName] = setting.width || widthCollumnLF;
       });
 
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);

@@ -176,8 +176,8 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {String} componentName The name of object-list-view component
     (can be undefined for update all components widths).
   */
-  updateWidthTrigger(componentName) {
-    this.trigger('updateWidth', componentName);
+  updateWidthTrigger(onHidden,componentName) {
+    this.trigger('updateWidth', onHidden, componentName);
   },
 
   /**

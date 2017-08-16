@@ -361,6 +361,24 @@ export default FlexberryBaseComponent.extend({
   */
   tableStriped: true,
 
+    /**
+    Width columns OLV.
+
+    @property widthColumnListForms
+    @type String
+    @default 150
+  */
+  widthColumnListForms: 150,
+
+  /**
+    Width change OLV.
+
+    @property widthChangeOLV
+    @type String
+    @default false
+  */
+   widthChangeOLV: false,
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.

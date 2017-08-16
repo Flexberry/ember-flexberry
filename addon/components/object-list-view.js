@@ -954,7 +954,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
-    this.get('objectlistviewEventsService').on('updateWidth', this, this._setColumnWidths);
+    this.get('objectlistviewEventsService').on('updateWidth', this, this._onHiddenTestOLV);
 
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
@@ -963,6 +963,13 @@ export default FlexberryBaseComponent.extend(
           this.set('showLoadingTbodyClass', showLoadingTbodyClass);
         }
       });
+    }
+  },
+
+  _onHiddenTestOLV(onHidden) {
+    let widthChangeLF = this.get('widthChangeOLV');
+    if (widthChangeLF === false || onHidden === true) {
+      this._setColumnWidths();
     }
   },
 
@@ -1104,7 +1111,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').off('updateWidth', this, this._setColumnWidths);
-
+    
     this._super(...arguments);
   },
 
@@ -1188,6 +1195,7 @@ export default FlexberryBaseComponent.extend(
 
     @param {Array} userSetting User setting to apply to control
   */
+  
   _setColumnWidths(componentName) {
     if (Ember.isBlank(componentName) || this.get('componentName') === componentName) {
       let userSetting;
@@ -1209,6 +1217,7 @@ export default FlexberryBaseComponent.extend(
       let olvRowMenuWidth = 0;
       let olvRowToolbarWidth = 0;
       let padding = (this.get('defaultLeftPadding') || 0) * 2;
+      let widthCollumnLF = this.get('widthColumnListForms');
 
       Ember.$.each($columns, (key, item) => {
         let currentItem = this.$(item);
@@ -1231,8 +1240,7 @@ export default FlexberryBaseComponent.extend(
             setting.width = (checkbox && delButton ? 100 : delButton ? 70 : 65) - padding;
           }
         }
-
-        tableWidth += padding + (setting.width || 150);
+        tableWidth += padding + (setting.width || widthCollumnLF);
         if (currentPropertyName === 'OlvRowToolbar') {
           olvRowToolbarWidth = setting.width;
         }
@@ -1241,7 +1249,7 @@ export default FlexberryBaseComponent.extend(
           olvRowMenuWidth = setting.width;
         }
 
-        hashedUserSetting[setting.propName] = setting.width || 150;
+        hashedUserSetting[setting.propName] = setting.width || widthCollumnLF;
       });
 
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);

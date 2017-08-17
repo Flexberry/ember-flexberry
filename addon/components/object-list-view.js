@@ -954,7 +954,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
-    this.get('objectlistviewEventsService').on('updateWidth', this, this._onHiddenTestOLV);
+    this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidth);
 
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
@@ -966,10 +966,10 @@ export default FlexberryBaseComponent.extend(
     }
   },
 
-  _onHiddenTestOLV(onHidden) {
-    let widthChangeLF = this.get('widthChangeOLV');
-    if (widthChangeLF === false || onHidden === true) {
-      this._setColumnWidths();
+  setColumnWidth(onHidden, componentName) {
+    let widthChangeOnContainerResize = this.get('widthChangeOnContainerResize');
+    if (widthChangeOnContainerResize || onHidden) {
+      this._setColumnWidths(componentName);
     }
   },
 
@@ -1217,7 +1217,7 @@ export default FlexberryBaseComponent.extend(
       let olvRowMenuWidth = 0;
       let olvRowToolbarWidth = 0;
       let padding = (this.get('defaultLeftPadding') || 0) * 2;
-      let widthCollumnLF = this.get('widthColumnListForms');
+      let minAutoColumnWidth = this.get('minAutoColumnWidth');
 
       Ember.$.each($columns, (key, item) => {
         let currentItem = this.$(item);
@@ -1241,7 +1241,7 @@ export default FlexberryBaseComponent.extend(
           }
         }
 
-        tableWidth += padding + (setting.width || widthCollumnLF);
+        tableWidth += padding + (setting.width || minAutoColumnWidth);
         if (currentPropertyName === 'OlvRowToolbar') {
           olvRowToolbarWidth = setting.width;
         }
@@ -1250,7 +1250,7 @@ export default FlexberryBaseComponent.extend(
           olvRowMenuWidth = setting.width;
         }
 
-        hashedUserSetting[setting.propName] = setting.width || widthCollumnLF;
+        hashedUserSetting[setting.propName] = setting.width || minAutoColumnWidth;
       });
 
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);

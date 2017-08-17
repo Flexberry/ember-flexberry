@@ -364,20 +364,20 @@ export default FlexberryBaseComponent.extend({
   /**
     Width columns OLV.
 
-    @property widthColumnListForms
+    @property minAutoColumnWidth
     @type String
     @default 150
   */
-  widthColumnListForms: 150,
+  minAutoColumnWidth: 150,
 
   /**
     Width change OLV.
 
-    @property widthChangeOLV
+    @property widthChangeOnContainerResize
     @type String
     @default false
   */
-  widthChangeOLV: false,
+  widthChangeOnContainerResize: true,
 
   actions: {
     /**

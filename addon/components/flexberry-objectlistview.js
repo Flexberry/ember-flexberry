@@ -528,7 +528,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default false
   */
-   widthChangeOLV: false,
+  widthChangeOLV: false,
 
   /**
     Current interval of records.

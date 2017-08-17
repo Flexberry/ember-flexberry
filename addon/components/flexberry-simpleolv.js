@@ -212,14 +212,14 @@ ErrorableControllerMixin, {
   */
   widthColumnListForms: 150,
 
-   /**
+  /**
     Width change OLV.
 
     @property widthChangeOLV
     @type String
     @default false
   */
-   widthChangeOLV: false,
+  widthChangeOLV: false,
 
   /**
     Classes for table.
@@ -1089,7 +1089,7 @@ ErrorableControllerMixin, {
     }
   },
 
-   _onHiddenTestOLV(onHidden) {
+  _onHiddenTestOLV(onHidden) {
     let widthChangeLF = this.get('widthChangeOLV');
     if (widthChangeLF === false || onHidden === true) {
       this._setColumnWidths();

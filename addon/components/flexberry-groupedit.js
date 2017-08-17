@@ -361,7 +361,7 @@ export default FlexberryBaseComponent.extend({
   */
   tableStriped: true,
 
-    /**
+  /**
     Width columns OLV.
 
     @property widthColumnListForms
@@ -377,7 +377,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default false
   */
-   widthChangeOLV: false,
+  widthChangeOLV: false,
 
   actions: {
     /**

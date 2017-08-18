@@ -3,7 +3,7 @@
     class="ui refresh-button {{buttonClass}} button"
     title={{t "components.olv-toolbar.refresh-button-text"}}
     {{action "refresh"}}>
-      {{t "components.olv-toolbar.refresh-button-text"}}
+      <i class="refresh icon"></i>
   </button>
 {{/if}}
 {{#if createNewButton}}
@@ -19,7 +19,7 @@
     class="ui delete-button {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button"
     title={{t "components.olv-toolbar.delete-button-text"}}
      {{action "delete"}}>
-      {{t "components.olv-toolbar.delete-button-text"}}
+       <i class="delete icon"></i>
   </button>
 {{/if}}
 {{#if availableHierarchicalMode}}

@@ -418,14 +418,6 @@ div.ui.secondary.menu.no-margin:first-child {
      border: 1px solid @green;
 }
 
-.basic.right.pointing.ui.icon.dropdown.button {
-    border: 1px solid @blue;
-}
-
-.basic.right.pointing.ui.icon.dropdown.button:hover {
-    border: 1px solid @blue;
-}
-
 .theme-button {
     border: 1px solid @blue;
 }
@@ -459,4 +451,37 @@ div.ui.secondary.menu.no-margin:first-child {
     border: 0px ;
     border-bottom: 1px solid @paleBlue;
     border-radius: 0px;
+}
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons {
+    border: none!important;
+}
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button {
+    border: none!important;
+    background: none!important;
+    font-size: 14px;
+    color: @blue!important;
+    padding: 10px;
+}
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button:hover {
+    color: @red!important;
+}
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > button.active {
+    color: #999!important;
+}
+
+.showing-entries {
+    color: #777;
+}
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .ui.disabled {
+    color: #999!important;
+    opacity: 1!important;
+}
+
+.basic.right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
+    color: #fff;
 }

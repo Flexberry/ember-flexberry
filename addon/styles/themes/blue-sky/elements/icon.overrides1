@@ -31,17 +31,19 @@ for instance `lemon icon` not `lemon outline icon` since there is only one lemon
 *******************************/
 
 /* Web Content */
-i.icon.search:before { content: "\f002"; }
+i.icon {font-family: 'Icons';}
+i.icon:before { color: @blue;}
+i.icon.search:before {content: "\e803"; font-size: 20px; font-family: 'Crimean'; }
 i.icon.mail.outline:before { content: "\f003"; }
 i.icon.external:before { content: "\f08e"; }
 i.icon.signal:before { content: "\f012"; }
-i.icon.setting:before { content: "\f013"; }
+i.icon.setting:before { content: "\e817"; font-family: 'Crimean'; }
 i.icon.home:before { content: "\f015"; }
 i.icon.inbox:before { content: "\f01c"; }
 i.icon.browser:before { content: "\f022"; }
 i.icon.tag:before { content: "\f02b"; }
 i.icon.tags:before { content: "\f02c"; }
-i.icon.calendar:before { content: "\f073"; }
+i.icon.calendar:before { content: "\e81c"; color: @blue; font-family: 'Crimean'; }
 i.icon.comment:before { content: "\f075"; }
 i.icon.comments:before { content: "\f086"; }
 i.icon.shop:before { content: "\f07a"; }
@@ -84,7 +86,7 @@ i.icon.paint.brush:before { content: "\f1fc"; }
 i.icon.heartbeat:before { content: "\f21e"; }
 
 /* User Actions */
-i.icon.download:before { content: "\f019"; }
+i.icon.download:before { content: "\e822"; font-family: 'Crimean'; }
 i.icon.repeat:before { content: "\f01e"; }
 i.icon.refresh:before { content: "\f021"; }
 i.icon.lock:before { content: "\f023"; }
@@ -93,7 +95,7 @@ i.icon.print:before { content: "\f02f"; }
 i.icon.write:before { content: "\f040"; }
 i.icon.theme:before { content: "\f043"; }
 i.icon.adjust:before { content: "\f042"; }
-i.icon.edit:before { content: "\f044"; }
+i.icon.edit:before { content: "\e810"; font-family: 'Crimean'; }
 i.icon.external.share:before { content: "\f045"; }
 i.icon.ban:before { content: "\f05e"; }
 i.icon.mail.forward:before { content: "\f064"; }
@@ -113,7 +115,8 @@ i.icon.call.square:before { content: "\f098"; }
 i.icon.remove.bookmark:before { content: "\f097"; }
 i.icon.unlock:before { content: "\f09c"; }
 i.icon.configure:before { content: "\f0ad"; }
-i.icon.filter:before { content: "\f0b0"; }
+i.icon.filter:before { content: "\e809"; font-size: 19.5px; font-family: 'Crimean'; opacity: 0.8; }
+i.icon.filter:hover:before { content: "\e809"; font-size: 19.5px; font-family: 'Crimean';  opacity: 1;}
 i.icon.wizard:before { content: "\f0d0"; }
 i.icon.undo:before { content: "\f0e2"; }
 i.icon.exchange:before { content: "\f0ec"; }
@@ -140,7 +143,7 @@ i.icon.remove.user:before { content: "\f235"; }
 
 /* Messages */
 i.icon.help.circle:before { content: "\f059"; }
-i.icon.info.circle:before { content: "\f05a"; }
+i.icon.info.circle:before { content: "\f05a";}
 i.icon.warning:before { content: "\f12a"; }
 i.icon.warning.circle:before { content: "\f06a"; }
 i.icon.warning.sign:before { content: "\f071"; }
@@ -176,7 +179,7 @@ i.icon.neuter:before { content: "\f22c"; }
 
 /* View Adjustment */
 i.icon.grid.layout:before { content: "\f00a"; }
-i.icon.list.layout:before { content: "\f00b"; }
+i.icon.list.layout:before { content: "\"; font-size: 12px; font-family: 'Crimean'; }
 i.icon.block.layout:before { content: "\f009"; }
 i.icon.zoom:before { content: "\f00e"; }
 i.icon.zoom.out:before { content: "\f010"; }
@@ -224,7 +227,7 @@ i.icon.diamond:before { content: "\f219"; }
 
 /* Shapes */
 i.icon.crosshairs:before { content: "\f05b"; }
-i.icon.asterisk:before { content: "\f069"; }
+i.icon.asterisk:before { content: "\f069"; color: @brightRed; }
 i.icon.certificate:before { content: "\f0a3"; }
 i.icon.circle:before { content: "\f111"; }
 i.icon.quote.left:before { content: "\f10d"; }
@@ -240,18 +243,20 @@ i.icon.square:before { content: "\f0c8"; }
 
 /* Item Selection */
 i.icon.checkmark:before { content: "\f00c"; }
-i.icon.remove:before { content: "\f00d"; }
+i.icon.remove:before { content: "\e806"; font-size: 17px; position: relative; top: -1px; font-family: 'Crimean'; }
+i.icon.remove:hover { color: @red; }
 i.icon.checkmark.box:before { content: "\f046"; }
 i.icon.move:before { content: "\f047"; }
 i.icon.add.circle:before { content: "\f055"; }
 i.icon.minus.circle:before { content: "\f056"; }
-i.icon.remove.circle:before { content: "\f057"; }
+i.icon.remove.circle:before { content: "\e806"; font-size: 16px; }
+i.icon.remove.circle:hover:before { color: @blue; }
 i.icon.check.circle:before { content: "\f058"; }
 i.icon.remove.circle.outline:before { content: "\f05c"; }
 i.icon.check.circle.outline:before { content: "\f05d"; }
-i.icon.plus:before { content: "\f067"; }
-i.icon.minus:before { content: "\f068"; }
-i.icon.add.square:before { content: "\f0fe"; }
+i.icon.plus:before { content: "\e833"; position: relative; font-family: 'Crimean'; }
+i.icon.minus:before { content: "\e834"; font-size: 2px; position: relative; top: -3px; font-family: 'Crimean'; }
+i.icon.add.square:before { content: "\e833"; font-family: 'Crimean'; }
 i.icon.radio:before { content: "\f10c"; }
 i.icon.selected.radio:before { content: "\f192"; }
 i.icon.minus.square:before { content: "\f146"; }
@@ -277,12 +282,12 @@ i.icon.arrow.circle.outline.down:before { content: "\f01a"; }
 i.icon.arrow.circle.outline.up:before { content: "\f01b"; }
 i.icon.chevron.left:before { content: "\f053"; }
 i.icon.chevron.right:before { content: "\f054"; }
-i.icon.arrow.left:before { content: "\f060"; }
-i.icon.arrow.right:before { content: "\f061"; }
+i.icon.arrow.left:before { content: "\f104"; font-size: 20px;}
+i.icon.arrow.right:before { content: "\f105"; font-size: 20px;}
 i.icon.arrow.up:before { content: "\f062"; }
 i.icon.arrow.down:before { content: "\f063"; }
-i.icon.chevron.up:before { content: "\f077"; }
-i.icon.chevron.down:before { content: "\f078"; }
+i.icon.chevron.up:before { content: "\e820"; font-family: 'Crimean'; }
+i.icon.chevron.down:before { content: "\e81f"; font-family: 'Crimean';}
 i.icon.pointing.right:before { content: "\f0a4"; }
 i.icon.pointing.left:before { content: "\f0a5"; }
 i.icon.pointing.up:before { content: "\f0a6"; }
@@ -300,7 +305,7 @@ i.icon.angle.double.right:before { content: "\f101"; }
 i.icon.angle.double.up:before { content: "\f102"; }
 i.icon.angle.double.down:before { content: "\f103"; }
 i.icon.angle.left:before { content: "\f104"; }
-i.icon.angle.right:before { content: "\f105"; }
+i.icon.angle.right:before { content: "\f105"; font-size: 16px;}
 i.icon.angle.up:before { content: "\f106"; }
 i.icon.angle.down:before { content: "\f107"; }
 i.icon.chevron.circle.left:before { content: "\f137"; }
@@ -320,8 +325,8 @@ i.icon.toggle.left:before { content: "\f191"; }
 
 /* Computer */
 i.icon.power:before { content: "\f011"; }
-i.icon.trash:before { content: "\f1f8"; }
-i.icon.trash.outline:before { content: "\f014"; }
+i.icon.trash:before { content: "\e814"; font-family: 'Crimean'; }
+i.icon.trash.outline:before { content: "\e814"; }
 i.icon.disk.outline:before { content: "\f0a0"; }
 i.icon.desktop:before { content: "\f108"; }
 i.icon.laptop:before { content: "\f109"; }
@@ -343,8 +348,8 @@ i.icon.file.text.outline:before { content: "\f0f6"; }
 i.icon.folder.outline:before { content: "\f114"; }
 i.icon.folder.open.outline:before { content: "\f115"; }
 i.icon.file.pdf.outline:before { content: "\f1c1"; }
-i.icon.file.word.outline:before { content: "\f1c2"; }
-i.icon.file.excel.outline:before { content: "\f1c3"; }
+i.icon.file.word.outline:before { content: "\f1c2"; font-family: 'Crimean'; }
+i.icon.file.excel.outline:before { content: "\e80a"; font-size:20px; font-family: 'Crimean'; opacity: 0.8;}
 i.icon.file.powerpoint.outline:before { content: "\f1c4"; }
 i.icon.file.image.outline:before { content: "\f1c5"; }
 i.icon.file.archive.outline:before { content: "\f1c6"; }
@@ -430,24 +435,28 @@ i.icon.train:before { content: "\f238"; }
 i.icon.subway:before { content: "\f239"; }
 
 /* Tables */
-i.icon.table:before { content: "\f0ce"; }
-i.icon.columns:before { content: "\f0db"; }
-i.icon.sort:before { content: "\f0dc"; }
-i.icon.sort.ascending:before { content: "\f0de"; }
-i.icon.sort.descending:before { content: "\f0dd"; }
-i.icon.sort.alphabet.ascending:before { content: "\f15d"; }
-i.icon.sort.alphabet.descending:before { content: "\f15e"; }
-i.icon.sort.content.ascending:before { content: "\f160"; }
-i.icon.sort.content.descending:before { content: "\f161"; }
-i.icon.sort.numeric.ascending:before { content: "\f162"; }
-i.icon.sort.numeric.descending:before { content: "\f163"; }
+i.icon.table:before { content: "\e819"; opacity: 0.8; font-family: 'Crimean';}
+i.icon.table:hover:before { opacity: 1; color: @blue; }
+i.icon.columns:before { content: "\f0db";}
+i.icon.sort:before { content: "\f0dc";}
+i.icon.sort.ascending:before { content: "\f0de";}
+i.icon.sort.descending:before { content: "\f0dd";}
+i.icon.sort.alphabet.ascending:before { content: "\f15d";}
+i.icon.sort.alphabet.descending:before { content: "\f15e";}
+i.icon.sort.content.ascending:before { content: "\f160";}
+i.icon.sort.content.descending:before { content: "\f161";}
+i.icon.sort.numeric.ascending:before { content: "\f162";}
+i.icon.sort.numeric.descending:before { content: "\f163";}
+.ui.button.icon.mini.compact > .minus.icon:before { content: "\e834"; font-size: 1px; position: relative; top: -3px; font-family: 'Crimean'; }
+.ui.button.icon.mini.compact > .plus.icon:before { content: "\e833"; position: relative; font-family: 'Crimean'; font-size: 9px; }
+
 
 /* Text Editor */
 i.icon.font:before { content: "\f031"; }
 i.icon.bold:before { content: "\f032"; }
 i.icon.italic:before { content: "\f033"; }
 i.icon.text.height:before { content: "\f034"; }
-i.icon.text.width:before { content: "\f035"; }
+i.icon.text.width:before { content: "\f035";}
 i.icon.align.left:before { content: "\f036"; }
 i.icon.align.center:before { content: "\f037"; }
 i.icon.align.right:before { content: "\f038"; }
@@ -462,7 +471,7 @@ i.icon.attach:before { content: "\f0c6"; }
 i.icon.save:before { content: "\f0c7"; }
 i.icon.content:before { content: "\f0c9"; }
 i.icon.unordered.list:before { content: "\f0ca"; }
-i.icon.ordered.list:before { content: "\f0cb"; }
+i.icon.ordered.list:before { content: "\f0cb";}
 i.icon.strikethrough:before { content: "\f0cc"; }
 i.icon.underline:before { content: "\f0cd"; }
 i.icon.paste:before { content: "\f0ea"; }
@@ -599,7 +608,7 @@ i.icon.like:before { content: "\f004"; }
 i.icon.favorite:before { content: "\f005"; }
 i.icon.video:before { content: "\f008"; }
 i.icon.check:before { content: "\f00c"; }
-i.icon.close:before { content: "\f00d"; }
+i.icon.close:before { content: "\e806"; font-family: 'Crimean'; }
 i.icon.cancel:before { content: "\f00d"; }
 i.icon.delete:before { content: "\f00d"; }
 i.icon.x:before { content: "\f00d"; }
@@ -666,7 +675,7 @@ i.icon.wrench:before { content: "\f0ad"; }
 i.icon.briefcase:before { content: "\f0b1"; }
 i.icon.group:before { content: "\f0c0"; }
 i.icon.flask:before { content: "\f0c3"; }
-i.icon.sidebar:before { content: "\f0c9"; }
+i.icon.sidebar:before { content: "\e800"; color: #fff; font-family: 'Crimean';}
 i.icon.bars:before { content: "\f0c9"; }
 i.icon.list.ul:before { content: "\f0ca"; }
 i.icon.list.ol:before { content: "\f0cb"; }
@@ -693,7 +702,7 @@ i.icon.computer:before { content: "\f108"; }
 i.icon.circle.outline:before { content: "\f10c"; }
 i.icon.intersex:before { content: "\f10c"; }
 i.icon.asexual:before { content: "\f10c"; }
-i.icon.spinner:before { content: "\f110"; }
+i.icon.spinner:before { content: "\e839";  font-family: "Icons"}
 i.icon.gamepad:before { content: "\f11b"; }
 i.icon.star.half.full:before { content: "\f123"; }
 i.icon.question:before { content: "\f128"; }
@@ -753,3 +762,310 @@ i.icon.mars.stroke.horizontal:before { content: "\f22b"; }
 i.icon.facebook.official { content: "\f230"; }
 i.icon.pinterest.official { content: "\f231"; }
 i.icon.bed:before { content: "\f236"; }
+
+.ui.menu .ui.dropdown .menu > .active.item i.icon:before {
+    color: #fff!important;
+}
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .prev-page-button:before {
+    content: "\e81a";
+    font-family: 'Crimean';
+    visibility: visible;
+}
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .next-page-button:before {
+    content: "\e81b";
+    font-family: 'Crimean';
+    visibility: visible;
+}
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .prev-page-button {
+    visibility: hidden;
+}
+
+.ui.secondary.menu.no-margin > .ui.basic.buttons > .next-page-button {
+    visibility: hidden;
+}
+
+.refresh-button:before {
+    content: "\e807";
+    font-family: 'Crimean';
+    visibility: visible;
+    font-size: 21px;
+    color: @green;
+    opacity: 0.8;
+}
+
+.refresh-button:hover:before {
+    color: @green;
+    opacity: 1;
+}
+
+.create-button {
+    color: #fff;
+    background: @green;
+    border: 1px solid @green;
+}
+
+.create-button {
+    color: #fff;
+    background: @green;
+    border: 1px solid @green;
+}
+
+.delete-button:before {
+    content: "\e814";
+    font-family: 'Crimean';
+    visibility: visible;
+    font-size: 21px;
+    color: @blue;
+}
+
+.delete-button:hover:before {
+    color: @red;
+}
+
+.page-header-userbar a:after {
+    margin: 0 0 0 15px;
+    font-size: 16px;
+    visibility: visible;
+    vertical-align: middle;
+    font-family: 'Crimean';
+    content: "\e81e";
+}
+
+.page-header-userbar a {
+    margin: 0px 25px 0px 0px;
+}
+
+
+.menu.transition > .flexberry-menuitem > i.icon.checkmark.box:before {
+    content: "\e815";
+    font-family: 'Crimean';
+}
+
+.menu.transition > .flexberry-menuitem > i.icon.setting:before {
+    content: "\e810";
+    font-family: 'Crimean';
+}
+
+.menu.transition > .flexberry-menuitem > i.icon.remove:before {
+    content: "\e814";
+    font-family: 'Crimean';
+    font-size:16px;
+}
+
+.menu.transition > .flexberry-menuitem > i.icon.remove:hover:before {
+    color: @blue;
+}
+
+
+.menu.transition > .flexberry-menuitem > i.icon.remove.circle:before{
+    content: "\f057";
+    font-family: 'Icons';
+}
+.save-button:before {
+    content: "\e80c";
+    font-family: 'Crimean';
+    color: @blue;
+    font-size: 21px;
+    padding-right:10px;
+}
+
+button:before:hover {
+    color: #fff!important;
+}
+
+.remove.icon:before:hover {
+    color: @red;
+}
+
+.ui.buttons .ui.icon.button:hover .large.icon:before {
+    color: @blue!important;
+    opacity: 1!important;
+}
+
+.ui.positive.button:hover:before {
+    color: #fff;
+}
+
+.ui.negative.button:hover:before {
+    color: #fff;
+}
+
+.remove.icon:hover:before {
+    color: @red;
+}
+
+.field .flexberry-edit-panel > button:hover:before {
+    color: #fff;
+}
+
+.asterisk.small.red.icon.transparent {
+    display:none;
+}
+
+i.icon.text-menu-hide:before {
+    color: #91a7cd !important;
+}
+
+.ui.button.ui-change {
+    font-size: 0px;
+    width: 35px;
+    border: none;
+}
+
+.ui.button.ui-change:before {
+    content: "";
+    font-family: 'Crimean';
+    visibility: visible;
+    color: @blue;
+    font-size: 13px;
+}
+
+.ui.button.ui-change:hover:before {
+    color: @brightBlue;
+    opacity: 1;
+}
+
+.ui.loading.button.ui-change:before {
+    content: '';
+}
+
+ui.button.ui-clear:hover {
+    color: @red;
+    opacity: 1;
+}
+
+.ui.icon.button > .plus.icon {
+  margin-right: 1em;
+}
+
+.ui.icon.button > .minus.icon {
+  margin-right: 1em;
+}
+
+.ui.button.icon.mini.compact {
+  border: 1px solid @blue;
+  padding: 0px;
+  height: 22px;
+  &:hover {
+    border-color: @green;
+    background: @white;
+  }
+}
+
+.ui.button.icon.mini.compact > .minus.icon:before {
+  content: "\e834";
+  font-size: 1px;
+  position: relative;
+  top: -3px;
+  font-family: 'Crimean';
+}
+
+.ui.button.icon.mini.compact > .plus.icon:before {
+  content: "\e833";
+  position: relative;
+  font-family: 'Crimean';
+  font-size: 9px;
+}
+
+.launch:hover .ui.menu.item:before {
+    color: @blue!important;
+}
+
+.text_menu:hover .ui.menu.item:before {
+    color: @blue!important;
+}
+
+.disabled:before {
+    opacity: 1!important;
+    color: #999!important;
+}
+
+.flexberry-lookup > .ui.fluid > button > i.icon.remove:before {
+    content: "\e806";
+    font-family: 'Crimean';
+    font-size: 13px;
+}
+
+/** FileControl buttons section start **/
+
+.flexberry-file-add-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+}
+.flexberry-file-add-button.ui.icon.button:hover::before {
+    color: @green;
+}
+.flexberry-file-add-button.ui.icon.button:hover {
+    border-color: @green;
+    color: @green;
+}
+.ui.icon.button:hover i.add.outline.icon:before {
+    color: @green;
+}
+.flexberry-file-remove-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+}
+.flexberry-file-remove-button.ui.icon.button:hover {
+    border-color: @red;
+    color: @red;
+}
+.ui.icon.button:hover i.trash.outline.icon:before {
+    color: @red;
+}
+.flexberry-file-download-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+}
+.flexberry-file-download-button.ui.icon.button:hover {
+    border-color: @brightBlue;
+    color: @brightBlue;
+}
+.ui.icon.button:hover i.download.outline.icon:before {
+    color: @brightBlue;
+}
+.flexberry-file-upload-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+}
+.flexberry-file-upload-button.ui.icon.button:hover {
+    border-color: @brightBlue;
+    color: @brightBlue;
+}
+.ui.icon.button:hover i.upload.outline.icon:before {
+    color: @brightBlue;
+}
+
+/** FileControl buttons section end **/
+
+i.plus.icon {
+    position: relative;
+    left: 5px;
+}
+
+i.minus.icon {
+    position: relative;
+    left: 5px;
+}
+
+.hierarchical-button > .sitemap.icon:before {
+    opacity: 0.8;
+}
+
+.hierarchical-button > .sitemap.icon:hover:before {
+    opacity: 1;
+}
+.save-close-button:before {
+    content: "\e80d";
+    font-family: 'Crimean';
+    color: @blue;
+    font-size: 21px;
+    padding-right: 10px;
+}
+
+.save-del-button:before {
+    content: "\e814";
+    font-family: 'Crimean';
+    color: @blue;
+    font-size: 21px;
+    padding-right: 10px;
+}

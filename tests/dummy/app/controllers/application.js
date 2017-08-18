@@ -25,8 +25,8 @@ export default Ember.Controller.extend({
         closable: false,
         dimPage: false,
         onHide: function() {
-          Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
-          Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+          Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
+          Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
         },
         onHidden: function() {
           objectlistviewEventsService.updateWidthTrigger();
@@ -34,12 +34,12 @@ export default Ember.Controller.extend({
       }).sidebar('toggle');
 
       if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
-        Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
+        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
         Ember.$('.bgw-opacity').addClass('hidden');
       } else {
-        Ember.$('.sidebar.icon.text-menu-1').addClass('hidden-menu');
-        Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
+        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
         Ember.$('.bgw-opacity').removeClass('hidden');
       }
 
@@ -60,8 +60,8 @@ export default Ember.Controller.extend({
       let objectlistviewEventsService = this.get('objectlistviewEventsService');
       sidebar.sidebar({
         onHide: function() {
-          Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
-          Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+          Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
+          Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
         },
         onHidden: function() {
           objectlistviewEventsService.updateWidthTrigger();
@@ -69,12 +69,12 @@ export default Ember.Controller.extend({
       }).sidebar('toggle');
 
       if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
-        Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
+        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
         Ember.$('.bgw-opacity').addClass('hidden');
       } else {
-        Ember.$('.sidebar.icon.text-menu-1').addClass('hidden-menu');
-        Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
+        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
         Ember.$('.bgw-opacity').removeClass('hidden');
       }
     }
@@ -414,7 +414,6 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.title'),
             children: null
-          }, {
           }, {
             link: 'components-examples/flexberry-objectlistview/edit-form-with-detail-list',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.edit-form-with-detail-list.caption'),

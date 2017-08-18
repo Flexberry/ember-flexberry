@@ -43,3 +43,15 @@
 
 @labeledIconBackgroundColor: rgba(85, 172, 238, 0.05);
 @labeledIconBorder: rgba(0, 0, 0, 0.1);
+
+/*-------------------
+        Types
+--------------------*/
+
+/* Basic */
+@basicBoxShadow: none;
+@basicHoverBoxShadow: none;
+@basicDownBoxShadow: none;
+@basicHoverBackground: @primaryColor;
+@basicDownBackground: @primaryColor;
+@basicHoverTextColor: @white;

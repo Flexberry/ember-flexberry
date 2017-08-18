@@ -156,11 +156,11 @@
 @loaderSize              : @relativeBig;
 @loaderSpeed             : 0.6s;
 @loaderLineWidth         : 0.2em;
-@loaderFillColor         : rgba(0, 0, 0, 0.1);
-@loaderLineColor         : @grey;
+@loaderFillColor         : #CCE2FF;
+@loaderLineColor         : @primaryColor;
 
-@invertedLoaderFillColor : rgba(255, 255, 255, 0.15);
-@invertedLoaderLineColor : @white;
+@invertedLoaderFillColor : @primaryColor;
+@invertedLoaderLineColor : #CCE2FF;
 
 /*-------------------
         Grid
@@ -191,6 +191,7 @@
 
 /*---  Colors  ---*/
 @red              : #FF7500;
+@brightRed        : #FF4800;
 @orange           : #F2711C;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
@@ -199,6 +200,8 @@
 @blue             : #7ba7d9;
 @brightBlue       : #3c87dc;
 @paleBlue         : #b1cae8;
+@whiteBlue        : #f1f7ff;
+@headerColor      : #4f73b0;
 @violet           : #6435C9;
 @purple           : #A333C8;
 @pink             : #E03997;
@@ -590,6 +593,8 @@
 /*---  Colors  ---*/
 @primaryColorHover    : saturate(darken(@primaryColor, 5), 10, relative);
 @secondaryColorHover  : saturate(lighten(@secondaryColor, 5), 10, relative);
+
+@dropdownHoveredItemColor: #dcebfc;
 
 @redHover             : saturate(darken(@red, 5), 10, relative);
 @orangeHover          : saturate(darken(@orange, 5), 10, relative);

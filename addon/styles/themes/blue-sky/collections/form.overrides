@@ -3,15 +3,15 @@
 
 *******************************/
 .ui.form select {
-    color: @blue;
+    color: @primaryColor;
     border: none;
-    border-bottom: 1px solid @paleBlue;
+    border-bottom: 1px solid @inputBorderColor;
     border-radius: 0px;
     outline: none;
 }
 
 .ui.form select:hover {
-    color: @brightBlue;
+    color: @hoveredSelectColor;
 }
 
 .ui.form input:not([type]), .ui.form input[type="date"],
@@ -21,7 +21,7 @@
 .ui.form input[type="time"], .ui.form input[type="text"],
 .ui.form input[type="url"] {
     border: none;
-    border-bottom: 1px solid @paleBlue;
+    border-bottom: 1px solid @inputBorderColor;
     border-radius: 0px;
     outline: none;
 }
@@ -32,27 +32,23 @@ input[type="checkbox"]:after {
     font-size: 16px;
     height: 16px;
     width: 17px;
-    background: #fff;
     position: relative;
     border-radius: 4px;
     top: -3px;
     left: -2px;
-    border: 1px solid @blue;
-    background: #f1f8ff;
+    border: 1px solid @borderColor;
+    background: @checkboxBackground;
 }
 
 input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
     content: '\e805';
     font-family: 'Crimean';
-    color: @blue;
-    border-color: @blue;
-    font-size: 15px;
+    color: @primaryColor;
+    border-color: @primaryColor;
+    font-size: 16px;
     border-left: none;
-    width: 16px;
-}
-
-.ui.form textarea {
-    border-color: @blue;
+    border-top: none;
+    width: 17px;
 }
 
 .ui.form textarea, .ui.form input[type="checkbox"] {
@@ -60,11 +56,11 @@ input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
 }
 
 select {
-    color: @blue;
+    color: @primaryColor;
 }
 
 select:hover {
-    color: @paleBlue;
+    color: @hoveredSelectColor;
 }
 
 option {
@@ -73,8 +69,4 @@ option {
 
 .ui.form .fields .field .ui.input input, .ui.form .field .ui.input input {
     background: none;
-}
-
-.ui.loading.form:after {
-    border-color: @blue #CCE2FF #CCE2FF #CCE2FF;
 }

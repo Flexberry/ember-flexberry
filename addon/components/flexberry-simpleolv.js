@@ -204,22 +204,22 @@ ErrorableControllerMixin, {
   customTableClass: '',
 
   /**
-    Width columns OLV.
+    Minimum column width, if width isn't defined in userSettings.
 
-    @property widthColumnListForms
-    @type int
+    @property minAutoColumnWidth
+    @type Number
     @default 150
   */
   minAutoColumnWidth: 150,
 
   /**
-    Width change OLV.
+    Indicates whether or not invoke _setColumnWidths function on container resize.
 
-    @property widthChangeOLV
-    @type String
-    @default false
+    @property widthChangeOnContainerResize
+    @type Boolean
+    @default true
   */
-  widthChangeOLV: false,
+  widthChangeOnContainerResize: true,
 
   /**
     Classes for table.
@@ -1062,7 +1062,7 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').on('resetFilters', this, this._resetColumnFilters);
-    this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidth);
+    this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
 
     this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
@@ -1089,9 +1089,18 @@ ErrorableControllerMixin, {
     }
   },
 
-  setColumnWidth(onHidden, componentName) {
+  /**
+    Handler for updateWidth action.
+
+    @method setColumnWidths
+
+    @param {Boolean} alwaysUpdate If true, then component update width despite
+    his widthChangeOnContainerResize property.
+    @param {String} componentName The name of object-list-view component.
+  */
+  setColumnWidths(alwaysUpdate, componentName) {
     let widthChangeOnContainerResize = this.get('widthChangeOnContainerResize');
-    if (widthChangeOnContainerResize || onHidden) {
+    if (alwaysUpdate || widthChangeOnContainerResize) {
       this._setColumnWidths(componentName);
     }
   },
@@ -1149,7 +1158,7 @@ ErrorableControllerMixin, {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').off('resetFilters', this, this._resetColumnFilters);
-    this.get('objectlistviewEventsService').off('updateWidth', this, this._setColumnWidths);
+    this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
     this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
@@ -1286,7 +1295,7 @@ ErrorableControllerMixin, {
           }
         }
 
-        tableWidth += padding + (setting.width || minAutoColumnWidth);
+        tableWidth += padding + (setting.width || minAutoColumnWidth || 1);
         if (currentPropertyName === 'OlvRowToolbar') {
           olvRowToolbarWidth = setting.width;
         }
@@ -1295,7 +1304,7 @@ ErrorableControllerMixin, {
           olvRowMenuWidth = setting.width;
         }
 
-        hashedUserSetting[setting.propName] = setting.width || minAutoColumnWidth;
+        hashedUserSetting[setting.propName] = setting.width || minAutoColumnWidth || 1;
       });
 
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);

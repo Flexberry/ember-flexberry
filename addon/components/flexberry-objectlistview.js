@@ -513,20 +513,20 @@ export default FlexberryBaseComponent.extend({
   recordsTotalCount: null,
 
   /**
-    Width columns OLV.
+    Minimum column width, if width isn't defined in userSettings.
 
     @property minAutoColumnWidth
-    @type String
+    @type Number
     @default 150
   */
   minAutoColumnWidth: 150,
 
   /**
-    Width change OLV.
+    Indicates whether or not invoke _setColumnWidths function on container resize.
 
     @property widthChangeOnContainerResize
-    @type String
-    @default false
+    @type Boolean
+    @default true
   */
   widthChangeOnContainerResize: true,
 

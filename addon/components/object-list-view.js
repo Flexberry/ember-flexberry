@@ -954,7 +954,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
-    this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidth);
+    this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
 
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
@@ -966,9 +966,18 @@ export default FlexberryBaseComponent.extend(
     }
   },
 
-  setColumnWidth(onHidden, componentName) {
+  /**
+    Handler for updateWidth action.
+
+    @method setColumnWidths
+
+    @param {Boolean} alwaysUpdate If true, then component update width despite
+    his widthChangeOnContainerResize property.
+    @param {String} componentName The name of object-list-view component.
+  */
+  setColumnWidths(alwaysUpdate, componentName) {
     let widthChangeOnContainerResize = this.get('widthChangeOnContainerResize');
-    if (widthChangeOnContainerResize || onHidden) {
+    if (alwaysUpdate || widthChangeOnContainerResize) {
       this._setColumnWidths(componentName);
     }
   },
@@ -1110,7 +1119,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
-    this.get('objectlistviewEventsService').off('updateWidth', this, this._setColumnWidths);
+    this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
 
     this._super(...arguments);
   },
@@ -1195,7 +1204,6 @@ export default FlexberryBaseComponent.extend(
 
     @param {Array} userSetting User setting to apply to control
   */
-
   _setColumnWidths(componentName) {
     if (Ember.isBlank(componentName) || this.get('componentName') === componentName) {
       let userSetting;
@@ -1241,7 +1249,7 @@ export default FlexberryBaseComponent.extend(
           }
         }
 
-        tableWidth += padding + (setting.width || minAutoColumnWidth);
+        tableWidth += padding + (setting.width || minAutoColumnWidth || 1);
         if (currentPropertyName === 'OlvRowToolbar') {
           olvRowToolbarWidth = setting.width;
         }
@@ -1250,7 +1258,7 @@ export default FlexberryBaseComponent.extend(
           olvRowMenuWidth = setting.width;
         }
 
-        hashedUserSetting[setting.propName] = setting.width || minAutoColumnWidth;
+        hashedUserSetting[setting.propName] = setting.width || minAutoColumnWidth || 1;
       });
 
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);

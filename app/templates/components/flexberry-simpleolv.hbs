@@ -52,11 +52,14 @@
   {{/if}}
   {{#if filterButton}}
     <div class="ui action input">
-      <div class="block-action-input">{{input
-        type="text"
-        placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
-        value=filterByAnyMatchText enter="filterByAnyMatch"
-      }}</div>
+      <div class="block-action-input">
+        <input
+          type="text"
+          value={{filterByAnyMatchText}}
+          placeholder={{t "components.olv-toolbar.filter-by-any-match-placeholder"}}
+          onkeyup={{action "filterByAnyMatch"}}
+        />
+      </div>
       <button
         class="ui {{buttonClass}} icon button search-button"
         title={{t "components.olv-toolbar.search-button-text"}}

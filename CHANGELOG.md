@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+* When typing in the input field to search the `flexberry-simpleolv` component, `didRender` method that is problematic for the component is called.
+
 ## [0.9.0-beta.16] - 2017-08-11
 ### Added
 * Manage animation of `flexberry-toggler` component through `duration` property.

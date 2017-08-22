@@ -3,6 +3,32 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Added components:
+  * `flexberry-button`.
+  * `flexberry-colorpicker`.
+  * `flexberry-ddau-checkbox`.
+  * `flexberry-ddau-slider`.
+  * `flexberry-dialog`.
+  * `flexberry-icon`.
+  * `flexberry-jsonarea`.
+  * `flexberry-tab-bar`.
+  * `flexberry-tree`.
+  * `flexberry-treenode`.
+* Added icons for next buttons:
+  * `refresh-button`.
+  * `delete-button`.
+  * `prev-page-button`.
+  * `next-page-button`.
+
+### Changed
+* Deleted unnecessary Semantic-UI themes.
+* `blues-sky` theme refactoring:
+    * Updated names of several classes:
+      * `text-menu-1` to `text-menu-show`.
+      * `text-menu-2` to `text-menu-hide`.
+      * `hidden-menu` to `hidden`.
+    * Deleted useless classes: `my-test-user-button`, `theme-button`.
 
 ## [0.9.0-beta.16] - 2017-08-11
 ### Added

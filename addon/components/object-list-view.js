@@ -954,7 +954,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
-    this.get('objectlistviewEventsService').on('updateWidth', this, this._setColumnWidths);
+    this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
 
     let eventsBus = this.get('eventsBus');
     if (eventsBus) {
@@ -963,6 +963,22 @@ export default FlexberryBaseComponent.extend(
           this.set('showLoadingTbodyClass', showLoadingTbodyClass);
         }
       });
+    }
+  },
+
+  /**
+    Handler for updateWidth action.
+
+    @method setColumnWidths
+
+    @param {Boolean} alwaysUpdate If true, then component update width despite
+    his widthChangeOnContainerResize property.
+    @param {String} componentName The name of object-list-view component.
+  */
+  setColumnWidths(alwaysUpdate, componentName) {
+    let widthChangeOnContainerResize = this.get('widthChangeOnContainerResize');
+    if (alwaysUpdate || widthChangeOnContainerResize) {
+      this._setColumnWidths(componentName);
     }
   },
 
@@ -1103,7 +1119,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
-    this.get('objectlistviewEventsService').off('updateWidth', this, this._setColumnWidths);
+    this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
 
     this._super(...arguments);
   },
@@ -1209,6 +1225,7 @@ export default FlexberryBaseComponent.extend(
       let olvRowMenuWidth = 0;
       let olvRowToolbarWidth = 0;
       let padding = (this.get('defaultLeftPadding') || 0) * 2;
+      let minAutoColumnWidth = this.get('minAutoColumnWidth');
 
       Ember.$.each($columns, (key, item) => {
         let currentItem = this.$(item);
@@ -1232,7 +1249,7 @@ export default FlexberryBaseComponent.extend(
           }
         }
 
-        tableWidth += padding + (setting.width || 150);
+        tableWidth += padding + (setting.width || minAutoColumnWidth || 1);
         if (currentPropertyName === 'OlvRowToolbar') {
           olvRowToolbarWidth = setting.width;
         }
@@ -1241,7 +1258,7 @@ export default FlexberryBaseComponent.extend(
           olvRowMenuWidth = setting.width;
         }
 
-        hashedUserSetting[setting.propName] = setting.width || 150;
+        hashedUserSetting[setting.propName] = setting.width || minAutoColumnWidth || 1;
       });
 
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);

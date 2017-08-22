@@ -171,13 +171,15 @@ export default Ember.Service.extend(Ember.Evented, {
     Trigger for "updateWidth" event in object-list-view.
     Event name: updateWidth.
 
-    @method updateWidth
+    @method updateWidthTrigger
 
+    @param {Boolean} alwaysUpdate If true, then component update width despite
+    his widthChangeOnContainerResize property.
     @param {String} componentName The name of object-list-view component
     (can be undefined for update all components widths).
   */
-  updateWidthTrigger(componentName) {
-    this.trigger('updateWidth', componentName);
+  updateWidthTrigger(alwaysUpdate, componentName) {
+    this.trigger('updateWidth', alwaysUpdate, componentName);
   },
 
   /**

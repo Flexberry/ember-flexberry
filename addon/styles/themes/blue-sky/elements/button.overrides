@@ -48,6 +48,36 @@
     color: @white;
 }
 
+/* Flexberyy-button */
+
+.ui.button.flexberry-button {
+    padding: 0.7em;
+    min-width: 35px;
+
+    &:hover {
+      i.icon:before {
+        color: @white;
+        opacity: 1;
+      }
+    }
+    &.green, &.red, &.blue {
+      color: @white;
+      border: none;
+      i.icon:before {
+          color: @white;
+          opacity: 1;
+      }
+    }
+    &.loading {
+      i.icon:before {
+          opacity: 0;
+      }
+    }
+}
+
+.ui.icon.buttons .button, .ui.icon.button {
+}
+
 /**************************************
         Toolbar buttons section
 ***************************************/

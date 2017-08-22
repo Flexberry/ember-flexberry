@@ -13,6 +13,8 @@
 @uiHoveredNegitveBackgroundColor: @red;
 @uiHoveredNegitveTextColor: @red;
 
+@flexberryButtonHoveredColor: @brightBlue;
+
 /*-------------------
    Button Variables
 --------------------*/
@@ -72,3 +74,10 @@
 @basicHoverTextColor: @red;
 
 @disabledOpacity: 0.5;
+
+/*-------------------
+      Variations
+--------------------*/
+
+/* Attached */
+@attachedBoxShadow: none;

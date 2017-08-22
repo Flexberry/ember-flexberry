@@ -17,10 +17,6 @@ body.pushable {
     background: none!important;
 }
 
-.ui.attached.menu {
-    border-bottom: none!important;
-}
-
 .ui.top.attached {
     margin: 20px 5px;
     width: 250px;
@@ -52,10 +48,6 @@ body.pushable {
 
 .ui.menu .item:before {
     background: none;
-}
-
-.ui.menu:not(.vertical) .item {
-    border-left: none!important;
 }
 
 .ui.attached.menu > .flex-container > .launch.icon.item:hover {

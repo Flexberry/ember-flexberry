@@ -38,3 +38,8 @@ i.icon.hand.paper:before {
 .ui.menu .ui.dropdown .menu > .item:hover {
     background: @dropdownHoveredItemBackground !important;
 }
+
+.ui.attached.tabular.menu {
+    background: none;
+    margin-bottom: 0;
+}

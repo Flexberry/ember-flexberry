@@ -31,7 +31,3 @@
     color: @checkboxColor;
     border-left: none;
 }
-
-label.button:hover {
-    background: @white !important;
-}

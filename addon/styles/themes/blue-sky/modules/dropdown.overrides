@@ -20,8 +20,8 @@
     outline: none;
 }
 
-.ui.selection.dropdown:hover {
-    color: @blue;
+.ui.search.dropdown > .text {
+    cursor: pointer;
 }
 
 .ui.dropdown.icon.button > .dropdown.icon {

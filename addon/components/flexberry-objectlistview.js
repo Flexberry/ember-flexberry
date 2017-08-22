@@ -750,7 +750,7 @@ export default FlexberryBaseComponent.extend({
             return [{
               buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name'),
               buttonAction: 'userButtonActionTest',
-              buttonClasses: 'my-test-user-button test-click-button'
+              buttonClasses: 'test-click-button'
             }];
           })
         });

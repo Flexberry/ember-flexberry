@@ -67,6 +67,6 @@
 @invertedActiveColor: #3f65a4;
 
 /* Inverted Active Hover  */
-@invertedActiveHoverColor: @brightRed;
+@invertedActiveHoverColor: @red;
 
 @invertedSubMenuActiveBackground: #dcebfc!important;

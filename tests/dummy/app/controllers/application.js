@@ -243,12 +243,32 @@ export default Ember.Controller.extend({
         title: i18n.t('forms.application.sitemap.components-examples.title'),
         children: [{
           link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-button.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-button.title'),
+          children: [{
+            link: 'components-examples/flexberry-button/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-button.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-button.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.title'),
           children: [{
             link: 'components-examples/flexberry-checkbox/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-checkbox.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-ddau-checkbox.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-ddau-checkbox.title'),
+          children: [{
+            link: 'components-examples/flexberry-ddau-checkbox/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-ddau-checkbox.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-ddau-checkbox.settings-example.title'),
             children: null
           }]
         }, {
@@ -522,6 +542,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-toggler/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-tree.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.flexberry-tree.title'),
+          children: [{
+            link: 'components-examples/flexberry-tree/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-tree.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-tree.settings-example.title'),
             children: null
           }]
         }, {

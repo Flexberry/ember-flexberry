@@ -29,6 +29,9 @@ export default Ember.Controller.extend({
           Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
         },
         onHidden: function() {
+          objectlistviewEventsService.updateWidthTrigger(true);
+        },
+        onShow: function() {
           objectlistviewEventsService.updateWidthTrigger();
         }
       }).sidebar('toggle');

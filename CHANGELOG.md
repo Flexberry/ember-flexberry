@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* List components:
+    * Add `minAutoColumnWidth` property (minimum column width, if width isn't defined in `userSettings`).
 * Added components:
   * `flexberry-button`.
   * `flexberry-colorpicker`.
@@ -20,6 +22,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   * `delete-button`.
   * `prev-page-button`.
   * `next-page-button`.
+
+### Fixed
+  * When typing in the input field to search the `flexberry-simpleolv` component, `didRender` method that is problematic for the component is called.
 
 ### Changed
 * Deleted unnecessary Semantic-UI themes.

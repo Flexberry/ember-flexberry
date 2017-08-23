@@ -2,10 +2,9 @@
              Sidebar
 *******************************/
 
-/*-------------------
-       Content
---------------------*/
-
-/* Color below page */
 @canvasBackground: @white;
+
 @sidebarInvertedBackground: @whiteBlue;
+
+@textMenuColor: @white;
+@textMenuHideColor: #91a7cd;

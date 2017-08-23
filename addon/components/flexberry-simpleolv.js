@@ -835,9 +835,12 @@ ErrorableControllerMixin, {
       @method actions.filterByAnyMatch
       @public
     */
-    filterByAnyMatch() {
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, this.get('filterByAnyMatchText'));
+    filterByAnyMatch(event) {
+      if (!event || event.key === 'Enter') {
+        let componentName = this.get('componentName');
+        let filterByAnyMatchText = this.$('.block-action-input input').val();
+        this.get('objectlistviewEventsService').filterByAnyMatchTrigger(componentName, filterByAnyMatchText);
+      }
     },
 
     /**
@@ -855,6 +858,7 @@ ErrorableControllerMixin, {
       Ember.run.later((function() {
         _this.set('filterText', null);
         _this.set('filterByAnyMatchText', null);
+        _this.$('.block-action-input input').val('');
       }), 50);
     },
 

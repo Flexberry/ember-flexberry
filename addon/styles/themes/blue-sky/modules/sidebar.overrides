@@ -24,7 +24,7 @@ body.pushable {
 
 .inverted.vertical.menu.sidebar {
     height: 85.3vh !important;
-    background: @whiteBlue;
+    background: @sidebarInvertedBackground;
 }
 
 .mobile.inverted.vertical.menu.sidebar {
@@ -56,12 +56,12 @@ body.pushable {
 
 .text-menu-hide span {
     padding-left: 10px;
-    color: #91a7cd;
+    color: @textMenuHideColor;
 }
 
 .text_menu {
     margin-left:15px;
-    color: @white;
+    color: @textMenuColor;
     font-size: 15px;
 }
 

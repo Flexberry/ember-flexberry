@@ -8,3 +8,4 @@
 
 /* Color below page */
 @canvasBackground: @white;
+@sidebarInvertedBackground: @whiteBlue;

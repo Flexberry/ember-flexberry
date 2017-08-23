@@ -998,10 +998,7 @@ export default FlexberryBaseComponent.extend(
       this._setColumnWidths(columnWidth);
     }
 
-    // TODO: resolve this problem.
-    this.$('.flexberry-dropdown:last').dropdown({
-      direction: 'upward'
-    });
+    this.$('.flexberry-dropdown:last').dropdown('setting', 'direction', 'upward');
   },
 
   /**
@@ -1112,7 +1109,7 @@ export default FlexberryBaseComponent.extend(
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
 
     // The last menu needs will be up.
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+    this.$('.flexberry-dropdown:last').dropdown('setting', 'direction', 'upward');
 
     this._setCurrentColumnsWidth();
   },

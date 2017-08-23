@@ -43,6 +43,7 @@
 
 .stackable > .ui.message {
     top: 70px;
+    background-color: #dcebfc;
 }
 
 /**ScrollBar**/

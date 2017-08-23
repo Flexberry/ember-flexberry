@@ -4,11 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* List componentx:
+* List components:
     * Add `minAutoColumnWidth` property (minimum column width, if width isn't defined in `userSettings`).
 
 ### Fixed
 * When typing in the input field to search the `flexberry-simpleolv` component, `didRender` method that is problematic for the component is called.
+* Fix `flexberry-groupedit` sorting.
 
 ## [0.9.0-beta.16] - 2017-08-11
 ### Added

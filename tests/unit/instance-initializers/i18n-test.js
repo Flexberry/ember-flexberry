@@ -9,7 +9,7 @@ let appInstance;
 let fakeLocale;
 
 module('Unit | Instance Initializer | i18n', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
     appInstance = application.buildInstance();
 
@@ -18,30 +18,33 @@ module('Unit | Instance Initializer | i18n', {
     fakeLocale = 'fake-locale';
     i18n.set('locale', fakeLocale);
   },
-  afterEach: function() {
+
+  afterEach() {
     destroyApp(appInstance);
     destroyApp(application);
-  }
+  },
 });
 
 test('Configures i18n service for locale', function(assert) {
-  assert.expect(2);
+  Ember.run(() => {
+    assert.expect(2);
 
-  let i18n = appInstance.lookup('service:i18n');
-  let ENV = appInstance._lookupFactory('config:environment');
-  let defaultLocale = (ENV.i18n || {}).defaultLocale;
+    let i18n = appInstance.lookup('service:i18n');
+    let ENV = appInstance._lookupFactory('config:environment');
+    let defaultLocale = (ENV.i18n || {}).defaultLocale;
 
-  assert.strictEqual(i18n.get('locale'), fakeLocale, 'Default i18n-service locale is \'' + fakeLocale + '\'');
+    assert.strictEqual(i18n.get('locale'), fakeLocale, 'Default i18n-service locale is \'' + fakeLocale + '\'');
 
-  var currentLocale = defaultLocale ? defaultLocale :
+    var currentLocale = defaultLocale ? defaultLocale :
     window.navigator.languages ? window.navigator.languages[0] : (window.navigator.language || window.navigator.userLanguage);
 
-  var locales = appInstance.lookup('controller:application').get('locales');
-  if (!locales || Ember.typeOf(locales) !== 'array' || locales.indexOf(currentLocale) === -1 || Ember.isBlank(currentLocale)) {
-    currentLocale = 'en';
-  }
+    var locales = appInstance.lookup('controller:application').get('locales');
+    if (!locales || Ember.typeOf(locales) !== 'array' || locales.indexOf(currentLocale) === -1 || Ember.isBlank(currentLocale)) {
+      currentLocale = 'en';
+    }
 
-  I18nInstanceInitializer.initialize(appInstance);
+    I18nInstanceInitializer.initialize(appInstance);
 
-  assert.strictEqual(i18n.get('locale'), currentLocale, 'Current i18n-service locale is \'' + currentLocale + '\'');
+    assert.strictEqual(i18n.get('locale'), currentLocale, 'Current i18n-service locale is \'' + currentLocale + '\'');
+  });
 });

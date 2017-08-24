@@ -24,7 +24,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   * `next-page-button`.
 
 ### Fixed
-  * When typing in the input field to search the `flexberry-simpleolv` component, `didRender` method that is problematic for the component is called.
+* When typing in the input field to search the `flexberry-simpleolv` component, `didRender` method that is problematic for the component is called.
+* Fix `flexberry-groupedit` sorting.
 
 ### Changed
 * Deleted unnecessary Semantic-UI themes.

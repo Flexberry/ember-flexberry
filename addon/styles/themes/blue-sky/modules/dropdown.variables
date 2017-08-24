@@ -6,6 +6,9 @@
 -----------*/
 
 @borderColor: @paleBlue;
+@dropdownBorder: none;
+@dropdownBorderBottom: 1px solid @borderColor;
+@borderRadius: 0px;
 
 /*------------
    Selection

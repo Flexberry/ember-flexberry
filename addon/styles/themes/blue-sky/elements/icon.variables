@@ -8,3 +8,4 @@
 @cornerIconInvertedShadow: @blue;
 
 @colorIcon : @blue;
+@colorIconBorder: @blue;

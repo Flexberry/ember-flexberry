@@ -32,7 +32,7 @@ for instance `lemon icon` not `lemon outline icon` since there is only one lemon
 
 /* Web Content */
 i.icon {font-family: 'Icons'; }
-i.icon:before { color: @blue; opacity: 0.8; }
+i.icon:before { color: @colorIcon; opacity: 0.8; }
 i.icon:hover:before { opacity: 1; }
 .disabled:before { opacity: 1; color: #999; }
 i.icon.setting:before { content: "\e817"; font-family: 'Crimean'; }
@@ -57,7 +57,7 @@ i.icon.angle.right:before { content: "\f105"; font-size: 16px;}
 i.icon.columns:before { content: "\f0db";}
 i.icon.edit:before { content: "\e810"; font-family: 'Crimean'; }
 i.icon.asterisk:before { content: "\f069"; color: @brightRed; }
-i.icon.calendar:before { content: "\e81c"; color: @blue; font-family: 'Crimean'; }
+i.icon.calendar:before { content: "\e81c"; color: @colorIcon; font-family: 'Crimean'; }
 
 /*******************************
             Aliases
@@ -125,21 +125,21 @@ i.icon.remove:before {
 .save-button:before {
     content: "\e80c";
     font-family: 'Crimean';
-    color: @blue;
+    color: @colorIcon;
     font-size: 21px;
     padding-right:10px;
 }
 .save-close-button:before {
     content: "\e80d";
     font-family: 'Crimean';
-    color: @blue;
+    color: @colorIcon;
     font-size: 21px;
     padding-right: 10px;
 }
 .save-del-button:before {
     content: "\e814";
     font-family: 'Crimean';
-    color: @blue;
+    color: @colorIcon;
     font-size: 21px;
     padding-right: 10px;
 }
@@ -180,7 +180,7 @@ i.icon.remove:before {
     font-size:16px;
 }
 .menu.transition > .flexberry-menuitem > i.icon.remove:hover:before {
-    color: @blue;
+    color: @colorIcon;
 }
 .menu.transition > .flexberry-menuitem > i.icon.remove.circle:before{
     content: "\f057";
@@ -312,7 +312,7 @@ i.icon.text-menu-hide:before {
 }
 
 .ui.button.icon.mini.compact {
-  border: 1px solid @blue;
+  border: 1px solid @colorIconBorder;
   padding: 0px;
   height: 22px;
   &:hover {
@@ -335,11 +335,11 @@ i.icon.text-menu-hide:before {
 }
 
 .launch:hover .ui.menu.item:before {
-    color: @blue!important;
+    color: @colorIcon !important;
 }
 
 .text_menu:hover .ui.menu.item:before {
-    color: @blue!important;
+    color: @colorIcon !important;
 }
 
 .flexberry-lookup > .ui.fluid > button > i.icon.remove:before {

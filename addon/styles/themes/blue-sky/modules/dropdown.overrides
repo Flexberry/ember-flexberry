@@ -7,16 +7,16 @@
 }
 
 .ui.fluid.dropdown {
-    border: none;
-    border-bottom: 1px solid @borderColor;
-    border-radius: 0px;
+    border: @dropdownBorder;
+    border-bottom: @dropdownBorderBottom;
+    border-radius: @borderRadius;
     outline: none;
 }
 
 .ui.selection.dropdown {
-    border: none;
-    border-bottom: 1px solid @borderColor;
-    border-radius: 0px;
+    border: @dropdownBorder;
+    border-bottom: @dropdownBorderBottom;
+    border-radius: @borderRadius;
     outline: none;
 }
 

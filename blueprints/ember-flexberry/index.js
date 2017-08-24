@@ -244,6 +244,7 @@ module.exports = {
       return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
     }).then(function() {
       return _this.addAddonsToProject({
+        blueprintOptions: { saveDev: true },
         packages: [
           { name: 'broccoli-jscs', target: '1.4.1' },
           { name: 'ember-browserify', target: '1.1.9' },

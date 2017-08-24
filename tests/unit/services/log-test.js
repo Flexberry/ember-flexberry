@@ -1,17 +1,19 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import { module, test } from 'qunit';
-import startApp from '../../helpers/start-app';
-import destroyApp from '../../helpers/destroy-app';
+import startApp from 'dummy/tests/helpers/start-app';
+import destroyApp from 'dummy/tests/helpers/destroy-app';
 
 let app;
 
 module('Unit | Service | log', {
-  beforeEach: function () {
+  beforeEach() {
     app = startApp();
   },
-  afterEach: function() {
+
+  afterEach() {
     destroyApp(app);
-  }
+  },
 });
 
 test('error works properly', function(assert) {

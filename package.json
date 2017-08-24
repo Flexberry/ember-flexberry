@@ -60,7 +60,6 @@
   },
   "dependencies": {
     "ember-cli-babel": "^5.1.7",
-    "ember-cli-legacy-blueprints": "^0.1.0",
     "ember-flexberry-data": "git+https://github.com/Flexberry/ember-flexberry-data.git#feature-ember-update",
     "ember-i18n": "4.2.2",
     "ember-truth-helpers": "1.2.0",

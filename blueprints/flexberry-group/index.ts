@@ -105,10 +105,7 @@ class GroupBlueprint {
       ui: undefined,
       analytics: undefined,
       project: undefined,
-      paths: [
-        "node_modules/ember-flexberry/blueprints",
-        "node_modules/ember-flexberry/node_modules/ember-cli-legacy-blueprints/blueprints"
-      ]
+      paths: this.options.project.blueprintLookupPaths()
     });
   }
 

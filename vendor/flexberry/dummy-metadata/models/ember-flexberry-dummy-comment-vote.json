@@ -6,39 +6,44 @@
   "parentClassName": null,
   "attrs": [
     {
-      "name": "voteType",
-      "type": "ember-flexberry-dummy-vote-type",
-      "flexberryType": "VoteType",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
       "name": "createTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "creator",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editor",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "voteType",
+      "type": "ember-flexberry-dummy-vote-type",
+      "flexberryType": "VoteType",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
     }
   ],
   "belongsTo": [
@@ -142,5 +147,7 @@
       ],
       "hasMany": []
     }
-  ]
+  ],
+  "stored": true,
+  "offline": true
 }

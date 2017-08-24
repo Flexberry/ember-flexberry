@@ -67,6 +67,12 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   sorting: [],
 
   /**
+    @property colsConfigMenu
+    @type Service
+  */
+  colsConfigMenu: Ember.inject.service(),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -76,6 +82,10 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   */
   model: function(params, transition) {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
+
+    let controller = this.controllerFor(this.routeName);
+    controller.set('state', 'loading');
+
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -110,6 +120,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
 
     Ember.assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
       nComponents === 1);
+    userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
@@ -120,16 +131,29 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         }
 
         let hierarchicalAttribute;
-        let controller = this.controllerFor(this.routeName);
         if (controller.get('inHierarchicalMode')) {
           hierarchicalAttribute = controller.get('hierarchicalAttribute');
         }
 
         this.sorting = userSettingsService.getCurrentSorting(componentName);
+        this.perPage = userSettingsService.getCurrentPerPage(componentName);
+        if (this.perPage !== params.perPage) {
+          if (params.perPage !== 5) {
+            this.perPage = params.perPage;
+            userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
+          } else {
+            if (this.sorting.length === 0) {
+              this.transitionTo(this.currentRouteName, { queryParams: { sort: null, perPage: this.perPage || 5 } }); // Show page without sort parameters
+            } else {
+              this.transitionTo(this.currentRouteName, { queryParams: { perPage: this.perPage || 5 } });  //Reload current page and records (model) list
+            }
+          }
+        }
+
         let queryParameters = {
           modelName: modelName,
           projectionName: projectionName,
-          perPage: params.perPage,
+          perPage: this.perPage,
           page: params.page,
           sorting: this.sorting,
           filter: params.filter,
@@ -140,6 +164,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         };
 
         this.onModelLoadingStarted(queryParameters);
+        this.get('colsConfigMenu').updateNamedSettingTrigger();
 
         // Find by query is always fetching.
         // TODO: support getting from cache with "store.all->filterByProjection".
@@ -155,6 +180,9 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         this.onModelLoadingRejected(errorData);
       }).finally((data) => {
         this.onModelLoadingAlways(data);
+        if (this.get('controller.state') === 'loading') {
+          this.get('controller').set('state', '');
+        }
       });
 
     if (this.get('controller') === undefined) {
@@ -256,5 +284,10 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
+    controller.set('developerUserSettings', this.get('developerUserSettings'));
+    controller.set('resultPredicate', this.get('resultPredicate'));
+    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    }
   }
 });

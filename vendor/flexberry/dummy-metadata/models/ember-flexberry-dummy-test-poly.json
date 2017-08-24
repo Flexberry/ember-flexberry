@@ -10,7 +10,8 @@
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     }
   ],
   "belongsTo": [
@@ -94,5 +95,7 @@
       ],
       "hasMany": []
     }
-  ]
+  ],
+  "stored": true,
+  "offline": true
 }

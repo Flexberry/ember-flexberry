@@ -112,10 +112,10 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Indent to indicate hierarchy, can be used HTML.
+    Indent in pixels to indicate hierarchy.
 
     @property hierarchicalIndent
-    @type String
+    @type Number
   */
   hierarchicalIndent: undefined,
 
@@ -127,6 +127,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   disableHierarchicalMode: false,
+
+  /**
+    Default left padding in cells.
+
+    @property defaultLeftPadding
+    @type Number
+    @default 10
+  */
+  defaultLeftPadding: 10,
 
   /**
     Text to be displayed in table body, if content is not defined or empty.
@@ -153,6 +162,15 @@ export default FlexberryBaseComponent.extend({
     @type String
   */
   editFormRoute: undefined,
+
+  /**
+    Flag indicates whether component on edit form (for FOLV).
+
+    @property onEditForm
+    @type Boolean
+    @default false
+  */
+  onEditForm: false,
 
   /**
     Primary action for row click.
@@ -186,6 +204,15 @@ export default FlexberryBaseComponent.extend({
     componentName: undefined,
     componentProperties: null,
   },
+
+  /**
+    Flag: indicates whether to show validation messages in every row or not.
+
+    @property showValidationMessages
+    @type Boolean
+    @default false
+  */
+  showValidationMessagesInRow: false,
 
   /**
     Flag indicates whether to show asterisk icon in first column of every changed row.
@@ -235,8 +262,46 @@ export default FlexberryBaseComponent.extend({
   /**
     Additional menu items for dropdown menu in last column of every row.
 
+    @example
+      ```javascript
+      // app/controllers/exapmle.js
+      ...
+      menuItems: [{
+        icon: 'spy icon',
+        title: 'Recruit it',
+        actionName: 'recruit',
+      }],
+      ...
+      actions: {
+        ...
+        recruit(record) {
+          record.set('isSpy', true);
+        },
+        ...
+      },
+      ...
+      ```
+
+      Note: For every action in component you need to pass an additional parameter in the form of `actionName="actionName"`.
+      ```javascript
+      // app/templates/example.hbs
+      ...
+      {{flexberry-groupedit
+        ...
+        menuInRowAdditionalItems=menuItems
+        recruit="recruit"
+        ...
+      }}
+      ...
+      ```
+
+    For in-row menu following properties are used:
+    - {{#crossLink "FlexberryGroupeditComponent/showDeleteMenuItemInRow:property"}}{{/crossLink}},
+    - {{#crossLink "FlexberryGroupeditComponent/showEditMenuItemInRow:property"}}{{/crossLink}},
+    - {{#crossLink "FlexberryGroupeditComponent/menuInRowAdditionalItems:property"}}{{/crossLink}}.
+
     @property menuInRowAdditionalItems
-    @type Boolean
+    @type Array
     @default null
   */
   menuInRowAdditionalItems: null,
@@ -358,6 +423,15 @@ export default FlexberryBaseComponent.extend({
   colsConfigButton: true,
 
   /**
+    Flag indicates whether to show exportExcelButton button at toolbar.
+
+    @property exportExcelButton
+    @type Boolean
+    @default false
+  */
+  exportExcelButton: false,
+
+  /**
     Flag to use filters in OLV component.
 
     @property enableFilters
@@ -439,6 +513,24 @@ export default FlexberryBaseComponent.extend({
   recordsTotalCount: null,
 
   /**
+    Minimum column width, if width isn't defined in userSettings.
+
+    @property minAutoColumnWidth
+    @type Number
+    @default 150
+  */
+  minAutoColumnWidth: 150,
+
+  /**
+    Indicates whether or not invoke _setColumnWidths function on container resize.
+
+    @property widthChangeOnContainerResize
+    @type Boolean
+    @default true
+  */
+  widthChangeOnContainerResize: true,
+
+  /**
     Current interval of records.
 
     @property currentIntervalRecords
@@ -451,7 +543,7 @@ export default FlexberryBaseComponent.extend({
     let recordsTotalCount = this.get('recordsTotalCount');
     if (recordsTotalCount === null && this.get('showShowingEntries')) {
       this.set('showShowingEntries', false);
-      Ember.Logger.error('Property \'recordsTotalCount\' is undefined.');
+      throw new Error('Property \'recordsTotalCount\' is undefined.');
     }
 
     let currentStartRecords = null;
@@ -570,15 +662,30 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.objectListViewRowClick
       @public
-      @param {Object} record Clicked record
+      @param {Object} record Clicked record.
+      @param {Object} options Different parameters to handle action.
     */
-    objectListViewRowClick(record) {
-      if (this.get('componentMode') === 'lookupform') {
-        this.sendAction('action', record);
-      } else {
-        let editFormRoute = this.get('editFormRoute');
-        Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
-        this.sendAction('action', record, editFormRoute);
+    objectListViewRowClick(record, options) {
+      if (this.get('rowClickable') && !this.get('readonly')) {
+        let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
+        Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
+          if (this.get('componentMode') === 'lookupform') {
+            this.sendAction('action', record);
+          } else {
+            let editFormRoute = this.get('editFormRoute');
+            Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
+            if (Ember.isNone(options)) {
+              options = {};
+              options.editFormRoute = editFormRoute;
+            } else {
+              options = Ember.merge(options, { editFormRoute: editFormRoute });
+            }
+
+            this.sendAction('action', record, options);
+          }
+        });
+
+        this._setActiveRow($clickedRow);
       }
     },
 
@@ -587,6 +694,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.previousPage
       @public
+      @param {Action} action Action previous page.
     */
     previousPage(action) {
       if (!action) {
@@ -603,6 +711,7 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.nextPage
       @public
+      @param {Action} action Action next page.
     */
     nextPage(action) {
       if (!action) {
@@ -619,7 +728,8 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.gotoPage
       @public
-      @param {Number} pageNumber Number of page to go to
+      @param {Action} action Action go to page.
+      @param {Number} pageNumber Number of page to go to.
     */
     gotoPage(action, pageNumber) {
       if (!action) {
@@ -639,7 +749,8 @@ export default FlexberryBaseComponent.extend({
         {
           buttonName: '...', // Button displayed name.
           buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-          buttonClasses: '...' // Css classes for button.
+          buttonClasses: '...', // Css classes for button.
+          buttonTitle: '...' // Button title.
         }
         ```
 
@@ -740,10 +851,15 @@ export default FlexberryBaseComponent.extend({
       Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
 
       @method actions.resetFilters
+      @param {Action} action Action reset filters.
     */
-    resetFilters() {
-      throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
+    resetFilters(action) {
+      if (!action) {
+        throw new Error('No handler for resetFilters action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... resetFilters=(action "resetFilters")}}.');
+      }
+
+      action(this.get('componentName'));
     },
 
     /**
@@ -793,10 +909,26 @@ export default FlexberryBaseComponent.extend({
       Called when click on perPage.
 
       @method actions.perPageClick
+      @param {String} perPageValue Selected perPage value.
     */
-    perPageClick() {
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
-    }
+    perPageClick(perPageValue) {
+      var userSettings = this.get('userSettingsService');
+      if (parseInt(perPageValue, 10) !== userSettings.getCurrentPerPage(this.componentName)) {
+        userSettings.setCurrentPerPage(this.componentName, undefined, perPageValue);
+        this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      }
+    },
+
+    /**
+      Send action with `actionName` into controller.
+
+      @method actions.sendMenuItemAction
+      @param {String} actionName
+      @param {DS.Model} record
+    */
+    sendMenuItemAction(actionName, record) {
+      this.sendAction(actionName, record);
+    },
   },
 
   /**
@@ -920,5 +1052,41 @@ export default FlexberryBaseComponent.extend({
   */
   didRender() {
     this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
+  },
+
+  /**
+    Get the row by key.
+
+    @method _getRowByKey
+    @private
+  */
+  _getRowByKey(key) {
+    let row = null;
+    this.$('tbody tr').each(function() {
+      let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
+      if (currentKey === key) {
+        row = Ember.$(this);
+        return;
+      }
+    });
+    return row;
+  },
+
+  /**
+    Set the active row.
+
+    @method _setActiveRow
+    @private
+
+    @param {Object} row Table row, which must become active.
+  */
+  _setActiveRow($row) {
+    // Deactivate previously activated row.
+    this.$('tbody tr.active').removeClass('active');
+
+    // Activate specified row.
+    if ($row && $row.addClass) {
+      $row.addClass('active');
+    }
   },
 });

@@ -8,6 +8,8 @@ moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
     'transform:decimal',
 <% if (!!needsAllEnums === true) { %>
 <%= needsAllEnums %>,
+<% } %><% if (!!needsAllObjects === true) { %>
+<%= needsAllObjects %>,
 <% } %>
 <%= needsAllModels %>
   ]

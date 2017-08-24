@@ -1,56 +1,100 @@
 <div class="ui secondary menu no-margin ">
   {{#if refreshButton}}
-    <button class="ui {{buttonClass}} button" {{action "refresh"}}>
-      {{t "components.olv-toolbar.refresh-button-text"}}
+    <button
+      class="ui refresh-button {{buttonClass}} button"
+      title={{t "components.olv-toolbar.refresh-button-text"}}
+      {{action "refresh"}}>
+        {{t "components.olv-toolbar.refresh-button-text"}}
     </button>
   {{/if}}
   {{#if createNewButton}}
-    <button class="ui {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button" {{action "createNew"}}>
-      {{t "components.olv-toolbar.add-button-text"}}
+    <button
+      class="ui create-button {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button"
+      title={{t "components.olv-toolbar.add-button-text"}}
+      {{action "createNew"}}>
+        {{t "components.olv-toolbar.add-button-text"}}
     </button>
   {{/if}}
   {{#if deleteButton}}
-    <button class="ui {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button" {{action "delete"}}>
-      {{t "components.olv-toolbar.delete-button-text"}}
+    <button
+      class="ui delete-button {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button"
+      title={{t "components.olv-toolbar.delete-button-text"}}
+       {{action "delete"}}>
+        {{t "components.olv-toolbar.delete-button-text"}}
     </button>
   {{/if}}
   {{#if availableHierarchicalMode}}
-    <button class="ui button icon {{buttonClass}} {{if inHierarchicalMode "active"}}" {{action "switchHierarchicalMode"}}>
-      <i class="sitemap icon"></i>
+    <button
+      class="ui button icon hierarchical-button {{buttonClass}} {{if inHierarchicalMode "active"}}"
+      title={{t "components.olv-toolbar.hierarchy-button-text"}}
+      {{action "switchHierarchicalMode"}}>
+        <i class="sitemap icon"></i>
     </button>
   {{/if}}
   {{#if enableFilters}}
-    <div class="ui icon input buttons">
-      <button class="ui button {{buttonClass}} {{if showFilters "active"}}" {{action "toggleStateFilters"}}>
-        <i class="filter icon"></i>
+    <div class="ui icon buttons filter-active">
+      <button
+        class="ui button {{buttonClass}} {{if showFilters "active"}}"
+        title={{t "components.olv-toolbar.filter-button-text"}}
+        {{action "toggleStateFilters"}}>
+          <i class="filter icon"></i>
       </button>
       {{#if filters}}
         <div class="or" data-text="&bull;"></div>
-        <button class="ui button {{buttonClass}}" {{action "resetFilters"}}>
-          <i class="remove icon"></i>
+        <button
+          class="ui button removeFilter-button {{buttonClass}}"
+          title={{t "components.olv-toolbar.remove-filter-button-text"}}
+          {{action "resetFilters" this.attrs.resetFilters}}>
+            <i class="remove icon"></i>
         </button>
       {{/if}}
     </div>
   {{/if}}
   {{#if filterButton}}
     <div class="ui action input">
-      {{input
-        type="text"
-        placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
-        value=filterByAnyMatchText enter="filterByAnyMatch"
+      <div class="block-action-input">
+        <input
+          type="text"
+          value={{filterByAnyMatchText}}
+          placeholder={{t "components.olv-toolbar.filter-by-any-match-placeholder"}}
+          onkeyup={{action "filterByAnyMatch"}}
+        />
+      </div>
+      <button
+        class="ui {{buttonClass}} icon button search-button"
+        title={{t "components.olv-toolbar.search-button-text"}}
+        {{action "filterByAnyMatch"}}>
+          <i class="search icon"></i>
+      </button>
+      <button
+        class="ui {{buttonClass}} icon button clear-search-button"
+        title={{t "components.olv-toolbar.clear-search-button-text"}}
+        {{action "removeFilter"}}>
+          <i class="remove icon"></i>
+      </button>
+    </div>
+  {{/if}}
+  {{#if exportExcelButton}}
+    <div class="ui buttons">
+      <button
+        class="ui button icon export-button {{buttonClass}}"
+        title={{t "components.olv-toolbar.export-excel-button-text"}}
+        {{action "showExportDialog"}}>
+          <i class="large file excel outline icon"></i>
+      </button>
+      {{flexberry-menu
+        items=exportExcelItems
+        onItemClick=(action "onExportMenuItemClick")
       }}
-      <button class="ui {{buttonClass}} icon button" {{action "filterByAnyMatch"}}>
-        <i class="search icon"></i>
-      </button>
-      <button class="ui {{buttonClass}} icon button" {{action "removeFilter"}}>
-        <i class="remove icon"></i>
-      </button>
     </div>
   {{/if}}
   {{#if colsConfigButton}}
     <div class="ui buttons">
-      <button class="ui icon button" {{action "showConfigDialog"}}>
-        <i class="large table icon"></i>
+      <button
+        class="ui icon button config-button"
+        title={{t "components.colsconfig-dialog-content.title"}}
+        {{action "showConfigDialog"}}>
+          <i class="large table icon"></i>
       </button>
       {{#if colsSettingsItems}}
         {{flexberry-menu
@@ -63,6 +107,7 @@
   {{#each customButtons as |customButton|}}
     <button
       class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
+      title={{if customButton.buttonTitle customButton.buttonTitle}}
       {{action "customButtonAction" customButton.buttonAction}}>
       {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
     </button>
@@ -73,16 +118,20 @@
       {{_infoModalDialogCaption}}
     </div>
     <div class="center aligned ui grid">
-    <button class="ui icon button" {{action "copyJSONContent"}} id='OLVToolbarInfoCopyButton'>
+    <button
+      class="ui icon button"
+      title={{t "components.olv-toolbar.copy"}}
+      {{action "copyJSONContent"}}
+      id='OLVToolbarInfoCopyButton'>
         <i class="copy icon"></i>
         {{t "components.olv-toolbar.copy"}}
-      </button>
-      <div class="actions">
+    </button>
+    <div class="actions">
       <div class="olv-toolbar-info-modal-dialog-ok-button ui approve green inverted button" >
-          <i class="remove icon"></i>
-          {{t "components.olv-toolbar.close"}}
-        </div>
+        <i class="remove icon"></i>
+        {{t "components.olv-toolbar.close"}}
       </div>
+    </div>
     </div>
     <div class="ui form">
       <div class="olv-toolbar-info-modal-dialog-content center aligned ui field">
@@ -108,12 +157,12 @@
     <thead>
       <tr>
         {{#if showHelperColumn}}
-          <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
+          <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar"></th>
         {{/if}}
         {{#each columns as |column|}}
           {{#unless column.hide}}
             <th class="dt-head-left me class" onclick={{ action "headerCellClick" column }}>
-              <div data-olv-header-property-name={{column.propName}} title={{t "components.object-list-view.header-title-attr"}}>
+              <div data-olv-header-property-name={{column.propName}} title={{sortTitleCompute}}>
                 <span>
                 {{#if column.keyLocale}}
                   {{t column.keyLocale}}
@@ -124,11 +173,11 @@
                 {{#if column.sorted}}
                   <div style="float:right;">
                     {{#if column.sortAscending}}
-                      <div title="Order ascending">
+                      <div title="{{t 'components.object-list-view.sort-ascending'}}">
                       ▲{{column.sortNumber}}
                       </div>
                     {{else}}
-                      <div title="Order descending">
+                      <div title="{{t 'components.object-list-view.sort-descending'}}">
                       ▼{{column.sortNumber}}
                       </div>
                     {{/if}}
@@ -146,10 +195,12 @@
     <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
       {{#if showFilters}}
         <tr>
-          <td rowspan="2" class="{{unless (and showHelperColumn hasContent) 'hidden'}}"></td>
+          {{#if showHelperColumn}}
+            <td rowspan="1"></td>
+          {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td>
+              <td style={{defaultPaddingStyle}}>
                 {{#if column.filter.conditions}}
                   {{component "flexberry-dropdown"
                     value=column.filter.condition
@@ -163,13 +214,16 @@
             {{/unless}}
           {{/each}}
           {{#if showMenuColumn}}
-            <td rowspan="2"></td>
+            <td rowspan="1"></td>
           {{/if}}
         </tr>
         <tr>
+          {{#if showHelperColumn}}
+            <td rowspan="1"></td>
+          {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td>
+              <td style={{defaultPaddingStyle}}>
                 {{#if column.filter.component.name}}
                   {{component column.filter.component.name
                     value=column.filter.pattern
@@ -179,13 +233,9 @@
               </td>
             {{/unless}}
           {{/each}}
-        </tr>
-      {{/if}}
-      {{#if rowsInLoadingState}}
-        <tr>
-          <td colspan="{{colspan}}" style="text-align:center;">
-            <div class="ui active centered inline loader"></div> {{t "components.object-list-view.loading-text"}}
-          </td>
+          {{#if showMenuColumn}}
+            <td rowspan="1"></td>
+          {{/if}}
         </tr>
       {{/if}}
       {{#unless content}}
@@ -197,7 +247,7 @@
       {{else}}
         {{#each contentWithKeys key="key" as |record|}}
             <tr class="{{record.rowConfig.customClass}}">
-              <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}">
+              <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
                 <div class="hidden">{{record.key}}</div>
                 {{#if showHelperColumn}}
                   <div class="object-list-view-helper-column-cell">
@@ -216,7 +266,7 @@
                     {{/if}}
                     {{#if showDeleteButtonInRow}}
                       <div class="cell">
-                        <button class="ui {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}>
+                        <button class="ui ui-delete {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}>
                           <i class="minus icon"></i>
                         </button>
                       </div>
@@ -226,13 +276,13 @@
               </td>
               {{#each columns as |column|}}
                 {{#unless column.hide}}
-                  <td {{action "objectListViewRowClick" record preventDefault=false}}>
+                  <td {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
                     {{#if column.cellComponent.componentName}}
                       {{component column.cellComponent.componentName
                         dynamicProperties=column.cellComponent.componentProperties
                         relatedModel=record.data
                         value=(mut (get record.data column.propName))
-                        readonly=readonly
+                        readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
                         required=required
                       }}
                     {{else}}
@@ -247,17 +297,17 @@
                 {{/unless}}
               {{/each}}
               {{#if showMenuColumn}}
-                <td class="object-list-view-menu">
+                <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
                   <div class="basic right pointing ui icon dropdown button">
                     <i class="list layout icon"></i>
                     <div class="left menu">
-                      {{#if record.rowConfig.canBeSelected}}
+                      {{#if (and showEditMenuItemInRow record.rowConfig.canBeSelected)}}
                         <div class="item" {{ action "objectListViewRowClick" record }}>
                           <i class="edit icon"></i>
                           <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
                         </div>
                       {{/if}}
-                      {{#if record.rowConfig.canBeDeleted}}
+                      {{#if (and showDeleteMenuItemInRow record.rowConfig.canBeDeleted)}}
                         <div class="item" {{ action "deleteRow" record }}>
                           <i class="trash icon"></i>
                           <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
@@ -275,7 +325,7 @@
 </div>
 <div class="ui secondary menu no-margin">
   <div class="ui basic buttons">
-    <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
+    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
     {{#each pages as |page|}}
       {{#if page.isEllipsis}}
         <div class="ui button">...</div>
@@ -287,10 +337,10 @@
         {{/if}}
       {{/if}}
     {{/each}}
-    <button class="ui {{unless hasNextPage 'disabled'}} button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
+    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
   </div>
   <div class="right menu">
-    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick")}}
+    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}
   </div>
 </div>
 {{#if showShowingEntries}}

@@ -1,5 +1,5 @@
-{{#if _supportDateType}} 
+{{#if (and currentTypeSupported useBrowserInput)}}
   {{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString placeholder=placeholder}}
 {{else}}
-  {{input type="text" class="flatpickr" placeholder=placeholder value=_valueAsString min=_minAsString max=_maxAsString}}
+  <input type="text" class="flatpickr" placeholder={{placeholder}}/>
 {{/if}}

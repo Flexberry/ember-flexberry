@@ -122,15 +122,12 @@ export default FlexberryBaseComponent.extend({
     if (configurateItems) {
       let configurateItemsType = Ember.typeOf(configurateItems);
 
-      if (configurateItemsType === 'function') {
-        configurateItems(items);
-      } else {
-        Ember.Logger.error(
-          'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
-          'actual type is \'' +
-          configurateItemsType +
-          '\', but \'function\' is expected.');
-      }
+      Ember.assert(
+        'Wrong type of flexberry-menu \'configurateItems\' propery: ' +
+        'actual type is \'' +
+        configurateItemsType +
+        '\', but \'function\' is expected.', configurateItemsType === 'function');
+      configurateItems(items);
     }
 
     this.set('items', items);
@@ -232,7 +229,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Menu's collapseMenuOnItemClick observer.
-   */
+  */
   _collapseMenuOnItemClickDidChange: Ember.observer('collapseMenuOnItemClick', function() {
     this.$().dropdown({
       action: this._getActionForMenu(this.get('collapseMenuOnItemClick'))
@@ -246,7 +243,7 @@ export default FlexberryBaseComponent.extend({
     @param {Boolean} collapseMenuOnItemClick Flag whether to collapse menu on click or not.
     @return {String} Action name.
     @private
-   */
+  */
   _getActionForMenu(collapseMenuOnItemClick) {
     return collapseMenuOnItemClick ? 'activate' : 'nothing';
   }

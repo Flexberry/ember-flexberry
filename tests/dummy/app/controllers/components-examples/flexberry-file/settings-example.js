@@ -180,7 +180,7 @@ export default EditFormController.extend({
       settingName: 'inputClass',
       settingType: 'css',
       settingDefaultValue: '',
-      settingAvailableItems: ['fluid input', 'transparent input', 'mini input', 'huge input', 'input error'],
+      settingAvailableItems: ['fluid input', 'transparent input', 'mini input', 'huge input', 'field error'],
       bindedControllerPropertieName: 'inputClass'
     });
     componentSettingsMetadata.pushObject({

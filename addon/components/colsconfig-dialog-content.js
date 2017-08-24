@@ -1,5 +1,8 @@
 import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
+import serializeSortingParam from '../utils/serialize-sorting-param';
+import QueryBuilder from 'ember-flexberry-data/query/builder';
+import ODataAdapter from 'ember-flexberry-data/query/odata-adapter';
 const { getOwner } = Ember;
 const _idPrefix = 'ColDesc';
 
@@ -20,6 +23,15 @@ export default FlexberryBaseComponent.extend({
   colsConfigMenu: Ember.inject.service(),
 
   /**
+   Service that triggers objectlistview events.
+
+   @property objectlistviewEvents
+   @type {Class}
+   @default Ember.inject.service()
+   */
+  objectlistviewEvents: Ember.inject.service(),
+
+  /**
    Model with added DOM elements.
 
    @property modelForDOM
@@ -30,7 +42,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
    ObjectListView component name.
-   *
+
    @property componentName
    @type {String}
    @default ''
@@ -39,7 +51,7 @@ export default FlexberryBaseComponent.extend({
 
   /**
    ObjectListView setting name.
-   *
+
    @property settingName
    @type {String}
    @default ''
@@ -47,12 +59,20 @@ export default FlexberryBaseComponent.extend({
   settingName: '',
 
   /**
-   changed flag.
-   *
-   @property isChanged
-   @type {Boolean}
-   @default false
-   */
+    Form state. A form is in different states: loading, success, error.
+
+    @property state
+    @type String
+  */
+  state: '',
+
+  /**
+    Changed flag.
+
+    @property isChanged
+    @type {Boolean}
+    @default false
+  */
   _isChanged: false,
 
   /**
@@ -60,9 +80,45 @@ export default FlexberryBaseComponent.extend({
 
    @property saveColWidthState
    @type {Boolean}
-   @default false
+   @default true
    */
-  saveColWidthState: false,
+  saveColWidthState: true,
+
+  /**
+    Per page value.
+
+    @property perPageValue
+    @type {Int}
+    @default undefined
+  */
+  perPageValue: undefined,
+
+  /**
+    Params for export excel.
+
+    @property exportParams
+    @type {Object}
+    @default {}
+  */
+  exportParams: {},
+
+  /**
+    Current store.
+
+    @property store
+    @type {Object}
+    @default undefined
+  */
+  store: undefined,
+
+  /**
+    Current model name.
+
+    @property modelName
+    @type {String}
+    @default undefined
+  */
+  modelName: undefined,
 
   init: function() {
     this._super(...arguments);
@@ -73,6 +129,11 @@ export default FlexberryBaseComponent.extend({
 
     this.settingName = this.model.settingName;
     this.componentName = this.model.componentName;
+    this.perPageValue = this.model.perPageValue;
+    this.saveColWidthState = this.model.saveColWidthState;
+    this.exportParams = this.model.exportParams;
+    this.modelName = this.model.modelName;
+    this.set('store', this.model.store);
     let colDescs = this.model.colDescs;
     for (let i = 0; i < colDescs.length; i++) {
       let colDesc = colDescs[i];
@@ -85,10 +146,6 @@ export default FlexberryBaseComponent.extend({
         } else {
           colDesc.sortOrderdNot = 'selected';
         }
-      }
-
-      if ('columnWidth' in colDesc) {
-        this.saveColWidthState = true;
       }
 
       colDesc.trId = _idPrefix + 'TR_' + i;
@@ -107,6 +164,15 @@ export default FlexberryBaseComponent.extend({
     firstButtonUp.addClass('disabled'); // Disable first button up
     let lastButtondown = Ember.$('#ColDescRowDown_' + (this.modelForDOM.length - 1));
     lastButtondown.addClass('disabled'); // Disable last button down
+    if (this.exportParams.isExportExcel && this.exportParams.immediateExport) {
+      this.exportParams.immediateExport = false;
+      this.actions.apply.call(this);
+    }
+  },
+
+  didInsertElement: function() {
+    this._super(...arguments);
+    this.$('.sort-direction-dropdown').dropdown();
   },
 
   actions: {
@@ -301,37 +367,69 @@ export default FlexberryBaseComponent.extend({
      Apply settings specified in the interface as DEFAULT values
 
      @method actions.apply
-     */
+    */
     apply: function() {
-      let colsConfig = this._getSettings();
-      let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
-      if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
-        return;
-      }
-
-      //Save colsConfig in userSettings as DEFAULT
-      let router = getOwner(this).lookup('router:main');
-      let savePromise = this._getSavePromise(undefined, colsConfig);
-      savePromise.then(
-        record => {
-          if (router.location.location.hash.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: null } }); // Show page without sort parameters
-          } else {
-            router.router.refresh();  //Reload current page and records (model) list
-          }
+      if (!this.exportParams.isExportExcel) {
+        let colsConfig = this._getSettings();
+        let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
+        if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
+          return;
         }
-      );
-      this.sendAction('close', colsConfig); // close modal window
+
+        //Save colsConfig in userSettings as DEFAULT
+        let router = getOwner(this).lookup('router:main');
+        let savePromise = this._getSavePromise(undefined, colsConfig);
+        savePromise.then(
+          record => {
+            let sort = serializeSortingParam(colsConfig.sorting);
+            router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+          }
+        );
+        this.sendAction('close', colsConfig); // close modal window
+      } else {
+        let _this = this;
+        _this.set('state', 'loading');
+        let store = this.get('store.onlineStore') || this.get('store');
+        let adapter = store.adapterFor(this.modelName);
+        let currentQuery = this._getCurrentQuery();
+        adapter.query(store, this.modelName, currentQuery).then((result) => {
+          let blob = new Blob([result], { type: 'application/vnd.ms-excel' });
+          let anchor = Ember.$('.download-anchor');
+          if (!Ember.isBlank(anchor)) {
+            if (window.navigator.msSaveOrOpenBlob) {
+              let downloadFunction = function() {
+                window.navigator.msSaveOrOpenBlob(blob, 'list.xlsx');
+              };
+
+              anchor.on('click', downloadFunction);
+              anchor.get(0).click();
+              anchor.off('click', downloadFunction);
+            } else {
+              let downloadUrl = URL.createObjectURL(blob);
+              anchor.prop('href', downloadUrl);
+              anchor.prop('download', 'list.xlsx');
+              anchor.get(0).click();
+            }
+          }
+
+          _this.set('state', '');
+        }).catch(() => {
+          _this.set('state', '');
+        });
+      }
     },
     /**
-     Save named settings specified in the interface as named values
+      Save named settings specified in the interface as named values
 
-     @method actions.saveColsSetting
-     */
+      @method actions.saveColsSetting
+    */
     saveColsSetting: function() {
       let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
       if (settingName.length <= 0) {
-        alert(this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
+        this.set('currentController.message.type', 'warning');
+        this.set('currentController.message.visible', true);
+        this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.enter-setting-name'));
+        this.set('currentController.message.message', '');
         return;
       }
 
@@ -340,39 +438,116 @@ export default FlexberryBaseComponent.extend({
       this.get('colsConfigMenu').addNamedSettingTrigger(settingName);
       savePromise.then(
         record => {
-          alert(this.get('i18n').t('components.colsconfig-dialog-content.setting') +
+          this.set('currentController.message.type', 'success');
+          this.set('currentController.message.visible', true);
+          this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.setting') +
             settingName +
             this.get('i18n').t('components.colsconfig-dialog-content.is-saved'));
+          this.set('currentController.message.message', '');
           Ember.$('#columnConfigurtionButtonSave')[0].className += ' disabled';
+          this._isChanged = false;
         },
         error => {
-          alert(this.get('i18n').t('components.colsconfig-dialog-content.have-errors') + JSON.stringify(error));
+          this.set('currentController.message.type', 'error');
+          this.set('currentController.message.visible', true);
+          this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
+          this.set('currentController.message.message', JSON.stringify(error));
         }
       );
     },
 
     /**
-     Column width is changed
+      Column width is changed
 
-     @method actions.widthChanged
-     */
+      @method actions.widthChanged
+    */
     widthChanged: function() {
       this._changed();
     },
 
     /**
-     Config name is defined
+      Config name is defined
 
-     @method actions.setConfigName
-     */
+      @method actions.setConfigName
+    */
     setConfigName: function() {
       this._changed();
     },
 
+    /**
+      Per page value is changed
+
+      @method actions.perPageChanged
+    */
+    perPageChanged: function() {
+      this._changed();
+    },
+
+    /**
+      DetSeparateCols value is changed
+
+      @method actions.detSeparateColsChange
+    */
+    detSeparateColsChange: function() {
+      this._changed();
+    },
+
+    /**
+      DetSeparateRows value is changed
+
+      @method actions.detSeparateRowsChange
+    */
+    detSeparateRowsChange: function() {
+      this._changed();
+    },
+  },
+
+  /**
+    Gets current query for export excel
+
+    @method _getCurrentQuery
+  */
+  _getCurrentQuery: function() {
+    let settings = this._getSettings();
+    let sortString = '';
+    let modelName = this.modelName;
+    settings.sorting.map(sort => {
+      sortString += `${sort.propName} ${sort.direction},`;
+    });
+    sortString = sortString.slice(0, -1);
+    let store = this.get('store.onlineStore') || this.get('store');
+    let builder = new QueryBuilder(store, modelName);
+    let adapter = new ODataAdapter('123', store);
+    builder.selectByProjection(this.exportParams.projectionName, true);
+    let colsOrder = settings.colsOrder.filter(({ hide }) => !hide)
+      .map(column => adapter._getODataAttributeName(modelName, column.propName).replace(/\//g, '.') + '/' + column.name || column.propName)
+      .join();
+    if (sortString) {
+      builder.orderBy(sortString);
+    }
+
+    let limitFunction = this.get('objectlistviewEvents').getLimitFunction();
+    if (limitFunction) {
+      builder.where(limitFunction);
+    }
+
+    if (this.exportParams.isExportExcel) {
+      builder.ofDataType('blob');
+      let customQueryParams = { colsOrder: colsOrder, exportExcel: this.exportParams.isExportExcel,
+        detSeparateRows: this.exportParams.detSeparateRows, detSeparateCols: this.exportParams.detSeparateCols };
+      builder.withCustomParams(customQueryParams);
+    }
+
+    let query = builder.build();
+
+    return query;
   },
 
   _getSavePromise: function(settingName, colsConfig) {
-    return this.get('userSettingsService').saveUserSetting(this.componentName, settingName, colsConfig);
+    return this.get('userSettingsService').saveUserSetting(this.componentName, settingName, colsConfig, this.exportParams.isExportExcel)
+    .then(result => {
+      this.get('colsConfigMenu').updateNamedSettingTrigger();
+    });
   },
 
   _getSettings: function() {
@@ -387,7 +562,7 @@ export default FlexberryBaseComponent.extend({
       let tr = trs[i];
       let index = this._getIndexFromId(tr.id);  // get index of initial (model) order
       let colDesc = this.model.colDescs[index];  // Model for this tr
-      colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide };  //Set colsOrder element
+      colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide, name: colDesc.name.toString() };  //Set colsOrder element
       if (colDesc.sortPriority !== undefined) { // Sort priority defined
         sortSettings[sortSettings.length] = { propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority }; //Add sortSetting element
       }
@@ -408,9 +583,21 @@ export default FlexberryBaseComponent.extend({
       sorting[sorting.length] =  { propName: sortedSetting.propName, direction:  sortedSetting.sortOrder > 0 ? 'asc' : 'desc' };
     }
 
-    colsConfig = { colsOrder: colsOrder, sorting: sorting };  // Set colsConfig Object
+    let perPageElement = Ember.$('#perPageValueInput').get(0);
+    let perPage = parseInt(perPageElement.value, 10);
+
+    if (perPage === isNaN || perPage <= 0) {
+      perPage = 5;
+    }
+
+    colsConfig = { colsOrder: colsOrder, sorting: sorting, perPage: perPage };  // Set colsConfig Object
     if (this.saveColWidthState) {
       colsConfig.columnWidths = widthSetting;
+    }
+
+    if (this.exportParams.isExportExcel) {
+      colsConfig.detSeparateRows = this.exportParams.detSeparateRows;
+      colsConfig.detSeparateCols = this.exportParams.detSeparateCols;
     }
 
     return colsConfig;

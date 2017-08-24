@@ -24,6 +24,15 @@ const {
  */
 export default Ember.Mixin.create({
   /**
+   Service that triggers objectlistview events.
+
+   @property objectlistviewEvents
+   @type {Class}
+   @default Ember.inject.service()
+   */
+  objectlistviewEvents: Ember.inject.service(),
+
+  /**
    * It reloads data by parameters.
 
      This method is called to get data for flexberry-objectlistview
@@ -119,6 +128,7 @@ export default Ember.Mixin.create({
                             (filterPredicate ?
                               filterPredicate :
                               undefined));
+    this.get('objectlistviewEvents').setLimitFunction(resultPredicate);
 
     if (resultPredicate) {
       builder.where(resultPredicate);

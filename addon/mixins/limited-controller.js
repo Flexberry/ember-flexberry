@@ -55,7 +55,7 @@ export default Ember.Mixin.create({
     @type Array
     @default ['lf', 'filter']
    */
-  queryParams: ['filter'],
+  queryParams: ['filter', 'filterCondition'],
 
   /**
     Filters filled in OLV component.
@@ -76,12 +76,29 @@ export default Ember.Mixin.create({
   filter: null,
 
   /**
+    Result predicate with all restrictions for olv.
+
+    @property resultPredicate
+    @type BasePredicate
+    @default null
+   */
+  resultPredicate: null,
+
+  /**
     Condition for predicate uses at filter by any match, can be `or` or `and`.
 
     @property filterCondition
     @type String
   */
   filterCondition: undefined,
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   actions: {
     /**
@@ -92,6 +109,7 @@ export default Ember.Mixin.create({
     */
     applyFilters(filters) {
       this.set('filters', filters);
+      this.set('state', 'loading');
       this.send('refreshList');
     },
 
@@ -99,10 +117,13 @@ export default Ember.Mixin.create({
       Reset filters and refresh list.
 
       @method actions.resetFilters
+      @param {String} componentName The name of objectlistview component.
     */
-    resetFilters() {
+    resetFilters(componentName) {
       this.set('filters', null);
+      this.set('state', 'loading');
       this.send('refreshList');
+      this.get('objectlistviewEventsService').resetFiltersTrigger(componentName);
     },
 
     /**
@@ -114,11 +135,15 @@ export default Ember.Mixin.create({
     */
     filterByAnyMatch(pattern, filterCondition) {
       if (this.get('filter') !== pattern) {
-        this.setProperties({
-          filterCondition: filterCondition,
-          filter: pattern,
-          page: 1
-        });
+        this.set('state', 'loading');
+        let _this = this;
+        Ember.run.later((function() {
+          _this.setProperties({
+            filterCondition: filterCondition,
+            filter: pattern,
+            page: 1
+          });
+        }), 50);
       }
     },
   },

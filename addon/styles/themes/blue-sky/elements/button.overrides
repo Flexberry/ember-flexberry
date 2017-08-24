@@ -1,0 +1,462 @@
+/*******************************
+           Overrides
+*******************************/
+
+.ui.primary.button > .icon {
+    color: #FFFFFF;
+}
+
+.ui.icon.button:hover {
+    color: #FFFFFF;
+}
+
+.ui.button:hover {
+  color: #FFFFFF;
+  border: 1px solid @blue;
+  background: @blue;
+}
+
+.ui.button:focus {
+  color: @blue;
+  border:1px solid @blue;
+  background: @white;
+}
+
+.ui.button:active {
+  color: @blue;
+  border:1px solid @blue;
+}
+
+.ui.button {
+    color: @blue;
+    padding: 0px 18px;
+    height: 35px;
+    text-align: center;
+    border: 1px solid @blue;
+    border-radius: 5px;
+    margin: 0px 5px;
+}
+
+.ui.icon.button > .large.table.icon, .large.file.excel {
+    margin-top: -4px;
+}
+
+.ui.buttons > .ui.button:not(.basic):not(.inverted),
+.ui.buttons:not(.basic):not(.inverted) > .button {
+    border: none;
+    background: none!important;
+    padding: 0.7400em 0.8571em!important;
+}
+
+.ui.basic.buttons .active.button {
+    color: #999!important;
+    font-weight: 700;
+    padding: 0.7400em 1.284em 0.8571em!important;
+}
+
+ .ui.basic.green.button {
+    border: none;
+}
+
+.ui.negative.button {
+    outline: none;
+    border: none;
+}
+
+.ui.positive.buttons .button, .ui.positive.button {
+    outline: none;
+    border: none;
+}
+
+.ui.fluid.action.input > button {
+    border: none;
+    background: none;
+    padding: 0px;
+}
+
+.ui.fluid.action.input .ui.button.ui-change {
+    position: absolute;
+    right: 20px;
+}
+
+.ui.fluid.action.input .ui.button.ui-clear {
+    position: absolute;
+    right: 0px;
+}
+
+.ui.fluid.action.input .ui.loading.button.ui-change {
+    position: absolute;
+    right: 27px;
+}
+
+.ui.fluid > button:before:first-child {
+    content: "\e807";
+    color: red;
+}
+
+.ui.fluid.action.input > button:hover {
+    color: @blue
+}
+
+.ui.fluid.action.input:hover {
+    background: none;
+}
+
+i.icon.remove:before:hover {
+    color: @red;
+}
+
+.flexberry-dropdown.compact.selection.selection.dropdown > .ui.dropdown > .dropdown.icon:before {
+    font-size:15px;
+}
+
+.ui.action.input > button {
+    background: none;
+}
+
+.ui.action.input > button:last-child {
+    background: none;
+}
+
+.ui.buttons .disabled.button {
+    color: #999;
+}
+
+.ui.button .flexberry-edit-panel > button {
+    color: #3f65a4;
+}
+
+.ui.button.save-button, .ui.button.save-close-button,
+.ui.button.save-del-button {
+    background: none;
+    border: 1px solid @blue;
+    color: #3f65a4;
+}
+
+.ui.icon.tiny.button {
+    border: 1px solid;
+    margin: 2px 15px;
+}
+
+.ui.button.icon.hierarchical-button {
+    border: 0px;
+}
+
+.ui.button.icon.hierarchical-button:hover {
+    background: @white;
+}
+
+.ui.button.icon.hierarchical-button.active {
+    background: none;
+}
+
+.ui.button.icon.remove-button:hover {
+    border-color: @red;
+}
+
+.ui.icon.tiny.button.no-margin{
+    border: 1px solid;
+    margin: 2px 15px;
+}
+
+#columnConfigurtionButtonUse {
+    display: flex;
+    align-items: center;
+    background-color: @green;
+    border: 1px solid @blue;
+}
+
+#columnConfigurtionButtonUse:hover {
+    border: 1px solid @green;
+}
+
+.ui.button.save-button:hover, .ui.button.save-close-button:hover {
+    background: @green;
+    border: 1px solid @green;
+    color: @white;
+}
+
+.ui.button.save-del-button:hover {
+    background-color: @red;
+    border: 1px solid @red;
+    color: @white;
+}
+
+.ui.positive.buttons .button, .ui.positive.button {
+    background: @green;
+    border: 1px solid @green;
+}
+
+.ui.positive.buttons .button:focus, .ui.positive.button:focus {
+    background: @green;
+    border: 1px solid @green;
+}
+
+.stackable.grid.container p:last-child .ui.positive.button {
+    background: @backgroundGreenColor;
+}
+
+.stackable.grid.container p:last-child .ui.negative.button {
+   background: @red;
+}
+
+.ui.negative.buttons .button:hover, .ui.negative.button:hover   {
+    background: @red ;
+    opacity: 0.8;
+    border:1px solid @red ;
+}
+
+.ui.positive.buttons .button, .ui.positive.button:hover {
+    background: @green;
+    border: 1px solid @green;
+}
+
+.ui.positive.button:hover .flexberry-edit-panel > button:before{
+    color: #fff;
+}
+
+.ui.buttons:not(.basic):not(.inverted) {
+    box-shadow: none;
+}
+
+.ui.econdary.menu.no-margin > .ui.basic > button:hover:before {
+    color: @red;
+}
+
+.ui.econdary.menu.no-margin > .ui.basic > .ui.button:hover {
+    color: @red;
+}
+
+.ui.small.button {
+    border: none;
+    font-size: 12px;
+}
+
+.ui.small.button:hover {
+    background: #d01919;
+}
+
+.ember-view.groupedit-toolbar > button:hover {
+    background: #fff;
+    color: @green;
+    border-color: @green;
+}
+
+.ember-view.groupedit-toolbar > button:hover i.icon:before {
+    color: @green;
+}
+
+.ui.button.icon.mini.compact:hover i.icon:before {
+    color: @green;
+}
+
+.ui.action.input > button:hover i.search:before {
+    color: @brightBlue;
+}
+
+.ui.action.input > button:hover i.remove:before {
+    color: @red;
+}
+
+.cell .button:hover{
+    background: #fff;
+}
+
+.cell .button:hover i.icon:before {
+    color: @green;
+}
+
+.ui.form.flexberry-vertical-form .field .ember-view .ui.fluid button:first-child {
+    content: "\e800";
+    visibility: hidden;
+}
+
+.ui.basic.green.buttons .button, .ui.basic.green.button {
+    box-shadow: none;
+}
+
+.ui.basic.green.buttons .button, .ui.basic.green.button:hover {
+    box-shadow: none;
+}
+
+#columnConfigurtionButtonSave {
+    border: 1px solid @blue;
+}
+
+#columnConfigurtionButtonSave:hover {
+    border: 1px solid @green;
+    background-color: @green;
+}
+
+.ui.icon.tiny.button:hover i.icon.chevron.down:before {
+    color: #fff;
+}
+
+.ui.icon.tiny.button:hover i.icon.chevron.up:before {
+    color: #fff;
+}
+
+.ui.ui-delete.button:hover {
+    border: 1px solid @red;
+}
+
+.ui.ui-delete.button:hover i.icon.minus:before{
+    color: @red;
+}
+
+.icon.button:hover .i.icon.table:before {
+    color: @blue;
+}
+
+.ui.button.all-del-user-button {
+   border: 1px solid @blue;
+    color: @blue;
+}
+
+.ui.button.all-del-user-button:hover {
+    background-color: @red;
+    border: 1px solid @red;
+    color: @white;
+}
+
+.ui.ui-delete.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @blue;
+}
+
+.ui.ui-add.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @blue;
+}
+
+div.ui.secondary.menu.no-margin:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.ui.buttons .or {
+    display: none;
+}
+
+.ui.button.refresh-button {
+    border: none;
+    font-size: 0px;
+    width: 25px;
+    padding: 0px 5px 0px 0px;
+    height: 0px;
+}
+
+.ui.button.refresh-button:hover {
+    background: none;
+}
+
+.ui.button.create-button:hover {
+    color: #fff;
+    background: @green;
+    border-color: @green;
+}
+
+.ui.button.delete-button {
+    border:none;
+    font-size: 0px;;
+    padding-left: 10px;
+    height: 0px;
+}
+
+.ui.button.delete-button:hover {
+    background: none;
+    border:none;
+    color: #fff;
+    background-color: #DB2828;
+}
+
+.ui.button.close-button {
+    position: absolute;
+    border: none;
+    width: 43px;
+    height: 43px;
+    right: -2px;
+    top: -33px;
+    font-size: 0px;
+    background: url("@{imagePath}/close.png") center no-repeat;
+}
+
+.ui.button.close-button:hover {
+    background: url("@{imagePath}/close-hover.png") center no-repeat;
+}
+
+.hierarchical-button:hover {
+    background-color: #fff;
+    background: none;
+    border: none;
+}
+
+.ui.right.floated.tiny.compact.button {
+    border: 1px solid @blue;
+}
+
+.ui.right.floated.tiny.compact.secondary.button,
+.ui.right.floated.tiny.compact.secondary.button:hover,
+.ui.right.floated.tiny.compact.secondary.button:focus {
+    background-color: #6299d9;
+    border-color: #6299d9;
+}
+
+.ui.right.floated.tiny.primary.compact.button:hover {
+    border: 1px solid @blue;
+}
+
+.my-test-user-button {
+     border: 1px solid @blue;
+}
+
+.my-test-user-button:hover {
+     border: 1px solid @green;
+}
+
+.basic.right.pointing.ui.icon.dropdown.button {
+    border: 1px solid @blue;
+}
+
+.basic.right.pointing.ui.icon.dropdown.button:hover {
+    border: 1px solid @blue;
+}
+
+.theme-button {
+    border: 1px solid @blue;
+}
+
+.theme-button:hover {
+    border: 1px solid @green;
+}
+
+.ui.secondary.menu > .ui.action.input {
+    margin: 0 10px;
+}
+
+.ui.buttons.filter-active {
+    border: 1px solid @blue;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.ui.buttons.removeFilter-button {
+    border-left: 1px solid @blue;
+    height: 33px ;
+}
+
+.ui.secondary.menu > .ui.action.input > .search-button {
+    border: 0px ;
+    border-bottom: 1px solid @paleBlue;
+    border-radius: 0px;
+}
+
+.ui.secondary.menu > .ui.action.input > .clear-search-button {
+    border: 0px ;
+    border-bottom: 1px solid @paleBlue;
+    border-radius: 0px;
+}

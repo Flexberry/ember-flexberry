@@ -1,7 +1,7 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-simpleolv.configurate-rows.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
-    <button {{action 'changeAttribute2'}} class="ui button">Change attribute 2</button>
+    <button {{action 'changeAttribute2'}} class="ui button theme-button">Change attribute 2</button>
   </div>
   <div class="field">
     {{#settings-example
@@ -15,6 +15,7 @@
         editFormRoute='ember-flexberry-dummy-suggestion-edit'
         modelProjection=modelProjection
         filterByAnyMatch=(action "filterByAnyMatch")
+        refreshButton=true
         filterText=filter
         sorting=computedSorting
         sortByColumn=(action "sortByColumn")

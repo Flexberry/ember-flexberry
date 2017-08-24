@@ -2,8 +2,10 @@
   @module ember-flexberry
  */
 
+import Ember from 'ember';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
+import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 
 /**
   Base route for the Edit Forms.
@@ -31,7 +33,9 @@ import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
   @extends ProjectedModelForm
   @uses FlexberryGroupeditRouteMixin
  */
-export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
+export default ProjectedModelFormRoute.extend(
+FlexberryObjectlistviewRouteMixin,
+FlexberryGroupeditRouteMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
@@ -46,6 +50,20 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
       this._super(transition);
       this.controller.send('routeWillTransition');
     },
+  },
+
+  /**
+    Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
+
+    @property queryParams
+    @type Object
+   */
+  queryParams: {
+    page: { refreshModel: false },
+    perPage: { refreshModel: false },
+    sort: { refreshModel: false },
+    filter: { refreshModel: false },
+    filterCondition: { refreshModel: false }
   },
 
   /**
@@ -88,7 +106,8 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
    */
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
-    let keptAgregators = controller.get('modelCurrentAgregators');
+    let modelCurrentAgregators = controller.get('modelCurrentAgregators');
+    let keptAgregators = modelCurrentAgregators && Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 
     controller.send('dismissErrorMessages');
     controller.set('modelCurrentAgregatorPathes', undefined);
@@ -137,6 +156,14 @@ export default ProjectedModelFormRoute.extend(FlexberryGroupeditRouteMixin, {
     controller.set('modelProjection', proj);
     controller.set('routeName', this.get('routeName'));
     controller.set('developerUserSettings', this.get('developerUserSettings'));
+    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    }
+
+    if (controller.get('state') === 'loading') {
+      controller.set('state', '');
+    }
+
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');

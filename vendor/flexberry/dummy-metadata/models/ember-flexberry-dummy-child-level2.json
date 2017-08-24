@@ -1,0 +1,431 @@
+﻿{
+  "name": "EmberFlexberryDummyChildLevel2",
+  "modelName": "ember-flexberry-dummy-child-level2",
+  "className": "ChildLevel2",
+  "parentModelName": "ember-flexberry-dummy-child-level1",
+  "parentClassName": "ChildLevel1",
+  "attrs": [
+    {
+      "name": "textChild2",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "obj",
+      "type": "ember-flexberry-dummy-post-e-obj",
+      "flexberryType": "EObj",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "textIf",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": false
+    }
+  ],
+  "belongsTo": [],
+  "hasMany": [],
+  "projections": [
+    {
+      "name": "AllProps2",
+      "modelName": "ember-flexberry-dummy-child-level2",
+      "attrs": [],
+      "belongsTo": [
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Author",
+          "belongsTo": [],
+          "hidden": true,
+          "attrs": [
+            {
+              "name": "createTime",
+              "caption": "Author.CreateTime",
+              "hidden": true,
+              "index": 1
+            },
+            {
+              "name": "creator",
+              "caption": "Author.Creator",
+              "hidden": true,
+              "index": 2
+            },
+            {
+              "name": "editTime",
+              "caption": "Author.EditTime",
+              "hidden": true,
+              "index": 3
+            },
+            {
+              "name": "editor",
+              "caption": "Author.Editor",
+              "hidden": true,
+              "index": 4
+            },
+            {
+              "name": "name",
+              "caption": "Author.Name",
+              "hidden": true,
+              "index": 5
+            },
+            {
+              "name": "eMail",
+              "caption": "Author.EMail",
+              "hidden": true,
+              "index": 6
+            },
+            {
+              "name": "phone1",
+              "caption": "Author.Phone1",
+              "hidden": true,
+              "index": 7
+            },
+            {
+              "name": "phone2",
+              "caption": "Author.Phone2",
+              "hidden": true,
+              "index": 8
+            },
+            {
+              "name": "phone3",
+              "caption": "Author.Phone3",
+              "hidden": true,
+              "index": 9
+            },
+            {
+              "name": "activated",
+              "caption": "Author.Activated",
+              "hidden": true,
+              "index": 10
+            },
+            {
+              "name": "vK",
+              "caption": "Author.VK",
+              "hidden": true,
+              "index": 11
+            },
+            {
+              "name": "facebook",
+              "caption": "Author.Facebook",
+              "hidden": true,
+              "index": 12
+            },
+            {
+              "name": "twitter",
+              "caption": "Author.Twitter",
+              "hidden": true,
+              "index": 13
+            },
+            {
+              "name": "birthday",
+              "caption": "Author.Birthday",
+              "hidden": true,
+              "index": 14
+            },
+            {
+              "name": "gender",
+              "caption": "Author.Gender",
+              "hidden": true,
+              "index": 15
+            },
+            {
+              "name": "vip",
+              "caption": "Author.Vip",
+              "hidden": true,
+              "index": 16
+            },
+            {
+              "name": "karma",
+              "caption": "Author.Karma",
+              "hidden": true,
+              "index": 17
+            }
+          ],
+          "index": 0,
+          "caption": "Author.*",
+          "name": "author",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        },
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Type",
+          "belongsTo": [
+            {
+              "lookupValue": null,
+              "lookupValueField": null,
+              "relationName": "Type.Parent",
+              "belongsTo": [
+                {
+                  "lookupValue": null,
+                  "lookupValueField": null,
+                  "relationName": "Type.Parent.Parent",
+                  "belongsTo": [],
+                  "hidden": false,
+                  "attrs": [
+                    {
+                      "name": "createTime",
+                      "caption": "Type.Parent.Parent.CreateTime",
+                      "hidden": false,
+                      "index": 35
+                    },
+                    {
+                      "name": "creator",
+                      "caption": "Type.Parent.Parent.Creator",
+                      "hidden": false,
+                      "index": 36
+                    },
+                    {
+                      "name": "editTime",
+                      "caption": "Type.Parent.Parent.EditTime",
+                      "hidden": false,
+                      "index": 37
+                    },
+                    {
+                      "name": "editor",
+                      "caption": "Type.Parent.Parent.Editor",
+                      "hidden": false,
+                      "index": 38
+                    },
+                    {
+                      "name": "name",
+                      "caption": "Type.Parent.Parent.Name",
+                      "hidden": false,
+                      "index": 39
+                    },
+                    {
+                      "name": "moderated",
+                      "caption": "Type.Parent.Parent.Moderated",
+                      "hidden": false,
+                      "index": 40
+                    }
+                  ],
+                  "index": 34,
+                  "caption": "",
+                  "name": "parent",
+                  "relatedTo": "ember-flexberry-dummy-suggestion-type",
+                  "inverse": null
+                }
+              ],
+              "hidden": false,
+              "attrs": [
+                {
+                  "name": "createTime",
+                  "caption": "Type.Parent.CreateTime",
+                  "hidden": false,
+                  "index": 27
+                },
+                {
+                  "name": "creator",
+                  "caption": "Type.Parent.Creator",
+                  "hidden": false,
+                  "index": 28
+                },
+                {
+                  "name": "editTime",
+                  "caption": "Type.Parent.EditTime",
+                  "hidden": false,
+                  "index": 29
+                },
+                {
+                  "name": "editor",
+                  "caption": "Type.Parent.Editor",
+                  "hidden": false,
+                  "index": 30
+                },
+                {
+                  "name": "name",
+                  "caption": "Type.Parent.Name",
+                  "hidden": false,
+                  "index": 31
+                },
+                {
+                  "name": "moderated",
+                  "caption": "Type.Parent.Moderated",
+                  "hidden": false,
+                  "index": 32
+                }
+              ],
+              "index": 26,
+              "caption": "",
+              "name": "parent",
+              "relatedTo": "ember-flexberry-dummy-suggestion-type",
+              "inverse": null
+            }
+          ],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "createTime",
+              "caption": "Type.CreateTime",
+              "hidden": false,
+              "index": 19
+            },
+            {
+              "name": "creator",
+              "caption": "Type.Creator",
+              "hidden": false,
+              "index": 20
+            },
+            {
+              "name": "editTime",
+              "caption": "Type.EditTime",
+              "hidden": false,
+              "index": 21
+            },
+            {
+              "name": "editor",
+              "caption": "Type.Editor",
+              "hidden": false,
+              "index": 22
+            },
+            {
+              "name": "name",
+              "caption": "Type.Name",
+              "hidden": false,
+              "index": 23
+            },
+            {
+              "name": "moderated",
+              "caption": "Type.Moderated",
+              "hidden": false,
+              "index": 24
+            }
+          ],
+          "index": 18,
+          "caption": "Type.*",
+          "name": "type",
+          "relatedTo": "ember-flexberry-dummy-suggestion-type",
+          "inverse": null
+        },
+        {
+          "lookupValue": null,
+          "lookupValueField": null,
+          "relationName": "Editor1",
+          "belongsTo": [],
+          "hidden": false,
+          "attrs": [
+            {
+              "name": "createTime",
+              "caption": "Editor1.CreateTime",
+              "hidden": false,
+              "index": 43
+            },
+            {
+              "name": "creator",
+              "caption": "Editor1.Creator",
+              "hidden": false,
+              "index": 44
+            },
+            {
+              "name": "editTime",
+              "caption": "Editor1.EditTime",
+              "hidden": false,
+              "index": 45
+            },
+            {
+              "name": "editor",
+              "caption": "Editor1.Editor",
+              "hidden": false,
+              "index": 46
+            },
+            {
+              "name": "name",
+              "caption": "Editor1.Name",
+              "hidden": false,
+              "index": 47
+            },
+            {
+              "name": "eMail",
+              "caption": "Editor1.EMail",
+              "hidden": false,
+              "index": 48
+            },
+            {
+              "name": "phone1",
+              "caption": "Editor1.Phone1",
+              "hidden": false,
+              "index": 49
+            },
+            {
+              "name": "phone2",
+              "caption": "Editor1.Phone2",
+              "hidden": false,
+              "index": 50
+            },
+            {
+              "name": "phone3",
+              "caption": "Editor1.Phone3",
+              "hidden": false,
+              "index": 51
+            },
+            {
+              "name": "activated",
+              "caption": "Editor1.Activated",
+              "hidden": false,
+              "index": 52
+            },
+            {
+              "name": "vK",
+              "caption": "Editor1.VK",
+              "hidden": false,
+              "index": 53
+            },
+            {
+              "name": "facebook",
+              "caption": "Editor1.Facebook",
+              "hidden": false,
+              "index": 54
+            },
+            {
+              "name": "twitter",
+              "caption": "Editor1.Twitter",
+              "hidden": false,
+              "index": 55
+            },
+            {
+              "name": "birthday",
+              "caption": "Editor1.Birthday",
+              "hidden": false,
+              "index": 56
+            },
+            {
+              "name": "gender",
+              "caption": "Editor1.Gender",
+              "hidden": false,
+              "index": 57
+            },
+            {
+              "name": "vip",
+              "caption": "Editor1.Vip",
+              "hidden": false,
+              "index": 58
+            },
+            {
+              "name": "karma",
+              "caption": "Editor1.Karma",
+              "hidden": false,
+              "index": 59
+            }
+          ],
+          "index": 42,
+          "caption": "Editor1.*",
+          "name": "editor1",
+          "relatedTo": "ember-flexberry-dummy-application-user",
+          "inverse": null
+        }
+      ],
+      "hasMany": []
+    }
+  ],
+  "stored": true,
+  "offline": true
+}

@@ -7,6 +7,8 @@ var fs = require("fs");
 var path = require('path');
 var lodash = require('lodash');
 var Locales_1 = require('../flexberry-core/Locales');
+var CommonUtils_1 = require('../flexberry-common/CommonUtils');
+var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -19,6 +21,27 @@ module.exports = {
         { name: 'file', type: String },
         { name: 'metadata-dir', type: String }
     ],
+    supportsAddon: function () {
+        return false;
+    },
+    _files: null,
+    files: function () {
+        if (this._files) {
+            return this._files;
+        }
+        if (this.options.dummy) {
+            this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "app/templates/__name__.hbs"; });
+        }
+        else {
+            this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "tests/dummy/app/templates/__name__.hbs"; });
+        }
+        return this._files;
+    },
+    afterInstall: function (options) {
+        if (this.project.isEmberCLIAddon()) {
+            CommonUtils_1.default.installFlexberryAddon(options, ["controller", "route"]);
+        }
+    },
     /**
      * Blueprint Hook locals.
      * Use locals to add custom template variables. The method receives one argument: options.
@@ -83,9 +106,7 @@ var EditFormBlueprint = (function () {
         return this.readSnippetFile(componentName, "hbs");
     };
     EditFormBlueprint.prototype.loadModel = function (modelName) {
-        var modelFile = path.join(this.modelsDir, modelName + ".json");
-        var content = stripBom(fs.readFileSync(modelFile, "utf8"));
-        var model = JSON.parse(content);
+        var model = ModelBlueprint_1.default.loadModel(this.modelsDir, modelName + ".json");
         return model;
     };
     EditFormBlueprint.prototype.findAttr = function (model, attrName) {
@@ -166,6 +187,7 @@ var EditFormBlueprint = (function () {
                 belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
                 belongsToAttr.readonly = "true";
                 belongsToAttr.type = attr.type;
+                this.locales.setupEditFormAttribute(belongsToAttr);
                 this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
             }
             this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);
@@ -177,11 +199,14 @@ var EditFormBlueprint = (function () {
         var listForms = fs.readdirSync(listFormsDir);
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
             var form = listForms_1[_i];
+            var pp = path.parse(form);
+            if (pp.ext != ".json")
+                continue;
             var listFormFile = path.join(listFormsDir, form);
             var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
             var listForm = JSON.parse(content);
             if (this.options.entity.name === listForm.editForm) {
-                parentRoute = path.parse(form).name;
+                parentRoute = pp.name;
             }
         }
         return parentRoute;

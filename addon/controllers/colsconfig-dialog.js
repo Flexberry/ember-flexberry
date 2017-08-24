@@ -25,6 +25,7 @@ export default Ember.Controller.extend(ColsconfigDialogController, {
      * @param {JQuery} modalDialog Created modal window.
      */
     createdModalDialog: function(modalDialog) {
+      this.set('message.visible', false);
       this.set('_openedModalDialog', modalDialog);
     }
   },

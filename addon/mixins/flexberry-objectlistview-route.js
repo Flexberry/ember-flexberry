@@ -22,9 +22,54 @@ export default Ember.Mixin.create({
 
       @param {Ember.Object} record Record related to clicked table row
     */
-    objectListViewRowClick(record, editFormRoute) {
+    objectListViewRowClick(record, options) {
+      let methodOptions = {
+        saveBeforeRouteLeave: false,
+        editOnSeparateRoute: false,
+        onEditForm: false,
+        modelName: undefined,
+        detailArray: undefined,
+        editFormRoute: undefined,
+        readonly: false,
+        goToEditForm: undefined
+      };
+      methodOptions = Ember.merge(methodOptions, options);
+      let goToEditForm = methodOptions.goToEditForm;
+      if (goToEditForm === false) {
+        return;
+      }
+
+      let saveBeforeRouteLeave = methodOptions.saveBeforeRouteLeave;
+      let onEditForm = methodOptions.onEditForm;
+      let editFormRoute = methodOptions.editFormRoute;
+      if (!editFormRoute) {
+        throw new Error('Detail\'s edit form route is undefined.');
+      }
+
       let recordId = record.get('id') || record.get('data.id');
-      this.transitionTo(editFormRoute, recordId);
+      let thisUrl = this.get('router.url');
+      if (!onEditForm) {
+        this.transitionTo(editFormRoute, recordId)
+        .then((newRoute) => {
+          newRoute.controller.set('parentRoute', thisUrl);
+        });
+      } else {
+        if (saveBeforeRouteLeave) {
+          this.controller.save(false, true).then(() => {
+            this.transitionTo(editFormRoute, recordId)
+            .then((newRoute) => {
+              newRoute.controller.set('parentRoute', thisUrl);
+            });
+          }).catch((errorData) => {
+            this.controller.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+          });
+        } else {
+          this.transitionTo(editFormRoute, recordId)
+          .then((newRoute) => {
+            newRoute.controller.set('parentRoute', thisUrl);
+          });
+        }
+      }
     },
 
     /**

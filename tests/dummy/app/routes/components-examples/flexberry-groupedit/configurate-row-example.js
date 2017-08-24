@@ -6,9 +6,9 @@ export default EditFormRoute.extend({
 
     @property modelProjection
     @type String
-    @default 'AggregatorE'
+    @default 'ConfigurateRowView'
   */
-  modelProjection: 'AggregatorE',
+  modelProjection: 'ConfigurateRowView',
 
   /**
     Name of model to be used as form's record type.

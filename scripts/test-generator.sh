@@ -42,6 +42,7 @@ bower install git://github.com/chmln/flatpickr.git#4ca9590caa70bc0232cf0a3455cfa
 
 rm -f ./ember-cli-build.js
 cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
+#npm install dexie@1.3.6
 rm -f ./.jscsrc
 
 # Generate components using Dummy metamodel and test them.

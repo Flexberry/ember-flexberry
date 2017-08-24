@@ -4,6 +4,14 @@ import config from '../config/environment';
 const version = config.APP.version;
 
 export default Ember.Controller.extend({
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
   actions: {
     /**
       Toggles application sitemap's side bar.
@@ -11,9 +19,79 @@ export default Ember.Controller.extend({
       @method actions.toggleSidebar
     */
     toggleSidebar() {
-      Ember.$('.ui.sidebar').sidebar('toggle');
+      let sidebar = Ember.$('.ui.sidebar.main.menu');
+      let objectlistviewEventsService = this.get('objectlistviewEventsService');
+      sidebar.sidebar({
+        closable: false,
+        dimPage: false,
+        onHide: function() {
+          Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+          Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        },
+        onHidden: function() {
+          objectlistviewEventsService.updateWidthTrigger(true);
+        },
+        onShow: function() {
+          objectlistviewEventsService.updateWidthTrigger();
+        }
+      }).sidebar('toggle');
+
+      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
+        Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        Ember.$('.bgw-opacity').addClass('hidden');
+      } else {
+        Ember.$('.sidebar.icon.text-menu-1').addClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
+        Ember.$('.bgw-opacity').removeClass('hidden');
+      }
+
+      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
+        Ember.$('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
+      } else {
+        Ember.$('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
+      }
+    },
+
+    /**
+      Toggles application sitemap's side bar in mobile view.
+
+      @method actions.toggleSidebarMobile
+    */
+    toggleSidebarMobile() {
+      let sidebar = Ember.$('.ui.sidebar.main.menu');
+      let objectlistviewEventsService = this.get('objectlistviewEventsService');
+      sidebar.sidebar({
+        onHide: function() {
+          Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+          Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        },
+        onHidden: function() {
+          objectlistviewEventsService.updateWidthTrigger();
+        }
+      }).sidebar('toggle');
+
+      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
+        Ember.$('.sidebar.icon.text-menu-1').removeClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-2').addClass('hidden-menu');
+        Ember.$('.bgw-opacity').addClass('hidden');
+      } else {
+        Ember.$('.sidebar.icon.text-menu-1').addClass('hidden-menu');
+        Ember.$('.sidebar.icon.text-menu-2').removeClass('hidden-menu');
+        Ember.$('.bgw-opacity').removeClass('hidden');
+      }
     }
   },
+
+  /**
+    Flag: indicates that form to which controller is related designed for acceptance tests &
+    all additional markup in application.hbs mustn't be rendered.
+
+    @property isInAcceptanceTestMode
+    @type Boolean
+    @default false
+  */
+  isInAcceptanceTestMode: false,
 
   /**
     Currernt addon version.
@@ -146,6 +224,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.log-service-examples.settings-example.caption'),
           title: i18n.t('forms.application.sitemap.log-service-examples.settings-example.title'),
           children: null
+        }, {
+          link: 'log-service-examples/clear-log-form',
+          caption: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.caption'),
+          title: i18n.t('forms.application.sitemap.log-service-examples.clear-log-form.title'),
+          children: null
         }]
       }, {
         link: null,
@@ -240,6 +323,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.settings-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-groupedit/configurate-row-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.configurate-row-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-groupedit.configurate-row-example.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -261,6 +349,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.limit-function-through-dynamic-properties-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-lookup/lookup-block-form-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-block-form-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.lookup-block-form-example.title'),
@@ -274,6 +367,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-lookup/dropdown-mode-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.dropdown-mode-example.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/default-ordering-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.default-ordering-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.default-ordering-example.title'),
             children: null
           }]
         }, {
@@ -296,6 +394,11 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-objectlistview/inheritance-models',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.inheritance-models.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.inheritance-models.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-objectlistview/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.title'),
@@ -315,14 +418,35 @@ export default Ember.Controller.extend({
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.title'),
             children: null
           }, {
+          }, {
+            link: 'components-examples/flexberry-objectlistview/edit-form-with-detail-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.edit-form-with-detail-list.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.edit-form-with-detail-list.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/hierarchy-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.hierarchy-example.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-objectlistview/configurate-rows',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.title'),
             children: null
           }, {
+            link: 'components-examples/flexberry-objectlistview/downloading-files-from-olv-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.downloading-files-from-olv-list.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.downloading-files-from-olv-list.title'),
+            children: null
+          }, {
             link: 'components-examples/flexberry-objectlistview/selected-rows',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/object-list-view-resize',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.title'),
             children: null
           }]
         }, {
@@ -402,6 +526,16 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-toggler/settings-example',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-toggler.settings-example.title'),
+            children: null
+          }]
+        }, {
+          link: null,
+          caption: i18n.t('forms.application.sitemap.components-examples.ui-message.caption'),
+          title: i18n.t('forms.application.sitemap.components-examples.ui-message.title'),
+          children: [{
+            link: 'components-examples/ui-message/settings-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.ui-message.settings-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.ui-message.settings-example.title'),
             children: null
           }]
         }]

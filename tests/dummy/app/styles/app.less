@@ -1,0 +1,92 @@
+@import 'addon/styles/addon';
+@import "src/semantic";
+
+.spinner {
+  background: url('/assets/images/cat.gif') no-repeat;
+  background-size: contain;
+  height: 140px;
+  width: 175px;
+  margin: 0 auto;
+}
+
+.loading-message {
+  text-align: center;
+  color: #aaa;
+}
+
+// Examples application template
+#example-with-submenu {
+  padding-top: 40px;
+
+  .flexberry-submenu .item {
+    padding-right: 0;
+    > .menu {
+      margin-right: -2px;
+    }
+  }
+
+  .flexberry-content {
+    position: relative;
+    padding: 0;
+
+    &.segment {
+      box-shadow: none;
+      border: none;
+    }
+  }
+}
+
+.ui.form .field > .field {
+  margin-bottom: 0;
+}
+
+#example {
+  .flexberry-content {
+    padding: 1em 0;
+  }
+
+  .full.height {
+    width: 100%;
+    transition: width 0.3s ease-in-out 0s;
+  }
+}
+
+#example-mobile {
+  .flexberry-content {
+    padding: 4em 10px 2em 10px;
+    border-bottom: none;
+  }
+}
+
+.flexberry-word-break {
+  word-break: break-all !important;
+}
+
+.ui.menu.mobile:not(.inverted) .item, .ui.menu.mobile .ui.selection.dropdown, .ui.menu.mobile .ui.selection.visible.dropdown > .text:not(.default) {
+    color: rgba(255, 255, 255, 0.9)!important;
+}
+
+.ui.button.delete-deteil {
+    border: 1px solid #7ba7d9;
+}
+
+.ui.button.delete-deteil:hover {
+    background-color: #ff6400;
+    border: 1px solid #ff6400;
+}
+
+.ui.button.clear-all-log {
+    border: 1px solid #7ba7d9;
+}
+
+.ui.button.clear-all-log:hover {
+    background-color: #ff6400;
+    border: 1px solid #ff6400;
+}
+
+.ui.button.clear-all-log:focus {
+    background-color: #ff6400;
+    border: 1px solid #ff6400;
+}
+
+

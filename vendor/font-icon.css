@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'Icons';
+  src: url("/assets/fonts/icons.eot");
+  src: url("/assets/fonts/icons.woff2") format('woff2'),
+	   url("/assets/fonts/icons.woff") format('woff'),
+	   url("/assets/fonts/icons.ttf") format('truetype'),
+	   url("/assets/fonts/icons.svg#icons") format('svg');
+}
+@font-face {
+  font-family: 'Crimean';
+  src: url("/assets/fonts/crim.eot");
+  src: url("/assets/fonts/crim.woff2") format('woff2'),
+	   url("/assets/fonts/crim.woff") format('woff'),
+	   url("/assets/fonts/crim.ttf") format('truetype'),
+	   url("/assets/fonts/crim.svg#icons") format('svg');
+}

@@ -8,6 +8,7 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
+import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 const {
   Builder,
@@ -33,6 +34,7 @@ const {
     <!-- app/templates/post.hbs -->
     ...
     {{flexberry-lookup
+      componentName="AuthorLookup"
       choose="showLookupDialog"
       remove="removeLookupValue"
       value=model.author
@@ -196,6 +198,15 @@ export default FlexberryBaseComponent.extend({
   sorting: 'asc',
 
   /**
+    Ordering condition for list of records to choose.
+    Expected string type: '+Name1-Name2...', where: '+' and '-' - sorting direction, 'NameX' - property name for soring.
+
+    @property orderBy
+    @type String
+  */
+  orderBy: undefined,
+
+  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -275,8 +286,11 @@ export default FlexberryBaseComponent.extend({
     'relationName',
     'title',
     'lookupLimitPredicate',
+    'relatedModel',
     '_lookupWindowCustomPropertiesData',
+    'orderBy',
     function() {
+      let ordering = this.get('orderBy') ? this.get('orderBy') : '';
       return {
         projection: this.get('projection'),
         relationName: this.get('relationName'),
@@ -284,6 +298,8 @@ export default FlexberryBaseComponent.extend({
         predicate: this.get('lookupLimitPredicate'),
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
+        componentName: this.get('componentName'),
+        sorting: deserializeSortingParam(ordering),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')
@@ -297,7 +313,7 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @readOnly
   */
-  removeData: Ember.computed('relationName', function() {
+  removeData: Ember.computed('relationName', 'relatedModel', function() {
     return {
       relationName: this.get('relationName'),
       modelToLookup: this.get('relatedModel')
@@ -332,14 +348,40 @@ export default FlexberryBaseComponent.extend({
   value: undefined,
 
   /**
-    Additional observer of value change, updates `displayValue`.
+    Flag indicating whether a modal dialog is open.
 
-    @method _valueObserver
-    @private
+    @property modalIsShow
+    @type Boolean
+    @default false
   */
-  _valueObserver: Ember.observer('value', function() {
-    this.set('displayValue', this._buildDisplayValue());
-  }),
+  modalIsShow: false,
+
+  /**
+    Flag indicating whether a modal dialog starts to show.
+    Needs for add loading indicator for choose button.
+
+    @property modalIsStartToShow
+    @type Boolean
+    @default false
+  */
+  modalIsStartToShow: false,
+
+  /**
+    Flag: indicates whether a modal dialog will be shown soon.
+
+    @property modalIsBeforeToShow
+    @type Boolean
+    @default false
+  */
+  modalIsBeforeToShow: false,
+
+  /**
+    Service that triggers lookup events.
+
+    @property lookupEventsService
+    @type Service
+  */
+  lookupEventsService: Ember.inject.service('lookup-events'),
 
   /**
     Text that displayed for the user as representation of currently selected value.
@@ -371,7 +413,36 @@ export default FlexberryBaseComponent.extend({
     @type Array
     @readOnly
   */
-  classNameBindings: ['autocompleteClass'],
+  classNameBindings: ['autocompleteClass', 'isActive:active'],
+
+  /**
+    Flag: indicates whether component is active or not.
+    Used to highlight component before data loading operation will be started.
+
+    @property isActive
+    @type Boolean
+    @default false
+  */
+  isActive: false,
+
+  /**
+    Flag: indicates whether component is in blocked state now.
+
+    @property isBlocked
+    @type Boolean
+    @readOnly
+  */
+  isBlocked: Ember.computed('modalIsBeforeToShow', 'modalIsStartToShow', 'modalIsShow', function() {
+    return this.get('modalIsBeforeToShow') || this.get('modalIsStartToShow') || this.get('modalIsShow');
+  }),
+
+  /**
+    Used to identify lookup on the page.
+
+    @property componentName
+    @type String
+  */
+  componentName: undefined,
 
   /**
     Semantic-ui settings for dropdown.
@@ -404,11 +475,29 @@ export default FlexberryBaseComponent.extend({
       @param {Object} chooseData
     */
     choose(chooseData) {
-      if (this.get('readonly')) {
+      if (this.get('readonly') || this.get('isBlocked')) {
         return;
       }
 
-      this.sendAction('choose', chooseData);
+      let componentName = this.get('componentName');
+      if (!componentName) {
+        Ember.warn('`componentName` of flexberry-lookup is undefined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.component-name-is-not-defined' });
+      } else {
+        // Show choose button spinner.
+        this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
+      }
+
+      // Set state to active to add 'active' css-class.
+      this.set('isActive', true);
+
+      // Signalize that modal dialog will be shown soon.
+      this.set('modalIsBeforeToShow', true);
+
+      // Send 'choose' action after 'active' css-class will be completely added into component's DOM-element.
+      Ember.run.later(() => {
+        this.sendAction('choose', chooseData);
+        this.set('isActive', false);
+      }, 300);
     },
 
     /**
@@ -424,6 +513,21 @@ export default FlexberryBaseComponent.extend({
 
       this.sendAction('remove', removeData);
     }
+  },
+
+  /**
+    An overridable method called when objects are instantiated.
+    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+  */
+  init() {
+    this._super(...arguments);
+    this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
+    this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
+    this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
+
+    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
+    this.addObserver('value', this, this._valueObserver);
+    this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 
   /**
@@ -460,9 +564,7 @@ export default FlexberryBaseComponent.extend({
     let isAutocomplete = this.get('autocomplete');
     let isDropdown = this.get('dropdown');
     if (isAutocomplete && isDropdown) {
-      Ember.Logger.error(
-        'Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
-      return;
+      throw new Error('Component flexberry-lookup should not have both flags \'autocomplete\' and \'dropdown\' enabled.');
     }
 
     let cachedDropdownValue = this.get('_cachedDropdownValue');
@@ -476,6 +578,72 @@ export default FlexberryBaseComponent.extend({
 
     this.set('_cachedDropdownValue', isDropdown);
     this.set('_cachedAutocompleteValue', isAutocomplete);
+  },
+
+  /**
+    Override to implement teardown.
+    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroy() {
+    this._super(...arguments);
+    this.get('lookupEventsService').off('lookupDialogOnShow', this, this._setModalIsStartToShow);
+    this.get('lookupEventsService').off('lookupDialogOnVisible', this, this._setModalIsVisible);
+    this.get('lookupEventsService').off('lookupDialogOnHidden', this, this._setModalIsHidden);
+
+    // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
+    this.removeObserver('value', this, this._valueObserver);
+    this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
+  },
+
+  /**
+    Additional observer of value and `relatedModel.relationName` change, updates `displayValue`.
+
+    @method _valueObserver
+    @private
+  */
+  _valueObserver() {
+    this.set('displayValue', this._buildDisplayValue());
+  },
+
+  /**
+    Set the value for the property `modalIsStartToShow`.
+
+    @method _setModalIsStartToShow
+    @private
+  */
+  _setModalIsStartToShow(componentName) {
+    if (this.get('componentName') === componentName) {
+      this.set('modalIsBeforeToShow', false);
+      this.set('modalIsStartToShow', true);
+    }
+  },
+
+  /**
+    Set the value for the property `modalIsShow` & `modalIsStartToShow`.
+
+    @method _setModalIsVisible
+    @private
+  */
+  _setModalIsVisible(componentName, lookupDialog) {
+    if (this.get('componentName') === componentName) {
+      this.set('modalIsBeforeToShow', false);
+      this.set('modalIsShow', true);
+      this.set('modalIsStartToShow', false);
+    }
+  },
+
+  /**
+    Set the value for the property `modalIsShow`.
+
+    @method _setModalIsHidden
+    @private
+  */
+  _setModalIsHidden(componentName) {
+    if (this.get('componentName') === componentName) {
+      this.set('modalIsBeforeToShow', false);
+      this.set('modalIsShow', false);
+      this.set('modalIsStartToShow', false);
+    }
   },
 
   /**
@@ -498,8 +666,7 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      Ember.Logger.error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
-      return;
+      throw new Error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
     }
 
     let minCharacters = this.get('minCharacters');
@@ -519,13 +686,18 @@ export default FlexberryBaseComponent.extend({
       cache: false,
       apiSettings: {
         /**
-         * Mocks call to the data source,
-         * Uses query language and store for loading data explicitly.
-         *
-         * @param {Object} settings
-         * @param {Function} callback
-         */
+          Mocks call to the data source,
+          Uses query language and store for loading data explicitly.
+
+          @param {Object} settings
+          @param {Function} callback
+        */
         responseAsync(settings, callback) {
+          // Prevent async data-request from being sent in readonly mode.
+          if (_this.get('readonly')) {
+            return;
+          }
+
           let builder = new Builder(store, relationModelName)
             .select(displayAttributeName)
             .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
@@ -561,7 +733,7 @@ export default FlexberryBaseComponent.extend({
        */
       onResultsOpen() {
         state = 'opened';
-        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
       },
 
       /**
@@ -572,7 +744,7 @@ export default FlexberryBaseComponent.extend({
        */
       onSelect(result) {
         state = 'selected';
-        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
         _this.set('value', result.instance);
         _this.sendAction(
@@ -600,7 +772,7 @@ export default FlexberryBaseComponent.extend({
         }
 
         state = 'closed';
-        Ember.Logger.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
       }
     });
   },
@@ -627,8 +799,7 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      Ember.Logger.error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
-      return;
+      throw new Error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
     }
 
     let i18n = _this.get('i18n');
@@ -698,9 +869,9 @@ export default FlexberryBaseComponent.extend({
         let newValue = value;
         if (value) {
           let cachedValues = _this.get('_cachedDropdownValues');
-          if (!cachedValues || cachedValues[value] !== null && !cachedValues[value]) {
-            Ember.Logger.error('Can\'t find selected dropdown value among cached values.');
-          } else {
+          let cachedValuesContainsVlue = cachedValues && (cachedValues[value] === null || cachedValues[value]);
+          Ember.assert('Can\'t find selected dropdown value among cached values.', cachedValuesContainsVlue);
+          if (cachedValuesContainsVlue) {
             newValue = cachedValues[value];
           }
         }
@@ -713,7 +884,7 @@ export default FlexberryBaseComponent.extend({
             newRelationValue: newValue
           });
       }
-    }).dropdown('set text', _this.get('displayValue'));
+    });
   },
 
   /**
@@ -727,14 +898,11 @@ export default FlexberryBaseComponent.extend({
     let selectedModel = this.get('value');
     let displayAttributeName = this.get('displayAttributeName');
     if (!selectedModel) {
-      this.set('placeholder', t('components.flexberry-lookup.placeholder'));
       return '';
-    } else {
-      this.set('placeholder', '');
     }
 
     if (!displayAttributeName) {
-      Ember.Logger.warn('\`displayAttributeName\` is not defined.');
+      Ember.warn('\`displayAttributeName\` is not defined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.display-attribute-name-is-not-defined' });
       return '';
     }
 

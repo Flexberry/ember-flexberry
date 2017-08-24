@@ -45,6 +45,7 @@ export default FlexberryBaseComponent.extend({
   allowTab: true,
   transition: 'auto',
   duration: 200,
+  action: 'select',
 
   /**
     Flag indicates whether to make checks on selected value or not.
@@ -151,29 +152,28 @@ export default FlexberryBaseComponent.extend({
   /**
     Handles changes in available items & selected item (including changes on component initialization).
   */
-  itemsOrValueDidChange: Ember.on('init', Ember.observer('_items.[]', 'value', function() {
+  itemsOrValueDidChange: Ember.on('init', Ember.observer('_items', 'value', function() {
     let destroyHasBeenCalled = this.get('destroyHasBeenCalled');
     if (destroyHasBeenCalled) {
       return;
     }
 
-    let items = this.get('_items');
-    let needChecksOnValue = this.get('needChecksOnValue');
-
-    // Convert 'value' and 'items' to strings because flexberry-dropdown interpret selected value as string commonly.
-    let value = !Ember.isNone(this.get('value')) ? this.get('value') : null;
+    // Convert 'value' and 'items' into strings because flexberry-dropdown interpret selected value as string commonly.
+    let value = this.get('value');
     let stringValue = !Ember.isNone(value) ? value.toString() : null;
 
-    let valueIsExist = false;
-    for (let key in items) {
-      if (items[key] === stringValue) {
-        valueIsExist = true;
-        break;
+    if (this.get('needChecksOnValue')) {
+      let items = this.get('_items') || {};
+      let itemsArray = Ember.A();
+      for (let key in items) {
+        if (items.hasOwnProperty(key)) {
+          itemsArray.pushObject(items[key]);
+        }
       }
-    }
 
-    if (needChecksOnValue && !Ember.isNone(stringValue) && !valueIsExist) {
-      Ember.Logger.error(`Wrong value of flexberry-dropdown \`value\` property: \`${value}\`. Allowed values are: [\`${items.join(`\`, \``)}\`].`);
+      if (!Ember.isBlank(stringValue) && !itemsArray.contains(stringValue)) {
+        throw new Error(`Wrong value of flexberry-dropdown \`value\` property: \`${stringValue}\`. Allowed values are: [\`${itemsArray.join(`\`, \``)}\`].`);
+      }
     }
 
     let dropdownDomElement = this.get('dropdownDomElement');

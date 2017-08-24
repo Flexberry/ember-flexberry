@@ -1,19 +1,19 @@
-<div class="flexberry-colsconfig content">
+<div class="ui form {{state}} flexberry-colsconfig content">
       <table class="ui unstackable fixed selectable celled table"
         ><thead
           ><tr
-          ><th class="show-columns" title='{{t "components.colsconfig-dialog-content.dont-show-columns"}}'><i class='large hide icon'></i></th
-          ><th class="columns-order"><i class='large sort icon' title='{{t "components.colsconfig-dialog-content.columns-order"}}'></i></th
-          ><th title='{{t "components.colsconfig-dialog-content.column-name"}}'>{{t "components.colsconfig-dialog-content.column-name"}}</th
-          ><th class="sort-direction" title='{{t "components.colsconfig-dialog-content.sort-direction"}}'><nobr><i class="large sort content ascending icon"></i><i class="large sort content descending icon"></i></nobr></th
-          ><th class="sort-priority" title="{{t "components.colsconfig-dialog-content.sort-priority"}}"><i class='large ordered list icon'></i></th
-          ><th class="column-width" title="{{t "components.colsconfig-dialog-content.column-width"}}"><i class='large text width icon'></i></th
+          ><th class="show-columns" title='{{t "components.colsconfig-dialog-content.dont-show-columns"}}' style="cursor:default"><i class='large hide icon' ></i></th
+          ><th class="columns-order" style="cursor:default"><i class='large sort icon' title='{{t "components.colsconfig-dialog-content.columns-order"}}' ></i></th
+          ><th title='{{t "components.colsconfig-dialog-content.column-name"}}' style="cursor:default">{{t "components.colsconfig-dialog-content.column-name"}}</th
+          ><th class="sort-direction" title='{{t "components.colsconfig-dialog-content.sort-direction"}}' style="cursor:default"><nobr><i class="large sort content ascending icon"></i><i class="large sort content descending icon"></i></nobr></th
+          ><th class="sort-priority" title="{{t "components.colsconfig-dialog-content.sort-priority"}}" style="cursor:default"><i class='large ordered list icon'></i></th
+          ><th class="column-width" title="{{t "components.colsconfig-dialog-content.column-width"}}" style="cursor:default"><i class='large text width icon'></i></th
           ></tr
         ></thead
         ><tbody id='colsConfigtableRows'>
 {{#each modelForDOM as |colDesc n|}}
           <tr id="{{colDesc.trId}}" propName='{{colDesc.propName}}'
-            ><td><i id="{{colDesc.hideId}}" class='large {{if colDesc.hide 'hide' 'unhide'}} icon' colsConfigHidden=false {{action 'invertVisibility' n}}></i></td
+            ><td><i id="{{colDesc.hideId}}" class='large {{if colDesc.hide 'hide' 'unhide'}} icon' colsConfigHidden=false {{action 'invertVisibility' n}} style="cursor:pointer"></i></td
             ><td class="{{if colDesc.hide 'disabled' ''}}">
               <button {{action 'rowUp' n}} id="{{colDesc.rowUpId}}" class="ui icon tiny button">
                 <i class="chevron up icon"></i>
@@ -23,8 +23,8 @@
               </button>
             </td
             ><td class="{{if colDesc.hide 'disabled' ''}}">{{colDesc.name}}</td
-            ><td
-              ><select class="ui compact dropdown selection icon button {{if colDesc.hide 'disabled' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n on='change'}}>
+            ><td class="sort-direction-cell"
+              ><select class="ui compact dropdown selection sort-direction-dropdown {{if colDesc.hide 'disabled' ''}} {{if colDesc.isHasMany 'hidden' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n on='change'}}>
                 <option selected='{{colDesc.sortOrderNot}}' value='0'>-</option>
                 <option selected='{{colDesc.sortOrderAsc}}' value='1'>▲</option>
                 <option selected='{{colDesc.sortOrderDesc}}' value='-1'>▼</option>
@@ -37,16 +37,32 @@
               </div>
             </td
             ><td class="{{if colDesc.hide 'disabled' ''}}">
-            <div class="ui input {{if (or colDesc.hide (not saveColWidthState)) 'disabled' ''}}">
-            <input id="{{colDesc.columnWidthId}}" size='2' class="columnWidth" value='{{colDesc.columnWidth}}' type='input' {{action "widthChanged"  on="focusOut"}}
-                  >
+              <div class="ui input {{if (or colDesc.hide (or exportParams.isExportExcel (or colDesc.fixed (not saveColWidthState)))) 'disabled' ''}}">
+                <input id="{{colDesc.columnWidthId}}" size='2' class="columnWidth" value='{{colDesc.columnWidth}}' type='input' {{action "widthChanged"  on="focusOut"}}>
               </div>
             </td
+
           ></tr>
 {{/each}}
         </tbody
-        ><tfoot class="full-width"
-          ><tr
+        ><tfoot class="full-width">
+          {{#if exportParams.isExportExcel}}
+          <tr
+            ><th colspan='6'>
+              {{flexberry-checkbox
+                label=(t "components.colsconfig-dialog-content.det-separate-cols")
+                value=exportParams.detSeparateCols
+                onChange=(action "detSeparateColsChange")
+              }}
+              {{flexberry-checkbox
+                label=(t "components.colsconfig-dialog-content.det-separate-rows")
+                value=exportParams.detSeparateRows
+                onChange=(action "detSeparateRowsChange")
+              }}
+            </th
+          ></tr>
+          {{/if}}
+          <tr class="{{if exportParams.isExportExcel 'hidden' ''}}"
           ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.col-width-on"}}</th
             ><th>
               {{flexberry-checkbox
@@ -55,19 +71,36 @@
               }}
             </th
           ></tr
+          ><tr class="{{if exportParams.isExportExcel 'hidden' ''}}"
+          ><th colspan='5' style='text-align:right'>{{t "components.colsconfig-dialog-content.per-page"}}</th
+            ><th>
+              <div class="ui input">
+              <input id="perPageValueInput" size='2' class="perPage" value='{{perPageValue}}' type='input' {{action "perPageChanged"  on="focusOut"}}
+                    >
+                </div>
+            </th
+          ></tr
           ><tr
             ><th colspan='6'>
               <div class="ui action input">
                 <input id="columnConfigurtionSettingName" type='input' name='configName'
                   placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'
-                  {{action "setConfigName" n on="focusOut"}}>
+                  {{action "setConfigName" n on="change"}}>
                 <div id="columnConfigurtionButtonSave" class="ui small button disabled" {{action 'saveColsSetting'}}>
                   {{t "components.colsconfig-dialog-content.save"}}
                 </div>
               </div>
-                <div id="columnConfigurtionButtonUse" class="ui right floated button" {{action 'apply'}}>{{t "components.colsconfig-dialog-content.use"}}</div>
+                <div id="columnConfigurtionButtonUse" class="ui right floated button" {{action 'apply'}}>{{if exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</div>
             </th
           ></tr
         ></tfoot
       ></table>
+      {{ui-message
+        type=type
+        closeable=closeable
+        visible=visible
+        caption=caption
+        message=message
+      }}
+      <a class="hidden download-anchor"></a>
 </div>

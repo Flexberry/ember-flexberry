@@ -6,10 +6,11 @@
   deleteButton=deleteButton
   colsConfigButton=colsConfigButton
   enableFilters=enableFilters
+  exportExcelButton=exportExcelButton
   showFilters=_showFilters
   filters=filters
   toggleStateFilters=(action "toggleStateFilters")
-  resetFilters=(action (if resetFilters resetFilters "resetFilters"))
+  resetFilters=(action "resetFilters" this.attrs.resetFilters)
   filterButton=filterButton
   filterText=filterText
   buttonClass=buttonClass
@@ -28,17 +29,21 @@
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
+  widthChangeOnContainerResize=widthChangeOnContainerResize
+  minAutoColumnWidth=minAutoColumnWidth
   buttonClass=buttonClass
   tableStriped=tableStriped
   customTableClass=customTableClass
   cellComponent=cellComponent
   singleColumnCellComponent=singleColumnCellComponent
   singleColumnHeaderTitle=singleColumnHeaderTitle
+  showValidationMessagesInRow=(and (not readonly) showValidationMessagesInRow)
   showAsteriskInRow=(and (not readonly) showAsteriskInRow)
   showCheckBoxInRow=(and (not readonly) showCheckBoxInRow)
   showDeleteButtonInRow=(and (not readonly) showDeleteButtonInRow)
   showEditMenuItemInRow=(and (not readonly) showEditMenuItemInRow)
   showDeleteMenuItemInRow=(and (not readonly) showDeleteMenuItemInRow)
+  sendMenuItemAction=(action "sendMenuItemAction")
   menuInRowAdditionalItems=menuInRowAdditionalItems
   rowClickable=(and (not readonly) rowClickable)
   orderable=orderable
@@ -75,11 +80,13 @@
   useRowByRowLoading=useRowByRowLoading
   useRowByRowLoadingProgress=useRowByRowLoadingProgress
   eventsBus=eventsBus
+  onEditForm=onEditForm
+  defaultLeftPadding=defaultLeftPadding
 }}
 {{#unless _inHierarchicalMode}}
   <div class="ui secondary menu no-margin">
     <div class="ui basic buttons">
-      <button class="ui {{unless hasPreviousPage 'disabled'}} button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
+      <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}
           <div class="ui button">...</div>
@@ -91,10 +98,10 @@
           {{/if}}
         {{/if}}
       {{/each}}
-      <button class="ui {{unless hasNextPage 'disabled'}} button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
+      <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
     </div>
     <div class="right menu">
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick")}}
+      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}
     </div>
   </div>
   {{#if showShowingEntries}}

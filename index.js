@@ -48,8 +48,13 @@ module.exports = {
       production:  'bower_components/flatpickr-calendar/dist/flatpickr.min.js'
     });
 
+    app.import({
+      development: 'bower_components/semantic-ui/dist/semantic.js',
+      production:  'bower_components/semantic-ui/dist/semantic.min.js'
+    });
+
     app.import('bower_components/flatpickr-calendar/dist/flatpickr.min.css');
-    app.import('bower_components/flatpickr-calendar/src/flatpickr.l10n.ru.js');
+    app.import('bower_components/flatpickr-calendar/src/l10n/ru.js');
 
     app.import({
       development: 'bower_components/devicejs/lib/device.js',
@@ -60,9 +65,15 @@ module.exports = {
     app.import('vendor/jquery.3.0.0-alpha1+compat/jquery.ajaxreplacement.js');
 
     // Script for column resize.
-    app.import('vendor/jquery.colResizable/colResizable-1.5.min.js');
+    app.import('vendor/jquery.colResizable/colResizable-1.6.min.js');
+
+    // Script for mask input.
+    app.import('vendor/jquery.maskedinput.min/jquery.maskedinput.min.js');
 
     // JQuery file download plugin with error callbacks support.
     app.import('vendor/jquery.flexberry.downloadFile/jquery.flexberry.downloadFile.js');
+
+    // JQuery plugin for blob data type support in ajax requests.
+    app.import('vendor/jquery.blobAjaxTransport/jquery.blobajaxtransport.js');
   }
 };

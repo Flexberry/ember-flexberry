@@ -1,26 +1,23 @@
-{{#ui-sidebar class="inverted vertical menu"}}
+{{#ui-sidebar class="mobile inverted vertical main menu"}}
   <a class="item"
-     href="https://github.com/flexberry"
-     target="_blank"
-     title={{t "forms.application.sitemap.application-name.title"}}>
-    <img class="ui centered image" src="assets/images/flexberry-logo.png" />
-  </a>
-  <a class="item"
-     href={{addonVersionHref}}
-     target="_blank"
-     title={{t "forms.application.sitemap.application-version.title"}}>
+    href={{addonVersionHref}}
+    target="_blank"
+    title={{t "forms.application.sitemap.application-version.title"}}>
     {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
   </a>
   {{render "sitemap" sitemap}}
 {{/ui-sidebar}}
-<div id="example-mobile" class="pusher">
-  <div class="full height">
-    <div class="ui top fixed inverted menu">
-      <a {{action "toggleSidebar"}} class="launch icon item">
-        <i class="sidebar icon"></i>
-      </a>
-      <div class="right menu">
-        <div class="item">
+<div class="bgw-fix">
+  <div class="background-logo">
+    <div class="ui attached menu mobile">
+      <div class="ui container flex-container">
+        <a {{action 'toggleSidebarMobile'}}
+          class="launch icon item mobile"
+          title={{t "forms.application.header.menu.sitemap-button.title"}}>
+          <i class="sidebar icon text-menu-1"></i>
+          <i class="sidebar icon hidden-menu text-menu-2 hidden-text"></i>
+        </a>
+        <div class="right item">
           <label style="margin-right: 5px;">
             {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
           </label>
@@ -29,7 +26,7 @@
             value=userSettingsService.isUserSettingsServiceEnabled
           }}
         </div>
-        <div class="item">
+        <div class="right item lang">
           <label style="margin-right: 5px;">
             {{t "forms.application.header.menu.language-dropdown.caption"}}
           </label>
@@ -53,9 +50,34 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div id="example-mobile" class="pusher">
+  <div class="full height" style="min-height: 94.8vh!important;" >
     <div class="flexberry-content ui attached segment">
-      {{outlet}}
-      {{outlet "modal"}}
+      <div class="ui main container">
+        <div class="stackable grid container">
+          {{outlet}}
+          {{outlet "modal"}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ui vertical footer segment">
+  <div class="ui container flex-container">
+    <div class="ui text menu">
+      <a class="brand item" href="#">
+        {{t "forms.application.footer.application-name"}}
+      </a>
+      <div class="right menu">
+        <a class="item"
+          href={{addonVersionHref}}
+          target="_blank"
+          title={{t "forms.application.footer.application-version.title"}}>
+            {{t "forms.application.footer.application-version.caption" version=addonVersion}}
+        </a>
+      </div>
     </div>
   </div>
 </div>

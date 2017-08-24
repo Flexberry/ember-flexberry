@@ -3,6 +3,7 @@
  */
 
 import Ember from 'ember';
+import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Service for triggering objectlistview events.
@@ -139,5 +140,75 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   rowsChangedTrigger(componentName) {
     this.trigger('olvRowsChanged', componentName);
+  },
+
+  /**
+    Trigger for "reset filters" event in simpleolv.
+    Event name: resetFilters.
+
+    @method resetFiltersTrigger
+
+    @param {String} componentName The name of simpleolv component.
+  */
+  resetFiltersTrigger(componentName) {
+    this.trigger('resetFilters', componentName);
+  },
+
+  /**
+    Trigger for "geSortApply" event in object-list-view.
+    Event name: geSortApply.
+
+    @method geSortApplyTrigger
+
+    @param {String} componentName The name of object-list-view component.
+    @param {Array} sorting Array of sorting definitions.
+  */
+  geSortApplyTrigger(componentName, sorting) {
+    this.trigger('geSortApply', componentName, sorting);
+  },
+
+  /**
+    Trigger for "updateWidth" event in object-list-view.
+    Event name: updateWidth.
+
+    @method updateWidthTrigger
+
+    @param {Boolean} alwaysUpdate If true, then component update width despite
+    his widthChangeOnContainerResize property.
+    @param {String} componentName The name of object-list-view component
+    (can be undefined for update all components widths).
+  */
+  updateWidthTrigger(alwaysUpdate, componentName) {
+    this.trigger('updateWidth', alwaysUpdate, componentName);
+  },
+
+  /**
+    Current limit function for OLV.
+
+    @property currentLimitFunction
+    @type BasePredicate
+    @default undefined
+  */
+  currentLimitFunction: undefined,
+
+  /**
+    Sets current limit function for OLV.
+
+    @method setLimitFunction
+
+    @param {BasePredicate} limitFunction Current limit function.
+  */
+  setLimitFunction(limitFunction) {
+    this.set('currentLimitFunction', limitFunction instanceof BasePredicate ? limitFunction : undefined);
+  },
+
+  /**
+    Gets current limit function for OLV.
+
+    @method getLimitFunction
+    @return {BasePredicate} Current limit function.
+  */
+  getLimitFunction() {
+    return this.get('currentLimitFunction');
   }
 });

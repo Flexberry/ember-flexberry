@@ -12,7 +12,7 @@ TMP_DIR='/tmp/embertest'
 mkdir -p "$TMP_DIR"
 
 # Part 1. Test the generated app.
-pushd "$TMP_DIR"
+cd "$TMP_DIR"
 
 # Initialize new ember app and install ember-flexberry from the build.
 ember new ember-app
@@ -33,7 +33,7 @@ ember generate flexberry-application app --metadata-dir=${META_DIR}
 ember test
 
 # Part 2. Test generated addon.
-popd
+cd "$TMP_DIR"
 
 # Initialize new ember addon and install ember-flexberry from the build.
 ember addon ember-addon

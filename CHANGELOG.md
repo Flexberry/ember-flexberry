@@ -35,6 +35,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
       * `text-menu-2` to `text-menu-hide`.
       * `hidden-menu` to `hidden`.
     * Deleted useless classes: `my-test-user-button`, `theme-button`.
+* Flexberry componets styles were moved to semantic default theme folder.
 
 ## [0.9.0-beta.16] - 2017-08-11
 ### Added

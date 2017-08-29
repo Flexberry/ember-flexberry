@@ -75,9 +75,6 @@
     }
 }
 
-.ui.icon.buttons .button, .ui.icon.button {
-}
-
 /**************************************
         Toolbar buttons section
 ***************************************/
@@ -228,6 +225,46 @@ div.ui.secondary.menu.no-margin {
     cursor: default;
 }
 
+/**************************************
+      FileControl buttons section
+***************************************/
+
+.flexberry-file-add-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+    &:hover {
+        border-color: @green;
+        color: @green;
+        background: @white;
+
+        &:before {
+            color: @green;
+        }
+    }
+}
+.flexberry-file-remove-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+    &:hover {
+        border-color: @red;
+        color: @red;
+        background: @white;
+    }
+}
+.flexberry-file-download-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+    &:hover {
+        border-color: @brightBlue;
+        color: @brightBlue;
+        background: @white;
+    }
+}
+.flexberry-file-upload-button.ui.icon.button {
+    margin: 0px 2.5px!important;
+    &:hover {
+        border-color: @brightBlue;
+        color: @brightBlue;
+        background: @white;
+    }
+}
 
 /******************************************
       Components buttons section

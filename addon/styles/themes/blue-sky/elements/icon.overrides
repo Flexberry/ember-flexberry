@@ -191,26 +191,8 @@ i.icon.remove:before {
       FileControl buttons section
 ***************************************/
 
-.flexberry-file-add-button.ui.icon.button {
-    margin: 0px 2.5px!important;
-    &:hover {
-        border-color: @green;
-        color: @green;
-
-        &:before {
-            color: @green;
-        }
-    }
-}
 .ui.icon.button:hover i.add.outline.icon:before {
     color: @green;
-}
-.flexberry-file-remove-button.ui.icon.button {
-    margin: 0px 2.5px!important;
-    &:hover {
-        border-color: @red;
-        color: @red;
-    }
 }
 i.icon.trash.outline:before {
     font-family: 'Crimean';
@@ -219,26 +201,12 @@ i.icon.trash.outline:before {
 .ui.icon.button:hover i.trash.outline.icon:before {
     color: @red;
 }
-.flexberry-file-download-button.ui.icon.button {
-    margin: 0px 2.5px!important;
-    &:hover {
-        border-color: @brightBlue;
-        color: @brightBlue;
-    }
-}
 i.icon.download:before {
     font-family: 'Crimean';
     content: "\e822";
 }
 .ui.icon.button:hover i.download.outline.icon:before {
     color: @brightBlue;
-}
-.flexberry-file-upload-button.ui.icon.button {
-    margin: 0px 2.5px!important;
-    &:hover {
-        border-color: @brightBlue;
-        color: @brightBlue;
-    }
 }
 .ui.icon.button:hover i.upload.outline.icon:before {
     color: @brightBlue;

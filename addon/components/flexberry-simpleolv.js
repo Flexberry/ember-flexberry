@@ -798,8 +798,7 @@ ErrorableControllerMixin, {
       @public
     */
     refresh() {
-      let currentController = this.get('currentController');
-      currentController.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -813,7 +812,7 @@ ErrorableControllerMixin, {
       let editFormRoute = this.get('editFormRoute');
       Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
       let currentController = this.get('currentController');
-      currentController.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       Ember.run.later((function() {
         currentController.transitionToRoute(editFormRoute + '.new');
       }), 50);
@@ -861,7 +860,7 @@ ErrorableControllerMixin, {
     removeFilter() {
       let _this = this;
       if (_this.get('filterText')) {
-        _this.get('currentController').set('state', 'loading');
+        this.get('objectlistviewEventsService').setLoadingState('loading');
       }
 
       Ember.run.later((function() {

@@ -67,6 +67,14 @@ FlexberryGroupeditRouteMixin, {
   },
 
   /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -160,10 +168,7 @@ FlexberryGroupeditRouteMixin, {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }
 
-    if (controller.get('state') === 'loading') {
-      controller.set('state', '');
-    }
-
+    this.get('objectlistviewEventsService').setLoadingState('');
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');

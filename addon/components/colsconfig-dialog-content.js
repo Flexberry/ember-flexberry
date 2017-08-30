@@ -59,14 +59,6 @@ export default FlexberryBaseComponent.extend({
   settingName: '',
 
   /**
-    Form state. A form is in different states: loading, success, error.
-
-    @property state
-    @type String
-  */
-  state: '',
-
-  /**
     Changed flag.
 
     @property isChanged
@@ -388,7 +380,7 @@ export default FlexberryBaseComponent.extend({
         this.sendAction('close', colsConfig); // close modal window
       } else {
         let _this = this;
-        _this.set('state', 'loading');
+        _this.get('objectlistviewEvents').setLoadingState('loading');
         let store = this.get('store.onlineStore') || this.get('store');
         let adapter = store.adapterFor(this.modelName);
         let currentQuery = this._getCurrentQuery();
@@ -412,9 +404,9 @@ export default FlexberryBaseComponent.extend({
             }
           }
 
-          _this.set('state', '');
+          this.get('objectlistviewEvents').setLoadingState('');
         }).catch(() => {
-          _this.set('state', '');
+          this.get('objectlistviewEvents').setLoadingState('');
         });
       }
     },

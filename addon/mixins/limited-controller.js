@@ -109,7 +109,7 @@ export default Ember.Mixin.create({
     */
     applyFilters(filters) {
       this.set('filters', filters);
-      this.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.send('refreshList');
     },
 
@@ -121,7 +121,7 @@ export default Ember.Mixin.create({
     */
     resetFilters(componentName) {
       this.set('filters', null);
-      this.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.send('refreshList');
       this.get('objectlistviewEventsService').resetFiltersTrigger(componentName);
     },
@@ -135,7 +135,7 @@ export default Ember.Mixin.create({
     */
     filterByAnyMatch(pattern, filterCondition) {
       if (this.get('filter') !== pattern) {
-        this.set('state', 'loading');
+        this.get('objectlistviewEventsService').setLoadingState('loading');
         let _this = this;
         Ember.run.later((function() {
           _this.setProperties({

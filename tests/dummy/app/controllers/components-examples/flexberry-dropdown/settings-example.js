@@ -45,7 +45,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
+  componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-dropdown<br>' +
     '  items=(flexberry-enum \"components-examples/flexberry-dropdown/settings-example/enumeration\")<br>' +
     '  value=model.enumeration<br>' +

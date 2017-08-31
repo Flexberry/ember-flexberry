@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   /**
     Message to be displayed in 'ui-message' component.
   */
-  message: new Ember.Handlebars.SafeString(
+  message: new Ember.String.htmlSafe(
     '<pre><code>' +
     '<strong>itemsArray: </strong>' +
       '[\"itemsArray1\", \"itemsArray2\", \"itemsArray3\"]' +

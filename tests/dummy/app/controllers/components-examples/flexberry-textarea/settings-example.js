@@ -123,7 +123,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
+  componentTemplateText: new Ember.String.htmlSafe(
     '{{textarea<br>' +
     '  value=model.text<br>' +
     '  placeholder=placeholder<br>' +

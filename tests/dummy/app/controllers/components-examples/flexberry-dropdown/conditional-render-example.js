@@ -10,7 +10,7 @@ export default EditFormController.extend({
    */
   infoMessage: Ember.computed('i18n.locale', function() {
     var message = this.get('i18n').t('forms.components-examples.flexberry-dropdown.conditional-render-example.info-message', {
-      pageTemplate: new Ember.Handlebars.SafeString(
+      pageTemplate: new Ember.String.htmlSafe(
         '<pre><code>' +
         '{{#if model.enumeration}}<br>' +
         '  &lt;span&gt;{{model.enumeration}}&lt;/span&gt;<br>' +
@@ -23,6 +23,6 @@ export default EditFormController.extend({
         '</code></pre>')
     });
 
-    return new Ember.Handlebars.SafeString(message);
+    return new Ember.String.htmlSafe(message);
   })
 });

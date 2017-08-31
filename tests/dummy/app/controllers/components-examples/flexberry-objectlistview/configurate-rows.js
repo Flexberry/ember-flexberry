@@ -99,7 +99,7 @@ export default ListFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
+  componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-objectlistview<br>' +
     '  configurateRow=(action \"configurateRow\")<br>' +
     '}}'),

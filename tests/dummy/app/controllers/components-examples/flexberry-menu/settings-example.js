@@ -85,7 +85,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
   */
-  componentTemplateText: new Ember.Handlebars.SafeString(
+  componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-menu<br>' +
     '  placeholder=placeholder<br>' +
     '  class="compact"<br>' +

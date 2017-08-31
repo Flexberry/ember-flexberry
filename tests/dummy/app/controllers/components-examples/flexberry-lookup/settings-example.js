@@ -100,7 +100,7 @@ export default EditFormController.extend({
     @property componentTemplateText
     @type String
   */
-  componentTemplateText: new Ember.Handlebars.SafeString(
+  componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-lookup<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +

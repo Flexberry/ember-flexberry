@@ -175,7 +175,7 @@ export default ListFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
+  componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-simpleolv<br>' +
     '  componentName=\"SuggestionsObjectListView\"<br>' +
     '  colsConfigButton=true<br>' +

@@ -92,7 +92,7 @@ export default EditFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
+  componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-file<br>' +
     '  value=model.file<br>' +
     '  placeholder=placeholder<br>' +

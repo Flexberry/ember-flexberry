@@ -48,7 +48,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
+  componentTemplateText: new Ember.String.htmlSafe(
     '{{#flexberry-toggler<br>' +
     '  caption=caption<br>' +
     '  expandedCaption=expandedCaption<br>' +

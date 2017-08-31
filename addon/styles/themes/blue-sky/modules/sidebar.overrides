@@ -3,7 +3,6 @@
 *******************************/
 
 .ui.sidebar {
-    position: absolute!important;
     top: 90px;
     float: left;
     box-shadow: none!important;
@@ -11,68 +10,31 @@
 }
 
 body.pushable {
-    background: #fff!important;
     overflow: hidden;
 }
 
-.page-header-caption a{
-    background: none;
-    color: #fff;
-    vertical-align: middle;
-    text-decoration: none;
-    font-size: 24px;
-    border-radius: 0px;
-    box-shadow: none;
-}
-
-.page-header-caption a:hover{
-    color: #fff!important;
-}
-
-.page-header-caption {
-    display: flex;
-    align-items: center;
-}
-
-.ui.attached.menu {
-    border-bottom: none!important;
-}
-
-.flex-container {
-    width: 100%!important;
-    justify-content: space-between;
+.pushable > .pusher:after {
+    background: none!important;
 }
 
 .ui.top.attached {
     margin: 20px 5px;
-    border-radius: 5px!important;
     width: 250px;
 }
 
-.ui.left.sidebar {
-    width: 260px;
-}
-
 .inverted.vertical.menu.sidebar {
-    left: 0px!important;
-    height: 85.3vh!important;
-    position: fixed!important;
-    background: #f1f7ff!important;
+    height: 85.3vh !important;
+    background: @sidebarInvertedBackground;
 }
 
 .mobile.inverted.vertical.menu.sidebar {
-    height: 87.6vh!important;
+    height: 87.6vh !important;
     top: 4em;
-}
-
-.ui.attached.menu {
-    border: none!important;
-    background: none;
 }
 
 .launch.icon.item {
     box-shadow: none;
-    padding: 0px!important;
+    padding: 0px;
     width: 150px;
 }
 
@@ -81,110 +43,60 @@ body.pushable {
 }
 
 .ui.attached.menu:not(.tabular) {
-    border: none!important;
-    border-radius: 5px;
+    border: none;
 }
 
 .ui.menu .item:before {
     background: none;
 }
 
-.ui.menu:not(.vertical) .item {
-    border-left: none!important;
+.ui.attached.menu > .flex-container > .launch.icon.item:hover {
+    background: none;
 }
 
-#example .flexberry-content {
-    border: none;
+.text-menu-hide span {
+    padding-left: 10px;
+    color: @textMenuHideColor;
 }
 
-.ui.attached.menu > .flex-container > .item {
-    padding:0px!important;
-}
-
-.launch.icon.item:hover {
-    background: none!important;
-}
-
-.launch.icon.item:hover:before {
-    color: #fff!important;
-}
 .text_menu {
     margin-left:15px;
-    color: #fff;
+    color: @textMenuColor;
     font-size: 15px;
 }
 
-.hidden-text {
-    color: #91a7cd!important;
-}
-
-.hidden-menu {
-    display: none!important;
-}
-.logo {
-    width: 70px;
-}
-
 img.item-plus {
-    width: 16px!important;
-    border-radius: 0px!important;
-    margin-right: 5px!important;
-    margin-bottom: 1px!important;
+    width: 16px;
+    border-radius: 0px;
+    margin-right: 5px;
+    margin-bottom: 1px;
     cursor: pointer;
 }
 
 img.item-minus {
-    width: 16px!important;
-    border-radius: 0px!important;
-    margin-right: 5px!important;
-    margin-bottom: 1px!important;
+    width: 16px;
+    border-radius: 0px;
+    margin-right: 5px;
+    margin-bottom: 1px;
     cursor: pointer;
-}
-
-div.subMenu a{
-    padding-left:50px!important;
 }
 
 .item-menu{
     cursor: pointer;
 }
 
-.ui.vertical.menu > a {
-    padding-left:43px!important;
+.ui.sidebar.menu .item {
+  padding: 0.7em 0.2em 0.7em 1em;
 }
 
-.menu.subMenu > .item-menu >.item-minus {
-    float: left;
-    margin-left: 23px!important;
+.ui.sidebar.menu > a.item {
+    padding-left: 41px;
 }
 
-.menu.subMenu > .item-menu >.item-plus {
-    float: left;
-    margin-left: 23px!important;
+.ui.sidebar.menu .menu .item {
+    padding-left: 50px;
 }
 
-.item-menu > .menu.subMenu >.item-menu > .subMenu > a{
-        padding-left: 59px!important;
-}
-
-.enable-menu {
-    display: block!important;
-}
-
-.fixed-menu {
-    position: fixed;
-    top: 0px;
-    margin: 0px;
-    width: 260px;
-    border-radius: 0px!important;
-    z-index: 999;
-}
-
-.fixed-sidebar{
-    position: fixed!important;
-    top: 45px!important;
-}
-
-.pushable > .pusher:after {
-    background: none!important;
+.ui.sidebar.menu .menu .item-menu {
+    padding-left: 25px;
 }

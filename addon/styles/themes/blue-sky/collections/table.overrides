@@ -1,33 +1,9 @@
-.ui.celled.table tr th {
-    color: #777;
-}
-
-.ui.celled.table tr td {
-    color: #555;
-}
-
-.ui.table tr.active, .ui.table td.active {
-    background: #f1f7ff!important;
-}
-
-table tr:hover {
-    background: #f1f7ffimportant;
-}
-
 tr {
     cursor: pointer;
 }
 
-.basic.right.pointing.ui.icon.dropdown.button {
-    box-shadow: none;
-}
-
-.basic.right.pointing.ui.icon.dropdown.button:hover {
-    background: @blue!important;
-}
-
-.basic.right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
-    color: #fff!important;
+.oveflow-text {
+    overflow: hidden;
 }
 
 .ui.table.object-list-view tr td {
@@ -51,24 +27,8 @@ table.object-list-view.selectable thead {
   cursor: pointer;
 }
 
-.oveflow-text {
-    overflow: hidden;
-}
-
 .object-list-view-menu {
     overflow: initial!important;
-}
-
-.ui.dropdown .menu > .item:hover {
-    background: none!important;
-}
-
-.ui.basic.button:focus {
-    background: none!umportant;
-}
-
-.left.menu.transition.visible:hover {
-    background: #f5f8ff !important;
 }
 
 .object-list-view-helper-column-cell div.cell {

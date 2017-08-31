@@ -72,11 +72,9 @@ var Model = Projection.Model.extend({
   })),
 
   commentsCountCompute: function() {
-    let result = 0;
-    this.get('comments').forEach(function() {
-      result++;
-    });
-    this.set('commentsCount', result);
+    if (!this.get('isDeleted')) {
+      this.set('commentsCount', this.get('comments.length'));
+    }
   }
 });
 

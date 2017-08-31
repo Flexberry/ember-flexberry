@@ -252,8 +252,6 @@ test('it renders manually defined placeholder', function(assert) {
 });
 
 test('type mode works properly', function(assert) {
-  assert.expect(7);
-
   // Render component.
   this.render(hbs`{{flexberry-field
     class=class
@@ -263,12 +261,6 @@ test('type mode works properly', function(assert) {
   // Retrieve component.
   let $component = this.$().children();
   let $fieldInput = Ember.$('.flexberry-textbox input', $component);
-
-  // Check that <input>'s type attribute doesn't exist yet.
-  assert.strictEqual(
-    Ember.$.trim($fieldInput.attr('type')),
-    '',
-    'Component\'s inner <input> hasn\'t type attribute');
 
   // Check that <input>'s type attribute 'text'.
   this.set('type', 'text');

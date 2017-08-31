@@ -6,7 +6,7 @@ import Ember from 'ember';
 moduleForComponent('modal-dialog', 'Integration | Component | modal dialog', {
   integration: true,
 
-  setup: function () {
+  beforeEach() {
     // detachable need for jquery can do select child components
     this.set('settings', {
       detachable: false
@@ -20,8 +20,8 @@ moduleForComponent('modal-dialog', 'Integration | Component | modal dialog', {
     Ember.Test.registerWaiter(this, () => this.get('created'));
   },
 
-  teardown: function() {
-    this.$().modal('hide dimmer');
+  afterEach() {
+    this.$('.flexberry-modal').modal('hide dimmer');
   }
 });
 

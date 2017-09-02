@@ -9,16 +9,21 @@ cache:
   yarn: true
   directories:
     - $HOME/.npm
-    - $HOME/.cache
 
 env:
   - EMBER_TRY_SCENARIO=default
+  - EMBER_TRY_SCENARIO=ember-lts-2.4
+  - EMBER_TRY_SCENARIO=ember-lts-2.8
   - EMBER_TRY_SCENARIO=ember-release
+  - EMBER_TRY_SCENARIO=ember-beta
+  - EMBER_TRY_SCENARIO=ember-canary
 
 matrix:
   fast_finish: true
   allow_failures:
     - env: EMBER_TRY_SCENARIO=ember-release
+    - env: EMBER_TRY_SCENARIO=ember-beta
+    - env: EMBER_TRY_SCENARIO=ember-canary
 
 notifications:
   webhooks:
@@ -31,7 +36,7 @@ notifications:
 before_install:
   - yarn global add firebase-tools
   - yarn global add phantomjs-prebuilt
-  - yarn global add ember-cli@2.9.1
+  - yarn global add ember-cli@2.10.1
   - yarn global add bower
 
 install:
@@ -39,8 +44,8 @@ install:
   - bower install
 
 script:
-  - ember try $EMBER_TRY_SCENARIO test
-  - bash ./scripts/test-generator.sh
+  - ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+  - if [$EMBER_TRY_SCENARIO == "default"]; then bash ./scripts/test-generator.sh; fi
 
 after_success:
   - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy --project flexberry-ember-dev --token "$FIREBASE_TOKEN" --non-interactive -m "Travis Build №$TRAVIS_BUILD_NUMBER."

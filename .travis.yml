@@ -45,7 +45,7 @@ install:
 
 script:
   - ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
-  - if [["$EMBER_TRY_SCENARIO" == "default"]]; then bash ./scripts/test-generator.sh; fi
+  - if [ "$EMBER_TRY_SCENARIO" == "default" ]; then ./scripts/test-generator.sh; fi
 
 after_success:
   - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy --project flexberry-ember-dev --token "$FIREBASE_TOKEN" --non-interactive -m "Travis Build №$TRAVIS_BUILD_NUMBER."

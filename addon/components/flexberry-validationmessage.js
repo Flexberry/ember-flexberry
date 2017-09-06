@@ -12,6 +12,15 @@ import Ember from 'ember';
 */
 export default Ember.Component.extend({
   /**
+    A list of properties of the view to apply as class names. If the property is a string value, the value of that string will be applied as a class name.
+
+    @property classNameBindings
+    @type Array
+    @default ['color', 'pointing']
+  */
+  classNameBindings: ['color', 'pointing'],
+
+  /**
     Default classes for component wrapper.
   */
   classNames: ['ui', 'basic', 'label'],
@@ -66,8 +75,6 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
 
-    this.get('classNames').push(this.get('color'));
-
     let pointing = this.get('pointing');
     if (pointing) {
       let possiblePointings = [
@@ -84,8 +91,6 @@ export default Ember.Component.extend({
         throw new Error(
           `Wrong value of flexberry-validationmessage pointing property, actual is '${pointing}', possible values are: ${messagePointings}`);
       }
-
-      this.get('classNames').push(pointing);
     }
   }
 });

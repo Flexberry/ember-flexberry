@@ -231,7 +231,10 @@ test('readonly mode works properly', function(assert) {
 });
 
 test('needChecksOnValue mode properly', function(assert) {
-  assert.expect(2);
+  let exceptionHandler = Ember.Test.adapter.exception;
+  Ember.Test.adapter.exception = (error) => {
+    throw error;
+  };
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -244,24 +247,14 @@ test('needChecksOnValue mode properly', function(assert) {
     needChecksOnValue=needChecksOnValue
   }}`);
 
-  // Stub Ember.onerror method.
-  let originalOnError = Ember.onerror;
-
   // Change property binded to 'value' & check them.
   this.set('needChecksOnValue', true);
   let newValue = 'Caption4';
-  let latestLoggerErrorMessage;
-  Ember.onerror = function(error) {
-    latestLoggerErrorMessage = error.message;
-  };
 
   // Check that errors handled properly.
-  this.set('value', newValue);
-  assert.strictEqual(Ember.typeOf(latestLoggerErrorMessage) === 'string', true, 'Check message exists');
-  assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true, 'Invalid value exists');
+  assert.throws(() => { this.set('value', newValue); }, new RegExp(newValue));
 
-  // Restore original method in the and of the test.
-  Ember.onerror = originalOnError;
+  Ember.Test.adapter.exception = exceptionHandler;
 });
 
 test('dropdown with items represented by object renders properly', function(assert) {

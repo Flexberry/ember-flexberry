@@ -95,31 +95,27 @@ export default Ember.Mixin.create({
         this.set('classNames', classNames);
       }
 
-      // Remove previously added custom class names.
-      Ember.A(previousCustomClassNames).forEach((previousCustomClassName) => {
-        let index = classNames.indexOf(previousCustomClassName);
+      if ($component) {
+        // Remove previously added custom class names.
+        Ember.A(previousCustomClassNames).forEach((previousCustomClassName) => {
+          let index = classNames.indexOf(previousCustomClassName);
 
-        if (index >= 0) {
-          classNames.splice(index, 1);
-
-          // For some reason changes to classNames will not cause automatic rerender,
-          // so there is no other way to remove class names manually through jQuery methods.
-          if (!Ember.isNone($component)) {
+          if (index >= 0) {
+            // For some reason changes to classNames will not cause automatic rerender,
+            // so there is no other way to remove class names manually through jQuery methods.
             $component.removeClass(previousCustomClassName);
           }
-        }
-      });
+        });
 
-      // Add new custom class names.
-      Ember.A(customClassNames).forEach((customClassName) => {
-        classNames.push(customClassName);
-
-        // For some reason changes to classNames will not cause automatic rerender,
-        // so there is no other way to add class names manually through jQuery methods.
-        if (!Ember.isNone($component)) {
+        // Add new custom class names.
+        Ember.A(customClassNames).forEach((customClassName) => {
+          // For some reason changes to classNames will not cause automatic rerender,
+          // so there is no other way to add class names manually through jQuery methods.
           $component.addClass(customClassName);
-        }
-      });
+        });
+      }
+
+      this.set('classNames', customClassNames);
 
       // Remember added custom class names in the context of property observer handler.
       previousCustomClassNames = customClassNames;

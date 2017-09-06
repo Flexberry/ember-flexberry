@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* Mixins
+    * Add `edit-form-controller-operations-indication` and `edit-form-route-operations-indication` mixins for edit forms controllers and routes.
 * List components:
     * Add `minAutoColumnWidth` property (minimum column width, if width isn't defined in `userSettings`).
 * Added components:

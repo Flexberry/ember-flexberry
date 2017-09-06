@@ -1,5 +1,5 @@
 /**
-  @module ember-flexberry-dummy
+  @module ember-flexberry
 */
 
 import Ember from 'ember';

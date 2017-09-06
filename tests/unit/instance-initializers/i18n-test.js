@@ -13,6 +13,9 @@ module('Unit | Instance Initializer | i18n', {
     application = startApp();
     appInstance = application.buildInstance();
 
+    // Just take it and turn it off...
+    appInstance.lookup('service:log').set('enabled', false);
+
     // Set 'fake-locale' as default i18n-service locale.
     let i18n = appInstance.lookup('service:i18n');
     fakeLocale = 'fake-locale';

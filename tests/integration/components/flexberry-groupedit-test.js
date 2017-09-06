@@ -20,6 +20,9 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
     UserSettingsService.reopen({
       isUserSettingsServiceEnabled: false
     });
+
+    // Just take it and turn it off...
+    App.__container__.lookup('service:log').set('enabled', false);
   },
   afterEach: function() {
     Ember.run(App, 'destroy');

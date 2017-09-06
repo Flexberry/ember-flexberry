@@ -20,6 +20,9 @@ moduleForComponent('object-list-view', 'Integration | Component | object list vi
     UserSettingsService.reopen({
       isUserSettingsServiceEnabled: false
     });
+
+    // Just take it and turn it off...
+    App.__container__.lookup('service:log').set('enabled', false);
   }
 });
 

@@ -13,6 +13,9 @@ export function executeTest(testName, callback) {
         // Start application.
         app = startApp();
 
+        // Just take it and turn it off...
+        app.__container__.lookup('service:log').set('enabled', false);
+
         // Enable acceptance test mode in application controller (to hide unnecessary markup from application.hbs).
         let applicationController = app.__container__.lookup('controller:application');
         applicationController.set('isInAcceptanceTestMode', true);

@@ -29,6 +29,9 @@ moduleForComponent('flexberry-lookup', 'Integration | Component | flexberry-look
     this.set('i18n.locale', 'ru');
 
     app = startApp();
+
+    // Just take it and turn it off...
+    app.__container__.lookup('service:log').set('enabled', false);
   },
   afterEach: function() {
     destroyApp(app);

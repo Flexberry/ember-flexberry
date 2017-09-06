@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Errors from 'ember-validations/errors';
@@ -33,9 +34,14 @@ test('it color property should pass to classes', function (assert) {
 });
 
 test('it should throw exception on unset errors property', function (assert) {
-  assert.throws(() => {
-    this.render(hbs`{{flexberry-validationsummary}}`);
-  });
+  let exceptionHandler = Ember.Test.adapter.exception;
+  Ember.Test.adapter.exception = (error) => {
+    throw error;
+  };
+
+  assert.throws(() => { this.render(hbs`{{flexberry-validationsummary}}`); });
+
+  Ember.Test.adapter.exception = exceptionHandler;
 });
 
 test('it should be invisible if no errors', function (assert) {

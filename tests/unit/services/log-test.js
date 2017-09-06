@@ -5,13 +5,21 @@ import startApp from 'dummy/tests/helpers/start-app';
 import destroyApp from 'dummy/tests/helpers/destroy-app';
 
 let app;
+let adapter;
 
 module('Unit | Service | log', {
   beforeEach() {
     app = startApp();
+
+    adapter = Ember.Test.adapter;
+    Ember.Test.adapter = null;
+    Ember.testing = false;
   },
 
   afterEach() {
+    Ember.Test.adapter = adapter;
+    Ember.testing = true;
+
     destroyApp(app);
   },
 });

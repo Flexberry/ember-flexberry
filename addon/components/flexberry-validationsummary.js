@@ -12,6 +12,15 @@ import Ember from 'ember';
 */
 export default Ember.Component.extend({
   /**
+    A list of properties of the view to apply as class names. If the property is a string value, the value of that string will be applied as a class name.
+
+    @property classNameBindings
+    @type Array
+    @default ['color']
+  */
+  classNameBindings: ['color'],
+
+  /**
     Default classes for component wrapper.
   */
   classNames: ['ui', 'message'],
@@ -72,7 +81,6 @@ export default Ember.Component.extend({
       }
     }
 
-    this.get('classNames').push(this.get('color'));
     this.changeMessages();
   },
 

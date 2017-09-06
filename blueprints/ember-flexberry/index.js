@@ -244,13 +244,11 @@ module.exports = {
       return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
     }).then(function() {
       return _this.addAddonsToProject({
-        blueprintOptions: { saveDev: true },
         packages: [
           { name: 'broccoli-jscs', target: '1.4.1' },
           { name: 'ember-browserify', target: '1.1.9' },
           { name: 'ember-cli-less', target: '1.5.4' },
           { name: 'ember-link-action', target: '0.0.35' },
-          { name: 'ember-cli-moment-shim', target: '1.0.0' },
           { name: 'ember-moment', target: '6.1.0' },
         ]
       });
@@ -263,14 +261,7 @@ module.exports = {
     }).then(function () {
       return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
     }).then(function () {
-      return _this.removePackageFromProject('ember-data');
-    }).then(function () {
-      return _this.addAddonsToProject({
-        blueprintOptions: { saveDev: true },
-        packages: [
-          { name: 'ember-data', target: '2.13.1' },
-        ]
-      });
+      return _this.addAddonToProject('ember-data@~2.11.0');
     });
   },
 

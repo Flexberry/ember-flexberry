@@ -8,10 +8,10 @@ module.exports = {
       name: 'ember-lts-2.4',
       bower: {
         dependencies: {
-          'ember': '~2.4.0'
+          'ember': 'components/ember#lts-2-4'
         },
         resolutions: {
-          'ember': '~2.4.0'
+          'ember': 'lts-2-4'
         }
       },
       npm: {
@@ -24,10 +24,10 @@ module.exports = {
       name: 'ember-lts-2.8',
       bower: {
         dependencies: {
-          'ember': '~2.8.0'
+          'ember': 'components/ember#lts-2-8'
         },
         resolutions: {
-          'ember': '~2.8.0'
+          'ember': 'lts-2-8'
         }
       },
       npm: {

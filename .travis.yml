@@ -36,7 +36,7 @@ notifications:
 before_install:
   - yarn global add firebase-tools
   - yarn global add phantomjs-prebuilt
-  - yarn global add ember-cli@2.10.1
+  - yarn global add ember-cli@2.11.1
   - yarn global add bower
 
 install:

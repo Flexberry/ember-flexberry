@@ -36,12 +36,4 @@ export default Ember.Component.extend({
     @type String
    */
   componentTemplateText: null,
-
-  /**
-    Loader for component used in example.
-
-    @property showLoadingTbodyClass
-    @type Boolean
-   */
-  showLoadingTbodyClass: false
 });

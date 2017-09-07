@@ -192,7 +192,7 @@ export default Ember.Service.extend(Ember.Evented, {
   currentLimitFunction: undefined,
 
   /**
-    Data loading state.
+    Form's loading state.
 
     @property loadingState
     @type string
@@ -222,12 +222,13 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
-   Method that determines the loading of data.
+   Method that sets the form's loading state.
 
     @method setLoadingState
+
+    @param {String} loadingState Loading state for set.
   */
   setLoadingState(loadingState) {
     this.set('loadingState', loadingState);
   }
-
 });

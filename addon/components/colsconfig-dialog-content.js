@@ -25,11 +25,11 @@ export default FlexberryBaseComponent.extend({
   /**
    Service that triggers objectlistview events.
 
-   @property objectlistviewEvents
+   @property objectlistviewEventsService
    @type {Class}
    @default Ember.inject.service()
    */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
    Model with added DOM elements.
@@ -380,7 +380,7 @@ export default FlexberryBaseComponent.extend({
         this.sendAction('close', colsConfig); // close modal window
       } else {
         let _this = this;
-        _this.get('objectlistviewEvents').setLoadingState('loading');
+        _this.get('objectlistviewEventsService').setLoadingState('loading');
         let store = this.get('store.onlineStore') || this.get('store');
         let adapter = store.adapterFor(this.modelName);
         let currentQuery = this._getCurrentQuery();
@@ -404,9 +404,9 @@ export default FlexberryBaseComponent.extend({
             }
           }
 
-          this.get('objectlistviewEvents').setLoadingState('');
+          this.get('objectlistviewEventsService').setLoadingState('');
         }).catch(() => {
-          this.get('objectlistviewEvents').setLoadingState('');
+          this.get('objectlistviewEventsService').setLoadingState('');
         });
       }
     },
@@ -518,7 +518,7 @@ export default FlexberryBaseComponent.extend({
       builder.orderBy(sortString);
     }
 
-    let limitFunction = this.get('objectlistviewEvents').getLimitFunction();
+    let limitFunction = this.get('objectlistviewEventsService').getLimitFunction();
     if (limitFunction) {
       builder.where(limitFunction);
     }

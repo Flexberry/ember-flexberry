@@ -632,6 +632,14 @@ export default FlexberryBaseComponent.extend({
   */
   eventsBus: Ember.Object.extend(Ember.Evented, {}).create(),
 
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -702,7 +710,7 @@ export default FlexberryBaseComponent.extend({
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       action();
     },
 
@@ -719,7 +727,7 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       action();
     },
 
@@ -737,7 +745,7 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       action(pageNumber);
     },
 
@@ -915,7 +923,7 @@ export default FlexberryBaseComponent.extend({
       var userSettings = this.get('userSettingsService');
       if (parseInt(perPageValue, 10) !== userSettings.getCurrentPerPage(this.componentName)) {
         userSettings.setCurrentPerPage(this.componentName, undefined, perPageValue);
-        this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+        this.get('objectlistviewEventsService').setLoadingState('loading');
       }
     },
 

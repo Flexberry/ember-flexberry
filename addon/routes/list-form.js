@@ -188,7 +188,9 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         this.onModelLoadingRejected(errorData);
       }).finally((data) => {
         this.onModelLoadingAlways(data);
-        this.get('objectlistviewEventsService').setLoadingState('');
+        if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
+          this.get('objectlistviewEventsService').setLoadingState('');
+        }
       });
 
     if (this.get('controller') === undefined) {

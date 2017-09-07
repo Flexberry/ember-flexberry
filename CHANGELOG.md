@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * When typing in the input field to search the `flexberry-simpleolv` component, `didRender` method that is problematic for the component is called.
 * Fix `flexberry-groupedit` sorting.
+* Fix form's loading spinner.
 
 ### Changed
 * Deleted unnecessary Semantic-UI themes.
@@ -38,6 +39,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
       * `hidden-menu` to `hidden`.
     * Deleted useless classes: `my-test-user-button`, `theme-button`.
 * Flexberry componets styles were moved to semantic default theme folder.
+* Form's loading state now stored in `objectlistview-events` service.
 
 ## [0.9.0-beta.16] - 2017-08-11
 ### Added

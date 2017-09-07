@@ -136,7 +136,9 @@ export default Ember.Mixin.create({
         _this.set('customFolvContent', records);
       })
       .finally(() => {
-        this.get('objectlistviewEventsService').setLoadingState('');
+        if (_this.get('objectlistviewEventsService.loadingState') === 'loading') {
+          _this.get('objectlistviewEventsService').setLoadingState('');
+        }
       });
     }
 

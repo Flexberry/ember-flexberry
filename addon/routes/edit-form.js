@@ -168,7 +168,10 @@ FlexberryGroupeditRouteMixin, {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }
 
-    this.get('objectlistviewEventsService').setLoadingState('');
+    if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
+      this.get('objectlistviewEventsService').setLoadingState('');
+    }
+
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');

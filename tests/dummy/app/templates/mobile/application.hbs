@@ -53,12 +53,14 @@
   </div>
 </div>
 <div id="example-mobile" class="pusher">
-  <div class="full height" style="min-height: 94.8vh!important;" >
-    <div class="flexberry-content ui attached segment">
-      <div class="ui main container">
-        <div class="stackable grid container">
-          {{outlet}}
-          {{outlet "modal"}}
+  <div class="ui form {{objectlistviewEventsService.loadingState}}">
+    <div class="full height" style="min-height: 94.8vh!important;" >
+      <div class="flexberry-content ui attached segment">
+        <div class="ui main container">
+          <div class="stackable grid container">
+            {{outlet}}
+            {{outlet "modal"}}
+          </div>
         </div>
       </div>
     </div>

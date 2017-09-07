@@ -57,7 +57,7 @@ ErrorableControllerMixin, {
         this.set('contentWithKeys', this.contentForRender);
       }
 
-      this.set('showLoadingTbodyClass', false);
+      this.get('objectlistviewEventsService').setLoadingState('');
     }
   })),
 
@@ -457,15 +457,6 @@ ErrorableControllerMixin, {
   contentForRender: null,
 
   /**
-    Class loading for tbody.
-
-    @property showLoadingTbodyClass
-    @type Boolean
-    @defaul false
-  */
-  showLoadingTbodyClass: false,
-
-  /**
     Flag indicates whether content is defined.
 
     @property hasContent
@@ -723,7 +714,7 @@ ErrorableControllerMixin, {
         return;
       }
 
-      this.set('showLoadingTbodyClass', true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
@@ -798,8 +789,7 @@ ErrorableControllerMixin, {
       @public
     */
     refresh() {
-      let currentController = this.get('currentController');
-      currentController.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -813,7 +803,7 @@ ErrorableControllerMixin, {
       let editFormRoute = this.get('editFormRoute');
       Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
       let currentController = this.get('currentController');
-      currentController.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       Ember.run.later((function() {
         currentController.transitionToRoute(editFormRoute + '.new');
       }), 50);
@@ -861,7 +851,7 @@ ErrorableControllerMixin, {
     removeFilter() {
       let _this = this;
       if (_this.get('filterText')) {
-        _this.get('currentController').set('state', 'loading');
+        this.get('objectlistviewEventsService').setLoadingState('loading');
       }
 
       Ember.run.later((function() {
@@ -1072,15 +1062,6 @@ ErrorableControllerMixin, {
     this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
 
-    let eventsBus = this.get('eventsBus');
-    if (eventsBus) {
-      eventsBus.on('showLoadingTbodyClass', (componentName, showLoadingTbodyClass) => {
-        if (componentName === this.get('componentName')) {
-          this.set('showLoadingTbodyClass', showLoadingTbodyClass);
-        }
-      });
-    }
-
     let projection = this.get('modelProjection');
 
     if (!projection) {
@@ -1178,10 +1159,6 @@ ErrorableControllerMixin, {
     this._super(...arguments);
 
     Ember.$(window).unbind(`resize.${this.get('componentName')}`);
-    let eventsBus = this.get('eventsBus');
-    if (eventsBus) {
-      eventsBus.off('showLoadingTbodyClass');
-    }
   },
 
   /**

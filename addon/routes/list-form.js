@@ -73,6 +73,14 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   colsConfigMenu: Ember.inject.service(),
 
   /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -84,7 +92,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
 
     let controller = this.controllerFor(this.routeName);
-    controller.set('state', 'loading');
+    this.get('objectlistviewEventsService').setLoadingState('loading');
 
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
@@ -180,8 +188,8 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         this.onModelLoadingRejected(errorData);
       }).finally((data) => {
         this.onModelLoadingAlways(data);
-        if (this.get('controller.state') === 'loading') {
-          this.get('controller').set('state', '');
+        if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
+          this.get('objectlistviewEventsService').setLoadingState('');
         }
       });
 

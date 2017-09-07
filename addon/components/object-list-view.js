@@ -555,15 +555,6 @@ export default FlexberryBaseComponent.extend(
   useRowByRowLoadingProgress: false,
 
   /**
-    Class loading for tbody.
-
-    @property showLoadingTbodyClass
-    @type Boolean
-    @defaul false
-  */
-  showLoadingTbodyClass: false,
-
-  /**
     Flag indicates whether content is defined.
 
     @property hasContent
@@ -855,7 +846,7 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
-      this.set('showLoadingTbodyClass', true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
@@ -955,15 +946,6 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
-
-    let eventsBus = this.get('eventsBus');
-    if (eventsBus) {
-      eventsBus.on('showLoadingTbodyClass', (componentName, showLoadingTbodyClass) => {
-        if (componentName === this.get('componentName')) {
-          this.set('showLoadingTbodyClass', showLoadingTbodyClass);
-        }
-      });
-    }
   },
 
   /**
@@ -1043,7 +1025,7 @@ export default FlexberryBaseComponent.extend(
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
-            this.set('showLoadingTbodyClass', false);
+            this.get('objectlistviewEventsService').setLoadingState('');
 
             this.set('_renderedRowIndex', -1);
 
@@ -1132,10 +1114,6 @@ export default FlexberryBaseComponent.extend(
     this._super(...arguments);
 
     Ember.$(window).unbind(`resize.${this.get('componentName')}`);
-    let eventsBus = this.get('eventsBus');
-    if (eventsBus) {
-      eventsBus.off('showLoadingTbodyClass');
-    }
   },
 
   /**
@@ -1680,14 +1658,14 @@ export default FlexberryBaseComponent.extend(
             });
           }).then(()=> {
             this.set('contentWithKeys', this.contentForRender);
-            this.set('showLoadingTbodyClass', false);
+            this.get('objectlistviewEventsService').setLoadingState('');
           });
         } else {
           content.forEach((item) => {
             this._addModel(item);
           });
           this.set('contentWithKeys', this.contentForRender);
-          this.set('showLoadingTbodyClass', false);
+          this.get('objectlistviewEventsService').setLoadingState('');
         }
       }
 

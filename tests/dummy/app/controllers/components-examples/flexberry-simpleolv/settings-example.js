@@ -376,14 +376,6 @@ export default ListFormController.extend({
     return componentSettingsMetadata;
   }),
 
-  showLoadingTbodyClass: Ember.computed('model.content', function() {
-    if (this.get('model.content') === undefined) {
-      return true;
-    } else {
-      return false;
-    }
-  }),
-
   _enableFilters: Ember.observer('enableFilters', function() {
     if (this.get('enableFilters')) {
       this.set('refreshButton', true);

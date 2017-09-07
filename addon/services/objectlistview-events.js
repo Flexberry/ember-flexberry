@@ -192,6 +192,15 @@ export default Ember.Service.extend(Ember.Evented, {
   currentLimitFunction: undefined,
 
   /**
+    Form's loading state.
+
+    @property loadingState
+    @type string
+    @default undefined
+  */
+  loadingState: undefined,
+
+  /**
     Sets current limit function for OLV.
 
     @method setLimitFunction
@@ -210,5 +219,16 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   getLimitFunction() {
     return this.get('currentLimitFunction');
+  },
+
+  /**
+   Method that sets the form's loading state.
+
+    @method setLoadingState
+
+    @param {String} loadingState Loading state for set.
+  */
+  setLoadingState(loadingState) {
+    this.set('loadingState', loadingState);
   }
 });

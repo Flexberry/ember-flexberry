@@ -1,5 +1,5 @@
 <h3 class="ui header">{{t "forms.ember-flexberry-dummy-application-user-edit.caption"}}</h3>
-<form class="ui {{state}} form flexberry-vertical-form" role="form">
+<form class="ui form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
     closeable=true
@@ -83,7 +83,7 @@
     <label>{{t "forms.ember-flexberry-dummy-application-user-edit.activated-caption"}}</label>
     {{flexberry-checkbox
       value=model.activated
-      readonly=readonly      
+      readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.activated pointing="pointing"}}
   </div>
@@ -133,7 +133,7 @@
     <label>{{t "forms.ember-flexberry-dummy-application-user-edit.vip-caption"}}</label>
     {{flexberry-checkbox
       value=model.vip
-      readonly=readonly     
+      readonly=readonly
     }}
     {{flexberry-validationmessage error=model.errors.vip pointing="pointing"}}
   </div>

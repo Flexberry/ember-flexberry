@@ -381,8 +381,7 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     refresh() {
-      let currentController = this.get('currentController');
-      currentController.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -396,7 +395,7 @@ export default FlexberryBaseComponent.extend({
       let editFormRoute = this.get('editFormRoute');
       Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
       let modelController = this.get('modelController');
-      modelController.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       Ember.run.later((function() {
         modelController.transitionToRoute(editFormRoute + '.new');
       }), 50);
@@ -441,7 +440,7 @@ export default FlexberryBaseComponent.extend({
     removeFilter() {
       let _this = this;
       if (_this.get('filterText')) {
-        _this.get('currentController').set('state', 'loading');
+        this.get('objectlistviewEventsService').setLoadingState('loading');
       }
 
       Ember.run.later((function() {

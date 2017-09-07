@@ -17,7 +17,7 @@ body.pushable {
     background: none!important;
 }
 
-.ui.top.attached {
+.background-logo .ui.top.attached {
     margin: 20px 5px;
     width: 250px;
 }

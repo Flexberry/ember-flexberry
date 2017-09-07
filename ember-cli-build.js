@@ -62,6 +62,11 @@ module.exports = function(defaults) {
   */
   if (app.env !== 'production') {
     app.import('bower_components/jquery-mockjax/jquery.mockjax.js');
+
+    // Include device.js script directly into application's 'assets' folder.
+    app.import('vendor/devicejs/devicejs.script', {
+      destDir: 'assets'
+    });
   }
 
   return app.toTree();

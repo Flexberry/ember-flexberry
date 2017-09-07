@@ -8,22 +8,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Add `edit-form-controller-operations-indication` and `edit-form-route-operations-indication` mixins for edit forms controllers and routes.
 * List components:
     * Add `minAutoColumnWidth` property (minimum column width, if width isn't defined in `userSettings`).
+    * Add `columnsWidthAutoresize` property (indicates whether or not autoresize columns for fit the container width).
 * Added components:
-  * `flexberry-button`.
-  * `flexberry-colorpicker`.
-  * `flexberry-ddau-checkbox`.
-  * `flexberry-ddau-slider`.
-  * `flexberry-dialog`.
-  * `flexberry-icon`.
-  * `flexberry-jsonarea`.
-  * `flexberry-tab-bar`.
-  * `flexberry-tree`.
-  * `flexberry-treenode`.
+    * `flexberry-button`.
+    * `flexberry-colorpicker`.
+    * `flexberry-ddau-checkbox`.
+    * `flexberry-ddau-slider`.
+    * `flexberry-dialog`.
+    * `flexberry-icon`.
+    * `flexberry-jsonarea`.
+    * `flexberry-tab-bar`.
+    * `flexberry-tree`.
+    * `flexberry-treenode`.
 * Added icons for next buttons:
-  * `refresh-button`.
-  * `delete-button`.
-  * `prev-page-button`.
-  * `next-page-button`.
+    * `refresh-button`.
+    * `delete-button`.
+    * `prev-page-button`.
+    * `next-page-button`.
 
 ### Fixed
 * When typing in the input field to search the `flexberry-simpleolv` component, `didRender` method that is problematic for the component is called.
@@ -34,9 +35,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Deleted unnecessary Semantic-UI themes.
 * `blues-sky` theme refactoring:
     * Updated names of several classes:
-      * `text-menu-1` to `text-menu-show`.
-      * `text-menu-2` to `text-menu-hide`.
-      * `hidden-menu` to `hidden`.
+        * `text-menu-1` to `text-menu-show`.
+        * `text-menu-2` to `text-menu-hide`.
+        * `hidden-menu` to `hidden`.
     * Deleted useless classes: `my-test-user-button`, `theme-button`.
 * Flexberry componets styles were moved to semantic default theme folder.
 * Form's loading state now stored in `objectlistview-events` service.

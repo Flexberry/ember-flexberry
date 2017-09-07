@@ -953,14 +953,16 @@ export default FlexberryBaseComponent.extend(
 
     @method setColumnWidths
 
-    @param {Boolean} alwaysUpdate If true, then component update width despite
-    his widthChangeOnContainerResize property.
     @param {String} componentName The name of object-list-view component.
   */
-  setColumnWidths(alwaysUpdate, componentName) {
-    let widthChangeOnContainerResize = this.get('widthChangeOnContainerResize');
-    if (alwaysUpdate || widthChangeOnContainerResize) {
+  setColumnWidths(componentName) {
+    let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+    if (columnsWidthAutoresize) {
       this._setColumnWidths(componentName);
+    } else {
+      if (this.get('eventsBus')) {
+        this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'));
+      }
     }
   },
 
@@ -971,7 +973,16 @@ export default FlexberryBaseComponent.extend(
   didInsertElement() {
     this._super(...arguments);
 
-    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() { this._setColumnWidths(); }, this));
+    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() {
+      if (this.get('columnsWidthAutoresize')) {
+        this._setColumnWidths();
+      } else {
+        if (this.get('eventsBus')) {
+          this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'));
+        }
+      }
+    }, this));
+
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -1241,8 +1252,13 @@ export default FlexberryBaseComponent.extend(
 
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);
       let containerWidth = $table[0].parentElement.clientWidth - 5;
-      let widthCondition = containerWidth > tableWidth;
-      $table.css({ 'width': (widthCondition ? containerWidth : tableWidth) + 'px' });
+      let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+      let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
+      $table.css({ 'width': (columnsWidthAutoresize ? containerWidth : tableWidth) + 'px' });
+      if (this.get('eventsBus')) {
+        this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'), tableWidth, containerWidth);
+      }
+
       Ember.$.each($columns, (key, item) => {
         let currentItem = this.$(item);
         let currentPropertyName = this._getColumnPropertyName(currentItem);

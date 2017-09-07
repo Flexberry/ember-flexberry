@@ -3,16 +3,15 @@
 *******************************/
 
 .ui.menu > .brand.item {
-    background:none!important;
+    background: none;
+}
+
+.logo {
+    width: 70px;
 }
 
 .ui.menu > .brand.item:hover {
-    color: #545454!important;
-}
-
-.stackable > .ui.message {
-    background-color: #dcebfc!important;
-    top: 70px;
+    color: @lightBlack;
 }
 
 .ui.vertical.inverted.menu .menu .item,
@@ -20,21 +19,8 @@
     font-size:13px;;
 }
 
-.ui.menu .item {
-    padding: 0.72857143em 0 0.72857143em 1.14285714em;
-}
-
 .ui.menu > .grid, .ui.menu > .container {
-    background: #4f73b0!important;
-}
-
-.ui.vertical.inverted.menu .item .menu a.item:hover,
- .ui.vertical.inverted.menu .item .menu .link.item:hover {
-     color: #ff4800;
-}
-
-.text-menu-2 span{
-    padding-left: 10px!important;
+    background: @headerColor !important;
 }
 
 i.icon.hand.paper:before {
@@ -42,5 +28,18 @@ i.icon.hand.paper:before {
 }
 
 .ui.attached.menu {
-    height: 0px!important;
+    height: 0px !important;
+}
+
+.ui.inverted.vertical.menu.sidebar {
+    overflow-x: hidden;
+}
+
+.ui.menu .ui.dropdown .menu > .item:hover {
+    background: @dropdownHoveredItemBackground !important;
+}
+
+.ui.attached.tabular.menu {
+    background: none;
+    margin-bottom: 0;
 }

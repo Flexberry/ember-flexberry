@@ -1,7 +1,3 @@
 /*******************************
          Theme Overrides
 *******************************/
-
-ui.teal.labels .label, .ui.teal.label {
-    background-color: #4f73b0 !important;
-}

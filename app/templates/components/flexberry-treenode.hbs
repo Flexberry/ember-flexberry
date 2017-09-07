@@ -1,0 +1,30 @@
+{{!--
+  See https://github.com/ciena-blueplanet/ember-block-slots#usage
+  {{yield}} is required here to make yield-slots available.
+--}}
+{{yield}}
+
+<div
+  class="{{flexberryClassNames.header}} title"
+  onclick={{action "onHeaderClick" preventDefault=false}}>
+    {{#if _hasContent}}
+      <i class="{{flexberryClassNames.expandCollapseIcon}} dropdown icon"></i>
+    {{else}}
+      {{!-- Here "visibility: hidden;" style is to force exactly the same padding for tree nodes without children --}}
+      <i class="{{flexberryClassNames.expandCollapseIcon}} dropdown icon" style="visibility: hidden;"></i>
+    {{/if}}
+    {{caption}}
+    {{#yield-slot "header"}}
+      {{yield}}
+    {{/yield-slot}}
+</div>
+<div class="{{flexberryClassNames.content}} content">
+  {{#if _hasNodes}}
+    {{flexberry-tree
+      nodes=nodes
+    }}
+  {{/if}}
+  {{#yield-slot "content"}}
+    {{yield}}
+  {{/yield-slot}}
+</div>

@@ -1,6 +1,7 @@
 /*******************************
          Theme Overrides
 *******************************/
+
 .ui.action.input:not([class*="left action"]) > input {
     height: 35px;
 }
@@ -9,33 +10,25 @@
     border-radius: 0px;
 }
 
-input {
+.ui.input input, input {
     border: none;
-    border-bottom: 1px solid @paleBlue;
-    border-radius: 0px!important;
+    border-bottom: 1px solid @borderColor;
+    border-radius: 0px;
     outline: none;
 }
 
 .block-action-input {
     width: 100%;
-}
-
-.block-action-input input{
-    height: 35px;
-    width: 100%!important;
-    border: none !important;
-    border-bottom: 1px solid @paleBlue !important;
-    border-radius: 0px!important;
-}
-
-.ui.action.input:not([class*="left action"]) input:focus {
-    border-right-color: #fff!important;
-}
-
-.filter-button{
-    border-right-color: #fff!important;
+    & input {
+        height: 35px;
+        min-width: 220px;
+    }
 }
 
 .flatpickr.flatpickr-input {
     letter-spacing: 3px;
+}
+
+.ui.secondary.menu > .ui.action.input {
+    margin: 0 10px;
 }

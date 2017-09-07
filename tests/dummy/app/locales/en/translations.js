@@ -268,8 +268,24 @@ Ember.$.extend(true, translations, {
         'components-examples': {
           'caption': 'Components examples',
           'title': '',
+          'flexberry-button': {
+            'caption': 'flexberry-button',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
           'flexberry-checkbox': {
             'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-ddau-checkbox': {
+            'caption': 'flexberry-ddau-checkbox',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -464,6 +480,14 @@ Ember.$.extend(true, translations, {
               'title': ''
             }
           },
+          'flexberry-tree': {
+            'caption': 'flexberry-tree',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
           'ui-message': {
             'caption': 'ui-message',
             'title': '',
@@ -628,9 +652,19 @@ Ember.$.extend(true, translations, {
     },
 
     'components-examples': {
+      'flexberry-button': {
+        'settings-example': {
+          'caption': 'Settings example for flexberry-button'
+        }
+      },
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Settings example'
+        }
+      },
+      'flexberry-ddau-checkbox': {
+        'settings-example': {
+          'caption': 'Settings example for flexberry-ddau-checkbox'
         }
       },
       'flexberry-datepicker': {
@@ -833,6 +867,14 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Settings example',
           'togglerContent': 'Some expandable/collapsable content'
+        }
+      },
+      'flexberry-tree': {
+        'settings-example': {
+          'caption': 'Settings example for flexberry-tree',
+          'json-tree-tab-caption': 'JSON-object-defined tree',
+          'json-tree-latest-clicked-node-caption': 'Latest clicked tree node settings',
+          'json-tree-latest-clicked-node-placeholder': 'Click on any tree node to display it\'s settings'
         }
       },
       'ui-message': {

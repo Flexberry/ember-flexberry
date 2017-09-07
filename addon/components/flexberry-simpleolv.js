@@ -213,13 +213,13 @@ ErrorableControllerMixin, {
   minAutoColumnWidth: 150,
 
   /**
-    Indicates whether or not invoke _setColumnWidths function on container resize.
+    Indicates whether or not autoresize columns for fit the page width.
 
-    @property widthChangeOnContainerResize
+    @property columnsWidthAutoresize
     @type Boolean
-    @default true
+    @default false
   */
-  widthChangeOnContainerResize: true,
+  columnsWidthAutoresize: false,
 
   /**
     Classes for table.
@@ -1098,14 +1098,14 @@ ErrorableControllerMixin, {
 
     @method setColumnWidths
 
-    @param {Boolean} alwaysUpdate If true, then component update width despite
-    his widthChangeOnContainerResize property.
     @param {String} componentName The name of object-list-view component.
   */
-  setColumnWidths(alwaysUpdate, componentName) {
-    let widthChangeOnContainerResize = this.get('widthChangeOnContainerResize');
-    if (alwaysUpdate || widthChangeOnContainerResize) {
+  setColumnWidths(componentName) {
+    let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+    if (columnsWidthAutoresize) {
       this._setColumnWidths(componentName);
+    } else {
+      this._setMenuWidth();
     }
   },
 
@@ -1116,7 +1116,13 @@ ErrorableControllerMixin, {
   didInsertElement() {
     this._super(...arguments);
 
-    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() { this._setColumnWidths(); }, this));
+    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() {
+      if (this.get('columnsWidthAutoresize')) {
+        this._setColumnWidths();
+      } else {
+        this._setMenuWidth();
+      }
+    }, this));
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1313,8 +1319,10 @@ ErrorableControllerMixin, {
 
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);
       let containerWidth = $table[0].parentElement.clientWidth - 5;
-      let widthCondition = containerWidth > tableWidth;
-      $table.css({ 'width': (widthCondition ? containerWidth : tableWidth) + 'px' });
+      let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+      let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
+      $table.css({ 'width': (columnsWidthAutoresize ? containerWidth : tableWidth) + 'px' });
+      this._setMenuWidth(tableWidth, containerWidth);
       Ember.$.each($columns, (key, item) => {
         let currentItem = this.$(item);
         let currentPropertyName = this._getColumnPropertyName(currentItem);
@@ -1341,6 +1349,20 @@ ErrorableControllerMixin, {
     this._setColumnsOrder();
     this._setColumnsSorting();
     this._setColumnWidths();
+  },
+
+  _setMenuWidth(tableWidth, containerWidth) {
+    let $table = this.$('table.object-list-view')[0];
+    if (Ember.isBlank(tableWidth)) {
+      tableWidth = $table.clientWidth;
+    }
+
+    if (Ember.isBlank(containerWidth)) {
+      containerWidth = $table.parentElement.clientWidth - 5;
+    }
+
+    this.$('.ui.secondary.menu').css({ 'width': (this.get('columnsWidthAutoresize') ?
+      containerWidth : containerWidth < tableWidth ? containerWidth : tableWidth) + 'px' });
   },
 
   /**

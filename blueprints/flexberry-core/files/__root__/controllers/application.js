@@ -81,6 +81,9 @@ export default Ember.Controller.extend({
         },
         onHidden: function() {
           objectlistviewEventsService.updateWidthTrigger();
+        },
+        onShow: function() {
+          objectlistviewEventsService.updateWidthTrigger();
         }
       }).sidebar('toggle');
 
@@ -108,6 +111,9 @@ export default Ember.Controller.extend({
           Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
         },
         onHidden: function() {
+          objectlistviewEventsService.updateWidthTrigger();
+        },
+        onShow: function() {
           objectlistviewEventsService.updateWidthTrigger();
         }
       }).sidebar('toggle');

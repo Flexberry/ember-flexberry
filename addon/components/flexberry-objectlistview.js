@@ -522,13 +522,13 @@ export default FlexberryBaseComponent.extend({
   minAutoColumnWidth: 150,
 
   /**
-    Indicates whether or not invoke _setColumnWidths function on container resize.
+    Indicates whether or not autoresize columns for fit the page width.
 
-    @property widthChangeOnContainerResize
+    @property columnsWidthAutoresize
     @type Boolean
-    @default true
+    @default false
   */
-  widthChangeOnContainerResize: true,
+  columnsWidthAutoresize: false,
 
   /**
     Current interval of records.
@@ -1042,6 +1042,15 @@ export default FlexberryBaseComponent.extend({
       // For lookup mode we allow to set properties.
       this.setProperties(customProperties);
     }
+
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.on('setMenuWidth', (componentName, tableWidth, containerWidth) => {
+        if (componentName === this.get('componentName')) {
+          this._setMenuWidth(tableWidth, containerWidth);
+        }
+      });
+    }
   },
 
   /**
@@ -1052,6 +1061,19 @@ export default FlexberryBaseComponent.extend({
   */
   didRender() {
     this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
+  },
+
+  /**
+    Called when the element of the view is going to be destroyed.
+    For more information see [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.off('setMenuWidth');
+    }
   },
 
   /**
@@ -1089,4 +1111,18 @@ export default FlexberryBaseComponent.extend({
       $row.addClass('active');
     }
   },
+
+  _setMenuWidth(tableWidth, containerWidth) {
+    let $table = this.$('table.object-list-view')[0];
+    if (Ember.isBlank(tableWidth)) {
+      tableWidth = $table.clientWidth;
+    }
+
+    if (Ember.isBlank(containerWidth)) {
+      containerWidth = $table.parentElement.clientWidth - 5;
+    }
+
+    this.$('.ui.secondary.menu').css({ 'width': (this.get('columnsWidthAutoresize') ?
+      containerWidth : containerWidth < tableWidth ? containerWidth : tableWidth) + 'px' });
+  }
 });

@@ -371,13 +371,13 @@ export default FlexberryBaseComponent.extend({
   minAutoColumnWidth: 150,
 
   /**
-    Indicates whether or not invoke _setColumnWidths function on container resize.
+    Indicates whether or not autoresize columns for fit the page width.
 
-    @property widthChangeOnContainerResize
+    @property columnsWidthAutoresize
     @type Boolean
     @default true
   */
-  widthChangeOnContainerResize: true,
+  columnsWidthAutoresize: true,
 
   actions: {
     /**

@@ -44,8 +44,7 @@ executeTest('check paging dropdown', (store, assert, app) => {
           }).catch((reason) => {
             throw new Error(reason);
           }).finally(() => {
-            deleteRecords(store, modelName, uuid, assert);
-            done();
+            deleteRecords(store, modelName, uuid).finally(done);
           });
         }), timeout);
       });

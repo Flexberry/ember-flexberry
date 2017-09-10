@@ -33,8 +33,7 @@ executeTest('check paging nav', (store, assert) => {
         }).catch((reason) => {
           throw new Error(reason);
         }).finally(() => {
-          deleteRecords(store, modelName, uuid, assert);
-          done();
+          deleteRecords(store, modelName, uuid).finally(done);
         });
       });
     });

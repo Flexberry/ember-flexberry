@@ -93,18 +93,9 @@ export function addRecords(store, modelName, uuid) {
 }
 
 // Function for deleting records.
-export function deleteRecords(store, modelName, uuid, assert) {
-  Ember.run(() => {
-    let done = assert.async();
-    let builder = new Query.Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid);
-    store.query(modelName, builder.build()).then((results) => {
-      results.content.forEach(function(item) {
-        item.deleteRecord();
-        item.save();
-      });
-      done();
-    });
-  });
+export function deleteRecords(store, modelName, uuid) {
+  let builder = new Query.Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid);
+  return store.query(modelName, builder.build()).then(r => Ember.RSVP.all(r.map(i => i.destroyRecord())));
 }
 
 // Function for waiting loading list.

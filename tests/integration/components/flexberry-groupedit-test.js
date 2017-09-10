@@ -1,9 +1,12 @@
 import Ember from 'ember';
-import { moduleForComponent, test } from 'ember-qunit';
+
 import hbs from 'htmlbars-inline-precompile';
-import startApp from '../../helpers/start-app';
-import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/shared/aggregator';
+import wait from 'ember-test-helpers/wait';
+import startApp from 'dummy/tests/helpers/start-app';
+import { moduleForComponent, test } from 'ember-qunit';
+
 import UserSettingsService from 'ember-flexberry/services/user-settings';
+import AggregatorModel from 'dummy/models/components-examples/flexberry-groupedit/shared/aggregator';
 
 let App;
 

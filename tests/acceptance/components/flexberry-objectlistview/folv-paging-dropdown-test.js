@@ -22,9 +22,9 @@ executeTest('check paging dropdown', (store, assert, app) => {
 
         let $folvPerPageButton = Ember.$('.flexberry-dropdown.compact');
         let $menu = Ember.$('.menu', $folvPerPageButton);
-        let trTableBody = () => { return $(Ember.$('table.object-list-view tbody tr')).length.toString(); };
+        let trTableBody = () => { return Ember.$('table.object-list-view tbody tr').length.toString(); };
 
-        let activeItem =  () => { return $(Ember.$('.item.active.selected', $menu)).attr('data-value'); };
+        let activeItem =  () => { return Ember.$('.item.active.selected', $menu).attr('data-value'); };
 
         // The list should be more than 5 items.
         assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
@@ -37,7 +37,7 @@ executeTest('check paging dropdown', (store, assert, app) => {
           let done = assert.async();
           loadingList($choosedIthem[1], '.object-list-view-container', 'table.object-list-view tbody tr').then(($list) => {
             assert.ok($list);
-            assert.equal(activeItem(), $($choosedIthem[1]).attr('data-value'), 'equal');
+            assert.equal(activeItem(), Ember.$($choosedIthem[1]).attr('data-value'), 'equal');
 
             // The list should be more than 10 items
             assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');

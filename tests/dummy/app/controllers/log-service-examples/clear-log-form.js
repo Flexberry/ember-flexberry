@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
       if (_this.logRecordsOlderDate) {
         builder = new Builder(this.store, modelName)
           .top(1)
-          .where('timestamp', Query.FilterOperator.Leq, _this.logRecordsOlderDate)
+          .where('timestamp', Query.FilterOperator.Leq, _this.logRecordsOlderDate)
           .count();
         this.store.query(modelName, builder.build()).then((data) => {
           _this.set('logRecordsOlderDateCount', data.meta.count);

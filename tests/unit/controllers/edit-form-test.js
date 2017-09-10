@@ -73,7 +73,5 @@ test('save hasMany relationships recursively', function(assert) {
       assert.equal(savedRecords[1], model22);
       assert.equal(savedRecords[2], model31);
     });
-
-    wait();
   });
 });

@@ -64,7 +64,7 @@ export default ListFormRoute.extend({
       let store = this.get('store');
 
       let query = new Query.Builder(store)
-        .from('ember-flexberry-dummy-suggestion')
+        .from('ember-flexberry-dummy-suggestion')
         .select('address')
         .where('address', Query.FilterOperator.Neq, null)
         .top(1);

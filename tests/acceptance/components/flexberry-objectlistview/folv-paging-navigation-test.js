@@ -21,15 +21,15 @@ executeTest('check paging nav', (store, assert) => {
 
         // check paging.
         let $basicButtons = Ember.$('.ui.button', '.ui.basic.buttons');
-        assert.equal($($basicButtons[0]).hasClass('disabled'), true, 'button prev is disabled');
-        assert.equal($($basicButtons[1]).hasClass('active'), true, 'page 1 is active');
+        assert.equal(Ember.$($basicButtons[0]).hasClass('disabled'), true, 'button prev is disabled');
+        assert.equal(Ember.$($basicButtons[1]).hasClass('active'), true, 'page 1 is active');
 
         let done = assert.async();
         loadingList($basicButtons[2], '.object-list-view-container', 'table.object-list-view tbody tr').then(($list) => {
           assert.ok($list);
           let $basicButtons = Ember.$('.ui.button', '.ui.basic.buttons');
-          assert.equal($($basicButtons[1]).hasClass('active'), false, 'page 1 is not active');
-          assert.equal($($basicButtons[2]).hasClass('active'), true, 'page 2 is active');
+          assert.equal(Ember.$($basicButtons[1]).hasClass('active'), false, 'page 1 is not active');
+          assert.equal(Ember.$($basicButtons[2]).hasClass('active'), true, 'page 2 is active');
         }).catch((reason) => {
           throw new Error(reason);
         }).finally(() => {

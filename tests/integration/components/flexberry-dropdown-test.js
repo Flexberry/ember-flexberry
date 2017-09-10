@@ -77,7 +77,7 @@ let selectDropdownItem = function(options) {
     }
 
     // To select some item, menu must contain such item (with the specified caption).
-    let $item = $('.item:contains(' + itemCaption + ')', $menu);
+    let $item = Ember.$('.item:contains(' + itemCaption + ')', $menu);
     if ($item.length === 0) {
       reject(new Error('flexberry-dropdown\'s menu doesn\'t contain item with caption \'' + itemCaption + '\''));
     }

@@ -3,8 +3,12 @@ import Ember from 'ember';
 import sinon from 'sinon';
 
 moduleFor('controller:lookup-dialog', 'Unit | Controller | lookup dialog', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: [
+    'controller:colsconfig-dialog',
+    'service:lookup-events',
+    'service:objectlistview-events',
+    'service:user-settings',
+  ],
 });
 
 // Replace this with your real tests.

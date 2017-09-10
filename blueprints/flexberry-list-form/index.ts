@@ -55,6 +55,7 @@ module.exports = {
     return lodash.defaults({
       editForm: listFormBlueprint.listForm.editForm,// for use in files\__root__\templates\__name__.hbs
       formName: listFormBlueprint.listForm.name,// for use in files\__root__\controllers\__name__.js
+      entityName: options.entity.name,
       modelName: listFormBlueprint.listForm.projections[0].modelName,// for use in files\__root__\templates\__name__.hbs, files\__root__\routes\__name__.js
       modelProjection: listFormBlueprint.listForm.projections[0].modelProjection,// for use in files\__root__\routes\__name__.js
       caption: listFormBlueprint.listForm.caption// for use in files\__root__\templates\__name__.hbs

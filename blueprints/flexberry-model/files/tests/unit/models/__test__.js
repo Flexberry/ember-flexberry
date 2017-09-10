@@ -3,8 +3,9 @@ import { moduleForModel, test } from 'ember-qunit';
 moduleForModel('<%= name %>', 'Unit | Model | <%= name %>', {
   // Specify the other units that are required for this test.
   needs: [
+    'service:syncer',
 <%= needsAllModels %>
-  ]
+  ],
 });
 
 test('it exists', function(assert) {

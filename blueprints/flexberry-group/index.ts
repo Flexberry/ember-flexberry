@@ -62,14 +62,6 @@ class GroupBlueprint {
       case 'transform-test':
         this.emberGenerate("objects");
         break;
-      case 'controller-test':
-        this.emberGenerate("list-forms");
-        this.emberGenerate("edit-forms");
-        break;
-      case 'route-test':
-        this.emberGenerate("list-forms");
-        this.emberGenerate("edit-forms");
-        break;
       case 'flexberry-enum':
         this.emberGenerate("enums");
         break;

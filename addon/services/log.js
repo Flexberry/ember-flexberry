@@ -307,7 +307,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
     let onError = function(error) {
       // If `this` is not undefined then assuming this function was called as promise error handler. So we not performing it.
-      if (!this) {
+      if (!this || error instanceof Error) {
         originalEmberLoggerError(error);
         _this._onError(error, false);
       }

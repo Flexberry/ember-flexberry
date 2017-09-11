@@ -1,5 +1,6 @@
-/*jshint node:true*/
+/* eslint-env node */
 module.exports = {
+  useYarn: true,
   scenarios: [
     {
       name: 'default'

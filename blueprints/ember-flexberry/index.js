@@ -245,7 +245,6 @@ module.exports = {
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'broccoli-jscs', target: '1.4.1' },
           { name: 'ember-browserify', target: '1.1.9' },
           { name: 'ember-cli-less', target: '1.5.4' },
           { name: 'ember-link-action', target: '0.0.35' },
@@ -261,7 +260,7 @@ module.exports = {
     }).then(function () {
       return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
     }).then(function () {
-      return _this.addAddonToProject('ember-data@~2.11.0');
+      return _this.addAddonToProject('ember-data@~2.12.0');
     });
   },
 

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Add `yield` for `flexberry-dropdown` component.
 
 ## [0.9.0-beta.17] - 2017-09-07
 ### Added

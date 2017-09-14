@@ -102,9 +102,9 @@ export default FlexberryBaseComponent.extend({
 
     @property chooseText
     @type String
-    @default t('components.flexberry-lookup.choose-button-text')
+    @default '<i class="change icon"></i>'
   */
-  chooseText: t('components.flexberry-lookup.choose-button-text'),
+  chooseText: '<i class="change icon"></i>',
 
   /**
     Text on button clear value.

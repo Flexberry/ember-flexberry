@@ -117,6 +117,18 @@ i.icon.remove:before {
         color: @red;
     }
 }
+i.icon.change:before {
+    font-family: 'Crimean';
+    content: "";
+    font-size: 17px;
+    position: relative;
+    top: -1px;
+    opacity: 1;
+    &:hover {
+        color: @brightBlue;
+        opacity: 1;
+    }
+}
 
 /**************************************
       Edit panel buttons section
@@ -264,6 +276,13 @@ i.icon.next-page {
     color: @red;
 }
 
+.remove.icon:before:hover {
+    color: @brightBlue;
+}
+.remove.icon:hover:before {
+    color: @brightBlue;
+}
+
 .asterisk.small.red.icon.transparent {
     display:none;
 }
@@ -312,6 +331,12 @@ i.icon.text-menu-hide:before {
 
 .flexberry-lookup > .ui.fluid > button > i.icon.remove:before {
     content: "\e806";
+    font-family: 'Crimean';
+    font-size: 13px;
+}
+
+.flexberry-lookup > .ui.fluid > button > i.icon.change:before {
+    content: "";
     font-family: 'Crimean';
     font-size: 13px;
 }

@@ -13,15 +13,11 @@
 }
 
 .ui.modal .content .object-list-view-container {
-    height: 300px;
-}
-
-.ui.modal .content .ui.secondary.menu.no-margin.ember-view {
-    display: none;
+    max-height: 300px;
 }
 
 .ui.modal .content .flexberry-colsconfig.content {
-    height: 585px;
+    max-height: 585px;
     overflow: auto;
 }
 

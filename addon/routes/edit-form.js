@@ -6,6 +6,7 @@ import Ember from 'ember';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
+import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
 
 /**
   Base route for the Edit Forms.
@@ -35,7 +36,8 @@ import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistvie
  */
 export default ProjectedModelFormRoute.extend(
 FlexberryObjectlistviewRouteMixin,
-FlexberryGroupeditRouteMixin, {
+FlexberryGroupeditRouteMixin,
+FlexberryObjectlistviewHierarchicalRouteMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.

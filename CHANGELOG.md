@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * Fix hierarchy expand for `flexberry-objectlistview` on edit form.
+* Fix operation indication on edit form when new record added.
 
 ## [0.9.0-beta.18] - 2017-09-13
 ### Added

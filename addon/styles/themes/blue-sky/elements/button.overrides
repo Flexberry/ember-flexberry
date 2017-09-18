@@ -82,6 +82,7 @@
 div.ui.secondary.menu.no-margin {
     display: flex;
     align-items: center;
+    min-height: 0em;
 }
 
 .ui.button.refresh-button {

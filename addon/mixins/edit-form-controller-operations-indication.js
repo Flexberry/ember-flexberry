@@ -15,7 +15,7 @@ export default Ember.Mixin.create({
       Handler for success ui-message component 'onShow' action.
 
       @method actions.onSuccessMessageShow
-     */
+    */
     onSuccessMessageShow() {
     },
 
@@ -23,16 +23,16 @@ export default Ember.Mixin.create({
       Handler for success ui-message component 'onHide' action.
 
       @method actions.onSuccessMessageHide
-     */
+    */
     onSuccessMessageHide() {
-      this.set('showFormSuccessMessage', undefined);
+      this.set('showFormSuccessMessage', false);
     },
 
     /**
       Handler for error ui-message component 'onShow' action.
 
       @method actions.onErrorMessageShow
-     */
+    */
     onErrorMessageShow() {
     },
 
@@ -40,9 +40,9 @@ export default Ember.Mixin.create({
       Handler for error ui-message component 'onHide' action.
 
       @method actions.onErrorMessageHide
-     */
+    */
     onErrorMessageHide() {
-      this.set('showFormErrorMessage', undefined);
+      this.set('showFormErrorMessage', false);
     }
   },
 
@@ -51,7 +51,7 @@ export default Ember.Mixin.create({
 
     @property latestOperationType.
     @type String
-   */
+  */
   latestOperationType: undefined,
 
   /**
@@ -59,15 +59,16 @@ export default Ember.Mixin.create({
 
     @property showFormSuccessMessage.
     @type Boolean
-   */
-  showFormSuccessMessage: undefined,
+    @default false
+  */
+  showFormSuccessMessage: false,
 
   /**
     Success message caption related to current locale and operation type.
 
     @property formSuccessMessageCaption.
     @type String
-   */
+  */
   formSuccessMessageCaption: Ember.computed('i18n.locale', 'latestOperationType', function() {
     let i18n = this.get('i18n');
     if (this.get('latestOperationType') === 'save') {
@@ -82,7 +83,7 @@ export default Ember.Mixin.create({
 
     @property formSuccessMessage.
     @type String
-   */
+  */
   formSuccessMessage: Ember.computed('i18n.locale', 'latestOperationType', function() {
     let i18n = this.get('i18n');
     let message = null;
@@ -100,15 +101,16 @@ export default Ember.Mixin.create({
 
     @property showFormErrorMessage.
     @type Boolean
-   */
-  showFormErrorMessage: undefined,
+    @default false
+  */
+  showFormErrorMessage: false,
 
   /**
     Error message caption related to current locale and operation type.
 
     @property formErrorMessageCaption.
     @type String
-   */
+  */
   formErrorMessageCaption: Ember.computed('i18n.locale', 'latestOperationType', function() {
     let i18n = this.get('i18n');
     if (this.get('latestOperationType') === 'save') {
@@ -123,7 +125,7 @@ export default Ember.Mixin.create({
 
     @property formErrorMessage
     @type String
-   */
+  */
   formErrorMessage: Ember.computed('errorMessages.[]', function() {
     let message = '';
     let errorMessages = this.get('errorMessages');
@@ -140,7 +142,7 @@ export default Ember.Mixin.create({
     This method will be invoked before save operation will be called.
 
     @method onSaveActionStarted.
-   */
+  */
   onSaveActionStarted() {
     this._super(...arguments);
 
@@ -151,7 +153,7 @@ export default Ember.Mixin.create({
     This method will be invoked when save operation successfully completed.
 
     @method onSaveActionFulfilled.
-   */
+  */
   onSaveActionFulfilled() {
     this._super(...arguments);
 
@@ -164,7 +166,7 @@ export default Ember.Mixin.create({
 
     @method onSaveActionRejected.
     @param {Object} errorData Data about save operation fail.
-   */
+  */
   onSaveActionRejected(errorData) {
     this._super(...arguments);
 
@@ -178,7 +180,7 @@ export default Ember.Mixin.create({
 
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
-   */
+  */
   onSaveActionAlways(data) {
     this._super(...arguments);
   },
@@ -187,7 +189,7 @@ export default Ember.Mixin.create({
     This method will be invoked before delete operation will be called.
 
     @method onDeleteActionStarted.
-   */
+  */
   onDeleteActionStarted() {
     this._super(...arguments);
 
@@ -198,7 +200,7 @@ export default Ember.Mixin.create({
     This method will be invoked when delete operation successfully completed.
 
     @method onDeleteActionFulfilled.
-   */
+  */
   onDeleteActionFulfilled() {
     this._super(...arguments);
 
@@ -211,7 +213,7 @@ export default Ember.Mixin.create({
 
     @method onDeleteActionRejected.
     @param {Object} errorData Data about delete operation fail.
-   */
+  */
   onDeleteActionRejected(errorData) {
     this._super(...arguments);
 
@@ -225,7 +227,7 @@ export default Ember.Mixin.create({
 
     @method onDeleteActionAlways.
     @param {Object} data Data about completed delete operation.
-   */
+  */
   onDeleteActionAlways(data) {
     this._super(...arguments);
   },
@@ -234,10 +236,10 @@ export default Ember.Mixin.create({
     This method will be invoked before close method will be called.
 
     @method onDeleteActionStarted.
-   */
+  */
   onCloseActionStarted() {
-    this.set('showFormSuccessMessage', undefined);
-    this.set('showFormErrorMessage', undefined);
+    this.set('showFormSuccessMessage', false);
+    this.set('showFormErrorMessage', false);
     this.set('latestOperationType', undefined);
   }
 });

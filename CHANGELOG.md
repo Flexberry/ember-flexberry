@@ -7,6 +7,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Fix hierarchy expand for `flexberry-objectlistview` on edit form.
 * Fix operation indication on edit form when new record added.
 
+### Breaking changes
+* Search localisation for models in `flexberry-objectlistview` and `flexberry-simpleolv` components:
+  * Before: `models.modelName.projections.projectionName.attributePath.caption`
+  * After: `models.modelName.projections.projectionName.attributePath.__caption__`
+  * There are several solutions:
+    * Carefully regenerate the application.
+    * Find and replace in `Visual Studio Code`, files to include: `locales/en/models, locales/ru/models`, find: `(^\s+)(caption)`, replace: `$1__$2__`.
+
 ## [0.9.0-beta.18] - 2017-09-13
 ### Added
 * Add `yield` block for `flexberry-dropdown` component.

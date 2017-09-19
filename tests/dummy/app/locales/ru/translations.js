@@ -10,85 +10,85 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionL': {
           'address': {
-            'caption': 'Адрес'
+            __caption__: 'Адрес'
           },
           'text': {
-            'caption': 'Текст'
+            __caption__: 'Текст'
           },
           'date': {
-            'caption': 'Дата'
+            __caption__: 'Дата'
           },
           'votes': {
-            'caption': 'Голоса'
+            __caption__: 'Голоса'
           },
           'author': {
-            'caption': 'Автор',
+            __caption__: 'Автор',
             'eMail': {
-              'caption': 'Почта'
+              __caption__: 'Почта'
             }
           },
           'editor1': {
-            'caption': 'Редактор',
+            __caption__: 'Редактор',
             'eMail': {
-              'caption': 'Почта'
+              __caption__: 'Почта'
             }
           },
           'moderated': {
-            'caption': 'Одобрено'
+            __caption__: 'Одобрено'
           },
           'type': {
-            'caption': 'Тип предложения'
+            __caption__: 'Тип предложения'
           },
           'commentsCount': {
-            'caption': 'Количество комментариев'
+            __caption__: 'Количество комментариев'
           },
           'comments': {
-            'caption': 'Комментарии'
+            __caption__: 'Комментарии'
           },
         },
         'SuggestionE': {
           'address': {
-            'caption': 'Адрес'
+            __caption__: 'Адрес'
           },
           'userVotes': {
             'name': {
-              'caption': 'Наименование'
+              __caption__: 'Наименование'
             },
             'voteType': {
-              'caption': 'Тип голосования'
+              __caption__: 'Тип голосования'
             },
             'author': {
-              'caption': 'Пользователь приложения',
+              __caption__: 'Пользователь приложения',
               'eMail': {
-                'caption': 'Почта'
+                __caption__: 'Почта'
               }
             }
           },
           'files': {
             'order': {
-              'caption': 'Номер'
+              __caption__: 'Номер'
             },
             'file': {
-              'caption': 'Файл',
+              __caption__: 'Файл',
             }
           },
           'comments': {
             'name': {
-              'caption': 'Наименование'
+              __caption__: 'Наименование'
             },
             'text': {
-              'caption': 'Текст'
+              __caption__: 'Текст'
             },
             'votes': {
-              'caption': 'Голоса',
+              __caption__: 'Голоса',
             },
             'moderated': {
-              'caption': 'Одобрено',
+              __caption__: 'Одобрено',
             },
             'author': {
-              'caption': 'Пользователь приложения',
+              __caption__: 'Пользователь приложения',
               'eMail': {
-                'caption': 'Почта'
+                __caption__: 'Почта'
               }
             }
           }
@@ -99,22 +99,22 @@ Ember.$.extend(true, translations, {
       'projections': {
         'ApplicationUserL': {
           'name': {
-            'caption': 'Имя'
+            __caption__: 'Имя'
           },
           'eMail': {
-            'caption': 'Почта'
+            __caption__: 'Почта'
           },
           'activated': {
-            'caption': 'Учетная запись активирована'
+            __caption__: 'Учетная запись активирована'
           },
           'birthday': {
-            'caption': 'Дата рождения'
+            __caption__: 'Дата рождения'
           },
           'gender': {
-            'caption': 'Пол'
+            __caption__: 'Пол'
           },
           'karma': {
-            'caption': 'Карма'
+            __caption__: 'Карма'
           },
         },
       }
@@ -123,7 +123,7 @@ Ember.$.extend(true, translations, {
       'projections': {
         'LocalizationL': {
           'name': {
-            'caption': 'Наименование'
+            __caption__: 'Наименование'
           },
         },
       }
@@ -132,24 +132,24 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionTypeL': {
           'name': {
-            'caption': 'Наименование'
+            __caption__: 'Наименование'
           },
           'moderated': {
-            'caption': 'Одобрено'
+            __caption__: 'Одобрено'
           },
           'parent': {
-            'caption': 'Иерархия'
+            __caption__: 'Иерархия'
           },
         },
         'SuggestionTypeE': {
           'localizedTypes': {
             'name': {
-              'caption': 'Наименование'
+              __caption__: 'Наименование'
             },
             'localization': {
-              'caption': 'Локализация',
+              __caption__: 'Локализация',
               'name': {
-                'caption': 'Наименование'
+                __caption__: 'Наименование'
               }
             }
           },
@@ -160,16 +160,16 @@ Ember.$.extend(true, translations, {
       'projections': {
         'CommentE': {
           'text': {
-            'caption': 'Текст комментария'
+            __caption__: 'Текст комментария'
           },
           'userVotes': {
             'voteType': {
-              'caption': 'Тип голосования'
+              __caption__: 'Тип голосования'
             },
             'applicationUser': {
-              'caption': 'Пользователь',
+              __caption__: 'Пользователь',
               'name': {
-                'caption': 'Наименование'
+                __caption__: 'Наименование'
               }
             }
           },

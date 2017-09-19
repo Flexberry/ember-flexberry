@@ -1,4 +1,4 @@
-﻿/// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 
@@ -99,6 +99,7 @@ class CoreBlueprint {
     let importProperties = [];
     let formsImportedProperties = [];
     let modelsImportedProperties = [];
+    let irregularRules = [];
     let inflectorIrregular = [];
     for (let formFileName of listForms) {
       let pp: path.ParsedPath = path.parse(formFileName);
@@ -136,9 +137,22 @@ class CoreBlueprint {
       let irregularLastWordOfModelNames = irregularLastWordOfModelName.charAt(0).toUpperCase() + irregularLastWordOfModelName.slice(1) + 's';
       importProperties.push(`import ${model.name}Model from './models/${modelName}';`);
       modelsImportedProperties.push(`    '${modelName}': ${model.name}Model`);
-      inflectorIrregular.push(`inflector.irregular('${irregularLastWordOfModelName}', '${irregularLastWordOfModelNames}');`);
+      irregularRules.push({ name: irregularLastWordOfModelName, names: irregularLastWordOfModelNames });
     }
 
+    inflectorIrregular = irregularRules.sort(function(a, b) {
+      if (a.name.length > b.name.length) {
+        return -1;
+      } else if (a.name.length < b.name.length) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }).map(function(item) {
+      return `inflector.irregular('${item.name}', '${item.names}');`;
+    }).filter(function(item, index, self) {
+      return self.indexOf(item) === index;
+    });
     this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
     let applicationMenuLocales = new ApplicationMenuLocales("ru");
     for (let item of this.sitemap.items) {

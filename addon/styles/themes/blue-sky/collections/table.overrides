@@ -7,7 +7,7 @@ tr {
 }
 
 .ui.table.object-list-view tr td {
-    overflow: inherit;
+    overflow: hidden;
 }
 
 .object-list-view-container {

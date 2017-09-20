@@ -76,7 +76,7 @@
     </div>
   {{/if}}
   {{#if exportExcelButton}}
-    <div class="ui buttons export-config">
+    <div class="ui buttons">
       <button
         class="ui button icon export-button {{buttonClass}}"
         title={{t "components.olv-toolbar.export-excel-button-text"}}
@@ -90,7 +90,7 @@
     </div>
   {{/if}}
   {{#if colsConfigButton}}
-    <div class="ui buttons cols-config">
+    <div class="ui buttons">
       <button
         class="ui icon button config-button"
         title={{t "components.colsconfig-dialog-content.title"}}
@@ -326,9 +326,7 @@
 </div>
 <div class="ui secondary menu no-margin">
   <div class="ui basic buttons">
-    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>
-      <i class="prev-page icon"></i>
-    </button>
+    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
     {{#each pages as |page|}}
       {{#if page.isEllipsis}}
         <div class="ui button">...</div>
@@ -340,9 +338,7 @@
         {{/if}}
       {{/if}}
     {{/each}}
-    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} >
-      <i class="next-page icon"></i>
-    </button>
+    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
   </div>
   <div class="right menu">
     {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}

@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 * Fix `custom-inflector-rules` generation (sorting and no duplicates).
+* Fix `chooseText` for lookups in `flexberry-groupedit`.
 
 ## [0.9.0-beta.19] - 2017-09-19
 ### Fixed

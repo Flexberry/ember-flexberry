@@ -520,7 +520,15 @@ export default FlexberryBaseComponent.extend({
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
   */
   init() {
+    this.set('chooseTextCopy', this.get('chooseText'));
+
     this._super(...arguments);
+
+    // Sometimes super method replace chooseText to '...'.
+    if (this.get('chooseText') === '...') {
+      this.set('chooseText', this.get('chooseTextCopy'));
+    }
+
     this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);

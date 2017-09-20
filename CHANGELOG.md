@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Fix `custom-inflector-rules` generation (sorting and no duplicates).
 * Fix `chooseText` for lookups in `flexberry-groupedit`.
+* Generation of applications containing external entities (forms and models):
+  * At generation application by `flexberry-application` blueprint, skip entities containing key `external` with `true` value.
+  * At generation entity by own blueprint (for example `flexberry-model`) it will be generated in any case.
 
 ## [0.9.0-beta.19] - 2017-09-19
 ### Fixed

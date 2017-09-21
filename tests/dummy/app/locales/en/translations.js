@@ -10,85 +10,85 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionL': {
           'address': {
-            'caption': 'Address'
+            __caption__: 'Address'
           },
           'text': {
-            'caption': 'Text'
+            __caption__: 'Text'
           },
           'date': {
-            'caption': 'Date'
+            __caption__: 'Date'
           },
           'votes': {
-            'caption': 'Votes'
+            __caption__: 'Votes'
           },
           'author': {
-            'caption': 'Author',
+            __caption__: 'Author',
             'eMail': {
-              'caption': 'Email'
+              __caption__: 'Email'
             }
           },
           'editor1': {
-            'caption': 'Editor',
+            __caption__: 'Editor',
             'eMail': {
-              'caption': 'Email'
+              __caption__: 'Email'
             }
           },
           'moderated': {
-            'caption': 'Moderated'
+            __caption__: 'Moderated'
           },
           'type': {
-            'caption': 'Type'
+            __caption__: 'Type'
           },
           'commentsCount': {
-            'caption': 'Comments count'
+            __caption__: 'Comments count'
           },
           'comments': {
-            'caption': 'Comments'
+            __caption__: 'Comments'
           },
         },
         'SuggestionE': {
           'address': {
-            'caption': 'Address'
+            __caption__: 'Address'
           },
           'userVotes': {
             'name': {
-              'caption': 'Name'
+              __caption__: 'Name'
             },
             'voteType': {
-              'caption': 'Vote type'
+              __caption__: 'Vote type'
             },
             'author': {
-              'caption': 'Application User',
+              __caption__: 'Application User',
               'eMail': {
-                'caption': 'Email'
+                __caption__: 'Email'
               }
             }
           },
           'files': {
             'order': {
-              'caption': 'Order'
+              __caption__: 'Order'
             },
             'file': {
-              'caption': 'File',
+              __caption__: 'File',
             }
           },
           'comments': {
             'name': {
-              'caption': 'Name'
+              __caption__: 'Name'
             },
             'text': {
-              'caption': 'Text'
+              __caption__: 'Text'
             },
             'votes': {
-              'caption': 'Votes',
+              __caption__: 'Votes',
             },
             'moderated': {
-              'caption': 'Moderated',
+              __caption__: 'Moderated',
             },
             'author': {
-              'caption': 'Application User',
+              __caption__: 'Application User',
               'eMail': {
-                'caption': 'Mail'
+                __caption__: 'Mail'
               }
             }
           }
@@ -99,22 +99,22 @@ Ember.$.extend(true, translations, {
       'projections': {
         'ApplicationUserL': {
           'name': {
-            'caption': 'Name'
+            __caption__: 'Name'
           },
           'eMail': {
-            'caption': 'E-mail'
+            __caption__: 'E-mail'
           },
           'activated': {
-            'caption': 'Activated'
+            __caption__: 'Activated'
           },
           'birthday': {
-            'caption': 'Birthday'
+            __caption__: 'Birthday'
           },
           'gender': {
-            'caption': 'Gender'
+            __caption__: 'Gender'
           },
           'karma': {
-            'caption': 'Karma'
+            __caption__: 'Karma'
           },
         },
       }
@@ -123,7 +123,7 @@ Ember.$.extend(true, translations, {
       'projections': {
         'LocalizationL': {
           'name': {
-            'caption': 'Name'
+            __caption__: 'Name'
           },
         },
       }
@@ -132,27 +132,27 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionTypeL': {
           'name': {
-            'caption': 'Name'
+            __caption__: 'Name'
           },
           'moderated': {
-            'caption': 'Moderated'
+            __caption__: 'Moderated'
           },
           'parent': {
-            'caption': 'Parent'
+            __caption__: 'Parent'
           },
         },
         'SuggestionTypeE': {
           'name': {
-            'caption': 'Name'
+            __caption__: 'Name'
           },
           'localizedTypes': {
             'name': {
-              'caption': 'Name'
+              __caption__: 'Name'
             },
             'localization': {
-              'caption': 'Localization',
+              __caption__: 'Localization',
               'name': {
-                'caption': 'Name'
+                __caption__: 'Name'
               }
             }
           },

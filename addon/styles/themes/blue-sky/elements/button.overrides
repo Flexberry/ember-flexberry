@@ -89,8 +89,8 @@ div.ui.secondary.menu.no-margin {
     border: none;
     font-size: 0px;
     width: 25px;
-    padding: 0px 20px 0px 0px;
-    height: 0px;
+    padding: 10px 20px 0px 0px;
+    height: 25px;
     &:hover {
         border: none;
         background: none;
@@ -105,14 +105,13 @@ div.ui.secondary.menu.no-margin {
 
 .ui.button.delete-button {
     border: none;
-    font-size: 0px;;
+    font-size: 0px;
+    padding-top: 10px;
     padding-left: 10px;
-    height: 0px;
+    height: 25px;
     &:hover {
         background: none;
-        border:none;
-        color: @white;
-        background-color: #DB2828;
+        border :none;
     }
 }
 
@@ -272,11 +271,9 @@ div.ui.secondary.menu.no-margin {
 *******************************************/
 
 /* Lookup select button */
+.ui.loading.button.ui-change:before,
+.ui.loading.button.ui-change i.icon.change,
 .ui.loading.button.ui-change i.icon.change:before {
-    content: '';
-}
-
-.ui.loading.button.ui-change i.icon.change {
     content: '';
 }
 

@@ -117,6 +117,7 @@ i.icon.remove:before {
         color: @red;
     }
 }
+
 i.icon.change:before {
     font-family: 'Crimean';
     content: "";
@@ -228,7 +229,7 @@ i.icon.download:before {
       Page navigation buttons section
 *******************************************/
 
-i.icon.prev-page {
+.prev-page-button {
     &:before {
         content: "\e81a";
         font-family: 'Crimean';
@@ -239,7 +240,7 @@ i.icon.prev-page {
         color: @red;
     }
 }
-i.icon.next-page {
+.next-page-button {
     &:before {
         content: "\e81b";
         font-family: 'Crimean';
@@ -250,7 +251,6 @@ i.icon.next-page {
         color: @red;
     }
 }
-
 
 /******************************************
       Not categorized icons section
@@ -274,13 +274,6 @@ i.icon.next-page {
 }
 .remove.icon:hover:before {
     color: @red;
-}
-
-.remove.icon:before:hover {
-    color: @brightBlue;
-}
-.remove.icon:hover:before {
-    color: @brightBlue;
 }
 
 .asterisk.small.red.icon.transparent {

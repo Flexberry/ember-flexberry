@@ -25,6 +25,7 @@ body.pushable {
 .inverted.vertical.menu.sidebar {
     height: 85.3vh !important;
     background: @sidebarInvertedBackground;
+    padding-bottom: 40px;
 }
 
 .mobile.inverted.vertical.menu.sidebar {

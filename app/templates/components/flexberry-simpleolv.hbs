@@ -277,7 +277,8 @@
               </td>
               {{#each columns as |column|}}
                 {{#unless column.hide}}
-                  <td {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
+                  <td class="{{if (eq column.cellComponent.componentName "flexberry-dropdown") " overflowed-cell"}}"
+                    {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
                     {{#if column.cellComponent.componentName}}
                       {{component column.cellComponent.componentName
                         dynamicProperties=column.cellComponent.componentProperties
@@ -326,9 +327,7 @@
 </div>
 <div class="ui secondary menu no-margin">
   <div class="ui basic buttons">
-    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>
-      <i class="prev-page icon"></i>
-    </button>
+    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
     {{#each pages as |page|}}
       {{#if page.isEllipsis}}
         <div class="ui button">...</div>
@@ -340,12 +339,10 @@
         {{/if}}
       {{/if}}
     {{/each}}
-    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} >
-      <i class="next-page icon"></i>
-    </button>
+    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
   </div>
   <div class="right menu">
-    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}
+    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
   </div>
 </div>
 {{#if showShowingEntries}}

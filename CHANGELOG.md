@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Generation of applications containing external entities (forms and models):
   * At generation application by `flexberry-application` blueprint, skip entities containing key `external` with `true` value.
   * At generation entity by own blueprint (for example `flexberry-model`) it will be generated in any case.
+* Fix list's `refresh` and `delete` buttons styles for Firefox.
 
 ## [0.9.0-beta.19] - 2017-09-19
 ### Fixed

@@ -108,6 +108,8 @@ class CoreBlueprint {
       let listFormFile = path.join(listFormsDir, formFileName);
       let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
       let listForm: metadata.ListForm = JSON.parse(content);
+      if (listForm.external)
+        continue;
       let listFormName = pp.name;
       routes.push(`  this.route('${listFormName}');`);
       routes.push(`  this.route('${listForm.editForm}',\n  { path: '${listForm.editForm}/:id' });`);
@@ -122,6 +124,8 @@ class CoreBlueprint {
       let editFormFile = path.join(editFormsDir, formFileName);
       let content = stripBom(fs.readFileSync(editFormFile, "utf8"));
       let editForm: metadata.EditForm = JSON.parse(content);
+      if (editForm.external)
+        continue;
       let editFormName = pp.name;
       importProperties.push(`import ${editForm.name}Form from './forms/${editFormName}';`);
       formsImportedProperties.push(`    '${editFormName}': ${editForm.name}Form`);
@@ -131,6 +135,8 @@ class CoreBlueprint {
       if (pp.ext != ".json")
         continue;
       let model: metadata.Model = ModelBlueprint.loadModel(modelsDir, modelFileName);
+      if (model.external)
+        continue;
       let modelName = pp.name;
       let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([А-ЯЁA-Z][а-яёa-z\d]*$)/;
       let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();

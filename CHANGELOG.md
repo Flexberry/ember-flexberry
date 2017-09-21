@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Fix `custom-inflector-rules` generation (sorting and no duplicates).
 * Fix `chooseText` for lookups in `flexberry-groupedit`.
+* Fix list's `refresh` and `delete` buttons styles for Firefox.
 
 ## [0.9.0-beta.19] - 2017-09-19
 ### Fixed

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.0-beta.20] - 2017-09-22
 ### Fixed
 * Fix `custom-inflector-rules` generation (sorting and no duplicates).
 * Fix `chooseText` for lookups in `flexberry-groupedit`.
@@ -10,11 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   * At generation application by `flexberry-application` blueprint, skip entities containing key `external` with `true` value.
   * At generation entity by own blueprint (for example `flexberry-model`) it will be generated in any case.
 * Fix list's `refresh` and `delete` buttons styles for Firefox.
-
-## [0.9.0-beta.19] - 2017-09-19
-### Fixed
-* Fix hierarchy expand for `flexberry-objectlistview` on edit form.
-* Fix operation indication on edit form when new record added.
+* Add `overflowedComponents` property for list's components (list of component names, which can overflow table cell, `flexberry-dropdown` and `flexberry-lookup` by default).
 
 ### Breaking changes
 * Search localisation for models in `flexberry-objectlistview` and `flexberry-simpleolv` components:
@@ -23,6 +21,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   * There are several solutions:
     * Carefully regenerate the application.
     * Find and replace in `Visual Studio Code`, files to include: `locales/en/models, locales/ru/models`, find: `(^\s+)(caption)`, replace: `$1__$2__`.
+
+## [0.9.0-beta.19] - 2017-09-19
+### Fixed
+* Fix hierarchy expand for `flexberry-objectlistview` on edit form.
+* Fix operation indication on edit form when new record added.
 
 ## [0.9.0-beta.18] - 2017-09-13
 ### Added

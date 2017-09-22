@@ -755,8 +755,7 @@ export default FlexberryBaseComponent.extend({
         Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
         _this.set('value', result.instance);
-        _this.sendAction(
-          'updateLookupAction',
+        _this.get('currentController').send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,
@@ -884,8 +883,7 @@ export default FlexberryBaseComponent.extend({
           }
         }
 
-        _this.sendAction(
-          'updateLookupAction',
+        _this.get('currentController').send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,

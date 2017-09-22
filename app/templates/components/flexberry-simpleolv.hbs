@@ -277,7 +277,7 @@
               </td>
               {{#each columns as |column|}}
                 {{#unless column.hide}}
-                  <td class="{{if (eq column.cellComponent.componentName "flexberry-dropdown") " overflowed-cell"}}"
+                  <td class="{{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
                     {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
                     {{#if column.cellComponent.componentName}}
                       {{component column.cellComponent.componentName

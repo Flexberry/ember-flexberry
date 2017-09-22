@@ -379,6 +379,15 @@ export default FlexberryBaseComponent.extend({
   */
   columnsWidthAutoresize: true,
 
+  /**
+    List of component names, which can overflow table cell.
+
+    @property overflowedComponents
+    @type Array
+    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+  */
+  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.

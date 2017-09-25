@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* Fix `onRowClick` action for `object-list-view-row`.
+* Fix `array-contains` helper.
 
 ## [0.9.0-beta.20] - 2017-09-22
 ### Fixed

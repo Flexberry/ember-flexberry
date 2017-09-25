@@ -500,7 +500,3 @@ ui.button.ui-clear:hover {
 .ui.right.floated.tiny.primary.compact.button:hover {
     border: 1px solid @uiBorderColor;
 }
-
-.showing-entries {
-    color: #777;
-}

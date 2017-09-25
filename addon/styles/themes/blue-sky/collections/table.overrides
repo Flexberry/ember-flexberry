@@ -18,13 +18,17 @@ tr {
 .object-list-view-container {
   margin: 1em 0;
   max-width: 100%;
-  overflow: visible;
+  overflow: auto;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-tap-highlight-color: transparent;
 
   .object-list-view {
     margin: 0;
   }
+}
+
+.object-list-view-container.groupedit-container {
+  overflow: visible;
 }
 
 table.object-list-view.selectable tbody,

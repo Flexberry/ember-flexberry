@@ -39,7 +39,6 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
             choose: 'showLookupDialog',
-            chooseText: '...',
             remove: 'removeLookupValue',
             displayAttributeName: 'name',
             required: true,
@@ -52,7 +51,6 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
         case 'ember-flexberry-dummy-comment+author':
           cellComponent.componentProperties = {
             choose: 'showLookupDialog',
-            chooseText: '...',
             remove: 'removeLookupValue',
             displayAttributeName: 'name',
             required: true,

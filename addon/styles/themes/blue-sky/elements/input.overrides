@@ -32,3 +32,8 @@
 .ui.secondary.menu > .ui.action.input {
     margin: 0 10px;
 }
+
+::-ms-clear, ::-ms-reveal {
+   width: 0;
+   height: 0;
+}

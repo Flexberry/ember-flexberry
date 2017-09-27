@@ -11,7 +11,8 @@ tr {
     overflow-y: visible;
 }
 
-.ui.table.object-list-view tr td.overflowed-cell {
+.ui.table.object-list-view tr td.overflowed-cell,
+.ui.table.object-list-view tr td.object-list-view-menu {
     overflow: visible;
 }
 
@@ -34,10 +35,6 @@ tr {
 table.object-list-view.selectable tbody,
 table.object-list-view.selectable thead {
   cursor: pointer;
-}
-
-.object-list-view-menu {
-    overflow: initial!important;
 }
 
 .object-list-view-helper-column-cell div.cell {

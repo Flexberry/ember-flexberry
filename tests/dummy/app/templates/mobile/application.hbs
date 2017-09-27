@@ -8,7 +8,7 @@
   {{render "sitemap" sitemap}}
 {{/ui-sidebar}}
 <div class="bgw-fix">
-  <div class="background-logo">
+  <div class="background-logo mobile">
     <div class="ui attached menu mobile">
       <div class="ui container flex-container">
         <a {{action 'toggleSidebarMobile'}}
@@ -69,7 +69,7 @@
   {{outlet "modal"}}
 </div>
 <div class="ui vertical footer segment">
-  <div class="ui container flex-container">
+  <div class="ui container flex-container mobile-footer">
     <div class="ui text menu">
       <a class="brand item" href="#">
         {{t "forms.application.footer.application-name"}}

@@ -366,9 +366,9 @@ export default FlexberryBaseComponent.extend({
 
     @property minAutoColumnWidth
     @type Number
-    @default 150
+    @default 100
   */
-  minAutoColumnWidth: 150,
+  minAutoColumnWidth: 100,
 
   /**
     Indicates whether or not autoresize columns for fit the page width.

@@ -45,6 +45,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            lookupWindowCustomProperties: () => { return { filterButton: true, refreshButton: true }; },
           };
           break;
 

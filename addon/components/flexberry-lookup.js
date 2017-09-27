@@ -259,9 +259,9 @@ export default FlexberryBaseComponent.extend({
   _lookupWindowCustomPropertiesData: Ember.computed(
     'projection',
     'relationName',
-    'attrs.lookupWindowCustomProperties',
+    'lookupWindowCustomProperties',
     function() {
-      let lookupWindowCustomProperties = this.attrs.lookupWindowCustomProperties;
+      let lookupWindowCustomProperties = this.get('lookupWindowCustomProperties');
       if (lookupWindowCustomProperties) {
         let result = lookupWindowCustomProperties({
           relationName: this.get('relationName'),

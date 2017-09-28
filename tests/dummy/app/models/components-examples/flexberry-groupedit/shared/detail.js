@@ -47,6 +47,7 @@ Model.defineProjection('DetailShortE', 'components-examples/flexberry-groupedit/
 
 // Edit form ultra short projection.
 Model.defineProjection('DetailUltraShortE', 'components-examples/flexberry-groupedit/shared/detail', {
+  flag: Projection.attr('Flag'),
   enumeration: Projection.attr('Enumeration'),
 });
 

@@ -201,7 +201,7 @@
           {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td style={{defaultPaddingStyle}} class="{{"overflowed-cell"}}">
+              <td style={{defaultPaddingStyle}} class="overflowed-cell">
                 {{#if column.filter.conditions}}
                   {{component "flexberry-dropdown"
                     value=column.filter.condition

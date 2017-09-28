@@ -53,7 +53,7 @@
           <td rowspan="1"></td>
         {{/if}}
         {{#each columns as |column|}}
-          <td style={{defaultPaddingStyle}}>
+          <td style={{defaultPaddingStyle}} class="overflowed-cell">
             {{#if column.filter.conditions}}
               {{component "flexberry-dropdown"
                 value=column.filter.condition
@@ -74,7 +74,7 @@
           <td rowspan="1"></td>
         {{/if}}
         {{#each columns as |column|}}
-          <td style={{defaultPaddingStyle}}>
+          <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
             {{#if column.filter.component.name}}
               {{component column.filter.component.name
                 value=column.filter.pattern

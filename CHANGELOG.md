@@ -3,8 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.0] - 2017-09-28
 ### Fixed
 * Fix `lookupWindowCustomProperties` for lookups in `flexberry-groupedit`.
+* Fix new controllers/routes generation for addon.
+* Fix list's filter cells overflow.
 
 ## [0.9.0-beta.21] - 2017-09-25
 ### Fixed

@@ -1,0 +1,39 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.ui.action.input:not([class*="left action"]) > input {
+    height: 35px;
+}
+
+.ui.action.input:not([class*="left action"]) > .button:last-child {
+    border-radius: 0px;
+}
+
+.ui.input input, input {
+    border: none;
+    border-bottom: 1px solid @borderColor;
+    border-radius: 0px;
+    outline: none;
+}
+
+.block-action-input {
+    width: 100%;
+    & input {
+        height: 35px;
+        min-width: 220px;
+    }
+}
+
+.flatpickr.flatpickr-input {
+    letter-spacing: 3px;
+}
+
+.ui.secondary.menu > .ui.action.input {
+    margin: 0 10px;
+}
+
+::-ms-clear, ::-ms-reveal {
+   width: 0;
+   height: 0;
+}

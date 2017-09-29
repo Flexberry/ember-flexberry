@@ -1,55 +1,98 @@
 {{#if refreshButton}}
-  <button class="ui {{buttonClass}} button" {{action "refresh"}}>
-    {{t "components.olv-toolbar.refresh-button-text"}}
+  <button
+    class="ui refresh-button {{buttonClass}} button"
+    title={{t "components.olv-toolbar.refresh-button-text"}}
+    {{action "refresh"}}>
+      {{t "components.olv-toolbar.refresh-button-text"}}
+      <i class="refresh icon"></i>
   </button>
 {{/if}}
 {{#if createNewButton}}
-  <button class="ui {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button" {{action "createNew"}}>
-    {{t "components.olv-toolbar.add-button-text"}}
+  <button
+    class="ui create-button {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button"
+    title={{t "components.olv-toolbar.add-button-text"}}
+    {{action "createNew"}}>
+      {{t "components.olv-toolbar.add-button-text"}}
   </button>
 {{/if}}
 {{#if deleteButton}}
-  <button class="ui {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button" {{action "delete"}}>
-    {{t "components.olv-toolbar.delete-button-text"}}
+  <button
+    class="ui delete-button {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button"
+    title={{t "components.olv-toolbar.delete-button-text"}}
+     {{action "delete"}}>
+      {{t "components.olv-toolbar.delete-button-text"}}
+       <i class="delete icon"></i>
   </button>
 {{/if}}
 {{#if availableHierarchicalMode}}
-  <button class="ui button icon {{buttonClass}} {{if inHierarchicalMode "active"}}" {{action switchHierarchicalMode}}>
-    <i class="sitemap icon"></i>
+  <button
+    class="ui button icon hierarchical-button {{buttonClass}} {{if inHierarchicalMode "active"}}"
+    title={{t "components.olv-toolbar.hierarchy-button-text"}}
+    {{action switchHierarchicalMode}}>
+      <i class="sitemap icon"></i>
   </button>
 {{/if}}
 {{#if enableFilters}}
-  <div class="ui icon buttons">
-    <button class="ui button {{buttonClass}} {{if showFilters "active"}}" {{action toggleStateFilters}}>
-      <i class="filter icon"></i>
+  <div class="ui icon buttons filter-active">
+    <button
+      class="ui button {{buttonClass}} {{if showFilters "active"}}"
+      title={{t "components.olv-toolbar.filter-button-text"}}
+      {{action toggleStateFilters}}>
+        <i class="filter icon"></i>
     </button>
     {{#if filters}}
       <div class="or" data-text="&bull;"></div>
-      <button class="ui button {{buttonClass}}" {{action resetFilters}}>
-        <i class="remove icon"></i>
+      <button
+        class="ui button removeFilter-button {{buttonClass}}"
+        title={{t "components.olv-toolbar.remove-filter-button-text"}}
+        {{action resetFilters}}>
+          <i class="remove icon"></i>
       </button>
     {{/if}}
   </div>
 {{/if}}
 {{#if filterButton}}
   <div class="ui action input">
-    {{input
+    <div class="block-action-input">{{input
       type="text"
       placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
       value=filterByAnyMatchText enter="filterByAnyMatch"
-    }}
-    <button class="ui {{buttonClass}} icon button" {{action "filterByAnyMatch"}}>
-      <i class="search icon"></i>
+    }}</div>
+    <button
+      class="ui {{buttonClass}} icon button search-button"
+      title={{t "components.olv-toolbar.search-button-text"}}
+      {{action "filterByAnyMatch"}}>
+        <i class="search icon"></i>
     </button>
-    <button class="ui {{buttonClass}} icon button" {{action "removeFilter"}}>
-      <i class="remove icon"></i>
+    <button
+      class="ui {{buttonClass}} icon button clear-search-button"
+      title={{t "components.olv-toolbar.clear-search-button-text"}}
+      {{action "removeFilter"}}>
+        <i class="remove icon"></i>
     </button>
   </div>
 {{/if}}
+{{#if exportExcelButton}}
+  <div class="ui buttons export-config">
+    <button
+      class="ui button icon export-button {{buttonClass}}"
+      title={{t "components.olv-toolbar.export-excel-button-text"}}
+      {{action "showExportDialog"}}>
+        <i class="large file excel outline icon"></i>
+    </button>
+    {{flexberry-menu
+      items=exportExcelItems
+      onItemClick=(action "onExportMenuItemClick")
+    }}
+  </div>
+{{/if}}
 {{#if colsConfigButton}}
-  <div class="ui buttons">
-    <button class="ui icon button" {{action "showConfigDialog"}}>
-      <i class="large table icon"></i>
+  <div class="ui buttons cols-config">
+    <button
+      class="ui icon button config-button"
+      title={{t "components.colsconfig-dialog-content.title"}}
+      {{action "showConfigDialog"}}>
+        <i class="large table icon"></i>
     </button>
     {{#if colsSettingsItems}}
       {{flexberry-menu
@@ -62,8 +105,9 @@
 {{#each customButtons as |customButton|}}
   <button
     class="ui {{if customButton.buttonClasses customButton.buttonClasses ""}} button"
+    title={{if customButton.buttonTitle customButton.buttonTitle}}
     {{action "customButtonAction" customButton.buttonAction}}>
-    {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
+      {{if customButton.buttonName customButton.buttonName (t "components.olv-toolbar.custom-button-text")}}
   </button>
 {{/each}}
 <div class="olv-toolbar-info-modal-dialog ui small basic modal">
@@ -72,16 +116,20 @@
     {{_infoModalDialogCaption}}
   </div>
   <div class="center aligned ui grid">
-  <button class="ui icon button" {{action "copyJSONContent"}} id='OLVToolbarInfoCopyButton'>
+  <button
+    class="ui icon button"
+    title={{t "components.olv-toolbar.copy"}}
+    {{action "copyJSONContent"}}
+    id='OLVToolbarInfoCopyButton'>
       <i class="copy icon"></i>
       {{t "components.olv-toolbar.copy"}}
-    </button>
-    <div class="actions">
+  </button>
+  <div class="actions">
     <div class="olv-toolbar-info-modal-dialog-ok-button ui approve green inverted button" >
-        <i class="remove icon"></i>
-        {{t "components.olv-toolbar.close"}}
-      </div>
+      <i class="remove icon"></i>
+      {{t "components.olv-toolbar.close"}}
     </div>
+  </div>
   </div>
   <div class="ui form">
     <div class="olv-toolbar-info-modal-dialog-content center aligned ui field">

@@ -6,6 +6,7 @@ import Ember from 'ember';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
+import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
 
 /**
   Base route for the Edit Forms.
@@ -35,7 +36,8 @@ import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistvie
  */
 export default ProjectedModelFormRoute.extend(
 FlexberryObjectlistviewRouteMixin,
-FlexberryGroupeditRouteMixin, {
+FlexberryGroupeditRouteMixin,
+FlexberryObjectlistviewHierarchicalRouteMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
@@ -65,6 +67,14 @@ FlexberryGroupeditRouteMixin, {
     filter: { refreshModel: false },
     filterCondition: { refreshModel: false }
   },
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
     A hook you can implement to convert the URL into the model for this route.
@@ -156,6 +166,14 @@ FlexberryGroupeditRouteMixin, {
     controller.set('modelProjection', proj);
     controller.set('routeName', this.get('routeName'));
     controller.set('developerUserSettings', this.get('developerUserSettings'));
+    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    }
+
+    if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
+      this.get('objectlistviewEventsService').setLoadingState('');
+    }
+
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');
     let modelCurrentAgregatorPath = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     let modelCurrentAgregator = flexberryDetailInteractionService.get('modelCurrentAgregators');

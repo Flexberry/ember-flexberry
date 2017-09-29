@@ -102,9 +102,9 @@ export default FlexberryBaseComponent.extend({
 
     @property chooseText
     @type String
-    @default t('components.flexberry-lookup.choose-button-text')
+    @default '<i class="change icon"></i>'
   */
-  chooseText: t('components.flexberry-lookup.choose-button-text'),
+  chooseText: '<i class="change icon"></i>',
 
   /**
     Text on button clear value.
@@ -259,9 +259,9 @@ export default FlexberryBaseComponent.extend({
   _lookupWindowCustomPropertiesData: Ember.computed(
     'projection',
     'relationName',
-    'attrs.lookupWindowCustomProperties',
+    'lookupWindowCustomProperties',
     function() {
-      let lookupWindowCustomProperties = this.attrs.lookupWindowCustomProperties;
+      let lookupWindowCustomProperties = this.get('lookupWindowCustomProperties');
       if (lookupWindowCustomProperties) {
         let result = lookupWindowCustomProperties({
           relationName: this.get('relationName'),
@@ -520,7 +520,9 @@ export default FlexberryBaseComponent.extend({
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
   */
   init() {
+
     this._super(...arguments);
+
     this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
@@ -747,8 +749,7 @@ export default FlexberryBaseComponent.extend({
         Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
         _this.set('value', result.instance);
-        _this.sendAction(
-          'updateLookupAction',
+        _this.get('currentController').send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,
@@ -876,8 +877,7 @@ export default FlexberryBaseComponent.extend({
           }
         }
 
-        _this.sendAction(
-          'updateLookupAction',
+        _this.get('currentController').send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,

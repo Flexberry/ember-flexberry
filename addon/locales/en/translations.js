@@ -110,10 +110,17 @@ export default {
       'loading-text': 'Loading data...',
       'header-title-attr': 'Click to change ordering, Ctrl+Click to append ordering for this column',
       'single-column-header-title': 'Model properties',
+      'sort-ascending': 'Order ascending',
+      'sort-descending': 'Order descending',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',
+        'add-menu-item-title': 'Add record',
         'delete-menu-item-title': 'Delete record'
-      }
+      },
+      'hierarchy-buttons': {
+        'plus-button-title': 'Expand',
+        'minus-button-title': 'Collapse',
+      },
     },
 
     'object-list-view-cell': {
@@ -126,9 +133,16 @@ export default {
       'refresh-button-text': 'Refresh',
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
+      'hierarchy-button-text': 'On/off hierarchy',
+      'filter-button-text': 'Add filter',
+      'remove-filter-button-text': 'Reset filter',
+      'search-button-text': 'Search',
+      'clear-search-button-text': 'Clear search',
+      'export-excel-button-text': 'Export to Excel',
       'filter-by-any-match-placeholder': 'Search...',
       'create-setting-title': 'New setting',
       'use-setting-title': 'Use',
+      'export-title': 'Unload',
       'edit-setting-title': 'Edit',
       'remove-setting-title': 'Remove',
       'set-default-setting-title': 'Default setting',
@@ -140,8 +154,14 @@ export default {
       'ctrlc': 'Press Ctrl/C to copy'
     },
 
+    'groupedit-toolbar': {
+      'add-button-text': 'Add',
+      'delete-button-text': 'Delete'
+    },
+
     'colsconfig-dialog-content': {
       'title': 'Customize the display of colums',
+      'export-title': 'Export in Excel',
       'dont-show-columns': 'Do not display columns',
       'columns-order': 'Specify the order of the columns',
       'column-name': 'Column name',
@@ -152,19 +172,42 @@ export default {
       'setting-name': 'Setting name',
       'enter-setting-name': 'Enter setting name',
       'use': 'Use',
+      'export': 'Unload',
       'use-without-save': 'Use this settings without saving in setting ',
       'save': 'Save',
       'have-errors': 'When you save a configuration errors occurred: ',
       'setting': 'Setting ',
       'is-saved': ' is saved',
       'col-width-on': 'Enable setting column widths',
-      'per-page': 'Records count on page'
+      'per-page': 'Records count on page',
+      'det-separate-rows': 'List\'s properties in separate rows',
+      'det-separate-cols': 'List\'s properties in separate columns'
     },
 
     'form-load-time-tracker': {
       'load-time': 'Load time',
       'render-time': 'Render time',
     },
+
+    'flexberry-dialog': {
+      'approve-button': {
+        'caption': 'Ok'
+      },
+      'deny-button': {
+        'caption': 'Cancel'
+      }
+    },
+
+    'flexberry-jsonarea': {
+      'placeholder': '(Enter JSON-string)',
+      'parse-error': {
+        'caption': 'Error while parsing entered JSON-string'
+      }
+    },
+
+    'flexberry-tree': {
+      'placeholder': 'Tree nodes are not defined'
+    }
 
   },
 
@@ -173,46 +216,46 @@ export default {
       'projections': {
         'ApplicationLogL': {
           'processId': {
-            'caption': 'URL'
+            __caption__: 'URL'
           },
           'timestamp':{
-            'caption': 'Time'
+            __caption__: 'Time'
           },
           'category':{
-            'caption': 'Category'
+            __caption__: 'Category'
           },
           'eventId':{
-            'caption': 'Event ID'
+            __caption__: 'Event ID'
           },
           'priority':{
-            'caption': 'Priority'
+            __caption__: 'Priority'
           },
           'severity':{
-            'caption': 'Severity'
+            __caption__: 'Severity'
           },
           'title':{
-            'caption': 'Title'
+            __caption__: 'Title'
           },
           'machineName':{
-            'caption': 'Server'
+            __caption__: 'Server'
           },
           'appDomainName':{
-            'caption': 'Browser'
+            __caption__: 'Browser'
           },
           'processName':{
-            'caption': 'Process name'
+            __caption__: 'Process name'
           },
           'threadName':{
-            'caption': 'ThreadName'
+            __caption__: 'ThreadName'
           },
           'win32ThreadId':{
-            'caption': 'Win32ThreadId',
+            __caption__: 'Win32ThreadId',
           },
           'message':{
-            'caption': 'Message'
+            __caption__: 'Message'
           },
           'formattedMessage':{
-            'caption': 'Formatted message'
+            __caption__: 'Formatted message'
           }
         }
       }
@@ -220,9 +263,9 @@ export default {
     'new-platform-flexberry-services-lock': {
       'projections': {
         'LockL': {
-          'lockKey': { 'caption': 'Key locked object' },
-          'userName': { 'caption': 'User locked object' },
-          'lockDate': { 'caption': 'Date lock' },
+          'lockKey': { __caption__: 'Key locked object' },
+          'userName': { __caption__: 'User locked object' },
+          'lockDate': { __caption__: 'Date lock' },
         },
       },
     },

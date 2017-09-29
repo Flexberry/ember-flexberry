@@ -144,6 +144,11 @@ export default FlexberryBaseComponent.extend(
   */
   defaultLeftPadding: 10,
 
+  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+  }),
+
   /**
     Flag indicates whether to look for changes of model (and displaying corresponding changes on control) or not.
 
@@ -550,24 +555,6 @@ export default FlexberryBaseComponent.extend(
   useRowByRowLoadingProgress: false,
 
   /**
-    Flag indicates whether some rows are not loaded yet.
-
-    @property rowsInLoadingState
-    @type Boolean
-    @default false
-  */
-  rowsInLoadingState: false,
-
-  /**
-    Class loading for tbody.
-
-    @property showLoadingTbodyClass
-    @type Boolean
-    @defaul false
-  */
-  showLoadingTbodyClass: false,
-
-  /**
     Flag indicates whether content is defined.
 
     @property hasContent
@@ -665,6 +652,13 @@ export default FlexberryBaseComponent.extend(
             if (record.get('isMyFavoriteRecord')) {
               Ember.set(rowConfig, 'customClass', 'my-fav-record');
             }
+
+            let readonlyColumns = [];
+            if (record.get('isNameColumnReadonly')) {
+              readonlyColumns.push('name');
+            }
+
+            Ember.set(rowConfig, 'readonlyColumns', readonlyColumns);
           }
         }
       });
@@ -793,10 +787,15 @@ export default FlexberryBaseComponent.extend(
 
       @method actions.rowClick
       @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
+      @param {Object} recordWithKey Object containing record related to clicked row and it's key.
+      @param {Object} recordWithKey.key Key of record related to clicked row
+      @param {Object} recordWithKey.data Record related to clicked row.
+      @param {Object} params Additional parameters describing clicked row.
+      @param {Object} params.column Column in row wich owns the clicked cell.
+      @param {Number} params.columnIndex Index of column in row wich owns the clicked cell.
+      @param {jQuery.Event} params.originalEvent Сlick event object.
     */
-    rowClick(recordWithKey, e) {
+    rowClick(recordWithKey, params) {
       let editOnSeparateRoute = this.get('editOnSeparateRoute');
       if (this.get('readonly')) {
         if (!editOnSeparateRoute) {
@@ -810,16 +809,19 @@ export default FlexberryBaseComponent.extend(
 
         let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
+        params = params || {};
+        Ember.$.extend(params, {
+          onEditForm: this.get('onEditForm'),
+          saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
+          editOnSeparateRoute: editOnSeparateRoute,
+          modelName: this.get('modelProjection').modelName,
+          detailArray: this.get('content'),
+          readonly: this.get('readonly'),
+          goToEditForm: true
+        });
 
         Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
-          this.sendAction('action', recordData, {
-            onEditForm: this.get('onEditForm'),
-            saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
-            editOnSeparateRoute: editOnSeparateRoute,
-            modelName: this.get('modelProjection').modelName,
-            detailArray: this.get('content'),
-            readonly: this.get('readonly')
-          });
+          this.sendAction('action', recordData, params);
         });
 
         this._setActiveRecord(recordKey);
@@ -844,7 +846,7 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
-      this.set('showLoadingTbodyClass', true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
@@ -943,14 +945,24 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
+    this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
+  },
 
-    let eventsBus = this.get('eventsBus');
-    if (eventsBus) {
-      eventsBus.on('showLoadingTbodyClass', (componentName, showLoadingTbodyClass) => {
-        if (componentName === this.get('componentName')) {
-          this.set('showLoadingTbodyClass', showLoadingTbodyClass);
-        }
-      });
+  /**
+    Handler for updateWidth action.
+
+    @method setColumnWidths
+
+    @param {String} componentName The name of object-list-view component.
+  */
+  setColumnWidths(componentName) {
+    let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+    if (columnsWidthAutoresize) {
+      this._setColumnWidths(componentName);
+    } else {
+      if (this.get('eventsBus')) {
+        this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'));
+      }
     }
   },
 
@@ -960,6 +972,16 @@ export default FlexberryBaseComponent.extend(
   */
   didInsertElement() {
     this._super(...arguments);
+
+    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() {
+      if (this.get('columnsWidthAutoresize')) {
+        this._setColumnWidths();
+      } else {
+        if (this.get('eventsBus')) {
+          this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'));
+        }
+      }
+    }, this));
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -972,24 +994,7 @@ export default FlexberryBaseComponent.extend(
       this.get('currentController').getCustomContent();
     }
 
-    let columnWidth;
-    if (this.notUseUserSettings) {
-      columnWidth = this.get('currentController.developerUserSettings');
-      columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
-      columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
-      columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
-    } else {
-      columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
-    }
-
-    if (columnWidth !== undefined) {
-      this._setColumnWidths(columnWidth);
-    }
-
-    // TODO: resolve this problem.
-    this.$('.flexberry-dropdown:last').dropdown({
-      direction: 'upward'
-    });
+    this._setColumnWidths();
   },
 
   /**
@@ -1031,7 +1036,7 @@ export default FlexberryBaseComponent.extend(
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
-            this.set('showLoadingTbodyClass', false);
+            this.get('objectlistviewEventsService').setLoadingState('');
 
             this.set('_renderedRowIndex', -1);
 
@@ -1042,19 +1047,7 @@ export default FlexberryBaseComponent.extend(
               }
             }
 
-            let columnWidth;
-            if (this.notUseUserSettings) {
-              columnWidth = this.get('currentController.developerUserSettings');
-              columnWidth = columnWidth ? columnWidth[this.get('componentName')] : undefined;
-              columnWidth = columnWidth ? columnWidth.DEFAULT : undefined;
-              columnWidth = columnWidth ? columnWidth.columnWidths : undefined;
-            } else {
-              columnWidth = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
-            }
-
-            if (columnWidth !== undefined) {
-              this._setColumnWidths(columnWidth);
-            }
+            this._setColumnWidths();
 
             let $currentTable = this.$('table.object-list-view');
             if (this.get('allowColumnResize')) {
@@ -1077,6 +1070,8 @@ export default FlexberryBaseComponent.extend(
                 }
               }
             }
+
+            this._reinitResizablePlugin();
           }
         }
       }
@@ -1117,6 +1112,7 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
+    this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
 
     this._super(...arguments);
   },
@@ -1128,10 +1124,7 @@ export default FlexberryBaseComponent.extend(
   willDestroyElement() {
     this._super(...arguments);
 
-    let eventsBus = this.get('eventsBus');
-    if (eventsBus) {
-      eventsBus.off('showLoadingTbodyClass');
-    }
+    Ember.$(window).unbind(`resize.${this.get('componentName')}`);
   },
 
   /**
@@ -1143,13 +1136,48 @@ export default FlexberryBaseComponent.extend(
   */
   _reinitResizablePlugin() {
     let $currentTable = this.$('table.object-list-view');
+    let cols = this.get('columns');
+    let helper = this.get('showHelperColumn');
+    let menu = this.get('showMenuColumn');
+    let disabledColumns = [];
+    let fixedColumns = this.get('currentController.defaultDeveloperUserSettings');
+    fixedColumns = fixedColumns ? fixedColumns[this.get('componentName')] : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.DEFAULT : undefined;
+    fixedColumns = fixedColumns ? fixedColumns.columnWidths || [] : [];
+    let fixedColumnsWidth = fixedColumns.filter(({ width }) => width);
+    fixedColumns = fixedColumns.filter(({ fixed }) => fixed).map(obj => { return obj.propName; });
+    for (let k = 0; k < fixedColumnsWidth.length; k++) {
+      if (fixedColumnsWidth[k].propName === 'OlvRowMenu') {
+        this.$('.object-list-view-menu').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+      }
+
+      if (fixedColumnsWidth[k].propName === 'OlvRowToolbar') {
+        this.$('.object-list-view-operations').css({ 'width': fixedColumnsWidth[k].width + 'px' });
+      }
+    }
+
+    if (helper && fixedColumns.indexOf('OlvRowToolbar') > -1) {
+      disabledColumns.push(0);
+    }
+
+    if (menu && fixedColumns.indexOf('OlvRowMenu') > -1) {
+      disabledColumns.push(helper ? cols.length : cols.length - 1);
+    }
+
+    for (let i = 0; i < cols.length; i++) {
+      let col = cols[i];
+      if (fixedColumns.indexOf(col.propName) > -1) {
+        disabledColumns.push(i);
+        disabledColumns.push(helper ? i + 1 : i - 1);
+      }
+    }
 
     // Disable plugin and then init it again.
     $currentTable.colResizable({ disable: true });
 
     $currentTable.colResizable({
       minWidth: 50,
-      resizeMode: 'flex',
+      disabledColumns: disabledColumns,
       onResize: (e)=> {
         // Save column width as user setting on resize.
         this._afterColumnResize(e);
@@ -1165,40 +1193,90 @@ export default FlexberryBaseComponent.extend(
 
     @param {Array} userSetting User setting to apply to control
   */
-  _setColumnWidths(userSetting) {
-    if (!Ember.isArray(userSetting)) {
-      return;
-    }
-
-    let hashedUserSetting = {};
-    userSetting.forEach(item => {
-      let userColumnInfo = Ember.merge({
-        propName: undefined,
-        width: undefined
-      }, item);
-
-      let propName = userColumnInfo.propName;
-      let width = userColumnInfo.width;
-
-      Ember.assert('Property name is not defined at saved user setting.', propName);
-      Ember.assert('Column width is not defined at saved user setting.', width !== undefined);
-
-      hashedUserSetting[propName] = width;
-    });
-
-    let $columns = this.$('table.object-list-view').find('th');
-    Ember.$.each($columns, (key, item) => {
-      let currentItem = this.$(item);
-      let currentPropertyName = this._getColumnPropertyName(currentItem);
-      Ember.assert('Column property name is not defined', currentPropertyName);
-
-      let savedColumnWidth = hashedUserSetting[currentPropertyName];
-      if (savedColumnWidth) {
-        currentItem.width(savedColumnWidth);
+  _setColumnWidths(componentName) {
+    if (Ember.isBlank(componentName) || this.get('componentName') === componentName) {
+      let userSetting;
+      if (this.notUseUserSettings) {
+        userSetting = this.get('currentController.developerUserSettings');
+        userSetting = userSetting ? userSetting[this.get('componentName')] : undefined;
+        userSetting = userSetting ? userSetting.DEFAULT : undefined;
+        userSetting = userSetting ? userSetting.columnWidths : undefined;
+      } else {
+        userSetting = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
       }
-    });
 
-    this._reinitResizablePlugin();
+      userSetting = Ember.isArray(userSetting) ? Ember.A(userSetting) : Ember.A();
+
+      let $table = this.$('table.object-list-view');
+      let $columns = $table.find('th');
+      let hashedUserSetting = {};
+      let tableWidth = 0;
+      let olvRowMenuWidth = 0;
+      let olvRowToolbarWidth = 0;
+      let padding = (this.get('defaultLeftPadding') || 0) * 2;
+      let minAutoColumnWidth = this.get('minAutoColumnWidth');
+
+      Ember.$.each($columns, (key, item) => {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        Ember.assert('Column property name is not defined', currentPropertyName);
+
+        let setting = userSetting.filter(sett => (sett.propName === currentPropertyName) && !Ember.isBlank(sett.width));
+        setting = setting.length > 0 ? setting[0] : undefined;
+        if (!setting) {
+          setting = {};
+          setting.propName = currentPropertyName;
+          if (currentPropertyName === 'OlvRowMenu') {
+            setting.width = 68 - padding;
+          }
+
+          if (currentPropertyName === 'OlvRowToolbar') {
+            let checkbox = this.get('showCheckBoxInRow');
+            let delButton = this.get('showDeleteButtonInRow');
+
+            setting.width = (checkbox && delButton ? 100 : delButton ? 70 : 65) - padding;
+          }
+        }
+
+        tableWidth += padding + (setting.width || minAutoColumnWidth || 1);
+        if (currentPropertyName === 'OlvRowToolbar') {
+          olvRowToolbarWidth = setting.width;
+        }
+
+        if (currentPropertyName === 'OlvRowMenu') {
+          olvRowMenuWidth = setting.width;
+        }
+
+        hashedUserSetting[setting.propName] = setting.width || minAutoColumnWidth || 1;
+      });
+
+      let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);
+      let containerWidth = $table[0].parentElement.clientWidth - 5;
+      let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+      let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
+      $table.css({ 'width': (columnsWidthAutoresize ? containerWidth : tableWidth) + 'px' });
+      if (this.get('eventsBus')) {
+        this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'), tableWidth, containerWidth);
+      }
+
+      Ember.$.each($columns, (key, item) => {
+        let currentItem = this.$(item);
+        let currentPropertyName = this._getColumnPropertyName(currentItem);
+        Ember.assert('Column property name is not defined', currentPropertyName);
+
+        let savedColumnWidth = hashedUserSetting[currentPropertyName];
+        if (savedColumnWidth) {
+          if (widthCondition && currentPropertyName !== 'OlvRowToolbar' && currentPropertyName !== 'OlvRowMenu') {
+            savedColumnWidth = (savedColumnWidth + padding) / (tableWidth - helperColumnsWidth) * (containerWidth - helperColumnsWidth) - 1;
+            currentItem.width(savedColumnWidth - padding);
+          } else {
+            currentItem.width(savedColumnWidth);
+          }
+        }
+      });
+
+      this._reinitResizablePlugin();
+    }
   },
 
   /**
@@ -1226,7 +1304,7 @@ export default FlexberryBaseComponent.extend(
 
       userWidthSettings.push({
         propName: currentPropertyName,
-        width: currentColumnWidth,
+        width: currentColumnWidth
       });
     });
     this._setCurrentColumnsWidth();
@@ -1357,9 +1435,9 @@ export default FlexberryBaseComponent.extend(
           mainModelName = descriptor.type;
         }
       });
-      key = 'models.' + mainModelName + '.projections.' + mainModelProjection.projectionName + '.' + nameRelationship + '.' + bindingPath + '.caption';
+      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
     } else {
-      key = 'models.' + modelName + '.projections.' + projection.projectionName + '.' + bindingPath + '.caption';
+      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
     }
 
     return key;
@@ -1587,7 +1665,6 @@ export default FlexberryBaseComponent.extend(
     if (this.get('componentName') === componentName) {
       let content = this.get('content');
       if (content && !content.isLoading) {
-        this.set('rowsInLoadingState', false);
         this.set('contentWithKeys', Ember.A());
         this.set('contentForRender', Ember.A());
         if (content instanceof Ember.RSVP.Promise) {
@@ -1597,17 +1674,15 @@ export default FlexberryBaseComponent.extend(
             });
           }).then(()=> {
             this.set('contentWithKeys', this.contentForRender);
-            this.set('showLoadingTbodyClass', false);
+            this.get('objectlistviewEventsService').setLoadingState('');
           });
         } else {
           content.forEach((item) => {
             this._addModel(item);
           });
           this.set('contentWithKeys', this.contentForRender);
-          this.set('showLoadingTbodyClass', false);
+          this.get('objectlistviewEventsService').setLoadingState('');
         }
-      } else {
-        this.set('rowsInLoadingState', true);
       }
 
       if (Ember.isArray(sorting)) {

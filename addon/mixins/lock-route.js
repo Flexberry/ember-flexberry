@@ -45,13 +45,6 @@ export default Ember.Mixin.create({
       });
       ```
 
-    @property userName
-    @type String
-    @default 'admin'
-    @for EditFormRoute
-  */
-  userName: 'admin',
-
   /**
     This object contains answers which will corresponding functions resolved.
 
@@ -88,6 +81,8 @@ export default Ember.Mixin.create({
     },
   },
 
+  _userSettingsService: Ember.inject.service('user-settings'),
+
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel).
@@ -108,7 +103,7 @@ export default Ember.Mixin.create({
           if (!lock) {
             this.store.createRecord('new-platform-flexberry-services-lock', {
               lockKey: params.id,
-              userName: this.get('userName'),
+              userName: this.get('_userSettingsService').getCurrentUser(),
               lockDate: new Date(),
             }).save().then((lock) => {
               this.set('_currentLock', lock);
@@ -118,7 +113,7 @@ export default Ember.Mixin.create({
                 this._openReadOnly(answer, resolve, reject);
               });
             });
-          } else if (lock.get('userName') === this.get('userName')) {
+          } else if (lock.get('userName') === this.get('_userSettingsService').getCurrentUser()) {
             this.set('_currentLock', lock);
             resolve();
           } else {

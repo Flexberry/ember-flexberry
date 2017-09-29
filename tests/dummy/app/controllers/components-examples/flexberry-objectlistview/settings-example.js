@@ -100,6 +100,22 @@ export default ListFormController.extend({
   readonly: false,
 
   /**
+    Flag for 'flexberry-objectlistview' component 'colsConfigButton' property.
+
+    @property colsConfigButton
+    @type Boolean
+   */
+  colsConfigButton: true,
+
+  /**
+    Flag for 'flexberry-objectlistview' component 'exportExcelButton' property.
+
+    @property exportExcelButton
+    @type Boolean
+   */
+  exportExcelButton: false,
+
+  /**
     Flag for 'flexberry-objectlistview' component 'tableStriped' property.
 
     @property tableStriped
@@ -212,6 +228,22 @@ export default ListFormController.extend({
   singleColumnHeaderTitle: undefined,
 
   /**
+    'Flexberry-objectlistview' component's 'minAutoColumnWidth' property.
+
+    @property minAutoColumnWidth
+    @type Number
+   */
+  minAutoColumnWidth: 150,
+
+  /**
+    Flag for 'flexberry-objectlistview' component 'columnsWidthAutoresize' property.
+
+    @property columnsWidthAutoresize
+    @type Boolean
+   */
+  columnsWidthAutoresize: false,
+
+  /**
     Current records.
 
     @property _records
@@ -230,7 +262,8 @@ export default ListFormController.extend({
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-objectlistview<br>' +
     '  componentName=\"SuggestionsObjectListView\"<br>' +
-    '  colsConfigButton=true<br>' +
+    '  colsConfigButton=colsConfigButton<br>' +
+    '  exportExcelButton=exportExcelButton<br>' +
     '  content=model<br>' +
     '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
     '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
@@ -239,6 +272,8 @@ export default ListFormController.extend({
     '  readonly=readonly<br>' +
     '  tableStriped=tableStriped<br>' +
     '  allowColumnResize=allowColumnResize<br>' +
+    '  minAutoColumnWidth=minAutoColumnWidth<br>' +
+    '  columnsWidthAutoresize=columnsWidthAutoresize<br>' +
     '  createNewButton=createNewButton<br>' +
     '  deleteButton=deleteButton<br>' +
     '  enableFilters=enableFilters<br>' +
@@ -294,6 +329,13 @@ export default ListFormController.extend({
       bindedControllerPropertieName: 'colsConfigButton'
     });
     componentSettingsMetadata.pushObject({
+      settingName: 'exportExcelButton',
+      settingType: 'boolean',
+      settingValue: false,
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'exportExcelButton'
+    });
+    componentSettingsMetadata.pushObject({
       settingName: 'content',
       settingType: 'hasManyArray',
       settingValue: this.get('model'),
@@ -339,6 +381,18 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: true,
       bindedControllerPropertieName: 'allowColumnResize'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'minAutoColumnWidth',
+      settingType: 'number',
+      settingDefaultValue: 150,
+      bindedControllerPropertieName: 'minAutoColumnWidth'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'columnsWidthAutoresize',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'columnsWidthAutoresize'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'createNewButton',
@@ -426,14 +480,6 @@ export default ListFormController.extend({
     });
 
     return componentSettingsMetadata;
-  }),
-
-  showLoadingTbodyClass: Ember.computed('model.content', function() {
-    if (this.get('model.content') === undefined) {
-      return true;
-    } else {
-      return false;
-    }
   }),
 
   _enableFilters: Ember.observer('enableFilters', function() {

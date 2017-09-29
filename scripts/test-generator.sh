@@ -16,14 +16,13 @@ pushd "$TMP_DIR"
 # Initialize new ember app and install addon from the build.
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.
-ember init
+ember init --skip-npm
 cp app/index.html .
 rm -r app/*
 mv index.html app
+yarn install
 ember install "${ADDON_DIR}"
 #npm install dexie@1.3.6
-rm -f ./ember-cli-build.js
-cp "${ADDON_DIR}/vendor/flexberry/ember-cli-build.js" .
 rm -f ./.jscsrc
 
 # Generate components using Dummy metamodel and test them.
@@ -41,9 +40,10 @@ mkdir -p "$TMP_DIR"
 rm -rf "$TMP_DIR/*"
 pushd "$TMP_DIR"
 
-ember addon new-addon-for-tests
+ember addon new-addon-for-tests --skip-npm
 pushd new-addon-for-tests
 
+yarn install
 ember install "${ADDON_DIR}"
 
 # EmberCLI asks whether it needs to overwrite existing files,

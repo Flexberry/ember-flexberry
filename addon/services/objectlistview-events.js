@@ -3,6 +3,7 @@
  */
 
 import Ember from 'ember';
+import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Service for triggering objectlistview events.
@@ -164,5 +165,68 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   geSortApplyTrigger(componentName, sorting) {
     this.trigger('geSortApply', componentName, sorting);
+  },
+
+  /**
+    Trigger for "updateWidth" event in object-list-view.
+    Event name: updateWidth.
+
+    @method updateWidthTrigger
+
+    @param {String} componentName The name of object-list-view component
+    (can be undefined for update all components widths).
+  */
+  updateWidthTrigger(componentName) {
+    this.trigger('updateWidth', componentName);
+  },
+
+  /**
+    Current limit function for OLV.
+
+    @property currentLimitFunction
+    @type BasePredicate
+    @default undefined
+  */
+  currentLimitFunction: undefined,
+
+  /**
+    Form's loading state.
+
+    @property loadingState
+    @type string
+    @default undefined
+  */
+  loadingState: undefined,
+
+  /**
+    Sets current limit function for OLV.
+
+    @method setLimitFunction
+
+    @param {BasePredicate} limitFunction Current limit function.
+  */
+  setLimitFunction(limitFunction) {
+    this.set('currentLimitFunction', limitFunction instanceof BasePredicate ? limitFunction : undefined);
+  },
+
+  /**
+    Gets current limit function for OLV.
+
+    @method getLimitFunction
+    @return {BasePredicate} Current limit function.
+  */
+  getLimitFunction() {
+    return this.get('currentLimitFunction');
+  },
+
+  /**
+   Method that sets the form's loading state.
+
+    @method setLoadingState
+
+    @param {String} loadingState Loading state for set.
+  */
+  setLoadingState(loadingState) {
+    this.set('loadingState', loadingState);
   }
 });

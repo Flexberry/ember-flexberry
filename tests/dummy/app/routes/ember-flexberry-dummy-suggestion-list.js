@@ -32,7 +32,11 @@ export default ListFormRoute.extend({
   @default {}
   */
   developerUserSettings: {
-    SuggestionObjectListView: { }
+    SuggestionObjectListView: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+      }
+    }
   },
 
   /**

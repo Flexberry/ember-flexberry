@@ -44,6 +44,23 @@ export default Ember.Mixin.create({
   folvProjection: undefined,
 
   /**
+    Result predicate with all restrictions for olv.
+
+    @property resultPredicate
+    @type BasePredicate
+    @default null
+   */
+  resultPredicate: null,
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
     Total count of FOLV records.
 
     @property recordsTotalCount
@@ -117,6 +134,11 @@ export default Ember.Mixin.create({
       return this.reloadList(queryParameters)
       .then(records => {
         _this.set('customFolvContent', records);
+      })
+      .finally(() => {
+        if (_this.get('objectlistviewEventsService.loadingState') === 'loading') {
+          _this.get('objectlistviewEventsService').setLoadingState('');
+        }
       });
     }
 

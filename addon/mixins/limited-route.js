@@ -5,7 +5,7 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 
-const { Condition, SimplePredicate, ComplexPredicate } = Query;
+const { Condition, SimplePredicate, ComplexPredicate, DatePredicate } = Query;
 
 /**
   Mixin for route, that restrictions on the list form.
@@ -72,6 +72,15 @@ export default Ember.Mixin.create({
   filter: null,
 
   /**
+    Result predicate with all restrictions for olv.
+
+    @property resultPredicate
+    @type BasePredicate
+    @default null
+   */
+  resultPredicate: null,
+
+  /**
     Return predicate to filter through.
 
     @example
@@ -95,9 +104,12 @@ export default Ember.Mixin.create({
   predicateForFilter(filter) {
     switch (filter.type) {
       case 'string':
-      case 'number':
       case 'boolean':
         return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+      case 'number':
+        return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
+      case 'date':
+        return new DatePredicate(filter.name, filter.condition, filter.pattern);
 
       default:
         return null;

@@ -8,5 +8,7 @@ export default ListFormController.extend({
     @type String
     @default 'ember-flexberry-dummy-suggestion-type-edit'
    */
-  editFormRoute: 'ember-flexberry-dummy-suggestion-type-edit'
+  editFormRoute: 'ember-flexberry-dummy-suggestion-type-edit',
+
+  exportExcelProjection: 'SuggestionTypeL'
 });

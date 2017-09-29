@@ -73,6 +73,14 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   colsConfigMenu: Ember.inject.service(),
 
   /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -82,6 +90,10 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   */
   model: function(params, transition) {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
+
+    let controller = this.controllerFor(this.routeName);
+    this.get('objectlistviewEventsService').setLoadingState('loading');
+
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -127,7 +139,6 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         }
 
         let hierarchicalAttribute;
-        let controller = this.controllerFor(this.routeName);
         if (controller.get('inHierarchicalMode')) {
           hierarchicalAttribute = controller.get('hierarchicalAttribute');
         }
@@ -177,6 +188,9 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         this.onModelLoadingRejected(errorData);
       }).finally((data) => {
         this.onModelLoadingAlways(data);
+        if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
+          this.get('objectlistviewEventsService').setLoadingState('');
+        }
       });
 
     if (this.get('controller') === undefined) {
@@ -278,5 +292,10 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     let proj = modelClass.projections.get(this.get('modelProjection'));
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
+    controller.set('developerUserSettings', this.get('developerUserSettings'));
+    controller.set('resultPredicate', this.get('resultPredicate'));
+    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    }
   }
 });

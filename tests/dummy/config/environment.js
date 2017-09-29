@@ -14,6 +14,7 @@ module.exports = function(environment) {
     baseURL: '/',
     locationType: 'auto',
     EmberENV: {
+      LOG_STACKTRACE_ON_DEPRECATION: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -105,7 +106,7 @@ module.exports = function(environment) {
   ENV.i18n = {
     // Should be defined to avoid ember-i18n deprecations.
     // Locale will be changed then to navigator current locale (in instance initializer).
-    defaultLocale: 'en'
+    defaultLocale: 'ru'
   };
 
   // Read more about ember-moment: https://github.com/stefanpenner/ember-moment.

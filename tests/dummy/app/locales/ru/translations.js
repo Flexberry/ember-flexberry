@@ -10,54 +10,85 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionL': {
           'address': {
-            'caption': 'Адрес'
+            __caption__: 'Адрес'
           },
           'text': {
-            'caption': 'Текст'
+            __caption__: 'Текст'
           },
           'date': {
-            'caption': 'Дата'
+            __caption__: 'Дата'
           },
           'votes': {
-            'caption': 'Голоса'
+            __caption__: 'Голоса'
           },
           'author': {
-            'caption': 'Автор',
+            __caption__: 'Автор',
             'eMail': {
-              'caption': 'Почта'
+              __caption__: 'Почта'
             }
           },
           'editor1': {
-            'caption': 'Редактор',
+            __caption__: 'Редактор',
             'eMail': {
-              'caption': 'Почта'
+              __caption__: 'Почта'
             }
           },
           'moderated': {
-            'caption': 'Одобрено'
+            __caption__: 'Одобрено'
           },
           'type': {
-            'caption': 'Тип предложения'
+            __caption__: 'Тип предложения'
           },
           'commentsCount': {
-            'caption': 'Количество голосов'
+            __caption__: 'Количество комментариев'
+          },
+          'comments': {
+            __caption__: 'Комментарии'
           },
         },
         'SuggestionE': {
           'address': {
-            'caption': 'Адрес'
+            __caption__: 'Адрес'
           },
           'userVotes': {
             'name': {
-              'caption': 'Наименование'
+              __caption__: 'Наименование'
             },
             'voteType': {
-              'caption': 'Тип голосования'
+              __caption__: 'Тип голосования'
             },
-            'applicationUser': {
-              'caption': 'Пользователь приложения',
+            'author': {
+              __caption__: 'Пользователь приложения',
               'eMail': {
-                'caption': 'Почта'
+                __caption__: 'Почта'
+              }
+            }
+          },
+          'files': {
+            'order': {
+              __caption__: 'Номер'
+            },
+            'file': {
+              __caption__: 'Файл',
+            }
+          },
+          'comments': {
+            'name': {
+              __caption__: 'Наименование'
+            },
+            'text': {
+              __caption__: 'Текст'
+            },
+            'votes': {
+              __caption__: 'Голоса',
+            },
+            'moderated': {
+              __caption__: 'Одобрено',
+            },
+            'author': {
+              __caption__: 'Пользователь приложения',
+              'eMail': {
+                __caption__: 'Почта'
               }
             }
           }
@@ -68,22 +99,22 @@ Ember.$.extend(true, translations, {
       'projections': {
         'ApplicationUserL': {
           'name': {
-            'caption': 'Имя'
+            __caption__: 'Имя'
           },
           'eMail': {
-            'caption': 'Почта'
+            __caption__: 'Почта'
           },
           'activated': {
-            'caption': 'Учетная запись активирована'
+            __caption__: 'Учетная запись активирована'
           },
           'birthday': {
-            'caption': 'Дата рождения'
+            __caption__: 'Дата рождения'
           },
           'gender': {
-            'caption': 'Пол'
+            __caption__: 'Пол'
           },
           'karma': {
-            'caption': 'Карма'
+            __caption__: 'Карма'
           },
         },
       }
@@ -92,7 +123,7 @@ Ember.$.extend(true, translations, {
       'projections': {
         'LocalizationL': {
           'name': {
-            'caption': 'Наименование'
+            __caption__: 'Наименование'
           },
         },
       }
@@ -101,15 +132,48 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionTypeL': {
           'name': {
-            'caption': 'Наименование'
+            __caption__: 'Наименование'
           },
           'moderated': {
-            'caption': 'Одобрено'
+            __caption__: 'Одобрено'
           },
           'parent': {
-            'caption': 'Иерархия'
+            __caption__: 'Иерархия'
           },
         },
+        'SuggestionTypeE': {
+          'localizedTypes': {
+            'name': {
+              __caption__: 'Наименование'
+            },
+            'localization': {
+              __caption__: 'Локализация',
+              'name': {
+                __caption__: 'Наименование'
+              }
+            }
+          },
+        }
+      }
+    },
+    'ember-flexberry-dummy-comment': {
+      'projections': {
+        'CommentE': {
+          'text': {
+            __caption__: 'Текст комментария'
+          },
+          'userVotes': {
+            'voteType': {
+              __caption__: 'Тип голосования'
+            },
+            'applicationUser': {
+              __caption__: 'Пользователь',
+              'name': {
+                __caption__: 'Наименование'
+              }
+            }
+          },
+        }
       }
     },
   },
@@ -134,10 +198,22 @@ Ember.$.extend(true, translations, {
           'user-settings-service-checkbox': {
             'caption': 'Использовать сервис сохранения пользовательских настроек'
           },
+          'show-menu': {
+            'caption': 'Показать меню'
+          },
+          'hide-menu': {
+            'caption': 'Скрыть меню'
+          },
           'language-dropdown': {
             'caption': 'Язык приложения',
             'placeholder': 'Выберите язык'
           }
+        },
+        'login': {
+          'caption': 'Вход'
+        },
+        'logout': {
+          'caption': 'Выход'
         }
       },
 
@@ -209,8 +285,24 @@ Ember.$.extend(true, translations, {
         'components-examples': {
           'caption': 'Примеры компонентов',
           'title': '',
+          'flexberry-button': {
+            'caption': 'flexberry-button',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-checkbox': {
             'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-ddau-checkbox': {
+            'caption': 'flexberry-ddau-checkbox',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -363,6 +455,14 @@ Ember.$.extend(true, translations, {
             'selected-rows': {
               'caption': 'Выбранные строки',
               'title': ''
+            },
+            'downloading-files-from-olv-list': {
+              'caption': 'Пример скачивания файлов со списка',
+              'title': ''
+            },
+            'object-list-view-resize': {
+              'caption': 'Разметка столбцов',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -391,6 +491,22 @@ Ember.$.extend(true, translations, {
           },
           'flexberry-toggler': {
             'caption': 'flexberry-toggler',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-tree': {
+            'caption': 'flexberry-tree',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'ui-message': {
+            'caption': 'ui-message',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -553,9 +669,19 @@ Ember.$.extend(true, translations, {
     },
 
     'components-examples': {
+      'flexberry-button': {
+        'settings-example': {
+          'caption': 'Пример работы с настройками flexberry-button'
+        }
+      },
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Пример работы с настройками'
+        }
+      },
+      'flexberry-ddau-checkbox': {
+        'settings-example': {
+          'caption': 'Пример работы с настройками flexberry-ddau-checkbox'
         }
       },
       'flexberry-datepicker': {
@@ -705,6 +831,14 @@ Ember.$.extend(true, translations, {
         },
         'selected-rows': {
           'caption': 'Flexberry-objectlistview. Выбранные строки'
+        },
+        'downloading-files-from-olv-list': {
+          'caption': 'Flexberry-objectlistview. Скачивание файлов со списка'
+        },
+        'object-list-view-resize': {
+          'caption': 'Flexberry-objectlistview. Разметка столбцов',
+          'button-сaption': 'Добавить',
+          'title': ''
         }
       },
       'flexberry-simpleolv': {
@@ -751,6 +885,24 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Пример работы с настройками',
           'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
+        }
+      },
+      'flexberry-tree': {
+        'settings-example': {
+          'caption': 'Пример работы с настройками flexberry-tree',
+          'json-tree-tab-caption': 'Дерево заданное JSON-объектом',
+          'json-tree-latest-clicked-node-caption': 'Настройки последней кликнутой вершины дерева',
+          'json-tree-latest-clicked-node-placeholder': 'Кликните на любую вершину дерева, чтобы отобразить её настройки'
+        }
+      },
+      'ui-message': {
+        'settings-example': {
+          'caption': 'Ui-message. Пример работы с настройками',
+          'captionMessage': 'Результат проверки',
+          'messageError': 'Операция не выполнена',
+          'messageSuccess': 'Операция выполнена успешно',
+          'messageWarning': 'Частично выполнено',
+          'messageInfo': 'Обратите внимание!'
         }
       }
     },

@@ -110,10 +110,17 @@ export default {
       'loading-text': 'Данные загружаются...',
       'header-title-attr': 'Нажмите, чтобы изменить порядок, Ctrl+Click чтобы добавить упорядочение для этого столбца',
       'single-column-header-title': 'Свойства модели',
+      'sort-ascending': 'По возрастанию',
+      'sort-descending': 'По убыванию',
       'menu-in-row': {
         'edit-menu-item-title': 'Редактировать запись',
+        'add-menu-item-title': 'Добавить запись',
         'delete-menu-item-title': 'Удалить запись'
-      }
+      },
+      'hierarchy-buttons': {
+        'plus-button-title': 'Раскрыть',
+        'minus-button-title': 'Свернуть',
+      },
     },
 
     'object-list-view-cell': {
@@ -126,9 +133,16 @@ export default {
       'refresh-button-text': 'Обновить',
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
+      'hierarchy-button-text': 'Вкл/выкл иерархии',
+      'filter-button-text': 'Добавить фильтр',
+      'remove-filter-button-text': 'Сбросить фильтр',
+      'search-button-text': 'Поиск',
+      'clear-search-button-text': 'Очистить поиск',
+      'export-excel-button-text': 'Экспорт в Excel',
       'filter-by-any-match-placeholder': 'Поиск...',
       'create-setting-title': 'Новая настройка',
       'use-setting-title': 'Применить',
+      'export-title': 'Выгрузить',
       'edit-setting-title': 'Редактировать',
       'remove-setting-title': 'Удалить',
       'set-default-setting-title': 'Установка по умолчанию',
@@ -141,8 +155,14 @@ export default {
       'ctrlc': 'Нажмите Ctrl/C для копирования'
     },
 
+    'groupedit-toolbar': {
+      'add-button-text': 'Добавить',
+      'delete-button-text': 'Удалить'
+    },
+
     'colsconfig-dialog-content': {
       'title': 'Настроить отображение столбцов',
+      'export-title': 'Экспорт в Excel',
       'dont-show-columns': 'Не отображать столбцы',
       'columns-order': 'Определить порядок столбцов',
       'column-name': 'Название столбца',
@@ -153,18 +173,42 @@ export default {
       'setting-name': 'Название настройки',
       'enter-setting-name': 'Введите название настройки',
       'use': 'Применить',
+      'export': 'Выгрузить',
       'use-without-save': 'Применить данные установки без сохранения в настройке ',
       'save': 'Сохранить',
       'have-errors': 'При сохранении настройки возникли ошибки: ',
       'setting': 'Настройка ',
       'is-saved': ' сохранена',
       'col-width-on': 'Включить настройку ширины столбцов',
-      'per-page': 'Записей на странице'
+      'per-page': 'Записей на странице',
+      'det-separate-rows': 'Поля списков в отдельные строки',
+      'det-separate-cols': 'Поля списков в отдельные столбцы',
+      'unresizable': 'Фиксированная ширина'
     },
 
     'form-load-time-tracker': {
       'load-time': 'Время загрузки',
       'render-time': 'Время отрисовки',
+    },
+
+    'flexberry-dialog': {
+      'approve-button': {
+        'caption': 'Ок'
+      },
+      'deny-button': {
+        'caption': 'Отмена'
+      }
+    },
+
+    'flexberry-jsonarea': {
+      'placeholder': '(Введите JSON-строку)',
+      'parse-error': {
+        'caption': 'Ошибка парсинга введенной JSON-строки'
+      }
+    },
+
+    'flexberry-tree': {
+      'placeholder': 'Вершины дерева не заданы'
     },
 
   },
@@ -174,46 +218,46 @@ export default {
       'projections': {
         'ApplicationLogL': {
           'processId': {
-            'caption': 'URL'
+            __caption__: 'URL'
           },
           'timestamp':{
-            'caption': 'Время'
+            __caption__: 'Время'
           },
           'category':{
-            'caption': 'Категория'
+            __caption__: 'Категория'
           },
           'eventId':{
-            'caption': 'Идентификтатор события'
+            __caption__: 'Идентификтатор события'
           },
           'priority':{
-            'caption': 'Приоритет'
+            __caption__: 'Приоритет'
           },
           'severity':{
-            'caption': 'Значимость'
+            __caption__: 'Значимость'
           },
           'title':{
-            'caption': 'Заголовок'
+            __caption__: 'Заголовок'
           },
           'machineName':{
-            'caption': 'Сервер'
+            __caption__: 'Сервер'
           },
           'appDomainName':{
-            'caption': 'Браузер'
+            __caption__: 'Браузер'
           },
           'processName':{
-            'caption': 'Имя процесса'
+            __caption__: 'Имя процесса'
           },
           'threadName':{
-            'caption': 'Имя потока'
+            __caption__: 'Имя потока'
           },
           'win32ThreadId':{
-            'caption': 'Идентификатор потока',
+            __caption__: 'Идентификатор потока',
           },
           'message':{
-            'caption': 'Сообщение'
+            __caption__: 'Сообщение'
           },
           'formattedMessage':{
-            'caption': 'Форматированное сообщение'
+            __caption__: 'Форматированное сообщение'
           }
         }
       }
@@ -221,9 +265,9 @@ export default {
     'new-platform-flexberry-services-lock': {
       'projections': {
         'LockL': {
-          'lockKey': { 'caption': 'Ключ заблокированного объекта' },
-          'userName': { 'caption': 'Заблокировавший пользователь' },
-          'lockDate': { 'caption': 'Дата блокировки' },
+          'lockKey': { __caption__: 'Ключ заблокированного объекта' },
+          'userName': { __caption__: 'Заблокировавший пользователь' },
+          'lockDate': { __caption__: 'Дата блокировки' },
         },
       },
     },

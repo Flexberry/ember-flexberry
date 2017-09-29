@@ -218,46 +218,46 @@ export default {
       'projections': {
         'ApplicationLogL': {
           'processId': {
-            'caption': 'URL'
+            __caption__: 'URL'
           },
           'timestamp':{
-            'caption': 'Время'
+            __caption__: 'Время'
           },
           'category':{
-            'caption': 'Категория'
+            __caption__: 'Категория'
           },
           'eventId':{
-            'caption': 'Идентификтатор события'
+            __caption__: 'Идентификтатор события'
           },
           'priority':{
-            'caption': 'Приоритет'
+            __caption__: 'Приоритет'
           },
           'severity':{
-            'caption': 'Значимость'
+            __caption__: 'Значимость'
           },
           'title':{
-            'caption': 'Заголовок'
+            __caption__: 'Заголовок'
           },
           'machineName':{
-            'caption': 'Сервер'
+            __caption__: 'Сервер'
           },
           'appDomainName':{
-            'caption': 'Браузер'
+            __caption__: 'Браузер'
           },
           'processName':{
-            'caption': 'Имя процесса'
+            __caption__: 'Имя процесса'
           },
           'threadName':{
-            'caption': 'Имя потока'
+            __caption__: 'Имя потока'
           },
           'win32ThreadId':{
-            'caption': 'Идентификатор потока',
+            __caption__: 'Идентификатор потока',
           },
           'message':{
-            'caption': 'Сообщение'
+            __caption__: 'Сообщение'
           },
           'formattedMessage':{
-            'caption': 'Форматированное сообщение'
+            __caption__: 'Форматированное сообщение'
           }
         }
       }
@@ -265,9 +265,9 @@ export default {
     'new-platform-flexberry-services-lock': {
       'projections': {
         'LockL': {
-          'lockKey': { 'caption': 'Ключ заблокированного объекта' },
-          'userName': { 'caption': 'Заблокировавший пользователь' },
-          'lockDate': { 'caption': 'Дата блокировки' },
+          'lockKey': { __caption__: 'Ключ заблокированного объекта' },
+          'userName': { __caption__: 'Заблокировавший пользователь' },
+          'lockDate': { __caption__: 'Дата блокировки' },
         },
       },
     },

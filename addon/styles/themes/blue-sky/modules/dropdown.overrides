@@ -52,3 +52,9 @@
 .ui.upward.pointing.dropdown > .menu:after {
     background: @hoveredItemBackground;
 }
+
+.ui.buttons.cols-config > .ui.dropdown:last-child .menu,
+.ui.buttons.export-config > .ui.dropdown:last-child .menu {
+    left: auto;
+    right: -5em;
+}

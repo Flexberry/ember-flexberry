@@ -385,7 +385,7 @@ export default FlexberryBaseComponent.extend({
         let adapter = store.adapterFor(this.modelName);
         let currentQuery = this._getCurrentQuery();
         adapter.query(store, this.modelName, currentQuery).then((result) => {
-          let blob = new Blob([result], { type: 'application/vnd.ms-excel' });
+          let blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           let anchor = Ember.$('.download-anchor');
           if (!Ember.isBlank(anchor)) {
             if (window.navigator.msSaveOrOpenBlob) {

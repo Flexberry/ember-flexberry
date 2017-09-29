@@ -26,6 +26,7 @@ export default class ModelBlueprint {
   offlineSerializerAttrs: string;
   parentModelName: string;
   parentClassName: string;
+  parentExternal: boolean;
   className: string;
   projections: string;
   name: string;
@@ -41,6 +42,10 @@ export default class ModelBlueprint {
     let model: metadata.Model = ModelBlueprint.loadModel(modelsDir, options.file);
     this.parentModelName = model.parentModelName;
     this.parentClassName = model.parentClassName;
+    if (model.parentModelName) {
+      let parentModel: metadata.Model = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
+      this.parentExternal = parentModel.external;
+    }
     this.className = model.className;
     this.serializerAttrs = this.getSerializerAttrs(model);
     this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);

@@ -76,7 +76,7 @@
     </div>
   {{/if}}
   {{#if exportExcelButton}}
-    <div class="ui buttons">
+    <div class="ui buttons export-config">
       <button
         class="ui button icon export-button {{buttonClass}}"
         title={{t "components.olv-toolbar.export-excel-button-text"}}
@@ -90,7 +90,7 @@
     </div>
   {{/if}}
   {{#if colsConfigButton}}
-    <div class="ui buttons">
+    <div class="ui buttons cols-config">
       <button
         class="ui icon button config-button"
         title={{t "components.colsconfig-dialog-content.title"}}
@@ -201,7 +201,7 @@
           {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td style={{defaultPaddingStyle}}>
+              <td style={{defaultPaddingStyle}} class="overflowed-cell">
                 {{#if column.filter.conditions}}
                   {{component "flexberry-dropdown"
                     value=column.filter.condition
@@ -224,7 +224,7 @@
           {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td style={{defaultPaddingStyle}}>
+              <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
                 {{#if column.filter.component.name}}
                   {{component column.filter.component.name
                     value=column.filter.pattern
@@ -277,7 +277,8 @@
               </td>
               {{#each columns as |column|}}
                 {{#unless column.hide}}
-                  <td {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
+                  <td class="{{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
+                    {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
                     {{#if column.cellComponent.componentName}}
                       {{component column.cellComponent.componentName
                         dynamicProperties=column.cellComponent.componentProperties
@@ -324,11 +325,9 @@
     </tbody>
   </table>
 </div>
-<div class="ui secondary menu no-margin">
+<div class="ui secondary menu no-margin nav-bar">
   <div class="ui basic buttons">
-    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>
-      <i class="prev-page icon"></i>
-    </button>
+    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
     {{#each pages as |page|}}
       {{#if page.isEllipsis}}
         <div class="ui button">...</div>
@@ -340,20 +339,18 @@
         {{/if}}
       {{/if}}
     {{/each}}
-    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} >
-      <i class="next-page icon"></i>
-    </button>
+    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
   </div>
   <div class="right menu">
-    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}
+    {{#if showShowingEntries}}
+      <div class="showing-entries">
+        {{#if (and currentIntervalRecords recordsTotalCount) }}
+          {{concat
+            (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+          }}
+        {{/if}}
+      </div>
+    {{/if}}
+    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
   </div>
 </div>
-{{#if showShowingEntries}}
-  <div class="showing-entries">
-    {{#if (and currentIntervalRecords recordsTotalCount) }}
-      {{concat
-        (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-      }}
-    {{/if}}
-  </div>
-{{/if}}

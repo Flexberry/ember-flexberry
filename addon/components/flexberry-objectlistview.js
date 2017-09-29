@@ -531,6 +531,15 @@ export default FlexberryBaseComponent.extend({
   columnsWidthAutoresize: false,
 
   /**
+    List of component names, which can overflow table cell.
+
+    @property overflowedComponents
+    @type Array
+    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+  */
+  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
+
+  /**
     Current interval of records.
 
     @property currentIntervalRecords

@@ -39,20 +39,19 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
         case 'ember-flexberry-dummy-vote+author':
           cellComponent.componentProperties = {
             choose: 'showLookupDialog',
-            chooseText: '...',
             remove: 'removeLookupValue',
             displayAttributeName: 'name',
             required: true,
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
+            lookupWindowCustomProperties: () => { return { filterButton: true, refreshButton: true }; },
           };
           break;
 
         case 'ember-flexberry-dummy-comment+author':
           cellComponent.componentProperties = {
             choose: 'showLookupDialog',
-            chooseText: '...',
             remove: 'removeLookupValue',
             displayAttributeName: 'name',
             required: true,

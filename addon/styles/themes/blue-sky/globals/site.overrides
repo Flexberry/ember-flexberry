@@ -21,6 +21,10 @@
     width: 100%;
 }
 
+.background-logo.mobile {
+    height: 50px;
+}
+
 .background-logo a {
     background: #fff;
     border-radius: 15px;
@@ -39,6 +43,10 @@
 .flex-container {
     width: 100%!important;
     justify-content: space-between;
+}
+
+.flex-container.mobile-footer {
+  height: 30px;
 }
 
 .stackable > .ui.message {

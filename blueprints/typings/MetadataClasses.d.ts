@@ -9,6 +9,7 @@ declare module "MetadataClasses" {
     
     export class Form {
         
+        public external: boolean;
         public caption: string;
         public name: string;
         public className: string;
@@ -64,6 +65,7 @@ declare module "MetadataClasses" {
         public projections: ProjectionForModel[];
         public stored: boolean;
         public offline: boolean;
+        public external: boolean;
     }
     export class DSattr {
         

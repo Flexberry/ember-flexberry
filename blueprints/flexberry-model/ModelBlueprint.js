@@ -24,6 +24,10 @@ var ModelBlueprint = (function () {
         var model = ModelBlueprint.loadModel(modelsDir, options.file);
         this.parentModelName = model.parentModelName;
         this.parentClassName = model.parentClassName;
+        if (model.parentModelName) {
+            var parentModel = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
+            this.parentExternal = parentModel.external;
+        }
         this.className = model.className;
         this.serializerAttrs = this.getSerializerAttrs(model);
         this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);

@@ -374,6 +374,7 @@ FolvOnEditControllerMixin, {
           }, _this);
           let transitionQuery = {};
           transitionQuery.queryParams = qpars;
+          transitionQuery.queryParams.recordAdded = true;
           _this.transitionToRoute(routeName.slice(0, -4), _this.get('model'), transitionQuery);
         }
       }

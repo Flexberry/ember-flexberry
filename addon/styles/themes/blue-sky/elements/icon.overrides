@@ -118,6 +118,19 @@ i.icon.remove:before {
     }
 }
 
+i.icon.change:before {
+    font-family: 'Crimean';
+    content: "";
+    font-size: 17px;
+    position: relative;
+    top: -1px;
+    opacity: 1;
+    &:hover {
+        color: @brightBlue;
+        opacity: 1;
+    }
+}
+
 /**************************************
       Edit panel buttons section
 ***************************************/
@@ -216,7 +229,7 @@ i.icon.download:before {
       Page navigation buttons section
 *******************************************/
 
-i.icon.prev-page {
+.prev-page-button {
     &:before {
         content: "\e81a";
         font-family: 'Crimean';
@@ -227,7 +240,7 @@ i.icon.prev-page {
         color: @red;
     }
 }
-i.icon.next-page {
+.next-page-button {
     &:before {
         content: "\e81b";
         font-family: 'Crimean';
@@ -238,7 +251,6 @@ i.icon.next-page {
         color: @red;
     }
 }
-
 
 /******************************************
       Not categorized icons section
@@ -312,6 +324,12 @@ i.icon.text-menu-hide:before {
 
 .flexberry-lookup > .ui.fluid > button > i.icon.remove:before {
     content: "\e806";
+    font-family: 'Crimean';
+    font-size: 13px;
+}
+
+.flexberry-lookup > .ui.fluid > button > i.icon.change:before {
+    content: "";
     font-family: 'Crimean';
     font-size: 13px;
 }

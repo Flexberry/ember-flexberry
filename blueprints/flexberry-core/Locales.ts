@@ -135,7 +135,7 @@ export class ModelLocales extends Locales {
           }
         }
         hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
-        hasManyAttrs.unshift(new SortedPair(-1, `        caption: '${this.escapeValue(hasMany.caption)}'`, `        caption: '${hasMany.name}'`));
+        hasManyAttrs.unshift(new SortedPair(-1, `        __caption__: '${this.escapeValue(hasMany.caption)}'`, `        __caption__: '${hasMany.name}'`));
         let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n        ");
         let attrsStrOtherLocales = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n        ");
         projAttrs.push(new SortedPair(Number.MAX_VALUE,
@@ -173,7 +173,7 @@ export class ModelLocales extends Locales {
       indent.pop();
       let indentStr2 = indent.join("");
       hasManyAttrs = lodash.sortBy(hasManyAttrs, ["index"]);
-      hasManyAttrs.unshift(new SortedPair(-1, `caption: '${this.escapeValue(detailHasMany.caption)}'`, `caption: '${detailHasMany.name}'`));
+      hasManyAttrs.unshift(new SortedPair(-1, `__caption__: '${this.escapeValue(detailHasMany.caption)}'`, `__caption__: '${detailHasMany.name}'`));
       let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n" + indentStr);
       let attrsStrOtherLocales = lodash.map(hasManyAttrs, "strOtherLocales").join(",\n" + indentStr);
 
@@ -207,7 +207,7 @@ export class ModelLocales extends Locales {
     } else {
       index = belongsToAttrs[0].index;
     }
-    belongsToAttrs.unshift(new SortedPair(-1, `caption: '${this.escapeValue(belongsTo.caption)}'`, `caption: '${belongsTo.name}'`));
+    belongsToAttrs.unshift(new SortedPair(-1, `__caption__: '${this.escapeValue(belongsTo.caption)}'`, `__caption__: '${belongsTo.name}'`));
     let attrsStr = lodash.map(belongsToAttrs, "str").join(",\n" + indentStr);
     let attrsStrOtherLocales = lodash.map(belongsToAttrs, "strOtherLocales").join(",\n" + indentStr);
 
@@ -226,8 +226,8 @@ export class ModelLocales extends Locales {
     indent.pop();
     let indentStr2 = indent.join("");
     return new SortedPair(attr.index,
-      `${attr.name}: {\n${indentStr}caption: '${this.escapeValue(attr.caption)}'\n${indentStr2}}`,
-      `${attr.name}: {\n${indentStr}caption: '${attr.name}'\n${indentStr2}}`
+      `${attr.name}: {\n${indentStr}__caption__: '${this.escapeValue(attr.caption)}'\n${indentStr2}}`,
+      `${attr.name}: {\n${indentStr}__caption__: '${attr.name}'\n${indentStr2}}`
     );
   }
 

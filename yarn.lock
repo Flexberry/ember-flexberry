@@ -1864,7 +1864,7 @@ ember-cli-app-version@^1.0.0:
     ember-cli-htmlbars "^1.0.0"
     git-repo-version "0.3.0"
 
-ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.10, ember-cli-babel@^5.1.3, ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.1.8:
+ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.10, ember-cli-babel@^5.1.3, ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.1.8, ember-cli-babel@^5.2.4:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.2.4.tgz#5ce4f46b08ed6f6d21e878619fb689719d6e8e13"
   dependencies:
@@ -1916,7 +1916,7 @@ ember-cli-htmlbars-inline-precompile@^0.3.1:
     semver "^5.3.0"
     silent-error "^1.1.0"
 
-ember-cli-htmlbars@^1.0.0, ember-cli-htmlbars@^1.0.3:
+ember-cli-htmlbars@^1.0.0, ember-cli-htmlbars@^1.0.3, ember-cli-htmlbars@^1.1.1:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-1.3.4.tgz#461289724b34af372a6a0c4b6635819156963353"
   dependencies:
@@ -1943,9 +1943,9 @@ ember-cli-less@^1.5.4:
     ember-cli-version-checker "^1.1.4"
     lodash.merge "^3.3.2"
 
-ember-cli-moment-shim@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-1.0.0.tgz#959e8bce1825b93f0c0fb471525928c603b32608"
+ember-cli-moment-shim@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-2.2.1.tgz#78870872a626177d0b04223c9eb6be0729590e61"
   dependencies:
     broccoli-funnel "^1.0.0"
     broccoli-merge-trees "^1.0.0"
@@ -1953,7 +1953,9 @@ ember-cli-moment-shim@1.0.0:
     chalk "^1.1.1"
     ember-cli-babel "^5.0.0"
     exists-sync "0.0.3"
-    lodash.defaults "^3.1.2"
+    lodash.defaults "^4.1.0"
+    moment "^2.13.0"
+    moment-timezone "^0.5.0"
 
 ember-cli-node-assets@^0.1.1:
   version "0.1.6"
@@ -2139,7 +2141,7 @@ ember-cli@2.4.3:
     walk-sync "^0.2.6"
     yam "0.0.18"
 
-ember-data@~2.4.3:
+ember-data@2.4.3:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-2.4.3.tgz#93bc28b9bb52f68a1d7c0c935f715a58c242f5e1"
   dependencies:
@@ -2179,11 +2181,12 @@ ember-factory-for-polyfill@^1.1.0:
   dependencies:
     ember-cli-version-checker "^1.2.0"
 
-ember-flexberry-data@0.9.0-beta.6:
-  version "0.9.0-beta.6"
-  resolved "https://registry.yarnpkg.com/ember-flexberry-data/-/ember-flexberry-data-0.9.0-beta.6.tgz#09259cde274247d005b9ff31f844063b2effdff0"
+ember-flexberry-data@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/ember-flexberry-data/-/ember-flexberry-data-0.9.0.tgz#db1bdc71fd7faca4bbdf06b94d4e3440a6fbfa12"
   dependencies:
     ember-cli-babel "^5.1.6"
+    ember-cli-htmlbars "^1.0.3"
     ember-validations "~2.0.0-alpha.4"
 
 ember-get-config@0.1.7:
@@ -2255,6 +2258,13 @@ ember-router-generator@^1.0.0:
   resolved "https://registry.yarnpkg.com/ember-router-generator/-/ember-router-generator-1.2.3.tgz#8ed2ca86ff323363120fc14278191e9e8f1315ee"
   dependencies:
     recast "^0.11.3"
+
+ember-runtime-enumerable-includes-polyfill@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ember-runtime-enumerable-includes-polyfill/-/ember-runtime-enumerable-includes-polyfill-1.0.4.tgz#16a7612e347a2edf07da8b2f2f09dbfee70deba0"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+    ember-cli-version-checker "^1.1.6"
 
 ember-sinon@0.5.0:
   version "0.5.0"
@@ -3275,6 +3285,10 @@ indexof@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/indexof/-/indexof-0.0.1.tgz#82dc336d232b9062179d05ab3293a66059fd435d"
 
+inflection@1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/inflection/-/inflection-1.10.0.tgz#5bffcb1197ad3e81050f8e17e21668087ee9eb2f"
+
 inflection@^1.7.0, inflection@^1.8.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/inflection/-/inflection-1.12.0.tgz#a200935656d6f5f6bc4dc7502e1aecb703228416"
@@ -3929,7 +3943,7 @@ lodash._slice@~2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/lodash._slice/-/lodash._slice-2.3.0.tgz#147198132859972e4680ca29a5992c855669aa5c"
 
-lodash.assign@^3.0.0, lodash.assign@^3.2.0:
+lodash.assign@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/lodash.assign/-/lodash.assign-3.2.0.tgz#3ce9f0234b4b2223e296b8fa0ac1fee8ebca64fa"
   dependencies:
@@ -3959,12 +3973,9 @@ lodash.debounce@^3.1.1:
   dependencies:
     lodash._getnative "^3.0.0"
 
-lodash.defaults@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-3.1.2.tgz#c7308b18dbf8bc9372d701a73493c61192bd2e2c"
-  dependencies:
-    lodash.assign "^3.0.0"
-    lodash.restparam "^3.0.0"
+lodash.defaults@^4.1.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
 
 lodash.defaults@~2.3.0:
   version "2.3.0"
@@ -4432,11 +4443,17 @@ moment-timezone@^0.3.0:
   dependencies:
     moment ">= 2.6.0"
 
+moment-timezone@^0.5.0:
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.13.tgz#99ce5c7d827262eb0f1f702044177f60745d7b90"
+  dependencies:
+    moment ">= 2.9.0"
+
 moment@2.11.2:
   version "2.11.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.11.2.tgz#87968e5f95ac038c2e42ac959c75819cd3f52901"
 
-"moment@>= 2.6.0":
+"moment@>= 2.6.0", "moment@>= 2.9.0", moment@^2.13.0:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -5584,9 +5601,9 @@ sane@^1.1.1:
     walker "~1.0.5"
     watch "~0.10.0"
 
-semantic-ui-ember@0.9.3:
+"semantic-ui-ember@git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3":
   version "0.9.3"
-  resolved "https://registry.yarnpkg.com/semantic-ui-ember/-/semantic-ui-ember-0.9.3.tgz#9fd28bda4acf1a1d379996f6ba10f28de5524873"
+  resolved "git://github.com/Flexberry/Semantic-UI-Ember.git#0d27d98ae0a66c9a078ff1fd77f260ea57b9d3b8"
   dependencies:
     ember-cli-babel "^5.1.3"
 
@@ -6203,6 +6220,14 @@ uglify-js@^2.6, uglify-js@^2.7.0:
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
+
+ui-ember-slider@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/ui-ember-slider/-/ui-ember-slider-0.5.0.tgz#7f31dbd0636be1364501a7a34d504df0692f752b"
+  dependencies:
+    ember-cli-babel "^5.2.4"
+    ember-cli-htmlbars "^1.1.1"
+    ember-runtime-enumerable-includes-polyfill "^1.0.4"
 
 uid-number@0.0.6:
   version "0.0.6"

@@ -7,7 +7,13 @@ tr {
 }
 
 .ui.table.object-list-view tr td {
-    overflow: inherit;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.ui.table.object-list-view tr td.overflowed-cell,
+.ui.table.object-list-view tr td.object-list-view-menu {
+    overflow: visible;
 }
 
 .object-list-view-container {
@@ -22,13 +28,13 @@ tr {
   }
 }
 
+.object-list-view-container.groupedit-container {
+  overflow: visible;
+}
+
 table.object-list-view.selectable tbody,
 table.object-list-view.selectable thead {
   cursor: pointer;
-}
-
-.object-list-view-menu {
-    overflow: initial!important;
 }
 
 .object-list-view-helper-column-cell div.cell {

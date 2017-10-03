@@ -1995,20 +1995,44 @@ ErrorableControllerMixin, {
   */
   _deleteRecord(record, immediately) {
     let beforeDeleteRecord = this.get('beforeDeleteRecord');
+    let possiblePromise = null;
+    let data = {
+      immediately: immediately,
+      cancel: false
+    };
+
     if (beforeDeleteRecord) {
       Ember.assert('beforeDeleteRecord must be a function', typeof beforeDeleteRecord === 'function');
 
-      let data = {
-        immediately: immediately,
-        cancel: false
-      };
-      beforeDeleteRecord(record, data);
+      possiblePromise = beforeDeleteRecord(record, data);
 
-      if (data.cancel) {
+      if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancel) {
         return;
       }
     }
 
+    if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+      possiblePromise.then(() => {
+        if (!data.cancel) {
+         this._actualDeleteRecord(record, data.immediately);
+        }
+      });
+    } else {
+      this._actualDeleteRecord(record, data.immediately);
+    }
+  },
+
+  /**
+    Actually delete the record.
+
+    @method _actualDeleteRecord
+    @private
+
+    @param {DS.Model} record A record to delete
+    @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
+  */
+
+  _actualDeleteRecord(record, immediately) {
     let key = this._getModelKey(record);
     this._removeModelWithKey(key);
 

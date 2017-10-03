@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.2-beta.01] - 2017-10-03
+### Changed
+* List components:
+    * `beforeDeleteRecord` method now support asynchronous mode, i.e. it is possible to return promises as result value.
+
 ## [0.9.1] - 2017-09-29
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.9.0.

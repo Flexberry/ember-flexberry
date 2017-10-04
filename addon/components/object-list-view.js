@@ -1917,7 +1917,7 @@ export default FlexberryBaseComponent.extend(
     if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
       possiblePromise.then(() => {
         if (!data.cancel) {
-         this._actualDeleteRecord(record, data.immediately);
+          this._actualDeleteRecord(record, data.immediately);
         }
       });
     } else {

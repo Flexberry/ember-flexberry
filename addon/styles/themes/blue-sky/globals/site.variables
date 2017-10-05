@@ -45,3 +45,12 @@
 
 /*---  Colors  ---*/
 @dropdownHoveredItemColor: #dcebfc;
+
+/*-------------------
+        Heights
+--------------------*/
+
+@headerHeight : 80px;
+@footerHeight : 40px;
+@headerHeightMobile : 50px;
+@footerHeightMobile : 30px;

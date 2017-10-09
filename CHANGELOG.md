@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-simpledatetime` component:
+    * Add remove value button.
 
 ## [0.9.2-beta.1] - 2017-10-06
 ### Added

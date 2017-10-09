@@ -102,18 +102,22 @@ export default Ember.Mixin.create({
     @return {BasePredicate|null} Predicate to filter through.
   */
   predicateForFilter(filter) {
-    switch (filter.type) {
-      case 'string':
-      case 'boolean':
-        return new SimplePredicate(filter.name, filter.condition, filter.pattern);
-      case 'number':
-        return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
-      case 'date':
-        return new DatePredicate(filter.name, filter.condition, filter.pattern);
+    if (filter.pattern && filter.condition) {
+      switch (filter.type) {
+        case 'string':
+        case 'boolean':
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+        case 'number':
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
+        case 'date':
+          return new DatePredicate(filter.name, filter.condition, filter.pattern);
 
-      default:
-        return null;
+        default:
+          return null;
+      }
     }
+
+    return null;
   },
 
   /**
@@ -132,6 +136,8 @@ export default Ember.Mixin.create({
           let predicate = this.predicateForFilter(filters[filter]);
           if (predicate) {
             predicates.push(predicate);
+          } else {
+            delete filters[filter];
           }
         }
       }

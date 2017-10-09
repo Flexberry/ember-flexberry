@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* List components:
+    * Now filters calls `predicateForFilter` method even if filter pattern is undefined.
 
 ## [0.9.2-beta.1] - 2017-10-06
 ### Added

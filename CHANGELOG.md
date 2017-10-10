@@ -7,6 +7,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `blue-sky` theme:
     * Fix sidebar and page content height.
 
+## [0.9.2-beta.1] - 2017-10-06
+### Added
+* `flexberry-simpledatetime` component:
+    * Add localization support.
+
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix user's date input.
+
 ## [0.9.2-beta.0] - 2017-10-04
 ### Changed
 * List components:

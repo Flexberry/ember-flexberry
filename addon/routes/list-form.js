@@ -242,6 +242,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   /**
     This method will be invoked when model loading operation completed, but failed.
     Override this method to add some custom logic on model loading operation fail.
+    By default showing error form.
 
     @example
       ```javascript
@@ -253,7 +254,11 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     @param {Object} errorData Data about model loading operation fail.
   */
   onModelLoadingRejected(errorData) {
-    // TODO: Provide information about error to user.
+    if (this.get('controller.model.isLoading')) {
+      errorData = errorData || {};
+      errorData.retryRoute = this.routeName;
+      this.intermediateTransitionTo('error', errorData);
+    }
   },
 
   /**

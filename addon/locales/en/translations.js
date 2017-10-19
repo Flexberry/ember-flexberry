@@ -11,6 +11,12 @@ export default {
       'close-button-text': 'Close'
     },
 
+    'error-form': {
+      caption: 'An error has occurred',
+      detail: 'Detail',
+      retry: 'Retry',
+    },
+
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Application log'
     },

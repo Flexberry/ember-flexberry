@@ -11,6 +11,12 @@ export default {
       'close-button-text': 'Закрыть'
     },
 
+    'error-form': {
+      caption: 'Произошла ошибка',
+      detail: 'Подробно',
+      retry: 'Повторить попытку',
+    },
+
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Лог приложения'
     },

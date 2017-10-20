@@ -1822,7 +1822,7 @@ ErrorableControllerMixin, {
         let filters = {};
         let hasFilters = false;
         this.get('columns').forEach((column) => {
-          if (column.filter.pattern && column.filter.condition) {
+          if (column.filter.condition) {
             hasFilters = true;
             filters[column.filter.name] = column.filter;
           }

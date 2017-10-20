@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-simpledatetime` component:
     * Add remove value button.
 
+### Changed
+* List components:
+    * Now filters calls `predicateForFilter` method even if filter pattern is undefined.
+
 ### Fixed
 * `blue-sky` theme:
     * Fix sidebar and page content height.

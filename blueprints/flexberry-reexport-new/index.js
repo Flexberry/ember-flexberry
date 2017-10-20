@@ -1,3 +1,4 @@
+var inflector = require("inflection");
 module.exports = {
     description: 'Generates an import wrapper for new routes and controllers.',
     availableOptions: [
@@ -9,7 +10,7 @@ module.exports = {
                 return options.dasherizedModuleName;
             },
             __path__: function (options) {
-                return inflector.pluralize(options.middlePath);
+                return inflector.pluralize(options.originBlueprintName);
             },
             __root__: function (options) {
                 return 'app';

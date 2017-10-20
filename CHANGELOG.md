@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `blue-sky` theme:
+    * Fix sidebar and page content height.
+* Fix locale dropdown for IE in `application.hbs`.
 
 ## [0.9.2-beta.2] - 2017-10-19
 ### Added

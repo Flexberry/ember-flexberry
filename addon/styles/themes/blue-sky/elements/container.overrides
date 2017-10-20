@@ -16,13 +16,12 @@
 }
 
 #example {
-    padding-top: 80px;
+    padding-top: @headerHeight;
 }
 
 .full.height {
-    height: 87.2vh!important;
+    height: calc(~"100vh - @{headerHeight} - @{footerHeight}") !important;
     overflow: auto;
-    padding-bottom: 40px;
 }
 
 .ui.attached.segment {

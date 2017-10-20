@@ -7,7 +7,7 @@
 }
 
 .background-logo {
-    height: 80px;
+    height: @headerHeight;
     position: fixed;
     display: -webkit-flex;
     display: -moz-flex;
@@ -22,7 +22,7 @@
 }
 
 .background-logo.mobile {
-    height: 50px;
+    height: @headerHeightMobile;
 }
 
 .background-logo a {
@@ -43,10 +43,6 @@
 .flex-container {
     width: 100%!important;
     justify-content: space-between;
-}
-
-.flex-container.mobile-footer {
-  height: 30px;
 }
 
 .stackable > .ui.message {

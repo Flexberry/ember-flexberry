@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-simpledatetime` component:
+    * Add remove value button.
+
 ### Fixed
 * `blue-sky` theme:
     * Fix sidebar and page content height.

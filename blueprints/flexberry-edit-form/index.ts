@@ -45,6 +45,7 @@ module.exports = {
   afterInstall: function (options) {
     if (this.project.isEmberCLIAddon()) {
       CommonUtils.installFlexberryAddon(options, ["controller", "route"]);
+      CommonUtils.installReexportNew(options, ["controller", "route"]);
     }
   },
 

@@ -1,7 +1,7 @@
 const inflector = require("inflection");
 
 module.exports = {
-  description: 'Generates an import wrapper.',
+  description: 'Generates an import wrapper for new routes and controllers.',
 
   availableOptions: [
     { name: 'middle-path', type: String }
@@ -33,7 +33,9 @@ module.exports = {
    */
   locals: function(options) {
     return {
-      modulePath: `${options.project.name()}/${inflector.pluralize(options.middlePath)}/${options.entity.name}` // for use in files\__root__\__path__\__name__.js
+      middlePath: `${inflector.pluralize(options.middlePath)}`,
+      projectName: `${options.project.name()}`,
+      entityName: `${options.entity.name}`
     }
   }
 }

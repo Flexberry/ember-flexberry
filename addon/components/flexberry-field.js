@@ -62,6 +62,16 @@ export default FlexberryBaseComponent.extend({
   type: 'text',
 
   /**
+    Specifies the maximum number of characters (in UTF-16 code units) that the user can enter.
+    Working only with input types: text, email, search, password, tel, or url.
+
+    @property maxlength
+    @type Number
+    @default undefined
+   */
+  maxlength: undefined,
+
+  /**
     Path to component's settings in application configuration (JSON from ./config/environment.js).
 
     @property appConfigSettingsPath

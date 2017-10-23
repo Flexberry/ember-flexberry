@@ -27,6 +27,11 @@ export default {
   },
 
   'components': {
+    'flexberry-error': {
+      caption: 'Произошла ошибка',
+      detail: 'Подробнее',
+    },
+
     'flexberry-field': {
       placeholder: '(нет значения)'
     },

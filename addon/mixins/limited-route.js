@@ -5,7 +5,7 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 
-const { Condition, SimplePredicate, ComplexPredicate, DatePredicate } = Query;
+const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate } = Query;
 
 /**
   Mixin for route, that restrictions on the list form.
@@ -105,6 +105,9 @@ export default Ember.Mixin.create({
     if (filter.pattern && filter.condition) {
       switch (filter.type) {
         case 'string':
+          return filter.condition === 'like' ?
+            new StringPredicate(filter.name).contains(filter.pattern) :
+            new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'boolean':
           return new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'number':
@@ -114,6 +117,11 @@ export default Ember.Mixin.create({
 
         default:
           return null;
+      }
+    } else {
+      if (!filter.condition && filter.type === 'string') {
+        Ember.set(filter, 'condition', 'like');
+        return new StringPredicate(filter.name).contains(filter.pattern);
       }
     }
 

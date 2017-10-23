@@ -1740,6 +1740,8 @@ ErrorableControllerMixin, {
         return ['eq', 'neq', 'le', 'ge'];
 
       case 'string':
+        return ['eq', 'neq', 'like'];
+
       case 'boolean':
         return ['eq', 'neq'];
 
@@ -1822,7 +1824,7 @@ ErrorableControllerMixin, {
         let filters = {};
         let hasFilters = false;
         this.get('columns').forEach((column) => {
-          if (column.filter.condition) {
+          if (column.filter.condition || column.filter.pattern) {
             hasFilters = true;
             filters[column.filter.name] = column.filter;
           }
@@ -1831,7 +1833,11 @@ ErrorableControllerMixin, {
         if (hasFilters) {
           this.sendAction('applyFilters', filters);
         } else {
-          this.get('currentController').send('refreshList');
+          if (this.get('currentController.filters')) {
+            this.get('currentController').send('resetFilters');
+          } else {
+            this.get('currentController').send('refreshList');
+          }
         }
       } else {
         this.get('currentController').send('refreshList');

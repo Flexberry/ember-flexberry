@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * List components:
     * Now filters calls `predicateForFilter` method even if filter pattern is undefined.
+    * Added `like` condition for filters (for `string` type fields). It will be applied by default when condition is not set.
 
 ### Fixed
 * `blue-sky` theme:

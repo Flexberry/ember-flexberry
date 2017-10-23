@@ -105,6 +105,9 @@ export default Ember.Mixin.create({
     if (filter.pattern && filter.condition) {
       switch (filter.type) {
         case 'string':
+          return filter.condition === 'like' ?
+            new StringPredicate(filter.name).contains(filter.pattern) :
+            new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'boolean':
           return new SimplePredicate(filter.name, filter.condition, filter.pattern);
         case 'number':
@@ -117,7 +120,8 @@ export default Ember.Mixin.create({
       }
     } else {
       if (!filter.condition && filter.type === 'string') {
-        return new StringPredicate(filter.name).contains(filter.pattern)
+        Ember.set(filter, 'condition', 'like');
+        return new StringPredicate(filter.name).contains(filter.pattern);
       }
     }
 

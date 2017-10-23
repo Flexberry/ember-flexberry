@@ -1740,6 +1740,8 @@ ErrorableControllerMixin, {
         return ['eq', 'neq', 'le', 'ge'];
 
       case 'string':
+        return ['eq', 'neq', 'like'];
+
       case 'boolean':
         return ['eq', 'neq'];
 

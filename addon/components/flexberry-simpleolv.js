@@ -752,7 +752,6 @@ export default folv.extend(
         }
       }
 
-      this.send('dismissErrorMessages');
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 
@@ -1953,7 +1952,6 @@ export default folv.extend(
   */
   _deleteRows(componentName, immediately) {
     if (componentName === this.get('componentName')) {
-      this.send('dismissErrorMessages');
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
       selectedRecords.forEach((item, index, enumerable) => {

@@ -225,6 +225,14 @@ export default FlexberryBaseComponent.extend({
   locale: undefined,
 
   /**
+    If true, then flatpickr has remove button.
+
+    @property removeButton
+    @type Bool
+  */
+  removeButton: true,
+
+  /**
     Initializes DOM-related component's logic.
   */
   didInsertElement() {
@@ -335,9 +343,9 @@ export default FlexberryBaseComponent.extend({
       options.dateFormat = 'Y-m-d';
     }
 
-    this.set('_flatpickr', this.$('.flatpickr').flatpickr(options));
+    this.set('_flatpickr', this.$('.flatpickr > input').flatpickr(options));
     Ember.$('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
-    Ember.$('flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
+    Ember.$('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
     this.$('.custom-flatpickr').mask(type === 'date' ? '99.99.9999' : '99.99.9999 99:99');
     this.$('.custom-flatpickr').keydown(Ember.$.proxy(function(e) {
       if (e.which === 13) {
@@ -349,14 +357,14 @@ export default FlexberryBaseComponent.extend({
     this.$('.custom-flatpickr').change(Ember.$.proxy(function (e) {
       this._validationDateTime();
     }, this));
-    this.$('.flatpickr').attr('readonly', this.get('readonly'));
+    this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
   },
 
   /**
     Sets readonly attr for flatpickr.
   */
   readonlyObserver: Ember.observer('readonly', function() {
-    this.$('.flatpickr').attr('readonly', this.get('readonly'));
+    this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
   }),
 
   /**
@@ -451,5 +459,20 @@ export default FlexberryBaseComponent.extend({
     }
 
     return dateToSet;
+  },
+
+  actions: {
+    /**
+      Clear current value.
+
+      @method actions.remove
+    */
+    remove() {
+      let value = this.get('value');
+      if (!Ember.isNone(value)) {
+        this.get('_flatpickr').clear();
+        this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
+      }
+    }
   }
 });

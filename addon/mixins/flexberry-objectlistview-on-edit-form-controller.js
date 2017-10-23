@@ -6,7 +6,7 @@ import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
-const { Condition, SimplePredicate, ComplexPredicate, Builder } = Query;
+const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate, Builder } = Query;
 
 /**
   Mixin for edit-form-controller for ObjectListView support.
@@ -208,15 +208,30 @@ export default Ember.Mixin.create({
     @return {BasePredicate|null} Predicate to filter through.
   */
   predicateForFilter(filter) {
-    switch (filter.type) {
-      case 'string':
-      case 'number':
-      case 'boolean':
-        return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+    if (filter.pattern && filter.condition) {
+      switch (filter.type) {
+        case 'string':
+          return filter.condition === 'like' ?
+            new StringPredicate(filter.name).contains(filter.pattern) :
+            new SimplePredicate(filter.name, filter.condition, filter.pattern);
+        case 'boolean':
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+        case 'number':
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
+        case 'date':
+          return new DatePredicate(filter.name, filter.condition, filter.pattern);
 
-      default:
-        return null;
+        default:
+          return null;
+      }
+    } else {
+      if (!filter.condition && filter.type === 'string') {
+        Ember.set(filter, 'condition', 'like');
+        return new StringPredicate(filter.name).contains(filter.pattern);
+      }
     }
+
+    return null;
   },
 
   /**
@@ -235,6 +250,8 @@ export default Ember.Mixin.create({
           let predicate = this.predicateForFilter(filters[filter]);
           if (predicate) {
             predicates.push(predicate);
+          } else {
+            delete filters[filter];
           }
         }
       }

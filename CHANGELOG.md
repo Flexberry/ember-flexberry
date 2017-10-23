@@ -5,9 +5,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * Component `flexberry-error` for errors displaying.
+* `flexberry-simpledatetime` component:
+    * Add remove value button.
 
 ### Changed
 * Errors on lists and edit forms are displayed through the `flexberry-error` component.
+* List components:
+    * Now filters calls `predicateForFilter` method even if filter pattern is undefined.
+    * Added `like` condition for filters (for `string` type fields). It will be applied by default when condition is not set.
+
+### Fixed
+* `blue-sky` theme:
+    * Fix sidebar and page content height.
+* Fix locale dropdown for IE in `application.hbs`.
 
 ## [0.9.2-beta.2] - 2017-10-19
 ### Added

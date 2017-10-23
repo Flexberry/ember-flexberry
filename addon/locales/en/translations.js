@@ -13,7 +13,7 @@ export default {
 
     'error-form': {
       caption: 'An error has occurred',
-      detail: 'Detail',
+      'show-more': 'Show more',
       retry: 'Retry',
     },
 
@@ -29,7 +29,7 @@ export default {
   'components': {
     'flexberry-error': {
       caption: 'An error has occurred',
-      detail: 'Detail',
+      'show-more': 'Show more',
     },
 
     'flexberry-field': {

@@ -9,7 +9,7 @@
       <h2 class="ui header">{{error.message}}</h2>
       {{#if error.errors}}
         {{#flexberry-toggler
-          caption=(t "components.flexberry-error.detail")
+          caption=(t "components.flexberry-error.show-more")
         }}
           {{#each error.errors as |e|}}
             <h3 class="ui header">{{e.message}}</h3>
@@ -27,7 +27,7 @@
       <h2 class="ui header">{{error.message}}</h2>
       {{#if error.errors}}
         {{#flexberry-toggler
-          caption=(t "components.flexberry-error.detail")
+          caption=(t "components.flexberry-error.show-more")
         }}
           {{#each error.errors as |e|}}
             <h3 class="ui header">{{e.message}}</h3>

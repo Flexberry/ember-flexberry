@@ -258,6 +258,8 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
       errorData = errorData || {};
       errorData.retryRoute = this.routeName;
       this.intermediateTransitionTo('error', errorData);
+    } else {
+      this.controller.send('error', errorData);
     }
   },
 

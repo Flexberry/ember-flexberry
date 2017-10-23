@@ -11,6 +11,12 @@ export default {
       'close-button-text': 'Закрыть'
     },
 
+    'error-form': {
+      caption: 'Произошла ошибка',
+      'show-more': 'Подробно',
+      retry: 'Повторить попытку',
+    },
+
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Лог приложения'
     },
@@ -21,6 +27,11 @@ export default {
   },
 
   'components': {
+    'flexberry-error': {
+      caption: 'Произошла ошибка',
+      'show-more': 'Подробнее',
+    },
+
     'flexberry-field': {
       placeholder: '(нет значения)'
     },

@@ -1,0 +1,40 @@
+{{#if error}}
+  {{#if modal}}
+    {{#modal-dialog
+      title=(t "components.flexberry-error.caption")
+      close="close"
+      useOkButton=false
+      settings=(hash context=".pusher")
+    }}
+      <h2 class="ui header">{{error.message}}</h2>
+      {{#if error.errors}}
+        {{#flexberry-toggler
+          caption=(t "components.flexberry-error.show-more")
+        }}
+          {{#each error.errors as |e|}}
+            <h3 class="ui header">{{e.message}}</h3>
+            <pre>{{e.stack}}</pre>
+          {{/each}}
+        {{/flexberry-toggler}}
+      {{/if}}
+    {{/modal-dialog}}
+  {{else}}
+    {{#ui-message
+      type="negative"
+      onHide="close"
+      closeable=true
+    }}
+      <h2 class="ui header">{{error.message}}</h2>
+      {{#if error.errors}}
+        {{#flexberry-toggler
+          caption=(t "components.flexberry-error.show-more")
+        }}
+          {{#each error.errors as |e|}}
+            <h3 class="ui header">{{e.message}}</h3>
+            <pre>{{e.stack}}</pre>
+          {{/each}}
+        {{/flexberry-toggler}}
+      {{/if}}
+    {{/ui-message}}
+  {{/if}}
+{{/if}}

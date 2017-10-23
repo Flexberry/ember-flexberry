@@ -11,6 +11,12 @@ export default {
       'close-button-text': 'Close'
     },
 
+    'error-form': {
+      caption: 'An error has occurred',
+      'show-more': 'Show more',
+      retry: 'Retry',
+    },
+
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Application log'
     },
@@ -21,6 +27,11 @@ export default {
   },
 
   'components': {
+    'flexberry-error': {
+      caption: 'An error has occurred',
+      'show-more': 'Show more',
+    },
+
     'flexberry-field': {
       placeholder: '(no value)'
     },

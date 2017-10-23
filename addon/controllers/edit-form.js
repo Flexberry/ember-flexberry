@@ -504,7 +504,7 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about save operation fail.
   */
   onSaveActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+    this.send('error', errorData);
   },
 
   /**
@@ -572,7 +572,7 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about delete operation fail.
   */
   onDeleteActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.delete-failed-message'));
+    this.send('error', errorData);
   },
 
   /**

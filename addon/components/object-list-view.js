@@ -5,7 +5,6 @@ import Ember from 'ember';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
-import ErrorableControllerMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 
@@ -20,8 +19,7 @@ import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions'
 */
 export default FlexberryBaseComponent.extend(
   FlexberryLookupCompatibleComponentMixin,
-  FlexberryFileCompatibleComponentMixin,
-  ErrorableControllerMixin, {
+  FlexberryFileCompatibleComponentMixin, {
   /**
     Projection set by property {{#crossLink "ObjectListViewComponent/modelProjection:property"}}{{/crossLink}}.
 
@@ -875,7 +873,6 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
-      this.send('dismissErrorMessages');
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 
@@ -1879,7 +1876,6 @@ export default FlexberryBaseComponent.extend(
   */
   _deleteRows(componentName, immediately) {
     if (componentName === this.get('componentName')) {
-      this.send('dismissErrorMessages');
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
       selectedRecords.forEach((item, index, enumerable) => {
@@ -1948,7 +1944,7 @@ export default FlexberryBaseComponent.extend(
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
     }) : record.deleteRecord()).catch((reason) => {
-      this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
+      this.get('currentController').send('error', reason);
       record.rollbackAll();
     });
 

@@ -1,14 +1,3 @@
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type='error'
-      closeable=true
-      visible=true
-      title='Error occurred'
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
 <table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
   <thead>
     <tr>

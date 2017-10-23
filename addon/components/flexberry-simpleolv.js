@@ -1839,7 +1839,7 @@ ErrorableControllerMixin, {
             this.get('currentController').send('refreshList');
           }
         }
-    } else {
+      } else {
         this.get('currentController').send('refreshList');
       }
     }

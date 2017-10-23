@@ -6,7 +6,7 @@ import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
-const { Condition, SimplePredicate, ComplexPredicate, DatePredicate, Builder } = Query;
+const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate, Builder } = Query;
 
 /**
   Mixin for edit-form-controller for ObjectListView support.
@@ -220,6 +220,10 @@ export default Ember.Mixin.create({
 
         default:
           return null;
+      }
+    } else {
+      if (!filter.condition && filter.type === 'string') {
+        return new StringPredicate(filter.name).contains(filter.pattern)
       }
     }
 

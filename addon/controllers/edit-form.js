@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import EmberValidations from 'ember-validations';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
@@ -48,6 +49,7 @@ const { getOwner } = Ember;
 */
 export default Ember.Controller.extend(
 Ember.Evented,
+EmberValidations,
 FlexberryLookupMixin,
 ErrorableControllerMixin,
 FlexberryFileControllerMixin,
@@ -186,6 +188,23 @@ FolvOnEditControllerMixin, {
     @default undefined
   */
   defaultDeveloperUserSettings: undefined,
+
+  /**
+    Contains all validation errors.
+
+    @property validationErrors
+    @type Ember.Enumerable
+  */
+  validationErrors: undefined,
+
+  /**
+    The `validations` property will be merged when extension from mixins and inheritable controllers.
+
+    @property mergedProperties
+    @type Array
+    @default ['validations']
+  */
+  mergedProperties: ['validations'],
 
   actions: {
     /**
@@ -767,4 +786,47 @@ FolvOnEditControllerMixin, {
 
     return Ember.RSVP.all(promises);
   },
+
+  /**
+    Define `validationErrors` property after initialize this instance.
+
+    @method _validationErrors
+    @private
+  */
+  _validationErrors: Ember.on('init', function() {
+    let keys = [];
+    let args = ['model.errors.length'];
+    let validations = this.get('validations');
+    for (let key in validations) {
+      if (validations.hasOwnProperty(key)) {
+        keys.push({
+          path: `errors.${key}`,
+          attribute: key.replace('model.', ''),
+        });
+        args.push(`errors.${key}.[]`);
+      }
+    }
+
+    let descriptor = Ember.computed.apply(null, args.concat(function() {
+      let errors = Ember.A();
+      for (let i = 0; i < keys.length; i++) {
+        let error = this.get(keys[i].path);
+        if (error) {
+          errors[keys[i].attribute] = errors[keys[i].attribute] || Ember.A();
+          errors[keys[i].attribute].addObjects(error);
+          errors.addObjects(error);
+        }
+      }
+
+      this.get('model.errors').forEach((error) => {
+        errors[error.attribute] = errors[error.attribute] || Ember.A();
+        errors[error.attribute].addObject(error.message);
+        errors.addObject(error.message);
+      });
+
+      return errors;
+    }));
+
+    Ember.defineProperty(this, 'validationErrors', descriptor);
+  }),
 });

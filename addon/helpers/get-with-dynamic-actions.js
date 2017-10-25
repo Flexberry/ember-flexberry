@@ -278,7 +278,7 @@ export default Ember.Helper.extend({
 
             // Don't observe properties containing inside arrays,
             // it's unnecessary, because whole array has special observer.
-			propertyIsObservable: false
+            propertyIsObservable: false
           });
         }
       }

@@ -274,7 +274,11 @@ export default Ember.Helper.extend({
 
           this._bindDynamicActions({
             propertyPath: addedOrMovedPropertyPath,
-            propertyValue: addedOrMovedPropertyValue
+            propertyValue: addedOrMovedPropertyValue,
+
+            // Don't observe properties containing inside arrays,
+            // it's unnecessary, because whole array has special observer.
+			propertyIsObservable: false
           });
         }
       }
@@ -309,7 +313,7 @@ export default Ember.Helper.extend({
 
     // Observe property content.
     if (Ember.isArray(propertyValue) && Ember.isNone(Ember.get(observer, 'arrayObserver'))) {
-      Ember.set(observer, 'arrayObserver', referenceObserver);
+      Ember.set(observer, 'arrayObserver', arrayObserver);
       propertyValue.addArrayObserver(arrayObserver);
     }
   },
@@ -341,7 +345,7 @@ export default Ember.Helper.extend({
     while (--len >= 0) {
       let observer = hierarchyPropertiesObservers[len];
       if (!observerCanBeRemoved(observer)) {
-        break;
+        continue;
       }
 
       let observerPropertyPath = Ember.get(observer, 'propertyPath');

@@ -1755,9 +1755,16 @@ export default folv.extend(
     @return {Object} Object with parameters for component.
   */
   _getFilterComponent(type, relation) {
+    let _this = this;
+    let enterClick = function(e) {
+      if (e.which === 13) {
+        _this._refreshList(_this.get('componentName'));
+      }
+    };
+
     let component = {
       name: undefined,
-      properties: undefined,
+      properties: { keyDown: enterClick },
     };
 
     switch (type) {
@@ -1766,24 +1773,24 @@ export default folv.extend(
 
       case 'string':
         component.name = 'flexberry-textbox';
-        component.properties = {
+        component.properties = Ember.$.extend(true, component.properties, {
           class: 'compact fluid',
-        };
+        });
         break;
 
       case 'number':
         component.name = 'flexberry-textbox';
-        component.properties = {
+        component.properties = Ember.$.extend(true, component.properties, {
           class: 'compact fluid',
-        };
+        });
         break;
 
       case 'boolean':
         component.name = 'flexberry-dropdown';
-        component.properties = {
+        component.properties = Ember.$.extend(true, component.properties, {
           items: ['true', 'false'],
           class: 'compact fluid',
-        };
+        });
         break;
 
       case 'date':
@@ -1795,10 +1802,10 @@ export default folv.extend(
         let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
         if (transformClass && transformClass.isEnum) {
           component.name = 'flexberry-dropdown';
-          component.properties = {
+          component.properties = Ember.$.extend(true, component.properties, {
             items: transformInstance.get('captions'),
             class: 'compact fluid',
-          };
+          });
         }
 
         break;

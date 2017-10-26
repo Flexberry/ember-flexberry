@@ -19,6 +19,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `blue-sky` theme:
     * Fix sidebar and page content height.
 * Fix locale dropdown for IE in `application.hbs`.
+* Blueprints:
+    * Fix generation of `flexberry-groupedit` component template on edit forms. Now translations of field's captions should be applied.
 
 ## [0.9.2-beta.2] - 2017-10-19
 ### Added

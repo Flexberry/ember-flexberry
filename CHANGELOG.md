@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.2-beta.3] - 2017-10-27
 ### Added
 * Component `flexberry-error` for errors displaying.
 * `flexberry-simpledatetime` component:

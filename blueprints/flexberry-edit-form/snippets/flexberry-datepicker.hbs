@@ -1,11 +1,10 @@
 <div class="field">
   <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-datepicker
-    placeholder='(no value)'
+  {{flexberry-datepicker
+    placeholder="(no value)"
     readonly=<%= readonly %>
     value=model.<%= name %>
-    class=(if model.errors.<%= name %> 'error' '')
+    class=(if validationErrors.<%= name %> "error")
   }}
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
+  {{flexberry-validationmessage error=validationErrors.<%= name %> pointing="pointing"}}
 </div>

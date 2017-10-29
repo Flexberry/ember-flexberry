@@ -1,13 +1,12 @@
 <div class="field">
   <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-groupedit
+  {{flexberry-groupedit
     componentName="<%= name %>GroupEdit"
     modelProjection=modelProjection.attributes.<%= name %>
     content=model.<%= name %>
     readonly=<%= readonly %>
     orderable=false
-    class=(if model.errors.<%= name %> 'error' '')
+    class=(if validationErrors.<%= name %> "error")
   }}
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
+  {{flexberry-validationmessage error=validationErrors.<%= name %> pointing="pointing"}}
 </div>

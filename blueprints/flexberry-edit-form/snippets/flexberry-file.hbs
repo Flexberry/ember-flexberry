@@ -1,12 +1,11 @@
 <div class="field">
   <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-file
-    placeholder=(t 'components.flexberry-file.placeholder')
+  {{flexberry-file
+    placeholder=(t "components.flexberry-file.placeholder")
     readonly=<%= readonly %>
     value=model.<%= name %>
-    class=(if model.errors.<%= name %> 'error' '')
+    class=(if validationErrors.<%= name %> "error")
     label=(<%= caption %>)
   }}
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
+  {{flexberry-validationmessage error=validationErrors.<%= name %> pointing="pointing"}}
 </div>

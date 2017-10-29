@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import Errors from 'ember-validations/errors';
 import EmberValidations from 'ember-validations';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
@@ -399,24 +400,29 @@ FolvOnEditControllerMixin, {
       }
     };
 
-    let savePromise = this.get('model').save().then((model) => {
-      let agragatorModel = getCurrentAgregator.call(this);
-      if (needSaveCurrentAgregator.call(this, agragatorModel)) {
-        return this._saveHasManyRelationships(model).then(() => {
-          return agragatorModel.save().then(afterSaveModelFunction);
-        });
-      } else {
-        return this._saveHasManyRelationships(model).then(afterSaveModelFunction);
-      }
+    return this.validate().then(() => {
+      let savePromise = this.get('model').save().then((model) => {
+        let agragatorModel = getCurrentAgregator.call(this);
+        if (needSaveCurrentAgregator.call(this, agragatorModel)) {
+          return this._saveHasManyRelationships(model).then(() => {
+            return agragatorModel.save().then(afterSaveModelFunction);
+          });
+        } else {
+          return this._saveHasManyRelationships(model).then(afterSaveModelFunction);
+        }
+      });
+
+      return savePromise;
     }).catch((errorData) => {
       this.get('objectlistviewEventsService').setLoadingState('error');
+      if (errorData instanceof Errors) {
+        errorData = new Error('This model is invalid');
+        errorData.errors = this.get('validationErrors').map(e => ({ message: e }));
+      }
+
       this.onSaveActionRejected(errorData);
       return Ember.RSVP.reject(errorData);
-    }).finally((data) => {
-      this.onSaveActionAlways(data);
-    });
-
-    return savePromise;
+    }).finally(this.onSaveActionAlways);
   },
 
   /**

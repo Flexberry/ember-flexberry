@@ -34,6 +34,7 @@ export default class ModelBlueprint {
   needsAllEnums: string;
   needsAllObjects: string;
   lodashVariables: {};
+  validations: {};
   constructor(blueprint, options) {
     let modelsDir = path.join(options.metadataDir, "models");
     if (!options.file) {
@@ -57,6 +58,7 @@ export default class ModelBlueprint {
     this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
     let modelLocales = new ModelLocales(model, modelsDir, "ru");
     this.lodashVariables = modelLocales.getLodashVariablesProperties();
+    this.validations = this.getValidations(model, options.metadataDir);
   }
 
   static loadModel(modelsDir: string, modelFileName: string): metadata.Model {
@@ -119,7 +121,7 @@ export default class ModelBlueprint {
   }
 
   getJSForModel(model: metadata.Model): string {
-    let attrs: string[] = [], validations: string[] = [];
+    let attrs: string[] = [];
     let templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
     let templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
     let attr: metadata.DSattr;
@@ -133,13 +135,6 @@ export default class ModelBlueprint {
           TAB + "*/\n" + TAB;
       }
       attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}')`);
-      if (attr.notNull) {
-        if (attr.type === "date") {
-          validations.push(attr.name + ": { datetime: true }");
-        } else {
-          validations.push(attr.name + ": { presence: true }");
-        }
-      }
       if (attr.stored)
         continue;
       let methodToSetNotStoredProperty =
@@ -164,30 +159,11 @@ export default class ModelBlueprint {
     }
     let belongsTo: metadata.DSbelongsTo;
     for (belongsTo of model.belongsTo) {
-      if (belongsTo.presence)
-        validations.push(belongsTo.name + ": { presence: true }");
       attrs.push(templateBelongsTo(belongsTo));
     }
     for (let hasMany of model.hasMany) {
       attrs.push(templateHasMany(hasMany));
     }
-    let validationsFunc=TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
-    if(validations.length===0){
-      validationsFunc="";
-    }
-    validationsFunc =
-      "getValidations: function () {\n" +
-      TAB + TAB + "let parentValidations = this._super();\n" +
-      TAB + TAB + "let thisValidations = {\n" +
-      validationsFunc + TAB + TAB + "};\n" +
-      TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-      TAB + "}";
-    let initFunction =
-      "init: function () {\n" +
-      TAB + TAB + "this.set('validations', this.getValidations());\n" +
-      TAB + TAB + "this._super.apply(this, arguments);\n" +
-      TAB + "}";
-    attrs.push(validationsFunc, initFunction);
     return TAB + attrs.join(",\n" + TAB);
   }
 
@@ -305,5 +281,74 @@ export default class ModelBlueprint {
       projections.push(`  modelClass.defineProjection('${proj.name}', '${proj.modelName}', {\n    ${attrsStr}\n  });`);
     }
     return `\n${projections.join("\n")}\n`;
+  }
+
+  getValidations(model: metadata.Model, metadataDir: string): {} {
+    let validations: {} = {};
+    let usedProjections: {} = {};
+
+    let modelsDir = path.join(metadataDir, "models");
+    let parentModel = model.parentModelName ? ModelBlueprint.loadModel(modelsDir, `${model.parentModelName}.json`) : null;
+
+    let editFormsDir = path.join(metadataDir, "edit-forms");
+    let editForms = fs.readdirSync(editFormsDir);
+    for (let form of editForms) {
+      if (path.parse(form).ext === ".json") {
+        let content = fs.readFileSync(path.join(editFormsDir, form), "utf8");
+        let editForm: metadata.EditForm = JSON.parse(stripBom(content));
+        editForm.projections.forEach((projection) => {
+          if (projection.modelName === model.modelName) {
+            usedProjections[projection.modelProjection] = true;
+          }
+        });
+      }
+    }
+
+    for (let projection of model.projections) {
+      if (usedProjections[projection.name]) {
+        let validation: string[] = [];
+        for (let attr of projection.attrs) {
+          let aParentModel = parentModel;
+          let attrs = model.attrs.filter((a) => a.name === attr.name);
+          while (attrs.length === 0 && aParentModel) {
+            attrs = aParentModel.attrs.filter((a) => a.name === attr.name);
+            aParentModel = aParentModel.parentModelName ? ModelBlueprint.loadModel(modelsDir, `${aParentModel.parentModelName}.json`) : null;
+          }
+
+          if (attrs.length !== 1) {
+            throw new Error(`In '${model.name}' model too many or too few attributes with name '${attr.name}'.`);
+          }
+
+          if (attrs[0].notNull) {
+            if (attrs[0].type === "date") {
+              validation.push(`'model.${attrs[0].name}': { datetime: true }`);
+            } else {
+              validation.push(`'model.${attrs[0].name}': { presence: true }`);
+            }
+          }
+        }
+
+        for (let belongsTo of projection.belongsTo) {
+          let bParentModel = parentModel;
+          let belongsTos = model.belongsTo.filter((b) => b.name === belongsTo.name);
+          while (belongsTos.length === 0 && bParentModel) {
+            belongsTos = bParentModel.belongsTo.filter((b) => b.name === belongsTo.name);
+            bParentModel = bParentModel.parentModelName ? ModelBlueprint.loadModel(modelsDir, `${bParentModel.parentModelName}.json`) : null;
+          }
+
+          if (belongsTos.length !== 1) {
+            throw new Error(`In '${model.name}' model too many or too few relations with name '${belongsTo.name}'.`);
+          }
+
+          if (belongsTos[0].presence) {
+            validation.push(`'model.${belongsTos[0].name}': { presence: true }`);
+          }
+        }
+
+        validations[`${projection.name}Validation`] = validation.length ? `\n${TAB + TAB + validation.join(`,\n${TAB + TAB}`)},\n${TAB}` : '';
+      }
+    }
+
+    return validations;
   }
 }

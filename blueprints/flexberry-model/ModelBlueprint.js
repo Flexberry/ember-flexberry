@@ -39,6 +39,7 @@ var ModelBlueprint = (function () {
         this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru");
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
+        this.validations = this.getValidations(model, options.metadataDir);
     }
     ModelBlueprint.loadModel = function (modelsDir, modelFileName) {
         var modelFile = path.join(modelsDir, modelFileName);
@@ -101,7 +102,7 @@ var ModelBlueprint = (function () {
         return "      " + attrs.join(",\n      ");
     };
     ModelBlueprint.prototype.getJSForModel = function (model) {
-        var attrs = [], validations = [];
+        var attrs = [];
         var templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
         var templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
         var attr;
@@ -116,14 +117,6 @@ var ModelBlueprint = (function () {
                         TAB + "*/\n" + TAB;
             }
             attrs.push("" + comment + attr.name + ": DS.attr('" + attr.type + "')");
-            if (attr.notNull) {
-                if (attr.type === "date") {
-                    validations.push(attr.name + ": { datetime: true }");
-                }
-                else {
-                    validations.push(attr.name + ": { presence: true }");
-                }
-            }
             if (attr.stored)
                 continue;
             var methodToSetNotStoredProperty = "/**\n" +
@@ -148,30 +141,12 @@ var ModelBlueprint = (function () {
         var belongsTo;
         for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
             belongsTo = _c[_b];
-            if (belongsTo.presence)
-                validations.push(belongsTo.name + ": { presence: true }");
             attrs.push(templateBelongsTo(belongsTo));
         }
         for (var _d = 0, _e = model.hasMany; _d < _e.length; _d++) {
             var hasMany = _e[_d];
             attrs.push(templateHasMany(hasMany));
         }
-        var validationsFunc = TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
-        if (validations.length === 0) {
-            validationsFunc = "";
-        }
-        validationsFunc =
-            "getValidations: function () {\n" +
-                TAB + TAB + "let parentValidations = this._super();\n" +
-                TAB + TAB + "let thisValidations = {\n" +
-                validationsFunc + TAB + TAB + "};\n" +
-                TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-                TAB + "}";
-        var initFunction = "init: function () {\n" +
-            TAB + TAB + "this.set('validations', this.getValidations());\n" +
-            TAB + TAB + "this._super.apply(this, arguments);\n" +
-            TAB + "}";
-        attrs.push(validationsFunc, initFunction);
         return TAB + attrs.join(",\n" + TAB);
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
@@ -296,6 +271,75 @@ var ModelBlueprint = (function () {
             projections.push("  modelClass.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
         }
         return "\n" + projections.join("\n") + "\n";
+    };
+    ModelBlueprint.prototype.getValidations = function (model, metadataDir) {
+        var validations = {};
+        var usedProjections = {};
+        var modelsDir = path.join(metadataDir, "models");
+        var parentModel = model.parentModelName ? ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json") : null;
+        var editFormsDir = path.join(metadataDir, "edit-forms");
+        var editForms = fs.readdirSync(editFormsDir);
+        for (var _i = 0, editForms_1 = editForms; _i < editForms_1.length; _i++) {
+            var form = editForms_1[_i];
+            if (path.parse(form).ext === ".json") {
+                var content = fs.readFileSync(path.join(editFormsDir, form), "utf8");
+                var editForm = JSON.parse(stripBom(content));
+                editForm.projections.forEach(function (projection) {
+                    if (projection.modelName === model.modelName) {
+                        usedProjections[projection.modelProjection] = true;
+                    }
+                });
+            }
+        }
+        for (var _a = 0, _b = model.projections; _a < _b.length; _a++) {
+            var projection = _b[_a];
+            if (usedProjections[projection.name]) {
+                var validation = [];
+                var _loop_1 = function(attr) {
+                    var aParentModel = parentModel;
+                    var attrs = model.attrs.filter(function (a) { return a.name === attr.name; });
+                    while (attrs.length === 0 && aParentModel) {
+                        attrs = aParentModel.attrs.filter(function (a) { return a.name === attr.name; });
+                        aParentModel = aParentModel.parentModelName ? ModelBlueprint.loadModel(modelsDir, aParentModel.parentModelName + ".json") : null;
+                    }
+                    if (attrs.length !== 1) {
+                        throw new Error("In '" + model.name + "' model too many or too few attributes with name '" + attr.name + "'.");
+                    }
+                    if (attrs[0].notNull) {
+                        if (attrs[0].type === "date") {
+                            validation.push("'model." + attrs[0].name + "': { datetime: true }");
+                        }
+                        else {
+                            validation.push("'model." + attrs[0].name + "': { presence: true }");
+                        }
+                    }
+                };
+                for (var _c = 0, _d = projection.attrs; _c < _d.length; _c++) {
+                    var attr = _d[_c];
+                    _loop_1(attr);
+                }
+                var _loop_2 = function(belongsTo) {
+                    var bParentModel = parentModel;
+                    var belongsTos = model.belongsTo.filter(function (b) { return b.name === belongsTo.name; });
+                    while (belongsTos.length === 0 && bParentModel) {
+                        belongsTos = bParentModel.belongsTo.filter(function (b) { return b.name === belongsTo.name; });
+                        bParentModel = bParentModel.parentModelName ? ModelBlueprint.loadModel(modelsDir, bParentModel.parentModelName + ".json") : null;
+                    }
+                    if (belongsTos.length !== 1) {
+                        throw new Error("In '" + model.name + "' model too many or too few relations with name '" + belongsTo.name + "'.");
+                    }
+                    if (belongsTos[0].presence) {
+                        validation.push("'model." + belongsTos[0].name + "': { presence: true }");
+                    }
+                };
+                for (var _e = 0, _f = projection.belongsTo; _e < _f.length; _e++) {
+                    var belongsTo = _f[_e];
+                    _loop_2(belongsTo);
+                }
+                validations[(projection.name + "Validation")] = validation.length ? "\n" + (TAB + TAB + validation.join(",\n" + (TAB + TAB))) + ",\n" + TAB : '';
+            }
+        }
+        return validations;
     };
     return ModelBlueprint;
 }());

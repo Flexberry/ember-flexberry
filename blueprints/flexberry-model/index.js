@@ -60,7 +60,8 @@ module.exports = {
             name: modelBlueprint.name,
             needsAllModels: modelBlueprint.needsAllModels,
             needsAllEnums: modelBlueprint.needsAllEnums,
-            needsAllObjects: modelBlueprint.needsAllObjects // for use in files\tests\unit\serializers\__name__.js
+            needsAllObjects: modelBlueprint.needsAllObjects,
+            validations: modelBlueprint.validations,
         }, modelBlueprint.lodashVariables);
     }
 };

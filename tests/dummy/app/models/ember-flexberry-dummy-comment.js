@@ -22,15 +22,6 @@ var Model = Projection.Model.extend({
     inverse: 'comment',
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    author: {
-      presence: {
-        message: 'Author is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

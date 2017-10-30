@@ -9,5 +9,9 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @type String
     @default 'ember-flexberry-dummy-localization-list'
   */
-  parentRoute: 'ember-flexberry-dummy-localization-list'
+  parentRoute: 'ember-flexberry-dummy-localization-list',
+
+  validations: {
+    'model.name': { presence: { message: 'Name is required' } },
+  },
 });

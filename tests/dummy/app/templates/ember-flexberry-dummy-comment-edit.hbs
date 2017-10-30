@@ -21,7 +21,7 @@
   {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=validationErrors}}
     </div>
   </div>
   <div class="field">
@@ -40,31 +40,31 @@
       <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if model.errors.text "error" ""}}">
+  <div class="field {{if validationErrors.text "error" ""}}">
     {{flexberry-field
       value=model.text
       label=(t "forms.ember-flexberry-dummy-comment-edit.text-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
+    {{flexberry-validationmessage error=validationErrors.text pointing="pointing"}}
   </div>
-  <div class="field {{if model.errors.votes "error" ""}}">
+  <div class="field {{if validationErrors.votes "error" ""}}">
     {{flexberry-field
       value=model.votes
       label=(t "forms.ember-flexberry-dummy-comment-edit.votes-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.votes pointing="pointing"}}
+    {{flexberry-validationmessage error=validationErrors.votes pointing="pointing"}}
   </div>
-  <div class="field {{if model.errors.moderated "error" ""}}">
+  <div class="field {{if validationErrors.moderated "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.moderated-caption"}}</label>
     {{flexberry-checkbox
       value=model.moderated
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
+    {{flexberry-validationmessage error=validationErrors.moderated pointing="pointing"}}
   </div>
-  <div class="field {{if model.errors.author "error" ""}}">
+  <div class="field {{if validationErrors.author "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.author-caption"}}</label>
     {{flexberry-lookup
       value=model.author
@@ -77,9 +77,9 @@
       remove=(action "removeLookupValue")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
+    {{flexberry-validationmessage error=validationErrors.author pointing="pointing"}}
   </div>
-  <div class="field {{if model.errors.userVotes "error" ""}}">
+  <div class="field {{if validationErrors.userVotes "error" ""}}">
     <label>{{t "forms.ember-flexberry-dummy-comment-edit.userVotes-caption"}}</label>
     {{flexberry-groupedit
       componentName="commentUserVotesGroupEdit"
@@ -94,6 +94,6 @@
       orderable=false
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
+    {{flexberry-validationmessage error=validationErrors.userVotes pointing="pointing"}}
   </div>
 </form>

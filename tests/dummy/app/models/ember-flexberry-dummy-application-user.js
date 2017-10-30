@@ -15,20 +15,6 @@ var Model = Projection.Model.extend({
   gender: DS.attr('ember-flexberry-dummy-gender'),
   vip: DS.attr('boolean'),
   karma: DS.attr('decimal'),
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    },
-    eMail: {
-      presence: {
-        message: 'User email is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

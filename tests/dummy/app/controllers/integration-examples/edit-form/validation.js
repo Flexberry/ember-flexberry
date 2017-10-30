@@ -7,6 +7,49 @@ export default EditFormController.extend({
   */
   lookupEvents: Ember.inject.service('lookup-events'),
 
+  validations: {
+    'model.flag': {
+      presence: { message: 'Flag is required' },
+      inclusion: {
+        in: [true],
+        message: 'Flag must be \'true\' only'
+      }
+    },
+    'model.number': {
+      presence: { message: 'Number is required' },
+      numericality: {
+        odd: true,
+        onlyInteger: true,
+        messages: {
+          numericality: 'Number is invalid',
+          odd: 'Number must be an odd',
+          onlyInteger: 'Number must be an integer'
+        }
+      }
+    },
+    'model.text': {
+      presence: { message: 'Text is required' },
+      allowBlank: false,
+      length: {
+        minimum: 5,
+        messages: { tooShort: 'Text length must be >= 5' }
+      }
+    },
+    'model.longText': { presence: { message: 'Long text is required' } },
+    'model.date': {
+      datetime: {
+        allowBlank: false,
+        messages: {
+          blank: 'Date is required',
+          invalid: 'Date is invalid'
+        }
+      }
+    },
+    'model.enumeration': { presence: { message: 'Enumeration is required' } },
+    'model.file': { presence: { message: 'File is required' } },
+    'model.master': { presence: { message: 'Master is required' } },
+  },
+
   actions: {
     /**
       Handles click on lookup's choose button.

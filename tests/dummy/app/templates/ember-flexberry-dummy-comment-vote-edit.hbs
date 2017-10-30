@@ -21,7 +21,7 @@
   {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=validationErrors}}
     </div>
   </div>
   <div class="field">
@@ -49,7 +49,7 @@
     value=model.voteType
     readonly=readonly
   }}
-  {{flexberry-validationmessage error=model.errors.voteType pointing="pointing"}}
+  {{flexberry-validationmessage error=validationErrors.voteType pointing="pointing"}}
 </div>
 
 <div class="field">
@@ -65,7 +65,7 @@
     title=(t 'forms.ember-flexberry-dummy-comment-vote-edit.applicationUser-caption')
     readonly=readonly
   }}
-  {{flexberry-validationmessage error=model.errors.applicationUser pointing="pointing"}}
+  {{flexberry-validationmessage error=validationErrors.applicationUser pointing="pointing"}}
 </div>
 
 </form>

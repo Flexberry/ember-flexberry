@@ -8,8 +8,12 @@ export default DetailEditFormController.extend(EditFormControllerOperationsIndic
     @property commentsVoteEditRoute
     @type String
     @default 'ember-flexberry-dummy-comment-vote-edit'
-   */
+  */
   commentsVoteEditRoute: 'ember-flexberry-dummy-comment-vote-edit',
+
+  validations: {
+    'model.author': { presence: { message: 'Author is required' } },
+  },
 
   /**
     Method to get type and attributes of a component,
@@ -21,7 +25,7 @@ export default DetailEditFormController.extend(EditFormControllerOperationsIndic
     @param {DS.Model} modelClass Model class of data record related to current table row.
     @return {Object} Object containing name & properties of component, which will be used to render current table cell.
     { componentName: 'my-component',  componentProperties: { ... } }.
-   */
+  */
   getCellComponent: function(attr, bindingPath, model) {
     var cellComponent = this._super(...arguments);
 
@@ -39,5 +43,5 @@ export default DetailEditFormController.extend(EditFormControllerOperationsIndic
     }
 
     return cellComponent;
-  }
+  },
 });

@@ -8,8 +8,12 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @property parentRoute
     @type String
     @default 'ember-flexberry-dummy-application-user-list'
-   */
+  */
   parentRoute: 'ember-flexberry-dummy-suggestion-type-list',
+
+  validations: {
+    'model.name': { presence: { message: 'Name is required' } },
+  },
 
   /**
     Method to get type and attributes of a component,
@@ -21,7 +25,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @param {DS.Model} modelClass Model class of data record related to current table row.
     @return {Object} Object containing name & properties of component, which will be used to render current table cell.
     { componentName: 'my-component',  componentProperties: { ... } }.
-   */
+  */
   getCellComponent: function(attr, bindingPath, model) {
     var cellComponent = this._super(...arguments);
 

@@ -15,10 +15,6 @@ var Model = Projection.Model.extend({
     inverse: null,
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-  }
 });
 
 // Edit form projection.

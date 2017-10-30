@@ -48,25 +48,6 @@ var Model = Projection.Model.extend({
     async: false
   }),
 
-  // Model validation rules.
-  validations: {
-    type: {
-      presence: {
-        message: 'Type is required'
-      }
-    },
-    author: {
-      presence: {
-        message: 'Author is required'
-      }
-    },
-    editor1: {
-      presence: {
-        message: 'Editor is required'
-      }
-    }
-  },
-
   commentsChanged: Ember.on('init', Ember.observer('comments', function() {
     Ember.run.once(this, 'commentsCountCompute');
   })),

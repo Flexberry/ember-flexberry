@@ -3,15 +3,6 @@ import { Projection } from 'ember-flexberry-data';
 
 var Model = Projection.Model.extend({
   name: DS.attr('string'),
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

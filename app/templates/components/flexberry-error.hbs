@@ -4,9 +4,15 @@
       title=(t "components.flexberry-error.caption")
       close="close"
       useOkButton=false
-      settings=(hash context=".pusher")
+      settings=(hash context=modalContext)
     }}
-      <h2 class="ui header">{{error.message}}</h2>
+      <h2 class="ui header">
+        {{#if error.message}}
+          {{error.message}}
+        {{else}}
+          {{t "components.flexberry-error.unknown-error"}}
+        {{/if}}
+      </h2>
       {{#if error.errors}}
         {{#flexberry-toggler
           caption=(t "components.flexberry-error.show-more")
@@ -24,7 +30,13 @@
       onHide="close"
       closeable=true
     }}
-      <h2 class="ui header">{{error.message}}</h2>
+      <h2 class="ui header">
+        {{#if error.message}}
+          {{error.message}}
+        {{else}}
+          {{t "components.flexberry-error.unknown-error"}}
+        {{/if}}
+      </h2>
       {{#if error.errors}}
         {{#flexberry-toggler
           caption=(t "components.flexberry-error.show-more")

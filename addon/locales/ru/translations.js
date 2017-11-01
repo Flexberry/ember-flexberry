@@ -30,6 +30,7 @@ export default {
     'flexberry-error': {
       caption: 'Произошла ошибка',
       'show-more': 'Подробнее',
+      'unknown-error': 'Неизвестная ошибка',
     },
 
     'flexberry-field': {

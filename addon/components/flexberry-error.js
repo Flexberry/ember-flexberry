@@ -36,6 +36,15 @@ export default Ember.Component.extend({
   modal: true,
 
   /**
+    Selector for modal dialog's context.
+
+    @property modalContext
+    @type String
+    @default '.pusher:first'
+  */
+  modalContext: '.pusher:first',
+
+  /**
     Error for displaying.
 
     @property error

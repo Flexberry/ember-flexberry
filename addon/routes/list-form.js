@@ -208,16 +208,16 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   },
 
   actions: {
-  /**
-    Event handler for processing promise model rejecting.
-    [More info](https://emberjs.com/api/ember/2.4/classes/Ember.Route/events/error?anchor=error).
+    /**
+      Event handler for processing promise model rejecting.
+      [More info](https://emberjs.com/api/ember/2.4/classes/Ember.Route/events/error?anchor=error).
 
-    @method actions.error
-    @param {Object} error
-    @param {Object} transition
-  */
-  error: function(error, transition) {
-      this.onModelLoadingRejected(error);
+      @method actions.error
+      @param {Object} error
+      @param {Object} transition
+    */
+    error: function(error, transition) {
+        this.onModelLoadingRejected(error);
     }
   },
 

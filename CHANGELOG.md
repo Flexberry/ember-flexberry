@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* List forms:
+    * Fix reset of loading state when promise model was rejected.
 
 ## [0.9.2-beta.4] - 2017-11-02
 ### Added

@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-error` component:
+    * Add default error message.
+
+### Fixed
+* `flexberry-error` component:
+    * Fix selector for modal context.
 
 ## [0.9.2-beta.3] - 2017-10-27
 ### Added

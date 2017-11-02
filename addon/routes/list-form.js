@@ -217,7 +217,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
       @param {Object} transition
     */
     error: function(error, transition) {
-        this.onModelLoadingRejected(error);
+      this.onModelLoadingRejected(error);
     }
   },
 

@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Change related model value after clearing date when value was set programmatically.
 
 ## [0.9.2-beta.5] - 2017-11-02
 ### Fixed

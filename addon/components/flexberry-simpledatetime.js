@@ -130,6 +130,7 @@ export default FlexberryBaseComponent.extend({
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         this.set('_valueAsString', this._convertDateToString(value));
       } else {
+        this.set('_valueAsDate', value);
         let flatpickr = this.get('_flatpickr');
         if (flatpickr) {
           flatpickr.setDate(value);

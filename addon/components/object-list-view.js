@@ -1558,7 +1558,7 @@ export default FlexberryBaseComponent.extend(
       modelName = this.get(`modelProjection.attributes.${path.join('.attributes.')}.modelName`);
     } else {
       attributeName = bindingPath;
-      modelName = this.get('modelName');
+      modelName = this.get('modelProjection.modelName');
     }
 
     let model = this.get('store').modelFor(modelName);

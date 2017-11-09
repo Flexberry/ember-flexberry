@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.2-beta.7] - 2017-11-09
 ### Added
 * Component `flexberry-lookup` displaying data via `flexberry-objectlistview` component supports filters.
 

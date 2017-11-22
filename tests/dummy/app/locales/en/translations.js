@@ -478,6 +478,9 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'ge-into-toggler-example': {
+              'caption': 'GroupEdit into toggler example',
             }
           },
           'flexberry-tree': {
@@ -867,6 +870,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Settings example',
           'togglerContent': 'Some expandable/collapsable content'
+        },
+        'ge-into-toggler-example': {
+          'caption': 'Flexberry-toggler. GroupEdit into toggler example'
         }
       },
       'flexberry-tree': {

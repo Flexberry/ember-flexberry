@@ -20,6 +20,7 @@ export default ApplicationSerializer.extend({
     Property name in which object identifier is kept.
    */
   primaryKey: '__PrimaryKey',
+  
   keyForAttribute(key) {
     return key;
   },

@@ -36,5 +36,16 @@
   }}
   {{flexberry-validationmessage error=model.errors.togglerExampleMasterProperty pointing="pointing"}}
 </div>
-
+<div class="field {{if model.errors.togglerExampleDetail "error" ""}}">
+  <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
+  {{flexberry-groupedit
+    componentName="togglerExampleDetailGroupEdit"
+    content=model.togglerExampleDetail
+    mainModelProjection=modelProjection
+    modelProjection=modelProjection.attributes.togglerExampleDetail
+    orderable=true
+    readonly=readonly
+  }}
+  {{flexberry-validationmessage error=model.errors.togglerExampleDetail pointing="pointing"}}
+</div>
 </form>

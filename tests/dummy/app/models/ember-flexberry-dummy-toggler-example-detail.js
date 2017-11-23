@@ -12,16 +12,10 @@ var Model = Projection.Model.extend({
 });
 
 Model.defineProjection('TogglerExampleDetailE', 'ember-flexberry-dummy-toggler-example-detail', {
-  togglerExampleDetailProperty: Projection.attr('Наименование детейла'),
-  togglerExampleMaster: Projection.belongsTo('ember-flexberry-dummy-toggler-example-master', '', {
-    togglerExampleMasterProperty: Projection.attr('Наименование мастера')
-  })
+  togglerExampleDetailProperty: Projection.attr('Наименование детейла')
 });
 Model.defineProjection('TogglerExampleDetailL', 'ember-flexberry-dummy-toggler-example-detail', {
-  togglerExampleDetailProperty: Projection.attr('Наименование детейла'),
-  togglerExampleMaster: Projection.belongsTo('ember-flexberry-dummy-toggler-example-master', '', {
-    togglerExampleMasterProperty: Projection.attr('Наименование мастера')
-  })
+  togglerExampleDetailProperty: Projection.attr('Наименование детейла')
 });
 
 export default Model;

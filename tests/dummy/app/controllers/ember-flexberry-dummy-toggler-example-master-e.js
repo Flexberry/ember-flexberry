@@ -1,5 +1,5 @@
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
-  parentRoute: 'ember-flexberry-dummy-toggler-example-master',
+  parentRoute: 'components-examples/flexberry-toggler/ge-into-toggler-example',
 });

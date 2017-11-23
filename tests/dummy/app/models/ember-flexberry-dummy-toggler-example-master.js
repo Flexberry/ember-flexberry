@@ -3,7 +3,10 @@ import { Projection } from 'ember-flexberry-data';
 
 var Model = Projection.Model.extend({
   togglerExampleMasterProperty: DS.attr('string'),
-  togglerExampleDetail: DS.hasMany('ember-flexberry-dummy-toggler-example-detail', { inverse: 'togglerExampleMaster', async: false }),
+  togglerExampleDetail: DS.hasMany('ember-flexberry-dummy-toggler-example-detail', {
+    inverse: 'togglerExampleMaster',
+    async: false
+  }),
 
   // Model validation rules.
   validations: {
@@ -11,7 +14,8 @@ var Model = Projection.Model.extend({
 });
 
 Model.defineProjection('TogglerExampleMasterE', 'ember-flexberry-dummy-toggler-example-master', {
-  togglerExampleMasterProperty: Projection.attr('Наименование мастера')
+  togglerExampleMasterProperty: Projection.attr('Наименование мастера'),
+
 });
 Model.defineProjection('TogglerExampleMasterL', 'ember-flexberry-dummy-toggler-example-master', {
   togglerExampleMasterProperty: Projection.attr('Наименование мастера')

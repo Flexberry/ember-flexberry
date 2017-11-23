@@ -596,6 +596,12 @@ Ember.$.extend(true, translations, {
       'editor-validation-message-caption': 'Editor is required'
     },
 
+    'ember-flexberry-dummy-toggler-example-master-e': {
+      'caption': 'Master',
+      'toggler-example-master-property-caption': 'Master property',
+      'toggler-example-deteil-property-caption': 'Deteil'
+    },
+
     'ember-flexberry-dummy-suggestion-type-edit': {
       'caption': 'Suggestion type',
       'name-caption': 'Name',

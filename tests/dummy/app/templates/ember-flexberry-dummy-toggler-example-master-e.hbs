@@ -25,19 +25,18 @@
     </div>
   </div>
   <div class="field">
+  <label>{{t 'forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-master-property-caption'}}</label>
   {{
     flexberry-field
     placeholder=(t 'components.flexberry-field.placeholder')
     readonly=readonly
     required=true
     value=model.togglerExampleMasterProperty
-    class=(if model.errors.togglerExampleMasterProperty 'error' '')
-    label=(t 'forms.ember-flexberry-dummy-toggler-example-master-e.togglerExampleMasterProperty-caption')
   }}
   {{flexberry-validationmessage error=model.errors.togglerExampleMasterProperty pointing="pointing"}}
 </div>
 <div class="field {{if model.errors.togglerExampleDetail "error" ""}}">
-  <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
+  <label>{{t 'forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-deteil-property-caption'}}</label>
   {{flexberry-groupedit
     componentName="togglerExampleDetailGroupEdit"
     content=model.togglerExampleDetail

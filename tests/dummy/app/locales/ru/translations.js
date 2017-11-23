@@ -613,6 +613,12 @@ Ember.$.extend(true, translations, {
       'editor-validation-message-caption': 'Заполните поле "Редактор"'
     },
 
+    'ember-flexberry-dummy-toggler-example-master-e': {
+      'caption': 'Мастер',
+      'toggler-example-master-property-caption': 'Свойство мастера',
+      'toggler-example-deteil-property-caption': 'Детейл'
+    },
+
     'ember-flexberry-dummy-suggestion-type-edit': {
       'caption': 'Тип предложения',
       'name-caption': 'Наименование',

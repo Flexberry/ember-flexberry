@@ -7,7 +7,6 @@ export default ListFormController.extend({
     @property editFormRoute
     @type String
     @default 'ember-flexberry-dummy-toggler-example-master-e'
-   */
-
-   editFormRoute: 'ember-flexberry-dummy-toggler-example-master-e',
+  */
+  editFormRoute: 'ember-flexberry-dummy-toggler-example-master-e',
 });

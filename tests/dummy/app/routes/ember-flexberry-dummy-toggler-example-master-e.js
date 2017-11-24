@@ -42,12 +42,12 @@ export default EditFormRoute.extend({
     }
   },
 
-    /**
-      Name of model to be used as list's records types.
+  /**
+    Name of model to be used as list's records types.
 
-      @property modelName
-      @type String
-      @default 'ember-flexberry-dummy-toggler-example-master'
-     */
+    @property modelName
+    @type String
+    @default 'ember-flexberry-dummy-toggler-example-master'
+  */
   modelName: 'ember-flexberry-dummy-toggler-example-master'
 });

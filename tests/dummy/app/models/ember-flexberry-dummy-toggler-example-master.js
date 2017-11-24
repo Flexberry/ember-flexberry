@@ -10,6 +10,11 @@ var Model = Projection.Model.extend({
 
   // Model validation rules.
   validations: {
+    togglerExampleMasterProperty: {
+      presence: {
+        message: 'Master property is required'
+      }
+    }
   }
 });
 

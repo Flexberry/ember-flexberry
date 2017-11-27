@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.2-beta.8] - 2017-11-27
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.1-beta.2.
+
 ## [0.9.2-beta.7] - 2017-11-09
 ### Added
 * Component `flexberry-lookup` displaying data via `flexberry-objectlistview` component supports filters.

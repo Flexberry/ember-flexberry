@@ -2,7 +2,29 @@
   <thead>
     <tr>
       {{#if showHelperColumn}}
-        <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar"></th>
+        <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
+          <button
+            class="ui check-all-at-page-button {{buttonClass}} button"
+            title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+            {{action "checkAllAtPage" this.attrs.componentName}}>
+              Всё тут
+              <i class="check-all-at-page icon"></i>
+          </button>
+          <button
+            class="ui check-all-button {{buttonClass}} button"
+            title={{t "components.olv-toolbar.check-all-button-text"}}
+            {{action "checkAll"}}>
+              Всё всё
+              <i class="check-all icon"></i>
+          </button>
+          <button
+            class="ui clear-sorting-button {{buttonClass}} button"
+            title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+            {{action "clearSorting"}}>
+            Сортировка по умолчанию
+              <i class="clear-sorting icon"></i>
+          </button>
+        </th>
       {{/if}}
       {{#each columns as |column|}}
         <th class="dt-head-left me class" onclick={{action "headerCellClick" column }}>

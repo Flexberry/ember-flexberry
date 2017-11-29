@@ -856,7 +856,7 @@ export default FlexberryBaseComponent.extend(
       @method actions.deleteRow
       @public
       @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
+      @param {jQuery.Event} e jQuery.Event by click on button
     */
     deleteRow(recordWithKey, e) {
 
@@ -882,7 +882,7 @@ export default FlexberryBaseComponent.extend(
       @method actions.selectRow
       @public
       @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
+      @param {jQuery.Event} e jQuery.Event by click on button
     */
     selectRow(recordWithKey, e) {
       let selectedRecords = this.get('selectedRecords');
@@ -906,6 +906,102 @@ export default FlexberryBaseComponent.extend(
 
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
+    },
+
+    /**
+      This action is called when click check all at page button.
+
+      @method actions.checkAllAtPage
+      @public
+      @param {DS.Model} records A record with key
+      @param {jQuery.Event} e jQuery.Event by click on button
+    */
+    checkAllAtPage(componentName, e) {
+      let records1 = this.get('componentName');
+      /*let selectedRow = this._getRowByKey(recordWithKey.key);
+
+      if (e.checked) {
+        if (!selectedRow.hasClass('active')) {
+          selectedRow.addClass('active');
+        }
+
+        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+          selectedRecords.pushObject(recordWithKey.data);
+        }
+      } else {
+        if (selectedRow.hasClass('active')) {
+          selectedRow.removeClass('active');
+        }
+
+        selectedRecords.removeObject(recordWithKey.data);
+      }
+
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);*/
+    },
+
+    /**
+      This action is called when click check all at all button.
+
+      @method actions.checkAll
+      @public
+      @param {DS.Model} records A record with key
+      @param {jQuery.Event} e jQuery.Event by click on row
+    */
+    checkAll(records, e) {
+      /*let selectedRecords = this.get('selectedRecords');
+      let selectedRow = this._getRowByKey(recordWithKey.key);
+
+      if (e.checked) {
+        if (!selectedRow.hasClass('active')) {
+          selectedRow.addClass('active');
+        }
+
+        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+          selectedRecords.pushObject(recordWithKey.data);
+        }
+      } else {
+        if (selectedRow.hasClass('active')) {
+          selectedRow.removeClass('active');
+        }
+
+        selectedRecords.removeObject(recordWithKey.data);
+      }
+
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);*/
+    },
+
+    /**
+      This action is called when click clear sorting button.
+
+      @method actions.clearSorting
+      @public
+      @param {DS.Model} recordWithKey A record with key
+      @param {jQuery.Event} e jQuery.Event by click on row
+    */
+    clearSorting(e) {
+      /*let selectedRecords = this.get('selectedRecords');
+      let selectedRow = this._getRowByKey(recordWithKey.key);
+
+      if (e.checked) {
+        if (!selectedRow.hasClass('active')) {
+          selectedRow.addClass('active');
+        }
+
+        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+          selectedRecords.pushObject(recordWithKey.data);
+        }
+      } else {
+        if (selectedRow.hasClass('active')) {
+          selectedRow.removeClass('active');
+        }
+
+        selectedRecords.removeObject(recordWithKey.data);
+      }
+
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);*/
     }
   },
 

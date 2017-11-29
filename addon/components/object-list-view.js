@@ -7,6 +7,7 @@ import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
   Object list view component.
@@ -917,27 +918,43 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on button
     */
     checkAllAtPage(componentName, e) {
-      let records1 = this.get('componentName');
-      /*let selectedRow = this._getRowByKey(recordWithKey.key);
+      let contentWithKeys = this.get('contentWithKeys');
+      let content = this.get('content');
+      let selectedRecords = this.get('selectedRecords');
 
-      if (e.checked) {
-        if (!selectedRow.hasClass('active')) {
-          selectedRow.addClass('active');
-        }
+      let checked = false;
 
-        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-          selectedRecords.pushObject(recordWithKey.data);
+      for (let i = 0; i < contentWithKeys.length; i++){
+        if (!contentWithKeys[i].get('selected')){
+          checked = true;
         }
-      } else {
-        if (selectedRow.hasClass('active')) {
-          selectedRow.removeClass('active');
-        }
-
-        selectedRecords.removeObject(recordWithKey.data);
       }
 
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);*/
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        let recordWithKey = contentWithKeys[i];
+        let selectedRow = this._getRowByKey(recordWithKey.key);
+
+        if (checked) {
+          if (!selectedRow.hasClass('active')) {
+            selectedRow.addClass('active');
+          }
+
+          if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+            selectedRecords.pushObject(recordWithKey.data);
+          }
+        } else {
+          if (selectedRow.hasClass('active')) {
+            selectedRow.removeClass('active');
+          }
+
+          selectedRecords.removeObject(recordWithKey.data);
+        }
+
+        recordWithKey.set('selected', checked)
+
+        let componentName = this.get('componentName');
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked);
+      }
     },
 
     /**
@@ -981,27 +998,22 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     clearSorting(e) {
-      /*let selectedRecords = this.get('selectedRecords');
-      let selectedRow = this._getRowByKey(recordWithKey.key);
+      let componentName = this.get('componentName');
+      let userSettingsService = this.get('userSettingsService');
 
-      if (e.checked) {
-        if (!selectedRow.hasClass('active')) {
-          selectedRow.addClass('active');
-        }
-
-        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-          selectedRecords.pushObject(recordWithKey.data);
-        }
-      } else {
-        if (selectedRow.hasClass('active')) {
-          selectedRow.removeClass('active');
-        }
-
-        selectedRecords.removeObject(recordWithKey.data);
+      if (!userSettingsService.haveDefaultUserSetting(componentName)) {
+        alert('No default usersettings');
+        return;
       }
 
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);*/
+      this._router = Ember.getOwner(this).lookup('router:main');
+
+      let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+      userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
+      .then(record => {
+        let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
+        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+      });
     }
   },
 

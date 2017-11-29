@@ -55,6 +55,6 @@ export default Ember.Mixin.create({
   queryParams: {
     page: { refreshModel: true },
     perPage: { refreshModel: true },
-    selectObjectById: { refreshModel: true },
+    selectObjectById: { refreshModel: false },
   },
 });

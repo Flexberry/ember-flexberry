@@ -91,6 +91,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   model: function(params, transition) {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
 
+    let _this = this;
     let controller = this.controllerFor(this.routeName);
     this.get('objectlistviewEventsService').setLoadingState('loading');
 
@@ -169,15 +170,37 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
           filters: filtersPredicate,
           predicate: limitPredicate,
           hierarchicalAttribute: hierarchicalAttribute,
+          selectObjectById: params.selectObjectById
         };
 
-        this.onModelLoadingStarted(queryParameters);
-        this.get('colsConfigMenu').updateNamedSettingTrigger();
+        return new Ember.RSVP.Promise((resolve, reject) => {
+          // TODO: Надо вызвать вычисление параметра page для queryParameters, если задан selectObjectById. Это будет промис, соответственно, всё что дальше - будет привязано в виде цепочки после его завершения.
+          // TODO: Надо вынести в ENV настройку, которая будет указывать нужно ли использовать функцию перехода на редактируемый объект при закрытии формы редактирования.
+          if (!queryParameters.selectObjectById) {
+            resolve(queryParameters);
+          } else {
+            // TODO: вызвать метод backend-а, который вернёт номер.
+            let newPage = 5;
 
-        // Find by query is always fetching.
-        // TODO: support getting from cache with "store.all->filterByProjection".
-        // TODO: move includeSorting to setupController mixins?
-        return this.reloadList(queryParameters);
+            // Если страница не подходит, то переходим на неё.
+            if (queryParameters.page !== newPage) {
+              _this.transitionTo(_this.currentRouteName, {
+                queryParams: {
+                  sort: _this.sorting, // todo: сортировка тут какая-то неправильная сейчас
+                  perPage: _this.perPage || 5,
+                  page: newPage,
+                  selectObjectById: queryParameters.selectObjectById
+                }
+              });
+            }
+
+            resolve(queryParameters);
+          }
+        }).then((queryParameters) => {
+          this.onModelLoadingStarted(queryParameters);
+          this.get('colsConfigMenu').updateNamedSettingTrigger();
+          return this.reloadList(queryParameters);
+        });
       }).then((records) => {
         this.get('formLoadTimeTracker').set('endLoadTime', performance.now());
         this.onModelLoadingFulfilled(records);
@@ -316,6 +339,8 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     controller.set('modelProjection', proj);
     controller.set('developerUserSettings', this.get('developerUserSettings'));
     controller.set('resultPredicate', this.get('resultPredicate'));
+    controller.set('highlightObjectById', controller.get('selectObjectById'));
+    controller.set('selectObjectById', undefined);
     if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }

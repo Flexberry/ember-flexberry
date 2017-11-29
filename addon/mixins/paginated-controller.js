@@ -48,7 +48,7 @@ import Ember from 'ember';
  */
 export default Ember.Mixin.create({
   /**
-    Start page.
+    Start page (query parameter).
 
     @property page
     @type Number
@@ -57,7 +57,7 @@ export default Ember.Mixin.create({
   page: 1,
 
   /**
-    Count records on page.
+    Count records on page (query parameter).
 
     @property perPage
     @type Number
@@ -73,6 +73,15 @@ export default Ember.Mixin.create({
     @default [5, 10, 20, 50]
   */
   perPageValues: [5, 10, 20, 50],
+
+  /**
+    Select object in list by this id (query parameter).
+
+    @property selectObjectById
+    @type Object
+    @default undefined
+  */
+  selectObjectById: undefined,
 
   /**
     Get or set `perPage` value.

@@ -206,6 +206,15 @@ export default FlexberryBaseComponent.extend(
   customTableClass: '',
 
   /**
+    Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
+
+    @property allowColumnResize
+    @type Boolean
+    @default true
+  */
+  allSelect: false,
+
+  /**
     Classes for table.
 
     @property tableClass
@@ -918,14 +927,17 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on button
     */
     checkAllAtPage(componentName, e) {
+      if (this.allSelect) {
+        return;
+      }
+
       let contentWithKeys = this.get('contentWithKeys');
-      let content = this.get('content');
       let selectedRecords = this.get('selectedRecords');
 
       let checked = false;
 
-      for (let i = 0; i < contentWithKeys.length; i++){
-        if (!contentWithKeys[i].get('selected')){
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        if (!contentWithKeys[i].get('selected')) {
           checked = true;
         }
       }
@@ -950,7 +962,7 @@ export default FlexberryBaseComponent.extend(
           selectedRecords.removeObject(recordWithKey.data);
         }
 
-        recordWithKey.set('selected', checked)
+        recordWithKey.set('selected', checked);
 
         let componentName = this.get('componentName');
         this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked);
@@ -966,27 +978,32 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on row
     */
     checkAll(records, e) {
-      /*let selectedRecords = this.get('selectedRecords');
-      let selectedRow = this._getRowByKey(recordWithKey.key);
+      let contentWithKeys = this.get('contentWithKeys');
+      let selectedRecords = this.get('selectedRecords');
 
-      if (e.checked) {
-        if (!selectedRow.hasClass('active')) {
-          selectedRow.addClass('active');
+      let checked = !this.allSelect;
+      this.allSelect = checked;
+
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        let recordWithKey = contentWithKeys[i];
+        let selectedRow = this._getRowByKey(recordWithKey.key);
+
+        if (checked) {
+          if (!selectedRow.hasClass('active')) {
+            selectedRow.addClass('active');
+          }
+        } else {
+          if (selectedRow.hasClass('active')) {
+            selectedRow.removeClass('active');
+          }
         }
 
-        if (selectedRecords.indexOf(recordWithKey.data) === -1) {
-          selectedRecords.pushObject(recordWithKey.data);
-        }
-      } else {
-        if (selectedRow.hasClass('active')) {
-          selectedRow.removeClass('active');
-        }
+        recordWithKey.set('selected', checked);
+        recordWithKey.set('rowConfig.canBeSelected', !checked);
 
-        selectedRecords.removeObject(recordWithKey.data);
+        let componentName = this.get('componentName');
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked);
       }
-
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);*/
     },
 
     /**

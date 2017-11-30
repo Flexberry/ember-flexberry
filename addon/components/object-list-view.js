@@ -1816,6 +1816,17 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
+      if (this.allSelect)
+      {
+        let contentWithKeys = this.get('contentWithKeys');
+        let checked = this.allSelect;
+
+        contentWithKeys.forEach((item) => {
+          item.set('selected', checked);
+          item.set('rowConfig.canBeSelected', !checked);
+        });
+      }
+
       if (Ember.isArray(sorting)) {
         let columns = this.get('columns');
         if (Ember.isArray(columns)) {

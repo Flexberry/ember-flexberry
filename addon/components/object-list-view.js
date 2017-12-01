@@ -982,7 +982,7 @@ export default FlexberryBaseComponent.extend(
       let selectedRecords = this.get('selectedRecords');
 
       let checked = !this.allSelect;
-      this.allSelect = checked;
+      Ember.set(this, 'allSelect', checked);
 
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
@@ -1000,10 +1000,10 @@ export default FlexberryBaseComponent.extend(
 
         recordWithKey.set('selected', checked);
         recordWithKey.set('rowConfig.canBeSelected', !checked);
-
-        let componentName = this.get('componentName');
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked);
       }
+
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
     },
 
     /**

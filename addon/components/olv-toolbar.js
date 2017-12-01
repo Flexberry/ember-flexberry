@@ -127,6 +127,15 @@ export default FlexberryBaseComponent.extend({
   enableDeleteButton: true,
 
   /**
+  The flag to specify whether the select all button is enabled.
+
+    @property selectAll
+    @type Boolean
+    @default true
+  */
+  selectAll: true,
+
+  /**
     Name of action to send out, action triggered by click on user button.
 
     @property customButtonAction
@@ -415,9 +424,14 @@ export default FlexberryBaseComponent.extend({
           return;
         }
       }
-
-      let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      if(!this.get('selectAll'))
+      {
+        let componentName = this.get('componentName');
+        this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      }
+      {
+        // Place to implement the method of removing all objects
+      }
     },
 
     /**
@@ -611,6 +625,7 @@ export default FlexberryBaseComponent.extend({
 
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
 
     this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
@@ -640,6 +655,7 @@ export default FlexberryBaseComponent.extend({
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
     this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
@@ -721,6 +737,14 @@ export default FlexberryBaseComponent.extend({
 
   _deleteNamedSetting(namedSetting) {
     this._updateListNamedUserSettings();
+  },
+
+  _selectAll(componentName,selectAllParameter) {
+    if(componentName === this.componentName)
+    {
+      this.set('selectAll', selectAllParameter);
+      this.set('isDeleteButtonEnabled', selectAllParameter);
+    }
   },
 
   _sortNamedSetting(isExportExcel) {

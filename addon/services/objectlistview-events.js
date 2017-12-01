@@ -181,6 +181,19 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "selectAll" event in object-list-view.
+    Event name: updateSelectAll.
+
+    @method updateSelectAll
+
+    @param {String} componentName The name of object-list-view component
+    @param {Boolean} selectAllParameter Flag to selet all records parameter.
+  */
+  updateSelectAllTrigger(componentName, selectAllParameter) {
+    this.trigger('updateSelectAll', componentName, selectAllParameter);
+  },
+
+  /**
     Current limit function for OLV.
 
     @property currentLimitFunction

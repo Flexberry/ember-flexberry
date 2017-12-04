@@ -386,6 +386,10 @@ Ember.$.extend(true, translations, {
             'default-ordering-example': {
               'caption': 'Default ordering example',
               'title': ''
+            },
+            'autocomplete-order-example': {
+              'caption': 'Example for autocomplete with order',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -756,6 +760,10 @@ Ember.$.extend(true, translations, {
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Default ordering example',
+          'titleLookup': 'Master'
+        },
+        'autocomplete-order-example': {
+          'caption': 'Flexberry-lookup. Example for autocomplete with order',
           'titleLookup': 'Master'
         },
       },

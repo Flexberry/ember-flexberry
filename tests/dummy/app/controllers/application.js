@@ -396,6 +396,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.default-ordering-example.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.default-ordering-example.title'),
             children: null
+          }, {
+            link: 'components-examples/flexberry-lookup/autocomplete-order-example',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-lookup.autocomplete-order-example.title'),
+            children: null
           }]
         }, {
           link: null,

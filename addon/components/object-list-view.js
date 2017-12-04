@@ -206,11 +206,11 @@ export default FlexberryBaseComponent.extend(
   customTableClass: '',
 
   /**
-    Flag indicates whether allow to resize columns (if `true`) or not (if `false`).
+    The flag is selected for all records.
 
-    @property allowColumnResize
+    @property allSelect
     @type Boolean
-    @default true
+    @default false
   */
   allSelect: false,
 

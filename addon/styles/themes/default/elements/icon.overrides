@@ -441,6 +441,8 @@ i.icon.sort.content.ascending:before { content: "\f160"; }
 i.icon.sort.content.descending:before { content: "\f161"; }
 i.icon.sort.numeric.ascending:before { content: "\f162"; }
 i.icon.sort.numeric.descending:before { content: "\f163"; }
+i.icon.check-square-o:before { content: "\f046";}
+i.icon.check-all-square-o:before { content: "\e815"; font-family: 'Crimean';}
 
 /* Text Editor */
 i.icon.font:before { content: "\f031"; }

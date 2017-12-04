@@ -58,6 +58,8 @@ i.icon.columns:before { content: "\f0db";}
 i.icon.edit:before { content: "\e810"; font-family: 'Crimean'; }
 i.icon.asterisk:before { content: "\f069"; color: @brightRed; }
 i.icon.calendar:before { content: "\e81c"; color: @colorIcon; font-family: 'Crimean'; }
+i.icon.check-square-o:before { content: "\f046";}
+i.icon.check-all-square-o:before { content: "\e815"; font-family: 'Crimean';}
 
 /*******************************
             Aliases

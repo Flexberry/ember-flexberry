@@ -67,7 +67,8 @@
     "ember-i18n": "4.2.0",
     "ember-truth-helpers": "1.2.0",
     "lodash": "^4.4.0",
-    "strip-bom": "^2.0.0"
+    "strip-bom": "^2.0.0",
+    "jointjs": "^2.0.1"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

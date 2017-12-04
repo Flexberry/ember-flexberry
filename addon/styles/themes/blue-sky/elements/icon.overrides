@@ -316,6 +316,21 @@ i.icon.text-menu-hide:before {
   font-size: 9px;
 }
 
+.ui.button.icon.mini.compact > .plus.check-square-o:before {
+  position: relative;
+  font-size: 1px;
+}
+
+.ui.button.icon.mini.compact > .plus.check-all-square-o:before {
+  position: relative;
+  font-size: 1px;
+}
+
+.ui.button.icon.mini.compact > .plus.sort:before {
+  position: relative;
+  font-size: 1px;
+}
+
 .launch:hover .ui.menu.item:before {
     color: @colorIcon !important;
 }

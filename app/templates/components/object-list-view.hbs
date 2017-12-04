@@ -4,13 +4,13 @@
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
           <button
-            class="ui check-all-at-page-button {{buttonClass}} {{if allSelect "disable black"}} button"
+            class="ui check-all-at-page-button {{buttonClass}} {{if allSelect "disabled"}} button"
             title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
             {{action "checkAllAtPage"}}>
               <i class="check-square-o icon"></i>
           </button>
           <button
-            class="ui check-all-button {{buttonClass}}  {{if allSelect "blue"}} button"
+            class="ui check-all-button {{buttonClass}}  {{if allSelect "active"}} button"
             title={{t "components.olv-toolbar.check-all-button-text"}}
             {{action "checkAll"}}>
               <i class="check-all-square-o icon"></i>

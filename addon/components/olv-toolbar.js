@@ -127,13 +127,13 @@ export default FlexberryBaseComponent.extend({
   enableDeleteButton: true,
 
   /**
-  The flag to specify whether the select all button is enabled.
+  The flag to specify whether the select all button is on.
 
     @property selectAll
     @type Boolean
     @default true
   */
-  selectAll: true,
+  allSelect: false,
 
   /**
     Name of action to send out, action triggered by click on user button.
@@ -428,7 +428,7 @@ export default FlexberryBaseComponent.extend({
       let componentName = this.get('componentName');
 
       //TODO: Implement the method of removing all objects.
-      if (!this.get('selectAll'))
+      if (!this.get('allSelect'))
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
       }
@@ -742,7 +742,7 @@ export default FlexberryBaseComponent.extend({
   _selectAll(componentName, selectAllParameter) {
     if (componentName === this.componentName)
     {
-      this.set('selectAll', selectAllParameter);
+      this.set('allSelect', selectAllParameter);
       this.set('isDeleteButtonEnabled', selectAllParameter);
     }
   },

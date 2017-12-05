@@ -202,7 +202,7 @@ export default folv.extend(
   customTableClass: '',
 
   /**
-    The flag is selected for all records..
+    The flag is selected for all records.
 
     @property allSelect
     @type Boolean
@@ -842,7 +842,7 @@ export default folv.extend(
       let componentName = this.get('componentName');
 
       //TODO: Implement the method of removing all objects.
-      if (this.allSelect)
+      if (!this.allSelect)
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
       }
@@ -1058,10 +1058,9 @@ export default folv.extend(
 
       @method actions.checkAllAtPage
       @public
-      @param {DS.Model} records A record with key
-      @param {jQuery.Event} e jQuery.Event by click on button
+      @param {jQuery.Event} e jQuery.Event by click on check all at page buttons
     */
-    checkAllAtPage(componentName, e) {
+    checkAllAtPage(e) {
       if (this.allSelect) {
         return;
       }
@@ -1109,14 +1108,15 @@ export default folv.extend(
 
       @method actions.checkAll
       @public
-      @param {DS.Model} records A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
+      @param {jQuery.Event} e jQuery.Event by click on ckeck all button
     */
-    checkAll(records, e) {
+    checkAll(e) {
       let contentWithKeys = this.get('contentWithKeys');
 
       let checked = !this.allSelect;
       Ember.set(this, 'allSelect', checked);
+      Ember.set(this, 'isDeleteButtonEnabled', checked);
+
 
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
@@ -1145,8 +1145,7 @@ export default folv.extend(
 
       @method actions.clearSorting
       @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
+      @param {jQuery.Event} e jQuery.Event by click on clear sorting button
     */
     clearSorting(e) {
       let componentName = this.get('componentName');

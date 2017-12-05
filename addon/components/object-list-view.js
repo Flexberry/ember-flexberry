@@ -10,7 +10,7 @@ import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions'
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
-  Object list view component.
+  Object list view component
 
   @class ObjectListViewComponent
   @extends FlexberryBaseComponent
@@ -866,7 +866,7 @@ export default FlexberryBaseComponent.extend(
       @method actions.deleteRow
       @public
       @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on button
+      @param {jQuery.Event} e jQuery.Event by click on row
     */
     deleteRow(recordWithKey, e) {
 
@@ -892,7 +892,7 @@ export default FlexberryBaseComponent.extend(
       @method actions.selectRow
       @public
       @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on button
+      @param {jQuery.Event} e jQuery.Event by click on row
     */
     selectRow(recordWithKey, e) {
       let selectedRecords = this.get('selectedRecords');
@@ -923,10 +923,9 @@ export default FlexberryBaseComponent.extend(
 
       @method actions.checkAllAtPage
       @public
-      @param {DS.Model} records A record with key
-      @param {jQuery.Event} e jQuery.Event by click on button
+      @param {jQuery.Event} e jQuery.Event by click on check all at page button
     */
-    checkAllAtPage(componentName, e) {
+    checkAllAtPage(e) {
       if (this.allSelect) {
         return;
       }
@@ -974,10 +973,9 @@ export default FlexberryBaseComponent.extend(
 
       @method actions.checkAll
       @public
-      @param {DS.Model} records A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
+      @param {jQuery.Event} e jQuery.Event by click on ckeck all button
     */
-    checkAll(records, e) {
+    checkAll(e) {
       let contentWithKeys = this.get('contentWithKeys');
 
       let checked = !this.allSelect;
@@ -1010,8 +1008,7 @@ export default FlexberryBaseComponent.extend(
 
       @method actions.clearSorting
       @public
-      @param {DS.Model} recordWithKey A record with key
-      @param {jQuery.Event} e jQuery.Event by click on row
+      @param {jQuery.Event} e jQuery.Event by click on clear sorting button
     */
     clearSorting(e) {
       let componentName = this.get('componentName');

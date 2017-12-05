@@ -318,17 +318,17 @@ i.icon.text-menu-hide:before {
 
 .ui.button.icon.mini.compact > .plus.check-square-o:before {
   position: relative;
-   font-size: 20px;
+  font-size: 20px;
 }
 
 .ui.button.icon.mini.compact > .plus.check-all-square-o:before {
   position: relative;
-   font-size: 20px;
+  font-size: 20px;
 }
 
 .ui.button.icon.mini.compact > .plus.sort:before {
   position: relative;
-   font-size: 20px;
+  font-size: 20px;
 }
 
 .launch:hover .ui.menu.item:before {

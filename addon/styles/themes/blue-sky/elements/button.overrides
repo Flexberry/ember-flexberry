@@ -339,11 +339,13 @@ ui.button.ui-clear:hover {
     padding: 0px;
     height: 30px;
     width: 30px;
-    text-align: right;
-    border: 1px solid @uiBorderColor;
+    text-align: center;
+    border: 0px;
+    background: none;
+    margin: 0 0 0 0px;
     &:hover {
-        border: 1px solid @uiHoveredNegitveBorderColor;
-        background: @white;
+        border: 0px;
+        background: none;
         & i.icon.check-square-o:before {
             color: @uiHoveredNegitveTextColor;
         }
@@ -354,11 +356,13 @@ ui.button.ui-clear:hover {
     padding: 0px;
     height: 30px;
     width: 30px;
-    text-align: right;
-    border: 1px solid @uiBorderColor;
+    text-align: center;
+    border: 0px;
+    background: none;
+    margin: 0 0 0 0px;
     &:hover {
-        border: 1px solid @uiHoveredNegitveBorderColor;
-        background: @white;
+        border: 0px;
+        background: none;
         & i.icon.check-all-square-o:before {
             color: @uiHoveredNegitveTextColor;
         }
@@ -369,11 +373,13 @@ ui.button.ui-clear:hover {
     padding: 0px;
     height: 30px;
     width: 30px;
-    text-align: right;
-    border: 1px solid @uiBorderColor;
+    text-align: center;
+    border: 0px;
+    background: none;
+    margin: 0 0 0 0px;
     &:hover {
-        border: 1px solid @uiHoveredNegitveBorderColor;
-        background: @white;
+        border: 0px;
+        background: none;
         & i.icon.sort:before {
             color: @uiHoveredNegitveTextColor;
         }

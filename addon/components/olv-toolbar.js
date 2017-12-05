@@ -424,9 +424,10 @@ export default FlexberryBaseComponent.extend({
           return;
         }
       }
-      if(!this.get('selectAll'))
+
+      let componentName = this.get('componentName');
+      if (!this.get('selectAll'))
       {
-        let componentName = this.get('componentName');
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
       }
       {

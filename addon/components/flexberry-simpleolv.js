@@ -840,7 +840,14 @@ export default folv.extend(
       }
 
       let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      if (this.allSelect)
+      {
+        this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      }
+      else {
+        // Place to implement the method of removing all objects.
+      }
+
     },
 
     /**

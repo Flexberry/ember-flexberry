@@ -840,14 +840,12 @@ export default folv.extend(
       }
 
       let componentName = this.get('componentName');
+
+      //TODO: Implement the method of removing all objects.
       if (this.allSelect)
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
       }
-      else {
-        // Place to implement the method of removing all objects.
-      }
-
     },
 
     /**
@@ -1103,7 +1101,7 @@ export default folv.extend(
 
         let componentName = this.get('componentName');
         this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked);
-        }
+      }
     },
 
     /**
@@ -1116,7 +1114,6 @@ export default folv.extend(
     */
     checkAll(records, e) {
       let contentWithKeys = this.get('contentWithKeys');
-      let selectedRecords = this.get('selectedRecords');
 
       let checked = !this.allSelect;
       Ember.set(this, 'allSelect', checked);

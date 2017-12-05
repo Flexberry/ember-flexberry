@@ -979,7 +979,6 @@ export default FlexberryBaseComponent.extend(
     */
     checkAll(records, e) {
       let contentWithKeys = this.get('contentWithKeys');
-      let selectedRecords = this.get('selectedRecords');
 
       let checked = !this.allSelect;
       Ember.set(this, 'allSelect', checked);

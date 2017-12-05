@@ -426,12 +426,11 @@ export default FlexberryBaseComponent.extend({
       }
 
       let componentName = this.get('componentName');
+
+      //TODO: Implement the method of removing all objects.
       if (!this.get('selectAll'))
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
-      }
-      {
-        // Place to implement the method of removing all objects
       }
     },
 
@@ -740,8 +739,8 @@ export default FlexberryBaseComponent.extend({
     this._updateListNamedUserSettings();
   },
 
-  _selectAll(componentName,selectAllParameter) {
-    if(componentName === this.componentName)
+  _selectAll(componentName, selectAllParameter) {
+    if (componentName === this.componentName)
     {
       this.set('selectAll', selectAllParameter);
       this.set('isDeleteButtonEnabled', selectAllParameter);

@@ -926,6 +926,7 @@ Ember.$.extend(true, translations, {
         },
         'validation': {
           'caption': 'Integration examples. Валидация',
+          'summary-caption': 'Ошибки валидации:',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',
           'text-caption': 'Текст',

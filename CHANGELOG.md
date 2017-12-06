@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-validationsummary` component:
+    * Add header property.
 
 ## [0.9.2-beta.8] - 2017-11-27
 ### Changed

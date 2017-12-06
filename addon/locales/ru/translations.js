@@ -94,7 +94,8 @@ export default {
       'remove-button-text': 'Очистить',
       'dropdown': {
         'messages': {
-          'noResults': 'Значения не найдены.'
+          'noResultsHeader': 'Нет данных',
+          'noResults': 'Значения не найдены'
         }
       }
     },

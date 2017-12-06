@@ -10,7 +10,7 @@ import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions'
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
-  Object list view component
+  Object list view component.
 
   @class ObjectListViewComponent
   @extends FlexberryBaseComponent

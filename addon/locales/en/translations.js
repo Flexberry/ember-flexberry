@@ -94,7 +94,8 @@ export default {
       'remove-button-text': 'Remove',
       'dropdown': {
         'messages': {
-          'noResults': 'No results found.'
+          'noResultsHeader': 'No results',
+          'noResults': 'No results found'
         }
       }
     },

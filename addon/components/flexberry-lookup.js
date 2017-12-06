@@ -682,10 +682,20 @@ export default FlexberryBaseComponent.extend({
     }
 
     let state;
+    let i18n = _this.get('i18n');
     this.$().search({
       minCharacters: minCharacters,
       maxResults: maxResults,
       cache: false,
+      templates: {
+        message: function(message, type) {
+          return '<div class="message empty"><div class="header">' +
+          i18n.t('components.flexberry-lookup.dropdown.messages.noResultsHeader').string +
+          '</div><div class="description">' +
+          i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string +
+          '</div></div>';
+        }
+      },
       apiSettings: {
         /**
           Mocks call to the data source,

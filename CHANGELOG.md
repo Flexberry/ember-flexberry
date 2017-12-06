@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `flexberry-validationsummary` component:
     * Add header property.
+* `flexberry-lookup` component:
+    * Add localization for autocomplete empty result.
+    * Add sorting settings for autocomplete result list.
 
 ### Fixed
 * `flexberry-tree` component:

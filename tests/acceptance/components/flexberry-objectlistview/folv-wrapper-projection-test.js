@@ -41,7 +41,7 @@ executeTest('check wrapper and projection', (store, assert, app) => {
       });
       assert.ok(flag, 'projection = columns names');
 
-      let newProjectionName = 'SettingLookupExampleView';
+      let newProjectionName = 'SettingLookupExampleTypeView';
       controller.set('modelProjection', newProjectionName);
 
       // Ember.get(controller, 'modelProjection') returns only the name of the projection when it replaced.

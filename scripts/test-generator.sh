@@ -49,6 +49,12 @@ pushd "$TMP_DIR"
 ember addon new-addon-for-tests --skip-npm
 pushd new-addon-for-tests
 
+popd
+popd
+cp -f ./testem.js "$TMP_DIR/new-addon-for-tests/testem.js"
+pushd "$TMP_DIR"
+pushd new-addon-for-tests
+
 yarn install
 ember install "${ADDON_DIR}"
 

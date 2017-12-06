@@ -33,6 +33,17 @@ export default FlexberryBaseComponent.extend(
 
   _contentObserver: Ember.on('init', Ember.observer('content', function() {
     this._setContent(this.get('componentName'));
+
+    if (this.allSelect)
+    {
+      let contentWithKeys = this.get('contentWithKeys');
+      let checked = this.allSelect;
+
+      contentWithKeys.forEach((item) => {
+        item.set('selected', checked);
+        item.set('rowConfig.canBeSelected', !checked);
+      });
+    }
   })),
 
   sortTitle: t('components.object-list-view.header-title-attr'),
@@ -1810,17 +1821,6 @@ export default FlexberryBaseComponent.extend(
           this.set('contentWithKeys', this.contentForRender);
           this.get('objectlistviewEventsService').setLoadingState('');
         }
-      }
-
-      if (this.allSelect)
-      {
-        let contentWithKeys = this.get('contentWithKeys');
-        let checked = this.allSelect;
-
-        contentWithKeys.forEach((item) => {
-          item.set('selected', checked);
-          item.set('rowConfig.canBeSelected', !checked);
-        });
       }
 
       if (Ember.isArray(sorting)) {

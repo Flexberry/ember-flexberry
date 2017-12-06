@@ -256,13 +256,26 @@ export default Ember.Helper.extend({
     let arrayObserver = {
       arrayWillChange: (arr, start, removeCount, addCount) => {
         // Remove observers from removing properties (while properties still exists).
-        for (let i = start; removeCount > 0 && i < start + removeCount; i++) {
-          let removingPropertyPath = `${propertyPath}.${i}`;
+        if (removeCount !== 0) {
+          for (let i = start; removeCount > 0 && i < start + removeCount; i++) {
+            let removingPropertyPath = `${propertyPath}.${i}`;
 
-          this._removeHierarchyPropertiesObservers({
-            propertyPathStartsWith: removingPropertyPath
-          });
+            this._removeHierarchyPropertiesObservers({
+              propertyPathStartsWith: removingPropertyPath,
+              status: 'Delete'
+            });
+          }
+        } else {
+          for (let i = start; i < start + 2; i++) {
+            let replacePropertyPath = `${propertyPath}.${i}`;
+
+            this._removeHierarchyPropertiesObservers({
+              propertyPathStartsWith: replacePropertyPath,
+              status: 'Replace'
+            });
+          }
         }
+
       },
 
       arrayDidChange: (arr, start, removeCount, addCount) => {
@@ -342,6 +355,7 @@ export default Ember.Helper.extend({
     let rootPropertyOwner = this.get('_rootPropertyOwner');
     let hierarchyPropertiesObservers = this.get('_hierarchyPropertiesObservers');
     let len = hierarchyPropertiesObservers.length;
+    hierarchyPropertiesObservers = this._sort(hierarchyPropertiesObservers);
     while (--len >= 0) {
       let observer = hierarchyPropertiesObservers[len];
       if (!observerCanBeRemoved(observer)) {
@@ -350,6 +364,11 @@ export default Ember.Helper.extend({
 
       let observerPropertyPath = Ember.get(observer, 'propertyPath');
       let observerPropertyValue = getRecord(rootPropertyOwner, observerPropertyPath);
+
+      let status = Ember.get(options, 'status');
+      if (status === 'Delete') {
+        this._renamePropertyPath(observerPropertyPath, len);
+      }
 
       let referenceObserver = Ember.get(observer, 'referenceObserver');
       Ember.removeObserver(rootPropertyOwner, observerPropertyPath, referenceObserver);
@@ -365,6 +384,77 @@ export default Ember.Helper.extend({
     if (hierarchyPropertiesObservers.length === 0) {
       this.set('_hierarchyPropertiesObservers', null);
     }
+  },
+
+  /**
+    Renames property path of observers.
+
+    @method _renamePropertyPath
+    @param {String} observerPropertyPath Path to property from which observers must be removed.
+    @param {Number} len Index of observer in the array to be removed.
+    @private
+  */
+  _renamePropertyPath(observerPropertyPath, len) {
+    let hierarchyPropertiesObservers = this.get('_hierarchyPropertiesObservers');
+    let rootPropertyOwner = this.get('_rootPropertyOwner');
+    let observerPropertyPathArray = observerPropertyPath.split('.');
+
+    if (observerPropertyPathArray.length >= 3) {
+
+      let arrayForSubstring = observerPropertyPathArray.slice(0, observerPropertyPathArray.length - 2);
+      let checkSubstring = arrayForSubstring.join('.');
+
+      for (let i = len + 1; i < hierarchyPropertiesObservers.length; i++) {
+        let observer = hierarchyPropertiesObservers[i];
+
+        let updatableObserverPropertyPath = Ember.get(observer, 'propertyPath');
+        let updatableObserverPropertyPathArray = updatableObserverPropertyPath.split('.');
+        let newObserverPropertyPath = updatableObserverPropertyPathArray[0];
+
+        for (let j = 1; j < updatableObserverPropertyPathArray.length; j++) {
+          if ((j === (observerPropertyPathArray.length - 2)) && (checkSubstring === newObserverPropertyPath)) {
+            newObserverPropertyPath += '.' + (updatableObserverPropertyPathArray[j] - 1).toString();
+
+            let observerPropertyValue = getRecord(rootPropertyOwner, updatableObserverPropertyPath);
+            let referenceObserver = Ember.get(observer, 'referenceObserver');
+            Ember.removeObserver(rootPropertyOwner, updatableObserverPropertyPath, referenceObserver);
+
+            let arrayObserver = Ember.get(observer, 'arrayObserver');
+            if (Ember.isArray(observerPropertyValue)) {
+              observerPropertyValue.removeArrayObserver(arrayObserver);
+            }
+
+          } else {
+            newObserverPropertyPath += '.' + updatableObserverPropertyPathArray[j];
+          }
+        }
+
+        Ember.set(observer, 'propertyPath', newObserverPropertyPath);
+      }
+    }
+  },
+
+  /**
+    Sort array with hierarchy properties observers.
+
+    @method _sort
+    @param {Array} hierarchyPropertiesObservers Array with hierarchy properties observers.
+    @private
+  */
+  _sort(hierarchyPropertiesObservers) {
+
+    let sortArray = hierarchyPropertiesObservers.sort(function (a, b) {
+      if (a.propertyPath > b.propertyPath) {
+        return 1;
+      }
+
+      if (a.propertyPath < b.propertyPath) {
+        return -1;
+      }
+
+      return 0;
+    });
+    return sortArray;
   },
 
   /**

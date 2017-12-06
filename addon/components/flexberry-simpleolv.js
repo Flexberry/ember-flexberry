@@ -55,6 +55,17 @@ export default folv.extend(
         this.set('contentWithKeys', this.contentForRender);
       }
 
+      if (this.allSelect)
+      {
+        let contentWithKeys = this.get('contentWithKeys');
+        let checked = this.allSelect;
+
+        contentWithKeys.forEach((item) => {
+          item.set('selected', checked);
+          item.set('rowConfig.canBeSelected', !checked);
+        });
+      }
+
       this.get('objectlistviewEventsService').setLoadingState('');
     }
   })),
@@ -1116,7 +1127,6 @@ export default folv.extend(
       let checked = !this.allSelect;
       Ember.set(this, 'allSelect', checked);
       Ember.set(this, 'isDeleteButtonEnabled', checked);
-
 
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];

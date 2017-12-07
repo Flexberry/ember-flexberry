@@ -369,6 +369,12 @@ ui.button.ui-clear:hover {
     }
 }
 
+.ui.check-all-button.button.activated {
+  & i.icon.check-all-square-o:before {
+    color: @uiHoveredNegitveTextColor;
+  }
+}
+
 .ui.clear-sorting-button.button {
     padding: 0px;
     height: 30px;

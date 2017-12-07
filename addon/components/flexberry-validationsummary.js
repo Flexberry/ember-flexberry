@@ -50,6 +50,14 @@ export default Ember.Component.extend({
   messages: undefined,
 
   /**
+    Header of validationsummary
+
+    @property headerText
+    @type String
+  */
+  headerText: undefined,
+
+  /**
     An overridable method called when objects are instantiated.
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
   */

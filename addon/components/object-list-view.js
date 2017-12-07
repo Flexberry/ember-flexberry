@@ -1033,10 +1033,12 @@ export default FlexberryBaseComponent.extend(
       this._router = Ember.getOwner(this).lookup('router:main');
 
       let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
-      userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
+      let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName)
+      currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
+      userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {
-        let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+        let sort = serializeSortingParam(currentUserSetting.sorting);
+        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort }});
       });
     }
   },

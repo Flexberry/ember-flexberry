@@ -242,6 +242,15 @@ export default FlexberryBaseComponent.extend({
   showDeleteButtonInRow: false,
 
   /**
+    Flag indicates whether to show edit button in first column of every row.
+
+    @property showEditButtonInRow
+    @type Boolean
+    @default false
+  */
+  showEditButtonInRow: false,
+
+  /**
     Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
 
     @property showEditMenuItemInRow

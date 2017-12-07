@@ -53,6 +53,15 @@ export default FlexberryBaseComponent.extend({
   _switchHierarchicalMode: 'switchHierarchicalMode',
 
   /**
+    Store the action name at controller for switch to the collapse/expand mode.
+
+    @property _switchExpandMode
+    @type String
+    @default 'switchExpandMode'
+    @private
+  */
+  _switchExpandMode: 'switchExpandMode',
+  /**
     Store the action name at controller for save the hierarchical attribute name.
 
     @property _saveHierarchicalAttribute
@@ -73,6 +82,16 @@ export default FlexberryBaseComponent.extend({
   _availableHierarchicalMode: false,
 
   /**
+    Flag indicate when available the collapse/expand all hierarchies mode.
+
+    @property _availableCollExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  _availableCollExpandMode: false,
+
+  /**
     Flag indicate when component is in the hierarchical mode.
 
     @property _inHierarchicalMode
@@ -82,6 +101,24 @@ export default FlexberryBaseComponent.extend({
   */
   _inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
     return this.get('currentController.inHierarchicalMode');
+  }),
+
+  /**
+    Flag indicate when component is in the collapse/expand mode.
+
+    @property _inExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  _inExpandMode: Ember.computed('currentController.inExpandMode', {
+    get(key) {
+      return this.get('currentController.inExpandMode');
+    },
+    set(key, value) {
+      this.set('currentController.inExpandMode',  value);
+      return value;
+    }
   }),
 
   /**
@@ -908,6 +945,15 @@ export default FlexberryBaseComponent.extend({
     */
     switchHierarchicalMode() {
       this.sendAction('_switchHierarchicalMode');
+    },
+
+    /**
+      Called controller action to switch in collapse/expand mode.
+
+      @method actions.switchExpandMode
+    */
+    switchExpandMode() {
+      this.sendAction('_switchExpandMode');
     },
 
     /**

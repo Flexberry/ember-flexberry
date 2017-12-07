@@ -244,6 +244,26 @@ export default ListFormController.extend({
   columnsWidthAutoresize: false,
 
   /**
+    Flag indicate when available the hierarchical mode.
+
+    @property availableHierarchicalMode
+    @type Boolean
+    @default false
+    @private
+  */
+  availableHierarchicalMode: false,
+
+  /**
+    Flag indicate when available the collapse/expand all hierarchies mode.
+
+    @property availableCollExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  availableCollExpandMode: false,
+
+  /**
     Current records.
 
     @property _records
@@ -295,6 +315,8 @@ export default ListFormController.extend({
     '  sorting=computedSorting<br>' +
     '  sortByColumn=(action \"sortByColumn\")<br>' +
     '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
+    '  _availableHierarchicalMode=availableHierarchicalMode<br>'+
+    '  _availableCollExpandMode=availableCollExpandMode<br>'+
     '  pages=pages<br>' +
     '  perPageValue=perPageValue<br>' +
     '  perPageValues=perPageValues<br>' +
@@ -477,6 +499,18 @@ export default ListFormController.extend({
       settingType: 'string',
       settingDefaultValue: undefined,
       bindedControllerPropertieName: 'singleColumnHeaderTitle'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'availableHierarchicalMode',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'availableHierarchicalMode'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'availableCollExpandMode',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'availableCollExpandMode'
     });
 
     return componentSettingsMetadata;

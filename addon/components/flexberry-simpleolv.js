@@ -1174,7 +1174,7 @@ export default folv.extend(
       userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {
         let sort = serializeSortingParam(currentUserSetting.sorting);
-        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort }});
+        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
       });
     }
   },

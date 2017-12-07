@@ -315,8 +315,8 @@ export default ListFormController.extend({
     '  sorting=computedSorting<br>' +
     '  sortByColumn=(action \"sortByColumn\")<br>' +
     '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
-    '  _availableHierarchicalMode=availableHierarchicalMode<br>'+
-    '  _availableCollExpandMode=availableCollExpandMode<br>'+
+    '  _availableHierarchicalMode=availableHierarchicalMode<br>' +
+    '  _availableCollExpandMode=availableCollExpandMode<br>' +
     '  pages=pages<br>' +
     '  perPageValue=perPageValue<br>' +
     '  perPageValues=perPageValues<br>' +

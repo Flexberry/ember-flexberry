@@ -187,6 +187,14 @@ export default FlexberryBaseComponent.extend(
   onEditForm: false,
 
   /**
+    Id object in list, which highlighted for user attention.
+
+    @property highlightObjectById
+    @type Object
+  */
+  highlightObjectById: undefined,
+
+  /**
     Custom classes for table.
 
     @example
@@ -719,11 +727,13 @@ export default FlexberryBaseComponent.extend(
     @param {Boolean} [canBeDeleted=true] The row can be deleted
     @param {Boolean} [canBeSelected=true] The row can be selected via checkbox
     @param {String} [customClass=''] Custom css classes for the row
+    @param {Boolean} [isHighlighted=false] The row highlighted
   */
   defaultRowConfig: {
     canBeDeleted: true,
     canBeSelected: true,
     customClass: '',
+    isHighlighted: false
   },
 
   /**
@@ -1827,6 +1837,10 @@ export default FlexberryBaseComponent.extend(
     let rowConfig = Ember.copy(this.get('defaultRowConfig'));
     modelWithKey.set('rowConfig', rowConfig);
     record.set('rowConfig', rowConfig);
+    let highlightObjectById = this.get('highlightObjectById');
+    if (highlightObjectById && record.get('id') === highlightObjectById) {
+      rowConfig.isHighlighted = true;
+    }
 
     let configurateRow = this.get('configurateRow');
     if (configurateRow) {

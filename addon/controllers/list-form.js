@@ -83,6 +83,14 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   state: undefined,
 
   /**
+    Id object in list, which highlighted for user attention.
+
+    @property highlightObjectById
+    @type Object
+  */
+  highlightObjectById: undefined,
+
+  /**
     Method to get type and attributes of component, which will be embeded in object-list-view cell.
 
     @method getCellComponent

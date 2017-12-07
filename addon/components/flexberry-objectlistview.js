@@ -173,6 +173,14 @@ export default FlexberryBaseComponent.extend({
   onEditForm: false,
 
   /**
+    Id object in list, which highlighted for user attention.
+
+    @property highlightObjectById
+    @type Object
+  */
+  highlightObjectById: undefined,
+
+  /**
     Primary action for row click.
 
     @property action

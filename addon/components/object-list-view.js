@@ -1033,7 +1033,7 @@ export default FlexberryBaseComponent.extend(
       this._router = Ember.getOwner(this).lookup('router:main');
 
       let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
-      let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName)
+      let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName);
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
       userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {

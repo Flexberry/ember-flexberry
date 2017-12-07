@@ -683,7 +683,7 @@ export default FlexberryBaseComponent.extend({
       @param {Object} options Different parameters to handle action.
     */
     objectListViewRowClick(record, options) {
-      if (this.get('rowClickable') && !this.get('readonly')) {
+      if ((this.get('rowClickable') || options.rowEdit) && !this.get('readonly')) {
         let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
         Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {

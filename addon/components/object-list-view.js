@@ -801,7 +801,7 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
-      if (this.rowClickable) {
+      if (this.rowClickable || params.rowEdit) {
         let recordKey = recordWithKey && recordWithKey.key;
         let recordData = recordWithKey && recordWithKey.data;
 

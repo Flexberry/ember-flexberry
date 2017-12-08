@@ -131,6 +131,10 @@ div.ui.secondary.menu.no-margin {
     border: none;
 }
 
+.ui.button.collexp-button {
+    border: 0px;
+}
+
 .ui.buttons.filter-active {
     border: 1px solid @uiBorderColor;
     height: 35px;

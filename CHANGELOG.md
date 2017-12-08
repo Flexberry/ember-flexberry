@@ -4,6 +4,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.2-beta.9] - 2017-12-06
+### Added
+* `flexberry-validationsummary` component:
+    * Add header property.
+* `flexberry-lookup` component:
+    * Add localization for autocomplete empty result.
+    * Add sorting settings for autocomplete result list.
+
+### Fixed
+* `flexberry-tree` component:
+    * Fix `get-with-dynamic-actions` helper.
+
 ## [0.9.2-beta.8] - 2017-11-27
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.9.1-beta.2.

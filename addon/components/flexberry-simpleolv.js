@@ -322,6 +322,7 @@ export default folv.extend(
     'showAsteriskInRow',
     'showCheckBoxInRow',
     'showDeleteButtonInRow',
+    'showEditButtonInRow',
     'modelProjection',
     function() {
     if (this.get('modelProjection')) {

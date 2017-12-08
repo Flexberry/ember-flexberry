@@ -57,7 +57,7 @@
               {{#if (and (not index) inHierarchicalMode)}}
                 {{#if hasRecords}}
                   <button class="ui button hierarchy-expand icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
-                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
+                    <i class="{{if inExpandMode "minus" "plus"}} hierarchy-expand icon"></i>
                   </button>
                 {{/if}}
               {{/if}}
@@ -83,10 +83,10 @@
               {{#if hasRecords}}
                 <button
                   class="ui button hierarchy-expand icon mini compact {{buttonClass}}"
-                  title={{if _expanded (t "components.object-list-view.hierarchy-buttons.minus-button-title")
+                  title={{if inExpandMode (t "components.object-list-view.hierarchy-buttons.minus-button-title")
                    (t "components.object-list-view.hierarchy-buttons.plus-button-title")}}
                   {{action "expand" bubbles=false}}>
-                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
+                    <i class="{{if inExpandMode "minus" "plus"}} hierarchy-expand icon"></i>
                 </button>
               {{/if}}
             {{/if}}
@@ -126,7 +126,7 @@
       </td>
     {{/if}}
   </tr>
-  {{#if (and _expanded inHierarchicalMode)}}
+  {{#if (and inExpandMode inHierarchicalMode)}}
     {{#each records key="key" as |record|}}
       {{object-list-view-row
         record=record
@@ -144,6 +144,7 @@
         showDeleteButtonInRow=showDeleteButtonInRow
         showEditButtonInRow=showEditButtonInRow
         inHierarchicalMode=inHierarchicalMode
+        inExpandMode=inExpandMode
         loadRecords=loadRecords
         doRenderData=record.doRenderData
         rowClick=rowClick

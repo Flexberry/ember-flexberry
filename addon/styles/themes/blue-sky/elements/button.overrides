@@ -344,7 +344,7 @@ ui.button.ui-clear:hover {
     &:hover {
         border: 1px solid @uiHoveredNegitveBorderColor;
         background: @white;
-        & i.icon.minus:before {
+        & i.icon.edit:before {
             color: @uiHoveredNegitveTextColor;
         }
     }

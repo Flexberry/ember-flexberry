@@ -1242,7 +1242,7 @@ export default FlexberryBaseComponent.extend(
             let delButton = this.get('showDeleteButtonInRow');
             let editButton = this.get('showEditButtonInRow');
 
-            setting.width = (checkbox && delButton && editButton ? 120 : delButton ? 70 : 65) - padding;
+            setting.width = (checkbox && delButton && editButton ? 130 : (checkbox && delButton) || (checkbox && editButton) || (delButton && editButton) ? 100 : checkbox || delButton || editButton ? 70 : 65) - padding;
           }
         }
 

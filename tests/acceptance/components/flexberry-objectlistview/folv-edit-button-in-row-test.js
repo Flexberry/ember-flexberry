@@ -13,7 +13,7 @@ executeTest('check edit button in row', (store, assert, app) => {
 
     let $editButtonInRow = Ember.$('.object-list-view-row-edit-button');
 
-    assert.equal(saveButton.length, 5, 'All row have editButton');
+    assert.equal($editButtonInRow.length, 5, 'All row have editButton');
 
     let $button = $editButtonInRow[0];
     $button.click();

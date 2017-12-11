@@ -963,9 +963,10 @@ export default FlexberryBaseComponent.extend({
       @param {String} Primary key.
       @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
       @param {String} Property name.
+      @param {Boolean} Flag indicates that this is the first download of data.
     */
-    loadRecords(id, target, property) {
-      this.sendAction('_loadRecords', id, target, property);
+    loadRecords(id, target, property, firstRunMode) {
+      this.sendAction('_loadRecords', id, target, property, firstRunMode);
     },
 
     /**

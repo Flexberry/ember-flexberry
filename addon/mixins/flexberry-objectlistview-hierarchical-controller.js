@@ -84,9 +84,10 @@ export default Ember.Mixin.create({
       @param {String} id Record ID.
       @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
       @param {String} property Property name into {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {Boolean} Flag indicates that this is the first download of data.
     */
-    loadRecords(id, target, property) {
-      this.send('loadRecordsById', id, target, property);
+    loadRecords(id, target, property, firstRunMode) {
+      this.send('loadRecordsById', id, target, property, firstRunMode);
     },
   }
 });

@@ -132,7 +132,24 @@ export default class ModelBlueprint {
           TAB + TAB + `@property ${attr.name}\n` +
           TAB + "*/\n" + TAB;
       }
-      attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}')`);
+      let defaultValue = "";
+      if (attr.defaultValue) {
+        switch (attr.type) {
+          case 'decimal':
+          case 'number':
+          case 'boolean':
+            defaultValue = `, { defaultValue: ${attr.defaultValue} }`;
+            break;
+          case 'date':
+            if (attr.defaultValue === 'Now') {
+              defaultValue = `, { defaultValue() { return new Date(); }}`;
+              break;
+            }
+          default:
+            defaultValue = `, { defaultValue: '${attr.defaultValue}' }`;
+        }
+      }
+      attrs.push(`${comment}${attr.name}: DS.attr('${attr.type}'${defaultValue})`);
       if (attr.notNull) {
         if (attr.type === "date") {
           validations.push(attr.name + ": { datetime: true }");

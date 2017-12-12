@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Add localization for autocomplete empty result.
     * Add sorting settings for autocomplete result list.
+* Blueprints:
+    * Add model's default property values generation.
 
 ### Fixed
 * `flexberry-tree` component:

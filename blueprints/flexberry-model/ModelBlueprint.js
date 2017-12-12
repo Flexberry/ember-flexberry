@@ -126,7 +126,7 @@ var ModelBlueprint = (function () {
                         break;
                     case 'date':
                         if (attr.defaultValue === 'Now') {
-                            defaultValue = ", { defaultValue() { return new Date(); }}";
+                            defaultValue = ", { defaultValue() { return new Date(); } }";
                             break;
                         }
                     default:

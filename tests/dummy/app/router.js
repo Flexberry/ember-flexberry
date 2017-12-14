@@ -124,6 +124,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
+  this.route('components-acceptance-tests/flexberry-objectlistview/folv-filter');
 });
 
 export default Router;

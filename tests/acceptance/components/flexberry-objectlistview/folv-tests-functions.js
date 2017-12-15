@@ -122,3 +122,44 @@ export function loadingLocales(locale, app) {
     }), timeout);
   });
 }
+
+// Function for filter object-list-view by list of operations and values.
+export function filterObjectListView(objectListView, operations, filterValues) {
+  Ember.run(() => {
+
+    let tableBody = objectListView.children('tbody');
+    let tableRow = Ember.$(tableBody.children('tr'));
+    let tableColumns= Ember.$(tableRow[0]).children('td');
+
+    for (let i = 0; i < tableColumns.length; i++) {
+      filterCollumn(objectListView, i, operations[i], filterValues[i]);
+    }
+  });
+}
+
+// Function for filter object-list-view at one column by operations and values.
+export function filterCollumn(objectListView, columnNumber, operation, filterValue) {
+  Ember.run(() => {
+
+    let tableBody = objectListView.children('tbody');
+    let tableRow = tableBody.children('tr');
+
+    let filterOperation = Ember.$(tableRow[0]).find('.flexberry-dropdown')[columnNumber];
+    let filterValueCell = Ember.$(tableRow[1]).children('td')[columnNumber];
+
+    // Select an existing item.
+    Ember.$(filterOperation).dropdown('set selected', operation);
+    let objectFilterValue = undefined;
+
+    dropdown = Ember.$(filterValueCell).find('.flexberry-dropdown');
+    textbox = Ember.$(filterValueCell).find('.ember-text-field');
+
+    if (textbox.length != 0) {
+      fillIn(textbox, filterValue);
+    }
+
+    if (dropdown.length != 0) {
+      dropdown.dropdown('set selected', filterValue);
+    }
+  });
+}

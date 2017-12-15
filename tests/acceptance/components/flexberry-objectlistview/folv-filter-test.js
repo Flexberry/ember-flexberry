@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
+import {  filterObjectListView } from './folv-tests-functions';
 
 executeTest('check filter', (store, assert) => {
   assert.expect(1);
-  let path = 'components-examples/flexberry-objectlistview/custom-filter';
+  let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
 
   // Add records for paging.
   Ember.run(() => {
@@ -13,18 +14,15 @@ executeTest('check filter', (store, assert) => {
 
       let $filterButtonDiv = Ember.$('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
-      let $objectListView = Ember.$('.object-list-view');
+      let objectListView = Ember.$('.object-list-view');
 
       // Activate filtre row.
       $filterButton.click();
 
-      // Select an existing item.
-      let filterOperation = Ember.$('.flexberry-dropdown')[0];
-      Ember.$(filterOperation).dropdown('set selected', 'eq');
+      let filtreInsertOperationArr = ['eq', '', 'eq', 'eq', 'eq', 'eq'];
+      let filtreInsertValueArr = ['dfg', '', '3', 'false', '123222', 'Иван'];
 
-      // Add filtre value.
-      let firstObjectFilterValue = $objectListView.find('.ember-text-field')[0];
-      fillIn(firstObjectFilterValue, 'dfg');
+      filterObjectListView(objectListView, filtreInsertOperationArr, filtreInsertValueArr);
 
       let done = assert.async();
 
@@ -36,9 +34,9 @@ executeTest('check filter', (store, assert) => {
         let done1 = assert.async();
         window.setTimeout(() => {
           done1();
-        }, 10000);
+        }, 100000);
         done();
-      }, 100);
+      }, 1000);
     });
   });
 });

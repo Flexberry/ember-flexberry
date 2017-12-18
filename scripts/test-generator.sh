@@ -16,7 +16,7 @@ pushd "$TMP_DIR"
 # Initialize new ember app and install addon from the build.
 # EmberCLI asks whether it needs to overwrite existing files,
 # so we need to remove them for non-interactive build.
-yarn add ember-cli@2.4.3
+npm install ember-cli@2.4.3
 ember init --skip-npm
 cp app/index.html .
 rm -r app/*
@@ -47,7 +47,7 @@ mkdir -p "$TMP_DIR"
 rm -rf "$TMP_DIR/*"
 pushd "$TMP_DIR"
 
-yarn add ember-cli@2.4.3
+npm install ember-cli@2.4.3
 ember addon new-addon-for-tests --skip-npm
 pushd new-addon-for-tests
 

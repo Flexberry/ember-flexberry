@@ -3,11 +3,11 @@ import { executeTest } from './execute-folv-test';
 import { filterObjectListView } from './folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
-executeTest('check filter', (store, assert) => {
+executeTest('check neq filter', (store, assert) => {
   assert.expect(2);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
-  let filtreInsertOperationArr = ['eq', '', 'eq', 'eq', 'eq', 'eq'];
+  let filtreInsertOperationArr = ['neq', '', 'neq', 'neq', 'neq', 'neq'];
   let filtreInsertValueArr;
 
   visit(path);
@@ -15,12 +15,11 @@ executeTest('check filter', (store, assert) => {
     assert.equal(currentPath(), path);
 
     // Check that the records have been removed into store.
-    let builder2 = new Query.Builder(store).from(modelName).top(1);
-    store.query(modelName, builder2.build()).then((result) => {
+    let builder = new Query.Builder(store).from(modelName).top(1);
+    store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertValueArr = [arr.objectAt(0).get('address'), '', arr.objectAt(0).get('votes'), arr.objectAt(0).get('moderated'), arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
     }).then(function() {
-
       let $filterButtonDiv = Ember.$('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
       let $objectListView = Ember.$('.object-list-view');

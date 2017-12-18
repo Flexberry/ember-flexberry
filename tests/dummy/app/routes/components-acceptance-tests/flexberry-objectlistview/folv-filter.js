@@ -1,4 +1,5 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
+import { Query } from 'ember-flexberry-data';
 
 export default ListFormRoute.extend({
   /**
@@ -39,5 +40,17 @@ export default ListFormRoute.extend({
     @type String
     @default 'ember-flexberry-dummy-suggestion'
    */
-  modelName: 'ember-flexberry-dummy-suggestion'
+  modelName: 'ember-flexberry-dummy-suggestion',
+
+  /**
+    It overrides base method and forms the limit predicate for loaded data.
+
+    @public
+    @method objectListViewLimitPredicate
+    @param {Object} options Method options..
+   */
+  objectListViewLimitPredicate: function(options) {
+    let limitFunction = new Query.SimplePredicate('address', Query.FilterOperator.Neq, undefined);
+    return limitFunction;
+  }
 });

@@ -18,7 +18,6 @@ export default ListFormController.extend({
    */
   editFormRoute: 'ember-flexberry-dummy-suggestion-edit',
 
-
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'enableFilters' mode or not.
 
@@ -26,7 +25,6 @@ export default ListFormController.extend({
     @type Boolean
    */
   enableFilters: true,
-
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'refreshButton' mode or not.
@@ -43,7 +41,6 @@ export default ListFormController.extend({
     @type Boolean
    */
   showEditMenuItemInRow: true,
-
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'rowClickable' mode or not.

@@ -129,7 +129,7 @@ export function filterObjectListView(objectListView, operations, filterValues) {
 
     let tableBody = objectListView.children('tbody');
     let tableRow = Ember.$(tableBody.children('tr'));
-    let tableColumns= Ember.$(tableRow[0]).children('td');
+    let tableColumns = Ember.$(tableRow[0]).children('td');
 
     for (let i = 0; i < tableColumns.length; i++) {
       filterCollumn(objectListView, i, operations[i], filterValues[i]);
@@ -149,16 +149,15 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
 
     // Select an existing item.
     Ember.$(filterOperation).dropdown('set selected', operation);
-    let objectFilterValue = undefined;
 
-    dropdown = Ember.$(filterValueCell).find('.flexberry-dropdown');
-    textbox = Ember.$(filterValueCell).find('.ember-text-field');
+    let dropdown = Ember.$(filterValueCell).find('.flexberry-dropdown');
+    let textbox = Ember.$(filterValueCell).find('.ember-text-field');
 
-    if (textbox.length != 0) {
+    if (textbox.length !== 0) {
       fillIn(textbox, filterValue);
     }
 
-    if (dropdown.length != 0) {
+    if (dropdown.length !== 0) {
       dropdown.dropdown('set selected', filterValue);
     }
   });

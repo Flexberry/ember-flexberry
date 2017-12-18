@@ -261,7 +261,12 @@ export default FlexberryBaseComponent.extend({
       let id = this.get('record.data.id');
       if (id && this.get('inHierarchicalMode')) {
         this.set('recordsLoaded', true);
-        this.sendAction('loadRecords', id, this, 'records');
+        if (this.get('_level') > 0) {
+          this.sendAction('loadRecords', id, this, 'records', false);
+        } else {
+          this.sendAction('loadRecords', id, this, 'records', true);
+        }
+
       }
     }
   },

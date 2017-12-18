@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 * `flexberry-objectlistview` component:
     * Add collapse/expand all button for hierarchy mode.
+    * Increased performance when working in hierarchical mode by reducing number of queries to backend on rendering top-level nodes.
 
 ## [0.9.2-beta.9] - 2017-12-06
 ### Added

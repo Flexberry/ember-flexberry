@@ -1,14 +1,14 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
-import { filterObjectListView } from './folv-tests-functions';
+import { filterCollumn } from './folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
-executeTest('check filter', (store, assert, app) => {
-  assert.expect(2);
+executeTest('check like filter', (store, assert, app) => {
+  assert.expect(3);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
-  let filtreInsertOperationArr = ['eq', '', 'eq', 'eq', 'eq', 'eq'];
-  let filtreInsertValueArr;
+  let filtreInsertOperation = 'like';
+  let filtreInsertParametr;
 
   visit(path);
   andThen(function() {
@@ -16,7 +16,8 @@ executeTest('check filter', (store, assert, app) => {
     let builder2 = new Query.Builder(store).from(modelName).top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
-      filtreInsertValueArr = [arr.objectAt(0).get('address'), '', arr.objectAt(0).get('votes'), arr.objectAt(0).get('moderated'), arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
+      filtreInsertParametr = arr.objectAt(0).get('address');
+      filtreInsertParametr = filtreInsertParametr.slice(1, filtreInsertParametr.length);
     }).then(function() {
       let $filterButtonDiv = Ember.$('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
@@ -25,7 +26,7 @@ executeTest('check filter', (store, assert, app) => {
       // Activate filtre row.
       $filterButton.click();
 
-      filterObjectListView($objectListView, filtreInsertOperationArr, filtreInsertValueArr);
+      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr);
 
       let done = assert.async();
       window.setTimeout(() => {
@@ -37,7 +38,9 @@ executeTest('check filter', (store, assert, app) => {
         window.setTimeout(() => {
           let controller = app.__container__.lookup('controller:' + currentRouteName());
           let filtherResult = controller.model.content;
+          let address = filtherResult[0]._data.address;
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
+          assert.equal(address.lastIndexOf(filtreInsertParametr) !== -1 , true, 'Filter successfully worked');
           done1();
         }, 1000);
         done();

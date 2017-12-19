@@ -125,6 +125,12 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-filter');
+
+  this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-list-with-checked-checkbox');
+  this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox',
+  { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/:id' });
+  this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox.new',
+  { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/new' });
 });
 
 export default Router;

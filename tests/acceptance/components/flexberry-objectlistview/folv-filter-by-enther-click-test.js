@@ -10,7 +10,7 @@ executeTest('check filter by enter click', (store, assert, app) => {
   let filtreInsertOperation = 'eq';
   let filtreInsertParametr;
 
-  visit(path + '?perPage=500');
+  visit(path);
   andThen(function() {
     assert.equal(currentPath(), path);
     let builder2 = new Query.Builder(store).from(modelName).top(1);
@@ -32,12 +32,10 @@ executeTest('check filter by enter click', (store, assert, app) => {
         // Apply filter by enter click.
         let input = Ember.$('.ember-text-field')[0];
         input.focus();
-
         keyEvent(input, "keydown", 13);
 
         let done1 = assert.async();
         window.setTimeout(() => {
-
           let controller = app.__container__.lookup('controller:' + currentRouteName());
           let filtherResult = controller.model.content;
           let $notSuccessful = true;
@@ -51,7 +49,7 @@ executeTest('check filter by enter click', (store, assert, app) => {
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal($notSuccessful, true, 'Filter successfully worked');
           done1();
-        }, 100000);
+        }, 1000);
         done();
       }, 100);
     });

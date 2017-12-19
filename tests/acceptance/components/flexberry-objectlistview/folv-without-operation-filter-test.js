@@ -3,11 +3,11 @@ import { executeTest } from './execute-folv-test';
 import { filterCollumn } from './folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
-executeTest('check like filter', (store, assert, app) => {
-  assert.expect(3);
+executeTest('check without operation filter', (store, assert, app) => {
+  assert.expect(4);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
-  let filtreInsertOperation = 'like';
+  let filtreInsertOperation = '';
   let filtreInsertParametr;
 
   visit(path);
@@ -46,6 +46,10 @@ executeTest('check like filter', (store, assert, app) => {
             }
           }
 
+          let dropdown = Ember.$('.flexberry-dropdown')[0];
+          let per = dropdown.innerText;
+
+          assert.equal(dropdown.innerText, 'like', 'Filter select like operation if it is not specified');
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal($notSuccessful, true, 'Filter successfully worked');
           done1();

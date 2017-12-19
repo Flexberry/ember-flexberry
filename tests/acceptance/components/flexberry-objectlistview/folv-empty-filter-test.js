@@ -40,7 +40,7 @@ executeTest('check empty filter', (store, assert, app) => {
         }
 
         assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty (If failed, add suggestion with empty address)');
-        assert.equal($neqParametr, true, 'Filter successfully worked');
+        assert.equal($notSuccessful, true, 'Filter successfully worked');
         done1();
       }, 1000);
       done();

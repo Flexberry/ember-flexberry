@@ -46,7 +46,7 @@ executeTest('check neq filter', (store, assert, app) => {
           }
 
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
-          assert.equal($neqParametr, true, 'Filter successfully worked');
+          assert.equal($notSuccessful, true, 'Filter successfully worked');
           done1();
         }, 1000);
         done();

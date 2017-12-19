@@ -3,7 +3,7 @@ import { executeTest } from './execute-folv-test';
 import { filterObjectListView } from './folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
-executeTest('check filter', (store, assert) => {
+executeTest('check filter', (store, assert, app) => {
   assert.expect(2);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
@@ -13,14 +13,11 @@ executeTest('check filter', (store, assert) => {
   visit(path);
   andThen(function() {
     assert.equal(currentPath(), path);
-
-    // Check that the records have been removed into store.
     let builder2 = new Query.Builder(store).from(modelName).top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertValueArr = [arr.objectAt(0).get('address'), '', arr.objectAt(0).get('votes'), arr.objectAt(0).get('moderated'), arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
     }).then(function() {
-
       let $filterButtonDiv = Ember.$('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
       let $objectListView = Ember.$('.object-list-view');
@@ -38,6 +35,7 @@ executeTest('check filter', (store, assert) => {
 
         let done1 = assert.async();
         window.setTimeout(() => {
+          //let controller = app.__container__.lookup('controller:' + currentRouteName());
           let rows = $objectListView.find('tr');
           assert.equal(rows.length >= 4, true, 'Filter successfully worked');
           done1();

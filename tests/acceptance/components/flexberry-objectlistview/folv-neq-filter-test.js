@@ -40,12 +40,13 @@ executeTest('check neq filter', (store, assert, app) => {
           let $neqParametr = true;
           for (let i = 0; i < filtherResult.length; i++) {
             let address = filtherResult[0]._data.address;
-            if ( address === filtreInsertParametr ) {
+            if (address === filtreInsertParametr) {
               $neqParametr = false;
             }
           }
+
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
-          assert.equal($neqParametr , true, 'Filter successfully worked');
+          assert.equal($neqParametr, true, 'Filter successfully worked');
           done1();
         }, 1000);
         done();

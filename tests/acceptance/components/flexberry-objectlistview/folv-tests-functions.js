@@ -132,7 +132,7 @@ export function filterObjectListView(objectListView, operations, filterValues) {
     let tableColumns = Ember.$(tableRow[0]).children('td');
 
     for (let i = 0; i < tableColumns.length; i++) {
-      if ( operations[i] ) {
+      if (operations[i]) {
         filterCollumn(objectListView, i, operations[i], filterValues[i]);
       }
     }

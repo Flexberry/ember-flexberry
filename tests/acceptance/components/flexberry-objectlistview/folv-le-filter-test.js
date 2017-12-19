@@ -40,10 +40,11 @@ executeTest('check le filter', (store, assert, app) => {
           let $notSuccessful = true;
           for (let i = 0; i < filtherResult.length; i++) {
             let votes = filtherResult[0]._data.votes;
-            if ( votes >= filtreInsertParametr ) {
+            if (votes >= filtreInsertParametr) {
               $notSuccessful = false;
             }
           }
+
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal($notSuccessful, true, 'Filter successfully worked');
           done1();

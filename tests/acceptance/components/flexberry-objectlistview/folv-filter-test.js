@@ -7,7 +7,7 @@ executeTest('check filter', (store, assert, app) => {
   assert.expect(2);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
-  let filtreInsertOperationArr = ['eq', '', 'eq', 'eq', 'eq', 'eq'];
+  let filtreInsertOperationArr = ['eq', undefined, 'eq', 'eq', 'eq', 'eq'];
   let filtreInsertValueArr;
 
   visit(path);
@@ -16,7 +16,8 @@ executeTest('check filter', (store, assert, app) => {
     let builder2 = new Query.Builder(store).from(modelName).top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
-      filtreInsertValueArr = [arr.objectAt(0).get('address'), '', arr.objectAt(0).get('votes'), arr.objectAt(0).get('moderated'), arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
+      filtreInsertValueArr = [arr.objectAt(0).get('address'), undefined, arr.objectAt(0).get('votes'),
+      arr.objectAt(0).get('moderated'), arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
     }).then(function() {
       let $filterButtonDiv = Ember.$('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');

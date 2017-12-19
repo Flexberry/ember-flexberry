@@ -40,7 +40,7 @@ executeTest('check like filter', (store, assert, app) => {
           let filtherResult = controller.model.content;
           let address = filtherResult[0]._data.address;
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
-          assert.equal(address.lastIndexOf(filtreInsertParametr) !== -1 , true, 'Filter successfully worked');
+          assert.equal(address.lastIndexOf(filtreInsertParametr) !== -1, true, 'Filter successfully worked');
           done1();
         }, 1000);
         done();

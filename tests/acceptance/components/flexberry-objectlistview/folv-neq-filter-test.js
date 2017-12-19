@@ -39,7 +39,7 @@ executeTest('check neq filter', (store, assert, app) => {
           let filtherResult = controller.model.content;
           let $neqParametr = true;
           for (let i = 0; i < filtherResult.length; i++) {
-            let address = filtherResult[0]._data.address;
+            let address = filtherResult[i]._data.address;
             if (address === filtreInsertParametr) {
               $neqParametr = false;
             }

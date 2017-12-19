@@ -38,9 +38,16 @@ executeTest('check like filter', (store, assert, app) => {
         window.setTimeout(() => {
           let controller = app.__container__.lookup('controller:' + currentRouteName());
           let filtherResult = controller.model.content;
-          let address = filtherResult[0]._data.address;
+          let $neqParametr = true;
+          for (let i = 0; i < filtherResult.length; i++) {
+            let address = filtherResult[i]._data.address;
+            if (address.lastIndexOf(filtreInsertParametr) === -1) {
+              $neqParametr = false;
+            }
+          }
+
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
-          assert.equal(address.lastIndexOf(filtreInsertParametr) !== -1, true, 'Filter successfully worked');
+          assert.equal($neqParametr, true, 'Filter successfully worked');
           done1();
         }, 1000);
         done();

@@ -261,6 +261,13 @@
                         </button>
                       </div>
                     {{/if}}
+                    {{#if showEditButtonInRow}}
+                      <div class="cell">
+                        <button class="ui ui-edit {{buttonClass}} {{if readonly "disabled"}} button" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
+                          <i class="edit icon"></i>
+                        </button>
+                      </div>
+                    {{/if}}
                   </div>
                 {{/if}}
               </td>
@@ -293,7 +300,7 @@
                     <i class="list layout icon"></i>
                     <div class="left menu">
                       {{#if (and showEditMenuItemInRow record.rowConfig.canBeSelected)}}
-                        <div class="item" {{ action "objectListViewRowClick" record }}>
+                        <div class="item" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
                           <i class="edit icon"></i>
                           <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
                         </div>

@@ -30,7 +30,7 @@
           {{#if showEditButtonInRow}}
             <div class="cell">
               <button
-                class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button"
+                class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} {{if readonly "disabled"}} button"
                 title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
                 {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                 <i class="edit icon"></i>

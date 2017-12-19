@@ -263,7 +263,7 @@
                     {{/if}}
                     {{#if showEditButtonInRow}}
                       <div class="cell">
-                        <button class="ui ui-edit {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
+                        <button class="ui ui-edit {{buttonClass}} {{if readonly "disabled"}} button" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
                           <i class="edit icon"></i>
                         </button>
                       </div>

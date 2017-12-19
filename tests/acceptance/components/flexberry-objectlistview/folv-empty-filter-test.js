@@ -31,11 +31,11 @@ executeTest('check empty filter', (store, assert, app) => {
       window.setTimeout(() => {
         let controller = app.__container__.lookup('controller:' + currentRouteName());
         let filtherResult = controller.model.content;
-        let $neqParametr = true;
+        let $notSuccessful = true;
         for (let i = 0; i < filtherResult.length; i++) {
           let address = filtherResult[i]._data.address;
           if (address === undefined) {
-            $neqParametr = false;
+            $notSuccessful = false;
           }
         }
 

@@ -4,10 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* `flexberry-simpleolv`, `flexberry-objectlistview` components:
-    * Add edit button.
+* Add optional edit button in row for `flexberry-simpleolv` and `flexberry-objectlistview` components.
 
-## [Unreleased]
 * `flexberry-objectlistview` component:
     * Add collapse/expand all button for hierarchy mode.
     * Increased performance when working in hierarchical mode by reducing number of queries to backend on rendering top-level nodes.

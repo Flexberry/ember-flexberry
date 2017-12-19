@@ -671,8 +671,10 @@ export default FlexberryBaseComponent.extend({
     @param {String} componentName The name of objectlistview component
     @param {DS.Model} record The model corresponding to selected row in objectlistview
     @param {Number} count Count of selected rows in objectlistview
+    @param {Boolean} checked Current state of row in objectlistview (checked or not)
+    @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
-  _rowSelected(componentName, record, count) {
+  _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }

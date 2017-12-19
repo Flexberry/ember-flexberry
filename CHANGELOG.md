@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* List components:
+    * Clear sorting operation, check all records on page operation and check all records on alls pages operation.
+    * Saving and restoring of previously selected records on reload records (including changing of page number, filtering, etc.).
 
 ## [0.9.2-beta.9] - 2017-12-06
 ### Added

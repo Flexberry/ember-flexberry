@@ -34,10 +34,10 @@ export default FlexberryBaseComponent.extend(
   _contentObserver: Ember.on('init', Ember.observer('content', function() {
     this._setContent(this.get('componentName'));
 
-    if (this.allSelect)
+    if (this.get('allSelect'))
     {
       let contentWithKeys = this.get('contentWithKeys');
-      let checked = this.allSelect;
+      let checked = this.get('allSelect');
 
       contentWithKeys.forEach((item) => {
         item.set('selected', checked);
@@ -926,7 +926,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked, recordWithKey);
     },
 
     /**
@@ -937,7 +937,7 @@ export default FlexberryBaseComponent.extend(
       @param {jQuery.Event} e jQuery.Event by click on check all at page button
     */
     checkAllAtPage(e) {
-      if (this.allSelect) {
+      if (this.get('allSelect')) {
         return;
       }
 
@@ -975,7 +975,7 @@ export default FlexberryBaseComponent.extend(
         recordWithKey.set('selected', checked);
 
         let componentName = this.get('componentName');
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked);
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
     },
 
@@ -989,7 +989,7 @@ export default FlexberryBaseComponent.extend(
     checkAll(e) {
       let contentWithKeys = this.get('contentWithKeys');
 
-      let checked = !this.allSelect;
+      let checked = !this.get('allSelect');
       Ember.set(this, 'allSelect', checked);
 
       for (let i = 0; i < contentWithKeys.length; i++) {
@@ -1164,6 +1164,34 @@ export default FlexberryBaseComponent.extend(
           let renderedRowIndex = this.get('_renderedRowIndex') + 1;
 
           if (renderedRowIndex >= contentLength) {
+            // Restore selected records.
+            if (this.get('selectedRecords')) {
+              this.get('selectedRecords').clear();
+            }
+
+            let componentName = this.get('componentName');
+            let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+            if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+              let e = {
+                checked: true
+              };
+
+              let someRecordWasSelected = false;
+              selectedRecordsToRestore.forEach((recordWithData, key) => {
+                if (this._getModelKey(recordWithData.data)) {
+                  someRecordWasSelected = true;
+                  this.send('selectRow', recordWithData, e);
+                }
+              });
+
+              if (!someRecordWasSelected && !this.get('allSelect')) {
+                // Reset toolbar buttons enabled state.
+                this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+              }
+            } else if (!this.get('allSelect')) {
+              // Reset toolbar buttons enabled state.
+              this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+            }
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
@@ -1244,6 +1272,8 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
+
+    this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
 
     this._super(...arguments);
   },
@@ -1966,6 +1996,17 @@ export default FlexberryBaseComponent.extend(
     if (configurateRow) {
       Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
       configurateRow(rowConfig, record);
+    }
+
+    // Mark previously selected records.
+    let componentName = this.get('componentName');
+    let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      selectedRecordsToRestore.forEach((recordWithData, key) => {
+        if (record === recordWithData.data) {
+          modelWithKey.selected = true;
+        }
+      });
     }
 
     if (this.get('useRowByRowLoading')) {

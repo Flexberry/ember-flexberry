@@ -55,10 +55,10 @@ export default folv.extend(
         this.set('contentWithKeys', this.contentForRender);
       }
 
-      if (this.allSelect)
+      if (this.get('allSelect'))
       {
         let contentWithKeys = this.get('contentWithKeys');
-        let checked = this.allSelect;
+        let checked = this.get('allSelect');
 
         contentWithKeys.forEach((item) => {
           item.set('selected', checked);
@@ -805,7 +805,7 @@ export default folv.extend(
       }
 
       let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked, recordWithKey);
     },
 
     /**
@@ -853,7 +853,7 @@ export default folv.extend(
       let componentName = this.get('componentName');
 
       //TODO: Implement the method of removing all objects.
-      if (!this.allSelect)
+      if (!this.get('allSelect'))
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
       }
@@ -1072,7 +1072,7 @@ export default folv.extend(
       @param {jQuery.Event} e jQuery.Event by click on check all at page buttons
     */
     checkAllAtPage(e) {
-      if (this.allSelect) {
+      if (this.get('allSelect')) {
         return;
       }
 
@@ -1110,7 +1110,7 @@ export default folv.extend(
         recordWithKey.set('selected', checked);
 
         let componentName = this.get('componentName');
-        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked);
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
     },
 
@@ -1124,7 +1124,7 @@ export default folv.extend(
     checkAll(e) {
       let contentWithKeys = this.get('contentWithKeys');
 
-      let checked = !this.allSelect;
+      let checked = !this.get('allSelect');
       Ember.set(this, 'allSelect', checked);
       Ember.set(this, 'isDeleteButtonEnabled', checked);
 
@@ -1265,6 +1265,35 @@ export default folv.extend(
   didRender() {
     this._super(...arguments);
 
+    // Restore selected records.
+    if (this.get('selectedRecords')) {
+      this.get('selectedRecords').clear();
+    }
+
+    let componentName = this.get('componentName');
+    let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      let e = {
+        checked: true
+      };
+
+      let someRecordWasSelected = false;
+      selectedRecordsToRestore.forEach((recordWithData, key) => {
+        if (this._getModelKey(recordWithData.data)) {
+          someRecordWasSelected = true;
+          this.send('selectRow', recordWithData, e);
+        }
+      });
+
+      if (!someRecordWasSelected && !this.get('allSelect')) {
+        // Reset toolbar buttons enabled state.
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+      }
+    } else if (!this.get('allSelect')) {
+      // Reset toolbar buttons enabled state.
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+    }
+
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
       if (key) {
@@ -1298,6 +1327,8 @@ export default folv.extend(
     this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
+
+    this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
 
     this._super(...arguments);
   },
@@ -2065,6 +2096,17 @@ export default folv.extend(
       configurateRow(rowConfig, record);
     }
 
+    // Mark previously selected records.
+    let componentName = this.get('componentName');
+    let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      selectedRecordsToRestore.forEach((recordWithData, key) => {
+        if (record === recordWithData.data) {
+          modelWithKey.selected = true;
+        }
+      });
+    }
+
     this.get('contentForRender').pushObject(modelWithKey);
 
     return key;
@@ -2721,8 +2763,10 @@ export default folv.extend(
     @param {String} componentName The name of objectlistview component
     @param {DS.Model} record The model corresponding to selected row in objectlistview
     @param {Number} count Count of selected rows in objectlistview
+    @param {Boolean} checked Current state of row in objectlistview (checked or not)
+    @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
-  _rowSelected(componentName, record, count) {
+  _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }

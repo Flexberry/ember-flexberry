@@ -13,16 +13,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
 */
 export default FlexberryBaseComponent.extend({
   /**
-    Flag used to display embedded records.
-
-    @property _expanded
-    @type Boolean
-    @default false
-    @private
-  */
-  _expanded: false,
-
-  /**
     Stores the number of pixels to isolate one level of hierarchy.
 
     @property _hierarchicalIndent
@@ -218,7 +208,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.expand
     */
     expand() {
-      this.toggleProperty('_expanded');
+      this.toggleProperty('inExpandMode');
     },
 
     /**
@@ -252,7 +242,10 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
-      Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      if (!Ember.isBlank(e)) {
+        Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      }
+
       this.sendAction('rowClick', record, params);
     }
   },
@@ -268,7 +261,12 @@ export default FlexberryBaseComponent.extend({
       let id = this.get('record.data.id');
       if (id && this.get('inHierarchicalMode')) {
         this.set('recordsLoaded', true);
-        this.sendAction('loadRecords', id, this, 'records');
+        if (this.get('_level') > 0) {
+          this.sendAction('loadRecords', id, this, 'records', false);
+        } else {
+          this.sendAction('loadRecords', id, this, 'records', true);
+        }
+
       }
     }
   },

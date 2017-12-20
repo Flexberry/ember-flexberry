@@ -1,12 +1,21 @@
+{{#ui-sidebar class="mobile inverted vertical main menu"}}
+  <a class="item"
+    href={{addonVersionHref}}
+    target="_blank"
+    title={{t "forms.application.sitemap.application-version.title"}}>
+    {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
+  </a>
+  {{render "sitemap" sitemap}}
+{{/ui-sidebar}}
 <div class="bgw-fix">
-  <div class="background-logo">
+  <div class="background-logo mobile">
     <div class="ui attached menu mobile">
       <div class="ui container flex-container">
-        <a {{action 'toggleSidebar'}}
+        <a {{action 'toggleSidebarMobile'}}
           class="launch icon item mobile"
           title={{t "forms.application.header.menu.sitemap-button.title"}}>
-          <i class="sidebar icon text-menu-1"></i>
-          <i class="sidebar icon hidden-menu text-menu-2 hidden-text"></i>
+          <i class="sidebar icon text-menu-show"></i>
+          <i class="sidebar icon hidden text-menu-hide hidden-text"></i>
         </a>
         <div class="right item">
           <label style="margin-right: 5px;">
@@ -21,51 +30,35 @@
           <label style="margin-right: 5px;">
             {{t "forms.application.header.menu.language-dropdown.caption"}}
           </label>
-          {{!-- ui-dropdown component used in flexberry-dropdown has some unfixed problems with IE, so we use <select> instead --}}
-          {{#if browserIsInternetExplorer}}
-            <select class="ui dropdown" onchange={{action (mut (get i18n "locale")) value="target.value"}}>
-              {{#each locales as |locale|}}
-                <option value={{locale}} selected={{eq (get i18n "locale") locale}}>
-                  {{locale}}
-                </option>
-              {{/each}}
-            </select>
-          {{else}}
-            {{flexberry-dropdown
-              class="compact"
-              items=locales
-              value=i18n.locale
-              placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-            }}
-          {{/if}}
+          {{flexberry-dropdown
+            class="compact"
+            items=locales
+            value=i18n.locale
+            placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+          }}
         </div>
       </div>
     </div>
   </div>
 </div>
 <div id="example-mobile" class="pusher">
-  <div class="full height" style="min-height: 94.8vh!important;" >
-    <div class="flexberry-content ui attached segment">
-    {{#ui-sidebar class="mobile inverted vertical main menu" dimPage=false}}
-      <a class="item"
-        href={{addonVersionHref}}
-        target="_blank"
-        title={{t "forms.application.sitemap.application-version.title"}}>
-        {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
-      </a>
-      {{render "sitemap" sitemap}}
-    {{/ui-sidebar}}
-      <div class="ui main container">
-        <div class="stackable grid container">
-          {{outlet}}
-          {{outlet "modal"}}
+  <div class="ui form {{objectlistviewEventsService.loadingState}}">
+    <div class="full height" style="min-height: 94.8vh!important;" >
+      <div class="flexberry-content ui attached segment">
+        <div class="ui main container">
+          <div class="stackable grid container">
+            {{outlet}}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<div class="ui main container">
+  {{outlet "modal"}}
+</div>
 <div class="ui vertical footer segment">
-  <div class="ui container flex-container">
+  <div class="ui container flex-container mobile-footer">
     <div class="ui text menu">
       <a class="brand item" href="#">
         {{t "forms.application.footer.application-name"}}

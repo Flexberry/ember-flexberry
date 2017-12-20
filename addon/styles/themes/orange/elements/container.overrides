@@ -45,7 +45,7 @@
     color: #fff!important;
 }
 
-.sidebar.icon.text-menu-1 {
+.sidebar.icon.text-menu-show {
     margin-left: 15px!important;
 }
 

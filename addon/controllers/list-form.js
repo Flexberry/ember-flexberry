@@ -8,6 +8,7 @@ import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
 import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-controller';
 import ColsConfigDialogMixin from '../mixins/colsconfig-dialog-controller';
+import ErrorableControllerMixin from '../mixins/errorable-controller';
 
 import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
 
@@ -44,7 +45,8 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   LimitedControllerMixin,
   FlexberryOlvToolbarMixin,
   FlexberryObjectlistviewHierarchicalControllerMixin,
-  ColsConfigDialogMixin, {
+  ColsConfigDialogMixin,
+  ErrorableControllerMixin, {
   /**
     Controller to show colsconfig modal window.
 

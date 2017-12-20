@@ -238,6 +238,14 @@ export default FlexberryBaseComponent.extend({
       this._setEmptyValue();
     } else {
       let dateToSet = this._getDateToSet(dateFromPicker);
+      if (!this.get('hasTimePicker')) {
+        dateToSet.setHours(13);
+        dateToSet.setUTCHours(11);
+        dateToSet.setUTCMinutes(0);
+        dateToSet.setUTCSeconds(0);
+        dateToSet.setUTCMilliseconds(0);
+      }
+
       let currentValue = this.get('value');
 
       // TODO: refactor

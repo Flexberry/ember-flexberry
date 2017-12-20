@@ -10,11 +10,11 @@ export default ListFormController.extend({
     return [{
       buttonName: 'filterByAnyWord',
       buttonAction: 'toggleFilterByAnyWord',
-      buttonClasses: this.get('filterByAnyWord') ? 'positive theme-button' : 'theme-button',
+      buttonClasses: this.get('filterByAnyWord') ? 'positive' : '',
     }, {
       buttonName: 'filterByAllWords',
       buttonAction: 'toggleFilterByAllWords',
-      buttonClasses: this.get('filterByAllWords') ? 'positive theme-button' : 'theme-button',
+      buttonClasses: this.get('filterByAllWords') ? 'positive' : '',
     }];
   }),
 
@@ -44,7 +44,7 @@ export default ListFormController.extend({
           return ['eq', 'neq', 'le', 'ge'];
 
         case 'string':
-          return ['eq', 'neq', 'like'];
+          return ['eq', 'neq', 'like', 'empty'];
 
         case 'boolean':
           return ['eq'];

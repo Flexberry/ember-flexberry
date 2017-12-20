@@ -1,5 +1,5 @@
 <h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.downloading-files-from-olv-list.caption"}}</h3>
-<form class="ui {{state}} form flexberry-vertical-form" role="form">
+<form class="ui form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
     closeable=true
@@ -25,7 +25,7 @@
   </div>
   <div class="field">
     <div class="flexberry-edit-panel">
-      <button type="submit" class="ui button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
   <div class="field {{if model.errors.name "error" ""}}">

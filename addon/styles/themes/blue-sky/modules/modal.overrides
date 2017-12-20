@@ -2,11 +2,25 @@
          Theme Overrides
 *******************************/
 
-.flexberry-modal.small {
-    height: 700px!important;
+.ui.modal > .close {
+    top: 0rem;
+    right: -0.2rem;
 }
 
 .ui.modal > .content {
-    overflow: auto!important;
-    max-height: 618px!important;
+    overflow: initial;
+    max-height: 618px;
+}
+
+.ui.modal .content .object-list-view-container {
+    max-height: 300px;
+}
+
+.ui.modal .content .flexberry-colsconfig.content {
+    max-height: 585px;
+    overflow: auto;
+}
+
+.ui.modal > ui.table {
+    margin-bottom: 0;
 }

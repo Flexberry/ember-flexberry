@@ -10,85 +10,85 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionL': {
           'address': {
-            'caption': 'Address'
+            __caption__: 'Address'
           },
           'text': {
-            'caption': 'Text'
+            __caption__: 'Text'
           },
           'date': {
-            'caption': 'Date'
+            __caption__: 'Date'
           },
           'votes': {
-            'caption': 'Votes'
+            __caption__: 'Votes'
           },
           'author': {
-            'caption': 'Author',
+            __caption__: 'Author',
             'eMail': {
-              'caption': 'Email'
+              __caption__: 'Email'
             }
           },
           'editor1': {
-            'caption': 'Editor',
+            __caption__: 'Editor',
             'eMail': {
-              'caption': 'Email'
+              __caption__: 'Email'
             }
           },
           'moderated': {
-            'caption': 'Moderated'
+            __caption__: 'Moderated'
           },
           'type': {
-            'caption': 'Type'
+            __caption__: 'Type'
           },
           'commentsCount': {
-            'caption': 'Comments count'
+            __caption__: 'Comments count'
           },
           'comments': {
-            'caption': 'Comments'
+            __caption__: 'Comments'
           },
         },
         'SuggestionE': {
           'address': {
-            'caption': 'Address'
+            __caption__: 'Address'
           },
           'userVotes': {
             'name': {
-              'caption': 'Name'
+              __caption__: 'Name'
             },
             'voteType': {
-              'caption': 'Vote type'
+              __caption__: 'Vote type'
             },
             'author': {
-              'caption': 'Application User',
+              __caption__: 'Application User',
               'eMail': {
-                'caption': 'Email'
+                __caption__: 'Email'
               }
             }
           },
           'files': {
             'order': {
-              'caption': 'Order'
+              __caption__: 'Order'
             },
             'file': {
-              'caption': 'File',
+              __caption__: 'File',
             }
           },
           'comments': {
             'name': {
-              'caption': 'Name'
+              __caption__: 'Name'
             },
             'text': {
-              'caption': 'Text'
+              __caption__: 'Text'
             },
             'votes': {
-              'caption': 'Votes',
+              __caption__: 'Votes',
             },
             'moderated': {
-              'caption': 'Moderated',
+              __caption__: 'Moderated',
             },
             'author': {
-              'caption': 'Application User',
+              __caption__: 'Application User',
               'eMail': {
-                'caption': 'Mail'
+                __caption__: 'Mail'
               }
             }
           }
@@ -99,22 +99,22 @@ Ember.$.extend(true, translations, {
       'projections': {
         'ApplicationUserL': {
           'name': {
-            'caption': 'Name'
+            __caption__: 'Name'
           },
           'eMail': {
-            'caption': 'E-mail'
+            __caption__: 'E-mail'
           },
           'activated': {
-            'caption': 'Activated'
+            __caption__: 'Activated'
           },
           'birthday': {
-            'caption': 'Birthday'
+            __caption__: 'Birthday'
           },
           'gender': {
-            'caption': 'Gender'
+            __caption__: 'Gender'
           },
           'karma': {
-            'caption': 'Karma'
+            __caption__: 'Karma'
           },
         },
       }
@@ -123,7 +123,7 @@ Ember.$.extend(true, translations, {
       'projections': {
         'LocalizationL': {
           'name': {
-            'caption': 'Name'
+            __caption__: 'Name'
           },
         },
       }
@@ -132,27 +132,27 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionTypeL': {
           'name': {
-            'caption': 'Name'
+            __caption__: 'Name'
           },
           'moderated': {
-            'caption': 'Moderated'
+            __caption__: 'Moderated'
           },
           'parent': {
-            'caption': 'Parent'
+            __caption__: 'Parent'
           },
         },
         'SuggestionTypeE': {
           'name': {
-            'caption': 'Name'
+            __caption__: 'Name'
           },
           'localizedTypes': {
             'name': {
-              'caption': 'Name'
+              __caption__: 'Name'
             },
             'localization': {
-              'caption': 'Localization',
+              __caption__: 'Localization',
               'name': {
-                'caption': 'Name'
+                __caption__: 'Name'
               }
             }
           },
@@ -268,8 +268,24 @@ Ember.$.extend(true, translations, {
         'components-examples': {
           'caption': 'Components examples',
           'title': '',
+          'flexberry-button': {
+            'caption': 'flexberry-button',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
           'flexberry-checkbox': {
             'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            }
+          },
+          'flexberry-ddau-checkbox': {
+            'caption': 'flexberry-ddau-checkbox',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -370,6 +386,10 @@ Ember.$.extend(true, translations, {
             'default-ordering-example': {
               'caption': 'Default ordering example',
               'title': ''
+            },
+            'autocomplete-order-example': {
+              'caption': 'Example for autocomplete with order',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -458,6 +478,17 @@ Ember.$.extend(true, translations, {
           },
           'flexberry-toggler': {
             'caption': 'flexberry-toggler',
+            'title': '',
+            'settings-example': {
+              'caption': 'Settings example',
+              'title': ''
+            },
+            'ge-into-toggler-example': {
+              'caption': 'GroupEdit into toggler example',
+            }
+          },
+          'flexberry-tree': {
+            'caption': 'flexberry-tree',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -569,6 +600,12 @@ Ember.$.extend(true, translations, {
       'editor-validation-message-caption': 'Editor is required'
     },
 
+    'ember-flexberry-dummy-toggler-example-master-e': {
+      'caption': 'Master',
+      'toggler-example-master-property-caption': 'Master property',
+      'toggler-example-deteil-property-caption': 'Deteil'
+    },
+
     'ember-flexberry-dummy-suggestion-type-edit': {
       'caption': 'Suggestion type',
       'name-caption': 'Name',
@@ -628,9 +665,19 @@ Ember.$.extend(true, translations, {
     },
 
     'components-examples': {
+      'flexberry-button': {
+        'settings-example': {
+          'caption': 'Settings example for flexberry-button'
+        }
+      },
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Settings example'
+        }
+      },
+      'flexberry-ddau-checkbox': {
+        'settings-example': {
+          'caption': 'Settings example for flexberry-ddau-checkbox'
         }
       },
       'flexberry-datepicker': {
@@ -722,6 +769,10 @@ Ember.$.extend(true, translations, {
         },
         'default-ordering-example': {
           'caption': 'Flexberry-lookup. Default ordering example',
+          'titleLookup': 'Master'
+        },
+        'autocomplete-order-example': {
+          'caption': 'Flexberry-lookup. Example for autocomplete with order',
           'titleLookup': 'Master'
         },
       },
@@ -833,6 +884,17 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Settings example',
           'togglerContent': 'Some expandable/collapsable content'
+        },
+        'ge-into-toggler-example': {
+          'caption': 'Flexberry-toggler. GroupEdit into toggler example'
+        }
+      },
+      'flexberry-tree': {
+        'settings-example': {
+          'caption': 'Settings example for flexberry-tree',
+          'json-tree-tab-caption': 'JSON-object-defined tree',
+          'json-tree-latest-clicked-node-caption': 'Latest clicked tree node settings',
+          'json-tree-latest-clicked-node-placeholder': 'Click on any tree node to display it\'s settings'
         }
       },
       'ui-message': {
@@ -866,6 +928,7 @@ Ember.$.extend(true, translations, {
         },
         'validation': {
           'caption': 'Integration examples. Validation',
+          'summary-caption': 'Validation errors:',
           'flag-caption': 'Flag',
           'number-caption': 'Number',
           'text-caption': 'Text',

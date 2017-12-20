@@ -3,11 +3,11 @@
 *******************************/
 
 div.item-plus {
-    width: 16px!important;
+    width: 16px;
     height: 16px;
-    border-radius: 3px!important;
-    margin-right: 10px!important;
-    margin-bottom: 1px!important;
+    border-radius: 3px;
+    margin-right: 10px;
+    margin-bottom: 1px;
     background: url("@{imagePath}/plus.png") center no-repeat;
     cursor: pointer;
     float: left;
@@ -16,11 +16,11 @@ div.item-plus {
 }
 
 div.item-minus {
-    width: 16px!important;
+    width: 16px;
     height: 16px;
-    border-radius: 3px!important;
-    margin-right: 10px!important;
-    margin-bottom: 1px!important;
+    border-radius: 3px;
+    margin-right: 10px;
+    margin-bottom: 1px;
     background: url("@{imagePath}/minus.png") center no-repeat;;
     cursor: pointer;
     float: left;

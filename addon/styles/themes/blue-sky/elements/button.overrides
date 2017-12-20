@@ -339,6 +339,63 @@ ui.button.ui-clear:hover {
     }
 }
 
+.ui.check-all-at-page-button.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    border: 0px;
+    background: none;
+    margin: 0 0 0 0px;
+    &:hover {
+        border: 0px;
+        background: none;
+        & i.icon.check-square-o:before {
+            color: @uiHoveredNegitveTextColor;
+        }
+    }
+}
+
+.ui.check-all-button.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    border: 0px;
+    background: none;
+    margin: 0 0 0 0px;
+    &:hover {
+        border: 0px;
+        background: none;
+        & i.icon.check-all-square-o:before {
+            color: @uiHoveredNegitveTextColor;
+        }
+    }
+}
+
+.ui.check-all-button.button.activated {
+  & i.icon.check-all-square-o:before {
+    color: @uiHoveredNegitveTextColor;
+  }
+}
+
+.ui.clear-sorting-button.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    border: 0px;
+    background: none;
+    margin: 0 0 0 0px;
+    &:hover {
+        border: 0px;
+        background: none;
+        & i.icon.sort:before {
+            color: @uiHoveredNegitveTextColor;
+        }
+    }
+}
+
 .ui.ui-edit.button {
     padding: 0px;
     height: 30px;

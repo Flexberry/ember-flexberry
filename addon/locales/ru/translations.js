@@ -166,7 +166,10 @@ export default {
       'close': 'Закрыть',
       'copy': 'Копировать',
       'copied': 'Скопировано',
-      'ctrlc': 'Нажмите Ctrl/C для копирования'
+      'ctrlc': 'Нажмите Ctrl/C для копирования',
+      'check-all-at-page-button-text': 'Отметить все записи на текущей странице',
+      'check-all-button-text': 'Отметить все на всех страницах',
+      'clear-sorting-button-text': 'Установить сортировку по умолчанию'
     },
 
     'groupedit-toolbar': {

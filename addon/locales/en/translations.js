@@ -165,7 +165,10 @@ export default {
       'close': 'Close',
       'copy': 'Copy',
       'copied': 'Copied',
-      'ctrlc': 'Press Ctrl/C to copy'
+      'ctrlc': 'Press Ctrl/C to copy',
+      'check-all-at-page-button-text': 'Check all entries on the current page',
+      'check-all-button-text': 'Check all on all pages',
+      'clear-sorting-button-text': 'Set the default sorting'
     },
 
     'groupedit-toolbar': {

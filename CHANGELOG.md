@@ -4,8 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-* Add optional edit button in row for `flexberry-simpleolv` and `flexberry-objectlistview` components.
-
+* List components:
+    * Check all records on page operation, check all records on alls pages operation, clear sorting operation.
+    * Saving and restoring previously selected records on reloading (including changing of page number, filtering, etc.).
+    * Optional edit button in row.
 * `flexberry-objectlistview` component:
     * Add collapse/expand all button for hierarchy mode.
     * Increased performance when working in hierarchical mode by reducing number of queries to backend on rendering top-level nodes.

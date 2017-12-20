@@ -88,13 +88,13 @@ export default FlexberryBaseComponent.extend({
   */
   minDate: undefined,
 
-    /**
-    Display the date from the bottom by default.
+  /**
+    Whether the calendar opens below ('down' by default) or above ('up') the element it's attached to.
 
     @property drops
-    @type Date
+    @type String
+    @default 'down'
   */
- 
   drops: 'down',
 
   /**

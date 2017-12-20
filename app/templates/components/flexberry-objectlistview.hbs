@@ -23,8 +23,11 @@
   showConfigDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
   inHierarchicalMode=_inHierarchicalMode
+  inExpandMode=_inExpandMode
   availableHierarchicalMode=_availableHierarchicalMode
+  availableCollExpandMode=_availableCollExpandMode
   switchHierarchicalMode=(action "switchHierarchicalMode")
+  switchExpandMode=(action "switchExpandMode")
 }}
 {{object-list-view
   placeholder=placeholder
@@ -41,6 +44,7 @@
   showAsteriskInRow=(and (not readonly) showAsteriskInRow)
   showCheckBoxInRow=(and (not readonly) showCheckBoxInRow)
   showDeleteButtonInRow=(and (not readonly) showDeleteButtonInRow)
+  showEditButtonInRow=(and (not readonly) showEditButtonInRow)
   showEditMenuItemInRow=(and (not readonly) showEditMenuItemInRow)
   showDeleteMenuItemInRow=(and (not readonly) showDeleteMenuItemInRow)
   sendMenuItemAction=(action "sendMenuItemAction")
@@ -74,6 +78,7 @@
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
   inHierarchicalMode=_inHierarchicalMode
+  inExpandMode=_inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")

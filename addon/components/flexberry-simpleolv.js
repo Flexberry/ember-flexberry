@@ -316,6 +316,15 @@ export default folv.extend(
   showDeleteButtonInRow: false,
 
   /**
+    Flag indicates whether to show delete button in first column of every row.
+
+    @property showEditButtonInRow
+    @type Boolean
+    @default false
+  */
+  showEditButtonInRow: false,
+
+  /**
     Flag indicates whether to not use userSetting from backend
     @property notUseUserSettings
     @type Boolean
@@ -334,10 +343,11 @@ export default folv.extend(
     'showAsteriskInRow',
     'showCheckBoxInRow',
     'showDeleteButtonInRow',
+    'showEditButtonInRow',
     'modelProjection',
     function() {
     if (this.get('modelProjection')) {
-      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow') || this.get('showEditButtonInRow');
     } else {
       return false;
     }
@@ -1453,8 +1463,11 @@ export default folv.extend(
           if (currentPropertyName === 'OlvRowToolbar') {
             let checkbox = this.get('showCheckBoxInRow');
             let delButton = this.get('showDeleteButtonInRow');
+            let editButton = this.get('showEditButtonInRow');
 
-            setting.width = (checkbox && delButton ? 100 : delButton ? 70 : 65) - padding;
+            // TODO: Probably need to replace this.
+            setting.width = (checkbox && delButton && editButton ? 130 : (checkbox && delButton) || (checkbox && editButton) ||
+            (delButton && editButton) ? 100 : checkbox || delButton || editButton ? 70 : 65) - padding;
           }
         }
 

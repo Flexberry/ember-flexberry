@@ -131,6 +131,10 @@ div.ui.secondary.menu.no-margin {
     border: none;
 }
 
+.ui.button.collexp-button {
+    border: 0px;
+}
+
 .ui.buttons.filter-active {
     border: 1px solid @uiBorderColor;
     height: 35px;
@@ -387,6 +391,21 @@ ui.button.ui-clear:hover {
         border: 0px;
         background: none;
         & i.icon.sort:before {
+            color: @uiHoveredNegitveTextColor;
+        }
+    }
+}
+
+.ui.ui-edit.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+    text-align: right;
+    &:hover {
+        border: 1px solid @uiHoveredNegitveBorderColor;
+        background: @white;
+        & i.icon.edit:before {
             color: @uiHoveredNegitveTextColor;
         }
     }

@@ -31,6 +31,14 @@
     {{action switchHierarchicalMode}}>
       <i class="sitemap icon"></i>
   </button>
+  {{#if availableCollExpandMode}}
+    <button
+      class="ui button icon hierarchical-button {{buttonClass}}"
+      title={{t "components.olv-toolbar.coll-expand-button-text"}}
+      {{action switchExpandMode}}>
+        <i class="expand icon"></i>
+    </button>
+  {{/if}}
 {{/if}}
 {{#if enableFilters}}
   <div class="ui icon buttons filter-active">

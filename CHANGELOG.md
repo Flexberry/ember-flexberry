@@ -5,8 +5,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * List components:
-    * Clear sorting operation, check all records on page operation and check all records on alls pages operation.
-    * Saving and restoring of previously selected records on reload records (including changing of page number, filtering, etc.).
+    * Check all records on page operation, check all records on alls pages operation, clear sorting operation.
+    * Saving and restoring previously selected records on reloading (including changing of page number, filtering, etc.).
+    * Optional edit button in row.
+* `flexberry-objectlistview` component:
+    * Add collapse/expand all button for hierarchy mode.
+    * Increased performance when working in hierarchical mode by reducing number of queries to backend on rendering top-level nodes.
+
+### Fixed
+* Reset `page` in `LimitedController` mixin when change or reset filters.
 
 ## [0.9.2-beta.9] - 2017-12-06
 ### Added
@@ -15,6 +22,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * Add localization for autocomplete empty result.
     * Add sorting settings for autocomplete result list.
+* Blueprints:
+    * Add model's default property values generation.
 
 ### Fixed
 * `flexberry-tree` component:

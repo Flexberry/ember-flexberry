@@ -43,3 +43,18 @@ i.icon.hand.paper:before {
     background: none;
     margin-bottom: 0;
 }
+
+.showing-entries {
+    color: #777;
+    margin: 0.65em;
+}
+
+div.ui.secondary.menu.no-margin.nav-bar {
+    .ui.basic.buttons {
+        align-self: flex-start;
+    }
+    .right.menu {
+        flex-wrap: wrap-reverse;
+        justify-content: flex-end;
+    }
+}

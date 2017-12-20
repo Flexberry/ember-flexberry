@@ -53,6 +53,15 @@ export default FlexberryBaseComponent.extend({
   _switchHierarchicalMode: 'switchHierarchicalMode',
 
   /**
+    Store the action name at controller for switch to the collapse/expand mode.
+
+    @property _switchExpandMode
+    @type String
+    @default 'switchExpandMode'
+    @private
+  */
+  _switchExpandMode: 'switchExpandMode',
+  /**
     Store the action name at controller for save the hierarchical attribute name.
 
     @property _saveHierarchicalAttribute
@@ -73,6 +82,16 @@ export default FlexberryBaseComponent.extend({
   _availableHierarchicalMode: false,
 
   /**
+    Flag indicate when available the collapse/expand all hierarchies mode.
+
+    @property _availableCollExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  _availableCollExpandMode: false,
+
+  /**
     Flag indicate when component is in the hierarchical mode.
 
     @property _inHierarchicalMode
@@ -82,6 +101,24 @@ export default FlexberryBaseComponent.extend({
   */
   _inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
     return this.get('currentController.inHierarchicalMode');
+  }),
+
+  /**
+    Flag indicate when component is in the collapse/expand mode.
+
+    @property _inExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  _inExpandMode: Ember.computed('currentController.inExpandMode', {
+    get(key) {
+      return this.get('currentController.inExpandMode');
+    },
+    set(key, value) {
+      this.set('currentController.inExpandMode',  value);
+      return value;
+    }
   }),
 
   /**
@@ -240,6 +277,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   showDeleteButtonInRow: false,
+
+  /**
+    Flag indicates whether to show edit button in first column of every row.
+
+    @property showEditButtonInRow
+    @type Boolean
+    @default false
+  */
+  showEditButtonInRow: false,
 
   /**
     Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
@@ -531,6 +577,15 @@ export default FlexberryBaseComponent.extend({
   columnsWidthAutoresize: false,
 
   /**
+    List of component names, which can overflow table cell.
+
+    @property overflowedComponents
+    @type Array
+    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+  */
+  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
+
+  /**
     Current interval of records.
 
     @property currentIntervalRecords
@@ -674,7 +729,7 @@ export default FlexberryBaseComponent.extend({
       @param {Object} options Different parameters to handle action.
     */
     objectListViewRowClick(record, options) {
-      if (this.get('rowClickable') && !this.get('readonly')) {
+      if ((this.get('rowClickable') || options.rowEdit) && !this.get('readonly')) {
         let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
         Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
@@ -902,15 +957,25 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Called controller action to switch in collapse/expand mode.
+
+      @method actions.switchExpandMode
+    */
+    switchExpandMode() {
+      this.sendAction('_switchExpandMode');
+    },
+
+    /**
       Redirects the call to controller.
 
       @method actions.loadRecords
       @param {String} Primary key.
       @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
       @param {String} Property name.
+      @param {Boolean} Flag indicates that this is the first download of data.
     */
-    loadRecords(id, target, property) {
-      this.sendAction('_loadRecords', id, target, property);
+    loadRecords(id, target, property, firstRunMode) {
+      this.sendAction('_loadRecords', id, target, property, firstRunMode);
     },
 
     /**

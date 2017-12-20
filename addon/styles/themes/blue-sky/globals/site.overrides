@@ -7,7 +7,7 @@
 }
 
 .background-logo {
-    height: 80px;
+    height: @headerHeight;
     position: fixed;
     display: -webkit-flex;
     display: -moz-flex;
@@ -19,6 +19,10 @@
     background: @headerColor;
     z-index: 999;
     width: 100%;
+}
+
+.background-logo.mobile {
+    height: @headerHeightMobile;
 }
 
 .background-logo a {

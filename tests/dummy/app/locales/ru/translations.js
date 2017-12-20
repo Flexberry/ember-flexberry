@@ -403,6 +403,10 @@ Ember.$.extend(true, translations, {
             'default-ordering-example': {
               'caption': 'Сортировка по умолчанию',
               'title': ''
+            },
+            'autocomplete-order-example': {
+              'caption': 'Пример сортировки при автокомплите',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -776,6 +780,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Сортировка по умолчанию',
           'titleLookup': 'Мастер'
         },
+        'autocomplete-order-example': {
+          'caption': 'Flexberry-lookup. Пример сортировки при автокомплите',
+          'titleLookup': 'Мастер'
+        },
       },
       'flexberry-menu': {
         'settings-example': {
@@ -926,6 +934,7 @@ Ember.$.extend(true, translations, {
         },
         'validation': {
           'caption': 'Integration examples. Валидация',
+          'summary-caption': 'Ошибки валидации:',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',
           'text-caption': 'Текст',

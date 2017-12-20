@@ -22,10 +22,10 @@ body.pushable {
     width: 250px;
 }
 
-.inverted.vertical.menu.sidebar {
-    height: 85.3vh !important;
+.inverted.vertical.main.menu.sidebar {
+    height: calc(~"100vh - @{headerHeight} - @{footerHeight}") !important;
     background: @sidebarInvertedBackground;
-    padding-bottom: 40px;
+    top: @headerHeight;
 }
 
 .mobile.inverted.vertical.menu.sidebar {

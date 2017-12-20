@@ -29,11 +29,16 @@ notifications:
     on_failure: always  # options: [always|never|change] default: always
     on_start: never     # options: [always|never|change] default: always
 
+dist: trusty
+
+addons:
+  chrome: stable
+
 before_install:
   - yarn global add firebase-tools
-  - yarn global add phantomjs-prebuilt
   - yarn global add ember-cli@2.4.3
   - yarn global add bower
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
 install:
   - yarn install
@@ -46,7 +51,6 @@ script:
 after_success:
   - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && ember build && firebase deploy --project flexberry-ember-dev --token "$FIREBASE_TOKEN" --non-interactive -m "Travis Build №$TRAVIS_BUILD_NUMBER."
   - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ember build && firebase deploy --project flexberry-ember --token "$FIREBASE_TOKEN" --non-interactive -m "Travis Build №$TRAVIS_BUILD_NUMBER."
-  - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_PULL_REQUEST == "false" && (test $TRAVIS_BRANCH == "master" || test $TRAVIS_BRANCH == "develop") && bash scripts/update-docs.sh
 
 after_script:
   - test $EMBER_TRY_SCENARIO == "default" && test $TRAVIS_BRANCH == "dummy-test" && ember build && firebase deploy --project flexberry-ember-test --token "$FIREBASE_TOKEN" -m "Travis Build №$TRAVIS_BUILD_NUMBER."

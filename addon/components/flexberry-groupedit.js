@@ -366,9 +366,9 @@ export default FlexberryBaseComponent.extend({
 
     @property minAutoColumnWidth
     @type Number
-    @default 150
+    @default 100
   */
-  minAutoColumnWidth: 150,
+  minAutoColumnWidth: 100,
 
   /**
     Indicates whether or not autoresize columns for fit the page width.
@@ -378,6 +378,15 @@ export default FlexberryBaseComponent.extend({
     @default true
   */
   columnsWidthAutoresize: true,
+
+  /**
+    List of component names, which can overflow table cell.
+
+    @property overflowedComponents
+    @type Array
+    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+  */
+  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
 
   actions: {
     /**

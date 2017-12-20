@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+* Support `drops` option for `flexberry-datepicker` component.
 * List components:
     * Check all records on page operation, check all records on alls pages operation, clear sorting operation.
     * Saving and restoring previously selected records on reloading (including changing of page number, filtering, etc.).

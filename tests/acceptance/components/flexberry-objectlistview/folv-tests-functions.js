@@ -125,8 +125,7 @@ export function loadingLocales(locale, app) {
 
 // Function for filter object-list-view by list of operations and values.
 export function filterObjectListView(objectListView, operations, filterValues) {
-  Ember.run(() => {
-
+  return new Ember.RSVP.Promise((resolve) => {
     let tableBody = objectListView.children('tbody');
     let tableRow = Ember.$(tableBody.children('tr'));
     let tableColumns = Ember.$(tableRow[0]).children('td');
@@ -136,13 +135,14 @@ export function filterObjectListView(objectListView, operations, filterValues) {
         filterCollumn(objectListView, i, operations[i], filterValues[i]);
       }
     }
+
+    resolve();
   });
 }
 
 // Function for filter object-list-view at one column by operations and values.
 export function filterCollumn(objectListView, columnNumber, operation, filterValue) {
-  Ember.run(() => {
-
+  return new Ember.RSVP.Promise((resolve) => {
     let tableBody = objectListView.children('tbody');
     let tableRow = tableBody.children('tr');
 
@@ -162,5 +162,7 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
     if (dropdown.length !== 0) {
       dropdown.dropdown('set selected', filterValue);
     }
+
+    resolve();
   });
 }

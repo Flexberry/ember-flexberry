@@ -25,10 +25,7 @@ executeTest('check ge filter', (store, assert, app) => {
       // Activate filtre row.
       $filterButton.click();
 
-      filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr);
-
-      let done = assert.async();
-      window.setTimeout(() => {
+      filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter.
         let refreshButton = Ember.$('.refresh-button')[0];
         refreshButton.click();
@@ -49,8 +46,7 @@ executeTest('check ge filter', (store, assert, app) => {
           assert.equal($notSuccessful, true, 'Filter successfully worked');
           done1();
         }, 1000);
-        done();
-      }, 1000);
+      });
     });
   });
 });

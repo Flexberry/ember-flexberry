@@ -1,16 +1,16 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
-import { filterCollumn } from './folv-tests-functions';
+import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
+import { filterCollumn } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
-executeTest('check filter by enter click', (store, assert, app) => {
+executeTest('check neq filter', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
-  let filtreInsertOperation = 'eq';
+  let filtreInsertOperation = 'neq';
   let filtreInsertParametr;
 
-  visit(path);
+  visit(path + '?perPage=500');
   andThen(function() {
     assert.equal(currentPath(), path);
     let builder2 = new Query.Builder(store).from(modelName).top(1);
@@ -29,10 +29,9 @@ executeTest('check filter by enter click', (store, assert, app) => {
 
       let done = assert.async();
       window.setTimeout(() => {
-        // Apply filter by enter click.
-        let input = Ember.$('.ember-text-field')[0];
-        input.focus();
-        keyEvent(input, "keydown", 13);
+        // Apply filter.
+        let refreshButton = Ember.$('.refresh-button')[0];
+        refreshButton.click();
 
         let done1 = assert.async();
         window.setTimeout(() => {
@@ -41,7 +40,7 @@ executeTest('check filter by enter click', (store, assert, app) => {
           let $notSuccessful = true;
           for (let i = 0; i < filtherResult.length; i++) {
             let address = filtherResult[i]._data.address;
-            if (address !== filtreInsertParametr) {
+            if (address === filtreInsertParametr) {
               $notSuccessful = false;
             }
           }
@@ -51,7 +50,7 @@ executeTest('check filter by enter click', (store, assert, app) => {
           done1();
         }, 1000);
         done();
-      }, 100);
+      }, 1000);
     });
   });
 });

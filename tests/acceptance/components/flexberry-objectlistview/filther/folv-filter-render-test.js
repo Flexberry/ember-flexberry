@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
+import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 
 executeTest('check filter renders', (store, assert) => {
   assert.expect(34);

@@ -1,23 +1,22 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
-import { filterCollumn } from './folv-tests-functions';
+import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
+import { filterCollumn } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
-executeTest('check like filter', (store, assert, app) => {
+executeTest('check ge filter', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
-  let filtreInsertOperation = 'like';
+  let filtreInsertOperation = 'ge';
   let filtreInsertParametr;
 
-  visit(path);
+  visit(path + '?perPage=500');
   andThen(function() {
     assert.equal(currentPath(), path);
     let builder2 = new Query.Builder(store).from(modelName).top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
-      filtreInsertParametr = arr.objectAt(0).get('address');
-      filtreInsertParametr = filtreInsertParametr.slice(1, filtreInsertParametr.length);
+      filtreInsertParametr = arr.objectAt(0).get('votes');
     }).then(function() {
       let $filterButtonDiv = Ember.$('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
@@ -26,7 +25,7 @@ executeTest('check like filter', (store, assert, app) => {
       // Activate filtre row.
       $filterButton.click();
 
-      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr);
+      filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr);
 
       let done = assert.async();
       window.setTimeout(() => {
@@ -40,8 +39,8 @@ executeTest('check like filter', (store, assert, app) => {
           let filtherResult = controller.model.content;
           let $notSuccessful = true;
           for (let i = 0; i < filtherResult.length; i++) {
-            let address = filtherResult[i]._data.address;
-            if (address.lastIndexOf(filtreInsertParametr) === -1) {
+            let votes = filtherResult[0]._data.votes;
+            if (votes <= filtreInsertParametr) {
               $notSuccessful = false;
             }
           }

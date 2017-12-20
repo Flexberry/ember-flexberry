@@ -1,22 +1,22 @@
 import Ember from 'ember';
-import { executeTest } from './execute-folv-test';
-import { filterCollumn } from './folv-tests-functions';
+import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
+import { filterCollumn } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
-executeTest('check le filter', (store, assert, app) => {
+executeTest('check filter by enter click', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
   let modelName = 'ember-flexberry-dummy-suggestion';
-  let filtreInsertOperation = 'le';
+  let filtreInsertOperation = 'eq';
   let filtreInsertParametr;
 
-  visit(path + '?perPage=500');
+  visit(path);
   andThen(function() {
     assert.equal(currentPath(), path);
-    let builder2 = new Query.Builder(store).from(modelName).top(1);
-    store.query(modelName, builder2.build()).then((result) => {
+    let builder = new Query.Builder(store).from(modelName).top(1);
+    store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
-      filtreInsertParametr = arr.objectAt(0).get('votes');
+      filtreInsertParametr = arr.objectAt(0).get('address');
     }).then(function() {
       let $filterButtonDiv = Ember.$('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
@@ -25,13 +25,14 @@ executeTest('check le filter', (store, assert, app) => {
       // Activate filtre row.
       $filterButton.click();
 
-      filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr);
+      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr);
 
       let done = assert.async();
       window.setTimeout(() => {
-        // Apply filter.
-        let refreshButton = Ember.$('.refresh-button')[0];
-        refreshButton.click();
+        // Apply filter by enter click.
+        let input = Ember.$('.ember-text-field')[0];
+        input.focus();
+        keyEvent(input, 'keydown', 13);
 
         let done1 = assert.async();
         window.setTimeout(() => {
@@ -39,8 +40,8 @@ executeTest('check le filter', (store, assert, app) => {
           let filtherResult = controller.model.content;
           let $notSuccessful = true;
           for (let i = 0; i < filtherResult.length; i++) {
-            let votes = filtherResult[0]._data.votes;
-            if (votes >= filtreInsertParametr) {
+            let address = filtherResult[i]._data.address;
+            if (address !== filtreInsertParametr) {
               $notSuccessful = false;
             }
           }
@@ -50,7 +51,7 @@ executeTest('check le filter', (store, assert, app) => {
           done1();
         }, 1000);
         done();
-      }, 1000);
+      }, 100);
     });
   });
 });

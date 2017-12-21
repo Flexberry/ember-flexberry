@@ -32,11 +32,11 @@ test('it renders', function(assert) {
 test('render with type before value', function(assert) {
   assert.expect(1);
   let typeName = 'date';
-  this.set('typeName', typeName);
+  this.set('type', typeName);
 
   // Render component.
   this.render(hbs`{{flexberry-simpledatetime
-      type='date'
+      type=type
       value=value
     }}`);
 
@@ -56,12 +56,12 @@ test('render with type before value', function(assert) {
 test('render with type afther value', function(assert) {
   assert.expect(1);
   let typeName = 'date';
-  this.set('typeName', typeName);
+  this.set('type', typeName);
 
   // Render component.
   this.render(hbs`{{flexberry-simpledatetime
       value=value
-      type='date'
+      type='type'
     }}`);
 
   // Retrieve component.

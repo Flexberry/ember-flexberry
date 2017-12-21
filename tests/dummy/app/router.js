@@ -29,6 +29,9 @@ Router.map(function() {
   this.route('ember-flexberry-dummy-suggestion-type-edit', { path: 'ember-flexberry-dummy-suggestion-type-edit/:id' });
   this.route('ember-flexberry-dummy-suggestion-type-edit.new', { path: 'ember-flexberry-dummy-suggestion-type-edit/new' });
 
+  this.route('ember-flexberry-dummy-toggler-example-master-e', { path: 'ember-flexberry-dummy-toggler-example-master-e/:id' });
+  this.route('ember-flexberry-dummy-toggler-example-master-e.new', { path: 'ember-flexberry-dummy-toggler-example-master-e/new' });
+
   // Logging.
   this.route('i-i-s-caseberry-logging-objects-application-log-l');
   this.route('i-i-s-caseberry-logging-objects-application-log-e', { path: 'i-i-s-caseberry-logging-objects-application-log-e/:id' });
@@ -110,6 +113,7 @@ Router.map(function() {
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');
   this.route('components-examples/flexberry-toggler/settings-example');
+  this.route('components-examples/flexberry-toggler/ge-into-toggler-example');
   this.route('components-examples/flexberry-tree/settings-example');
   this.route('components-examples/ui-message/settings-example');
 

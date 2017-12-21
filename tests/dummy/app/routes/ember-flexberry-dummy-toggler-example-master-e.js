@@ -1,17 +1,19 @@
-import ListFormRoute from 'ember-flexberry/routes/list-form';
+import EditFormRoute from 'ember-flexberry/routes/edit-form';
 
-export default ListFormRoute.extend({
+export default EditFormRoute.extend({
+
   /**
-    Name of model projection to be used as record's properties limitation.
+   Name of model projection to be used as record's properties limitation.
 
-    @property modelProjection
-    @type String
-    @default 'SuggestionL'
+   @property modelProjection
+   @type String
+   @default 'TogglerExampleMasterE'
    */
-  modelProjection: 'SuggestionE',
+  modelProjection: 'TogglerExampleMasterE',
 
   /**
   developerUserSettings.
+  Format:
   {
   <componentName>: {
     <settingName>: {
@@ -31,9 +33,11 @@ export default ListFormRoute.extend({
   @default {}
   */
   developerUserSettings: {
-    FOLVSettingExampleObjectListView: {
+    togglerExampleDetailGroupEdit: {
       'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 120 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+        'columnWidths': [
+          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+          { 'propName': 'togglerExampleDetailProperty', 'width': 935 }]
       }
     }
   },
@@ -43,7 +47,7 @@ export default ListFormRoute.extend({
 
     @property modelName
     @type String
-    @default 'ember-flexberry-dummy-suggestion'
-   */
-  modelName: 'ember-flexberry-dummy-suggestion'
+    @default 'ember-flexberry-dummy-toggler-example-master'
+  */
+  modelName: 'ember-flexberry-dummy-toggler-example-master'
 });

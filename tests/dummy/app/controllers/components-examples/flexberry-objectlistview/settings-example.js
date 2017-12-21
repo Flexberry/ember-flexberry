@@ -188,6 +188,14 @@ export default ListFormController.extend({
   showDeleteButtonInRow: false,
 
   /**
+    Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditButtonInRow' mode or not.
+
+    @property showEditButtonInRow
+    @type Boolean
+   */
+  showEditButtonInRow: false,
+
+  /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showEditMenuItemInRow' mode or not.
 
     @property showEditMenuItemInRow
@@ -304,6 +312,7 @@ export default ListFormController.extend({
     '  filterButton=filterButton<br>' +
     '  showCheckBoxInRow=showCheckBoxInRow<br>' +
     '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
+    '  showEditButtonInRow=showEditButtonInRow<br>' +
     '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
     '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
     '  rowClickable=rowClickable<br>' +
@@ -469,6 +478,12 @@ export default ListFormController.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'showDeleteButtonInRow'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'showEditButtonInRow',
+      settingType: 'boolean',
+      settingDefaultValue: false,
+      bindedControllerPropertieName: 'showEditButtonInRow'
     });
     componentSettingsMetadata.pushObject({
       settingName: 'showEditMenuItemInRow',

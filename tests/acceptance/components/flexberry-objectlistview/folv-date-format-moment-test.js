@@ -6,6 +6,7 @@ import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 
 executeTest('date format moment L', (store, assert, app) => {
   assert.expect(7);
+  let done = assert.async();
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
   andThen(() => {
@@ -20,7 +21,6 @@ executeTest('date format moment L', (store, assert, app) => {
       let $refreshButton = $toolBarButtons[0];
       assert.equal($refreshButton.innerText.trim(), Ember.get(I18nRuLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
 
-      let done = assert.async();
       loadingList($refreshButton, olvContainerClass, trTableClass).then(($list) => {
         assert.ok($list, 'list loaded');
 

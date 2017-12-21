@@ -340,6 +340,17 @@ export default FlexberryBaseComponent.extend({
   displayAttributeName: null,
 
   /**
+    Name of the attribute of the model to display for the user
+    for hidden attribute by master.
+    Is required for autocomplete and dropdown modes.
+
+    @property autocompleteOrder
+    @type String
+    @default null
+  */
+  autocompleteOrder: null,
+
+  /**
     Current selected instance of the model.
 
     @property value
@@ -667,6 +678,7 @@ export default FlexberryBaseComponent.extend({
     let relationModelName = getRelationType(relatedModel, relationName);
 
     let displayAttributeName = this.get('displayAttributeName');
+    let autocompleteOrder = this.get('autocompleteOrder');
     if (!displayAttributeName) {
       throw new Error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
     }
@@ -682,10 +694,20 @@ export default FlexberryBaseComponent.extend({
     }
 
     let state;
+    let i18n = _this.get('i18n');
     this.$().search({
       minCharacters: minCharacters,
       maxResults: maxResults,
       cache: false,
+      templates: {
+        message: function(message, type) {
+          return '<div class="message empty"><div class="header">' +
+          i18n.t('components.flexberry-lookup.dropdown.messages.noResultsHeader').string +
+          '</div><div class="description">' +
+          i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string +
+          '</div></div>';
+        }
+      },
       apiSettings: {
         /**
           Mocks call to the data source,
@@ -700,9 +722,15 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
-          let builder = new Builder(store, relationModelName)
+          let builder;
+          if (autocompleteOrder) {
+            builder = new Builder(store, relationModelName)
+            .select(displayAttributeName).orderBy(`${autocompleteOrder}`);
+          } else {
+            builder = new Builder(store, relationModelName)
             .select(displayAttributeName)
             .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
+          }
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :

@@ -44,7 +44,7 @@ export default ListFormController.extend({
           return ['eq', 'neq', 'le', 'ge'];
 
         case 'string':
-          return ['eq', 'neq', 'like'];
+          return ['eq', 'neq', 'like', 'empty'];
 
         case 'boolean':
           return ['eq'];

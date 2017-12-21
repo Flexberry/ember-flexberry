@@ -386,6 +386,10 @@ Ember.$.extend(true, translations, {
             'default-ordering-example': {
               'caption': 'Default ordering example',
               'title': ''
+            },
+            'autocomplete-order-example': {
+              'caption': 'Example for autocomplete with order',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -478,6 +482,9 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Settings example',
               'title': ''
+            },
+            'ge-into-toggler-example': {
+              'caption': 'GroupEdit into toggler example',
             }
           },
           'flexberry-tree': {
@@ -591,6 +598,12 @@ Ember.$.extend(true, translations, {
       'type-validation-message-caption': 'Type is required',
       'author-validation-message-caption': 'Author is required',
       'editor-validation-message-caption': 'Editor is required'
+    },
+
+    'ember-flexberry-dummy-toggler-example-master-e': {
+      'caption': 'Master',
+      'toggler-example-master-property-caption': 'Master property',
+      'toggler-example-deteil-property-caption': 'Deteil'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {
@@ -758,6 +771,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Default ordering example',
           'titleLookup': 'Master'
         },
+        'autocomplete-order-example': {
+          'caption': 'Flexberry-lookup. Example for autocomplete with order',
+          'titleLookup': 'Master'
+        },
       },
       'flexberry-menu': {
         'settings-example': {
@@ -867,6 +884,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Settings example',
           'togglerContent': 'Some expandable/collapsable content'
+        },
+        'ge-into-toggler-example': {
+          'caption': 'Flexberry-toggler. GroupEdit into toggler example'
         }
       },
       'flexberry-tree': {
@@ -908,6 +928,7 @@ Ember.$.extend(true, translations, {
         },
         'validation': {
           'caption': 'Integration examples. Validation',
+          'summary-caption': 'Validation errors:',
           'flag-caption': 'Flag',
           'number-caption': 'Number',
           'text-caption': 'Text',

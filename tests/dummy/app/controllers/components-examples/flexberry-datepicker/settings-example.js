@@ -133,6 +133,11 @@ export default Ember.Controller.extend({
     'DD-MM-YYYY HH-MM-SS'
   ],
 
+  _drops: [
+    'up',
+    'down',
+  ],
+
   /**
     Default display format.
 
@@ -179,6 +184,7 @@ export default Ember.Controller.extend({
       this.set('placeholder', t('components.flexberry-datepicker.placeholder'));
     }
   }),
+
   /**
     Flag: indicates whether 'flexberry-datepicker' component is in 'readonly' mode or not.
 
@@ -202,6 +208,7 @@ export default Ember.Controller.extend({
     '  value=model.date<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
+    '  drops=\'up\'<br>' +
     '}}'),
 
   /**
@@ -263,5 +270,5 @@ export default Ember.Controller.extend({
     });
 
     return componentSettingsMetadata;
-  })
+  }),
 });

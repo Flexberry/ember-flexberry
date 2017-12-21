@@ -94,7 +94,8 @@ export default {
       'remove-button-text': 'Очистить',
       'dropdown': {
         'messages': {
-          'noResults': 'Значения не найдены.'
+          'noResultsHeader': 'Нет данных',
+          'noResults': 'Значения не найдены'
         }
       }
     },
@@ -146,6 +147,7 @@ export default {
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
       'hierarchy-button-text': 'Вкл/выкл иерархии',
+      'coll-expand-button-text':'Свернуть/развернуть все иерархии',
       'filter-button-text': 'Добавить фильтр',
       'remove-filter-button-text': 'Сбросить фильтр',
       'search-button-text': 'Поиск',
@@ -164,7 +166,10 @@ export default {
       'close': 'Закрыть',
       'copy': 'Копировать',
       'copied': 'Скопировано',
-      'ctrlc': 'Нажмите Ctrl/C для копирования'
+      'ctrlc': 'Нажмите Ctrl/C для копирования',
+      'check-all-at-page-button-text': 'Отметить все записи на текущей странице',
+      'check-all-button-text': 'Отметить все на всех страницах',
+      'clear-sorting-button-text': 'Установить сортировку по умолчанию'
     },
 
     'groupedit-toolbar': {

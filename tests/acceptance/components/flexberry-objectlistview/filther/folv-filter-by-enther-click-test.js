@@ -25,16 +25,13 @@ executeTest('check filter by enter click', (store, assert, app) => {
       // Activate filtre row.
       $filterButton.click();
 
-      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr);
-
-      let done = assert.async();
-      window.setTimeout(() => {
+      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr, assert).then(function() {
         // Apply filter by enter click.
         let input = Ember.$('.ember-text-field')[0];
         input.focus();
         keyEvent(input, 'keydown', 13);
 
-        let done1 = assert.async();
+        let done = assert.async();
         window.setTimeout(() => {
           let controller = app.__container__.lookup('controller:' + currentRouteName());
           let filtherResult = controller.model.content;
@@ -48,10 +45,9 @@ executeTest('check filter by enter click', (store, assert, app) => {
 
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal($notSuccessful, true, 'Filter successfully worked');
-          done1();
+          done();
         }, 1000);
-        done();
-      }, 100);
+      });
     });
   });
 });

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
+import { filterCollumn } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
 executeTest('check filter renders', (store, assert) => {
   assert.expect(34);
@@ -52,17 +53,10 @@ executeTest('check filter renders', (store, assert) => {
       // Check filtre row afther filter active.
       assert.strictEqual($tableRows.length === 7, true, 'Filtre row aren\'t active');
 
-      // Select an existing item.
-      let filterOperation = Ember.$('.flexberry-dropdown')[0];
-      Ember.$(filterOperation).dropdown('set selected', 'eq');
+      let filtreInsertOperation = 'ge';
+      let filtreInsertParametr = 'A value that will never be told';
 
-      // Add filtre value.
-      let firstObjectFilterValue = $objectListView.find('.ember-text-field')[0];
-      fillIn(firstObjectFilterValue, 'A value that will never be told');
-
-      let done = assert.async();
-      window.setTimeout(() => {
-
+      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr, assert).then(function() {
         // Apply filter.
         let refreshButton = Ember.$('.refresh-button')[0];
         refreshButton.click();
@@ -116,8 +110,7 @@ executeTest('check filter renders', (store, assert) => {
           }, 100);
           done1();
         }, 1000);
-        done();
-      }, 100);
+      });
     });
   });
 });

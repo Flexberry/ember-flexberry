@@ -25,15 +25,12 @@ executeTest('check le filter', (store, assert, app) => {
       // Activate filtre row.
       $filterButton.click();
 
-      filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr);
-
-      let done = assert.async();
-      window.setTimeout(() => {
+      filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr, assert).then(function() {
         // Apply filter.
         let refreshButton = Ember.$('.refresh-button')[0];
         refreshButton.click();
 
-        let done1 = assert.async();
+        let done = assert.async();
         window.setTimeout(() => {
           let controller = app.__container__.lookup('controller:' + currentRouteName());
           let filtherResult = controller.model.content;
@@ -47,10 +44,9 @@ executeTest('check le filter', (store, assert, app) => {
 
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal($notSuccessful, true, 'Filter successfully worked');
-          done1();
+          done();
         }, 1000);
-        done();
-      }, 1000);
+      });
     });
   });
 });

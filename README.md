@@ -1,14 +1,18 @@
 # Ember Flexberry
 [![npm](https://img.shields.io/npm/v/ember-flexberry.svg?label=npm%20latest%20version)](https://www.npmjs.com/package/ember-flexberry)
+[![npm](https://img.shields.io/npm/dm/ember-flexberry.svg)]()
 [![Travis master branch](https://img.shields.io/travis/Flexberry/ember-flexberry/master.svg?label=master%20build%20)](https://travis-ci.org/Flexberry/ember-flexberry)
 [![Travis develop branch](https://img.shields.io/travis/Flexberry/ember-flexberry/develop.svg?label=develop%20build)](https://travis-ci.org/Flexberry/ember-flexberry/branches)
-[![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)](https://github.com/orangemug/stability-badges#work-in-progress)
+
+[![Ember Observer Score](https://emberobserver.com/badges/ember-flexberry.svg)](https://emberobserver.com/addons/ember-flexberry)
+[![Code Climate](https://codeclimate.com/github/Flexberry/ember-flexberry/badges/gpa.svg)](https://codeclimate.com/github/Flexberry/ember-flexberry)
+[![Test Coverage](https://codeclimate.com/github/Flexberry/ember-flexberry/badges/coverage.svg)](https://codeclimate.com/github/Flexberry/ember-flexberry/coverage)  
 
 [![ember](https://embadge.io/v1/badge.svg?label=ember&range=~2.4.3)](https://github.com/emberjs/ember.js/releases)
 [![ember-data](https://embadge.io/v1/badge.svg?label=ember-data&range=~2.4.2)](https://github.com/emberjs/data/releases)
 [![ember-cli](https://embadge.io/v1/badge.svg?label=ember-cli&range=2.4.3)](https://github.com/ember-cli/ember-cli/releases)
 
-Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework powered by Ember.js.
+Ember Flexberry Addon - SPA UI Framework powered by Ember.js.
 
 ## Installation or Upgrading
 

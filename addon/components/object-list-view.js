@@ -1634,7 +1634,7 @@ export default FlexberryBaseComponent.extend(
     let cellComponent = this.get('cellComponent');
 
     if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
-      let recordModel =  (this.get('content') || {}).type || null;
+      let recordModel = Ember.isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 

@@ -499,6 +499,9 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'ge-into-toggler-example': {
+              'caption': 'GroupEdit в toggler example',
             }
           },
           'flexberry-tree': {
@@ -612,6 +615,12 @@ Ember.$.extend(true, translations, {
       'type-validation-message-caption': 'Заполните тип предложения',
       'author-validation-message-caption': 'Заполните поле "Автор"',
       'editor-validation-message-caption': 'Заполните поле "Редактор"'
+    },
+
+    'ember-flexberry-dummy-toggler-example-master-e': {
+      'caption': 'Мастер',
+      'toggler-example-master-property-caption': 'Свойство мастера',
+      'toggler-example-deteil-property-caption': 'Детейл'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {
@@ -893,6 +902,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Пример работы с настройками',
           'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
+        },
+        'ge-into-toggler-example': {
+          'caption': 'Flexberry-toggler. GroupEdit в toggler example'
         }
       },
       'flexberry-tree': {

@@ -61,7 +61,7 @@ test('render with type afther value', function(assert) {
   // Render component.
   this.render(hbs`{{flexberry-simpledatetime
       value=value
-      type='type'
+      type=type
     }}`);
 
   // Retrieve component.

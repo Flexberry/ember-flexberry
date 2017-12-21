@@ -139,5 +139,23 @@ module.exports = function(environment) {
 
   }
 
+  // Change paths to application assets if build has been started with the following parameters:
+  // ember build --gh-pages --gh-pages-branch=<branch-to-publish-on-gh-pages>.
+  if (process.argv.indexOf('--gh-pages') >= 0) {
+    var branch;
+
+    // Retrieve branch name from process arguments.
+    process.argv.forEach(function (value) {
+      if (value.indexOf('--gh-pages-branch=') >= 0) {
+        branch = value.split('=')[1];
+        return;
+      }
+    });
+
+    // Change base URL to force paths to application assets be relative.
+    ENV.baseURL = '/' + ENV.repositoryName + '/' + branch + '/';
+    ENV.locationType = 'none';
+  }
+
   return ENV;
 };

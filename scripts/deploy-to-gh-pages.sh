@@ -9,8 +9,8 @@ repositoryRelativeGitHubAddress="Flexberry/ember-flexberry"
 # Clone project into 'repository' subdirectory && move to it.
 echo "Prepare for deploy to gh-pages."
 echo "Clone ${repositoryRelativeGitHubAddress} repository & checkout latest version of gh-pages branch."
-git clone --recursive "https://github.com/${repositoryRelativeGitHubAddress}.git" repository
-cd repository
+git clone --recursive "https://github.com/${repositoryRelativeGitHubAddress}.git" emberFlexberryRepository
+cd emberFlexberryRepository
 
 # Checkout gh-pages branch & pull it's latest version.
 git checkout gh-pages
@@ -53,7 +53,7 @@ echo "Execute yuidoc autodocumentation generator."
 yuidoc
 
 echo "Navigate to target directory for autodoc in gh-pages."
-cd "../repository/autodoc"
+cd "../emberFlexberryRepository/autodoc"
 
 # Remove results of previous deploy (for current branch) & recreate directory.
 rm -rf "${TRAVIS_BRANCH}"
@@ -73,6 +73,6 @@ git add --all
 git commit -m "Update gh-pages for ${TRAVIS_BRANCH} branch"
 
 # Redirect any output to /dev/null to hide any sensitive credential data that might otherwise be exposed.
-git push --force --quiet "https://${GH_TOKEN}@github.com/${repositoryRelativeGitHubAddress}.git" > /dev/null 2>&1
+git push origin gh-pages --force --quiet "https://${GH_TOKEN}@github.com/${repositoryRelativeGitHubAddress}.git" > /dev/null 2>&1
 
 echo "Deploy to gh-pages finished."

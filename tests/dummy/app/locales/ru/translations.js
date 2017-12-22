@@ -804,7 +804,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-objectlistview': {
         'limit-function-example': {
-          'caption': 'Flexberry-objectlistview. Функция ограничения'
+          'caption': 'Flexberry-objectlistview. Функция ограничения',
+          'captionFirstLimitFunction': 'Функция ограничения №1',
+          'captionSecondLimitFunction': 'Функция ограничения №2',
+          'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'inheritance-models': {
           'caption': 'Flexberry-objectlistview. Пример наследуемых моделей',

@@ -4,18 +4,18 @@
 
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
+import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
-
-const { Condition, SimplePredicate, ComplexPredicate, Builder } = Query;
 
 /**
   Mixin for edit-form-controller for ObjectListView support.
 
   @class FlexberryObjectlistviewOnEditFormControllerMixin
   @extends Ember.Mixin
+  @uses PredicateFromFiltersMixin
   @public
 */
-export default Ember.Mixin.create({
+export default Ember.Mixin.create(PredicateFromFiltersMixin, {
   /**
     Name of related to FOLV edit form route.
 
@@ -42,6 +42,23 @@ export default Ember.Mixin.create({
     @default undefined
    */
   folvProjection: undefined,
+
+  /**
+    Result predicate with all restrictions for olv.
+
+    @property resultPredicate
+    @type BasePredicate
+    @default null
+   */
+  resultPredicate: null,
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
     Total count of FOLV records.
@@ -117,6 +134,11 @@ export default Ember.Mixin.create({
       return this.reloadList(queryParameters)
       .then(records => {
         _this.set('customFolvContent', records);
+      })
+      .finally(() => {
+        if (_this.get('objectlistviewEventsService.loadingState') === 'loading') {
+          _this.get('objectlistviewEventsService').setLoadingState('');
+        }
       });
     }
 
@@ -165,65 +187,6 @@ export default Ember.Mixin.create({
   }),
 
   /**
-    Return predicate to filter through.
-
-    @example
-      ```javascript
-      // app/routes/example.js
-      ...
-      predicateForFilter(filter) {
-        if (filter.type === 'string' && filter.condition === 'like') {
-          return new StringPredicate(filter.name).contains(filter.pattern);
-        }
-
-        return this._super(...arguments);
-      },
-      ...
-      ```
-
-    @method predicateForFilter
-    @param {Object} filter Object (`{ name, condition, pattern }`) with parameters for filter.
-    @return {BasePredicate|null} Predicate to filter through.
-  */
-  predicateForFilter(filter) {
-    switch (filter.type) {
-      case 'string':
-      case 'number':
-      case 'boolean':
-        return new SimplePredicate(filter.name, filter.condition, filter.pattern);
-
-      default:
-        return null;
-    }
-  },
-
-  /**
-    Return predicate for `QueryBuilder` or `undefined`.
-
-    @method _filtersPredicate
-    @return {BasePredicate|undefined} Predicate for `QueryBuilder` or `undefined`.
-    @private
-  */
-  _filtersPredicate() {
-    let filters = this.get('filters');
-    if (filters) {
-      let predicates = [];
-      for (let filter in filters) {
-        if (filters.hasOwnProperty(filter)) {
-          let predicate = this.predicateForFilter(filters[filter]);
-          if (predicate) {
-            predicates.push(predicate);
-          }
-        }
-      }
-
-      return predicates.length ? predicates.length > 1 ? new ComplexPredicate(Condition.And, ...predicates) : predicates[0] : undefined;
-    }
-
-    return undefined;
-  },
-
-  /**
     It forms the limit predicate for FOLV loaded data on edit form.
 
     By default it returns `undefined`.
@@ -255,7 +218,7 @@ export default Ember.Mixin.create({
       let hierarchicalAttribute = this.get('hierarchicalAttribute');
       let modelName = this.get('folvModelName');
       let projectionName = this.get('folvProjection');
-      let builder = new Builder(this.store)
+      let builder = new Query.Builder(this.store)
         .from(modelName)
         .selectByProjection(projectionName)
         .where(hierarchicalAttribute, 'eq', id);

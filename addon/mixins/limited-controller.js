@@ -76,6 +76,15 @@ export default Ember.Mixin.create({
   filter: null,
 
   /**
+    Result predicate with all restrictions for olv.
+
+    @property resultPredicate
+    @type BasePredicate
+    @default null
+   */
+  resultPredicate: null,
+
+  /**
     Condition for predicate uses at filter by any match, can be `or` or `and`.
 
     @property filterCondition
@@ -99,7 +108,9 @@ export default Ember.Mixin.create({
       @param {Object} filters
     */
     applyFilters(filters) {
+      this.set('page', 1);
       this.set('filters', filters);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.send('refreshList');
     },
 
@@ -110,7 +121,9 @@ export default Ember.Mixin.create({
       @param {String} componentName The name of objectlistview component.
     */
     resetFilters(componentName) {
+      this.set('page', 1);
       this.set('filters', null);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.send('refreshList');
       this.get('objectlistviewEventsService').resetFiltersTrigger(componentName);
     },
@@ -124,11 +137,15 @@ export default Ember.Mixin.create({
     */
     filterByAnyMatch(pattern, filterCondition) {
       if (this.get('filter') !== pattern) {
-        this.setProperties({
-          filterCondition: filterCondition,
-          filter: pattern,
-          page: 1
-        });
+        this.get('objectlistviewEventsService').setLoadingState('loading');
+        let _this = this;
+        Ember.run.later((function() {
+          _this.setProperties({
+            filterCondition: filterCondition,
+            filter: pattern,
+            page: 1
+          });
+        }), 50);
       }
     },
   },

@@ -1,0 +1,13 @@
+﻿{
+  "propertyLookup": [],
+  "caption": null,
+  "name": "EmberFlexberryDummyLazyLoadingMasterEdit",
+  "className": "LazyLoadingMasterEdit",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "ember-flexberry-dummy-lazy-loading-master",
+      "modelProjection": "LazyLoadingMasterEdit"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-button.settings-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{#settings-example
+      controllerProperties=this
+      componentSettingsMetadata=componentSettingsMetadata
+      componentTemplateText=componentTemplateText
+    }}
+      {{flexberry-button
+        class=class
+        iconClass=iconClass
+        caption=caption
+        tooltip=tooltip
+        readonly=readonly
+        click=(action "onButtonClick")
+      }}
+    {{/settings-example}}
+  </div>
+</form>

@@ -1,3 +1,4 @@
+{{flexberry-error error=error}}
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-type-list.caption"}}</h3>
 <div class="row">
   {{flexberry-simpleolv
@@ -6,7 +7,9 @@
     modelProjection=modelProjection
     editFormRoute=editFormRoute
     createNewButton=true
+    deleteButton=true
     refreshButton=true
+    exportExcelButton=true
     sorting=computedSorting
     orderable=true
     pages=pages
@@ -20,7 +23,7 @@
     previousPage=(action "previousPage")
     gotoPage=(action "gotoPage")
     nextPage=(action "nextPage")
-    componentName="SOLVsuggestionTypeObjectListView"
+    componentName="SOLVSuggestionTypeObjectListView"
     showCheckBoxInRow=true
     showEditMenuItemInRow=true
     showDeleteMenuItemInRow=true

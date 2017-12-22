@@ -1,12 +1,13 @@
+"use strict";
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
 var fs = require("fs");
-var path = require('path');
-var lodash = require('lodash');
-var Locales_1 = require('../flexberry-core/Locales');
+var path = require("path");
+var lodash = require("lodash");
+var Locales_1 = require("../flexberry-core/Locales");
 var TAB = "  ";
 var SortedPair = (function () {
     function SortedPair(index, str) {
@@ -21,36 +22,52 @@ var ModelBlueprint = (function () {
         if (!options.file) {
             options.file = options.entity.name + ".json";
         }
-        var modelFile = path.join(modelsDir, options.file);
-        var content = stripBom(fs.readFileSync(modelFile, "utf8"));
-        var model = JSON.parse(content);
+        var model = ModelBlueprint.loadModel(modelsDir, options.file);
         this.parentModelName = model.parentModelName;
         this.parentClassName = model.parentClassName;
+        if (model.parentModelName) {
+            var parentModel = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
+            this.parentExternal = parentModel.external;
+        }
         this.className = model.className;
         this.serializerAttrs = this.getSerializerAttrs(model);
+        this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);
         this.projections = this.getJSForProjections(model, modelsDir);
         this.model = this.getJSForModel(model);
         this.name = options.entity.name;
         this.needsAllModels = this.getNeedsAllModels(modelsDir);
-        this.needsAllEnums = this.getNeedsAllEnums(path.join(options.metadataDir, "enums"));
+        this.needsAllEnums = this.getNeedsTransforms(path.join(options.metadataDir, "enums"));
+        this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru");
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
     }
-    ModelBlueprint.prototype.getNeedsAllEnums = function (enumsDir) {
-        var listEnums = fs.readdirSync(enumsDir);
-        var enums = [];
-        for (var _i = 0, listEnums_1 = listEnums; _i < listEnums_1.length; _i++) {
-            var e = listEnums_1[_i];
-            enums.push("    'transform:" + path.parse(e).name + "'");
+    ModelBlueprint.loadModel = function (modelsDir, modelFileName) {
+        var modelFile = path.join(modelsDir, modelFileName);
+        var content = stripBom(fs.readFileSync(modelFile, "utf8"));
+        var model = JSON.parse(content);
+        return model;
+    };
+    ModelBlueprint.prototype.getNeedsTransforms = function (dir) {
+        var list = fs.readdirSync(dir);
+        var transforms = [];
+        for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
+            var e = list_1[_i];
+            var pp = path.parse(e);
+            if (pp.ext != ".json")
+                continue;
+            transforms.push("    'transform:" + pp.name + "'");
         }
-        return enums.join(",\n");
+        return transforms.join(",\n");
     };
     ModelBlueprint.prototype.getNeedsAllModels = function (modelsDir) {
         var listModels = fs.readdirSync(modelsDir);
         var models = [];
         for (var _i = 0, listModels_1 = listModels; _i < listModels_1.length; _i++) {
             var model = listModels_1[_i];
-            models.push("    'model:" + path.parse(model).name + "'");
+            var pp = path.parse(model);
+            if (pp.ext != ".json")
+                continue;
+            models.push("    'model:" + pp.name + "'");
         }
         return models.join(",\n");
     };
@@ -67,7 +84,22 @@ var ModelBlueprint = (function () {
         if (attrs.length === 0) {
             return "";
         }
-        return "    " + attrs.join(",\n    ");
+        return "      " + attrs.join(",\n      ");
+    };
+    ModelBlueprint.prototype.getOfflineSerializerAttrs = function (model) {
+        var attrs = [];
+        for (var _i = 0, _a = model.belongsTo; _i < _a.length; _i++) {
+            var belongsTo = _a[_i];
+            attrs.push(belongsTo.name + ": { serialize: 'id', deserialize: 'records' }");
+        }
+        for (var _b = 0, _c = model.hasMany; _b < _c.length; _b++) {
+            var hasMany = _c[_b];
+            attrs.push(hasMany.name + ": { serialize: 'ids', deserialize: 'records' }");
+        }
+        if (attrs.length === 0) {
+            return "";
+        }
+        return "      " + attrs.join(",\n      ");
     };
     ModelBlueprint.prototype.getJSForModel = function (model) {
         var attrs = [], validations = [];
@@ -76,7 +108,32 @@ var ModelBlueprint = (function () {
         var attr;
         for (var _i = 0, _a = model.attrs; _i < _a.length; _i++) {
             attr = _a[_i];
-            attrs.push(attr.name + ": DS.attr('" + attr.type + "')");
+            var comment = "";
+            if (!attr.stored) {
+                comment =
+                    "/**\n" +
+                        TAB + TAB + "Non-stored property.\n\n" +
+                        TAB + TAB + ("@property " + attr.name + "\n") +
+                        TAB + "*/\n" + TAB;
+            }
+            var defaultValue = "";
+            if (attr.defaultValue) {
+                switch (attr.type) {
+                    case 'decimal':
+                    case 'number':
+                    case 'boolean':
+                        defaultValue = ", { defaultValue: " + attr.defaultValue + " }";
+                        break;
+                    case 'date':
+                        if (attr.defaultValue === 'Now') {
+                            defaultValue = ", { defaultValue() { return new Date(); } }";
+                            break;
+                        }
+                    default:
+                        defaultValue = ", { defaultValue: '" + attr.defaultValue + "' }";
+                }
+            }
+            attrs.push("" + comment + attr.name + ": DS.attr('" + attr.type + "'" + defaultValue + ")");
             if (attr.notNull) {
                 if (attr.type === "date") {
                     validations.push(attr.name + ": { datetime: true }");
@@ -85,6 +142,26 @@ var ModelBlueprint = (function () {
                     validations.push(attr.name + ": { presence: true }");
                 }
             }
+            if (attr.stored)
+                continue;
+            var methodToSetNotStoredProperty = "/**\n" +
+                TAB + TAB + "Method to set non-stored property.\n" +
+                TAB + TAB + "Please, use code below in model class (outside of this mixin) otherwise it will be replaced during regeneration of models.\n" +
+                TAB + TAB + ("Please, implement '" + attr.name + "Compute' method in model class (outside of this mixin) if you want to compute value of '" + attr.name + "' property.\n\n") +
+                TAB + TAB + ("@method _" + attr.name + "Compute\n") +
+                TAB + TAB + "@private\n" +
+                TAB + TAB + "@example\n" +
+                TAB + TAB + TAB + "```javascript\n" +
+                TAB + TAB + TAB + ("_" + attr.name + "Changed: Ember.on('init', Ember.observer('" + attr.name + "', function() {\n") +
+                TAB + TAB + TAB + TAB + ("Ember.run.once(this, '_" + attr.name + "Compute');\n") +
+                TAB + TAB + TAB + "}))\n" +
+                TAB + TAB + TAB + "```\n" +
+                TAB + "*/\n" +
+                TAB + ("_" + attr.name + "Compute: function() {\n") +
+                TAB + TAB + ("let result = (this." + attr.name + "Compute && typeof this." + attr.name + "Compute === 'function') ? this." + attr.name + "Compute() : null;\n") +
+                TAB + TAB + ("this.set('" + attr.name + "', result);\n") +
+                TAB + "}";
+            attrs.push(methodToSetNotStoredProperty);
         }
         var belongsTo;
         for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
@@ -101,12 +178,13 @@ var ModelBlueprint = (function () {
         if (validations.length === 0) {
             validationsFunc = "";
         }
-        validationsFunc = "getValidations: function () {\n" +
-            TAB + TAB + "let parentValidations = this._super();\n" +
-            TAB + TAB + "let thisValidations = {\n" +
-            validationsFunc + TAB + TAB + "};\n" +
-            TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-            TAB + "}";
+        validationsFunc =
+            "getValidations: function () {\n" +
+                TAB + TAB + "let parentValidations = this._super();\n" +
+                TAB + TAB + "let thisValidations = {\n" +
+                validationsFunc + TAB + TAB + "};\n" +
+                TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+                TAB + "}";
         var initFunction = "init: function () {\n" +
             TAB + TAB + "this.set('validations', this.getValidations());\n" +
             TAB + TAB + "this._super.apply(this, arguments);\n" +
@@ -116,8 +194,7 @@ var ModelBlueprint = (function () {
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
-        var modelFile = path.join(modelsDir, detailHasMany.relatedTo + ".json");
-        var hasManyModel = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+        var hasManyModel = ModelBlueprint.loadModel(modelsDir, detailHasMany.relatedTo + ".json");
         var hasManyProj = lodash.find(hasManyModel.projections, function (pr) { return pr.name === detailHasMany.projectionName; });
         if (hasManyProj) {
             for (var _i = 0, _a = hasManyProj.attrs; _i < _a.length; _i++) {
@@ -211,8 +288,7 @@ var ModelBlueprint = (function () {
             for (var _f = 0, _g = proj.hasMany; _f < _g.length; _f++) {
                 var hasMany = _g[_f];
                 var hasManyAttrs = [];
-                var modelFile = path.join(modelsDir, hasMany.relatedTo + ".json");
-                var detailModel = JSON.parse(stripBom(fs.readFileSync(modelFile, "utf8")));
+                var detailModel = ModelBlueprint.loadModel(modelsDir, hasMany.relatedTo + ".json");
                 projName = hasMany.projectionName;
                 var detailProj = lodash.find(detailModel.projections, function (pr) { return pr.name === projName; });
                 if (detailProj) {
@@ -241,6 +317,5 @@ var ModelBlueprint = (function () {
     };
     return ModelBlueprint;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ModelBlueprint;
 //# sourceMappingURL=ModelBlueprint.js.map

@@ -5,7 +5,7 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 
-const { Condition, SimplePredicate, ComplexPredicate } = Query;
+const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate } = Query;
 
 /**
   Mixin for route, that restrictions on the list form.
@@ -72,6 +72,15 @@ export default Ember.Mixin.create({
   filter: null,
 
   /**
+    Result predicate with all restrictions for olv.
+
+    @property resultPredicate
+    @type BasePredicate
+    @default null
+   */
+  resultPredicate: null,
+
+  /**
     Return predicate to filter through.
 
     @example
@@ -93,15 +102,30 @@ export default Ember.Mixin.create({
     @return {BasePredicate|null} Predicate to filter through.
   */
   predicateForFilter(filter) {
-    switch (filter.type) {
-      case 'string':
-      case 'number':
-      case 'boolean':
-        return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+    if (filter.pattern && filter.condition) {
+      switch (filter.type) {
+        case 'string':
+          return filter.condition === 'like' ?
+            new StringPredicate(filter.name).contains(filter.pattern) :
+            new SimplePredicate(filter.name, filter.condition, filter.pattern);
+        case 'boolean':
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+        case 'number':
+          return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
+        case 'date':
+          return new DatePredicate(filter.name, filter.condition, filter.pattern);
 
-      default:
-        return null;
+        default:
+          return null;
+      }
+    } else {
+      if (!filter.condition && filter.type === 'string') {
+        Ember.set(filter, 'condition', 'like');
+        return new StringPredicate(filter.name).contains(filter.pattern);
+      }
     }
+
+    return null;
   },
 
   /**
@@ -120,6 +144,8 @@ export default Ember.Mixin.create({
           let predicate = this.predicateForFilter(filters[filter]);
           if (predicate) {
             predicates.push(predicate);
+          } else {
+            delete filters[filter];
           }
         }
       }

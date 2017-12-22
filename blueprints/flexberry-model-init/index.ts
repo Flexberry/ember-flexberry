@@ -9,6 +9,10 @@ module.exports = {
     { name: 'metadata-dir', type: String }
   ],
 
+  supportsAddon: function () {
+    return false;
+  },
+
   /**
    * Blueprint Hook locals.
    * Use locals to add custom template variables. The method receives one argument: options.
@@ -25,6 +29,7 @@ module.exports = {
       className: modelBlueprint.className,// for use in files\__root__\models\__name__.js
       parentModelName: modelBlueprint.parentModelName,// for use in files\__root__\models\__name__.js
       parentClassName: modelBlueprint.parentClassName,// for use in files\__root__\models\__name__.js
+      parentExternal: modelBlueprint.parentExternal,// for use in files\__root__\models\__name__.js
       name: modelBlueprint.name,// for use in files\__root__\models\__name__.js
       projections: modelBlueprint.projections,// for use in files\__root__\models\__name__.js
     };

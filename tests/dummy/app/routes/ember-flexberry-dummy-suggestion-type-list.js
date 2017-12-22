@@ -30,7 +30,11 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { SOLVsuggestionTypeObjectListView: { } },
+  developerUserSettings: { SOLVSuggestionTypeObjectListView: {
+    'DEFAULT': {
+      'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 100 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+    }
+  } },
 
   /**
     Name of model to be used as list's records types.

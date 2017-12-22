@@ -78,7 +78,7 @@ export default Ember.Service.extend({
     @type Object
     @default {}
    */
-  developerUserSettings:{},
+  developerUserSettings: {},
 
   /**
     User settings for all pages before params applying.
@@ -87,7 +87,7 @@ export default Ember.Service.extend({
     @type Object
     @default {}
     */
-  beforeParamUserSettings:{},
+  beforeParamUserSettings: {},
 
   /**
     Current user settings for all pages
@@ -96,7 +96,7 @@ export default Ember.Service.extend({
     @type Object
     @default {}
     */
-  currentUserSettings:{},
+  currentUserSettings: {},
 
   init() {
     this._super(...arguments);
@@ -182,7 +182,7 @@ export default Ember.Service.extend({
     }
 
     let appPage = this.currentAppPage;
-    if (!(appPage  in this.currentUserSettings)) {
+    if (!(appPage in this.currentUserSettings)) {
       this.currentUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
       this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
       this.developerUserSettings[appPage] = developerUserSettings;
@@ -196,7 +196,7 @@ export default Ember.Service.extend({
 
     }
 
-    return new Ember.RSVP.Promise(function(resolve) {
+    return new Ember.RSVP.Promise(function (resolve) {
       resolve(undefined);
     });
   },
@@ -234,7 +234,7 @@ export default Ember.Service.extend({
   getListComponentNames() {
     let ret = [];
     let appPage = this.currentAppPage;
-    if (appPage in  this.currentUserSettings) {
+    if (appPage in this.currentUserSettings) {
       for (let componentName in this.currentUserSettings[appPage]) {
         ret[ret.length] = componentName;
       }
@@ -280,8 +280,8 @@ export default Ember.Service.extend({
    */
   haveDefaultUserSetting(componentName) {
     let ret = this.exists() &&
-    componentName in this.currentUserSettings[this.currentAppPage] &&
-    defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName];
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName];
     return ret;
   },
 
@@ -291,12 +291,23 @@ export default Ember.Service.extend({
    *   @method getListCurrentUserSetting
    *   @return {String}
    */
-  getListCurrentUserSetting(componentName) {
-    let ret = [];
-    if (this.currentAppPage in  this.currentUserSettings &&
+  getListCurrentUserSetting(componentName, isExportExcel) {
+    let ret = {};
+    if (this.currentAppPage in this.currentUserSettings &&
       componentName in this.currentUserSettings[this.currentAppPage]
     ) {
-      ret = this.currentUserSettings[this.currentAppPage][componentName];
+      let sets = this.currentUserSettings[this.currentAppPage][componentName];
+
+      for (let settingName in sets) {
+        let settingNameSplit = settingName.split('/');
+        if (isExportExcel && settingNameSplit[0] === 'ExportExcel') {
+          ret[settingName] = sets[settingName];
+        }
+
+        if (!isExportExcel && settingNameSplit[0] !== 'ExportExcel') {
+          ret[settingName] = sets[settingName];
+        }
+      }
     }
 
     return ret;
@@ -308,9 +319,9 @@ export default Ember.Service.extend({
     @method getListCurrentNamedUserSetting
     @return {String}
   */
-  getListCurrentNamedUserSetting(componentName) {
+  getListCurrentNamedUserSetting(componentName, isExportExcel) {
     let ret = {};
-    let listCurrentUserSetting = this.getListCurrentUserSetting(componentName);
+    let listCurrentUserSetting = this.getListCurrentUserSetting(componentName, isExportExcel);
     for (let settingName in listCurrentUserSetting) {
       if (settingName === defaultSettingName) {
         continue;
@@ -336,7 +347,7 @@ export default Ember.Service.extend({
     }
 
     let ret;
-    if (this.currentAppPage in  this.currentUserSettings &&
+    if (this.currentAppPage in this.currentUserSettings &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName]
     ) {
@@ -357,7 +368,7 @@ export default Ember.Service.extend({
     let settingName = defaultSettingName;
 
     let ret;
-    if (this.currentAppPage in  this.defaultDeveloperUserSettings &&
+    if (this.currentAppPage in this.defaultDeveloperUserSettings &&
       componentName in this.defaultDeveloperUserSettings[this.currentAppPage] &&
       settingName in this.defaultDeveloperUserSettings[this.currentAppPage][componentName]
     ) {
@@ -417,6 +428,32 @@ export default Ember.Service.extend({
   getCurrentColumnWidths(componentName, settingName) {
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
     return currentUserSetting && 'columnWidths' in currentUserSetting ? currentUserSetting.columnWidths : undefined;
+  },
+
+  /**
+   Returns current detSeparateCols.
+
+   @method getDetSeparateCols
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Boolean}
+   */
+  getDetSeparateCols(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting && 'detSeparateCols' in currentUserSetting ? currentUserSetting.detSeparateCols : false;
+  },
+
+  /**
+   Returns current detSeparateRows.
+
+   @method getDetSeparateRows
+   @param {String} componentName Name of component.
+   @param {String} settingName Name of setting.
+   @return {Boolean}
+   */
+  getDetSeparateRows(componentName, settingName) {
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting && 'detSeparateRows' in currentUserSetting ? currentUserSetting.detSeparateRows : false;
   },
 
   /**
@@ -486,9 +523,13 @@ export default Ember.Service.extend({
    @param {String} settingName Setting name to search by.
    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array
    */
-  deleteUserSetting(componentName, settingName) {
+  deleteUserSetting(componentName, settingName, isExportExcel) {
     if (settingName === undefined) {
       settingName = defaultSettingName;
+    }
+
+    if (isExportExcel) {
+      settingName = 'ExportExcel/' + settingName;
     }
 
     Ember.assert('deleteUserSetting:: componentName name is not defined for user setting getting.', componentName);
@@ -506,7 +547,7 @@ export default Ember.Service.extend({
     }
 
     if (!this.get('isUserSettingsServiceEnabled')) {
-      return new Ember.RSVP.Promise(function(resolve) {
+      return new Ember.RSVP.Promise(function (resolve) {
         resolve(undefined);
       });
     }
@@ -523,9 +564,13 @@ export default Ember.Service.extend({
    @param {String} userSetting User setting data to save.
    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>} Save operation promise.
    */
-  saveUserSetting(componentName, settingName, userSetting) {
+  saveUserSetting(componentName, settingName, userSetting, isExportExcel) {
     if (settingName === undefined) {
       settingName = defaultSettingName;
+    }
+
+    if (isExportExcel) {
+      settingName = 'ExportExcel/' + settingName;
     }
 
     Ember.assert('saveUserSetting:: componentName is not defined for user setting saving.', componentName);
@@ -533,17 +578,17 @@ export default Ember.Service.extend({
     Ember.assert('saveUserSetting:: Setting name is not defined for user setting saving.', settingName !== undefined);
 
     if (!(this.currentAppPage in this.currentUserSettings)) {
-      this.currentUserSettings[this.currentAppPage] = { };
+      this.currentUserSettings[this.currentAppPage] = {};
     }
 
     if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
-      this.currentUserSettings[this.currentAppPage][componentName] = { };
+      this.currentUserSettings[this.currentAppPage][componentName] = {};
     }
 
     this.currentUserSettings[this.currentAppPage][componentName][settingName] = userSetting;
     this.beforeParamUserSettings[this.currentAppPage] = JSON.parse(JSON.stringify(this.currentUserSettings[this.currentAppPage]));
     if (!this.get('isUserSettingsServiceEnabled')) {
-      return new Ember.RSVP.Promise((resolve, reject) => {resolve();});
+      return new Ember.RSVP.Promise((resolve, reject) => { resolve(); });
     }
 
     let store = this.get('_store');
@@ -553,6 +598,12 @@ export default Ember.Service.extend({
           let prevUserSetting = JSON.parse(foundRecord.get('txtVal'));
           if (!prevUserSetting) {
             prevUserSetting = {};
+          }
+
+          for (let settingName in prevUserSetting) {
+            if (Ember.isNone(userSetting[settingName])) {
+              delete prevUserSetting[settingName];
+            }
           }
 
           for (let settingName in userSetting) {
@@ -576,6 +627,7 @@ export default Ember.Service.extend({
   },
 
   /**
+
     Returns current user name.
     Method must be overridden if application uses some authentication.
 
@@ -595,7 +647,7 @@ export default Ember.Service.extend({
    */
   _getUserSettings() {
     if (!this.get('isUserSettingsServiceEnabled')) {
-      return { };
+      return {};
     }
 
     let settingsPromise = this._getExistingSettings();
@@ -607,8 +659,8 @@ export default Ember.Service.extend({
           for (let i = 0; i < foundRecords.length; i++) {
             let foundRecord = foundRecords[i];
             let userSettingValue = foundRecord.record.get('txtVal');
-            let settName  = foundRecord.record.get('settName');
-            let componentName  = foundRecord.record.get('moduleName');
+            let settName = foundRecord.record.get('settName');
+            let componentName = foundRecord.record.get('moduleName');
             if (!settName) {
               settName = defaultSettingName;
             }
@@ -702,27 +754,27 @@ export default Ember.Service.extend({
    @return {<a href="http://emberjs.com/api/classes/RSVP.Promise.html">Promise</a>[]} Promises array.
    @private
    */
-  _deleteExistingRecord: function(componentName, settingName) {
+  _deleteExistingRecord: function (componentName, settingName) {
     // TODO: add search by username.
     let cp = this._getSearchPredicate(componentName, settingName);
     let store = this.get('_store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
     let builder = new Builder(store)
-    .from(modelName)
-    .selectByProjection('FlexberryUserSettingE')
-    .where(cp);
+      .from(modelName)
+      .selectByProjection('FlexberryUserSettingE')
+      .where(cp);
 
     return store.query(modelName, builder.build()).then((result) => {
       if (result) {
         let delPromises = [];
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
-          for (let i =  0; i < foundRecords.length; i++) {
+          for (let i = 0; i < foundRecords.length; i++) {
             delPromises[delPromises.length] = foundRecords[i].record.destroyRecord();
           }
 
           return Ember.RSVP.Promise.all(delPromises).then(
-            result => {return result;}
+            result => { return result; }
           );
         }
       }
@@ -747,10 +799,10 @@ export default Ember.Service.extend({
     let store = this.get('_store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
     let builder = new Builder(store)
-    .from(modelName)
-    .selectByProjection('FlexberryUserSettingE')
-    .orderBy('settLastAccessTime desc')
-    .where(cp);
+      .from(modelName)
+      .selectByProjection('FlexberryUserSettingE')
+      .orderBy('settLastAccessTime desc')
+      .where(cp);
     return store.query(modelName, builder.build()).then((result) => {
       if (result) {
         let foundRecords = result.get('content');
@@ -782,9 +834,9 @@ export default Ember.Service.extend({
     let store = this.get('_store');
     let modelName = 'new-platform-flexberry-flexberry-user-setting';
     let builder = new Builder(store)
-    .from(modelName)
-    .selectByProjection('FlexberryUserSettingE')
-    .where(cp);
+      .from(modelName)
+      .selectByProjection('FlexberryUserSettingE')
+      .where(cp);
 
     return store.query(modelName, builder.build()).then((result) => {
       let foundRecords = [];

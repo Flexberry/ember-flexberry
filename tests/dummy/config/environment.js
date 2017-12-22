@@ -9,11 +9,13 @@ module.exports = function(environment) {
   }
 
   var ENV = {
+    repositoryName: 'ember-flexberry/dummy',
     modulePrefix: 'dummy',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
     EmberENV: {
+      LOG_STACKTRACE_ON_DEPRECATION: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -105,7 +107,7 @@ module.exports = function(environment) {
   ENV.i18n = {
     // Should be defined to avoid ember-i18n deprecations.
     // Locale will be changed then to navigator current locale (in instance initializer).
-    defaultLocale: 'en'
+    defaultLocale: 'ru'
   };
 
   // Read more about ember-moment: https://github.com/stefanpenner/ember-moment.
@@ -136,6 +138,24 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
 
+  }
+
+  // Change paths to application assets if build has been started with the following parameters:
+  // ember build --gh-pages --gh-pages-branch=<branch-to-publish-on-gh-pages>.
+  if (process.argv.indexOf('--gh-pages') >= 0) {
+    var branch;
+
+    // Retrieve branch name from process arguments.
+    process.argv.forEach(function (value) {
+      if (value.indexOf('--gh-pages-branch=') >= 0) {
+        branch = value.split('=')[1];
+        return;
+      }
+    });
+
+    // Change base URL to force paths to application assets be relative.
+    ENV.baseURL = '/' + ENV.repositoryName + '/' + branch + '/';
+    ENV.locationType = 'none';
   }
 
   return ENV;

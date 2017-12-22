@@ -51,18 +51,8 @@ let expandCollapseTogglerWithStateChecks = function(assert, captions) {
       $componentTitle.click();
     });
 
-    // Wait animation to check component's state.
-    Ember.run(() => {
-      let animation = assert.async();
-      setTimeout(() => {
-        // Check that component is animating now.
-        assert.strictEqual($componentContent.hasClass('animating'), true);
-
-        // Tell to test method that asynchronous operation completed.
-        animation();
-
-      }, animationDuration / 2);
-    });
+    // Check that component is animating now.
+    assert.strictEqual($componentContent.hasClass('animating'), true);
 
     // Wait for expand animation to be completed & check component's state.
     Ember.run(() => {
@@ -279,4 +269,42 @@ test('changes in \'expanded\' property causes changing of component\'s expand/co
   assert.strictEqual($togglerTitle.hasClass('active'), false);
   assert.strictEqual($togglerContent.hasClass('active'), false);
   assert.strictEqual(Ember.$.trim($togglerCaption.text()), collapsedCaption);
+});
+
+test('disabled animation', function(assert) {
+  this.render(hbs`
+    {{#flexberry-toggler
+      caption="Click me!"
+      duration=0}}
+      Hello!
+    {{/flexberry-toggler}}`);
+
+  assert.notOk(this.$('.flexberry-toggler .content').hasClass('active'));
+
+  this.$('.flexberry-toggler .title').click();
+
+  assert.ok(this.$('.flexberry-toggler .content').hasClass('active'));
+});
+
+test('loong animation speed', function(assert) {
+  assert.expect(3);
+  let done = assert.async();
+
+  this.render(hbs`
+    {{#flexberry-toggler
+      caption="Click me!"
+      duration=750}}
+      Hello!
+    {{/flexberry-toggler}}`);
+
+  this.$('.flexberry-toggler .title').click();
+
+  assert.ok(this.$('.flexberry-toggler .content').hasClass('animating'));
+  Ember.run.later(() => {
+    assert.ok(this.$('.flexberry-toggler .content').hasClass('animating'));
+  }, 500);
+  Ember.run.later(() => {
+    assert.notOk(this.$('.flexberry-toggler .content').hasClass('animating'));
+    done();
+  }, 1000);
 });

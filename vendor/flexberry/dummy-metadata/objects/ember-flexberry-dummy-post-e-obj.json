@@ -1,0 +1,15 @@
+﻿{
+  "name": "EmberFlexberryDummyPostEObj",
+  "emberObjectName": "ember-flexberry-dummy-post-e-obj",
+  "className": "EObj",
+  "attrs": [
+    {
+      "name": "editor",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    }
+  ]
+}

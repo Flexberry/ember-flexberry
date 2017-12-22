@@ -10,7 +10,7 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
-  _items: Ember.computed('items', function() {
+  _items: Ember.computed('items.[]', function() {
     let items = this.get('items');
     let obj = null;
 
@@ -45,6 +45,7 @@ export default FlexberryBaseComponent.extend({
   allowTab: true,
   transition: 'auto',
   duration: 200,
+  action: 'select',
 
   /**
     Flag indicates whether to make checks on selected value or not.

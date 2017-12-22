@@ -95,6 +95,25 @@ export default Ember.Component.extend({
   iconClass: undefined,
 
   /**
+    Flag indicates whenever toogler contains resaizable OLV.
+
+    @property hasResizableOLV
+    @type Boolean
+  */
+  hasResizableOLV: false,
+
+  /**
+    Duration in milliseconds of opening animation.
+    Set `0` for disabling animation.
+    Important: used only on initial render.
+
+    @property duration
+    @type Number
+    @default 350
+  */
+  duration: 350,
+
+  /**
     Handles the event, when component has been insterted.
     Attaches event handlers for expanding / collapsing content.
   */
@@ -103,10 +122,15 @@ export default Ember.Component.extend({
 
     // Attach semantic-ui open/close callbacks.
     $accordeonDomElement.accordion({
+      duration: this.get('duration'),
       onOpen: () => {
         // Change of 'expanded' state may cause asynchronous animation, so we need Ember.run here.
         Ember.run(() => {
           this.set('expanded', true);
+          if (this.get('hasResizableOLV')) {
+            this.$('table.object-list-view').colResizable({ disable: true });
+            this.$('table.object-list-view').colResizable();
+          }
         });
       },
       onClose: () => {

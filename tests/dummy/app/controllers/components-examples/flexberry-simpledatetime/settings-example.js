@@ -121,6 +121,15 @@ export default Ember.Controller.extend({
   readonly: false,
 
   /**
+    Flag indicates whether 'flexberry-simpledatetime' component has remove button or not.
+
+    @property removeButton
+    @type Boolean
+    @default true
+   */
+  removeButton: true,
+
+  /**
     Template text for 'flexberry-simpledatetime' component.
 
     @property componentTemplateText
@@ -129,6 +138,7 @@ export default Ember.Controller.extend({
   componentTemplateText: new Ember.Handlebars.SafeString(
     '{{flexberry-simpledatetime<br>' +
     '  type=type<br>' +
+    '  removeButton=removeButton<br>' +
     '  value=model.date<br>' +
     '  min=min<br>' +
     '  max=max<br>' +
@@ -151,6 +161,12 @@ export default Ember.Controller.extend({
       settingDefaultValue: 'datetime-local',
       bindedControllerPropertieName: 'type',
       bindedControllerPropertieDisplayName: 'type',
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'removeButton',
+      settingType: 'boolean',
+      settingDefaultValue: true,
+      bindedControllerPropertieName: 'removeButton',
     });
     componentSettingsMetadata.pushObject({
       settingName: 'min',

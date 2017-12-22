@@ -6,123 +6,140 @@
   "parentClassName": null,
   "attrs": [
     {
-      "name": "name",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": true,
-      "defaultValue": ""
-    },
-    {
-      "name": "eMail",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": true,
-      "defaultValue": ""
-    },
-    {
-      "name": "phone1",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "phone2",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "phone3",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "activated",
-      "type": "boolean",
-      "flexberryType": "bool",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "vK",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "facebook",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "twitter",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "birthday",
-      "type": "date",
-      "flexberryType": "NullableDateTime",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "gender",
-      "type": "ember-flexberry-dummy-gender",
-      "flexberryType": "Gender",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "vip",
-      "type": "boolean",
-      "flexberryType": "bool",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "karma",
-      "type": "decimal",
-      "flexberryType": "decimal",
-      "notNull": false,
-      "defaultValue": "100"
-    },
-    {
       "name": "createTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "creator",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editor",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": true,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "eMail",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": true,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "phone1",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "phone2",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "phone3",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "activated",
+      "type": "boolean",
+      "flexberryType": "bool",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "vK",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "facebook",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "twitter",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "birthday",
+      "type": "date",
+      "flexberryType": "NullableDateTime",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "gender",
+      "type": "ember-flexberry-dummy-gender",
+      "flexberryType": "Gender",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "vip",
+      "type": "boolean",
+      "flexberryType": "bool",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "karma",
+      "type": "decimal",
+      "flexberryType": "decimal",
+      "notNull": false,
+      "defaultValue": "100",
+      "stored": true
     }
   ],
   "belongsTo": [],
@@ -344,5 +361,7 @@
       "belongsTo": [],
       "hasMany": []
     }
-  ]
+  ],
+  "stored": true,
+  "offline": true
 }

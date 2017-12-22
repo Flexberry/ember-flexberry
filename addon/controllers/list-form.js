@@ -8,6 +8,7 @@ import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
 import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-controller';
 import ColsConfigDialogMixin from '../mixins/colsconfig-dialog-controller';
+import ErrorableControllerMixin from '../mixins/errorable-controller';
 
 import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
 
@@ -44,7 +45,8 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   LimitedControllerMixin,
   FlexberryOlvToolbarMixin,
   FlexberryObjectlistviewHierarchicalControllerMixin,
-  ColsConfigDialogMixin, {
+  ColsConfigDialogMixin,
+  ErrorableControllerMixin, {
   /**
     Controller to show colsconfig modal window.
 
@@ -53,6 +55,32 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     @default Ember.inject.controller('colsconfig-dialog')
   */
   colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+
+  /**
+    Object with developer user settings.
+
+    @property developerUserSettings
+    @type Object
+    @default undefined
+  */
+  developerUserSettings: undefined,
+
+  /**
+    Object with default developer user settings.
+
+    @property defaultDeveloperUserSettings
+    @type Object
+    @default undefined
+  */
+  defaultDeveloperUserSettings: undefined,
+
+  /**
+    State form. A form is in different states: loading, success, error.
+
+    @property state
+    @type String
+  */
+  state: undefined,
 
   /**
     Method to get type and attributes of component, which will be embeded in object-list-view cell.

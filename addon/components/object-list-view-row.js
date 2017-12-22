@@ -13,16 +13,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
 */
 export default FlexberryBaseComponent.extend({
   /**
-    Flag used to display embedded records.
-
-    @property _expanded
-    @type Boolean
-    @default false
-    @private
-  */
-  _expanded: false,
-
-  /**
     Stores the number of pixels to isolate one level of hierarchy.
 
     @property _hierarchicalIndent
@@ -182,6 +172,17 @@ export default FlexberryBaseComponent.extend({
     },
   }),
 
+  hierarchicalIndentStyle: Ember.computed('_hierarchicalIndent', 'defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    let hierarchicalIndent = this.get('hierarchicalIndent');
+    return Ember.String.htmlSafe(`padding-left:${hierarchicalIndent}px !important; padding-right:${defaultLeftPadding}px !important;`);
+  }),
+
+  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+    let defaultLeftPadding = this.get('defaultLeftPadding');
+    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+  }),
+
   /**
     Tag name for the view's outer element. [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
 
@@ -207,7 +208,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.expand
     */
     expand() {
-      this.toggleProperty('_expanded');
+      this.toggleProperty('inExpandMode');
     },
 
     /**
@@ -229,6 +230,24 @@ export default FlexberryBaseComponent.extend({
     removeLookupValue(removeData) {
       this.get('currentController').send('removeLookupValue', removeData);
     },
+
+    /**
+      Handles rows clicks and sends 'rowClick' action outside.
+
+      @method actions.onRowClick
+      @param {Object} record Record related to clicked row.
+      @param {Object} params Additional parameters describing clicked row.
+      @param {Object} params.column Column in row wich owns the clicked cell.
+      @param {Number} params.columnIndex Index of column in row wich owns the clicked cell.
+      @param {Object} e Click event object.
+    */
+    onRowClick(record, params, e) {
+      if (!Ember.isBlank(e)) {
+        Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      }
+
+      this.sendAction('rowClick', record, params);
+    }
   },
 
   /**
@@ -242,7 +261,12 @@ export default FlexberryBaseComponent.extend({
       let id = this.get('record.data.id');
       if (id && this.get('inHierarchicalMode')) {
         this.set('recordsLoaded', true);
-        this.sendAction('loadRecords', id, this, 'records');
+        if (this.get('_level') > 0) {
+          this.sendAction('loadRecords', id, this, 'records', false);
+        } else {
+          this.sendAction('loadRecords', id, this, 'records', true);
+        }
+
       }
     }
   },

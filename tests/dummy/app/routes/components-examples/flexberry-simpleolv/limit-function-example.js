@@ -90,9 +90,8 @@ export default ListFormRoute.extend({
 
       let limitFunctionText = this.get('controller.limitFunction');
 
-      if (limitFunctionText)
-      {
-        let limitFunction = new StringPredicate('author.name').contains(limitFunctionText);
+      if (limitFunctionText) {
+        let limitFunction = new StringPredicate('address').contains(limitFunctionText);
 
         return limitFunction;
       }
@@ -109,15 +108,12 @@ export default ListFormRoute.extend({
 
     let store = this.get('store');
 
-    let query = new Query.Builder(store)
-      .from('ember-flexberry-dummy-suggestion')
-      .selectByProjection('SuggestionE');
+    let query = new Query.Builder(store).from(this.get('modelName')).where('address', Query.FilterOperator.Neq, '');
 
     store.query('ember-flexberry-dummy-suggestion', query.build()).then((limitdata) => {
       let limitTypesArr = limitdata.toArray();
-      this.set('firstLimitType', limitTypesArr.objectAt(0).get('author.name'));
-      this.set('secondLimitType', limitTypesArr.objectAt(1).get('author.name'));
-      this.refresh();
+      this.set('firstLimitType', limitTypesArr.objectAt(0).get('address'));
+      this.set('secondLimitType', limitTypesArr.objectAt(1).get('address'));
     });
 
     return this._super(...arguments);

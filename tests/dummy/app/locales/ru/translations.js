@@ -863,7 +863,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-simpleolv': {
         'limit-function-example': {
-          'caption': 'Flexberry-simpleolv. Функция ограничения'
+          'caption': 'Flexberry-simpleolv. Функция ограничения',
+          'captionFirstLimitFunction': 'Функция ограничения №1',
+          'captionSecondLimitFunction': 'Функция ограничения №2',
+          'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'settings-example': {
           'caption': 'Flexberry-simpleolv. Пример работы с настройками'

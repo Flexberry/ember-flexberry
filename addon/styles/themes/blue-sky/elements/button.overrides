@@ -341,8 +341,8 @@ ui.button.ui-clear:hover {
 
 .ui.check-all-at-page-button.button {
     padding: 0px;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     text-align: center;
     border: 0px;
     background: none;
@@ -358,8 +358,8 @@ ui.button.ui-clear:hover {
 
 .ui.check-all-button.button {
     padding: 0px;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     text-align: center;
     border: 0px;
     background: none;
@@ -381,8 +381,8 @@ ui.button.ui-clear:hover {
 
 .ui.clear-sorting-button.button {
     padding: 0px;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 10px;
     text-align: center;
     border: 0px;
     background: none;

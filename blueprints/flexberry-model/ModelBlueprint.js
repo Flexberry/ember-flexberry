@@ -1,12 +1,13 @@
+"use strict";
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
-"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var stripBom = require("strip-bom");
 var fs = require("fs");
-var path = require('path');
-var lodash = require('lodash');
-var Locales_1 = require('../flexberry-core/Locales');
+var path = require("path");
+var lodash = require("lodash");
+var Locales_1 = require("../flexberry-core/Locales");
 var TAB = "  ";
 var SortedPair = (function () {
     function SortedPair(index, str) {
@@ -24,6 +25,10 @@ var ModelBlueprint = (function () {
         var model = ModelBlueprint.loadModel(modelsDir, options.file);
         this.parentModelName = model.parentModelName;
         this.parentClassName = model.parentClassName;
+        if (model.parentModelName) {
+            var parentModel = ModelBlueprint.loadModel(modelsDir, model.parentModelName + ".json");
+            this.parentExternal = parentModel.external;
+        }
         this.className = model.className;
         this.serializerAttrs = this.getSerializerAttrs(model);
         this.offlineSerializerAttrs = this.getOfflineSerializerAttrs(model);
@@ -111,7 +116,24 @@ var ModelBlueprint = (function () {
                         TAB + TAB + ("@property " + attr.name + "\n") +
                         TAB + "*/\n" + TAB;
             }
-            attrs.push("" + comment + attr.name + ": DS.attr('" + attr.type + "')");
+            var defaultValue = "";
+            if (attr.defaultValue) {
+                switch (attr.type) {
+                    case 'decimal':
+                    case 'number':
+                    case 'boolean':
+                        defaultValue = ", { defaultValue: " + attr.defaultValue + " }";
+                        break;
+                    case 'date':
+                        if (attr.defaultValue === 'Now') {
+                            defaultValue = ", { defaultValue() { return new Date(); } }";
+                            break;
+                        }
+                    default:
+                        defaultValue = ", { defaultValue: '" + attr.defaultValue + "' }";
+                }
+            }
+            attrs.push("" + comment + attr.name + ": DS.attr('" + attr.type + "'" + defaultValue + ")");
             if (attr.notNull) {
                 if (attr.type === "date") {
                     validations.push(attr.name + ": { datetime: true }");
@@ -295,6 +317,5 @@ var ModelBlueprint = (function () {
     };
     return ModelBlueprint;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ModelBlueprint;
 //# sourceMappingURL=ModelBlueprint.js.map

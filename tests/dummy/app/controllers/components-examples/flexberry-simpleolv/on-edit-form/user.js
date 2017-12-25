@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
-import EditFormControllerOperationsIndicationMixin from '../../../../mixins/edit-form-controller-operations-indication';
+import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 
 import { Query } from 'ember-flexberry-data';
 

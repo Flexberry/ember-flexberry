@@ -32,6 +32,24 @@
         configurateRow=(action "configurateRow")
         componentName="FOLVConfigurateRowsObjectListView"
       }}
+      {{flexberry-groupedit
+        componentName="ConfigurateRowsGroupedit"
+        content=model
+        modelProjection=projection
+        placeholder=placeholder
+        readonly=readonly
+        allowColumnResize=false
+        createNewButton=true
+        showAsteriskInRow=true
+        showCheckBoxInRow=true
+        rowClickable=false
+        immediateDelete=false
+        editOnSeperateRoute=false
+        searchForContentChange=searchForContentChange
+        orderable=false
+        readonly=readonly
+        configurateRow=(action "configurateRow")
+      }}
     {{/settings-example}}
   </div>
 </form>

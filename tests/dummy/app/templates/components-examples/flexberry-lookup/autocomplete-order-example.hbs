@@ -1,0 +1,19 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-lookup.autocomplete-order-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    {{flexberry-lookup
+        readonly=readonly
+        value=model.type
+        projection="SettingLookupExampleView"
+        displayAttributeName="name"
+        autocompleteOrder="moderated asc, parent desc"
+        title=title
+        relatedModel=model
+        relationName="type"
+        choose="showLookupDialog"
+        remove="removeLookupValue"
+        autocomplete=true
+        placeholder=placeholder
+    }}
+  </div>
+</form>

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export let Serializer = Ember.Mixin.create({
+export let OfflineSerializer = Ember.Mixin.create({
   getAttrs: function () {
     let parentAttrs = this._super();
     let attrs = {

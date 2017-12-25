@@ -33,3 +33,13 @@
   componentName="FOLVLimitFunctionExampleObjectListView"
 }}
 </div>
+<br>
+<button class="ui button" {{action 'firstLimitFunction' on="click"}}>
+  {{concat (t "forms.components-examples.flexberry-objectlistview.limit-function-example.captionFirstLimitFunction") ": " firstLimitType}}
+</button>
+<button class="ui button" {{action 'secondLimitFunction' on="click"}}>  
+  {{concat (t "forms.components-examples.flexberry-objectlistview.limit-function-example.captionSecondLimitFunction") ": " secondLimitType}}
+</button>
+<button class="ui button" {{action 'clearLimitFunction' on="click"}}>
+  {{t "forms.components-examples.flexberry-objectlistview.limit-function-example.captionClearLimitFunction"}}
+</button>

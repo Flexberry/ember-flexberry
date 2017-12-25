@@ -1,17 +1,7 @@
 <h3 class="ui header">{{<%= caption %>}}</h3>
 
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type='error'
-      closeable=true
-      visible=true
-      title='Error occurred'
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
-<form class="ui {{state}} form flexberry-vertical-form" role="form">
+<form class="ui form flexberry-vertical-form" role="form">
+  {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
       {{flexberry-validationsummary errors=model.errors}}
@@ -20,16 +10,16 @@
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-        <button type="submit" class="ui positive button" {{action 'save'}}>
+        <button type="submit" class="ui button save-button" {{action 'save'}}>
           {{t "forms.edit-form.save-button-text"}}
         </button>
         {{#unless model.isNew}}
-          <button type="submit" class="ui negative button" {{action 'delete'}}>
+          <button type="submit" class="ui button save-del-button" {{action 'delete'}}>
             {{t "forms.edit-form.delete-button-text"}}
           </button>
         {{/unless}}
       {{/unless}}
-      <button type="submit" class="ui button" {{action 'close'}}>
+      <button type="submit" class="ui button close-button" {{action 'close'}}>
         {{t "forms.edit-form.close-button-text"}}
       </button>
     </div>

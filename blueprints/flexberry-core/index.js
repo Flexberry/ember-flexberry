@@ -81,6 +81,7 @@ var CoreBlueprint = (function () {
         var importProperties = [];
         var formsImportedProperties = [];
         var modelsImportedProperties = [];
+        var irregularRules = [];
         var inflectorIrregular = [];
         for (var _i = 0, listForms_1 = listForms; _i < listForms_1.length; _i++) {
             var formFileName = listForms_1[_i];
@@ -90,6 +91,8 @@ var CoreBlueprint = (function () {
             var listFormFile = path.join(listFormsDir, formFileName);
             var content = stripBom(fs.readFileSync(listFormFile, "utf8"));
             var listForm = JSON.parse(content);
+            if (listForm.external)
+                continue;
             var listFormName = pp.name;
             routes.push("  this.route('" + listFormName + "');");
             routes.push("  this.route('" + listForm.editForm + "',\n  { path: '" + listForm.editForm + "/:id' });");
@@ -105,6 +108,8 @@ var CoreBlueprint = (function () {
             var editFormFile = path.join(editFormsDir, formFileName);
             var content = stripBom(fs.readFileSync(editFormFile, "utf8"));
             var editForm = JSON.parse(content);
+            if (editForm.external)
+                continue;
             var editFormName = pp.name;
             importProperties.push("import " + editForm.name + "Form from './forms/" + editFormName + "';");
             formsImportedProperties.push("    '" + editFormName + "': " + editForm.name + "Form");
@@ -115,13 +120,31 @@ var CoreBlueprint = (function () {
             if (pp.ext != ".json")
                 continue;
             var model = ModelBlueprint_1.default.loadModel(modelsDir, modelFileName);
+            if (model.external)
+                continue;
             var modelName = pp.name;
             var LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([А-ЯЁA-Z][а-яёa-z\d]*$)/;
             var irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
+            var irregularLastWordOfModelNames = irregularLastWordOfModelName.charAt(0).toUpperCase() + irregularLastWordOfModelName.slice(1) + 's';
             importProperties.push("import " + model.name + "Model from './models/" + modelName + "';");
             modelsImportedProperties.push("    '" + modelName + "': " + model.name + "Model");
-            inflectorIrregular.push("inflector.irregular('" + irregularLastWordOfModelName + "', '" + irregularLastWordOfModelName + "s');");
+            irregularRules.push({ name: irregularLastWordOfModelName, names: irregularLastWordOfModelNames });
         }
+        inflectorIrregular = irregularRules.sort(function (a, b) {
+            if (a.name.length > b.name.length) {
+                return -1;
+            }
+            else if (a.name.length < b.name.length) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }).map(function (item) {
+            return "inflector.irregular('" + item.name + "', '" + item.names + "');";
+        }).filter(function (item, index, self) {
+            return self.indexOf(item) === index;
+        });
         this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
         var applicationMenuLocales = new Locales_1.ApplicationMenuLocales("ru");
         for (var _c = 0, _d = this.sitemap.items; _c < _d.length; _c++) {

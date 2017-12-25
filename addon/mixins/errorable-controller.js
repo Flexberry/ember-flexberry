@@ -11,6 +11,16 @@ import ValidationData from '../objects/validation-data';
 export default Ember.Mixin.create({
   actions: {
     /**
+      Save the error.
+
+      @method actions.error
+      @param {Error} error
+    */
+    error(error) {
+      this.set('error', error);
+    },
+
+    /**
       Add error message.
 
       @method actions.addErrorMessage

@@ -56,7 +56,7 @@ executeTest('check filter renders', (store, assert) => {
       let filtreInsertOperation = 'ge';
       let filtreInsertParametr = 'A value that will never be told';
 
-      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr, assert).then(function() {
+      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter.
         let refreshButton = Ember.$('.refresh-button')[0];
         refreshButton.click();

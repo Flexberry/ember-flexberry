@@ -10,9 +10,8 @@ executeTest('check empty filter', (store, assert, app) => {
   let filtreInsertOperation = 'empty';
   let filtreInsertParametr = '';
   Ember.run(() => {
-    let builder = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Eq, '');
+    let builder = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Eq, undefined).top(1);
     store.query(modelName, builder.build()).then((result) => {
-      let promises = Ember.A();
       let arr = result.toArray();
 
       // Add an object with an empty address, if it is not present.
@@ -50,7 +49,7 @@ executeTest('check empty filter', (store, assert, app) => {
       // Activate filtre row.
       $filterButton.click();
 
-      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr, assert).then(function() {
+      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter.
         let refreshButton = Ember.$('.refresh-button')[0];
         refreshButton.click();

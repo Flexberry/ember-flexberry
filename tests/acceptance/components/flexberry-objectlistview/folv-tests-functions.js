@@ -124,30 +124,24 @@ export function loadingLocales(locale, app) {
 }
 
 // Function for filter object-list-view by list of operations and values.
-export function filterObjectListView(objectListView, operations, filterValues, assert) {
-  return new Ember.RSVP.Promise((resolve) => {
-    let tableBody = objectListView.children('tbody');
-    let tableRow = Ember.$(tableBody.children('tr'));
-    let tableColumns = Ember.$(tableRow[0]).children('td');
+export function filterObjectListView(objectListView, operations, filterValues) {
+  let tableBody = objectListView.children('tbody');
+  let tableRow = Ember.$(tableBody.children('tr'));
+  let tableColumns = Ember.$(tableRow[0]).children('td');
 
-    let per = function(i) {
-      if (i === tableColumns.length - 1) {
-        resolve();
-      }
-    };
+  let promises = Ember.A();
 
-    for (let i = 0; i < tableColumns.length; i++) {
-      if (operations[i]) {
-        filterCollumn(objectListView, i, operations[i], filterValues[i]).then(per(i));
-      }
+  for (let i = 0; i < tableColumns.length; i++) {
+    if (operations[i]) {
+      promises.push(filterCollumn(objectListView, i, operations[i], filterValues[i]));
     }
+  }
 
-    //resolve();
-  });
+  return Ember.RSVP.Promise.all(promises);
 }
 
 // Function for filter object-list-view at one column by operations and values.
-export function filterCollumn(objectListView, columnNumber, operation, filterValue, assert) {
+export function filterCollumn(objectListView, columnNumber, operation, filterValue) {
   return new Ember.RSVP.Promise((resolve) => {
     let tableBody = objectListView.children('tbody');
     let tableRow = tableBody.children('tr');

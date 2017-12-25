@@ -13,7 +13,7 @@ executeTest('check without operation filter', (store, assert, app) => {
   visit(path);
   andThen(function() {
     assert.equal(currentPath(), path);
-    let builder2 = new Query.Builder(store).from(modelName).top(1);
+    let builder2 = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Neq, undefined).top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertParametr = arr.objectAt(0).get('address');
@@ -26,7 +26,7 @@ executeTest('check without operation filter', (store, assert, app) => {
       // Activate filtre row.
       $filterButton.click();
 
-      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr, assert).then(function() {
+      filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter.
         let refreshButton = Ember.$('.refresh-button')[0];
         refreshButton.click();

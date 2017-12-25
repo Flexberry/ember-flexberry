@@ -13,7 +13,7 @@ executeTest('check filter', (store, assert, app) => {
   visit(path);
   andThen(function() {
     assert.equal(currentPath(), path);
-    let builder2 = new Query.Builder(store).from(modelName).top(1);
+    let builder2 = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Neq, undefined).top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertValueArr = [arr.objectAt(0).get('address'), undefined, arr.objectAt(0).get('votes'),
@@ -26,7 +26,7 @@ executeTest('check filter', (store, assert, app) => {
       // Activate filtre row.
       $filterButton.click();
 
-      filterObjectListView($objectListView, filtreInsertOperationArr, filtreInsertValueArr, assert).then(function() {
+      filterObjectListView($objectListView, filtreInsertOperationArr, filtreInsertValueArr).then(function() {
         // Apply filter.
         let refreshButton = Ember.$('.refresh-button')[0];
         refreshButton.click();

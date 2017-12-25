@@ -1467,7 +1467,7 @@ export default folv.extend(
 
             // TODO: Probably need to replace this.
             setting.width = (checkbox && delButton && editButton ? 130 : (checkbox && delButton) || (checkbox && editButton) ||
-            (delButton && editButton) ? 100 : checkbox || delButton || editButton ? 70 : 65) - padding;
+            (delButton && editButton) ? 100 : checkbox || delButton || editButton ? 86 : 65) - padding;
           }
         }
 

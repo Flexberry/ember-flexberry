@@ -3,24 +3,26 @@
     <tr>
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
-          <button
-            class="ui check-all-at-page-button {{buttonClass}} {{if allSelect "disabled"}} button"
-            title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-            {{action "checkAllAtPage"}}>
-              <i class="check-square-o icon"></i>
-          </button>
-          <button
-            class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
-            title={{t "components.olv-toolbar.check-all-button-text"}}
-            {{action "checkAll"}}>
-              <i class="check-all-square-o icon"></i>
-          </button>
-          <button
-            class="ui clear-sorting-button {{buttonClass}} button"
-            title={{t "components.olv-toolbar.clear-sorting-button-text"}}
-            {{action "clearSorting"}}>
-              <i class="sort icon"></i>
-          </button>
+          {{#if showCheckBoxInRow }}
+            <button
+              class="ui check-all-at-page-button {{buttonClass}} {{if allSelect "disabled"}} button"
+              title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+              {{action "checkAllAtPage"}}>
+                <i class="check-square-o icon"></i>
+            </button>
+            <button
+              class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
+              title={{t "components.olv-toolbar.check-all-button-text"}}
+              {{action "checkAll"}}>
+                <i class="check-all-square-o icon"></i>
+            </button>
+            <button
+              class="ui clear-sorting-button {{buttonClass}} button"
+              title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+              {{action "clearSorting"}}>
+                <i class="sort icon"></i>
+            </button>
+          {{/if}}
         </th>
       {{/if}}
       {{#each columns as |column|}}

@@ -15,6 +15,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * Reset `page` in `LimitedController` mixin when change or reset filters.
+* `blue-sky` theme:
+    * Fix header height for mobile version.
 
 ## [0.9.2-beta.9] - 2017-12-06
 ### Added

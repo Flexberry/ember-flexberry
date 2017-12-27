@@ -21,10 +21,16 @@ export default ListFormController.extend({
   actions: {
     toggleFilterByAnyWord() {
       this.toggleProperty('filterByAnyWord');
+      if (this.get('filterByAnyWord')) {
+        this.set('filterByAllWords', false);
+      }
     },
 
     toggleFilterByAllWords() {
       this.toggleProperty('filterByAllWords');
+      if (this.get('filterByAllWords')) {
+        this.set('filterByAnyWord', false);
+      }
     },
 
     componentForFilter(type, relation) {

@@ -13,7 +13,7 @@ executeTest('check filter by enter click', (store, assert, app) => {
   visit(path);
   andThen(function() {
     assert.equal(currentPath(), path);
-    let builder = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Neq, undefined).top(1);
+    let builder = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Neq, '').top(1);
     store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertParametr = arr.objectAt(0).get('address');

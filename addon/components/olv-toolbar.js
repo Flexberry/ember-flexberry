@@ -454,7 +454,7 @@ export default FlexberryBaseComponent.extend({
     */
     keyDownFilterAction(currentValue, e) {
       if (e.keyCode === 13) {
-        this.send("filterByAnyMatch");
+        this.send('filterByAnyMatch');
       }
 
       this._super(...arguments);

@@ -8,6 +8,7 @@ import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
 import FlexberryOlvToolbarMixin from '../mixins/olv-toolbar-controller';
 import ColsConfigDialogMixin from '../mixins/colsconfig-dialog-controller';
+import ErrorableControllerMixin from '../mixins/errorable-controller';
 
 import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
 
@@ -44,7 +45,8 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   LimitedControllerMixin,
   FlexberryOlvToolbarMixin,
   FlexberryObjectlistviewHierarchicalControllerMixin,
-  ColsConfigDialogMixin, {
+  ColsConfigDialogMixin,
+  ErrorableControllerMixin, {
   /**
     Controller to show colsconfig modal window.
 
@@ -53,6 +55,32 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     @default Ember.inject.controller('colsconfig-dialog')
   */
   colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+
+  /**
+    Object with developer user settings.
+
+    @property developerUserSettings
+    @type Object
+    @default undefined
+  */
+  developerUserSettings: undefined,
+
+  /**
+    Object with default developer user settings.
+
+    @property defaultDeveloperUserSettings
+    @type Object
+    @default undefined
+  */
+  defaultDeveloperUserSettings: undefined,
+
+  /**
+    State form. A form is in different states: loading, success, error.
+
+    @property state
+    @type String
+  */
+  state: undefined,
 
   /**
     Method to get type and attributes of component, which will be embeded in object-list-view cell.
@@ -71,5 +99,70 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     };
 
     return cellComponent;
+  },
+
+  /**
+    This method will be invoked before delete operation will be called.
+    Override this method to add custom logic on delete operation start.
+
+    @example
+      ```javascript
+      onDeleteActionStarted() {
+        alert('Delete operation started!');
+      }
+      ```
+    @method onDeleteActionStarted.
+  */
+  onDeleteActionStarted() {
+  },
+
+  /**
+    This method will be invoked when delete operation successfully completed.
+    Override this method to add some custom logic on delete operation success.
+
+    @example
+      ```javascript
+      onDeleteActionFulfilled() {
+        alert('Delete operation succeed!');
+      }
+      ```
+    @method onDeleteActionFulfilled.
+  */
+  onDeleteActionFulfilled() {
+  },
+
+  /**
+    This method will be invoked when delete operation completed, but failed.
+    Override this method to add some custom logic on delete operation fail.
+
+    @example
+      ```javascript
+      onDeleteActionRejected() {
+        alert('Delete operation failed!');
+      }
+      ```
+    @method onDeleteActionRejected.
+    @param {Object} errorData Data about delete operation fail.
+  */
+  onDeleteActionRejected(errorData, record) {
+    this.rejectError(errorData, `Unable to delete a record: ${record.toString()}.`);
+  },
+
+  /**
+    This method will be invoked always when delete operation completed,
+    regardless of save promise's state (was it fulfilled or rejected).
+    Override this method to add some custom logic on delete operation completion.
+
+    @example
+      ```js
+      onDeleteActionAlways(data) {
+        alert('Delete operation completed!');
+      }
+      ```
+
+    @method onSaveActionAlways.
+    @param {Object} data Data about completed save operation.
+  */
+  onDeleteActionAlways(data) {
   }
 });

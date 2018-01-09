@@ -6,53 +6,60 @@
   "parentClassName": null,
   "attrs": [
     {
-      "name": "text",
-      "type": "string",
-      "flexberryType": "string",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "votes",
-      "type": "number",
-      "flexberryType": "long",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
-      "name": "moderated",
-      "type": "boolean",
-      "flexberryType": "bool",
-      "notNull": false,
-      "defaultValue": ""
-    },
-    {
       "name": "createTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "creator",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editTime",
       "type": "date",
       "flexberryType": "AuditNullableDateTime",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
     },
     {
       "name": "editor",
       "type": "string",
       "flexberryType": "string",
       "notNull": false,
-      "defaultValue": ""
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "flexberryType": "string",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "votes",
+      "type": "number",
+      "flexberryType": "long",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
+    },
+    {
+      "name": "moderated",
+      "type": "boolean",
+      "flexberryType": "bool",
+      "notNull": false,
+      "defaultValue": "",
+      "stored": true
     }
   ],
   "belongsTo": [
@@ -64,10 +71,10 @@
       "inverse": null
     },
     {
-      "polymorphic": false,
+      "polymorphic": true,
       "presence": true,
       "name": "suggestion",
-      "relatedTo": "ember-flexberry-dummy-suggestion",
+      "relatedTo": "ember-flexberry-dummy-post-suggestion",
       "inverse": "comments"
     }
   ],
@@ -222,7 +229,7 @@
           "index": 0,
           "caption": "Address",
           "name": "suggestion",
-          "relatedTo": "ember-flexberry-dummy-suggestion",
+          "relatedTo": "ember-flexberry-dummy-post-suggestion",
           "inverse": null
         },
         {
@@ -262,5 +269,7 @@
         }
       ]
     }
-  ]
+  ],
+  "stored": true,
+  "offline": true
 }

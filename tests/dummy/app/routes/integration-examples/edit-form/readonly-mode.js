@@ -31,5 +31,33 @@ export default EditFormRoute.extend({
     aggregator.get('details').pushObject(detail);
 
     return aggregator;
+  },
+
+  /**
+  developerUserSettings.
+  {
+  <componentName>: {
+    <settingName>: {
+        colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+        sorting: [{ propName: <colName>, direction: "asc"|"desc" }, ... ],
+        colsWidths: [ <colName>:<colWidth>, ... ],
+      },
+      ...
+    },
+    ...
   }
+  For default userSetting use empty name ('').
+  <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
+
+  @property developerUserSettings
+  @type Object
+  @default {}
+  */
+  developerUserSettings: {
+    aggregatorDetailsGroupedit: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }]
+      }
+    }
+  },
 });

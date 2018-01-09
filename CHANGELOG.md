@@ -3,6 +3,223 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* Support `drops` option for `flexberry-datepicker` component.
+* List components:
+    * Check all records on page operation, check all records on alls pages operation, clear sorting operation.
+    * Saving and restoring previously selected records on reloading (including changing of page number, filtering, etc.).
+    * Optional edit button in row.
+* `flexberry-objectlistview` component:
+    * Add collapse/expand all button for hierarchy mode.
+    * Increased performance when working in hierarchical mode by reducing number of queries to backend on rendering top-level nodes.
+    * Calling `onDeleteActionStarted`, `onDeleteActionFulfilled`, `onDeleteActionRejected` and `onDeleteActionAlways` methods from `ListFormController` in the process of deleting the record.
+
+### Fixed
+* Reset `page` in `LimitedController` mixin when change or reset filters.
+
+## [0.9.2-beta.9] - 2017-12-06
+### Added
+* `flexberry-validationsummary` component:
+    * Add header property.
+* `flexberry-lookup` component:
+    * Add localization for autocomplete empty result.
+    * Add sorting settings for autocomplete result list.
+* Blueprints:
+    * Add model's default property values generation.
+
+### Fixed
+* `flexberry-tree` component:
+    * Fix `get-with-dynamic-actions` helper.
+
+## [0.9.2-beta.8] - 2017-11-27
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.1-beta.2.
+
+## [0.9.2-beta.7] - 2017-11-09
+### Added
+* Component `flexberry-lookup` displaying data via `flexberry-objectlistview` component supports filters.
+
+## [0.9.2-beta.6] - 2017-11-08
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Change related model value after clearing date when value was set programmatically.
+
+## [0.9.2-beta.5] - 2017-11-02
+### Fixed
+* List forms:
+    * Fix reset of loading state when promise model was rejected.
+
+## [0.9.2-beta.4] - 2017-11-02
+### Added
+* `flexberry-error` component:
+    * Add default error message.
+
+### Fixed
+* `flexberry-error` component:
+    * Fix selector for modal context.
+
+## [0.9.2-beta.3] - 2017-10-27
+### Added
+* Component `flexberry-error` for errors displaying.
+* `flexberry-simpledatetime` component:
+    * Add remove value button.
+
+### Changed
+* Errors on lists and edit forms are displayed through the `flexberry-error` component.
+* List components:
+    * Now filters calls `predicateForFilter` method even if filter pattern is undefined.
+    * Added `like` condition for filters (for `string` type fields). It will be applied by default when condition is not set.
+    * Now filters can apply on Enter click.
+
+### Fixed
+* `blue-sky` theme:
+    * Fix sidebar and page content height.
+* Fix locale dropdown for IE in `application.hbs`.
+* Blueprints:
+    * Fix generation of `flexberry-groupedit` component template on edit forms. Now translations of field's captions should be applied.
+
+## [0.9.2-beta.2] - 2017-10-19
+### Added
+* Add `maxlength` attribute for `flexberry-field` and `flexberry-textbox`.
+
+## [0.9.2-beta.1] - 2017-10-06
+### Added
+* `flexberry-simpledatetime` component:
+    * Add localization support.
+
+### Fixed
+* `flexberry-simpledatetime` component:
+    * Fix user's date input.
+
+## [0.9.2-beta.0] - 2017-10-04
+### Changed
+* List components:
+    * `beforeDeleteRecord` method now support asynchronous mode, i.e. it is possible to return promises as result value.
+* Update dependency on `ember-flexberry-data` to version 0.9.1-beta.0.
+
+## [0.9.1] - 2017-09-29
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.9.0.
+
+## [0.9.0] - 2017-09-28
+### Added
+* Add semantic ui themes support.
+* Add `blue-sky` theme.
+* Blueprints:
+    * Add support ember objects and transforms generation (from classes with "type" stereotype in Flexberry Designer's class diagrams).
+    * Add support reexport for addon.
+    * Add generation non-stored properties of models.
+    * Add generation offline serializers.
+    * Add generation mobile templates.
+    * Add some files to generation for `offline` support.
+    * Add generation of `blue-sky` theme for applications. This theme will be used as default theme for generated applications.
+    * Add generation of `orange` theme for applications.
+* `olv-toolbar` component:
+    * Add default value for `modelController`. It's needed when using `olv-toolbar` component separately (apart from list components).
+* `flexberry-toogler` component:
+    * Add `hasResizableOLV` flag indicates when component need to initialize `colResizable` plugin.
+    * Manage animation of `flexberry-toggler` component through `duration` property.
+* Add titles for component's buttons.
+* `flexberry-simpledatetime` component:
+    * Add date and time validation when focus is changing.
+    * Add user input for `flexberry-simpledatetime`.
+* Add `edit-form-controller-operations-indication` and `edit-form-route-operations-indication` mixins for edit forms controllers and routes.
+* List components:
+    * Add export excel feature for list components.
+    * Add spinner for searching in list components.
+    * Add spinner for list components when redirecting to `editFormRoute`.
+    * Add `fixed` setting for columns in `developerUserSettings` for list components.
+    * Add localization for sort order in list components.
+    * Add `readonly-cell` helper. It can specify `readonly` property for each cell of list components.
+    * Add ability to set width for fixed columns in list components.
+    * Add `minAutoColumnWidth` property (minimum column width, if width isn't defined in `userSettings`).
+    * Add `columnsWidthAutoresize` property (indicates whether or not autoresize columns for fit the container width).
+    * Add `overflowedComponents` property for list's components (list of component names, which can overflow table cell, `flexberry-dropdown` and `flexberry-lookup` by default).
+    * Now list components use `DatePredicate` for filtering dates.
+    * Add filters applying spinner.
+* Added components:
+    * `flexberry-button`.
+    * `flexberry-colorpicker`.
+    * `flexberry-ddau-checkbox`.
+    * `flexberry-ddau-slider`.
+    * `flexberry-dialog`.
+    * `flexberry-icon`.
+    * `flexberry-jsonarea`.
+    * `flexberry-tab-bar`.
+    * `flexberry-tree`.
+    * `flexberry-treenode`.
+* Add `yield` block for `flexberry-dropdown` component.
+
+### Changed
+* Blueprints:
+    * Now serializers are generating correctly in case of inheriting of models.
+    * Changed regular expression in `flexberry-core` for cyrillic support.
+    * Now `custom-inflector-rules` generates capitalized plural words.
+* Update `jquery.colResizable` plugin to version 1.6.
+* `ui-message` component: `onShow` & `onHide` actions now sent on every change in visible property.
+* Now locks gets userName from `UserSettingsService`.
+* Own loader from `object-list-view` and `flexberry-simpleolv` components replaced by loader on route template level.
+* Page content width changing when sidebar is toggling.
+* When sidebar is visible, it isn't blocking page content.
+* Flexberry componets styles were moved to semantic default theme folder.
+* Form's loading state now stored in `objectlistview-events` service.
+
+### Fixed
+* Blueprints:
+    * Fix wrong path of tempates generation when process was started with `--dummy` option.
+    * Fix generation to addon errors.
+    * Fix master fields caption generation on `edit-forms`.
+    * Fix `offline-serializers` generation.
+    * Fix `custom-inflector-rules` generation (sorting and no duplicates).
+    * Generation of applications containing external entities (forms and models):
+      * At generation application by `flexberry-application` blueprint, skip entities containing key `external` with `true` value.
+      * At generation entity by own blueprint (for example `flexberry-model`) it will be generated in any case.
+    * Fix new controllers/routes generation for addon.
+* Localization:
+    * Now default locale set in `environment.js` is not ignored.
+    * If application is not support current browser languale (when default locale is not set) then `en` locale will be used for application.
+* `user-settings` service:
+    * Fix `userSettings` updating.
+* `flexberry-simpleolv` component:
+    * Fix columns width applying from `userSettings`.
+* `olv-toolbar` component:
+    * Fix `userSettings` names getting on first render.
+* `reload-list` mixin:
+    * Сontroller is unaccessible in some cases inside `reloadList` method. So we added corresponding checks.
+* `flexberry-simpledatetime` component:
+    * Fix wrong timezone storing when using component to choose date without time.
+* `colsconfig-dialog-content` component:
+    * Fix semantic styles for sort direction dropdown.
+* Fix menu sidebar script to not apply on other sidebars.
+* Fix delete button disabling after deletion on lists.
+* Fix dropdown's overflow on list components.
+* Fix groupEdit's adding new row on separate route.
+* Fix transition to `editForm` in FireFox.
+* Fix filter columns shifts to left, when filter result is empty.
+* Fix vertical scroll in list's components.
+* Fix list's components width computing.
+* When typing in the input field to search the `flexberry-simpleolv` component, `didRender` method that is problematic for the component is called.
+* Fix `flexberry-groupedit` sorting.
+* Fix hierarchy expand for `flexberry-objectlistview` on edit form.
+* Fix operation indication on edit form when new record added.
+* Fix `chooseText` for lookups in `flexberry-groupedit`.
+* Fix list's `refresh` and `delete` buttons styles for Firefox.
+* Fix `onRowClick` action for `object-list-view-row`.
+* Fix `lookupWindowCustomProperties` for lookups in `flexberry-groupedit`.
+
+### Removed
+* `ui-message` component: attribute `title`.
+
+### Breaking changes
+* Search localisation for models in `flexberry-objectlistview` and `flexberry-simpleolv` components:
+  * Before: `models.modelName.projections.projectionName.attributePath.caption`
+  * After: `models.modelName.projections.projectionName.attributePath.__caption__`
+  * There are several solutions:
+    * Carefully regenerate the application.
+    * Find and replace in `Visual Studio Code`, files to include: `locales/en/models, locales/ru/models`, find: `(^\s+)(caption)`, replace: `$1__$2__`.
+
+### Known issues
+* Now there is no way for filtering by timeless date in backend requests, therefore timeless date fields on backend must have 11:00:00.000 time in UTC.
 
 ## [0.8.6] - 2017-02-09
 ### Changed

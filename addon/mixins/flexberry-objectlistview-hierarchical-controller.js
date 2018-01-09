@@ -21,6 +21,15 @@ export default Ember.Mixin.create({
   inHierarchicalMode: false,
 
   /**
+    Flag indicate whether component is in collapse/expand mode.
+
+    @property inExpandMode
+    @type Boolean
+    @default false
+  */
+  inExpandMode: false,
+
+  /**
     Attribute name to hierarchy build.
 
     @property hierarchicalAttribute
@@ -36,6 +45,16 @@ export default Ember.Mixin.create({
     */
     switchHierarchicalMode() {
       this.toggleProperty('inHierarchicalMode');
+      this.send('refreshList');
+    },
+
+    /**
+      Switch collapse/expand mode.
+
+      @method actions.switchExpandMode
+    */
+    switchExpandMode() {
+      this.toggleProperty('inExpandMode');
       this.send('refreshList');
     },
 
@@ -65,9 +84,10 @@ export default Ember.Mixin.create({
       @param {String} id Record ID.
       @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
       @param {String} property Property name into {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {Boolean} Flag indicates that this is the first download of data.
     */
-    loadRecords(id, target, property) {
-      this.send('loadRecordsById', id, target, property);
+    loadRecords(id, target, property, firstRunMode) {
+      this.send('loadRecordsById', id, target, property, firstRunMode);
     },
   }
 });

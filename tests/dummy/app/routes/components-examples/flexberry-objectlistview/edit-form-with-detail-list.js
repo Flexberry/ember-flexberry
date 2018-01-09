@@ -30,8 +30,14 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { applicationUserObjectListView: { } },
+  developerUserSettings: {
+    suggestionTypeLocalizedTypesObjectListView: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 100 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 65 }]
+      }
+    }
 
+  },
   /**
     Name of model to be used as list's records types.
 

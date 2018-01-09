@@ -10,9 +10,10 @@
   "validateQuoteMarks": { "mark": "'", "escape": true },
   "requireSpacesInAnonymousFunctionExpression": null,
   "maximumLineLength": {
-    value: 160,
-    allExcept: ["regex", "comments", "urlComments"]
+    "value": 160,
+    "allExcept": ["regex", "comments", "urlComments"]
   },
   "disallowQuotedKeysInObjects": false,
-  "safeContextKeyword": false
+  "safeContextKeyword": null,
+  "disallowArrayDestructuringReturn": false
 }

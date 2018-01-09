@@ -1,0 +1,19 @@
+<h1 class="ui header">{{t "forms.error-form.caption"}}</h1>
+<h2 class="ui header">
+  {{if model.name (concat model.name ": ")}}
+  {{if model.message model.message}}
+</h2>
+{{#if model.stack}}
+  {{#flexberry-toggler
+    caption=(t "forms.error-form.show-more")
+  }}
+    <pre>{{model.stack}}</pre>
+  {{/flexberry-toggler}}
+{{/if}}
+{{#if model.retryRoute}}
+  {{link-to (t "forms.error-form.retry") model.retryRoute
+    tagName="button"
+    activeClass=""
+    class="ui button"
+  }}
+{{/if}}

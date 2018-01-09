@@ -50,8 +50,12 @@ export default ListFormRoute.extend({
       return new StringPredicate(filter.name).contains(filter.pattern);
     }
 
+    if (filter.type === 'string' && filter.condition === 'empty') {
+      return new SimplePredicate(filter.name, 'eq', null);
+    }
+
     if (filter.type === 'decimal') {
-      return new SimplePredicate(filter.name, filter.condition, filter.pattern);
+      return new SimplePredicate(filter.name, filter.condition, filter.pattern ? Number(filter.pattern) : filter.pattern);
     }
 
     return this._super(...arguments);

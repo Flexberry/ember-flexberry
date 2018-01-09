@@ -9,6 +9,7 @@ declare module "MetadataClasses" {
     
     export class Form {
         
+        public external: boolean;
         public caption: string;
         public name: string;
         public className: string;
@@ -44,6 +45,13 @@ declare module "MetadataClasses" {
         public className: string;
         public enumObjects: { [key: string]: string; };
     }
+    export class EmberObject {
+        
+        public name: string;
+        public emberObjectName: string;
+        public className: string;
+        public attrs: DSattr[];
+    }
     export class Model {
         
         public name: string;
@@ -55,6 +63,9 @@ declare module "MetadataClasses" {
         public belongsTo: DSbelongsTo[];
         public hasMany: DShasMany[];
         public projections: ProjectionForModel[];
+        public stored: boolean;
+        public offline: boolean;
+        public external: boolean;
     }
     export class DSattr {
         
@@ -63,6 +74,7 @@ declare module "MetadataClasses" {
         public flexberryType: string;
         public notNull: boolean;
         public defaultValue: string;
+        public stored: boolean;
     }
     export class Relation {
         
@@ -116,6 +128,7 @@ declare module "MetadataClasses" {
         public applicationCaption: string;
         public applicationTitle: string;
         public items: SitemapItem[];
+        public mobile: boolean;
     }
     export class SitemapItem {
         

@@ -1,4 +1,4 @@
-﻿/// <reference path='../typings/node/node.d.ts' />
+/// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/lodash/index.d.ts' />
 /// <reference path='../typings/MetadataClasses.d.ts' />
 
@@ -8,6 +8,8 @@ import path = require('path');
 import lodash = require('lodash');
 import metadata = require('MetadataClasses');
 import { ApplicationMenuLocales } from '../flexberry-core/Locales';
+import ModelBlueprint from '../flexberry-model/ModelBlueprint';
+import CommonUtils from '../flexberry-common/CommonUtils';
 const TAB = "  ";
 
 module.exports = {
@@ -16,6 +18,24 @@ module.exports = {
   availableOptions: [
     { name: 'metadata-dir', type: String }
   ],
+
+  supportsAddon: function () {
+    return false;
+  },
+
+  _files: null,
+
+  files: function () {
+    if (this._files) { return this._files; }
+    let sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
+    let sitemap: metadata.Sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
+    if (sitemap.mobile) {
+      this._files = CommonUtils.getFilesForGeneration(this);
+    } else {
+      this._files = CommonUtils.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs"; });
+    }
+    return this._files;
+  },
 
   /**
    * Blueprint Hook locals.
@@ -79,38 +99,66 @@ class CoreBlueprint {
     let importProperties = [];
     let formsImportedProperties = [];
     let modelsImportedProperties = [];
+    let irregularRules = [];
     let inflectorIrregular = [];
     for (let formFileName of listForms) {
+      let pp: path.ParsedPath = path.parse(formFileName);
+      if (pp.ext != ".json")
+        continue;
       let listFormFile = path.join(listFormsDir, formFileName);
       let content = stripBom(fs.readFileSync(listFormFile, "utf8"));
       let listForm: metadata.ListForm = JSON.parse(content);
-      let listFormName = path.parse(formFileName).name;
+      if (listForm.external)
+        continue;
+      let listFormName = pp.name;
       routes.push(`  this.route('${listFormName}');`);
-      routes.push(`  this.route('${listForm.editForm}', { path: '${listForm.editForm}/:id' });`);
-      routes.push(`  this.route('${listForm.newForm}.new', { path: '${listForm.newForm}/new' });`);
+      routes.push(`  this.route('${listForm.editForm}',\n  { path: '${listForm.editForm}/:id' });`);
+      routes.push(`  this.route('${listForm.newForm}.new',\n  { path: '${listForm.newForm}/new' });`);
       importProperties.push(`import ${listForm.name}Form from './forms/${listFormName}';`);
       formsImportedProperties.push(`    '${listFormName}': ${listForm.name}Form`);
     }
     for (let formFileName of editForms) {
+      let pp: path.ParsedPath = path.parse(formFileName);
+      if (pp.ext != ".json")
+        continue;
       let editFormFile = path.join(editFormsDir, formFileName);
       let content = stripBom(fs.readFileSync(editFormFile, "utf8"));
       let editForm: metadata.EditForm = JSON.parse(content);
-      let editFormName = path.parse(formFileName).name;
+      if (editForm.external)
+        continue;
+      let editFormName = pp.name;
       importProperties.push(`import ${editForm.name}Form from './forms/${editFormName}';`);
       formsImportedProperties.push(`    '${editFormName}': ${editForm.name}Form`);
     }
     for (let modelFileName of models) {
-      let modelFile = path.join(modelsDir, modelFileName);
-      let content = stripBom(fs.readFileSync(modelFile, "utf8"));
-      let model: metadata.Model = JSON.parse(content);
-      let modelName = path.parse(modelFileName).name;
-      let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([A-Z][a-z\d]*$)/;
+      let pp: path.ParsedPath = path.parse(modelFileName);
+      if (pp.ext != ".json")
+        continue;
+      let model: metadata.Model = ModelBlueprint.loadModel(modelsDir, modelFileName);
+      if (model.external)
+        continue;
+      let modelName = pp.name;
+      let LAST_WORD_CAMELIZED_REGEX = /([\w/\s-]*)([А-ЯЁA-Z][а-яёa-z\d]*$)/;
       let irregularLastWordOfModelName = LAST_WORD_CAMELIZED_REGEX.exec(model.name)[2].toLowerCase();
+      let irregularLastWordOfModelNames = irregularLastWordOfModelName.charAt(0).toUpperCase() + irregularLastWordOfModelName.slice(1) + 's';
       importProperties.push(`import ${model.name}Model from './models/${modelName}';`);
       modelsImportedProperties.push(`    '${modelName}': ${model.name}Model`);
-      inflectorIrregular.push(`inflector.irregular('${irregularLastWordOfModelName}', '${irregularLastWordOfModelName}s');`);
+      irregularRules.push({ name: irregularLastWordOfModelName, names: irregularLastWordOfModelNames });
     }
 
+    inflectorIrregular = irregularRules.sort(function(a, b) {
+      if (a.name.length > b.name.length) {
+        return -1;
+      } else if (a.name.length < b.name.length) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }).map(function(item) {
+      return `inflector.irregular('${item.name}', '${item.names}');`;
+    }).filter(function(item, index, self) {
+      return self.indexOf(item) === index;
+    });
     this.sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
     let applicationMenuLocales = new ApplicationMenuLocales("ru");
     for (let item of this.sitemap.items) {

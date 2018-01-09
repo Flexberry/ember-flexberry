@@ -1,6 +1,25 @@
 {{flexberry-error error=error}}
 <h3>{{t "forms.ember-flexberry-dummy-localization-list.caption"}}</h3>
-<div class="row">
+<form class="ui form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  <div class="field">
   {{flexberry-objectlistview
     content=model
     modelName="ember-flexberry-dummy-localization"
@@ -24,3 +43,4 @@
     componentName="localizationObjectListView"
     }}
 </div>
+</form>

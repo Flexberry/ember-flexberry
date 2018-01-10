@@ -1,0 +1,49 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.downloading-files-from-olv-list.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
+    </div>
+  </div>
+  <div class="field {{if model.errors.name "error" ""}}">
+    {{flexberry-field
+      value=model.order
+      readonly=readonly
+    }}
+    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.eMail "error" ""}}">
+    {{flexberry-file
+      value=model.file
+      placeholder=placeholder
+      readonly=readonly
+      showPreview=false
+      inputClass=inputClass
+      buttonClass=buttonClass
+    }}
+    {{flexberry-validationmessage error=model.errors.file pointing="pointing"}}
+  </div>
+</form>

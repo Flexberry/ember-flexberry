@@ -10,85 +10,85 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionL': {
           'address': {
-            'caption': 'Адрес'
+            __caption__: 'Адрес'
           },
           'text': {
-            'caption': 'Текст'
+            __caption__: 'Текст'
           },
           'date': {
-            'caption': 'Дата'
+            __caption__: 'Дата'
           },
           'votes': {
-            'caption': 'Голоса'
+            __caption__: 'Голоса'
           },
           'author': {
-            'caption': 'Автор',
+            __caption__: 'Автор',
             'eMail': {
-              'caption': 'Почта'
+              __caption__: 'Почта'
             }
           },
           'editor1': {
-            'caption': 'Редактор',
+            __caption__: 'Редактор',
             'eMail': {
-              'caption': 'Почта'
+              __caption__: 'Почта'
             }
           },
           'moderated': {
-            'caption': 'Одобрено'
+            __caption__: 'Одобрено'
           },
           'type': {
-            'caption': 'Тип предложения'
+            __caption__: 'Тип предложения'
           },
           'commentsCount': {
-            'caption': 'Количество комментариев'
+            __caption__: 'Количество комментариев'
           },
           'comments': {
-            'caption': 'Комментарии'
+            __caption__: 'Комментарии'
           },
         },
         'SuggestionE': {
           'address': {
-            'caption': 'Адрес'
+            __caption__: 'Адрес'
           },
           'userVotes': {
             'name': {
-              'caption': 'Наименование'
+              __caption__: 'Наименование'
             },
             'voteType': {
-              'caption': 'Тип голосования'
+              __caption__: 'Тип голосования'
             },
             'author': {
-              'caption': 'Пользователь приложения',
+              __caption__: 'Пользователь приложения',
               'eMail': {
-                'caption': 'Почта'
+                __caption__: 'Почта'
               }
             }
           },
           'files': {
             'order': {
-              'caption': 'Номер'
+              __caption__: 'Номер'
             },
             'file': {
-              'caption': 'Файл',
+              __caption__: 'Файл',
             }
           },
           'comments': {
             'name': {
-              'caption': 'Наименование'
+              __caption__: 'Наименование'
             },
             'text': {
-              'caption': 'Текст'
+              __caption__: 'Текст'
             },
             'votes': {
-              'caption': 'Голоса',
+              __caption__: 'Голоса',
             },
             'moderated': {
-              'caption': 'Одобрено',
+              __caption__: 'Одобрено',
             },
             'author': {
-              'caption': 'Пользователь приложения',
+              __caption__: 'Пользователь приложения',
               'eMail': {
-                'caption': 'Почта'
+                __caption__: 'Почта'
               }
             }
           }
@@ -99,22 +99,22 @@ Ember.$.extend(true, translations, {
       'projections': {
         'ApplicationUserL': {
           'name': {
-            'caption': 'Имя'
+            __caption__: 'Имя'
           },
           'eMail': {
-            'caption': 'Почта'
+            __caption__: 'Почта'
           },
           'activated': {
-            'caption': 'Учетная запись активирована'
+            __caption__: 'Учетная запись активирована'
           },
           'birthday': {
-            'caption': 'Дата рождения'
+            __caption__: 'Дата рождения'
           },
           'gender': {
-            'caption': 'Пол'
+            __caption__: 'Пол'
           },
           'karma': {
-            'caption': 'Карма'
+            __caption__: 'Карма'
           },
         },
       }
@@ -123,7 +123,7 @@ Ember.$.extend(true, translations, {
       'projections': {
         'LocalizationL': {
           'name': {
-            'caption': 'Наименование'
+            __caption__: 'Наименование'
           },
         },
       }
@@ -132,24 +132,24 @@ Ember.$.extend(true, translations, {
       'projections': {
         'SuggestionTypeL': {
           'name': {
-            'caption': 'Наименование'
+            __caption__: 'Наименование'
           },
           'moderated': {
-            'caption': 'Одобрено'
+            __caption__: 'Одобрено'
           },
           'parent': {
-            'caption': 'Иерархия'
+            __caption__: 'Иерархия'
           },
         },
         'SuggestionTypeE': {
           'localizedTypes': {
             'name': {
-              'caption': 'Наименование'
+              __caption__: 'Наименование'
             },
             'localization': {
-              'caption': 'Локализация',
+              __caption__: 'Локализация',
               'name': {
-                'caption': 'Наименование'
+                __caption__: 'Наименование'
               }
             }
           },
@@ -160,16 +160,16 @@ Ember.$.extend(true, translations, {
       'projections': {
         'CommentE': {
           'text': {
-            'caption': 'Текст комментария'
+            __caption__: 'Текст комментария'
           },
           'userVotes': {
             'voteType': {
-              'caption': 'Тип голосования'
+              __caption__: 'Тип голосования'
             },
             'applicationUser': {
-              'caption': 'Пользователь',
+              __caption__: 'Пользователь',
               'name': {
-                'caption': 'Наименование'
+                __caption__: 'Наименование'
               }
             }
           },
@@ -198,10 +198,22 @@ Ember.$.extend(true, translations, {
           'user-settings-service-checkbox': {
             'caption': 'Использовать сервис сохранения пользовательских настроек'
           },
+          'show-menu': {
+            'caption': 'Показать меню'
+          },
+          'hide-menu': {
+            'caption': 'Скрыть меню'
+          },
           'language-dropdown': {
             'caption': 'Язык приложения',
             'placeholder': 'Выберите язык'
           }
+        },
+        'login': {
+          'caption': 'Вход'
+        },
+        'logout': {
+          'caption': 'Выход'
         }
       },
 
@@ -273,8 +285,24 @@ Ember.$.extend(true, translations, {
         'components-examples': {
           'caption': 'Примеры компонентов',
           'title': '',
+          'flexberry-button': {
+            'caption': 'flexberry-button',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
           'flexberry-checkbox': {
             'caption': 'flexberry-checkbox',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            }
+          },
+          'flexberry-ddau-checkbox': {
+            'caption': 'flexberry-ddau-checkbox',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -375,6 +403,10 @@ Ember.$.extend(true, translations, {
             'default-ordering-example': {
               'caption': 'Сортировка по умолчанию',
               'title': ''
+            },
+            'autocomplete-order-example': {
+              'caption': 'Пример сортировки при автокомплите',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -428,6 +460,10 @@ Ember.$.extend(true, translations, {
               'caption': 'Выбранные строки',
               'title': ''
             },
+            'downloading-files-from-olv-list': {
+              'caption': 'Пример скачивания файлов со списка',
+              'title': ''
+            },
             'object-list-view-resize': {
               'caption': 'Разметка столбцов',
               'title': ''
@@ -459,6 +495,17 @@ Ember.$.extend(true, translations, {
           },
           'flexberry-toggler': {
             'caption': 'flexberry-toggler',
+            'title': '',
+            'settings-example': {
+              'caption': 'Пример работы с настройками',
+              'title': ''
+            },
+            'ge-into-toggler-example': {
+              'caption': 'GroupEdit в toggler example',
+            }
+          },
+          'flexberry-tree': {
+            'caption': 'flexberry-tree',
             'title': '',
             'settings-example': {
               'caption': 'Пример работы с настройками',
@@ -512,6 +559,15 @@ Ember.$.extend(true, translations, {
       'delete-success-message-caption': 'Удаление завершилось успешно',
       'delete-success-message': 'Объект удален',
       'delete-error-message-caption': 'Ошибка удаления'
+    },
+
+    'list-form': {
+      'delete-success-message-caption': 'Удаление завершилось успешно',
+      'delete-success-message': 'Объект удален',
+      'delete-error-message-caption': 'Ошибка удаления',
+      'load-success-message-caption': 'Загрузка данных завершилась успешно',
+      'load-success-message': 'Объект загружен',
+      'load-error-message-caption': 'Ошибка загрузки данных',
     },
 
     'ember-flexberry-dummy-application-user-edit': {
@@ -574,6 +630,12 @@ Ember.$.extend(true, translations, {
       'editor-validation-message-caption': 'Заполните поле "Редактор"'
     },
 
+    'ember-flexberry-dummy-toggler-example-master-e': {
+      'caption': 'Мастер',
+      'toggler-example-master-property-caption': 'Свойство мастера',
+      'toggler-example-deteil-property-caption': 'Детейл'
+    },
+
     'ember-flexberry-dummy-suggestion-type-edit': {
       'caption': 'Тип предложения',
       'name-caption': 'Наименование',
@@ -633,9 +695,19 @@ Ember.$.extend(true, translations, {
     },
 
     'components-examples': {
+      'flexberry-button': {
+        'settings-example': {
+          'caption': 'Пример работы с настройками flexberry-button'
+        }
+      },
       'flexberry-checkbox': {
         'settings-example': {
           'caption': 'Flexberry-checkbox. Пример работы с настройками'
+        }
+      },
+      'flexberry-ddau-checkbox': {
+        'settings-example': {
+          'caption': 'Пример работы с настройками flexberry-ddau-checkbox'
         }
       },
       'flexberry-datepicker': {
@@ -730,6 +802,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Сортировка по умолчанию',
           'titleLookup': 'Мастер'
         },
+        'autocomplete-order-example': {
+          'caption': 'Flexberry-lookup. Пример сортировки при автокомплите',
+          'titleLookup': 'Мастер'
+        },
       },
       'flexberry-menu': {
         'settings-example': {
@@ -741,7 +817,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-objectlistview': {
         'limit-function-example': {
-          'caption': 'Flexberry-objectlistview. Функция ограничения'
+          'caption': 'Flexberry-objectlistview. Функция ограничения',
+          'captionFirstLimitFunction': 'Функция ограничения №1',
+          'captionSecondLimitFunction': 'Функция ограничения №2',
+          'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'inheritance-models': {
           'caption': 'Flexberry-objectlistview. Пример наследуемых моделей',
@@ -786,6 +865,9 @@ Ember.$.extend(true, translations, {
         'selected-rows': {
           'caption': 'Flexberry-objectlistview. Выбранные строки'
         },
+        'downloading-files-from-olv-list': {
+          'caption': 'Flexberry-objectlistview. Скачивание файлов со списка'
+        },
         'object-list-view-resize': {
           'caption': 'Flexberry-objectlistview. Разметка столбцов',
           'button-сaption': 'Добавить',
@@ -794,7 +876,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-simpleolv': {
         'limit-function-example': {
-          'caption': 'Flexberry-simpleolv. Функция ограничения'
+          'caption': 'Flexberry-simpleolv. Функция ограничения',
+          'captionFirstLimitFunction': 'Функция ограничения №1',
+          'captionSecondLimitFunction': 'Функция ограничения №2',
+          'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'settings-example': {
           'caption': 'Flexberry-simpleolv. Пример работы с настройками'
@@ -836,6 +921,17 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Пример работы с настройками',
           'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
+        },
+        'ge-into-toggler-example': {
+          'caption': 'Flexberry-toggler. GroupEdit в toggler example'
+        }
+      },
+      'flexberry-tree': {
+        'settings-example': {
+          'caption': 'Пример работы с настройками flexberry-tree',
+          'json-tree-tab-caption': 'Дерево заданное JSON-объектом',
+          'json-tree-latest-clicked-node-caption': 'Настройки последней кликнутой вершины дерева',
+          'json-tree-latest-clicked-node-placeholder': 'Кликните на любую вершину дерева, чтобы отобразить её настройки'
         }
       },
       'ui-message': {
@@ -869,6 +965,7 @@ Ember.$.extend(true, translations, {
         },
         'validation': {
           'caption': 'Integration examples. Валидация',
+          'summary-caption': 'Ошибки валидации:',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',
           'text-caption': 'Текст',

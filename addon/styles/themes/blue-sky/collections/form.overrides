@@ -1,0 +1,76 @@
+/*******************************
+         Theme Overrides
+
+*******************************/
+.ui.form select {
+    color: @primaryColor;
+    border: none;
+    border-bottom: 1px solid @inputBorderColor;
+    border-radius: 0px;
+    outline: none;
+}
+
+.ui.form select:hover {
+    color: @hoveredSelectColor;
+}
+
+.ui.form input:not([type]), .ui.form input[type="date"],
+.ui.form input[type="datetime-local"], .ui.form input[type="email"],
+.ui.form input[type="number"], .ui.form input[type="password"],
+.ui.form input[type="search"], .ui.form input[type="tel"],
+.ui.form input[type="time"], .ui.form input[type="text"],
+.ui.form input[type="url"] {
+    border: none;
+    border-bottom: 1px solid @inputBorderColor;
+    border-radius: 0px;
+    outline: none;
+}
+
+input[type="checkbox"]:after {
+    content: "";
+    display: inline-block;
+    font-size: 16px;
+    height: 16px;
+    width: 17px;
+    position: relative;
+    border-radius: 4px;
+    top: -3px;
+    left: -2px;
+    border: 1px solid @borderColor;
+    background: @checkboxBackground;
+}
+
+input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
+    content: '\e805';
+    font-family: 'Crimean';
+    color: @primaryColor;
+    border-color: @primaryColor;
+    font-size: 16px;
+    border-left: none;
+    border-top: none;
+    width: 17px;
+}
+
+.ui.form textarea, .ui.form input[type="checkbox"] {
+    margin: 5px;
+}
+
+select {
+    color: @primaryColor;
+}
+
+select:hover {
+    color: @hoveredSelectColor;
+}
+
+option {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.ui.form .fields .field .ui.input input, .ui.form .field .ui.input input {
+    background: none;
+}
+
+.ui.form .field .ui.input .block-action-input input {
+    width: 100%;
+}

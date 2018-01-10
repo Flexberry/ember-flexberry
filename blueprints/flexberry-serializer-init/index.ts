@@ -29,6 +29,7 @@ module.exports = {
       className: modelBlueprint.className,// for use in files\__root__\serializers\__name__.js
       parentModelName: modelBlueprint.parentModelName,// for use in files\__root__\serializers\__name__.js
       parentClassName: modelBlueprint.parentClassName,// for use in files\__root__\serializers\__name__.js
+      parentExternal: modelBlueprint.parentExternal,// for use in files\__root__\serializers\__name__.js
       name: modelBlueprint.name,// for use in files\__root__\serializers\__name__.js
     };
   }

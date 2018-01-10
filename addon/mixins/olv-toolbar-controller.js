@@ -265,9 +265,9 @@ export default Ember.Mixin.create({
           mainModelName = descriptor.type;
         }
       });
-      key = 'models.' + mainModelName + '.projections.' + mainModelProjection.projectionName + '.' + nameRelationship + '.' + bindingPath + '.caption';
+      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
     } else {
-      key = 'models.' + modelName + '.projections.' + projection.projectionName + '.' + bindingPath + '.caption';
+      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
     }
 
     return key;
@@ -289,7 +289,7 @@ export default Ember.Mixin.create({
     let cellComponent = this.get('cellComponent');
 
     if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
-      let recordModel =  (this.get('content') || {}).type || null;
+      let recordModel = Ember.isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 

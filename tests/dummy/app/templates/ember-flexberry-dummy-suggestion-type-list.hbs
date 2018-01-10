@@ -1,11 +1,13 @@
+{{flexberry-error error=error}}
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-type-list.caption"}}</h3>
-<div class="ui {{state}} row form">
+<div class="row">
   {{flexberry-simpleolv
     content=model
     modelName="ember-flexberry-dummy-suggestion-type"
     modelProjection=modelProjection
     editFormRoute=editFormRoute
     createNewButton=true
+    deleteButton=true
     refreshButton=true
     exportExcelButton=true
     sorting=computedSorting

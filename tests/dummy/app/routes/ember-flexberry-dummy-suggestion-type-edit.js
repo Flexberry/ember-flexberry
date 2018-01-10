@@ -1,5 +1,5 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-import EditFormRouteOperationsIndicationMixin from '../mixins/edit-form-route-operations-indication';
+import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
 
 export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   /**
@@ -18,5 +18,33 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @type String
     @default 'ember-flexberry-dummy-suggestion-type'
    */
-  modelName: 'ember-flexberry-dummy-suggestion-type'
+  modelName: 'ember-flexberry-dummy-suggestion-type',
+
+  /**
+  developerUserSettings.
+  {
+  <componentName>: {
+    <settingName>: {
+        colsOrder: [ { propName :<colName>, hide: true|false }, ... ],
+        sorting: [{ propName: <colName>, direction: 'asc'|'desc' }, ... ],
+        colsWidths: [ <colName>:<colWidth>, ... ],
+      },
+      ...
+    },
+    ...
+  }
+  For default userSetting use empty name ('').
+  <componentName> may contain any of properties: colsOrder, sorting, colsWidth or being empty.
+
+  @property developerUserSettings
+  @type Object
+  @default {}
+  */
+  developerUserSettings: {
+    suggestionTypeLocalizedTypesGroupEdit: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 55 }]
+      }
+    }
+  }
 });

@@ -1,5 +1,15 @@
-{{#if currentTypeSupported}}
+{{#if (and currentTypeSupported useBrowserInput)}}
   {{input type=type readonly=readonlyAttr value=_valueAsString min=_minAsString max=_maxAsString placeholder=placeholder}}
 {{else}}
-  {{input type="text" class="flatpickr" readonly=readonlyAttr placeholder=placeholder}}
+  <div class="ui fluid action input flatpickr">
+    <input type="text" placeholder={{placeholder}}/>
+    {{#if removeButton}}
+      <button
+        class="ui ui-clear {{if readonlyAttr " disabled"}} button"
+        title={{t "components.flexberry-lookup.remove-button-text"}}
+        {{action "remove"}}>
+        <i class="remove icon"></i>
+      </button>
+    {{/if}}
+  </div>
 {{/if}}

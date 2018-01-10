@@ -22,6 +22,7 @@
   allowTab=allowTab
   transition=transition
   duration=duration
+  action=action
 }}
   {{#if (and isSearch isSearchReadOnly)}}
     <input class="search" autocomplete="off">
@@ -38,6 +39,7 @@
     <div class="text">{{text}}</div>
   {{/if}}
   <div class="menu">
+    {{yield}}
     {{#each-in _items as |key value|}}
       {{#if value}}
         <div class="item" data-value="{{value}}">{{value}}</div>

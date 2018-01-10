@@ -12,7 +12,7 @@ let openLookupDialog = function($lookup) {
 
     let timeout = 4000;
 
-    let $lookupChooseButton = Ember.$('.lookup-choose-button', $lookup);
+    let $lookupChooseButton = Ember.$('.ui-change', $lookup);
 
     // Try to open lookup dialog.
     Ember.run(() => {
@@ -238,7 +238,7 @@ test('flexberry-lookup limit function test', function(assert) {
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
 
     let $limitFunctionButton = Ember.$('.limitFunction');
-    let $lookupChouseButton = Ember.$('.lookup-choose-button');
+    let $lookupChouseButton = Ember.$('.ui-change');
 
     Ember.run(() => {
       $limitFunctionButton.click();
@@ -322,8 +322,8 @@ test('flexberry-lookup actions test', function(assert) {
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example-actions');
   andThen(function() {
-    let $lookupButtouChoose = Ember.$('.lookup-choose-button');
-    let $lookupButtouRemove = Ember.$('.lookup-clear-button');
+    let $lookupButtouChoose = Ember.$('.ui-change');
+    let $lookupButtouRemove = Ember.$('.ui-clear');
 
     Ember.run(() => {
       $lookupButtouChoose.click();
@@ -352,7 +352,7 @@ test('flexberry-lookup projection test', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-projection');
 
-    let $lookupButtouChoose = Ember.$('.lookup-choose-button');
+    let $lookupButtouChoose = Ember.$('.ui-change');
 
     // Click choose button.
     Ember.run(() => {
@@ -388,7 +388,7 @@ test('visiting flexberry-lookup dropdown', function(assert) {
 
     // Retrieve component, it's inner <input>.
     let $lookupSearch = Ember.$('.lookup-field');
-    let $lookupButtonChoose = Ember.$('.lookup-choose-button');
+    let $lookupButtonChoose = Ember.$('.ui-change');
     let $lookupButtonClear = Ember.$('.lookup-remove-button');
 
     assert.strictEqual($lookupSearch.length === 0, true, 'Component has n\'t flexberry-lookup');

@@ -1,0 +1,43 @@
+<h3 class="ui header">{{t "forms.components-examples.flexberry-tree.settings-example.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    <div class="ui top attached tabular menu">
+      <a class="item active" data-tab="jsonTree">
+        {{t "forms.components-examples.flexberry-tree.settings-example.json-tree-tab-caption"}}
+      </a>
+    </div>
+    <div class="ui bottom attached tab segment active" data-tab="jsonTree">
+      {{#settings-example
+        controllerProperties=this
+        componentSettingsMetadata=jsonTreeComponentSettingsMetadata
+        componentTemplateText=jsonTreeComponentTemplateText
+      }}
+        {{flexberry-tree
+          class=jsonTreeClass
+          exclusive=jsonTreeExclusive
+          collapsible=jsonTreeCollapsible
+          animateChildren=jsonTreeAnimateChildren
+          duration=jsonTreeDuration
+          nodes=(get-with-dynamic-actions this "jsonTreeNodes"
+            hierarchyPropertyName="nodes"
+            pathKeyword="nodePath"
+            dynamicActions=(array
+              (hash
+                on="headerClick"
+                actionName="onTreenodeHeaderClick"
+                actionArguments=(array "{% nodePath %}")
+              )
+            )
+          )
+        }}
+      {{/settings-example}}
+      <br>
+      {{settings-example
+        controllerProperties=this
+        componentSettingsMetadata=jsonTreeLatestClickedNodeComponentSettingsMetadata
+        componentSettingsCaption=(t "forms.components-examples.flexberry-tree.settings-example.json-tree-latest-clicked-node-caption")
+        componentSettingsPlaceholder=(t "forms.components-examples.flexberry-tree.settings-example.json-tree-latest-clicked-node-placeholder")
+      }}
+    </div>
+  </div>
+</form>

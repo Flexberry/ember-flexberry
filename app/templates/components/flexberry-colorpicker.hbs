@@ -1,0 +1,10 @@
+{{!--
+  Binding through get-helper value=(get this "value") is a way to achieve one way binding.
+  It makes value immutable within component, what is major rule of "Data Down Actions Up (DDAU)" pattern:
+  component should display data, but not mutate it by its own.
+--}}
+{{input
+  class=flexberryClassNames.input
+  type="hidden"
+  value=(get this "value")
+}}

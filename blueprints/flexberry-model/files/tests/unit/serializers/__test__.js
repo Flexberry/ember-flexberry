@@ -6,8 +6,11 @@ moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
     'serializer:<%= name %>',
     'transform:file',
     'transform:decimal',
-<% if (!!needsAllEnums === true) { %>
+    'transform:guid',
+    <% if (!!needsAllEnums === true) { %>
 <%= needsAllEnums %>,
+<% } %><% if (!!needsAllObjects === true) { %>
+<%= needsAllObjects %>,
 <% } %>
 <%= needsAllModels %>
   ]

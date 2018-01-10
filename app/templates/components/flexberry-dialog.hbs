@@ -1,0 +1,18 @@
+<i class="{{flexberryClassNames.closeButton}} close icon"></i>
+<div class="{{flexberryClassNames.header}} header">
+  {{caption}}
+</div>
+<div class="{{flexberryClassNames.content}} content {{contentClass}}">
+  {{content}}
+  {{yield}}
+</div>
+<div class="{{flexberryClassNames.toolbar}} actions">
+  {{flexberry-button
+    class=(concat flexberryClassNames.approveButton " approve positive")
+    caption=approveButtonCaption
+  }}
+  {{flexberry-button
+    class=(concat flexberryClassNames.cancelButton " deny negative")
+    caption=denyButtonCaption
+  }}
+</div>

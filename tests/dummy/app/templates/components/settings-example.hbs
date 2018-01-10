@@ -12,7 +12,7 @@
         <th>{{t "components.settings-example.component-current-settings-caption"}}</th>
         <th>{{t "components.settings-example.component-default-settings-caption"}}</th>
       </tr></thead>
-      <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
+      <tbody>
         {{#each componentSettingsMetadata as |settingMetadata|}}
         <tr>
           <td>

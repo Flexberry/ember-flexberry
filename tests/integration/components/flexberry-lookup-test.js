@@ -16,16 +16,16 @@ test('component renders properly', function(assert) {
   assert.expect(30);
 
   this.render(hbs`{{#flexberry-lookup
-  placeholder=placeholder}}
+  placeholder='(нет значения)'}}
   {{/flexberry-lookup}}`);
 
   // Retrieve component, it's inner <input>.
   let $component = this.$().children();
   let $lookupFluid = $component.children('.fluid');
   let $lookupInput = $lookupFluid.children('.lookup-field');
-  let $lookupButtouChoose = $lookupFluid.children('.lookup-choose-button');
-  let $lookupButtouClear = $lookupFluid.children('.lookup-clear-button');
-  let $lookupButtouClearIcon = $lookupButtouClear.children('.remove');
+  let $lookupButtonChoose = $lookupFluid.children('.ui-change');
+  let $lookupButtonClear = $lookupFluid.children('.ui-clear');
+  let $lookupButtonClearIcon = $lookupButtonClear.children('.remove');
 
   // Check wrapper <flexberry-lookup>.
   assert.strictEqual($component.prop('tagName'), 'DIV', 'Component\'s title block is a <div>');
@@ -46,28 +46,28 @@ test('component renders properly', function(assert) {
   assert.strictEqual($lookupInput.hasClass('lookup-field'), true, 'Component\'s title block has \'lookup-field\' css-class');
   assert.strictEqual($lookupInput.hasClass('ember-view'), true, 'Component\'s title block has \'ember-view\' css-class');
   assert.strictEqual($lookupInput.hasClass('ember-text-field'), true, 'Component\'s title block has \'ember-text-field\' css-class');
-  assert.equal($lookupInput.attr('placeholder'), '(no value)', 'Component\'s container has \'input\' css-class');
+  assert.equal($lookupInput.attr('placeholder'), '(нет значения)', 'Component\'s container has \'input\' css-class');
 
   // Check <choose button>.
-  assert.strictEqual($lookupButtouChoose.length === 1, true, 'Component has inner title block');
-  assert.strictEqual($lookupButtouChoose.prop('tagName'), 'BUTTON', 'Component\'s title block is a <button>');
-  assert.strictEqual($lookupButtouChoose.hasClass('ui'), true, 'Component\'s container has \'ui\' css-class');
-  assert.strictEqual($lookupButtouChoose.hasClass('lookup-choose-button'), true, 'Component\'s container has \'lookup-choose-button\' css-class');
-  assert.strictEqual($lookupButtouChoose.hasClass('button'), true, 'Component\'s container has \'button\' css-class');
-  assert.equal($lookupButtouChoose.text().trim(), 'Choose');
+  assert.strictEqual($lookupButtonChoose.length === 1, true, 'Component has inner title block');
+  assert.strictEqual($lookupButtonChoose.prop('tagName'), 'BUTTON', 'Component\'s title block is a <button>');
+  assert.strictEqual($lookupButtonChoose.hasClass('ui'), true, 'Component\'s container has \'ui\' css-class');
+  assert.strictEqual($lookupButtonChoose.hasClass('ui-change'), true, 'Component\'s container has \'ui-change\' css-class');
+  assert.strictEqual($lookupButtonChoose.hasClass('button'), true, 'Component\'s container has \'button\' css-class');
+  assert.equal($lookupButtonChoose.attr('title'), 'Выбрать');
 
   // Check <clear button>.
-  assert.strictEqual($lookupButtouClear.length === 1, true, 'Component has inner title block');
-  assert.strictEqual($lookupButtouClear.prop('tagName'), 'BUTTON', 'Component\'s title block is a <button>');
-  assert.strictEqual($lookupButtouClear.hasClass('ui'), true, 'Component\'s container has \'ui\' css-class');
-  assert.strictEqual($lookupButtouClear.hasClass('lookup-clear-button'), true, 'Component\'s container has \'lookup-clear-button\' css-class');
-  assert.strictEqual($lookupButtouClear.hasClass('button'), true, 'Component\'s container has \'button\' css-class');
+  assert.strictEqual($lookupButtonClear.length === 1, true, 'Component has inner title block');
+  assert.strictEqual($lookupButtonClear.prop('tagName'), 'BUTTON', 'Component\'s title block is a <button>');
+  assert.strictEqual($lookupButtonClear.hasClass('ui'), true, 'Component\'s container has \'ui\' css-class');
+  assert.strictEqual($lookupButtonClear.hasClass('ui-clear'), true, 'Component\'s container has \'ui-clear\' css-class');
+  assert.strictEqual($lookupButtonClear.hasClass('button'), true, 'Component\'s container has \'button\' css-class');
 
   // Check <clear button icon>
-  assert.strictEqual($lookupButtouClearIcon.length === 1, true, 'Component has inner title block');
-  assert.strictEqual($lookupButtouClearIcon.prop('tagName'), 'I', 'Component\'s title block is a <i>');
-  assert.strictEqual($lookupButtouClearIcon.hasClass('remove'), true, 'Component\'s container has \'remove\' css-class');
-  assert.strictEqual($lookupButtouClearIcon.hasClass('icon'), true, 'Component\'s container has \'icon\' css-class');
+  assert.strictEqual($lookupButtonClearIcon.length === 1, true, 'Component has inner title block');
+  assert.strictEqual($lookupButtonClearIcon.prop('tagName'), 'I', 'Component\'s title block is a <i>');
+  assert.strictEqual($lookupButtonClearIcon.hasClass('remove'), true, 'Component\'s container has \'remove\' css-class');
+  assert.strictEqual($lookupButtonClearIcon.hasClass('icon'), true, 'Component\'s container has \'icon\' css-class');
 });
 
 test('component with readonly renders properly', function(assert) {
@@ -80,14 +80,14 @@ test('component with readonly renders properly', function(assert) {
   // Retrieve component, it's inner <input>.
   let $component = this.$().children();
   let $lookupFluid = $component.children('.fluid');
-  let $lookupButtouChoose = $lookupFluid.children('.lookup-choose-button');
-  let $lookupButtouClear = $lookupFluid.children('.lookup-clear-button');
+  let $lookupButtonChoose = $lookupFluid.children('.ui-change');
+  let $lookupButtonClear = $lookupFluid.children('.ui-clear');
 
   // Check <choose button>.
-  assert.strictEqual($lookupButtouChoose.hasClass('disabled'), true, 'Component\'s container has \'disabled\' css-class');
+  assert.strictEqual($lookupButtonChoose.hasClass('disabled'), true, 'Component\'s container has \'disabled\' css-class');
 
   // Check <clear button>.
-  assert.strictEqual($lookupButtouClear.hasClass('disabled'), true, 'Component\'s container has \'disabled\' css-class');
+  assert.strictEqual($lookupButtonClear.hasClass('disabled'), true, 'Component\'s container has \'disabled\' css-class');
 });
 
 test('component with choose-text and remove-text properly', function(assert) {
@@ -103,12 +103,12 @@ test('component with choose-text and remove-text properly', function(assert) {
 
   let $component = this.$().children();
   let $lookupFluid = $component.children('.fluid');
-  let $lookupButtouChoose = $lookupFluid.children('.lookup-choose-button');
-  let $lookupButtouClear = $lookupFluid.children('.lookup-clear-button');
+  let $lookupButtonChoose = $lookupFluid.children('.ui-change');
+  let $lookupButtonClear = $lookupFluid.children('.ui-clear');
 
   // Check <choose button>.
-  assert.equal($lookupButtouChoose.text().trim(), 'TempText1');
+  assert.equal($lookupButtonChoose.text().trim(), 'TempText1');
 
   // Check <clear button>.
-  assert.equal($lookupButtouClear.text().trim(), 'TempText2');
+  assert.equal($lookupButtonClear.text().trim(), 'TempText2');
 });

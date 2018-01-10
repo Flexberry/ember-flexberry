@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-objectlistview` component:
     * Add collapse/expand all button for hierarchy mode.
     * Increased performance when working in hierarchical mode by reducing number of queries to backend on rendering top-level nodes.
+    * Calling `onDeleteActionStarted`, `onDeleteActionFulfilled`, `onDeleteActionRejected` and `onDeleteActionAlways` methods from `ListFormController` in the process of deleting the record.
 
 ### Fixed
 * Reset `page` in `LimitedController` mixin when change or reset filters.

@@ -7,7 +7,7 @@ moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
     'transform:file',
     'transform:decimal',
     'transform:guid',
-    <% if (!!needsAllEnums === true) { %>
+<% if (!!needsAllEnums === true) { %>
 <%= needsAllEnums %>,
 <% } %><% if (!!needsAllObjects === true) { %>
 <%= needsAllObjects %>,

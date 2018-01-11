@@ -99,5 +99,70 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     };
 
     return cellComponent;
+  },
+
+  /**
+    This method will be invoked before delete operation will be called.
+    Override this method to add custom logic on delete operation start.
+
+    @example
+      ```javascript
+      onDeleteActionStarted() {
+        alert('Delete operation started!');
+      }
+      ```
+    @method onDeleteActionStarted.
+  */
+  onDeleteActionStarted() {
+  },
+
+  /**
+    This method will be invoked when delete operation successfully completed.
+    Override this method to add some custom logic on delete operation success.
+
+    @example
+      ```javascript
+      onDeleteActionFulfilled() {
+        alert('Delete operation succeed!');
+      }
+      ```
+    @method onDeleteActionFulfilled.
+  */
+  onDeleteActionFulfilled() {
+  },
+
+  /**
+    This method will be invoked when delete operation completed, but failed.
+    Override this method to add some custom logic on delete operation fail.
+
+    @example
+      ```javascript
+      onDeleteActionRejected() {
+        alert('Delete operation failed!');
+      }
+      ```
+    @method onDeleteActionRejected.
+    @param {Object} errorData Data about delete operation fail.
+  */
+  onDeleteActionRejected(errorData, record) {
+    this.rejectError(errorData, `Unable to delete a record: ${record.toString()}.`);
+  },
+
+  /**
+    This method will be invoked always when delete operation completed,
+    regardless of save promise's state (was it fulfilled or rejected).
+    Override this method to add some custom logic on delete operation completion.
+
+    @example
+      ```js
+      onDeleteActionAlways(data) {
+        alert('Delete operation completed!');
+      }
+      ```
+
+    @method onSaveActionAlways.
+    @param {Object} data Data about completed save operation.
+  */
+  onDeleteActionAlways(data) {
   }
 });

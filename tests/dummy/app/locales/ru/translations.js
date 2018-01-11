@@ -557,6 +557,15 @@ Ember.$.extend(true, translations, {
       'delete-error-message-caption': 'Ошибка удаления'
     },
 
+    'list-form': {
+      'delete-success-message-caption': 'Удаление завершилось успешно',
+      'delete-success-message': 'Объект удален',
+      'delete-error-message-caption': 'Ошибка удаления',
+      'load-success-message-caption': 'Загрузка данных завершилась успешно',
+      'load-success-message': 'Объект загружен',
+      'load-error-message-caption': 'Ошибка загрузки данных',
+    },
+
     'ember-flexberry-dummy-application-user-edit': {
       'caption': 'Пользователь приложения',
       'name-caption': 'Имя',
@@ -944,7 +953,7 @@ Ember.$.extend(true, translations, {
           'text-caption': 'Текст',
           'long-text-caption': 'Длинный текст',
           'date-caption': 'Дата',
-          'time-caption': 'Время',
+          'time-caption': 'Дата + Время',
           'enumeration-caption': 'Перечисление',
           'file-caption': 'Файл',
           'master-caption': 'Мастер',

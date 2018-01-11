@@ -1408,7 +1408,7 @@ export default FlexberryBaseComponent.extend(
 
             // TODO: Probably need to replace this.
             setting.width = (checkbox && delButton && editButton ? 130 : (checkbox && delButton) || (checkbox && editButton) ||
-            (delButton && editButton) ? 100 : checkbox || delButton || editButton ? 70 : 65) - padding;
+            (delButton && editButton) ? 100 : checkbox || delButton || editButton ? 86 : 65) - padding;
           }
         }
 
@@ -2094,6 +2094,8 @@ export default FlexberryBaseComponent.extend(
     @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
   */
   _deleteRecord(record, immediately) {
+    let currentController = this.get('currentController');
+    currentController.onDeleteActionStarted();
     let beforeDeleteRecord = this.get('beforeDeleteRecord');
     let possiblePromise = null;
     let data = {
@@ -2133,14 +2135,21 @@ export default FlexberryBaseComponent.extend(
   */
 
   _actualDeleteRecord(record, immediately) {
+    let currentController = this.get('currentController');
     let key = this._getModelKey(record);
     this._removeModelWithKey(key);
 
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
+      currentController.onDeleteActionFulfilled();
     }) : record.deleteRecord()).catch((reason) => {
-      this.get('currentController').send('error', reason);
+
+      currentController.onDeleteActionRejected(reason, record);
+      currentController.send('error', reason);
+
       record.rollbackAll();
+    }).finally((data) => {
+      currentController.onDeleteActionAlways(data);
     });
 
     let componentName = this.get('componentName');

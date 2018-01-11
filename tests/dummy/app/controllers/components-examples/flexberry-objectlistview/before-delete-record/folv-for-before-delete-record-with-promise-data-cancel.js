@@ -16,6 +16,7 @@ export default ListFormController.extend({
     beforeDeleteRecord(record, data) {
       return new Ember.RSVP.Promise((resolve) => {
         this.set('recordWasNotDelete', !record.get('isDeleted'));
+        data.cancel = true;
         resolve();
       });
     }

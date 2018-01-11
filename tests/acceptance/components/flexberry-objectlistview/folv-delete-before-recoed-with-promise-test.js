@@ -5,9 +5,9 @@ import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import { Query } from 'ember-flexberry-data';
 const { Builder } = Query;
 
-executeTest('check delete before recoed with promise test', (store, assert, app) => {
+executeTest('check delete before record with promise test', (store, assert, app) => {
   assert.expect(5);
-  let path = 'components-examples/flexberry-objectlistview/folv-for-before-delete-record-with-promise';
+  let path = 'components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise';
   let modelName = 'ember-flexberry-dummy-suggestion-type';
   let howAddRec = 1;
   let uuid = '0' + generateUniqueId();

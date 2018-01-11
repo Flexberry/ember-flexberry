@@ -557,6 +557,15 @@ Ember.$.extend(true, translations, {
       'delete-error-message-caption': 'Ошибка удаления'
     },
 
+    'list-form': {
+      'delete-success-message-caption': 'Удаление завершилось успешно',
+      'delete-success-message': 'Объект удален',
+      'delete-error-message-caption': 'Ошибка удаления',
+      'load-success-message-caption': 'Загрузка данных завершилась успешно',
+      'load-success-message': 'Объект загружен',
+      'load-error-message-caption': 'Ошибка загрузки данных',
+    },
+
     'ember-flexberry-dummy-application-user-edit': {
       'caption': 'Пользователь приложения',
       'name-caption': 'Имя',
@@ -804,7 +813,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-objectlistview': {
         'limit-function-example': {
-          'caption': 'Flexberry-objectlistview. Функция ограничения'
+          'caption': 'Flexberry-objectlistview. Функция ограничения',
+          'captionFirstLimitFunction': 'Функция ограничения №1',
+          'captionSecondLimitFunction': 'Функция ограничения №2',
+          'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'inheritance-models': {
           'caption': 'Flexberry-objectlistview. Пример наследуемых моделей',
@@ -860,7 +872,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-simpleolv': {
         'limit-function-example': {
-          'caption': 'Flexberry-simpleolv. Функция ограничения'
+          'caption': 'Flexberry-simpleolv. Функция ограничения',
+          'captionFirstLimitFunction': 'Функция ограничения №1',
+          'captionSecondLimitFunction': 'Функция ограничения №2',
+          'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'settings-example': {
           'caption': 'Flexberry-simpleolv. Пример работы с настройками'

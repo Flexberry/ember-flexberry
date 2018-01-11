@@ -870,27 +870,29 @@ export default FlexberryBaseComponent.extend({
             builder.where(resultPredicate);
           }
 
-          store.query(relationModelName, builder.build()).then((records) => {
-            // We have to cache data because dropdown component sets text as value and we lose object value.
-            let resultArray = [];
-            let results = records.map((i) => {
-              let attributeName = i.get(displayAttributeName);
-              resultArray[i.id] = i;
-              return {
-                name: attributeName,
-                value: i.id
-              };
+          Ember.run(() => {
+            store.query(relationModelName, builder.build()).then((records) => {
+              // We have to cache data because dropdown component sets text as value and we lose object value.
+              let resultArray = [];
+              let results = records.map((i) => {
+                let attributeName = i.get(displayAttributeName);
+                resultArray[i.id] = i;
+                return {
+                  name: attributeName,
+                  value: i.id
+                };
+              });
+
+              if (!_this.get('required')) {
+                results.unshift({ name: _this.get('placeholder'), value: null });
+                resultArray['null'] = null;
+              }
+
+              callback({ success: true, results: results });
+              _this.set('_cachedDropdownValues', resultArray);
+            }, () => {
+              callback({ success: false });
             });
-
-            if (!_this.get('required')) {
-              results.unshift({ name: _this.get('placeholder'), value: null });
-              resultArray['null'] = null;
-            }
-
-            callback({ success: true, results: results });
-            _this.set('_cachedDropdownValues', resultArray);
-          }, () => {
-            callback({ success: false });
           });
         }
       },

@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.2-beta.10] - 2018-01-11
 ### Added
 * Support `drops` option for `flexberry-datepicker` component.
 * List components:
@@ -12,13 +14,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-objectlistview` component:
     * Add collapse/expand all button for hierarchy mode.
     * Increased performance when working in hierarchical mode by reducing number of queries to backend on rendering top-level nodes.
+    * Calling `onDeleteActionStarted`, `onDeleteActionFulfilled`, `onDeleteActionRejected` and `onDeleteActionAlways` methods from `ListFormController` in the process of deleting the record.
 
 ### Fixed
 * Reset `page` in `LimitedController` mixin when change or reset filters.
+* Error when clicking on child rows when `flexberry-objectlistview` component is in hierarchical mode.
 * `blue-sky` theme:
     * Fix header height for mobile version.
 * `flexberry-objectlistview` component:
     * Filtering by all fields is now applying by pressing `Enter` in IE.
+    * Clicking on child rows in hierarchical mode.
 * `flexberry-checkbox` component:
     * Fix `checked` property to support IE.
 * `flexberry-objectlistview` and `flexberry-groupedit` components:

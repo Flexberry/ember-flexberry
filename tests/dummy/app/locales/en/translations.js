@@ -540,6 +540,15 @@ Ember.$.extend(true, translations, {
       'delete-error-message-caption': 'Delete operation failed'
     },
 
+    'list-form': {
+      'delete-success-message-caption': 'Delete operation succeed',
+      'delete-success-message': 'Object deleted',
+      'delete-error-message-caption': 'Delete operation failed',
+      'load-success-message-caption': 'Load operation succeed',
+      'load-success-message': 'Object loaded',
+      'load-error-message-caption': 'Load operation failed'
+    },
+
     'ember-flexberry-dummy-application-user-edit': {
       'caption': 'Application user',
       'name-caption': 'Name',
@@ -786,7 +795,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-objectlistview': {
         'limit-function-example': {
-          'caption': 'Flexberry-objectlistview. Limit function example'
+          'caption': 'Flexberry-objectlistview. Limit function example',
+          'captionFirstLimitFunction': 'Limit function №1',
+          'captionSecondLimitFunction': 'Limit function №2',
+          'captionClearLimitFunction': 'Clear limit function'
         },
         'inheritance-models': {
           'caption': 'Flexberry-objectlistview. Inheritance models example',
@@ -842,7 +854,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-simpleolv': {
         'limit-function-example': {
-          'caption': 'Flexberry-simpleolv. Limit function example'
+          'caption': 'Flexberry-simpleolv. Limit function example',
+          'captionFirstLimitFunction': 'Limit function №1',
+          'captionSecondLimitFunction': 'Limit function №2',
+          'captionClearLimitFunction': 'Clear limit function'
         },
         'settings-example': {
           'caption': 'Flexberry-simpleolv. Settings example'

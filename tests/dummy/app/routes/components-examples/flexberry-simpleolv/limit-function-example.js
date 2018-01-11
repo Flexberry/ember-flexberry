@@ -5,14 +5,33 @@ import { Query } from 'ember-flexberry-data';
 const { StringPredicate } = Query;
 
 export default ListFormRoute.extend({
+
+  /**
+    Current predicate to limit accessible values for lookup.
+
+    @property firstLimitType
+    @type BasePredicate
+    @default undefined
+   */
+  firstLimitType: undefined,
+
+  /**
+    Current predicate to limit accessible values for lookup.
+
+    @property secondLimitType
+    @type BasePredicate
+    @default undefined
+   */
+  secondLimitType: undefined,
+
   /**
     Name of model projection to be used as record's properties limitation.
 
     @property modelProjection
     @type String
-    @default 'FolvWithLimitFunctionExampleView'
+    @default 'SuggestionE'
    */
-  modelProjection: 'FolvWithLimitFunctionExampleView',
+  modelProjection: 'SuggestionE',
 
   /**
   developerUserSettings.
@@ -59,6 +78,7 @@ export default ListFormRoute.extend({
     @return {BasePredicate} The predicate to limit loaded data.
    */
   objectListViewLimitPredicate: function(options) {
+
     let methodOptions = Ember.merge({
       modelName: undefined,
       projectionName: undefined,
@@ -66,14 +86,54 @@ export default ListFormRoute.extend({
     }, options);
 
     if (methodOptions.modelName === this.get('modelName') &&
-        methodOptions.projectionName === this.get('modelProjection')) {
-      let currentPerPageValue = methodOptions.params ? methodOptions.params.perPage : undefined;
-      let limitFunction = (currentPerPageValue && currentPerPageValue % 2 === 0) ?
-                          new StringPredicate('address').contains('S') :
-                          new StringPredicate('address').contains('п');
-      return limitFunction;
+      methodOptions.projectionName === this.get('modelProjection')) {
+
+      let limitFunctionText = this.get('controller.limitFunction');
+
+      if (limitFunctionText) {
+        let limitFunction = new StringPredicate('address').contains(limitFunctionText);
+
+        return limitFunction;
+      }
     }
 
     return undefined;
+  },
+
+  /**
+    Returns model related to current route.
+    @method model
+   */
+  model(params) {
+
+    let store = this.get('store');
+
+    let query = new Query.Builder(store).from(this.get('modelName')).where('address', Query.FilterOperator.Neq, '');
+
+    store.query('ember-flexberry-dummy-suggestion', query.build()).then((limitdata) => {
+      let limitTypesArr = limitdata.toArray();
+      this.set('firstLimitType', limitTypesArr.objectAt(0).get('address'));
+      this.set('secondLimitType', limitTypesArr.objectAt(1).get('address'));
+    });
+
+    return this._super(...arguments);
+  },
+
+  actions: {
+    refreshModel: function() {
+      this.refresh();
+    }
+  },
+
+  /**
+    Load limit accessible values for lookup.
+    @method setupController
+   */
+  setupController() {
+    this._super(...arguments);
+
+    this.set('controller.firstLimitType', this.get('firstLimitType'));
+
+    this.set('controller.secondLimitType', this.get('secondLimitType'));
   }
 });

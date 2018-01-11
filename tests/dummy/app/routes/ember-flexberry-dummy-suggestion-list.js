@@ -1,6 +1,7 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
+import ListFormRouteOperationsIndicationMixin from '../mixins/list-form-route-operations-indication';
 
-export default ListFormRoute.extend({
+export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
   /**
    Name of model projection to be used as record's properties limitation.
 

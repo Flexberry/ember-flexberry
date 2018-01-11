@@ -6,6 +6,10 @@
     position: relative;
 }
 
+.bgw-fix.mobile {
+    height: @headerHeightMobile;
+}
+
 .background-logo {
     height: @headerHeight;
     position: fixed;

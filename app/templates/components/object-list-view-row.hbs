@@ -105,7 +105,7 @@
           <i class="list layout icon"></i>
           <div class="left menu">
             {{#if showEditMenuItemInRow}}
-              <div class="item" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                 <i class="edit icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
               </div>

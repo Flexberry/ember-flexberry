@@ -19,6 +19,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix header height for mobile version.
 * `flexberry-objectlistview` component:
     * Filtering by all fields is now applying by pressing `Enter` in IE.
+* `flexberry-checkbox` component:
+    * Fix `checked` property to support IE.
 * `flexberry-objectlistview` and `flexberry-groupedit` components:
     * Row clicks work correctly now in mobile mode.
 

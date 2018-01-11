@@ -127,6 +127,14 @@ Router.map(function() {
   this.route('user-setting-forms/user-setting-delete');
 
   // Components acceptance tests forms.
+  this.route('components-acceptance-tests/flexberry-lookup/base-operations');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-projection');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-actions');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');

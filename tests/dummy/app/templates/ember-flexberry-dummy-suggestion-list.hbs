@@ -1,5 +1,25 @@
+{{flexberry-error error=error}}
 <h3>{{t "forms.ember-flexberry-dummy-suggestion-list.caption"}}</h3>
-<div class="ui {{state}} row form">
+<form class="ui form flexberry-vertical-form" role="form">
+  {{ui-message
+    type="success"
+    closeable=true
+    visible=showFormSuccessMessage
+    caption=formSuccessMessageCaption
+    message=formSuccessMessage
+    onShow=(action "onSuccessMessageShow")
+    onHide=(action "onSuccessMessageHide")
+  }}
+  {{ui-message
+    type="error"
+    closeable=true
+    visible=showFormErrorMessage
+    caption=formErrorMessageCaption
+    message=formErrorMessage
+    onShow=(action "onErrorMessageShow")
+    onHide=(action "onErrorMessageHide")
+  }}
+  <div class="field">
   {{flexberry-objectlistview
     editFormRoute=editFormRoute
     showCheckBoxInRow=true
@@ -27,3 +47,4 @@
     deleteButton=true
   }}
 </div>
+</form>

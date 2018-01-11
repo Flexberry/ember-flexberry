@@ -25,11 +25,11 @@ export default FlexberryBaseComponent.extend({
   /**
    Service that triggers objectlistview events.
 
-   @property objectlistviewEvents
+   @property objectlistviewEventsService
    @type {Class}
    @default Ember.inject.service()
    */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
    Model with added DOM elements.
@@ -57,14 +57,6 @@ export default FlexberryBaseComponent.extend({
    @default ''
    */
   settingName: '',
-
-  /**
-    Form state. A form is in different states: loading, success, error.
-
-    @property state
-    @type String
-  */
-  state: '',
 
   /**
     Changed flag.
@@ -388,22 +380,33 @@ export default FlexberryBaseComponent.extend({
         this.sendAction('close', colsConfig); // close modal window
       } else {
         let _this = this;
-        _this.set('state', 'loading');
+        _this.get('objectlistviewEventsService').setLoadingState('loading');
         let store = this.get('store.onlineStore') || this.get('store');
         let adapter = store.adapterFor(this.modelName);
         let currentQuery = this._getCurrentQuery();
         adapter.query(store, this.modelName, currentQuery).then((result) => {
-          let blob = new Blob([result], { type: 'application/vnd.ms-excel' });
-          let downloadUrl = URL.createObjectURL(blob);
+          let blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           let anchor = Ember.$('.download-anchor');
-          if (!Ember.isNone(anchor)) {
-            anchor.prop('href', downloadUrl);
-            anchor.prop('download', 'list.xlsx');
-            anchor.get(0).click();
-            _this.set('state', '');
+          if (!Ember.isBlank(anchor)) {
+            if (window.navigator.msSaveOrOpenBlob) {
+              let downloadFunction = function() {
+                window.navigator.msSaveOrOpenBlob(blob, 'list.xlsx');
+              };
+
+              anchor.on('click', downloadFunction);
+              anchor.get(0).click();
+              anchor.off('click', downloadFunction);
+            } else {
+              let downloadUrl = URL.createObjectURL(blob);
+              anchor.prop('href', downloadUrl);
+              anchor.prop('download', 'list.xlsx');
+              anchor.get(0).click();
+            }
           }
+
+          this.get('objectlistviewEventsService').setLoadingState('');
         }).catch(() => {
-          _this.set('state', '');
+          this.get('objectlistviewEventsService').setLoadingState('');
         });
       }
     },
@@ -515,7 +518,7 @@ export default FlexberryBaseComponent.extend({
       builder.orderBy(sortString);
     }
 
-    let limitFunction = this.get('objectlistviewEvents').getLimitFunction();
+    let limitFunction = this.get('objectlistviewEventsService').getLimitFunction();
     if (limitFunction) {
       builder.where(limitFunction);
     }

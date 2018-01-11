@@ -1,0 +1,8 @@
+/*******************************
+            Input
+*******************************/
+
+@borderColor: @paleBlue;
+@bottomBorderColor: @paleBlue;
+@background: transparent;
+@focusBackground: transparent;

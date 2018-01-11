@@ -1,0 +1,11 @@
+/*******************************
+             Icon
+*******************************/
+
+/*-------------------
+   Icon Variables
+--------------------*/
+@cornerIconInvertedShadow: @blue;
+
+@colorIcon : @blue;
+@colorIconBorder: @blue;

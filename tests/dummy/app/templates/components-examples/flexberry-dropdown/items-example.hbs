@@ -7,7 +7,7 @@
     icon="info circle icon"
     title=(t "forms.components-examples.flexberry-dropdown.items-example.info-caption")
     message=message
-  }}        
+  }}
   <div class="field">
     {{flexberry-checkbox
       class=(concat (if value "disabled") " toggle")
@@ -25,7 +25,7 @@
         class="fluid"
         value=value
       }}
-      <button class="ui green basic button icon" {{action 'resetValue'}}>
+      <button class="ui button icon" {{action 'resetValue'}}>
         <i class="large remove circle icon"></i>
       </button>
     </div>

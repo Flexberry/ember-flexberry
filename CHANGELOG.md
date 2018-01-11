@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix hierarchy collapse and expand.
 
 ## [0.9.2-beta.10] - 2018-01-11
 ### Added

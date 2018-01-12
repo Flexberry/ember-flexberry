@@ -125,10 +125,20 @@ Router.map(function() {
   this.route('user-setting-forms/user-setting-delete');
 
   // Components acceptance tests forms.
+  this.route('components-acceptance-tests/flexberry-lookup/base-operations');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-projection');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-actions');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
+  this.route('components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
   this.route('components-acceptance-tests/edit-form-readonly');
+  this.route('components-acceptance-tests/edit-form-validation/validation');
+
   this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-list-with-checked-checkbox');
   this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox',
   { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/:id' });

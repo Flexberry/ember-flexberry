@@ -939,7 +939,7 @@ Ember.$.extend(true, translations, {
           'text-caption': 'Text',
           'long-text-caption': 'Long text',
           'date-caption': 'Date',
-          'time-caption': 'Time',
+          'time-caption': 'Date + Time',
           'enumeration-caption': 'Enumeration',
           'file-caption': 'File',
           'master-caption': 'Master',

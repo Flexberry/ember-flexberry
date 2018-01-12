@@ -17,6 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   * Add button's classes `flexberry-lookup`.
   * Add left menu item's classes `object-list-view-row`.
 
+## [0.9.2-beta.10] - 2018-01-11
 ### Added
 * Support `drops` option for `flexberry-datepicker` component.
 * List components:
@@ -30,6 +31,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * Reset `page` in `LimitedController` mixin when change or reset filters.
+* Error when clicking on child rows when `flexberry-objectlistview` component is in hierarchical mode.
+* `blue-sky` theme:
+    * Fix header height for mobile version.
+* `flexberry-objectlistview` component:
+    * Filtering by all fields is now applying by pressing `Enter` in IE.
+    * Clicking on child rows in hierarchical mode.
+* `flexberry-checkbox` component:
+    * Fix `checked` property to support IE.
+* `flexberry-objectlistview` and `flexberry-groupedit` components:
+    * Row clicks work correctly now in mobile mode.
 
 ## [0.9.2-beta.9] - 2017-12-06
 ### Added

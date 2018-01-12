@@ -14,6 +14,7 @@ export default ListFormController.extend({
   actions: {
     beforeDeleteRecord(record, data) {
       this.set('recordWasNotDelete', !record.get('isDeleted'));
+      data.immediately = false;
       return;
     }
   }

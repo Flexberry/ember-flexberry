@@ -52,7 +52,7 @@ executeTest('check delete before record with promise data cancel test', (store, 
           let controller = app.__container__.lookup('controller:' + currentRouteName());
           assert.ok(controller.recordWasNotDelete, 'Records wasn\'t remove in beforeDeleteRecord');
 
-          // Check that the records have been removed.
+          // Check that the records haven't been removed.
           let recordsIsDeleteBtnInRow = $rows().every((element) => {
             let nameRecord = Ember.$.trim(element.children[1].innerText);
             return nameRecord.indexOf(uuid) < 0;
@@ -60,7 +60,7 @@ executeTest('check delete before record with promise data cancel test', (store, 
 
           assert.notOk(recordsIsDeleteBtnInRow, 'Each entry begins with \'' + uuid + '\' is delete with button in row');
 
-          // Check that the records have been removed into store.
+          // Check that the records haven't been removed into store.
           let builder2 = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid).count();
           let timeout = 500;
           Ember.run.later((function() {

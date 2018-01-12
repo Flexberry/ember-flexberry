@@ -5,9 +5,9 @@ import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import { Query } from 'ember-flexberry-data';
 const { Builder } = Query;
 
-executeTest('check delete before record with promise test', (store, assert, app) => {
+executeTest('check delete before record data immediately test', (store, assert, app) => {
   assert.expect(5);
-  let path = 'components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise';
+  let path = 'components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately';
   let modelName = 'ember-flexberry-dummy-suggestion-type';
   let howAddRec = 1;
   let uuid = '0' + generateUniqueId();
@@ -60,13 +60,13 @@ executeTest('check delete before record with promise test', (store, assert, app)
 
           assert.ok(recordsIsDeleteBtnInRow, 'Each entry begins with \'' + uuid + '\' is delete with button in row');
 
-          // Check that the records haven't been removed into store.
+          // Check that the records have been removed into store.
           let builder2 = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid).count();
           let timeout = 500;
           Ember.run.later((function() {
             let done2 = assert.async();
             store.query(modelName, builder2.build()).then((result) => {
-              assert.notOk(result.meta.count, 'record \'' + uuid + '\'not found in store');
+              assert.ok(result.meta.count, 'record \'' + uuid + '\'not found in store');
               done2();
             });
           }), timeout);

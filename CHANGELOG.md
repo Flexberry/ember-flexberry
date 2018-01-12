@@ -5,17 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Changed
-* Blueprints:
-    * Changed regular expression in `flexberry-core` for cyrillic support.
-* Changed component `flexberry-darepicker` classNames: add class `flexberry-datepicker`.
-* Changed component `flexberry-simpledatetime`: remove readonlyObserver.
-* Component's template:
-  * Changed readonly attribute for `flexberry-datepicker`.
-  * Add readonly attribute for `flexberry-simpledatetime`.
-  * Add button's classes `flexberry-datepicker`.
-  * Add button's classes `groupedit-toolbar`.
-  * Add button's classes `flexberry-lookup`.
-  * Add left menu item's classes `object-list-view-row`.
+* Add class `flexberry-datepicker` in `classNames` for `flexberry-datepicker` component.
+* Add classes for menu items in `object-list-view-row` component.
+* Changed readonly attribute for `flexberry-datepicker`.
 
 ## [0.9.2-beta.10] - 2018-01-11
 ### Added
@@ -294,7 +286,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Change hierarchy indent setting (`hierarchicalIndent` property) to `Number` type (in pixels).
 * Update `flatpickr-calendar` dependency to 2.3.4.
 
-###Fixed
+### Fixed
 * `flexberry-simpledatetime` component:
     * Fix `readonly` mode.
 * `flexberry-objectlistview` component:
@@ -377,7 +369,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
         * `sort` method is renamed into `sortNamedSetting`.
 * `Ember.Logger.xxx` changed to `Ember.xxx` calls and throwing errors. So redundant messages will not display in console in production.
 
-###Fixed
+### Fixed
 * `object-list-view` component:
     * `rowConfig` usage  in mobile mode.
     * Displaying of deletion errors if record deletion was unsuccessful.

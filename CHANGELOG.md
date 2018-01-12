@@ -4,6 +4,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+* Blueprints:
+    * Changed regular expression in `flexberry-core` for cyrillic support.
+* Changed component `flexberry-darepicker` classNames: add class `flexberry-datepicker`.
+* Changed component `flexberry-simpledatetime`: remove readonlyObserver.
+* Component's template:
+  * Changed readonly attribute for `flexberry-datepicker`.
+  * Add readonly attribute for `flexberry-simpledatetime`.
+  * Add button's classes `flexberry-datepicker`.
+  * Add button's classes `groupedit-toolbar`.
+  * Add button's classes `flexberry-lookup`.
+  * Add left menu item's classes `object-list-view-row`.
+
 ## [0.9.2-beta.10] - 2018-01-11
 ### Added
 * Support `drops` option for `flexberry-datepicker` component.

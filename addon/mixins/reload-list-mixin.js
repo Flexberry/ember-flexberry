@@ -52,6 +52,26 @@ export default Ember.Mixin.create({
    * @return {Promise}  A promise, which is resolved with a set of loaded records once the server returns.
    */
   reloadList: function(options) {
+    if ((options.filters instanceof SimplePredicate) && options.filters._operator === 'neq') {
+      let sp1 = options.filters;
+      let sp2 = new SimplePredicate(sp1._attributePath, Query.FilterOperator.Eq, '');
+      options.filters = new ComplexPredicate(Condition.Or, sp1, sp2);
+    } else {
+      if ((options.filters instanceof ComplexPredicate)) {
+        var newFilter = Ember.A();
+        options.filters._predicates.forEach((predicate) => {
+          if ((predicate instanceof SimplePredicate) && predicate._operator === 'neq') {
+            let sp1 = predicate;
+            let sp2 = new SimplePredicate(sp1._attributePath, Query.FilterOperator.Eq, '');
+            newFilter.push(new ComplexPredicate(Condition.Or, sp1, sp2));
+          } else {
+            newFilter.push(predicate);
+          }
+        });
+        options.filters._predicates = newFilter;
+      }
+    }
+
     let store = this.store;
     Ember.assert('Store for data loading is not defined.', store);
 

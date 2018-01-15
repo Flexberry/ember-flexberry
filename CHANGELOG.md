@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix hierarchy collapse and expand.
 
 ### Fixed
 * Set default user settings in `flexberry-simpleolv` component.

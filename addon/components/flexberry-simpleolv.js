@@ -989,13 +989,10 @@ export default folv.extend(
             break;
           }
 
-          userSettingsService.deleteUserSetting(componentName)
-          .then(record => {
-            if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: 5 } }); // Show page without sort parameters
-            } else {
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: 5 } });  //Reload current page and records (model) list
-            }
+          let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+          userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting).then(() => {
+            let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
+            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
           });
           break;
         case 'unhide icon':

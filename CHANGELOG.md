@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+* Set default user settings in `flexberry-simpleolv` component.
+
 ## [0.9.2-beta.10] - 2018-01-11
 ### Added
 * Support `drops` option for `flexberry-datepicker` component.

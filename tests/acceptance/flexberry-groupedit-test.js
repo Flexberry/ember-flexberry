@@ -5,40 +5,11 @@ import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 moduleForAcceptance('Acceptance | flexberry groupedit');
 
-test('flexberry-grupedit editFormRoute test', function(assert) {
-
-  visit('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-form-route');
-
-  andThen(function() {
-    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-form-route');
-
-    wait().then(() => {
-
-      let field = Ember.$('.field');
-
-      // Opening edit form route.
-      Ember.run(() => {
-        $(field[0]).click();
-      });
-
-      let done = assert.async();
-      setTimeout(function() {
-        let tempTextHeader = Ember.$('.tempText');
-
-        // Check correct opening edit form route.
-        assert.strictEqual(tempTextHeader.text().trim(), 'Temp text for test', 'Component open current edit form route');
-        done();
-      }, 2000);
-    });
-  });
-});
-
 test('flexberry-grupedit editOnSeparateRoute test', function(assert) {
-
-  visit('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-on-separete-route');
-
+  let path = 'components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-on-separete-route';
+  visit(path);
   andThen(function() {
-    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-on-separete-route');
+    assert.equal(currentURL(), path);
 
     let done = assert.async();
     setTimeout(function() {
@@ -63,10 +34,10 @@ test('flexberry-grupedit saveBeforeRouteLeave on test', function(assert) {
     }
   });
 
-  visit('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-on');
-
+  let path = 'components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-on';
+  visit(path);
   andThen(function() {
-    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-on');
+    assert.equal(currentURL(), path);
 
     wait().then(() => {
 
@@ -94,10 +65,10 @@ test('flexberry-grupedit saveBeforeRouteLeave off test', function(assert) {
     }
   });
 
-  visit('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-off');
-
+  let path = 'components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-off';
+  visit(path);
   andThen(function() {
-    assert.equal(currentURL(), 'components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-off');
+    assert.equal(currentURL(), path);
 
     wait().then(() => {
 

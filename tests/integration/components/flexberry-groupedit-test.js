@@ -38,52 +38,6 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
   }
 });
 
-test('change inserted component into edit-form controller test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
-
-    // Override getCellComponent method in current controller's instance.
-    editFormController.set('getCellComponent', function(attr, bindingPath, modelClass) {
-      // Instead of call to this._super(...arguments);
-      let superClassGetCellComponent = EditFormController.prototype.getCellComponent;
-      let cellComponent = superClassGetCellComponent.apply(this, arguments);
-
-      if (attr.caption === 'Text') {
-        cellComponent.componentName = 'flexberry-textarea';
-      }
-
-      return cellComponent;
-    });
-
-    this.render(hbs`
-      {{flexberry-groupedit
-        content=model.details
-        componentName=componentName
-        modelProjection=proj.attributes.details
-        searchForContentChange=searchForContentChange
-      }}`);
-
-    // Add record.
-    let detailModel = this.get('model.details');
-    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
-
-    wait().then(() => {
-      let $component = this.$().children();
-      let $textarea = Ember.$('.ember-text-area', $component);
-      assert.strictEqual($textarea.length === 1, true, 'flexberry-textarea is embedded properly into object-list-view, after change.');
-    });
-  });
-});
-
 test('ember-grupedit cellComponent test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
@@ -119,9 +73,11 @@ test('ember-grupedit cellComponent test', function(assert) {
       $addButton.click();
     });
 
-    // Check count cell with checkbox.
-    let $textarea = Ember.$('.flexberry-checkbox');
-    assert.strictEqual($textarea.length === 7, true, 'All cell have flexberry-checkbox component');
+    wait().then(() => {
+      // Check count cell with checkbox.
+      let $textarea = Ember.$('.flexberry-checkbox');
+      assert.strictEqual($textarea.length === 7, true, 'All cell have flexberry-checkbox component');
+    });
   });
 });
 
@@ -179,7 +135,6 @@ test('ember-grupedit element by default test', function(assert) {
       let $editMenuButton = Ember.$('.button.right', $component);
 
       assert.strictEqual($editMenuButton.length === 0, true, 'Component hasn\'t edit menu in last cell');
-
     });
   });
 });

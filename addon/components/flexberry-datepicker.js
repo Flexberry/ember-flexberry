@@ -113,7 +113,7 @@ export default FlexberryBaseComponent.extend({
     @type Array
     @readOnly
   */
-  classNames: ['ui', 'icon', 'input'],
+  classNames: ['ui', 'icon', 'input', 'flexberry-datepicker'],
 
   /**
     Init component when DOM is ready.
@@ -233,31 +233,33 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _setValue(dateFromPicker) {
-    let valueFromInput = this.$('input').val();
-    if (valueFromInput === '' && !dateFromPicker.isValid()) {
-      this._setEmptyValue();
-    } else {
-      let dateToSet = this._getDateToSet(dateFromPicker);
-      if (!this.get('hasTimePicker')) {
-        dateToSet.setHours(13);
-        dateToSet.setUTCHours(11);
-        dateToSet.setUTCMinutes(0);
-        dateToSet.setUTCSeconds(0);
-        dateToSet.setUTCMilliseconds(0);
+    Ember.run(() => {
+      let valueFromInput = this.$('input').val();
+      if (valueFromInput === '' && !dateFromPicker.isValid()) {
+        this._setEmptyValue();
+      } else {
+        let dateToSet = this._getDateToSet(dateFromPicker);
+        if (!this.get('hasTimePicker')) {
+          dateToSet.setHours(13);
+          dateToSet.setUTCHours(11);
+          dateToSet.setUTCMinutes(0);
+          dateToSet.setUTCSeconds(0);
+          dateToSet.setUTCMilliseconds(0);
+        }
+
+        let currentValue = this.get('value');
+
+        // TODO: refactor
+        let tmp = moment(dateToSet).format(this.dateTimeFormat);
+        let tmp2 = !moment(tmp, this.dateTimeFormat).isSame(moment(moment(currentValue).format(this.dateTimeFormat), this.dateTimeFormat));
+        if (currentValue === null || tmp2) {
+          this.set('value', dateToSet);
+          this._setProperOffsetToCalendar();
+        }
+
+        this._setCalendarEnabledState();
       }
-
-      let currentValue = this.get('value');
-
-      // TODO: refactor
-      let tmp = moment(dateToSet).format(this.dateTimeFormat);
-      let tmp2 = !moment(tmp, this.dateTimeFormat).isSame(moment(moment(currentValue).format(this.dateTimeFormat), this.dateTimeFormat));
-      if (currentValue === null || tmp2) {
-        this.set('value', dateToSet);
-        this._setProperOffsetToCalendar();
-      }
-    }
-
-    this._setCalendarEnabledState();
+    });
   },
 
   /**

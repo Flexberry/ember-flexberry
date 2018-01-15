@@ -1,5 +1,5 @@
 ---
-sudo: false
+sudo: required
 
 language: node_js
 
@@ -35,10 +35,12 @@ addons:
   chrome: stable
 
 before_install:
+  - sudo chown root /opt/google/chrome/chrome-sandbox
+  - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
   - yarn global add firebase-tools
   - yarn global add ember-cli@2.4.3
   - yarn global add bower
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
 install:
   - yarn install

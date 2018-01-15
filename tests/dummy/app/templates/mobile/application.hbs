@@ -1,3 +1,7 @@
+{{#if isInAcceptanceTestMode}}
+  {{outlet}}
+  {{outlet "modal"}}
+{{else}}
 {{#ui-sidebar class="mobile inverted vertical main menu"}}
   <a class="item"
     href={{addonVersionHref}}
@@ -7,7 +11,7 @@
   </a>
   {{render "sitemap" sitemap}}
 {{/ui-sidebar}}
-<div class="bgw-fix">
+<div class="bgw-fix mobile">
   <div class="background-logo mobile">
     <div class="ui attached menu mobile">
       <div class="ui container flex-container">
@@ -74,3 +78,4 @@
     </div>
   </div>
 </div>
+{{/if}}

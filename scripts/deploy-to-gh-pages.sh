@@ -27,40 +27,44 @@ mkdir "${TRAVIS_BRANCH}"
 # Copy builded ember application from 'dist' directory into 'repository/${TRAVIS_BRANCH}'.
 echo "Copy builded ember application (for ${TRAVIS_BRANCH} branch)."
 cp -r ../../dist/* "${TRAVIS_BRANCH}"
-cd ../..
 
-# Generate autodoc.
-npm install -g yuidocjs
+if [${TRAVIS_BRANCH} != "dummy-test"]
+then
+  cd ../..
 
-# Define yuidoc theme repository relative GitHub address.
-repositoryYuidocTheme="Flexberry/flexberry-yuidoc-theme"
+  # Generate autodoc.
+  npm install -g yuidocjs
 
-# Clone project into 'repositoryYuidocTheme' subdirectory && move to it.
-echo "Prepare for deploy to gh-pages."
-echo "Clone ${repositoryYuidocTheme} repository & checkout latest version of gh-pages branch."
-git clone --recursive "https://github.com/${repositoryYuidocTheme}.git" repositoryYuidocTheme
-cd repositoryYuidocTheme
+  # Define yuidoc theme repository relative GitHub address.
+  repositoryYuidocTheme="Flexberry/flexberry-yuidoc-theme"
 
-# Checkout and pull same branch.
-git checkout ${TRAVIS_BRANCH}
-git pull
+  # Clone project into 'repositoryYuidocTheme' subdirectory && move to it.
+  echo "Prepare for deploy to gh-pages."
+  echo "Clone ${repositoryYuidocTheme} repository & checkout latest version of gh-pages branch."
+  git clone --recursive "https://github.com/${repositoryYuidocTheme}.git" repositoryYuidocTheme
+  cd repositoryYuidocTheme
 
-echo "Copy ember addon source (for ${TRAVIS_BRANCH} branch) into addon directory."
-mkdir addon
-cp -r ../addon/* addon
+  # Checkout and pull same branch.
+  git checkout ${TRAVIS_BRANCH}
+  git pull
 
-echo "Execute yuidoc autodocumentation generator."
-yuidoc
+  echo "Copy ember addon source (for ${TRAVIS_BRANCH} branch) into addon directory."
+  mkdir addon
+  cp -r ../addon/* addon
 
-echo "Navigate to target directory for autodoc in gh-pages."
-cd "../emberFlexberryRepository/autodoc"
+  echo "Execute yuidoc autodocumentation generator."
+  yuidoc
 
-# Remove results of previous deploy (for current branch) & recreate directory.
-rm -rf "${TRAVIS_BRANCH}"
-mkdir "${TRAVIS_BRANCH}"
+  echo "Navigate to target directory for autodoc in gh-pages."
+  cd "../emberFlexberryRepository/autodoc"
 
-echo "Copy autodoc result into ${TRAVIS_BRANCH} directory."
-cp -r ../../repositoryYuidocTheme/autodoc-result/* ${TRAVIS_BRANCH}
+  # Remove results of previous deploy (for current branch) & recreate directory.
+  rm -rf "${TRAVIS_BRANCH}"
+  mkdir "${TRAVIS_BRANCH}"
+
+  echo "Copy autodoc result into ${TRAVIS_BRANCH} directory."
+  cp -r ../../repositoryYuidocTheme/autodoc-result/* ${TRAVIS_BRANCH}
+fi
 
 cd ..
 

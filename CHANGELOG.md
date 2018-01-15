@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+### Changed
+* Add class `flexberry-datepicker` in `classNames` for `flexberry-datepicker` component.
+* Add classes for menu items in `object-list-view-row` component.
+* Changed readonly attribute for `flexberry-datepicker`.
+
+## [0.9.2-beta.10] - 2018-01-11
 ### Added
 * Support `drops` option for `flexberry-datepicker` component.
 * List components:
@@ -16,6 +23,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * Reset `page` in `LimitedController` mixin when change or reset filters.
+* Error when clicking on child rows when `flexberry-objectlistview` component is in hierarchical mode.
+* `blue-sky` theme:
+    * Fix header height for mobile version.
+* `flexberry-objectlistview` component:
+    * Filtering by all fields is now applying by pressing `Enter` in IE.
+    * Clicking on child rows in hierarchical mode.
+* `flexberry-checkbox` component:
+    * Fix `checked` property to support IE.
+* `flexberry-objectlistview` and `flexberry-groupedit` components:
+    * Row clicks work correctly now in mobile mode.
 
 ## [0.9.2-beta.9] - 2017-12-06
 ### Added
@@ -269,7 +286,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Change hierarchy indent setting (`hierarchicalIndent` property) to `Number` type (in pixels).
 * Update `flatpickr-calendar` dependency to 2.3.4.
 
-###Fixed
+### Fixed
 * `flexberry-simpledatetime` component:
     * Fix `readonly` mode.
 * `flexberry-objectlistview` component:
@@ -352,7 +369,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
         * `sort` method is renamed into `sortNamedSetting`.
 * `Ember.Logger.xxx` changed to `Ember.xxx` calls and throwing errors. So redundant messages will not display in console in production.
 
-###Fixed
+### Fixed
 * `object-list-view` component:
     * `rowConfig` usage  in mobile mode.
     * Displaying of deletion errors if record deletion was unsuccessful.

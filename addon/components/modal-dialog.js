@@ -113,12 +113,18 @@ export default Ember.Component.extend({
         allowMultiple: true,
 
         onApprove: function () {
-          _this.sendAction('ok');
-          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+          // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
+          Ember.run(() => {
+            _this.sendAction('ok');
+            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+          });
         },
         onDeny: function () {
-          _this.sendAction('close');
-          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+          // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
+          Ember.run(() => {
+            _this.sendAction('close');
+            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+          });
         },
         onHidden: function () {
           Ember.run(() => {
@@ -130,6 +136,7 @@ export default Ember.Component.extend({
           });
         },
         onVisible: function () {
+          // Handler of 'created' action causes asynchronous animation, so Ember.run is necessary.
           Ember.run(() => {
             _this.sendAction('created', Ember.$(this));
           });

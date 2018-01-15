@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import Ember from 'ember';
 import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-component';
 
 /**
@@ -72,6 +73,11 @@ export default FlexberryBaseComponent.extend({
   */
   label: null,
 
+  valueObserver: Ember.observer('value', function() {
+    let value = this.get('value');
+    this.$('.flexberry-checkbox-input').prop('checked', value);
+  }),
+
   /**
     Initializes DOM-related component's properties.
   */
@@ -93,6 +99,10 @@ export default FlexberryBaseComponent.extend({
         });
       }
     });
+
+    if (this.get('value')) {
+      this.$().checkbox('set checked');
+    }
   },
 
   /**

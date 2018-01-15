@@ -544,7 +544,11 @@ Ember.$.extend(true, translations, {
             'caption': 'Удаление настроек',
             'title': ''
           }
-        }
+        },
+        'components-acceptance-tests': {
+          'caption': 'Acceptance тесты',
+          'title': '',
+        },
       }
     },
 
@@ -953,7 +957,7 @@ Ember.$.extend(true, translations, {
           'text-caption': 'Текст',
           'long-text-caption': 'Длинный текст',
           'date-caption': 'Дата',
-          'time-caption': 'Время',
+          'time-caption': 'Дата + Время',
           'enumeration-caption': 'Перечисление',
           'file-caption': 'Файл',
           'master-caption': 'Мастер',
@@ -980,7 +984,7 @@ Ember.$.extend(true, translations, {
         'all-del-button-name': 'Удалить все!',
         'message': 'Настройки удалены'
       }
-    }
+    },
   },
 
   'components': {

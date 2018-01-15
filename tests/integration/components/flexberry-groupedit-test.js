@@ -176,7 +176,7 @@ test('ember-grupedit element by default test', function(assert) {
 
       assert.strictEqual($minusButton.length === 0, true, 'Component hasn\'t delete button in first cell');
 
-      let $editMenuButton = Ember.$('.basic.right', $component);
+      let $editMenuButton = Ember.$('.button.right', $component);
 
       assert.strictEqual($editMenuButton.length === 0, true, 'Component hasn\'t edit menu in last cell');
 
@@ -476,11 +476,12 @@ test('it properly rerenders by default', function(assert) {
     let $componentObjectListViewBody = $componentObjectListView.children('tbody');
     $componentObjectListViewTr = $componentObjectListViewBody.children('tr');
     let $componentObjectListViewTd = $componentObjectListViewTr.children('td');
+    let $componentObjectListViewTdInner = $componentObjectListViewTd[0];
 
     // Check object-list-view <td>.
     assert.strictEqual($componentObjectListViewTd.length === 1, true, 'Component has inner object-list-view-operations blocks');
     assert.strictEqual($componentObjectListViewTd.prop('tagName'), 'TD', 'Component\'s inner component block is a <th>');
-    assert.strictEqual($componentObjectListViewTd.text().trim(), 'There is no data', 'Component\'s inner component block is a <th>');
+    assert.strictEqual($componentObjectListViewTdInner.innerText, 'Нет данных', 'Component\'s inner component block is a <th>');
 
   });
 });
@@ -620,6 +621,8 @@ test('ember-grupedit off createNewButton and deleteButton test', function(assert
           searchForContentChange=searchForContentChange
           createNewButton=false
           deleteButton=false
+          showCheckBoxInRow=false
+          showAsteriskInRow=false
         }}`);
 
     let $component = this.$().children();
@@ -733,7 +736,7 @@ test('ember-grupedit showCheckBoxInRow test', function(assert) {
 
       assert.ok($flexberryCheckbox, false, 'Component hasn\'t flexberry-checkbox in first cell');
 
-      let $componentObjectListViewEditMenu = Ember.$('.basic.right.pointing');
+      let $componentObjectListViewEditMenu = Ember.$('.button.right.pointing');
 
       assert.strictEqual($componentObjectListViewEditMenu.length === 0, true, 'Component hasn\'t edit menu in last cell');
     });
@@ -806,7 +809,7 @@ test('ember-grupedit showEditMenuItemInRow test', function(assert) {
     });
 
     wait().then(() => {
-      let $editMenuButton = Ember.$('.basic.right', $component);
+      let $editMenuButton = Ember.$('.button.right', $component);
       let $editMenuItem = Ember.$('.item', $editMenuButton);
 
       assert.strictEqual($editMenuItem.length === 1, true, 'Component has edit menu item in last cell');
@@ -820,7 +823,7 @@ test('ember-grupedit showEditMenuItemInRow test', function(assert) {
       assert.strictEqual($editMenuItemIcon.hasClass('icon'), true, 'Component\'s inner object-list-view has \'icon\' css-class');
 
       let $editMenuItemSpan = $editMenuItem.children('span');
-      assert.strictEqual($editMenuItemSpan.text().trim(), 'Edit record', 'Component has edit menu item in last cell');
+      assert.strictEqual($editMenuItemSpan.text().trim(), 'Редактировать запись', 'Component has edit menu item in last cell');
 
     });
   });
@@ -855,7 +858,7 @@ test('ember-grupedit showDeleteMenuItemInRow test', function(assert) {
     });
 
     wait().then(() => {
-      let $editMenuButton = Ember.$('.basic.right', $component);
+      let $editMenuButton = Ember.$('.button.right', $component);
       let $editMenuItem = Ember.$('.item', $editMenuButton);
 
       assert.strictEqual($editMenuItem.length === 1, true, 'Component has delete menu item in last cell');
@@ -869,7 +872,7 @@ test('ember-grupedit showDeleteMenuItemInRow test', function(assert) {
       assert.strictEqual($editMenuItemIcon.hasClass('icon'), true, 'Component\'s inner object-list-view has \'icon\' css-class');
 
       let $editMenuItemSpan = $editMenuItem.children('span');
-      assert.strictEqual($editMenuItemSpan.text().trim(), 'Delete record', 'Component has delete menu item in last cell');
+      assert.strictEqual($editMenuItemSpan.text().trim(), 'Удалить запись', 'Component has delete menu item in last cell');
 
     });
   });
@@ -905,7 +908,7 @@ test('ember-grupedit showEditMenuItemInRow and showDeleteMenuItemInRow test', fu
     });
 
     wait().then(() => {
-      let $editMenuButton = Ember.$('.basic.right', $component);
+      let $editMenuButton = Ember.$('.button.right', $component);
       let $editMenuItem = Ember.$('.item', $editMenuButton);
 
       assert.strictEqual($editMenuItem.length === 2, true, 'Component has edit menu and delete menu item in last cell');
@@ -927,7 +930,7 @@ test('ember-grupedit showEditMenuItemInRow and showDeleteMenuItemInRow test', fu
       assert.strictEqual($editMenuItemIcon.hasClass('icon'), true, 'Component\'s inner object-list-view has \'icon\' css-class');
 
       let $editMenuItemSpan = $editMenuItem.children('span');
-      assert.strictEqual($editMenuItemSpan.text().trim(), 'Edit recordDelete record', 'Component has edit menu and delete menu item in last cell');
+      assert.strictEqual($editMenuItemSpan.text().trim(), 'Редактировать записьУдалить запись', 'Component has edit menu and delete menu item in last cell');
 
     });
   });
@@ -1133,7 +1136,7 @@ test('ember-grupedit menuInRowAdditionalItems without standart element test', fu
       $addButton.click();
     });
 
-    let componentOLVMenu =  Ember.$('.basic.right');
+    let componentOLVMenu =  Ember.$('.button.right');
     let componentOLVMenuItem = componentOLVMenu.children('div').children('.item');
 
     assert.strictEqual(componentOLVMenuItem.length === 1, true, 'Component OLVMenuItem has only adding item');
@@ -1181,7 +1184,7 @@ test('ember-grupedit menuInRowAdditionalItems with standart element test', funct
       $addButton.click();
     });
 
-    let componentOLVMenu =  Ember.$('.basic.right');
+    let componentOLVMenu =  Ember.$('.button.right');
     let componentOLVMenuItem = componentOLVMenu.children('div').children('.item');
 
     assert.strictEqual(componentOLVMenuItem.length === 3, true, 'Component OLVMenuItem has standart and adding items');
@@ -1234,8 +1237,8 @@ test('ember-grupedit main model projection test', function(assert) {
 
     let $componentObjectListView = Ember.$('.object-list-view');
     let $componentObjectListViewTh = $componentObjectListView.children('thead').children('tr').children('th');
-    let $componentOlvFirstHead = $($componentObjectListViewTh[1]);
+    let $componentOlvFirstHead = $componentObjectListViewTh[1];
 
-    assert.strictEqual($componentOlvFirstHead.text().trim() === 'Temp text for test', true, 'Header has text \'Temp text for test\'');
+    assert.strictEqual($componentOlvFirstHead.innerText === 'Vote type', true, 'Header has text \'Vote type\'');
   });
 });

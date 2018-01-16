@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
+import { Query } from 'ember-flexberry-data';
+
+const { StringPredicate } = Query;
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**
@@ -33,6 +36,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
   getCellComponent(attr, bindingPath, model) {
+    let limitFunction = new StringPredicate('name').contains('ва');
     let cellComponent = this._super(...arguments);
     if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
@@ -45,7 +49,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            lookupWindowCustomProperties: () => { return { filterButton: true, refreshButton: true }; },
+            lookupLimitPredicate: limitFunction,
+            readonly: true
           };
           break;
 

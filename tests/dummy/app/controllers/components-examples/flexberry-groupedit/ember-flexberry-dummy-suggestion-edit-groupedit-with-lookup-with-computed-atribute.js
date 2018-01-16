@@ -39,10 +39,9 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
   }),
 
   lookupLimitFunction: Ember.computed('limitFunction', function() {
-    if(this.get('fieldvalue')) {
+    if (this.get('fieldvalue')) {
       return new StringPredicate('name').contains(this.get('fieldvalue'));
-    }
-    else {
+    } else {
       return undefined;
     }
   }),

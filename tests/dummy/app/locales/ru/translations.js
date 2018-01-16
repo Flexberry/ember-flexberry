@@ -627,7 +627,9 @@ Ember.$.extend(true, translations, {
       'comments-caption': 'Комментарии',
       'type-validation-message-caption': 'Заполните тип предложения',
       'author-validation-message-caption': 'Заполните поле "Автор"',
-      'editor-validation-message-caption': 'Заполните поле "Редактор"'
+      'editor-validation-message-caption': 'Заполните поле "Редактор"',
+      'readonly-groupedit-with-lookup-with-computed-atribute-field': 'Readonly для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"',
+      'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Ограничения для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"'
     },
 
     'ember-flexberry-dummy-toggler-example-master-e': {

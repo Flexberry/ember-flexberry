@@ -610,7 +610,9 @@ Ember.$.extend(true, translations, {
       'comments-caption': 'Comments',
       'type-validation-message-caption': 'Type is required',
       'author-validation-message-caption': 'Author is required',
-      'editor-validation-message-caption': 'Editor is required'
+      'editor-validation-message-caption': 'Editor is required',
+      'readonly-groupedit-with-lookup-with-computed-atribute-field': 'Readonly for LookUp "Application User" in GroupEdit "User votes"',
+      'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Limitations for LookUp "Application User" in GroupEdit "User votes"'
     },
 
     'ember-flexberry-dummy-toggler-example-master-e': {

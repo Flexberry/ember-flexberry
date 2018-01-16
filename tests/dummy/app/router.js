@@ -134,17 +134,6 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
 
-  this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-form-route');
-  this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-cell-component');
-  this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-on-separete-route');
-  this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-on');
-  this.route('components-acceptance-tests/flexberry-groupedit/flexberry-groupedit-test-save-before-route-off');
-
-  this.route('components-acceptance-tests/flexberry-groupedit/ember-flexberry-dummy-comment-edit');
-
-  this.route('ember-flexberry-dummy-comment-edit-test', { path: 'ember-flexberry-dummy-comment-edit-test/:id' });
-  this.route('ember-flexberry-dummy-comment-edit-test.new', { path: 'ember-flexberry-dummy-comment-edit-test/new' });
-
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');

@@ -350,6 +350,10 @@ Ember.$.extend(true, translations, {
             'configurate-row-example': {
               'caption': 'Configurate rows',
               'title': ''
+            },
+            'groupedit-with-lookup-with-computed-atribute': {
+              'caption': 'Computed attributes LookUp  in GroupEdit',
+              'title': ''
             }
           },
           'flexberry-lookup': {

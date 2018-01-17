@@ -51,7 +51,7 @@ export default FlexberryBaseComponent.extend({
         let dateFormat = this.get('dateFormat');
         return dateFormat ? momentValue.format(dateFormat) : momentValue.format();
       case 'boolean':
-        return Ember.String.htmlSafe(`<div class='ui checkbox'><input type='checkbox' class='hidden' ${value ? 'checked' : ''}><label></label></div>`);
+        return Ember.String.htmlSafe(`<div class='ui checkbox disabled'><input type='checkbox' class='hidden' ${value ? 'checked' : ''}><label></label></div>`);
       default:
         return value;
     }

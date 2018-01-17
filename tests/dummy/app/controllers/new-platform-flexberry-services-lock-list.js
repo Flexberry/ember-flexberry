@@ -47,8 +47,6 @@ export default NewPlatformFlexberryServicesLockListController.extend({
     }];
   }),
 
-  _userSettingsService: Ember.inject.service('user-settings'),
-
   actions: {
     /**
       Change current value `userName` for {{#crossLink "EditFormRoute"}}{{/crossLink}}.
@@ -57,12 +55,11 @@ export default NewPlatformFlexberryServicesLockListController.extend({
     */
     changeUserName() {
       let i18n = this.get('i18n');
-      let userSettingsService = this.get('_userSettingsService');
       let userService = Ember.getOwner(this).lookup('service:user');
       let currentUserName = userService.getCurrentUserName();
       let newUserName = window.prompt(i18n.t('forms.new-platform-flexberry-services-lock-list.enter-new-user-name'), currentUserName);
       if (typeof newUserName === 'string') {
-        userSettingsService.set('userName', newUserName);
+        userService.set('userName', newUserName);
       }
     },
 

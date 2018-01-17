@@ -64,8 +64,6 @@ export default Ember.Mixin.create({
     },
   },
 
-  _userSettingsService: Ember.inject.service('user-settings'),
-
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel).

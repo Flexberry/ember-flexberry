@@ -1,6 +1,8 @@
-import UserSettingsService from 'ember-flexberry/services/user-settings';
+import { Security } from 'ember-flexberry-data';
 
-export default UserSettingsService.extend({
+const { UserService } = Security;
+
+export default UserService.extend({
   /**
     @property userName
     @type String
@@ -13,10 +15,10 @@ export default UserSettingsService.extend({
     Returns current user name.
     Method must be overridden if application uses some authentication.
 
-    @method getCurrentUser
+    @method getCurrentUserName
     @return {String} Current user name.
   */
-  getCurrentUser() {
+  getCurrentUserName() {
     let user = this.get('userName');
     return user;
   }

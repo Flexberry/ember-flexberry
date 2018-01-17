@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
+* To display boolean values on lists, the checkbox is used.
 * Getting of current user name is able now by calling `getCurrentUserName` from [`user` service](https://github.com/Flexberry/ember-flexberry-data/blob/develop/addon/services/user.js#L37) (declared in `ember-flexberry-data` addon).
 
 ### Fixed
@@ -12,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * Set default user settings in `flexberry-simpleolv` component.
+* `flexberry-objectlistview` component:
+    * Fix hierarchy collapse and expand.
 
 ### Changed
 * Add class `flexberry-datepicker` in `classNames` for `flexberry-datepicker` component.

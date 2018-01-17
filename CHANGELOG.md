@@ -21,6 +21,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Add classes for menu items in `object-list-view-row` component.
 * Changed readonly attribute for `flexberry-datepicker`.
 
+### Fixed
+* List components:
+    * Fix neq filter when value isn't null.
+
 ## [0.9.2-beta.10] - 2018-01-11
 ### Added
 * Support `drops` option for `flexberry-datepicker` component.

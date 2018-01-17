@@ -4,24 +4,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
-* To display boolean values on lists, the checkbox is used.
+* List components:
+    * Checkbox is used to display boolean values.
 * Getting of current user name is able now by calling `getCurrentUserName` from [`user` service](https://github.com/Flexberry/ember-flexberry-data/blob/develop/addon/services/user.js#L37) (declared in `ember-flexberry-data` addon).
+* `flexberry-datepicker` component
+    * Add class `flexberry-datepicker` in `classNames`.
+    * Changed readonly attribute.
 
 ### Fixed
 * `flexberry-objectlistview` component:
     * Fix hierarchy collapse and expand.
-
-### Fixed
-* Set default user settings in `flexberry-simpleolv` component.
-* `flexberry-objectlistview` component:
-    * Fix hierarchy collapse and expand.
-
-### Changed
-* Add class `flexberry-datepicker` in `classNames` for `flexberry-datepicker` component.
-* Add classes for menu items in `object-list-view-row` component.
-* Changed readonly attribute for `flexberry-datepicker`.
-
-### Fixed
+* `flexberry-simpleolv` component:
+    * Set default user settings.
 * List components:
     * Fix neq filter when value isn't null.
 

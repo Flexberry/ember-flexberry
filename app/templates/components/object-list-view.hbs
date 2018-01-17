@@ -5,19 +5,19 @@
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
           {{#if showCheckBoxInRow }}
             <button
-              class="ui check-all-at-page-button {{buttonClass}} {{if allSelect "disabled"}} button"
+              class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
               title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
               {{action "checkAllAtPage"}}>
                 <i class="check-square-o icon"></i>
             </button>
             <button
-              class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} button"
+              class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
               title={{t "components.olv-toolbar.check-all-button-text"}}
               {{action "checkAll"}}>
                 <i class="check-all-square-o icon"></i>
             </button>
             <button
-              class="ui clear-sorting-button {{buttonClass}} button"
+              class="ui clear-sorting-button {{buttonClass}} {{if readonly "disabled"}} button"
               title={{t "components.olv-toolbar.clear-sorting-button-text"}}
               {{action "clearSorting"}}>
                 <i class="sort icon"></i>

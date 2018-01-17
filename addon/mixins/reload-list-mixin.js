@@ -53,7 +53,7 @@ export default Ember.Mixin.create({
    * @return {Promise}  A promise, which is resolved with a set of loaded records once the server returns.
    */
   reloadList: function(options) {
-    if ((options.filters instanceof ComplexPredicate)) {
+    if (options.filters instanceof ComplexPredicate) {
       var newFilter = Ember.A();
       options.filters._predicates.forEach((predicate) => {
         newFilter.push(this._normalizeNeqPredicate(predicate));

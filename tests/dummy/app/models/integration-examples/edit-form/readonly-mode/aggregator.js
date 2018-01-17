@@ -56,7 +56,9 @@ Model.defineProjection('AggregatorE', 'integration-examples/edit-form/readonly-m
   details: Projection.hasMany('integration-examples/edit-form/readonly-mode/detail', 'Details', {
     flag: Projection.attr('Flag'),
     text: Projection.attr('Text'),
+    longText: Projection.attr('Long text'),
     date: Projection.attr('Date'),
+    time: Projection.attr('Time'),
     enumeration: Projection.attr('Enumeration'),
     file: Projection.attr('File'),
     master: Projection.belongsTo('integration-examples/edit-form/readonly-mode/master', 'Master', {
@@ -65,7 +67,14 @@ Model.defineProjection('AggregatorE', 'integration-examples/edit-form/readonly-m
       })
     }, {
       displayMemberPath: 'name'
+    }),
+    masterDropdown: Projection.belongsTo('integration-examples/edit-form/validation/master-dropdown', 'Master dropdown', {
+    text: Projection.attr('Text', {
+      hidden: true
     })
+  }, {
+    displayMemberPath: 'text'
+  })
   })
 });
 

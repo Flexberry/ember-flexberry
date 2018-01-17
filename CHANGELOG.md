@@ -3,6 +3,21 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+* List components:
+    * Checkbox is used to display boolean values.
+* Getting of current user name is able now by calling `getCurrentUserName` from [`user` service](https://github.com/Flexberry/ember-flexberry-data/blob/develop/addon/services/user.js#L37) (declared in `ember-flexberry-data` addon).
+* `flexberry-datepicker` component
+    * Add class `flexberry-datepicker` in `classNames`.
+    * Changed readonly attribute.
+
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix hierarchy collapse and expand.
+* `flexberry-simpleolv` component:
+    * Set default user settings.
+* List components:
+    * Fix neq filter when value isn't null.
 
 ## [0.9.2-beta.10] - 2018-01-11
 ### Added
@@ -281,7 +296,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Change hierarchy indent setting (`hierarchicalIndent` property) to `Number` type (in pixels).
 * Update `flatpickr-calendar` dependency to 2.3.4.
 
-###Fixed
+### Fixed
 * `flexberry-simpledatetime` component:
     * Fix `readonly` mode.
 * `flexberry-objectlistview` component:
@@ -364,7 +379,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
         * `sort` method is renamed into `sortNamedSetting`.
 * `Ember.Logger.xxx` changed to `Ember.xxx` calls and throwing errors. So redundant messages will not display in console in production.
 
-###Fixed
+### Fixed
 * `object-list-view` component:
     * `rowConfig` usage  in mobile mode.
     * Displaying of deletion errors if record deletion was unsuccessful.

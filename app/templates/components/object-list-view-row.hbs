@@ -58,7 +58,7 @@
               {{#if (and (not index) inHierarchicalMode)}}
                 {{#if hasRecords}}
                   <button class="ui button hierarchy-expand icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
-                    <i class="{{if inExpandMode "minus" "plus"}} hierarchy-expand icon"></i>
+                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
                   </button>
                 {{/if}}
               {{/if}}
@@ -84,10 +84,10 @@
               {{#if hasRecords}}
                 <button
                   class="ui button hierarchy-expand icon mini compact {{buttonClass}}"
-                  title={{if inExpandMode (t "components.object-list-view.hierarchy-buttons.minus-button-title")
+                  title={{if _expanded (t "components.object-list-view.hierarchy-buttons.minus-button-title")
                    (t "components.object-list-view.hierarchy-buttons.plus-button-title")}}
                   {{action "expand" bubbles=false}}>
-                    <i class="{{if inExpandMode "minus" "plus"}} hierarchy-expand icon"></i>
+                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
                 </button>
               {{/if}}
             {{/if}}
@@ -105,13 +105,13 @@
           <i class="list layout icon"></i>
           <div class="left menu">
             {{#if showEditMenuItemInRow}}
-              <div class="item" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                 <i class="edit icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
               </div>
             {{/if}}
             {{#if showDeleteMenuItemInRow}}
-              <div class="item" {{ action deleteRow record }}>
+              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action deleteRow record }}>
                 <i class="trash icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
               </div>
@@ -127,7 +127,7 @@
       </td>
     {{/if}}
   </tr>
-  {{#if (and inExpandMode inHierarchicalMode)}}
+  {{#if (and _expanded inHierarchicalMode)}}
     {{#each records key="key" as |record|}}
       {{object-list-view-row
         record=record
@@ -145,7 +145,7 @@
         showDeleteButtonInRow=showDeleteButtonInRow
         showEditButtonInRow=showEditButtonInRow
         inHierarchicalMode=inHierarchicalMode
-        inExpandMode=inExpandMode
+        inExpandMode=(unbound inExpandMode)
         loadRecords=loadRecords
         doRenderData=record.doRenderData
         rowClick=rowClick

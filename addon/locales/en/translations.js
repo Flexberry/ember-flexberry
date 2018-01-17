@@ -136,11 +136,6 @@ export default {
       },
     },
 
-    'object-list-view-cell': {
-      'boolean-false-caption': 'False',
-      'boolean-true-caption': 'True'
-    },
-
     'olv-toolbar': {
       'add-button-text': 'Add',
       'refresh-button-text': 'Refresh',

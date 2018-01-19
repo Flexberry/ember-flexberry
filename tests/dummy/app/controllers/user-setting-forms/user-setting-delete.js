@@ -13,7 +13,7 @@ export default ListFormController.extend({
     return [{
       buttonName: i18n.t('forms.user-setting-forms.user-setting-delete.all-del-button-name'),
       buttonAction: 'allDelButtonAction',
-      buttonClasses: 'all-del-user-button negative'
+      buttonClasses: 'all-del-user-button'
     }];
   }),
 

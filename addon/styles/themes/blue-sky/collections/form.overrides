@@ -3,10 +3,15 @@
 
 *******************************/
 .ui.form select {
+    color: @primaryColor;
     border: none;
-    border-bottom: 1px solid #b1cae8;
+    border-bottom: 1px solid @inputBorderColor;
     border-radius: 0px;
     outline: none;
+}
+
+.ui.form select:hover {
+    color: @hoveredSelectColor;
 }
 
 .ui.form input:not([type]), .ui.form input[type="date"],
@@ -16,8 +21,8 @@
 .ui.form input[type="time"], .ui.form input[type="text"],
 .ui.form input[type="url"] {
     border: none;
-    border-bottom: 1px solid #b1cae8;
-    border-radius: 0px!important;
+    border-bottom: 1px solid @inputBorderColor;
+    border-radius: 0px;
     outline: none;
 }
 
@@ -27,23 +32,23 @@ input[type="checkbox"]:after {
     font-size: 16px;
     height: 16px;
     width: 17px;
-    background: #fff;
     position: relative;
     border-radius: 4px;
     top: -3px;
     left: -2px;
-    border: 1px solid #7ba7d9;
-    background: #f1f8ff;
+    border: 1px solid @borderColor;
+    background: @checkboxBackground;
 }
 
 input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
     content: '\e805';
     font-family: 'Crimean';
-    color: #7ba7d9;
-    border-color: #7ba7d9;
-    font-size: 15px;
+    color: @primaryColor;
+    border-color: @primaryColor;
+    font-size: 16px;
     border-left: none;
-    width: 16px;
+    border-top: none;
+    width: 17px;
 }
 
 .ui.form textarea, .ui.form input[type="checkbox"] {
@@ -51,13 +56,21 @@ input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
 }
 
 select {
-    color: #b1cae8!important;
+    color: @primaryColor;
+}
+
+select:hover {
+    color: @hoveredSelectColor;
 }
 
 option {
-    color: rgba(0, 0, 0, 0.87)!important;
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .ui.form .fields .field .ui.input input, .ui.form .field .ui.input input {
-    background: none!important;
+    background: none;
+}
+
+.ui.form .field .ui.input .block-action-input input {
+    width: 100%;
 }

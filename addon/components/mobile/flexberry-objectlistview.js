@@ -129,4 +129,13 @@ export default FlexberryObjectlistview.extend({
     @type String
   */
   singleColumnHeaderTitle: undefined,
+
+  /**
+    Indicates whether or not autoresize columns for fit the page width.
+
+    @property columnsWidthAutoresize
+    @type Boolean
+    @default true
+  */
+  columnsWidthAutoresize: true,
 });

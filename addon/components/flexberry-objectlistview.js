@@ -53,6 +53,15 @@ export default FlexberryBaseComponent.extend({
   _switchHierarchicalMode: 'switchHierarchicalMode',
 
   /**
+    Store the action name at controller for switch to the collapse/expand mode.
+
+    @property _switchExpandMode
+    @type String
+    @default 'switchExpandMode'
+    @private
+  */
+  _switchExpandMode: 'switchExpandMode',
+  /**
     Store the action name at controller for save the hierarchical attribute name.
 
     @property _saveHierarchicalAttribute
@@ -73,6 +82,16 @@ export default FlexberryBaseComponent.extend({
   _availableHierarchicalMode: false,
 
   /**
+    Flag indicate when available the collapse/expand all hierarchies mode.
+
+    @property _availableCollExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  _availableCollExpandMode: false,
+
+  /**
     Flag indicate when component is in the hierarchical mode.
 
     @property _inHierarchicalMode
@@ -82,6 +101,24 @@ export default FlexberryBaseComponent.extend({
   */
   _inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
     return this.get('currentController.inHierarchicalMode');
+  }),
+
+  /**
+    Flag indicate when component is in the collapse/expand mode.
+
+    @property _inExpandMode
+    @type Boolean
+    @default false
+    @private
+  */
+  _inExpandMode: Ember.computed('currentController.inExpandMode', {
+    get(key) {
+      return this.get('currentController.inExpandMode');
+    },
+    set(key, value) {
+      this.set('currentController.inExpandMode',  value);
+      return value;
+    }
   }),
 
   /**
@@ -240,6 +277,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   showDeleteButtonInRow: false,
+
+  /**
+    Flag indicates whether to show edit button in first column of every row.
+
+    @property showEditButtonInRow
+    @type Boolean
+    @default false
+  */
+  showEditButtonInRow: false,
 
   /**
     Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
@@ -513,6 +559,33 @@ export default FlexberryBaseComponent.extend({
   recordsTotalCount: null,
 
   /**
+    Minimum column width, if width isn't defined in userSettings.
+
+    @property minAutoColumnWidth
+    @type Number
+    @default 150
+  */
+  minAutoColumnWidth: 150,
+
+  /**
+    Indicates whether or not autoresize columns for fit the page width.
+
+    @property columnsWidthAutoresize
+    @type Boolean
+    @default false
+  */
+  columnsWidthAutoresize: false,
+
+  /**
+    List of component names, which can overflow table cell.
+
+    @property overflowedComponents
+    @type Array
+    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+  */
+  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
+
+  /**
     Current interval of records.
 
     @property currentIntervalRecords
@@ -614,6 +687,14 @@ export default FlexberryBaseComponent.extend({
   */
   eventsBus: Ember.Object.extend(Ember.Evented, {}).create(),
 
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -648,7 +729,7 @@ export default FlexberryBaseComponent.extend({
       @param {Object} options Different parameters to handle action.
     */
     objectListViewRowClick(record, options) {
-      if (this.get('rowClickable') && !this.get('readonly')) {
+      if ((this.get('rowClickable') || options.rowEdit) && !this.get('readonly')) {
         let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
         Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
@@ -684,7 +765,7 @@ export default FlexberryBaseComponent.extend({
                         'Set handler like {{flexberry-objectlistview ... previousPage=(action "previousPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       action();
     },
 
@@ -701,7 +782,7 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... nextPage=(action "nextPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       action();
     },
 
@@ -719,7 +800,7 @@ export default FlexberryBaseComponent.extend({
                       'Set handler like {{flexberry-objectlistview ... gotoPage=(action "gotoPage")}}.');
       }
 
-      this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       action(pageNumber);
     },
 
@@ -731,7 +812,8 @@ export default FlexberryBaseComponent.extend({
         {
           buttonName: '...', // Button displayed name.
           buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-          buttonClasses: '...' // Css classes for button.
+          buttonClasses: '...', // Css classes for button.
+          buttonTitle: '...' // Button title.
         }
         ```
 
@@ -749,7 +831,7 @@ export default FlexberryBaseComponent.extend({
             return [{
               buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name'),
               buttonAction: 'userButtonActionTest',
-              buttonClasses: 'my-test-user-button test-click-button'
+              buttonClasses: 'test-click-button'
             }];
           })
         });
@@ -875,15 +957,25 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Called controller action to switch in collapse/expand mode.
+
+      @method actions.switchExpandMode
+    */
+    switchExpandMode() {
+      this.sendAction('_switchExpandMode');
+    },
+
+    /**
       Redirects the call to controller.
 
       @method actions.loadRecords
       @param {String} Primary key.
       @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
       @param {String} Property name.
+      @param {Boolean} Flag indicates that this is the first download of data.
     */
-    loadRecords(id, target, property) {
-      this.sendAction('_loadRecords', id, target, property);
+    loadRecords(id, target, property, firstRunMode) {
+      this.sendAction('_loadRecords', id, target, property, firstRunMode);
     },
 
     /**
@@ -896,7 +988,7 @@ export default FlexberryBaseComponent.extend({
       var userSettings = this.get('userSettingsService');
       if (parseInt(perPageValue, 10) !== userSettings.getCurrentPerPage(this.componentName)) {
         userSettings.setCurrentPerPage(this.componentName, undefined, perPageValue);
-        this.get('eventsBus').trigger('showLoadingTbodyClass', this.get('componentName'), true);
+        this.get('objectlistviewEventsService').setLoadingState('loading');
       }
     },
 
@@ -1023,6 +1115,15 @@ export default FlexberryBaseComponent.extend({
       // For lookup mode we allow to set properties.
       this.setProperties(customProperties);
     }
+
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.on('setMenuWidth', (componentName, tableWidth, containerWidth) => {
+        if (componentName === this.get('componentName')) {
+          this._setMenuWidth(tableWidth, containerWidth);
+        }
+      });
+    }
   },
 
   /**
@@ -1033,6 +1134,19 @@ export default FlexberryBaseComponent.extend({
   */
   didRender() {
     this.get('formLoadTimeTracker').set('endRenderTime', performance.now());
+  },
+
+  /**
+    Called when the element of the view is going to be destroyed.
+    For more information see [willDestroyElement](http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement) event of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
+  */
+  willDestroyElement() {
+    this._super(...arguments);
+
+    let eventsBus = this.get('eventsBus');
+    if (eventsBus) {
+      eventsBus.off('setMenuWidth');
+    }
   },
 
   /**
@@ -1070,4 +1184,18 @@ export default FlexberryBaseComponent.extend({
       $row.addClass('active');
     }
   },
+
+  _setMenuWidth(tableWidth, containerWidth) {
+    let $table = this.$('table.object-list-view')[0];
+    if (Ember.isBlank(tableWidth)) {
+      tableWidth = $table.clientWidth;
+    }
+
+    if (Ember.isBlank(containerWidth)) {
+      containerWidth = $table.parentElement.clientWidth - 5;
+    }
+
+    this.$('.ui.secondary.menu').css({ 'width': (this.get('columnsWidthAutoresize') ?
+      containerWidth : containerWidth < tableWidth ? containerWidth : tableWidth) + 'px' });
+  }
 });

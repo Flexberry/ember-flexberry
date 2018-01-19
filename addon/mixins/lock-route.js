@@ -29,30 +29,6 @@ export default Ember.Mixin.create({
   _readonly: false,
 
   /**
-    This property uses for setting user name.
-
-    @example
-      ```javascript
-      // app/routes/user-edit.js
-      import EditFormRoute from 'ember-flexberry/routes/edit-form';
-      export default EditFormRoute.extend({
-        ...
-        userName: Ember.computed(function() {
-          let userService = Ember.getOwner(this).lookup('service:user');
-          return userService.getCurrentUserName();
-        }),
-        ...
-      });
-      ```
-
-    @property userName
-    @type String
-    @default 'admin'
-    @for EditFormRoute
-  */
-  userName: 'admin',
-
-  /**
     This object contains answers which will corresponding functions resolved.
 
     @property defaultBehaviorLock
@@ -98,6 +74,7 @@ export default Ember.Mixin.create({
   */
   beforeModel(transition) {
     let params = this.paramsFor(this.routeName);
+    let userService = Ember.getOwner(this).lookup('service:user');
     return new Ember.RSVP.Promise((resolve, reject) => {
       if (params.id) {
         let builder = new Query.Builder(this.store)
@@ -108,7 +85,7 @@ export default Ember.Mixin.create({
           if (!lock) {
             this.store.createRecord('new-platform-flexberry-services-lock', {
               lockKey: params.id,
-              userName: this.get('userName'),
+              userName: userService.getCurrentUserName(),
               lockDate: new Date(),
             }).save().then((lock) => {
               this.set('_currentLock', lock);
@@ -118,7 +95,7 @@ export default Ember.Mixin.create({
                 this._openReadOnly(answer, resolve, reject);
               });
             });
-          } else if (lock.get('userName') === this.get('userName')) {
+          } else if (lock.get('userName') === userService.getCurrentUserName()) {
             this.set('_currentLock', lock);
             resolve();
           } else {

@@ -11,6 +11,12 @@ export default {
       'close-button-text': 'Close'
     },
 
+    'error-form': {
+      caption: 'An error has occurred',
+      'show-more': 'Show more',
+      retry: 'Retry',
+    },
+
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Application log'
     },
@@ -21,6 +27,12 @@ export default {
   },
 
   'components': {
+    'flexberry-error': {
+      caption: 'An error has occurred',
+      'show-more': 'Show more',
+      'unknown-error': 'Unknown error occurred',
+    },
+
     'flexberry-field': {
       placeholder: '(no value)'
     },
@@ -82,7 +94,8 @@ export default {
       'remove-button-text': 'Remove',
       'dropdown': {
         'messages': {
-          'noResults': 'No results found.'
+          'noResultsHeader': 'No results',
+          'noResults': 'No results found'
         }
       }
     },
@@ -114,13 +127,13 @@ export default {
       'sort-descending': 'Order descending',
       'menu-in-row': {
         'edit-menu-item-title': 'Edit record',
+        'add-menu-item-title': 'Add record',
         'delete-menu-item-title': 'Delete record'
-      }
-    },
-
-    'object-list-view-cell': {
-      'boolean-false-caption': 'False',
-      'boolean-true-caption': 'True'
+      },
+      'hierarchy-buttons': {
+        'plus-button-title': 'Expand',
+        'minus-button-title': 'Collapse',
+      },
     },
 
     'olv-toolbar': {
@@ -128,6 +141,13 @@ export default {
       'refresh-button-text': 'Refresh',
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
+      'hierarchy-button-text': 'On/off hierarchy',
+      'coll-expand-button-text':'Collapse/Expand all hierarchies',
+      'filter-button-text': 'Add filter',
+      'remove-filter-button-text': 'Reset filter',
+      'search-button-text': 'Search',
+      'clear-search-button-text': 'Clear search',
+      'export-excel-button-text': 'Export to Excel',
       'filter-by-any-match-placeholder': 'Search...',
       'create-setting-title': 'New setting',
       'use-setting-title': 'Use',
@@ -140,7 +160,15 @@ export default {
       'close': 'Close',
       'copy': 'Copy',
       'copied': 'Copied',
-      'ctrlc': 'Press Ctrl/C to copy'
+      'ctrlc': 'Press Ctrl/C to copy',
+      'check-all-at-page-button-text': 'Check all entries on the current page',
+      'check-all-button-text': 'Check all on all pages',
+      'clear-sorting-button-text': 'Set the default sorting'
+    },
+
+    'groupedit-toolbar': {
+      'add-button-text': 'Add',
+      'delete-button-text': 'Delete'
     },
 
     'colsconfig-dialog-content': {
@@ -173,6 +201,26 @@ export default {
       'render-time': 'Render time',
     },
 
+    'flexberry-dialog': {
+      'approve-button': {
+        'caption': 'Ok'
+      },
+      'deny-button': {
+        'caption': 'Cancel'
+      }
+    },
+
+    'flexberry-jsonarea': {
+      'placeholder': '(Enter JSON-string)',
+      'parse-error': {
+        'caption': 'Error while parsing entered JSON-string'
+      }
+    },
+
+    'flexberry-tree': {
+      'placeholder': 'Tree nodes are not defined'
+    }
+
   },
 
   'models': {
@@ -180,46 +228,46 @@ export default {
       'projections': {
         'ApplicationLogL': {
           'processId': {
-            'caption': 'URL'
+            __caption__: 'URL'
           },
           'timestamp':{
-            'caption': 'Time'
+            __caption__: 'Time'
           },
           'category':{
-            'caption': 'Category'
+            __caption__: 'Category'
           },
           'eventId':{
-            'caption': 'Event ID'
+            __caption__: 'Event ID'
           },
           'priority':{
-            'caption': 'Priority'
+            __caption__: 'Priority'
           },
           'severity':{
-            'caption': 'Severity'
+            __caption__: 'Severity'
           },
           'title':{
-            'caption': 'Title'
+            __caption__: 'Title'
           },
           'machineName':{
-            'caption': 'Server'
+            __caption__: 'Server'
           },
           'appDomainName':{
-            'caption': 'Browser'
+            __caption__: 'Browser'
           },
           'processName':{
-            'caption': 'Process name'
+            __caption__: 'Process name'
           },
           'threadName':{
-            'caption': 'ThreadName'
+            __caption__: 'ThreadName'
           },
           'win32ThreadId':{
-            'caption': 'Win32ThreadId',
+            __caption__: 'Win32ThreadId',
           },
           'message':{
-            'caption': 'Message'
+            __caption__: 'Message'
           },
           'formattedMessage':{
-            'caption': 'Formatted message'
+            __caption__: 'Formatted message'
           }
         }
       }
@@ -227,9 +275,9 @@ export default {
     'new-platform-flexberry-services-lock': {
       'projections': {
         'LockL': {
-          'lockKey': { 'caption': 'Key locked object' },
-          'userName': { 'caption': 'User locked object' },
-          'lockDate': { 'caption': 'Date lock' },
+          'lockKey': { __caption__: 'Key locked object' },
+          'userName': { __caption__: 'User locked object' },
+          'lockDate': { __caption__: 'Date lock' },
         },
       },
     },

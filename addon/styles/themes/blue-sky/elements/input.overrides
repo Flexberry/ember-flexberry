@@ -1,38 +1,35 @@
 /*******************************
          Theme Overrides
 *******************************/
+
 .ui.action.input:not([class*="left action"]) > input {
     height: 35px;
 }
 
-input {
+.ui.action.input:not([class*="left action"]) > .button:last-child {
+    border-radius: 0px;
+}
+
+.ui.input input, input {
     border: none;
-    border-bottom: 1px solid #b1cae8;
-    border-radius: 0px!important;
+    border-bottom: 1px solid @borderColor;
+    border-radius: 0px;
     outline: none;
 }
 
-.ui.action.input:not([class*="left action"]) > .dropdown,
-.ui.action.input:not([class*="left action"]) > .button,
-.ui.action.input:not([class*="left action"]) > .buttons > .button {
-    border: 1px solid #7ba7d9;
-}
-
-
 .block-action-input {
     width: 100%;
+    & input {
+        height: 35px;
+        min-width: 220px;
+    }
 }
 
-.block-action-input input{
-    height: 35px;
-    width: 100%!important;
+.ui.secondary.menu > .ui.action.input {
+    margin: 0 10px;
 }
 
-.ui.action.input:not([class*="left action"]) input:focus {
-    border-right-color: #fff!important;
+::-ms-clear, ::-ms-reveal {
+   width: 0;
+   height: 0;
 }
-
-.filter-button{
-    border-right-color: #fff!important;
-}
-

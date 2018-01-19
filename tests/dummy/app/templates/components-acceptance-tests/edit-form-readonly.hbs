@@ -1,0 +1,68 @@
+<h3 class="ui header">{{t "forms.integration-examples.edit-form.readonly-mode.caption"}}</h3>
+  <div class="not-in-groupedit">
+    {{flexberry-checkbox
+      value=model.flag
+      readonly=readonly
+    }}
+    {{flexberry-textbox
+      value=model.text
+      readonly=readonly
+    }}
+    {{flexberry-textarea
+      value=model.longText
+      readonly=readonly
+    }}
+      {{flexberry-datepicker
+        value=model.date
+        readonly=readonly
+      }}
+      {{flexberry-simpledatetime
+        readonly=readonly
+        type="time"
+        value=model.time
+        readonly=readonly
+      }}
+    {{flexberry-dropdown
+      items=(flexberry-enum "integration-examples/edit-form/readonly-mode/enumeration")
+      value=model.enumeration
+      readonly=readonly
+    }}
+    {{flexberry-file
+      value=model.file
+      readonly=readonly
+    }}
+    {{flexberry-lookup
+      value=model.master
+      relatedModel=model
+      relationName="master"
+      projection="MasterL"
+      displayAttributeName="text"
+      title=(t "forms.integration-examples.edit-form.readonly-mode.master-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      readonly=readonly
+    }}
+    {{flexberry-lookup
+      value=model.masterDropdown
+      relatedModel=model
+      relationName="masterDropdown"
+      projection="MasterDropdownL"
+      displayAttributeName="text"
+      title=(t "forms.integration-examples.edit-form.readonly-mode.master-dropdown-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+      dropdown=true
+      readonly=readonly
+    }}
+  </div>
+  <div class="in-groupedit">
+    {{flexberry-groupedit
+      componentName="aggregatorDetailsGroupedit"
+      content=model.details
+      modelProjection=modelProjection.attributes.details
+      readonly=readonly
+      showDeleteButtonInRow=true
+      showEditMenuItemInRow=true
+      showDeleteMenuItemInRow=true
+    }}
+  </div>

@@ -1,5 +1,5 @@
 <h3 class="ui header">{{t 'forms.ember-flexberry-dummy-comment-vote-edit.caption'}}</h3>
-<form class="ui {{formState}} form flexberry-vertical-form" role="form">
+<form class="ui form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
     closeable=true
@@ -18,6 +18,7 @@
     onShow=(action "onErrorMessageShow")
     onHide=(action "onErrorMessageHide")
   }}
+  {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
       {{flexberry-validationsummary errors=model.errors}}
@@ -26,11 +27,11 @@
   <div class="field">
     <div class="flexberry-edit-panel">
       {{#unless readonly}}
-        <button type="submit" class="ui positive button save-button" {{action 'save'}}>
+        <button type="submit" class="ui button save-button" {{action 'save'}}>
           {{t "forms.edit-form.save-button-text"}}
         </button>
         {{#unless model.isNew}}
-          <button type="submit" class="ui negative button save-del-button" {{action 'delete'}}>
+          <button type="submit" class="ui button save-del-button" {{action 'delete'}}>
             {{t "forms.edit-form.delete-button-text"}}
           </button>
         {{/unless}}

@@ -361,6 +361,33 @@ export default FlexberryBaseComponent.extend({
   */
   tableStriped: true,
 
+  /**
+    Minimum column width, if width isn't defined in userSettings.
+
+    @property minAutoColumnWidth
+    @type Number
+    @default 100
+  */
+  minAutoColumnWidth: 100,
+
+  /**
+    Indicates whether or not autoresize columns for fit the page width.
+
+    @property columnsWidthAutoresize
+    @type Boolean
+    @default true
+  */
+  columnsWidthAutoresize: true,
+
+  /**
+    List of component names, which can overflow table cell.
+
+    @property overflowedComponents
+    @type Array
+    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+  */
+  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -371,10 +398,16 @@ export default FlexberryBaseComponent.extend({
     sortByColumn(column) {
       let sortAscending = column.sortAscending;
       let columnName = column.propName;
+      let attributePath = columnName;
+      if (Ember.get(column, 'cellComponent.componentName') === 'flexberry-lookup') {
+        let diplayAttribute = Ember.get(column, 'cellComponent.componentProperties.displayAttributeName');
+        attributePath += diplayAttribute ? `.${diplayAttribute}` : '';
+      }
+
       if (Ember.isNone(sortAscending)) {
-        this.set('sorting', [{ propName: columnName, direction: 'asc' }]);
+        this.set('sorting', [{ propName: columnName, direction: 'asc', attributePath: attributePath }]);
       } else if (sortAscending) {
-        this.set('sorting', [{ propName: columnName, direction: 'desc' }]);
+        this.set('sorting', [{ propName: columnName, direction: 'desc', attributePath: attributePath }]);
       } else {
         this.set('sorting', []);
       }
@@ -389,6 +422,12 @@ export default FlexberryBaseComponent.extend({
     addColumnToSorting(column) {
       let sortAscending = column.sortAscending;
       let columnName = column.propName;
+      let attributePath = columnName;
+      if (Ember.get(column, 'cellComponent.componentName') === 'flexberry-lookup') {
+        let diplayAttribute = Ember.get(column, 'cellComponent.componentProperties.displayAttributeName');
+        attributePath += diplayAttribute ? `.${diplayAttribute}` : '';
+      }
+
       let sorting = this.get('sorting') || [];
       for (let i = 0; i < sorting.length; i++) {
         if (sorting[i].propName === 'id') {
@@ -398,7 +437,7 @@ export default FlexberryBaseComponent.extend({
       }
 
       if (Ember.isNone(sortAscending)) {
-        sorting.push({ propName: columnName, direction: 'asc' });
+        sorting.push({ propName: columnName, direction: 'asc', attributePath: attributePath });
         this.sortingFunction();
       } else if (sortAscending) {
         for (let i = 0; i < sorting.length; i++) {
@@ -509,8 +548,8 @@ export default FlexberryBaseComponent.extend({
   sortRecords(records, sortDef, start, end) {
     let recordsSort = records;
     let condition = function(koef) {
-      let firstProp = recordsSort.objectAt(koef - 1).get(sortDef.propName);
-      let secondProp = recordsSort.objectAt(koef).get(sortDef.propName);
+      let firstProp = recordsSort.objectAt(koef - 1).get(sortDef.attributePath || sortDef.propName);
+      let secondProp = recordsSort.objectAt(koef).get(sortDef.attributePath || sortDef.propName);
       if (sortDef.direction === 'asc') {
         return Ember.isNone(secondProp) && !Ember.isNone(firstProp) ? true : firstProp > secondProp;
       }
@@ -524,12 +563,9 @@ export default FlexberryBaseComponent.extend({
 
     for (let i = start + 1; i <= end; i++) {
       for (let j = i; j > start && condition(j); j--) {
-        let canonRecord = recordsSort.canonicalState[j];
-        let currentRecord = recordsSort.currentState[j];
-        recordsSort.canonicalState[j] = recordsSort.canonicalState[j - 1];
-        recordsSort.currentState[j] = recordsSort.currentState[j - 1];
-        recordsSort.canonicalState[j - 1] = canonRecord;
-        recordsSort.currentState[j - 1] = currentRecord;
+        let record = recordsSort.objectAt(j);
+        recordsSort.replace(j, 1, [recordsSort.objectAt(j - 1)]);
+        recordsSort.insertAt(j - 1, record);
       }
     }
 

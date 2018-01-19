@@ -13,6 +13,16 @@ import FlexberryBaseComponent from './flexberry-base-component';
 */
 export default FlexberryBaseComponent.extend({
   /**
+    Flag used to display embedded records.
+
+    @property _expanded
+    @type Boolean
+    @default false
+    @private
+  */
+  _expanded: false,
+
+  /**
     Stores the number of pixels to isolate one level of hierarchy.
 
     @property _hierarchicalIndent
@@ -184,6 +194,13 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Observe inExpandMode changes.
+  */
+  inExpandModeObserver: Ember.on('init', Ember.observer('inExpandMode', function() {
+    this.set('_expanded', this.get('inExpandMode'));
+  })),
+
+  /**
     Tag name for the view's outer element. [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
 
     @property tagName
@@ -208,7 +225,10 @@ export default FlexberryBaseComponent.extend({
       @method actions.expand
     */
     expand() {
-      this.toggleProperty('inExpandMode');
+      this.toggleProperty('_expanded');
+      if (!this.get('_expanded')) {
+        this.set('inExpandMode', false);
+      }
     },
 
     /**

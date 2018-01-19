@@ -150,7 +150,7 @@
           <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
             {{#if showCheckBoxInRow }}
               <button
-                class="ui check-all-at-page-button {{buttonClass}} {{if or readonly allSelect "disabled"}} button"
+                class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
                 title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
                 {{action "checkAllAtPage"}}>
                   <i class="check-square-o icon"></i>

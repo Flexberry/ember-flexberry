@@ -1175,6 +1175,7 @@ export default FlexberryBaseComponent.extend(
 
           if (renderedRowIndex >= contentLength) {
             // Restore selected records.
+            // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
             if (this.get('selectedRecords')) {
               this.get('selectedRecords').clear();
             }
@@ -1193,6 +1194,11 @@ export default FlexberryBaseComponent.extend(
                   this.send('selectRow', recordWithData, e);
                 }
               });
+
+              // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+              if (someRecordWasSelected) {
+                this.get('objectlistviewEventsService').clearSelectedRecords(componentName);
+              }
 
               if (!someRecordWasSelected && !this.get('allSelect')) {
                 // Reset toolbar buttons enabled state.

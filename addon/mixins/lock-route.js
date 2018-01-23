@@ -73,6 +73,8 @@ export default Ember.Mixin.create({
     @return {Promise}
   */
   beforeModel(transition) {
+    this._super(...arguments);
+
     let params = this.paramsFor(this.routeName);
     let userService = Ember.getOwner(this).lookup('service:user');
     return new Ember.RSVP.Promise((resolve, reject) => {

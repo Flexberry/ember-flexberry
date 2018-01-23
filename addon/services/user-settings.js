@@ -592,6 +592,7 @@ export default Ember.Service.extend({
     }
 
     let store = this.get('_store');
+    let _this = this;
     let ret = this._getExistingRecord(componentName, settingName).then(
       (foundRecord) => {
         if (foundRecord) {
@@ -612,7 +613,8 @@ export default Ember.Service.extend({
 
           foundRecord.set('txtVal', JSON.stringify(prevUserSetting));
         } else {
-          let currentUserName = this.getCurrentUser();
+          let userService = Ember.getOwner(_this).lookup('service:user');
+          let currentUserName = userService.getCurrentUserName();
           foundRecord = store.createRecord('new-platform-flexberry-flexberry-user-setting');
           foundRecord.set('userName', currentUserName);
           foundRecord.set('appName', this.currentAppPage);
@@ -624,19 +626,6 @@ export default Ember.Service.extend({
         return foundRecord.save();
       });
     return ret;
-  },
-
-  /**
-
-    Returns current user name.
-    Method must be overridden if application uses some authentication.
-
-    @method getCurrentUser
-    @return {String} Current user name.
-  */
-  getCurrentUser() {
-    // TODO: add mechanism to return current user.
-    return '';
   },
 
   /**
@@ -853,7 +842,8 @@ export default Ember.Service.extend({
 
   _getSearchPredicate(componentName, settingName) {
     let ret;
-    let currentUserName = this.getCurrentUser();
+    let userService = Ember.getOwner(this).lookup('service:user');
+    let currentUserName = userService.getCurrentUserName();
     let p1 = new SimplePredicate('appName', 'eq', this.currentAppPage);
     let p2 = new SimplePredicate('userName', 'eq', currentUserName);
     if (componentName !== undefined) {

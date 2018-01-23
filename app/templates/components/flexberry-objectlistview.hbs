@@ -23,12 +23,17 @@
   showConfigDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
   inHierarchicalMode=_inHierarchicalMode
+  inExpandMode=_inExpandMode
   availableHierarchicalMode=_availableHierarchicalMode
+  availableCollExpandMode=_availableCollExpandMode
   switchHierarchicalMode=(action "switchHierarchicalMode")
+  switchExpandMode=(action "switchExpandMode")
 }}
 {{object-list-view
   placeholder=placeholder
   readonly=readonly
+  columnsWidthAutoresize=columnsWidthAutoresize
+  minAutoColumnWidth=minAutoColumnWidth
   buttonClass=buttonClass
   tableStriped=tableStriped
   customTableClass=customTableClass
@@ -39,6 +44,7 @@
   showAsteriskInRow=(and (not readonly) showAsteriskInRow)
   showCheckBoxInRow=(and (not readonly) showCheckBoxInRow)
   showDeleteButtonInRow=(and (not readonly) showDeleteButtonInRow)
+  showEditButtonInRow=(and (not readonly) showEditButtonInRow)
   showEditMenuItemInRow=(and (not readonly) showEditMenuItemInRow)
   showDeleteMenuItemInRow=(and (not readonly) showDeleteMenuItemInRow)
   sendMenuItemAction=(action "sendMenuItemAction")
@@ -72,6 +78,7 @@
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
   inHierarchicalMode=_inHierarchicalMode
+  inExpandMode=_inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")
@@ -80,11 +87,12 @@
   eventsBus=eventsBus
   onEditForm=onEditForm
   defaultLeftPadding=defaultLeftPadding
+  overflowedComponents=overflowedComponents
 }}
 {{#unless _inHierarchicalMode}}
-  <div class="ui secondary menu no-margin">
+  <div class="ui secondary menu no-margin nav-bar">
     <div class="ui basic buttons">
-      <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
+      <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
       {{#each pages as |page|}}
         {{#if page.isEllipsis}}
           <div class="ui button">...</div>
@@ -96,19 +104,19 @@
           {{/if}}
         {{/if}}
       {{/each}}
-      <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
+      <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
     </div>
     <div class="right menu">
-      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}
+      {{#if showShowingEntries}}
+        <div class="showing-entries">
+          {{#if (and currentIntervalRecords recordsTotalCount) }}
+            {{concat
+              (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+            }}
+          {{/if}}
+        </div>
+      {{/if}}
+      {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
     </div>
   </div>
-  {{#if showShowingEntries}}
-    <div class="showing-entries">
-      {{#if (and currentIntervalRecords recordsTotalCount) }}
-        {{concat
-          (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-        }}
-      {{/if}}
-    </div>
-  {{/if}}
 {{/unless}}

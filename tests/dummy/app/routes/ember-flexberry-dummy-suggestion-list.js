@@ -1,6 +1,7 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
+import ListFormRouteOperationsIndicationMixin from '../mixins/list-form-route-operations-indication';
 
-export default ListFormRoute.extend({
+export default ListFormRoute.extend(ListFormRouteOperationsIndicationMixin, {
   /**
    Name of model projection to be used as record's properties limitation.
 
@@ -34,7 +35,7 @@ export default ListFormRoute.extend({
   developerUserSettings: {
     SuggestionObjectListView: {
       'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 86 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
       }
     }
   },

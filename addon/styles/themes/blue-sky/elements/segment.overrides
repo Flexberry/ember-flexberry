@@ -5,22 +5,31 @@
 .ui.vertical.footer.segment > .flex-container > .ui.text.menu {
     margin: 0px;
     padding: 0px 30px;
-    background-color: #eee;
-    display: flex!important;
-    justify-content: space-between!important
+    background-color: @footerBackground;
+    display: flex;
+    justify-content: space-between;
 }
 
 .ui.vertical.footer.segment > .flex-container {
     position: fixed;
     bottom: 0px;
     z-index: 99;
+    height: @footerHeight;
 }
 
 .daterangepicker .calendar td {
-    color: #7ba7d9;
+    color: @daterangepickerColor;
 }
 
-.daterangepicker .calendar th, {
+.daterangepicker .calendar td:hover {
+    background: @daterangepickerBackground;
+}
+
+.daterangepicker .calendar td.off {
+    color: #999;
+}
+
+.daterangepicker .calendar th {
     color: #888;
 }
 
@@ -29,29 +38,17 @@
     min-width:25px;
 }
 
-.daterangepicker .calendar td:hover {
-    background: #dcebfc!important;
+.daterangepicker th.available:hover, .daterangepicker th.available i.icon:hover {
+    background: @daterangepickerBackground;
+    color: @daterangepickerColor;
 }
 
 .month > select {
-    color: #7ba7d9!important;
-    font-size: 1em!important;
+    color: @primaryColor;
+    font-size: 1em;
 }
 
 .daterangepicker td.active, .daterangepicker td.active:hover {
-     background: #7ba7d9!important;
-     color: #fff!important;
-}
-
-.ui.loader:before {
-    border: 0.2em solid #CCE2FF!important;
-}
-
-.ui.loader:after {
-    border-color: #7ba7d9 transparent transparent!important;
-}
-
-.daterangepicker td.available:hover,
-.daterangepicker th.available:hover {
-     background: none!important;
+     background: @primaryColor;
+     color: @white;
 }

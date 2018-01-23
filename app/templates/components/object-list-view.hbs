@@ -1,19 +1,29 @@
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type='error'
-      closeable=true
-      visible=true
-      title='Error occurred'
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
 <table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
   <thead>
     <tr>
       {{#if showHelperColumn}}
-        <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar"></th>
+        <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
+          {{#if showCheckBoxInRow }}
+            <button
+              class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
+              title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+              {{action "checkAllAtPage"}}>
+                <i class="check-square-o icon"></i>
+            </button>
+            <button
+              class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
+              title={{t "components.olv-toolbar.check-all-button-text"}}
+              {{action "checkAll"}}>
+                <i class="check-all-square-o icon"></i>
+            </button>
+            <button
+              class="ui clear-sorting-button {{buttonClass}} {{if readonly "disabled"}} button"
+              title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+              {{action "clearSorting"}}>
+                <i class="sort icon"></i>
+            </button>
+          {{/if}}
+        </th>
       {{/if}}
       {{#each columns as |column|}}
         <th class="dt-head-left me class" onclick={{action "headerCellClick" column }} width={{column.width}}>
@@ -46,14 +56,14 @@
       {{/if}}
     </tr>
   </thead>
-  <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
+  <tbody>
     {{#if showFilters}}
       <tr>
         {{#if showHelperColumn}}
           <td rowspan="1"></td>
         {{/if}}
         {{#each columns as |column|}}
-          <td style={{defaultPaddingStyle}}>
+          <td style={{defaultPaddingStyle}} class="overflowed-cell">
             {{#if column.filter.conditions}}
               {{component "flexberry-dropdown"
                 value=column.filter.condition
@@ -74,7 +84,7 @@
           <td rowspan="1"></td>
         {{/if}}
         {{#each columns as |column|}}
-          <td style={{defaultPaddingStyle}}>
+          <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
             {{#if column.filter.component.name}}
               {{component column.filter.component.name
                 value=column.filter.pattern
@@ -86,13 +96,6 @@
         {{#if showMenuColumn}}
           <td rowspan="1"></td>
         {{/if}}
-      </tr>
-    {{/if}}
-    {{#if rowsInLoadingState}}
-      <tr>
-        <td colspan="{{colspan}}" style="text-align:center;">
-          <div class="ui active centered inline loader"></div> {{t "components.object-list-view.loading-text"}}
-        </td>
       </tr>
     {{/if}}
     {{#unless content}}
@@ -117,16 +120,19 @@
           showAsteriskInRow=showAsteriskInRow
           showCheckBoxInRow=showCheckBoxInRow
           showDeleteButtonInRow=showDeleteButtonInRow
+          showEditButtonInRow=showEditButtonInRow
           showDeleteMenuItemInRow=showDeleteMenuItemInRow
           showEditMenuItemInRow=showEditMenuItemInRow
           hierarchicalIndent=hierarchicalIndent
           inHierarchicalMode=inHierarchicalMode
+          inExpandMode=(unbound inExpandMode)
           loadRecords=loadRecords
           doRenderData=record.doRenderData
           rowClick=(action "rowClick")
           selectRow=(action "selectRow")
           deleteRow=(action "deleteRow")
           defaultLeftPadding=defaultLeftPadding
+          overflowedComponents=overflowedComponents
         }}
       {{/each}}
       {{#if rowByRowLoadingProgress}}

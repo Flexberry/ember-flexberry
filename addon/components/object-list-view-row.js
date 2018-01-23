@@ -194,6 +194,13 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Observe inExpandMode changes.
+  */
+  inExpandModeObserver: Ember.on('init', Ember.observer('inExpandMode', function() {
+    this.set('_expanded', this.get('inExpandMode'));
+  })),
+
+  /**
     Tag name for the view's outer element. [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
 
     @property tagName
@@ -219,6 +226,9 @@ export default FlexberryBaseComponent.extend({
     */
     expand() {
       this.toggleProperty('_expanded');
+      if (!this.get('_expanded')) {
+        this.set('inExpandMode', false);
+      }
     },
 
     /**
@@ -252,7 +262,9 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
-      Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      if (!Ember.isBlank(e)) {
+        Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      }
 
       this.sendAction('rowClick', record, params);
     }
@@ -269,7 +281,12 @@ export default FlexberryBaseComponent.extend({
       let id = this.get('record.data.id');
       if (id && this.get('inHierarchicalMode')) {
         this.set('recordsLoaded', true);
-        this.sendAction('loadRecords', id, this, 'records');
+        if (this.get('_level') > 0) {
+          this.sendAction('loadRecords', id, this, 'records', false);
+        } else {
+          this.sendAction('loadRecords', id, this, 'records', true);
+        }
+
       }
     }
   },

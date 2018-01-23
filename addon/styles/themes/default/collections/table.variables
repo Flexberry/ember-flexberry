@@ -2,6 +2,15 @@
              Table
 *******************************/
 
+/*-----------------------------
+       Object List View
+-------------------------------*/
+@olvMargin: 0;
+@olvSelectableCursor: pointer;
+
+/* Container */
+@olvContainerMargin: 1em 0;
+
 /*-------------------
        Element
 --------------------*/

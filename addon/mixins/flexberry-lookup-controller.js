@@ -266,6 +266,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       perPage: undefined,
       page: undefined,
       sorting: undefined,
+      filters: undefined,
       filter: undefined,
       filterCondition: undefined,
       predicate: undefined,
@@ -302,6 +303,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       perPage: reloadData.perPage ? reloadData.perPage : this.get('lookupModalWindowPerPage'),
       page: reloadData.page ? reloadData.page : 1,
       sorting: reloadData.sorting ? reloadData.sorting : [],
+      filters: reloadData.filters,
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate

@@ -46,7 +46,7 @@
       </tr>
     </thead>
   {{/if}}
-  <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
+  <tbody>
     {{#if showFilters}}
       <tr>
         {{#if showHelperColumn}}
@@ -79,13 +79,6 @@
         {{#if showMenuColumn}}
           <td class="object-list-view-menu"></td>
         {{/if}}
-      </tr>
-    {{/if}}
-    {{#if rowsInLoadingState}}
-      <tr>
-        <td colspan="{{colspan}}" style="text-align:center;">
-          <div class="ui active centered inline loader"></div> {{t "components.object-list-view.loading-text"}}
-        </td>
       </tr>
     {{/if}}
     {{#unless content}}

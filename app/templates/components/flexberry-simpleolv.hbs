@@ -5,6 +5,7 @@
       title={{t "components.olv-toolbar.refresh-button-text"}}
       {{action "refresh"}}>
         {{t "components.olv-toolbar.refresh-button-text"}}
+        <i class="refresh icon"></i>
     </button>
   {{/if}}
   {{#if createNewButton}}
@@ -52,11 +53,14 @@
   {{/if}}
   {{#if filterButton}}
     <div class="ui action input">
-      <div class="block-action-input">{{input
-        type="text"
-        placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
-        value=filterByAnyMatchText enter="filterByAnyMatch"
-      }}</div>
+      <div class="block-action-input">
+        <input
+          type="text"
+          value={{filterByAnyMatchText}}
+          placeholder={{t "components.olv-toolbar.filter-by-any-match-placeholder"}}
+          onkeyup={{action "filterByAnyMatch"}}
+        />
+      </div>
       <button
         class="ui {{buttonClass}} icon button search-button"
         title={{t "components.olv-toolbar.search-button-text"}}
@@ -72,7 +76,7 @@
     </div>
   {{/if}}
   {{#if exportExcelButton}}
-    <div class="ui buttons">
+    <div class="ui buttons export-config">
       <button
         class="ui button icon export-button {{buttonClass}}"
         title={{t "components.olv-toolbar.export-excel-button-text"}}
@@ -86,7 +90,7 @@
     </div>
   {{/if}}
   {{#if colsConfigButton}}
-    <div class="ui buttons">
+    <div class="ui buttons cols-config">
       <button
         class="ui icon button config-button"
         title={{t "components.colsconfig-dialog-content.title"}}
@@ -139,22 +143,32 @@
 </div>
 
 <div class="object-list-view-container">
-  {{#if errorMessages}}
-    {{#each errorMessages as |currentError|}}
-      {{ui-message
-        type='error'
-        closeable=true
-        visible=true
-        title='Error occurred'
-        message=currentError
-      }}
-    {{/each}}
-  {{/if}}
   <table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
     <thead>
       <tr>
         {{#if showHelperColumn}}
-          <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar"></th>
+          <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
+            {{#if showCheckBoxInRow }}
+              <button
+                class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
+                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                {{action "checkAllAtPage"}}>
+                  <i class="check-square-o icon"></i>
+              </button>
+              <button
+                class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
+                title={{t "components.olv-toolbar.check-all-button-text"}}
+                {{action "checkAll"}}>
+                  <i class="check-all-square-o icon"></i>
+              </button>
+              <button
+                class="ui clear-sorting-button {{buttonClass}} {{if readonly "disabled"}} button"
+                title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+                {{action "clearSorting"}}>
+                  <i class="sort icon"></i>
+              </button>
+            {{/if}}
+          </th>
         {{/if}}
         {{#each columns as |column|}}
           {{#unless column.hide}}
@@ -189,7 +203,7 @@
         {{/if}}
       </tr>
     </thead>
-    <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
+    <tbody>
       {{#if showFilters}}
         <tr>
           {{#if showHelperColumn}}
@@ -197,7 +211,7 @@
           {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td style={{defaultPaddingStyle}}>
+              <td style={{defaultPaddingStyle}} class="overflowed-cell">
                 {{#if column.filter.conditions}}
                   {{component "flexberry-dropdown"
                     value=column.filter.condition
@@ -220,7 +234,7 @@
           {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td style={{defaultPaddingStyle}}>
+              <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
                 {{#if column.filter.component.name}}
                   {{component column.filter.component.name
                     value=column.filter.pattern
@@ -235,102 +249,103 @@
           {{/if}}
         </tr>
       {{/if}}
-      {{#if rowsInLoadingState}}
+      {{#unless content}}
         <tr>
           <td colspan="{{colspan}}" style="text-align:center;">
-            <div class="ui active centered inline loader"></div> {{t "components.object-list-view.loading-text"}}
+              {{placeholder}}
           </td>
         </tr>
       {{else}}
-        {{#unless content}}
-          <tr>
-            <td colspan="{{colspan}}" style="text-align:center;">
-                {{placeholder}}
-            </td>
-          </tr>
-        {{else}}
-          {{#each contentWithKeys key="key" as |record|}}
-              <tr class="{{record.rowConfig.customClass}}">
-                <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
-                  <div class="hidden">{{record.key}}</div>
-                  {{#if showHelperColumn}}
-                    <div class="object-list-view-helper-column-cell">
-                      {{#if showAsteriskInRow}}
-                        <div class="cell">
-                          <i class="asterisk small red icon {{unless record.data.hasDirtyAttributes "transparent"}}"></i>
-                        </div>
-                      {{/if}}
-                      {{#if showCheckBoxInRow}}
-                        <div class="cell">
-                          {{flexberry-checkbox
-                            readonly=(or readonly (not record.rowConfig.canBeSelected))
-                            onChange=(action "selectRow" record)
-                          }}
-                        </div>
-                      {{/if}}
-                      {{#if showDeleteButtonInRow}}
-                        <div class="cell">
-                          <button class="ui ui-delete {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}>
-                            <i class="minus icon"></i>
-                          </button>
-                        </div>
-                      {{/if}}
-                    </div>
-                  {{/if}}
-                </td>
-                {{#each columns as |column|}}
-                  {{#unless column.hide}}
-                    <td {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
-                      {{#if column.cellComponent.componentName}}
-                        {{component column.cellComponent.componentName
-                          dynamicProperties=column.cellComponent.componentProperties
-                          relatedModel=record.data
-                          value=(mut (get record.data column.propName))
-                          readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
-                          required=required
-                        }}
-                      {{else}}
-                        <div class="oveflow-text">
-                          {{get-formatted record.data column.propName
-                            dateFormat=dateFormat
-                            moment=moment
-                          }}
-                        </div>
-                      {{/if}}
-                    </td>
-                  {{/unless}}
-                {{/each}}
-                {{#if showMenuColumn}}
-                  <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
-                    <div class="basic right pointing ui icon dropdown button">
-                      <i class="list layout icon"></i>
-                      <div class="left menu">
-                        {{#if (and showEditMenuItemInRow record.rowConfig.canBeSelected)}}
-                          <div class="item" {{ action "objectListViewRowClick" record }}>
-                            <i class="edit icon"></i>
-                            <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
-                          </div>
-                        {{/if}}
-                        {{#if (and showDeleteMenuItemInRow record.rowConfig.canBeDeleted)}}
-                          <div class="item" {{ action "deleteRow" record }}>
-                            <i class="trash icon"></i>
-                            <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
-                          </div>
-                        {{/if}}
+        {{#each contentWithKeys key="key" as |record|}}
+            <tr class="{{record.rowConfig.customClass}}">
+              <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
+                <div class="hidden">{{record.key}}</div>
+                {{#if showHelperColumn}}
+                  <div class="object-list-view-helper-column-cell">
+                    {{#if showAsteriskInRow}}
+                      <div class="cell">
+                        <i class="asterisk small red icon {{unless record.data.hasDirtyAttributes "transparent"}}"></i>
                       </div>
-                    </div>
-                  </td>
+                    {{/if}}
+                    {{#if showCheckBoxInRow}}
+                      <div class="cell">
+                        {{flexberry-checkbox
+                          readonly=(or readonly (not record.rowConfig.canBeSelected))
+                          onChange=(action "selectRow" record)
+                          value=record.selected
+                        }}
+                      </div>
+                    {{/if}}
+                    {{#if showDeleteButtonInRow}}
+                      <div class="cell">
+                        <button class="ui ui-delete {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}>
+                          <i class="minus icon"></i>
+                        </button>
+                      </div>
+                    {{/if}}
+                    {{#if showEditButtonInRow}}
+                      <div class="cell">
+                        <button class="ui ui-edit {{buttonClass}} {{if readonly "disabled"}} button" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
+                          <i class="edit icon"></i>
+                        </button>
+                      </div>
+                    {{/if}}
+                  </div>
                 {{/if}}
-              </tr>
-          {{/each}}
-        {{/unless}}
-      {{/if}}
+              </td>
+              {{#each columns as |column|}}
+                {{#unless column.hide}}
+                  <td class="{{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
+                    {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
+                    {{#if column.cellComponent.componentName}}
+                      {{component column.cellComponent.componentName
+                        dynamicProperties=column.cellComponent.componentProperties
+                        relatedModel=record.data
+                        value=(mut (get record.data column.propName))
+                        readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
+                        required=required
+                      }}
+                    {{else}}
+                      <div class="oveflow-text">
+                        {{get-formatted record.data column.propName
+                          dateFormat=dateFormat
+                          moment=moment
+                        }}
+                      </div>
+                    {{/if}}
+                  </td>
+                {{/unless}}
+              {{/each}}
+              {{#if showMenuColumn}}
+                <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
+                  <div class="right pointing ui icon dropdown button">
+                    <i class="list layout icon"></i>
+                    <div class="left menu">
+                      {{#if (and showEditMenuItemInRow record.rowConfig.canBeSelected)}}
+                        <div class="item" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
+                          <i class="edit icon"></i>
+                          <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
+                        </div>
+                      {{/if}}
+                      {{#if (and showDeleteMenuItemInRow record.rowConfig.canBeDeleted)}}
+                        <div class="item" {{ action "deleteRow" record }}>
+                          <i class="trash icon"></i>
+                          <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
+                        </div>
+                      {{/if}}
+                    </div>
+                  </div>
+                </td>
+              {{/if}}
+            </tr>
+        {{/each}}
+      {{/unless}}
     </tbody>
   </table>
 </div>
-<div class="ui secondary menu no-margin">
+<div class="ui secondary menu no-margin nav-bar">
   <div class="ui basic buttons">
-    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
+    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
     {{#each pages as |page|}}
       {{#if page.isEllipsis}}
         <div class="ui button">...</div>
@@ -342,18 +357,18 @@
         {{/if}}
       {{/if}}
     {{/each}}
-    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
+    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
   </div>
   <div class="right menu">
-    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}
+    {{#if showShowingEntries}}
+      <div class="showing-entries">
+        {{#if (and currentIntervalRecords recordsTotalCount) }}
+          {{concat
+            (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+          }}
+        {{/if}}
+      </div>
+    {{/if}}
+    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
   </div>
 </div>
-{{#if showShowingEntries}}
-  <div class="showing-entries">
-    {{#if (and currentIntervalRecords recordsTotalCount) }}
-      {{concat
-        (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-      }}
-    {{/if}}
-  </div>
-{{/if}}

@@ -14,6 +14,7 @@
               {{flexberry-checkbox
                 readonly=(or readonly (not record.rowConfig.canBeSelected))
                 onChange=(action selectRow record)
+                value=record.selected
               }}
             </div>
           {{/if}}
@@ -27,13 +28,23 @@
               </button>
             </div>
           {{/if}}
+          {{#if showEditButtonInRow}}
+            <div class="cell">
+              <button
+                class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} {{if readonly "disabled"}} button"
+                title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
+                {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                <i class="edit icon"></i>
+              </button>
+            </div>
+          {{/if}}
         </div>
       {{/if}}
     </td>
     {{#each columns as |column index|}}
       <td
         onclick={{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
-        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}"
+        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}} {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
@@ -90,17 +101,17 @@
     {{/each}}
     {{#if showMenuColumn}}
       <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
-        <div class="basic right pointing ui icon dropdown button">
+        <div class="right pointing ui icon dropdown button">
           <i class="list layout icon"></i>
           <div class="left menu">
             {{#if showEditMenuItemInRow}}
-              <div class="item" {{action "onRowClick" record (hash column=null columnIndex=null)}}>
+              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                 <i class="edit icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
               </div>
             {{/if}}
             {{#if showDeleteMenuItemInRow}}
-              <div class="item" {{ action deleteRow record }}>
+              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action deleteRow record }}>
                 <i class="trash icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
               </div>
@@ -132,7 +143,9 @@
         showAsteriskInRow=showAsteriskInRow
         showCheckBoxInRow=showCheckBoxInRow
         showDeleteButtonInRow=showDeleteButtonInRow
+        showEditButtonInRow=showEditButtonInRow
         inHierarchicalMode=inHierarchicalMode
+        inExpandMode=(unbound inExpandMode)
         loadRecords=loadRecords
         doRenderData=record.doRenderData
         rowClick=rowClick
@@ -141,6 +154,7 @@
         _currentLevel=_currentLevel
         hierarchicalIndent=_hierarchicalIndent
         defaultLeftPadding=defaultLeftPadding
+        overflowedComponents=overflowedComponents
       }}
     {{/each}}
   {{/if}}

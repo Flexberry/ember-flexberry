@@ -2,6 +2,9 @@
   {{outlet}}
   {{outlet "modal"}}
 {{else}}
+{{#ui-sidebar class="inverted vertical main menu"}}
+  {{render "sitemap" sitemap}}
+{{/ui-sidebar}}
 <div class="bgw-fix">
   <div class="background-logo">
     <div class="ui top attached">
@@ -11,8 +14,8 @@
             class="launch icon item"
             title={{t "forms.application.header.menu.sitemap-button.title"}}>
             {{t "forms.application.header.menu.sitemap-button.caption"}}
-            <i class="sidebar icon text-menu-1"><span class="text_menu ">{{t "forms.application.header.menu.show-menu.caption"}}</span><span class="text_menu hidden-menu text-menu-2">{{t "forms.application.header.menu.hide-menu.caption"}}</span></i>
-            <i class="sidebar icon hidden-menu text-menu-2 hidden-text"><span class="text_menu hidden-text">{{t "forms.application.header.menu.hide-menu.caption"}}</span></i>
+            <i class="sidebar icon text-menu-show"><span class="text_menu ">{{t "forms.application.header.menu.show-menu.caption"}}</span><span class="text_menu hidden text-menu-hide">{{t "forms.application.header.menu.hide-menu.caption"}}</span></i>
+            <i class="sidebar icon hidden text-menu-hide hidden-text"><span class="text_menu hidden-text">{{t "forms.application.header.menu.hide-menu.caption"}}</span></i>
           </a>
         </div>
       </div>
@@ -31,19 +34,20 @@
   </div>
 </div>
 <div id="example" class="pusher">
-  <div class="full height" style="min-height: 90vh" >
-    <div class="flexberry-content ui attached segment">
-    {{#ui-sidebar class="inverted vertical main menu" dimPage=false}}
-      {{render "sitemap" sitemap}}
-    {{/ui-sidebar}}
-      <div class="ui main container">
-        <div class="stackable grid container">
-          {{outlet}}
-          {{outlet "modal"}}
+  <div class="ui form {{objectlistviewEventsService.loadingState}}">
+    <div class="full height">
+      <div class="flexberry-content ui attached segment">
+        <div class="ui main container">
+          <div class="stackable grid container">
+            {{outlet}}
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+<div class="ui main container">
+  {{outlet "modal"}}
 </div>
 <div class="ui vertical footer segment">
   <div class="ui container flex-container">
@@ -64,24 +68,13 @@
         <label style="margin-right: 5px;">
           {{t "forms.application.header.menu.language-dropdown.caption"}}
         </label>
-        {{!-- ui-dropdown component used in flexberry-dropdown has some unfixed problems with IE, so we use <select> instead --}}
-        {{#if browserIsInternetExplorer}}
-          <select class="ui dropdown" onchange={{action (mut (get i18n "locale")) value="target.value"}}>
-            {{#each locales as |locale|}}
-              <option value={{locale}} selected={{eq (get i18n "locale") locale}}>
-                {{locale}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{flexberry-dropdown
-            class="compact"
-            items=locales
-            value=i18n.locale
-            placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-            direction="upward"
-          }}
-        {{/if}}
+        {{flexberry-dropdown
+          class="compact"
+          items=locales
+          value=i18n.locale
+          placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+          direction="upward"
+        }}
       </div>
     </div>
   </div>

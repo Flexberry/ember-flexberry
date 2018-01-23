@@ -2,7 +2,7 @@
 @import "src/semantic";
 
 .spinner {
-  background: url('/assets/images/cat.gif') no-repeat;
+  background: url('images/cat.gif') no-repeat;
   background-size: contain;
   height: 140px;
   width: 175px;
@@ -43,12 +43,18 @@
 #example {
   .flexberry-content {
     padding: 1em 0;
+    border: none;
+  }
+
+  .full.height {
+    width: 100%;
+    transition: width 0.3s ease-in-out 0s;
   }
 }
 
 #example-mobile {
   .flexberry-content {
-    padding: 4em 10px 2em 10px;
+    padding: 0px 10px 2em 10px;
     border-bottom: none;
   }
 }
@@ -61,33 +67,44 @@
     color: rgba(255, 255, 255, 0.9)!important;
 }
 
-.delete-deteil {
-    border: 1px solid #7ba7d9!important;;
+
+/* Dummy example buttons styles */
+.ui.button.add-deteil:hover {
+    border: 1px solid #7dd4b4;
+    background-color: #7dd4b4;
 }
 
-.delete-deteil:hover {
-    background-color: #ff4800!important;
-    border: 1px solid #ff4800!important;
+.ui.button.delete-deteil:hover {
+    border: 1px solid #ff6400;
+    background-color: #ff6400;
 }
 
-.clear-all-log {
-    border: 1px solid #7ba7d9!important;
+.ui.button.clear-all-log {
+    border: 1px solid #7ba7d9;
 }
 
-.clear-all-log:hover {
-    background-color: #ff4800!important;
-    border: 1px solid #ff4800!important;
+.ui.button.clear-all-log:hover {
+    background-color: #ff6400;
+    border: 1px solid #ff6400;
 }
 
-.clear-all-log:focus {
-    background-color: #ff4800!important;
-    border: 1px solid #ff4800!important;
+.ui.button.clear-all-log:focus {
+    background-color: #ff6400;
+    border: 1px solid #ff6400;
 }
 
-.refresh-counts {
-    border: 1px solid #7ba7d9!important;
+
+/* Dummy buttons styles for lock service test buttons*/
+.ui.right.floated.tiny.compact.lockServiseButtonBlue.button {
+    color:white;
+    background-color: #7ba7d9;
+    background: #7ba7d9;
+    border: #7ba7d9;
 }
 
-.refresh-counts:hover {
-    border: 1px solid #94cea8!important;
+.ui.right.floated.tiny.compact.lockServiseButtonBlack.button {
+    color:white;
+    background-color: black;
+    background: black;
+    border: black;
 }

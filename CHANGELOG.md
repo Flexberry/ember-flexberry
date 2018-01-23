@@ -3,11 +3,21 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-
 ### Changed
-* Add class `flexberry-datepicker` in `classNames` for `flexberry-datepicker` component.
-* Add classes for menu items in `object-list-view-row` component.
-* Changed readonly attribute for `flexberry-datepicker`.
+* List components:
+    * Checkbox is used to display boolean values.
+* Getting of current user name is able now by calling `getCurrentUserName` from [`user` service](https://github.com/Flexberry/ember-flexberry-data/blob/develop/addon/services/user.js#L37) (declared in `ember-flexberry-data` addon).
+* `flexberry-datepicker` component
+    * Add class `flexberry-datepicker` in `classNames`.
+    * Changed readonly attribute.
+
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix hierarchy collapse and expand.
+* `flexberry-simpleolv` component:
+    * Set default user settings.
+* List components:
+    * Fix neq filter when value isn't null.
 
 ## [0.9.2-beta.10] - 2018-01-11
 ### Added

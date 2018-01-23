@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-groupedit` component:
+    * Add column widths saving in usersettings.
+    * Add restore default usersettings button.
+
 ### Changed
 * List components:
     * Checkbox is used to display boolean values.

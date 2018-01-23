@@ -112,6 +112,15 @@ export default FlexberryBaseComponent.extend({
   deleteButton: true,
 
   /**
+    Flag: indicates whether to show default settings button at toolbar.
+
+    @property defaultSettingsButton
+    @type Boolean
+    @default true
+  */
+  defaultSettingsButton: true,
+
+  /**
     Route of edit form.
 
     @example

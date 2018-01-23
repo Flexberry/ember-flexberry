@@ -9,17 +9,24 @@ export default ListFormController.extend({
   queryParams: ['filterCondition'],
   filterCondition: undefined,
 
-  currentFilterCondition: Ember.computed('filterCondition', function() {
-      let filterCondition = this.get('filterCondition');
-      if(filterCondition == 'or'){
-        this.set('filterByAnyWord',true);
-        this.set('filterByAllWords',false);
-      }else if(filterCondition == 'and'){
-        this.set('filterByAnyWord',false);
-        this.set('filterByAllWords',true);
-      }
+  /**
+    Observes current state of FilterCondition parameter
+    & set right filter option after reload page.
 
-      return filterCondition;
+    @method  _currentFilterCondition
+    @private
+  */
+  _currentFilterCondition: Ember.observer('filterCondition', function() {
+    let filterCondition = this.get('filterCondition');
+    if (filterCondition === 'or') {
+      this.set('filterByAnyWord', true);
+      this.set('filterByAllWords', false);
+    }else if (filterCondition === 'and') {
+      this.set('filterByAnyWord', false);
+      this.set('filterByAllWords', true);
+    }
+
+    return filterCondition;
   }),
 
   customButtons: Ember.computed('filterByAnyWord', 'filterByAllWords', function() {
@@ -35,7 +42,6 @@ export default ListFormController.extend({
   }),
 
   actions: {
-
     toggleFilterByAnyWord() {
       this.toggleProperty('filterByAnyWord');
       if (this.get('filterByAnyWord')) {

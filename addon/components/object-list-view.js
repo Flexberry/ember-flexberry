@@ -447,13 +447,13 @@ export default FlexberryBaseComponent.extend(
       }
 
       // Set columns width.
-      for (let i = 0; i < cols.length; i++) {
-        let col = cols[i];
-        let propName = col.propName;
-
-        let setting = userSettings.columnWidths.filter(sett => (sett.propName === propName) && !Ember.isBlank(sett.width));
-
-        col.width = setting.width || 150; // TODO: in method _setColumnWidths() used magical focus for compute this width
+      if (Ember.isArray(userSettings.columnWidths)) {
+        for (let i = 0; i < userSettings.columnWidths.length; i++) {
+          let columnWidth = userSettings.columnWidths[i];
+          if (namedCols[columnWidth.propName]) {
+            namedCols[columnWidth.propName].width = columnWidth.width || 150;
+          }
+        }
       }
 
       if (userSettings.sorting === undefined) {

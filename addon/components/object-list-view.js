@@ -420,16 +420,15 @@ export default FlexberryBaseComponent.extend(
 
     let cols = this._generateColumns(projection.attributes);
     let userSettings;
-    let userSettingName = this._getUserSettingName();
     if (this.notUseUserSettings === true) {
 
       // flexberry-groupedit and lookup-dialog-content set this flag to true and use only developerUserSettings.
       // In future release backend can save userSettings for each olv.
       userSettings = this.get('currentController.developerUserSettings');
-      userSettings = userSettings ? userSettings[userSettingName] : undefined;
+      userSettings = userSettings ? userSettings[this.get('componentName')] : undefined;
       userSettings = userSettings ? userSettings.DEFAULT : undefined;
     } else {
-      userSettings = this.get('userSettingsService').getCurrentUserSetting(userSettingName); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
+      userSettings = this.get('userSettingsService').getCurrentUserSetting(this.get('componentName')); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
     }
 
     let onEditForm = this.get('onEditForm');
@@ -1375,18 +1374,6 @@ export default FlexberryBaseComponent.extend(
   },
 
   /**
-    It returns user setting name for this component instance.
-
-    @method _getUserSettingName
-    @private
-
-    @param {Array} userSetting User setting to apply to control
-  */
-  _getUserSettingName() {
-    return this.get('modelProjection.modelName') + '//' + this.get('modelProjection.projectionName') + '//' + this.get('componentName');
-  },
-
-  /**
     It handles the end of getting user setting with column widths.
 
     @method _setColumnWidths
@@ -1397,14 +1384,13 @@ export default FlexberryBaseComponent.extend(
   _setColumnWidths(componentName) {
     if (Ember.isBlank(componentName) || this.get('componentName') === componentName) {
       let userSetting;
-      let userSettingName = this._getUserSettingName();
       if (this.notUseUserSettings) {
         userSetting = this.get('currentController.developerUserSettings');
-        userSetting = userSetting ? userSetting[userSettingName] : undefined;
+        userSetting = userSetting ? userSetting[this.get('componentName')] : undefined;
         userSetting = userSetting ? userSetting.DEFAULT : undefined;
         userSetting = userSetting ? userSetting.columnWidths : undefined;
       } else {
-        userSetting = this.get('userSettingsService').getCurrentColumnWidths(userSettingName);
+        userSetting = this.get('userSettingsService').getCurrentColumnWidths(this.get('componentName'));
       }
 
       userSetting = Ember.isArray(userSetting) ? Ember.A(userSetting) : Ember.A();
@@ -1513,8 +1499,7 @@ export default FlexberryBaseComponent.extend(
       });
     });
     this._setCurrentColumnsWidth();
-    let userSettingName = this._getUserSettingName();
-    this.get('userSettingsService').setCurrentColumnWidths(userSettingName, undefined, userWidthSettings);
+    this.get('userSettingsService').setCurrentColumnWidths(this.get('componentName'), undefined, userWidthSettings);
   },
 
   /**

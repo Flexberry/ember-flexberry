@@ -1190,14 +1190,6 @@ export default FlexberryBaseComponent.extend(
             }
 
             this._setColumnWidths();
-
-            let $currentTable = this.$('table.object-list-view');
-            if (this.get('allowColumnResize')) {
-              $currentTable.addClass('fixed');
-              this._reinitResizablePlugin();
-            } else {
-              $currentTable.colResizable({ disable: true });
-            }
           } else {
             // Start render row.
             let modelWithKey = contentForRender[renderedRowIndex];
@@ -1213,7 +1205,12 @@ export default FlexberryBaseComponent.extend(
               }
             }
 
-            this._reinitResizablePlugin();
+            if (this.get('allowColumnResize')) {
+              this._reinitResizablePlugin();
+            } else {
+              let $table = this.$('table.object-list-view');
+              $table.colResizable({ disable: true });
+            }
           }
         }
       }
@@ -1354,6 +1351,14 @@ export default FlexberryBaseComponent.extend(
 
       let $table = this.$('table.object-list-view');
       let $columns = $table.find('th');
+
+      if (this.get('allowColumnResize')) {
+        $table.addClass('fixed');
+        this._reinitResizablePlugin();
+      } else {
+        $table.colResizable({ disable: true });
+      }
+
       let hashedUserSetting = {};
       let tableWidth = 0;
       let olvRowMenuWidth = 0;
@@ -1423,7 +1428,9 @@ export default FlexberryBaseComponent.extend(
         }
       });
 
-      this._reinitResizablePlugin();
+      if (this.get('allowColumnResize')) {
+        this._reinitResizablePlugin();
+      }
     }
   },
 

@@ -1047,7 +1047,7 @@ export default FlexberryBaseComponent.extend(
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
       userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {
-        if (this.get('class') != 'groupedit-container')
+        if (this.get('class') !== 'groupedit-container')
         {
           let sort = serializeSortingParam(currentUserSetting.sorting);
           this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });

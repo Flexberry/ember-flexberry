@@ -13,7 +13,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @type String
     @default 'ember-flexberry-dummy-suggestion-list'
    */
-  parentRoute: 'ember-flexberry-dummy-suggestion-list',
+  parentRoute: 'components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute',
 
   /**
     Name of model.comments edit route.
@@ -23,6 +23,28 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @default 'ember-flexberry-dummy-comment-edit'
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
+
+  /**
+    Name of model.comments edit route.
+
+    @property commentsEditRoute
+    @type String
+    @default 'ember-flexberry-dummy-comment-edit'
+   */
+  checkboxValue: false,
+  fieldvalue: undefined,
+
+  lookupReadonly: Ember.computed('lookupReadonly', function() {
+    return this.get('checkboxValue');
+  }),
+
+  lookupLimitFunction: Ember.computed('limitFunction', function() {
+    if (this.get('fieldvalue')) {
+      return new StringPredicate('name').contains(this.get('fieldvalue'));
+    } else {
+      return undefined;
+    }
+  }),
 
   /**
     Method to get type and attributes of a component,
@@ -36,7 +58,6 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
   getCellComponent(attr, bindingPath, model) {
-    let limitFunction = new StringPredicate('name').contains('ва');
     let cellComponent = this._super(...arguments);
     if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
@@ -49,8 +70,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            lookupLimitPredicate: limitFunction,
-            readonly: true
+            lookupLimitPredicate: this.get('lookupLimitFunction'),
+            readonly: this.get('lookupReadonly')
           };
           break;
 

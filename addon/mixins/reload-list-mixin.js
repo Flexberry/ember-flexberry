@@ -12,7 +12,8 @@ const {
   BasePredicate,
   SimplePredicate,
   StringPredicate,
-  ComplexPredicate
+  ComplexPredicate,
+  DatePredicate
 } = Query;
 
 /**
@@ -52,6 +53,17 @@ export default Ember.Mixin.create({
    * @return {Promise}  A promise, which is resolved with a set of loaded records once the server returns.
    */
   reloadList: function(options) {
+    if (options.filters instanceof ComplexPredicate) {
+      var newFilter = Ember.A();
+      options.filters._predicates.forEach((predicate) => {
+        newFilter.push(this._normalizeNeqPredicate(predicate));
+      }, this);
+
+      options.filters._predicates = newFilter;
+    } else {
+      options.filters = this._normalizeNeqPredicate(options.filters);
+    }
+
     let store = this.store;
     Ember.assert('Store for data loading is not defined.', store);
 
@@ -305,4 +317,31 @@ export default Ember.Mixin.create({
 
     return attributes;
   },
+
+  /**
+    Generates new predicate for neq value predicate.
+
+    @method _normalizeNeqPredicate
+    @param {Object} predicate
+    @return {Object} Normalized predicate.
+    @private
+  */
+  _normalizeNeqPredicate(predicate) {
+    let result = predicate;
+    if (!Ember.isNone(predicate) && predicate._operator === 'neq' && predicate._value !== null) {
+      let sp1 = predicate;
+      let sp2;
+      if (predicate instanceof SimplePredicate) {
+        sp2 = new SimplePredicate(sp1._attributePath, Query.FilterOperator.Eq, null);
+      }
+
+      if (predicate instanceof DatePredicate) {
+        sp2 = new DatePredicate(sp1._attributePath, Query.FilterOperator.Eq, null);
+      }
+
+      result = sp2 ? new ComplexPredicate(Condition.Or, sp1, sp2) : sp1;
+    }
+
+    return result;
+  }
 });

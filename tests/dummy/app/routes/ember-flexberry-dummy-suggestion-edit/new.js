@@ -27,5 +27,40 @@ export default EditFormNewRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @type String
     @default 'ember-flexberry-dummy-suggestion-edit'
   */
-  templateName: 'ember-flexberry-dummy-suggestion-edit'
+  templateName: 'ember-flexberry-dummy-suggestion-edit',
+
+  developerUserSettings: {
+    suggestionUserVotesGroupEdit: {
+      'DEFAULT': {
+        'columnWidths': [
+          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+          { 'propName': 'voteType', 'width': 133 },
+          { 'propName': 'author', 'width': 348 },
+          { 'propName': 'author.eMail', 'width': 531 }
+        ],
+        'sorting': [{ 'propName': 'author', 'direction': 'asc', 'attributePath': 'author.name' }]
+      }
+    },
+    filesGroupEdit: {
+      'DEFAULT': {
+        'columnWidths': [
+          { 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 },
+          { 'propName': 'order', 'width': 140 },
+          { 'propName': 'file', 'width': 893 }
+        ],
+        'colsOrder': [{ 'propName': 'file' }, { 'propName': 'order' }],
+        'sorting': [{ 'propName': 'order', 'direction': 'desc' }]
+      }
+    },
+    suggestionCommentsGroupEdit: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }, { 'propName': 'votes', 'fixed': true }],
+        'sorting': [
+          { 'propName': 'votes', 'direction': 'asc' },
+          { 'propName': 'moderated', 'direction': 'desc' },
+          { 'propName': 'text', 'direction': 'asc' }
+        ],
+      }
+    }
+  },
 });

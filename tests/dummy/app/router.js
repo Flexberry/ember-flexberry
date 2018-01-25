@@ -136,6 +136,8 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
+  this.route('components-acceptance-tests/edit-form-readonly');
+  this.route('components-acceptance-tests/edit-form-validation/validation');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-filter');
 
   this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-list-with-checked-checkbox');

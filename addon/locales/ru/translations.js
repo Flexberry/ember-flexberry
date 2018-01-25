@@ -136,11 +136,6 @@ export default {
       },
     },
 
-    'object-list-view-cell': {
-      'boolean-false-caption': 'Ложь',
-      'boolean-true-caption': 'Истина'
-    },
-
     'olv-toolbar': {
       'add-button-text': 'Добавить',
       'refresh-button-text': 'Обновить',
@@ -174,7 +169,8 @@ export default {
 
     'groupedit-toolbar': {
       'add-button-text': 'Добавить',
-      'delete-button-text': 'Удалить'
+      'delete-button-text': 'Удалить',
+      'clear-settings-button-text': 'Восстановить настройки по умолчанию'
     },
 
     'colsconfig-dialog-content': {

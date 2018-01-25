@@ -544,7 +544,11 @@ Ember.$.extend(true, translations, {
             'caption': 'Удаление настроек',
             'title': ''
           }
-        }
+        },
+        'components-acceptance-tests': {
+          'caption': 'Acceptance тесты',
+          'title': '',
+        },
       }
     },
 
@@ -980,7 +984,7 @@ Ember.$.extend(true, translations, {
         'all-del-button-name': 'Удалить все!',
         'message': 'Настройки удалены'
       }
-    }
+    },
   },
 
   'components': {

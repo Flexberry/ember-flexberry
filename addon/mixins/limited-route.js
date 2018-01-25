@@ -144,8 +144,6 @@ export default Ember.Mixin.create({
           let predicate = this.predicateForFilter(filters[filter]);
           if (predicate) {
             predicates.push(predicate);
-          } else {
-            delete filters[filter];
           }
         }
       }

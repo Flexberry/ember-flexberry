@@ -52,7 +52,7 @@
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
-              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
+              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
             }}
               {{#if (and (not index) inHierarchicalMode)}}
@@ -68,7 +68,7 @@
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
-              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
+              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
             }}
             {{#if showValidationMessages}}

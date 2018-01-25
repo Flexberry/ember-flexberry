@@ -319,6 +319,7 @@ export default FlexberryBaseComponent.extend({
       time_24hr: true,
       allowInput: true,
       clickOpens: false,
+      disableMobile: true,
       altInputClass: 'custom-flatpickr',
       minDate: this.get('min'),
       maxDate: this.get('max'),

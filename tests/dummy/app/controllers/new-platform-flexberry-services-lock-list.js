@@ -29,9 +29,9 @@ export default NewPlatformFlexberryServicesLockListController.extend({
   */
   customButtons: Ember.computed('i18n.locale', 'openReadOnly', 'unlockObject', function() {
     let i18n = this.get('i18n');
-    let baseClasses = 'right floated tiny compact';
-    let openReadOnly = this.get('openReadOnly') ? 'lockServiseButtonBlue' : 'lockServiseButtonBlack';
-    let unlockObject = this.get('unlockObject') ? 'lockServiseButtonBlue' : 'lockServiseButtonBlack';
+    let baseClasses = 'floated tiny compact';
+    let openReadOnly = this.get('openReadOnly') ? 'positive' : 'negative';
+    let unlockObject = this.get('unlockObject') ? 'positive' : 'negative';
     return [{
       buttonName: i18n.t('forms.new-platform-flexberry-services-lock-list.change-user-name'),
       buttonAction: 'changeUserName',

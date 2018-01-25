@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import Errors from 'ember-validations/errors';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
@@ -504,7 +505,9 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about save operation fail.
   */
   onSaveActionRejected(errorData) {
-    this.send('error', errorData);
+    if (!(errorData instanceof Errors)) {
+      this.send('error', errorData);
+    }
   },
 
   /**

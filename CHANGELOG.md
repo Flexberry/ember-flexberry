@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Set default user settings.
 * List components:
     * Fix neq filter when value isn't null.
+    * Fix displaying in readonly mode.
 
 ## [0.9.2-beta.10] - 2018-01-11
 ### Added

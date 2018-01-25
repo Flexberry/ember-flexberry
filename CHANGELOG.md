@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-objectlistview` component:
     * Fix hierarchy collapse and expand.
+    * Now `allowColumnResize` property apllying properly.
 * `flexberry-simpleolv` component:
     * Set default user settings.
 * List components:

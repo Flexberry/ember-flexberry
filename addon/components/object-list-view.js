@@ -1047,8 +1047,15 @@ export default FlexberryBaseComponent.extend(
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
       userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {
-        let sort = serializeSortingParam(currentUserSetting.sorting);
-        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+        if (this.get('class') != 'groupedit-container')
+        {
+          let sort = serializeSortingParam(currentUserSetting.sorting);
+          this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+        } else {
+          this.set('sorting', currentUserSetting.sorting);
+          let objectlistviewEventsService = this.get('objectlistviewEventsService');
+          objectlistviewEventsService.updateWidthTrigger(componentName);
+        }
       });
     }
   },

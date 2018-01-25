@@ -32,18 +32,25 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @default 'ember-flexberry-dummy-comment-edit'
    */
   checkboxValue: false,
-  fieldvalue: undefined,
+  fieldvalue: 'Vasya',
 
-  lookupReadonly: Ember.computed('lookupReadonly', function() {
+  lookupReadonly: Ember.observer('checkboxValue', function() {
+    if (!Ember.isNone(this.get('computedProperties.dynamicProperties.readonly'))) {
+      if (this.get('checkboxValue')) {
+        this.set('computedProperties.dynamicProperties.readonly', true);
+      } else {
+        this.set('computedProperties.dynamicProperties.readonly', false);
+      }
+    }
+
     return this.get('checkboxValue');
   }),
 
-  lookupLimitFunction: Ember.computed('limitFunction', function() {
-    if (this.get('fieldvalue')) {
-      return new StringPredicate('name').contains(this.get('fieldvalue'));
-    } else {
-      return undefined;
+  lookupLimitFunction: Ember.observer('fieldvalue', function() {
+    if (!Ember.isNone(this.get('computedProperties.dynamicProperties.lookupLimitPredicate'))) {
+      this.set('computedProperties.dynamicProperties.lookupLimitPredicate', new StringPredicate('name').contains(this.get('fieldvalue')));
     }
+
   }),
 
   /**
@@ -59,6 +66,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
    */
   getCellComponent(attr, bindingPath, model) {
     let cellComponent = this._super(...arguments);
+    let limitFunction = new StringPredicate('name').contains('Vasya');
     if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
@@ -70,8 +78,9 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             relationName: 'author',
             projection: 'ApplicationUserL',
             autocomplete: true,
-            lookupLimitPredicate: this.get('lookupLimitFunction'),
-            readonly: this.get('lookupReadonly')
+            lookupLimitPredicate: limitFunction,
+            computedProperties: { thisController: this },
+            readonly: false,
           };
           break;
 

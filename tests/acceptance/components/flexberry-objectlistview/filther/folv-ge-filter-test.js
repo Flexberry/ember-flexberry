@@ -16,7 +16,7 @@ executeTest('check ge filter', (store, assert, app) => {
     let builder2 = new Query.Builder(store).from(modelName).top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
-      filtreInsertParametr = arr.objectAt(0).get('votes');
+      filtreInsertParametr = arr.objectAt(0).get('votes') - 1;
     }).then(function() {
       let $filterButtonDiv = Ember.$('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
@@ -34,16 +34,16 @@ executeTest('check ge filter', (store, assert, app) => {
         window.setTimeout(() => {
           let controller = app.__container__.lookup('controller:' + currentRouteName());
           let filtherResult = controller.model.content;
-          let $notSuccessful = true;
+          let $successful = true;
           for (let i = 0; i < filtherResult.length; i++) {
             let votes = filtherResult[0]._data.votes;
             if (votes <= filtreInsertParametr) {
-              $notSuccessful = false;
+              $successful = false;
             }
           }
 
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
-          assert.equal($notSuccessful, true, 'Filter successfully worked');
+          assert.equal($successful, true, 'Filter successfully worked');
           done();
         }, 1000);
       });

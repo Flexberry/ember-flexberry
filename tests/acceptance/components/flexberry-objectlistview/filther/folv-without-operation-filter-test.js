@@ -38,18 +38,18 @@ executeTest('check without operation filter', (store, assert, app) => {
         let done1 = assert.async();
         refreshListByFunction(refreshFunction, controller).then(() => {
           let filtherResult = controller.model.content;
-          let $successful = true;
+          let successful = true;
           for (let i = 0; i < filtherResult.length; i++) {
             let address = filtherResult[i]._data.address;
             if (address.lastIndexOf(filtreInsertParametr) === -1) {
-              $successful = false;
+              successful = false;
             }
           }
 
           let dropdown = Ember.$('.flexberry-dropdown')[0];
           assert.equal(dropdown.innerText, 'like', 'Filter select like operation if it is not specified');
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
-          assert.equal($successful, true, 'Filter successfully worked');
+          assert.equal(successful, true, 'Filter successfully worked');
           done1();
         });
       });

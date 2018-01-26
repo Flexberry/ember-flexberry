@@ -37,16 +37,16 @@ executeTest('check ge filter', (store, assert, app) => {
         let done1 = assert.async();
         refreshListByFunction(refreshFunction, controller).then(() => {
           let filtherResult = controller.model.content;
-          let $successful = true;
+          let successful = true;
           for (let i = 0; i < filtherResult.length; i++) {
             let votes = filtherResult[0]._data.votes;
             if (votes <= filtreInsertParametr) {
-              $successful = false;
+              successful = false;
             }
           }
 
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
-          assert.equal($successful, true, 'Filter successfully worked');
+          assert.equal(successful, true, 'Filter successfully worked');
           done1();
         });
       });

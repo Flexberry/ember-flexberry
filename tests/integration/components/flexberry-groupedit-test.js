@@ -5,11 +5,9 @@ import startApp from '../../helpers/start-app';
 import UserSettingsService from 'ember-flexberry/services/user-settings';
 import AggregatorModel from '../../../models/components-examples/flexberry-groupedit/shared/aggregator';
 import AggregatorModelMainModelProjection from '../../../models/ember-flexberry-dummy-suggestion';
-import EditFormController from 'ember-flexberry/controllers/edit-form';
 import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-component';
 
 let App;
-let editFormController;
 
 moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry groupedit', {
   integration: true,
@@ -24,10 +22,6 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
     UserSettingsService.reopen({
       isUserSettingsServiceEnabled: false
     });
-
-    // Override base component's reference to current controller.
-    editFormController = EditFormController.create(App.__container__.ownerInjection());
-    FlexberryBaseComponent.prototype.currentController = editFormController;
   },
 
   afterEach: function() {
@@ -36,49 +30,6 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
 
     Ember.run(App, 'destroy');
   }
-});
-
-test('ember-grupedit cellComponent test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-    let tempCellComponent = {
-      componentName: 'flexberry-checkbox',
-      componentProperties: null
-    };
-
-    // Remove getCellComponent method from current controller's instance to force groupedit use componennt defined in its cellComponent property.
-    editFormController.set('getCellComponent', null);
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('cellComponent',  tempCellComponent);
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          cellComponent=cellComponent
-          searchForContentChange=searchForContentChange
-        }}`);
-
-    // Add record.
-    let $addButton = $(Ember.$('.ui.button')[0]);
-
-    Ember.run(() => {
-      $addButton.click();
-    });
-
-    wait().then(() => {
-      // Check count cell with checkbox.
-      let $textarea = Ember.$('.flexberry-checkbox');
-      assert.strictEqual($textarea.length === 7, true, 'All cell have flexberry-checkbox component');
-    });
-  });
 });
 
 test('ember-grupedit element by default test', function(assert) {
@@ -479,62 +430,6 @@ test('ember-grupedit placeholder test', function(assert) {
   });
 });
 
-test('ember-grupedit readonly test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
-          readonly=true
-        }}`);
-
-    let detailModel = this.get('model.details');
-    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
-
-    wait().then(() => {
-      let $componentObjectListView = Ember.$('.object-list-view');
-      let $componentObjectListViewTd = $componentObjectListView.children('tbody').children('tr').children('td');
-
-      let $disabledItem;
-      let $objectlistviewcell1 = $($componentObjectListViewTd[1]);
-      $disabledItem = $objectlistviewcell1.children('.flexberry-checkbox');
-      assert.strictEqual($disabledItem.hasClass('read-only'), true, 'Flexberry-checkbox is readonly into object-list-view.');
-
-      let $objectlistviewcell2 = $($componentObjectListViewTd[2]);
-      $disabledItem = Ember.$('.ember-view.ember-text-field', $objectlistviewcell2);
-      assert.strictEqual($disabledItem.attr('readonly'), 'readonly', 'Flexberry-textbox is readonly into object-list-view.');
-
-      let $objectlistviewcell3 = $($componentObjectListViewTd[3]);
-      $disabledItem = Ember.$('.ember-view.ember-text-field', $objectlistviewcell3);
-      assert.strictEqual($disabledItem.attr('readonly'), 'readonly', 'Calendar is readonly into object-list-view.');
-
-      let $objectlistviewcell4 = $($componentObjectListViewTd[4]);
-      $disabledItem = $objectlistviewcell4.children('.flexberry-dropdown');
-      assert.strictEqual($disabledItem.hasClass('disabled'), true, 'Flexberry-dropdown is readonly into object-list-view.');
-
-      let $objectlistviewcell5 = $($componentObjectListViewTd[5]);
-      $disabledItem = Ember.$('.flexberry-file-add-button', $objectlistviewcell5);
-      assert.strictEqual($disabledItem.length === 0, true, 'Flexberry-file is readonly into object-list-view.');
-
-      let $objectlistviewcell6 = $($componentObjectListViewTd[6]);
-      $disabledItem = Ember.$('.disabled', $objectlistviewcell6);
-      assert.strictEqual($disabledItem.length === 0, false, 'Flexberry-lookup is readonly into object-list-view.');
-    });
-  });
-});
-
 test('ember-grupedit striped test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
@@ -928,54 +823,6 @@ test('ember-grupedit rowClickable test', function(assert) {
   });
 });
 
-test('correct embedding components in to objectlistview test', function(assert) {
-  let store = App.__container__.lookup('service:store');
-
-  Ember.run(() => {
-
-    let model = store.createRecord('components-examples/flexberry-groupedit/shared/aggregator');
-    let testComponentName = 'my-test-component-to-count-rerender';
-
-    this.set('proj', AggregatorModel.projections.get('AggregatorE'));
-    this.set('model', model);
-    this.set('componentName', testComponentName);
-    this.set('searchForContentChange', true);
-    this.render(
-      hbs`
-        {{flexberry-groupedit
-          content=model.details
-          componentName=componentName
-          modelProjection=proj.attributes.details
-          searchForContentChange=searchForContentChange
-        }}`);
-
-    // Add record.
-    let detailModel = this.get('model.details');
-    detailModel.addObject(store.createRecord('components-examples/flexberry-groupedit/shared/detail'));
-
-    wait().then(() => {
-      let $componentObjectListView = Ember.$('.object-list-view');
-      let $componentObjectListViewTd = $componentObjectListView.children('tbody').children('tr').children('td');
-
-      let $objectlistviewcell1 = $($componentObjectListViewTd[1]);
-      assert.strictEqual($objectlistviewcell1.children('.flexberry-checkbox').length === 1, true,
-        'Flexberry-checkbox is embedded properly into object-list-view.');
-      let $objectlistviewcell2 = $($componentObjectListViewTd[2]);
-      assert.strictEqual($objectlistviewcell2.children('.flexberry-textbox').length === 1, true,
-        'Flexberry-textbox is embedded properly into object-list-view.');
-      let $objectlistviewcell3 = $($componentObjectListViewTd[3]);
-      assert.strictEqual($objectlistviewcell3.children('.ui.icon.input').length === 1, true, 'Calendar is embedded pSroperly into object-list-view.');
-      let $objectlistviewcell4 = $($componentObjectListViewTd[4]);
-      assert.strictEqual($objectlistviewcell4.children('.flexberry-dropdown').length === 1, true,
-        'Flexberry-dropdown is embedded properly into object-list-view.');
-      let $objectlistviewcell5 = $($componentObjectListViewTd[5]);
-      assert.strictEqual($objectlistviewcell5.children('.flexberry-file').length === 1, true, 'Flexberry-file is embedded properly into object-list-view.');
-      let $objectlistviewcell6 = $($componentObjectListViewTd[6]);
-      assert.strictEqual($objectlistviewcell6.children('.flexberry-lookup').length === 1, true, 'Flexberry-lookup is embedded properly into object-list-view.');
-    });
-  });
-});
-
 test('ember-grupedit buttonClass test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
@@ -1092,8 +939,6 @@ test('ember-grupedit menuInRowAdditionalItems without standart element test', fu
           menuInRowAdditionalItems=menuInRowAdditionalItems
         }}`);
 
-    //let controller = App.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
-
     let $addButton = $(Ember.$('.ui.button')[0]);
 
     Ember.run(() => {
@@ -1110,8 +955,6 @@ test('ember-grupedit menuInRowAdditionalItems without standart element test', fu
 
     assert.strictEqual(componentOLVMenuItemIcon.hasClass('icon'), true, 'Component OLVMenuItemIcon has class icon');
     assert.strictEqual(componentOLVMenuItemIcon.hasClass('remove'), true, 'Component OLVMenuItemIcon has class remove');
-
-    //Add action test.
   });
 });
 

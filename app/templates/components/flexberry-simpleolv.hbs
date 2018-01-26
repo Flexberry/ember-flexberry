@@ -10,7 +10,7 @@
   {{/if}}
   {{#if createNewButton}}
     <button
-      class="ui create-button {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button"
+      class="ui create-button {{buttonClass}} {{if readonly "disabled" (if enableCreateNewButton "" "disabled")}} button"
       title={{t "components.olv-toolbar.add-button-text"}}
       {{action "createNew"}}>
         {{t "components.olv-toolbar.add-button-text"}}
@@ -18,7 +18,7 @@
   {{/if}}
   {{#if deleteButton}}
     <button
-      class="ui delete-button {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button"
+      class="ui delete-button {{buttonClass}} {{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}} button"
       title={{t "components.olv-toolbar.delete-button-text"}}
        {{action "delete"}}>
         {{t "components.olv-toolbar.delete-button-text"}}
@@ -143,22 +143,32 @@
 </div>
 
 <div class="object-list-view-container">
-  {{#if errorMessages}}
-    {{#each errorMessages as |currentError|}}
-      {{ui-message
-        type='error'
-        closeable=true
-        visible=true
-        title='Error occurred'
-        message=currentError
-      }}
-    {{/each}}
-  {{/if}}
   <table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
     <thead>
       <tr>
         {{#if showHelperColumn}}
-          <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar"></th>
+          <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
+            {{#if showCheckBoxInRow }}
+              <button
+                class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
+                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                {{action "checkAllAtPage"}}>
+                  <i class="check-square-o icon"></i>
+              </button>
+              <button
+                class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
+                title={{t "components.olv-toolbar.check-all-button-text"}}
+                {{action "checkAll"}}>
+                  <i class="check-all-square-o icon"></i>
+              </button>
+              <button
+                class="ui clear-sorting-button {{buttonClass}} button"
+                title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+                {{action "clearSorting"}}>
+                  <i class="sort icon"></i>
+              </button>
+            {{/if}}
+          </th>
         {{/if}}
         {{#each columns as |column|}}
           {{#unless column.hide}}
@@ -262,6 +272,7 @@
                         {{flexberry-checkbox
                           readonly=(or readonly (not record.rowConfig.canBeSelected))
                           onChange=(action "selectRow" record)
+                          value=record.selected
                         }}
                       </div>
                     {{/if}}
@@ -269,6 +280,13 @@
                       <div class="cell">
                         <button class="ui ui-delete {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action 'deleteRow' record}}>
                           <i class="minus icon"></i>
+                        </button>
+                      </div>
+                    {{/if}}
+                    {{#if showEditButtonInRow}}
+                      <div class="cell">
+                        <button class="ui ui-edit {{buttonClass}} {{if readonly "disabled"}} button" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
+                          <i class="edit icon"></i>
                         </button>
                       </div>
                     {{/if}}
@@ -304,13 +322,13 @@
                     <i class="list layout icon"></i>
                     <div class="left menu">
                       {{#if (and showEditMenuItemInRow record.rowConfig.canBeSelected)}}
-                        <div class="item" {{ action "objectListViewRowClick" record }}>
+                        <div class="item {{if readonly "disabled"}}" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
                           <i class="edit icon"></i>
                           <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
                         </div>
                       {{/if}}
                       {{#if (and showDeleteMenuItemInRow record.rowConfig.canBeDeleted)}}
-                        <div class="item" {{ action "deleteRow" record }}>
+                        <div class="item {{if readonly "disabled"}}" {{ action "deleteRow" record }}>
                           <i class="trash icon"></i>
                           <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
                         </div>

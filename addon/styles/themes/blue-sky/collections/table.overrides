@@ -44,3 +44,8 @@ table.object-list-view.selectable thead {
 .object-list-view-helper-column  {
     padding: 0px 7px!important;
 }
+
+.ui.fixed.table th.object-list-view-operations {
+    text-overflow: clip;
+    white-space: normal;
+}

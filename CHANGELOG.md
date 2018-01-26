@@ -4,6 +4,79 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.10.0] - 2018-01-26
+### Added
+* `flexberry-error` component for errors displaying.
+* `flexberry-simpledatetime` component:
+    * Add remove value button.
+    * Add localization support.
+* `flexberry-datepicker` component:
+    * Support `drops` option.
+* List components:
+    * Check all records on page operation, check all records on alls pages operation, clear sorting operation.
+    * Saving and restoring previously selected records on reloading (including filtering, refreshing, etc. except changing of page number temporarily).
+    * Optional edit button in row.
+* `flexberry-objectlistview` component:
+    * Add collapse/expand all button for hierarchy mode.
+    * Increased performance when working in hierarchical mode by reducing number of queries to backend on rendering top-level nodes.
+    * Calling `onDeleteActionStarted`, `onDeleteActionFulfilled`, `onDeleteActionRejected` and `onDeleteActionAlways` methods from `ListFormController` in process of deleting the record.
+* `flexberry-validationsummary` component:
+    * Add `header` property.
+* `flexberry-lookup` component:
+    * Add localization for autocomplete empty result.
+    * Add sorting settings for autocomplete result list.
+    * Supporting filters when component is displaying via `flexberry-objectlistview` component.
+* Blueprints:
+    * Add model's default property values generation.
+* `flexberry-field` and `flexberry-textbox` components:
+    * Add `maxlength` attribute.
+
+### Changed
+* Update dependency on [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) to version 0.10.0.
+* Errors on list and edit forms are displaying via `flexberry-error` component now.
+* List components:
+    * Checkbox is used to display boolean values.
+    * Now filters calls `predicateForFilter` method even if filter pattern is undefined.
+    * Added `like` condition for filters (for `string` type fields). It will be applied by default when condition is not set.
+    * Now filters can apply on Enter click.
+    * `beforeDeleteRecord` method now support asynchronous mode, i.e. it is possible to return promises as result value.
+* Getting of current user name is able now by calling `getCurrentUserName` from [`user` service](https://github.com/Flexberry/ember-flexberry-data/blob/develop/addon/services/user.js#L37) (declared in `ember-flexberry-data` addon).
+* `flexberry-datepicker` component
+    * Add class `flexberry-datepicker` in `classNames`.
+    * Changed readonly attribute.
+
+### Fixed
+* `flexberry-objectlistview` component:
+    * Fix hierarchy collapse and expand.
+    * Now `allowColumnResize` property apllying properly.
+    * Filtering by all fields is now applying by pressing `Enter` in IE.
+    * Clicking on child rows in hierarchical mode.
+* `flexberry-simpleolv` component:
+    * Set default user settings.
+* List components:
+    * Fix `neq` filter when value isn't null.
+    * Row clicks are working correctly now in mobile mode.
+    * Fix reset of loading state when model promise was rejected.
+* `log` service:
+    * Now log does not attempt to save undefined errors.
+* `flexberry-simpledatetime` component:
+    * Fix using browser input instead of mobile input for `flatpickr` in mobile mode.
+    * Fix displaying in readonly mode.
+    * Change related model value after clearing date when value was set programmatically.
+    * Fix user's date input.
+* Reset `page` in `LimitedController` mixin when change or reset filters.
+* `blue-sky` theme:
+    * Fix header height for mobile version.
+    * Fix styles for modal dialogs.
+    * Fix sidebar and page content height.
+* `flexberry-checkbox` component:
+    * Fix `checked` property to support IE.
+* `flexberry-tree` component:
+    * Fix `get-with-dynamic-actions` helper.
+* Fix locale dropdown for IE in `application.hbs`.
+* Blueprints:
+    * Fix generation of `flexberry-groupedit` component template on edit forms. Now translations of field's captions should be applied.
+
 ## [0.9.1] - 2017-09-29
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.9.0.
@@ -176,7 +249,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Change hierarchy indent setting (`hierarchicalIndent` property) to `Number` type (in pixels).
 * Update `flatpickr-calendar` dependency to 2.3.4.
 
-###Fixed
+### Fixed
 * `flexberry-simpledatetime` component:
     * Fix `readonly` mode.
 * `flexberry-objectlistview` component:
@@ -259,7 +332,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
         * `sort` method is renamed into `sortNamedSetting`.
 * `Ember.Logger.xxx` changed to `Ember.xxx` calls and throwing errors. So redundant messages will not display in console in production.
 
-###Fixed
+### Fixed
 * `object-list-view` component:
     * `rowConfig` usage  in mobile mode.
     * Displaying of deletion errors if record deletion was unsuccessful.

@@ -207,6 +207,20 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     }
   },
 
+  actions: {
+    /**
+      Event handler for processing promise model rejecting.
+      [More info](https://emberjs.com/api/ember/2.4/classes/Ember.Route/events/error?anchor=error).
+
+      @method actions.error
+      @param {Object} error
+      @param {Object} transition
+    */
+    error: function(error, transition) {
+      this.onModelLoadingRejected(error);
+    }
+  },
+
   /**
     This method will be invoked before model loading operation will be called.
     Override this method to add some custom logic on model loading operation start.
@@ -242,6 +256,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   /**
     This method will be invoked when model loading operation completed, but failed.
     Override this method to add some custom logic on model loading operation fail.
+    By default showing error form.
 
     @example
       ```javascript
@@ -253,7 +268,14 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     @param {Object} errorData Data about model loading operation fail.
   */
   onModelLoadingRejected(errorData) {
-    // TODO: Provide information about error to user.
+    if (!this.get('controller') || !this.get('controller.model') || this.get('controller.model.isLoading')) {
+      this.get('objectlistviewEventsService').setLoadingState('error');
+      errorData = errorData || {};
+      errorData.retryRoute = this.routeName;
+      this.intermediateTransitionTo('error', errorData);
+    } else {
+      this.controller.send('error', errorData);
+    }
   },
 
   /**

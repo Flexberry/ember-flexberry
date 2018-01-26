@@ -23,8 +23,12 @@
   showConfigDialog="showConfigDialog"
   confirmDeleteRows=confirmDeleteRows
   inHierarchicalMode=_inHierarchicalMode
+  inExpandMode=_inExpandMode
   availableHierarchicalMode=_availableHierarchicalMode
+  availableCollExpandMode=_availableCollExpandMode
   switchHierarchicalMode=(action "switchHierarchicalMode")
+  switchExpandMode=(action "switchExpandMode")
+  readonly=readonly
 }}
 {{object-list-view
   placeholder=placeholder
@@ -38,11 +42,12 @@
   singleColumnCellComponent=singleColumnCellComponent
   singleColumnHeaderTitle=singleColumnHeaderTitle
   showValidationMessagesInRow=(and (not readonly) showValidationMessagesInRow)
-  showAsteriskInRow=(and (not readonly) showAsteriskInRow)
-  showCheckBoxInRow=(and (not readonly) showCheckBoxInRow)
-  showDeleteButtonInRow=(and (not readonly) showDeleteButtonInRow)
-  showEditMenuItemInRow=(and (not readonly) showEditMenuItemInRow)
-  showDeleteMenuItemInRow=(and (not readonly) showDeleteMenuItemInRow)
+  showAsteriskInRow=showAsteriskInRow
+  showCheckBoxInRow=showCheckBoxInRow
+  showDeleteButtonInRow=showDeleteButtonInRow
+  showEditButtonInRow=showEditButtonInRow
+  showEditMenuItemInRow=showEditMenuItemInRow
+  showDeleteMenuItemInRow=showDeleteMenuItemInRow
   sendMenuItemAction=(action "sendMenuItemAction")
   menuInRowAdditionalItems=menuInRowAdditionalItems
   rowClickable=(and (not readonly) rowClickable)
@@ -74,6 +79,7 @@
   notUseUserSettings=notUseUserSettings
   hierarchicalIndent=hierarchicalIndent
   inHierarchicalMode=_inHierarchicalMode
+  inExpandMode=_inExpandMode
   disableHierarchicalMode=(if hierarchyByAttribute true disableHierarchicalMode)
   loadRecords=(action "loadRecords")
   availableHierarchicalMode=(action "availableHierarchicalMode")

@@ -403,6 +403,10 @@ Ember.$.extend(true, translations, {
             'default-ordering-example': {
               'caption': 'Сортировка по умолчанию',
               'title': ''
+            },
+            'autocomplete-order-example': {
+              'caption': 'Пример сортировки при автокомплите',
+              'title': ''
             }
           },
           'flexberry-menu': {
@@ -495,6 +499,9 @@ Ember.$.extend(true, translations, {
             'settings-example': {
               'caption': 'Пример работы с настройками',
               'title': ''
+            },
+            'ge-into-toggler-example': {
+              'caption': 'GroupEdit в toggler example',
             }
           },
           'flexberry-tree': {
@@ -537,7 +544,11 @@ Ember.$.extend(true, translations, {
             'caption': 'Удаление настроек',
             'title': ''
           }
-        }
+        },
+        'components-acceptance-tests': {
+          'caption': 'Acceptance тесты',
+          'title': '',
+        },
       }
     },
 
@@ -548,6 +559,15 @@ Ember.$.extend(true, translations, {
       'delete-success-message-caption': 'Удаление завершилось успешно',
       'delete-success-message': 'Объект удален',
       'delete-error-message-caption': 'Ошибка удаления'
+    },
+
+    'list-form': {
+      'delete-success-message-caption': 'Удаление завершилось успешно',
+      'delete-success-message': 'Объект удален',
+      'delete-error-message-caption': 'Ошибка удаления',
+      'load-success-message-caption': 'Загрузка данных завершилась успешно',
+      'load-success-message': 'Объект загружен',
+      'load-error-message-caption': 'Ошибка загрузки данных',
     },
 
     'ember-flexberry-dummy-application-user-edit': {
@@ -608,6 +628,12 @@ Ember.$.extend(true, translations, {
       'type-validation-message-caption': 'Заполните тип предложения',
       'author-validation-message-caption': 'Заполните поле "Автор"',
       'editor-validation-message-caption': 'Заполните поле "Редактор"'
+    },
+
+    'ember-flexberry-dummy-toggler-example-master-e': {
+      'caption': 'Мастер',
+      'toggler-example-master-property-caption': 'Свойство мастера',
+      'toggler-example-deteil-property-caption': 'Детейл'
     },
 
     'ember-flexberry-dummy-suggestion-type-edit': {
@@ -776,6 +802,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Сортировка по умолчанию',
           'titleLookup': 'Мастер'
         },
+        'autocomplete-order-example': {
+          'caption': 'Flexberry-lookup. Пример сортировки при автокомплите',
+          'titleLookup': 'Мастер'
+        },
       },
       'flexberry-menu': {
         'settings-example': {
@@ -787,7 +817,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-objectlistview': {
         'limit-function-example': {
-          'caption': 'Flexberry-objectlistview. Функция ограничения'
+          'caption': 'Flexberry-objectlistview. Функция ограничения',
+          'captionFirstLimitFunction': 'Функция ограничения №1',
+          'captionSecondLimitFunction': 'Функция ограничения №2',
+          'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'inheritance-models': {
           'caption': 'Flexberry-objectlistview. Пример наследуемых моделей',
@@ -843,7 +876,10 @@ Ember.$.extend(true, translations, {
       },
       'flexberry-simpleolv': {
         'limit-function-example': {
-          'caption': 'Flexberry-simpleolv. Функция ограничения'
+          'caption': 'Flexberry-simpleolv. Функция ограничения',
+          'captionFirstLimitFunction': 'Функция ограничения №1',
+          'captionSecondLimitFunction': 'Функция ограничения №2',
+          'captionClearLimitFunction': 'Очистить функцию ограничения'
         },
         'settings-example': {
           'caption': 'Flexberry-simpleolv. Пример работы с настройками'
@@ -885,6 +921,9 @@ Ember.$.extend(true, translations, {
         'settings-example': {
           'caption': 'Flexberry-toggler. Пример работы с настройками',
           'togglerContent': 'Некоторое  сворачивающееся/разворачивающееся содержание'
+        },
+        'ge-into-toggler-example': {
+          'caption': 'Flexberry-toggler. GroupEdit в toggler example'
         }
       },
       'flexberry-tree': {
@@ -918,7 +957,7 @@ Ember.$.extend(true, translations, {
           'text-caption': 'Текст',
           'long-text-caption': 'Длинный текст',
           'date-caption': 'Дата',
-          'time-caption': 'Время',
+          'time-caption': 'Дата + Время',
           'enumeration-caption': 'Перечисление',
           'file-caption': 'Файл',
           'master-caption': 'Мастер',
@@ -926,6 +965,7 @@ Ember.$.extend(true, translations, {
         },
         'validation': {
           'caption': 'Integration examples. Валидация',
+          'summary-caption': 'Ошибки валидации:',
           'flag-caption': 'Флаг',
           'number-caption': 'Число',
           'text-caption': 'Текст',
@@ -944,7 +984,7 @@ Ember.$.extend(true, translations, {
         'all-del-button-name': 'Удалить все!',
         'message': 'Настройки удалены'
       }
-    }
+    },
   },
 
   'components': {

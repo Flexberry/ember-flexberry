@@ -9,7 +9,7 @@
 {{/if}}
 {{#if createNewButton}}
   <button
-    class="ui create-button {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button"
+    class="ui create-button {{buttonClass}} {{if readonly "disabled" (if enableCreateNewButton "" "disabled")}} button"
     title={{t "components.olv-toolbar.add-button-text"}}
     {{action "createNew"}}>
       {{t "components.olv-toolbar.add-button-text"}}
@@ -17,7 +17,7 @@
 {{/if}}
 {{#if deleteButton}}
   <button
-    class="ui delete-button {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button"
+    class="ui delete-button {{buttonClass}} {{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}} button"
     title={{t "components.olv-toolbar.delete-button-text"}}
      {{action "delete"}}>
       {{t "components.olv-toolbar.delete-button-text"}}
@@ -31,6 +31,14 @@
     {{action switchHierarchicalMode}}>
       <i class="sitemap icon"></i>
   </button>
+  {{#if availableCollExpandMode}}
+    <button
+      class="ui button icon hierarchical-button {{buttonClass}}"
+      title={{t "components.olv-toolbar.coll-expand-button-text"}}
+      {{action switchExpandMode}}>
+        <i class="expand icon"></i>
+    </button>
+  {{/if}}
 {{/if}}
 {{#if enableFilters}}
   <div class="ui icon buttons filter-active">
@@ -56,7 +64,7 @@
     <div class="block-action-input">{{input
       type="text"
       placeholder=(t "components.olv-toolbar.filter-by-any-match-placeholder")
-      value=filterByAnyMatchText enter="filterByAnyMatch"
+      value=filterByAnyMatchText key-down="keyDownFilterAction"
     }}</div>
     <button
       class="ui {{buttonClass}} icon button search-button"
@@ -117,22 +125,20 @@
   </div>
   <div class="center aligned ui grid">
   <button
-    class="ui icon button"
+    class="ui button icon olv-toolbar-info-modal-dialog-copy-button"
     title={{t "components.olv-toolbar.copy"}}
     {{action "copyJSONContent"}}
     id='OLVToolbarInfoCopyButton'>
-      <i class="copy icon"></i>
       {{t "components.olv-toolbar.copy"}}
   </button>
   <div class="actions">
-    <div class="olv-toolbar-info-modal-dialog-ok-button ui approve green inverted button" >
-      <i class="remove icon"></i>
+    <div class="ui button approve olv-toolbar-info-modal-dialog-ok-button">
       {{t "components.olv-toolbar.close"}}
     </div>
   </div>
   </div>
   <div class="ui form">
-    <div class="olv-toolbar-info-modal-dialog-content center aligned ui field">
+    <div class="ui field olv-toolbar-info-modal-dialog-content center aligned ">
       <textarea id='OLVToolbarInfoContent' cols='80' rows='20'>{{_infoModalDialogContent}}</textarea>
     </div>
   </div>

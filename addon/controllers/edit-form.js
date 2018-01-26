@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import Errors from 'ember-validations/errors';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
@@ -504,7 +505,9 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about save operation fail.
   */
   onSaveActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+    if (!(errorData instanceof Errors)) {
+      this.send('error', errorData);
+    }
   },
 
   /**
@@ -572,7 +575,7 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about delete operation fail.
   */
   onDeleteActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.delete-failed-message'));
+    this.send('error', errorData);
   },
 
   /**

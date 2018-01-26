@@ -11,6 +11,12 @@ export default {
       'close-button-text': 'Close'
     },
 
+    'error-form': {
+      caption: 'An error has occurred',
+      'show-more': 'Show more',
+      retry: 'Retry',
+    },
+
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Application log'
     },
@@ -21,6 +27,12 @@ export default {
   },
 
   'components': {
+    'flexberry-error': {
+      caption: 'An error has occurred',
+      'show-more': 'Show more',
+      'unknown-error': 'Unknown error occurred',
+    },
+
     'flexberry-field': {
       placeholder: '(no value)'
     },
@@ -82,7 +94,8 @@ export default {
       'remove-button-text': 'Remove',
       'dropdown': {
         'messages': {
-          'noResults': 'No results found.'
+          'noResultsHeader': 'No results',
+          'noResults': 'No results found'
         }
       }
     },
@@ -123,17 +136,13 @@ export default {
       },
     },
 
-    'object-list-view-cell': {
-      'boolean-false-caption': 'False',
-      'boolean-true-caption': 'True'
-    },
-
     'olv-toolbar': {
       'add-button-text': 'Add',
       'refresh-button-text': 'Refresh',
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
       'hierarchy-button-text': 'On/off hierarchy',
+      'coll-expand-button-text':'Collapse/Expand all hierarchies',
       'filter-button-text': 'Add filter',
       'remove-filter-button-text': 'Reset filter',
       'search-button-text': 'Search',
@@ -151,7 +160,10 @@ export default {
       'close': 'Close',
       'copy': 'Copy',
       'copied': 'Copied',
-      'ctrlc': 'Press Ctrl/C to copy'
+      'ctrlc': 'Press Ctrl/C to copy',
+      'check-all-at-page-button-text': 'Check all entries on the current page',
+      'check-all-button-text': 'Check all on all pages',
+      'clear-sorting-button-text': 'Set the default sorting'
     },
 
     'groupedit-toolbar': {

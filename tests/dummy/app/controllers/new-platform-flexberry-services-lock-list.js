@@ -29,9 +29,9 @@ export default NewPlatformFlexberryServicesLockListController.extend({
   */
   customButtons: Ember.computed('i18n.locale', 'openReadOnly', 'unlockObject', function() {
     let i18n = this.get('i18n');
-    let baseClasses = 'right floated tiny compact';
-    let openReadOnly = this.get('openReadOnly') ? 'lockServiseButtonBlue' : 'lockServiseButtonBlack';
-    let unlockObject = this.get('unlockObject') ? 'lockServiseButtonBlue' : 'lockServiseButtonBlack';
+    let baseClasses = 'floated tiny compact';
+    let openReadOnly = this.get('openReadOnly') ? 'positive' : 'negative';
+    let unlockObject = this.get('unlockObject') ? 'positive' : 'negative';
     return [{
       buttonName: i18n.t('forms.new-platform-flexberry-services-lock-list.change-user-name'),
       buttonAction: 'changeUserName',
@@ -47,8 +47,6 @@ export default NewPlatformFlexberryServicesLockListController.extend({
     }];
   }),
 
-  _userSettingsService: Ember.inject.service('user-settings'),
-
   actions: {
     /**
       Change current value `userName` for {{#crossLink "EditFormRoute"}}{{/crossLink}}.
@@ -57,11 +55,11 @@ export default NewPlatformFlexberryServicesLockListController.extend({
     */
     changeUserName() {
       let i18n = this.get('i18n');
-      let userSettingsService = this.get('_userSettingsService');
-      let currentUserName = userSettingsService.getCurrentUser();
+      let userService = Ember.getOwner(this).lookup('service:user');
+      let currentUserName = userService.getCurrentUserName();
       let newUserName = window.prompt(i18n.t('forms.new-platform-flexberry-services-lock-list.enter-new-user-name'), currentUserName);
       if (typeof newUserName === 'string') {
-        userSettingsService.set('userName', newUserName);
+        userService.set('userName', newUserName);
       }
     },
 

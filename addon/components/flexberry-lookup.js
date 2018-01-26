@@ -340,6 +340,17 @@ export default FlexberryBaseComponent.extend({
   displayAttributeName: null,
 
   /**
+    Name of the attribute of the model to display for the user
+    for hidden attribute by master.
+    Is required for autocomplete and dropdown modes.
+
+    @property autocompleteOrder
+    @type String
+    @default null
+  */
+  autocompleteOrder: null,
+
+  /**
     Current selected instance of the model.
 
     @property value
@@ -667,6 +678,7 @@ export default FlexberryBaseComponent.extend({
     let relationModelName = getRelationType(relatedModel, relationName);
 
     let displayAttributeName = this.get('displayAttributeName');
+    let autocompleteOrder = this.get('autocompleteOrder');
     if (!displayAttributeName) {
       throw new Error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
     }
@@ -682,10 +694,20 @@ export default FlexberryBaseComponent.extend({
     }
 
     let state;
+    let i18n = _this.get('i18n');
     this.$().search({
       minCharacters: minCharacters,
-      maxResults: maxResults,
+      maxResults: maxResults + 1,
       cache: false,
+      templates: {
+        message: function(message, type) {
+          return '<div class="message empty"><div class="header">' +
+          i18n.t('components.flexberry-lookup.dropdown.messages.noResultsHeader').string +
+          '</div><div class="description">' +
+          i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string +
+          '</div></div>';
+        }
+      },
       apiSettings: {
         /**
           Mocks call to the data source,
@@ -700,9 +722,15 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
-          let builder = new Builder(store, relationModelName)
+          let builder;
+          if (autocompleteOrder) {
+            builder = new Builder(store, relationModelName)
+            .select(displayAttributeName).orderBy(`${autocompleteOrder}`);
+          } else {
+            builder = new Builder(store, relationModelName)
             .select(displayAttributeName)
             .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
+          }
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -712,15 +740,27 @@ export default FlexberryBaseComponent.extend({
             builder.where(resultPredicate);
           }
 
+          let maxRes = _this.get('maxResults');
+          let iCount = 1;
+          builder.top(maxRes + 1);
+          builder.count();
+
           store.query(relationModelName, builder.build()).then((records) => {
             callback({
               success: true,
               results: records.map(i => {
                 let attributeName = i.get(displayAttributeName);
-                return {
-                  title: attributeName,
-                  instance: i
-                };
+                if (iCount > maxRes && records.meta.count > maxRes) {
+                  return {
+                    title: '...'
+                  };
+                } else {
+                  iCount += 1;
+                  return {
+                    title: attributeName,
+                    instance: i
+                  };
+                }
               })
             });
           }, () => {
@@ -842,27 +882,29 @@ export default FlexberryBaseComponent.extend({
             builder.where(resultPredicate);
           }
 
-          store.query(relationModelName, builder.build()).then((records) => {
-            // We have to cache data because dropdown component sets text as value and we lose object value.
-            let resultArray = [];
-            let results = records.map((i) => {
-              let attributeName = i.get(displayAttributeName);
-              resultArray[i.id] = i;
-              return {
-                name: attributeName,
-                value: i.id
-              };
+          Ember.run(() => {
+            store.query(relationModelName, builder.build()).then((records) => {
+              // We have to cache data because dropdown component sets text as value and we lose object value.
+              let resultArray = [];
+              let results = records.map((i) => {
+                let attributeName = i.get(displayAttributeName);
+                resultArray[i.id] = i;
+                return {
+                  name: attributeName,
+                  value: i.id
+                };
+              });
+
+              if (!_this.get('required')) {
+                results.unshift({ name: _this.get('placeholder'), value: null });
+                resultArray['null'] = null;
+              }
+
+              callback({ success: true, results: results });
+              _this.set('_cachedDropdownValues', resultArray);
+            }, () => {
+              callback({ success: false });
             });
-
-            if (!_this.get('required')) {
-              results.unshift({ name: _this.get('placeholder'), value: null });
-              resultArray['null'] = null;
-            }
-
-            callback({ success: true, results: results });
-            _this.set('_cachedDropdownValues', resultArray);
-          }, () => {
-            callback({ success: false });
           });
         }
       },

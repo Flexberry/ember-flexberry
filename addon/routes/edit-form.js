@@ -77,6 +77,43 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
+    This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel).
+
+    @method beforeModel
+    @param {Transition} transition
+    @return {Promise}
+  */
+  beforeModel(transition) {
+    this._super(...arguments);
+
+    let webPage = transition.targetName;
+    let userSettingsService = this.get('userSettingsService');
+    userSettingsService.setCurrentWebPage(webPage);
+    let developerUserSettings = this.get('developerUserSettings') || {};
+
+    let nComponents = 0;
+    let componentName;
+    for (componentName in developerUserSettings) {
+      let componentDesc = developerUserSettings[componentName];
+      switch (typeof componentDesc) {
+        case 'string':
+          developerUserSettings[componentName] = JSON.parse(componentDesc);
+          break;
+        case 'object':
+          break;
+        default:
+          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+            'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
+      }
+      nComponents += 1;
+    }
+
+    userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
+    return userSettingsService.setDeveloperUserSettings(developerUserSettings);
+  },
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 

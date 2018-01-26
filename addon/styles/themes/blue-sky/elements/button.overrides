@@ -425,6 +425,17 @@ ui.button.ui-clear:hover {
     }
 }
 
+.ui.ui-clear-settings.button {
+    padding: 0px;
+    height: 30px;
+    width: 30px;
+    border: 1px solid @uiBorderColor;
+    text-align: right;
+    &:hover {
+        background: @white;
+    }
+}
+
 .right.pointing.ui.icon.dropdown.button:hover i.icon.list.layout:before {
     color: @white;
 }

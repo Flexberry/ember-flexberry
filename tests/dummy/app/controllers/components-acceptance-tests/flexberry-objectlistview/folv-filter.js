@@ -64,5 +64,13 @@ export default ListFormController.extend({
     @property colsConfigButton
     @type Boolean
   */
-  colsConfigButton: false
+  colsConfigButton: false,
+
+  /**
+    Cout of list loading.
+
+    @property loadCount
+    @type Int
+  */
+  loadCount: 0,
 });

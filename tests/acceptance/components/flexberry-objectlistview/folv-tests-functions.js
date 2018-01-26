@@ -48,7 +48,7 @@ export function loadingList($ctrlForClick, list, records) {
 }
 
 // Function for waiting list loading.
-export function refreshListByClick($ctrlForClick, list, controller) {
+export function refreshListByClick($ctrlForClick, controller) {
   return new Ember.RSVP.Promise((resolve, reject) => {
     let checkIntervalId;
     let checkIntervalSucceed = false;
@@ -56,18 +56,18 @@ export function refreshListByClick($ctrlForClick, list, controller) {
     let renderInterval = 100;
     let timeout = 10000;
 
-    let $controller = Ember.$(controller);
-    let $lastLoadCount = $controller[0].loadCount;
-    let $list = Ember.$(list);
+    let $lastLoadCount = controller.loadCount;
 
-    Ember.run(() => {
-      $ctrlForClick.click();
-    });
+    if ($ctrlForClick) {
+      Ember.run(() => {
+        $ctrlForClick.click();
+      });
+    }
 
     Ember.run(() => {
       checkIntervalId = window.setInterval(() => {
-        let $loadCount = $controller[0].loadCount;
-        if ($loadCount === $lastLoadCount) {
+        let loadCount = controller.loadCount;
+        if (loadCount === $lastLoadCount) {
 
           // Data isn't loaded yet.
           return;
@@ -78,7 +78,7 @@ export function refreshListByClick($ctrlForClick, list, controller) {
         window.setTimeout(() => {
           window.clearInterval(checkIntervalId);
           checkIntervalSucceed = true;
-          resolve($list);
+          resolve();
         }, renderInterval);
       }, checkInterval);
     });

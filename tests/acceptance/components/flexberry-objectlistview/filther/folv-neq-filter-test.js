@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
-import { filterCollumn } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
+import { filterCollumn, refreshListByClick } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
 executeTest('check neq filter', (store, assert, app) => {
@@ -28,11 +28,9 @@ executeTest('check neq filter', (store, assert, app) => {
       filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter.
         let refreshButton = Ember.$('.refresh-button')[0];
-        refreshButton.click();
-
-        let done = assert.async();
-        window.setTimeout(() => {
-          let controller = app.__container__.lookup('controller:' + currentRouteName());
+        let controller = app.__container__.lookup('controller:' + currentRouteName());
+        let done1 = assert.async();
+        refreshListByClick(refreshButton, controller).then(() => {
           let filtherResult = controller.model.content;
           let $successful = true;
           for (let i = 0; i < filtherResult.length; i++) {
@@ -44,8 +42,8 @@ executeTest('check neq filter', (store, assert, app) => {
 
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal($successful, true, 'Filter successfully worked');
-          done();
-        }, 1000);
+          done1();
+        });
       });
     });
   });

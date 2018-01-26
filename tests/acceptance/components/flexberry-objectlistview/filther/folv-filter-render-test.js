@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
-import { filterCollumn } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
+import { filterCollumn, refreshListByClick } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
-executeTest('check filter renders', (store, assert) => {
+executeTest('check filter renders', (store, assert, app) => {
   assert.expect(34);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
 
@@ -59,10 +59,9 @@ executeTest('check filter renders', (store, assert) => {
       filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter.
         let refreshButton = Ember.$('.refresh-button')[0];
-        refreshButton.click();
-
+        let controller = app.__container__.lookup('controller:' + currentRouteName());
         let done1 = assert.async();
-        window.setTimeout(() => {
+        refreshListByClick(refreshButton, controller).then(() => {
           $filterButtonDiv = Ember.$('.buttons.filter-active');
           $filterButton = $filterButtonDiv.children('.button.active');
           $filterButtonIcon = $filterButton.children('i');
@@ -100,16 +99,18 @@ executeTest('check filter renders', (store, assert) => {
           // Deactivate filtre row.
           $filterButton.click();
 
+          // Apply filter.
+          let refreshButton = Ember.$('.refresh-button')[0];
           let done2 = assert.async();
-          window.setTimeout(() => {
+          refreshListByClick(refreshButton, controller).then(() => {
             $tableRows = $tableTbody.children('tr');
 
             // Check filtre row afther filter deactivate.
             assert.strictEqual($tableRows.length === 1, true, 'Filtre row aren\'t deactivate');
             done2();
-          }, 100);
+          });
           done1();
-        }, 1000);
+        });
       });
     });
   });

@@ -52,5 +52,10 @@ export default ListFormRoute.extend({
   objectListViewLimitPredicate: function(options) {
     let limitFunction = new Query.SimplePredicate('address', Query.FilterOperator.Neq, undefined);
     return limitFunction;
-  }
+  },
+
+  onModelLoadingAlways(data) {
+    let loadCount = this.get('controller.loadCount') + 1;
+    this.set('controller.loadCount', loadCount);
+  },
 });

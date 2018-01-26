@@ -271,7 +271,7 @@ test('it properly rerenders', function(assert) {
 });
 
 test('it properly rerenders by default', function(assert) {
-  assert.expect(68);
+  assert.expect(72);
 
   let store = App.__container__.lookup('service:store');
 
@@ -309,7 +309,7 @@ test('it properly rerenders by default', function(assert) {
     let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
 
     // Check button count.
-    assert.strictEqual($componentButtons.length === 2, true, 'Component has inner two button blocks');
+    assert.strictEqual($componentButtons.length === 3, true, 'Component has inner two button blocks');
 
     let $componentButtonAdd = $($componentButtons[0]);
 
@@ -335,6 +335,14 @@ test('it properly rerenders by default', function(assert) {
     assert.strictEqual($componentButtonRemove.hasClass('ui'), true, 'Component\'s inner groupedit block has \'ui\' css-class');
     assert.strictEqual($componentButtonRemove.hasClass('button'), true, 'Component\'s inner groupedit block has \'button\' css-class');
     assert.strictEqual($componentButtonRemove.hasClass('disabled'), true, 'Component\'s inner groupedit block has \'disabled\' css-class');
+
+    let $componentButtonDefauldSetting = $($componentButtons[2]);
+
+    // Check buttonRemove <button>.
+    assert.strictEqual($componentButtonDefauldSetting.length === 1, true, 'Component has inner button block');
+    assert.strictEqual($componentButtonDefauldSetting.prop('tagName'), 'BUTTON', 'Component\'s inner groupedit block is a <button>');
+    assert.strictEqual($componentButtonDefauldSetting.hasClass('ui'), true, 'Component\'s inner groupedit block has \'ui\' css-class');
+    assert.strictEqual($componentButtonDefauldSetting.hasClass('button'), true, 'Component\'s inner groupedit block has \'button\' css-class');
 
     let $componentButtonRemoveIcon = $componentButtonRemove.children('i');
 
@@ -556,7 +564,7 @@ test('ember-grupedit striped test', function(assert) {
   });
 });
 
-test('ember-grupedit off createNewButton and deleteButton test', function(assert) {
+test('ember-grupedit off defaultSettingsButton, createNewButton and deleteButton test', function(assert) {
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -578,6 +586,7 @@ test('ember-grupedit off createNewButton and deleteButton test', function(assert
           deleteButton=false
           showCheckBoxInRow=false
           showAsteriskInRow=false
+          defaultSettingsButton=false
         }}`);
 
     let $component = this.$().children();

@@ -1279,6 +1279,7 @@ export default folv.extend(
     }
 
     let componentName = this.get('componentName');
+
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
     if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
       let e = {
@@ -1292,11 +1293,6 @@ export default folv.extend(
           this.send('selectRow', recordWithData, e);
         }
       });
-
-      // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-      if (someRecordWasSelected) {
-        this.get('objectlistviewEventsService').clearSelectedRecords(componentName);
-      }
 
       if (!someRecordWasSelected && !this.get('allSelect')) {
         // Reset toolbar buttons enabled state.

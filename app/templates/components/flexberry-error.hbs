@@ -2,9 +2,8 @@
   {{#if modal}}
     {{#modal-dialog
       title=(t "components.flexberry-error.caption")
-      close="close"
       useOkButton=false
-      settings=(hash context=modalContext)
+      settings=(hash context=modalContext onHidden=(action "close"))
     }}
       <h2 class="ui header">
         {{#if error.message}}

@@ -47,7 +47,28 @@ export function loadingList($ctrlForClick, list, records) {
   });
 }
 
-// Function for waiting list loading.
+/**
+  Function for waiting list loading afther refresh by function at acceptance test.
+
+  @public
+  @method refreshListByFunction
+  @param {Function} refreshFunction Method options.
+  @param {Object} controlle Current form controller.
+
+  For use:
+    Form controller must have the following code:
+      ```js
+        loadCount: 0
+      ```
+
+    Form router must have the following code:
+      ```js
+        onModelLoadingAlways(data) {
+          let loadCount = this.get('controller.loadCount') + 1;
+          this.set('controller.loadCount', loadCount);
+        }
+      ```
+ */
 export function refreshListByFunction(refreshFunction, controller) {
   return new Ember.RSVP.Promise((resolve, reject) => {
     let checkIntervalId;

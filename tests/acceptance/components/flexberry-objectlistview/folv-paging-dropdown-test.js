@@ -29,6 +29,7 @@ executeTest('check paging dropdown', (store, assert, app) => {
           let $folvPerPageButton = Ember.$('.flexberry-dropdown.compact');
           let $menu = Ember.$('.menu', $folvPerPageButton);
           trTableBody = () => { return $(Ember.$('table.object-list-view tbody tr')).length.toString(); };
+
           activeItem =  () => { return $(Ember.$('.item.active.selected', $menu)).attr('data-value'); };
 
           // The list should be more than 5 items.

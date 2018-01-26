@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
-import { filterCollumn, refreshListByClick } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
+import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
 executeTest('check ge filter', (store, assert, app) => {
@@ -26,11 +26,16 @@ executeTest('check ge filter', (store, assert, app) => {
       $filterButton.click();
 
       filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr).then(function() {
+        // Apply filter function.
+        let refreshFunction =  function() {
+          let refreshButton = Ember.$('.refresh-button')[0];
+          refreshButton.click();
+        };
+
         // Apply filter.
-        let refreshButton = Ember.$('.refresh-button')[0];
         let controller = app.__container__.lookup('controller:' + currentRouteName());
         let done1 = assert.async();
-        refreshListByClick(refreshButton, controller).then(() => {
+        refreshListByFunction(refreshFunction, controller).then(() => {
           let filtherResult = controller.model.content;
           let $successful = true;
           for (let i = 0; i < filtherResult.length; i++) {

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
-import { filterCollumn } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
+import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
 executeTest('check filter by enter click', (store, assert, app) => {
@@ -26,14 +26,17 @@ executeTest('check filter by enter click', (store, assert, app) => {
       $filterButton.click();
 
       filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
-        // Apply filter by enter click.
-        let input = Ember.$('.ember-text-field')[0];
-        input.focus();
-        keyEvent(input, 'keydown', 13);
+        // Apply filter by enter click function.
+        let refreshFunction =  function() {
+          let input = Ember.$('.ember-text-field')[0];
+          input.focus();
+          keyEvent(input, 'keydown', 13);
+        };
 
-        let done = assert.async();
-        window.setTimeout(() => {
-          let controller = app.__container__.lookup('controller:' + currentRouteName());
+        // Apply filter.
+        let controller = app.__container__.lookup('controller:' + currentRouteName());
+        let done1 = assert.async();
+        refreshListByFunction(refreshFunction, controller).then(() => {
           let filtherResult = controller.model.content;
           let $successful = true;
           for (let i = 0; i < filtherResult.length; i++) {
@@ -45,8 +48,8 @@ executeTest('check filter by enter click', (store, assert, app) => {
 
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           assert.equal($successful, true, 'Filter successfully worked');
-          done();
-        }, 1000);
+          done1();
+        });
       });
     });
   });

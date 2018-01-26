@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
-import { filterCollumn, refreshListByClick } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
+import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
 executeTest('check filter renders', (store, assert, app) => {
   assert.expect(34);
@@ -57,11 +57,16 @@ executeTest('check filter renders', (store, assert, app) => {
       let filtreInsertParametr = 'A value that will never be told';
 
       filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
+        // Apply filter function.
+        let refreshFunction =  function() {
+          let refreshButton = Ember.$('.refresh-button')[0];
+          refreshButton.click();
+        };
+
         // Apply filter.
-        let refreshButton = Ember.$('.refresh-button')[0];
         let controller = app.__container__.lookup('controller:' + currentRouteName());
         let done1 = assert.async();
-        refreshListByClick(refreshButton, controller).then(() => {
+        refreshListByFunction(refreshFunction, controller).then(() => {
           $filterButtonDiv = Ember.$('.buttons.filter-active');
           $filterButton = $filterButtonDiv.children('.button.active');
           $filterButtonIcon = $filterButton.children('i');
@@ -100,9 +105,8 @@ executeTest('check filter renders', (store, assert, app) => {
           $filterButton.click();
 
           // Apply filter.
-          let refreshButton = Ember.$('.refresh-button')[0];
           let done2 = assert.async();
-          refreshListByClick(refreshButton, controller).then(() => {
+          refreshListByFunction(refreshFunction, controller).then(() => {
             $tableRows = $tableTbody.children('tr');
 
             // Check filtre row afther filter deactivate.

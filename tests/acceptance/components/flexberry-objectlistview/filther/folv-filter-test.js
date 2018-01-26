@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
-import { filterObjectListView, refreshListByClick  } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
+import { filterObjectListView, refreshListByFunction  } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
 executeTest('check filter', (store, assert, app) => {
@@ -27,11 +27,16 @@ executeTest('check filter', (store, assert, app) => {
       $filterButton.click();
 
       filterObjectListView($objectListView, filtreInsertOperationArr, filtreInsertValueArr).then(function() {
+        // Apply filter function.
+        let refreshFunction =  function() {
+          let refreshButton = Ember.$('.refresh-button')[0];
+          refreshButton.click();
+        };
+
         // Apply filter.
-        let refreshButton = Ember.$('.refresh-button')[0];
         let controller = app.__container__.lookup('controller:' + currentRouteName());
         let done1 = assert.async();
-        refreshListByClick(refreshButton, controller).then(($list) => {
+        refreshListByFunction(refreshFunction, controller).then(($list) => {
           let filtherResult = controller.model.content;
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           done1();

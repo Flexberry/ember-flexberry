@@ -14,3 +14,11 @@
       <i class="minus icon"></i>
   </button>
 {{/if}}
+{{#if defaultSettingsButton}}
+  <button
+    class="ui ui-clear-settings {{buttonClass}} button"
+    title={{t "components.groupedit-toolbar.clear-settings-button-text"}}
+    {{action 'setDefaultSettings'}}>
+      <i class="configure icon"></i>
+  </button>
+{{/if}}

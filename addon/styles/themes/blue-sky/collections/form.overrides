@@ -55,6 +55,35 @@ input[type=checkbox]:checked:after, input[type=checkbox]:indeterminate:after {
     margin: 5px;
 }
 
+.ui.form .olv-toolbar-info-modal-dialog-content textarea {
+    background: white;
+}
+
+.center.aligned.ui.grid div {
+     margin:0px 0px 10px 0px;
+}
+
+.ui.button.olv-toolbar-info-modal-dialog-ok-button {
+    padding: 0.8571em 1.284em 0.8571em;
+}
+
+.ui.button.flexberry-file-error-modal-dialog-ok-button {
+    padding: 0.8571em 1.284em 0.8571em;
+}
+
+.center.aligned.ui.grid .button {
+    background: white;
+    color: #4f73b0;
+    border: 1px solid #4f73b0;
+    opacity:1;
+}
+
+.center.aligned.ui.grid .button:hover {
+    background: #7dd4b4;
+    color: white;
+    border: 1px solid #7dd4b4;
+}
+
 select {
     color: @primaryColor;
 }

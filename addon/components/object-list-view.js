@@ -1174,34 +1174,7 @@ export default FlexberryBaseComponent.extend(
           let renderedRowIndex = this.get('_renderedRowIndex') + 1;
 
           if (renderedRowIndex >= contentLength) {
-            // Restore selected records.
-            if (this.get('selectedRecords')) {
-              this.get('selectedRecords').clear();
-            }
-
-            let componentName = this.get('componentName');
-            let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
-            if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
-              let e = {
-                checked: true
-              };
-
-              let someRecordWasSelected = false;
-              selectedRecordsToRestore.forEach((recordWithData, key) => {
-                if (this._getModelKey(recordWithData.data)) {
-                  someRecordWasSelected = true;
-                  this.send('selectRow', recordWithData, e);
-                }
-              });
-
-              if (!someRecordWasSelected && !this.get('allSelect')) {
-                // Reset toolbar buttons enabled state.
-                this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
-              }
-            } else if (!this.get('allSelect')) {
-              // Reset toolbar buttons enabled state.
-              this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
-            }
+            this._restoreSelectedRecords();
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
@@ -1217,14 +1190,6 @@ export default FlexberryBaseComponent.extend(
             }
 
             this._setColumnWidths();
-
-            let $currentTable = this.$('table.object-list-view');
-            if (this.get('allowColumnResize')) {
-              $currentTable.addClass('fixed');
-              this._reinitResizablePlugin();
-            } else {
-              $currentTable.colResizable({ disable: true });
-            }
           } else {
             // Start render row.
             let modelWithKey = contentForRender[renderedRowIndex];
@@ -1240,11 +1205,17 @@ export default FlexberryBaseComponent.extend(
               }
             }
 
-            this._reinitResizablePlugin();
+            if (this.get('allowColumnResize')) {
+              this._reinitResizablePlugin();
+            } else {
+              let $table = this.$('table.object-list-view');
+              $table.colResizable({ disable: true });
+            }
           }
         }
       }
     } else {
+      this._restoreSelectedRecords();
 
       if (!this._colResizableInit) {
         let $currentTable = this.$('table.object-list-view');
@@ -1380,6 +1351,14 @@ export default FlexberryBaseComponent.extend(
 
       let $table = this.$('table.object-list-view');
       let $columns = $table.find('th');
+
+      if (this.get('allowColumnResize')) {
+        $table.addClass('fixed');
+        this._reinitResizablePlugin();
+      } else {
+        $table.colResizable({ disable: true });
+      }
+
       let hashedUserSetting = {};
       let tableWidth = 0;
       let olvRowMenuWidth = 0;
@@ -1449,7 +1428,9 @@ export default FlexberryBaseComponent.extend(
         }
       });
 
-      this._reinitResizablePlugin();
+      if (this.get('allowColumnResize')) {
+        this._reinitResizablePlugin();
+      }
     }
   },
 
@@ -2313,4 +2294,44 @@ export default FlexberryBaseComponent.extend(
 
     return attrsArray;
   },
+
+  /**
+    Restore selected records after refreshing or transition to other page.
+
+    @method _restoreSelectedRecords
+    @private
+  */
+  _restoreSelectedRecords() {
+    // Restore selected records.
+    // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+    if (this.get('selectedRecords')) {
+      this.get('selectedRecords').clear();
+    }
+
+    let componentName = this.get('componentName');
+
+    let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      let e = {
+        checked: true
+      };
+
+      let someRecordWasSelected = false;
+      selectedRecordsToRestore.forEach((recordWithData, key) => {
+        if (this._getModelKey(recordWithData.data)) {
+          someRecordWasSelected = true;
+          this.send('selectRow', recordWithData, e);
+        }
+      });
+
+      if (!someRecordWasSelected && !this.get('allSelect')) {
+        // Reset toolbar buttons enabled state.
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+      }
+    } else if (!this.get('allSelect')) {
+      // Reset toolbar buttons enabled state.
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+    }
+  },
+
 });

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
-import { loadingList, loadingLocales } from './folv-tests-functions';
+import { loadingLocales, refreshListByFunction } from './folv-tests-functions';
 import I18nEnLocale from 'ember-flexberry/locales/en/translations';
 
 executeTest('check getCellComponent', (store, assert, app) => {
@@ -14,7 +14,6 @@ executeTest('check getCellComponent', (store, assert, app) => {
     loadingLocales('en', app).then(() => {
 
       let olvContainerClass = '.object-list-view-container';
-      let trTableClass = 'table.object-list-view tbody tr';
 
       let controller = app.__container__.lookup('controller:' + currentRouteName());
 
@@ -52,8 +51,16 @@ executeTest('check getCellComponent', (store, assert, app) => {
 
       let timeout = 500;
       Ember.run.later((() => {
+        // Apply filter function.
+        let refreshFunction =  function() {
+          let refreshButton = Ember.$('.refresh-button')[0];
+          refreshButton.click();
+        };
+
+        // Apply filter.
         let done = assert.async();
-        loadingList($refreshButton, olvContainerClass, trTableClass).then(($list) => {
+        refreshListByFunction(refreshFunction, controller).then(() => {
+          let $list =  Ember.$(olvContainerClass);
           assert.ok($list, 'list loaded');
 
           // Date format most be DD.MM.YYYY, hh:mm:ss.
@@ -67,7 +74,8 @@ executeTest('check getCellComponent', (store, assert, app) => {
           let done2 = assert.async();
           Ember.run.later((() => {
             let done1 = assert.async();
-            loadingList($refreshButton, olvContainerClass, trTableClass).then(($list) => {
+            refreshListByFunction(refreshFunction, controller).then(() => {
+              let $list =  Ember.$(olvContainerClass);
               assert.ok($list, 'list loaded');
 
               // Date format most be II (example Sep 4 1986).

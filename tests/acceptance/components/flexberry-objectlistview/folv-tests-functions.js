@@ -47,6 +47,58 @@ export function loadingList($ctrlForClick, list, records) {
   });
 }
 
+// Function for waiting list loading.
+export function refreshListByClick($ctrlForClick, list, controller) {
+  return new Ember.RSVP.Promise((resolve, reject) => {
+    let checkIntervalId;
+    let checkIntervalSucceed = false;
+    let checkInterval = 500;
+    let renderInterval = 100;
+    let timeout = 10000;
+
+    let $controller = Ember.$(controller);
+    let $lastLoadCount = $controller[0].loadCount;
+    let $list = Ember.$(list);
+
+    Ember.run(() => {
+      $ctrlForClick.click();
+    });
+
+    Ember.run(() => {
+      checkIntervalId = window.setInterval(() => {
+        let $loadCount = $controller[0].loadCount;
+        if ($loadCount === $lastLoadCount) {
+
+          // Data isn't loaded yet.
+          return;
+        }
+
+        // Data is loaded, wait to render.
+        // Stop interval & resolve promise.
+        window.setTimeout(() => {
+          window.clearInterval(checkIntervalId);
+          checkIntervalSucceed = true;
+          resolve($list);
+        }, renderInterval);
+      }, checkInterval);
+    });
+
+    // Set wait timeout.
+    Ember.run(() => {
+      window.setTimeout(() => {
+        if (checkIntervalSucceed) {
+          return;
+        }
+
+        // Time is out.
+        // Stop intervals & reject promise.
+        window.clearInterval(checkIntervalId);
+        reject('editForm load operation is timed out');
+      }, timeout);
+    });
+  });
+}
+
 // Function for check sorting.
 export function checkSortingList(store, projection, $olv, ordr) {
   return new Ember.RSVP.Promise((resolve) => {

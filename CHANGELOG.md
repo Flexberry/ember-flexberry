@@ -14,6 +14,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * List components:
     * Fix using `readonly` property from `componentProperties` for dynamic components.
+* `flexberry-simpleolv` component:
+    * "Show settings" menu for user settings.
 
 ## [0.10.0] - 2018-01-26
 ### Added

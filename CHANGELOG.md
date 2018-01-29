@@ -11,6 +11,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * User settings support, use parameter `notUseUserSettings` to disabling.
     * `perPage` parameter.
 
+### Changed
+* `log` service:
+    * Now `processName` field contains application name from `ENV.modulePrefix` of `environment.js`.
+
 ### Fixed
 * List components:
     * Fix using `readonly` property from `componentProperties` for dynamic components.

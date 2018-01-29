@@ -484,6 +484,10 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   _onError(error, isPromiseError) {
+    if (Ember.isNone(error)) {
+      return;
+    }
+
     if (Ember.typeOf(error) === 'string') {
       error = new Error(error);
     }

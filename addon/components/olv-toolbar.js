@@ -127,6 +127,15 @@ export default FlexberryBaseComponent.extend({
   enableDeleteButton: true,
 
   /**
+  The flag to specify whether the select all button is on.
+
+    @property selectAll
+    @type Boolean
+    @default true
+  */
+  allSelect: false,
+
+  /**
     Name of action to send out, action triggered by click on user button.
 
     @property customButtonAction
@@ -143,7 +152,8 @@ export default FlexberryBaseComponent.extend({
       {
         buttonName: '...', // Button displayed name.
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...' // Css classes for button.
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...' // Button title.
       }
       ```
 
@@ -380,6 +390,7 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     refresh() {
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -393,7 +404,7 @@ export default FlexberryBaseComponent.extend({
       let editFormRoute = this.get('editFormRoute');
       Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
       let modelController = this.get('modelController');
-      modelController.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       Ember.run.later((function() {
         modelController.transitionToRoute(editFormRoute + '.new');
       }), 50);
@@ -415,7 +426,12 @@ export default FlexberryBaseComponent.extend({
       }
 
       let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+
+      //TODO: Implement the method of removing all objects.
+      if (!this.get('allSelect'))
+      {
+        this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      }
     },
 
     /**
@@ -430,6 +446,21 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Checks if "Enter" button was pressed.
+      If "Enter" button was pressed then filters the content by "Filter by any match" field value.
+
+      @method actions.keyDownFilterAction
+      @public
+    */
+    keyDownFilterAction(currentValue, e) {
+      if (e.keyCode === 13) {
+        this.send('filterByAnyMatch');
+      }
+
+      this._super(...arguments);
+    },
+
+    /**
       Remove filter from url.
 
       @method actions.removeFilter
@@ -438,7 +469,7 @@ export default FlexberryBaseComponent.extend({
     removeFilter() {
       let _this = this;
       if (_this.get('filterText')) {
-        _this.get('currentController').set('state', 'loading');
+        this.get('objectlistviewEventsService').setLoadingState('loading');
       }
 
       Ember.run.later((function() {
@@ -609,6 +640,7 @@ export default FlexberryBaseComponent.extend({
 
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
 
     this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
@@ -638,6 +670,7 @@ export default FlexberryBaseComponent.extend({
   willDestroy() {
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
+    this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
     this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
@@ -653,10 +686,26 @@ export default FlexberryBaseComponent.extend({
     @param {String} componentName The name of objectlistview component
     @param {DS.Model} record The model corresponding to selected row in objectlistview
     @param {Number} count Count of selected rows in objectlistview
+    @param {Boolean} checked Current state of row in objectlistview (checked or not)
+    @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
-  _rowSelected(componentName, record, count) {
+  _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
+    }
+  },
+
+  /**
+    Handler for "Olv rows deleted" event in objectlistview.
+
+    @method _rowsDeleted
+
+    @param {String} componentName The name of objectlistview component
+    @param {Integer} count Number of deleted records
+  */
+  _rowsDeleted(componentName, count) {
+    if (componentName === this.get('componentName')) {
+      this.set('isDeleteButtonEnabled', false);
     }
   },
 
@@ -705,6 +754,14 @@ export default FlexberryBaseComponent.extend({
 
   _deleteNamedSetting(namedSetting) {
     this._updateListNamedUserSettings();
+  },
+
+  _selectAll(componentName, selectAllParameter) {
+    if (componentName === this.componentName)
+    {
+      this.set('allSelect', selectAllParameter);
+      this.set('isDeleteButtonEnabled', selectAllParameter);
+    }
   },
 
   _sortNamedSetting(isExportExcel) {

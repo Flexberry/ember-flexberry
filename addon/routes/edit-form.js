@@ -6,6 +6,7 @@ import Ember from 'ember';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
+import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
 
 /**
   Base route for the Edit Forms.
@@ -35,7 +36,8 @@ import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistvie
  */
 export default ProjectedModelFormRoute.extend(
 FlexberryObjectlistviewRouteMixin,
-FlexberryGroupeditRouteMixin, {
+FlexberryGroupeditRouteMixin,
+FlexberryObjectlistviewHierarchicalRouteMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
@@ -64,6 +66,51 @@ FlexberryGroupeditRouteMixin, {
     sort: { refreshModel: false },
     filter: { refreshModel: false },
     filterCondition: { refreshModel: false }
+  },
+
+  /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
+    This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
+    [More info](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel).
+
+    @method beforeModel
+    @param {Transition} transition
+    @return {Promise}
+  */
+  beforeModel(transition) {
+    this._super(...arguments);
+
+    let webPage = transition.targetName;
+    let userSettingsService = this.get('userSettingsService');
+    userSettingsService.setCurrentWebPage(webPage);
+    let developerUserSettings = this.get('developerUserSettings') || {};
+
+    let nComponents = 0;
+    let componentName;
+    for (componentName in developerUserSettings) {
+      let componentDesc = developerUserSettings[componentName];
+      switch (typeof componentDesc) {
+        case 'string':
+          developerUserSettings[componentName] = JSON.parse(componentDesc);
+          break;
+        case 'object':
+          break;
+        default:
+          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+            'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
+      }
+      nComponents += 1;
+    }
+
+    userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
+    return userSettingsService.setDeveloperUserSettings(developerUserSettings);
   },
 
   /**
@@ -160,8 +207,8 @@ FlexberryGroupeditRouteMixin, {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }
 
-    if (controller.get('state') === 'loading') {
-      controller.set('state', '');
+    if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
+      this.get('objectlistviewEventsService').setLoadingState('');
     }
 
     let flexberryDetailInteractionService = this.get('flexberryDetailInteractionService');

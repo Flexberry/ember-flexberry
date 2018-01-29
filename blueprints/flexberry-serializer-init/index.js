@@ -25,6 +25,7 @@ module.exports = {
             className: modelBlueprint.className,
             parentModelName: modelBlueprint.parentModelName,
             parentClassName: modelBlueprint.parentClassName,
+            parentExternal: modelBlueprint.parentExternal,
             name: modelBlueprint.name,
         };
     }

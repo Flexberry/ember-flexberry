@@ -1,0 +1,87 @@
+<h3 class="ui header">{{t "forms.integration-examples.edit-form.validation.caption"}}</h3>
+<form class="ui form flexberry-vertical-form" role="form">
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field {{if model.errors.flag "error" ""}}">
+    <label>{{t "forms.integration-examples.edit-form.validation.flag-caption"}}</label>
+    {{flexberry-checkbox
+      value=model.flag
+    }}
+    {{flexberry-validationmessage error=model.errors.flag pointing="left pointing"}}
+  </div>
+  <div class="field {{if model.errors.number "error" ""}}">
+    <label>{{t "forms.integration-examples.edit-form.validation.number-caption"}}</label>
+    {{flexberry-textbox
+      value=model.number
+    }}
+    {{flexberry-validationmessage error=model.errors.number pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.text "error" ""}}">
+    <label>{{t "forms.integration-examples.edit-form.validation.text-caption"}}</label>
+    {{flexberry-textbox
+      value=model.text
+    }}
+    {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.longText "error" ""}}">
+  <label>{{t "forms.integration-examples.edit-form.validation.long-text-caption"}}</label>
+    {{flexberry-textarea
+      value=model.longText
+    }}
+    {{flexberry-validationmessage error=model.errors.longText pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.date "error" ""}}">
+    <label>{{t "forms.integration-examples.edit-form.validation.date-caption"}}</label>
+    <div class="inline fields">
+    {{flexberry-validationmessage error=model.errors.date pointing="right pointing"}}
+    {{flexberry-datepicker
+      value=model.date
+    }}
+    </div>
+  </div>
+  <div class="field {{if model.errors.enumeration "error" ""}}">
+    <label>{{t "forms.integration-examples.edit-form.validation.enumeration-caption"}}</label>
+    {{flexberry-dropdown
+      items=(flexberry-enum "integration-examples/edit-form/validation/enumeration")
+      value=model.enumeration
+    }}
+    {{flexberry-validationmessage error=model.errors.enumeration pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.file "error" ""}}">
+    <label>{{t "forms.integration-examples.edit-form.validation.file-caption"}}</label>
+    {{flexberry-file
+      value=model.file
+      showUploadButton=false
+      showDownloadButton=false
+    }}
+    {{flexberry-validationmessage error=model.errors.file pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.master "error" ""}}">
+    <label>{{t "forms.integration-examples.edit-form.validation.master-caption"}}</label>
+    {{flexberry-lookup
+      componentName="IntegrationExamplesValidationsMaster"
+      value=model.master
+      relatedModel=model
+      relationName="master"
+      projection="MasterL"
+      displayAttributeName="text"
+      title=(t "forms.integration-examples.edit-form.validation.master-caption")
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
+    }}
+    {{flexberry-validationmessage error=model.errors.master pointing="pointing"}}
+  </div>
+  <div class="field {{if model.errors.files "error" ""}}">
+    <label>{{t "forms.integration-examples.edit-form.validation.details-caption"}}</label>
+    {{flexberry-groupedit
+      componentName="IntegrationExamplesEditFormValidationsDetails"
+      content=model.details
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.details
+      orderable=false
+    }}
+  </div>
+</form>

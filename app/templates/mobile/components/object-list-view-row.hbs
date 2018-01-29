@@ -26,7 +26,9 @@
       </div>
     {{/if}}
   </td>
-    <td {{action rowClick record preventDefault=false}} style="padding-left:{{hierarchicalIndent}}px;">
+    <td
+    onclick={{action "onRowClick" record (hash column=columns) preventDefault=false}}
+    style="padding-left:{{hierarchicalIndent}}px;">
       {{component singleColumnCellComponent.componentName
         model=record.data
         columns=columns
@@ -37,13 +39,13 @@
       }}
       {{#if hasRecords}}
         <button class="ui button icon mini {{buttonClass}}" {{action "expand" bubbles=false}}>
-          <i class="{{if _expanded "minus" "plus"}} icon"></i>
+          <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
         </button>
       {{/if}}
     </td>
   {{#if showMenuColumn}}
     <td class="object-list-view-menu">
-      <div class="basic right pointing ui icon dropdown button">
+      <div class="right pointing ui icon dropdown button">
         <i class="list layout icon"></i>
         <div class="left menu">
           {{#if showEditMenuItemInRow}}

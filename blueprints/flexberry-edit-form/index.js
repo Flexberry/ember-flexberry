@@ -4,11 +4,11 @@
 "use strict";
 var stripBom = require("strip-bom");
 var fs = require("fs");
-var path = require('path');
-var lodash = require('lodash');
-var Locales_1 = require('../flexberry-core/Locales');
-var CommonUtils_1 = require('../flexberry-common/CommonUtils');
-var ModelBlueprint_1 = require('../flexberry-model/ModelBlueprint');
+var path = require("path");
+var lodash = require("lodash");
+var Locales_1 = require("../flexberry-core/Locales");
+var CommonUtils_1 = require("../flexberry-common/CommonUtils");
+var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
@@ -40,6 +40,7 @@ module.exports = {
     afterInstall: function (options) {
         if (this.project.isEmberCLIAddon()) {
             CommonUtils_1.default.installFlexberryAddon(options, ["controller", "route"]);
+            CommonUtils_1.default.installReexportNew(options, ["controller", "route"]);
         }
     },
     /**
@@ -187,6 +188,7 @@ var EditFormBlueprint = (function () {
                 belongsToAttr.name = lodash.concat(currentPath, belongsToAttr.name).join(".");
                 belongsToAttr.readonly = "true";
                 belongsToAttr.type = attr.type;
+                this.locales.setupEditFormAttribute(belongsToAttr);
                 this._tmpSnippetsResult.push({ index: belongsToAttr.index, snippetResult: lodash.template(snippet)(belongsToAttr) });
             }
             this.fillBelongsToAttrs(belongsTo.belongsTo, currentPath);

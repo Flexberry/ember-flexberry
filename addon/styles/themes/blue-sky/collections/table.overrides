@@ -1,0 +1,51 @@
+tr {
+    cursor: pointer;
+}
+
+.oveflow-text {
+    overflow: hidden;
+}
+
+.ui.table.object-list-view tr td {
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.ui.table.object-list-view tr td.overflowed-cell,
+.ui.table.object-list-view tr td.object-list-view-menu {
+    overflow: visible;
+}
+
+.object-list-view-container {
+  margin: 1em 0;
+  max-width: 100%;
+  overflow: auto;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+
+  .object-list-view {
+    margin: 0;
+  }
+}
+
+.object-list-view-container.groupedit-container {
+  overflow: visible;
+}
+
+table.object-list-view.selectable tbody,
+table.object-list-view.selectable thead {
+  cursor: pointer;
+}
+
+.object-list-view-helper-column-cell div.cell {
+    float: left;
+}
+
+.object-list-view-helper-column  {
+    padding: 0px 7px!important;
+}
+
+.ui.fixed.table th.object-list-view-operations {
+    text-overflow: clip;
+    white-space: normal;
+}

@@ -73,6 +73,14 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   colsConfigMenu: Ember.inject.service(),
 
   /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -82,6 +90,10 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   */
   model: function(params, transition) {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
+
+    let controller = this.controllerFor(this.routeName);
+    this.get('objectlistviewEventsService').setLoadingState('loading');
+
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
@@ -127,7 +139,6 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         }
 
         let hierarchicalAttribute;
-        let controller = this.controllerFor(this.routeName);
         if (controller.get('inHierarchicalMode')) {
           hierarchicalAttribute = controller.get('hierarchicalAttribute');
         }
@@ -177,8 +188,8 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         this.onModelLoadingRejected(errorData);
       }).finally((data) => {
         this.onModelLoadingAlways(data);
-        if (this.get('controller.state') === 'loading') {
-          this.get('controller').set('state', '');
+        if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
+          this.get('objectlistviewEventsService').setLoadingState('');
         }
       });
 
@@ -193,6 +204,20 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
       return model;
     } else {
       return { isLoading: true };
+    }
+  },
+
+  actions: {
+    /**
+      Event handler for processing promise model rejecting.
+      [More info](https://emberjs.com/api/ember/2.4/classes/Ember.Route/events/error?anchor=error).
+
+      @method actions.error
+      @param {Object} error
+      @param {Object} transition
+    */
+    error: function(error, transition) {
+      this.onModelLoadingRejected(error);
     }
   },
 
@@ -231,6 +256,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   /**
     This method will be invoked when model loading operation completed, but failed.
     Override this method to add some custom logic on model loading operation fail.
+    By default showing error form.
 
     @example
       ```javascript
@@ -242,7 +268,14 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     @param {Object} errorData Data about model loading operation fail.
   */
   onModelLoadingRejected(errorData) {
-    // TODO: Provide information about error to user.
+    if (!this.get('controller') || !this.get('controller.model') || this.get('controller.model.isLoading')) {
+      this.get('objectlistviewEventsService').setLoadingState('error');
+      errorData = errorData || {};
+      errorData.retryRoute = this.routeName;
+      this.intermediateTransitionTo('error', errorData);
+    } else {
+      this.controller.send('error', errorData);
+    }
   },
 
   /**

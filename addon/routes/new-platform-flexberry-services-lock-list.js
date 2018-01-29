@@ -31,6 +31,10 @@ export default ListFormRoute.extend({
     @default { DEFAULT: {} }
   */
   developerUserSettings: {
-    DEFAULT: {},
+    LockObjectListView: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 100 }]
+      }
+    }
   },
 });

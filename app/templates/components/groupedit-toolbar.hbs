@@ -1,6 +1,24 @@
 {{#if createNewButton}}
-  <button class="ui {{buttonClass}} button" {{action 'addRow'}} disabled={{readonly}}><i class="plus icon"></i></button>
+  <button
+    class="ui ui-add {{buttonClass}} button"
+    title={{t "components.groupedit-toolbar.add-button-text"}}
+    disabled={{readonly}} {{action 'addRow'}}>
+      <i class="plus icon"></i>
+  </button>
 {{/if}}
 {{#if deleteButton}}
-  <button class="ui {{if _isDeleteRowsEnabled '' 'disabled'}} {{buttonClass}} button" disabled={{readonly}} {{action 'deleteRows'}}><i class="minus icon"></i></button>
+  <button
+    class="ui ui-delete {{if _isDeleteRowsEnabled '' 'disabled'}} {{buttonClass}} button"
+    title={{t "components.groupedit-toolbar.delete-button-text"}}
+    disabled={{readonly}} {{action 'deleteRows'}}>
+      <i class="minus icon"></i>
+  </button>
+{{/if}}
+{{#if defaultSettingsButton}}
+  <button
+    class="ui ui-clear-settings {{buttonClass}} button"
+    title={{t "components.groupedit-toolbar.clear-settings-button-text"}}
+    {{action 'setDefaultSettings'}}>
+      <i class="configure icon"></i>
+  </button>
 {{/if}}

@@ -1,19 +1,81 @@
-{{#ui-sidebar class="inverted vertical menu"}}
-  <div class="header item">
-    <a class="brand" href="#">Flexberry Ember Demo</a>
-  </div>
+{{#if isInAcceptanceTestMode}}
+  {{outlet}}
+  {{outlet "modal"}}
+{{else}}
+{{#ui-sidebar class="mobile inverted vertical main menu"}}
+  <a class="item"
+    href={{addonVersionHref}}
+    target="_blank"
+    title={{t "forms.application.sitemap.application-version.title"}}>
+    {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
+  </a>
   {{render "sitemap" sitemap}}
 {{/ui-sidebar}}
-<div id="example-mobile" class="pusher">
-  <div class="full height">
-    <div class="ui top fixed inverted menu">
-      <a {{ action 'toggleSidebar' }} class="launch icon item"><i class="sidebar icon"></i></a>
-      <div class="right menu">
+<div class="bgw-fix mobile">
+  <div class="background-logo mobile">
+    <div class="ui attached menu mobile">
+      <div class="ui container flex-container">
+        <a {{action 'toggleSidebarMobile'}}
+          class="launch icon item mobile"
+          title={{t "forms.application.header.menu.sitemap-button.title"}}>
+          <i class="sidebar icon text-menu-show"></i>
+          <i class="sidebar icon hidden text-menu-hide hidden-text"></i>
+        </a>
+        <div class="right item">
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.user-settings-service-checkbox.caption"}}
+          </label>
+          {{flexberry-checkbox
+            class="toggle"
+            value=userSettingsService.isUserSettingsServiceEnabled
+          }}
+        </div>
+        <div class="right item lang">
+          <label style="margin-right: 5px;">
+            {{t "forms.application.header.menu.language-dropdown.caption"}}
+          </label>
+          {{flexberry-dropdown
+            class="compact"
+            items=locales
+            value=i18n.locale
+            placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
+          }}
+        </div>
       </div>
-    </div>
-    <div class="flexberry-content ui attached segment">
-      {{outlet}}
-      {{outlet "modal"}}
     </div>
   </div>
 </div>
+<div id="example-mobile" class="pusher">
+  <div class="ui form {{objectlistviewEventsService.loadingState}}">
+    <div class="full height" style="min-height: 94.8vh!important;" >
+      <div class="flexberry-content ui attached segment">
+        <div class="ui main container">
+          <div class="stackable grid container">
+            {{outlet}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ui main container">
+  {{outlet "modal"}}
+</div>
+<div class="ui vertical footer segment">
+  <div class="ui container flex-container mobile-footer">
+    <div class="ui text menu">
+      <a class="brand item" href="#">
+        {{t "forms.application.footer.application-name"}}
+      </a>
+      <div class="right menu">
+        <a class="item"
+          href={{addonVersionHref}}
+          target="_blank"
+          title={{t "forms.application.footer.application-version.title"}}>
+            {{t "forms.application.footer.application-version.caption" version=addonVersion}}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}

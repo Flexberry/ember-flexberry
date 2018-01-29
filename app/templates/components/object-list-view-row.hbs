@@ -5,7 +5,7 @@
       {{#if showHelperColumn}}
         <div class="object-list-view-helper-column-cell">
           {{#if showAsteriskInRow}}
-            <div class="cell">
+            <div class="cell asterisk-cell">
               <i class="asterisk small red icon {{unless record.data.hasDirtyAttributes "transparent"}}"></i>
             </div>
           {{/if}}
@@ -14,13 +14,27 @@
               {{flexberry-checkbox
                 readonly=(or readonly (not record.rowConfig.canBeSelected))
                 onChange=(action selectRow record)
+                value=record.selected
               }}
             </div>
           {{/if}}
           {{#if showDeleteButtonInRow}}
             <div class="cell">
-              <button class="ui object-list-view-row-delete-button {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button" {{action deleteRow record}}>
+              <button
+                class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button"
+                title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
+                {{action deleteRow record}}>
                 <i class="minus icon"></i>
+              </button>
+            </div>
+          {{/if}}
+          {{#if showEditButtonInRow}}
+            <div class="cell">
+              <button
+                class="ui ui-edit object-list-view-row-edit-button {{buttonClass}} {{if readonly "disabled"}} button"
+                title={{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}
+                {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
+                <i class="edit icon"></i>
               </button>
             </div>
           {{/if}}
@@ -29,8 +43,8 @@
     </td>
     {{#each columns as |column index|}}
       <td
-        {{action rowClick record preventDefault=false}}
-        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}}"
+        onclick={{action "onRowClick" record (hash column=column columnIndex=index) preventDefault=false}}
+        class="field {{if (and showValidationMessages (get record.data (concat "errors." column.propName ".length"))) "error"}} {{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
         style={{if (and (not index) inHierarchicalMode) hierarchicalIndentStyle defaultPaddingStyle}}>
         {{#if column.cellComponent.componentName}}
           {{#if inHierarchicalMode}}
@@ -38,13 +52,13 @@
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
-              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
+              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
             }}
               {{#if (and (not index) inHierarchicalMode)}}
                 {{#if hasRecords}}
-                  <button class="ui button icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
-                    <i class="{{if _expanded "minus" "plus"}} icon"></i>
+                  <button class="ui button hierarchy-expand icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
+                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
                   </button>
                 {{/if}}
               {{/if}}
@@ -54,7 +68,7 @@
               dynamicProperties=column.cellComponent.componentProperties
               relatedModel=record.data
               value=(mut (get record.data column.propName))
-              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
+              readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
             }}
             {{#if showValidationMessages}}
@@ -68,8 +82,12 @@
           <div class="oveflow-text">
             {{#if (and (not index) inHierarchicalMode)}}
               {{#if hasRecords}}
-                <button class="ui button icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
-                  <i class="{{if _expanded "minus" "plus"}} icon"></i>
+                <button
+                  class="ui button hierarchy-expand icon mini compact {{buttonClass}}"
+                  title={{if _expanded (t "components.object-list-view.hierarchy-buttons.minus-button-title")
+                   (t "components.object-list-view.hierarchy-buttons.plus-button-title")}}
+                  {{action "expand" bubbles=false}}>
+                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
                 </button>
               {{/if}}
             {{/if}}
@@ -83,17 +101,17 @@
     {{/each}}
     {{#if showMenuColumn}}
       <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
-        <div class="basic right pointing ui icon dropdown button">
+        <div class="right pointing ui icon dropdown button">
           <i class="list layout icon"></i>
           <div class="left menu">
             {{#if showEditMenuItemInRow}}
-              <div class="item" {{ action rowClick record }}>
+              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} edit-menu" {{action "onRowClick" record (hash column=null columnIndex=null rowEdit=true)}}>
                 <i class="edit icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
               </div>
             {{/if}}
             {{#if showDeleteMenuItemInRow}}
-              <div class="item" {{ action deleteRow record }}>
+              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action deleteRow record }}>
                 <i class="trash icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
               </div>
@@ -125,7 +143,9 @@
         showAsteriskInRow=showAsteriskInRow
         showCheckBoxInRow=showCheckBoxInRow
         showDeleteButtonInRow=showDeleteButtonInRow
+        showEditButtonInRow=showEditButtonInRow
         inHierarchicalMode=inHierarchicalMode
+        inExpandMode=(unbound inExpandMode)
         loadRecords=loadRecords
         doRenderData=record.doRenderData
         rowClick=rowClick
@@ -134,6 +154,7 @@
         _currentLevel=_currentLevel
         hierarchicalIndent=_hierarchicalIndent
         defaultLeftPadding=defaultLeftPadding
+        overflowedComponents=overflowedComponents
       }}
     {{/each}}
   {{/if}}

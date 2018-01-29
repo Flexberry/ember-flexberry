@@ -6,6 +6,29 @@ export default ListFormController.extend({
 
   filterByAllWords: false,
 
+  queryParams: ['filterCondition'],
+  filterCondition: undefined,
+
+  /**
+    Observes current state of FilterCondition parameter
+    & set right filter option after reload page.
+
+    @method  _currentFilterCondition
+    @private
+  */
+  _currentFilterCondition: Ember.observer('filterCondition', function() {
+    let filterCondition = this.get('filterCondition');
+    if (filterCondition === 'or') {
+      this.set('filterByAnyWord', true);
+      this.set('filterByAllWords', false);
+    }else if (filterCondition === 'and') {
+      this.set('filterByAnyWord', false);
+      this.set('filterByAllWords', true);
+    }
+
+    return filterCondition;
+  }),
+
   customButtons: Ember.computed('filterByAnyWord', 'filterByAllWords', function() {
     return [{
       buttonName: 'filterByAnyWord',
@@ -21,10 +44,16 @@ export default ListFormController.extend({
   actions: {
     toggleFilterByAnyWord() {
       this.toggleProperty('filterByAnyWord');
+      if (this.get('filterByAnyWord')) {
+        this.set('filterByAllWords', false);
+      }
     },
 
     toggleFilterByAllWords() {
       this.toggleProperty('filterByAllWords');
+      if (this.get('filterByAllWords')) {
+        this.set('filterByAnyWord', false);
+      }
     },
 
     componentForFilter(type, relation) {
@@ -45,7 +74,7 @@ export default ListFormController.extend({
           return ['eq', 'neq', 'le', 'ge'];
 
         case 'string':
-          return ['eq', 'neq', 'like'];
+          return ['eq', 'neq', 'like', 'empty'];
 
         case 'boolean':
           return ['eq'];

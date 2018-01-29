@@ -113,21 +113,30 @@ export default Ember.Component.extend({
         allowMultiple: true,
 
         onApprove: function () {
-          _this.sendAction('ok');
-          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+          // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
+          Ember.run(() => {
+            _this.sendAction('ok');
+            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+          });
         },
         onDeny: function () {
-          _this.sendAction('close');
-          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+          // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
+          Ember.run(() => {
+            _this.sendAction('close');
+            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+          });
         },
         onHidden: function () {
-          _this.sendAction('close');
+          Ember.run(() => {
+            _this.sendAction('close');
 
-          // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
-          Ember.$(this).remove();
-          _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+            // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
+            Ember.$(this).remove();
+            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
+          });
         },
         onVisible: function () {
+          // Handler of 'created' action causes asynchronous animation, so Ember.run is necessary.
           Ember.run(() => {
             _this.sendAction('created', Ember.$(this));
           });

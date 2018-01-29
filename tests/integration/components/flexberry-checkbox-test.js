@@ -255,3 +255,27 @@ test('Component works properly in readonly mode', function(assert) {
       'Component\'s binded value is equals to \'true\' after first click when readonly mode is disabled');
   });
 });
+
+test('Setting up classes in checkbox', function(assert) {
+  assert.expect(6);
+
+  let checkClass = 'radio slider toggle';
+  this.set('class', checkClass);
+  this.render(hbs`{{flexberry-checkbox value=flag class=class}}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+
+  // Check component's initial state.
+  assert.strictEqual($component.hasClass('radio'), true, 'Component hasn\'t css-class \'radio\' by default');
+  assert.strictEqual($component.hasClass('slider'), true, 'Component hasn\'t css-class \'slider\' by default');
+  assert.strictEqual($component.hasClass('toggle'), true, 'Component hasn\'t css-class \'toggle\' by default');
+
+  // Change binded value to 'true' & check component's state again (it must be checked).
+  this.set('flag', true);
+
+  // Check component's afther change state.
+  assert.strictEqual($component.hasClass('radio'), true, 'Component hasn\'t css-class \'radio\' afther change');
+  assert.strictEqual($component.hasClass('slider'), true, 'Component hasn\'t css-class \'slider\' afther change');
+  assert.strictEqual($component.hasClass('toggle'), true, 'Component hasn\'t css-class \'toggle\' afther change');
+});

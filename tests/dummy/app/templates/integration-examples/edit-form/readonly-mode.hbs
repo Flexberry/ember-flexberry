@@ -55,7 +55,7 @@
       <label>{{t "forms.integration-examples.edit-form.readonly-mode.time-caption"}}</label>
       {{flexberry-simpledatetime
         readonly=readonly
-        type="time"
+        type="datetime"
         value=model.time
         readonly=readonly
       }}
@@ -84,7 +84,7 @@
       relationName="master"
       projection="MasterL"
       displayAttributeName="text"
-      title=(t "forms.integration-examples.edit-form.readonly-mode.master-caption")     
+      title=(t "forms.integration-examples.edit-form.readonly-mode.master-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
       readonly=readonly

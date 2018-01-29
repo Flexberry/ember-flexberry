@@ -10,7 +10,7 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
-  _items: Ember.computed('items', function() {
+  _items: Ember.computed('items.[]', function() {
     let items = this.get('items');
     let obj = null;
 

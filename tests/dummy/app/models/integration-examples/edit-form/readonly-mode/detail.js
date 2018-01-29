@@ -11,6 +11,7 @@ let Model = Projection.Model.extend({
 
   flag: DS.attr('boolean'),
   text: DS.attr('string'),
+  longText: DS.attr('string'),
   date: DS.attr('date'),
   enumeration: DS.attr('integration-examples/edit-form/readonly-mode/enumeration'),
   file: DS.attr('file'),
@@ -26,6 +27,7 @@ let Model = Projection.Model.extend({
 Model.defineProjection('DetailE', 'integration-examples/edit-form/readonly-mode/detail', {
   flag: Projection.attr('Flag'),
   text: Projection.attr('Text'),
+  longText: Projection.attr('longText'),
   date: Projection.attr('Date'),
   enumeration: Projection.attr('Enumeration'),
   file: Projection.attr('File'),

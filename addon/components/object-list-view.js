@@ -428,7 +428,7 @@ export default FlexberryBaseComponent.extend(
       userSettings = userSettings ? userSettings[this.get('componentName')] : undefined;
       userSettings = userSettings ? userSettings.DEFAULT : undefined;
     } else {
-      userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
+      userSettings = this.get('userSettingsService').getCurrentUserSetting(this.get('componentName')); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
     }
 
     let onEditForm = this.get('onEditForm');
@@ -441,8 +441,19 @@ export default FlexberryBaseComponent.extend(
         delete col.sorted;
         delete col.sortNumber;
         delete col.sortAscending;
+        delete col.width;
         let propName = col.propName;
         namedCols[propName] = col;
+      }
+
+      // Set columns width.
+      if (Ember.isArray(userSettings.columnWidths)) {
+        for (let i = 0; i < userSettings.columnWidths.length; i++) {
+          let columnWidth = userSettings.columnWidths[i];
+          if (namedCols[columnWidth.propName]) {
+            namedCols[columnWidth.propName].width = columnWidth.width || 150;
+          }
+        }
       }
 
       if (userSettings.sorting === undefined) {
@@ -1047,8 +1058,15 @@ export default FlexberryBaseComponent.extend(
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
       userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {
-        let sort = serializeSortingParam(currentUserSetting.sorting);
-        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+        if (this.get('class') !== 'groupedit-container')
+        {
+          let sort = serializeSortingParam(currentUserSetting.sorting);
+          this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+        } else {
+          this.set('sorting', currentUserSetting.sorting);
+          let objectlistviewEventsService = this.get('objectlistviewEventsService');
+          objectlistviewEventsService.updateWidthTrigger(componentName);
+        }
       });
     }
   },
@@ -1344,7 +1362,7 @@ export default FlexberryBaseComponent.extend(
         userSetting = userSetting ? userSetting.DEFAULT : undefined;
         userSetting = userSetting ? userSetting.columnWidths : undefined;
       } else {
-        userSetting = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+        userSetting = this.get('userSettingsService').getCurrentColumnWidths(this.get('componentName'));
       }
 
       userSetting = Ember.isArray(userSetting) ? Ember.A(userSetting) : Ember.A();
@@ -1463,7 +1481,7 @@ export default FlexberryBaseComponent.extend(
       });
     });
     this._setCurrentColumnsWidth();
-    this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
+    this.get('userSettingsService').setCurrentColumnWidths(this.get('componentName'), undefined, userWidthSettings);
   },
 
   /**

@@ -104,6 +104,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
         sizeClass: undefined,
         lookupWindowCustomPropertiesData: undefined,
         componentName: undefined,
+        notUseUserSettings: undefined,
+        perPage: this.get('lookupModalWindowPerPage'),
         sorting: undefined
       }, chooseData);
 
@@ -124,6 +126,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       let model = modelToLookup ? modelToLookup : this.get('model');
       let sorting = options.sorting ? options.sorting : [];
+      let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
       // Get ember static function to get relation by name.
       let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
@@ -146,7 +149,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         relatedToType: relatedToType,
         projectionName: projectionName,
 
-        perPage: this.get('lookupModalWindowPerPage'),
+        perPage: perPage,
         page: 1,
         sorting: sorting,
         filter: undefined,
@@ -160,7 +163,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
         },
         currentLookupRow: model.get(relationName),
         customPropertiesData: lookupWindowCustomPropertiesData,
-        componentName: componentName
+        componentName: componentName,
+        notUseUserSettings: options.notUseUserSettings,
       };
 
       this._reloadModalData(this, reloadData);
@@ -250,6 +254,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
     @param {String} [options.currentLookupRow] Current lookup value.
     @param {String} [options.customPropertiesData] Custom properties of modal lookup window.
     @param {String} [options.componentName] Component name of lookup component.
+    @param {Boolean} [options.notUseUserSettings] Not use user settings in the list component on lookup window.
   */
   _reloadModalData(currentContext, options) {
     let lookupSettings = currentContext.get('lookupSettings');
@@ -276,7 +281,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
       saveTo: undefined,
       currentLookupRow: undefined,
       customPropertiesData: undefined,
-      componentName: undefined
+      componentName: undefined,
+      notUseUserSettings: undefined,
     }, options);
 
     Ember.assert('Reload data are not defined fully.',
@@ -319,6 +325,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       currentLookupRow: reloadData.currentLookupRow,
       customPropertiesData: reloadData.customPropertiesData,
       componentName: reloadData.componentName,
+      notUseUserSettings: reloadData.notUseUserSettings,
 
       perPage: queryParameters.perPage,
       page: queryParameters.page,

@@ -4,7 +4,6 @@
 
 import Ember from 'ember';
 import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-component';
-import Ember from 'ember';
 
 /**
   Flexberry checkbox component with [Semantic UI checkbox](http://semantic-ui.com/modules/checkbox.html) style.

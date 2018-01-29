@@ -48,7 +48,7 @@ export default Ember.Mixin.create({
         for (let i = 0; i < recordsArray.length; i++) {
           let record = store.peekRecord(modelName, recordsArray[i].id);
 
-          if ((!Ember.isNone(record.get(hierarchicalAttribute))) && (record.get(hierarchicalAttribute).id === id)) {
+          if (record && (!Ember.isNone(record.get(hierarchicalAttribute))) && (record.get(hierarchicalAttribute).id === id)) {
             sortRecordsArray.push(record);
           }
         }

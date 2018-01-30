@@ -1248,7 +1248,9 @@ export default folv.extend(
   */
   didInsertElement() {
     this._super(...arguments);
-
+    let infoModalDialog = this.$('.olv-toolbar-info-modal-dialog');
+    infoModalDialog.modal('setting', 'closable', true);
+    this.set('_infoModalDialog', infoModalDialog);
     Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() {
       if (this.get('columnsWidthAutoresize')) {
         this._setColumnWidths();

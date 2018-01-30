@@ -10,7 +10,6 @@ export default EditFormController.extend({
         autofocus: false,
         detachable: false,
         allowMultiple: true,
-        context: '#example',
       });
       this.set('repeatWindow', repeatWindow);
       this.get('repeatWindow').modal('refresh').modal('show');
@@ -22,7 +21,6 @@ export default EditFormController.extend({
         autofocus: false,
         detachable: false,
         allowMultiple: true,
-        context: '#example',
       });
       this.set('repeatWindowdouble', repeatWindow);
       this.get('repeatWindowdouble').modal('refresh').modal('show');

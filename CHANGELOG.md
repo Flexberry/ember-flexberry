@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-groupedit` component:
     * Add column widths saving in usersettings.
     * Add restore default usersettings button.
+    * Add clear sorting button.
 * `flexberry-lookup` component:
     * User settings support, use parameter `notUseUserSettings` to disabling.
     * `perPage` parameter.

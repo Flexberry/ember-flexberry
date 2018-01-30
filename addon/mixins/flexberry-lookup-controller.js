@@ -95,6 +95,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
     */
     showLookupDialog(chooseData) {
+      let lookupController = this.get('lookupController');
       let options = Ember.$.extend(true, {
         projection: undefined,
         relationName: undefined,
@@ -106,7 +107,8 @@ export default Ember.Mixin.create(ReloadListMixin, {
         componentName: undefined,
         notUseUserSettings: undefined,
         perPage: this.get('lookupModalWindowPerPage'),
-        sorting: undefined
+        sorting: undefined,
+        hierarchicalAttribute: lookupController.get('hierarchicalAttribute')
       }, chooseData);
 
       let projectionName = options.projection;
@@ -123,6 +125,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
       let sizeClass = options.sizeClass;
       let componentName = options.componentName;
+      let hierarchicalAttribute = options.hierarchicalAttribute;
 
       let model = modelToLookup ? modelToLookup : this.get('model');
       let sorting = options.sorting ? options.sorting : [];
@@ -154,6 +157,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         sorting: sorting,
         filter: undefined,
         predicate: limitPredicate,
+        hierarchicalAttribute: hierarchicalAttribute,
 
         title: title,
         sizeClass: sizeClass,
@@ -275,6 +279,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filter: undefined,
       filterCondition: undefined,
       predicate: undefined,
+      hierarchicalAttribute: undefined,
 
       title: undefined,
       sizeClass: undefined,
@@ -303,6 +308,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
     }
 
+    let controller = currentContext.get('lookupController');
     let queryParameters = {
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
@@ -312,10 +318,10 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filters: reloadData.filters,
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
-      predicate: limitPredicate
+      predicate: limitPredicate,
+      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined
     };
 
-    let controller = currentContext.get('lookupController');
     controller.clear(reloadData.initialLoad);
     controller.setProperties({
       modelProjection: projection,
@@ -333,6 +339,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
+      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
 
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,

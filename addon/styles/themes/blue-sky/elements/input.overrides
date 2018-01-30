@@ -33,3 +33,15 @@
    width: 0;
    height: 0;
 }
+
+.ui.form input.ember-view.ember-text-field:-ms-input-placeholder {
+   color: @placeholderColor;
+}
+
+.ui.form textarea.ember-view.ember-text-area:-ms-input-placeholder {
+   color: @placeholderColor;
+}
+
+.ember-view.ui.dropdown div.default.text {
+   color: @placeholderColor;
+}

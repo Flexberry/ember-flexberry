@@ -87,18 +87,20 @@
       orderable=false
     }}
   </div>
-  {{#flexberry-toggler expanded=true}}
-    <div class="field {{if model.errors.details "error" ""}}">
-      <label>{{t "forms.integration-examples.edit-form.validation.details-caption"}}</label>
-      {{flexberry-groupedit
-        componentName="IntegrationExamplesEditFormValidationsDetails"
-        content=model.details
-        mainModelProjection=modelProjection
-        modelProjection=modelProjection.attributes.details
-        orderable=false
-        showValidationMessagesInRow=false
-      }}
-      {{flexberry-validationmessage error=model.errors.details pointing="pointing"}}
-    </div>
-  {{/flexberry-toggler}}
+    <div  class="ui segment">
+    {{#flexberry-toggler expanded=true}}
+      <div class="field {{if model.errors.details "error" ""}}">
+        <label>{{t "forms.integration-examples.edit-form.validation.details-caption"}}</label>
+        {{flexberry-groupedit
+          componentName="IntegrationExamplesEditFormValidationsDetails"
+          content=model.details
+          mainModelProjection=modelProjection
+          modelProjection=modelProjection.attributes.details
+          orderable=false
+          showValidationMessagesInRow=false
+        }}
+        {{flexberry-validationmessage error=model.errors.details pointing="pointing"}}
+      </div>
+    {{/flexberry-toggler}}
+  </div>
 </form>

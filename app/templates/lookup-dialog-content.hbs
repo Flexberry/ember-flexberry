@@ -5,7 +5,7 @@
     content=model
     selectedRecord=currentLookupRow
     componentMode='lookupform'
-    componentName='flexberry-objectlistview-at-lookup'
+    componentName=(concat "folw_in_" (or componentName "undefined") "_lookup")
 
     showEditMenuItemInRow=false
     createNewButton=false
@@ -35,6 +35,6 @@
     orderable=true
     sortByColumn=(action "sortByColumn")
     addColumnToSorting=(action "addColumnToSorting")
-    notUseUserSettings=true
+    notUseUserSettings=notUseUserSettings
   }}
 </div>

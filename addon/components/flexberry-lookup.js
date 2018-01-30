@@ -45,6 +45,7 @@ const {
       placeholder="Not select"
       chooseText="Select"
       removeText="Clear"
+      perPage=50
     }}
     ...
     ```
@@ -252,6 +253,45 @@ export default FlexberryBaseComponent.extend({
     Closure action `lookupWindowCustomProperties` is called here if defined,
     otherwise `undefined` is returned.
 
+    @example
+      ```javascript
+      // app/controllers/post.js
+      import EditFormController from './edit-form';
+      export default EditFormController.extend({
+        actions: {
+          lookupWindowCustomProperties({ relationName, projection }) {
+            if (relationName === 'author' && projection === 'UserL') {
+              return {
+                filterButton: true,
+                filterByAnyWord: true,
+                enableFilters: true,
+                refreshButton: true,
+                perPage: 25,
+              };
+            }
+          },
+        },
+      });
+      ```
+
+      ```handlebars
+      <!-- app/templates/post.hbs -->
+      {{flexberry-lookup
+        componentName="AuthorLookup"
+        choose="showLookupDialog"
+        remove="removeLookupValue"
+        value=model.author
+        projection="UserL"
+        relationName="author"
+        displayAttributeName="name"
+        title="Author"
+        placeholder="Not select"
+        chooseText="Select"
+        removeText="Clear"
+        lookupWindowCustomProperties=(action "getLookupFolvProperties")
+      }}
+      ```
+
     @property _lookupWindowCustomPropertiesData
     @type Object
     @private
@@ -291,6 +331,7 @@ export default FlexberryBaseComponent.extend({
     'orderBy',
     function() {
       let ordering = this.get('orderBy') ? this.get('orderBy') : '';
+      let perPage = this.get('userSettings').getCurrentPerPage(`folw_in_${this.get('componentName')}_lookup`);
       return {
         projection: this.get('projection'),
         relationName: this.get('relationName'),
@@ -299,6 +340,8 @@ export default FlexberryBaseComponent.extend({
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
         componentName: this.get('componentName'),
+        notUseUserSettings: this.get('notUseUserSettings'),
+        perPage: perPage || this.get('perPage'),
         sorting: deserializeSortingParam(ordering),
 
         //TODO: move to modal settings.
@@ -328,6 +371,14 @@ export default FlexberryBaseComponent.extend({
     @readOnly
   */
   store: Ember.inject.service('store'),
+
+  /**
+    The user settings service.
+
+    @property userSettings
+    @type UserSettingsService
+  */
+  userSettings: Ember.inject.service('user-settings'),
 
   /**
     Name of the attribute of the model to display for the user.

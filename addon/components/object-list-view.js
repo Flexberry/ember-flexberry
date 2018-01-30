@@ -428,7 +428,7 @@ export default FlexberryBaseComponent.extend(
       userSettings = userSettings ? userSettings[this.get('componentName')] : undefined;
       userSettings = userSettings ? userSettings.DEFAULT : undefined;
     } else {
-      userSettings = this.get('userSettingsService').getCurrentUserSetting(this.componentName);
+      userSettings = this.get('userSettingsService').getCurrentUserSetting(this.get('componentName')); // TODO: Need use promise for loading user settings. There are async promise execution now, called by hook model in list-view route (loading started by call setDeveloperUserSettings(developerUserSettings) but may be not finished yet).
     }
 
     let onEditForm = this.get('onEditForm');
@@ -441,8 +441,19 @@ export default FlexberryBaseComponent.extend(
         delete col.sorted;
         delete col.sortNumber;
         delete col.sortAscending;
+        delete col.width;
         let propName = col.propName;
         namedCols[propName] = col;
+      }
+
+      // Set columns width.
+      if (Ember.isArray(userSettings.columnWidths)) {
+        for (let i = 0; i < userSettings.columnWidths.length; i++) {
+          let columnWidth = userSettings.columnWidths[i];
+          if (namedCols[columnWidth.propName]) {
+            namedCols[columnWidth.propName].width = columnWidth.width || 150;
+          }
+        }
       }
 
       if (userSettings.sorting === undefined) {
@@ -1047,8 +1058,15 @@ export default FlexberryBaseComponent.extend(
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
       userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {
-        let sort = serializeSortingParam(currentUserSetting.sorting);
-        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+        if (this.get('class') !== 'groupedit-container')
+        {
+          let sort = serializeSortingParam(currentUserSetting.sorting);
+          this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+        } else {
+          this.set('sorting', currentUserSetting.sorting);
+          let objectlistviewEventsService = this.get('objectlistviewEventsService');
+          objectlistviewEventsService.updateWidthTrigger(componentName);
+        }
       });
     }
   },
@@ -1174,40 +1192,7 @@ export default FlexberryBaseComponent.extend(
           let renderedRowIndex = this.get('_renderedRowIndex') + 1;
 
           if (renderedRowIndex >= contentLength) {
-            // Restore selected records.
-            // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-            if (this.get('selectedRecords')) {
-              this.get('selectedRecords').clear();
-            }
-
-            let componentName = this.get('componentName');
-            let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
-            if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
-              let e = {
-                checked: true
-              };
-
-              let someRecordWasSelected = false;
-              selectedRecordsToRestore.forEach((recordWithData, key) => {
-                if (this._getModelKey(recordWithData.data)) {
-                  someRecordWasSelected = true;
-                  this.send('selectRow', recordWithData, e);
-                }
-              });
-
-              // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
-              if (someRecordWasSelected) {
-                this.get('objectlistviewEventsService').clearSelectedRecords(componentName);
-              }
-
-              if (!someRecordWasSelected && !this.get('allSelect')) {
-                // Reset toolbar buttons enabled state.
-                this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
-              }
-            } else if (!this.get('allSelect')) {
-              // Reset toolbar buttons enabled state.
-              this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
-            }
+            this._restoreSelectedRecords();
 
             // Remove long loading spinners.
             this.set('rowByRowLoadingProgress', false);
@@ -1223,14 +1208,6 @@ export default FlexberryBaseComponent.extend(
             }
 
             this._setColumnWidths();
-
-            let $currentTable = this.$('table.object-list-view');
-            if (this.get('allowColumnResize')) {
-              $currentTable.addClass('fixed');
-              this._reinitResizablePlugin();
-            } else {
-              $currentTable.colResizable({ disable: true });
-            }
           } else {
             // Start render row.
             let modelWithKey = contentForRender[renderedRowIndex];
@@ -1246,11 +1223,17 @@ export default FlexberryBaseComponent.extend(
               }
             }
 
-            this._reinitResizablePlugin();
+            if (this.get('allowColumnResize')) {
+              this._reinitResizablePlugin();
+            } else {
+              let $table = this.$('table.object-list-view');
+              $table.colResizable({ disable: true });
+            }
           }
         }
       }
     } else {
+      this._restoreSelectedRecords();
 
       if (!this._colResizableInit) {
         let $currentTable = this.$('table.object-list-view');
@@ -1379,13 +1362,21 @@ export default FlexberryBaseComponent.extend(
         userSetting = userSetting ? userSetting.DEFAULT : undefined;
         userSetting = userSetting ? userSetting.columnWidths : undefined;
       } else {
-        userSetting = this.get('userSettingsService').getCurrentColumnWidths(this.componentName);
+        userSetting = this.get('userSettingsService').getCurrentColumnWidths(this.get('componentName'));
       }
 
       userSetting = Ember.isArray(userSetting) ? Ember.A(userSetting) : Ember.A();
 
       let $table = this.$('table.object-list-view');
       let $columns = $table.find('th');
+
+      if (this.get('allowColumnResize')) {
+        $table.addClass('fixed');
+        this._reinitResizablePlugin();
+      } else {
+        $table.colResizable({ disable: true });
+      }
+
       let hashedUserSetting = {};
       let tableWidth = 0;
       let olvRowMenuWidth = 0;
@@ -1455,7 +1446,9 @@ export default FlexberryBaseComponent.extend(
         }
       });
 
-      this._reinitResizablePlugin();
+      if (this.get('allowColumnResize')) {
+        this._reinitResizablePlugin();
+      }
     }
   },
 
@@ -1488,7 +1481,7 @@ export default FlexberryBaseComponent.extend(
       });
     });
     this._setCurrentColumnsWidth();
-    this.get('userSettingsService').setCurrentColumnWidths(this.componentName, undefined, userWidthSettings);
+    this.get('userSettingsService').setCurrentColumnWidths(this.get('componentName'), undefined, userWidthSettings);
   },
 
   /**
@@ -2319,4 +2312,44 @@ export default FlexberryBaseComponent.extend(
 
     return attrsArray;
   },
+
+  /**
+    Restore selected records after refreshing or transition to other page.
+
+    @method _restoreSelectedRecords
+    @private
+  */
+  _restoreSelectedRecords() {
+    // Restore selected records.
+    // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+    if (this.get('selectedRecords')) {
+      this.get('selectedRecords').clear();
+    }
+
+    let componentName = this.get('componentName');
+
+    let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      let e = {
+        checked: true
+      };
+
+      let someRecordWasSelected = false;
+      selectedRecordsToRestore.forEach((recordWithData, key) => {
+        if (this._getModelKey(recordWithData.data)) {
+          someRecordWasSelected = true;
+          this.send('selectRow', recordWithData, e);
+        }
+      });
+
+      if (!someRecordWasSelected && !this.get('allSelect')) {
+        // Reset toolbar buttons enabled state.
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+      }
+    } else if (!this.get('allSelect')) {
+      // Reset toolbar buttons enabled state.
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+    }
+  },
+
 });

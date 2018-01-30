@@ -266,7 +266,12 @@ export default FlexberryBaseComponent.extend({
         Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
       }
 
-      this.sendAction('rowClick', record, params);
+      // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
+      let classOfHierarchyExpandButton = 'hierarchy-expand';
+      if (Ember.isNone(e) || !Ember.$(e.srcElement).hasClass(classOfHierarchyExpandButton))
+      {
+        this.sendAction('rowClick', record, params);
+      }
     }
   },
 

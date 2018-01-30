@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * User settings support, use parameter `notUseUserSettings` to disabling.
     * `perPage` parameter.
+    * Hierarchy mode support.
 
 ### Changed
 * `log` service:

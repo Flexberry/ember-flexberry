@@ -591,6 +591,7 @@ export default FlexberryBaseComponent.extend({
 
     // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
     this.addObserver('value', this, this._valueObserver);
+    this.addObserver('displayAttributeName', this, this._valueObserver);
     this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 
@@ -656,6 +657,7 @@ export default FlexberryBaseComponent.extend({
 
     // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
     this.removeObserver('value', this, this._valueObserver);
+    this.removeObserver('displayAttributeName', this, this._valueObserver);
     this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 

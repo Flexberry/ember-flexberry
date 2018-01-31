@@ -92,6 +92,13 @@ Ember.$.extend(true, translations, {
               }
             }
           }
+        },
+        'SuggestionMainModelProjectionTest': {
+          'userVotes': {
+            'voteType': {
+              'caption': 'Temp text for test'
+            }
+          }
         }
       }
     },
@@ -365,6 +372,10 @@ Ember.$.extend(true, translations, {
             },
             'customizing-window-example': {
               'caption': 'Window customization',
+              'title': ''
+            },
+            'hierarchy-olv-in-lookup-example': {
+              'caption': 'Example hierarchical OLV in lookup',
               'title': ''
             },
             'limit-function-example': {
@@ -755,6 +766,10 @@ Ember.$.extend(true, translations, {
         },
         'customizing-window-example': {
           'caption': 'Flexberry-lookup. Window customization',
+          'titleLookup': 'Master'
+        },
+        'hierarchy-olv-in-lookup-example': {
+          'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',
           'titleLookup': 'Master'
         },
         'limit-function-example': {

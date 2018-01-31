@@ -13,7 +13,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @type String
     @default 'ember-flexberry-dummy-suggestion-list'
    */
-  parentRoute: 'ember-flexberry-dummy-suggestion-list',
+  parentRoute: 'components-examples/flexberry-groupedit/ember-flexberry-dummy-suggestion-list-groupedit-with-lookup-with-computed-atribute',
 
   /**
     Name of model.comments edit route.
@@ -23,6 +23,35 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @default 'ember-flexberry-dummy-comment-edit'
    */
   commentsEditRoute: 'ember-flexberry-dummy-comment-edit',
+
+  /**
+    Name of model.comments edit route.
+
+    @property commentsEditRoute
+    @type String
+    @default 'ember-flexberry-dummy-comment-edit'
+   */
+  checkboxValue: false,
+  fieldvalue: 'Vasya',
+
+  lookupReadonly: Ember.observer('checkboxValue', function() {
+    if (!Ember.isNone(this.get('computedProperties.dynamicProperties.readonly'))) {
+      if (this.get('checkboxValue')) {
+        this.set('computedProperties.dynamicProperties.readonly', true);
+      } else {
+        this.set('computedProperties.dynamicProperties.readonly', false);
+      }
+    }
+
+    return this.get('checkboxValue');
+  }),
+
+  lookupLimitFunction: Ember.observer('fieldvalue', function() {
+    if (!Ember.isNone(this.get('computedProperties.dynamicProperties.lookupLimitPredicate'))) {
+      this.set('computedProperties.dynamicProperties.lookupLimitPredicate', new StringPredicate('name').contains(this.get('fieldvalue')));
+    }
+
+  }),
 
   /**
     Method to get type and attributes of a component,
@@ -36,8 +65,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     { componentName: 'my-component',  componentProperties: { ... } }.
    */
   getCellComponent(attr, bindingPath, model) {
-    let limitFunction = new StringPredicate('name').contains('ва');
     let cellComponent = this._super(...arguments);
+    let limitFunction = new StringPredicate('name').contains('Vasya');
     if (attr.kind === 'belongsTo') {
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author':
@@ -50,7 +79,8 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
             projection: 'ApplicationUserL',
             autocomplete: true,
             lookupLimitPredicate: limitFunction,
-            readonly: true
+            computedProperties: { thisController: this },
+            readonly: false,
           };
           break;
 

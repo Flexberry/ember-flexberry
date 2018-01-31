@@ -272,6 +272,11 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
       this.get('objectlistviewEventsService').setLoadingState('error');
       errorData = errorData || {};
       errorData.retryRoute = this.routeName;
+      if (errorData.message.indexOf('Ember Data Request') !== -1) {
+        errorData.name = this.get('i18n').t('forms.error-form.error').string.toString();
+        errorData.message = this.get('i18n').t('forms.error-form.ember-data-request').string.toString();
+      }
+
       this.intermediateTransitionTo('error', errorData);
     } else {
       this.controller.send('error', errorData);

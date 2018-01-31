@@ -15,6 +15,8 @@ export default {
       caption: 'Произошла ошибка',
       'show-more': 'Подробно',
       retry: 'Повторить попытку',
+      error: 'Ошибка',
+      'ember-data-request': 'сервер недоступен, необходимо проверить соединение с сервером',
     },
 
     'i-i-s-caseberry-logging-objects-application-log-l': {

@@ -92,6 +92,13 @@ Ember.$.extend(true, translations, {
               }
             }
           }
+        },
+        'SuggestionMainModelProjectionTest': {
+          'userVotes': {
+            'voteType': {
+              'caption': 'Temp text for test'
+            }
+          }
         }
       }
     },

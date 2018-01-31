@@ -1,4 +1,5 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
+import { Query } from 'ember-flexberry-data';
 
 export default ListFormRoute.extend({
   /**
@@ -8,7 +9,7 @@ export default ListFormRoute.extend({
     @type String
     @default 'SuggestionL'
    */
-  modelProjection: 'SuggestionE',
+  modelProjection: 'FlexberryObjectlistviewFilterTest',
 
   /**
   developerUserSettings.
@@ -30,13 +31,7 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: {
-    FOLVSettingExampleObjectListView: {
-      'DEFAULT': {
-        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 120 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
-      }
-    }
-  },
+  developerUserSettings: { FOLVSettingExampleObjectListView: { } },
 
   /**
     Name of model to be used as list's records types.
@@ -46,6 +41,18 @@ export default ListFormRoute.extend({
     @default 'ember-flexberry-dummy-suggestion'
    */
   modelName: 'ember-flexberry-dummy-suggestion',
+
+  /**
+    It overrides base method and forms the limit predicate for loaded data.
+
+    @public
+    @method objectListViewLimitPredicate
+    @param {Object} options Method options..
+   */
+  objectListViewLimitPredicate: function(options) {
+    let limitFunction = new Query.SimplePredicate('address', Query.FilterOperator.Neq, undefined);
+    return limitFunction;
+  },
 
   /**
     This method will be invoked always when load operation completed,

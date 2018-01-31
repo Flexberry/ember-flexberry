@@ -303,4 +303,26 @@ Model.defineProjection('DefaultOrderingExampleView', 'ember-flexberry-dummy-sugg
   })
 });
 
+// Example to filter test.
+Model.defineProjection('FlexberryObjectlistviewFilterTest', 'ember-flexberry-dummy-suggestion', {
+  address: Projection.attr('Address'),
+  date: Projection.attr('Date'),
+  votes: Projection.attr('Votes'),
+  moderated: Projection.attr('Moderated'),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
 export default Model;

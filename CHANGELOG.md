@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * List components:
     * Fix using `readonly` property from `componentProperties` for dynamic components.
+    * Fix displaying error about server unavailability. It was made more appropriate for perception.
 * `blue-sky` theme:
     * Actual width for `flexberry-checkbox` was set.
     * Displaying placeholders in IE.

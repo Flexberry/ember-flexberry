@@ -27,6 +27,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Displaying placeholders in IE.
 * `flexberry-simpleolv` component:
     * "Show settings" menu for user settings.
+* `flexberry-lookup` component:
+    * View is update on `displayAttributeName` property was changed.
 
 ## [0.10.0] - 2018-01-26
 ### Added

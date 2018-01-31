@@ -134,6 +134,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-actions');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
+
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
@@ -145,6 +146,7 @@ Router.map(function() {
   { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/:id' });
   this.route('components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox.new',
   { path: 'components-acceptance-tests/flexberry-checkbox/ember-flexberry-dummy-suggestion-edit-with-checked-checkbox/new' });
+
 });
 
 export default Router;

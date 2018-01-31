@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Hierarchy mode support.
 
 ### Changed
+* For compatibility with `Ember Inspector`, `tagName` for application view has been restored, and sidebar moved into this block (see more [here](https://github.com/Flexberry/ember-flexberry/commit/0d4de9aa95b506c37e31e0b99f2e8bb534f85fba) and [here](https://github.com/Flexberry/ember-flexberry/commit/d555c3f0fc4e070a66c0e18403fc721398593d40)).
 * `log` service:
     * Now `processName` field contains application name from `ENV.modulePrefix` of `environment.js`.
 

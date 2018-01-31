@@ -16,7 +16,7 @@ export default {
       'show-more': 'Show more',
       retry: 'Retry',
       error: 'Error',
-      'ember-data-request': 'the server is not available, check the connection to the server',
+      'ember-data-request': 'Server is not available, check the connection to the server',
     },
 
     'i-i-s-caseberry-logging-objects-application-log-l': {

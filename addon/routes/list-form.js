@@ -268,9 +268,10 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     @param {Object} errorData Data about model loading operation fail.
   */
   onModelLoadingRejected(errorData) {
+    errorData = errorData || {};
+    this._updateErrorToDisplay(errorData);
     if (!this.get('controller') || !this.get('controller.model') || this.get('controller.model.isLoading')) {
       this.get('objectlistviewEventsService').setLoadingState('error');
-      errorData = errorData || {};
       errorData.retryRoute = this.routeName;
       this.intermediateTransitionTo('error', errorData);
     } else {
@@ -318,6 +319,21 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     controller.set('resultPredicate', this.get('resultPredicate'));
     if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    }
+  },
+
+  /**
+    This method checks error message and makes some messages more appropriate for perception.
+
+    @method _updateErrorToDisplay.
+    @param {Object} errorData Data with error description and details.
+    @private
+  */
+  _updateErrorToDisplay(errorData) {
+    let message = errorData.message ? errorData.message.replace(/\n/g, ' ') : '';
+    if (message.indexOf('Ember Data Request') !== -1 && message.indexOf('returned a 0 Payload (Empty Content-Type)') !== -1) {
+      errorData.name = this.get('i18n').t('forms.error-form.error').string.toString();
+      errorData.message = this.get('i18n').t('forms.error-form.ember-data-request').string.toString();
     }
   }
 });

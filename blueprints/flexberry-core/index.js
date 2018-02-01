@@ -25,11 +25,21 @@ module.exports = {
         }
         var sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
         var sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
-        if (sitemap.mobile) {
-            this._files = CommonUtils_1.default.getFilesForGeneration(this);
+        if (this.project.isEmberCLIAddon() && !this.options.dummy) {
+            if (sitemap.mobile) {
+                this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/locales/en/translations.js" || v === "__root__/locales/ru/translations.js"; });
+            }
+            else {
+                this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs" || v === "__root__/locales/en/translations.js" || v === "__root__/locales/ru/translations.js"; });
+            }
         }
         else {
-            this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs"; });
+            if (sitemap.mobile) {
+                this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "addon/locales/en/translations.js" || v === "addon/locales/ru/translations.js"; });
+            }
+            else {
+                this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs" || v === "addon/locales/en/translations.js" || v === "addon/locales/ru/translations.js"; });
+            }
         }
         return this._files;
     },

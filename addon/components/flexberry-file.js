@@ -295,6 +295,8 @@ export default FlexberryBaseComponent.extend({
   */
   _errorModalDialogContent: t('components.flexberry-file.error-dialog-content'),
 
+  _errorMessagePreview:'',
+
   /**
     Selected jQuery object, containing HTML of error modal dialog.
 
@@ -730,6 +732,11 @@ export default FlexberryBaseComponent.extend({
     return errorContent;
   },
 
+  previewError(fileName){
+      this.set('_errorMessagePreview', 'preview error ' + fileName);
+  },
+
+
   /**
     Shows file size errors if there were some.
 
@@ -917,7 +924,7 @@ export default FlexberryBaseComponent.extend({
       Ember.$.ajax(previewUrl).done((data, textStatus, jqXHR) => {
         this.set('_previewImageAsBase64String', data);
       }).fail((jqXHR, textStatus, errorThrown) => {
-        this.showDownloadErrorModalDialog(this.get('_jsonValue.fileName'), errorThrown);
+        this.previewError(this.get('_jsonValue.fileName'));
       }).always(() => {
         this.set('_previewDownloadIsInProgress', false);
       });

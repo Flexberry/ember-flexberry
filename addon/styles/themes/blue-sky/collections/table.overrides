@@ -50,11 +50,6 @@ table.object-list-view.selectable thead {
     white-space: normal;
 }
 
-.inline.fields.filter .filter-field-name {
-    width:10%;
-    min-width: 70px;
-}
-
 .inline.fields.filter .filter-operation {
     width:10%;
     min-width: 70px;
@@ -68,9 +63,5 @@ table.object-list-view.selectable thead {
 }
 
 .inline.fields.filter .ui {
-    width: 100%;
-}
-
-.inline.fields.filter label {
     width: 100%;
 }

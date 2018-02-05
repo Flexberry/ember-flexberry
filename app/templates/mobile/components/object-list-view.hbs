@@ -57,9 +57,7 @@
         <td class="overflowed-cell">
           {{#each columns as |column|}}
             <div class="inline fields filter">
-              <div class="filter-field-name">
-                <label>{{column.header}}:</label>
-              </div>
+              <label>{{column.header}}:</label>
               {{#if column.filter.conditions}}
                 <div class="filter-operation">
                   {{component "flexberry-dropdown"

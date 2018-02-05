@@ -51,14 +51,11 @@ table.object-list-view.selectable thead {
 }
 
 .inline.fields.filter .filter-operation {
-    width:10%;
-    min-width: 70px;
-    padding-left:5px;
+    width: 70px;
 }
 
 .inline.fields.filter .filter-value {
-    width: 100%;
-    max-width: 85px 70%-5px;
+    width: 100%-5px;
     padding-left:5px;
 }
 

@@ -49,3 +49,28 @@ table.object-list-view.selectable thead {
     text-overflow: clip;
     white-space: normal;
 }
+
+.inline.fields.filter .filter-field-name {
+    width:10%;
+    min-width: 70px;
+}
+
+.inline.fields.filter .filter-operation {
+    width:10%;
+    min-width: 70px;
+    padding-left:5px;
+}
+
+.inline.fields.filter .filter-value {
+    width: 100%;
+    max-width: 85px 70%-5px;
+    padding-left:5px;
+}
+
+.inline.fields.filter .ui {
+    width: 100%;
+}
+
+.inline.fields.filter label {
+    width: 100%;
+}

@@ -17,7 +17,7 @@ module('Unit | Service | log', {
 
 test('error works properly', function(assert) {
   let done = assert.async();
-  assert.expect(9);
+  assert.expect(10);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -135,7 +135,7 @@ test('logService for error works properly when it\'s disabled', function(assert)
 
 test('warn works properly', function(assert) {
   let done = assert.async();
-  assert.expect(9);
+  assert.expect(10);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -255,7 +255,7 @@ test('logService for warn works properly when it\'s disabled', function(assert) 
 
 test('log works properly', function(assert) {
   let done = assert.async();
-  assert.expect(9);
+  assert.expect(10);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -374,7 +374,7 @@ test('logService for log works properly when it\'s disabled', function(assert) {
 
 test('info works properly', function(assert) {
   let done = assert.async();
-  assert.expect(9);
+  assert.expect(10);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -494,7 +494,7 @@ test('logService for info works properly when it\'s disabled', function(assert) 
 
 test('debug works properly', function(assert) {
   let done = assert.async();
-  assert.expect(9);
+  assert.expect(10);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -614,7 +614,7 @@ test('logService for debug works properly when it\'s disabled', function(assert)
 
 test('deprecate works properly', function(assert) {
   let done = assert.async();
-  assert.expect(9);
+  assert.expect(10);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -734,7 +734,7 @@ test('logService for deprecate works properly when it\'s disabled', function(ass
 
 test('assert works properly', function(assert) {
   let done = assert.async();
-  assert.expect(9);
+  assert.expect(10);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -854,7 +854,7 @@ test('logService for assert works properly when it\'s disabled', function(assert
 
 test('throwing exceptions logs properly', function(assert) {
   let done = assert.async();
-  assert.expect(9);
+  assert.expect(10);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;
@@ -973,7 +973,7 @@ test('logService for throw works properly when it\'s disabled', function(assert)
 
 test('promise errors logs properly', function(assert) {
   let done = assert.async();
-  assert.expect(9);
+  assert.expect(10);
 
   // Stub save method of i-i-s-caseberry-logging-objects-application-log base model.
   let originalSaveMethod = DS.Model.prototype.save;

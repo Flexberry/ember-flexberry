@@ -45,7 +45,8 @@ test('error works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), errorMachineName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), errorAppDomainName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), errorProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), config.modulePrefix);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), errorMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
     assert.ok(formattedMessageIsOk);
@@ -162,7 +163,8 @@ test('warn works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), warnMachineName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), warnAppDomainName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), warnProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), config.modulePrefix);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     let savedMessageContainsWarnMessage = savedLogRecord.get('message').indexOf(warnMessage) > -1;
     assert.ok(savedMessageContainsWarnMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
@@ -281,7 +283,8 @@ test('log works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), logMachineName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), logAppDomainName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), logProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), config.modulePrefix);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), logMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
     assert.ok(formattedMessageIsOk);
@@ -399,7 +402,8 @@ test('info works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), infoMachineName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), infoAppDomainName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), infoProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), config.modulePrefix);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), infoMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
     assert.ok(formattedMessageIsOk);
@@ -518,7 +522,8 @@ test('debug works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), debugMachineName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), debugAppDomainName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), debugProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), config.modulePrefix);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     let savedMessageContainsDebugMessage = savedLogRecord.get('message').indexOf(debugMessage) > -1;
     assert.ok(savedMessageContainsDebugMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
@@ -637,7 +642,8 @@ test('deprecate works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), deprecationMachineName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), deprecationAppDomainName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), deprecationProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), config.modulePrefix);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     let savedMessageContainsDeprecationMessage = savedLogRecord.get('message').indexOf(deprecationMessage) > -1;
     assert.ok(savedMessageContainsDeprecationMessage);
     let formattedMessageIsOk = savedLogRecord.get('formattedMessage') === '';
@@ -756,7 +762,8 @@ test('assert works properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), assertMachineName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), assertAppDomainName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), assertProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), config.modulePrefix);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     let savedMessageContainsAssertMessage = savedLogRecord.get('message').indexOf(assertMessage) > -1;
     assert.ok(savedMessageContainsAssertMessage);
     let formattedMessageContainsAssertMessage = savedLogRecord.get('formattedMessage').indexOf(assertMessage) > -1;
@@ -875,7 +882,8 @@ test('throwing exceptions logs properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), errorMachineName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), errorAppDomainName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), errorProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), config.modulePrefix);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), errorMessage);
     let formattedMessageContainsErrorMessage = savedLogRecord.get('formattedMessage').indexOf(errorMessage) > -1;
     assert.ok(formattedMessageContainsErrorMessage);
@@ -998,7 +1006,8 @@ test('promise errors logs properly', function(assert) {
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('machineName')), promiseMachineName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('appDomainName')), promiseAppDomainName);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('processId')), promiseProcessId);
-    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), config.modulePrefix);
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('processName')), 'EMBER-FLEXBERRY');
+    assert.strictEqual(Ember.$.trim(savedLogRecord.get('threadName')), config.modulePrefix);
     assert.strictEqual(Ember.$.trim(savedLogRecord.get('message')), promiseErrorMessage);
 
     let formattedMessageContainsPromiseErrorMessage = savedLogRecord.get('formattedMessage').indexOf(promiseErrorMessage) > -1;

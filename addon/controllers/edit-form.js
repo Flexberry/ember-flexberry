@@ -505,6 +505,7 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about save operation fail.
   */
   onSaveActionRejected(errorData) {
+    Ember.$('.ui.form .full.height').scrollTop(0);
     if (!(errorData instanceof Errors)) {
       this.send('error', errorData);
     }

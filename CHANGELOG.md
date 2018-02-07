@@ -32,6 +32,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-lookup` component:
     * View is update on `displayAttributeName` property was changed.
     * Fix lookup list's component name.
+* `flexberry-groupedit` component:
+    * Fix validation error message when `editOnSeparateRoute` and `saveOnRouteLeave` is true.
 
 ## [0.10.0] - 2018-01-26
 ### Added

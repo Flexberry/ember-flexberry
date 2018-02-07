@@ -286,6 +286,26 @@ export default Ember.Service.extend({
   },
 
   /**
+    Creates default user setting if setting for specified component isn't exists.
+
+    @method createDefaultUserSetting
+    @param {String} componentName
+   */
+  createDefaultUserSetting(componentName) {
+    if (!(this.exists())) {
+      Ember.set(this, `currentUserSettings.${this.currentAppPage}`, {});
+    }
+
+    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
+      Ember.set(this, `currentUserSettings.${this.currentAppPage}.${componentName}`, {});
+    }
+
+    if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
+      Ember.set(this, `currentUserSettings.${this.currentAppPage}.${componentName}.${defaultSettingName}`, {});
+    }
+  },
+
+  /**
    *   Returns current list of userSetting.
    *
    *   @method getListCurrentUserSetting
@@ -293,7 +313,7 @@ export default Ember.Service.extend({
    */
   getListCurrentUserSetting(componentName, isExportExcel) {
     let ret = {};
-    if (this.currentAppPage in this.currentUserSettings &&
+    if (this.exists() &&
       componentName in this.currentUserSettings[this.currentAppPage]
     ) {
       let sets = this.currentUserSettings[this.currentAppPage][componentName];
@@ -347,7 +367,7 @@ export default Ember.Service.extend({
     }
 
     let ret;
-    if (this.currentAppPage in this.currentUserSettings &&
+    if (this.exists() &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName]
     ) {
@@ -470,7 +490,7 @@ export default Ember.Service.extend({
     }
 
     let userSetting;
-    if (this.currentAppPage in this.currentUserSettings &&
+    if (this.exists() &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName]
     ) {
@@ -499,7 +519,7 @@ export default Ember.Service.extend({
     }
 
     let userSetting;
-    if (this.currentAppPage in this.currentUserSettings &&
+    if (this.exists() &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName]
     ) {
@@ -577,7 +597,7 @@ export default Ember.Service.extend({
     Ember.assert('saveUserSetting:: User setting data are not defined for user setting saving.', userSetting);
     Ember.assert('saveUserSetting:: Setting name is not defined for user setting saving.', settingName !== undefined);
 
-    if (!(this.currentAppPage in this.currentUserSettings)) {
+    if (!(this.exists())) {
       this.currentUserSettings[this.currentAppPage] = {};
     }
 

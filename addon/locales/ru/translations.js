@@ -177,6 +177,7 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Настроить отображение столбцов',
+      'export-modal-dialog-title': 'Настроить экспорт в Excel',
       'export-title': 'Экспорт в Excel',
       'dont-show-columns': 'Не отображать столбцы',
       'columns-order': 'Определить порядок столбцов',

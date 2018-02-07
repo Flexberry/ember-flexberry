@@ -1,5 +1,5 @@
 {{#modal-dialog
-  title=title
+  title=(if (eq model.exportParams.isExportExcel true) (t 'components.colsconfig-dialog-content.export-modal-dialog-title') (t 'components.colsconfig-dialog-content.title'))
   sizeClass='small'
   close='removeModalDialog'
   created='createdModalDialog'

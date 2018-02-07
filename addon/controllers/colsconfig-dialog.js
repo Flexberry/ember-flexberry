@@ -15,7 +15,7 @@ export default Ember.Controller.extend(ColsconfigDialogController, {
    * @default undefined
    */
   _openedModalDialog: undefined,
-  title: t('components.colsconfig-dialog-content.title'),
+
   actions: {
     /**
      * Handles create modal window action.

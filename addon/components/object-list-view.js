@@ -1235,16 +1235,11 @@ export default FlexberryBaseComponent.extend(
     } else {
       this._restoreSelectedRecords();
 
-      if (!this._colResizableInit) {
-        let $currentTable = this.$('table.object-list-view');
-        if (this.get('allowColumnResize')) {
-          $currentTable.addClass('fixed');
-          this._reinitResizablePlugin();
-        } else {
-          $currentTable.colResizable({ disable: true });
-        }
-
-        this.set('_colResizableInit', true);
+      if (this.get('allowColumnResize')) {
+        this._reinitResizablePlugin();
+      } else {
+        let $table = this.$('table.object-list-view');
+        $table.colResizable({ disable: true });
       }
 
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();

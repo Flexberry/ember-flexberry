@@ -33,6 +33,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * View is update on `displayAttributeName` property was changed.
 * Blueprints:
     * Fix generation of translations and assets into addon.
+* `flexberry-groupedit` component:
+    * Fix `_reinitResizablePlugin` call on `allowColumnResize` change.
 
 ## [0.10.0] - 2018-01-26
 ### Added

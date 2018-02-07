@@ -4,7 +4,6 @@
 
 import Ember from 'ember';
 import ColsconfigDialogController from '../mixins/colsconfig-dialog-controller';
-import { translationMacro as t } from 'ember-i18n';
 
 export default Ember.Controller.extend(ColsconfigDialogController, {
   /**
@@ -15,7 +14,6 @@ export default Ember.Controller.extend(ColsconfigDialogController, {
    * @default undefined
    */
   _openedModalDialog: undefined,
-
   actions: {
     /**
      * Handles create modal window action.

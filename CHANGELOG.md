@@ -31,6 +31,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * "Show settings" menu for user settings.
 * `flexberry-lookup` component:
     * View is update on `displayAttributeName` property was changed.
+* `flexberry-file` component:
+    * Fix buttons disabling in mobile.
+* `flexberry-modal` component:
+    * Fix dimmer hiding on close button click.
 
 ## [0.10.0] - 2018-01-26
 ### Added

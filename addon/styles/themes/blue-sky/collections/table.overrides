@@ -50,6 +50,10 @@ table.object-list-view.selectable thead {
     white-space: normal;
 }
 
+.ui.celled.table.object-list-view tr td.object-list-view-helper-column.hidden + td {
+    border-left: none;
+}
+
 .inline.fields.filter .filter-operation {
     width: 70px;
 }

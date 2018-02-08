@@ -33,6 +33,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * View is update on `displayAttributeName` property was changed.
 * Blueprints:
     * Fix generation of translations and assets into addon.
+* `colsconfig-dialog-content` component:
+    * Fix invisible cells content in Google Chrome.
 
 ## [0.10.0] - 2018-01-26
 ### Added

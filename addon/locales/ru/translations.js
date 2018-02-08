@@ -73,6 +73,7 @@ export default {
       'error-dialog-caption': 'Ошибка компонента выбора файла',
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',
       'error-dialog-ok-button-caption': 'OK',
+      'error-preview-caption': 'Предпросмотр не может быть загружен',
 
       'add-file-error-caption': 'Ошибка добавления файла',
       'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} байт. ' +

@@ -295,7 +295,16 @@ export default FlexberryBaseComponent.extend({
   */
   _errorModalDialogContent: t('components.flexberry-file.error-dialog-content'),
 
-  _errorMessagePreview:'',
+  /**
+    Caption to be displayed in loaded file table cell.
+    It will be displayed only if preview can't be loaded.
+
+    @property _errorPreviewCaption
+    @type String
+    @default t('components.flexberry-file.error-preview-caption')
+    @private
+  */
+  _errorPreviewCaption: t('components.flexberry-file.error-preview-caption'),
 
   /**
     Selected jQuery object, containing HTML of error modal dialog.
@@ -394,6 +403,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   showPreview: false,
+
+  /**
+    indicates whether preview img can be loaded when show.
+
+    @property _canLoadPreview
+    @type Boolean
+    @default true
+  */
+  _canLoadPreview: true,
 
   /**
     Flag: indicates whether to show upload button or not.
@@ -732,10 +750,11 @@ export default FlexberryBaseComponent.extend({
     return errorContent;
   },
 
-  previewError(fileName){
-      this.set('_errorMessagePreview', 'preview error ' + fileName);
+  previewError(fileName) {
+    this.set('_canLoadPreview', false);
+    let errorMessage = this.get('_errorPreviewCaption') + ' ' + fileName;
+    this.set('_errorPreviewCaption', errorMessage);
   },
-
 
   /**
     Shows file size errors if there were some.

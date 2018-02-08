@@ -19,21 +19,21 @@
         }}
       </div>
       {{#if showPreview}}
-          {{#unless _errorMessagePreview}}
-              <div class="flexberry-file-image-preview-wrapper ui small image" {{action "viewLoadedImage"}}>
-                {{#unless _previewDownloadIsInProgress}}
-                  <img
-                    class="flexberry-file-image-preview"
-                    src={{_previewImageAsBase64String}}
-                    alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
-                {{/unless}}
-                <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
-              </div>
-            {{else}}
-              <div class="field">
-                {{_errorMessagePreview}}
-              </div>
+        {{#if _canLoadPreview}}
+          <div class="flexberry-file-image-preview-wrapper ui small image" {{action "viewLoadedImage"}}>
+            {{#unless _previewDownloadIsInProgress}}
+              <img
+                class="flexberry-file-image-preview"
+                src={{_previewImageAsBase64String}}
+                alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
             {{/unless}}
+            <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
+          </div>
+        {{else}}
+          <span style ="color:red">
+            {{_errorPreviewCaption}}
+          </span>
+        {{/if}}
       {{/if}}
     {{/if}}
   </div>

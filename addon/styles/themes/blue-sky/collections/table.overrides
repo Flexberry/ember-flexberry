@@ -53,3 +53,16 @@ table.object-list-view.selectable thead {
 .ui.celled.table.object-list-view tr td.object-list-view-helper-column.hidden + td {
     border-left: none;
 }
+
+.inline.fields.filter .filter-operation {
+    width: 70px;
+}
+
+.inline.fields.filter .filter-value {
+    width: 100%-5px;
+    padding-left:5px;
+}
+
+.inline.fields.filter .ui {
+    width: 100%;
+}

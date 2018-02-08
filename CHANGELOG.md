@@ -31,6 +31,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * "Show settings" menu for user settings.
 * `flexberry-lookup` component:
     * View is update on `displayAttributeName` property was changed.
+* Blueprints:
+    * Fix generation of translations and assets into addon.
 
 ## [0.10.0] - 2018-01-26
 ### Added

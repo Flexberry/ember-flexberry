@@ -759,8 +759,7 @@ FolvOnEditControllerMixin, {
                 arrayWrapper.addObjects(result);
                 let errors = arrayWrapper.filterBy('state', 'rejected');
                 return errors.length > 0 ? Ember.RSVP.reject(errors) : record;
-              }
-              else {
+              } else {
                 return record;
               }
             });

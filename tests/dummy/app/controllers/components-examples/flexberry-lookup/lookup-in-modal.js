@@ -2,6 +2,14 @@ import Ember from 'ember';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
+  /**
+    Defaul style of modal context.
+
+    @property readonly
+    @type String
+    @default #example
+  */
+  _defaultStyle:'#example',
 
   actions: {
     modalWindow() {
@@ -10,10 +18,10 @@ export default EditFormController.extend({
         autofocus: false,
         detachable: false,
         allowMultiple: true,
-        context: '#example',
+        context: this.get('_defaultStyle'),
       });
       this.set('repeatWindow', repeatWindow);
-      this.get('repeatWindow').modal('refresh').modal('show');
+      this.get('repeatWindow').modal('show').modal('refresh');
     },
 
     modalWindowDouble() {
@@ -22,10 +30,10 @@ export default EditFormController.extend({
         autofocus: false,
         detachable: false,
         allowMultiple: true,
-        context: '#example',
+        context: this.get('_defaultStyle'),
       });
       this.set('repeatWindowdouble', repeatWindow);
-      this.get('repeatWindowdouble').modal('refresh').modal('show');
+      this.get('repeatWindowdouble').modal('show').modal('refresh');
     },
 
     logOut() {

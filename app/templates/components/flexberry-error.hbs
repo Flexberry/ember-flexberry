@@ -6,7 +6,15 @@
       settings=(hash context=modalContext onHidden=(action "close"))
     }}
       <h2 class="ui header">
-        {{#if error.message}}
+        {{#if (and _errorIsArray _messageIsNotSpecified)}}
+          <div class="ui bulleted list">
+            {{#each error as |err|}}
+              {{#if (eq err.state "rejected")}}
+                <div class="item">{{err.reason.message}}</div>
+              {{/if}}
+            {{/each}}
+          </div>
+        {{else if error.message}}
           {{error.message}}
         {{else}}
           {{t "components.flexberry-error.unknown-error"}}

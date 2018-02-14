@@ -68,7 +68,7 @@ export default {
       'upload-button-title': 'Загрузить файл',
       'download-button-title': 'Скачать файл',
 
-      'preview-image-alternative-text': 'Загруженное изображение',
+      'preview-image-alternative-text': 'Просмотр изображения не доступен',
 
       'error-dialog-caption': 'Ошибка компонента выбора файла',
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',
@@ -177,6 +177,7 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Настроить отображение столбцов',
+      'export-modal-dialog-title': 'Настроить экспорт в Excel',
       'export-title': 'Экспорт в Excel',
       'dont-show-columns': 'Не отображать столбцы',
       'columns-order': 'Определить порядок столбцов',

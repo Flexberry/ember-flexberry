@@ -376,7 +376,10 @@ export default FlexberryBaseComponent.extend({
             let sort = serializeSortingParam(colsConfig.sorting);
             router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
           }
-        );
+        ).catch((reason) => {
+          this.currentController.send('handleError', reason);
+        });
+
         this.sendAction('close', colsConfig); // close modal window
       } else {
         let _this = this;
@@ -405,8 +408,10 @@ export default FlexberryBaseComponent.extend({
           }
 
           this.get('objectlistviewEventsService').setLoadingState('');
-        }).catch(() => {
+        }).catch((reason) => {
           this.get('objectlistviewEventsService').setLoadingState('');
+          this.sendAction('close'); // close modal window
+          this.currentController.send('handleError', reason);
         });
       }
     },
@@ -444,6 +449,8 @@ export default FlexberryBaseComponent.extend({
           this.set('currentController.message.visible', true);
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
           this.set('currentController.message.message', JSON.stringify(error));
+          this.sendAction('close', colsConfig); // close modal window
+          this.currentController.send('handleError', error);
         }
       );
     },
@@ -492,6 +499,11 @@ export default FlexberryBaseComponent.extend({
     detSeparateRowsChange: function() {
       this._changed();
     },
+
+    handleError(error) {
+      this._super(...arguments);
+      return true;
+    }
   },
 
   /**

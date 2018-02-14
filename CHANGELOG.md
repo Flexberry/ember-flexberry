@@ -14,6 +14,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Hierarchy mode support.
 * `flexberry-objectlistview` component:
     * Now computed properties could be passed via `dynamicProperties` for embedded components in cells.
+* Edit form's logic:
+    * Scrolling to the top of form if saving errors are occured (to see error messages).
 
 ### Changed
 * For compatibility with `Ember Inspector`, `tagName` for application view has been restored, and sidebar moved into this block (see more [here](https://github.com/Flexberry/ember-flexberry/commit/0d4de9aa95b506c37e31e0b99f2e8bb534f85fba) and [here](https://github.com/Flexberry/ember-flexberry/commit/d555c3f0fc4e070a66c0e18403fc721398593d40)).
@@ -34,6 +36,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * "Show settings" menu for user settings.
 * `flexberry-lookup` component:
     * View is update on `displayAttributeName` property was changed.
+    * Fix lookup list's component name.
+* `flexberry-groupedit` component:
+    * Fix validation error message when `editOnSeparateRoute` and `saveOnRouteLeave` is true.
 * `flexberry-file` component:
     * Fix buttons disabling in mobile.
 * `flexberry-modal` component:

@@ -176,6 +176,7 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Customize the display of colums',
+      'export-modal-dialog-title': 'Customize export in Excel',
       'export-title': 'Export in Excel',
       'dont-show-columns': 'Do not display columns',
       'columns-order': 'Specify the order of the columns',

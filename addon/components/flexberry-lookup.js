@@ -221,6 +221,18 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    FOLV component name.
+
+    @property folvComponentName
+    @type String
+    @readOnly
+  */
+  folvComponentName: Ember.computed('componentName', function() {
+    let componentName = this.get('componentName') || 'undefined';
+    return `folv_in_${componentName}_lookup`;
+  }),
+
+  /**
     Action's name to update model's relation value.
 
     @property updateLookupAction
@@ -331,7 +343,7 @@ export default FlexberryBaseComponent.extend({
     'orderBy',
     function() {
       let ordering = this.get('orderBy') ? this.get('orderBy') : '';
-      let perPage = this.get('userSettings').getCurrentPerPage(`folw_in_${this.get('componentName')}_lookup`);
+      let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
       return {
         projection: this.get('projection'),
         relationName: this.get('relationName'),
@@ -343,6 +355,7 @@ export default FlexberryBaseComponent.extend({
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
         sorting: deserializeSortingParam(ordering),
+        folvComponentName: this.get('folvComponentName'),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')

@@ -207,8 +207,19 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         saveTo: this.get('saveTo'),
         currentLookupRow: this.get('currentLookupRow'),
         customPropertiesData: this.get('customPropertiesData'),
-        componentName: this.get('componentName')
+        componentName: this.get('componentName'),
+        folvComponentName: this.get('folvComponentName')
       };
+
+      let folvComponentName = this.get('folvComponentName');
+      if (folvComponentName) {
+        let userSettingsParams = {
+          sort: this.get('sort'),
+        };
+
+        let userSettingsService = this.get('userSettingsService');
+        userSettingsService.setCurrentParams(folvComponentName, userSettingsParams);
+      }
 
       reloadDataHandler(this.get('reloadContext'), reloadData);
     },

@@ -39,6 +39,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix lookup list's component name.
 * `flexberry-groupedit` component:
     * Fix validation error message when `editOnSeparateRoute` and `saveOnRouteLeave` is true.
+    * Fix availability to resize columns when `allowColumnResize` property was changed dynamically.
 * `flexberry-file` component:
     * Fix buttons disabling in mobile.
 * `flexberry-modal` component:

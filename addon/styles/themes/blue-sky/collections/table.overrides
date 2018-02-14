@@ -1,7 +1,3 @@
-tr {
-    cursor: pointer;
-}
-
 .oveflow-text {
     overflow: hidden;
 }

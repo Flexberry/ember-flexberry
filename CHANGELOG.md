@@ -34,13 +34,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * "Show settings" menu for user settings.
 * `flexberry-lookup` component:
     * View is update on `displayAttributeName` property was changed.
+* `flexberry-file` component:
+    * Fix buttons disabling in mobile.
+* `flexberry-modal` component:
+    * Fix dimmer hiding on close button click.
 * Blueprints:
     * Fix generation of translations and assets into addon.
 * Hanging up on list forms and edit forms when connection is unavailable.
 
 ### Removed
 * `flexberry-objectlistview` component:
-    * Remove `columnsWidthAutoresize` attribute at mobile version of component.
+    * `columnsWidthAutoresize` attribute in mobile version of component.
 
 ## [0.10.0] - 2018-01-26
 ### Added

@@ -68,7 +68,7 @@ export default {
       'upload-button-title': 'Загрузить файл',
       'download-button-title': 'Скачать файл',
 
-      'preview-image-alternative-text': 'Загруженное изображение',
+      'preview-image-alternative-text': 'Просмотр изображения не доступен',
 
       'error-dialog-caption': 'Ошибка компонента выбора файла',
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',

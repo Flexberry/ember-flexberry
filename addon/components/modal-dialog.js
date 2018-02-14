@@ -120,13 +120,6 @@ export default Ember.Component.extend({
             _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
           });
         },
-        onDeny: function () {
-          // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
-          Ember.run(() => {
-            _this.sendAction('close');
-            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
-          });
-        },
         onHidden: function () {
           Ember.run(() => {
             _this.sendAction('close');

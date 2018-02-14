@@ -68,7 +68,7 @@ export default {
       'upload-button-title': 'Upload File',
       'download-button-title': 'Download File',
 
-      'preview-image-alternative-text': 'Loaded image',
+      'preview-image-alternative-text': 'Image viewing isn\'t available',
 
       'error-dialog-caption': 'File component error',
       'error-dialog-content': 'File component error occurred',

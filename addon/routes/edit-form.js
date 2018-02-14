@@ -7,6 +7,7 @@ import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
+import ErrorableRouteMixin from '../mixins/errorable-route';
 
 /**
   Base route for the Edit Forms.
@@ -37,7 +38,8 @@ import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-o
 export default ProjectedModelFormRoute.extend(
 FlexberryObjectlistviewRouteMixin,
 FlexberryGroupeditRouteMixin,
-FlexberryObjectlistviewHierarchicalRouteMixin, {
+FlexberryObjectlistviewHierarchicalRouteMixin,
+ErrorableRouteMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.

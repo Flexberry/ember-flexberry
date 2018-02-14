@@ -218,7 +218,6 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
         };
 
         let userSettingsService = this.get('userSettingsService');
-        userSettingsService.createDefaultUserSetting(folvComponentName);
         userSettingsService.setCurrentParams(folvComponentName, userSettingsParams);
       }
 

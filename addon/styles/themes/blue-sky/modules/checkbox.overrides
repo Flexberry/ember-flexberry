@@ -36,7 +36,3 @@
 .ui.checkbox.flexberry-checkbox.read-only {
     opacity: 0.5;
 }
-
-.ui.checkbox {
-    width: 17px;
-}

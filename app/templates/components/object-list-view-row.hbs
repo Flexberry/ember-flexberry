@@ -54,6 +54,7 @@
               value=(mut (get record.data column.propName))
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
+              componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
             }}
               {{#if (and (not index) inHierarchicalMode)}}
                 {{#if hasRecords}}
@@ -70,6 +71,7 @@
               value=(mut (get record.data column.propName))
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
+              componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
             }}
             {{#if showValidationMessages}}
               {{flexberry-validationmessage
@@ -155,6 +157,8 @@
         hierarchicalIndent=_hierarchicalIndent
         defaultLeftPadding=defaultLeftPadding
         overflowedComponents=overflowedComponents
+        folvComponentName=folvComponentName
+        hierarchyLoadedLevel=hierarchyLoadedLevel
       }}
     {{/each}}
   {{/if}}

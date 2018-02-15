@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 
@@ -64,27 +63,5 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     }
 
     return cellComponent;
-  },
-
-  actions: {
-    configurateFilesRow(rowConfig, record) {
-      Ember.set(rowConfig, 'customClass', 'positive ');
-      let readonlyColumns = [];
-      if (record.get('order') === 1) {
-        readonlyColumns.push('order');
-        readonlyColumns.push('file');
-      }
-
-      Ember.set(rowConfig, 'readonlyColumns', readonlyColumns);
-    },
-
-    configurateVotesRow(rowConfig, record) {
-      let readonlyColumns = [];
-      if (record.get('author.name') === 'Иван') {
-        readonlyColumns.push('author');
-      }
-
-      Ember.set(rowConfig, 'readonlyColumns', readonlyColumns);
-    }
   }
 });

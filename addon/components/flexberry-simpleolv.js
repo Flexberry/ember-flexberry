@@ -2243,7 +2243,7 @@ export default folv.extend(
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
     }) : record.deleteRecord()).catch((reason) => {
-      this.get('currentController').send('error', reason);
+      this.get('currentController').send('handleError', reason);
       record.rollbackAll();
     });
 

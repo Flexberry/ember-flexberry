@@ -14,11 +14,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Hierarchy mode support.
 * `flexberry-objectlistview` component:
     * Now computed properties could be passed via `dynamicProperties` for embedded components in cells.
+* Edit form's logic:
+    * Scrolling to the top of form if saving errors are occured (to see error messages).
 
 ### Changed
 * For compatibility with `Ember Inspector`, `tagName` for application view has been restored, and sidebar moved into this block (see more [here](https://github.com/Flexberry/ember-flexberry/commit/0d4de9aa95b506c37e31e0b99f2e8bb534f85fba) and [here](https://github.com/Flexberry/ember-flexberry/commit/d555c3f0fc4e070a66c0e18403fc721398593d40)).
 * `log` service:
     * Now `processName` field contains application name from `ENV.modulePrefix` of `environment.js`.
+* Edit form's logic:
+    * It is available to handle errors for each detail in `onSaveActionRejected` method during saving of aggregator model.
+* Change export excel modal dialog title.
 
 ### Fixed
 * List components:
@@ -31,6 +36,25 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * "Show settings" menu for user settings.
 * `flexberry-lookup` component:
     * View is update on `displayAttributeName` property was changed.
+    * Fix lookup list's component name.
+* `flexberry-groupedit` component:
+    * Fix validation error message when `editOnSeparateRoute` and `saveOnRouteLeave` is true.
+    * Fix availability to resize columns when `allowColumnResize` property was changed dynamically.
+* `flexberry-file` component:
+    * Fix buttons disabling in mobile.
+* `flexberry-modal` component:
+    * Fix dimmer hiding on close button click.
+* Blueprints:
+    * Fix generation of translations and assets into addon.
+* `flexberry-objectlistview` component:
+    * Fix hierarchy loading on first load and when records has been already loaded.
+* `colsconfig-dialog-content` component:
+    * Fix invisible cells content in Google Chrome (some content was disappeared during resize of browser window).
+* Hanging up on list forms and edit forms when connection is unavailable.
+
+### Removed
+* `flexberry-objectlistview` component:
+    * `columnsWidthAutoresize` attribute in mobile version of component.
 
 ## [0.10.0] - 2018-01-26
 ### Added

@@ -73,6 +73,7 @@ export default {
       'error-dialog-caption': 'File component error',
       'error-dialog-content': 'File component error occurred',
       'error-dialog-ok-button-caption': 'OK',
+      'error-preview-caption': 'Preview can not be loaded',
 
       'add-file-error-caption': 'Add file error',
       'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +

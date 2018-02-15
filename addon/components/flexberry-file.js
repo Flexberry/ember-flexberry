@@ -296,6 +296,17 @@ export default FlexberryBaseComponent.extend({
   _errorModalDialogContent: t('components.flexberry-file.error-dialog-content'),
 
   /**
+    Caption to be displayed in loaded file table cell.
+    It will be displayed only if preview can't be loaded.
+
+    @property _errorPreviewCaption
+    @type String
+    @default t('components.flexberry-file.error-preview-caption')
+    @private
+  */
+  _errorPreviewCaption: t('components.flexberry-file.error-preview-caption'),
+
+  /**
     Selected jQuery object, containing HTML of error modal dialog.
 
     @property _errorModalDialog
@@ -392,6 +403,15 @@ export default FlexberryBaseComponent.extend({
     @default false
   */
   showPreview: false,
+
+  /**
+    indicates whether preview img can be loaded when show.
+
+    @property _canLoadPreview
+    @type Boolean
+    @default true
+  */
+  _canLoadPreview: true,
 
   /**
     Flag: indicates whether to show upload button or not.
@@ -730,6 +750,10 @@ export default FlexberryBaseComponent.extend({
     return errorContent;
   },
 
+  previewError(fileName) {
+    this.set('_canLoadPreview', false);
+  },
+
   /**
     Shows file size errors if there were some.
 
@@ -917,7 +941,7 @@ export default FlexberryBaseComponent.extend({
       Ember.$.ajax(previewUrl).done((data, textStatus, jqXHR) => {
         this.set('_previewImageAsBase64String', data);
       }).fail((jqXHR, textStatus, errorThrown) => {
-        this.showDownloadErrorModalDialog(this.get('_jsonValue.fileName'), errorThrown);
+        this.previewError(this.get('_jsonValue.fileName'));
       }).always(() => {
         this.set('_previewDownloadIsInProgress', false);
       });

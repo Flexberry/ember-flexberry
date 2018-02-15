@@ -1,4 +1,4 @@
-<h3 class="ui header">{{t "forms.ember-flexberry-dummy-suggestion-edit.caption"}}</h3>
+<h3 class="ui header">{{t "forms.application.sitemap.components-examples.flexberry-groupedit.readonly-columns-by-configurate-row-example.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   {{ui-message
     type="success"
@@ -139,6 +139,7 @@
       modelProjection=modelProjection.attributes.files
       orderable=true
       readonly=readonly
+      configurateRow=(action 'configurateFilesRow')
     }}
     {{flexberry-validationmessage error=model.errors.files pointing="pointing"}}
   </div>
@@ -151,6 +152,7 @@
       modelProjection=modelProjection.attributes.userVotes
       orderable=true
       readonly=readonly
+      configurateRow=(action 'configurateVotesRow')
     }}
     {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
   </div>

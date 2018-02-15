@@ -188,6 +188,31 @@ export default Ember.Service.extend({
       this.developerUserSettings[appPage] = developerUserSettings;
       if (this.isUserSettingsServiceEnabled) {
         return this._getUserSettings().then(
+          foundRecords => {
+            let ret = {};
+            if (foundRecords) {
+              for (let i = 0; i < foundRecords.length; i++) {
+                let foundRecord = foundRecords[i];
+                let userSettingValue = foundRecord.record.get('txtVal');
+                let settName = foundRecord.record.get('settName');
+                let componentName = foundRecord.record.get('moduleName');
+                if (!settName) {
+                  settName = defaultSettingName;
+                }
+
+                if (userSettingValue) {
+                  if (!(componentName in ret)) {
+                    ret[componentName] = {};
+                  }
+
+                  ret[componentName][settName] = JSON.parse(userSettingValue);
+                }
+              }
+            }
+
+            return ret;
+          }
+        ).then(
           appPageUserSettings => {
             return this._setCurrentUserSettings(appPageUserSettings);
           }
@@ -254,7 +279,7 @@ export default Ember.Service.extend({
     let sorting;
     if ('sort' in params && params.sort) {
       sorting = deserializeSortingParam(params.sort);
-    } else {
+    } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
       sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
     }
 
@@ -661,33 +686,7 @@ export default Ember.Service.extend({
 
     let settingsPromise = this._getExistingSettings();
 
-    let ret = settingsPromise.then(
-      foundRecords => {
-        let ret = {};
-        if (foundRecords) {
-          for (let i = 0; i < foundRecords.length; i++) {
-            let foundRecord = foundRecords[i];
-            let userSettingValue = foundRecord.record.get('txtVal');
-            let settName = foundRecord.record.get('settName');
-            let componentName = foundRecord.record.get('moduleName');
-            if (!settName) {
-              settName = defaultSettingName;
-            }
-
-            if (userSettingValue) {
-              if (!(componentName in ret)) {
-                ret[componentName] = {};
-              }
-
-              ret[componentName][settName] = JSON.parse(userSettingValue);
-            }
-          }
-        }
-
-        return ret;
-      }
-    );
-    return ret;
+    return settingsPromise;
   },
 
   /**

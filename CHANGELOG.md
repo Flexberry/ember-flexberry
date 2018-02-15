@@ -46,6 +46,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix dimmer hiding on close button click.
 * Blueprints:
     * Fix generation of translations and assets into addon.
+* `flexberry-objectlistview` component:
+    * Fix hierarchy loading on first load and when records has been already loaded.
 * `colsconfig-dialog-content` component:
     * Fix invisible cells content in Google Chrome (some content was disappeared during resize of browser window).
 * Hanging up on list forms and edit forms when connection is unavailable.

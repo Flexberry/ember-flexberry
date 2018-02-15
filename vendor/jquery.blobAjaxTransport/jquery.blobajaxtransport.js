@@ -46,7 +46,23 @@
                         completeCallback(xhr.status, xhr.statusText, res, xhr.getAllResponseHeaders());
                     });
 
-                    xhr.open(type, url, async);
+                    xhr.addEventListener('error', function(){
+                      // Support: IE9
+                      // On a manual native abort, IE9 throws
+                      // errors on any property access that is not readyState
+                      if ( typeof xhr.status !== "number" ) {
+                        completeCallback(0, "error");
+                      } else {
+                        completeCallback(
+
+                          // File: protocol always yields status 0; see #8605, #14207
+                          xhr.status,
+                          xhr.statusText
+                        );
+                      }
+                  });
+
+                  xhr.open(type, url, async);
                     xhr.responseType = dataType;
 
                     for (var key in headers){

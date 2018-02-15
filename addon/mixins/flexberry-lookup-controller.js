@@ -129,8 +129,11 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let folvComponentName = options.folvComponentName;
       let hierarchicalAttribute = options.hierarchicalAttribute;
 
+      let userSettingsService = this.get('userSettingsService');
+      userSettingsService.createDefaultUserSetting(folvComponentName);
+
       let model = modelToLookup ? modelToLookup : this.get('model');
-      let sorting = options.sorting ? options.sorting : [];
+      let sorting = userSettingsService.getCurrentSorting(folvComponentName) || options.sorting || [];
       let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
       // Get ember static function to get relation by name.

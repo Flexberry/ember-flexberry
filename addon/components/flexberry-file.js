@@ -752,8 +752,6 @@ export default FlexberryBaseComponent.extend({
 
   previewError(fileName) {
     this.set('_canLoadPreview', false);
-    let errorMessage = this.get('_errorPreviewCaption') + ' ' + fileName;
-    this.set('_errorPreviewCaption', errorMessage);
   },
 
   /**

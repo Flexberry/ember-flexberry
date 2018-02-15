@@ -56,9 +56,7 @@
       <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
     </div>
   {{else}}
-    <span style ="color:red">
-      {{_errorPreviewCaption}}
-    </span>
+    <span>{{_fileName}}</span>&nbsp;<span style ="color:red">{{_errorPreviewCaption}}</span>
   {{/if}}
 {{/if}}
 <div class="flexberry-file-download-iframes-container" style="display: none;">

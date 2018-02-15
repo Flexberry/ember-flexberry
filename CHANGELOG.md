@@ -41,7 +41,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Fix validation error message when `editOnSeparateRoute` and `saveOnRouteLeave` is true.
     * Fix availability to resize columns when `allowColumnResize` property was changed dynamically.
 * `flexberry-file` component:
-    * Fix buttons disabling in mobile.
+    * Fix buttons disabling in mobile mode.
+    * Fix displaying errors in mobile mode.
 * `flexberry-modal` component:
     * Fix dimmer hiding on close button click.
 * Blueprints:

@@ -52,6 +52,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `colsconfig-dialog-content` component:
     * Fix invisible cells content in Google Chrome (some content was disappeared during resize of browser window).
 * Hanging up on list forms and edit forms when connection is unavailable.
+* Fix `usersettings` for `new` forms.
 
 ### Removed
 * `flexberry-objectlistview` component:

@@ -71,6 +71,14 @@ ErrorableRouteMixin, {
   },
 
   /**
+    Suffix for new route (has value only on new routes).
+
+    @property newSuffix
+    @type String
+  */
+  newSuffix: undefined,
+
+  /**
     Service that triggers objectlistview events.
 
     @property objectlistviewEventsService
@@ -90,6 +98,11 @@ ErrorableRouteMixin, {
     this._super(...arguments);
 
     let webPage = transition.targetName;
+    let newSuffix = this.get('newSuffix');
+    if (!Ember.isBlank(newSuffix) && webPage.substr(webPage.length - newSuffix.length) === newSuffix) {
+      webPage = webPage.substr(0, webPage.length - newSuffix.length);
+    }
+
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings') || {};

@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * User settings support, use parameter `notUseUserSettings` to disabling.
     * `perPage` parameter.
     * Hierarchy mode support.
+    * User settings support, use parameter `developerUserSettings` to sorting.
 * `flexberry-objectlistview` component:
     * Now computed properties could be passed via `dynamicProperties` for embedded components in cells.
 * Edit form's logic:
@@ -57,6 +58,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * `flexberry-objectlistview` component:
     * `columnsWidthAutoresize` attribute in mobile version of component.
+* `flexberry-lookup` component:
+    * `orderBy` ordering condition for list of records to choose.
 
 ## [0.10.0] - 2018-01-26
 ### Added

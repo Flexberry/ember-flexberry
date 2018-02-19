@@ -101,6 +101,9 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-list');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-edit',
   { path: 'components-examples/flexberry-objectlistview/downloading-files-from-olv-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/lock-services-editor-view-list');
+  this.route('components-examples/flexberry-objectlistview/lock-services-editor-view-edit',
+  { path: 'components-examples/flexberry-objectlistview/lock-services-editor-view-edit/:id' });
 
   this.route('components-examples/flexberry-simpleolv/settings-example');
   this.route('components-examples/flexberry-simpleolv/toolbar-custom-buttons-example');

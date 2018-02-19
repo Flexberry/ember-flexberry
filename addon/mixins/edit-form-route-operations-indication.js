@@ -28,9 +28,20 @@ export default Ember.Mixin.create({
     @return {Promise}
   */
   beforeModel(transition) {
-    this._super(...arguments);
+    let result = this._super(...arguments);
 
-    this.set('recordAdded', transition.queryParams.recordAdded || false);
+    if (!(result instanceof Ember.RSVP.Promise)) {
+      result = Ember.RSVP.resolve();
+    }
+
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      result.then(() => {
+        this.set('recordAdded', transition.queryParams.recordAdded || false);
+        resolve();
+      }).catch((reason) => {
+        reject(reason);
+      });
+    });
   },
 
   /**

@@ -27,9 +27,9 @@ Ember Flexberry Addon - [Flexberry ORM](http://flexberry.ru/) SPA UI Framework p
 
 Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality of the addon.
 
-* Stable version (master branch): https://flexberry-ember.firebaseapp.com
-* Bleeding edge version (develop branch): https://flexberry-ember-dev.firebaseapp.com
-* For temporal testing: https://flexberry-ember-test.firebaseapp.com
+* Stable version (master branch): https://flexberry.github.io/ember-flexberry/dummy/master/
+* Bleeding edge version (develop branch): https://flexberry.github.io/ember-flexberry/dummy/develop/
+* For temporal testing: https://flexberry.github.io/ember-flexberry/dummy/dummy-test/
 
 ## Collaborating / Development
 

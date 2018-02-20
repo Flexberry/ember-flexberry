@@ -21,18 +21,18 @@ export default Ember.Mixin.create({
 
       @method actions.loadRecordsById
       @param {String} id Record ID.
-      @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {ObjectListViewRowComponent} target Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
       @param {String} property Property name into {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
-      @param {Boolean} Flag indicates that this is the first download of data.
+      @param {Boolean} firstRunMode Flag indicates that this is the first download of data.
+      @param {Object} recordParams Record params such as modelName, modelProjection and hierarchicalAttribute.
     */
-    loadRecordsById(id, target, property, firstRunMode) {
+    loadRecordsById(id, target, property, firstRunMode, recordParams) {
+      let params = recordParams || {};
+      let hierarchicalAttribute = params.hierarchicalAttribute || this.controllerFor(this.routeName).get('hierarchicalAttribute');
+      let modelName = params.modelName || this.get('modelName');
 
-      let hierarchicalAttribute = this.controllerFor(this.routeName).get('hierarchicalAttribute');
-      let modelName = this.get('modelName');
-
-      if (!firstRunMode) {
-
-        let projectionName = this.get('modelProjection');
+      if (firstRunMode) {
+        let projectionName = params.modelProjection || this.get('modelProjection');
         let builder = new Builder(this.store)
           .from(modelName)
           .selectByProjection(projectionName)
@@ -40,7 +40,6 @@ export default Ember.Mixin.create({
 
         Ember.set(target, property, this.store.query(modelName, builder.build()));
       } else {
-
         let store = this.get('store');
         let records = store.peekAll(modelName);
         let recordsArray = records.content;
@@ -48,7 +47,7 @@ export default Ember.Mixin.create({
         for (let i = 0; i < recordsArray.length; i++) {
           let record = store.peekRecord(modelName, recordsArray[i].id);
 
-          if ((!Ember.isNone(record.get(hierarchicalAttribute))) && (record.get(hierarchicalAttribute).id === id)) {
+          if (record && (!Ember.isNone(record.get(hierarchicalAttribute))) && (record.get(hierarchicalAttribute).id === id)) {
             sortRecordsArray.push(record);
           }
         }
@@ -59,7 +58,6 @@ export default Ember.Mixin.create({
 
         Ember.set(target, property, recordsArrayinPromise);
       }
-
     },
 
     objectListViewRowClick(record, params) {

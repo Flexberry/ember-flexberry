@@ -1248,7 +1248,9 @@ export default folv.extend(
   */
   didInsertElement() {
     this._super(...arguments);
-
+    let infoModalDialog = this.$('.olv-toolbar-info-modal-dialog');
+    infoModalDialog.modal('setting', 'closable', true);
+    this.set('_infoModalDialog', infoModalDialog);
     Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() {
       if (this.get('columnsWidthAutoresize')) {
         this._setColumnWidths();
@@ -2241,7 +2243,7 @@ export default folv.extend(
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
     }) : record.deleteRecord()).catch((reason) => {
-      this.get('currentController').send('error', reason);
+      this.get('currentController').send('handleError', reason);
       record.rollbackAll();
     });
 

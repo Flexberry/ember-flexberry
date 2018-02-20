@@ -137,6 +137,13 @@ Model.defineProjection('SuggestionE', 'ember-flexberry-dummy-suggestion', {
   })
 });
 
+// Edit form projection.
+Model.defineProjection('SuggestionMainModelProjectionTest', 'ember-flexberry-dummy-suggestion', {
+  userVotes: Projection.hasMany('ember-flexberry-dummy-vote', 'User votes', {
+    voteType: Projection.attr('Vote type')
+  })
+});
+
 // List form projection.
 Model.defineProjection('SuggestionL', 'ember-flexberry-dummy-suggestion', {
   address: Projection.attr('Address'),
@@ -288,6 +295,28 @@ Model.defineProjection('FlexberryObjectlistviewCustomFilter', 'ember-flexberry-d
 // Projection for lookup default ordering example.
 Model.defineProjection('DefaultOrderingExampleView', 'ember-flexberry-dummy-suggestion', {
   type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  })
+});
+
+// Example to filter test.
+Model.defineProjection('FlexberryObjectlistviewFilterTest', 'ember-flexberry-dummy-suggestion', {
+  address: Projection.attr('Address'),
+  date: Projection.attr('Date'),
+  votes: Projection.attr('Votes'),
+  moderated: Projection.attr('Moderated'),
+  type: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Type', {
+    name: Projection.attr('Name', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'name'
+  }),
+  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
     name: Projection.attr('Name', {
       hidden: true
     })

@@ -8,7 +8,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
-import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 const {
   Builder,
@@ -45,6 +44,7 @@ const {
       placeholder="Not select"
       chooseText="Select"
       removeText="Clear"
+      perPage=50
     }}
     ...
     ```
@@ -198,15 +198,6 @@ export default FlexberryBaseComponent.extend({
   sorting: 'asc',
 
   /**
-    Ordering condition for list of records to choose.
-    Expected string type: '+Name1-Name2...', where: '+' and '-' - sorting direction, 'NameX' - property name for soring.
-
-    @property orderBy
-    @type String
-  */
-  orderBy: undefined,
-
-  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -217,6 +208,18 @@ export default FlexberryBaseComponent.extend({
     if (this.get('autocomplete')) {
       return 'ui search';
     }
+  }),
+
+  /**
+    FOLV component name.
+
+    @property folvComponentName
+    @type String
+    @readOnly
+  */
+  folvComponentName: Ember.computed('componentName', function() {
+    let componentName = this.get('componentName') || 'undefined';
+    return `${componentName}`;
   }),
 
   /**
@@ -251,6 +254,45 @@ export default FlexberryBaseComponent.extend({
     This computed property forms a set of properties to send to lookup window.
     Closure action `lookupWindowCustomProperties` is called here if defined,
     otherwise `undefined` is returned.
+
+    @example
+      ```javascript
+      // app/controllers/post.js
+      import EditFormController from './edit-form';
+      export default EditFormController.extend({
+        actions: {
+          lookupWindowCustomProperties({ relationName, projection }) {
+            if (relationName === 'author' && projection === 'UserL') {
+              return {
+                filterButton: true,
+                filterByAnyWord: true,
+                enableFilters: true,
+                refreshButton: true,
+                perPage: 25,
+              };
+            }
+          },
+        },
+      });
+      ```
+
+      ```handlebars
+      <!-- app/templates/post.hbs -->
+      {{flexberry-lookup
+        componentName="AuthorLookup"
+        choose="showLookupDialog"
+        remove="removeLookupValue"
+        value=model.author
+        projection="UserL"
+        relationName="author"
+        displayAttributeName="name"
+        title="Author"
+        placeholder="Not select"
+        chooseText="Select"
+        removeText="Clear"
+        lookupWindowCustomProperties=(action "getLookupFolvProperties")
+      }}
+      ```
 
     @property _lookupWindowCustomPropertiesData
     @type Object
@@ -288,9 +330,8 @@ export default FlexberryBaseComponent.extend({
     'lookupLimitPredicate',
     'relatedModel',
     '_lookupWindowCustomPropertiesData',
-    'orderBy',
     function() {
-      let ordering = this.get('orderBy') ? this.get('orderBy') : '';
+      let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
       return {
         projection: this.get('projection'),
         relationName: this.get('relationName'),
@@ -299,7 +340,9 @@ export default FlexberryBaseComponent.extend({
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
         componentName: this.get('componentName'),
-        sorting: deserializeSortingParam(ordering),
+        notUseUserSettings: this.get('notUseUserSettings'),
+        perPage: perPage || this.get('perPage'),
+        folvComponentName: this.get('folvComponentName'),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')
@@ -328,6 +371,14 @@ export default FlexberryBaseComponent.extend({
     @readOnly
   */
   store: Ember.inject.service('store'),
+
+  /**
+    The user settings service.
+
+    @property userSettings
+    @type UserSettingsService
+  */
+  userSettings: Ember.inject.service('user-settings'),
 
   /**
     Name of the attribute of the model to display for the user.
@@ -540,6 +591,7 @@ export default FlexberryBaseComponent.extend({
 
     // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
     this.addObserver('value', this, this._valueObserver);
+    this.addObserver('displayAttributeName', this, this._valueObserver);
     this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 
@@ -605,6 +657,7 @@ export default FlexberryBaseComponent.extend({
 
     // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
     this.removeObserver('value', this, this._valueObserver);
+    this.removeObserver('displayAttributeName', this, this._valueObserver);
     this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 

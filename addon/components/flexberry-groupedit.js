@@ -112,6 +112,15 @@ export default FlexberryBaseComponent.extend({
   deleteButton: true,
 
   /**
+    Flag: indicates whether to show default settings button at toolbar.
+
+    @property defaultSettingsButton
+    @type Boolean
+    @default true
+  */
+  defaultSettingsButton: true,
+
+  /**
     Route of edit form.
 
     @example
@@ -428,7 +437,7 @@ export default FlexberryBaseComponent.extend({
         attributePath += diplayAttribute ? `.${diplayAttribute}` : '';
       }
 
-      let sorting = this.get('sorting') || [];
+      let sorting = Ember.copy(this.get('sorting'), true) || [];
       for (let i = 0; i < sorting.length; i++) {
         if (sorting[i].propName === 'id') {
           sorting.splice(i, 1);
@@ -438,6 +447,7 @@ export default FlexberryBaseComponent.extend({
 
       if (Ember.isNone(sortAscending)) {
         sorting.push({ propName: columnName, direction: 'asc', attributePath: attributePath });
+        this.set('sorting', sorting);
         this.sortingFunction();
       } else if (sortAscending) {
         for (let i = 0; i < sorting.length; i++) {
@@ -447,6 +457,7 @@ export default FlexberryBaseComponent.extend({
           }
         }
 
+        this.set('sorting', sorting);
         this.sortingFunction();
       } else {
         for (let i = 0; i < sorting.length; i++) {
@@ -457,6 +468,7 @@ export default FlexberryBaseComponent.extend({
           }
         }
 
+        this.set('sorting', sorting);
         this.sortingFunction();
       }
     },

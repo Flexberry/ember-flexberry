@@ -51,7 +51,9 @@ export default Ember.Mixin.create({
       if (!onEditForm) {
         this.transitionTo(editFormRoute, recordId)
         .then((newRoute) => {
-          newRoute.controller.set('parentRoute', thisUrl);
+          if (newRoute) {
+            newRoute.controller.set('parentRoute', thisUrl);
+          }
         });
       } else {
         if (saveBeforeRouteLeave) {

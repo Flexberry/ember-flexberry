@@ -23,7 +23,7 @@ executeTest('check operation datepicker', (store, assert, app) => {
 
       // Open datepicker calendar.
       $validationDateField.click();
-      let $validationDateButton = Ember.$('.available');
+      let $validationDateButton = Ember.$('.available:not(.active)');
       $validationDateButton = Ember.$($validationDateButton[18]);
 
       // Select date.

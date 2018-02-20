@@ -3,19 +3,21 @@
     <tr>
       {{#if showHelperColumn}}
         <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
-          {{#if  (and showCheckBoxInRow (not-eq class "groupedit-container"))}}
-            <button
-              class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
-              title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
-              {{action "checkAllAtPage"}}>
-                <i class="check-square-o icon"></i>
-            </button>
-            <button
-              class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
-              title={{t "components.olv-toolbar.check-all-button-text"}}
-              {{action "checkAll"}}>
-                <i class="check-all-square-o icon"></i>
-            </button>
+          {{#if showCheckBoxInRow }}
+            {{#if (not-eq class "groupedit-container") }}
+              <button
+                class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
+                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                {{action "checkAllAtPage"}}>
+                  <i class="check-square-o icon"></i>
+              </button>
+              <button
+                class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
+                title={{t "components.olv-toolbar.check-all-button-text"}}
+                {{action "checkAll"}}>
+                  <i class="check-all-square-o icon"></i>
+              </button>
+            {{/if}}
             <button
               class="ui clear-sorting-button {{buttonClass}} button"
               title={{t "components.olv-toolbar.clear-sorting-button-text"}}
@@ -26,7 +28,7 @@
         </th>
       {{/if}}
       {{#each columns as |column|}}
-        <th class="dt-head-left me class" onclick={{action "headerCellClick" column }}>
+        <th class="dt-head-left me class" onclick={{action "headerCellClick" column }} width={{column.width}}>
           <div data-olv-header-property-name={{column.propName}} title={{sortTitleCompute}}>
             <span>
             {{#if column.keyLocale}}
@@ -133,6 +135,7 @@
           deleteRow=(action "deleteRow")
           defaultLeftPadding=defaultLeftPadding
           overflowedComponents=overflowedComponents
+          folvComponentName=componentName
         }}
       {{/each}}
       {{#if rowByRowLoadingProgress}}

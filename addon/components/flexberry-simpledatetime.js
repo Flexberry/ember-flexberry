@@ -471,7 +471,7 @@ export default FlexberryBaseComponent.extend({
     */
     remove() {
       let value = this.get('value');
-      if (!Ember.isNone(value)) {
+      if (!Ember.isNone(value) && !this.get('readonly')) {
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }

@@ -35,9 +35,9 @@ export default Ember.Mixin.create({
     }
 
     return new Ember.RSVP.Promise((resolve, reject) => {
-      result.then(() => {
+      result.then((parentResult) => {
         this.set('recordAdded', transition.queryParams.recordAdded || false);
-        resolve();
+        resolve(parentResult);
       }).catch((reason) => {
         reject(reason);
       });

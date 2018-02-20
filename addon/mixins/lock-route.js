@@ -82,7 +82,7 @@ export default Ember.Mixin.create({
     return new Ember.RSVP.Promise((resolve, reject) => {
       let params = this.paramsFor(this.routeName);
       let userService = Ember.getOwner(this).lookup('service:user');
-      result.then(() => {
+      result.then((parentResult) => {
         if (params.id) {
           let builder = new Query.Builder(this.store)
             .from('new-platform-flexberry-services-lock')
@@ -96,7 +96,7 @@ export default Ember.Mixin.create({
                 lockDate: new Date(),
               }).save().then((lock) => {
                 this.set('_currentLock', lock);
-                resolve();
+                resolve(lock);
               }).catch((reason) => {
                 this.openReadOnly().then((answer) => {
                   this._openReadOnly(answer, resolve, reject, reason);
@@ -104,7 +104,7 @@ export default Ember.Mixin.create({
               });
             } else if (lock.get('userName') === userService.getCurrentUserName()) {
               this.set('_currentLock', lock);
-              resolve();
+              resolve(lock);
             } else {
               this.openReadOnly(lock.get('userName')).then((answer) => {
                 this._openReadOnly(answer, resolve, reject);
@@ -114,7 +114,7 @@ export default Ember.Mixin.create({
             reject(reason);
           });
         } else {
-          resolve();
+          resolve(parentResult);
         }
       }).catch((reason) => {
         reject(reason);

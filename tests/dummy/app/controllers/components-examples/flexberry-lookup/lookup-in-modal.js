@@ -9,28 +9,30 @@ export default EditFormController.extend({
     @type String
     @default #example
   */
-  _defaultStyle:'#example',
+  _style:'#example',
 
   actions: {
-    modalWindow() {
+    modalWindow(style) {
+      this.set('_style', style);
       let repeatWindow = Ember.$('#repeat-window').modal({
         closable: false,
         autofocus: false,
         detachable: false,
         allowMultiple: true,
-        context: this.get('_defaultStyle'),
+        context: this.get('_style'),
       });
       this.set('repeatWindow', repeatWindow);
       this.get('repeatWindow').modal('show').modal('refresh');
     },
 
-    modalWindowDouble() {
+    modalWindowDouble(style) {
+      this.set('_style', style);
       let repeatWindow = Ember.$('#repeat-window-double').modal({
         closable: false,
         autofocus: false,
         detachable: false,
         allowMultiple: true,
-        context: this.get('_defaultStyle'),
+        context: this.get('_style'),
       });
       this.set('repeatWindowdouble', repeatWindow);
       this.get('repeatWindowdouble').modal('show').modal('refresh');
@@ -43,5 +45,6 @@ export default EditFormController.extend({
     logOutDouble() {
       this.get('repeatWindowdouble').modal('hide');
     }
+
   }
 });

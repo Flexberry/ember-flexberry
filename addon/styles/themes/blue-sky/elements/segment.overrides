@@ -52,3 +52,8 @@
      background: @primaryColor;
      color: @white;
 }
+
+.flexberry-file-image-preview-wrapper.ui.segment {
+    padding-top: 10px;
+    padding-bottom: 4px;
+}

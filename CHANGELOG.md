@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * User settings support, use parameter `notUseUserSettings` to disabling.
     * `perPage` parameter.
     * Hierarchy mode support.
-    * User settings support, use parameter `developerUserSettings` to sorting.
+    * User settings support. Use parameter `developerUserSettings` to apply sorting instead of `orderBy` parameter in template.
 * `flexberry-objectlistview` component:
     * Now computed properties could be passed via `dynamicProperties` for embedded components in cells.
 * Edit form's logic:

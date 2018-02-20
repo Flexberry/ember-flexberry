@@ -105,6 +105,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         sizeClass: undefined,
         lookupWindowCustomPropertiesData: undefined,
         componentName: undefined,
+        folvComponentName: undefined,
         notUseUserSettings: undefined,
         perPage: this.get('lookupModalWindowPerPage'),
         sorting: undefined,
@@ -125,10 +126,14 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
       let sizeClass = options.sizeClass;
       let componentName = options.componentName;
+      let folvComponentName = options.folvComponentName;
       let hierarchicalAttribute = options.hierarchicalAttribute;
 
+      let userSettingsService = this.get('userSettingsService');
+      userSettingsService.createDefaultUserSetting(folvComponentName);
+
       let model = modelToLookup ? modelToLookup : this.get('model');
-      let sorting = options.sorting ? options.sorting : [];
+      let sorting = userSettingsService.getCurrentSorting(folvComponentName) || options.sorting || [];
       let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
       // Get ember static function to get relation by name.
@@ -168,6 +173,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         currentLookupRow: model.get(relationName),
         customPropertiesData: lookupWindowCustomPropertiesData,
         componentName: componentName,
+        folvComponentName: folvComponentName,
         notUseUserSettings: options.notUseUserSettings,
       };
 
@@ -287,6 +293,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       currentLookupRow: undefined,
       customPropertiesData: undefined,
       componentName: undefined,
+      folvComponentName: undefined,
       notUseUserSettings: undefined,
     }, options);
 
@@ -331,6 +338,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       currentLookupRow: reloadData.currentLookupRow,
       customPropertiesData: reloadData.customPropertiesData,
       componentName: reloadData.componentName,
+      folvComponentName: reloadData.folvComponentName,
       notUseUserSettings: reloadData.notUseUserSettings,
 
       perPage: queryParameters.perPage,

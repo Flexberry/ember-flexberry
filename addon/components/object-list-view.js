@@ -1419,6 +1419,10 @@ export default FlexberryBaseComponent.extend(
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);
       let containerWidth = $table[0].parentElement.clientWidth - 5;
       let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+      if ($columns.length === 0) {
+        tableWidth = containerWidth;
+      }
+
       let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
       $table.css({ 'width': (columnsWidthAutoresize ? containerWidth : tableWidth) + 'px' });
       if (this.get('eventsBus')) {

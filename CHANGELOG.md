@@ -44,6 +44,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-file` component:
     * Fix buttons disabling in mobile mode.
     * Fix displaying errors in mobile mode.
+    * Fix displaying text for non-image file preview in IE.
 * `flexberry-modal` component:
     * Fix dimmer hiding on close button click.
 * Blueprints:

@@ -21,6 +21,14 @@ import EditFormRoute from './edit-form';
  */
 export default EditFormRoute.extend({
   /**
+    Suffix for new route (has value only on new routes).
+
+    @property newSuffix
+    @type String
+   */
+  newSuffix: '.new',
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 

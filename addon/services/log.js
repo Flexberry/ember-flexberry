@@ -450,8 +450,8 @@ export default Ember.Service.extend(Ember.Evented, {
       machineName:  location.hostname,
       appDomainName: navigator.userAgent,
       processId: document.location.href,
-      processName: appConfig.modulePrefix,
-      threadName: '',
+      processName: 'EMBER-FLEXBERRY',
+      threadName: appConfig.modulePrefix,
       win32ThreadId: '',
       message: message,
       formattedMessage: formattedMessage

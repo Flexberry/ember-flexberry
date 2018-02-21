@@ -361,6 +361,10 @@ Ember.$.extend(true, translations, {
             'groupedit-with-lookup-with-computed-atribute': {
               'caption': 'Computed attributes LookUp  in GroupEdit',
               'title': ''
+            },
+            'readonly-columns-by-configurate-row-example': {
+              'caption': 'GrouptEdit readonly columns by configurateRow',
+              'title': ''
             }
           },
           'flexberry-lookup': {

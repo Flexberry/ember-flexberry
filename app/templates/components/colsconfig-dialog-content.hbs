@@ -82,16 +82,18 @@
             </th
           ></tr
           ><tr
-            ><th colspan='6'>
+            ><th colspan='4'>
               <div class="ui action input">
-                <input id="columnConfigurtionSettingName" type='input' name='configName'
+                <input id="columnConfigurtionSettingName" class="setting-name" type='input' name='configName'
                   placeholder='{{t "components.colsconfig-dialog-content.enter-setting-name"}}' value='{{settingName}}'
                   {{action "setConfigName" n on="change"}}>
                 <div id="columnConfigurtionButtonSave" class="ui small button disabled" {{action 'saveColsSetting'}}>
                   {{t "components.colsconfig-dialog-content.save"}}
                 </div>
               </div>
-                <div id="columnConfigurtionButtonUse" class="ui right floated button" {{action 'apply'}}>{{if exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</div>
+            </th>
+            <th colspan='2'>
+              <div id="columnConfigurtionButtonUse" class="ui right floated button" {{action 'apply'}}>{{if exportParams.isExportExcel (t "components.colsconfig-dialog-content.export") (t "components.colsconfig-dialog-content.use")}}</div>
             </th
           ></tr
         ></tfoot

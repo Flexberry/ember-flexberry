@@ -25,11 +25,27 @@ module.exports = {
         }
         var sitemapFile = path.join(this.options.metadataDir, "application", "sitemap.json");
         var sitemap = JSON.parse(stripBom(fs.readFileSync(sitemapFile, "utf8")));
-        if (sitemap.mobile) {
-            this._files = CommonUtils_1.default.getFilesForGeneration(this);
+        if (this.project.isEmberCLIAddon() && !this.options.dummy) {
+            if (sitemap.mobile) {
+                this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/locales/en/translations.js" || v === "__root__/locales/ru/translations.js"; });
+            }
+            else {
+                this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs" || v === "__root__/locales/en/translations.js" || v === "__root__/locales/ru/translations.js"; });
+            }
         }
         else {
-            this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs"; });
+            if (sitemap.mobile) {
+                this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "addon/locales/en/translations.js" || v === "addon/locales/ru/translations.js"; });
+            }
+            else {
+                this._files = CommonUtils_1.default.getFilesForGeneration(this, function (v) { return v === "__root__/templates/mobile/application.hbs" || v === "addon/locales/en/translations.js" || v === "addon/locales/ru/translations.js"; });
+            }
+        }
+        if (this.project.isEmberCLIAddon() || this.options.dummy) {
+            lodash.remove(this._files, function (v) { return v === "public/assets/images/cat.gif" || v === "public/assets/images/favicon.ico" || v === "public/assets/images/flexberry-logo.png"; });
+        }
+        else {
+            lodash.remove(this._files, function (v) { return v === "test/dummy/public/assets/images/cat.gif" || v === "test/dummy/public/assets/images/favicon.ico" || v === "test/dummy/public/assets/images/flexberry-logo.png"; });
         }
         return this._files;
     },

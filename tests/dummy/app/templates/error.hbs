@@ -11,9 +11,17 @@
   {{/flexberry-toggler}}
 {{/if}}
 {{#if model.retryRoute}}
-  {{link-to (t "forms.error-form.retry") model.retryRoute
-    tagName="button"
-    activeClass=""
-    class="ui button"
-  }}
+  {{#if model.id}}
+    {{link-to (t "forms.error-form.retry") model.retryRoute model.id
+      tagName="button"
+      activeClass=""
+      class="ui button"
+    }}
+  {{else}}
+    {{link-to (t "forms.error-form.retry") model.retryRoute
+      tagName="button"
+      activeClass=""
+      class="ui button"
+    }}
+  {{/if}}
 {{/if}}

@@ -218,6 +218,15 @@ export default FlexberryBaseComponent.extend({
   */
   recordsLoaded: false,
 
+  /**
+    Level of hierarchy, that already was loaded.
+
+    @property hierarchyLoadedLevel
+    @type Integer
+    @default -1
+  */
+  hierarchyLoadedLevel: -1,
+
   actions: {
     /**
       Show/hide embedded records.
@@ -268,7 +277,7 @@ export default FlexberryBaseComponent.extend({
 
       // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
       let classOfHierarchyExpandButton = 'hierarchy-expand';
-      if (Ember.isNone(e) || !Ember.$(e.srcElement).hasClass(classOfHierarchyExpandButton))
+      if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
       {
         this.sendAction('rowClick', record, params);
       }
@@ -285,13 +294,13 @@ export default FlexberryBaseComponent.extend({
     if (!this.get('recordsLoaded')) {
       let id = this.get('record.data.id');
       if (id && this.get('inHierarchicalMode')) {
+        let currentLevel = this.get('_currentLevel');
+        let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
+        this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
         this.set('recordsLoaded', true);
-        if (this.get('_level') > 0) {
-          this.sendAction('loadRecords', id, this, 'records', false);
-        } else {
-          this.sendAction('loadRecords', id, this, 'records', true);
+        if (currentLevel > hierarchyLoadedLevel) {
+          this.set('hierarchyLoadedLevel', currentLevel);
         }
-
       }
     }
   },

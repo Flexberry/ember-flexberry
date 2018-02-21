@@ -68,11 +68,12 @@ export default {
       'upload-button-title': 'Upload File',
       'download-button-title': 'Download File',
 
-      'preview-image-alternative-text': 'Loaded image',
+      'preview-image-alternative-text': 'Image viewing isn\'t available',
 
       'error-dialog-caption': 'File component error',
       'error-dialog-content': 'File component error occurred',
       'error-dialog-ok-button-caption': 'OK',
+      'error-preview-caption': 'Preview can not be loaded',
 
       'add-file-error-caption': 'Add file error',
       'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
@@ -176,6 +177,7 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Customize the display of colums',
+      'export-modal-dialog-title': 'Customize export in Excel',
       'export-title': 'Export in Excel',
       'dont-show-columns': 'Do not display columns',
       'columns-order': 'Specify the order of the columns',

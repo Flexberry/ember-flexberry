@@ -2,6 +2,7 @@ import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
 
 import { Query } from 'ember-flexberry-data';
+import Ember from 'ember';
 
 export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   /**
@@ -87,10 +88,9 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
       .byId(`'${params.id}'`);
 
     this.store.query(modelName, builder.build()).then((lock) => {
-      if(lock.content.length)
-      {
+      if (lock.content.length) {
         let lockUser = lock.objectAt(0).get('userName');
-        if(lockUser !== userService.getCurrentUserName()) {
+        if (lockUser !== userService.getCurrentUserName()) {
           this.set('controller.blockedByUser', lockUser);
         } else {
           this.set('controller.blockedByUser', undefined);
@@ -102,5 +102,4 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
 
     return this._super(...arguments);
   }
-
 });

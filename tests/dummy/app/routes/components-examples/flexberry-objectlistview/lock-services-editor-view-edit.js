@@ -1,6 +1,8 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
 
+import { Query } from 'ember-flexberry-data';
+
 export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
   /**
     Name of model projection to be used as record's properties limitation.
@@ -73,6 +75,32 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
     @type String
     @default 'ember-flexberry-dummy-suggestion'
    */
-  modelName: 'ember-flexberry-dummy-suggestion'
+  modelName: 'ember-flexberry-dummy-suggestion',
+
+  model(params) {
+    let userService = Ember.getOwner(this).lookup('service:user');
+    let modelName = 'new-platform-flexberry-services-lock';
+
+    let builder = new Query.Builder(this.store)
+      .from('new-platform-flexberry-services-lock')
+      .selectByProjection('LockL')
+      .byId(`'${params.id}'`);
+
+    this.store.query(modelName, builder.build()).then((lock) => {
+      if(lock.content.length)
+      {
+        let lockUser = lock.objectAt(0).get('userName');
+        if(lockUser !== userService.getCurrentUserName()) {
+          this.set('controller.blockedByUser', lockUser);
+        } else {
+          this.set('controller.blockedByUser', undefined);
+        }
+      } else {
+        this.set('controller.blockedByUser', undefined);
+      }
+    });
+
+    return this._super(...arguments);
+  }
 
 });

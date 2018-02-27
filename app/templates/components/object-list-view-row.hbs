@@ -116,6 +116,12 @@
                 <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
               </div>
             {{/if}}
+            {{#if showAddButtonMenuItemInRow}}
+              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action addCustomButtonToRow record }}>
+                <i class="add icon"></i>
+                <span>dobavit knopku</span>
+              </div>
+            {{/if}}
             {{#each menuInRowAdditionalItems as |menuItem|}}
               <div class="item" {{action sendMenuItemAction menuItem.actionName record.data}}>
                 <i class="{{menuItem.icon}}"></i>

@@ -367,6 +367,15 @@ export default FlexberryBaseComponent.extend(
   showDeleteMenuItemInRow: false,
 
   /**
+    Flag indicates whether to show dropdown menu with add custom button menu item, in last column of every row.
+
+    @property showAddButtonMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showAddButtonMenuItemInRow: false,
+
+  /**
     Additional menu items for dropdown menu in last column of every row.
 
     @property menuInRowAdditionalItems
@@ -397,9 +406,10 @@ export default FlexberryBaseComponent.extend(
   showMenuColumn: Ember.computed(
     'showEditMenuItemInRow',
     'showDeleteMenuItemInRow',
+    'showAddButtonMenuItemInRow',
     'menuInRowHasAdditionalItems',
     function() {
-      return this.get('showEditMenuItemInRow') || this.get('showDeleteMenuItemInRow') || this.get('menuInRowHasAdditionalItems');
+      return this.get('showEditMenuItemInRow') || this.get('showDeleteMenuItemInRow') || this.get('menuInRowHasAdditionalItems') || this.get('showAddButtonMenuItemInRow');
     }
   ),
 
@@ -916,6 +926,10 @@ export default FlexberryBaseComponent.extend(
       }
 
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
+    },
+
+    addCustomButtonToRow(recordWithKey) {
+      console.log("VIVOD" + recordWithKey);
     },
 
     /**

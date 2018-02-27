@@ -297,6 +297,15 @@ export default FlexberryBaseComponent.extend({
   showEditMenuItemInRow: false,
 
   /**
+    Flag indicates whether to show dropdown menu with add custom button menu item, in last column of every row.
+
+    @property showAddButtonMenuItemInRow
+    @type Boolean
+    @default false
+  */
+  showAddButtonMenuItemInRow: false,
+
+  /**
     Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
 
     @property showDeleteMenuItemInRow
@@ -344,6 +353,7 @@ export default FlexberryBaseComponent.extend({
     For in-row menu following properties are used:
     - {{#crossLink "FlexberryGroupeditComponent/showDeleteMenuItemInRow:property"}}{{/crossLink}},
     - {{#crossLink "FlexberryGroupeditComponent/showEditMenuItemInRow:property"}}{{/crossLink}},
+    - {{#crossLink "FlexberryGroupeditComponent/showAddButtonMenuItemInRow:property"}}{{/crossLink}},
     - {{#crossLink "FlexberryGroupeditComponent/menuInRowAdditionalItems:property"}}{{/crossLink}}.
 
     @property menuInRowAdditionalItems

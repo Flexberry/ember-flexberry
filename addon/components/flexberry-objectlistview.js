@@ -913,6 +913,31 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
+      Array of custom user buttons in row.
+
+      @property customButtonsInRow
+      @type Array
+   */
+    customButtonsInRow() {
+      return undefined;
+    },
+
+    /**
+      Handler to get user button's in rows actions and send action to corresponding controllers's handler.
+
+      @method actions.customButtonInRowAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonInRowAction(actionName,rowId) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-objectlistview toolbar was found.');
+      }
+
+      this.sendAction(actionName,rowId);
+    },
+
+    /**
       Show/hide filters.
 
       @method actions.toggleStateFilters
@@ -1024,6 +1049,7 @@ export default FlexberryBaseComponent.extend({
     sendMenuItemAction(actionName, record) {
       this.sendAction(actionName, record);
     },
+
   },
 
   /**

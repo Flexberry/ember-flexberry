@@ -18,16 +18,13 @@
               }}
             </div>
           {{/if}}
-          {{#if showDeleteButtonInRow}}
-            <div class="cell">
-              <button
-                class="ui ui-delete object-list-view-row-delete-button {{buttonClass}} {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} button"
-                title={{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}
-                {{action deleteRow record}}>
-                <i class="minus icon"></i>
-              </button>
-            </div>
-          {{/if}}
+          {{#each customButtonsInRow as |customButtonInRow|}}
+            <button
+              class="ui {{if customButtonInRow.buttonClasses customButton.buttonClasses ""}} button"
+              title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
+              {{action "customButtonInRowAction" customButtonInRow.buttonAction record.key}}>
+            </button>
+          {{/each}}
           {{#if showEditButtonInRow}}
             <div class="cell">
               <button
@@ -114,12 +111,6 @@
               <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action deleteRow record }}>
                 <i class="trash icon"></i>
                 <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
-              </div>
-            {{/if}}
-            {{#if showAddButtonMenuItemInRow}}
-              <div class="item {{if (or readonly (not record.rowConfig.canBeDeleted)) "disabled"}} delete-menu" {{ action addCustomButtonToRow record }}>
-                <i class="add icon"></i>
-                <span>dobavit knopku</span>
               </div>
             {{/if}}
             {{#each menuInRowAdditionalItems as |menuItem|}}

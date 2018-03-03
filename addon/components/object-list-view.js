@@ -928,10 +928,6 @@ export default FlexberryBaseComponent.extend(
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 
-    addCustomButtonToRow(recordWithKey) {
-      console.log("VIVOD" + recordWithKey);
-    },
-
     /**
       This action is called when user select the row.
 
@@ -1012,6 +1008,17 @@ export default FlexberryBaseComponent.extend(
         let componentName = this.get('componentName');
         this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
+    },
+
+    /**
+      Handler to get user button's in rows actions and send action to corresponding controllers's handler.
+
+      @method actions.customButtonInRowAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonInRowAction(actionName,rowId) {
+      this.sendAction('customButtonInRowAction', actionName,rowId);
     },
 
     /**
@@ -1179,6 +1186,9 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _colResizableInit: false,
+
+  customButtonsInRow: undefined,
+
 
   /**
     Field contains index for already rendered row.

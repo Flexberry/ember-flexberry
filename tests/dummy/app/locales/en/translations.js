@@ -859,6 +859,11 @@ Ember.$.extend(true, translations, {
         'custom-filter': {
           'caption': 'Flexberry-objectlistview. Custom filter'
         },
+        'edit-form-with-detail-list': {
+          'caption': 'List example',
+          'custom-row-button-name': 'Test button',
+          'title': ''
+        },
         'hierarchy-example': {
           'caption': 'Flexberry-objectlistview. Hierarchy example'
         },

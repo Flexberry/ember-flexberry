@@ -218,7 +218,46 @@ export default FlexberryBaseComponent.extend({
   */
   recordsLoaded: false,
 
+  /**
+    Name of action to send out, action triggered by click on user button.
+
+    @property customButtonAction
+    @type String
+    @default 'customButtonInRowAction'
+  */
+  customButtonInRowAction: 'customButtonInRowAction',
+
+  /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...' // Button title.
+      }
+      ```
+
+    @property customButtonsInRow
+    @type Array
+  */
+  customButtonsInRow: undefined,
+
   actions: {
+
+    /**
+      Handler to get user button's in rows actions.
+
+      @method actions.customButtonInRowAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonInRowAction(actionName,rowId) {
+      this.sendAction('customButtonInRowAction', actionName,rowId);
+    },
+
     /**
       Show/hide embedded records.
 
@@ -262,6 +301,7 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
+      console.log(this.customButtonsInRow);
       if (!Ember.isBlank(e)) {
         Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
       }
@@ -274,6 +314,8 @@ export default FlexberryBaseComponent.extend({
       }
     }
   },
+
+
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.

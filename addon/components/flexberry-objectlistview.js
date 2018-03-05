@@ -297,15 +297,6 @@ export default FlexberryBaseComponent.extend({
   showEditMenuItemInRow: false,
 
   /**
-    Flag indicates whether to show dropdown menu with add custom button menu item, in last column of every row.
-
-    @property showAddButtonMenuItemInRow
-    @type Boolean
-    @default false
-  */
-  showAddButtonMenuItemInRow: false,
-
-  /**
     Flag indicates whether to show dropdown menu with delete menu item, in last column of every row.
 
     @property showDeleteMenuItemInRow
@@ -353,7 +344,6 @@ export default FlexberryBaseComponent.extend({
     For in-row menu following properties are used:
     - {{#crossLink "FlexberryGroupeditComponent/showDeleteMenuItemInRow:property"}}{{/crossLink}},
     - {{#crossLink "FlexberryGroupeditComponent/showEditMenuItemInRow:property"}}{{/crossLink}},
-    - {{#crossLink "FlexberryGroupeditComponent/showAddButtonMenuItemInRow:property"}}{{/crossLink}},
     - {{#crossLink "FlexberryGroupeditComponent/menuInRowAdditionalItems:property"}}{{/crossLink}}.
 
     @property menuInRowAdditionalItems
@@ -929,12 +919,12 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {String} actionName The name of action
     */
-    customButtonInRowAction(actionName,rowId) {
+    customButtonInRowAction(actionName, rowId) {
       if (!actionName) {
         throw new Error('No handler for custom button of flexberry-objectlistview toolbar was found.');
       }
 
-      this.sendAction(actionName,rowId);
+      this.sendAction(actionName, rowId);
     },
 
     /**

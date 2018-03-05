@@ -236,6 +236,7 @@ export default FlexberryBaseComponent.extend({
         buttonName: '...', // Button displayed name.
         buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
         buttonClasses: '...', // Css classes for button.
+        buttonIcon: '...', // Button icon
         buttonTitle: '...' // Button title.
       }
       ```
@@ -246,7 +247,6 @@ export default FlexberryBaseComponent.extend({
   customButtonsInRow: undefined,
 
   actions: {
-
     /**
       Handler to get user button's in rows actions.
 
@@ -254,8 +254,8 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {String} actionName The name of action
     */
-    customButtonInRowAction(actionName,rowId) {
-      this.sendAction('customButtonInRowAction', actionName,rowId);
+    customButtonInRowAction(actionName, rowId) {
+      this.sendAction('customButtonInRowAction', actionName, rowId);
     },
 
     /**
@@ -314,8 +314,6 @@ export default FlexberryBaseComponent.extend({
       }
     }
   },
-
-
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.

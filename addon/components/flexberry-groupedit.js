@@ -199,7 +199,6 @@ export default FlexberryBaseComponent.extend({
     For in-row menu following properties are used:
     - {{#crossLink "FlexberryGroupeditComponent/showDeleteMenuItemInRow:property"}}{{/crossLink}},
     - {{#crossLink "FlexberryGroupeditComponent/showEditMenuItemInRow:property"}}{{/crossLink}},
-      - {{#crossLink "FlexberryGroupeditComponent/showAddButtonMenuItemInRow:property"}}{{/crossLink}},
     - {{#crossLink "FlexberryGroupeditComponent/menuInRowAdditionalItems:property"}}{{/crossLink}}.
 
     @property menuInRowAdditionalItems

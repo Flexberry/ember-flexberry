@@ -13,7 +13,10 @@ export default EditFormController.extend({
 
   actions: {
     modalWindow(style) {
-      this.set('_style', style);
+      if (!Ember.isNone(style)) {
+        this.set('_style', style);
+      }
+
       let repeatWindow = Ember.$('#repeat-window').modal({
         closable: false,
         autofocus: false,
@@ -26,7 +29,10 @@ export default EditFormController.extend({
     },
 
     modalWindowDouble(style) {
-      this.set('_style', style);
+      if (!Ember.isNone(style)) {
+        this.set('_style', style);
+      }
+
       let repeatWindow = Ember.$('#repeat-window-double').modal({
         closable: false,
         autofocus: false,

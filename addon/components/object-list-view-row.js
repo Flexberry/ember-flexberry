@@ -219,9 +219,9 @@ export default FlexberryBaseComponent.extend({
   recordsLoaded: false,
 
   /**
-    Name of action to send out, action triggered by click on user button.
+    Name of action to send out, action triggered by click on user button in row.
 
-    @property customButtonAction
+    @property customButtonInRowAction
     @type String
     @default 'customButtonInRowAction'
   */

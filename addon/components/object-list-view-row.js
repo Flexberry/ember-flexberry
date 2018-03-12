@@ -7,14 +7,12 @@ import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
   Component for displayed one record in {{#crossLink "ObjectListViewComponent"}}{{/crossLink}}.
-
   @class ObjectListViewRowComponent
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
   /**
     Flag used to display embedded records.
-
     @property _expanded
     @type Boolean
     @default false
@@ -24,7 +22,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Stores the number of pixels to isolate one level of hierarchy.
-
     @property _hierarchicalIndent
     @type Number
     @default 10
@@ -34,7 +31,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Level nesting by default.
-
     @property _level
     @type Number
     @default 0
@@ -44,7 +40,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Level nesting current record.
-
     @property _currentLevel
     @type Number
     @default 0
@@ -61,7 +56,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Store nested records.
-
     @property _records
     @type Ember.NativeArray
     @default Empty
@@ -71,7 +65,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Flag: indicates whether to show validation messages or not.
-
     @property showValidationMessagesInRow
     @type Boolean
     @default false
@@ -80,7 +73,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Flag used to start render row content.
-
     @property doRenderData
     @type Boolean
     @default false
@@ -89,7 +81,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Default left padding in cells.
-
     @property defaultLeftPadding
     @type Number
     @default 10
@@ -101,7 +92,6 @@ export default FlexberryBaseComponent.extend({
     - `key` - Ember GUID for record.
     - `data` - Instance of DS.Model.
     - `config` - Object with config for record.
-
     @property record
     @type Object
   */
@@ -113,7 +103,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Store nested records.
-
     @property records
     @type Ember.NativeArray
     @default Empty
@@ -148,7 +137,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Flag indicate whether there nested records.
-
     @property hasRecords
     @type Boolean
     @default false
@@ -159,7 +147,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Hierarchical indent based on the current level of nesting.
-
     @property hierarchicalIndent
     @type String
     @default ''
@@ -202,7 +189,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Tag name for the view's outer element. [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
-
     @property tagName
     @type String
     @default ''
@@ -211,12 +197,19 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Flag indicates that record's hierarchy for this row is loaded.
-
     @property recordsLoaded
     @type Boolean
     @default false
   */
   recordsLoaded: false,
+
+  /**
+    Level of hierarchy, that already was loaded.
+    @property hierarchyLoadedLevel
+    @type Integer
+    @default -1
+  */
+  hierarchyLoadedLevel: -1,
 
   /**
     Name of action to send out, action triggered by click on user button in row.
@@ -301,7 +294,6 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
-      console.log(this.customButtonsInRow);
       if (!Ember.isBlank(e)) {
         Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
       }

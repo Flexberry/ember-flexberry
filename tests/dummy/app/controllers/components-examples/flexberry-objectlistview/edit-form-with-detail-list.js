@@ -15,14 +15,14 @@ export default ListFormController.extend({
     return [{
       buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.edit-form-with-detail-list.custom-row-button-name') + 1,
       buttonAction: 'test1',
-      buttonClasses: 'add-button',
+      buttonClasses: 'test-click-button',
       buttonIcon: 'edit icon',
       buttonTitle: i18n.t('forms.components-examples.flexberry-objectlistview.edit-form-with-detail-list.custom-row-button-name') + 1
     },
     {
       buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.edit-form-with-detail-list.custom-row-button-name') + 2,
       buttonAction: 'test2',
-      buttonClasses: 'add-button',
+      buttonClasses: 'test-click-button',
       buttonIcon: 'edit icon',
       buttonTitle: i18n.t('forms.components-examples.flexberry-objectlistview.edit-form-with-detail-list.custom-row-button-name') + 2
     }];

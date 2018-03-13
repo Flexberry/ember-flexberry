@@ -43,13 +43,13 @@ export default Ember.Mixin.create({
 
   actions: {
     /**
-      The willTransition action is fired at the beginning of any attempted transition with a Transition object as the sole argument.
-      [More info](http://emberjs.com/api/classes/Ember.Route.html#event_willTransition).
-
-      @method actions.willTransition
-      @param {Transition} transition
-    */
-    willTransition(transition) {
+      A hook you can use to reset controller values either when the model changes or the route is exiting.
+      [More info](https://emberjs.com/api/ember/2.4/classes/Ember.Route/methods/resetController?anchor=resetController).
+     * @param {Controller} controller
+     * @param {ransition} transition
+     */
+    resetController(controller, transition) {
+      this._super(...arguments);
       this.set('_readonly', false);
       let lock = this.get('_currentLock');
       if (lock) {

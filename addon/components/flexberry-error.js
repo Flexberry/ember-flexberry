@@ -76,6 +76,7 @@ export default Ember.Component.extend({
     get() {
       return this.get('_error');
     },
+
     set(key, value) {
       return this.set('_error', value);
     },

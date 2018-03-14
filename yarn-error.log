@@ -1,0 +1,107 @@
+Arguments: 
+  C:\Program Files (x86)\nodejs\node.exe D:\Home\ananin\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install ember-cli@2.4.3
+
+PATH: 
+  C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Kaspersky Lab\Kaspersky Endpoint Security 10 for Windows\;C:\Program Files (x86)\Common Files\Borland Shared\Bde\;C:\Program Files (x86)\Barsum\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\Git\cmd;C:\Program Files (x86)\nodejs\;C:\OpenSSL-Win64\bin;C:\Program Files\Java\jdk1.8.0_65\bin;D:\Home\ananin\AppData\Roaming\npm
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  6.5.0
+
+Platform: 
+  win32 ia32
+
+npm manifest: 
+  {
+    "name": "ember-flexberry",
+    "version": "0.6.2-beta.2",
+    "description": "Ember Flexberry Addon",
+    "license": "MIT",
+    "author": {
+      "name": "Flexberry Team",
+      "email": "mail@flexberry.net",
+      "url": "http://flexberry.net/"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Flexberry/ember-flexberry.git"
+    },
+    "directories": {
+      "doc": "doc",
+      "test": "tests"
+    },
+    "scripts": {
+      "build": "ember build",
+      "start": "ember server",
+      "test": "ember try:testall"
+    },
+    "engines": {
+      "node": ">= 0.10.0"
+    },
+    "devDependencies": {
+      "broccoli-asset-rev": "^2.4.2",
+      "broccoli-jscs": "1.2.2",
+      "ember-ajax": "0.7.1",
+      "ember-cli": "2.4.3",
+      "ember-cli-app-version": "^1.0.0",
+      "ember-cli-dependency-checker": "^1.2.0",
+      "ember-cli-htmlbars": "^1.0.3",
+      "ember-cli-htmlbars-inline-precompile": "^0.3.1",
+      "ember-cli-inject-live-reload": "^1.4.0",
+      "ember-cli-moment-shim": "1.0.0",
+      "ember-cli-qunit": "^1.4.0",
+      "ember-cli-release": "0.2.8",
+      "ember-cli-sri": "^2.1.0",
+      "ember-cli-uglify": "^1.2.0",
+      "ember-data": "~2.4.3",
+      "ember-disable-prototype-extensions": "^1.1.0",
+      "ember-export-application-global": "^1.0.5",
+      "ember-link-action": "0.0.34",
+      "ember-load-initializers": "^0.5.1",
+      "ember-moment": "6.0.0",
+      "ember-resolver": "^2.0.3",
+      "ember-sinon": "0.5.0",
+      "ember-try": "^0.2.2",
+      "loader.js": "^4.0.1",
+      "moment": "2.11.2",
+      "moment-timezone": "0.5.0",
+      "ember-browserify": "1.1.9",
+      "dexie": "^1.4.2",
+      "semantic-ui-ember": "0.9.3",
+      "node-uuid": "^1.4.7"
+    },
+    "dependencies": {
+      "ember-cli-babel": "^5.1.6",
+      "ember-cli-sass": "^7.2.0",
+      "ember-flexberry-data": "^0.6.2-beta.1",
+      "ember-i18n": "4.2.0",
+      "ember-truth-helpers": "1.2.0",
+      "ember-validations": "~2.0.0-alpha.4",
+      "lodash": "^4.4.0",
+      "strip-bom": "^2.0.0"
+    },
+    "ember-addon": {
+      "configPath": "tests/dummy/config"
+    },
+    "keywords": [
+      "ember-addon",
+      "flexberry"
+    ]
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: `install` has been replaced with `add` to add new dependencies. Run "yarn add ember-cli@2.4.3" instead.
+      at MessageError.Error (native)
+      at new MessageError (D:\Home\ananin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
+      at Object.<anonymous> (D:\Home\ananin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:21987:13)
+      at next (native)
+      at step (D:\Home\ananin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:98:30)
+      at D:\Home\ananin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:109:13

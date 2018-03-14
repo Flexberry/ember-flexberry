@@ -72,7 +72,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
      */
     onButtonClick() {
       this._router = Ember.getOwner(this).lookup('router:main');
-      this._router.router.transitionTo('ember-flexberry-dummy-suggestion-list', { queryParams: { perPage: 1 } });
+      this._router.router.transitionTo(this.parentRoute, { queryParams: { perPage: 1 } });
     }
   }
 });

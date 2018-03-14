@@ -1,5 +1,4 @@
 {
-"strict-ssl": false,	 	   
-"proxy": "http://proxy2.ics.perm.ru:8080",
-"https-proxy": "http://proxy2.ics.perm.ru:8080"
+  "directory": "bower_components",
+  "analytics": false
 }

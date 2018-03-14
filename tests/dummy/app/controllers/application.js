@@ -220,6 +220,11 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.lock.title'),
           title: i18n.t('forms.application.sitemap.lock.title'),
           children: null
+        }, {
+          link: 'lock-service/ember-flexberry-dummy-suggestion-lock-return-list',
+          caption: i18n.t('forms.application.sitemap.lock-service.lock-return.title'),
+          title: i18n.t('forms.application.sitemap.lock-service.lock-return.lock.title'),
+          children: null
         }]
       }, {
         link: null,

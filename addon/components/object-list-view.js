@@ -821,6 +821,16 @@ export default FlexberryBaseComponent.extend(
   componentName: '',
 
   actions: {
+    /**
+     Handler to get user button's in rows actions and send action to corresponding controllers's handler.
+
+     @method actions.customButtonInRowAction
+     @public
+     @param {String} actionName The name of action
+   */
+    customButtonInRowAction(actionName, rowId) {
+      this.sendAction('customButtonInRowAction', actionName, rowId);
+    },
 
     /**
       This action is called when user click on row.
@@ -1175,6 +1185,25 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _renderedRowIndex: -1,
+
+  /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonIcon: '...', // Button icon
+        buttonTitle: '...' // Button title.
+      }
+      ```
+
+    @property customButtonsInRow
+    @type Array
+  */
+  customButtonsInRow: undefined,
 
   /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.

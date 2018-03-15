@@ -227,7 +227,46 @@ export default FlexberryBaseComponent.extend({
   */
   hierarchyLoadedLevel: -1,
 
+  /**
+    Name of action to send out, action triggered by click on user button in row.
+
+    @property customButtonInRowAction
+    @type String
+    @default 'customButtonInRowAction'
+  */
+  customButtonInRowAction: 'customButtonInRowAction',
+
+  /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonIcon: '...', // Button icon
+        buttonTitle: '...' // Button title.
+      }
+      ```
+
+    @property customButtonsInRow
+    @type Array
+  */
+  customButtonsInRow: undefined,
+
   actions: {
+    /**
+      Handler to get user button's in rows actions.
+
+      @method actions.customButtonInRowAction
+      @public
+      @param {String} actionName The name of action
+    */
+    customButtonInRowAction(actionName, rowId) {
+      this.sendAction('customButtonInRowAction', actionName, rowId);
+    },
+
     /**
       Show/hide embedded records.
 

@@ -448,7 +448,8 @@ Ember.$.extend(true, translations, {
             },
             'edit-form-with-detail-list': {
               'caption': 'List example',
-              'title': ''
+              'title': '',
+              'custom-row-button-name': 'Test button'
             },
             'hierarchy-example': {
               'caption': 'Hierarchy example',

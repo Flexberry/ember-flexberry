@@ -560,6 +560,44 @@ export default Ember.Service.extend({
   },
 
   /**
+   Set toggler status
+
+   @method setToggleStatus
+   @param {String} componentName Name of component.
+   @param {Boolean} toggleStatus Status to save.
+   */
+  setToggleStatus(componentName, toggleStatus) {
+    let userSetting;
+    let settingName = 'toggleStatus';
+    if (this.exists() &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
+    }
+
+    userSetting.toggleStatus = toggleStatus;
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting(componentName, settingName, userSetting);
+    }
+  },
+
+  /**
+   Returns toggler status from user service.
+
+   @method getToggleStatus
+   @param {String} componentName component Name to search by.
+   @return {Boolean} Saved status.
+   */
+  getToggleStatus(componentName) {
+    let settingName = 'toggleStatus';
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+    return currentUserSetting && 'toggleStatus' in currentUserSetting ? currentUserSetting.toggleStatus : null;
+  },
+
+  /**
    Deletes given user setting from storage.
 
    @method deleteUserSetting

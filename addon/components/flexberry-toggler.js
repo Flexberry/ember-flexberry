@@ -95,7 +95,7 @@ export default Ember.Component.extend({
   iconClass: undefined,
 
   /**
-    Flag indicates whenever toogler contains resaizable OLV.
+    Flag indicates whenever toogler contains resizable OLV.
 
     @property hasResizableOLV
     @type Boolean
@@ -150,5 +150,28 @@ export default Ember.Component.extend({
 
     // Destroys Semantic UI accordion.
     this.$().accordion('destroy');
+  },
+
+  /**
+    Saves toggler status to user service.
+  */
+  saveStatus() {
+    var userSettings = this.get('userSettingsService');
+    var expanded = this.get('expanded');
+
+    if (expanded !== userSettings.getToggleStatus(this.componentName)) {
+      userSettings.setToggleStatus(this.componentName, expanded);
+    }
+  },
+
+  /**
+    Loads toggler status from user service.
+  */
+  loadStatus() {
+    var userSettings = this.get('userSettingsService');
+    var status = userSettings.getToggleStatus(this.componentName);
+    if (!Ember.isNull(status)) {
+      this.set('expanded', status);
+    }
   }
 });

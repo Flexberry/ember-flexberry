@@ -41,7 +41,6 @@ Router.map(function() {
 
   // Locks.
   this.route('new-platform-flexberry-services-lock-list');
-  this.route('components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-list');
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-button/settings-example');
@@ -101,7 +100,8 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/selected-rows');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-list');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-edit',
-  { path: 'components-examples/flexberry-objectlistview/downloading-files-from-olv-edit/:id' });  
+  { path: 'components-examples/flexberry-objectlistview/downloading-files-from-olv-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-list');
   this.route('components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-edit',
   { path: 'components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-edit/:id' });
 

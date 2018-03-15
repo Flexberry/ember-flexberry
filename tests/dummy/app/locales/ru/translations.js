@@ -482,7 +482,7 @@ Ember.$.extend(true, translations, {
             },
             'return-from-ediform': {
               'title': 'Возвращение с edit-form на list-form с queryParametr',
-              'return-button' : 'Вернутся'
+              'return-button': 'Вернутся'
             },
           },
           'flexberry-simpledatetime': {

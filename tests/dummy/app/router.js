@@ -41,6 +41,8 @@ Router.map(function() {
 
   // Locks.
   this.route('new-platform-flexberry-services-lock-list');
+  this.route('lock-service/ember-flexberry-dummy-suggestion-lock-return-list');
+  this.route('lock-service/ember-flexberry-dummy-suggestion-lock-return-edit', { path: 'lock-service/ember-flexberry-dummy-suggestion-lock-return-edit/:id' });
 
   // Components examples routes (sorted by component's names).
   this.route('components-examples/flexberry-button/settings-example');

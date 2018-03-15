@@ -278,6 +278,11 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
+        'lock-service': {
+          'lock-return': {
+            'title': 'Пример возвращения с заблокированной формы с queryParametr',
+          },
+        },
         'lock': {
           'caption': 'Блокировки',
           'title': 'Список блокировок',

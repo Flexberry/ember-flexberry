@@ -268,9 +268,14 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        lock: {
-          caption: 'Blocking',
-          title: 'Block list',
+        'lock-service': {
+          'lock-return': {
+            'title': 'Example return from a locked form with queryParametr',
+          },
+        },
+        'lock': {
+          'caption': 'Blocking',
+          'title': 'Block list',
         },
         'components-examples': {
           'caption': 'Components examples',

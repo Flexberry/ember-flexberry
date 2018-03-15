@@ -10,7 +10,7 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     @type String
     @default 'ember-flexberry-dummy-suggestion-list'
    */
-  parentRoute: 'lock-service/ember-flexberry-dummy-suggestion-lock-return-list',
+  parentRoute: 'components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-list',
 
   /**
     Name of model.comments edit route.

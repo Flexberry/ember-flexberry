@@ -278,11 +278,6 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        'lock-service': {
-          'lock-return': {
-            'title': 'Пример возвращения с заблокированной формы с queryParametr',
-          },
-        },
         'lock': {
           'caption': 'Блокировки',
           'title': 'Список блокировок',
@@ -484,7 +479,10 @@ Ember.$.extend(true, translations, {
             'object-list-view-resize': {
               'caption': 'Разметка столбцов',
               'title': ''
-            }
+            },
+            'return-from-ediform': {
+              'title': 'Возвращение с edit-form на list-form с queryParametr',
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',

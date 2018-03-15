@@ -220,11 +220,6 @@ export default Ember.Controller.extend({
           caption: i18n.t('forms.application.sitemap.lock.title'),
           title: i18n.t('forms.application.sitemap.lock.title'),
           children: null
-        }, {
-          link: 'lock-service/ember-flexberry-dummy-suggestion-lock-return-list',
-          caption: i18n.t('forms.application.sitemap.lock-service.lock-return.title'),
-          title: i18n.t('forms.application.sitemap.lock-service.lock-return.lock.title'),
-          children: null
         }]
       }, {
         link: null,
@@ -472,6 +467,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-objectlistview/object-list-view-resize',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.title'),
+            children: null
+          }, {
+            link: 'components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.return-from-ediform.title'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.return-from-ediform.title'),
             children: null
           }]
         }, {

@@ -9,7 +9,7 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
     @type String
     @default 'ember-flexberry-dummy-suggestion-edit'
    */
-  editFormRoute: 'lock-service/ember-flexberry-dummy-suggestion-lock-return-edit',
+  editFormRoute: 'components-examples/flexberry-objectlistview/return-with-query-params/ember-flexberry-dummy-suggestion-return-with-query-params-edit',
 
   exportExcelProjection: 'SuggestionL'
 });

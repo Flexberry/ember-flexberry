@@ -268,11 +268,6 @@ Ember.$.extend(true, translations, {
             'title': ''
           }
         },
-        'lock-service': {
-          'lock-return': {
-            'title': 'Example return from a locked form with queryParametr',
-          },
-        },
         'lock': {
           'caption': 'Blocking',
           'title': 'Block list',
@@ -474,7 +469,10 @@ Ember.$.extend(true, translations, {
             'object-list-view-resize': {
               'caption': 'Columns markup',
               'title': ''
-            }
+            },
+            'return-from-ediform': {
+              'title': 'Return from edit-form to list-form with queryParameter',
+            },
           },
           'flexberry-simpledatetime': {
             'caption': 'flexberry-simpledatetime',

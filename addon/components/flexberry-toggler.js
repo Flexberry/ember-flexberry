@@ -113,11 +113,16 @@ export default Ember.Component.extend({
   */
   duration: 350,
 
+  expandedChanged: Ember.observer('expanded', function() {
+    this.saveStatus();
+  }),
   /**
     Handles the event, when component has been insterted.
     Attaches event handlers for expanding / collapsing content.
   */
   didInsertElement() {
+    this.loadStatus();
+    console.log(this.get('expanded'));
     let $accordeonDomElement = this.$();
 
     // Attach semantic-ui open/close callbacks.
@@ -170,7 +175,7 @@ export default Ember.Component.extend({
   loadStatus() {
     var userSettings = this.get('userSettingsService');
     var status = userSettings.getToggleStatus(this.componentName);
-    if (!Ember.isNull(status)) {
+    if (status !== null) {
       this.set('expanded', status);
     }
   }

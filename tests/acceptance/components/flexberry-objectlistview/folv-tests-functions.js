@@ -59,7 +59,6 @@ export function openEditFormByFunction(openEditFormFunction) {
     let checkIntervalId;
     let checkIntervalSucceed = false;
     let checkInterval = 500;
-    let renderInterval = 100;
     let timeout = 10000;
 
     openEditFormFunction();

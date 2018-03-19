@@ -39,11 +39,11 @@ Information on how to contribute to the project you can find [here](https://gith
 
 You will need the following things properly installed on your computer.
 
-* [Git](http://git-scm.com/)
-* [Node.js (v5.6.0)](http://nodejs.org/) (with NPM)
-* [Bower](http://bower.io/)
-* [Ember CLI (v2.4.3)](http://www.ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+* [Git](https://git-scm.com/)
+* [Node.js](http://nodejs.org/) (with NPM)
+* [Bower](https://bower.io/)
+* [Ember CLI](http://www.ember-cli.com/)
+* [Google Chrome](https://www.google.ru/chrome/index.html)
 
 #### Installation
 
@@ -60,12 +60,12 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 
 #### Running Tests
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 
 #### Building
 
+* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember build` (development)
 * `ember build --environment production` (production)
 
@@ -114,7 +114,7 @@ Manual deployment on [Firebase](https://www.firebase.com):
 ## Further Reading / Useful Links
 
 * [ember.js](http://emberjs.com/)
-* [ember-cli](http://www.ember-cli.com/)
+* [ember-cli](https://www.ember-cli.com/)
 * Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+  * [Ember Inspector for Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
+  * [Ember Inspector for Firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)

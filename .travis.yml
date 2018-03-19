@@ -13,7 +13,7 @@ cache:
     - $HOME/.cache
 
 env:
-  - EMBER_TRY_SCENARIO=default
+  - EMBER_TRY_SCENARIO=ember-default
   - EMBER_TRY_SCENARIO=ember-release
 
 matrix:
@@ -37,17 +37,21 @@ addons:
 before_install:
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
   - yarn global add firebase-tools
-  - yarn global add ember-cli@2.12.3
+  - yarn global add ember-cli@2.13.3
   - yarn global add bower
   - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
 install:
-  - yarn install
+  - yarn install --no-lockfile
   - bower install
 
 script:
-  - ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+  # Usually, it's ok to finish the test scenario without reverting
+  #  to the addon's original dependency state, skipping "cleanup".
+  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO test --skip-cleanup
   - if [ "$EMBER_TRY_SCENARIO" == "default" ]; then bash ./scripts/test-generator.sh; fi
 
 after_success:

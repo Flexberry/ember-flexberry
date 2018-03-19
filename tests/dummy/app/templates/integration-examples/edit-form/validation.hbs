@@ -2,7 +2,10 @@
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary
+        headerText=(t "forms.integration-examples.edit-form.validation.summary-caption")
+        errors=model.errors
+      }}
     </div>
   </div>
   <div class="field {{if model.errors.flag "error" ""}}">
@@ -68,13 +71,13 @@
       relationName="master"
       projection="MasterL"
       displayAttributeName="text"
-      title=(t "forms.integration-examples.edit-form.validation.master-caption")     
+      title=(t "forms.integration-examples.edit-form.validation.master-caption")
       choose=(action "showLookupDialog")
       remove=(action "removeLookupValue")
     }}
     {{flexberry-validationmessage error=model.errors.master pointing="pointing"}}
   </div>
-  <div class="field {{if model.errors.files "error" ""}}">
+  <div class="field {{if model.errors.details "error" ""}}">
     <label>{{t "forms.integration-examples.edit-form.validation.details-caption"}}</label>
     {{flexberry-groupedit
       componentName="IntegrationExamplesEditFormValidationsDetails"
@@ -83,5 +86,21 @@
       modelProjection=modelProjection.attributes.details
       orderable=false
     }}
+  </div>
+    <div  class="ui segment">
+    {{#flexberry-toggler expanded=true}}
+      <div class="field {{if model.errors.details "error" ""}}">
+        <label>{{t "forms.integration-examples.edit-form.validation.details-caption"}}</label>
+        {{flexberry-groupedit
+          componentName="IntegrationExamplesEditFormValidationsDetails"
+          content=model.details
+          mainModelProjection=modelProjection
+          modelProjection=modelProjection.attributes.details
+          orderable=false
+          showValidationMessagesInRow=false
+        }}
+        {{flexberry-validationmessage error=model.errors.details pointing="pointing"}}
+      </div>
+    {{/flexberry-toggler}}
   </div>
 </form>

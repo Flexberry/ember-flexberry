@@ -11,6 +11,14 @@ export default {
       'close-button-text': 'Close'
     },
 
+    'error-form': {
+      caption: 'An error has occurred',
+      'show-more': 'Show more',
+      retry: 'Retry',
+      error: 'Error',
+      'ember-data-request': 'Server is not available, check the connection to the server',
+    },
+
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Application log'
     },
@@ -21,6 +29,12 @@ export default {
   },
 
   'components': {
+    'flexberry-error': {
+      caption: 'An error has occurred',
+      'show-more': 'Show more',
+      'unknown-error': 'Unknown error occurred',
+    },
+
     'flexberry-field': {
       placeholder: '(no value)'
     },
@@ -54,11 +68,12 @@ export default {
       'upload-button-title': 'Upload File',
       'download-button-title': 'Download File',
 
-      'preview-image-alternative-text': 'Loaded image',
+      'preview-image-alternative-text': 'Image viewing isn\'t available',
 
       'error-dialog-caption': 'File component error',
       'error-dialog-content': 'File component error occurred',
       'error-dialog-ok-button-caption': 'OK',
+      'error-preview-caption': 'Preview can not be loaded',
 
       'add-file-error-caption': 'Add file error',
       'file-too-big-error-message': 'File size must not be greater than {{maxFileSize}} bytes. ' +
@@ -82,7 +97,8 @@ export default {
       'remove-button-text': 'Remove',
       'dropdown': {
         'messages': {
-          'noResults': 'No results found.'
+          'noResultsHeader': 'No results',
+          'noResults': 'No results found'
         }
       }
     },
@@ -123,17 +139,13 @@ export default {
       },
     },
 
-    'object-list-view-cell': {
-      'boolean-false-caption': 'False',
-      'boolean-true-caption': 'True'
-    },
-
     'olv-toolbar': {
       'add-button-text': 'Add',
       'refresh-button-text': 'Refresh',
       'delete-button-text': 'Delete',
       'custom-button-text': 'Custom button',
       'hierarchy-button-text': 'On/off hierarchy',
+      'coll-expand-button-text':'Collapse/Expand all hierarchies',
       'filter-button-text': 'Add filter',
       'remove-filter-button-text': 'Reset filter',
       'search-button-text': 'Search',
@@ -151,16 +163,21 @@ export default {
       'close': 'Close',
       'copy': 'Copy',
       'copied': 'Copied',
-      'ctrlc': 'Press Ctrl/C to copy'
+      'ctrlc': 'Press Ctrl/C to copy',
+      'check-all-at-page-button-text': 'Check all entries on the current page',
+      'check-all-button-text': 'Check all on all pages',
+      'clear-sorting-button-text': 'Set the default sorting'
     },
 
     'groupedit-toolbar': {
       'add-button-text': 'Add',
-      'delete-button-text': 'Delete'
+      'delete-button-text': 'Delete',
+      'clear-settings-button-text': 'Restore default settings'
     },
 
     'colsconfig-dialog-content': {
       'title': 'Customize the display of colums',
+      'export-modal-dialog-title': 'Customize export in Excel',
       'export-title': 'Export in Excel',
       'dont-show-columns': 'Do not display columns',
       'columns-order': 'Specify the order of the columns',
@@ -189,6 +206,26 @@ export default {
       'render-time': 'Render time',
     },
 
+    'flexberry-dialog': {
+      'approve-button': {
+        'caption': 'Ok'
+      },
+      'deny-button': {
+        'caption': 'Cancel'
+      }
+    },
+
+    'flexberry-jsonarea': {
+      'placeholder': '(Enter JSON-string)',
+      'parse-error': {
+        'caption': 'Error while parsing entered JSON-string'
+      }
+    },
+
+    'flexberry-tree': {
+      'placeholder': 'Tree nodes are not defined'
+    }
+
   },
 
   'models': {
@@ -196,46 +233,46 @@ export default {
       'projections': {
         'ApplicationLogL': {
           'processId': {
-            'caption': 'URL'
+            __caption__: 'URL'
           },
           'timestamp':{
-            'caption': 'Time'
+            __caption__: 'Time'
           },
           'category':{
-            'caption': 'Category'
+            __caption__: 'Category'
           },
           'eventId':{
-            'caption': 'Event ID'
+            __caption__: 'Event ID'
           },
           'priority':{
-            'caption': 'Priority'
+            __caption__: 'Priority'
           },
           'severity':{
-            'caption': 'Severity'
+            __caption__: 'Severity'
           },
           'title':{
-            'caption': 'Title'
+            __caption__: 'Title'
           },
           'machineName':{
-            'caption': 'Server'
+            __caption__: 'Server'
           },
           'appDomainName':{
-            'caption': 'Browser'
+            __caption__: 'Browser'
           },
           'processName':{
-            'caption': 'Process name'
+            __caption__: 'Process name'
           },
           'threadName':{
-            'caption': 'ThreadName'
+            __caption__: 'ThreadName'
           },
           'win32ThreadId':{
-            'caption': 'Win32ThreadId',
+            __caption__: 'Win32ThreadId',
           },
           'message':{
-            'caption': 'Message'
+            __caption__: 'Message'
           },
           'formattedMessage':{
-            'caption': 'Formatted message'
+            __caption__: 'Formatted message'
           }
         }
       }
@@ -243,9 +280,9 @@ export default {
     'new-platform-flexberry-services-lock': {
       'projections': {
         'LockL': {
-          'lockKey': { 'caption': 'Key locked object' },
-          'userName': { 'caption': 'User locked object' },
-          'lockDate': { 'caption': 'Date lock' },
+          'lockKey': { __caption__: 'Key locked object' },
+          'userName': { __caption__: 'User locked object' },
+          'lockDate': { __caption__: 'Date lock' },
         },
       },
     },

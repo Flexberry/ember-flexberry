@@ -45,6 +45,14 @@ export default Ember.Controller.extend({
   type: 'text',
 
   /**
+    Maxlength of 'flexberry-field' component.
+
+    @property maxlength
+    @type Number
+   */
+  maxlength: undefined,
+
+  /**
     Template text for 'flexberry-field' component.
 
     @property componentTemplateText
@@ -57,6 +65,7 @@ export default Ember.Controller.extend({
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
     '  type=type<br>' +
+    '  maxlength=maxlength<br>' +
     '}}'),
 
   /**
@@ -97,6 +106,12 @@ export default Ember.Controller.extend({
       settingType: 'boolean',
       settingDefaultValue: false,
       bindedControllerPropertieName: 'readonly'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxlength',
+      settingType: 'number',
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'maxlength'
     });
 
     return componentSettingsMetadata;

@@ -2,9 +2,9 @@ import Ember from 'ember';
 import folv from './flexberry-objectlistview';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
-import ErrorableControllerMixin from '../mixins/errorable-controller';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 const { getOwner } = Ember;
 
 /**
@@ -16,10 +16,8 @@ const { getOwner } = Ember;
   @uses ErrorableControllerMixin
 */
 export default folv.extend(
-FlexberryLookupCompatibleComponentMixin,
-FlexberryFileCompatibleComponentMixin,
-ErrorableControllerMixin, {
-
+  FlexberryLookupCompatibleComponentMixin,
+  FlexberryFileCompatibleComponentMixin, {
   /**
     Projection set by property {{#crossLink "ObjectListViewComponent/modelProjection:property"}}{{/crossLink}}.
 
@@ -57,7 +55,18 @@ ErrorableControllerMixin, {
         this.set('contentWithKeys', this.contentForRender);
       }
 
-      this.set('showLoadingTbodyClass', false);
+      if (this.get('allSelect'))
+      {
+        let contentWithKeys = this.get('contentWithKeys');
+        let checked = this.get('allSelect');
+
+        contentWithKeys.forEach((item) => {
+          item.set('selected', checked);
+          item.set('rowConfig.canBeSelected', !checked);
+        });
+      }
+
+      this.get('objectlistviewEventsService').setLoadingState('');
     }
   })),
 
@@ -204,6 +213,15 @@ ErrorableControllerMixin, {
   customTableClass: '',
 
   /**
+    The flag is selected for all records.
+
+    @property allSelect
+    @type Boolean
+    @default false
+  */
+  allSelect: false,
+
+  /**
     Minimum column width, if width isn't defined in userSettings.
 
     @property minAutoColumnWidth
@@ -213,13 +231,13 @@ ErrorableControllerMixin, {
   minAutoColumnWidth: 150,
 
   /**
-    Indicates whether or not invoke _setColumnWidths function on container resize.
+    Indicates whether or not autoresize columns for fit the page width.
 
-    @property widthChangeOnContainerResize
+    @property columnsWidthAutoresize
     @type Boolean
-    @default true
+    @default false
   */
-  widthChangeOnContainerResize: true,
+  columnsWidthAutoresize: false,
 
   /**
     Classes for table.
@@ -298,6 +316,15 @@ ErrorableControllerMixin, {
   showDeleteButtonInRow: false,
 
   /**
+    Flag indicates whether to show delete button in first column of every row.
+
+    @property showEditButtonInRow
+    @type Boolean
+    @default false
+  */
+  showEditButtonInRow: false,
+
+  /**
     Flag indicates whether to not use userSetting from backend
     @property notUseUserSettings
     @type Boolean
@@ -316,10 +343,11 @@ ErrorableControllerMixin, {
     'showAsteriskInRow',
     'showCheckBoxInRow',
     'showDeleteButtonInRow',
+    'showEditButtonInRow',
     'modelProjection',
     function() {
     if (this.get('modelProjection')) {
-      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow');
+      return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow') || this.get('showEditButtonInRow');
     } else {
       return false;
     }
@@ -455,15 +483,6 @@ ErrorableControllerMixin, {
   contentWithKeys: null,
 
   contentForRender: null,
-
-  /**
-    Class loading for tbody.
-
-    @property showLoadingTbodyClass
-    @type Boolean
-    @defaul false
-  */
-  showLoadingTbodyClass: false,
 
   /**
     Flag indicates whether content is defined.
@@ -667,6 +686,15 @@ ErrorableControllerMixin, {
   saveBeforeRouteLeave: false,
 
   /**
+    List of component names, which can overflow table cell.
+
+    @property overflowedComponents
+    @type Array
+    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+  */
+  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
+
+  /**
     Ember data store.
 
     @property store
@@ -723,7 +751,7 @@ ErrorableControllerMixin, {
         return;
       }
 
-      this.set('showLoadingTbodyClass', true);
+      this.get('objectlistviewEventsService').setLoadingState('loading');
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
       this.sendAction(action, column);
@@ -755,7 +783,6 @@ ErrorableControllerMixin, {
         }
       }
 
-      this.send('dismissErrorMessages');
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
 
@@ -788,7 +815,7 @@ ErrorableControllerMixin, {
       }
 
       let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked);
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, e.checked, recordWithKey);
     },
 
     /**
@@ -798,8 +825,7 @@ ErrorableControllerMixin, {
       @public
     */
     refresh() {
-      let currentController = this.get('currentController');
-      currentController.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.get('objectlistviewEventsService').refreshListTrigger(this.get('componentName'));
     },
 
@@ -813,7 +839,7 @@ ErrorableControllerMixin, {
       let editFormRoute = this.get('editFormRoute');
       Ember.assert('Property editFormRoute is not defined in controller', editFormRoute);
       let currentController = this.get('currentController');
-      currentController.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       Ember.run.later((function() {
         currentController.transitionToRoute(editFormRoute + '.new');
       }), 50);
@@ -835,7 +861,12 @@ ErrorableControllerMixin, {
       }
 
       let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+
+      //TODO: Implement the method of removing all objects.
+      if (!this.get('allSelect'))
+      {
+        this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      }
     },
 
     /**
@@ -861,7 +892,7 @@ ErrorableControllerMixin, {
     removeFilter() {
       let _this = this;
       if (_this.get('filterText')) {
-        _this.get('currentController').set('state', 'loading');
+        this.get('objectlistviewEventsService').setLoadingState('loading');
       }
 
       Ember.run.later((function() {
@@ -958,13 +989,10 @@ ErrorableControllerMixin, {
             break;
           }
 
-          userSettingsService.deleteUserSetting(componentName)
-          .then(record => {
-            if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: 5 } }); // Show page without sort parameters
-            } else {
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: 5 } });  //Reload current page and records (model) list
-            }
+          let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+          userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting).then(() => {
+            let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
+            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
           });
           break;
         case 'unhide icon':
@@ -1042,6 +1070,120 @@ ErrorableControllerMixin, {
     removeLookupValue(removeData) {
       this.get('currentController').send('removeLookupValue', removeData);
     },
+
+    /**
+      This action is called when click check all at page button.
+
+      @method actions.checkAllAtPage
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on check all at page buttons
+    */
+    checkAllAtPage(e) {
+      if (this.get('allSelect')) {
+        return;
+      }
+
+      let contentWithKeys = this.get('contentWithKeys');
+      let selectedRecords = this.get('selectedRecords');
+
+      let checked = false;
+
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        if (!contentWithKeys[i].get('selected')) {
+          checked = true;
+        }
+      }
+
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        let recordWithKey = contentWithKeys[i];
+        let selectedRow = this._getRowByKey(recordWithKey.key);
+
+        if (checked) {
+          if (!selectedRow.hasClass('active')) {
+            selectedRow.addClass('active');
+          }
+
+          if (selectedRecords.indexOf(recordWithKey.data) === -1) {
+            selectedRecords.pushObject(recordWithKey.data);
+          }
+        } else {
+          if (selectedRow.hasClass('active')) {
+            selectedRow.removeClass('active');
+          }
+
+          selectedRecords.removeObject(recordWithKey.data);
+        }
+
+        recordWithKey.set('selected', checked);
+
+        let componentName = this.get('componentName');
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
+      }
+    },
+
+    /**
+      This action is called when click check all at all button.
+
+      @method actions.checkAll
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on ckeck all button
+    */
+    checkAll(e) {
+      let contentWithKeys = this.get('contentWithKeys');
+
+      let checked = !this.get('allSelect');
+      Ember.set(this, 'allSelect', checked);
+      Ember.set(this, 'isDeleteButtonEnabled', checked);
+
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        let recordWithKey = contentWithKeys[i];
+        let selectedRow = this._getRowByKey(recordWithKey.key);
+
+        if (checked) {
+          if (!selectedRow.hasClass('active')) {
+            selectedRow.addClass('active');
+          }
+        } else {
+          if (selectedRow.hasClass('active')) {
+            selectedRow.removeClass('active');
+          }
+        }
+
+        recordWithKey.set('selected', checked);
+        recordWithKey.set('rowConfig.canBeSelected', !checked);
+      }
+
+      let componentName = this.get('componentName');
+      this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
+    },
+
+    /**
+      This action is called when click clear sorting button.
+
+      @method actions.clearSorting
+      @public
+      @param {jQuery.Event} e jQuery.Event by click on clear sorting button
+    */
+    clearSorting(e) {
+      let componentName = this.get('componentName');
+      let userSettingsService = this.get('userSettingsService');
+
+      if (!userSettingsService.haveDefaultUserSetting(componentName)) {
+        alert('No default usersettings');
+        return;
+      }
+
+      this._router = Ember.getOwner(this).lookup('router:main');
+
+      let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+      let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName);
+      currentUserSetting.sorting = defaultDeveloperUserSetting.sorting;
+      userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
+      .then(record => {
+        let sort = serializeSortingParam(currentUserSetting.sorting);
+        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+      });
+    }
   },
 
   /**
@@ -1072,15 +1214,6 @@ ErrorableControllerMixin, {
     this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
 
-    let eventsBus = this.get('eventsBus');
-    if (eventsBus) {
-      eventsBus.on('showLoadingTbodyClass', (componentName, showLoadingTbodyClass) => {
-        if (componentName === this.get('componentName')) {
-          this.set('showLoadingTbodyClass', showLoadingTbodyClass);
-        }
-      });
-    }
-
     let projection = this.get('modelProjection');
 
     if (!projection) {
@@ -1098,14 +1231,14 @@ ErrorableControllerMixin, {
 
     @method setColumnWidths
 
-    @param {Boolean} alwaysUpdate If true, then component update width despite
-    his widthChangeOnContainerResize property.
     @param {String} componentName The name of object-list-view component.
   */
-  setColumnWidths(alwaysUpdate, componentName) {
-    let widthChangeOnContainerResize = this.get('widthChangeOnContainerResize');
-    if (alwaysUpdate || widthChangeOnContainerResize) {
+  setColumnWidths(componentName) {
+    let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+    if (columnsWidthAutoresize) {
       this._setColumnWidths(componentName);
+    } else {
+      this._setMenuWidth();
     }
   },
 
@@ -1115,8 +1248,16 @@ ErrorableControllerMixin, {
   */
   didInsertElement() {
     this._super(...arguments);
-
-    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() { this._setColumnWidths(); }, this));
+    let infoModalDialog = this.$('.olv-toolbar-info-modal-dialog');
+    infoModalDialog.modal('setting', 'closable', true);
+    this.set('_infoModalDialog', infoModalDialog);
+    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() {
+      if (this.get('columnsWidthAutoresize')) {
+        this._setColumnWidths();
+      } else {
+        this._setMenuWidth();
+      }
+    }, this));
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1132,6 +1273,37 @@ ErrorableControllerMixin, {
   */
   didRender() {
     this._super(...arguments);
+
+    // Restore selected records.
+    // TODO: when we will ask user about actions with selected records clearing selected records won't be use, because it resets selecting on other pages.
+    if (this.get('selectedRecords')) {
+      this.get('selectedRecords').clear();
+    }
+
+    let componentName = this.get('componentName');
+
+    let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      let e = {
+        checked: true
+      };
+
+      let someRecordWasSelected = false;
+      selectedRecordsToRestore.forEach((recordWithData, key) => {
+        if (this._getModelKey(recordWithData.data)) {
+          someRecordWasSelected = true;
+          this.send('selectRow', recordWithData, e);
+        }
+      });
+
+      if (!someRecordWasSelected && !this.get('allSelect')) {
+        // Reset toolbar buttons enabled state.
+        this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+      }
+    } else if (!this.get('allSelect')) {
+      // Reset toolbar buttons enabled state.
+      this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, null, 0, false, null);
+    }
 
     if (this.rowClickable) {
       let key = this._getModelKey(this.selectedRecord);
@@ -1167,6 +1339,8 @@ ErrorableControllerMixin, {
     this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
 
+    this.get('objectlistviewEventsService').clearSelectedRecords(this.get('componentName'));
+
     this._super(...arguments);
   },
 
@@ -1178,10 +1352,6 @@ ErrorableControllerMixin, {
     this._super(...arguments);
 
     Ember.$(window).unbind(`resize.${this.get('componentName')}`);
-    let eventsBus = this.get('eventsBus');
-    if (eventsBus) {
-      eventsBus.off('showLoadingTbodyClass');
-    }
   },
 
   /**
@@ -1294,8 +1464,11 @@ ErrorableControllerMixin, {
           if (currentPropertyName === 'OlvRowToolbar') {
             let checkbox = this.get('showCheckBoxInRow');
             let delButton = this.get('showDeleteButtonInRow');
+            let editButton = this.get('showEditButtonInRow');
 
-            setting.width = (checkbox && delButton ? 100 : delButton ? 70 : 65) - padding;
+            // TODO: Probably need to replace this.
+            setting.width = (checkbox && delButton && editButton ? 130 : (checkbox && delButton) || (checkbox && editButton) ||
+            (delButton && editButton) ? 100 : checkbox || delButton || editButton ? 86 : 65) - padding;
           }
         }
 
@@ -1313,8 +1486,10 @@ ErrorableControllerMixin, {
 
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);
       let containerWidth = $table[0].parentElement.clientWidth - 5;
-      let widthCondition = containerWidth > tableWidth;
-      $table.css({ 'width': (widthCondition ? containerWidth : tableWidth) + 'px' });
+      let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+      let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
+      $table.css({ 'width': (columnsWidthAutoresize ? containerWidth : tableWidth) + 'px' });
+      this._setMenuWidth(tableWidth, containerWidth);
       Ember.$.each($columns, (key, item) => {
         let currentItem = this.$(item);
         let currentPropertyName = this._getColumnPropertyName(currentItem);
@@ -1341,6 +1516,20 @@ ErrorableControllerMixin, {
     this._setColumnsOrder();
     this._setColumnsSorting();
     this._setColumnWidths();
+  },
+
+  _setMenuWidth(tableWidth, containerWidth) {
+    let $table = this.$('table.object-list-view')[0];
+    if (Ember.isBlank(tableWidth)) {
+      tableWidth = $table.clientWidth;
+    }
+
+    if (Ember.isBlank(containerWidth)) {
+      containerWidth = $table.parentElement.clientWidth - 5;
+    }
+
+    this.$('.ui.secondary.menu').css({ 'width': (this.get('columnsWidthAutoresize') ?
+      containerWidth : containerWidth < tableWidth ? containerWidth : tableWidth) + 'px' });
   },
 
   /**
@@ -1583,9 +1772,9 @@ ErrorableControllerMixin, {
           mainModelName = descriptor.type;
         }
       });
-      key = 'models.' + mainModelName + '.projections.' + mainModelProjection.projectionName + '.' + nameRelationship + '.' + bindingPath + '.caption';
+      key = `models.${mainModelName}.projections.${mainModelProjection.projectionName}.${nameRelationship}.${bindingPath}.__caption__`;
     } else {
-      key = 'models.' + modelName + '.projections.' + projection.projectionName + '.' + bindingPath + '.caption';
+      key = `models.${modelName}.projections.${projection.projectionName}.${bindingPath}.__caption__`;
     }
 
     return key;
@@ -1607,7 +1796,7 @@ ErrorableControllerMixin, {
     let cellComponent = this.get('cellComponent');
 
     if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
-      let recordModel =  (this.get('content') || {}).type || null;
+      let recordModel = Ember.isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 
@@ -1732,6 +1921,8 @@ ErrorableControllerMixin, {
         return ['eq', 'neq', 'le', 'ge'];
 
       case 'string':
+        return ['eq', 'neq', 'like'];
+
       case 'boolean':
         return ['eq', 'neq'];
 
@@ -1749,9 +1940,16 @@ ErrorableControllerMixin, {
     @return {Object} Object with parameters for component.
   */
   _getFilterComponent(type, relation) {
+    let _this = this;
+    let enterClick = function(e) {
+      if (e.which === 13) {
+        _this._refreshList(_this.get('componentName'));
+      }
+    };
+
     let component = {
       name: undefined,
-      properties: undefined,
+      properties: { keyDown: enterClick },
     };
 
     switch (type) {
@@ -1760,24 +1958,24 @@ ErrorableControllerMixin, {
 
       case 'string':
         component.name = 'flexberry-textbox';
-        component.properties = {
+        component.properties = Ember.$.extend(true, component.properties, {
           class: 'compact fluid',
-        };
+        });
         break;
 
       case 'number':
         component.name = 'flexberry-textbox';
-        component.properties = {
+        component.properties = Ember.$.extend(true, component.properties, {
           class: 'compact fluid',
-        };
+        });
         break;
 
       case 'boolean':
         component.name = 'flexberry-dropdown';
-        component.properties = {
+        component.properties = Ember.$.extend(true, component.properties, {
           items: ['true', 'false'],
           class: 'compact fluid',
-        };
+        });
         break;
 
       case 'date':
@@ -1789,10 +1987,10 @@ ErrorableControllerMixin, {
         let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
         if (transformClass && transformClass.isEnum) {
           component.name = 'flexberry-dropdown';
-          component.properties = {
+          component.properties = Ember.$.extend(true, component.properties, {
             items: transformInstance.get('captions'),
             class: 'compact fluid',
-          };
+          });
         }
 
         break;
@@ -1814,7 +2012,7 @@ ErrorableControllerMixin, {
         let filters = {};
         let hasFilters = false;
         this.get('columns').forEach((column) => {
-          if (column.filter.pattern && column.filter.condition) {
+          if (column.filter.condition || column.filter.pattern) {
             hasFilters = true;
             filters[column.filter.name] = column.filter;
           }
@@ -1823,7 +2021,11 @@ ErrorableControllerMixin, {
         if (hasFilters) {
           this.sendAction('applyFilters', filters);
         } else {
-          this.get('currentController').send('refreshList');
+          if (this.get('currentController.filters')) {
+            this.get('currentController').send('resetFilters');
+          } else {
+            this.get('currentController').send('refreshList');
+          }
         }
       } else {
         this.get('currentController').send('refreshList');
@@ -1908,6 +2110,17 @@ ErrorableControllerMixin, {
       configurateRow(rowConfig, record);
     }
 
+    // Mark previously selected records.
+    let componentName = this.get('componentName');
+    let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
+    if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      selectedRecordsToRestore.forEach((recordWithData, key) => {
+        if (record === recordWithData.data) {
+          modelWithKey.selected = true;
+        }
+      });
+    }
+
     this.get('contentForRender').pushObject(modelWithKey);
 
     return key;
@@ -1948,7 +2161,6 @@ ErrorableControllerMixin, {
   */
   _deleteRows(componentName, immediately) {
     if (componentName === this.get('componentName')) {
-      this.send('dismissErrorMessages');
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
       selectedRecords.forEach((item, index, enumerable) => {
@@ -1987,27 +2199,51 @@ ErrorableControllerMixin, {
   */
   _deleteRecord(record, immediately) {
     let beforeDeleteRecord = this.get('beforeDeleteRecord');
+    let possiblePromise = null;
+    let data = {
+      immediately: immediately,
+      cancel: false
+    };
+
     if (beforeDeleteRecord) {
       Ember.assert('beforeDeleteRecord must be a function', typeof beforeDeleteRecord === 'function');
 
-      let data = {
-        immediately: immediately,
-        cancel: false
-      };
-      beforeDeleteRecord(record, data);
+      possiblePromise = beforeDeleteRecord(record, data);
 
-      if (data.cancel) {
+      if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancel) {
         return;
       }
     }
 
+    if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+      possiblePromise.then(() => {
+        if (!data.cancel) {
+          this._actualDeleteRecord(record, data.immediately);
+        }
+      });
+    } else {
+      this._actualDeleteRecord(record, data.immediately);
+    }
+  },
+
+  /**
+    Actually delete the record.
+
+    @method _actualDeleteRecord
+    @private
+
+    @param {DS.Model} record A record to delete
+    @param {Boolean} immediately If `true`, relationships have been destroyed (delete and save)
+  */
+
+  _actualDeleteRecord(record, immediately) {
     let key = this._getModelKey(record);
     this._removeModelWithKey(key);
 
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
     }) : record.deleteRecord()).catch((reason) => {
-      this.rejectError(reason, `Unable to delete a record: ${record.toString()}.`);
+      this.get('currentController').send('handleError', reason);
       record.rollbackAll();
     });
 
@@ -2541,8 +2777,10 @@ ErrorableControllerMixin, {
     @param {String} componentName The name of objectlistview component
     @param {DS.Model} record The model corresponding to selected row in objectlistview
     @param {Number} count Count of selected rows in objectlistview
+    @param {Boolean} checked Current state of row in objectlistview (checked or not)
+    @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
-  _rowSelected(componentName, record, count) {
+  _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }

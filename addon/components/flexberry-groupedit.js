@@ -112,6 +112,15 @@ export default FlexberryBaseComponent.extend({
   deleteButton: true,
 
   /**
+    Flag: indicates whether to show default settings button at toolbar.
+
+    @property defaultSettingsButton
+    @type Boolean
+    @default true
+  */
+  defaultSettingsButton: true,
+
+  /**
     Route of edit form.
 
     @example
@@ -366,18 +375,27 @@ export default FlexberryBaseComponent.extend({
 
     @property minAutoColumnWidth
     @type Number
-    @default 150
+    @default 100
   */
-  minAutoColumnWidth: 150,
+  minAutoColumnWidth: 100,
 
   /**
-    Indicates whether or not invoke _setColumnWidths function on container resize.
+    Indicates whether or not autoresize columns for fit the page width.
 
-    @property widthChangeOnContainerResize
+    @property columnsWidthAutoresize
     @type Boolean
     @default true
   */
-  widthChangeOnContainerResize: true,
+  columnsWidthAutoresize: true,
+
+  /**
+    List of component names, which can overflow table cell.
+
+    @property overflowedComponents
+    @type Array
+    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+  */
+  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
 
   actions: {
     /**
@@ -419,7 +437,7 @@ export default FlexberryBaseComponent.extend({
         attributePath += diplayAttribute ? `.${diplayAttribute}` : '';
       }
 
-      let sorting = this.get('sorting') || [];
+      let sorting = Ember.copy(this.get('sorting'), true) || [];
       for (let i = 0; i < sorting.length; i++) {
         if (sorting[i].propName === 'id') {
           sorting.splice(i, 1);
@@ -429,6 +447,7 @@ export default FlexberryBaseComponent.extend({
 
       if (Ember.isNone(sortAscending)) {
         sorting.push({ propName: columnName, direction: 'asc', attributePath: attributePath });
+        this.set('sorting', sorting);
         this.sortingFunction();
       } else if (sortAscending) {
         for (let i = 0; i < sorting.length; i++) {
@@ -438,6 +457,7 @@ export default FlexberryBaseComponent.extend({
           }
         }
 
+        this.set('sorting', sorting);
         this.sortingFunction();
       } else {
         for (let i = 0; i < sorting.length; i++) {
@@ -448,6 +468,7 @@ export default FlexberryBaseComponent.extend({
           }
         }
 
+        this.set('sorting', sorting);
         this.sortingFunction();
       }
     },

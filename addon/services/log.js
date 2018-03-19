@@ -3,7 +3,7 @@
 */
 
 import Ember from 'ember';
-
+const { getOwner } = Ember;
 const messageCategory = {
   error: { name: 'ERROR', priority: 1 },
   warn: { name: 'WARN', priority: 2 },
@@ -439,6 +439,7 @@ export default Ember.Service.extend(Ember.Evented, {
       });
     }
 
+    let appConfig = getOwner(this)._lookupFactory('config:environment');
     let applicationLogProperties = {
       category: category.name,
       eventId: 0,
@@ -450,7 +451,7 @@ export default Ember.Service.extend(Ember.Evented, {
       appDomainName: navigator.userAgent,
       processId: document.location.href,
       processName: 'EMBER-FLEXBERRY',
-      threadName: '',
+      threadName: appConfig.modulePrefix,
       win32ThreadId: '',
       message: message,
       formattedMessage: formattedMessage
@@ -484,6 +485,10 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   _onError(error, isPromiseError) {
+    if (Ember.isNone(error)) {
+      return;
+    }
+
     if (Ember.typeOf(error) === 'string') {
       error = new Error(error);
     }

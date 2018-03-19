@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import ListFormController from '../controllers/list-form';
 import SortableRouteMixin from '../mixins/sortable-route';
+import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 /**
@@ -14,7 +15,7 @@ import deserializeSortingParam from '../utils/deserialize-sorting-param';
   @extends ListFormController
   @uses SortableRouteMixin
 */
-export default ListFormController.extend(SortableRouteMixin, {
+export default ListFormController.extend(SortableRouteMixin, PredicateFromFiltersMixin, {
   /**
     Current open a modal window.
 
@@ -154,6 +155,91 @@ export default ListFormController.extend(SortableRouteMixin, {
     routeWillTransition() {
       this._closeModalDialog();
     },
+
+    /**
+      Save filters and refresh list.
+
+      @method actions.applyFilters
+      @param {Object} filters
+    */
+    applyFilters(filters) {
+      this.set('filters', filters);
+      this.send('refreshList');
+    },
+
+    /**
+      Reset filters and refresh list.
+
+      @method actions.resetFilters
+    */
+    resetFilters() {
+      this.set('filters', null);
+      this.send('refreshList');
+    },
+
+    /**
+      Refresh list with actual parameters.
+
+      @method actions.refreshList
+    */
+    refreshList() {
+      let reloadDataHandler = this.get('reloadDataHandler');
+      if (!reloadDataHandler) {
+        throw new Error('No reload handler was defined.');
+      }
+
+      let sorting = deserializeSortingParam(this.get('sort'));
+      let reloadData = {
+        relatedToType: this.get('modelType'),
+        projectionName: this.get('projectionName'),
+
+        perPage: this.get('perPage'),
+        page: this.get('page'),
+        sorting: sorting,
+        filters: this._filtersPredicate(),
+        filter: this.get('filter'),
+        filterCondition: this.get('filterCondition'),
+        predicate: this.get('predicate'),
+        hierarchicalAttribute: this.get('hierarchicalAttribute'),
+
+        title: this.get('title'),
+        sizeClass: this.get('sizeClass'),
+        saveTo: this.get('saveTo'),
+        currentLookupRow: this.get('currentLookupRow'),
+        customPropertiesData: this.get('customPropertiesData'),
+        componentName: this.get('componentName'),
+        folvComponentName: this.get('folvComponentName')
+      };
+
+      let folvComponentName = this.get('folvComponentName');
+      if (folvComponentName) {
+        let userSettingsParams = {
+          sort: this.get('sort'),
+        };
+
+        let userSettingsService = this.get('userSettingsService');
+        userSettingsService.setCurrentParams(folvComponentName, userSettingsParams);
+      }
+
+      reloadDataHandler(this.get('reloadContext'), reloadData);
+    },
+
+    /**
+      Redirect actions into route.
+
+      @method actions.loadRecords
+      @param {String} id Record ID.
+      @param {ObjectListViewRowComponent} target Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {String} property Property name into {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {Boolean} firstRunMode Flag indicates that this is the first download of data.
+    */
+    loadRecords(id, target, property, firstRunMode) {
+      let params = {};
+      params.hierarchicalAttribute = this.get('hierarchicalAttribute');
+      params.modelName = this.get('customPropertiesData.modelName');
+      params.modelProjection = this.get('customPropertiesData.modelProjection');
+      this.send('loadRecordsById', id, target, property, firstRunMode, params);
+    },
   },
 
   /**
@@ -163,36 +249,9 @@ export default ListFormController.extend(SortableRouteMixin, {
     @method queryParametersChanged
   */
   queryParametersChanged: Ember.observer('filter', 'page', 'perPage', 'sort', function() {
-    if (!this.get('reloadObserverIsActive')) {
-      return;
+    if (this.get('reloadObserverIsActive')) {
+      this.send('refreshList');
     }
-
-    let reloadDataHandler = this.get('reloadDataHandler');
-    if (!reloadDataHandler) {
-      throw new Error('No reload handler was defined.');
-    }
-
-    let sorting = deserializeSortingParam(this.get('sort'));
-    let reloadData = {
-      relatedToType: this.get('modelType'),
-      projectionName: this.get('projectionName'),
-
-      perPage: this.get('perPage'),
-      page: this.get('page'),
-      sorting: sorting,
-      filter: this.get('filter'),
-      filterCondition: this.get('filterCondition'),
-      predicate: this.get('predicate'),
-
-      title: this.get('title'),
-      sizeClass: this.get('sizeClass'),
-      saveTo: this.get('saveTo'),
-      currentLookupRow: this.get('currentLookupRow'),
-      customPropertiesData: this.get('customPropertiesData'),
-      componentName: this.get('componentName')
-    };
-
-    reloadDataHandler(this.get('reloadContext'), reloadData);
   }),
 
   /**
@@ -214,6 +273,7 @@ export default ListFormController.extend(SortableRouteMixin, {
       this.set('perPage', undefined);
       this.set('page', undefined);
       this.set('sort', undefined);
+      this.set('filters', undefined);
       this.set('filter', undefined);
       this.set('filterCondition', undefined);
       this.set('predicate', undefined);

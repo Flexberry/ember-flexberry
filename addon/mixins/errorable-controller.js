@@ -2,7 +2,7 @@ import Ember from 'ember';
 import ValidationData from '../objects/validation-data';
 
 /**
-  Mixin for validation.
+  Mixin for handling errors.
 
   @class ErrorableControllerMixin
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
@@ -10,6 +10,16 @@ import ValidationData from '../objects/validation-data';
 */
 export default Ember.Mixin.create({
   actions: {
+    /**
+      Save the error.
+
+      @method actions.error
+      @param {Error} error
+    */
+    error(error) {
+      this.set('error', error);
+    },
+
     /**
       Add error message.
 

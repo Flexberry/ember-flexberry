@@ -22,8 +22,10 @@ export default Ember.Controller.extend({
           selectValue = 'itemsSubmenu';
         }
 
-        let selectElement = this.get(selectValue)[0];
-        this.set('currentItem', selectElement);
+        if (selectValue) {
+          let selectElement = this.get(selectValue)[0];
+          this.set('currentItem', selectElement);
+        }
       }
 
       clickedMenu.popup({

@@ -5,11 +5,12 @@
       title={{t "components.olv-toolbar.refresh-button-text"}}
       {{action "refresh"}}>
         {{t "components.olv-toolbar.refresh-button-text"}}
+        <i class="refresh icon"></i>
     </button>
   {{/if}}
   {{#if createNewButton}}
     <button
-      class="ui create-button {{buttonClass}} {{if enableCreateNewButton "" "disabled"}} button"
+      class="ui create-button {{buttonClass}} {{if readonly "disabled" (if enableCreateNewButton "" "disabled")}} button"
       title={{t "components.olv-toolbar.add-button-text"}}
       {{action "createNew"}}>
         {{t "components.olv-toolbar.add-button-text"}}
@@ -17,7 +18,7 @@
   {{/if}}
   {{#if deleteButton}}
     <button
-      class="ui delete-button {{buttonClass}} {{if isDeleteButtonEnabled "" "disabled"}} button"
+      class="ui delete-button {{buttonClass}} {{if readonly "disabled" (if isDeleteButtonEnabled "" "disabled")}} button"
       title={{t "components.olv-toolbar.delete-button-text"}}
        {{action "delete"}}>
         {{t "components.olv-toolbar.delete-button-text"}}
@@ -75,7 +76,7 @@
     </div>
   {{/if}}
   {{#if exportExcelButton}}
-    <div class="ui buttons">
+    <div class="ui buttons export-config">
       <button
         class="ui button icon export-button {{buttonClass}}"
         title={{t "components.olv-toolbar.export-excel-button-text"}}
@@ -89,7 +90,7 @@
     </div>
   {{/if}}
   {{#if colsConfigButton}}
-    <div class="ui buttons">
+    <div class="ui buttons cols-config">
       <button
         class="ui icon button config-button"
         title={{t "components.colsconfig-dialog-content.title"}}
@@ -142,22 +143,32 @@
 </div>
 
 <div class="object-list-view-container">
-  {{#if errorMessages}}
-    {{#each errorMessages as |currentError|}}
-      {{ui-message
-        type='error'
-        closeable=true
-        visible=true
-        title='Error occurred'
-        message=currentError
-      }}
-    {{/each}}
-  {{/if}}
   <table class="object-list-view ui unstackable celled {{if readonly 'readonly'}} {{tableClass}} table">
     <thead>
       <tr>
         {{#if showHelperColumn}}
-          <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar"></th>
+          <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar">
+            {{#if showCheckBoxInRow }}
+              <button
+                class="ui check-all-at-page-button {{buttonClass}} {{if (or readonly allSelect) "disabled"}} button"
+                title={{t "components.olv-toolbar.check-all-at-page-button-text"}}
+                {{action "checkAllAtPage"}}>
+                  <i class="check-square-o icon"></i>
+              </button>
+              <button
+                class="ui check-all-button {{buttonClass}} {{if allSelect "activated"}} {{if readonly "disabled"}} button"
+                title={{t "components.olv-toolbar.check-all-button-text"}}
+                {{action "checkAll"}}>
+                  <i class="check-all-square-o icon"></i>
+              </button>
+              <button
+                class="ui clear-sorting-button {{buttonClass}} button"
+                title={{t "components.olv-toolbar.clear-sorting-button-text"}}
+                {{action "clearSorting"}}>
+                  <i class="sort icon"></i>
+              </button>
+            {{/if}}
+          </th>
         {{/if}}
         {{#each columns as |column|}}
           {{#unless column.hide}}
@@ -192,7 +203,7 @@
         {{/if}}
       </tr>
     </thead>
-    <tbody class="{{if showLoadingTbodyClass 'ui loading form' ''}}">
+    <tbody>
       {{#if showFilters}}
         <tr>
           {{#if showHelperColumn}}
@@ -200,7 +211,7 @@
           {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td style={{defaultPaddingStyle}}>
+              <td style={{defaultPaddingStyle}} class="overflowed-cell">
                 {{#if column.filter.conditions}}
                   {{component "flexberry-dropdown"
                     value=column.filter.condition
@@ -223,7 +234,7 @@
           {{/if}}
           {{#each columns as |column|}}
             {{#unless column.hide}}
-              <td style={{defaultPaddingStyle}}>
+              <td style={{defaultPaddingStyle}} class="{{if (array-contains overflowedComponents column.filter.component.name) "overflowed-cell"}}">
                 {{#if column.filter.component.name}}
                   {{component column.filter.component.name
                     value=column.filter.pattern
@@ -261,6 +272,7 @@
                         {{flexberry-checkbox
                           readonly=(or readonly (not record.rowConfig.canBeSelected))
                           onChange=(action "selectRow" record)
+                          value=record.selected
                         }}
                       </div>
                     {{/if}}
@@ -271,18 +283,26 @@
                         </button>
                       </div>
                     {{/if}}
+                    {{#if showEditButtonInRow}}
+                      <div class="cell">
+                        <button class="ui ui-edit {{buttonClass}} {{if readonly "disabled"}} button" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
+                          <i class="edit icon"></i>
+                        </button>
+                      </div>
+                    {{/if}}
                   </div>
                 {{/if}}
               </td>
               {{#each columns as |column|}}
                 {{#unless column.hide}}
-                  <td {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
+                  <td class="{{if (array-contains overflowedComponents column.cellComponent.componentName) " overflowed-cell"}}"
+                    {{action "objectListViewRowClick" record preventDefault=false}} style={{defaultPaddingStyle}}>
                     {{#if column.cellComponent.componentName}}
                       {{component column.cellComponent.componentName
                         dynamicProperties=column.cellComponent.componentProperties
                         relatedModel=record.data
                         value=(mut (get record.data column.propName))
-                        readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly)
+                        readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
                         required=required
                       }}
                     {{else}}
@@ -298,17 +318,17 @@
               {{/each}}
               {{#if showMenuColumn}}
                 <td class="object-list-view-menu" style={{defaultPaddingStyle}}>
-                  <div class="basic right pointing ui icon dropdown button">
+                  <div class="right pointing ui icon dropdown button">
                     <i class="list layout icon"></i>
                     <div class="left menu">
                       {{#if (and showEditMenuItemInRow record.rowConfig.canBeSelected)}}
-                        <div class="item" {{ action "objectListViewRowClick" record }}>
+                        <div class="item {{if readonly "disabled"}}" {{ action "objectListViewRowClick" record (hash rowEdit=true) }}>
                           <i class="edit icon"></i>
                           <span>{{t "components.object-list-view.menu-in-row.edit-menu-item-title"}}</span>
                         </div>
                       {{/if}}
                       {{#if (and showDeleteMenuItemInRow record.rowConfig.canBeDeleted)}}
-                        <div class="item" {{ action "deleteRow" record }}>
+                        <div class="item {{if readonly "disabled"}}" {{ action "deleteRow" record }}>
                           <i class="trash icon"></i>
                           <span>{{t "components.object-list-view.menu-in-row.delete-menu-item-title"}}</span>
                         </div>
@@ -323,9 +343,9 @@
     </tbody>
   </table>
 </div>
-<div class="ui secondary menu no-margin">
+<div class="ui secondary menu no-margin nav-bar">
   <div class="ui basic buttons">
-    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}>&laquo;</button>
+    <button class="ui {{unless hasPreviousPage 'disabled'}} button prev-page-button" {{action 'previousPage' this.attrs.previousPage}}></button>
     {{#each pages as |page|}}
       {{#if page.isEllipsis}}
         <div class="ui button">...</div>
@@ -337,18 +357,18 @@
         {{/if}}
       {{/if}}
     {{/each}}
-    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} >&raquo;</button>
+    <button class="ui {{unless hasNextPage 'disabled'}} button next-page-button" {{action 'nextPage' this.attrs.nextPage}} ></button>
   </div>
   <div class="right menu">
-    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false}}
+    {{#if showShowingEntries}}
+      <div class="showing-entries">
+        {{#if (and currentIntervalRecords recordsTotalCount) }}
+          {{concat
+            (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
+          }}
+        {{/if}}
+      </div>
+    {{/if}}
+    {{flexberry-dropdown items=perPageValues value=perPageValue class="compact selection" onChange=(action "perPageClick") needChecksOnValue=false direction="upward"}}
   </div>
 </div>
-{{#if showShowingEntries}}
-  <div class="showing-entries">
-    {{#if (and currentIntervalRecords recordsTotalCount) }}
-      {{concat
-        (t "components.flexberry-objectlistview.showing-entries.showing") currentIntervalRecords (t "components.flexberry-objectlistview.showing-entries.of") recordsTotalCount (t "components.flexberry-objectlistview.showing-entries.entries")
-      }}
-    {{/if}}
-  </div>
-{{/if}}

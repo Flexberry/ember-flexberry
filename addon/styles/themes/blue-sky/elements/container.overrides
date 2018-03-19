@@ -7,7 +7,7 @@
 }
 
 .ui.main.container {
-    margin-top: -70px!important;
+    margin-top: -70px;
     margin-bottom: 50px;
 }
 
@@ -16,11 +16,11 @@
 }
 
 #example {
-    padding-top: 80px!important;
+    padding-top: @headerHeight;
 }
 
 .full.height {
-    height: 87.2vh!important;
+    height: calc(~"100vh - @{headerHeight} - @{footerHeight}") !important;
     overflow: auto;
 }
 

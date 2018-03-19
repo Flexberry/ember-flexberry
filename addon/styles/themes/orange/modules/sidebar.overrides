@@ -9,7 +9,7 @@
     box-shadow: none!important;
 }
 
-body.pushable {
+.pushable {
     background: #fff!important;
     overflow: hidden;
 }
@@ -111,7 +111,7 @@ body.pushable {
     color: rgba(0, 0, 0, 0.54);
 }
 
-.hidden-menu {
+.hidden {
     display: none!important;
 }
 

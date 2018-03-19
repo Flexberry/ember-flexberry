@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import Errors from 'ember-validations/errors';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
@@ -92,12 +93,12 @@ FolvOnEditControllerMixin, {
   readonly: false,
 
   /**
-    State form. A form is in different states: loading, success, error.
+    Service that triggers objectlistview events.
 
-    @property state
-    @type String
+    @property objectlistviewEventsService
+    @type Service
   */
-  state: undefined,
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
     Readonly HTML attribute following to the `readonly` query param. According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
@@ -354,15 +355,15 @@ FolvOnEditControllerMixin, {
     this.send('dismissErrorMessages');
 
     this.onSaveActionStarted();
-    this.set('state', 'loading');
+    this.get('objectlistviewEventsService').setLoadingState('loading');
 
     let _this = this;
 
     let afterSaveModelFunction = () => {
-      _this.set('state', 'success');
+      this.get('objectlistviewEventsService').setLoadingState('success');
       _this.onSaveActionFulfilled();
       if (close) {
-        _this.set('state', '');
+        this.get('objectlistviewEventsService').setLoadingState('');
         _this.close(skipTransition);
       } else if (!skipTransition) {
         let routeName = _this.get('routeName');
@@ -374,6 +375,7 @@ FolvOnEditControllerMixin, {
           }, _this);
           let transitionQuery = {};
           transitionQuery.queryParams = qpars;
+          transitionQuery.queryParams.recordAdded = true;
           _this.transitionToRoute(routeName.slice(0, -4), _this.get('model'), transitionQuery);
         }
       }
@@ -382,14 +384,34 @@ FolvOnEditControllerMixin, {
     let savePromise = this.get('model').save().then((model) => {
       let agragatorModel = getCurrentAgregator.call(this);
       if (needSaveCurrentAgregator.call(this, agragatorModel)) {
-        return this._saveHasManyRelationships(model).then(() => {
-          return agragatorModel.save().then(afterSaveModelFunction);
+        return this._saveHasManyRelationships(model).then((result) => {
+          if (result && Ember.isArray(result)) {
+            let arrayWrapper = Ember.A();
+            arrayWrapper.addObjects(result);
+            let errors = arrayWrapper.filterBy('state', 'rejected');
+            return errors.length > 0 ? Ember.RSVP.reject(errors) : agragatorModel.save().then(afterSaveModelFunction);
+          } else {
+            return agragatorModel.save().then(afterSaveModelFunction);
+          }
         });
       } else {
-        return this._saveHasManyRelationships(model).then(afterSaveModelFunction);
+        return this._saveHasManyRelationships(model).then((result) => {
+          if (result && Ember.isArray(result)) {
+            let arrayWrapper = Ember.A();
+            arrayWrapper.addObjects(result);
+            let errors = arrayWrapper.filterBy('state', 'rejected');
+            if (errors.length > 0) {
+              return Ember.RSVP.reject(errors);
+            } else {
+              afterSaveModelFunction();
+            }
+          } else {
+            afterSaveModelFunction();
+          }
+        });
       }
     }).catch((errorData) => {
-      this.set('state', 'error');
+      this.get('objectlistviewEventsService').setLoadingState('error');
       this.onSaveActionRejected(errorData);
       return Ember.RSVP.reject(errorData);
     }).finally((data) => {
@@ -410,7 +432,7 @@ FolvOnEditControllerMixin, {
     this.send('dismissErrorMessages');
 
     this.onDeleteActionStarted();
-    this.set('state', 'loading');
+    this.get('objectlistviewEventsService').setLoadingState('loading');
 
     let model = this.get('model');
     let deletePromise = null;
@@ -435,7 +457,7 @@ FolvOnEditControllerMixin, {
 
     deletePromise.catch((errorData) => {
       model.rollbackAll();
-      this.set('state', 'error');
+      this.get('objectlistviewEventsService').setLoadingState('error');
       this.onDeleteActionRejected(errorData);
     }).finally((data) => {
       this.onDeleteActionAlways(data);
@@ -452,7 +474,7 @@ FolvOnEditControllerMixin, {
     @param {Boolean} rollBackModel Flag: indicates whether to set flag to roll back model after route leave (if `true`) or not (if `false`).
   */
   close(skipTransition, rollBackModel) {
-    this.set('state', '');
+    this.get('objectlistviewEventsService').setLoadingState('');
     this.onCloseActionStarted();
     if (!skipTransition) {
       this.transitionToParentRoute(skipTransition, rollBackModel);
@@ -503,7 +525,10 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about save operation fail.
   */
   onSaveActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.save-failed-message'));
+    Ember.$('.ui.form .full.height').scrollTop(0);
+    if (!(errorData instanceof Errors)) {
+      this.send('handleError', errorData);
+    }
   },
 
   /**
@@ -571,7 +596,7 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about delete operation fail.
   */
   onDeleteActionRejected(errorData) {
-    this.rejectError(errorData, this.get('i18n').t('forms.edit-form.delete-failed-message'));
+    this.send('error', errorData);
   },
 
   /**
@@ -729,8 +754,15 @@ FolvOnEditControllerMixin, {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
           let promise = record.save().then((record) => {
-            return this._saveHasManyRelationships(record).then(() => {
-              return record;
+            return this._saveHasManyRelationships(record).then((result) => {
+              if (result && Ember.isArray(result) && result.length > 0) {
+                let arrayWrapper = Ember.A();
+                arrayWrapper.addObjects(result);
+                let errors = arrayWrapper.filterBy('state', 'rejected');
+                return errors.length > 0 ? Ember.RSVP.reject(errors) : record;
+              } else {
+                return record;
+              }
             });
           });
 
@@ -739,7 +771,7 @@ FolvOnEditControllerMixin, {
       }
     });
 
-    return Ember.RSVP.all(promises);
+    return Ember.RSVP.allSettled(promises);
   },
 
   /**
@@ -764,6 +796,6 @@ FolvOnEditControllerMixin, {
       }
     });
 
-    return Ember.RSVP.all(promises);
+    return Ember.RSVP.allSettled(promises);
   },
 });

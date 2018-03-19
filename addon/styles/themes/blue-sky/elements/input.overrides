@@ -1,6 +1,7 @@
 /*******************************
          Theme Overrides
 *******************************/
+
 .ui.action.input:not([class*="left action"]) > input {
     height: 35px;
 }
@@ -9,33 +10,44 @@
     border-radius: 0px;
 }
 
-input {
+.ui.input input, input {
     border: none;
-    border-bottom: 1px solid @paleBlue;
-    border-radius: 0px!important;
+    border-bottom: 1px solid @borderColor;
+    border-radius: 0px;
     outline: none;
 }
 
 .block-action-input {
     width: 100%;
+    & input {
+        height: 35px;
+        min-width: 220px;
+    }
 }
 
-.block-action-input input{
-    height: 35px;
-    width: 100%!important;
-    border: none !important;
-    border-bottom: 1px solid @paleBlue !important;
-    border-radius: 0px!important;
+.ui.secondary.menu > .ui.action.input {
+    margin: 0 10px;
 }
 
-.ui.action.input:not([class*="left action"]) input:focus {
-    border-right-color: #fff!important;
+::-ms-clear, ::-ms-reveal {
+   width: 0;
+   height: 0;
 }
 
-.filter-button{
-    border-right-color: #fff!important;
+.ui.form input.ember-view.ember-text-field:-ms-input-placeholder {
+   color: @placeholderColor;
 }
 
-.flatpickr.flatpickr-input {
-    letter-spacing: 3px;
+.ui.form textarea.ember-view.ember-text-area:-ms-input-placeholder {
+   color: @placeholderColor;
+}
+
+.ember-view.ui.dropdown div.default.text {
+   color: @placeholderColor;
+}
+
+.flexberry-file.mobile .flexberry-file-grid {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }

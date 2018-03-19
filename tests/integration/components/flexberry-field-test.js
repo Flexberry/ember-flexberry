@@ -344,6 +344,25 @@ test('changes in inner <input> causes changes in property binded to \'value\'', 
     'Component\'s property binded to \'value\' is equals to \'' + newValue + '\'');
 });
 
+test('attribute maxlength rendered in html', function(assert) {
+  assert.expect(1);
+
+  // Render component.
+  this.render(hbs`{{flexberry-field
+    maxlength=5
+  }}`);
+
+  // Retrieve component.
+  let $component = this.$().children();
+  let $fieldInput = Ember.$('.flexberry-textbox input', $component);
+
+  // Check <input>'s maxlength attribute.
+  assert.strictEqual(
+    $fieldInput.attr('maxlength'),
+    '5',
+    'Component\'s inner <input>\'s attribute maxlength rendered');
+});
+
 test('changes in property binded to \'value\' causes changes in inner <input>', function(assert) {
   assert.expect(4);
 

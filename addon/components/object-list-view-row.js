@@ -194,6 +194,13 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
+    Observe inExpandMode changes.
+  */
+  inExpandModeObserver: Ember.on('init', Ember.observer('inExpandMode', function() {
+    this.set('_expanded', this.get('inExpandMode'));
+  })),
+
+  /**
     Tag name for the view's outer element. [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
 
     @property tagName
@@ -211,6 +218,15 @@ export default FlexberryBaseComponent.extend({
   */
   recordsLoaded: false,
 
+  /**
+    Level of hierarchy, that already was loaded.
+
+    @property hierarchyLoadedLevel
+    @type Integer
+    @default -1
+  */
+  hierarchyLoadedLevel: -1,
+
   actions: {
     /**
       Show/hide embedded records.
@@ -219,6 +235,9 @@ export default FlexberryBaseComponent.extend({
     */
     expand() {
       this.toggleProperty('_expanded');
+      if (!this.get('_expanded')) {
+        this.set('inExpandMode', false);
+      }
     },
 
     /**
@@ -252,9 +271,16 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
-      Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      if (!Ember.isBlank(e)) {
+        Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      }
 
-      this.sendAction('rowClick', record, params);
+      // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
+      let classOfHierarchyExpandButton = 'hierarchy-expand';
+      if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
+      {
+        this.sendAction('rowClick', record, params);
+      }
     }
   },
 
@@ -268,8 +294,13 @@ export default FlexberryBaseComponent.extend({
     if (!this.get('recordsLoaded')) {
       let id = this.get('record.data.id');
       if (id && this.get('inHierarchicalMode')) {
+        let currentLevel = this.get('_currentLevel');
+        let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
+        this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
         this.set('recordsLoaded', true);
-        this.sendAction('loadRecords', id, this, 'records');
+        if (currentLevel > hierarchyLoadedLevel) {
+          this.set('hierarchyLoadedLevel', currentLevel);
+        }
       }
     }
   },

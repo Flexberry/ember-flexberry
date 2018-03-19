@@ -11,6 +11,14 @@ export default {
       'close-button-text': 'Закрыть'
     },
 
+    'error-form': {
+      caption: 'Произошла ошибка',
+      'show-more': 'Подробно',
+      retry: 'Повторить попытку',
+      error: 'Ошибка',
+      'ember-data-request': 'Сервер недоступен, необходимо проверить соединение с сервером',
+    },
+
     'i-i-s-caseberry-logging-objects-application-log-l': {
       caption: 'Лог приложения'
     },
@@ -21,6 +29,12 @@ export default {
   },
 
   'components': {
+    'flexberry-error': {
+      caption: 'Произошла ошибка',
+      'show-more': 'Подробнее',
+      'unknown-error': 'Неизвестная ошибка',
+    },
+
     'flexberry-field': {
       placeholder: '(нет значения)'
     },
@@ -54,11 +68,12 @@ export default {
       'upload-button-title': 'Загрузить файл',
       'download-button-title': 'Скачать файл',
 
-      'preview-image-alternative-text': 'Загруженное изображение',
+      'preview-image-alternative-text': 'Просмотр изображения не доступен',
 
       'error-dialog-caption': 'Ошибка компонента выбора файла',
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',
       'error-dialog-ok-button-caption': 'OK',
+      'error-preview-caption': 'Предпросмотр не может быть загружен',
 
       'add-file-error-caption': 'Ошибка добавления файла',
       'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} байт. ' +
@@ -82,7 +97,8 @@ export default {
       'remove-button-text': 'Очистить',
       'dropdown': {
         'messages': {
-          'noResults': 'Значения не найдены.'
+          'noResultsHeader': 'Нет данных',
+          'noResults': 'Значения не найдены'
         }
       }
     },
@@ -123,17 +139,13 @@ export default {
       },
     },
 
-    'object-list-view-cell': {
-      'boolean-false-caption': 'Ложь',
-      'boolean-true-caption': 'Истина'
-    },
-
     'olv-toolbar': {
       'add-button-text': 'Добавить',
       'refresh-button-text': 'Обновить',
       'delete-button-text': 'Удалить',
       'custom-button-text': 'Пользовательская кнопка',
       'hierarchy-button-text': 'Вкл/выкл иерархии',
+      'coll-expand-button-text':'Свернуть/развернуть все иерархии',
       'filter-button-text': 'Добавить фильтр',
       'remove-filter-button-text': 'Сбросить фильтр',
       'search-button-text': 'Поиск',
@@ -152,16 +164,21 @@ export default {
       'close': 'Закрыть',
       'copy': 'Копировать',
       'copied': 'Скопировано',
-      'ctrlc': 'Нажмите Ctrl/C для копирования'
+      'ctrlc': 'Нажмите Ctrl/C для копирования',
+      'check-all-at-page-button-text': 'Отметить все записи на текущей странице',
+      'check-all-button-text': 'Отметить все на всех страницах',
+      'clear-sorting-button-text': 'Установить сортировку по умолчанию'
     },
 
     'groupedit-toolbar': {
       'add-button-text': 'Добавить',
-      'delete-button-text': 'Удалить'
+      'delete-button-text': 'Удалить',
+      'clear-settings-button-text': 'Восстановить настройки по умолчанию'
     },
 
     'colsconfig-dialog-content': {
       'title': 'Настроить отображение столбцов',
+      'export-modal-dialog-title': 'Настроить экспорт в Excel',
       'export-title': 'Экспорт в Excel',
       'dont-show-columns': 'Не отображать столбцы',
       'columns-order': 'Определить порядок столбцов',
@@ -191,6 +208,26 @@ export default {
       'render-time': 'Время отрисовки',
     },
 
+    'flexberry-dialog': {
+      'approve-button': {
+        'caption': 'Ок'
+      },
+      'deny-button': {
+        'caption': 'Отмена'
+      }
+    },
+
+    'flexberry-jsonarea': {
+      'placeholder': '(Введите JSON-строку)',
+      'parse-error': {
+        'caption': 'Ошибка парсинга введенной JSON-строки'
+      }
+    },
+
+    'flexberry-tree': {
+      'placeholder': 'Вершины дерева не заданы'
+    },
+
   },
 
   'models': {
@@ -198,46 +235,46 @@ export default {
       'projections': {
         'ApplicationLogL': {
           'processId': {
-            'caption': 'URL'
+            __caption__: 'URL'
           },
           'timestamp':{
-            'caption': 'Время'
+            __caption__: 'Время'
           },
           'category':{
-            'caption': 'Категория'
+            __caption__: 'Категория'
           },
           'eventId':{
-            'caption': 'Идентификтатор события'
+            __caption__: 'Идентификтатор события'
           },
           'priority':{
-            'caption': 'Приоритет'
+            __caption__: 'Приоритет'
           },
           'severity':{
-            'caption': 'Значимость'
+            __caption__: 'Значимость'
           },
           'title':{
-            'caption': 'Заголовок'
+            __caption__: 'Заголовок'
           },
           'machineName':{
-            'caption': 'Сервер'
+            __caption__: 'Сервер'
           },
           'appDomainName':{
-            'caption': 'Браузер'
+            __caption__: 'Браузер'
           },
           'processName':{
-            'caption': 'Имя процесса'
+            __caption__: 'Имя процесса'
           },
           'threadName':{
-            'caption': 'Имя потока'
+            __caption__: 'Имя потока'
           },
           'win32ThreadId':{
-            'caption': 'Идентификатор потока',
+            __caption__: 'Идентификатор потока',
           },
           'message':{
-            'caption': 'Сообщение'
+            __caption__: 'Сообщение'
           },
           'formattedMessage':{
-            'caption': 'Форматированное сообщение'
+            __caption__: 'Форматированное сообщение'
           }
         }
       }
@@ -245,9 +282,9 @@ export default {
     'new-platform-flexberry-services-lock': {
       'projections': {
         'LockL': {
-          'lockKey': { 'caption': 'Ключ заблокированного объекта' },
-          'userName': { 'caption': 'Заблокировавший пользователь' },
-          'lockDate': { 'caption': 'Дата блокировки' },
+          'lockKey': { __caption__: 'Ключ заблокированного объекта' },
+          'userName': { __caption__: 'Заблокировавший пользователь' },
+          'lockDate': { __caption__: 'Дата блокировки' },
         },
       },
     },

@@ -348,6 +348,7 @@ export default EditFormController.extend({
 
     if (attr.kind === 'belongsTo' && bindingPath === 'master') {
       cellComponent.componentProperties = {
+        componentName:'GroupEditSettingExampleMaster',
         projection: 'MasterL',
         displayAttributeName: 'text',
         title: 'Master',
@@ -358,5 +359,27 @@ export default EditFormController.extend({
     }
 
     return cellComponent;
+  },
+
+  /**
+    Lookup events service.
+  */
+  lookupEvents: Ember.inject.service('lookup-events'),
+
+  actions: {
+    /**
+      Handles click on lookup's choose button.
+    */
+    showLookupDialog() {
+      // Create new master & add to model.
+      let master = this.get('store').createRecord('components-examples/flexberry-groupedit/shared/master', { text: 'Master text' });
+      let deteils = this.get('model.details');
+
+      deteils.forEach((item) => {
+        item.set('master', master);
+      });
+
+      this.get('lookupEvents').lookupDialogOnHiddenTrigger('GroupEditSettingExampleMaster');
+    }
   }
 });

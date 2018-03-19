@@ -92,6 +92,9 @@ var GroupBlueprint = (function () {
             var entityName = pp.name;
             if (notOverwrite && fs.existsSync(folderJsFiles + "/" + entityName + ".js"))
                 continue;
+            var entity = JSON.parse(stripBom(fs.readFileSync(path.join(metadataSubDir, file), "utf8")));
+            if (entity.external)
+                continue;
             var groupOptions = lodash.merge({}, this.options, { entity: { name: entityName } });
             GroupBlueprint.groupOptions.push(groupOptions);
             this.promise = this.promise.then(GroupBlueprint.funCallback);

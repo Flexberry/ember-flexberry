@@ -8,7 +8,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
-import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 const {
   Builder,
@@ -45,6 +44,7 @@ const {
       placeholder="Not select"
       chooseText="Select"
       removeText="Clear"
+      perPage=50
     }}
     ...
     ```
@@ -102,9 +102,9 @@ export default FlexberryBaseComponent.extend({
 
     @property chooseText
     @type String
-    @default t('components.flexberry-lookup.choose-button-text')
+    @default '<i class="change icon"></i>'
   */
-  chooseText: t('components.flexberry-lookup.choose-button-text'),
+  chooseText: '<i class="change icon"></i>',
 
   /**
     Text on button clear value.
@@ -198,15 +198,6 @@ export default FlexberryBaseComponent.extend({
   sorting: 'asc',
 
   /**
-    Ordering condition for list of records to choose.
-    Expected string type: '+Name1-Name2...', where: '+' and '-' - sorting direction, 'NameX' - property name for soring.
-
-    @property orderBy
-    @type String
-  */
-  orderBy: undefined,
-
-  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -217,6 +208,18 @@ export default FlexberryBaseComponent.extend({
     if (this.get('autocomplete')) {
       return 'ui search';
     }
+  }),
+
+  /**
+    FOLV component name.
+
+    @property folvComponentName
+    @type String
+    @readOnly
+  */
+  folvComponentName: Ember.computed('componentName', function() {
+    let componentName = this.get('componentName') || 'undefined';
+    return `${componentName}`;
   }),
 
   /**
@@ -252,6 +255,45 @@ export default FlexberryBaseComponent.extend({
     Closure action `lookupWindowCustomProperties` is called here if defined,
     otherwise `undefined` is returned.
 
+    @example
+      ```javascript
+      // app/controllers/post.js
+      import EditFormController from './edit-form';
+      export default EditFormController.extend({
+        actions: {
+          lookupWindowCustomProperties({ relationName, projection }) {
+            if (relationName === 'author' && projection === 'UserL') {
+              return {
+                filterButton: true,
+                filterByAnyWord: true,
+                enableFilters: true,
+                refreshButton: true,
+                perPage: 25,
+              };
+            }
+          },
+        },
+      });
+      ```
+
+      ```handlebars
+      <!-- app/templates/post.hbs -->
+      {{flexberry-lookup
+        componentName="AuthorLookup"
+        choose="showLookupDialog"
+        remove="removeLookupValue"
+        value=model.author
+        projection="UserL"
+        relationName="author"
+        displayAttributeName="name"
+        title="Author"
+        placeholder="Not select"
+        chooseText="Select"
+        removeText="Clear"
+        lookupWindowCustomProperties=(action "getLookupFolvProperties")
+      }}
+      ```
+
     @property _lookupWindowCustomPropertiesData
     @type Object
     @private
@@ -259,9 +301,9 @@ export default FlexberryBaseComponent.extend({
   _lookupWindowCustomPropertiesData: Ember.computed(
     'projection',
     'relationName',
-    'attrs.lookupWindowCustomProperties',
+    'lookupWindowCustomProperties',
     function() {
-      let lookupWindowCustomProperties = this.attrs.lookupWindowCustomProperties;
+      let lookupWindowCustomProperties = this.get('lookupWindowCustomProperties');
       if (lookupWindowCustomProperties) {
         let result = lookupWindowCustomProperties({
           relationName: this.get('relationName'),
@@ -288,9 +330,8 @@ export default FlexberryBaseComponent.extend({
     'lookupLimitPredicate',
     'relatedModel',
     '_lookupWindowCustomPropertiesData',
-    'orderBy',
     function() {
-      let ordering = this.get('orderBy') ? this.get('orderBy') : '';
+      let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
       return {
         projection: this.get('projection'),
         relationName: this.get('relationName'),
@@ -299,7 +340,9 @@ export default FlexberryBaseComponent.extend({
         modelToLookup: this.get('relatedModel'),
         lookupWindowCustomPropertiesData: this.get('_lookupWindowCustomPropertiesData'),
         componentName: this.get('componentName'),
-        sorting: deserializeSortingParam(ordering),
+        notUseUserSettings: this.get('notUseUserSettings'),
+        perPage: perPage || this.get('perPage'),
+        folvComponentName: this.get('folvComponentName'),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')
@@ -330,6 +373,14 @@ export default FlexberryBaseComponent.extend({
   store: Ember.inject.service('store'),
 
   /**
+    The user settings service.
+
+    @property userSettings
+    @type UserSettingsService
+  */
+  userSettings: Ember.inject.service('user-settings'),
+
+  /**
     Name of the attribute of the model to display for the user.
     Is required for autocomplete and dropdown modes.
 
@@ -338,6 +389,17 @@ export default FlexberryBaseComponent.extend({
     @default null
   */
   displayAttributeName: null,
+
+  /**
+    Name of the attribute of the model to display for the user
+    for hidden attribute by master.
+    Is required for autocomplete and dropdown modes.
+
+    @property autocompleteOrder
+    @type String
+    @default null
+  */
+  autocompleteOrder: null,
 
   /**
     Current selected instance of the model.
@@ -520,13 +582,16 @@ export default FlexberryBaseComponent.extend({
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
   */
   init() {
+
     this._super(...arguments);
+
     this.get('lookupEventsService').on('lookupDialogOnShow', this, this._setModalIsStartToShow);
     this.get('lookupEventsService').on('lookupDialogOnVisible', this, this._setModalIsVisible);
     this.get('lookupEventsService').on('lookupDialogOnHidden', this, this._setModalIsHidden);
 
     // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
     this.addObserver('value', this, this._valueObserver);
+    this.addObserver('displayAttributeName', this, this._valueObserver);
     this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 
@@ -592,6 +657,7 @@ export default FlexberryBaseComponent.extend({
 
     // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
     this.removeObserver('value', this, this._valueObserver);
+    this.removeObserver('displayAttributeName', this, this._valueObserver);
     this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 
@@ -665,6 +731,7 @@ export default FlexberryBaseComponent.extend({
     let relationModelName = getRelationType(relatedModel, relationName);
 
     let displayAttributeName = this.get('displayAttributeName');
+    let autocompleteOrder = this.get('autocompleteOrder');
     if (!displayAttributeName) {
       throw new Error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
     }
@@ -680,10 +747,20 @@ export default FlexberryBaseComponent.extend({
     }
 
     let state;
+    let i18n = _this.get('i18n');
     this.$().search({
       minCharacters: minCharacters,
-      maxResults: maxResults,
+      maxResults: maxResults + 1,
       cache: false,
+      templates: {
+        message: function(message, type) {
+          return '<div class="message empty"><div class="header">' +
+          i18n.t('components.flexberry-lookup.dropdown.messages.noResultsHeader').string +
+          '</div><div class="description">' +
+          i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string +
+          '</div></div>';
+        }
+      },
       apiSettings: {
         /**
           Mocks call to the data source,
@@ -698,9 +775,15 @@ export default FlexberryBaseComponent.extend({
             return;
           }
 
-          let builder = new Builder(store, relationModelName)
+          let builder;
+          if (autocompleteOrder) {
+            builder = new Builder(store, relationModelName)
+            .select(displayAttributeName).orderBy(`${autocompleteOrder}`);
+          } else {
+            builder = new Builder(store, relationModelName)
             .select(displayAttributeName)
             .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);
+          }
 
           let autocompletePredicate = settings.urlData.query ?
                                       new StringPredicate(displayAttributeName).contains(settings.urlData.query) :
@@ -710,15 +793,27 @@ export default FlexberryBaseComponent.extend({
             builder.where(resultPredicate);
           }
 
+          let maxRes = _this.get('maxResults');
+          let iCount = 1;
+          builder.top(maxRes + 1);
+          builder.count();
+
           store.query(relationModelName, builder.build()).then((records) => {
             callback({
               success: true,
               results: records.map(i => {
                 let attributeName = i.get(displayAttributeName);
-                return {
-                  title: attributeName,
-                  instance: i
-                };
+                if (iCount > maxRes && records.meta.count > maxRes) {
+                  return {
+                    title: '...'
+                  };
+                } else {
+                  iCount += 1;
+                  return {
+                    title: attributeName,
+                    instance: i
+                  };
+                }
               })
             });
           }, () => {
@@ -747,8 +842,7 @@ export default FlexberryBaseComponent.extend({
         Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
         _this.set('value', result.instance);
-        _this.sendAction(
-          'updateLookupAction',
+        _this.get('currentController').send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,
@@ -841,27 +935,29 @@ export default FlexberryBaseComponent.extend({
             builder.where(resultPredicate);
           }
 
-          store.query(relationModelName, builder.build()).then((records) => {
-            // We have to cache data because dropdown component sets text as value and we lose object value.
-            let resultArray = [];
-            let results = records.map((i) => {
-              let attributeName = i.get(displayAttributeName);
-              resultArray[i.id] = i;
-              return {
-                name: attributeName,
-                value: i.id
-              };
+          Ember.run(() => {
+            store.query(relationModelName, builder.build()).then((records) => {
+              // We have to cache data because dropdown component sets text as value and we lose object value.
+              let resultArray = [];
+              let results = records.map((i) => {
+                let attributeName = i.get(displayAttributeName);
+                resultArray[i.id] = i;
+                return {
+                  name: attributeName,
+                  value: i.id
+                };
+              });
+
+              if (!_this.get('required')) {
+                results.unshift({ name: _this.get('placeholder'), value: null });
+                resultArray['null'] = null;
+              }
+
+              callback({ success: true, results: results });
+              _this.set('_cachedDropdownValues', resultArray);
+            }, () => {
+              callback({ success: false });
             });
-
-            if (!_this.get('required')) {
-              results.unshift({ name: _this.get('placeholder'), value: null });
-              resultArray['null'] = null;
-            }
-
-            callback({ success: true, results: results });
-            _this.set('_cachedDropdownValues', resultArray);
-          }, () => {
-            callback({ success: false });
           });
         }
       },
@@ -876,8 +972,7 @@ export default FlexberryBaseComponent.extend({
           }
         }
 
-        _this.sendAction(
-          'updateLookupAction',
+        _this.get('currentController').send(_this.get('updateLookupAction'),
           {
             relationName: relationName,
             modelToLookup: relatedModel,

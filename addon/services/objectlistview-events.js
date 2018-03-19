@@ -14,6 +14,25 @@ import { BasePredicate } from 'ember-flexberry-data/query/predicate';
   @public
  */
 export default Ember.Service.extend(Ember.Evented, {
+
+  /**
+    Current set of selected records for all list components.
+
+    @property _selectedRecords
+    @type Array
+    @private
+  */
+  _selectedRecords: undefined,
+
+  /**
+    Init service.
+
+    @method init
+  */
+  init() {
+    this.set('_selectedRecords', []);
+  },
+
   /**
     Trigger for "add new row" event in objectlistview.
     Event name: olvAddRow.
@@ -125,9 +144,23 @@ export default Ember.Service.extend(Ember.Evented, {
     @param {DS.Model} record The model corresponding to selected row in objectlistview
     @param {Number} count Count of selected rows in objectlistview
     @param {Boolean} checked Current state of row in objectlistview (checked or not)
+    @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
-  rowSelectedTrigger(componentName, record, count, checked) {
-    this.trigger('olvRowSelected', componentName, record, count, checked);
+  rowSelectedTrigger(componentName, record, count, checked, recordWithKey) {
+    if (count > 0 || !Ember.isNone(recordWithKey)) {
+      if (!this.get('_selectedRecords')[componentName]) {
+        this.get('_selectedRecords')[componentName] = Ember.Map.create();
+      }
+
+      if (checked) {
+        this.get('_selectedRecords')[componentName].set(recordWithKey.key, recordWithKey);
+      } else
+      {
+        this.get('_selectedRecords')[componentName].delete(recordWithKey.key);
+      }
+    }
+
+    this.trigger('olvRowSelected', componentName, record, count, checked, recordWithKey);
   },
 
   /**
@@ -173,13 +206,28 @@ export default Ember.Service.extend(Ember.Evented, {
 
     @method updateWidthTrigger
 
-    @param {Boolean} alwaysUpdate If true, then component update width despite
-    his widthChangeOnContainerResize property.
     @param {String} componentName The name of object-list-view component
     (can be undefined for update all components widths).
   */
-  updateWidthTrigger(alwaysUpdate, componentName) {
-    this.trigger('updateWidth', alwaysUpdate, componentName);
+  updateWidthTrigger(componentName) {
+    this.trigger('updateWidth', componentName);
+  },
+
+  /**
+    Trigger for "selectAll" event in object-list-view.
+    Event name: updateSelectAll.
+
+    @method updateSelectAll
+
+    @param {String} componentName The name of object-list-view component
+    @param {Boolean} selectAllParameter Flag to selet all records parameter.
+  */
+  updateSelectAllTrigger(componentName, selectAllParameter) {
+    if (!selectAllParameter) {
+      this.clearSelectedRecords(componentName);
+    }
+
+    this.trigger('updateSelectAll', componentName, selectAllParameter);
   },
 
   /**
@@ -190,6 +238,15 @@ export default Ember.Service.extend(Ember.Evented, {
     @default undefined
   */
   currentLimitFunction: undefined,
+
+  /**
+    Form's loading state.
+
+    @property loadingState
+    @type string
+    @default undefined
+  */
+  loadingState: undefined,
 
   /**
     Sets current limit function for OLV.
@@ -210,5 +267,43 @@ export default Ember.Service.extend(Ember.Evented, {
   */
   getLimitFunction() {
     return this.get('currentLimitFunction');
+  },
+
+  /**
+    Method that sets the form's loading state.
+
+    @method setLoadingState
+
+    @param {String} loadingState Loading state for set.
+  */
+  setLoadingState(loadingState) {
+    this.set('loadingState', loadingState);
+  },
+
+  /**
+    Returns map with previously saved selected records for OLV component with specified name.
+
+    @method getSelectedRecords
+
+    @param {String} componentName The name of OLV component.
+    @return {Ember.Map} Selected records for OLV component.
+  */
+  getSelectedRecords(componentName) {
+    return this.get('_selectedRecords')[componentName];
+  },
+
+  /**
+    Clears set of previously saved selected records for OLV component with specified name.
+
+    @method clearSelectedRecords
+
+    @param {String} componentName The name of OLV component.
+  */
+  clearSelectedRecords(componentName) {
+    if (this.get('_selectedRecords')[componentName] &&
+    this.get('_selectedRecords')[componentName].clear &&
+    typeof this.get('_selectedRecords')[componentName].clear === 'function') {
+      this.get('_selectedRecords')[componentName].clear();
+    }
   }
 });

@@ -239,6 +239,9 @@ module.exports = {
         { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
         { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
+        { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
+        { name: 'jquery-minicolors', target: '2.2.6' },
+        { name: 'js-beautify', target: '1.6.4' }
       ]);
     }).then(function() {
       return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
@@ -260,7 +263,14 @@ module.exports = {
     }).then(function () {
       return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
     }).then(function () {
-      return _this.addAddonToProject('ember-data@~2.12.0');
+      return _this.removePackageFromProject('ember-data');
+    }).then(function () {
+      return _this.addAddonsToProject({
+        packages: [
+          { name: 'ember-data', target: '2.12.2' },
+          { name: 'ember-block-slots', target: '1.1.3' }
+        ]
+      });
     });
   },
 

@@ -108,8 +108,9 @@ export default Ember.Mixin.create({
       @param {Object} filters
     */
     applyFilters(filters) {
+      this.set('page', 1);
       this.set('filters', filters);
-      this.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.send('refreshList');
     },
 
@@ -120,8 +121,9 @@ export default Ember.Mixin.create({
       @param {String} componentName The name of objectlistview component.
     */
     resetFilters(componentName) {
+      this.set('page', 1);
       this.set('filters', null);
-      this.set('state', 'loading');
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       this.send('refreshList');
       this.get('objectlistviewEventsService').resetFiltersTrigger(componentName);
     },
@@ -134,8 +136,8 @@ export default Ember.Mixin.create({
       @param {String} filterCondition Condition for predicate, can be `or` or `and`.
     */
     filterByAnyMatch(pattern, filterCondition) {
-      if (this.get('filter') !== pattern) {
-        this.set('state', 'loading');
+      if (this.get('filter') !== pattern || this.get('filterCondition') !== filterCondition) {
+        this.get('objectlistviewEventsService').setLoadingState('loading');
         let _this = this;
         Ember.run.later((function() {
           _this.setProperties({

@@ -1,3 +1,4 @@
+{{flexberry-error error=error}}
 <h3 class="ui header">{{t "forms.components-examples.flexberry-objectlistview.configurate-rows.caption"}}</h3>
 <form class="ui form flexberry-vertical-form" role="form">
   <div class="field">
@@ -31,6 +32,24 @@
         nextPage=(action "nextPage")
         configurateRow=(action "configurateRow")
         componentName="FOLVConfigurateRowsObjectListView"
+      }}
+      {{flexberry-groupedit
+        componentName="ConfigurateRowsGroupedit"
+        content=model
+        modelProjection=projection
+        placeholder=placeholder
+        readonly=readonly
+        allowColumnResize=false
+        createNewButton=true
+        showAsteriskInRow=true
+        showCheckBoxInRow=true
+        rowClickable=false
+        immediateDelete=false
+        editOnSeperateRoute=false
+        searchForContentChange=searchForContentChange
+        orderable=false
+        readonly=readonly
+        configurateRow=(action "configurateRow")
       }}
     {{/settings-example}}
   </div>

@@ -29,23 +29,6 @@ export default Ember.Mixin.create({
   _readonly: false,
 
   /**
-    This property uses for setting user name.
-
-    @example
-      ```javascript
-      // app/routes/user-edit.js
-      import EditFormRoute from 'ember-flexberry/routes/edit-form';
-      export default EditFormRoute.extend({
-        ...
-        userName: Ember.computed(function() {
-          let userService = Ember.getOwner(this).lookup('service:user');
-          return userService.getCurrentUserName();
-        }),
-        ...
-      });
-      ```
-
-  /**
     This object contains answers which will corresponding functions resolved.
 
     @property defaultBehaviorLock
@@ -81,8 +64,6 @@ export default Ember.Mixin.create({
     },
   },
 
-  _userSettingsService: Ember.inject.service('user-settings'),
-
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel).
@@ -92,39 +73,52 @@ export default Ember.Mixin.create({
     @return {Promise}
   */
   beforeModel(transition) {
-    let params = this.paramsFor(this.routeName);
+    let result = this._super(...arguments);
+
+    if (!(result instanceof Ember.RSVP.Promise)) {
+      result = Ember.RSVP.resolve();
+    }
+
     return new Ember.RSVP.Promise((resolve, reject) => {
-      if (params.id) {
-        let builder = new Query.Builder(this.store)
-          .from('new-platform-flexberry-services-lock')
-          .selectByProjection('LockL')
-          .byId(`'${params.id}'`);
-        this.store.queryRecord('new-platform-flexberry-services-lock', builder.build()).then((lock) => {
-          if (!lock) {
-            this.store.createRecord('new-platform-flexberry-services-lock', {
-              lockKey: params.id,
-              userName: this.get('_userSettingsService').getCurrentUser(),
-              lockDate: new Date(),
-            }).save().then((lock) => {
+      let params = this.paramsFor(this.routeName);
+      let userService = Ember.getOwner(this).lookup('service:user');
+      result.then((parentResult) => {
+        if (params.id) {
+          let builder = new Query.Builder(this.store)
+            .from('new-platform-flexberry-services-lock')
+            .selectByProjection('LockL')
+            .byId(`'${params.id}'`);
+          this.store.queryRecord('new-platform-flexberry-services-lock', builder.build()).then((lock) => {
+            if (!lock) {
+              this.store.createRecord('new-platform-flexberry-services-lock', {
+                lockKey: params.id,
+                userName: userService.getCurrentUserName(),
+                lockDate: new Date(),
+              }).save().then((lock) => {
+                this.set('_currentLock', lock);
+                resolve(lock);
+              }).catch((reason) => {
+                this.openReadOnly().then((answer) => {
+                  this._openReadOnly(answer, resolve, reject, reason);
+                });
+              });
+            } else if (lock.get('userName') === userService.getCurrentUserName()) {
               this.set('_currentLock', lock);
-              resolve();
-            }).catch((reason) => {
-              this.openReadOnly().then((answer) => {
+              resolve(lock);
+            } else {
+              this.openReadOnly(lock.get('userName')).then((answer) => {
                 this._openReadOnly(answer, resolve, reject);
               });
-            });
-          } else if (lock.get('userName') === this.get('_userSettingsService').getCurrentUser()) {
-            this.set('_currentLock', lock);
-            resolve();
-          } else {
-            this.openReadOnly(lock.get('userName')).then((answer) => {
-              this._openReadOnly(answer, resolve, reject);
-            });
-          }
-        });
-      } else {
-        resolve();
-      }
+            }
+          }).catch((reason) => {
+            reject(reason);
+          });
+        } else {
+          resolve(parentResult);
+        }
+      }).catch((reason) => {
+        reject(reason);
+      });
     });
   },
 
@@ -215,12 +209,13 @@ export default Ember.Mixin.create({
     @param {Boolean} answer
     @param {function} resolve
     @param {function} reject
+    @param {Object} reason
     @private
   */
-  _openReadOnly(answer, resolve, reject) {
+  _openReadOnly(answer, resolve, reject, reason) {
     if (answer) {
       this.set('_readonly', true);
-      resolve();
+      resolve(reason);
     } else {
       this.controllerFor(this.routeName).transitionToParentRoute();
       reject();

@@ -63,9 +63,9 @@ export default EditFormController.extend({
 
     @property chooseText
     @type String
-    @default 't('components.flexberry-lookup.choose-button-text')'
+    @default '<i class="remove icon"></i>'
   */
-  chooseText: t('components.flexberry-lookup.choose-button-text'),
+  chooseText: '<i class="change icon"></i>',
 
   /**
     Content for 'flexberry-lookup' component 'removeText' property.

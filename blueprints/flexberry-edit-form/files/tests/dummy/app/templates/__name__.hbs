@@ -1,17 +1,7 @@
 <h3 class="ui header">{{<%= caption %>}}</h3>
 
-{{#if errorMessages}}
-  {{#each errorMessages as |currentError|}}
-    {{ui-message
-      type='error'
-      closeable=true
-      visible=true
-      title='Error occurred'
-      message=currentError
-    }}
-  {{/each}}
-{{/if}}
-<form class="ui {{state}} form flexberry-vertical-form" role="form">
+<form class="ui form flexberry-vertical-form" role="form">
+  {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
       {{flexberry-validationsummary errors=model.errors}}

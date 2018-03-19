@@ -61,6 +61,28 @@ module.exports = {
       production:  'bower_components/devicejs/lib/device.min.js'
     });
 
+    // JS-code beautifier to format strings containing JS-code & represent in in user-friendly view.
+    app.import({
+      development: 'bower_components/js-beautify/js/lib/beautify.js',
+      production:  'bower_components/js-beautify/js/lib/beautify.js'
+    });
+
+    // UI-slider control.
+    app.import({
+      development: 'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.js',
+      production:  'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
+    });
+
+    // JQuery-minicolors plugin required for flexberry-colorpicker component.
+    app.import({
+      development: 'bower_components/jquery-minicolors/jquery.minicolors.js',
+      production:  'bower_components/jquery-minicolors/jquery.minicolors.min.js'
+    });
+    app.import('bower_components/jquery-minicolors/jquery.minicolors.css');
+    app.import('bower_components/jquery-minicolors/jquery.minicolors.png', {
+      destDir: '/assets'
+    });
+
     // Custom script which fixes some jQuery 1.10.x+ AJAX bugs with code from newer jQuery.3.0.0-alpha1+compat version.
     app.import('vendor/jquery.3.0.0-alpha1+compat/jquery.ajaxreplacement.js');
 

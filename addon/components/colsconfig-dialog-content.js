@@ -25,11 +25,11 @@ export default FlexberryBaseComponent.extend({
   /**
    Service that triggers objectlistview events.
 
-   @property objectlistviewEvents
+   @property objectlistviewEventsService
    @type {Class}
    @default Ember.inject.service()
    */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
   /**
    Model with added DOM elements.
@@ -57,14 +57,6 @@ export default FlexberryBaseComponent.extend({
    @default ''
    */
   settingName: '',
-
-  /**
-    Form state. A form is in different states: loading, success, error.
-
-    @property state
-    @type String
-  */
-  state: '',
 
   /**
     Changed flag.
@@ -384,16 +376,19 @@ export default FlexberryBaseComponent.extend({
             let sort = serializeSortingParam(colsConfig.sorting);
             router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
           }
-        );
+        ).catch((reason) => {
+          this.currentController.send('handleError', reason);
+        });
+
         this.sendAction('close', colsConfig); // close modal window
       } else {
         let _this = this;
-        _this.set('state', 'loading');
+        _this.get('objectlistviewEventsService').setLoadingState('loading');
         let store = this.get('store.onlineStore') || this.get('store');
         let adapter = store.adapterFor(this.modelName);
         let currentQuery = this._getCurrentQuery();
         adapter.query(store, this.modelName, currentQuery).then((result) => {
-          let blob = new Blob([result], { type: 'application/vnd.ms-excel' });
+          let blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           let anchor = Ember.$('.download-anchor');
           if (!Ember.isBlank(anchor)) {
             if (window.navigator.msSaveOrOpenBlob) {
@@ -412,9 +407,11 @@ export default FlexberryBaseComponent.extend({
             }
           }
 
-          _this.set('state', '');
-        }).catch(() => {
-          _this.set('state', '');
+          this.get('objectlistviewEventsService').setLoadingState('');
+        }).catch((reason) => {
+          this.get('objectlistviewEventsService').setLoadingState('');
+          this.sendAction('close'); // close modal window
+          this.currentController.send('handleError', reason);
         });
       }
     },
@@ -452,6 +449,8 @@ export default FlexberryBaseComponent.extend({
           this.set('currentController.message.visible', true);
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
           this.set('currentController.message.message', JSON.stringify(error));
+          this.sendAction('close', colsConfig); // close modal window
+          this.currentController.send('handleError', error);
         }
       );
     },
@@ -500,6 +499,11 @@ export default FlexberryBaseComponent.extend({
     detSeparateRowsChange: function() {
       this._changed();
     },
+
+    handleError(error) {
+      this._super(...arguments);
+      return true;
+    }
   },
 
   /**
@@ -526,7 +530,7 @@ export default FlexberryBaseComponent.extend({
       builder.orderBy(sortString);
     }
 
-    let limitFunction = this.get('objectlistviewEvents').getLimitFunction();
+    let limitFunction = this.get('objectlistviewEventsService').getLimitFunction();
     if (limitFunction) {
       builder.where(limitFunction);
     }

@@ -10,6 +10,7 @@ import ProjectedModelFormRoute from '../routes/projected-model-form';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
 import ReloadListMixin from '../mixins/reload-list-mixin';
+import ErrorableRouteMixin from '../mixins/errorable-route';
 
 /**
   Base route for the List Forms.
@@ -47,7 +48,8 @@ SortableRouteMixin,
 LimitedRouteMixin,
 ReloadListMixin,
 FlexberryObjectlistviewRouteMixin,
-FlexberryObjectlistviewHierarchicalRouteMixin, {
+FlexberryObjectlistviewHierarchicalRouteMixin,
+ErrorableRouteMixin, {
   /**
     Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
 
@@ -73,6 +75,14 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   colsConfigMenu: Ember.inject.service(),
 
   /**
+    Service that triggers objectlistview events.
+
+    @property objectlistviewEventsService
+    @type Service
+  */
+  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+
+  /**
     A hook you can implement to convert the URL into the model for this route.
     [More info](http://emberjs.com/api/classes/Ember.Route.html#method_model).
 
@@ -84,7 +94,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     this.get('formLoadTimeTracker').set('startLoadTime', performance.now());
 
     let controller = this.controllerFor(this.routeName);
-    controller.set('state', 'loading');
+    this.get('objectlistviewEventsService').setLoadingState('loading');
 
     let modelName = this.get('modelName');
     let webPage = transition.targetName;
@@ -163,7 +173,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
           hierarchicalAttribute: hierarchicalAttribute,
         };
 
-        this.onModelLoadingStarted(queryParameters);
+        this.onModelLoadingStarted(queryParameters, transition);
         this.get('colsConfigMenu').updateNamedSettingTrigger();
 
         // Find by query is always fetching.
@@ -172,16 +182,16 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
         return this.reloadList(queryParameters);
       }).then((records) => {
         this.get('formLoadTimeTracker').set('endLoadTime', performance.now());
-        this.onModelLoadingFulfilled(records);
+        this.onModelLoadingFulfilled(records, transition);
         this.includeSorting(records, this.sorting);
         this.get('controller').set('model', records);
         return records;
       }).catch((errorData) => {
-        this.onModelLoadingRejected(errorData);
+        this.onModelLoadingRejected(errorData, transition);
       }).finally((data) => {
-        this.onModelLoadingAlways(data);
-        if (this.get('controller.state') === 'loading') {
-          this.get('controller').set('state', '');
+        this.onModelLoadingAlways(data, transition);
+        if (this.get('objectlistviewEventsService.loadingState') === 'loading') {
+          this.get('objectlistviewEventsService').setLoadingState('');
         }
       });
 
@@ -205,14 +215,15 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
 
     @example
       ```javascript
-      onModelLoadingStarted(queryParameters) {
+      onModelLoadingStarted(queryParameters, transition) {
         alert('Model loading operation started!');
       }
       ```
     @method onModelLoadingStarted.
     @param {Object} queryParameters Query parameters used for model loading operation.
+    @param {Transition} transition Current transition object.
   */
-  onModelLoadingStarted(queryParameters) {
+  onModelLoadingStarted(queryParameters, transition) {
   },
 
   /**
@@ -221,31 +232,34 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
 
     @example
       ```javascript
-      onModelLoadingFulfilled() {
+      onModelLoadingFulfilled(model, transition) {
         alert('Model loading operation succeed!');
       }
       ```
     @method onModelLoadingFulfilled.
     @param {Object} model Loaded model data.
+    @param {Transition} transition Current transition object.
   */
-  onModelLoadingFulfilled(model) {
+  onModelLoadingFulfilled(model, transition) {
   },
 
   /**
     This method will be invoked when model loading operation completed, but failed.
     Override this method to add some custom logic on model loading operation fail.
+    By default showing error form.
 
     @example
       ```javascript
-      onModelLoadingRejected() {
+      onModelLoadingRejected(errorData, transition) {
         alert('Model loading operation failed!');
       }
       ```
     @method onModelLoadingRejected.
     @param {Object} errorData Data about model loading operation fail.
+    @param {Transition} transition Current transition object.
   */
-  onModelLoadingRejected(errorData) {
-    // TODO: Provide information about error to user.
+  onModelLoadingRejected(errorData, transition) {
+    this.handleError(errorData, transition);
   },
 
   /**
@@ -255,15 +269,16 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
 
     @example
       ```js
-      onModelLoadingAlways(data) {
+      onModelLoadingAlways(data, transition) {
         alert('Model loading operation completed!');
       }
       ```
 
     @method onModelLoadingAlways.
     @param {Object} data Data about completed model loading operation.
+    @param {Transition} transition Current transition object.
   */
-  onModelLoadingAlways(data) {
+  onModelLoadingAlways(data, transition) {
   },
 
   /**
@@ -282,6 +297,7 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     // TODO: remove that when list-form controller will be moved to this route.
     let modelClass = this.store.modelFor(this.get('modelName'));
     let proj = modelClass.projections.get(this.get('modelProjection'));
+    controller.set('error', undefined);
     controller.set('userSettings', this.userSettings);
     controller.set('modelProjection', proj);
     controller.set('developerUserSettings', this.get('developerUserSettings'));
@@ -289,5 +305,5 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }
-  }
+  },
 });

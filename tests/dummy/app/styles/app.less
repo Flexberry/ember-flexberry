@@ -2,7 +2,7 @@
 @import "src/semantic";
 
 .spinner {
-  background: url('/assets/images/cat.gif') no-repeat;
+  background: url('images/cat.gif') no-repeat;
   background-size: contain;
   height: 140px;
   width: 175px;
@@ -43,6 +43,7 @@
 #example {
   .flexberry-content {
     padding: 1em 0;
+    height: 100%;
   }
 
   .full.height {
@@ -53,8 +54,9 @@
 
 #example-mobile {
   .flexberry-content {
-    padding: 4em 10px 2em 10px;
+    padding: 0px 10px 2em 10px;
     border-bottom: none;
+    height: 100%;
   }
 }
 
@@ -66,13 +68,16 @@
     color: rgba(255, 255, 255, 0.9)!important;
 }
 
-.ui.button.delete-deteil {
-    border: 1px solid #7ba7d9;
+
+/* Dummy example buttons styles */
+.ui.button.add-deteil:hover {
+    border: 1px solid #7dd4b4;
+    background-color: #7dd4b4;
 }
 
 .ui.button.delete-deteil:hover {
-    background-color: #ff6400;
     border: 1px solid #ff6400;
+    background-color: #ff6400;
 }
 
 .ui.button.clear-all-log {
@@ -90,3 +95,17 @@
 }
 
 
+/* Dummy buttons styles for lock service test buttons*/
+.ui.right.floated.tiny.compact.lockServiseButtonBlue.button {
+    color:white;
+    background-color: #7ba7d9;
+    background: #7ba7d9;
+    border: #7ba7d9;
+}
+
+.ui.right.floated.tiny.compact.lockServiseButtonBlack.button {
+    color:white;
+    background-color: black;
+    background: black;
+    border: black;
+}

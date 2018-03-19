@@ -29,6 +29,14 @@ export default Ember.Controller.extend({
   readonly: false,
 
   /**
+    Maxlength of 'flexberry-textbox' component.
+
+    @property maxlength
+    @type Number
+   */
+  maxlength: undefined,
+
+  /**
     Template text for 'flexberry-textbox' component.
 
     @property componentTemplateText
@@ -40,6 +48,7 @@ export default Ember.Controller.extend({
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
     '  class=class<br>' +
+    '  maxlength=maxlength<br>' +
     '}}'),
 
   /**
@@ -74,6 +83,12 @@ export default Ember.Controller.extend({
       settingDefaultValue: '',
       settingAvailableItems: ['fluid input', 'transparent input', 'mini input', 'huge input', 'input error'],
       bindedControllerPropertieName: 'class'
+    });
+    componentSettingsMetadata.pushObject({
+      settingName: 'maxlength',
+      settingType: 'number',
+      settingDefaultValue: undefined,
+      bindedControllerPropertieName: 'maxlength'
     });
 
     return componentSettingsMetadata;

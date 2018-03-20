@@ -33,7 +33,7 @@ test('Configures i18n service for locale', function(assert) {
     assert.expect(2);
 
     let i18n = appInstance.lookup('service:i18n');
-    let ENV = appInstance.factoryFor('config:environment');
+    let ENV = appInstance.factoryFor('config:environment').class;
     let defaultLocale = (ENV.i18n || {}).defaultLocale;
 
     assert.strictEqual(i18n.get('locale'), fakeLocale, 'Default i18n-service locale is \'' + fakeLocale + '\'');

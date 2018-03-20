@@ -135,7 +135,7 @@ export default FlexberryBaseComponent.extend({
           let newRecord = Ember.Object.create({
             key: Ember.guidFor(record),
             data: record,
-            config: config,
+            rowConfig: config,
             doRenderData: true
           });
 

@@ -643,6 +643,7 @@ export default FlexberryBaseComponent.extend({
       }
     },
 
+    /* eslint-disable no-unused-vars */
     copyJSONContent(event) {
       Ember.$('#OLVToolbarInfoContent').select();
       let copied = document.execCommand('copy');
@@ -650,6 +651,7 @@ export default FlexberryBaseComponent.extend({
       oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
       oLVToolbarInfoCopyButton.addClass('disabled');
     }
+    /* eslint-enable no-unused-vars */
   },
 
   /**

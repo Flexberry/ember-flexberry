@@ -292,7 +292,7 @@ export default Ember.Mixin.create({
       if (projection.attributes.hasOwnProperty(name)) {
         let attribute = projection.attributes[name];
         switch (attribute.kind) {
-          case 'attr':
+          case 'attr': {
             let options = Ember.merge({}, attribute.options);
             options.displayMemberPath = projection.options && projection.options.displayMemberPath === name;
             attributes.push({
@@ -301,8 +301,9 @@ export default Ember.Mixin.create({
               type: Ember.get(store.modelFor(projection.modelName), 'attributes').get(name).type,
             });
             break;
+          }
 
-          case 'belongsTo':
+          case 'belongsTo': {
             let belongsToAttributes = this._attributesForFilter(attribute, store);
             for (let i = 0; i < belongsToAttributes.length; i++) {
               belongsToAttributes[i].name = `${name}.${belongsToAttributes[i].name}`;
@@ -310,12 +311,14 @@ export default Ember.Mixin.create({
             }
 
             break;
+          }
 
           case 'hasMany':
             break;
 
-          default:
+          default: {
             throw new Error(`Not supported kind: ${attribute.kind}`);
+          }
         }
       }
     }

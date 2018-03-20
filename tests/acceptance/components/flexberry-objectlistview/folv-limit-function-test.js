@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
-import { filterObjectListView, refreshListByFunction  } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
+import { refreshListByFunction  } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
 
 executeTest('check limit function', (store, assert, app) => {
@@ -25,7 +25,7 @@ executeTest('check limit function', (store, assert, app) => {
         result2 = arr.objectAt(1).get('address');
 
         if (!result1 && !result2) {
-          assert.ok(false, 'Laad empty data')
+          assert.ok(false, 'Laad empty data');
         }
       }).then(function() {
         let controller = app.__container__.lookup('controller:' + currentRouteName());

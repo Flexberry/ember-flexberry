@@ -151,7 +151,7 @@ test('warn works properly', function(assert) {
 
   // Call to Ember.warn.
   Ember.run(() => {
-    Ember.warn(warnMessage);
+    Ember.warn(warnMessage, false, { id: 'ember-flexberry-tests.log-test.warn-works-properly' });
   });
 });
 
@@ -174,7 +174,7 @@ test('logService works properly when storeWarnMessages disabled', function(asser
 
   // Call to Ember.warn.
   Ember.run(() => {
-    Ember.warn(warnMessage);
+    Ember.warn(warnMessage, false, { id: 'ember-flexberry-tests.log-test.warn-works-properly-when-store-warn-messages-is-disabled' });
   });
 });
 
@@ -201,7 +201,7 @@ test('logService for warn works properly when it\'s disabled', function(assert) 
 
   // Call to Ember.warn.
   Ember.run(() => {
-    Ember.warn(warnMessage);
+    Ember.warn(warnMessage, false, { id: 'ember-flexberry-tests.log-test.warn-works-properly-when-log-service-is-disabled' });
   });
 });
 

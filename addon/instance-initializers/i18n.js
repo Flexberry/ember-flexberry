@@ -36,7 +36,9 @@ export function initialize(applicationInstance) {
   // Check if current locale is supported.
   let locales = applicationInstance.lookup('controller:application').get('locales');
   if (!locales || Ember.typeOf(locales) !== 'array' || locales.indexOf(currentLocale) === -1 || Ember.isBlank(currentLocale)) {
-    Ember.warn('Default locale from `environment.js` or current browser language is not supported. Use "en" as default locale.');
+    Ember.warn('Default locale from `environment.js` or current browser language is not supported. Using "en" as default locale.',
+    false,
+    { id: 'ember-flexberry-debug.i18n.locale-is-not-supported' });
     currentLocale = 'en';
   }
 

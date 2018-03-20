@@ -2412,7 +2412,7 @@ export default folv.extend(
 
     contentWithKeys.forEach((item) => {
       let record = item.get('data');
-      if (!content.contains(record)) {
+      if (!content.includes(record)) {
         deletedItems.push(record);
       }
     });

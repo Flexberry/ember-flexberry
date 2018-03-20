@@ -100,7 +100,7 @@ export default Ember.Service.extend({
 
   init() {
     this._super(...arguments);
-    let appConfig = Ember.getOwner(this)._lookupFactory('config:environment');
+    let appConfig = Ember.getOwner(this).factoryFor('config:environment');
     if (!Ember.isNone(appConfig.APP.useUserSettingsService)) {
       this.set('isUserSettingsServiceEnabled', appConfig.APP.useUserSettingsService);
     }

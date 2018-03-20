@@ -141,7 +141,7 @@ export default Ember.Mixin.create({
       Ember.set(attachedEventHandlers, eventName, specifiedEventAttachedEventHandlers);
     }
 
-    if (!specifiedEventAttachedEventHandlers.contains(eventHandler)) {
+    if (!specifiedEventAttachedEventHandlers.includes(eventHandler)) {
       // Store given event-handler.
       specifiedEventAttachedEventHandlers.pushObject(eventHandler);
 
@@ -187,7 +187,7 @@ export default Ember.Mixin.create({
       // Get handlers array for specified event-name.
       let specifiedEventAttachedEventHandlers = Ember.get(attachedEventHandlers, eventName);
 
-      if (Ember.isArray(specifiedEventAttachedEventHandlers) && specifiedEventAttachedEventHandlers.contains(eventHandler)) {
+      if (Ember.isArray(specifiedEventAttachedEventHandlers) && specifiedEventAttachedEventHandlers.includes(eventHandler)) {
         // Remove handler from metadata.
         specifiedEventAttachedEventHandlers.removeObject(eventHandler);
 

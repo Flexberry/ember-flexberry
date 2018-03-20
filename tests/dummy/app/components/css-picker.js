@@ -104,7 +104,7 @@ export default Ember.Component.extend({
   _checkItems() {
     let classNames = Ember.A((this.get('value') || '').split(' '));
     this.get('_items').forEach((item) => {
-      Ember.set(item, 'checked', classNames.contains(item.name));
+      Ember.set(item, 'checked', classNames.includes(item.name));
     });
   }
 });

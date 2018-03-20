@@ -144,7 +144,7 @@ export default Ember.Controller.extend({
     // Force current locale to be one of available,
     // if browser's current language is not supported by dummy application,
     // or if browser's current locale is long value like 'ru-RU', 'en-GB', etc.
-    if (!availableLocales.contains(shortCurrentLocale)) {
+    if (!availableLocales.includes(shortCurrentLocale)) {
       i18n.set('locale', 'en');
     } else {
       i18n.set('locale', shortCurrentLocale);

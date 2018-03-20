@@ -156,8 +156,8 @@ export default Ember.Service.extend({
       let perfElems = document.elementsFromPoint(sizeWidth, sizeHeight).filter((item) => item.tagName === 'PERF').without(dataElement);
 
       if (perfElems.length) {
-        perfElem = perfElems.find((item) => item.classList.contains('nudger')) || perfElems[0];
-        isNudger = perfElem.classList.contains('nudger');
+        perfElem = perfElems.find((item) => item.classList.includes('nudger')) || perfElems[0];
+        isNudger = perfElem.classList.includes('nudger');
 
         if (isNudger) {
           nudgeCount = perfElem.getAttribute('data-nudge-count');

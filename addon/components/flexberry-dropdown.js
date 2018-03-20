@@ -171,7 +171,7 @@ export default FlexberryBaseComponent.extend({
         }
       }
 
-      if (!Ember.isBlank(stringValue) && !itemsArray.contains(stringValue)) {
+      if (!Ember.isBlank(stringValue) && !itemsArray.includes(stringValue)) {
         throw new Error(`Wrong value of flexberry-dropdown \`value\` property: \`${stringValue}\`. Allowed values are: [\`${itemsArray.join(`\`, \``)}\`].`);
       }
     }

@@ -83,7 +83,7 @@ export default Ember.Mixin.create({
       // Throw assertion failed exception, if action handler is not defined for required action.
       Ember.assert(
         `Handler for required \`${actionName}\` action is not defined in ${this}`,
-        !Ember.A(requiredActionNames).contains(actionName) || this._actionHandlerIsDefined({ actionName: actionName }));
+        !Ember.A(requiredActionNames).includes(actionName) || this._actionHandlerIsDefined({ actionName: actionName }));
 
     };
   }

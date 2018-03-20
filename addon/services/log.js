@@ -439,7 +439,7 @@ export default Ember.Service.extend(Ember.Evented, {
       });
     }
 
-    let appConfig = getOwner(this)._lookupFactory('config:environment');
+    let appConfig = getOwner(this).factoryFor('config:environment');
     let applicationLogProperties = {
       category: category.name,
       eventId: 0,

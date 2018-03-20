@@ -79,6 +79,7 @@ export default folv.extend(
     @default null
   */
   modelProjection: Ember.computed('_modelProjection', {
+    /* eslint-disable no-unused-vars */
     get(key) {
       return this.get('_modelProjection');
     },
@@ -98,6 +99,7 @@ export default folv.extend(
       this.set('_modelProjection', value);
       return value;
     },
+    /* eslint-enable no-unused-vars */
   }),
 
   sortTitle: t('components.object-list-view.header-title-attr'),
@@ -768,6 +770,7 @@ export default folv.extend(
       @param {DS.Model} recordWithKey A record with key
       @param {jQuery.Event} e jQuery.Event by click on row
     */
+    /* eslint-disable no-unused-vars */
     deleteRow(recordWithKey, e) {
 
       // TODO: rename recordWithKey. rename record in the template, where it is actually recordWithKey.
@@ -785,6 +788,7 @@ export default folv.extend(
 
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       This action is called when user select the row.
@@ -957,13 +961,15 @@ export default folv.extend(
       let userSettingsService = this.get('userSettingsService');
 
       switch (className) {
-        case 'table icon':
+        case 'table icon': {
           this.send('showConfigDialog');
           break;
-        case 'checkmark box icon':
+        }
+        case 'checkmark box icon': {
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
           let colsConfig = this.listNamedUserSettings[namedSetting];
+          /* eslint-disable no-unused-vars */
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
               if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
@@ -972,18 +978,24 @@ export default folv.extend(
                 this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: colsConfig.perPage || 5 } });  //Reload current page and records (model) list
               }
             });
+          /* eslint-enable no-unused-vars */
           break;
-        case 'setting icon':
+        }
+        case 'setting icon': {
           this.send('showConfigDialog', namedSetting);
           break;
-        case 'remove icon':
+        }
+        case 'remove icon': {
+          /* eslint-disable no-unused-vars */
           userSettingsService.deleteUserSetting(componentName, namedSetting)
           .then(result => {
             this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
             alert('Настройка ' + namedSetting + ' удалена');
           });
+          /* eslint-enable no-unused-vars */
           break;
-        case 'remove circle icon':
+        }
+        case 'remove circle icon': {
           if (!userSettingsService.haveDefaultUserSetting(componentName)) {
             alert('No default usersettings');
             break;
@@ -995,11 +1007,13 @@ export default folv.extend(
             this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
           });
           break;
-        case 'unhide icon':
+        }
+        case 'unhide icon': {
           let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
           let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
           this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
           break;
+        }
       }
     },
 
@@ -1034,22 +1048,26 @@ export default folv.extend(
           this.send('showExportDialog', namedSetting);
           break;
         case 'remove icon':
+          /* eslint-disable no-unused-vars */
           userSettingsService.deleteUserSetting(componentName, namedSetting, true)
           .then(result => {
             this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
             alert('Настройка ' + namedSetting + ' удалена');
           });
+          /* eslint-enable no-unused-vars */
           break;
       }
     },
 
-    copyJSONContent(event) {
+  /* eslint-disable no-unused-vars */
+  copyJSONContent(event) {
       Ember.$('#OLVToolbarInfoContent').select();
       let copied = document.execCommand('copy');
       let oLVToolbarInfoCopyButton = Ember.$('#OLVToolbarInfoCopyButton');
       oLVToolbarInfoCopyButton.get(0).innerHTML = this.get('i18n').t(copied ? 'components.olv-toolbar.copied' : 'components.olv-toolbar.ctrlc');
       oLVToolbarInfoCopyButton.addClass('disabled');
     },
+  /* eslint-enable no-unused-vars */
 
     /**
       Redirect action from FlexberryLookupComponent in the controller.
@@ -1078,6 +1096,7 @@ export default folv.extend(
       @public
       @param {jQuery.Event} e jQuery.Event by click on check all at page buttons
     */
+    /* eslint-disable no-unused-vars */
     checkAllAtPage(e) {
       if (this.get('allSelect')) {
         return;
@@ -1120,6 +1139,7 @@ export default folv.extend(
         this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       This action is called when click check all at all button.
@@ -1128,6 +1148,7 @@ export default folv.extend(
       @public
       @param {jQuery.Event} e jQuery.Event by click on ckeck all button
     */
+    /* eslint-disable no-unused-vars */
     checkAll(e) {
       let contentWithKeys = this.get('contentWithKeys');
 
@@ -1156,6 +1177,7 @@ export default folv.extend(
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       This action is called when click clear sorting button.
@@ -1164,6 +1186,7 @@ export default folv.extend(
       @public
       @param {jQuery.Event} e jQuery.Event by click on clear sorting button
     */
+    /* eslint-disable no-unused-vars */
     clearSorting(e) {
       let componentName = this.get('componentName');
       let userSettingsService = this.get('userSettingsService');
@@ -1184,6 +1207,7 @@ export default folv.extend(
         this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
       });
     }
+    /* eslint-enable no-unused-vars */
   },
 
   /**
@@ -1289,12 +1313,14 @@ export default folv.extend(
       };
 
       let someRecordWasSelected = false;
+      /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (this._getModelKey(recordWithData.data)) {
           someRecordWasSelected = true;
           this.send('selectRow', recordWithData, e);
         }
       });
+      /* eslint-enable no-unused-vars */
 
       if (!someRecordWasSelected && !this.get('allSelect')) {
         // Reset toolbar buttons enabled state.
@@ -1540,6 +1566,7 @@ export default folv.extend(
     @readOnly
   */
   columns: Ember.computed('modelProjection', 'enableFilters', 'columns.@each.index', {
+    /* eslint-disable no-unused-vars */
     get(key) {
       return this.get('_columns');
     },
@@ -1547,6 +1574,7 @@ export default folv.extend(
       this.set('_columns', value);
       return value;
     }
+    /* eslint-enable no-unused-vars */
   }),
 
   _setColumnsOrder() {
@@ -1717,7 +1745,7 @@ export default folv.extend(
         case 'hasMany':
           break;
 
-        case 'belongsTo':
+        case 'belongsTo': {
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
@@ -1736,8 +1764,9 @@ export default folv.extend(
           currentRelationshipPath += attrName + '.';
           this._generateColumns(attr.attributes, columnsBuf, currentRelationshipPath);
           break;
+        }
 
-        case 'attr':
+        case 'attr': {
           if (attr.options.hidden) {
             break;
           }
@@ -1746,6 +1775,7 @@ export default folv.extend(
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
+        }
       }
     }
 
@@ -1939,6 +1969,7 @@ export default folv.extend(
     @param {Boolean} relation
     @return {Object} Object with parameters for component.
   */
+  /* eslint-disable no-unused-vars */
   _getFilterComponent(type, relation) {
     let _this = this;
     let enterClick = function(e) {
@@ -1956,33 +1987,37 @@ export default folv.extend(
       case 'file':
         break;
 
-      case 'string':
+      case 'string': {
         component.name = 'flexberry-textbox';
         component.properties = Ember.$.extend(true, component.properties, {
           class: 'compact fluid',
         });
         break;
+      }
 
-      case 'number':
+      case 'number': {
         component.name = 'flexberry-textbox';
         component.properties = Ember.$.extend(true, component.properties, {
           class: 'compact fluid',
         });
         break;
+      }
 
-      case 'boolean':
+      case 'boolean': {
         component.name = 'flexberry-dropdown';
         component.properties = Ember.$.extend(true, component.properties, {
           items: ['true', 'false'],
           class: 'compact fluid',
         });
         break;
+      }
 
-      case 'date':
+      case 'date': {
         component.name = 'flexberry-textbox';
         break;
+      }
 
-      default:
+      default: {
         let transformInstance = Ember.getOwner(this).lookup('transform:' + type);
         let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
         if (transformClass && transformClass.isEnum) {
@@ -1994,10 +2029,12 @@ export default folv.extend(
         }
 
         break;
+      }
     }
 
     return component;
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Refresh list with the entered filter.
@@ -2114,11 +2151,13 @@ export default folv.extend(
     let componentName = this.get('componentName');
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
     if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (record === recordWithData.data) {
           modelWithKey.selected = true;
         }
       });
+      /* eslint-enable no-unused-vars */
     }
 
     this.get('contentForRender').pushObject(modelWithKey);
@@ -2163,11 +2202,13 @@ export default folv.extend(
     if (componentName === this.get('componentName')) {
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
+      /* eslint-disable no-unused-vars */
       selectedRecords.forEach((item, index, enumerable) => {
         Ember.run.once(this, function() {
           this._deleteRecord(item, immediately);
         });
       }, this);
+      /* eslint-enable no-unused-vars */
 
       selectedRecords.clear();
       this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
@@ -2182,11 +2223,13 @@ export default folv.extend(
     @param {String} componentName The name of objectlistview component
     @param {Integer} count Number of deleted records
   */
+  /* eslint-disable no-unused-vars */
   _rowsDeleted(componentName, count) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', false);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Delete the record.
@@ -2780,11 +2823,13 @@ export default folv.extend(
     @param {Boolean} checked Current state of row in objectlistview (checked or not)
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
+  /* eslint-disable no-unused-vars */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
   },
+  /* eslint-enable no-unused-vars */
 
   _updateListNamedUserSettings() {
     this._resetNamedUserSettings();
@@ -2829,9 +2874,11 @@ export default folv.extend(
     this._sortNamedSetting(isExportExcel);
   },
 
+  /* eslint-disable no-unused-vars */
   _deleteNamedSetting(namedSetting) {
     this._updateListNamedUserSettings();
   },
+  /* eslint-enable no-unused-vars */
 
   _sortNamedSetting(isExportExcel) {
     for (let i = 0; i < this.menus.length; i++) {

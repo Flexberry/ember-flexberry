@@ -632,9 +632,11 @@ export default Ember.Service.extend({
 
     this.currentUserSettings[this.currentAppPage][componentName][settingName] = userSetting;
     this.beforeParamUserSettings[this.currentAppPage] = JSON.parse(JSON.stringify(this.currentUserSettings[this.currentAppPage]));
+    /* eslint-disable no-unused-vars */
     if (!this.get('isUserSettingsServiceEnabled')) {
       return new Ember.RSVP.Promise((resolve, reject) => { resolve(); });
     }
+    /* eslint-enable no-unused-vars */
 
     let store = this.get('_store');
     let _this = this;

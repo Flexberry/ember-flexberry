@@ -11,6 +11,7 @@ import Ember from 'ember';
   @method emberRunAfter.initialize
   @param {<a href="http://emberjs.com/api/classes/Ember.Application.html">Ember.Application</a>} application Ember application.
 */
+/* eslint-disable no-unused-vars */
 export function initialize(application) {
   Ember.run.after = function(context, condition, handler) {
     let checkIntervalId;
@@ -46,6 +47,7 @@ export function initialize(application) {
     });
   };
 }
+/* eslint-enable no-unused-vars */
 
 export default {
   name: 'ember-run-after',

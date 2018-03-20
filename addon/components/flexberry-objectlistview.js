@@ -112,6 +112,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _inExpandMode: Ember.computed('currentController.inExpandMode', {
+    /* eslint-disable no-unused-vars */
     get(key) {
       return this.get('currentController.inExpandMode');
     },
@@ -119,6 +120,7 @@ export default FlexberryBaseComponent.extend({
       this.set('currentController.inExpandMode',  value);
       return value;
     }
+    /* eslint-enable no-unused-vars */
   }),
 
   /**
@@ -703,10 +705,12 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Object} column Column to sort by
     */
+    /* eslint-disable no-unused-vars */
     sortByColumn(column) {
       throw new Error('No handler for sortByColumn action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... sortByColumn=(action "sortByColumn")}}.');
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -715,10 +719,12 @@ export default FlexberryBaseComponent.extend({
       @public
       @param {Object} column Column to add sorting by
     */
+    /* eslint-disable no-unused-vars */
     addColumnToSorting(column) {
       throw new Error('No handler for addColumnToSorting action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... addColumnToSorting=(action "addColumnToSorting")}}.');
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Handles action from row click (action is handled at route so it can't be closure action now).
@@ -917,10 +923,12 @@ export default FlexberryBaseComponent.extend({
       @method actions.applyFilters
       @param {Array} filters Filters.
     */
+    /* eslint-disable no-unused-vars */
     applyFilters(filters) {
       throw new Error('No handler for applyFilters action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... applyFilters=(action "applyFilters")}}.');
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Dummy action handlers, overloaded in {{#crossLink "LimitedController"}}{{/crossLink}}.
@@ -943,10 +951,12 @@ export default FlexberryBaseComponent.extend({
       @method actions.filterByAnyMatch
       @param {String} The pattern to filter objects
     */
+    /* eslint-disable no-unused-vars */
     filterByAnyMatch(pattern) {
       throw new Error('No handler for filterByAnyMatch action set for flexberry-objectlistview. ' +
                       'Set handler like {{flexberry-objectlistview ... filterByAnyMatch=(action "filterByAnyMatch")}}.');
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Set availability hierarchical mode, and save the attribute name in controller.

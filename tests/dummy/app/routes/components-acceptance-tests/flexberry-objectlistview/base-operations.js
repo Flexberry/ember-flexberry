@@ -54,8 +54,10 @@ export default ListFormRoute.extend({
     @method onModelLoadingAlways.
     @param {Object} data Data about completed load operation.
    */
+  /* eslint-disable no-unused-vars */
   onModelLoadingAlways(data) {
     let loadCount = this.get('controller.loadCount') + 1;
     this.set('controller.loadCount', loadCount);
   },
+  /* eslint-enable no-unused-vars */
 });

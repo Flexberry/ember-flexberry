@@ -35,12 +35,14 @@ test('Component renders properly', function(assert) {
   let additioanlCssClasses = 'radio slider toggle';
   this.set('class', additioanlCssClasses);
 
+  /* eslint-disable no-unused-vars */
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
     'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('class', '');
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {

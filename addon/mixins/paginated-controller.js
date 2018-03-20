@@ -81,6 +81,7 @@ export default Ember.Mixin.create({
     @type Number
   */
   perPageValue: Ember.computed('perPage', {
+    /* eslint-disable no-unused-vars */
     get(key) {
       let perPage = this.get('perPage');
       /*let perPageValues = this.get('perPageValues');
@@ -114,6 +115,7 @@ export default Ember.Mixin.create({
 
       return perPage;
     }
+    /* eslint-enable no-unused-vars */
   }),
 
   /**

@@ -49,10 +49,12 @@ export default ListFormRoute.extend({
     @method objectListViewLimitPredicate
     @param {Object} options Method options..
    */
+  /* eslint-disable no-unused-vars */
   objectListViewLimitPredicate: function(options) {
     let limitFunction = new Query.SimplePredicate('address', Query.FilterOperator.Neq, undefined);
     return limitFunction;
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked always when load operation completed,
@@ -61,8 +63,10 @@ export default ListFormRoute.extend({
     @method onModelLoadingAlways.
     @param {Object} data Data about completed load operation.
    */
+  /* eslint-disable no-unused-vars */
   onModelLoadingAlways(data) {
     let loadCount = this.get('controller.loadCount') + 1;
     this.set('controller.loadCount', loadCount);
   },
+  /* eslint-enable no-unused-vars */
 });

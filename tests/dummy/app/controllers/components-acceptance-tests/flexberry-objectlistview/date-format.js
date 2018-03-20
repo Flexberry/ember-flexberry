@@ -158,35 +158,40 @@ export default ListFormController.extend({
 
   dateFormat: '1',
 
+  /* eslint-disable no-unused-vars */
   getCellComponent: function(attr, bindingPath, modelClass) {
     if (attr.kind === 'attr') {
       if (bindingPath === 'date') {
         switch (this.dateFormat) {
-          case '1':
+          case '1': {
             return {
               componentName: 'object-list-view-cell',
               componentProperties: {
                 dateFormat: 'YYYY-MM-DD'
               }
             };
-          case '2':
+          }
+          case '2': {
             return {
               componentName: 'object-list-view-cell',
               componentProperties: {
                 dateFormat: 'DD.MM.YYYY, hh:mm:ss'
               }
             };
-          case '3':
+          }
+          case '3': {
             return {
               componentName: 'object-list-view-cell',
               componentProperties: {
                 dateFormat: 'll'
               }
             };
+          }
         }
       }
     }
 
     return this._super(...arguments);
   }
+  /* eslint-enable no-unused-vars */
 });

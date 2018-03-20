@@ -220,6 +220,7 @@ export default ApplicationLogListFormController.extend({
     @return {Object} Object containing name & properties of component, which will be used to render current table cell.
     { componentName: 'my-component',  componentProperties: { ... } }.
   */
+  /* eslint-disable no-unused-vars */
   getCellComponent: function(attr, bindingPath, modelClass) {
     if (bindingPath === 'timestamp') {
       return {
@@ -232,6 +233,7 @@ export default ApplicationLogListFormController.extend({
 
     return this._super(...arguments);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Generates unique message prefix to avoid possible lost of same messages.

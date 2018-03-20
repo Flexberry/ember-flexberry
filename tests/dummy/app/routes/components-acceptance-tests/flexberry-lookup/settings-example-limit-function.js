@@ -34,6 +34,7 @@ export default EditFormRoute.extend({
 
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
     let store = this.get('store');
 
@@ -50,6 +51,7 @@ export default EditFormRoute.extend({
     });
 
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Load limit accessible values for lookup.

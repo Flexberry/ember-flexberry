@@ -92,6 +92,7 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     @return {Object} Object containing name & properties of component, which will be used to render current table cell
     ({ componentName: 'my-component',  componentProperties: { ... } }).
   */
+  /* eslint-disable no-unused-vars */
   getCellComponent(attr, bindingPath, modelClass) {
     let cellComponent = {
       componentName: undefined,
@@ -100,6 +101,7 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
 
     return cellComponent;
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before delete operation will be called.
@@ -163,6 +165,8 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
   */
+  /* eslint-disable no-unused-vars */
   onDeleteActionAlways(data) {
   }
+  /* eslint-enable no-unused-vars */
 });

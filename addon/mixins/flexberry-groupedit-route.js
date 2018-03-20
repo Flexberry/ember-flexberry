@@ -191,10 +191,12 @@ export default Ember.Mixin.create({
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {DS.Model} record The model corresponding to added row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
   */
+  /* eslint-disable no-unused-vars */
   _rowAdded(componentName, record) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Event handler for "row has been deleted" event in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
@@ -205,10 +207,12 @@ export default Ember.Mixin.create({
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {DS.Model} record The model corresponding to deleted row in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
   */
+  /* eslint-disable no-unused-vars */
   _rowDeleted(componentName, record) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Event handler for "model(s) corresponding to some row(s) was changed" event in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
@@ -218,8 +222,10 @@ export default Ember.Mixin.create({
 
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
   */
+  /* eslint-disable no-unused-vars */
   _rowChanged(componentName) {
     // Manually make record dirty, because ember-data does not do it when relationship changes.
     this.controller.get('model').makeDirty();
   }
+  /* eslint-enable no-unused-vars */
 });

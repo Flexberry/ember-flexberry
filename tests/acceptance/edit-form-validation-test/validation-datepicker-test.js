@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check operation datepicker', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -41,3 +42,4 @@ executeTest('check operation datepicker', (store, assert, app) => {
     }, 2000);
   });
 });
+/* eslint-enable no-unused-vars */

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check operation letter textbox', (store, assert, app) => {
   assert.expect(4);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -38,3 +39,4 @@ executeTest('check operation letter textbox', (store, assert, app) => {
     assert.equal($validationFlexberryErrorLable.text().trim(), '', 'letter textbox have >= 5 letter');
   });
 });
+/* eslint-enable no-unused-vars */

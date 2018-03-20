@@ -204,9 +204,11 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
   @param {String} [options.params] Current route query parameters
   @return {BasePredicate} The predicate to limit loaded data
   */
+  /* eslint-disable no-unused-vars */
   objectListViewLimitPredicate(options) {
     return undefined;
   },
+  /* eslint-enable no-unused-vars */
 
   actions: {
     /**

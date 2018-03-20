@@ -125,6 +125,7 @@ export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin,
 
   actions: {
     onButtonClick(e) {
+      // eslint-disable-next-line no-console
       console.log('Button clicked. Click event-object: ', e);
     }
   }

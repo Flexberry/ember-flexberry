@@ -104,6 +104,7 @@ export default ListFormRoute.extend({
     Returns model related to current route.
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
 
     let store = this.get('store');
@@ -118,6 +119,7 @@ export default ListFormRoute.extend({
 
     return this._super(...arguments);
   },
+  /* eslint-enable no-unused-vars */
 
   actions: {
     refreshModel: function() {

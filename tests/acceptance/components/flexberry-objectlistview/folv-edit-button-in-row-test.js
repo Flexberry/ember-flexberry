@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
 
 // Need to add sort by multiple columns.
+/* eslint-disable no-unused-vars */
 executeTest('check edit button in row', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
@@ -27,3 +28,4 @@ executeTest('check edit button in row', (store, assert, app) => {
     }, 1000);
   });
 });
+/* eslint-enable no-unused-vars */

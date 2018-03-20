@@ -370,9 +370,11 @@ FolvOnEditControllerMixin, {
         if (routeName.indexOf('.new') > 0) {
           let qpars = {};
           let queryParams = _this.get('queryParams');
+          /* eslint-disable no-unused-vars */
           queryParams.forEach(function(item, i, params) {
             qpars[item] = this.get(item);
           }, _this);
+          /* eslint-enable no-unused-vars */
           let transitionQuery = {};
           transitionQuery.queryParams = qpars;
           transitionQuery.queryParams.recordAdded = true;
@@ -546,8 +548,10 @@ FolvOnEditControllerMixin, {
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
   */
+  /* eslint-disable no-unused-vars */
   onSaveActionAlways(data) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before delete operation will be called.
@@ -614,8 +618,10 @@ FolvOnEditControllerMixin, {
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
   */
+  /* eslint-disable no-unused-vars */
   onDeleteActionAlways(data) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before close method will be called.
@@ -685,17 +691,23 @@ FolvOnEditControllerMixin, {
       case 'string':
       case 'number':
         break;
-      case 'boolean':
+      case 'boolean': {
         cellComponent.componentName = 'flexberry-checkbox';
         break;
-      case 'date':
+      }
+
+      case 'date': {
         cellComponent.componentName = 'flexberry-datepicker';
         break;
-      case 'file':
+      }
+
+      case 'file': {
         cellComponent.componentName = 'flexberry-file';
         cellComponent.componentProperties = { inputClass: 'fluid' };
         break;
-      default:
+      }
+
+      default: {
 
         // Current cell type is possibly custom transform.
         let transformInstance = getOwner(this).lookup('transform:' + modelAttr.type);
@@ -711,6 +723,7 @@ FolvOnEditControllerMixin, {
         }
 
         break;
+      }
     }
 
     return cellComponent;

@@ -55,6 +55,7 @@ export default ListFormRoute.extend({
   /**
     Performs loading of some existing address before model will be loaded.
   */
+  /* eslint-disable no-unused-vars */
   beforeModel(params) {
     if (this.get('controller.configurateRowByAddress')) {
       return;
@@ -78,6 +79,7 @@ export default ListFormRoute.extend({
       });
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Setups controller properties.

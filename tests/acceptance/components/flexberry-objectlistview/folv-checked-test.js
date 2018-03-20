@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { executeTest} from './execute-folv-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('test checking', (store, assert, app) => {
   assert.expect(2);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
@@ -23,3 +24,4 @@ executeTest('test checking', (store, assert, app) => {
     });
   });
 });
+/* eslint-enable no-unused-vars */

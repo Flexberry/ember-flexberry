@@ -35,12 +35,14 @@ executeTest('date format moment L', (store, assert, app) => {
 
         let indexDate = () => {
           let toReturn;
+          /* eslint-disable no-unused-vars */
           Object.keys($headRow).forEach((element, index, array) => {
             if (Ember.$.trim($headRow[element].innerText) === 'Date') {
               toReturn = index;
               return false;
             }
           });
+          /* eslint-enable no-unused-vars */
 
           return toReturn;
         };

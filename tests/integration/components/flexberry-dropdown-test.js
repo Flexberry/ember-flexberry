@@ -130,21 +130,25 @@ test('it renders properly', function(assert) {
   // Check wrapper's additional CSS-classes.
   let additioanlCssClasses = 'scrolling compact fluid';
   this.set('class', additioanlCssClasses);
+  /* eslint-disable no-unused-vars */
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
     'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   // Clean up wrapper's additional CSS-classes.
   this.set('class', '');
+  /* eslint-disable no-unused-vars */
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
     'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('it renders i18n-ed placeholder', function(assert) {

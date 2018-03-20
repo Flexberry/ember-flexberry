@@ -52,9 +52,11 @@ export default Ember.Mixin.create({
           }
         }
 
+        /* eslint-disable no-unused-vars */
         let recordsArrayinPromise = new Ember.RSVP.Promise((resolve, reject) => {
           resolve(sortRecordsArray);
         });
+        /* eslint-enable no-unused-vars */
 
         Ember.set(target, property, recordsArrayinPromise);
       }

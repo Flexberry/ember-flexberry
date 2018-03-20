@@ -6,6 +6,7 @@ export default Ember.Route.extend({
 
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
     var store = this.get('store');
 
@@ -13,4 +14,5 @@ export default Ember.Route.extend({
 
     return base;
   }
+  /* eslint-enable no-unused-vars */
 });

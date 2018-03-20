@@ -44,6 +44,7 @@ let expandCollapseTogglerWithStateChecks = function(assert, captions) {
   assert.strictEqual($componentContent.hasClass('active'), false);
   assert.strictEqual(Ember.$.trim($componentCaption.text()), collapsedCaption);
 
+  /* eslint-disable no-unused-vars */
   let expandAnimationCompleted = new Ember.RSVP.Promise((resolve, reject) => {
     // Try to expand component.
     // Semantic UI will start asynchronous animation after click, so we need Ember.run here.
@@ -71,6 +72,7 @@ let expandCollapseTogglerWithStateChecks = function(assert, captions) {
       }, animationDuration);
     });
   });
+  /* eslint-enable no-unused-vars */
 
   // Wait for expand animation to be completed (when resolve will be called inside previous timeout).
   // Then try to collapse component.
@@ -143,20 +145,24 @@ test('component renders properly', function(assert) {
   let additioanlCssClasses = 'firstClass secondClass';
   this.set('class', additioanlCssClasses);
 
+  /* eslint-disable no-unused-vars */
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
     'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('class', '');
+  /* eslint-disable no-unused-vars */
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
     'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('component\'s icon can be customized', function(assert) {

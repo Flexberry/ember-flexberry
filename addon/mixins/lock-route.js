@@ -49,6 +49,7 @@ export default Ember.Mixin.create({
       @method actions.willTransition
       @param {Transition} transition
     */
+    /* eslint-disable no-unused-vars */
     willTransition(transition) {
       this.set('_readonly', false);
       let lock = this.get('_currentLock');
@@ -62,6 +63,7 @@ export default Ember.Mixin.create({
         this.controller.set('readonly', false);
       }
     },
+    /* eslint-enable no-unused-vars */
   },
 
   /**
@@ -72,6 +74,7 @@ export default Ember.Mixin.create({
     @param {Transition} transition
     @return {Promise}
   */
+  /* eslint-disable no-unused-vars */
   beforeModel(transition) {
     let result = this._super(...arguments);
 
@@ -121,6 +124,7 @@ export default Ember.Mixin.create({
       });
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to setup the controller for the current route.
@@ -130,12 +134,14 @@ export default Ember.Mixin.create({
     @param {Controller} controller
     @param {Object} model
   */
+  /* eslint-disable no-unused-vars */
   setupController(controller, model) {
     this._super(...arguments);
     if (this.get('_readonly')) {
       controller.set('readonly', true);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This function will be called to solve open form read only or transition to parent route.
@@ -164,11 +170,13 @@ export default Ember.Mixin.create({
     @return {Promise}
     @for EditFormRoute
   */
+  /* eslint-disable no-unused-vars */
   openReadOnly(lockUserName) {
     return new Ember.RSVP.Promise((resolve) => {
       resolve(this.get('defaultBehaviorLock.openReadOnly'));
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This function will be called to solve unlock the object before form close.

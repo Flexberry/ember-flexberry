@@ -231,6 +231,8 @@ export default Ember.Service.extend({
               isQueueRendering = true;
 
               // console.profile();
+
+              // eslint-disable-next-line no-console
               console.timeStamp('Render queue running.');
               window.perf.startTime = timestamp;
             }
@@ -245,6 +247,8 @@ export default Ember.Service.extend({
               name: name,
               beforeInsertTime: Math.round(timestamp * 100) / 100
             };
+
+            // eslint-disable-next-line no-console
             console.time(name);
           }
         },
@@ -252,6 +256,8 @@ export default Ember.Service.extend({
         after(name, timestamp, payload) {
           let perfObject = window.perf.selection[payload.object];
           if (perfObject) {
+
+            // eslint-disable-next-line no-console
             console.timeEnd(perfObject.name);
 
             perfObject.afterInsertTime = Math.round(timestamp * 100) / 100;
@@ -283,7 +289,10 @@ export default Ember.Service.extend({
 
               // console.table(window.perf.results);
 
+            // eslint-disable-next-line no-console
               console.log('Render queue is flushed: ', window.perf.selectionRenderTime + 'ms');
+
+              // eslint-disable-next-line no-console
               console.timeStamp('Render queue is flushed: ', window.perf.selectionRenderTime + 'ms');
 
               // window.perf.results.forEach(result => console.log(result.totalRenderTime + 'ms', result.element))

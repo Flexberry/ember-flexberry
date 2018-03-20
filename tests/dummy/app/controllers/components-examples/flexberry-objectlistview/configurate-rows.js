@@ -88,10 +88,12 @@ export default ListFormController.extend({
   _configurateRowByAddress: Ember.observer('configurateRowByAddress', function() {
     let rowConfig = { customClass: '' };
 
+    /* eslint-disable no-unused-vars */
     this.get('records').forEach((record, index, records) => {
       this.send('configurateRow', rowConfig, record);
     });
-  }),
+    /* eslint-enable no-unused-vars */
+}),
 
   /**
     Template text for 'flexberry-objectlistview' component.

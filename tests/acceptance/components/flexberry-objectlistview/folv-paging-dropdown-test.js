@@ -1,3 +1,4 @@
+/* global $ */
 import Ember from 'ember';
 import { executeTest} from './execute-folv-test';
 import { addRecords, deleteRecords, refreshListByFunction } from './folv-tests-functions';

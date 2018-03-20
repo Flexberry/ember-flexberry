@@ -1,3 +1,4 @@
+/* global $ */
 import Ember from 'ember';
 
 import hbs from 'htmlbars-inline-precompile';

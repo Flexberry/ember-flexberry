@@ -107,7 +107,6 @@ ErrorableRouteMixin, {
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings') || {};
 
-    let nComponents = 0;
     let componentName;
     for (componentName in developerUserSettings) {
       let componentDesc = developerUserSettings[componentName];
@@ -121,7 +120,6 @@ ErrorableRouteMixin, {
           Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
             'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
       }
-      nComponents += 1;
     }
 
     userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
@@ -136,6 +134,7 @@ ErrorableRouteMixin, {
     @param {Object} params
     @param {Object} transition
    */
+  /* eslint-disable no-unused-vars */
   model(params, transition) {
     this._super.apply(this, arguments);
 
@@ -156,6 +155,7 @@ ErrorableRouteMixin, {
     // :id param defined in router.js
     return this.store.findRecord(modelName, params.id, findRecordParameters);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to reset controller values either when the model changes or the route is exiting.
@@ -166,6 +166,7 @@ ErrorableRouteMixin, {
     @param {Boolean} isExisting
     @param {Object} transition
    */
+  /* eslint-disable no-unused-vars */
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
     let modelCurrentAgregators = controller.get('modelCurrentAgregators');
@@ -199,6 +200,7 @@ ErrorableRouteMixin, {
       }
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to setup the controller for the current route.

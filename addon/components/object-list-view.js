@@ -71,6 +71,7 @@ export default FlexberryBaseComponent.extend(
     @default null
   */
   modelProjection: Ember.computed('_modelProjection', {
+    /* eslint-disable no-unused-vars */
     get(key) {
       return this.get('_modelProjection');
     },
@@ -90,6 +91,7 @@ export default FlexberryBaseComponent.extend(
       this.set('_modelProjection', value);
       return value;
     },
+    /* eslint-enable no-unused-vars */
   }),
 
   /**
@@ -900,6 +902,7 @@ export default FlexberryBaseComponent.extend(
       @param {DS.Model} recordWithKey A record with key
       @param {jQuery.Event} e jQuery.Event by click on row
     */
+    /* eslint-disable no-unused-vars */
     deleteRow(recordWithKey, e) {
 
       // TODO: rename recordWithKey. rename record in the template, where it is actually recordWithKey.
@@ -917,6 +920,7 @@ export default FlexberryBaseComponent.extend(
 
       this._deleteRecord(recordWithKey.data, this.get('immediateDelete'));
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       This action is called when user select the row.
@@ -957,6 +961,7 @@ export default FlexberryBaseComponent.extend(
       @public
       @param {jQuery.Event} e jQuery.Event by click on check all at page button
     */
+  /* eslint-disable no-unused-vars */
     checkAllAtPage(e) {
       if (this.get('allSelect')) {
         return;
@@ -999,6 +1004,7 @@ export default FlexberryBaseComponent.extend(
         this.get('objectlistviewEventsService').rowSelectedTrigger(componentName, recordWithKey.data, selectedRecords.length, checked, recordWithKey);
       }
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       This action is called when click check all at all button.
@@ -1007,6 +1013,7 @@ export default FlexberryBaseComponent.extend(
       @public
       @param {jQuery.Event} e jQuery.Event by click on ckeck all button
     */
+    /* eslint-disable no-unused-vars */
     checkAll(e) {
       let contentWithKeys = this.get('contentWithKeys');
 
@@ -1034,6 +1041,7 @@ export default FlexberryBaseComponent.extend(
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       This action is called when click clear sorting button.
@@ -1042,6 +1050,7 @@ export default FlexberryBaseComponent.extend(
       @public
       @param {jQuery.Event} e jQuery.Event by click on clear sorting button
     */
+    /* eslint-disable no-unused-vars */
     clearSorting(e) {
       let componentName = this.get('componentName');
       let userSettingsService = this.get('userSettingsService');
@@ -1069,6 +1078,7 @@ export default FlexberryBaseComponent.extend(
         }
       });
     }
+    /* eslint-enable no-unused-vars */
   },
 
   /**
@@ -1528,7 +1538,7 @@ export default FlexberryBaseComponent.extend(
         case 'hasMany':
           break;
 
-        case 'belongsTo':
+        case 'belongsTo': {
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
@@ -1547,8 +1557,9 @@ export default FlexberryBaseComponent.extend(
           currentRelationshipPath += attrName + '.';
           this._generateColumns(attr.attributes, columnsBuf, currentRelationshipPath);
           break;
+        }
 
-        case 'attr':
+        case 'attr': {
           if (attr.options.hidden) {
             break;
           }
@@ -1557,6 +1568,7 @@ export default FlexberryBaseComponent.extend(
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
+        }
       }
     }
 
@@ -1775,6 +1787,7 @@ export default FlexberryBaseComponent.extend(
     @param {Boolean} relation
     @return {Object} Object with parameters for component.
   */
+  /* eslint-disable no-unused-vars */
   _getFilterComponent(type, relation) {
     let _this = this;
     let enterClick = function(e) {
@@ -1792,33 +1805,37 @@ export default FlexberryBaseComponent.extend(
       case 'file':
         break;
 
-      case 'string':
+      case 'string':{
         component.name = 'flexberry-textbox';
         component.properties = Ember.$.extend(true, component.properties, {
           class: 'compact fluid',
         });
         break;
+      }
 
-      case 'number':
+      case 'number': {
         component.name = 'flexberry-textbox';
         component.properties = Ember.$.extend(true, component.properties, {
           class: 'compact fluid',
         });
         break;
+      }
 
-      case 'boolean':
+      case 'boolean': {
         component.name = 'flexberry-dropdown';
         component.properties = Ember.$.extend(true, component.properties, {
           items: ['true', 'false'],
           class: 'compact fluid',
         });
         break;
+      }
 
-      case 'date':
+      case 'date': {
         component.name = 'flexberry-textbox';
         break;
+      }
 
-      default:
+      default: {
         let transformInstance = Ember.getOwner(this).lookup('transform:' + type);
         let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
         if (transformClass && transformClass.isEnum) {
@@ -1830,10 +1847,12 @@ export default FlexberryBaseComponent.extend(
         }
 
         break;
+      }
     }
 
     return component;
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Sets content for component.
@@ -2013,11 +2032,13 @@ export default FlexberryBaseComponent.extend(
     let componentName = this.get('componentName');
     let selectedRecordsToRestore = this.get('objectlistviewEventsService').getSelectedRecords(componentName);
     if (selectedRecordsToRestore && selectedRecordsToRestore.size && selectedRecordsToRestore.size > 0) {
+      /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (record === recordWithData.data) {
           modelWithKey.selected = true;
         }
       });
+      /* eslint-enable no-unused-vars */
     }
 
     if (this.get('useRowByRowLoading')) {
@@ -2071,11 +2092,13 @@ export default FlexberryBaseComponent.extend(
     if (componentName === this.get('componentName')) {
       let selectedRecords = this.get('selectedRecords');
       let count = selectedRecords.length;
+      /* eslint-disable no-unused-vars */
       selectedRecords.forEach((item, index, enumerable) => {
         Ember.run.once(this, function() {
           this._deleteRecord(item, immediately);
         });
       }, this);
+      /* eslint-enable no-unused-vars */
 
       selectedRecords.clear();
       this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
@@ -2334,12 +2357,14 @@ export default FlexberryBaseComponent.extend(
       };
 
       let someRecordWasSelected = false;
+      /* eslint-disable no-unused-vars */
       selectedRecordsToRestore.forEach((recordWithData, key) => {
         if (this._getModelKey(recordWithData.data)) {
           someRecordWasSelected = true;
           this.send('selectRow', recordWithData, e);
         }
       });
+      /* eslint-enable no-unused-vars */
 
       if (!someRecordWasSelected && !this.get('allSelect')) {
         // Reset toolbar buttons enabled state.

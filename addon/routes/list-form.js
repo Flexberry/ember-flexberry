@@ -134,6 +134,7 @@ ErrorableRouteMixin, {
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
     let listComponentNames = userSettingsService.getListComponentNames();
     componentName = listComponentNames[0];
+    /* eslint-disable no-unused-vars */
     userSettingPromise
       .then(currectPageUserSettings => {
         if (params) {
@@ -194,6 +195,7 @@ ErrorableRouteMixin, {
           this.get('objectlistviewEventsService').setLoadingState('');
         }
       });
+    /* eslint-enable no-unused-vars */
 
     if (this.get('controller') === undefined) {
       return { isLoading: true };
@@ -223,8 +225,10 @@ ErrorableRouteMixin, {
     @param {Object} queryParameters Query parameters used for model loading operation.
     @param {Transition} transition Current transition object.
   */
+  /* eslint-disable no-unused-vars */
   onModelLoadingStarted(queryParameters, transition) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked when model loading operation successfully completed.
@@ -240,8 +244,10 @@ ErrorableRouteMixin, {
     @param {Object} model Loaded model data.
     @param {Transition} transition Current transition object.
   */
+  /* eslint-disable no-unused-vars */
   onModelLoadingFulfilled(model, transition) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked when model loading operation completed, but failed.
@@ -278,8 +284,10 @@ ErrorableRouteMixin, {
     @param {Object} data Data about completed model loading operation.
     @param {Transition} transition Current transition object.
   */
+  /* eslint-disable no-unused-vars */
   onModelLoadingAlways(data, transition) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to setup the controller for the current route.
@@ -289,6 +297,7 @@ ErrorableRouteMixin, {
     @param {<a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>} controller
     @param {Object} model
   */
+  /* eslint-disable no-unused-vars */
   setupController: function(controller, model) {
     this._super(...arguments);
     this.get('formLoadTimeTracker').set('startRenderTime', performance.now());
@@ -306,4 +315,5 @@ ErrorableRouteMixin, {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }
   },
+  /* eslint-enable no-unused-vars */
 });

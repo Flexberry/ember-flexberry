@@ -9,8 +9,10 @@ export default Ember.Route.extend({
     @param {<a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>} controller
     @param {Object} model
   */
+  /* eslint-disable no-unused-vars */
   setupController: function(controller, model) {
     this._super(...arguments);
     controller.getCounts();
   }
+  /* eslint-enable no-unused-vars */
 });

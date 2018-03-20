@@ -165,12 +165,14 @@ export default Ember.Mixin.create({
     @method onDeleteActionRejected.
     @param {Object} errorData Data about delete operation fail.
    */
+  /* eslint-disable no-unused-vars */
   onDeleteActionRejected(errorData, record) {
     this._super(...arguments);
 
     this.set('showFormSuccessMessage', false);
     this.set('showFormErrorMessage', true);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked always when delete operation completed,
@@ -179,7 +181,9 @@ export default Ember.Mixin.create({
     @method onDeleteActionAlways.
     @param {Object} data Data about completed delete operation.
    */
+  /* eslint-disable no-unused-vars */
   onDeleteActionAlways(data) {
     this._super(...arguments);
   }
+  /* eslint-enable no-unused-vars */
 });

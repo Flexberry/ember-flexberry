@@ -33,6 +33,7 @@ test('size renders properly', function(assert) {
 
   // Check component's syze's types.
   let sizeTypes = Ember.A(['small', 'large', 'huge', 'massive']);
+  /* eslint-disable no-unused-vars */
   sizeTypes.forEach((sizeCssClassName, index) => {
     this.set('size', sizeCssClassName);
     assert.strictEqual(
@@ -40,14 +41,17 @@ test('size renders properly', function(assert) {
       true,
       'Component\'s wrapper has size css-class \'' + sizeCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('size', '');
+  /* eslint-disable no-unused-vars */
   sizeTypes.forEach((sizeCssClassName, index) => {
     assert.strictEqual(
       $component.hasClass(sizeCssClassName),
       false,
       'Component\'s wrapper hasn\'t size css-class \'' + sizeCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('type renders properly', function(assert) {
@@ -63,6 +67,7 @@ test('type renders properly', function(assert) {
 
   // Check component's type's CSS-classes.
   let typeCssClasses = Ember.A(['warning', 'info', 'positive', 'success', 'negative', 'error']);
+  /* eslint-disable no-unused-vars */
   typeCssClasses.forEach((typeCssClassName, index) => {
     this.set('type', typeCssClassName);
     assert.strictEqual(
@@ -70,14 +75,17 @@ test('type renders properly', function(assert) {
       true,
       'Component\'s wrapper has type css-class \'' + typeCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('type', '');
+  /* eslint-disable no-unused-vars */
   typeCssClasses.forEach((typeCssClassName, index) => {
     assert.strictEqual(
       $component.hasClass(typeCssClassName),
       false,
       'Component\'s wrapper hasn\'t type css-class \'' + typeCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('color renders properly', function(assert) {
@@ -93,6 +101,7 @@ test('color renders properly', function(assert) {
 
   // Check component's color's CSS-classes.
   let colorCssClasses = Ember.A(['red', 'orange', 'yellow', 'olive', 'green', 'teal', 'blue', 'violet', 'purple', 'pink', 'brown', 'black']);
+  /* eslint-disable no-unused-vars */
   colorCssClasses.forEach((colorCssClassName, index) => {
     this.set('color', colorCssClassName);
     assert.strictEqual(
@@ -100,14 +109,17 @@ test('color renders properly', function(assert) {
       true,
       'Component\'s wrapper has color css-class \'' + colorCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   this.set('color', '');
+  /* eslint-disable no-unused-vars */
   colorCssClasses.forEach((colorCssClassName, index) => {
     assert.strictEqual(
       $component.hasClass(colorCssClassName),
       false,
       'Component\'s wrapper hasn\'t color css-class \'' + colorCssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('floating renders properly', function(assert) {

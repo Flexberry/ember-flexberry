@@ -185,6 +185,7 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
     let $component = this.$();
     let $componentInput = Ember.$('input', $component);
 
+    /* eslint-disable no-unused-vars */
     return new Ember.RSVP.Promise((resolve, reject) => {
       Ember.run(() => {
         ajaxMethodHasBeenCalled = false;
@@ -198,6 +199,7 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
         }, 300);
       });
     });
+    /* eslint-enable no-unused-vars */
   }).then(() => {
     // Check that store.query hasn\'t been called after focus.
     assert.strictEqual(ajaxMethodHasBeenCalled, false, '$.ajax hasn\'t been called after click on autocomplete lookup in readonly mode');

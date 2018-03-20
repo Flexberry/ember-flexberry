@@ -39,8 +39,10 @@ export default Ember.Mixin.create({
         });
       ```
     */
+    /* eslint-disable no-unused-vars */
     onTreenodeHeaderClick(...args) {
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Handles {{#crossLink "FlexberryTreenodeComponent/sendingActions.beforeExpand:method"}}flexberry-treenode component's 'beforeExpand' action{{/crossLink}}.
@@ -68,8 +70,10 @@ export default Ember.Mixin.create({
         });
       ```
     */
+    /* eslint-disable no-unused-vars */
     onTreenodeBeforeExpand(...args) {
     },
+    /* eslint-enable no-unused-vars */
 
     /**
       Handles {{#crossLink "FlexberryTreenodeComponent/sendingActions.beforeCollapse:method"}}flexberry-treenode component's 'beforeCollapse' action{{/crossLink}}.
@@ -97,7 +101,9 @@ export default Ember.Mixin.create({
         });
       ```
     */
+    /* eslint-disable no-unused-vars */
     onTreenodeBeforeCollapse(...args) {
     }
+    /* eslint-enable no-unused-vars */
   }
 });

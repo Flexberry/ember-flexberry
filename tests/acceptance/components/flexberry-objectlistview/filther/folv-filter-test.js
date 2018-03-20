@@ -36,11 +36,13 @@ executeTest('check filter', (store, assert, app) => {
         // Apply filter.
         let controller = app.__container__.lookup('controller:' + currentRouteName());
         let done1 = assert.async();
+        /* eslint-disable no-unused-vars */
         refreshListByFunction(refreshFunction, controller).then(($list) => {
           let filtherResult = controller.model.content;
           assert.equal(filtherResult.length >= 1, true, 'Filtered list is not empty');
           done1();
         });
+        /* eslint-enable no-unused-vars */
       });
     });
   });

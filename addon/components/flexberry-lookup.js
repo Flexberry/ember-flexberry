@@ -690,6 +690,7 @@ export default FlexberryBaseComponent.extend({
     @method _setModalIsVisible
     @private
   */
+  /* eslint-disable no-unused-vars */
   _setModalIsVisible(componentName, lookupDialog) {
     if (this.get('componentName') === componentName) {
       this.set('modalIsBeforeToShow', false);
@@ -697,6 +698,7 @@ export default FlexberryBaseComponent.extend({
       this.set('modalIsStartToShow', false);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Set the value for the property `modalIsShow`.
@@ -753,6 +755,7 @@ export default FlexberryBaseComponent.extend({
       maxResults: maxResults + 1,
       cache: false,
       templates: {
+        /* eslint-disable no-unused-vars */
         message: function(message, type) {
           return '<div class="message empty"><div class="header">' +
           i18n.t('components.flexberry-lookup.dropdown.messages.noResultsHeader').string +
@@ -760,6 +763,7 @@ export default FlexberryBaseComponent.extend({
           i18n.t('components.flexberry-lookup.dropdown.messages.noResults').string +
           '</div></div>';
         }
+        /* eslint-enable no-unused-vars */
       },
       apiSettings: {
         /**
@@ -922,7 +926,6 @@ export default FlexberryBaseComponent.extend({
       },
       apiSettings: {
         responseAsync(settings, callback) {
-          console.log('load');
           let builder = new Builder(store, relationModelName)
             .select(displayAttributeName)
             .orderBy(`${displayAttributeName} ${_this.get('sorting')}`);

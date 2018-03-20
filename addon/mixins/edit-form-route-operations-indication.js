@@ -70,10 +70,12 @@ export default Ember.Mixin.create({
     @param {Boolean} isExisting
     @param {Object} transition
    */
+  /* eslint-disable no-unused-vars */
   resetController: function(controller, isExisting, transition) {
     this._super.apply(this, arguments);
 
     controller.set('showFormSuccessMessage', false);
     controller.set('showFormErrorMessage', false);
   }
+  /* eslint-enable no-unused-vars */
 });

@@ -50,10 +50,12 @@ export default Ember.Controller.extend({
       Ember.$.ajax({
         type: 'GET',
         url: `${config.APP.backendUrls.api}/ClearLogRecords(dateTime='${stringedDate}')`,
+        /* eslint-disable no-unused-vars */
         success(result) {
           _this.set('queryInExecutingState', false);
           _this.getCounts();
         },
+        /* eslint-enable no-unused-vars */
         error(xhr, textStatus, errorThrown) {
           _this.set('queryInExecutingState', false);
           window.alert(`${textStatus} ${errorThrown} Please check browser error console.`);

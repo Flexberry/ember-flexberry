@@ -6,7 +6,9 @@ export default Ember.Route.extend({
 
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
     return this.get('store').createRecord('components-examples/flexberry-file/settings-example/base', {});
   }
+  /* eslint-enable no-unused-vars */
 });

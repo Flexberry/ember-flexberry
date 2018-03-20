@@ -254,6 +254,7 @@ export default Ember.Helper.extend({
     }
 
     let arrayObserver = {
+      /* eslint-disable no-unused-vars */
       arrayWillChange: (arr, start, removeCount, addCount) => {
         // Remove observers from removing properties (while properties still exists).
         if (removeCount !== 0) {
@@ -277,7 +278,9 @@ export default Ember.Helper.extend({
         }
 
       },
+      /* eslint-enable no-unused-vars */
 
+      /* eslint-disable no-unused-vars */
       arrayDidChange: (arr, start, removeCount, addCount) => {
         // Bind dynamic actions for added property, and rebind for following ones (till the end of array), or
         // rebind dynamic actions for properties following after removed ones (till the end of array).
@@ -295,6 +298,7 @@ export default Ember.Helper.extend({
           });
         }
       }
+      /* eslint-enable no-unused-vars */
     };
 
     let referenceObserver = () => {

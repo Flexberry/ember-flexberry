@@ -15,6 +15,7 @@ import SlotsMixin from 'ember-block-slots';
   @method blockSlots.initialize
   @param {<a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html">Ember.ApplicationInstance</a>} applicationInstance Ember application instance.
 */
+/* eslint-disable no-unused-vars */
 export function initialize(applicationInstance) {
   SlotsMixin.reopen({
     parentViewExcludingSlots: Ember.computed('parentView', 'targetObject', function() {
@@ -31,6 +32,7 @@ export function initialize(applicationInstance) {
     })
   });
 }
+/* eslint-enable no-unused-vars */
 
 export default {
   name: 'blockSlots',

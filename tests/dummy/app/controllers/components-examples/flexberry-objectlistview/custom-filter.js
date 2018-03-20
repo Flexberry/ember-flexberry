@@ -56,6 +56,7 @@ export default ListFormController.extend({
       }
     },
 
+    /* eslint-disable no-unused-vars */
     componentForFilter(type, relation) {
       switch (type) {
         case 'date': return { name: 'flexberry-datepicker' };
@@ -63,6 +64,7 @@ export default ListFormController.extend({
         default: return {};
       }
     },
+    /* eslint-enable no-unused-vars */
 
     conditionsByType(type) {
       switch (type) {

@@ -84,9 +84,11 @@ export default Ember.Mixin.create({
       this.refresh();
     },
 
+    /* eslint-disable no-unused-vars */
     saveAgregator(agregatorModel) {
       return false;
     }
+    /* eslint-enable no-unused-vars */
   },
 
   /**
@@ -139,7 +141,9 @@ export default Ember.Mixin.create({
   @param {String} [options.params] Current route query parameters
   @return {BasePredicate} The predicate to limit loaded data
   */
+  /* eslint-disable no-unused-vars */
   objectListViewLimitPredicate(options) {
     return undefined;
   }
+  /* eslint-enable no-unused-vars */
 });

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check operation checkbox', (store, assert, app) => {
   assert.expect(4);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -42,3 +43,4 @@ executeTest('check operation checkbox', (store, assert, app) => {
       'Checkbox\'s label have value after second click');
   });
 });
+/* eslint-enable no-unused-vars */

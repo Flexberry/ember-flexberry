@@ -24,6 +24,7 @@ export default EditFormRoute.extend({
 
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
     let store = this.get('store');
     let aggregator = store.createRecord('integration-examples/edit-form/readonly-mode/aggregator', {});
@@ -32,6 +33,7 @@ export default EditFormRoute.extend({
 
     return aggregator;
   },
+  /* eslint-enable no-unused-vars */
 
   /**
   developerUserSettings.

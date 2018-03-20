@@ -67,7 +67,7 @@ export default ListFormRoute.extend({
 
   predicateForAttribute(attribute, filter) {
     switch (attribute.type) {
-      case 'boolean':
+      case 'boolean': {
         let yes = ['TRUE', 'True', 'true', 'YES', 'Yes', 'yes', 'ДА', 'Да', 'да', '1', '+'];
         let no = ['False', 'False', 'false', 'NO', 'No', 'no', 'НЕТ', 'Нет', 'нет', '0', '-'];
 
@@ -80,9 +80,11 @@ export default ListFormRoute.extend({
         }
 
         return null;
+      }
 
-      default:
+      default: {
         return this._super(...arguments);
+      }
     }
   },
 
@@ -93,8 +95,10 @@ export default ListFormRoute.extend({
     @method onModelLoadingAlways.
     @param {Object} data Data about completed load operation.
    */
+  /* eslint-disable no-unused-vars */
   onModelLoadingAlways(data) {
     let loadCount = this.get('controller.loadCount') + 1;
     this.set('controller.loadCount', loadCount);
   },
+  /* eslint-enable no-unused-vars */
 });

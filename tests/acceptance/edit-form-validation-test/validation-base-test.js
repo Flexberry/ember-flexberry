@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check default value', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -20,3 +21,4 @@ executeTest('check default value', (store, assert, app) => {
     assert.equal($validationLi.length, 17, 'All components have default value in sixteenWide');
   });
 });
+/* eslint-enable no-unused-vars */

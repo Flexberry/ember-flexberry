@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check operation numeric textbox', (store, assert, app) => {
   assert.expect(4);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -38,3 +39,4 @@ executeTest('check operation numeric textbox', (store, assert, app) => {
     assert.equal($validationFlexberryErrorLable.text().trim(), '', 'Numeric textbox have odd value');
   });
 });
+/* eslint-enable no-unused-vars */

@@ -91,12 +91,14 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
       });
     },
 
+    /* eslint-disable no-unused-vars */
     componentForFilter(type, relation) {
       switch (type) {
         case 'string': return { name: 'flexberry-textbox', properties: { class: 'compact fluid' } };
         default: return {};
       }
     },
+    /* eslint-enable no-unused-vars */
 
     conditionsByType(type) {
       switch (type) {

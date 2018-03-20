@@ -34,11 +34,13 @@ executeTest('check wrapper and projection', (store, assert, app) => {
       let attrs = projectionName().attributes;
       let flag = true;
 
+      /* eslint-disable no-unused-vars */
       Object.keys(attrs).forEach((element, index, array) => {
         if (attrs[element].kind !== 'hasMany') {
           flag = flag && (Ember.$.trim(dtHeadTable[index].innerText) === attrs[element].caption);
         }
       });
+      /* eslint-enable no-unused-vars */
       assert.ok(flag, 'projection = columns names');
 
       let newProjectionName = 'SettingLookupExampleView';

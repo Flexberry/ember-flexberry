@@ -463,12 +463,15 @@ export default Ember.Service.extend(Ember.Evented, {
     // Break if message already exists in store (to avoid infinit loop when message is generated while saving itself).
     let applicationLogModel = store.peekAll(applicationLogModelName).findBy('message', message);
     if (applicationLogModel !== undefined) {
+      /* eslint-disable no-unused-vars */
       return new Ember.RSVP.Promise((resolve, reject) => {
         this._triggerEvent(category.name, applicationLogModel);
         resolve();
       });
+      /* eslint-enable no-unused-vars */
     }
 
+    /* eslint-disable no-unused-vars */
     return store.createRecord(applicationLogModelName, applicationLogProperties).save().then((applicationLogModel) => {
       this._triggerEvent(category.name, applicationLogModel);
       return applicationLogModel;
@@ -476,6 +479,7 @@ export default Ember.Service.extend(Ember.Evented, {
       // Switch off remote logging on rejection to avoid infinite loop.
       this.set('enabled', false);
     });
+    /* eslint-enable no-unused-vars */
   },
 
   _triggerEvent(eventName, applicationLogModel) {

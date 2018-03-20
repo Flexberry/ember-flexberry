@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { executeTest} from './execute-validation-test';
 
+/* eslint-disable no-unused-vars */
 executeTest('check detail delete', (store, assert, app) => {
   assert.expect(3);
   let path = 'components-acceptance-tests/edit-form-validation/validation';
@@ -30,3 +31,4 @@ executeTest('check detail delete', (store, assert, app) => {
     assert.equal($validationLablesContainer.length, 8, 'Detail was deleted without errors');
   });
 });
+/* eslint-enable no-unused-vars */

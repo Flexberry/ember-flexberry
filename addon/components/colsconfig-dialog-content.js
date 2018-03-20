@@ -371,6 +371,8 @@ export default FlexberryBaseComponent.extend({
         //Save colsConfig in userSettings as DEFAULT
         let router = getOwner(this).lookup('router:main');
         let savePromise = this._getSavePromise(undefined, colsConfig);
+
+        /* eslint-disable no-unused-vars */
         savePromise.then(
           record => {
             let sort = serializeSortingParam(colsConfig.sorting);
@@ -379,6 +381,7 @@ export default FlexberryBaseComponent.extend({
         ).catch((reason) => {
           this.currentController.send('handleError', reason);
         });
+        /* eslint-enable no-unused-vars */
 
         this.sendAction('close', colsConfig); // close modal window
       } else {
@@ -433,6 +436,8 @@ export default FlexberryBaseComponent.extend({
       let colsConfig = this._getSettings();
       let savePromise = this._getSavePromise(settingName, colsConfig);
       this.get('colsConfigMenu').addNamedSettingTrigger(settingName);
+
+      /* eslint-disable no-unused-vars */
       savePromise.then(
         record => {
           this.set('currentController.message.type', 'success');
@@ -453,6 +458,7 @@ export default FlexberryBaseComponent.extend({
           this.currentController.send('handleError', error);
         }
       );
+      /* eslint-enable no-unused-vars */
     },
 
     /**
@@ -500,10 +506,13 @@ export default FlexberryBaseComponent.extend({
       this._changed();
     },
 
+    /* eslint-disable no-unused-vars */
     handleError(error) {
       this._super(...arguments);
       return true;
     }
+    /* eslint-enable no-unused-vars */
+
   },
 
   /**
@@ -547,12 +556,14 @@ export default FlexberryBaseComponent.extend({
     return query;
   },
 
+  /* eslint-disable no-unused-vars */
   _getSavePromise: function(settingName, colsConfig) {
     return this.get('userSettingsService').saveUserSetting(this.componentName, settingName, colsConfig, this.exportParams.isExportExcel)
     .then(result => {
       this.get('colsConfigMenu').updateNamedSettingTrigger();
     });
   },
+  /* eslint-enable no-unused-vars */
 
   _getSettings: function() {
     let trs = Ember.$('#colsConfigtableRows').children('TR');

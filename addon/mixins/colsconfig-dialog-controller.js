@@ -32,9 +32,11 @@ export default Ember.Mixin.create({
       this.set('_openedModalDialog', modalDialog);
     },
 
+    /* eslint-disable no-unused-vars */
     sortByColumnsConfig: function (colsConfig) {
       this.closeModalDialog();
     }
+    /* eslint-enable no-unused-vars */
   },
 
   /**

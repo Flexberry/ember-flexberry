@@ -750,9 +750,11 @@ export default FlexberryBaseComponent.extend({
     return errorContent;
   },
 
+  /* eslint-disable no-unused-vars */
   previewError(fileName) {
     this.set('_canLoadPreview', false);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Shows file size errors if there were some.
@@ -938,6 +940,8 @@ export default FlexberryBaseComponent.extend({
     if (!Ember.isBlank(previewUrl)) {
       // Download file preview.
       this.set('_previewDownloadIsInProgress', true);
+
+      /* eslint-disable no-unused-vars */
       Ember.$.ajax(previewUrl).done((data, textStatus, jqXHR) => {
         this.set('_previewImageAsBase64String', data);
       }).fail((jqXHR, textStatus, errorThrown) => {
@@ -945,6 +949,7 @@ export default FlexberryBaseComponent.extend({
       }).always(() => {
         this.set('_previewDownloadIsInProgress', false);
       });
+      /* eslint-enable no-unused-vars */
     }
   }))
 });

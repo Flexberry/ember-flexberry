@@ -533,47 +533,64 @@ export default FlexberryBaseComponent.extend({
       let userSettingsService = this.get('userSettingsService');
 
       switch (className) {
-        case 'table icon':
+        case 'table icon': {
           this.send('showConfigDialog');
           break;
-        case 'checkmark box icon':
+        }
+
+        case 'checkmark box icon': {
 
           //TODO move this code and  _getSavePromise@addon/components/colsconfig-dialog-content.js to addon/components/colsconfig-dialog-content.js
           let colsConfig = this.listNamedUserSettings[namedSetting];
+          /* eslint-disable no-unused-vars */
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
               let sort = serializeSortingParam(colsConfig.sorting);
               this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
             });
+          /* eslint-enable no-unused-vars */
           break;
-        case 'setting icon':
+        }
+
+        case 'setting icon': {
           this.send('showConfigDialog', namedSetting);
           break;
-        case 'remove icon':
+        }
+
+        case 'remove icon': {
+          /* eslint-disable no-unused-vars */
           userSettingsService.deleteUserSetting(componentName, namedSetting)
           .then(result => {
             this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
             alert('Настройка ' + namedSetting + ' удалена');
           });
+          /* eslint-enable no-unused-vars */
           break;
-        case 'remove circle icon':
+        }
+
+        case 'remove circle icon': {
           if (!userSettingsService.haveDefaultUserSetting(componentName)) {
             alert('No default usersettings');
             break;
           }
 
           let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
+          /* eslint-disable no-unused-vars */
           userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
           .then(record => {
             let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
             this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
           });
+          /* eslint-enable no-unused-vars */
           break;
-        case 'unhide icon':
+        }
+
+        case 'unhide icon': {
           let currentUserSetting = userSettingsService.getListCurrentUserSetting(this.componentName);
           let caption = this.get('i18n').t('components.olv-toolbar.show-setting-caption') + this._router.currentPath + '.js';
           this.showInfoModalDialog(caption, JSON.stringify(currentUserSetting, undefined, '  '));
           break;
+        }
       }
     },
 
@@ -598,22 +615,31 @@ export default FlexberryBaseComponent.extend({
       let userSettingsService = this.get('userSettingsService');
 
       switch (className) {
-        case 'file excel outline icon':
+        case 'file excel outline icon': {
           this.send('showExportDialog');
           break;
-        case 'checkmark box icon':
+        }
+
+        case 'checkmark box icon': {
           this.send('showExportDialog', namedSetting, true);
           break;
-        case 'setting icon':
+        }
+
+        case 'setting icon': {
           this.send('showExportDialog', namedSetting);
           break;
-        case 'remove icon':
+        }
+
+        case 'remove icon': {
+          /* eslint-disable no-unused-vars */
           userSettingsService.deleteUserSetting(componentName, namedSetting, true)
           .then(result => {
             this.get('colsConfigMenu').deleteNamedSettingTrigger(namedSetting);
             alert('Настройка ' + namedSetting + ' удалена');
           });
+          /* eslint-enable no-unused-vars */
           break;
+        }
       }
     },
 
@@ -689,11 +715,13 @@ export default FlexberryBaseComponent.extend({
     @param {Boolean} checked Current state of row in objectlistview (checked or not)
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
+  /* eslint-disable no-unused-vars */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', count > 0 && this.get('enableDeleteButton'));
     }
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Handler for "Olv rows deleted" event in objectlistview.
@@ -703,11 +731,13 @@ export default FlexberryBaseComponent.extend({
     @param {String} componentName The name of objectlistview component
     @param {Integer} count Number of deleted records
   */
+  /* eslint-disable no-unused-vars */
   _rowsDeleted(componentName, count) {
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', false);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   _updateListNamedUserSettings() {
     this._resetNamedUserSettings();
@@ -752,9 +782,11 @@ export default FlexberryBaseComponent.extend({
     this._sortNamedSetting(isExportExcel);
   },
 
+  /* eslint-disable no-unused-vars */
   _deleteNamedSetting(namedSetting) {
     this._updateListNamedUserSettings();
   },
+  /* eslint-enable no-unused-vars */
 
   _selectAll(componentName, selectAllParameter) {
     if (componentName === this.componentName)

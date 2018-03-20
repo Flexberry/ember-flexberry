@@ -201,7 +201,7 @@ export default Ember.Mixin.create({
       let attr = attributes[attrName];
       Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
-        case 'hasMany':
+        case 'hasMany': {
           if (isExportExcel && !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath, true);
@@ -209,8 +209,9 @@ export default Ember.Mixin.create({
           }
 
           break;
+        }
 
-        case 'belongsTo':
+        case 'belongsTo': {
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
@@ -229,8 +230,9 @@ export default Ember.Mixin.create({
           currentRelationshipPath += attrName + '.';
           this._generateColumns(attr.attributes, isExportExcel, columnsBuf, currentRelationshipPath);
           break;
+        }
 
-        case 'attr':
+        case 'attr': {
           if (attr.options.hidden) {
             break;
           }
@@ -239,6 +241,7 @@ export default Ember.Mixin.create({
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
+        }
       }
     }
 

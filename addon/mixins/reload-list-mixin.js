@@ -202,7 +202,7 @@ export default Ember.Mixin.create({
     }
 
     switch (attribute.type) {
-      case 'string':
+      case 'string': {
         let words = filter.trim().replace(/\s+/g, ' ').split(' ');
         if (filterCondition && words.length > 1) {
           let predicates = words.map(word => new StringPredicate(attribute.name).contains(word));
@@ -210,23 +210,26 @@ export default Ember.Mixin.create({
         }
 
         return new StringPredicate(attribute.name).contains(filter);
+      }
 
-      case 'number':
+      case 'number': {
         if (isFinite(filter)) {
           return new SimplePredicate(attribute.name, 'eq', +filter);
         }
 
         return null;
+      }
 
-      case 'decimal':
+      case 'decimal': {
         filter = filter.replace(',', '.');
         if (isFinite(filter)) {
           return new SimplePredicate(attribute.name, 'eq', +filter);
         }
 
         return null;
+      }
 
-      case 'boolean':
+      case 'boolean': {
         let yes = ['TRUE', 'True', 'true', 'YES', 'Yes', 'yes', 'ДА', 'Да', 'да', '1', '+'];
         let no = ['False', 'False', 'false', 'NO', 'No', 'no', 'НЕТ', 'Нет', 'нет', '0', '-'];
 
@@ -239,9 +242,11 @@ export default Ember.Mixin.create({
         }
 
         return null;
+      }
 
-      default:
+      default: {
         return null;
+      }
     }
   },
 

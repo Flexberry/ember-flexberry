@@ -17,7 +17,7 @@ executeTest('check neq filter', (store, assert, app) => {
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertParametr = arr.objectAt(0).get('address');
-      if(!filtreInsertParametr) {
+      if (!filtreInsertParametr) {
         assert.ok(false, 'Empty data');
       }
     }).then(function() {

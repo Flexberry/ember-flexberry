@@ -18,7 +18,7 @@ executeTest('check without operation filter', (store, assert, app) => {
       let arr = result.toArray();
       filtreInsertParametr = arr.objectAt(0).get('address');
       filtreInsertParametr = filtreInsertParametr.slice(1, filtreInsertParametr.length);
-      if(!filtreInsertParametr) {
+      if (!filtreInsertParametr) {
         assert.ok(false, 'Empty data');
       }
     }).then(function() {

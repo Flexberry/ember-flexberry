@@ -546,7 +546,7 @@ export default FlexberryBaseComponent.extend({
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
               let sort = serializeSortingParam(colsConfig.sorting);
-              this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
+              this._router._routerMicrolib.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
             });
           /* eslint-enable no-unused-vars */
           break;
@@ -579,7 +579,7 @@ export default FlexberryBaseComponent.extend({
           userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting)
           .then(record => {
             let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+            this._router._routerMicrolib.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
           });
           /* eslint-enable no-unused-vars */
           break;

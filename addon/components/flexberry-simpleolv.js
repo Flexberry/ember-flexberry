@@ -973,9 +973,9 @@ export default folv.extend(
           userSettingsService.saveUserSetting(this.componentName, undefined, colsConfig).
             then(record => {
               if (this._router.location.location.href.indexOf('sort=') >= 0) { // sort parameter exist in URL (ugly - TODO find sort in query parameters)
-                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: colsConfig.perPage || 5 } }); // Show page without sort parameters
+                this._router._routerMicrolib.transitionTo(this._router.currentRouteName, { queryParams: { sort: null, perPage: colsConfig.perPage || 5 } }); // Show page without sort parameters
               } else {
-                this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { perPage: colsConfig.perPage || 5 } });  //Reload current page and records (model) list
+                this._router._routerMicrolib.transitionTo(this._router.currentRouteName, { queryParams: { perPage: colsConfig.perPage || 5 } });  //Reload current page and records (model) list
               }
             });
           /* eslint-enable no-unused-vars */
@@ -1004,7 +1004,7 @@ export default folv.extend(
           let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
           userSettingsService.saveUserSetting(componentName, undefined, defaultDeveloperUserSetting).then(() => {
             let sort = serializeSortingParam(defaultDeveloperUserSetting.sorting);
-            this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
+            this._router._routerMicrolib.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort, perPage: 5 } });
           });
           break;
         }
@@ -1204,7 +1204,7 @@ export default folv.extend(
       userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {
         let sort = serializeSortingParam(currentUserSetting.sorting);
-        this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+        this._router._routerMicrolib.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
       });
     }
     /* eslint-enable no-unused-vars */

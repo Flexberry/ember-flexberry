@@ -1070,7 +1070,7 @@ export default FlexberryBaseComponent.extend(
         if (this.get('class') !== 'groupedit-container')
         {
           let sort = serializeSortingParam(currentUserSetting.sorting);
-          this._router.router.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
+          this._router._routerMicrolib.transitionTo(this._router.currentRouteName, { queryParams: { sort: sort } });
         } else {
           this.set('sorting', currentUserSetting.sorting);
           let objectlistviewEventsService = this.get('objectlistviewEventsService');

@@ -172,7 +172,7 @@ export default Ember.Component.extend({
 
     let userSettings = this.get('userSettingsService');
     let settingName = 'togglerStatus';
-    let currentStatus = userSettings.getToggleStatus(componentName);
+    let currentStatus = userSettings.getToggleStatus(componentName, settingName);
     let expanded = this.get('expanded');
 
     if (expanded !== currentStatus) {

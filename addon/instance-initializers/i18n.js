@@ -18,7 +18,7 @@ export function initialize(applicationInstance) {
     return;
   }
 
-  let ENV = applicationInstance._lookupFactory('config:environment');
+  let ENV = applicationInstance.factoryFor('config:environment').class;
   let defaultLocale = (ENV.i18n || {}).defaultLocale;
   let currentLocale = defaultLocale;
 

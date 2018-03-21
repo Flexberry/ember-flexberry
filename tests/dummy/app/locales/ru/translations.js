@@ -50,6 +50,33 @@ Ember.$.extend(true, translations, {
           'address': {
             __caption__: 'Адрес'
           },
+          'text': {
+            __caption__: 'Текст'
+          },
+          'date': {
+            __caption__: 'Дата'
+          },
+          'votes': {
+            __caption__: 'Голоса'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'type': {
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+          'author': {
+            'name': {
+              __caption__: 'Автор'
+            },
+          },
+          'editor1': {
+            'name': {
+              __caption__: 'Редактор'
+            },
+          },
           'userVotes': {
             'name': {
               __caption__: 'Наименование'

@@ -6,7 +6,7 @@ import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 
 // Need to add sort by multiple columns.
 executeTest('check sorting', (store, assert, app) => {
-  assert.expect(9);
+  assert.expect(14);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
   andThen(() => {
@@ -29,6 +29,7 @@ executeTest('check sorting', (store, assert, app) => {
 
           // Check sortihg icon in the first column. Sorting icon is not added.
           assert.equal($thead.children[0].children.length, 1, 'no sorting icon in the first column');
+          assert.equal(controller.sort, undefined, 'no sorting in URL');
 
           // Refresh function.
           let refreshFunction =  function() {
@@ -43,6 +44,7 @@ executeTest('check sorting', (store, assert, app) => {
 
             assert.equal($divOrd.attr('title'), Ember.get(I18nRuLocale, 'components.object-list-view.sort-ascending'), 'title is Order ascending');
             assert.equal(Ember.$.trim($divOrd.text()), String.fromCharCode('9650') + '1', 'sorting symbol added');
+            assert.equal(controller.sort, '+address', 'up sorting in URL');
 
             let done2 = assert.async();
             checkSortingList(store, projectionName, $olv, 'address asc').then((isTrue) => {
@@ -55,10 +57,22 @@ executeTest('check sorting', (store, assert, app) => {
 
                 assert.equal($divOrd.attr('title'), Ember.get(I18nRuLocale, 'components.object-list-view.sort-descending'), 'title is Order descending');
                 assert.equal(Ember.$.trim($divOrd.text()), String.fromCharCode('9660') + '1', 'sorting symbol changed');
+                assert.equal(controller.sort, '-address', 'down sorting in URL');
 
                 let done4 = assert.async();
                 checkSortingList(store, projectionName, $olv, 'address desc').then((isTrue) => {
                   assert.ok(isTrue, 'sorting applied');
+
+                  let done5 = assert.async();
+                  refreshListByFunction(refreshFunction, controller).then(() => {
+                    assert.equal(controller.sort, '!address', 'no sorting in URL');
+                    let done6 = assert.async();
+                    refreshListByFunction(refreshFunction, controller).then(() => {
+                      assert.equal(controller.sort, '+address', 'up sorting in URL');
+                      done6();
+                    });
+                    done5();
+                  });
                   done4();
                 });
               }).finally(() => {

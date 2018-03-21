@@ -122,7 +122,7 @@ export default Ember.Component.extend({
   */
   didInsertElement() {
     this.loadStatus();
-    console.log(this.get('expanded'));
+
     let $accordeonDomElement = this.$();
 
     // Attach semantic-ui open/close callbacks.
@@ -147,6 +147,10 @@ export default Ember.Component.extend({
     });
   },
 
+  didRender() {
+
+  },
+
   /**
     Destroys DOM-related component's properties.
   */
@@ -158,14 +162,21 @@ export default Ember.Component.extend({
   },
 
   /**
-    Saves toggler status to user service.
+    Saves toggler status to user service. Only if componentName specified.
   */
   saveStatus() {
-    var userSettings = this.get('userSettingsService');
-    var expanded = this.get('expanded');
+    let componentName = this.get('componentName');
+    if (!Ember.isPresent(componentName)) {
+      return;
+    }
 
-    if (expanded !== userSettings.getToggleStatus(this.componentName)) {
-      userSettings.setToggleStatus(this.componentName, expanded);
+    let userSettings = this.get('userSettingsService');
+    let settingName = 'togglerStatus';
+    let currentStatus = userSettings.getToggleStatus(componentName);
+    let expanded = this.get('expanded');
+
+    if (expanded !== currentStatus) {
+      userSettings.setToggleStatus(this.componentName, settingName, expanded);
     }
   },
 
@@ -173,10 +184,18 @@ export default Ember.Component.extend({
     Loads toggler status from user service.
   */
   loadStatus() {
+    let componentName = this.get('componentName');
+    if (!Ember.isPresent(componentName)) {
+      return;
+    }
+
     var userSettings = this.get('userSettingsService');
-    var status = userSettings.getToggleStatus(this.componentName);
-    if (status !== null) {
-      this.set('expanded', status);
+    let settingName = 'togglerStatus';
+    var currentStatus = userSettings.getToggleStatus(componentName, settingName);
+    let expanded = this.get('expanded');
+
+    if (currentStatus !== null && expanded !== currentStatus) {
+      this.set('expanded', currentStatus);
     }
   }
 });

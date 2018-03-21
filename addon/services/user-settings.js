@@ -9,7 +9,7 @@ import deserializeSortingParam from '../utils/deserialize-sorting-param';
 const { Builder, SimplePredicate, ComplexPredicate } = Query;
 
 const defaultSettingName = 'DEFAULT';
-const defaultToggleSettingName = 'toggleStatus';
+
 /**
   Service to store/read user settings to/from application storage.
 
@@ -567,9 +567,12 @@ export default Ember.Service.extend({
    @param {String} componentName Name of component.
    @param {Boolean} toggleStatus Status to save.
    */
-  setToggleStatus(componentName, toggleStatus) {
+  setToggleStatus(componentName, settingName, toggleStatus) {
     let userSetting;
-    let settingName = defaultToggleSettingName;
+
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
 
     if (this.exists() &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
@@ -580,7 +583,7 @@ export default Ember.Service.extend({
       userSetting = {};
     }
 
-    userSetting.toggleStatus = toggleStatus;
+    userSetting.togglerStatus = toggleStatus;
     if (this.isUserSettingsServiceEnabled) {
       this.saveUserSetting(componentName, settingName, userSetting);
     }
@@ -593,11 +596,14 @@ export default Ember.Service.extend({
    @param {String} componentName component Name to search by.
    @return {Boolean} Saved status.
    */
-  getToggleStatus(componentName) {
-    let settingName = defaultToggleSettingName;
+  getToggleStatus(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
 
-    return currentUserSetting && 'toggleStatus' in currentUserSetting ? currentUserSetting.toggleStatus : null;
+    return currentUserSetting && 'togglerStatus' in currentUserSetting ? currentUserSetting.toggleStatus : null;
   },
 
   /**

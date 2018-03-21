@@ -13,8 +13,6 @@ executeTest('check checkbox at editform', (store, assert, app) => {
     let $trTableBody = Ember.$('table.object-list-view tbody tr', $folvContainer);
     let $cell = $trTableBody[0].children[1];
 
-    $cell.click();
-
     let timeout = 500;
     Ember.run.later((function() {
       controller.set('rowClickable', true);

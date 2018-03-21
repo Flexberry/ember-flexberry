@@ -15,7 +15,6 @@ executeTest('check goto editform', (store, assert, app) => {
     let $cell = $trTableBody[0].children[1];
 
     assert.equal(currentPath(), path, 'edit form not open');
-    $cell.click();
 
     let timeout = 500;
     Ember.run.later((function() {

@@ -104,7 +104,7 @@ export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
     @property jsonTreeComponentTemplateText
     @type String
   */
-  jsonTreeComponentTemplateText: new Ember.Handlebars.SafeString(
+  jsonTreeComponentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-tree<br>' +
     '  class=jsonTreeClass<br>' +
     '  exclusive=jsonTreeExclusive<br>' +

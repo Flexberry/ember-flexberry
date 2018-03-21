@@ -73,7 +73,7 @@ let FlexberryButtonComponent = Ember.Component.extend(
       let caption = this.get('caption');
       return Ember.typeOf(caption) === 'string' && Ember.$.trim(caption) !== '' ||
         Ember.typeOf(Ember.String.isHTMLSafe) === 'function' && Ember.String.isHTMLSafe(caption) && Ember.$.trim(Ember.get(caption, 'string')) !== '' ||
-        caption instanceof Ember.Handlebars.SafeString && Ember.$.trim(Ember.get(caption, 'string')) !== '';
+        caption instanceof Ember.String.htmlSafe && Ember.$.trim(Ember.get(caption, 'string')) !== '';
     }),
 
     /**

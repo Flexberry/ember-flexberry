@@ -30,7 +30,7 @@ export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin,
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
+  componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-ddau-checkbox<br>' +
     '  class=class<br>' +
     '  value=model.flag<br>' +

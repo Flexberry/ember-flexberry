@@ -92,7 +92,7 @@ export default Ember.Mixin.create({
       message = i18n.t('forms.list-form.load-success-message');
     }
 
-    return new Ember.Handlebars.SafeString('<ul><li>' + message + '</li></ul>');
+    return new Ember.String.htmlSafe('<ul><li>' + message + '</li></ul>');
   }),
 
   /**
@@ -133,7 +133,7 @@ export default Ember.Mixin.create({
       });
     }
 
-    return new Ember.Handlebars.SafeString('<ul>' + message + '</ul>');
+    return new Ember.String.htmlSafe('<ul>' + message + '</ul>');
   }),
 
   /**

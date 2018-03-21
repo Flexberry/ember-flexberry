@@ -113,6 +113,15 @@ export default Ember.Component.extend({
   */
   duration: 350,
 
+  /**
+  Toggler status setting name.
+
+    @property settingName
+    @type String
+    @default togglerStatus
+  */
+  settingName: 'togglerStatus',
+
   expandedChanged: Ember.observer('expanded', function() {
     this.saveStatus();
   }),
@@ -171,12 +180,12 @@ export default Ember.Component.extend({
     }
 
     let userSettings = this.get('userSettingsService');
-    let settingName = 'togglerStatus';
-    let currentStatus = userSettings.getToggleStatus(componentName, settingName);
+    let settingName = this.get('settingName');
+    let currentStatus = userSettings.getTogglerStatus(componentName, settingName);
     let expanded = this.get('expanded');
 
     if (expanded !== currentStatus) {
-      userSettings.setToggleStatus(this.componentName, settingName, expanded);
+      userSettings.setTogglerStatus(componentName, settingName, expanded);
     }
   },
 
@@ -190,8 +199,8 @@ export default Ember.Component.extend({
     }
 
     var userSettings = this.get('userSettingsService');
-    let settingName = 'togglerStatus';
-    var currentStatus = userSettings.getToggleStatus(componentName, settingName);
+    let settingName = this.get('settingName');
+    var currentStatus = userSettings.getTogglerStatus(componentName, settingName);
     let expanded = this.get('expanded');
 
     if (currentStatus !== null && expanded !== currentStatus) {

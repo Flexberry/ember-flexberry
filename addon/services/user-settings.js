@@ -563,11 +563,11 @@ export default Ember.Service.extend({
   /**
    Set toggler status
 
-   @method setToggleStatus
+   @method setTogglerStatus
    @param {String} componentName Name of component.
-   @param {Boolean} toggleStatus Status to save.
+   @param {Boolean} togglerStatus Status to save.
    */
-  setToggleStatus(componentName, settingName, toggleStatus) {
+  setTogglerStatus(componentName, settingName, togglerStatus) {
     let userSetting;
 
     if (settingName === undefined) {
@@ -583,7 +583,7 @@ export default Ember.Service.extend({
       userSetting = {};
     }
 
-    userSetting.togglerStatus = toggleStatus;
+    userSetting.togglerStatus = togglerStatus;
     if (this.isUserSettingsServiceEnabled) {
       this.saveUserSetting(componentName, settingName, userSetting);
     }
@@ -592,18 +592,18 @@ export default Ember.Service.extend({
   /**
    Returns toggler status from user service.
 
-   @method getToggleStatus
+   @method getTogglerStatus
    @param {String} componentName component Name to search by.
    @return {Boolean} Saved status.
    */
-  getToggleStatus(componentName, settingName) {
+  getTogglerStatus(componentName, settingName) {
     if (settingName === undefined) {
       settingName = defaultSettingName;
     }
 
     let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
 
-    return currentUserSetting && 'togglerStatus' in currentUserSetting ? currentUserSetting.toggleStatus : null;
+    return currentUserSetting && 'togglerStatus' in currentUserSetting ? currentUserSetting.togglerStatus : null;
   },
 
   /**

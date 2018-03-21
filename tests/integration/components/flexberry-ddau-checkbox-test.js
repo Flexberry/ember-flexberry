@@ -71,12 +71,14 @@ test('Component renders properly', function(assert) {
   /* eslint-enable no-unused-vars */
 
   this.set('class', '');
+  /* eslint-disable no-unused-vars */
   Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
     'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('Component invokes actions', function(assert) {

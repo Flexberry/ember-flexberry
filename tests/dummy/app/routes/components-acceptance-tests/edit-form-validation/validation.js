@@ -24,6 +24,7 @@ export default EditFormRoute.extend({
 
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
     let store = this.get('store');
 
@@ -36,4 +37,5 @@ export default EditFormRoute.extend({
 
     return base;
   }
+  /* eslint-enable no-unused-vars */
 });

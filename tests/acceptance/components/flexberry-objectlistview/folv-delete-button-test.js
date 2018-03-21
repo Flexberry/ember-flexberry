@@ -7,6 +7,7 @@ import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 import { Query } from 'ember-flexberry-data';
 const { Builder } = Query;
 
+/* eslint-disable no-unused-vars */
 executeTest('check delete using button on toolbar', (store, assert, app) => {
   assert.expect(6);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
@@ -74,6 +75,7 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
           let done = assert.async();
 
           // Delete the marked records.
+          /* eslint-disable no-unused-vars */
           loadingList($deleteButton, olvContainerClass, trTableClass).then(($list) => {
             let recordsIsDelete = $rows().every((element) => {
               let nameRecord = Ember.$.trim(element.children[1].innerText);
@@ -91,6 +93,7 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
             });
             done();
           });
+          /* eslint-enable no-unused-vars */
         });
         done1();
       });
@@ -98,3 +101,4 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
     });
   });
 });
+/* eslint-enable no-unused-vars */

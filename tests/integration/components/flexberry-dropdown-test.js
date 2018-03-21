@@ -217,6 +217,7 @@ test('readonly mode works properly', function(assert) {
   assert.strictEqual($component.hasClass('disabled'), true, 'Component\'s has readonly');
 
   // Check that component is disabled.
+  /* eslint-disable no-unused-vars */
   new Ember.RSVP.Promise((resolve, reject) => {
     Ember.run(() => {
       $component.click();
@@ -232,6 +233,7 @@ test('readonly mode works properly', function(assert) {
       }, animationDuration / 2);
     });
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('needChecksOnValue mode properly', function(assert) {

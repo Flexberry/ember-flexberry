@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.1-beta1] - 2018-03-22
+### Changed
+* `colsconfig-dialog-content` component:
+  * Search 'sortPriority' input field on form.
+* `colsconfig-dialog-content` template:
+  * input field in cells with columns names
+
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.11.1-beta.1.

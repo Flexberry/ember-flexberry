@@ -204,10 +204,11 @@ export default FlexberryBaseComponent.extend({
       let input;
       for (let i = 0; i < Ember.$($tr).find('input').length; i++) {
         let inputElement = Ember.$($tr).find('input').get(i);
-        if(inputElement.className.includes('sortPriority')){
-          input=inputElement;
+        if (inputElement.className.includes('sortPriority')) {
+          input = inputElement;
         }
       }
+
       let $inputs = Ember.$('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
       let SortPriority = 1;
       let index = this._getIndexFromId(input.id);

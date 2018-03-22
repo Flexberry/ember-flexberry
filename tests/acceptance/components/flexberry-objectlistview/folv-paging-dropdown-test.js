@@ -5,7 +5,7 @@ import { addRecords, deleteRecords, refreshListByFunction } from './folv-tests-f
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
 executeTest('check paging dropdown', (store, assert, app) => {
-  assert.expect(6);
+  assert.expect(5);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   let modelName = 'ember-flexberry-dummy-suggestion-type';
   let uuid = generateUniqueId();
@@ -30,7 +30,7 @@ executeTest('check paging dropdown', (store, assert, app) => {
           let $menu = Ember.$('.menu', $folvPerPageButton);
           trTableBody = () => { return $(Ember.$('table.object-list-view tbody tr')).length.toString(); };
 
-          activeItem =  () => { return $(Ember.$('.item.active.selected', $menu)).attr('data-value'); };
+          activeItem =  () => { return $(Ember.$('.item.active.selected', $menu)).text(); };
 
           // The list should be more than 5 items.
           assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
@@ -47,8 +47,6 @@ executeTest('check paging dropdown', (store, assert, app) => {
         let controller = app.__container__.lookup('controller:' + currentRouteName());
         let done = assert.async();
         refreshListByFunction(refreshFunction, controller).then(() => {
-          assert.equal(activeItem(), $($choosedIthem[1]).attr('data-value'), 'equal');
-
           // The list should be more than 10 items
           assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
         }).catch((reason) => {

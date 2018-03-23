@@ -2,7 +2,7 @@
   <label>{{<%= caption %>}}</label>
   {{
     flexberry-datepicker
-    placeholder='(no value)'
+    placeholder=(t 'components.flexberry-datepicker.placeholder')
     readonly=<%= readonly %>
     value=model.<%= name %>
     class=(if model.errors.<%= name %> 'error' '')

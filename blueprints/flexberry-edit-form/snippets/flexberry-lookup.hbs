@@ -5,7 +5,8 @@
     choose='showLookupDialog'
     remove='removeLookupValue'
     value=model.<%= name %>
-    <%if(lookupValueField){%>displayAttributeName='<%= lookupValueField %>'<%}else{%><%}%>
+    <%if(lookupValueField){%>displayAttributeName='<%= lookupValueField %>'
+    autocomplete=true<%}else{%><%}%>
     relationName='<%= name %>'
     projection='<%= projection %>'
     title=(<%= caption %>)

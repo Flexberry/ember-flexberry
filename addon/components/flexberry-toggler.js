@@ -131,7 +131,6 @@ export default Ember.Component.extend({
   */
   didInsertElement() {
     this.loadStatus();
-
     let $accordeonDomElement = this.$();
 
     // Attach semantic-ui open/close callbacks.

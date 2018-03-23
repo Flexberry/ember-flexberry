@@ -121,7 +121,7 @@ export default Ember.Service.extend({
   /**
    Get current Web Page.
 
-   @method setCurrentWebPage
+   @method getCurrentWebPage
    @return {String}
    */
   getCurrentWebPage() {

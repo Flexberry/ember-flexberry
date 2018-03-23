@@ -3,8 +3,6 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-
-## [0.11.1-beta1] - 2018-03-22
 ### Changed
 * `colsconfig-dialog-content` component:
   * Search 'sortPriority' input field on form.

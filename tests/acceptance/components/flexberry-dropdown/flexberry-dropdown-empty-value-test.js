@@ -3,8 +3,8 @@ import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
 let app;
-const path = 'components-examples/flexberry-dropdown/conditional-render-example';
-const testName = 'conditional render test';
+const path = 'components-examples/flexberry-dropdown/empty-value-example';
+const testName = 'empty value test';
 
 module('Acceptance | flexberry-dropdown | ' + testName, {
     beforeEach() {
@@ -23,7 +23,7 @@ module('Acceptance | flexberry-dropdown | ' + testName, {
   });
 
 test(testName, (assert) => {
-  assert.expect(4);
+  assert.expect(3);
 
   visit(path);
   andThen(() => {
@@ -31,19 +31,6 @@ test(testName, (assert) => {
 
     let $dropdown = Ember.$('.flexberry-dropdown');
     assert.equal($dropdown.length, 1, 'Dropdown is render');
-
-    // Select dropdown item.
-    $dropdown.dropdown('set selected', 'Enum value №1');
-
-    let done = assert.async();
-    let timeout = 100;
-    Ember.run.later((() => {
-      let $dropdown = Ember.$('.flexberry-dropdown');
-      assert.equal($dropdown.length, 0, 'Dropdown isn\'t render');
-
-      let $span = Ember.$('div.field span');
-      assert.equal($span.text(), 'Enum value №1', 'Span is render');
-      done();
-    }), timeout);
+    assert.equal($dropdown[0].innerText, 'Enum value №2', 'Dropdown value is "Enum value №2"');
   });
 });

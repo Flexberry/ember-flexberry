@@ -11,7 +11,7 @@
      title={{t "forms.application.sitemap.application-version.title"}}>
     {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
   </a>
-  {{render "sitemap" sitemap}}
+  {{flexberry-sitemap sitemap=sitemap}}
 {{/ui-sidebar}}
 <div id="example-with-submenu" class="pusher">
   <div class="full height">
@@ -28,7 +28,7 @@
       <div class="ui close left rail">
         <div class="ui sticky transition visible">
           <div class="flexberry-submenu ui large violet pointing secondary vertical following fluid menu">
-            {{render "sitemap" sitemap}}
+            {{flexberry-sitemap sitemap=sitemap}}
           </div>
         </div>
       </div>

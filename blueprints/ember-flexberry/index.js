@@ -227,6 +227,7 @@ module.exports = {
       );
     }).then(function() {
       return _this.addBowerPackagesToProject([
+        { name: 'semantic-ui', target: '2.3.1' },
         { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
         { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
@@ -235,8 +236,6 @@ module.exports = {
         { name: 'jquery-minicolors', target: '2.2.6' },
         { name: 'js-beautify', target: '1.6.4' }
       ]);
-    }).then(function() {
-      return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [

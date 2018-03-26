@@ -668,18 +668,18 @@ export default FlexberryBaseComponent.extend({
 
     @property useRowByRowLoading
     @type Boolean
-    @default true
+    @default false
   */
-  useRowByRowLoading: true,
+  useRowByRowLoading: false,
 
   /**
     Flag indicates whether to use bottom row by row loading progress while rows in loading state.
 
     @property useRowByRowLoadingProgress
     @type Boolean
-    @default true
+    @default false
   */
-  useRowByRowLoadingProgress: true,
+  useRowByRowLoadingProgress: false,
 
   /**
     Interface for communication between object-list-view and flexberry-objectlistview.

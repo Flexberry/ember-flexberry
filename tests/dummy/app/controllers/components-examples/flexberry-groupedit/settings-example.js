@@ -21,7 +21,7 @@ export default EditFormController.extend({
    */
   _detailsProjections: Ember.computed('model.details.relationship.belongsToType', function() {
     let detailsModelName = this.get('model.details.relationship.belongsToType');
-    let detailsClass = getOwner(this).factoryFor('model:' + detailsModelName);
+    let detailsClass = getOwner(this).factoryFor('model:' + detailsModelName).class;
 
     return Ember.get(detailsClass, 'projections');
   }),
@@ -54,7 +54,7 @@ export default EditFormController.extend({
     }
 
     let detailsModelName = this.get('model.details.relationship.belongsToType');
-    let detailsClass = getOwner(this).factoryFor('model:' + detailsModelName);
+    let detailsClass = getOwner(this).factoryFor('model:' + detailsModelName).class;
     let detailsClassProjections = Ember.get(detailsClass, 'projections');
     if (Ember.isNone(detailsClassProjections)) {
       return null;

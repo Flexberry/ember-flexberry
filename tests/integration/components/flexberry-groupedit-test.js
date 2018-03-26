@@ -40,6 +40,7 @@ moduleForComponent('flexberry-groupedit', 'Integration | Component | Flexberry g
 });
 
 test('ember-grupedit element by default test', function(assert) {
+  assert.expect(9);
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -69,7 +70,7 @@ test('ember-grupedit element by default test', function(assert) {
       $componentButtonAdd.click();
     });
 
-    wait().then(() => {
+    andThen(function() {
       let $componentObjectListViewFirstCellAsterisk = Ember.$('.asterisk', $component);
 
       // Check object-list-view <i>.
@@ -535,6 +536,7 @@ test('ember-grupedit allowColumnResize test', function(assert) {
 });
 
 test('ember-grupedit showAsteriskInRow test', function(assert) {
+  assert.expect(1);
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -562,7 +564,7 @@ test('ember-grupedit showAsteriskInRow test', function(assert) {
       $componentButtonAdd.click();
     });
 
-    wait().then(() => {
+    andThen(function() {
       let $componentObjectListViewFirstCell = Ember.$('.asterisk');
 
       // Check object-list-view <i>.
@@ -572,6 +574,7 @@ test('ember-grupedit showAsteriskInRow test', function(assert) {
 });
 
 test('ember-grupedit showCheckBoxInRow test', function(assert) {
+  assert.expect(2);
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -599,7 +602,7 @@ test('ember-grupedit showCheckBoxInRow test', function(assert) {
       $componentButtonAdd.click();
     });
 
-    wait().then(() => {
+    andThen(function() {
       let $flexberryCheckbox = Ember.$('.flexberry-checkbox');
 
       assert.ok($flexberryCheckbox, false, 'Component hasn\'t flexberry-checkbox in first cell');
@@ -612,6 +615,7 @@ test('ember-grupedit showCheckBoxInRow test', function(assert) {
 });
 
 test('ember-grupedit showDeleteButtonInRow test', function(assert) {
+  assert.expect(1);
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -638,7 +642,7 @@ test('ember-grupedit showDeleteButtonInRow test', function(assert) {
       $componentButtonAdd.click();
     });
 
-    wait().then(() => {
+    andThen(function() {
       let $componentObjectListViewFirstCell = Ember.$('.object-list-view-helper-column');
       let $minusButton = Ember.$('.minus', $componentObjectListViewFirstCell);
 
@@ -649,6 +653,7 @@ test('ember-grupedit showDeleteButtonInRow test', function(assert) {
 });
 
 test('ember-grupedit showEditMenuItemInRow test', function(assert) {
+  assert.expect(6);
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -676,7 +681,7 @@ test('ember-grupedit showEditMenuItemInRow test', function(assert) {
       $componentButtonAdd.click();
     });
 
-    wait().then(() => {
+    andThen(function() {
       let $editMenuButton = Ember.$('.button.right', $component);
       let $editMenuItem = Ember.$('.item', $editMenuButton);
 
@@ -698,6 +703,7 @@ test('ember-grupedit showEditMenuItemInRow test', function(assert) {
 });
 
 test('ember-grupedit showDeleteMenuItemInRow test', function(assert) {
+  assert.expect(6);
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -725,7 +731,7 @@ test('ember-grupedit showDeleteMenuItemInRow test', function(assert) {
       $componentButtonAdd.click();
     });
 
-    wait().then(() => {
+    andThen(function() {
       let $editMenuButton = Ember.$('.button.right', $component);
       let $editMenuItem = Ember.$('.item', $editMenuButton);
 
@@ -747,6 +753,7 @@ test('ember-grupedit showDeleteMenuItemInRow test', function(assert) {
 });
 
 test('ember-grupedit showEditMenuItemInRow and showDeleteMenuItemInRow test', function(assert) {
+  assert.expect(10);
   let store = App.__container__.lookup('service:store');
 
   Ember.run(() => {
@@ -775,7 +782,7 @@ test('ember-grupedit showEditMenuItemInRow and showDeleteMenuItemInRow test', fu
       $componentButtonAdd.click();
     });
 
-    wait().then(() => {
+    andThen(function() {
       let $editMenuButton = Ember.$('.button.right', $component);
       let $editMenuItem = Ember.$('.item', $editMenuButton);
 

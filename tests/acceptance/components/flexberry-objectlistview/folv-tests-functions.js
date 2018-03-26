@@ -215,7 +215,8 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
     let textbox = Ember.$(filterValueCell).find('.ember-text-field');
 
     if (textbox.length !== 0) {
-      fillIn(textbox, filterValue);
+      textbox.val(filterValue);
+      textbox.change();
     }
 
     if (dropdown.length !== 0) {

@@ -10,7 +10,7 @@ moduleForComponent('flexberry-toggler', 'Integration | Component | flexberry tog
 
 // Common expand/collapse test method.
 let expandCollapseTogglerWithStateChecks = function(assert, captions) {
-  assert.expect(10);
+  assert.expect(11);
 
   let content = 'Toggler\'s content';
 

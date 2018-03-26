@@ -5,11 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 * `flexberry-simpleolv` template:
-  * Add mobile template.
-* `button` style:
-  * Add mobile style for check-all-button.
-  * Add mobile style for check-all-at-page-button.
-  * Add mobile style for clear-sorting-button.
+  * Add backlight on check and clear sorting buttons when mobile touch.
 
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed

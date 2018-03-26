@@ -29,14 +29,6 @@ module.exports = {
       '      paths: [\n' +
       '        \'bower_components/semantic-ui\'\n' +
       '      ]\n' +
-      '    },\n' +
-      '    SemanticUI: {\n' +
-      '      import: {\n' +
-      '        css: false,\n' +
-      '        javascript: true,\n' +
-      '        images: false,\n' +
-      '        fonts: true\n' +
-      '      }\n' +
       '    }\n';
 
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
@@ -261,8 +253,6 @@ module.exports = {
         { name: 'node-uuid', target: '1.4.7' },
         { name: 'inflection', target: '1.10.0' }
       ]);
-    }).then(function () {
-      return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
     }).then(function () {
       return _this.removePackageFromProject('ember-data');
     }).then(function () {

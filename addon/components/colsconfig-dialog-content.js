@@ -201,14 +201,7 @@ export default FlexberryBaseComponent.extend({
       let $tr = Ember.$(select).parents('tr');  // TR DOM-element
       let $tbody = Ember.$(select).parents('tbody');  // TBODY DOM-element
       let value = select.options.item(select.selectedIndex).value;  // Chosen sort order
-      let input;
-      for (let i = 0; i < Ember.$($tr).find('input').length; i++) {
-        let inputElement = Ember.$($tr).find('input').get(i);
-        if (inputElement.className.includes('sortPriority')) {
-          input = inputElement;
-        }
-      }
-
+      let input = Ember.$($tr).find('input.sortPriority').get(0); //sortPriority field in this row
       let $inputs = Ember.$('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
       let SortPriority = 1;
       let index = this._getIndexFromId(input.id);

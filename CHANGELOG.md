@@ -3,11 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Changed
+### Added
 * `colsconfig-dialog-content` component:
-  * Search 'sortPriority' input field on form.
-* `colsconfig-dialog-content` template:
-  * input field in cells with columns names
+  * Add rename columns names in Excel export.
 
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed

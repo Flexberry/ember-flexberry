@@ -442,3 +442,46 @@ test('visiting flexberry-lookup autocomplete', function(assert) {
     assert.strictEqual($result.length === 1, true, 'Component has inner class \'result\'');
   });
 });
+
+test('flexberry-lookup limit function through dynamic properties test', function(assert) {
+
+  let path = 'components-examples/flexberry-lookup/limit-function-through-dynamic-properties-example';
+
+  visit(path);
+
+  andThen(function() {
+    assert.equal(currentURL(), path);
+
+    let $limitFunctionButton1 = Ember.$('.firstLimitFunction');
+    let $limitFunctionButton2 = Ember.$('.secondLimitFunction');
+    let $clearLimitFunctionButton = Ember.$('.clearLimitFunction');
+    let limitFunction1;
+    let limitFunction2;
+
+    let store = app.__container__.lookup('service:store');
+    let controller = app.__container__.lookup('controller:' + currentRouteName());
+
+    // Create limit for query.
+    let query = new Query.Builder(store)
+      .from('ember-flexberry-dummy-suggestion-type')
+      .selectByProjection('SettingLookupExampleView')
+      .top(2);
+
+    // Load olv data.
+    store.query('ember-flexberry-dummy-suggestion-type', query.build()).then((suggestionTypes) => {
+      let suggestionTypesArr = suggestionTypes.toArray();
+      limitFunction1 = suggestionTypesArr.objectAt(0).get('name');
+      limitFunction2 = suggestionTypesArr.objectAt(1).get('name');
+    }).then(()=> {
+
+      $limitFunctionButton1.click();
+      assert.equal(controller.lookupCustomLimitPredicate._containsValue, limitFunction1, 'Current limit function afther first limit function button click');
+
+      $limitFunctionButton2.click();
+      assert.equal(controller.lookupCustomLimitPredicate._containsValue, limitFunction2, 'Current limit function afther second limit function button click');
+
+      $clearLimitFunctionButton.click();
+      assert.equal(controller.lookupCustomLimitPredicate, undefined, 'Absent limit function afther clear limit function button click');
+    });
+  });
+});

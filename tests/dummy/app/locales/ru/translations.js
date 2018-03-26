@@ -63,19 +63,22 @@ Ember.$.extend(true, translations, {
             __caption__: 'Одобрено'
           },
           'type': {
+            __caption__: 'Тип предложения',
             'name': {
               __caption__: 'Тип предложения'
-            },
+            }
           },
           'author': {
+            __caption__: 'Автор',
             'name': {
               __caption__: 'Автор'
-            },
+            }
           },
           'editor1': {
+            __caption__: 'Редактор',
             'name': {
               __caption__: 'Редактор'
-            },
+            }
           },
           'userVotes': {
             'name': {
@@ -117,6 +120,157 @@ Ember.$.extend(true, translations, {
               'eMail': {
                 __caption__: 'Почта'
               }
+            }
+          }
+        },
+        'SuggestionMainModelProjectionTest': {
+          'userVotes': {
+            'voteType': {
+              __caption__: 'Текст для теста'
+            }
+          }
+        },
+        'SettingLookupExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'CustomizeLookupWindowExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'LookupWithLimitFunctionExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'DropDownLookupExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'FolvWithLimitFunctionExampleView': {
+          'address': {
+            __caption__: 'Адрес'
+          },
+          'text': {
+            __caption__: 'Текст'
+          },
+          'votes': {
+            __caption__: 'Голоса'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          }
+        },
+        'LookupInBlockFormView': {
+          'editor1': {
+            __caption__: 'Редактор',
+            'name': {
+              __caption__: 'Редактор'
+            },
+            'eMail': {
+              __caption__: 'Почта'
+            },
+            'gender': {
+              __caption__: 'Пол'
+            }
+          },
+        },
+        'FlexberryObjectlistviewCustomFilter': {
+          'address': {
+            __caption__: 'Адрес'
+          },
+          'date': {
+            __caption__: 'Дата'
+          },
+          'votes': {
+            __caption__: 'Голоса'
+          },
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+            'moderated': {
+              __caption__: 'Одобрено'
+            },
+            'parent': {
+              __caption__: 'Иерархия',
+              'name': {
+                __caption__: 'Тип предложения'
+              },
+              'moderated': {
+                __caption__: 'Одобрено'
+              },
+            },
+          },
+          'author': {
+            __caption__: 'Автор',
+            'name': {
+              __caption__: 'Автор'
+            },
+            'eMail': {
+              __caption__: 'Почта'
+            }
+          },
+          'editor1': {
+            __caption__: 'Редактор',
+            'name': {
+              __caption__: 'Редактор'
+            }
+          }
+        },
+        'DefaultOrderingExampleView': {
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            },
+          },
+        },
+        'FlexberryObjectlistviewFilterTest': {
+          'address': {
+            __caption__: 'Адрес'
+          },
+          'date': {
+            __caption__: 'Дата'
+          },
+          'votes': {
+            __caption__: 'Голоса'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'type': {
+            __caption__: 'Тип предложения',
+            'name': {
+              __caption__: 'Тип предложения'
+            }
+          },
+          'author': {
+            __caption__: 'Автор',
+            'name': {
+              __caption__: 'Автор'
             }
           }
         }
@@ -169,6 +323,15 @@ Ember.$.extend(true, translations, {
           },
         },
         'SuggestionTypeE': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          },
+          'parent': {
+            __caption__: 'Иерархия'
+          },
           'localizedTypes': {
             'name': {
               __caption__: 'Наименование'
@@ -180,6 +343,38 @@ Ember.$.extend(true, translations, {
               }
             }
           },
+        },
+        'SettingLookupExampleView': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          }
+        },
+        'CustomizeLookupWindowExampleView': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          }
+        },
+        'LookupWithLimitFunctionExampleView': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          }
+        },
+        'DropDownLookupExampleView': {
+          'name': {
+            __caption__: 'Наименование'
+          },
+          'moderated': {
+            __caption__: 'Одобрено'
+          }
         }
       }
     },
@@ -203,6 +398,51 @@ Ember.$.extend(true, translations, {
         }
       }
     },
+    'integration-examples/edit-form/validation/base': {
+      'projections': {
+        'BaseE': {
+          'flag': {
+            __caption__: 'Флаг'
+          },
+          'number': {
+            __caption__: 'Число'
+          },
+          'text': {
+            __caption__: 'Текст'
+          },
+          'longText': {
+            __caption__: 'Длинный текст'
+          },
+          'date': {
+            __caption__: 'Дата'
+          },
+          'enumeration': {
+            __caption__: 'Перечисление'
+          },
+          'file': {
+            __caption__: 'Файл'
+          },
+          'master': {
+            __caption__: 'Мастер',
+            'text': {
+              __caption__: 'Текст'
+            }
+          },
+          'details': {
+            __caption__: 'Детейлы',
+            'flag': {
+              __caption__: 'Флаг'
+            },
+            'number': {
+              __caption__: 'Число'
+            },
+            'text': {
+              __caption__: 'Текст'
+            }
+          }
+        }
+      }
+    }
   },
 
   'application-name': 'Тестовый стенд ember-flexberry',

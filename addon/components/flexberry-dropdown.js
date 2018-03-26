@@ -193,14 +193,21 @@ export default FlexberryBaseComponent.extend({
       action: 'select',
       onChange: (value) => {
         Ember.run(() => {
-          this.set('_value', value);
-          this.sendAction('onChange', this.get('value'));
+          if (this.get('_value') !== value) {
+            this.set('_value', value);
+            this.sendAction('onChange', this.get('value'));
+          }
         });
       },
     }, this.get('settings'));
 
     this.$().dropdown(settings);
     this.set('_initialized', true);
+
+    let _value = this.get('_value');
+    if (_value) {
+      this.$().dropdown('set selected', _value);
+    }
   },
 
   /**

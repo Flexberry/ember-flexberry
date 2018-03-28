@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 const { Builder, SimplePredicate, ComplexPredicate } = Query;
 
@@ -272,12 +273,14 @@ export default Ember.Service.extend({
    Implements current URL-params to currentUserSettings
 
    @method setCurrentParams
-   @param {Object} params.
+   @param {Object} params
+   @return {String} URL params
    */
   setCurrentParams(componentName, params) {
     let appPage = this.currentAppPage;
     if (params.sort === null) {
       this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = this.getCurrentSorting(componentName);
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
     } else {
       let sorting;
       if ('sort' in params && params.sort) {

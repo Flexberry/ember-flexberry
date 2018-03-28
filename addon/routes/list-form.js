@@ -100,6 +100,7 @@ ErrorableRouteMixin, {
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
     let filtersPredicate = this._filtersPredicate();
+    let sortString = null;
     let limitPredicate =
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
     let userSettingsService = this.get('userSettingsService');
@@ -137,7 +138,7 @@ ErrorableRouteMixin, {
     userSettingPromise
       .then(currectPageUserSettings => {
         if (params) {
-          userSettingsService.setCurrentParams(componentName, params);
+          sortString = userSettingsService.setCurrentParams(componentName, params);
         }
 
         let hierarchicalAttribute;
@@ -146,6 +147,7 @@ ErrorableRouteMixin, {
         }
 
         this.sorting = userSettingsService.getCurrentSorting(componentName);
+
         this.perPage = userSettingsService.getCurrentPerPage(componentName);
         if (this.perPage !== params.perPage) {
           if (params.perPage !== 5) {
@@ -153,9 +155,9 @@ ErrorableRouteMixin, {
             userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
           } else {
             if (this.sorting.length === 0) {
-              this.transitionTo(this.currentRouteName, { queryParams: { sort: null, perPage: this.perPage || 5 } }); // Show page without sort parameters
+              this.transitionTo(this.currentRouteName, { queryParams: { sort: sortString, perPage: this.perPage || 5 } }); // Show page without sort parameters
             } else {
-              this.transitionTo(this.currentRouteName, { queryParams: { perPage: this.perPage || 5 } });  //Reload current page and records (model) list
+              this.transitionTo(this.currentRouteName, { queryParams: { sort: sortString, perPage: this.perPage || 5 } });  //Reload current page and records (model) list
             }
           }
         }

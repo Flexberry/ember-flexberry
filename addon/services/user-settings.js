@@ -276,14 +276,21 @@ export default Ember.Service.extend({
    */
   setCurrentParams(componentName, params) {
     let appPage = this.currentAppPage;
-    let sorting;
-    if ('sort' in params && params.sort) {
-      sorting = deserializeSortingParam(params.sort);
-    } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
-      sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
-    }
+    if (params.sort === null) {
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = this.getCurrentSorting(componentName);
+    } else {
+      let sorting;
+      if ('sort' in params && params.sort) {
+        sorting = deserializeSortingParam(params.sort);
+      } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
+        sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
+      }
 
-    this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+      let userSetting = [];
+      userSetting.sorting = sorting;
+      this.saveUserSetting(componentName, defaultSettingName, userSetting);
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+    }
   },
 
   /**
@@ -381,7 +388,7 @@ export default Ember.Service.extend({
   /**
    Returns current userSetting.
 
-   @method getCurrentSorting
+   @method getCurrentUserSetting
    @param {String} componentName Name of component.
    @param {String} settingName Name of setting.
    @return {String}

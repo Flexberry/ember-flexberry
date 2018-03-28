@@ -109,7 +109,7 @@ test('Component invokes actions', function(assert) {
   assert.notStrictEqual(latestEventObjects.change, null, 'Component\'s \'change\' action was invoked after second click');
 });
 
-test('Component doesn\'t change binded value (without \'change\' action handler)', function(assert) {
+test('Component changes binded value (without \'change\' action handler)', function(assert) {
   // Mock Ember.assert method.
   let thrownExceptions = Ember.A();
   let originalEmberAssert = Ember.assert;
@@ -145,8 +145,8 @@ test('Component doesn\'t change binded value (without \'change\' action handler)
   // Check binded value state after click (it should be unchanged, because 'change' action handler is not defined).
   assert.strictEqual(
     this.get('flag'),
-    false,
-    'Component doesn\'t change binded value (without \'change\' action handler)');
+    true,
+    'Component\'s binded value changed (without \'change\' action handler)');
 
   assert.strictEqual(
     thrownExceptions.length === 1 && (/.*required.*change.*action.*not.*defined.*/gi).test(thrownExceptions[0].message),

@@ -1045,6 +1045,7 @@ test('ember-grupedit main model projection test', function(assert) {
   Ember.run(() => {
     let model = store.createRecord('ember-flexberry-dummy-suggestion');
     let testComponentName = 'my-test-component-to-count-rerender';
+    let valueMainModelProjection = model.get('i18n').t('models.ember-flexberry-dummy-suggestion.projections.SuggestionMainModelProjectionTest.userVotes.voteType.__caption__');
 
     this.set('proj', AggregatorModelMainModelProjection.projections.get('SuggestionMainModelProjectionTest'));
     this.set('model', model);
@@ -1062,6 +1063,6 @@ test('ember-grupedit main model projection test', function(assert) {
     let $componentObjectListViewTh = $componentObjectListView.children('thead').children('tr').children('th');
     let $componentOlvFirstHead = $componentObjectListViewTh[1];
 
-    assert.strictEqual($componentOlvFirstHead.innerText === 'Vote type', true, 'Header has text \'Vote type\'');
+    assert.strictEqual($componentOlvFirstHead.innerText === valueMainModelProjection.toString(), true, 'Header has text \'Vote type\'');
   });
 });

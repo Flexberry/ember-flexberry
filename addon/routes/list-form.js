@@ -11,6 +11,7 @@ import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistvie
 import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import ErrorableRouteMixin from '../mixins/errorable-route';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
   Base route for the List Forms.
@@ -185,6 +186,12 @@ ErrorableRouteMixin, {
         this.onModelLoadingFulfilled(records, transition);
         this.includeSorting(records, this.sorting);
         this.get('controller').set('model', records);
+
+        if (this.sorting.length > 0 && Ember.isNone(this.get('controller').get('sort'))) {
+          let sortQueryParam = serializeSortingParam(this.sorting, this.get('controller').get('sortDefaultValue'));
+          this.get('controller').set('sort', sortQueryParam);
+        }
+
         return records;
       }).catch((errorData) => {
         this.onModelLoadingRejected(errorData, transition);

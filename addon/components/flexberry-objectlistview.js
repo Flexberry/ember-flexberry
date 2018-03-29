@@ -697,6 +697,14 @@ export default FlexberryBaseComponent.extend({
   */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
+  /**
+    Ember data store.
+
+    @property store
+    @type Service
+  */
+  store: Ember.inject.service('store'),
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -1136,6 +1144,19 @@ export default FlexberryBaseComponent.extend({
     if (this.get('componentMode') === 'lookupform' && customProperties && typeof customProperties === 'object') {
       // For lookup mode we allow to set properties.
       this.setProperties(customProperties);
+    }
+
+    if (!this.get('disableHierarchicalMode')) {
+      let modelName = this.get('modelName');
+      if (modelName) {
+        let model = this.get('store').modelFor(modelName);
+        let relationships = Ember.get(model, 'relationships');
+        let hierarchicalrelationships = relationships.get(modelName);
+        if (hierarchicalrelationships.length === 1) {
+          let hierarchicalAttribute = hierarchicalrelationships[0].name;
+          this.send('availableHierarchicalMode', hierarchicalAttribute);
+        }
+      }
     }
 
     let eventsBus = this.get('eventsBus');

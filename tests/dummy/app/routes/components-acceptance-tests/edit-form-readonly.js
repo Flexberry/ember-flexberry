@@ -19,6 +19,14 @@ export default EditFormRoute.extend({
    */
   modelName: 'integration-examples/edit-form/readonly-mode/aggregator',
 
+  developerUserSettings: {
+    aggregatorDetailsGroupedit: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }]
+      }
+    }
+  },
+
   /**
     Returns model related to current route.
 

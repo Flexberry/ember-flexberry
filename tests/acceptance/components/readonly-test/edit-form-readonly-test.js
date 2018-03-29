@@ -72,8 +72,8 @@ test('flexbery-textbox on readonly editform', (assert) => {
 
     controller.set('readonly', false);
     Ember.run.scheduleOnce('afterRender', () => {
-      assert.strictEqual($(this).is('readonly'), false, 'Textbox don\'t readonly');
-      assert.strictEqual($(this).is('readonly'), false, 'Groupedit\'s textbox don\'t readonly');
+      assert.strictEqual($textbox.is('readonly'), false, 'Textbox don\'t readonly');
+      assert.strictEqual($textboxFge.is('readonly'), false, 'Groupedit\'s textbox don\'t readonly');
     });
   });
 });
@@ -184,7 +184,7 @@ test('flexberry-file on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     Ember.run.scheduleOnce('afterRender', () => {
-      assert.strictEqual($(this).is('readonly'), false, 'Flexberry-file don\'t readonly');
+      assert.strictEqual($file.is('readonly'), false, 'Flexberry-file don\'t readonly');
       let $addButton = Ember.$('.not-in-groupedit label.flexberry-file-add-button');
       assert.strictEqual($addButton.hasClass('disabled'), false, 'Flexberry-file\'s button \'Add\' don\'t readonly');
       let $removeButton = Ember.$('.not-in-groupedit label.flexberry-file-remove-button');
@@ -193,7 +193,7 @@ test('flexberry-file on readonly edit form', (assert) => {
       assert.strictEqual($uploadButton.hasClass('disabled'), true, 'Flexberry-file has button \'Upload\'');
       assert.strictEqual($downloadButton.hasClass('disabled'), true, 'Flexberry-file has button \'Download\'');
 
-      assert.strictEqual($(this).is('readonly'), false, 'Groupedit\'s flexberry-file don\'t readonly');
+      assert.strictEqual($fileFge.is('readonly'), false, 'Groupedit\'s flexberry-file don\'t readonly');
       let $addButtonFge = Ember.$('.in-groupedit label.flexberry-file-add-button');
       assert.strictEqual($addButtonFge.hasClass('disabled'), false, 'Groupedit\'s flexberry-file\'s button \'Add\' don\'t readonly');
       let $removeButtonFge = Ember.$('.in-groupedit label.flexberry-file-remove-button');
@@ -228,11 +228,11 @@ test('flexberry-lookup on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     Ember.run.scheduleOnce('afterRender', () => {
-      assert.strictEqual($(this).is('readonly'), false, 'Lookup don\'t readonly');
+      assert.strictEqual($lookup.is('readonly'), false, 'Lookup don\'t readonly');
       assert.strictEqual($chooseButton.hasClass('disabled'), false, 'Flexberry-lookup\'s button \'Choose\' don\'t readonly');
       assert.strictEqual($removeButton.hasClass('disabled'), false, 'Flexberry-lookup\'s button \'Remove\' don\'t readonly');
 
-      assert.strictEqual($(this).is('readonly'), false, 'Groupedit\'s lookup don\'t readonly');
+      assert.strictEqual($lookupFge.is('readonly'), false, 'Groupedit\'s lookup don\'t readonly');
       assert.strictEqual($chooseButtonFge.hasClass('disabled'), false, 'Groupedit\'s flexberry-lookup\'s button \'Choose\' don\'t readonly');
       assert.strictEqual($removeButtonFge.hasClass('disabled'), false, 'Groupedit\'s flexberry-lookup\'s button \'Remove\' don\'t readonly');
     });
@@ -297,8 +297,8 @@ test('flexberry-groupedit\'s button on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     Ember.run.scheduleOnce('afterRender', () => {
-      assert.strictEqual($(this).is('disabled'), false, 'Flexberry-groupedit\'s button \'Add\' don\'t readonly');
-      assert.strictEqual($(this).is('disabled'), false, 'Flexberry-groupedit\'s button \'Remove\' don\'t readonly');
+      assert.strictEqual($addButton.is('disabled'), false, 'Flexberry-groupedit\'s button \'Add\' don\'t readonly');
+      assert.strictEqual($removeButton.is('disabled'), false, 'Flexberry-groupedit\'s button \'Remove\' don\'t readonly');
       assert.strictEqual($checkbox.hasClass('read-only'), false, 'Flexberry-groupedit\'s checkbox helper don\'t readonly');
       assert.strictEqual($removeButtonRow.hasClass('disabled'), false, 'Flexberry-groupedit\'s button \'Remove in row\' don\'t readonly');
       assert.strictEqual($itemEditMenu.hasClass('disabled'), false, 'Flexberry-groupedit\'s item \'Edit\' in left menu don\'t readonly');

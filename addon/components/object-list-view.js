@@ -1089,19 +1089,6 @@ export default FlexberryBaseComponent.extend(
     this._super(...arguments);
     Ember.assert('ObjectListView must have componentName attribute.', this.get('componentName'));
 
-    if (!this.get('disableHierarchicalMode')) {
-      let modelName = this.get('modelName');
-      if (modelName) {
-        let model = this.get('store').modelFor(modelName);
-        let relationships = Ember.get(model, 'relationships');
-        let hierarchicalrelationships = relationships.get(modelName);
-        if (hierarchicalrelationships.length === 1) {
-          let hierarchicalAttribute = hierarchicalrelationships[0].name;
-          this.sendAction('availableHierarchicalMode', hierarchicalAttribute);
-        }
-      }
-    }
-
     this.set('selectedRecords', Ember.A());
 
     let searchForContentChange = this.get('searchForContentChange');
@@ -1874,14 +1861,12 @@ export default FlexberryBaseComponent.extend(
             });
           }).then(()=> {
             this.set('contentWithKeys', this.contentForRender);
-            this.get('objectlistviewEventsService').setLoadingState('');
           });
         } else {
           content.forEach((item) => {
             this._addModel(item);
           });
           this.set('contentWithKeys', this.contentForRender);
-          this.get('objectlistviewEventsService').setLoadingState('');
         }
       }
 

@@ -13,11 +13,16 @@ let Model = Projection.Model.extend({
   text: DS.attr('string'),
   longText: DS.attr('string'),
   date: DS.attr('date'),
+  time: DS.attr('date'),
   enumeration: DS.attr('integration-examples/edit-form/readonly-mode/enumeration'),
   file: DS.attr('file'),
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   master: DS.belongsTo('integration-examples/edit-form/readonly-mode/master', {
+    inverse: null,
+    async: false
+  }),
+  masterDropdown: DS.belongsTo('integration-examples/edit-form/readonly-mode/master-dropdown', {
     inverse: null,
     async: false
   })
@@ -29,9 +34,17 @@ Model.defineProjection('DetailE', 'integration-examples/edit-form/readonly-mode/
   text: Projection.attr('Text'),
   longText: Projection.attr('longText'),
   date: Projection.attr('Date'),
+  time: Projection.attr('Time'),
   enumeration: Projection.attr('Enumeration'),
   file: Projection.attr('File'),
   master: Projection.belongsTo('integration-examples/edit-form/readonly-mode/master', 'Master', {
+    text: Projection.attr('Text', {
+      hidden: true
+    })
+  }, {
+    displayMemberPath: 'text'
+  }),
+  masterDropdown: Projection.belongsTo('integration-examples/edit-form/validation/master-dropdown', 'Master dropdown', {
     text: Projection.attr('Text', {
       hidden: true
     })

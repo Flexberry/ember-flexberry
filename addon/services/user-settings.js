@@ -293,6 +293,7 @@ export default Ember.Service.extend({
       userSetting.sorting = sorting;
       this.saveUserSetting(componentName, defaultSettingName, userSetting);
       this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
     }
   },
 

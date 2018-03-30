@@ -149,13 +149,13 @@ ErrorableRouteMixin, {
         this.sorting = userSettingsService.getCurrentSorting(componentName);
 
         this.perPage = userSettingsService.getCurrentPerPage(componentName);
-        if (this.perPage !== params.perPage) {
+        if (this.perPage !== params.perPage || this.sorting !== params.sorting) {
           if (params.perPage !== 5) {
             this.perPage = params.perPage;
             userSettingsService.setCurrentPerPage(componentName, undefined, this.perPage);
           } else {
             if (this.sorting.length === 0) {
-              this.transitionTo(this.currentRouteName, { queryParams: { sort: sortString, perPage: this.perPage || 5 } }); // Show page without sort parameters
+              this.transitionTo(this.currentRouteName, { queryParams: { perPage: this.perPage || 5 } }); // Show page without sort parameters
             } else {
               this.transitionTo(this.currentRouteName, { queryParams: { sort: sortString, perPage: this.perPage || 5 } });  //Reload current page and records (model) list
             }

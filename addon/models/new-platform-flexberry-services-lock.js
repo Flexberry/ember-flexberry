@@ -16,6 +16,7 @@ Model.defineProjection('LockL', 'new-platform-flexberry-services-lock', {
   userName: Projection.attr('User name'),
   lockDate: Projection.attr('Lock date'),
 });
+Model.defineidType('string');
 
 /**
   Model lock, use in {{#crossLink "LockRouteMixin"}}{{/crossLink}}.

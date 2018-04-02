@@ -24,3 +24,7 @@
 .ui.modal > ui.table {
     margin-bottom: 0;
 }
+
+.ui.modal .content h2.ui.header {
+    word-wrap: break-word;
+}

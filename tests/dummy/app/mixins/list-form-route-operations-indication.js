@@ -29,8 +29,9 @@ export default Ember.Mixin.create({
 
     @method onModelLoadingStarted.
     @param {Object} queryParameters
+    @param {Transition} transition Current transition object.
    */
-  onModelLoadingStarted(queryParameters) {
+  onModelLoadingStarted(queryParameters, transition) {
     this._super(...arguments);
 
     let controller = this.get('copyController');
@@ -42,8 +43,9 @@ export default Ember.Mixin.create({
 
     @method onModelLoadingFulfilled.
     @param {Object} records
+    @param {Transition} transition Current transition object.
    */
-  onModelLoadingFulfilled(records) {
+  onModelLoadingFulfilled(records, transition) {
     this._super(...arguments);
 
     let controller = this.get('copyController');
@@ -56,8 +58,9 @@ export default Ember.Mixin.create({
 
     @method onModelLoadingRejected.
     @param {Object} errorData Data about load operation fail.
+    @param {Transition} transition Current transition object.
    */
-  onModelLoadingRejected(errorData) {
+  onModelLoadingRejected(errorData, transition) {
     this._super(...arguments);
 
     let controller = this.get('copyController');
@@ -71,8 +74,9 @@ export default Ember.Mixin.create({
 
     @method onModelLoadingAlways.
     @param {Object} data Data about completed load operation.
+    @param {Transition} transition Current transition object.
    */
-  onModelLoadingAlways(data) {
+  onModelLoadingAlways(data, transition) {
     this._super(...arguments);
   }
 });

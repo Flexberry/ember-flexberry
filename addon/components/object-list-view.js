@@ -1235,16 +1235,11 @@ export default FlexberryBaseComponent.extend(
     } else {
       this._restoreSelectedRecords();
 
-      if (!this._colResizableInit) {
-        let $currentTable = this.$('table.object-list-view');
-        if (this.get('allowColumnResize')) {
-          $currentTable.addClass('fixed');
-          this._reinitResizablePlugin();
-        } else {
-          $currentTable.colResizable({ disable: true });
-        }
-
-        this.set('_colResizableInit', true);
+      if (this.get('allowColumnResize')) {
+        this._reinitResizablePlugin();
+      } else {
+        let $table = this.$('table.object-list-view');
+        $table.colResizable({ disable: true });
       }
 
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
@@ -1424,6 +1419,10 @@ export default FlexberryBaseComponent.extend(
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);
       let containerWidth = $table[0].parentElement.clientWidth - 5;
       let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+      if ($columns.length === 0) {
+        tableWidth = containerWidth;
+      }
+
       let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
       $table.css({ 'width': (columnsWidthAutoresize ? containerWidth : tableWidth) + 'px' });
       if (this.get('eventsBus')) {

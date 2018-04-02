@@ -15,6 +15,8 @@ export default {
       caption: 'Произошла ошибка',
       'show-more': 'Подробно',
       retry: 'Повторить попытку',
+      error: 'Ошибка',
+      'ember-data-request': 'Сервер недоступен, необходимо проверить соединение с сервером',
     },
 
     'i-i-s-caseberry-logging-objects-application-log-l': {
@@ -66,11 +68,12 @@ export default {
       'upload-button-title': 'Загрузить файл',
       'download-button-title': 'Скачать файл',
 
-      'preview-image-alternative-text': 'Загруженное изображение',
+      'preview-image-alternative-text': 'Просмотр изображения не доступен',
 
       'error-dialog-caption': 'Ошибка компонента выбора файла',
       'error-dialog-content': 'Произошла ошибка в компоненте выбора файла',
       'error-dialog-ok-button-caption': 'OK',
+      'error-preview-caption': 'Предпросмотр не может быть загружен',
 
       'add-file-error-caption': 'Ошибка добавления файла',
       'file-too-big-error-message': 'Размер файла должен быть не больше {{maxFileSize}} байт. ' +
@@ -175,6 +178,7 @@ export default {
 
     'colsconfig-dialog-content': {
       'title': 'Настроить отображение столбцов',
+      'export-modal-dialog-title': 'Настроить экспорт в Excel',
       'export-title': 'Экспорт в Excel',
       'dont-show-columns': 'Не отображать столбцы',
       'columns-order': 'Определить порядок столбцов',

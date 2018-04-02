@@ -135,6 +135,9 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
       .then(records => {
         _this.set('customFolvContent', records);
       })
+      .catch(reason => {
+        _this.send('handleError', reason);
+      })
       .finally(() => {
         if (_this.get('objectlistviewEventsService.loadingState') === 'loading') {
           _this.get('objectlistviewEventsService').setLoadingState('');

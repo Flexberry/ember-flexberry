@@ -384,11 +384,31 @@ FolvOnEditControllerMixin, {
     let savePromise = this.get('model').save().then((model) => {
       let agragatorModel = getCurrentAgregator.call(this);
       if (needSaveCurrentAgregator.call(this, agragatorModel)) {
-        return this._saveHasManyRelationships(model).then(() => {
-          return agragatorModel.save().then(afterSaveModelFunction);
+        return this._saveHasManyRelationships(model).then((result) => {
+          if (result && Ember.isArray(result)) {
+            let arrayWrapper = Ember.A();
+            arrayWrapper.addObjects(result);
+            let errors = arrayWrapper.filterBy('state', 'rejected');
+            return errors.length > 0 ? Ember.RSVP.reject(errors) : agragatorModel.save().then(afterSaveModelFunction);
+          } else {
+            return agragatorModel.save().then(afterSaveModelFunction);
+          }
         });
       } else {
-        return this._saveHasManyRelationships(model).then(afterSaveModelFunction);
+        return this._saveHasManyRelationships(model).then((result) => {
+          if (result && Ember.isArray(result)) {
+            let arrayWrapper = Ember.A();
+            arrayWrapper.addObjects(result);
+            let errors = arrayWrapper.filterBy('state', 'rejected');
+            if (errors.length > 0) {
+              return Ember.RSVP.reject(errors);
+            } else {
+              afterSaveModelFunction();
+            }
+          } else {
+            afterSaveModelFunction();
+          }
+        });
       }
     }).catch((errorData) => {
       this.get('objectlistviewEventsService').setLoadingState('error');
@@ -505,8 +525,9 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about save operation fail.
   */
   onSaveActionRejected(errorData) {
+    Ember.$('.ui.form .full.height').scrollTop(0);
     if (!(errorData instanceof Errors)) {
-      this.send('error', errorData);
+      this.send('handleError', errorData);
     }
   },
 
@@ -733,8 +754,15 @@ FolvOnEditControllerMixin, {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
           let promise = record.save().then((record) => {
-            return this._saveHasManyRelationships(record).then(() => {
-              return record;
+            return this._saveHasManyRelationships(record).then((result) => {
+              if (result && Ember.isArray(result) && result.length > 0) {
+                let arrayWrapper = Ember.A();
+                arrayWrapper.addObjects(result);
+                let errors = arrayWrapper.filterBy('state', 'rejected');
+                return errors.length > 0 ? Ember.RSVP.reject(errors) : record;
+              } else {
+                return record;
+              }
             });
           });
 
@@ -743,7 +771,7 @@ FolvOnEditControllerMixin, {
       }
     });
 
-    return Ember.RSVP.all(promises);
+    return Ember.RSVP.allSettled(promises);
   },
 
   /**
@@ -768,6 +796,6 @@ FolvOnEditControllerMixin, {
       }
     });
 
-    return Ember.RSVP.all(promises);
+    return Ember.RSVP.allSettled(promises);
   },
 });

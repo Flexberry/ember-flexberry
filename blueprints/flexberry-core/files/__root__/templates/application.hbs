@@ -2,7 +2,14 @@
   {{outlet}}
   {{outlet "modal"}}
 {{else}}
-{{#ui-sidebar class="inverted vertical main menu"}}
+{{#ui-sidebar
+  class="inverted vertical main menu"
+  ui_context=".ember-application > .ember-view"
+  closable=false
+  dimPage=false
+  onShow=(action "updateWidth")
+  onHidden=(action "updateWidth")
+}}
   {{render "sitemap" sitemap}}
 {{/ui-sidebar}}
 <div class="bgw-fix">

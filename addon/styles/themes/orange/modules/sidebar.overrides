@@ -9,7 +9,7 @@
     box-shadow: none!important;
 }
 
-body.pushable {
+.pushable {
     background: #fff!important;
     overflow: hidden;
 }

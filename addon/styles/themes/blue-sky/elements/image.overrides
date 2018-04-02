@@ -27,3 +27,7 @@ div.item-minus {
     position: relative;
     top: -2px;
 }
+
+.flexberry-file-image-preview-wrapper.ui.segment .ui.small.image {
+    min-height: 57px;
+}

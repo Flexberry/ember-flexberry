@@ -54,24 +54,28 @@
             <div class="object-list-view-helper-column-cell"></div>
           </td>
         {{/if}}
-        <td>
+        <td class="overflowed-cell">
           {{#each columns as |column|}}
-            <div class="inline fields">
+            <div class="inline fields filter">
               <label>{{column.header}}:</label>
               {{#if column.filter.conditions}}
-                {{component "flexberry-dropdown"
-                  value=column.filter.condition
-                  items=column.filter.conditions
-                  class="compact fluid"
-                  placeholder=""
-                  needChecksOnValue=false
-                }}
+                <div class="filter-operation">
+                  {{component "flexberry-dropdown"
+                    value=column.filter.condition
+                    items=column.filter.conditions
+                    class="compact fluid"
+                    placeholder=""
+                    needChecksOnValue=false
+                  }}
+                </div>
               {{/if}}
               {{#if column.filter.component.name}}
-                {{component column.filter.component.name
-                  value=column.filter.pattern
-                  dynamicProperties=column.filter.component.properties
-                }}
+                <div class="filter-value">
+                  {{component column.filter.component.name
+                    value=column.filter.pattern
+                    dynamicProperties=column.filter.component.properties
+                  }}
+                </div>
               {{/if}}
             </div>
           {{/each}}

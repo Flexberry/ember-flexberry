@@ -45,3 +45,9 @@
 .ember-view.ui.dropdown div.default.text {
    color: @placeholderColor;
 }
+
+.flexberry-file.mobile .flexberry-file-grid {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}

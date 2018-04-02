@@ -8,7 +8,6 @@ import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getRelationType } from 'ember-flexberry-data/utils/model-functions';
 import { Query } from 'ember-flexberry-data';
-import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 const {
   Builder,
@@ -199,15 +198,6 @@ export default FlexberryBaseComponent.extend({
   sorting: 'asc',
 
   /**
-    Ordering condition for list of records to choose.
-    Expected string type: '+Name1-Name2...', where: '+' and '-' - sorting direction, 'NameX' - property name for soring.
-
-    @property orderBy
-    @type String
-  */
-  orderBy: undefined,
-
-  /**
     Classes by property of autocomplete.
 
     @property autocompleteClass
@@ -218,6 +208,18 @@ export default FlexberryBaseComponent.extend({
     if (this.get('autocomplete')) {
       return 'ui search';
     }
+  }),
+
+  /**
+    FOLV component name.
+
+    @property folvComponentName
+    @type String
+    @readOnly
+  */
+  folvComponentName: Ember.computed('componentName', function() {
+    let componentName = this.get('componentName') || 'undefined';
+    return `${componentName}`;
   }),
 
   /**
@@ -328,10 +330,8 @@ export default FlexberryBaseComponent.extend({
     'lookupLimitPredicate',
     'relatedModel',
     '_lookupWindowCustomPropertiesData',
-    'orderBy',
     function() {
-      let ordering = this.get('orderBy') ? this.get('orderBy') : '';
-      let perPage = this.get('userSettings').getCurrentPerPage(`folw_in_${this.get('componentName')}_lookup`);
+      let perPage = this.get('userSettings').getCurrentPerPage(this.get('folvComponentName'));
       return {
         projection: this.get('projection'),
         relationName: this.get('relationName'),
@@ -342,7 +342,7 @@ export default FlexberryBaseComponent.extend({
         componentName: this.get('componentName'),
         notUseUserSettings: this.get('notUseUserSettings'),
         perPage: perPage || this.get('perPage'),
-        sorting: deserializeSortingParam(ordering),
+        folvComponentName: this.get('folvComponentName'),
 
         //TODO: move to modal settings.
         sizeClass: this.get('sizeClass')
@@ -591,6 +591,7 @@ export default FlexberryBaseComponent.extend({
 
     // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
     this.addObserver('value', this, this._valueObserver);
+    this.addObserver('displayAttributeName', this, this._valueObserver);
     this.addObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 
@@ -656,6 +657,7 @@ export default FlexberryBaseComponent.extend({
 
     // TODO: This is necessary because of incomprehensible one-way binding on new detail form, perhaps the truth is out there, but I did not find it.
     this.removeObserver('value', this, this._valueObserver);
+    this.removeObserver('displayAttributeName', this, this._valueObserver);
     this.removeObserver(`relatedModel.${this.get('relationName')}`, this, this._valueObserver);
   },
 

@@ -41,8 +41,20 @@
   .sort-direction-dropdown {
     width: 100%;
   }
-  td>.input {
+  td > .input {
     width: 100%;
+    display: table-row;
+  }
+  th {
+    > .input {
+      display: table-row;
+      input.setting-name {
+        width: 250px;
+      }
+    }
+    .ui.action.input .ui.button {
+      display: inline-flex;
+    }
   }
 }
 

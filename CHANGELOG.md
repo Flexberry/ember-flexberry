@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.11.1-beta.1] - 2018-03-07
+### Changed
+* Update dependency on `ember-flexberry-data` to version 0.11.1-beta.1.
+
+## [0.11.0] - 2018-02-20
 ### Added
 * `flexberry-groupedit` component:
     * Add column widths saving in usersettings.
@@ -12,19 +18,59 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * User settings support, use parameter `notUseUserSettings` to disabling.
     * `perPage` parameter.
     * Hierarchy mode support.
+    * User settings support. Use parameter `developerUserSettings` to apply sorting instead of `orderBy` parameter in template.
+* `flexberry-objectlistview` component:
+    * Now computed properties could be passed via `dynamicProperties` for embedded components in cells.
+* Edit form's logic:
+    * Scrolling to the top of form if saving errors are occured (to see error messages).
 
 ### Changed
+* Update dependency on [`ember-flexberry-data`](https://github.com/Flexberry/ember-flexberry-data) to version 0.11.0.
+* For compatibility with `Ember Inspector`, `tagName` for application view has been restored, and sidebar moved into this block (see more [here](https://github.com/Flexberry/ember-flexberry/commit/0d4de9aa95b506c37e31e0b99f2e8bb534f85fba) and [here](https://github.com/Flexberry/ember-flexberry/commit/d555c3f0fc4e070a66c0e18403fc721398593d40)).
 * `log` service:
     * Now `processName` field contains application name from `ENV.modulePrefix` of `environment.js`.
+* Edit form's logic:
+    * It is available to handle errors for each detail in `onSaveActionRejected` method during saving of aggregator model.
+* Change export excel modal dialog title.
 
 ### Fixed
 * List components:
     * Fix using `readonly` property from `componentProperties` for dynamic components.
+    * Fix displaying error about server unavailability. It was made more appropriate for perception.
 * `blue-sky` theme:
     * Actual width for `flexberry-checkbox` was set.
     * Displaying placeholders in IE.
 * `flexberry-simpleolv` component:
     * "Show settings" menu for user settings.
+* `flexberry-lookup` component:
+    * View is update on `displayAttributeName` property was changed.
+    * Fix lookup list's component name.
+* `flexberry-groupedit` component:
+    * Fix validation error message when `editOnSeparateRoute` and `saveOnRouteLeave` is true.
+    * Fix availability to resize columns when `allowColumnResize` property was changed dynamically.
+* `flexberry-file` component:
+    * Fix buttons disabling in mobile mode.
+    * Fix displaying errors in mobile mode.
+    * Fix displaying text for non-image file preview in IE.
+* `flexberry-modal` component:
+    * Fix dimmer hiding on close button click.
+* Blueprints:
+    * Fix generation of translations and assets into addon.
+* `flexberry-objectlistview` component:
+    * Fix hierarchy loading on first load and when records has been already loaded.
+    * Fix toolbar width in mobile mode.
+* `colsconfig-dialog-content` component:
+    * Fix invisible cells content in Google Chrome (some content was disappeared during resize of browser window).
+* `flexberry-simpledatetime` component:
+    * Clear button worked in readonly mode in IE.
+* Hanging up on list forms and edit forms when connection is unavailable.
+* Fix `usersettings` for `new` forms.
+
+### Removed
+* `flexberry-objectlistview` component:
+    * `columnsWidthAutoresize` attribute in mobile version of component.
+* `flexberry-lookup` component:
+    * `orderBy` ordering condition for list of records to choose.
 
 ## [0.10.0] - 2018-01-26
 ### Added

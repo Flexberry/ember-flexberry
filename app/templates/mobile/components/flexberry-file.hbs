@@ -2,7 +2,7 @@
   <input type="file" name="files[]" id={{_fileInputId}} class="flexberry-file-file-input" style="display:none" />
   <div class="row">
     <label
-      class="flexberry-file-add-button ui icon {{buttonClass}} {{unless _addButtonIsEnabled "disabled"}} {{if (or _hasFile readonly) "hidden"}} button"
+      class="flexberry-file-add-button ui icon {{buttonClass}} {{if readonly "disabled" (unless _addButtonIsEnabled "disabled")}} {{if _hasFile "hidden"}} button"
       title={{t "components.flexberry-file.add-button-title"}}
       for={{_fileInputId}}
       {{action "addButtonClick" on="click" preventDefault=false}}>
@@ -11,7 +11,7 @@
     {{#if _hasFile}}
       <div class="flexberry-file-menu">
         {{flexberry-menu
-          class="left pointing"
+          class=(concat "left pointing" (if (and readonly (not showPreview)) " disabled" ""))
           items=_menuItems
           callItemsOnClickCallbacks=false
           onItemClick=(action "onMenuItemClick")
@@ -19,15 +19,19 @@
         }}
       </div>
       {{#if showPreview}}
-        <div class="flexberry-file-image-preview-wrapper ui small image" {{action "viewLoadedImage"}}>
-          {{#unless _previewDownloadIsInProgress}}
-            <img
-              class="flexberry-file-image-preview"
-              src={{_previewImageAsBase64String}}
-              alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
-          {{/unless}}
-          <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
-        </div>
+        {{#if _canLoadPreview}}
+          <div class="flexberry-file-image-preview-wrapper ui small image" {{action "viewLoadedImage"}}>
+            {{#unless _previewDownloadIsInProgress}}
+              <img
+                class="flexberry-file-image-preview"
+                src={{_previewImageAsBase64String}}
+                alt={{t "components.flexberry-file.preview-image-alternative-text"}} />
+            {{/unless}}
+            <div class="ui {{if _previewDownloadIsInProgress "active" ""}} loader"></div>
+          </div>
+        {{else}}
+          <span>{{_fileName}}</span>&nbsp;<span style ="color:red">{{_errorPreviewCaption}}</span>
+        {{/if}}
       {{/if}}
     {{/if}}
   </div>

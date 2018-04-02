@@ -20,6 +20,34 @@ export default EditFormRoute.extend({
   modelName: 'ember-flexberry-dummy-suggestion',
 
   /**
+  developerUserSettings.
+  {
+  <componentName>: {
+    <settingName>: {
+        sorting: [{ propName: <colName>, direction: 'asc'|'desc' }, ... ]
+      },
+      ...
+    },
+    ...
+  }
+  For default userSetting use empty name ('').
+  <componentName> may contain any of properties: sorting.
+
+  @property developerUserSettings
+  @type Object
+  @default {}
+  */
+  developerUserSettings: {
+    lookupUserSettings: {
+      'DEFAULT': {
+        'sorting': [
+          { 'propName': 'name', 'direction': 'desc' },
+          { 'propName': 'moderated', 'direction': 'asc' }
+        ]
+      }
+    }
+  },
+  /**
     Returns model related to current route.
 
     @method model

@@ -2,7 +2,7 @@ import Ember from 'ember';
 import ValidationData from '../objects/validation-data';
 
 /**
-  Mixin for validation.
+  Mixin for handling errors.
 
   @class ErrorableControllerMixin
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>

@@ -21,9 +21,9 @@ export default Ember.Mixin.create({
 
       @method actions.loadRecordsById
       @param {String} id Record ID.
-      @param {ObjectListViewRowComponent} Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
+      @param {ObjectListViewRowComponent} target Instance of {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
       @param {String} property Property name into {{#crossLink "ObjectListViewRowComponent"}}{{/crossLink}}.
-      @param {Boolean} Flag indicates that this is the first download of data.
+      @param {Boolean} firstRunMode Flag indicates that this is the first download of data.
       @param {Object} recordParams Record params such as modelName, modelProjection and hierarchicalAttribute.
     */
     loadRecordsById(id, target, property, firstRunMode, recordParams) {
@@ -31,7 +31,7 @@ export default Ember.Mixin.create({
       let hierarchicalAttribute = params.hierarchicalAttribute || this.controllerFor(this.routeName).get('hierarchicalAttribute');
       let modelName = params.modelName || this.get('modelName');
 
-      if (!firstRunMode) {
+      if (firstRunMode) {
         let projectionName = params.modelProjection || this.get('modelProjection');
         let builder = new Builder(this.store)
           .from(modelName)

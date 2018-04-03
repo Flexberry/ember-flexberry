@@ -55,17 +55,17 @@ You will need the following things properly installed on your computer.
 
 Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality of the addon.
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+* `ember serve`
+* Visit your app at [http://localhost:4200](http://localhost:4200).
 
 #### Running Tests
 
+* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 
 #### Building
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember build` (development)
 * `ember build --environment production` (production)
 

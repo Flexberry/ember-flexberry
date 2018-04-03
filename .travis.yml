@@ -45,13 +45,13 @@ before_install:
   - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
 install:
-  - yarn install --no-lockfile
+  - yarn install --no-lockfile --non-interactive
   - bower install
 
 script:
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
-  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO test --skip-cleanup
+  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
   - if [ "$EMBER_TRY_SCENARIO" == "default" ]; then bash ./scripts/test-generator.sh; fi
 
 after_success:

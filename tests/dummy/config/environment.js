@@ -1,4 +1,5 @@
 /* eslint-env node */
+'use strict';
 
 module.exports = function(environment) {
   var backendUrl = 'https://flexberry-ember-dummy.azurewebsites.net';
@@ -8,10 +9,10 @@ module.exports = function(environment) {
     backendUrl = 'http://localhost:6501';
   }
 
-  var ENV = {
+  let ENV = {
     repositoryName: 'ember-flexberry/dummy',
     modulePrefix: 'dummy',
-    environment: environment,
+    environment,
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
@@ -116,7 +117,8 @@ module.exports = function(environment) {
   // Read more about ember-moment: https://github.com/stefanpenner/ember-moment.
   // Locale will be changed then to same as ember-i18n locale (and will be changed every time when i18n locale changes).
   ENV.moment = {
-    outputFormat: 'L'
+    outputFormat: 'L',
+    includeLocales: ['ru']
   };
 
   if (environment === 'development') {

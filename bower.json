@@ -11,7 +11,8 @@
     "seiyria-bootstrap-slider": "6.0.6",
     "blueimp-file-upload": "9.11.2",
     "jquery-minicolors": "2.2.6",
-    "js-beautify": "1.6.4"
+    "js-beautify": "1.6.4",
+    "moment": "^2.22.0"
   },
   "resolutions": {
     "semantic-ui": "fixed-abort"

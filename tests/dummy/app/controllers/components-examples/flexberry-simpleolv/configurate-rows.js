@@ -103,7 +103,7 @@ export default ListFormController.extend({
    */
   componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-simpleolv<br>' +
-    '  configurateRow=(action \"configurateRow\")<br>' +
+    '  configurateRow=(action "configurateRow")<br>' +
     '}}'),
 
   /**

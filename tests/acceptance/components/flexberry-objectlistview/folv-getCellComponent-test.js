@@ -65,9 +65,11 @@ executeTest('check getCellComponent', (store, assert, app) => {
           let $list =  Ember.$(olvContainerClass);
           assert.ok($list, 'list loaded');
 
+          /* eslint-disable no-useless-escape */
           // Date format most be DD.MM.YYYY, hh:mm:ss.
           let reDateTime = /(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d\, ([0-1]\d|2[0-3])(:[0-5]\d){2}$/;
           let arrayDateTime = reDateTime.exec($dateCell());
+          /* eslint-enable no-useless-escape */
 
           let resultDateTime = arrayDateTime ? arrayDateTime[0] : null;
           assert.ok(resultDateTime, 'date format is \'DD.MM.YYYY, hh:mm:ss\' ');
@@ -80,9 +82,11 @@ executeTest('check getCellComponent', (store, assert, app) => {
               let $list =  Ember.$(olvContainerClass);
               assert.ok($list, 'list loaded');
 
+              /* eslint-disable no-useless-escape */
               // Date format most be II (example Sep 4 1986).
               let reDateString = /[a-zA-Z]{3} ([1-9]|[12][0-9]|3[01])\, (19|20)\d\d/;
               let arrayDateString = reDateString.exec($dateCell());
+              /* eslint-enable no-useless-escape */
 
               let resultDateString = arrayDateString ? arrayDateString[0] : null;
               assert.ok(resultDateString, 'date format is \'ll\' ');

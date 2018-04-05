@@ -16,7 +16,7 @@ export default EditFormController.extend({
         '  &lt;span&gt;{{model.enumeration}}&lt;/span&gt;<br>' +
         '{{else}}<br>' +
         '  {{flexberry-dropdown<br>' +
-        '    items=(flexberry-enum \"components-examples/flexberry-dropdown/conditional-render-example/enumeration\")<br>' +
+        '    items=(flexberry-enum "components-examples/flexberry-dropdown/conditional-render-example/enumeration")<br>' +
         '    value=model.enumeration<br>' +
         '  }}<br>' +
         '{{/if}}' +

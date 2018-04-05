@@ -193,7 +193,7 @@ export default EditFormController.extend({
    */
   componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-groupedit<br>' +
-    '  componentName=\"aggregatorDetailsGroupedit\"<br>' +
+    '  componentName="aggregatorDetailsGroupedit"<br>' +
     '  content=model.details<br>' +
     '  modelProjection=detailsProjection<br>' +
     '  placeholder=placeholder<br>' +

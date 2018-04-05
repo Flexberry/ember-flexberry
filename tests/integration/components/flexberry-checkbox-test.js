@@ -81,7 +81,7 @@ test('Component renders it\'s label properly', function(assert) {
   assert.strictEqual(
     Ember.$.trim($checkboxLabel.text()) === label,
     true,
-    `Component\'s inner <label> has text defined in component's 'label' property: '${label}'`);
+    `Component's inner <label> has text defined in component's 'label' property: '${label}'`);
 
   // Clean up defined label & check <label>'s text again.
   label = null;
@@ -89,7 +89,7 @@ test('Component renders it\'s label properly', function(assert) {
   assert.strictEqual(
     Ember.$.trim($checkboxLabel.text()).length === 0,
     true,
-    `Component\'s inner <label> is empty if component's 'label' property is cleaned up`);
+    `Component's inner <label> is empty if component's 'label' property is cleaned up`);
 });
 
 test('Changes in checkbox causes changes in binded value', function(assert) {

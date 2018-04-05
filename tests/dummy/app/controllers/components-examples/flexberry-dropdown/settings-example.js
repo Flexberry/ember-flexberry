@@ -47,7 +47,7 @@ export default Ember.Controller.extend({
    */
   componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-dropdown<br>' +
-    '  items=(flexberry-enum \"components-examples/flexberry-dropdown/settings-example/enumeration\")<br>' +
+    '  items=(flexberry-enum "components-examples/flexberry-dropdown/settings-example/enumeration")<br>' +
     '  value=model.enumeration<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +

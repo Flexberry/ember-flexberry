@@ -36,7 +36,7 @@ export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin,
     '  value=model.flag<br>' +
     '  caption=caption<br>' +
     '  readonly=readonly<br>' +
-    '  change=(action \"onCheckboxChange\" \"model.flag\")<br>' +
+    '  change=(action "onCheckboxChange" "model.flag")<br>' +
     '}}'),
 
   /**

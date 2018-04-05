@@ -735,7 +735,7 @@ export default FlexberryBaseComponent.extend({
     let displayAttributeName = this.get('displayAttributeName');
     let autocompleteOrder = this.get('autocompleteOrder');
     if (!displayAttributeName) {
-      throw new Error('\`displayAttributeName\` is required property for autocomplete mode in \`flexberry-lookup\`.');
+      throw new Error('`displayAttributeName` is required property for autocomplete mode in `flexberry-lookup`.');
     }
 
     let minCharacters = this.get('minCharacters');
@@ -897,7 +897,7 @@ export default FlexberryBaseComponent.extend({
 
     let displayAttributeName = this.get('displayAttributeName');
     if (!displayAttributeName) {
-      throw new Error(' \`displayAttributeName\` is required property for dropdown mode in \`flexberry-lookup\`.');
+      throw new Error('`displayAttributeName` is required property for dropdown mode in `flexberry-lookup`.');
     }
 
     let i18n = _this.get('i18n');
@@ -1000,7 +1000,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (!displayAttributeName) {
-      Ember.warn('\`displayAttributeName\` is not defined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.display-attribute-name-is-not-defined' });
+      Ember.warn('`displayAttributeName` is not defined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.display-attribute-name-is-not-defined' });
       return '';
     }
 

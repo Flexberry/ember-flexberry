@@ -11,7 +11,7 @@ import { getRecord } from '../utils/extended-get';
 // Not a helper member, so yuidoc-comments are unnecessary.
 let validateHelperProperties = function(args, hash) {
   Ember.assert(
-    'Exactly two unnamed arguments must be passed to \`get-with-dynamic-actions\` helper.',
+    'Exactly two unnamed arguments must be passed to `get-with-dynamic-actions` helper.',
     args.length === 2);
 
   let propertyOwner = args[0];

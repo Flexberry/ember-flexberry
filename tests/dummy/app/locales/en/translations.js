@@ -986,7 +986,7 @@ Ember.$.extend(true, translations, {
           'info-message': 'The page template looks like following:' +
             '{{pageTemplate}}' +
             'So, once the value is selected, the component will be rendered as &lt;span&gt;selected value&lt;/span&gt;,<br>' +
-            'after that check browser\'s console, it must be free from \"Semantic-UI\" and other errors.'
+            'after that check browser\'s console, it must be free from "Semantic-UI" and other errors.'
         },
         'empty-value-example': {
           'caption': 'Flexberry-dropdown. Example dropdown with empty value',

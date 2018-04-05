@@ -58,7 +58,7 @@ export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin,
     '  caption=caption<br>' +
     '  tooltip=tooltip<br>' +
     '  readonly=readonly<br>' +
-    '  click=(action \"onButtonClick\")<br>' +
+    '  click=(action "onButtonClick")<br>' +
     '}}'),
 
   /**

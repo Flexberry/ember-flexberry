@@ -217,12 +217,12 @@ export default ListFormController.extend({
    */
   componentTemplateText: new Ember.String.htmlSafe(
     '{{flexberry-simpleolv<br>' +
-    '  componentName=\"SuggestionsObjectListView\"<br>' +
+    '  componentName="SuggestionsObjectListView"<br>' +
     '  colsConfigButton=colsConfigButton<br>' +
     '  exportExcelButton=exportExcelButton<br>' +
     '  content=model<br>' +
-    '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
+    '  modelName="ember-flexberry-dummy-suggestion"<br>' +
+    '  editFormRoute="ember-flexberry-dummy-suggestion"<br>' +
     '  modelProjection=modelProjection<br>' +
     '  placeholder=placeholder<br>' +
     '  readonly=readonly<br>' +
@@ -245,21 +245,21 @@ export default ListFormController.extend({
     '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
     '  rowClickable=rowClickable<br>' +
     '  orderable=orderable<br>' +
-    '  filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
+    '  filterByAnyMatch=(action "filterByAnyMatch")<br>' +
     '  filterText=filter<br>' +
     '  filterByAnyWord=filterByAnyWord<br>' +
     '  filterByAllWords=filterByAllWords<br>' +
     '  sorting=computedSorting<br>' +
-    '  sortByColumn=(action \"sortByColumn\")<br>' +
-    '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
+    '  sortByColumn=(action "sortByColumn")<br>' +
+    '  addColumnToSorting=(action "addColumnToSorting")<br>' +
     '  pages=pages<br>' +
     '  perPageValue=perPageValue<br>' +
     '  perPageValues=perPageValues<br>' +
     '  hasPreviousPage=hasPreviousPage<br>' +
     '  hasNextPage=hasNextPage<br>' +
-    '  previousPage=(action \"previousPage\")<br>' +
-    '  gotoPage=(action \"gotoPage\")<br>' +
-    '  nextPage=(action \"nextPage\")<br>' +
+    '  previousPage=(action "previousPage")<br>' +
+    '  gotoPage=(action "gotoPage")<br>' +
+    '  nextPage=(action "nextPage")<br>' +
     '}}'),
 
   /**

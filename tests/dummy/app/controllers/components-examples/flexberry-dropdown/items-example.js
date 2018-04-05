@@ -7,12 +7,12 @@ export default Ember.Controller.extend({
   message: new Ember.String.htmlSafe(
     '<pre><code>' +
     '<strong>itemsArray: </strong>' +
-      '[\"itemsArray1\", \"itemsArray2\", \"itemsArray3\"]' +
+      '["itemsArray1", "itemsArray2", "itemsArray3"]' +
       '<br><br>' +
       '<strong>itemsObject:</strong> {<br>' +
-        '  itemsObject1: \"itemsObject1\",<br>' +
-        '  itemsObject2: \"itemsObject2\",<br>' +
-        '  itemsObject3: \"itemsObject3\"<br>' +
+        '  itemsObject1: "itemsObject1",<br>' +
+        '  itemsObject2: "itemsObject2",<br>' +
+        '  itemsObject3: "itemsObject3"<br>' +
       '}' +
     '</code></pre>'
   ),

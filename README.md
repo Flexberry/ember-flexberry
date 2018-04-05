@@ -48,6 +48,7 @@ You will need the following things properly installed on your computer.
 #### Installation
 
 * `git clone` this repository
+* `cd ember-flexberry`
 * `npm install`
 * `bower install`
 

@@ -37,7 +37,8 @@ executeTest('date format moment L', (store, assert, app) => {
           let toReturn;
           /* eslint-disable no-unused-vars */
           Object.keys($headRow).forEach((element, index, array) => {
-            if (Ember.$.trim($headRow[element].innerText) === 'Date') {
+            let $dateAttribute = Ember.$($headRow[element]).children('div');
+            if (($dateAttribute.length !== 0) && (Ember.$.trim($dateAttribute[0].getAttribute('data-olv-header-property-name')) === 'date')) {
               toReturn = index;
               return false;
             }

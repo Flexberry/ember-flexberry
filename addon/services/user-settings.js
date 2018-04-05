@@ -193,9 +193,9 @@ export default Ember.Service.extend({
             if (foundRecords) {
               for (let i = 0; i < foundRecords.length; i++) {
                 let foundRecord = foundRecords[i];
-                let userSettingValue = foundRecord.record.get('txtVal');
-                let settName = foundRecord.record.get('settName');
-                let componentName = foundRecord.record.get('moduleName');
+                let userSettingValue = foundRecord._record.get('txtVal');
+                let settName = foundRecord._record.get('settName');
+                let componentName = foundRecord._record.get('moduleName');
                 if (!settName) {
                   settName = defaultSettingName;
                 }
@@ -780,7 +780,7 @@ export default Ember.Service.extend({
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 0; i < foundRecords.length; i++) {
-            delPromises[delPromises.length] = foundRecords[i].record.destroyRecord();
+            delPromises[delPromises.length] = foundRecords[i]._record.destroyRecord();
           }
 
           return Ember.RSVP.Promise.all(delPromises).then(
@@ -818,10 +818,10 @@ export default Ember.Service.extend({
         let foundRecords = result.get('content');
         if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 1; i < foundRecords.length; i++) {
-            foundRecords[i].record.destroyRecord();
+            foundRecords[i]._record.destroyRecord();
           }
 
-          return foundRecords[0].record;
+          return foundRecords[0]._record;
         }
       }
 

@@ -431,6 +431,20 @@ export default FlexberryBaseComponent.extend({
       if (!this.get('allSelect'))
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      } else {
+        let filters = this.get('filters');
+        let filtersNames = Object.keys(filters);
+        let filtersArray = [];
+
+        filtersNames.forEach((item) => {
+          let filterValue = filters[item];
+          let dataObj = { name: filterValue.name, condition: filterValue.condition, pattern: filterValue.pattern };
+          filtersArray.push(dataObj);
+        });
+
+        let data = { filter: JSON.stringify(filtersArray) };
+        let adapter = getOwner(this).lookup('adapter:application');
+        adapter.callAction('DeleteAllSelect', data, null, { withCredentials: true });
       }
     },
 

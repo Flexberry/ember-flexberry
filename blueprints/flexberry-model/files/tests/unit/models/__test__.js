@@ -3,8 +3,14 @@ import { moduleForModel, test } from 'ember-qunit';
 moduleForModel('<%= name %>', 'Unit | Model | <%= name %>', {
   // Specify the other units that are required for this test.
   needs: [
-<%= needsAllModels %>
-  ]
+<%= needsAllModels %>,
+    'validator:ds-error',
+    'validator:presence',
+    'validator:number',
+    'validator:date',
+    'validator:belongs-to',
+    'validator:has-many',
+  ],
 });
 
 test('it exists', function(assert) {

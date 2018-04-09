@@ -5,31 +5,48 @@
 import Ember from 'ember';
 
 /**
-  Component for showing error message from model validators.
+  Component for output messages of validation errors as a [Semantic UI Label](https://semantic-ui.com/elements/label.html) element.
 
-  @class FlexberryValidationmessage
-  @extends Ember.Component
+  @example
+    ```handlebars
+    {{flexberry-validationmessage
+      color="pink"
+      pointing="left pointing"
+      error=error
+    }}
+    ```
+
+  @class FlexberryValidationmessageComponent
+  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
 */
 export default Ember.Component.extend({
   /**
-    Default classes for component wrapper.
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNameBindings
+    @type Array
+    @default ['color', 'pointing']
+  */
+  classNameBindings: ['color', 'pointing'],
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNames
+    @type Array
+    @default ['ui', 'basic', 'label']
   */
   classNames: ['ui', 'basic', 'label'],
 
   /**
-    Error messages array or error text for shown.
-    Typically uses Ember.Model.errors for specific attribute, plain test also supported.
+    See [EmberJS API](https://emberjs.com/api/).
 
-    @example
-      {{flexberry-validationmessage error=model.errors.email}}
-
-    @property error
-    @type Array|String
+    @property isVisible
   */
-  error: undefined,
+  isVisible: Ember.computed.notEmpty('error'),
 
   /**
-    Semantic color class name for label text.
+    See [Semantic UI API](https://semantic-ui.com/elements/label.html#colored).
 
     @property color
     @type String
@@ -38,54 +55,19 @@ export default Ember.Component.extend({
   color: 'red',
 
   /**
-    Label pointing direction.
-    Possible variants: '', pointing, pointing above, pointing below, left pointing, right pointing.
+    See [Semantic UI API](https://semantic-ui.com/elements/label.html#pointing).
 
     @property pointing
     @type String
-    @default ''
+    @default 'pointing'
   */
-  pointing: '',
+  pointing: 'pointing',
 
   /**
-    If error property isn't exists, the component will appear hidden in DOM.
+    Message or array of error messages.
 
-    @property isVisible
-    @type Boolean
-    @readOnly
+    @property error
+    @type Array|String
   */
-  isVisible: Ember.computed('error', function() {
-    let error = this.get('error');
-    return !!(Array.isArray(error) ? error.length : error);
-  }),
-
-  /**
-    An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
-  */
-  init() {
-    this._super(...arguments);
-
-    this.get('classNames').push(this.get('color'));
-
-    let pointing = this.get('pointing');
-    if (pointing) {
-      let possiblePointings = [
-        '',
-        'pointing',
-        'pointing above',
-        'pointing below',
-        'left pointing',
-        'right pointing'];
-      if (possiblePointings.indexOf(pointing) === -1) {
-        let messagePointings = possiblePointings.map(function(item) {
-          return `'${item}'`;
-        });
-        throw new Error(
-          `Wrong value of flexberry-validationmessage pointing property, actual is '${pointing}', possible values are: ${messagePointings}`);
-      }
-
-      this.get('classNames').push(pointing);
-    }
-  }
+  error: undefined,
 });

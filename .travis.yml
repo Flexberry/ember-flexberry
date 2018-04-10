@@ -17,8 +17,12 @@ cache:
     - $HOME/.cache
 
 env:
-  - EMBER_TRY_SCENARIO=ember-default
-  - EMBER_TRY_SCENARIO=ember-release
+  global:
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
+  matrix:
+    - EMBER_TRY_SCENARIO=ember-default
+    - EMBER_TRY_SCENARIO=ember-release
 
 matrix:
   fast_finish: true

@@ -142,6 +142,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
 
+    // here you can enable a production-specific feature
   }
 
   // Change paths to application assets if build has been started with the following parameters:

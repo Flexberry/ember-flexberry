@@ -47,9 +47,9 @@ You will need the following things properly installed on your computer.
 
 #### Installation
 
-* `git clone` this repository
+* `git clone <repository-url>` this repository
 * `cd ember-flexberry`
-* `npm install`
+* `yarn install`
 * `bower install`
 
 #### Running Dummy Application
@@ -61,7 +61,7 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 
 #### Running Tests
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
+* `yarn test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 

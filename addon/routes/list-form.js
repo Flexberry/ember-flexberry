@@ -100,6 +100,7 @@ ErrorableRouteMixin, {
     let webPage = transition.targetName;
     let projectionName = this.get('modelProjection');
     let filtersPredicate = this._filtersPredicate();
+    this.set('filtersPredicate', filtersPredicate);
     let limitPredicate =
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
     let userSettingsService = this.get('userSettingsService');
@@ -302,6 +303,7 @@ ErrorableRouteMixin, {
     controller.set('modelProjection', proj);
     controller.set('developerUserSettings', this.get('developerUserSettings'));
     controller.set('resultPredicate', this.get('resultPredicate'));
+    controller.set('filtersPredicate', this.get('filtersPredicate'));
     if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }

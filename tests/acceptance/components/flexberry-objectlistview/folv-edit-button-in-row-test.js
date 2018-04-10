@@ -24,6 +24,6 @@ executeTest('check edit button in row', (store, assert, app) => {
       let saveButton = Ember.$('.save-button');
       assert.equal(saveButton.length, 1, 'Edit button in row open editform');
       done();
-    }, 1000);
+    }, 1500);
   });
 });

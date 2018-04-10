@@ -5,7 +5,7 @@
 import Component from '@ember/component';
 import { typeOf } from '@ember/utils';
 import { htmlSafe, isHTMLSafe } from '@ember/string';
-import { get, set, computed  } from '@ember/object';
+import { get, computed  } from '@ember/object';
 import $ from 'jquery';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';

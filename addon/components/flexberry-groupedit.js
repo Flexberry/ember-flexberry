@@ -3,12 +3,12 @@
 */
 
 import { isNone } from '@ember/utils';
-import { get, computed, observer } from '@ember/object';
+import { get, observer } from '@ember/object';
 import { inject as service} from '@ember/service';
 import { A, isArray } from '@ember/array';
 import { copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
-import { merge } from '@ember/polyfills';
+import { merge } from '@ember/polyfills';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 

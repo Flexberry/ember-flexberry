@@ -3,7 +3,6 @@
 */
 
 import { assert, warn, debug } from '@ember/debug';
-import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { later, run } from '@ember/runloop';

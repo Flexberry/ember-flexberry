@@ -2,8 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-const { getOwner } = Ember;
+import Helper from '@ember/component/helper';
+import { getOwner } from '@ember/application';
 import { enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
 
 /**
@@ -13,7 +13,7 @@ import { enumCaptions } from 'ember-flexberry-data/utils/enum-functions';
   @extends <a href="http://emberjs.com/api/classes/Ember.Helper.html">Ember.Helper</a>
   @public
 */
-export default Ember.Helper.extend({
+export default Helper.extend({
   compute([enumName]) {
     let enumInstance = getOwner(this).lookup('enum:' + enumName);
     return enumCaptions(enumInstance);

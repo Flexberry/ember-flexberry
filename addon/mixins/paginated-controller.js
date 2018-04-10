@@ -2,7 +2,8 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
 
 /**
   Mixin for controller, that pagination support.
@@ -12,7 +13,7 @@ import Ember from 'ember';
     // app/controllers/employees.js
     import Ember from 'ember';
     import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
-    export default Ember.Controller.extend(PaginatedController, {
+    export default Controller.extend(PaginatedController, {
     });
     ```
 
@@ -20,7 +21,7 @@ import Ember from 'ember';
     // app/routes/employees.js
     import Ember from 'ember';
     import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
-    export default Ember.Route.extend(PaginatedRoute, {
+    export default Route.extend(PaginatedRoute, {
     });
     ```
 
@@ -46,7 +47,7 @@ import Ember from 'ember';
   @class PaginatedController
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Start page.
 
@@ -80,7 +81,7 @@ export default Ember.Mixin.create({
     @property perPageValue
     @type Number
   */
-  perPageValue: Ember.computed('perPage', {
+  perPageValue: computed('perPage', {
     /* eslint-disable no-unused-vars */
     get(key) {
       let perPage = this.get('perPage');
@@ -125,7 +126,7 @@ export default Ember.Mixin.create({
     @type Number
     @readOnly
   */
-  recordsTotalCount: Ember.computed('model', function() {
+  recordsTotalCount: computed('model', function() {
     return this.get('model.meta.count');
   }),
 
@@ -136,7 +137,7 @@ export default Ember.Mixin.create({
     @type Boolean
     @readOnly
   */
-  hasNextPage: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
+  hasNextPage: computed('page', 'perPage', 'recordsTotalCount', function() {
     let page = this.get('page');
     let lastPage = this._getLastPage();
     return page < lastPage;
@@ -149,7 +150,7 @@ export default Ember.Mixin.create({
     @type Boolean
     @readOnly
   */
-  hasPreviousPage: Ember.computed('page', function() {
+  hasPreviousPage: computed('page', function() {
     return this.get('page') > 1;
   }),
 
@@ -165,7 +166,7 @@ export default Ember.Mixin.create({
     @type Array
     @readOnly
   */
-  pages: Ember.computed('page', 'perPage', 'recordsTotalCount', function() {
+  pages: computed('page', 'perPage', 'recordsTotalCount', function() {
     let page = this.get('page');
     let lastPage = this._getLastPage();
 

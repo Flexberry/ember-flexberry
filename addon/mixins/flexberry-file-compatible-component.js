@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 /**
   Mixin for components which need to be flexberry-file compatible.
@@ -10,7 +10,7 @@ import Ember from 'ember';
   @class FlexberryFileCompatibleComponentMixin
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Handles {{#crossLink "FlexberryFileComponent"}}flexberry-file{{/crossLink}} 'viewLoadedImage' action,

@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import RSVP from 'rsvp';
+import { getOwner } from '@ember/application';
 import { Query } from 'ember-flexberry-data';
 
 /**
@@ -11,7 +13,7 @@ import { Query } from 'ember-flexberry-data';
   @class LockRouteMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     @property _currentLock
     @type DS.Model
@@ -55,7 +57,7 @@ export default Ember.Mixin.create({
       let lock = this.get('_currentLock');
       if (lock) {
         this.unlockObject().then((answer) => {
-          (answer ? lock.destroyRecord() : new Ember.RSVP.resolve()).then(() => {
+          (answer ? lock.destroyRecord() : new RSVP.resolve()).then(() => {
             this.set('_currentLock', null);
           });
         });
@@ -78,13 +80,13 @@ export default Ember.Mixin.create({
   beforeModel(transition) {
     let result = this._super(...arguments);
 
-    if (!(result instanceof Ember.RSVP.Promise)) {
-      result = Ember.RSVP.resolve();
+    if (!(result instanceof RSVP.Promise)) {
+      result = RSVP.resolve();
     }
 
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve, reject) => {
       let params = this.paramsFor(this.routeName);
-      let userService = Ember.getOwner(this).lookup('service:user');
+      let userService = getOwner(this).lookup('service:user');
       result.then((parentResult) => {
         if (params.id) {
           let builder = new Query.Builder(this.store)
@@ -156,7 +158,7 @@ export default Ember.Mixin.create({
       export default EditFormRoute.extend({
         ...
         openReadOnly(lockUserName) {
-          return new Ember.RSVP.Promise((resolve) => {
+          return new RSVP.Promise((resolve) => {
             let answer = confirm(`This object lock user with name: '${lockUserName}'. Open read only?`);
             resolve(answer);
           });
@@ -172,7 +174,7 @@ export default Ember.Mixin.create({
   */
   /* eslint-disable no-unused-vars */
   openReadOnly(lockUserName) {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new RSVP.Promise((resolve) => {
       resolve(this.get('defaultBehaviorLock.openReadOnly'));
     });
   },
@@ -191,7 +193,7 @@ export default Ember.Mixin.create({
       export default EditFormRoute.extend({
         ...
         unlockObject() {
-          return new Ember.RSVP.Promise((resolve) => {
+          return new RSVP.Promise((resolve) => {
             let answer = confirm(`Unlock this object?`);
             resolve(answer);
           });
@@ -205,7 +207,7 @@ export default Ember.Mixin.create({
     @for EditFormRoute
   */
   unlockObject() {
-    return new Ember.RSVP.Promise((resolve) => {
+    return new RSVP.Promise((resolve) => {
       resolve(this.get('defaultBehaviorLock.unlockObject'));
     });
   },

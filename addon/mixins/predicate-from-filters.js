@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { set } from '@ember/object';
 import { Query } from 'ember-flexberry-data';
 
 const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate } = Query;
@@ -14,7 +15,7 @@ const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredi
   @extends Ember.Mixin
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Return predicate to filter through.
 
@@ -55,7 +56,7 @@ export default Ember.Mixin.create({
       }
     } else {
       if (!filter.condition && filter.type === 'string') {
-        Ember.set(filter, 'condition', 'like');
+        set(filter, 'condition', 'like');
         return new StringPredicate(filter.name).contains(filter.pattern);
       }
     }

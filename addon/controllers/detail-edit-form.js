@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { getOwner } from '@ember/application';
 import EditFormController from './edit-form';
 
 /**
@@ -32,7 +33,7 @@ export default EditFormController.extend({
     @private
     @readOnly
   */
-  _hasParentRoute: Ember.computed('modelCurrentAgregatorPathes', function() {
+  _hasParentRoute: computed('modelCurrentAgregatorPathes', function() {
     let flexberryDetailInteractionService = this.get('_flexberryDetailInteractionService');
     let modelAgregatorRoutes = flexberryDetailInteractionService.get('modelCurrentAgregatorPathes');
     return flexberryDetailInteractionService.hasValues(this.get('modelCurrentAgregatorPathes')) ||
@@ -225,7 +226,7 @@ export default EditFormController.extend({
       flexberryDetailInteractionService.set('modelCurrentAgregators', modelCurrentAgregators);
       flexberryDetailInteractionService.set('modelLastUpdatedDetail', this.get('model'));
       if (modelCurrentAgregator) {
-        let store = Ember.getOwner(this).lookup('service:store');
+        let store = getOwner(this).lookup('service:store');
         let agregatorIsOfflineModel = modelCurrentAgregator && store.get('offlineModels') &&
           store.get(`offlineModels.${modelCurrentAgregator.constructor.modelName}`);
 

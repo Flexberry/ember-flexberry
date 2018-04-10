@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import $ from 'jquery';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
@@ -76,7 +77,7 @@ const flexberryClassNames = {
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryColorpickerComponent = Ember.Component.extend(
+let FlexberryColorpickerComponent = Component.extend(
   RequiredActionsMixin,
   DomActionsMixin,
   DynamicActionsMixin,
@@ -125,7 +126,7 @@ let FlexberryColorpickerComponent = Ember.Component.extend(
         which describes inner input's 'change' event.
       */
       change(e) {
-        let $input = Ember.$(e.target);
+        let $input = $(e.target);
         if (!$input.hasClass(flexberryClassNames.input)) {
           return false;
         }

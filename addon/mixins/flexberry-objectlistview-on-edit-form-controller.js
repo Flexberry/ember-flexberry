@@ -2,7 +2,12 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import RSVP from 'rsvp';
+import { on } from '@ember/object/evented';
+import { set, computed, observer } from '@ember/object';
+import { run, once  } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 import { Query } from 'ember-flexberry-data';
 import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
@@ -15,7 +20,7 @@ import deserializeSortingParam from '../utils/deserialize-sorting-param';
   @uses PredicateFromFiltersMixin
   @public
 */
-export default Ember.Mixin.create(PredicateFromFiltersMixin, {
+export default Mixin.create(PredicateFromFiltersMixin, {
   /**
     Name of related to FOLV edit form route.
 
@@ -58,7 +63,7 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   /**
     Total count of FOLV records.
@@ -67,10 +72,10 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
     @type Number
     @readOnly
   */
-  recordsTotalCount: Ember.on('init', Ember.computed('customFolvContent', function() {
+  recordsTotalCount: on('init', computed('customFolvContent', function() {
     let customFolvContent = this.get('customFolvContent');
     if (customFolvContent) {
-      if (customFolvContent instanceof Ember.RSVP.Promise) {
+      if (customFolvContent instanceof RSVP.Promise) {
         customFolvContent.then((records) => {
           this.set('recordsTotalCount', records.meta.count);
         }, this);
@@ -87,11 +92,11 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
     @type Promise
     @readOnly
   */
-  customFolvContentObserver: Ember.observer('model', 'perPage', 'page', 'sorting', 'filter', 'filters', function() {
+  customFolvContentObserver: observer('model', 'perPage', 'page', 'sorting', 'filter', 'filters', function() {
     let _this = this;
 
-    Ember.run(function() {
-      Ember.run.once(_this, 'getCustomContent');
+    run(function() {
+      once(_this, 'getCustomContent');
     });
   }),
 
@@ -154,7 +159,7 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
 
   sorting: [],
 
-  sortObserver: Ember.on('init', Ember.observer('sort', function() {
+  sortObserver: on('init', observer('sort', function() {
     let sorting = this.get('sort');
 
     if (sorting) {
@@ -171,7 +176,7 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
     @type Object
     @readOnly
   */
-  computedSorting: Ember.computed('sorting', function() {
+  computedSorting: computed('sorting', function() {
     let sorting = this.get('sorting');
     let result = {};
 
@@ -228,7 +233,7 @@ export default Ember.Mixin.create(PredicateFromFiltersMixin, {
         .selectByProjection(projectionName)
         .where(hierarchicalAttribute, 'eq', id);
 
-      Ember.set(target, property, this.store.query(modelName, builder.build()));
+      set(target, property, this.store.query(modelName, builder.build()));
     },
 
     /**

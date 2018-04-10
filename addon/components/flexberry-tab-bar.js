@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get, set, computed } from '@ember/object';
+import { A } from '@ember/array';
 
 /**
   Component's CSS-classes names.
@@ -27,7 +29,7 @@ const flexberryClassNames = {
  * Component to display semantic ui tabs
  * @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['ui', 'tabular', 'menu', flexberryClassNamesPrefix],
 
   /**
@@ -51,33 +53,33 @@ export default Ember.Component.extend({
    * @property tabs
    * @type {Array}
    */
-  tabs: Ember.computed('items.[]', 'items.@each.active', function () {
+  tabs: computed('items.[]', 'items.@each.active', function () {
     let active = false;
-    let items = this.get('items') || Ember.A();
-    let result = Ember.A();
+    let items = this.get('items') || A();
+    let result = A();
 
     items.forEach((item) => {
-      let itemIsActive = Ember.get(item, 'active');
+      let itemIsActive = get(item, 'active');
       if (itemIsActive && itemIsActive === true) {
         if (!active) {
           active = true;
           this.$('.item.active').removeClass('active');
 
-          let itemClass = Ember.get(item, 'class') || '';
+          let itemClass = get(item, 'class') || '';
           itemClass += itemClass + ' active';
-          Ember.set(item, 'class', itemClass);
+          set(item, 'class', itemClass);
 
           this.set('prevTab', item.selector);
           this.$().tab('change tab', item.selector);
         }
       }
 
-      Ember.set(item, 'active', false);
+      set(item, 'active', false);
 
-      if (Ember.get(item, 'iconClass')) {
-        Ember.set(item, '_hasIcon', true);
+      if (get(item, 'iconClass')) {
+        set(item, '_hasIcon', true);
       } else {
-        Ember.set(item, '_hasIcon', false);
+        set(item, '_hasIcon', false);
       }
 
       result.pushObject(item);

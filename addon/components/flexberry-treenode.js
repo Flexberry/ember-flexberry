@@ -2,7 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
+import { isArray } from '@ember/array';
+import { isNone } from '@ember/utils';
 import SlotsMixin from 'ember-block-slots';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
@@ -80,7 +84,7 @@ const flexberryClassNames = {
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryTreenodeComponent = Ember.Component.extend(
+let FlexberryTreenodeComponent = Component.extend(
   SlotsMixin,
   RequiredActionsMixin,
   DomActionsMixin,
@@ -95,10 +99,10 @@ let FlexberryTreenodeComponent = Ember.Component.extend(
       @readOnly
       @private
     */
-    _hasNodes: Ember.computed('nodes.[]', function() {
+    _hasNodes: computed('nodes.[]', function() {
       let nodes = this.get('nodes');
 
-      return Ember.isArray(nodes) && nodes.length > 0;
+      return isArray(nodes) && nodes.length > 0;
     }),
 
     /**
@@ -110,7 +114,7 @@ let FlexberryTreenodeComponent = Ember.Component.extend(
       @readOnly
       @private
     */
-    _hasContent: Ember.computed('_slots.[]', '_hasNodes', function() {
+    _hasContent: computed('_slots.[]', '_hasNodes', function() {
       // Yielded {{block-slot "content"}} is defined or 'nodes' are defined.
       return this._isRegistered('content') || this.get('_hasNodes');
     }),
@@ -179,7 +183,7 @@ let FlexberryTreenodeComponent = Ember.Component.extend(
         // As the 'click' event-target here could be passed any inner element nested inside node's header
         // (even some inner elements of dynamic components nested inside node),
         // that's why we should check for a special class-name in event-target itself & in it's parent elements.
-        let $clickTarget = Ember.$(e.target);
+        let $clickTarget = $(e.target);
         let clickTargetShouldPreventExpandCollapse = $clickTarget.hasClass(flexberryClassNames.preventExpandCollapse);
         if (!clickTargetShouldPreventExpandCollapse)  {
           clickTargetShouldPreventExpandCollapse = $clickTarget.parents().hasClass(flexberryClassNames.preventExpandCollapse);
@@ -194,8 +198,8 @@ let FlexberryTreenodeComponent = Ember.Component.extend(
           return;
         }
 
-        let expandedNodeClassName = Ember.$.fn.accordion.settings.className.active;
-        if (Ember.$(e.currentTarget).hasClass(expandedNodeClassName)) {
+        let expandedNodeClassName = $.fn.accordion.settings.className.active;
+        if ($(e.currentTarget).hasClass(expandedNodeClassName)) {
           this.sendAction('beforeCollapse', {
             originalEvent: e
           });
@@ -214,19 +218,19 @@ let FlexberryTreenodeComponent = Ember.Component.extend(
       @method _hasContentDidChange
       @private
     */
-    _hasContentDidChange: Ember.observer('_hasContent', function() {
+    _hasContentDidChange: observer('_hasContent', function() {
       if (this.get('_hasContent')) {
         return;
       }
 
       let $treeNode = this.$();
-      if (Ember.isNone($treeNode)) {
+      if (isNone($treeNode)) {
         return;
       }
 
       let collapse = function($element) {
-        let active = Ember.$.fn.accordion.settings.className.active;
-        if (!Ember.isNone($element) && $element.hasClass(active)) {
+        let active = $.fn.accordion.settings.className.active;
+        if (!isNone($element) && $element.hasClass(active)) {
           $element.removeClass(active);
         }
       };

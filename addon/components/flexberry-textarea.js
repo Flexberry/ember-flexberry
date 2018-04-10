@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -35,7 +35,7 @@ export default FlexberryBaseComponent.extend({
     @property readonly
     @type Boolean
   */
-  readonly: Ember.computed('_readonly', {
+  readonly: computed('_readonly', {
     get() {
       return this.get('_readonly') === true ? true : undefined;
     },

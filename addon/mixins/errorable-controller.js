@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { A, isArray } from '@ember/array';
+import { typeOf } from '@ember/utils';
+import { get } from '@ember/object';
 import ValidationData from '../objects/validation-data';
 
 /**
@@ -8,7 +11,7 @@ import ValidationData from '../objects/validation-data';
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Save the error.
@@ -48,7 +51,7 @@ export default Ember.Mixin.create({
   */
   init() {
     this._super.apply(this, arguments);
-    this.set('errorMessages', Ember.A([]));
+    this.set('errorMessages', A([]));
   },
 
   /**
@@ -67,7 +70,7 @@ export default Ember.Mixin.create({
       this._rejectError(errorData, message);
     } else if (errorData.hasOwnProperty('responseText')) {
       this._rejectAjaxError(errorData, message);
-    } else if (Ember.typeOf(errorData) === 'string') {
+    } else if (typeOf(errorData) === 'string') {
       this._rejectStringError(errorData, message);
     } else {
       this.send('addErrorMessage', 'Unknown error occurred.');
@@ -76,7 +79,7 @@ export default Ember.Mixin.create({
 
   _rejectError(errorData, message) {
     this.send('addErrorMessage', message + ' ' + errorData.message);
-    if (Ember.isArray(errorData.errors) && errorData.errors.length > 0) {
+    if (isArray(errorData.errors) && errorData.errors.length > 0) {
       let errors = errorData.errors;
       for (let i = 0, len = errors.length; i < len; i++) {
         let error = errors[i];
@@ -95,7 +98,7 @@ export default Ember.Mixin.create({
   },
 
   _rejectAjaxError(xhr, message) {
-    let ajaxErrorMessage = Ember.get(xhr, 'responseJSON.error.message') || xhr.statusText;
+    let ajaxErrorMessage = get(xhr, 'responseJSON.error.message') || xhr.statusText;
     this.send('addErrorMessage', message + ' ' + ajaxErrorMessage);
   },
 

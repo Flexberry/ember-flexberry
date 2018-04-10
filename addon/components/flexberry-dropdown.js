@@ -1,7 +1,10 @@
 /**
   @module ember-flexberry
 */
-import Ember from 'ember';
+import { typeOf, isBlank, isNone } from '@ember/utils';
+import { computed, observer } from '@ember/object';
+import { A, isArray } from '@ember/array';
+import { on } from '@ember/object/evented';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -10,11 +13,11 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
-  _items: Ember.computed('items.[]', function() {
+  _items: computed('items.[]', function() {
     let items = this.get('items');
     let obj = null;
 
-    if (Ember.isArray(items)) {
+    if (isArray(items)) {
       obj = {};
       items.forEach(item => obj[item] = item.toString());
     }
@@ -131,8 +134,8 @@ export default FlexberryBaseComponent.extend({
     @default false
     @readOnly
   */
-  showPlaceholder: Ember.computed('placeholder', 'value', function() {
-    return Ember.isBlank(this.get('value')) && !Ember.isBlank(this.get('placeholder'));
+  showPlaceholder: computed('placeholder', 'value', function() {
+    return isBlank(this.get('value')) && !isBlank(this.get('placeholder'));
   }),
 
   /**
@@ -143,16 +146,16 @@ export default FlexberryBaseComponent.extend({
     @default ''
     @readOnly
   */
-  text: Ember.computed('value', function() {
+  text: computed('value', function() {
     let value = this.get('value');
     value = value === '<!---->' ? '' : value;
-    return !Ember.isBlank(value) ? value : '';
+    return !isBlank(value) ? value : '';
   }),
 
   /**
     Handles changes in available items & selected item (including changes on component initialization).
   */
-  itemsOrValueDidChange: Ember.on('init', Ember.observer('_items', 'value', function() {
+  itemsOrValueDidChange: on('init', observer('_items', 'value', function() {
     let destroyHasBeenCalled = this.get('destroyHasBeenCalled');
     if (destroyHasBeenCalled) {
       return;
@@ -160,24 +163,24 @@ export default FlexberryBaseComponent.extend({
 
     // Convert 'value' and 'items' into strings because flexberry-dropdown interpret selected value as string commonly.
     let value = this.get('value');
-    let stringValue = !Ember.isNone(value) ? value.toString() : null;
+    let stringValue = !isNone(value) ? value.toString() : null;
 
     if (this.get('needChecksOnValue')) {
       let items = this.get('_items') || {};
-      let itemsArray = Ember.A();
+      let itemsArray = A();
       for (let key in items) {
         if (items.hasOwnProperty(key)) {
           itemsArray.pushObject(items[key]);
         }
       }
 
-      if (!Ember.isBlank(stringValue) && !itemsArray.includes(stringValue)) {
+      if (!isBlank(stringValue) && !itemsArray.includes(stringValue)) {
         throw new Error(`Wrong value of flexberry-dropdown \`value\` property: \`${stringValue}\`. Allowed values are: [\`${itemsArray.join(`\`, \``)}\`].`);
       }
     }
 
     let dropdownDomElement = this.get('dropdownDomElement');
-    if (Ember.isNone(dropdownDomElement)) {
+    if (isNone(dropdownDomElement)) {
       return;
     }
 
@@ -185,7 +188,7 @@ export default FlexberryBaseComponent.extend({
     // will not be called automatically, so we need to call some methods manually,
     // to be sure that sates of semanic ui-dropdown plugin & related DOM-elements
     // are fully corresponds to currently selected item.
-    if (Ember.isNone(value)) {
+    if (isNone(value)) {
       dropdownDomElement.dropdown('clear');
     } else {
       dropdownDomElement.dropdown('set selected', value);
@@ -210,8 +213,8 @@ export default FlexberryBaseComponent.extend({
       @public
     */
     onChange(component, id, newValue) {
-      let oldValue = !Ember.isNone(this.get('value')) ? this.get('value') : null;
-      newValue = !Ember.isNone(newValue) ? newValue : null;
+      let oldValue = !isNone(this.get('value')) ? this.get('value') : null;
+      newValue = !isNone(newValue) ? newValue : null;
       newValue = newValue === '<!---->' ? '' : newValue;
 
       if (newValue === oldValue) {
@@ -271,14 +274,14 @@ export default FlexberryBaseComponent.extend({
     // So we have to search our element in 'childViews' collection.
     let dropdownView = this.get('childViews').find(view => {
       let tagName = view.get('tagName');
-      if (Ember.typeOf(tagName) === 'string') {
+      if (typeOf(tagName) === 'string') {
         tagName = tagName.trim();
       }
 
       return tagName !== '' && view.$().hasClass('flexberry-dropdown');
     });
 
-    let dropdownDomElement = !Ember.isNone(dropdownView) ? dropdownView.$() : null;
+    let dropdownDomElement = !isNone(dropdownView) ? dropdownView.$() : null;
     this.set('dropdownDomElement', dropdownDomElement);
   },
 

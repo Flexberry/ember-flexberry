@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { A } from '@ember/array';
 
 /**
   ValidationSummary component for Semantic UI.
@@ -10,7 +11,7 @@ import Ember from 'ember';
   @class FlexberryValidationsummary
   @extends Ember.Component
 */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     A list of properties of the view to apply as class names. If the property is a string value, the value of that string will be applied as a class name.
 
@@ -79,7 +80,7 @@ export default Ember.Component.extend({
       throw new Error('Errors property for flexberry-validationsummary component must be set');
     }
 
-    this.set('validationProperties', new Ember.A());
+    this.set('validationProperties', new A());
 
     for (let propertyName in errors) {
       // TODO: Delete after update Ember on 2.5.1 and up.
@@ -107,7 +108,7 @@ export default Ember.Component.extend({
     and change component visibility if no errors occurred.
   */
   changeMessages() {
-    let messages = new Ember.A();
+    let messages = new A();
 
     this.get('validationProperties').forEach((property) => {
       // TODO: Delete after update Ember on 2.5.1 and up.

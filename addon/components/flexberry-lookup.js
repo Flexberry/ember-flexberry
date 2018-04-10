@@ -2,7 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { assert, warn, debug } from '@ember/debug';
+import { on } from '@ember/object/evented';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { later, run } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 import { translationMacro as t } from 'ember-i18n';
@@ -204,7 +208,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @readOnly
   */
-  autocompleteClass: Ember.computed('autocomplete', function() {
+  autocompleteClass: computed('autocomplete', function() {
     if (this.get('autocomplete')) {
       return 'ui search';
     }
@@ -217,7 +221,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @readOnly
   */
-  folvComponentName: Ember.computed('componentName', function() {
+  folvComponentName: computed('componentName', function() {
     let componentName = this.get('componentName') || 'undefined';
     return `${componentName}`;
   }),
@@ -298,7 +302,7 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @private
   */
-  _lookupWindowCustomPropertiesData: Ember.computed(
+  _lookupWindowCustomPropertiesData: computed(
     'projection',
     'relationName',
     'lookupWindowCustomProperties',
@@ -323,7 +327,7 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @readOnly
   */
-  chooseData: Ember.computed(
+  chooseData: computed(
     'projection',
     'relationName',
     'title',
@@ -356,7 +360,7 @@ export default FlexberryBaseComponent.extend({
     @type Object
     @readOnly
   */
-  removeData: Ember.computed('relationName', 'relatedModel', function() {
+  removeData: computed('relationName', 'relatedModel', function() {
     return {
       relationName: this.get('relationName'),
       modelToLookup: this.get('relatedModel')
@@ -370,7 +374,7 @@ export default FlexberryBaseComponent.extend({
     @type DS.Store
     @readOnly
   */
-  store: Ember.inject.service('store'),
+  store: service('store'),
 
   /**
     The user settings service.
@@ -378,7 +382,7 @@ export default FlexberryBaseComponent.extend({
     @property userSettings
     @type UserSettingsService
   */
-  userSettings: Ember.inject.service('user-settings'),
+  userSettings: service('user-settings'),
 
   /**
     Name of the attribute of the model to display for the user.
@@ -443,7 +447,7 @@ export default FlexberryBaseComponent.extend({
     @property lookupEventsService
     @type Service
   */
-  lookupEventsService: Ember.inject.service('lookup-events'),
+  lookupEventsService: service('lookup-events'),
 
   /**
     Text that displayed for the user as representation of currently selected value.
@@ -453,7 +457,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @readOnly
   */
-  displayValue: Ember.computed('value', function() {
+  displayValue: computed('value', function() {
     return this._buildDisplayValue();
   }),
 
@@ -494,7 +498,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readOnly
   */
-  isBlocked: Ember.computed('modalIsBeforeToShow', 'modalIsStartToShow', 'modalIsShow', function() {
+  isBlocked: computed('modalIsBeforeToShow', 'modalIsStartToShow', 'modalIsShow', function() {
     return this.get('modalIsBeforeToShow') || this.get('modalIsStartToShow') || this.get('modalIsShow');
   }),
 
@@ -543,7 +547,7 @@ export default FlexberryBaseComponent.extend({
 
       let componentName = this.get('componentName');
       if (!componentName) {
-        Ember.warn('`componentName` of flexberry-lookup is undefined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.component-name-is-not-defined' });
+        warn('`componentName` of flexberry-lookup is undefined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.component-name-is-not-defined' });
       } else {
         // Show choose button spinner.
         this.get('lookupEventsService').lookupDialogOnShowTrigger(componentName);
@@ -556,7 +560,7 @@ export default FlexberryBaseComponent.extend({
       this.set('modalIsBeforeToShow', true);
 
       // Send 'choose' action after 'active' css-class will be completely added into component's DOM-element.
-      Ember.run.later(() => {
+      later(() => {
         this.sendAction('choose', chooseData);
         this.set('isActive', false);
       }, 300);
@@ -832,7 +836,7 @@ export default FlexberryBaseComponent.extend({
        */
       onResultsOpen() {
         state = 'opened';
-        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        debug(`Flexberry Lookup::autocomplete state = ${state}`);
       },
 
       /**
@@ -843,7 +847,7 @@ export default FlexberryBaseComponent.extend({
        */
       onSelect(result) {
         state = 'selected';
-        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
+        debug(`Flexberry Lookup::autocomplete state = ${state}; result = ${result}`);
 
         _this.set('value', result.instance);
         _this.get('currentController').send(_this.get('updateLookupAction'),
@@ -870,7 +874,7 @@ export default FlexberryBaseComponent.extend({
         }
 
         state = 'closed';
-        Ember.debug(`Flexberry Lookup::autocomplete state = ${state}`);
+        debug(`Flexberry Lookup::autocomplete state = ${state}`);
       }
     });
   },
@@ -938,7 +942,7 @@ export default FlexberryBaseComponent.extend({
             builder.where(resultPredicate);
           }
 
-          Ember.run(() => {
+          run(() => {
             store.query(relationModelName, builder.build()).then((records) => {
               // We have to cache data because dropdown component sets text as value and we lose object value.
               let resultArray = [];
@@ -969,7 +973,7 @@ export default FlexberryBaseComponent.extend({
         if (value) {
           let cachedValues = _this.get('_cachedDropdownValues');
           let cachedValuesContainsVlue = cachedValues && (cachedValues[value] === null || cachedValues[value]);
-          Ember.assert('Can\'t find selected dropdown value among cached values.', cachedValuesContainsVlue);
+          assert('Can\'t find selected dropdown value among cached values.', cachedValuesContainsVlue);
           if (cachedValuesContainsVlue) {
             newValue = cachedValues[value];
           }
@@ -1000,7 +1004,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (!displayAttributeName) {
-      Ember.warn('`displayAttributeName` is not defined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.display-attribute-name-is-not-defined' });
+      warn('`displayAttributeName` is not defined.', false, { id: 'ember-flexberry-debug.flexberry-lookup.display-attribute-name-is-not-defined' });
       return '';
     }
 

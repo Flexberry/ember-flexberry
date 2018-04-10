@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 /**
   Mixin containing handlers for
@@ -11,7 +11,7 @@ import Ember from 'ember';
   @class FlexberryTreenodeActionsHandlerMixin
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Handles {{#crossLink "FlexberryTreenodeComponent/sendingActions.headerClick:method"}}flexberry-treenode component's 'headerClick' action{{/crossLink}}.
@@ -35,7 +35,7 @@ export default Ember.Mixin.create({
         import Ember from 'ember';
         import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 
-        export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
+        export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
         });
       ```
     */
@@ -66,7 +66,7 @@ export default Ember.Mixin.create({
         import Ember from 'ember';
         import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 
-        export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
+        export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
         });
       ```
     */
@@ -97,7 +97,7 @@ export default Ember.Mixin.create({
         import Ember from 'ember';
         import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 
-        export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
+        export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
         });
       ```
     */

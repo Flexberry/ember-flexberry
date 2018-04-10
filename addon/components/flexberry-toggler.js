@@ -1,8 +1,9 @@
 /**
   @module ember-flexberry
  */
-
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 
 /**
   Component for expand / collapse content.
@@ -21,7 +22,7 @@ import Ember from 'ember';
   @class FlexberryToggler
   @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
 */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     Current visibility state.
 
@@ -69,7 +70,7 @@ export default Ember.Component.extend({
     @type String
     @readOnly
   */
-  currentCaption: Ember.computed('caption', 'expandedCaption', 'collapsedCaption', 'expanded', function() {
+  currentCaption: computed('caption', 'expandedCaption', 'collapsedCaption', 'expanded', function() {
     let defaultCaption = this.get('caption');
     let caption = this.get('expanded') ? (this.get('expandedCaption') || defaultCaption) : (this.get('collapsedCaption') || defaultCaption);
 
@@ -125,7 +126,7 @@ export default Ember.Component.extend({
       duration: this.get('duration'),
       onOpen: () => {
         // Change of 'expanded' state may cause asynchronous animation, so we need Ember.run here.
-        Ember.run(() => {
+        run(() => {
           this.set('expanded', true);
           if (this.get('hasResizableOLV')) {
             this.$('table.object-list-view').colResizable({ disable: true });
@@ -135,7 +136,7 @@ export default Ember.Component.extend({
       },
       onClose: () => {
         // Change of 'expanded' state may cause asynchronous animation, so we need Ember.run here.
-        Ember.run(() => {
+        run(() => {
           this.set('expanded', false);
         });
       },

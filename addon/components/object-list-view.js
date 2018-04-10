@@ -1,14 +1,26 @@
 /**
   @module ember-flexberry
 */
-import Ember from 'ember';
+import Ember from 'ember'; //TODO Import Module. Replace Ember.run.after.
+import $ from 'jquery';
+import RSVP from 'rsvp';
+import EmberObject from '@ember/object';
+import { on } from '@ember/object/evented';
+import { guidFor, copy } from '@ember/object/internals';
+import { assert } from '@ember/debug';
+import { A, isArray } from '@ember/array';
+import { inject as service } from '@ember/service';
+import { typeOf, isBlank, isNone } from '@ember/utils';
+import { htmlSafe, capitalize } from '@ember/string';
+import { getOwner } from '@ember/application';
+import { once } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
-
+const { get, set, computed, observer } = EmberObject
 /**
   Object list view component.
 
@@ -31,7 +43,7 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
-  _contentObserver: Ember.on('init', Ember.observer('content', function() {
+  _contentObserver: on('init', observer('content', function() {
     this._setContent(this.get('componentName'));
 
     if (this.get('allSelect'))
@@ -54,7 +66,7 @@ export default FlexberryBaseComponent.extend(
     @property sortTitleCompute
     @type String
   */
-  sortTitleCompute: Ember.computed('orderable', 'sortTitle', function() {
+  sortTitleCompute: computed('orderable', 'sortTitle', function() {
     if (this.get('orderable')) {
       return this.get('sortTitle');
     } else {
@@ -70,7 +82,7 @@ export default FlexberryBaseComponent.extend(
     @type Object|String
     @default null
   */
-  modelProjection: Ember.computed('_modelProjection', {
+  modelProjection: computed('_modelProjection', {
     /* eslint-disable no-unused-vars */
     get(key) {
       return this.get('_modelProjection');
@@ -78,11 +90,11 @@ export default FlexberryBaseComponent.extend(
     set(key, value) {
       if (typeof value === 'string') {
         let modelName = this.get('modelName');
-        Ember.assert('For define projection by name, model name is required.', modelName);
+        assert('For define projection by name, model name is required.', modelName);
         let modelConstructor = this.get('store').modelFor(modelName);
-        Ember.assert(`Model with name '${modelName}' is not found.`, modelConstructor);
-        let projections = Ember.get(modelConstructor, 'projections');
-        Ember.assert(`Projection with name '${value}' for model with name '${modelName}' is not found.`, projections[value]);
+        assert(`Model with name '${modelName}' is not found.`, modelConstructor);
+        let projections = get(modelConstructor, 'projections');
+        assert(`Projection with name '${value}' for model with name '${modelName}' is not found.`, projections[value]);
         value = projections[value];
       } else if (typeof value !== 'object') {
         throw new Error(`Property 'modelProjection' should be a string or object.`);
@@ -156,9 +168,9 @@ export default FlexberryBaseComponent.extend(
   */
   defaultLeftPadding: 10,
 
-  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+  defaultPaddingStyle: computed('defaultLeftPadding', function() {
     let defaultLeftPadding = this.get('defaultLeftPadding');
-    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+    return htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
   }),
 
   /**
@@ -234,7 +246,7 @@ export default FlexberryBaseComponent.extend(
     @type String
     @readOnly
   */
-  tableClass: Ember.computed('tableStriped', 'rowClickable', 'customTableClass', 'allowColumnResize', function() {
+  tableClass: computed('tableStriped', 'rowClickable', 'customTableClass', 'allowColumnResize', function() {
     let tableStriped = this.get('tableStriped');
     let rowClickable = this.get('rowClickable');
     let allowColumnResize = this.get('allowColumnResize');
@@ -336,7 +348,7 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @readOnly
   */
-  showHelperColumn: Ember.computed(
+  showHelperColumn: computed(
     'showAsteriskInRow',
     'showCheckBoxInRow',
     'showDeleteButtonInRow',
@@ -384,9 +396,9 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @readOnly
   */
-  menuInRowHasAdditionalItems: Ember.computed('menuInRowAdditionalItems.[]', function() {
+  menuInRowHasAdditionalItems: computed('menuInRowAdditionalItems.[]', function() {
     let menuInRowAdditionalItems = this.get('menuInRowAdditionalItems');
-    return Ember.isArray(menuInRowAdditionalItems) && menuInRowAdditionalItems.length > 0;
+    return isArray(menuInRowAdditionalItems) && menuInRowAdditionalItems.length > 0;
   }),
 
   /**
@@ -396,7 +408,7 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @readOnly
   */
-  showMenuColumn: Ember.computed(
+  showMenuColumn: computed(
     'showEditMenuItemInRow',
     'showDeleteMenuItemInRow',
     'menuInRowHasAdditionalItems',
@@ -412,7 +424,7 @@ export default FlexberryBaseComponent.extend(
     @type Object[]
     @readOnly
   */
-  columns: Ember.computed('modelProjection', 'enableFilters', 'content', function() {
+  columns: computed('modelProjection', 'enableFilters', 'content', function() {
     let ret;
     let projection = this.get('modelProjection');
 
@@ -449,7 +461,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       // Set columns width.
-      if (Ember.isArray(userSettings.columnWidths)) {
+      if (isArray(userSettings.columnWidths)) {
         for (let i = 0; i < userSettings.columnWidths.length; i++) {
           let columnWidth = userSettings.columnWidths[i];
           if (namedCols[columnWidth.propName]) {
@@ -483,10 +495,10 @@ export default FlexberryBaseComponent.extend(
       } else {
         if (this.currentController) {
           if (this.currentController.userSettings === undefined) {
-            Ember.set(this.currentController, 'userSettings', {});
+            set(this.currentController, 'userSettings', {});
           }
 
-          Ember.set(this.currentController.userSettings, 'colsOrder', cols);
+          set(this.currentController.userSettings, 'colsOrder', cols);
         }
 
         ret = cols;
@@ -494,10 +506,10 @@ export default FlexberryBaseComponent.extend(
     } else {
       if (this.currentController) {
         if (this.currentController.userSettings === undefined) {
-          Ember.set(this.currentController, 'userSettings', {});
+          set(this.currentController, 'userSettings', {});
         }
 
-        Ember.set(this.currentController.userSettings, 'colsOrder', cols);
+        set(this.currentController.userSettings, 'colsOrder', cols);
       }
 
       ret = cols;
@@ -513,7 +525,7 @@ export default FlexberryBaseComponent.extend(
     @type Number
     @readOnly
   */
-  colspan: Ember.computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
+  colspan: computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
     let columnsCount = 0;
     if (this.get('showHelperColumn')) {
       columnsCount += 1;
@@ -524,7 +536,7 @@ export default FlexberryBaseComponent.extend(
     }
 
     let columns = this.get('columns');
-    columnsCount += Ember.isArray(columns) ? columns.length : 0;
+    columnsCount += isArray(columns) ? columns.length : 0;
 
     return columnsCount;
   }),
@@ -537,9 +549,9 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @readOnly
   */
-  hasEditableValues: Ember.computed('columns.[]', 'columns.@each.cellComponent', function() {
+  hasEditableValues: computed('columns.[]', 'columns.@each.cellComponent', function() {
     let columns = this.get('columns');
-    if (!Ember.isArray(columns)) {
+    if (!isArray(columns)) {
       return true;
     }
 
@@ -603,7 +615,7 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @readOnly
   */
-  hasContent: Ember.computed('contentWithKeys.length', function() {
+  hasContent: computed('contentWithKeys.length', function() {
     return this.get('contentWithKeys.length') > 0;
   }),
 
@@ -690,9 +702,9 @@ export default FlexberryBaseComponent.extend(
       export default ListFormController.extend({
         actions: {
           configurateRow(rowConfig, record) {
-            Ember.set(rowConfig, 'canBeDeleted', false);
+            set(rowConfig, 'canBeDeleted', false);
             if (record.get('isMyFavoriteRecord')) {
-              Ember.set(rowConfig, 'customClass', 'my-fav-record');
+              set(rowConfig, 'customClass', 'my-fav-record');
             }
 
             let readonlyColumns = [];
@@ -700,7 +712,7 @@ export default FlexberryBaseComponent.extend(
               readonlyColumns.push('name');
             }
 
-            Ember.set(rowConfig, 'readonlyColumns', readonlyColumns);
+            set(rowConfig, 'readonlyColumns', readonlyColumns);
           }
         }
       });
@@ -745,11 +757,11 @@ export default FlexberryBaseComponent.extend(
   */
   configurateSelectedRows: undefined,
 
-  selectedRowsChanged: Ember.on('init', Ember.observer('selectedRecords.@each', function() {
+  selectedRowsChanged: on('init', observer('selectedRecords.@each', function() {
     let selectedRecords = this.get('selectedRecords');
     let configurateSelectedRows = this.get('configurateSelectedRows');
     if (configurateSelectedRows) {
-      Ember.assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
+      assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
     }
   })),
@@ -803,7 +815,7 @@ export default FlexberryBaseComponent.extend(
     @property store
     @type Service
   */
-  store: Ember.inject.service('store'),
+  store: service('store'),
 
   /**
     Service that triggers objectlistview events.
@@ -811,7 +823,7 @@ export default FlexberryBaseComponent.extend(
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   /**
     Used to identify objectListView on the page.
@@ -852,7 +864,7 @@ export default FlexberryBaseComponent.extend(
         let $selectedRow = this._getRowByKey(recordKey);
         let editOnSeparateRoute = this.get('editOnSeparateRoute');
         params = params || {};
-        Ember.$.extend(params, {
+        $.extend(params, {
           onEditForm: this.get('onEditForm'),
           saveBeforeRouteLeave: this.get('saveBeforeRouteLeave'),
           editOnSeparateRoute: editOnSeparateRoute,
@@ -862,7 +874,7 @@ export default FlexberryBaseComponent.extend(
           goToEditForm: true
         });
 
-        Ember.run.after(this, () => { return Ember.isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
+        Ember.run.after(this, () => { return isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
           this.sendAction('action', recordData, params);
         });
 
@@ -912,7 +924,7 @@ export default FlexberryBaseComponent.extend(
 
       let confirmDeleteRow = this.get('confirmDeleteRow');
       if (confirmDeleteRow) {
-        Ember.assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
+        assert('Error: confirmDeleteRow must be a function.', typeof confirmDeleteRow === 'function');
         if (!confirmDeleteRow()) {
           return;
         }
@@ -1018,7 +1030,7 @@ export default FlexberryBaseComponent.extend(
       let contentWithKeys = this.get('contentWithKeys');
 
       let checked = !this.get('allSelect');
-      Ember.set(this, 'allSelect', checked);
+      set(this, 'allSelect', checked);
 
       for (let i = 0; i < contentWithKeys.length; i++) {
         let recordWithKey = contentWithKeys[i];
@@ -1060,7 +1072,7 @@ export default FlexberryBaseComponent.extend(
         return;
       }
 
-      this._router = Ember.getOwner(this).lookup('router:main');
+      this._router = getOwner(this).lookup('router:main');
 
       let defaultDeveloperUserSetting = userSettingsService.getDefaultDeveloperUserSetting(componentName);
       let currentUserSetting = userSettingsService.getCurrentUserSetting(componentName);
@@ -1087,9 +1099,9 @@ export default FlexberryBaseComponent.extend(
   */
   init() {
     this._super(...arguments);
-    Ember.assert('ObjectListView must have componentName attribute.', this.get('componentName'));
+    assert('ObjectListView must have componentName attribute.', this.get('componentName'));
 
-    this.set('selectedRecords', Ember.A());
+    this.set('selectedRecords', A());
 
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
@@ -1129,7 +1141,7 @@ export default FlexberryBaseComponent.extend(
   didInsertElement() {
     this._super(...arguments);
 
-    Ember.$(window).bind(`resize.${this.get('componentName')}`, Ember.$.proxy(function() {
+    $(window).bind(`resize.${this.get('componentName')}`, $.proxy(function() {
       if (this.get('columnsWidthAutoresize')) {
         this._setColumnWidths();
       } else {
@@ -1245,7 +1257,7 @@ export default FlexberryBaseComponent.extend(
     this.$('.object-list-view-menu > .ui.dropdown').dropdown();
 
     // The last menu needs will be up.
-    Ember.$('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
+    $('.object-list-view-menu:last .ui.dropdown').addClass('bottom');
 
     this._setCurrentColumnsWidth();
   },
@@ -1276,7 +1288,7 @@ export default FlexberryBaseComponent.extend(
   willDestroyElement() {
     this._super(...arguments);
 
-    Ember.$(window).unbind(`resize.${this.get('componentName')}`);
+    $(window).unbind(`resize.${this.get('componentName')}`);
   },
 
   /**
@@ -1346,7 +1358,7 @@ export default FlexberryBaseComponent.extend(
     @param {Array} userSetting User setting to apply to control
   */
   _setColumnWidths(componentName) {
-    if (Ember.isBlank(componentName) || this.get('componentName') === componentName) {
+    if (isBlank(componentName) || this.get('componentName') === componentName) {
       let userSetting;
       if (this.notUseUserSettings) {
         userSetting = this.get('currentController.developerUserSettings');
@@ -1357,7 +1369,7 @@ export default FlexberryBaseComponent.extend(
         userSetting = this.get('userSettingsService').getCurrentColumnWidths(this.get('componentName'));
       }
 
-      userSetting = Ember.isArray(userSetting) ? Ember.A(userSetting) : Ember.A();
+      userSetting = isArray(userSetting) ? A(userSetting) : A();
 
       let $table = this.$('table.object-list-view');
       let $columns = $table.find('th');
@@ -1376,12 +1388,12 @@ export default FlexberryBaseComponent.extend(
       let padding = (this.get('defaultLeftPadding') || 0) * 2;
       let minAutoColumnWidth = this.get('minAutoColumnWidth');
 
-      Ember.$.each($columns, (key, item) => {
+      $.each($columns, (key, item) => {
         let currentItem = this.$(item);
         let currentPropertyName = this._getColumnPropertyName(currentItem);
-        Ember.assert('Column property name is not defined', currentPropertyName);
+        assert('Column property name is not defined', currentPropertyName);
 
-        let setting = userSetting.filter(sett => (sett.propName === currentPropertyName) && !Ember.isBlank(sett.width));
+        let setting = userSetting.filter(sett => (sett.propName === currentPropertyName) && !isBlank(sett.width));
         setting = setting.length > 0 ? setting[0] : undefined;
         if (!setting) {
           setting = {};
@@ -1426,10 +1438,10 @@ export default FlexberryBaseComponent.extend(
         this.get('eventsBus').trigger('setMenuWidth', this.get('componentName'), tableWidth, containerWidth);
       }
 
-      Ember.$.each($columns, (key, item) => {
+      $.each($columns, (key, item) => {
         let currentItem = this.$(item);
         let currentPropertyName = this._getColumnPropertyName(currentItem);
-        Ember.assert('Column property name is not defined', currentPropertyName);
+        assert('Column property name is not defined', currentPropertyName);
 
         let savedColumnWidth = hashedUserSetting[currentPropertyName];
         if (savedColumnWidth) {
@@ -1462,10 +1474,10 @@ export default FlexberryBaseComponent.extend(
     // Send info to service with user settings.
     let userWidthSettings = [];
     let $columns = this.$(eventParams.currentTarget).find('th');
-    Ember.$.each($columns, (key, item) => {
+    $.each($columns, (key, item) => {
       let currentItem = this.$(item);
       let currentPropertyName = this._getColumnPropertyName(currentItem);
-      Ember.assert('Column property name is not defined', currentPropertyName);
+      assert('Column property name is not defined', currentPropertyName);
 
       // There can be fractional values potentially.
       let currentColumnWidth = currentItem.width();
@@ -1498,7 +1510,7 @@ export default FlexberryBaseComponent.extend(
         currentItem.find('*[data-olv-header-property-name]').attr('data-olv-header-property-name');
     }
 
-    Ember.assert(
+    assert(
     'There is no tag with attribute \'data-olv-header-property-name\' at column header.', currentPropertyName);
     return currentPropertyName;
   },
@@ -1520,7 +1532,7 @@ export default FlexberryBaseComponent.extend(
       }
 
       let attr = attributes[attrName];
-      Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
+      assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
         case 'hasMany':
           break;
@@ -1569,13 +1581,13 @@ export default FlexberryBaseComponent.extend(
     @private
   */
   _setCurrentColumnsWidth() {
-    if (!Ember.isNone(this.get('currentController'))) {
+    if (!isNone(this.get('currentController'))) {
       let $columns = this.$('table.object-list-view').find('th');
       let currentWidths = {};
-      Ember.$.each($columns, (key, item) => {
+      $.each($columns, (key, item) => {
         let currentItem = this.$(item);
         let currentPropertyName = this._getColumnPropertyName(currentItem);
-        Ember.assert('Column property name is not defined', currentPropertyName);
+        assert('Column property name is not defined', currentPropertyName);
 
         let currentColumnWidth = currentItem.width();
         currentColumnWidth = Math.round(currentColumnWidth);
@@ -1627,11 +1639,11 @@ export default FlexberryBaseComponent.extend(
     // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
     // if controller's 'getCellComponent' method call its super method from the base controller.
     let currentController = this.get('currentController');
-    let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
+    let getCellComponent = get(currentController || {}, 'getCellComponent');
     let cellComponent = this.get('cellComponent');
 
-    if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
-      let recordModel = Ember.isNone(this.get('content')) ? null : this.get('content.type');
+    if (!this.get('editOnSeparateRoute') && typeOf(getCellComponent) === 'function') {
+      let recordModel = isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 
@@ -1639,7 +1651,7 @@ export default FlexberryBaseComponent.extend(
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
 
     let column = {
-      header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
+      header: valueFromLocales || attr.caption || capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
     };
@@ -1652,7 +1664,7 @@ export default FlexberryBaseComponent.extend(
     if (customColumnAttributesFunc) {
       let customColAttr = customColumnAttributesFunc(attr, bindingPath);
       if (customColAttr && (typeof customColAttr === 'object')) {
-        Ember.$.extend(true, column, customColAttr);
+        $.extend(true, column, customColAttr);
       }
     }
 
@@ -1685,14 +1697,14 @@ export default FlexberryBaseComponent.extend(
     let component = this._getFilterComponent(attribute.type, relation);
     let componentForFilter = this.get('componentForFilter');
     if (componentForFilter) {
-      Ember.assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
-      Ember.$.extend(true, component, componentForFilter(attribute.type, relation));
+      assert(`Need function in 'componentForFilter'.`, typeof componentForFilter === 'function');
+      $.extend(true, component, componentForFilter(attribute.type, relation));
     }
 
     let conditions;
     let conditionsByType = this.get('conditionsByType');
     if (conditionsByType) {
-      Ember.assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
+      assert(`Need function in 'conditionsByType'.`, typeof conditionsByType === 'function');
       conditions = conditionsByType(attribute.type);
     } else {
       conditions = this._conditionsByType(attribute.type);
@@ -1736,7 +1748,7 @@ export default FlexberryBaseComponent.extend(
     }
 
     let model = this.get('store').modelFor(modelName);
-    return Ember.get(model, 'attributes').get(attributeName);
+    return get(model, 'attributes').get(attributeName);
   },
 
   /**
@@ -1794,7 +1806,7 @@ export default FlexberryBaseComponent.extend(
 
       case 'string':{
         component.name = 'flexberry-textbox';
-        component.properties = Ember.$.extend(true, component.properties, {
+        component.properties = $.extend(true, component.properties, {
           class: 'compact fluid',
         });
         break;
@@ -1802,7 +1814,7 @@ export default FlexberryBaseComponent.extend(
 
       case 'number': {
         component.name = 'flexberry-textbox';
-        component.properties = Ember.$.extend(true, component.properties, {
+        component.properties = $.extend(true, component.properties, {
           class: 'compact fluid',
         });
         break;
@@ -1810,7 +1822,7 @@ export default FlexberryBaseComponent.extend(
 
       case 'boolean': {
         component.name = 'flexberry-dropdown';
-        component.properties = Ember.$.extend(true, component.properties, {
+        component.properties = $.extend(true, component.properties, {
           items: ['true', 'false'],
           class: 'compact fluid',
         });
@@ -1823,11 +1835,11 @@ export default FlexberryBaseComponent.extend(
       }
 
       default: {
-        let transformInstance = Ember.getOwner(this).lookup('transform:' + type);
-        let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
+        let transformInstance = getOwner(this).lookup('transform:' + type);
+        let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
         if (transformClass && transformClass.isEnum) {
           component.name = 'flexberry-dropdown';
-          component.properties = Ember.$.extend(true, component.properties, {
+          component.properties = $.extend(true, component.properties, {
             items: transformInstance.get('captions'),
             class: 'compact fluid',
           });
@@ -1852,9 +1864,9 @@ export default FlexberryBaseComponent.extend(
     if (this.get('componentName') === componentName) {
       let content = this.get('content');
       if (content && !content.isLoading) {
-        this.set('contentWithKeys', Ember.A());
-        this.set('contentForRender', Ember.A());
-        if (content instanceof Ember.RSVP.Promise) {
+        this.set('contentWithKeys', A());
+        this.set('contentForRender', A());
+        if (content instanceof RSVP.Promise) {
           content.then((items) => {
             items.forEach((item) => {
               this._addModel(item);
@@ -1870,11 +1882,11 @@ export default FlexberryBaseComponent.extend(
         }
       }
 
-      if (Ember.isArray(sorting)) {
+      if (isArray(sorting)) {
         let columns = this.get('columns');
-        if (Ember.isArray(columns)) {
+        if (isArray(columns)) {
           columns.forEach((column) => {
-            Ember.set(column, 'sorted', false);
+            set(column, 'sorted', false);
             delete column.sortAscending;
             delete column.sortNumber;
             let idPosition = sorting.length;
@@ -1882,9 +1894,9 @@ export default FlexberryBaseComponent.extend(
               if (sorting[i].propName === 'id') {
                 idPosition = i;
               } else if (column.propName === sorting[i].propName) {
-                Ember.set(column, 'sortAscending', sorting[i].direction === 'asc' ? true : false);
-                Ember.set(column, 'sorted', true);
-                Ember.set(column, 'sortNumber', i > idPosition ? i : i + 1);
+                set(column, 'sortAscending', sorting[i].direction === 'asc' ? true : false);
+                set(column, 'sorted', true);
+                set(column, 'sortNumber', i > idPosition ? i : i + 1);
               }
             }
           }, this);
@@ -1939,14 +1951,14 @@ export default FlexberryBaseComponent.extend(
   */
   _getRowByKey(key) {
     let row = null;
-    if (Ember.isBlank(key)) {
+    if (isBlank(key)) {
       return row;
     }
 
     this.$('tbody tr').each(function() {
-      let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
+      let currentKey = $(this).find('td:eq(0) div:eq(0)').text().trim();
       if (currentKey === key) {
-        row = Ember.$(this);
+        row = $(this);
         return;
       }
     });
@@ -1997,19 +2009,19 @@ export default FlexberryBaseComponent.extend(
       return undefined;
     }
 
-    let modelWithKey = Ember.Object.create({});
-    let key = Ember.guidFor(record);
+    let modelWithKey = EmberObject.create({});
+    let key = guidFor(record);
 
     modelWithKey.set('key', key);
     modelWithKey.set('data', record);
 
-    let rowConfig = Ember.copy(this.get('defaultRowConfig'));
+    let rowConfig = copy(this.get('defaultRowConfig'));
     modelWithKey.set('rowConfig', rowConfig);
     record.set('rowConfig', rowConfig);
 
     let configurateRow = this.get('configurateRow');
     if (configurateRow) {
-      Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
+      assert('configurateRow must be a function', typeof configurateRow === 'function');
       configurateRow(rowConfig, record);
     }
 
@@ -2079,7 +2091,7 @@ export default FlexberryBaseComponent.extend(
       let count = selectedRecords.length;
       /* eslint-disable no-unused-vars */
       selectedRecords.forEach((item, index, enumerable) => {
-        Ember.run.once(this, function() {
+        once(this, function() {
           this._deleteRecord(item, immediately);
         });
       }, this);
@@ -2110,16 +2122,16 @@ export default FlexberryBaseComponent.extend(
     };
 
     if (beforeDeleteRecord) {
-      Ember.assert('beforeDeleteRecord must be a function', typeof beforeDeleteRecord === 'function');
+      assert('beforeDeleteRecord must be a function', typeof beforeDeleteRecord === 'function');
 
       possiblePromise = beforeDeleteRecord(record, data);
 
-      if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancel) {
+      if ((!possiblePromise || !(possiblePromise instanceof RSVP.Promise)) && data.cancel) {
         return;
       }
     }
 
-    if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+    if (possiblePromise || (possiblePromise instanceof RSVP.Promise)) {
       possiblePromise.then(() => {
         if (!data.cancel) {
           this._actualDeleteRecord(record, data.immediately);
@@ -2173,7 +2185,7 @@ export default FlexberryBaseComponent.extend(
     @return {Promise} A promise that will be resolved when relationships have been deleted
   */
   _deleteHasManyRelationships(record, immediately) {
-    let promises = Ember.A();
+    let promises = A();
     record.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         record.get(name).forEach((relRecord) => {
@@ -2182,7 +2194,7 @@ export default FlexberryBaseComponent.extend(
       }
     });
 
-    return Ember.RSVP.all(promises);
+    return RSVP.all(promises);
   },
 
   /**
@@ -2197,7 +2209,7 @@ export default FlexberryBaseComponent.extend(
     if (this.get('componentName') === componentName) {
       let anyWord = this.get('filterByAnyWord');
       let allWords = this.get('filterByAllWords');
-      Ember.assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
+      assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
       this.sendAction('filterByAnyMatch', pattern, filterCondition);
     }
@@ -2223,9 +2235,9 @@ export default FlexberryBaseComponent.extend(
   },
 
   // TODO: why this observer here in olv, if it is needed only for groupedit? And why there is still no group-edit component?
-  _rowsChanged: Ember.observer('content.@each.dirtyType', function() {
+  _rowsChanged: observer('content.@each.dirtyType', function() {
     let content = this.get('content');
-    if (content && !(content instanceof Ember.RSVP.Promise) && content.isAny('dirtyType', 'updated')) {
+    if (content && !(content instanceof RSVP.Promise) && content.isAny('dirtyType', 'updated')) {
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').rowsChangedTrigger(componentName);
     }
@@ -2240,7 +2252,7 @@ export default FlexberryBaseComponent.extend(
     @method _searchForContentChange
     @private
   */
-  _searchForContentChange: Ember.observer('searchForContentChange', function() {
+  _searchForContentChange: observer('searchForContentChange', function() {
     let searchForContentChange = this.get('searchForContentChange');
     if (searchForContentChange) {
       this.addObserver('content.[]', this, this._contentDidChange);

@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
 /**
   Controller for content of {{#crossLink "FlexberryFileComponent"}}flexberry-file{{/crossLink}} preview dialog.
@@ -10,7 +10,7 @@ import Ember from 'ember';
   @class FlexberryFileViewDialogController
   @extends <a href="http://emberjs.com/api/classes/Ember.Controller.html">Ember.Controller</a>
 */
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Currently opened modal dialog DOM element.
 

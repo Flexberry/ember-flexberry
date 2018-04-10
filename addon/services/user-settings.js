@@ -2,8 +2,15 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service, { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
+import { getOwner } from '@ember/application';
+import { isArray } from '@ember/array';
+import { assert } from '@ember/debug';
+import { merge } from '@ember/polyfills';
 import { Query } from 'ember-flexberry-data';
+import { isNone } from '@ember/utils';
+import { set } from '@ember/object';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 const { Builder, SimplePredicate, ComplexPredicate } = Query;
@@ -15,7 +22,7 @@ const defaultSettingName = 'DEFAULT';
   @class UserSettingsService
   @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
 */
-export default Ember.Service.extend({
+export default Service.extend({
   /**
     Ember data store.
 
@@ -23,7 +30,7 @@ export default Ember.Service.extend({
     @type DS.Store
     @private
   */
-  _store: Ember.inject.service('store'),
+  _store: service('store'),
 
   /**
     Flag: indicates whether to use user settings service (if `true`) or not (if `false`).
@@ -100,8 +107,8 @@ export default Ember.Service.extend({
 
   init() {
     this._super(...arguments);
-    let appConfig = Ember.getOwner(this).factoryFor('config:environment').class;
-    if (!Ember.isNone(appConfig.APP.useUserSettingsService)) {
+    let appConfig = getOwner(this).factoryFor('config:environment').class;
+    if (!isNone(appConfig.APP.useUserSettingsService)) {
       this.set('isUserSettingsServiceEnabled', appConfig.APP.useUserSettingsService);
     }
   },
@@ -221,7 +228,7 @@ export default Ember.Service.extend({
 
     }
 
-    return new Ember.RSVP.Promise(function (resolve) {
+    return new RSVP.Promise(function (resolve) {
       resolve(undefined);
     });
   },
@@ -318,15 +325,15 @@ export default Ember.Service.extend({
    */
   createDefaultUserSetting(componentName) {
     if (!(this.exists())) {
-      Ember.set(this, `currentUserSettings.${this.currentAppPage}`, {});
+      set(this, `currentUserSettings.${this.currentAppPage}`, {});
     }
 
     if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
-      Ember.set(this, `currentUserSettings.${this.currentAppPage}.${componentName}`, {});
+      set(this, `currentUserSettings.${this.currentAppPage}.${componentName}`, {});
     }
 
     if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
-      Ember.set(this, `currentUserSettings.${this.currentAppPage}.${componentName}.${defaultSettingName}`, {});
+      set(this, `currentUserSettings.${this.currentAppPage}.${componentName}.${defaultSettingName}`, {});
     }
   },
 
@@ -577,8 +584,8 @@ export default Ember.Service.extend({
       settingName = 'ExportExcel/' + settingName;
     }
 
-    Ember.assert('deleteUserSetting:: componentName name is not defined for user setting getting.', componentName);
-    Ember.assert('deleteUserSetting:: Setting name is not defined for user setting getting.', settingName);
+    assert('deleteUserSetting:: componentName name is not defined for user setting getting.', componentName);
+    assert('deleteUserSetting:: Setting name is not defined for user setting getting.', settingName);
 
     let appPage = this.currentAppPage;
     if (appPage in this.developerUserSettings &&
@@ -592,7 +599,7 @@ export default Ember.Service.extend({
     }
 
     if (!this.get('isUserSettingsServiceEnabled')) {
-      return new Ember.RSVP.Promise(function (resolve) {
+      return new RSVP.Promise(function (resolve) {
         resolve(undefined);
       });
     }
@@ -618,9 +625,9 @@ export default Ember.Service.extend({
       settingName = 'ExportExcel/' + settingName;
     }
 
-    Ember.assert('saveUserSetting:: componentName is not defined for user setting saving.', componentName);
-    Ember.assert('saveUserSetting:: User setting data are not defined for user setting saving.', userSetting);
-    Ember.assert('saveUserSetting:: Setting name is not defined for user setting saving.', settingName !== undefined);
+    assert('saveUserSetting:: componentName is not defined for user setting saving.', componentName);
+    assert('saveUserSetting:: User setting data are not defined for user setting saving.', userSetting);
+    assert('saveUserSetting:: Setting name is not defined for user setting saving.', settingName !== undefined);
 
     if (!(this.exists())) {
       this.currentUserSettings[this.currentAppPage] = {};
@@ -634,7 +641,7 @@ export default Ember.Service.extend({
     this.beforeParamUserSettings[this.currentAppPage] = JSON.parse(JSON.stringify(this.currentUserSettings[this.currentAppPage]));
     /* eslint-disable no-unused-vars */
     if (!this.get('isUserSettingsServiceEnabled')) {
-      return new Ember.RSVP.Promise((resolve, reject) => { resolve(); });
+      return new RSVP.Promise((resolve, reject) => { resolve(); });
     }
     /* eslint-enable no-unused-vars */
 
@@ -649,7 +656,7 @@ export default Ember.Service.extend({
           }
 
           for (let settingName in prevUserSetting) {
-            if (Ember.isNone(userSetting[settingName])) {
+            if (isNone(userSetting[settingName])) {
               delete prevUserSetting[settingName];
             }
           }
@@ -660,7 +667,7 @@ export default Ember.Service.extend({
 
           foundRecord.set('txtVal', JSON.stringify(prevUserSetting));
         } else {
-          let userService = Ember.getOwner(_this).lookup('service:user');
+          let userService = getOwner(_this).lookup('service:user');
           let currentUserName = userService.getCurrentUserName();
           foundRecord = store.createRecord('new-platform-flexberry-flexberry-user-setting');
           foundRecord.set('userName', currentUserName);
@@ -743,7 +750,7 @@ export default Ember.Service.extend({
     let addSettings = JSON.parse(JSON.stringify(setting2));
     for (let settingProperty in setting1) {
       ret[settingProperty] = (settingProperty in addSettings) ?
-        Ember.merge(setting1[settingProperty], addSettings[settingProperty]) :
+        merge(setting1[settingProperty], addSettings[settingProperty]) :
         setting1[settingProperty];
       delete addSettings[settingProperty];
     }
@@ -778,12 +785,12 @@ export default Ember.Service.extend({
       if (result) {
         let delPromises = [];
         let foundRecords = result.get('content');
-        if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
+        if (isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 0; i < foundRecords.length; i++) {
             delPromises[delPromises.length] = foundRecords[i]._record.destroyRecord();
           }
 
-          return Ember.RSVP.Promise.all(delPromises).then(
+          return RSVP.Promise.all(delPromises).then(
             result => { return result; }
           );
         }
@@ -816,7 +823,7 @@ export default Ember.Service.extend({
     return store.query(modelName, builder.build()).then((result) => {
       if (result) {
         let foundRecords = result.get('content');
-        if (Ember.isArray(foundRecords) && foundRecords.length > 0) {
+        if (isArray(foundRecords) && foundRecords.length > 0) {
           for (let i = 1; i < foundRecords.length; i++) {
             foundRecords[i]._record.destroyRecord();
           }
@@ -852,7 +859,7 @@ export default Ember.Service.extend({
       let foundRecords = [];
       if (result) {
         foundRecords = result.get('content');
-        if (!Ember.isArray(foundRecords)) {
+        if (!isArray(foundRecords)) {
           foundRecords = [];
         }
 
@@ -863,7 +870,7 @@ export default Ember.Service.extend({
 
   _getSearchPredicate(componentName, settingName) {
     let ret;
-    let userService = Ember.getOwner(this).lookup('service:user');
+    let userService = getOwner(this).lookup('service:user');
     let currentUserName = userService.getCurrentUserName();
     let p1 = new SimplePredicate('appName', 'eq', this.currentAppPage);
     let p2 = new SimplePredicate('userName', 'eq', currentUserName);
@@ -876,7 +883,7 @@ export default Ember.Service.extend({
         ret = new ComplexPredicate('and', p1, p2, p3);
       }
     } else {
-      Ember.assert('Find settingName of undefined componentName', settingName === undefined);
+      assert('Find settingName of undefined componentName', settingName === undefined);
       ret = new ComplexPredicate('and', p1, p2);
     }
 

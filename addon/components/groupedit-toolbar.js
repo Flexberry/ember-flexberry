@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { assert } from '@ember/debug';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -19,7 +20,7 @@ export default FlexberryBaseComponent.extend({
     @type Service
     @private
   */
-  _groupEditEventsService: Ember.inject.service('objectlistview-events'),
+  _groupEditEventsService: service('objectlistview-events'),
 
   /**
     Boolean flag to indicate enabled state of delete rows button.
@@ -99,7 +100,7 @@ export default FlexberryBaseComponent.extend({
 
       let confirmDeleteRows = this.get('confirmDeleteRows');
       if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
         if (!confirmDeleteRows()) {
           return;
         }

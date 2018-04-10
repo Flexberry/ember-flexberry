@@ -2,7 +2,7 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Controller, { inject } from '@ember/controller';
 import PaginatedControllerMixin from '../mixins/paginated-controller';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
@@ -40,7 +40,7 @@ import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexbe
   @uses SortableControllerMixin
   @uses LimitedControllerMixin
  */
-export default Ember.Controller.extend(PaginatedControllerMixin,
+export default Controller.extend(PaginatedControllerMixin,
   SortableControllerMixin,
   LimitedControllerMixin,
   FlexberryOlvToolbarMixin,
@@ -52,9 +52,9 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
 
     @property lookupController
     @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
-    @default Ember.inject.controller('colsconfig-dialog')
+    @default inject.controller('colsconfig-dialog')
   */
-  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+  colsconfigController: inject('colsconfig-dialog'),
 
   /**
     Object with developer user settings.

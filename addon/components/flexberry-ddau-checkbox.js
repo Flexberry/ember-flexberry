@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
@@ -82,7 +82,7 @@ const flexberryClassNames = {
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryDdauCheckboxComponent = Ember.Component.extend(
+let FlexberryDdauCheckboxComponent = Component.extend(
   RequiredActionsMixin,
   DomActionsMixin,
   DynamicActionsMixin,

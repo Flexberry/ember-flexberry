@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { isBlank, isNone } from '@ember/utils';
+import { observer } from '@ember/object';
+import { on } from '@ember/object/evented';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
@@ -33,7 +36,7 @@ const flexberryClassNames = {
   @class FlexberryJsonareaComponent
   @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
 */
-let FlexberryJsonareaComponent = Ember.Component.extend({
+let FlexberryJsonareaComponent = Component.extend({
   /**
     Flag: indicates whether to show error message or not.
 
@@ -142,7 +145,7 @@ let FlexberryJsonareaComponent = Ember.Component.extend({
       if (jsonMustBeSaved) {
         try {
           let text = this.get('_jsonText');
-          let value = Ember.isBlank(text) ? null : JSON.parse(text);
+          let value = isBlank(text) ? null : JSON.parse(text);
           this.set('value', value);
 
           this.set('_errorMessage', '');
@@ -174,9 +177,9 @@ let FlexberryJsonareaComponent = Ember.Component.extend({
     @method _valueDidChange
     @private
   */
-  _valueDidChange: Ember.on('init', Ember.observer('value', function() {
+  _valueDidChange: on('init', observer('value', function() {
     let value = this.get('value');
-    if (Ember.isNone(value)) {
+    if (isNone(value)) {
       this.set('_jsonText', '');
       return;
     }

@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
+import { isBlank, isNone } from '@ember/utils';
+import $ from 'jquery';
+import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import moment from 'moment';
 import { translationMacro as t } from 'ember-i18n';
@@ -34,7 +37,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @private
   */
-  _valueAsDate: Ember.computed(() => null),
+  _valueAsDate: computed(() => null),
 
   /**
     Convert date in `value` to appropriate input datatype.
@@ -45,7 +48,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @private
   */
-  _valueAsString: Ember.computed(() => null),
+  _valueAsString: computed(() => null),
 
   /**
     Convert date in `min` to appropriate input datatype.
@@ -56,7 +59,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @private
   */
-  _minAsString: Ember.computed(() => null),
+  _minAsString: computed(() => null),
 
   /**
     Convert date in `max` to appropriate input datatype.
@@ -67,7 +70,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @private
   */
-  _maxAsString: Ember.computed(() => null),
+  _maxAsString: computed(() => null),
 
   /**
     Checks whether the browser supports the date field.
@@ -76,7 +79,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @readOnly
   */
-  currentTypeSupported: Ember.computed('type', {
+  currentTypeSupported: computed('type', {
     get() {
       let type = this.get('type');
       let input = document.createElement('input');
@@ -93,7 +96,7 @@ export default FlexberryBaseComponent.extend({
     @default null
     @type String
   */
-  type: Ember.computed(() => null),
+  type: computed(() => null),
 
   /**
     Flag indicates only flatpickr using for this component.
@@ -110,7 +113,7 @@ export default FlexberryBaseComponent.extend({
     @property value
     @type Date
   */
-  value: Ember.computed('_valueAsString', '_valueAsDate', 'useBrowserInput', 'currentTypeSupported', {
+  value: computed('_valueAsString', '_valueAsDate', 'useBrowserInput', 'currentTypeSupported', {
     get() {
       if (this.get('useBrowserInput') && this.get('currentTypeSupported')) {
         if (this.get('type') === 'date') {
@@ -147,7 +150,7 @@ export default FlexberryBaseComponent.extend({
     @property min
     @type Date
   */
-  min: Ember.computed('_minAsString', 'useBrowserInput', 'currentTypeSupported', {
+  min: computed('_minAsString', 'useBrowserInput', 'currentTypeSupported', {
     get() {
       return this.get('_minAsString');
     },
@@ -171,7 +174,7 @@ export default FlexberryBaseComponent.extend({
     @property max
     @type Date
   */
-  max: Ember.computed('_maxAsString', 'useBrowserInput', 'currentTypeSupported', {
+  max: computed('_maxAsString', 'useBrowserInput', 'currentTypeSupported', {
     get() {
       return this.get('_maxAsString');
     },
@@ -294,7 +297,7 @@ export default FlexberryBaseComponent.extend({
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
     } else {
-      if (!Ember.isNone(inputValue)) {
+      if (!isNone(inputValue)) {
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
@@ -310,7 +313,7 @@ export default FlexberryBaseComponent.extend({
   _flatpickrCreate() {
     let i18n = this.get('i18n');
     let locale = this.get('locale');
-    if (i18n && Ember.isBlank(locale)) {
+    if (i18n && isBlank(locale)) {
       locale = i18n.locale;
     }
 
@@ -346,10 +349,10 @@ export default FlexberryBaseComponent.extend({
     }
 
     this.set('_flatpickr', this.$('.flatpickr > input').flatpickr(options));
-    Ember.$('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
-    Ember.$('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
+    $('.flatpickr-calendar .numInput.flatpickr-hour').prop('readonly', true);
+    $('.flatpickr-calendar .numInput.flatpickr-minute').prop('readonly', true);
     this.$('.custom-flatpickr').mask(type === 'date' ? '99.99.9999' : '99.99.9999 99:99');
-    this.$('.custom-flatpickr').keydown(Ember.$.proxy(function(e) {
+    this.$('.custom-flatpickr').keydown($.proxy(function(e) {
       if (e.which === 13) {
         this.$('.custom-flatpickr').blur();
         this._validationDateTime();
@@ -357,7 +360,7 @@ export default FlexberryBaseComponent.extend({
       }
     }, this));
     /* eslint-disable no-unused-vars */
-    this.$('.custom-flatpickr').change(Ember.$.proxy(function (e) {
+    this.$('.custom-flatpickr').change($.proxy(function (e) {
       this._validationDateTime();
     }, this));
     /* eslint-enable no-unused-vars */
@@ -367,16 +370,16 @@ export default FlexberryBaseComponent.extend({
   /**
     Sets readonly attr for flatpickr.
   */
-  readonlyObserver: Ember.observer('readonly', function() {
+  readonlyObserver: observer('readonly', function() {
     this.$('.custom-flatpickr').prop('readonly', this.get('readonly'));
   }),
 
   /**
     Reinit flatpickr.
   */
-  reinitFlatpikrObserver: Ember.observer('type', 'locale', 'i18n.locale', function() {
+  reinitFlatpikrObserver: observer('type', 'locale', 'i18n.locale', function() {
     this._flatpickrDestroy();
-    Ember.run.scheduleOnce('afterRender', this, '_flatpickrCreate');
+    scheduleOnce('afterRender', this, '_flatpickrCreate');
   }),
 
   /**
@@ -454,7 +457,7 @@ export default FlexberryBaseComponent.extend({
   */
   _convertDateToLocal(value) {
     let dateToSet = value;
-    if (!Ember.isBlank(dateToSet)) {
+    if (!isBlank(dateToSet)) {
       dateToSet.setHours(13);
       dateToSet.setUTCHours(11);
       dateToSet.setUTCMinutes(0);
@@ -473,7 +476,7 @@ export default FlexberryBaseComponent.extend({
     */
     remove() {
       let value = this.get('value');
-      if (!Ember.isNone(value) && !this.get('readonly')) {
+      if (!isNone(value) && !this.get('readonly')) {
         this.get('_flatpickr').clear();
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }

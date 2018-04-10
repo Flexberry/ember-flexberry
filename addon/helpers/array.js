@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Helper from '@ember/component/helper';
+import { A } from '@ember/array';
 
 /**
   Array helper.
@@ -19,7 +20,7 @@ import Ember from 'ember';
   ```
   Following array will be passed to component's 'availableItems' property: [1, 'two', 3, 'four', 5].
 */
-export default Ember.Helper.extend({
+export default Helper.extend({
   /**
     Overridden [Ember.Helper compute method](http://emberjs.com/api/classes/Ember.Helper.html#method_compute).
     Executes helper's logic, returns arguments wrapped into array.
@@ -30,6 +31,6 @@ export default Ember.Helper.extend({
     @return {[Ember.NativeArray](http://emberjs.com/api/classes/Ember.NativeArray.html)} Wrapped arguments.
   */
   compute(args) {
-    return Ember.A(args);
+    return A(args);
   }
 });

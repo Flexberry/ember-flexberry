@@ -2,10 +2,20 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Ember from 'ember'; //TODO Import Module. Replace Ember.run.after.
+import $ from 'jquery';
+import { isBlank, isNone } from '@ember/utils';
+import { oneWay } from '@ember/object/computed';
+import { inject as service} from '@ember/service';
+import EmberObject from '@ember/object';
+import Evented from '@ember/object/evented';
+import { guidFor } from '@ember/object/internals';
+import { assert } from '@ember/debug';
+import { merge } from '@ember/polyfills';
+import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
-
+const { get, computed } = EmberObject;
 /**
   Component to view list of object.
 
@@ -21,7 +31,7 @@ export default FlexberryBaseComponent.extend({
     @default false
     @private
   */
-  _showFilters: Ember.computed.oneWay('filters'),
+  _showFilters: oneWay('filters'),
 
   /**
     Link on {{#crossLink FormLoadTimeTrackerService}}{{/crossLink}}.
@@ -30,7 +40,7 @@ export default FlexberryBaseComponent.extend({
     @type FormLoadTimeTrackerService
     @private
   */
-  formLoadTimeTracker: Ember.inject.service(),
+  formLoadTimeTracker: service(),
 
   /**
     Store the action name at controller for loading records.
@@ -99,7 +109,7 @@ export default FlexberryBaseComponent.extend({
     @default false
     @private
   */
-  _inHierarchicalMode: Ember.computed('currentController.inHierarchicalMode', function() {
+  _inHierarchicalMode: computed('currentController.inHierarchicalMode', function() {
     return this.get('currentController.inHierarchicalMode');
   }),
 
@@ -111,7 +121,7 @@ export default FlexberryBaseComponent.extend({
     @default false
     @private
   */
-  _inExpandMode: Ember.computed('currentController.inExpandMode', {
+  _inExpandMode: computed('currentController.inExpandMode', {
     /* eslint-disable no-unused-vars */
     get(key) {
       return this.get('currentController.inExpandMode');
@@ -139,7 +149,7 @@ export default FlexberryBaseComponent.extend({
     @property hierarchyByAttribute
     @type String
   */
-  hierarchyByAttribute: Ember.computed({
+  hierarchyByAttribute: computed({
     get() {
       return this.get('_hierarchicalAttribute');
     },
@@ -583,9 +593,9 @@ export default FlexberryBaseComponent.extend({
 
     @property overflowedComponents
     @type Array
-    @default Ember.A(['flexberry-dropdown', 'flexberry-lookup'])
+    @default A(['flexberry-dropdown', 'flexberry-lookup'])
   */
-  overflowedComponents: Ember.A(['flexberry-dropdown', 'flexberry-lookup']),
+  overflowedComponents: A(['flexberry-dropdown', 'flexberry-lookup']),
 
   /**
     Current interval of records.
@@ -594,7 +604,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @readOnly
   */
-  currentIntervalRecords: Ember.computed('pages', 'perPageValue', function() {
+  currentIntervalRecords: computed('pages', 'perPageValue', function() {
     let pages = this.get('pages');
     let perPageValue = this.get('perPageValue');
     let recordsTotalCount = this.get('recordsTotalCount');
@@ -687,7 +697,7 @@ export default FlexberryBaseComponent.extend({
     @property eventsBus
     @type Ember.Evented
   */
-  eventsBus: Ember.Object.extend(Ember.Evented, {}).create(),
+  eventsBus: EmberObject.extend(Evented, {}).create(),
 
   /**
     Service that triggers objectlistview events.
@@ -695,7 +705,7 @@ export default FlexberryBaseComponent.extend({
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   /**
     Ember data store.
@@ -703,7 +713,7 @@ export default FlexberryBaseComponent.extend({
     @property store
     @type Service
   */
-  store: Ember.inject.service('store'),
+  store: service('store'),
 
   actions: {
     /**
@@ -744,18 +754,18 @@ export default FlexberryBaseComponent.extend({
     */
     objectListViewRowClick(record, options) {
       if ((this.get('rowClickable') || options.rowEdit) && !this.get('readonly')) {
-        let $clickedRow = this._getRowByKey(record.key || Ember.guidFor(record));
+        let $clickedRow = this._getRowByKey(record.key || guidFor(record));
         Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
             this.sendAction('action', record);
           } else {
             let editFormRoute = this.get('editFormRoute');
-            Ember.assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
-            if (Ember.isNone(options)) {
+            assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
+            if (isNone(options)) {
               options = {};
               options.editFormRoute = editFormRoute;
             } else {
-              options = Ember.merge(options, { editFormRoute: editFormRoute });
+              options = merge(options, { editFormRoute: editFormRoute });
             }
 
             this.sendAction('action', record, options);
@@ -852,7 +862,7 @@ export default FlexberryBaseComponent.extend({
 
         export default ListFormController.extend({
           ...
-          customButtonsMethod: Ember.computed('i18n.locale', function() {
+          customButtonsMethod: computed('i18n.locale', function() {
             let i18n = this.get('i18n');
             return [{
               buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name'),
@@ -1150,7 +1160,7 @@ export default FlexberryBaseComponent.extend({
       let modelName = this.get('modelName');
       if (modelName) {
         let model = this.get('store').modelFor(modelName);
-        let relationships = Ember.get(model, 'relationships');
+        let relationships = get(model, 'relationships');
         let hierarchicalrelationships = relationships.get(modelName);
         if (hierarchicalrelationships.length === 1) {
           let hierarchicalAttribute = hierarchicalrelationships[0].name;
@@ -1201,9 +1211,9 @@ export default FlexberryBaseComponent.extend({
   _getRowByKey(key) {
     let row = null;
     this.$('tbody tr').each(function() {
-      let currentKey = Ember.$(this).find('td:eq(0) div:eq(0)').text().trim();
+      let currentKey = $(this).find('td:eq(0) div:eq(0)').text().trim();
       if (currentKey === key) {
-        row = Ember.$(this);
+        row = $(this);
         return;
       }
     });
@@ -1230,11 +1240,11 @@ export default FlexberryBaseComponent.extend({
 
   _setMenuWidth(tableWidth, containerWidth) {
     let $table = this.$('table.object-list-view')[0];
-    if (Ember.isBlank(tableWidth)) {
+    if (isBlank(tableWidth)) {
       tableWidth = $table.clientWidth;
     }
 
-    if (Ember.isBlank(containerWidth)) {
+    if (isBlank(containerWidth)) {
       containerWidth = $table.parentElement.clientWidth - 5;
     }
 

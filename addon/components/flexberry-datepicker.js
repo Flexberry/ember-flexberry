@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { observer } from '@ember/object';
 import moment from 'moment';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
@@ -233,7 +234,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _setValue(dateFromPicker) {
-    Ember.run(() => {
+    run(() => {
       let valueFromInput = this.$('input').val();
       if (valueFromInput === '' && !dateFromPicker.isValid()) {
         this._setEmptyValue();
@@ -325,7 +326,7 @@ export default FlexberryBaseComponent.extend({
     @method _valueChanged
     @private
   */
-  _valueChanged: Ember.observer('value', function() {
+  _valueChanged: observer('value', function() {
     let val = this.get('value');
     let currValueDateTime = moment(this._getDateToSet(moment(val)));
     if (val && moment.isDate(val) && currValueDateTime.isValid()) {

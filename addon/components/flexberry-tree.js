@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
+import { isArray } from '@ember/array';
 import FlexberryTreenodeComponent from '../components/flexberry-treenode';
 
 import SlotsMixin from 'ember-block-slots';
@@ -83,7 +85,7 @@ const flexberryClassNames = {
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryTreeComponent = Ember.Component.extend(
+let FlexberryTreeComponent = Component.extend(
   SlotsMixin,
   RequiredActionsMixin,
   DomActionsMixin,
@@ -98,7 +100,7 @@ let FlexberryTreeComponent = Ember.Component.extend(
       @readonly
       @private
     */
-    _isRoot: Ember.computed('parentViewExcludingSlots', function() {
+    _isRoot: computed('parentViewExcludingSlots', function() {
       let parentView = this.get('parentViewExcludingSlots');
 
       return !(parentView instanceof FlexberryTreenodeComponent);
@@ -112,10 +114,10 @@ let FlexberryTreeComponent = Ember.Component.extend(
       @readOnly
       @private
     */
-    _hasNodes: Ember.computed('nodes.[]', function() {
+    _hasNodes: computed('nodes.[]', function() {
       let nodes = this.get('nodes');
 
-      return Ember.isArray(nodes) && nodes.length > 0;
+      return isArray(nodes) && nodes.length > 0;
     }),
 
     /**
@@ -127,7 +129,7 @@ let FlexberryTreeComponent = Ember.Component.extend(
       @readOnly
       @private
     */
-    _hasHeader: Ember.computed('_slots.[]', '_isRoot', function() {
+    _hasHeader: computed('_slots.[]', '_isRoot', function() {
       // Yielded {{block-slot "header"}} is defined and current tree is root.
       return this._isRegistered('header') && this.get('isRoot');
     }),
@@ -141,7 +143,7 @@ let FlexberryTreeComponent = Ember.Component.extend(
       @readOnly
       @private
     */
-    _hasContent: Ember.computed('_slots.[]', '_hasNodes', function() {
+    _hasContent: computed('_slots.[]', '_hasNodes', function() {
       // Yielded {{block-slot "content"}} is defined or 'nodes' are defined.
       return this._isRegistered('content') || this.get('_hasNodes');
     }),
@@ -155,7 +157,7 @@ let FlexberryTreeComponent = Ember.Component.extend(
       @readOnly
       @private
     */
-    _hasFooter: Ember.computed('_slots.[]', '_isRoot', function() {
+    _hasFooter: computed('_slots.[]', '_isRoot', function() {
       // Yielded {{block-slot "footer"}} is defined and current tree is root.
       return this._isRegistered('footer') && this.get('isRoot');
     }),
@@ -299,7 +301,7 @@ let FlexberryTreeComponent = Ember.Component.extend(
       @method _accordionPropertiesDidChange
       @private
     */
-    _accordionPropertiesDidChange: Ember.observer(
+    _accordionPropertiesDidChange: observer(
       'exclusive',
       'collapsible',
       'animateChildren',

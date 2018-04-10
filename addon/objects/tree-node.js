@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 
 /**
   Class for object describing properties of the
@@ -12,7 +12,7 @@ import Ember from 'ember';
   @class TreeNodeObject
   @extends <a href="http://emberjs.com/api/classes/Ember.Object.html">Ember.Object</a>
 */
-export default Ember.Object.extend({
+export default EmberObject.extend({
   /**
     Tree node's caption.
 

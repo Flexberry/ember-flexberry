@@ -2,9 +2,12 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import { schedule } from '@ember/runloop';
+import Route from '@ember/routing/route';
+import { subscribe, unsubscribe } from '@ember/instrumentation';
 
-export default Ember.Service.extend({
+export default Service.extend({
   /**
     Flag indicates whether perf service is enabled or not.
 
@@ -141,7 +144,7 @@ export default Ember.Service.extend({
       dataElement.classList.add('perf-rerendered');
     }
 
-    Ember.run.schedule('afterRender', this, () => {
+    schedule('afterRender', this, () => {
       let nudgeCount = 0;
       let isClosedTag = element.tagName === 'IMG' || element.tagName === 'INPUT';
       let isNudger = false;
@@ -184,7 +187,7 @@ export default Ember.Service.extend({
       return;
     }
 
-    Ember.run.schedule('afterRender', () => {
+    schedule('afterRender', () => {
       for (let i = 0, len = perfObjects.length; i < len; i++) {
         let obj = perfObjects[i];
         let parent;
@@ -208,7 +211,7 @@ export default Ember.Service.extend({
     let _this = this;
 
     if (selectors) {
-      Ember.Route.reopen({
+      Route.reopen({
         actions: {
           willTransition: function() {
             perfObjects = [];
@@ -218,7 +221,7 @@ export default Ember.Service.extend({
         }
       });
 
-      Ember.subscribe('render', {
+      subscribe('render', {
         before(name, timestamp, payload) {
           let className = payload.containerKey;
           if (className && selectors.filter(regEx => regEx.test(className)).length) {
@@ -310,6 +313,6 @@ export default Ember.Service.extend({
       elems[i].removeEventListener('click', this.handleClick);
     }
 
-    Ember.Instrumentation.unsubscribe('render');
+    unsubscribe('render');
   }
 });

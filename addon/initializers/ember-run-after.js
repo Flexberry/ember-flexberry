@@ -3,6 +3,7 @@
 */
 
 import Ember from 'ember';
+import { run } from '@ember/runloop'; //TODO Import Module. Replace Ember.run.after.
 
 /**
   Injects 'after' method into 'Ember.run' namespace.
@@ -18,7 +19,7 @@ export function initialize(application) {
     let checkInterval = 50;
 
     // Wait for condition fulfillment.
-    Ember.run(() => {
+    run(() => {
       checkIntervalId = window.setInterval(() => {
         let conditionFulfilled = false;
 
@@ -40,7 +41,7 @@ export function initialize(application) {
         window.clearInterval(checkIntervalId);
 
         // Call handler.
-        Ember.run(() => {
+        run(() => {
           handler.call(context);
         });
       }, checkInterval);

@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { typeOf } from '@ember/utils';
+import { htmlSafe } from '@ember/string';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -38,9 +40,9 @@ export default FlexberryBaseComponent.extend({
     @type String
     @readOnly
   */
-  formattedValue: Ember.computed('value', 'dateFormat', function() {
+  formattedValue: computed('value', 'dateFormat', function() {
     let value = this.get('value');
-    let valueType = Ember.typeOf(value);
+    let valueType = typeOf(value);
 
     switch (valueType) {
       case 'date': {
@@ -53,7 +55,7 @@ export default FlexberryBaseComponent.extend({
       }
 
       case 'boolean': {
-        return Ember.String.htmlSafe(`<div class='ui checkbox disabled'><input type='checkbox' class='hidden' ${value ? 'checked' : ''}><label></label></div>`);
+        return htmlSafe(`<div class='ui checkbox disabled'><input type='checkbox' class='hidden' ${value ? 'checked' : ''}><label></label></div>`);
       }
 
       default: {

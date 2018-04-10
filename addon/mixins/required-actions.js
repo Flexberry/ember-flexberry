@@ -2,7 +2,12 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { assert } from '@ember/debug';
+import { typeOf, isNone } from '@ember/utils';
+import { get } from '@ember/object';
+import { A, isArray } from '@ember/array';
+import Component from '@ember/component';
 
 /**
   Mixin containing logic which forces assertion exceptions
@@ -11,7 +16,7 @@ import Ember from 'ember';
   @class RequiredActionsMixin
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Component's required actions names.
     For actions enumerated in this array an assertion exceptions will be thrown,
@@ -34,10 +39,10 @@ export default Ember.Mixin.create({
   */
   _actionHandlerIsDefined(options) {
     options = options || {};
-    let actionName = Ember.get(options, 'actionName');
+    let actionName = get(options, 'actionName');
 
-    return Ember.typeOf(this.get(`attrs.${actionName}`)) === 'function' ||
-      Ember.typeOf(this.get(`attrs.${actionName}`)) === 'string';
+    return typeOf(this.get(`attrs.${actionName}`)) === 'function' ||
+      typeOf(this.get(`attrs.${actionName}`)) === 'string';
   },
 
   /**
@@ -47,17 +52,17 @@ export default Ember.Mixin.create({
     this._super(...arguments);
 
     let originalSendAction = this.sendAction;
-    Ember.assert(
-      `Wrong type of \`sendAction\` propery: actual type is ${Ember.typeOf(originalSendAction)}, ` +
+    assert(
+      `Wrong type of \`sendAction\` propery: actual type is ${typeOf(originalSendAction)}, ` +
       `but \`function\` is expected.`,
-      Ember.typeOf(originalSendAction) === 'function');
+      typeOf(originalSendAction) === 'function');
 
     // Override 'sendAction' method to add some custom logic.
     this.sendAction = (...args) => {
       let actionName = args[0];
-      let originalSendActionIsOverridden = originalSendAction !== Ember.Component.prototype.sendAction;
-      let outerActionHandlerIsDefined = Ember.typeOf(this.get(`attrs.${actionName}`)) === 'function' ||
-        Ember.typeOf(this.get(`attrs.${actionName}`)) === 'string';
+      let originalSendActionIsOverridden = originalSendAction !== Component.prototype.sendAction;
+      let outerActionHandlerIsDefined = typeOf(this.get(`attrs.${actionName}`)) === 'function' ||
+        typeOf(this.get(`attrs.${actionName}`)) === 'string';
 
       // Call for overridden send action, or call for standard 'sendAction' (sending action outside).
       // Overridden 'sendAction' must be called anywhere,
@@ -70,20 +75,20 @@ export default Ember.Mixin.create({
       }
 
       let requiredActionNames = this.get('_requiredActionNames');
-      Ember.assert(
+      assert(
         `Wrong type of parent component\`s \`_requiredActionNames\` propery: ` +
-        `actual type is ${Ember.typeOf(requiredActionNames)}, but \`array\` is expected.`,
-        Ember.isNone(requiredActionNames) || Ember.isArray(requiredActionNames));
+        `actual type is ${typeOf(requiredActionNames)}, but \`array\` is expected.`,
+        isNone(requiredActionNames) || isArray(requiredActionNames));
 
       // If no required actions names defined, break custom 'sendAction' logic then.
-      if (!Ember.isArray(requiredActionNames)) {
+      if (!isArray(requiredActionNames)) {
         return;
       }
 
       // Throw assertion failed exception, if action handler is not defined for required action.
-      Ember.assert(
+      assert(
         `Handler for required \`${actionName}\` action is not defined in ${this}`,
-        !Ember.A(requiredActionNames).includes(actionName) || this._actionHandlerIsDefined({ actionName: actionName }));
+        !A(requiredActionNames).includes(actionName) || this._actionHandlerIsDefined({ actionName: actionName }));
 
     };
   }

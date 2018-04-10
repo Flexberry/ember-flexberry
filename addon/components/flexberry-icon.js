@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
@@ -44,7 +44,7 @@ const flexberryClassNames = {
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryIconComponent = Ember.Component.extend(
+let FlexberryIconComponent = Component.extend(
   RequiredActionsMixin,
   DomActionsMixin,
   DynamicActionsMixin,

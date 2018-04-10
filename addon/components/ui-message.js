@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
+import { typeOf } from '@ember/utils';
 
 /**
   UIMessage component for Semantic UI.
@@ -25,7 +27,7 @@ import Ember from 'ember';
   @class UIMessage
   @extend <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
 */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     I can not remember what it is.
   */
@@ -37,9 +39,9 @@ export default Ember.Component.extend({
     @property _cssClass
     @private
   */
-  _cssClass: Ember.computed('size', 'type', 'color', 'floating', 'compact', 'attached', 'visible', 'icon', function() {
+  _cssClass: computed('size', 'type', 'color', 'floating', 'compact', 'attached', 'visible', 'icon', function() {
     let isNonEmptyString = (str) => {
-      return Ember.typeOf(str) === 'string' && str.trim().length > 0;
+      return typeOf(str) === 'string' && str.trim().length > 0;
     };
 
     let result = 'ui ';
@@ -256,7 +258,7 @@ export default Ember.Component.extend({
     @method _didVisibilityChange
     @private
   */
-  _didVisibilityChange: Ember.observer('visible', function() {
+  _didVisibilityChange: observer('visible', function() {
     if (this.get('visible')) {
       this.sendAction('onShow');
     } else {

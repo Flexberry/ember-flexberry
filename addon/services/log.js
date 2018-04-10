@@ -2,8 +2,16 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-const { getOwner } = Ember;
+import Ember from 'ember'; //TODO Import Module. Replace Ember.Logger, Ember.onerror.
+import Service, { inject as service } from '@ember/service';
+import Evented from '@ember/object/evented';
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import { typeOf, isNone } from '@ember/utils';
+import { A, isArray } from '@ember/array';
+import { assert } from '@ember/debug';
+import { set } from '@ember/object';
+
 const messageCategory = {
   error: { name: 'ERROR', priority: 1 },
   warn: { name: 'WARN', priority: 2 },
@@ -35,7 +43,7 @@ const joinArguments = function() {
   @class LogService
   @extends <a href="http://emberjs.com/api/classes/Ember.Service.html">Ember.Service</a>
 */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
   /**
     Cache containing references to original Logger methods.
     Cache is needed to restore original methods on service destroy.
@@ -53,7 +61,7 @@ export default Ember.Service.extend(Ember.Evented, {
     @property store
     @type <a href="http://emberjs.com/api/data/classes/DS.Store.html">DS.Store</a>
   */
-  store: Ember.inject.service('store'),
+  store: service('store'),
 
   /**
     Flag: indicates whether log service is enabled or not (if not, nothing will be stored to application log).
@@ -296,7 +304,7 @@ export default Ember.Service.extend(Ember.Evented, {
     this._super(...arguments);
 
     let _this = this;
-    let originalMethodsCache = Ember.A();
+    let originalMethodsCache = A();
 
     let originalEmberLoggerError = Ember.Logger.error;
     originalMethodsCache.pushObject({
@@ -323,7 +331,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
     // Assign Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
     Ember.onerror = onError;
-    Ember.RSVP.on('error', onPromiseError);
+    RSVP.on('error', onPromiseError);
 
     // Extend Ember.Logger.error logic.
     Ember.Logger.error = function() {
@@ -404,15 +412,15 @@ export default Ember.Service.extend(Ember.Evented, {
 
     // Restore original Ember.Logger methods.
     let originalMethodsCache = this.get('_originalMethodsCache');
-    if (Ember.isArray(originalMethodsCache)) {
+    if (isArray(originalMethodsCache)) {
       originalMethodsCache.forEach((cacheEntry) => {
-        Ember.set(cacheEntry.methodOwner, cacheEntry.methodName, cacheEntry.methodReference);
+        set(cacheEntry.methodOwner, cacheEntry.methodName, cacheEntry.methodReference);
       });
     }
 
     // Cleanup Ember.onerror & Ember.RSVP.on('error', ...) handlers (see http://emberjs.com/api/#event_onerror).
     Ember.onerror = null;
-    Ember.RSVP.off('error');
+    RSVP.off('error');
   },
 
   /**
@@ -433,7 +441,7 @@ export default Ember.Service.extend(Ember.Evented, {
       category.name === messageCategory.debug.name && !this.get('storeDebugMessages') ||
       category.name === messageCategory.deprecate.name && !this.get('storeDeprecationMessages') ||
       category.name === messageCategory.promise.name && !this.get('storePromiseErrors')) {
-      return new Ember.RSVP.Promise((resolve) => {
+      return new RSVP.Promise((resolve) => {
         this._triggerEvent(category.name);
         resolve();
       });
@@ -464,7 +472,7 @@ export default Ember.Service.extend(Ember.Evented, {
     let applicationLogModel = store.peekAll(applicationLogModelName).findBy('message', message);
     if (applicationLogModel !== undefined) {
       /* eslint-disable no-unused-vars */
-      return new Ember.RSVP.Promise((resolve, reject) => {
+      return new RSVP.Promise((resolve, reject) => {
         this._triggerEvent(category.name, applicationLogModel);
         resolve();
       });
@@ -483,17 +491,17 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   _triggerEvent(eventName, applicationLogModel) {
-    Ember.assert('Logger Error: event name should be a string', Ember.typeOf(eventName) === 'string');
+    assert('Logger Error: event name should be a string', typeOf(eventName) === 'string');
     let eventNameToTrigger = eventName.toLowerCase();
     this.trigger(eventNameToTrigger, applicationLogModel);
   },
 
   _onError(error, isPromiseError) {
-    if (Ember.isNone(error)) {
+    if (isNone(error)) {
       return;
     }
 
-    if (Ember.typeOf(error) === 'string') {
+    if (typeOf(error) === 'string') {
       error = new Error(error);
     }
 

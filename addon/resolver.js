@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { isNone } from '@ember/utils';
+import { assert } from '@ember/debug';
+import { isArray } from '@ember/array';
+import { copy } from '@ember/object/internals';
 import EmberResolver from 'ember-resolver';
 
 /**
@@ -70,7 +73,7 @@ export default EmberResolver.extend({
   resolve(fullName) {
     let device = this.get('device');
 
-    if (Ember.isNone(device)) {
+    if (isNone(device)) {
       return this._super(fullName);
     }
 
@@ -85,7 +88,7 @@ export default EmberResolver.extend({
 
         // Change resolvingPath from 'path/name' to 'pathPrefix/path/name.
         // For example 'components/my-component' -> 'tablet-portrait/components/my-component'.
-        let newPathParts = Ember.copy(resolvingPathParts);
+        let newPathParts = copy(resolvingPathParts);
         newPathParts.unshift(pathPrefix);
         let newPath = newPathParts.join('/');
 
@@ -111,7 +114,7 @@ export default EmberResolver.extend({
     @private
   */
   _resolveResourceWithoutDeviceTypeDetection(fullName) {
-    if (this.namespace && this.namespace.resolveWithoutDeviceTypeDetection && Ember.isArray(this.namespace.resolveWithoutDeviceTypeDetection)) {
+    if (this.namespace && this.namespace.resolveWithoutDeviceTypeDetection && isArray(this.namespace.resolveWithoutDeviceTypeDetection)) {
       let resourceTypesToApplyOriginResolving = this.namespace.resolveWithoutDeviceTypeDetection;
       return resourceTypesToApplyOriginResolving.indexOf(fullName) > -1;
     }
@@ -129,7 +132,7 @@ export default EmberResolver.extend({
   */
   _resolveTypeWithDeviceTypeDetection(type) {
     let deviceRelatedTypes = this.get('deviceRelatedTypes');
-    Ember.assert(`Property 'deviceRelatedTypes' must be a array.`, Ember.isArray(deviceRelatedTypes));
+    assert(`Property 'deviceRelatedTypes' must be a array.`, isArray(deviceRelatedTypes));
     return deviceRelatedTypes.indexOf(type) > -1;
   },
 });

@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { merge } from '@ember/polyfills';
 
 /**
   Mixin for {{#crossLink "DS.Route"}}Route{{/crossLink}}
@@ -12,7 +13,7 @@ import Ember from 'ember';
   @extends Ember.Mixin
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Table row click handler.
@@ -33,7 +34,7 @@ export default Ember.Mixin.create({
         readonly: false,
         goToEditForm: undefined
       };
-      methodOptions = Ember.merge(methodOptions, options);
+      methodOptions = merge(methodOptions, options);
       let goToEditForm = methodOptions.goToEditForm;
       if (goToEditForm === false) {
         return;
@@ -112,7 +113,7 @@ export default Ember.Mixin.create({
         modelName: 'ember-flexberry-dummy-suggestion',
 
         objectListViewLimitPredicate: function(options) {
-          let methodOptions = Ember.merge({
+          let methodOptions = merge({
             modelName: undefined,
             projectionName: undefined,
             params: undefined

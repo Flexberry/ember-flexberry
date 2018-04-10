@@ -2,7 +2,7 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 /**
   Mixin for route, that sorting on the list form.
@@ -12,7 +12,7 @@ import Ember from 'ember';
     // app/controllers/employees.js
     import Ember from 'ember';
     import SortableController from 'ember-flexberry/mixins/sortable-controller'
-    export default Ember.Controller.extend(SortableController, {
+    export default Controller.extend(SortableController, {
     });
     ```
 
@@ -20,7 +20,7 @@ import Ember from 'ember';
     // app/routes/employees.js
     import Ember from 'ember';
     import SortableRoute from 'ember-flexberry/mixins/sortable-route'
-    export default Ember.Route.extend(SortableRoute, {
+    export default Route.extend(SortableRoute, {
     });
     ```
 
@@ -40,7 +40,7 @@ import Ember from 'ember';
   @class SortableRoute
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
 

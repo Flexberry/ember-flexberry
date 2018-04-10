@@ -2,7 +2,8 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import $ from 'jquery';
 
 /**
   Mixin contains actions for open and close modal window.
@@ -13,7 +14,7 @@ import Ember from 'ember';
     import Ember from 'ember';
     import ModalApplicationRouteMixin from 'ember-flexberry/mixins/modal-application-route';
 
-    export default Ember.Route.extend(ModalApplicationRouteMixin, {
+    export default Route.extend(ModalApplicationRouteMixin, {
     ...
     });
     ```
@@ -57,7 +58,7 @@ import Ember from 'ember';
 
   @class ModalApplicationRoute
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Action to show modal-dialog by name.
@@ -73,7 +74,7 @@ export default Ember.Mixin.create({
      */
     showModalDialog(modalDialogName, data, modalParams) {
       modalParams = this._getModalParams(modalParams);
-      let params = Ember.$.extend({
+      let params = $.extend({
         into: modalParams.view,
         outlet: modalParams.outlet
       }, data);

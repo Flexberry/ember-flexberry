@@ -2,8 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-
+import Mixin from '@ember/object/mixin';
+import $ from 'jquery';
+import { merge } from '@ember/polyfills';
+import { get } from '@ember/object';
+import { assert, debug } from '@ember/debug';
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import { Query } from 'ember-flexberry-data';
 import serializeSortingParam from '../utils/serialize-sorting-param';
@@ -17,7 +20,7 @@ const { BasePredicate } = Query;
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
   @uses ReloadListMixin
 */
-export default Ember.Mixin.create(ReloadListMixin, {
+export default Mixin.create(ReloadListMixin, {
   /**
     Lookup settings for modal window.
     It has to be overriden on controller where this mixin is used.
@@ -96,7 +99,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
     */
     showLookupDialog(chooseData) {
       let lookupController = this.get('lookupController');
-      let options = Ember.$.extend(true, {
+      let options = $.extend(true, {
         projection: undefined,
         relationName: undefined,
         title: undefined,
@@ -113,7 +116,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       }, chooseData);
 
       let projectionName = options.projection;
-      Ember.assert('ProjectionName is undefined.', projectionName);
+      assert('ProjectionName is undefined.', projectionName);
 
       let limitPredicate = options.predicate;
       if (limitPredicate && !(limitPredicate instanceof BasePredicate)) {
@@ -137,7 +140,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
       // Get ember static function to get relation by name.
-      let relationshipsByName = Ember.get(model.constructor, 'relationshipsByName');
+      let relationshipsByName = get(model.constructor, 'relationshipsByName');
 
       // Get relation property from model.
       let relation = relationshipsByName.get(relationName);
@@ -150,7 +153,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
 
       // Lookup
       let lookupSettings = this.get('lookupSettings');
-      Ember.assert('Lookup settings are undefined.', lookupSettings);
+      assert('Lookup settings are undefined.', lookupSettings);
 
       let reloadData = {
         initialLoad: true,
@@ -197,7 +200,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       @param {Object} removeData Lookup parameters: { relationName, modelToLookup }.
     */
     removeLookupValue(removeData) {
-      let options = Ember.$.extend(true, {
+      let options = $.extend(true, {
         relationName: undefined,
         modelToLookup: undefined
       }, removeData);
@@ -218,7 +221,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       @param {Object} updateData Lookup parameters to update data at model: { relationName, newRelationValue, modelToLookup }.
     */
     updateLookupValue(updateData) {
-      let options = Ember.$.extend(true, {
+      let options = $.extend(true, {
         relationName: undefined,
         newRelationValue: undefined,
         modelToLookup: undefined
@@ -226,7 +229,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let modelToLookup = options.modelToLookup;
       let model = modelToLookup ? modelToLookup : this.get('model');
 
-      Ember.debug(`Flexberry Lookup Mixin::updateLookupValue ${options.relationName}`);
+      debug(`Flexberry Lookup Mixin::updateLookupValue ${options.relationName}`);
       model.set(options.relationName, options.newRelationValue);
 
       // Manually make record dirty, because ember-data does not do it when relationship changes.
@@ -268,12 +271,12 @@ export default Ember.Mixin.create(ReloadListMixin, {
   */
   _reloadModalData(currentContext, options) {
     let lookupSettings = currentContext.get('lookupSettings');
-    Ember.assert('Lookup settings are undefined.', lookupSettings);
-    Ember.assert('Lookup template is undefined.', lookupSettings.template);
-    Ember.assert('Lookup content template is undefined.', lookupSettings.contentTemplate);
-    Ember.assert('Lookup loader template is undefined.', lookupSettings.loaderTemplate);
+    assert('Lookup settings are undefined.', lookupSettings);
+    assert('Lookup template is undefined.', lookupSettings.template);
+    assert('Lookup content template is undefined.', lookupSettings.contentTemplate);
+    assert('Lookup loader template is undefined.', lookupSettings.loaderTemplate);
 
-    let reloadData = Ember.merge({
+    let reloadData = merge({
       initialLoad: false,
       relatedToType: undefined,
       projectionName: undefined,
@@ -297,14 +300,14 @@ export default Ember.Mixin.create(ReloadListMixin, {
       notUseUserSettings: undefined,
     }, options);
 
-    Ember.assert('Reload data are not defined fully.',
+    assert('Reload data are not defined fully.',
       reloadData.relatedToType ||
       reloadData.projectionName ||
       reloadData.projection ||
       reloadData.saveTo);
 
     let modelConstructor = currentContext.store.modelFor(reloadData.relatedToType);
-    let projection = Ember.get(modelConstructor, 'projections')[reloadData.projectionName];
+    let projection = get(modelConstructor, 'projections')[reloadData.projectionName];
     if (!projection) {
       throw new Error(
         `No projection with '${reloadData.projectionName}' name defined in '${reloadData.relatedToType}' model.`);

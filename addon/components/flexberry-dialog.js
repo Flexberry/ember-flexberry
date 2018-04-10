@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { observer } from '@ember/object';
+import { isNone } from '@ember/utils';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
@@ -49,7 +51,7 @@ const flexberryClassNames = {
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryDialogComponent = Ember.Component.extend(
+let FlexberryDialogComponent = Component.extend(
   RequiredActionsMixin,
   DomActionsMixin,
   DynamicActionsMixin,
@@ -191,9 +193,9 @@ let FlexberryDialogComponent = Ember.Component.extend(
       @method _visibleDidChange
       @private
     */
-    _visibleDidChange: Ember.observer('visible', function() {
+    _visibleDidChange: observer('visible', function() {
       let $dialog = this.get('_dialog');
-      if (Ember.isNone($dialog)) {
+      if (isNone($dialog)) {
         return;
       }
 
@@ -264,7 +266,7 @@ let FlexberryDialogComponent = Ember.Component.extend(
       });
 
       // Show dialog if necessary.
-      if (this.get('visible') && !Ember.isNone($dialog)) {
+      if (this.get('visible') && !isNone($dialog)) {
         $dialog.modal('show');
       }
 
@@ -278,7 +280,7 @@ let FlexberryDialogComponent = Ember.Component.extend(
       this._super(...arguments);
 
       let $dialog = this.get('_dialog');
-      if (Ember.isNone($dialog)) {
+      if (isNone($dialog)) {
         return;
       }
 

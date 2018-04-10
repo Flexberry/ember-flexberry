@@ -1,9 +1,12 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { get, set  } from '@ember/object';
+import { isBlank } from '@ember/utils';
+import { getOwner } from '@ember/application';
 import FlexberryBaseComponent from './flexberry-base-component';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 import QueryBuilder from 'ember-flexberry-data/query/builder';
 import ODataAdapter from 'ember-flexberry-data/query/odata-adapter';
-const { getOwner } = Ember;
 const _idPrefix = 'ColDesc';
 
 /**
@@ -18,18 +21,18 @@ export default FlexberryBaseComponent.extend({
 
    @property colsConfigMenu
    @type {Class}
-   @default Ember.inject.service()
+   @default service()
    */
-  colsConfigMenu: Ember.inject.service(),
+  colsConfigMenu: service(),
 
   /**
    Service that triggers objectlistview events.
 
    @property objectlistviewEventsService
    @type {Class}
-   @default Ember.inject.service()
+   @default service()
    */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   /**
    Model with added DOM elements.
@@ -152,9 +155,9 @@ export default FlexberryBaseComponent.extend({
   },
 
   didRender: function() {
-    let firstButtonUp = Ember.$('#ColDescRowUp_0');
+    let firstButtonUp = $('#ColDescRowUp_0');
     firstButtonUp.addClass('disabled'); // Disable first button up
-    let lastButtondown = Ember.$('#ColDescRowDown_' + (this.modelForDOM.length - 1));
+    let lastButtondown = $('#ColDescRowDown_' + (this.modelForDOM.length - 1));
     lastButtondown.addClass('disabled'); // Disable last button down
     if (this.exportParams.isExportExcel && this.exportParams.immediateExport) {
       this.exportParams.immediateExport = false;
@@ -176,14 +179,14 @@ export default FlexberryBaseComponent.extend({
      */
     invertVisibility: function(n) {
       let element = this._getEventElement('Hide', n); // clicked DOM-element
-      let newHideState = !Ember.get(this.model.colDescs[n], 'hide'); // Invert Hide/Unhide state from model.colDescs
-      Ember.set(this.model.colDescs[n], 'hide', newHideState); // Set new state in model.colDescs
+      let newHideState = !get(this.model.colDescs[n], 'hide'); // Invert Hide/Unhide state from model.colDescs
+      set(this.model.colDescs[n], 'hide', newHideState); // Set new state in model.colDescs
       if (newHideState) { // Hide element
         element.className = element.className.replace('unhide', 'hide');  // Change picture
-        Ember.$(element).parent().siblings('TD').addClass('disabled'); // Disable row
+        $(element).parent().siblings('TD').addClass('disabled'); // Disable row
       } else {
         element.className = element.className.replace('hide', 'unhide');  // Change picture
-        Ember.$(element).parent().siblings('TD').removeClass('disabled');  // Enaable row
+        $(element).parent().siblings('TD').removeClass('disabled');  // Enaable row
       }
 
       this._changed();
@@ -197,19 +200,19 @@ export default FlexberryBaseComponent.extend({
      */
     setSortOrder: function(n) {
       let select = this._getEventElement('SortOrder', n); // changed select DOM-element
-      let $tr = Ember.$(select).parents('tr');  // TR DOM-element
-      let $tbody = Ember.$(select).parents('tbody');  // TBODY DOM-element
+      let $tr = $(select).parents('tr');  // TR DOM-element
+      let $tbody = $(select).parents('tbody');  // TBODY DOM-element
       let value = select.options.item(select.selectedIndex).value;  // Chosen sort order
-      let input = Ember.$($tr).find('input').get(0); //sortPriority field in this row
-      let $inputs = Ember.$('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
+      let input = $($tr).find('input').get(0); //sortPriority field in this row
+      let $inputs = $('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
       let SortPriority = 1;
       let index = this._getIndexFromId(input.id);
       if (value === '0') {  // Disable sorting?
         input.value = '';
         input.disabled = true;  // Disable sortPriority field in this row
         input.style.display = 'none'; // Hide sortPriority field in this row
-        Ember.set(this.model.colDescs[index], 'sortPriority', undefined);
-        Ember.set(this.model.colDescs[n], 'sortOrder', undefined);
+        set(this.model.colDescs[index], 'sortPriority', undefined);
+        set(this.model.colDescs[n], 'sortOrder', undefined);
       } else {
         if (input.disabled) { // SortPriority disabled
           input.disabled = false;  // Enable SortPriority field in this row
@@ -223,8 +226,8 @@ export default FlexberryBaseComponent.extend({
           SortPriority = input.value;
         }
 
-        Ember.set(this.model.colDescs[index], 'sortPriority', SortPriority); // Remember values in model.colDescs
-        Ember.set(this.model.colDescs[n], 'sortOrder', parseInt(value));
+        set(this.model.colDescs[index], 'sortPriority', SortPriority); // Remember values in model.colDescs
+        set(this.model.colDescs[n], 'sortOrder', parseInt(value));
       }
 
       this._changed();
@@ -240,16 +243,16 @@ export default FlexberryBaseComponent.extend({
       let eventInput = this._getEventElement('SortPriority', n);  // changed input DOM-element
       let newValue = parseInt(eventInput.value);  //New value
       let prevValue = eventInput.getAttribute('prevValue'); // Previous value
-      let $tbody = Ember.$(eventInput).parents('tbody');  // TBODY DOM-element
+      let $tbody = $(eventInput).parents('tbody');  // TBODY DOM-element
       let input;
       let inputValue;
-      let $inputs = Ember.$('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
+      let $inputs = $('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
       if (isNaN(newValue) || newValue <= 0) { //new Value incorrectly setAttribute
         newValue = $inputs.length;  // Set last value
       }
 
       let index = this._getIndexFromId(eventInput.id);  // get index of initial order  (if  columns order is changed n!=index )
-      Ember.set(this.model.colDescs[index], 'sortPriority', newValue); // set new sortPriority value
+      set(this.model.colDescs[index], 'sortPriority', newValue); // set new sortPriority value
       if (prevValue === newValue) { //value not changed
         return;
       }
@@ -279,7 +282,7 @@ export default FlexberryBaseComponent.extend({
           input.value = inputValue; // Decrement/Increment value
           input.prevValue = inputValue; // Remeber previous value
           index = this._getIndexFromId(input.id); // get index of initial order
-          Ember.set(this.model.colDescs[index], 'sortPriority', inputValue); // Set computed value
+          set(this.model.colDescs[index], 'sortPriority', inputValue); // Set computed value
         }
       }
 
@@ -295,24 +298,24 @@ export default FlexberryBaseComponent.extend({
     rowUp: function(n) {
       let eventButton = this._getEventElement('RowUp', n);
       let newTr;
-      let tr = Ember.$(eventButton).parents('tr').get(0);  // TR DOM-element
-      let select = Ember.$(tr).find('SELECT').get(0);
+      let tr = $(eventButton).parents('tr').get(0);  // TR DOM-element
+      let select = $(tr).find('SELECT').get(0);
       let selectedIndex = select.selectedIndex; // selected index of sort order
-      var tbody = Ember.$(eventButton).parents('tbody').get(0);   // TBODY DOM-element
-      let prevTr = Ember.$(tr).prev('TR').get(0); // Previous TR DOM-element
+      var tbody = $(eventButton).parents('tbody').get(0);   // TBODY DOM-element
+      let prevTr = $(tr).prev('TR').get(0); // Previous TR DOM-element
       if (prevTr) { // Previous TR exist
         newTr = tbody.removeChild(tr);
         newTr = tbody.insertBefore(newTr, prevTr);
-        select = Ember.$(newTr).find('SELECT').get(0);
+        select = $(newTr).find('SELECT').get(0);
         select.selectedIndex = selectedIndex; // Reset selected index of sort order
-        Ember.$(newTr).find('BUTTON').eq(1).removeClass('disabled');
-        Ember.$(prevTr).find('BUTTON').eq(0).removeClass('disabled');
-        if (Ember.$(newTr).prev('TR').length === 0) {  //First row
-          Ember.$(newTr).find('BUTTON').eq(0).addClass('disabled');
+        $(newTr).find('BUTTON').eq(1).removeClass('disabled');
+        $(prevTr).find('BUTTON').eq(0).removeClass('disabled');
+        if ($(newTr).prev('TR').length === 0) {  //First row
+          $(newTr).find('BUTTON').eq(0).addClass('disabled');
         }
 
-        if (Ember.$(prevTr).next('TR').length === 0) {  //Last row
-          Ember.$(prevTr).find('BUTTON').eq(1).addClass('disabled');
+        if ($(prevTr).next('TR').length === 0) {  //Last row
+          $(prevTr).find('BUTTON').eq(1).addClass('disabled');
         }
       }
 
@@ -328,28 +331,28 @@ export default FlexberryBaseComponent.extend({
     rowDown: function(n) {
       let eventButton = this._getEventElement('RowDown', n);
       var newTr;
-      let tr = Ember.$(eventButton).parents('tr').get(0);  // TR DOM-element
-      let select = Ember.$(tr).find('SELECT').get(0);
+      let tr = $(eventButton).parents('tr').get(0);  // TR DOM-element
+      let select = $(tr).find('SELECT').get(0);
       let selectedIndex = select.selectedIndex; // selected index of sort order
-      var tbody = Ember.$(eventButton).parents('tbody').get(0);   // TBODY DOM-element
-      var nextTr = Ember.$(tr).next('TR').get(0); // Next TR DOM-element
+      var tbody = $(eventButton).parents('tbody').get(0);   // TBODY DOM-element
+      var nextTr = $(tr).next('TR').get(0); // Next TR DOM-element
       if (nextTr) { // Next TR exist
         newTr = tbody.removeChild(tr);  // Exchange TR's
-        if (Ember.$(nextTr).next('TR').length === 0) {  //Last row
+        if ($(nextTr).next('TR').length === 0) {  //Last row
           newTr = tbody.appendChild(newTr);
-          Ember.$(newTr).find('BUTTON').eq(1).addClass('disabled');
+          $(newTr).find('BUTTON').eq(1).addClass('disabled');
         } else {  // last row
           newTr = tbody.insertBefore(newTr, nextTr.nextSibling);
         }
 
-        if (Ember.$(nextTr).prev('TR').length === 0) {  //First row
-          Ember.$(nextTr).find('BUTTON').eq(0).addClass('disabled');
+        if ($(nextTr).prev('TR').length === 0) {  //First row
+          $(nextTr).find('BUTTON').eq(0).addClass('disabled');
         }
 
-        select = Ember.$(newTr).find('SELECT').get(0);
+        select = $(newTr).find('SELECT').get(0);
         select.selectedIndex = selectedIndex; // Reset selected index of sort order
-        Ember.$(newTr).find('BUTTON').eq(0).removeClass('disabled');
-        Ember.$(nextTr).find('BUTTON').eq(1).removeClass('disabled');
+        $(newTr).find('BUTTON').eq(0).removeClass('disabled');
+        $(nextTr).find('BUTTON').eq(1).removeClass('disabled');
       }
 
       this._changed();
@@ -363,7 +366,7 @@ export default FlexberryBaseComponent.extend({
     apply: function() {
       if (!this.exportParams.isExportExcel) {
         let colsConfig = this._getSettings();
-        let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
+        let settingName =  $('#columnConfigurtionSettingName')[0].value.trim();
         if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
           return;
         }
@@ -392,8 +395,8 @@ export default FlexberryBaseComponent.extend({
         let currentQuery = this._getCurrentQuery();
         adapter.query(store, this.modelName, currentQuery).then((result) => {
           let blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          let anchor = Ember.$('.download-anchor');
-          if (!Ember.isBlank(anchor)) {
+          let anchor = $('.download-anchor');
+          if (!isBlank(anchor)) {
             if (window.navigator.msSaveOrOpenBlob) {
               let downloadFunction = function() {
                 window.navigator.msSaveOrOpenBlob(blob, 'list.xlsx');
@@ -424,7 +427,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.saveColsSetting
     */
     saveColsSetting: function() {
-      let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
+      let settingName =  $('#columnConfigurtionSettingName')[0].value.trim();
       if (settingName.length <= 0) {
         this.set('currentController.message.type', 'warning');
         this.set('currentController.message.visible', true);
@@ -446,7 +449,7 @@ export default FlexberryBaseComponent.extend({
             settingName +
             this.get('i18n').t('components.colsconfig-dialog-content.is-saved'));
           this.set('currentController.message.message', '');
-          Ember.$('#columnConfigurtionButtonSave')[0].className += ' disabled';
+          $('#columnConfigurtionButtonSave')[0].className += ' disabled';
           this._isChanged = false;
         },
         error => {
@@ -566,7 +569,7 @@ export default FlexberryBaseComponent.extend({
   /* eslint-enable no-unused-vars */
 
   _getSettings: function() {
-    let trs = Ember.$('#colsConfigtableRows').children('TR');
+    let trs = $('#colsConfigtableRows').children('TR');
     let colsConfig = [];
     let colsOrder = [];
     let sortSettings = [];
@@ -598,7 +601,7 @@ export default FlexberryBaseComponent.extend({
       sorting[sorting.length] =  { propName: sortedSetting.propName, direction:  sortedSetting.sortOrder > 0 ? 'asc' : 'desc' };
     }
 
-    let perPageElement = Ember.$('#perPageValueInput').get(0);
+    let perPageElement = $('#perPageValueInput').get(0);
     let perPage = parseInt(perPageElement.value, 10);
 
     if (perPage === isNaN || perPage <= 0) {
@@ -625,13 +628,13 @@ export default FlexberryBaseComponent.extend({
 
   _getEventElement: function (prefix, n) {
     let id = '#' + _idPrefix + prefix + '_' + n;
-    let ret = Ember.$.find(id)[0];
+    let ret = $.find(id)[0];
     return ret;
   },
 
   _changed: function() {
     this._isChanged = true;
-    Ember.$('#columnConfigurtionButtonUse')[0].className = Ember.$('#columnConfigurtionButtonUse')[0].className.replace('disabled', '');
-    Ember.$('#columnConfigurtionButtonSave')[0].className = Ember.$('#columnConfigurtionButtonSave')[0].className.replace('disabled', '');
+    $('#columnConfigurtionButtonUse')[0].className = $('#columnConfigurtionButtonUse')[0].className.replace('disabled', '');
+    $('#columnConfigurtionButtonSave')[0].className = $('#columnConfigurtionButtonSave')[0].className.replace('disabled', '');
   }
 });

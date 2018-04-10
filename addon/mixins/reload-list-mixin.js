@@ -2,8 +2,13 @@
  * @module ember-flexberry
  */
 
-import Ember from 'ember';
-
+import Mixin from '@ember/object/mixin';
+import { get } from '@ember/object'
+import { merge } from '@ember/polyfills';
+import { assert } from '@ember/debug';
+import { inject } from '@ember/service';
+import { isNone } from '@ember/utils';
+import { A } from '@ember/array';
 import { Query } from 'ember-flexberry-data';
 
 const {
@@ -23,7 +28,7 @@ const {
  * @extends Ember.Mixin
  * @public
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
    Service that triggers objectlistview events.
 
@@ -31,7 +36,7 @@ export default Ember.Mixin.create({
    @type {Class}
    @default Ember.inject.service()
    */
-  objectlistviewEvents: Ember.inject.service(),
+  objectlistviewEvents: inject.service(),
 
   /**
    * It reloads data by parameters.
@@ -54,7 +59,7 @@ export default Ember.Mixin.create({
    */
   reloadList: function(options) {
     if (options.filters instanceof ComplexPredicate) {
-      var newFilter = Ember.A();
+      var newFilter = A();
       options.filters._predicates.forEach((predicate) => {
         newFilter.push(this._normalizeNeqPredicate(predicate));
       }, this);
@@ -65,9 +70,9 @@ export default Ember.Mixin.create({
     }
 
     let store = this.store;
-    Ember.assert('Store for data loading is not defined.', store);
+    assert('Store for data loading is not defined.', store);
 
-    let reloadOptions = Ember.merge({
+    let reloadOptions = merge({
       modelName: undefined,
       projectionName: undefined,
       perPage: undefined,
@@ -81,13 +86,13 @@ export default Ember.Mixin.create({
     }, options);
 
     let modelName = reloadOptions.modelName;
-    Ember.assert('Model name for data loading is not defined.', modelName);
+    assert('Model name for data loading is not defined.', modelName);
 
     let projectionName = reloadOptions.projectionName;
-    Ember.assert('Projection name for data loading is not defined.', projectionName);
+    assert('Projection name for data loading is not defined.', projectionName);
 
     let modelConstructor = store.modelFor(modelName);
-    let projection = Ember.get(modelConstructor, 'projections')[projectionName];
+    let projection = get(modelConstructor, 'projections')[projectionName];
     if (!projection) {
       throw new Error(`No projection with '${projectionName}' name defined in '${modelName}' model.`);
     }
@@ -110,8 +115,8 @@ export default Ember.Mixin.create({
     let page = reloadOptions.page;
     let pageNumber = parseInt(page, 10);
     let perPageNumber = parseInt(perPage, 10);
-    Ember.assert('page must be greater than zero.', pageNumber > 0);
-    Ember.assert('perPage must be greater than zero.', perPageNumber > 0);
+    assert('page must be greater than zero.', pageNumber > 0);
+    assert('perPage must be greater than zero.', perPageNumber > 0);
 
     let builder = new Builder(store)
       .from(modelName)
@@ -260,7 +265,7 @@ export default Ember.Mixin.create({
     @private
   */
   _getFilterPredicate: function(modelProjection, params) {
-    Ember.assert('Projection is not defined', modelProjection);
+    assert('Projection is not defined', modelProjection);
 
     let predicates = [];
     if (params.filter) {
@@ -293,12 +298,12 @@ export default Ember.Mixin.create({
         let attribute = projection.attributes[name];
         switch (attribute.kind) {
           case 'attr': {
-            let options = Ember.merge({}, attribute.options);
+            let options = merge({}, attribute.options);
             options.displayMemberPath = projection.options && projection.options.displayMemberPath === name;
             attributes.push({
               name: name,
               options: options,
-              type: Ember.get(store.modelFor(projection.modelName), 'attributes').get(name).type,
+              type: get(store.modelFor(projection.modelName), 'attributes').get(name).type,
             });
             break;
           }
@@ -336,7 +341,7 @@ export default Ember.Mixin.create({
   */
   _normalizeNeqPredicate(predicate) {
     let result = predicate;
-    if (!Ember.isNone(predicate) && predicate._operator === 'neq' && predicate._value !== null) {
+    if (!isNone(predicate) && predicate._operator === 'neq' && predicate._value !== null) {
       let sp1 = predicate;
       let sp2;
       if (predicate instanceof SimplePredicate) {

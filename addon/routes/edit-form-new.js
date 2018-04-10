@@ -2,7 +2,7 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import { assert } from '@ember/debug';
 import EditFormRoute from './edit-form';
 
 /**
@@ -66,7 +66,7 @@ export default EditFormRoute.extend({
    */
   renderTemplate(controller, model) {
     var templateName = this.get('templateName');
-    Ember.assert('Template name must be defined.', templateName);
+    assert('Template name must be defined.', templateName);
     this.render(templateName, {
       model,
       controller,

@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { computed  } from '@ember/object';
 import ObjectListViewComponent from '../object-list-view';
 
 /**
@@ -48,7 +48,7 @@ export default ObjectListViewComponent.extend({
     @type Number
     @readOnly
   */
-  colspan: Ember.computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
+  colspan: computed('columns.length', 'showHelperColumn', 'showMenuColumn', function() {
     let columnsCount = 1;
     if (this.get('showHelperColumn')) {
       columnsCount += 1;

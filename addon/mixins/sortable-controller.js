@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { oneWay } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import { inject as service} from '@ember/service';
 import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
@@ -14,14 +17,14 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
     // app/controllers/employees.js
     import Ember from 'ember';
     import SortableController from 'ember-flexberry/mixins/sortable-controller'
-    export default Ember.Controller.extend(SortableController, {
+    export default Controller.extend(SortableController, {
     });
     ```
     ```javascript
     // app/routes/employees.js
     import Ember from 'ember';
     import SortableRoute from 'ember-flexberry/mixins/sortable-route'
-    export default Ember.Route.extend(SortableRoute, {
+    export default Route.extend(SortableRoute, {
     });
     ```
     ```handlebars
@@ -41,7 +44,7 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
   @public
  */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Defines which query parameters the controller accepts.
     [More info](http://emberjs.com/api/classes/Ember.Controller.html#property_queryParams).
@@ -66,9 +69,9 @@ export default Ember.Mixin.create({
     @property sort
     @type String
   */
-  sort: Ember.computed.oneWay('sortDefaultValue'),
+  sort: oneWay('sortDefaultValue'),
 
-  _userSettingsService: Ember.inject.service('user-settings'),
+  _userSettingsService: service('user-settings'),
 
   _router: undefined,
 
@@ -79,7 +82,7 @@ export default Ember.Mixin.create({
     @type Object
     @readOnly
   */
-  computedSorting: Ember.computed('model.sorting', function() {
+  computedSorting: computed('model.sorting', function() {
     let sorting = this.get('model.sorting');
     let result = {};
 

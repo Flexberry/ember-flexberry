@@ -2,7 +2,10 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { assert } from '@ember/debug';
+import { isNone } from '@ember/utils';
 import LimitedRouteMixin from '../mixins/limited-route';
 import SortableRouteMixin from '../mixins/sortable-route';
 import PaginatedRouteMixin from '../mixins/paginated-route';
@@ -57,7 +60,7 @@ ErrorableRouteMixin, {
     @type FormLoadTimeTrackerService
     @private
   */
-  formLoadTimeTracker: Ember.inject.service(),
+  formLoadTimeTracker: service(),
 
   /**
     Current sorting.
@@ -72,7 +75,7 @@ ErrorableRouteMixin, {
     @property colsConfigMenu
     @type Service
   */
-  colsConfigMenu: Ember.inject.service(),
+  colsConfigMenu: service(),
 
   /**
     Service that triggers objectlistview events.
@@ -80,7 +83,7 @@ ErrorableRouteMixin, {
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   /**
     A hook you can implement to convert the URL into the model for this route.
@@ -105,7 +108,7 @@ ErrorableRouteMixin, {
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings');
-    Ember.assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
+    assert('Property developerUserSettings is not defined in /app/routes/' + transition.targetName + '.js', developerUserSettings);
 
     let nComponents = 0;
     let componentName;
@@ -118,17 +121,17 @@ ErrorableRouteMixin, {
         case 'object':
           break;
         default:
-          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+          assert('Component description ' + 'developerUserSettings.' + componentName +
             'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
       }
       nComponents += 1;
     }
 
     if (nComponents === 0) {
-      Ember.assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
+      assert('Developer MUST DEFINE component settings in /app/routes/' + transition.targetName + '.js', false);
     }
 
-    Ember.assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
+    assert('Developer MUST DEFINE SINGLE components settings in /app/routes/' + transition.targetName + '.js' + nComponents + ' defined.',
       nComponents === 1);
     userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
     let userSettingPromise = userSettingsService.setDeveloperUserSettings(developerUserSettings);
@@ -311,8 +314,8 @@ ErrorableRouteMixin, {
     controller.set('modelProjection', proj);
     controller.set('developerUserSettings', this.get('developerUserSettings'));
     controller.set('resultPredicate', this.get('resultPredicate'));
-    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
-      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    if (isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', $.extend(true, {}, this.get('developerUserSettings')));
     }
   },
   /* eslint-enable no-unused-vars */

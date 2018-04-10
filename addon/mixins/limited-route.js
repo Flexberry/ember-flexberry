@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { set } from '@ember/object';
 import { Query } from 'ember-flexberry-data';
 
 const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate } = Query;
@@ -15,7 +16,7 @@ const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredi
     // app/controllers/employees.js
     import Ember from 'ember';
     import LimitedController from 'ember-flexberry/mixins/limited-controller'
-    export default Ember.Controller.extend(LimitedController, {
+    export default Controller.extend(LimitedController, {
       ...
     });
     ```
@@ -24,7 +25,7 @@ const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredi
     // app/routes/employees.js
     import Ember from 'ember';
     import LimitedRoute from 'ember-flexberry/mixins/limited-route'
-    export default Ember.Route.extend(LimitedRoute, {
+    export default Route.extend(LimitedRoute, {
       ...
     });
     ```
@@ -50,7 +51,7 @@ const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredi
   @class LimitedRouteMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Configuration hash for this route's queryParams. [More info](http://emberjs.com/api/classes/Ember.Route.html#property_queryParams).
 
@@ -120,7 +121,7 @@ export default Ember.Mixin.create({
       }
     } else {
       if (!filter.condition && filter.type === 'string') {
-        Ember.set(filter, 'condition', 'like');
+        set(filter, 'condition', 'like');
         return new StringPredicate(filter.name).contains(filter.pattern);
       }
     }

@@ -1,10 +1,9 @@
-<div class="field">
-  <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-dropdown
-    items=(flexberry-enum '<%= type %>')
-    value=model.<%= name %>
-    readonly=<%= readonly %>
-  }}
-  {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
-</div>
+  <div class="field">
+    <label>{{<%= caption %>}}</label>
+    {{flexberry-dropdown
+      items=(flexberry-enum "<%= type %>")
+      value=model.<%= name %>
+      readonly=<%= readonly %>
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
+  </div>

@@ -1,9 +1,8 @@
-<div class="field">
-  <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-checkbox 
-    readonly=<%= readonly %> 
-    value=model.<%= name %>
-  }}
-  {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
-</div>
+  <div class="field">
+    <label>{{<%= caption %>}}</label>
+    {{flexberry-checkbox
+      readonly=<%= readonly %>
+      value=model.<%= name %>
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
+  </div>

@@ -1,15 +1,16 @@
-<div class="field">
-  <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-lookup
-    choose='showLookupDialog'
-    remove='removeLookupValue'
-    value=model.<%= name %>
-    <%if(lookupValueField){%>displayAttributeName='<%= lookupValueField %>'<%}else{%><%}%>
-    relationName='<%= name %>'
-    projection='<%= projection %>'
-    title=(<%= caption %>)
-    readonly=<%= readonly %>
-  }}
-  {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
-</div>
+  <div class="field">
+    <label>{{<%= caption %>}}</label>
+    {{flexberry-lookup
+      choose="showLookupDialog"
+      remove="removeLookupValue"
+      value=model.<%= name %><%
+if (lookupValueField) { %>
+      displayAttributeName="<%= lookupValueField %>"<%
+} %>
+      relationName="<%= name %>"
+      projection="<%= projection %>"
+      title=(<%= caption %>)
+      readonly=<%= readonly %>
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
+  </div>

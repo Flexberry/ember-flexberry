@@ -1,14 +1,13 @@
-<div class="field">
-  <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-groupedit
-    componentName="<%= name %>GroupEdit"
-    mainModelProjection=modelProjection
-    modelProjection=modelProjection.attributes.<%= name %>
-    content=model.<%= name %>
-    readonly=<%= readonly %>
-    orderable=false
-    class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
-  }}
-  {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
-</div>
+  <div class="field">
+    <label>{{<%= caption %>}}</label>
+    {{flexberry-groupedit
+      componentName="<%= name %>GroupEdit"
+      mainModelProjection=modelProjection
+      modelProjection=modelProjection.attributes.<%= name %>
+      content=model.<%= name %>
+      readonly=<%= readonly %>
+      orderable=false
+      class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
+  </div>

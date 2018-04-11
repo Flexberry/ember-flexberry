@@ -72,7 +72,7 @@ export default Mixin.create(PredicateFromFiltersMixin, {
     @type Number
     @readOnly
   */
-  recordsTotalCount: on('init', computed('customFolvContent', function() {
+  recordsTotalCount: computed('customFolvContent', function() {
     let customFolvContent = this.get('customFolvContent');
     if (customFolvContent) {
       if (customFolvContent instanceof RSVP.Promise) {
@@ -83,7 +83,7 @@ export default Mixin.create(PredicateFromFiltersMixin, {
         return customFolvContent.meta.count;
       }
     }
-  })),
+  }),
 
   /**
     Content of FOLV on this edit form.

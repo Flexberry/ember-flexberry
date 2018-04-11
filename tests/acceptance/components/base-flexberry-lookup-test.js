@@ -301,7 +301,7 @@ test('flexberry-lookup limit function test', function(assert) {
 
 test('flexberry-lookup actions test', function(assert) {
   assert.expect(5);
-
+  
   let controller = app.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
 
   // Remap remove action.

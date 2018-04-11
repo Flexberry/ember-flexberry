@@ -212,11 +212,12 @@ test('flexberry-lookup on readonly edit form', (assert) => {
   visit(path);
   andThen(() => {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let $lookup = $('.not-in-groupedit input.lookup-field');
+    let $flexberryLookup = $('.not-in-groupedit .flexberry-lookup div.ui.fluid.action.input');
+    let $lookup = $flexberryLookup.children('.lookup-field');
     assert.strictEqual($.trim($lookup.attr('readonly')), 'readonly', 'Lookup is readonly');
-    let $chooseButton = $('.not-in-groupedit button.ui-change');
+    let $chooseButton = $flexberryLookup.children('.button.ui-change');
     assert.strictEqual($chooseButton.hasClass('disabled'), true, 'Flexberry-lookup\'s button \'Choose\' is readonly');
-    let $removeButton = $('.not-in-groupedit button.ui-clear');
+    let $removeButton = $flexberryLookup.children('.button.ui-clear');
     assert.strictEqual($removeButton.hasClass('disabled'), true, 'Flexberry-lookup\'s button \'Remove\' is readonly');
 
     let $lookupFge = $('.in-groupedit input.lookup-field');

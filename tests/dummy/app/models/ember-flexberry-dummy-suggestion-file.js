@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
 
-var Model = Projection.Model.extend({
+let Model = Projection.Model.extend({
   // Inversed relationship for ember-flexberry-dummy-suggestion.files.
   // It's not a property for flexberry-lookup component.
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
@@ -10,10 +10,6 @@ var Model = Projection.Model.extend({
   }),
   order: DS.attr('number'),
   file: DS.attr('file'),
-
-  // Model validation rules.
-  validations: {
-  }
 });
 
 // Edit form projection.

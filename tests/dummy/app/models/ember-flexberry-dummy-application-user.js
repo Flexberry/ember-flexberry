@@ -1,7 +1,19 @@
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = Projection.Model.extend({
+const Validations = buildValidations({
+  name: validator('presence', {
+    presence: true,
+    message: 'Name is required',
+  }),
+  eMail: validator('presence', {
+    presence: true,
+    message: 'User email is required',
+  }),
+});
+
+let Model = Projection.Model.extend(Validations, {
   name: DS.attr('string'),
   eMail: DS.attr('string'),
   phone1: DS.attr('string'),
@@ -15,20 +27,6 @@ var Model = Projection.Model.extend({
   gender: DS.attr('ember-flexberry-dummy-gender'),
   vip: DS.attr('boolean'),
   karma: DS.attr('decimal'),
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    },
-    eMail: {
-      presence: {
-        message: 'User email is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

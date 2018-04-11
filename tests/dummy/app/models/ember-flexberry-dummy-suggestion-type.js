@@ -1,7 +1,15 @@
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = Projection.Model.extend({
+const Validations = buildValidations({
+  name: validator('presence', {
+    presence: true,
+    message: 'Name is required',
+  }),
+});
+
+let Model = Projection.Model.extend(Validations, {
   name: DS.attr('string'),
   moderated: DS.attr('boolean'),
 
@@ -17,15 +25,6 @@ var Model = Projection.Model.extend({
     inverse: 'suggestionType',
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

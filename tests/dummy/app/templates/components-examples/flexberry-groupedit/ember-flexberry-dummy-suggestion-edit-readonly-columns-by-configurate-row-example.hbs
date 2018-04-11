@@ -21,7 +21,7 @@
   {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
   <div class="field">
@@ -40,47 +40,47 @@
       <button type="submit" class="ui button close-button" {{action 'close'}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if model.errors.address "error" ""}}">
+  <div class="field {{if (v-get validationObject "address" "isInvalid") "error"}}">
     {{flexberry-field
       value=model.address
       label=(t "forms.ember-flexberry-dummy-suggestion-edit.address-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.address pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "address" "messages")}}
   </div>
-  <div class="field {{if model.errors.text "error" ""}}">
+  <div class="field {{if (v-get validationObject "text" "isInvalid") "error"}}">
     {{flexberry-field
       value=model.text
       label=(t "forms.ember-flexberry-dummy-suggestion-edit.text-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.text pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "text" "messages")}}
   </div>
-  <div class="field {{if model.errors.date "error" ""}}">
+  <div class="field {{if (v-get validationObject "date" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.date-caption"}}</label>
     {{flexberry-datepicker
       value=model.date
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.date pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "date" "messages")}}
   </div>
-  <div class="field {{if model.errors.votes "error" ""}}">
+  <div class="field {{if (v-get validationObject "votes" "isInvalid") "error"}}">
     {{flexberry-field
       value=model.votes
       label=(t "forms.ember-flexberry-dummy-suggestion-edit.votes-caption")
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.votes pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "votes" "messages")}}
   </div>
-  <div class="field {{if model.errors.moderated "error" ""}}">
+  <div class="field {{if (v-get validationObject "moderated" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.moderated-caption"}}</label>
     {{flexberry-checkbox
       value=model.moderated
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.moderated pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "moderated" "messages")}}
   </div>
-  <div class="field {{if model.errors.type "error" ""}}">
+  <div class="field {{if (v-get validationObject "type" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.type-caption"}}</label>
     {{flexberry-lookup
       value=model.type
@@ -96,9 +96,9 @@
       direction="upward"
       componentName="SuggestionEditType"
     }}
-    {{flexberry-validationmessage error=model.errors.type pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "type" "messages")}}
   </div>
-  <div class="field {{if model.errors.author "error" ""}}">
+  <div class="field {{if (v-get validationObject "author" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.author-caption"}}</label>
     {{flexberry-lookup
       value=model.author
@@ -112,9 +112,9 @@
       readonly=readonly
       componentName="SuggestionEditAuthor"
     }}
-    {{flexberry-validationmessage error=model.errors.author pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "author" "messages")}}
   </div>
-  <div class="field {{if model.errors.editor1 "error" ""}}">
+  <div class="field {{if (v-get validationObject "editor1" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.editor1-caption"}}</label>
     {{flexberry-lookup
       value=model.editor1
@@ -128,9 +128,9 @@
       readonly=readonly
       componentName="SuggestionEditEditor1"
     }}
-    {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "editor1" "messages")}}
   </div>
-  <div class="field {{if model.errors.files "error" ""}}">
+  <div class="field {{if (v-get validationObject "files" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.files-caption"}}</label>
     {{flexberry-groupedit
       componentName="filesGroupEdit"
@@ -141,9 +141,9 @@
       readonly=readonly
       configurateRow=(action 'configurateFilesRow')
     }}
-    {{flexberry-validationmessage error=model.errors.files pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "files" "messages")}}
   </div>
-  <div class="field {{if model.errors.userVotes "error" ""}}">
+  <div class="field {{if (v-get validationObject "userVotes" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.userVotes-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionUserVotesGroupEdit"
@@ -154,9 +154,9 @@
       readonly=readonly
       configurateRow=(action 'configurateVotesRow')
     }}
-    {{flexberry-validationmessage error=model.errors.userVotes pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "userVotes" "messages")}}
   </div>
-  <div class="field {{if model.errors.comments "error" ""}}">
+  <div class="field {{if (v-get validationObject "comments" "isInvalid") "error"}}">
     <label>{{t "forms.ember-flexberry-dummy-suggestion-edit.comments-caption"}}</label>
     {{flexberry-groupedit
       componentName="suggestionCommentsGroupEdit"
@@ -171,6 +171,6 @@
       orderable=true
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.comments pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "comments" "messages")}}
   </div>
 </form>

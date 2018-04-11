@@ -4,7 +4,7 @@
   {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
   <div class="field">
@@ -33,10 +33,10 @@
     required=true
     value=model.togglerExampleMasterProperty
   }}
-  {{flexberry-validationmessage error=model.errors.togglerExampleMasterProperty pointing="pointing"}}
+  {{flexberry-validationmessage error=(v-get validationObject "togglerExampleMasterProperty" "messages")}}
 </div>
 {{#flexberry-toggler}}
-  <div class="field {{if model.errors.togglerExampleDetail "error" ""}}">
+  <div class="field {{if (v-get validationObject "togglerExampleDetail" "isInvalid") "error"}}">
     <label>{{t 'forms.ember-flexberry-dummy-toggler-example-master-e.toggler-example-deteil-property-caption'}}</label>
     {{flexberry-groupedit
       componentName="togglerExampleDetailGroupEdit"

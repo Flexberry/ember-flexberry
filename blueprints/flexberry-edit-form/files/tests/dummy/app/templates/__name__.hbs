@@ -4,7 +4,7 @@
   {{flexberry-error error=error}}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
   <div class="field">

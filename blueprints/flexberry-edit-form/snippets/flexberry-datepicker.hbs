@@ -5,7 +5,7 @@
     placeholder='(no value)'
     readonly=<%= readonly %>
     value=model.<%= name %>
-    class=(if model.errors.<%= name %> 'error' '')
+    class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
   }}
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
+  {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
 </div>

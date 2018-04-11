@@ -5,8 +5,8 @@
     readonly=<%= readonly %>
     required=true
     value=model.<%= name %>
-    class=(if model.errors.<%= name %> 'error' '')
+    class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
     label=(<%= caption %>)
   }}
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
+  {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
 </div>

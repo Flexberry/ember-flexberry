@@ -1,4 +1,4 @@
-<div class="ui grid {{if model.errors.<%= name %> 'error' ''}}">
+<div class="ui grid {{if (v-get validationObject "<%= name %>" "isInvalid") "error"}}">
   <div class="ui two wide column right aligned middle aligned content">
     <label>{{<%= caption %>}}</label>
   </div>
@@ -11,5 +11,5 @@
       value=model.<%= name %>
     }}
   </div>
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
+  {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
 </div>

@@ -11,5 +11,5 @@
     title=(<%= caption %>)
     readonly=<%= readonly %>
   }}
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
+  {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
 </div>

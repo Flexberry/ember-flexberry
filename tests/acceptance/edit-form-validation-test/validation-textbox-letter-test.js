@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
 
 /* eslint-disable no-unused-vars */
@@ -12,7 +13,7 @@ executeTest('check operation letter textbox', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = Ember.$(Ember.$('.field.error')[2]);
+    let $validationField = $($('.field.error')[2]);
     let $validationFlexberryTextbox = $validationField.children('.flexberry-textbox');
     let $validationFlexberryTextboxInner = $validationFlexberryTextbox.children('input');
     let $validationFlexberryErrorLable = $validationField.children('.label');
@@ -21,7 +22,7 @@ executeTest('check operation letter textbox', (store, assert, app) => {
     assert.equal($validationFlexberryErrorLable.text().trim(), 'Text is required,Text length must be >= 5', 'letter textbox have default value');
 
     // Insert text in textbox.
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryTextboxInner[0].value = '1';
       $validationFlexberryTextboxInner.change();
     });
@@ -30,7 +31,7 @@ executeTest('check operation letter textbox', (store, assert, app) => {
     assert.equal($validationFlexberryErrorLable.text().trim(), 'Text length must be >= 5', 'letter textbox have < 5 letter');
 
     // Insert text in textbox.
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryTextboxInner[0].value = '12345';
       $validationFlexberryTextboxInner.change();
     });

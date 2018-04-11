@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 import { Query } from 'ember-flexberry-data';
 
@@ -79,7 +79,7 @@ export default ListFormRoute.extend({
    */
   objectListViewLimitPredicate: function(options) {
 
-    let methodOptions = Ember.merge({
+    let methodOptions = merge({
       modelName: undefined,
       projectionName: undefined,
       params: undefined

@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import EmberObject, { get } from '@ember/object';
+import { run } from '@ember/runloop';
 import DS from 'ember-data';
 import ReloadListMixin from 'ember-flexberry/mixins/reload-list-mixin';
 import { module, test } from 'qunit';
@@ -16,7 +17,7 @@ const {
 module('Unit | Mixin | reload list mixin');
 
 test('it works', function(assert) {
-  let ReloadListMixinObject = Ember.Object.extend(ReloadListMixin);
+  let ReloadListMixinObject = EmberObject.extend(ReloadListMixin);
   let subject = ReloadListMixinObject.create();
   assert.ok(subject);
 });
@@ -31,7 +32,7 @@ test('it properly generates simple filter predicate', function(assert) {
   });
 
   let modelSerializer = Serializer.Odata.extend({});
-  let projection = Ember.get(Model, 'projections').EmployeeE;
+  let projection = get(Model, 'projections').EmployeeE;
 
   let app = startApp();
 
@@ -39,14 +40,14 @@ test('it properly generates simple filter predicate', function(assert) {
   app.register('serializer:employeeTest', modelSerializer);
   let store = app.__container__.lookup('service:store');
 
-  let ReloadListMixinObject = Ember.Object.extend(ReloadListMixin);
+  let ReloadListMixinObject = EmberObject.extend(ReloadListMixin);
   let objectInstance = ReloadListMixinObject.create();
   objectInstance.store = store;
 
   let result = objectInstance._getFilterPredicate(projection, { filter: 'test' });
   let resultUndefined = objectInstance._getFilterPredicate(projection, { filter: undefined });
   let resultEmpty = objectInstance._getFilterPredicate(projection, { filter: '' });
-  Ember.run(app, 'destroy');
+  run(app, 'destroy');
 
   assert.equal(typeof result, 'object');
   assert.equal(result.constructor, StringPredicate);
@@ -94,17 +95,17 @@ test('it properly generates complex filter predicate', function(assert) {
 
   let modelSerializer = Serializer.Odata.extend({});
   let modelSerializer0 = Serializer.Odata.extend({});
-  let projection = Ember.get(Model, 'projections').EmployeeE;
+  let projection = get(Model, 'projections').EmployeeE;
 
   app.register('serializer:employeeTest2', modelSerializer0);
   app.register('serializer:employeeTest', modelSerializer);
   let store = app.__container__.lookup('service:store');
 
-  let ReloadListMixinObject = Ember.Object.extend(ReloadListMixin);
+  let ReloadListMixinObject = EmberObject.extend(ReloadListMixin);
   let objectInstance = ReloadListMixinObject.create();
   objectInstance.store = store;
   let result = objectInstance._getFilterPredicate(projection, { filter: '123' });
-  Ember.run(app, 'destroy');
+  run(app, 'destroy');
 
   assert.equal(typeof result, 'object');
   assert.equal(result.constructor, ComplexPredicate);

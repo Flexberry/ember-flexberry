@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { later } from '@ember/runloop';
 import { executeTest } from './execute-folv-test';
 import { loadingList } from './folv-tests-functions';
 
@@ -9,17 +10,17 @@ executeTest('check checkbox at editform', (store, assert, app) => {
   andThen(function() {
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let $folvContainer = Ember.$('.object-list-view-container');
-    let $trTableBody = Ember.$('table.object-list-view tbody tr', $folvContainer);
+    let $folvContainer = $('.object-list-view-container');
+    let $trTableBody = $('table.object-list-view tbody tr', $folvContainer);
     let $cell = $trTableBody[0].children[1];
 
     let timeout = 500;
-    Ember.run.later((function() {
+    later((function() {
       controller.set('rowClickable', true);
-      Ember.run.later((function() {
+      later((function() {
         let asyncOperationsCompleted = assert.async();
         loadingList($cell, 'form.flexberry-vertical-form', '.field').then(($editForm) => {
-          let checkbox = Ember.$('.flexberry-checkbox');
+          let checkbox = $('.flexberry-checkbox');
 
           assert.ok($editForm, 'edit form open');
           assert.equal(checkbox.hasClass('checked'), true, 'checkbox is check');

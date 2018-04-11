@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
@@ -31,7 +31,7 @@ export default EditFormController.extend({
       }
 
       if (record.get('flag') === this.get('configurateRowByFlag')) {
-        Ember.set(rowConfig, 'canBeDeleted', false);
+        set(rowConfig, 'canBeDeleted', false);
       }
     },
   },

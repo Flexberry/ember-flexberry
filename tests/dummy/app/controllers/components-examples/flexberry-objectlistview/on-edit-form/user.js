@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { merge } from '@ember/polyfills';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 import { StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
@@ -13,7 +14,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
   */
   parentRoute: 'components-examples/flexberry-objectlistview/on-edit-form',
 
-  store: Ember.inject.service(),
+  store: service(),
 
   getCellComponent: null,
 
@@ -45,7 +46,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
   folvProjection: 'SuggestionTypeL',
 
   objectListViewLimitPredicate: function(options) {
-    let methodOptions = Ember.merge({
+    let methodOptions = merge({
       modelName: undefined,
       projectionName: undefined,
       params: undefined

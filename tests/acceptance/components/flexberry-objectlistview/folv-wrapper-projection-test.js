@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { get } from '@ember/object';
 import { executeTest } from './execute-folv-test';
 import { checkSortingList, loadingLocales } from './folv-tests-functions';
 
@@ -10,17 +11,17 @@ executeTest('check wrapper and projection', (store, assert, app) => {
     assert.equal(currentPath(), path);
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let projectionName = () => { return Ember.get(controller, 'modelProjection'); };
+    let projectionName = () => { return get(controller, 'modelProjection'); };
 
-    let $olv = Ember.$('.object-list-view ');
-    let $folvContainer = Ember.$('.object-list-view-container');
-    let $tableInFolvContainer = Ember.$('table', $folvContainer);
+    let $olv = $('.object-list-view ');
+    let $folvContainer = $('.object-list-view-container');
+    let $tableInFolvContainer = $('table', $folvContainer);
     assert.equal($tableInFolvContainer.length, 1, 'folv table in container exist');
 
-    let $tableBody = Ember.$('tbody', '.object-list-view-container');
+    let $tableBody = $('tbody', '.object-list-view-container');
     assert.equal($tableBody.length, 1, 'tbody in table exist');
 
-    let dtHeadTable = Ember.$('.dt-head-left.me.class', 'thead', $tableInFolvContainer);
+    let dtHeadTable = $('.dt-head-left.me.class', 'thead', $tableInFolvContainer);
 
     let done = assert.async();
     checkSortingList(store, projectionName(), $olv, null).then((isTrue) => {
@@ -37,7 +38,7 @@ executeTest('check wrapper and projection', (store, assert, app) => {
       /* eslint-disable no-unused-vars */
       Object.keys(attrs).forEach((element, index, array) => {
         if (attrs[element].kind !== 'hasMany') {
-          flag = flag && (Ember.$.trim(dtHeadTable[index].innerText) === attrs[element].caption);
+          flag = flag && ($.trim(dtHeadTable[index].innerText) === attrs[element].caption);
         }
       });
       /* eslint-enable no-unused-vars */

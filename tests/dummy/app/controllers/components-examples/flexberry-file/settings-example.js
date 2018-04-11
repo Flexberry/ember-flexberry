@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import { A } from '@ember/array';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
 import config from 'dummy/config/environment';
@@ -17,7 +19,7 @@ export default EditFormController.extend({
     @method _placeholderChanged
     @private
    */
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-file.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-file.placeholder'));
     }
@@ -92,7 +94,7 @@ export default EditFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.String.htmlSafe(
+  componentTemplateText: new htmlSafe(
     '{{flexberry-file<br>' +
     '  value=model.file<br>' +
     '  placeholder=placeholder<br>' +
@@ -114,8 +116,8 @@ export default EditFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    var componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    var componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'string',

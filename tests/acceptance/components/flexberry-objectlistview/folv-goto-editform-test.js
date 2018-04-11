@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { later } from '@ember/runloop';
 import { executeTest } from './execute-folv-test';
 import { loadingList } from './folv-tests-functions';
 
@@ -10,17 +11,17 @@ executeTest('check goto editform', (store, assert, app) => {
     assert.equal(currentPath(), path);
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let $folvContainer = Ember.$('.object-list-view-container');
-    let $trTableBody = Ember.$('table.object-list-view tbody tr', $folvContainer);
+    let $folvContainer = $('.object-list-view-container');
+    let $trTableBody = $('table.object-list-view tbody tr', $folvContainer);
     let $cell = $trTableBody[0].children[1];
 
     assert.equal(currentPath(), path, 'edit form not open');
 
     let timeout = 500;
-    Ember.run.later((function() {
+    later((function() {
       assert.equal(currentPath(), path, 'edit form not open');
       controller.set('rowClickable', true);
-      Ember.run.later((function() {
+      later((function() {
         let asyncOperationsCompleted = assert.async();
         loadingList($cell, 'form.flexberry-vertical-form', '.field').then(($editForm) => {
           assert.ok($editForm, 'edit form open');

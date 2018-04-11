@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 
@@ -16,13 +17,13 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
   */
   parentRoute: 'components-examples/flexberry-simpleolv/on-edit-form',
 
-  store: Ember.inject.service(),
+  store: service(),
 
   getCellComponent: null,
 
   perPageValues: [],
 
-  customContent: Ember.computed('model.name', function() {
+  customContent: computed('model.name', function() {
     let name = this.get('model.name');
     let builder = new Builder(this.get('store'))
       .from('ember-flexberry-dummy-suggestion')

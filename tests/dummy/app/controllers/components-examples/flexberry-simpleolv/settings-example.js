@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -33,7 +35,7 @@ export default ListFormController.extend({
     @method _placeholderChanged
     @private
   **/
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-objectlistview.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-objectlistview.placeholder'));
     }
@@ -215,7 +217,7 @@ export default ListFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.String.htmlSafe(
+  componentTemplateText: new htmlSafe(
     '{{flexberry-simpleolv<br>' +
     '  componentName="SuggestionsObjectListView"<br>' +
     '  colsConfigButton=colsConfigButton<br>' +
@@ -268,8 +270,8 @@ export default ListFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', 'model.content', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', 'model.content', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'componentName',
@@ -445,7 +447,7 @@ export default ListFormController.extend({
     return componentSettingsMetadata;
   }),
 
-  _enableFilters: Ember.observer('enableFilters', function() {
+  _enableFilters: observer('enableFilters', function() {
     if (this.get('enableFilters')) {
       this.set('refreshButton', true);
     }

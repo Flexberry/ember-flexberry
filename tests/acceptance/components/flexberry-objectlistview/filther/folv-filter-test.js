@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterObjectListView, refreshListByFunction  } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import { Query } from 'ember-flexberry-data';
@@ -19,9 +19,9 @@ executeTest('check filter', (store, assert, app) => {
       filtreInsertValueArr = [arr.objectAt(0).get('address'), undefined, arr.objectAt(0).get('votes'),
       arr.objectAt(0).get('moderated'), arr.objectAt(0).get('type.name'), arr.objectAt(0).get('author.name')];
     }).then(function() {
-      let $filterButtonDiv = Ember.$('.buttons.filter-active');
+      let $filterButtonDiv = $('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
-      let $objectListView = Ember.$('.object-list-view');
+      let $objectListView = $('.object-list-view');
 
       // Activate filtre row.
       $filterButton.click();
@@ -29,7 +29,7 @@ executeTest('check filter', (store, assert, app) => {
       filterObjectListView($objectListView, filtreInsertOperationArr, filtreInsertValueArr).then(function() {
         // Apply filter function.
         let refreshFunction =  function() {
-          let refreshButton = Ember.$('.refresh-button')[0];
+          let refreshButton = $('.refresh-button')[0];
           refreshButton.click();
         };
 

@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import $ from 'jquery';
 import config from '../../config/environment';
 import { Query } from 'ember-flexberry-data';
 import getSerializedDateValue from 'ember-flexberry-data/utils/get-serialized-date-value';
 const { Builder } = Query;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   logRecordsTotalCount: 0,
   logRecordsOlderDate: null,
   logRecordsOlderDateCount: 0,
@@ -47,7 +48,7 @@ export default Ember.Controller.extend({
       let stringedDate = getSerializedDateValue.call(_this, date);
       stringedDate = stringedDate.substring(0, stringedDate.indexOf('T'));
 
-      Ember.$.ajax({
+      $.ajax({
         type: 'GET',
         url: `${config.APP.backendUrls.api}/ClearLogRecords(dateTime='${stringedDate}')`,
         /* eslint-disable no-unused-vars */

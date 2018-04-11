@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
 
@@ -9,7 +9,7 @@ export function executeTest(testName, callback) {
 
   module('Acceptance | flexberry-objectlistview | ' + testName, {
     beforeEach() {
-      Ember.run(() => {
+      run(() => {
         // Start application.
         app = startApp();
 
@@ -31,7 +31,7 @@ export function executeTest(testName, callback) {
     },
 
     afterEach() {
-      Ember.run(app, 'destroy');
+      run(app, 'destroy');
     },
   });
 

@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Text for 'flexberry-textbox' component 'placeholder' property.
 
@@ -15,7 +18,7 @@ export default Ember.Controller.extend({
     @method _placeholderChanged
     @private
    */
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-textbox.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-textbox.placeholder'));
     }
@@ -42,7 +45,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.String.htmlSafe(
+  componentTemplateText: new htmlSafe(
     '{{flexberry-textbox<br>' +
     '  value=model.text<br>' +
     '  placeholder=placeholder<br>' +
@@ -57,8 +60,8 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    var componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    var componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'string',

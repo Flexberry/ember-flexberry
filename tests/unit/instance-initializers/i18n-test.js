@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { typeOf, isBlank } from '@ember/utils';
 import I18nInstanceInitializer from 'ember-flexberry/instance-initializers/i18n';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
@@ -29,7 +30,7 @@ module('Unit | Instance Initializer | i18n', {
 });
 
 test('Configures i18n service for locale', function(assert) {
-  Ember.run(() => {
+  run(() => {
     assert.expect(2);
 
     let i18n = appInstance.lookup('service:i18n');
@@ -42,7 +43,7 @@ test('Configures i18n service for locale', function(assert) {
     window.navigator.languages ? window.navigator.languages[0] : (window.navigator.language || window.navigator.userLanguage);
 
     var locales = appInstance.lookup('controller:application').get('locales');
-    if (!locales || Ember.typeOf(locales) !== 'array' || locales.indexOf(currentLocale) === -1 || Ember.isBlank(currentLocale)) {
+    if (!locales || typeOf(locales) !== 'array' || locales.indexOf(currentLocale) === -1 || isBlank(currentLocale)) {
       currentLocale = 'en';
     }
 

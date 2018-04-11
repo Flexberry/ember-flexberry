@@ -1,8 +1,13 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Controller from '@ember/controller';
+import { isBlank } from '@ember/utils';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 import TreeNodeObject from 'ember-flexberry/objects/tree-node';
 
-export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
+export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
   /**
     Component's wrapper CSS classes.
 
@@ -55,20 +60,20 @@ export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
     @property jsonTreeNodes
     @type TreeNodeObject[]
   */
-  jsonTreeNodes: Ember.A([
+  jsonTreeNodes: A([
     TreeNodeObject.create({
       caption: 'Node 1 (with child nodes)',
-      nodes: Ember.A([
+      nodes: A([
         TreeNodeObject.create({
           caption: 'Node 1.1 (leaf node)',
           nodes: null
         }),
         TreeNodeObject.create({
           caption: 'Node 1.2 (with child nodes)',
-          nodes: Ember.A([
+          nodes: A([
             TreeNodeObject.create({
               caption: 'Node 1.2.1 (with child nodes)',
-              nodes: Ember.A([
+              nodes: A([
                 TreeNodeObject.create({
                   caption: 'Node 1.2.1.1 (leaf node)',
                   nodes: null
@@ -89,7 +94,7 @@ export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
     }),
     TreeNodeObject.create({
       caption: 'Node 3 (with child nodes)',
-      nodes: Ember.A([
+      nodes: A([
         TreeNodeObject.create({
           caption: 'Node 3.1 (leaf node)',
           nodes: null
@@ -104,7 +109,7 @@ export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
     @property jsonTreeComponentTemplateText
     @type String
   */
-  jsonTreeComponentTemplateText: new Ember.String.htmlSafe(
+  jsonTreeComponentTemplateText: new htmlSafe(
     '{{flexberry-tree<br>' +
     '  class=jsonTreeClass<br>' +
     '  exclusive=jsonTreeExclusive<br>' +
@@ -129,8 +134,8 @@ export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
     @property jsonTreeComponentSettingsMetadata
     @type Object[]
   */
-  jsonTreeComponentSettingsMetadata: Ember.computed(function() {
-    let componentSettingsMetadata = Ember.A();
+  jsonTreeComponentSettingsMetadata: computed(function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'class',
@@ -188,11 +193,11 @@ export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
     @property jsonTreeLatestClickedNodeComponentSettingsMetadata
     @type Object[]
   */
-  jsonTreeLatestClickedNodeComponentSettingsMetadata: Ember.computed('jsonTreeLatestClickedNodePath', function() {
+  jsonTreeLatestClickedNodeComponentSettingsMetadata: computed('jsonTreeLatestClickedNodePath', function() {
     let jsonTreeLatestClickedNodePath = this.get('jsonTreeLatestClickedNodePath');
-    let componentSettingsMetadata = Ember.A();
+    let componentSettingsMetadata = A();
 
-    if (Ember.isBlank(jsonTreeLatestClickedNodePath)) {
+    if (isBlank(jsonTreeLatestClickedNodePath)) {
       return componentSettingsMetadata;
     }
 
@@ -219,7 +224,7 @@ export default Ember.Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
     onTreenodeHeaderClick(...args) {
       let actionEventObject = args[args.length - 1];
       let clickedNodePropertiesPath = args[0];
-      let clickedNodeSettingsPrefix = Ember.$(actionEventObject.originalEvent.currentTarget)
+      let clickedNodeSettingsPrefix = $(actionEventObject.originalEvent.currentTarget)
         .closest('.tab.segment')
         .attr('data-tab');
 

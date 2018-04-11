@@ -1,7 +1,11 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import { A } from '@ember/array';
+
 import FlexberryDdauCheckboxActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-checkbox-actions-handler';
 
-export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {
+export default Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {
   /**
     Component's wrapper CSS-classes.
 
@@ -51,7 +55,7 @@ export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin,
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.String.htmlSafe(
+  componentTemplateText: new htmlSafe(
     '{{flexberry-button<br>' +
     '  class=class<br>' +
     '  iconClass=class<br>' +
@@ -67,8 +71,8 @@ export default Ember.Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin,
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'class',

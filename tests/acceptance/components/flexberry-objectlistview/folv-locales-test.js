@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { get } from '@ember/object';
 import { executeTest } from './execute-folv-test';
 import { loadingLocales } from './folv-tests-functions';
 
@@ -14,13 +15,13 @@ executeTest('check locale change', (store, assert, app) => {
 
     function toolbarBtnTextAssert(currentLocale) {
       assert.notEqual($toolBarButtons.length, 0, 'buttons in toolbar exists');
-      assert.equal($toolBarButtons[0].innerText.trim(), Ember.get(currentLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
-      assert.equal($toolBarButtons[1].innerText.trim(), Ember.get(currentLocale, 'components.olv-toolbar.add-button-text'), 'button create exist');
-      assert.equal($toolBarButtons[2].innerText.trim(), Ember.get(currentLocale, 'components.olv-toolbar.delete-button-text'), 'button delete exist');
-      assert.equal(Ember.$($toolBarButtons[2]).hasClass('disabled'), true, 'button delete is disabled');
+      assert.equal($toolBarButtons[0].innerText.trim(), get(currentLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
+      assert.equal($toolBarButtons[1].innerText.trim(), get(currentLocale, 'components.olv-toolbar.add-button-text'), 'button create exist');
+      assert.equal($toolBarButtons[2].innerText.trim(), get(currentLocale, 'components.olv-toolbar.delete-button-text'), 'button delete exist');
+      assert.equal($($toolBarButtons[2]).hasClass('disabled'), true, 'button delete is disabled');
     }
 
-    let $toolBar = Ember.$('.ui.secondary.menu')[0];
+    let $toolBar = $('.ui.secondary.menu')[0];
     let $toolBarButtons = $toolBar.children;
 
     // Set 'ru' as current locale.

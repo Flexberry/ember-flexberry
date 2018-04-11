@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
 
 /* eslint-disable no-unused-vars */
@@ -12,8 +12,8 @@ executeTest('check default value', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
-    let $validationSixteenWide = Ember.$('.list');
+    let $validationLablesContainer = $('.ember-view.ui.basic.label');
+    let $validationSixteenWide = $('.list');
     let $validationLi = $validationSixteenWide.children('li');
 
     // Сounting the number of validationmessage.

@@ -1,7 +1,12 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed, observer } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import { once } from '@ember/runloop';
+import { typeOf } from '@ember/utils';
+import { A } from '@ember/array';
 import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Serialized model date.
 
@@ -35,8 +40,8 @@ export default Ember.Controller.extend({
     @method _serializedModelDateDidChange
     @private
    */
-  _serializedModelDateDidChange: Ember.observer('_serializedModelDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedModelDate', 'model.date');
+  _serializedModelDateDidChange: observer('_serializedModelDate', function() {
+    once(this, '_changeDateProperty', '_serializedModelDate', 'model.date');
   }),
 
   /**
@@ -45,8 +50,8 @@ export default Ember.Controller.extend({
     @method _serializedMinDateDidChange
     @private
    */
-  _serializedMinDateDidChange: Ember.observer('_serializedMinDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedMinDate', 'minDate');
+  _serializedMinDateDidChange: observer('_serializedMinDate', function() {
+    once(this, '_changeDateProperty', '_serializedMinDate', 'minDate');
   }),
 
   /**
@@ -55,8 +60,8 @@ export default Ember.Controller.extend({
     @method _serializedMaxDateDidChange
     @private
    */
-  _serializedMaxDateDidChange: Ember.observer('_serializedMaxDate', function() {
-    Ember.run.once(this, '_changeDateProperty', '_serializedMaxDate', 'maxDate');
+  _serializedMaxDateDidChange: observer('_serializedMaxDate', function() {
+    once(this, '_changeDateProperty', '_serializedMaxDate', 'maxDate');
   }),
 
   /**
@@ -65,8 +70,8 @@ export default Ember.Controller.extend({
     @method _modelDateDidChange
     @private
    */
-  _modelDateDidChange: Ember.observer('model.date', function() {
-    Ember.run.once(this, '_changeSerializedDateProperty', '_serializedModelDate', 'model.date');
+  _modelDateDidChange: observer('model.date', function() {
+    once(this, '_changeSerializedDateProperty', '_serializedModelDate', 'model.date');
   }),
 
   /**
@@ -79,7 +84,7 @@ export default Ember.Controller.extend({
    */
   _changeDateProperty(serializedDatePropertyName, datePropertyName) {
     let serializedDate = this.get(serializedDatePropertyName);
-    if (Ember.typeOf(serializedDate) === 'undefined') {
+    if (typeOf(serializedDate) === 'undefined') {
       return;
     }
 
@@ -106,7 +111,7 @@ export default Ember.Controller.extend({
    */
   _changeSerializedDateProperty(serializedDatePropertyName, datePropertyName) {
     let date = this.get(datePropertyName);
-    if (date === null || Ember.typeOf(date) === 'undefined') {
+    if (date === null || typeOf(date) === 'undefined') {
       return;
     }
 
@@ -179,7 +184,7 @@ export default Ember.Controller.extend({
     @method _placeholderChanged
     @private
    */
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-datepicker.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-datepicker.placeholder'));
     }
@@ -199,7 +204,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.String.htmlSafe(
+  componentTemplateText: new htmlSafe(
     '{{flexberry-datepicker<br>' +
     '  dateTimeFormat=dateTimeFormat<br>' +
     '  hasTimePicker=hasTimePicker<br>' +
@@ -217,8 +222,8 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'dateTimeFormat',

@@ -1,7 +1,11 @@
-import Ember from 'ember';
+import { isBlank, isNone } from '@ember/utils';
+import { get, computed, observer } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/string';
+import { A } from '@ember/array';
+import { getOwner } from '@ember/application';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { translationMacro as t } from 'ember-i18n';
-const { getOwner } = Ember;
 
 export default EditFormController.extend({
   /**
@@ -19,11 +23,11 @@ export default EditFormController.extend({
     @property _detailsProjections
     @type Object[]
    */
-  _detailsProjections: Ember.computed('model.details.relationship.belongsToType', function() {
+  _detailsProjections: computed('model.details.relationship.belongsToType', function() {
     let detailsModelName = this.get('model.details.relationship.belongsToType');
     let detailsClass = getOwner(this).factoryFor('model:' + detailsModelName).class;
 
-    return Ember.get(detailsClass, 'projections');
+    return get(detailsClass, 'projections');
   }),
 
   /**
@@ -32,9 +36,9 @@ export default EditFormController.extend({
     @property _detailsProjectionsNames
     @type String[]
    */
-  _detailsProjectionsNames: Ember.computed('_detailsProjections.[]', function() {
+  _detailsProjectionsNames: computed('_detailsProjections.[]', function() {
     let detailsProjections = this.get('_detailsProjections');
-    if (Ember.isNone(detailsProjections)) {
+    if (isNone(detailsProjections)) {
       return [];
     }
 
@@ -47,16 +51,16 @@ export default EditFormController.extend({
     @property detailsProjection
     @type Object
    */
-  detailsProjection: Ember.computed('_detailsProjections.[]', '_detailsProjectionName', function() {
+  detailsProjection: computed('_detailsProjections.[]', '_detailsProjectionName', function() {
     let detailsProjectionName = this.get('_detailsProjectionName');
-    if (Ember.isBlank(detailsProjectionName)) {
+    if (isBlank(detailsProjectionName)) {
       return null;
     }
 
     let detailsModelName = this.get('model.details.relationship.belongsToType');
     let detailsClass = getOwner(this).factoryFor('model:' + detailsModelName).class;
-    let detailsClassProjections = Ember.get(detailsClass, 'projections');
-    if (Ember.isNone(detailsClassProjections)) {
+    let detailsClassProjections = get(detailsClass, 'projections');
+    if (isNone(detailsClassProjections)) {
       return null;
     }
 
@@ -76,7 +80,7 @@ export default EditFormController.extend({
     @method _placeholderChanged
     @private
    */
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-groupedit.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-groupedit.placeholder'));
     }
@@ -191,7 +195,7 @@ export default EditFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.String.htmlSafe(
+  componentTemplateText: new htmlSafe(
     '{{flexberry-groupedit<br>' +
     '  componentName="aggregatorDetailsGroupedit"<br>' +
     '  content=model.details<br>' +
@@ -218,8 +222,8 @@ export default EditFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'componentName',
@@ -364,7 +368,7 @@ export default EditFormController.extend({
   /**
     Lookup events service.
   */
-  lookupEvents: Ember.inject.service('lookup-events'),
+  lookupEvents: service('lookup-events'),
 
   actions: {
     /**

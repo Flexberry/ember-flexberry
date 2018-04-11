@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { isBlank, isNone } from '@ember/utils';
+import { get, computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -18,11 +21,11 @@ export default ListFormController.extend({
     @property _projections
     @type Object[]
    */
-  _projections: Ember.computed('model.[]', function() {
+  _projections: computed('model.[]', function() {
     let records = this.get('model');
-    let modelClass = Ember.get(records, 'length') > 0 ? Ember.get(records, 'firstObject').constructor : {};
+    let modelClass = get(records, 'length') > 0 ? get(records, 'firstObject').constructor : {};
 
-    return Ember.get(modelClass, 'projections');
+    return get(modelClass, 'projections');
   }),
 
   /**
@@ -31,9 +34,9 @@ export default ListFormController.extend({
     @property _projectionsNames
     @type String[]
    */
-  _projectionsNames: Ember.computed('_projections.[]', function() {
+  _projectionsNames: computed('_projections.[]', function() {
     let projections = this.get('_projections');
-    if (Ember.isNone(projections)) {
+    if (isNone(projections)) {
       return [];
     }
 
@@ -46,18 +49,18 @@ export default ListFormController.extend({
     @property projection
     @type Object
    */
-  projection: Ember.computed('_projections.[]', '_projectionName', function() {
+  projection: computed('_projections.[]', '_projectionName', function() {
     let projectionName = this.get('_projectionName');
-    if (Ember.isBlank(projectionName)) {
+    if (isBlank(projectionName)) {
       return null;
     }
 
     let projections = this.get('_projections');
-    if ((Ember.isNone(projections)) && (this.get('model.content') === undefined)) {
+    if ((isNone(projections)) && (this.get('model.content') === undefined)) {
       return {}; // модель не загрузилась ещё, свойство пересчитывается, потому что грузится страница.
     }
 
-    if (Ember.isNone(projections)) {
+    if (isNone(projections)) {
       return null;
     }
 
@@ -85,7 +88,7 @@ export default ListFormController.extend({
     @method _placeholderChanged
     @private
   **/
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-objectlistview.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-objectlistview.placeholder'));
     }
@@ -287,7 +290,7 @@ export default ListFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.String.htmlSafe(
+  componentTemplateText: new htmlSafe(
     '{{flexberry-objectlistview<br>' +
     '  componentName="SuggestionsObjectListView"<br>' +
     '  colsConfigButton=colsConfigButton<br>' +
@@ -342,8 +345,8 @@ export default ListFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', 'model.content', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', 'model.content', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'componentName',
@@ -531,7 +534,7 @@ export default ListFormController.extend({
     return componentSettingsMetadata;
   }),
 
-  _enableFilters: Ember.observer('enableFilters', function() {
+  _enableFilters: observer('enableFilters', function() {
     if (this.get('enableFilters')) {
       this.set('refreshButton', true);
     }

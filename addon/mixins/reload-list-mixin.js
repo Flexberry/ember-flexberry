@@ -6,7 +6,7 @@ import Mixin from '@ember/object/mixin';
 import { get } from '@ember/object'
 import { merge } from '@ember/polyfills';
 import { assert } from '@ember/debug';
-import { inject } from '@ember/service';
+import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
 import { A } from '@ember/array';
 import { Query } from 'ember-flexberry-data';
@@ -36,7 +36,7 @@ export default Mixin.create({
    @type {Class}
    @default Ember.inject.service()
    */
-  objectlistviewEvents: inject.service(),
+  objectlistviewEvents: service(),
 
   /**
    * It reloads data by parameters.

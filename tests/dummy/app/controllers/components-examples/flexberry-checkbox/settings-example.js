@@ -1,6 +1,9 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import { A } from '@ember/array';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Text for 'flexberry-checkbox' component 'label' property.
 
@@ -31,7 +34,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.String.htmlSafe(
+  componentTemplateText: new htmlSafe(
     '{{flexberry-checkbox<br>' +
     '  value=model.flag<br>' +
     '  label=label<br>' +
@@ -45,8 +48,8 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    var componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    var componentSettingsMetadata = A();
     componentSettingsMetadata.pushObject({
       settingName: 'value',
       settingType: 'boolean',

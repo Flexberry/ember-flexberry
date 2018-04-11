@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import Helper from '@ember/component/helper';
+import { htmlSafe } from '@ember/string';
 
 /**
   Calls [Ember.String.htmlSafe] with the provided string.
@@ -10,8 +11,8 @@ import Ember from 'ember';
   @see {Ember.String.htmlSafe}
   @public
 */
-export default Ember.Helper.extend({
+export default Helper.extend({
   compute: function ([value]) {
-    return new Ember.String.htmlSafe(value);
+    return new htmlSafe(value);
   }
 });

@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import startApp from 'dummy/tests/helpers/start-app';
 import needSaveCurrentAgregator from 'dummy/utils/need-save-current-agregator';
@@ -13,14 +13,14 @@ module('Unit | Utility | need save current agregator', {
   },
 
   afterEach() {
-    Ember.run(App, 'destroy');
+    run(App, 'destroy');
   },
 });
 
 // Replace this with your real tests.
 test('it works', function(assert) {
   let agregator;
-  Ember.run(function () {
+  run(function () {
     agregator = App.__container__.lookup('service:store').createRecord('ember-flexberry-dummy-localization', { name: 'Localization' });
   });
 

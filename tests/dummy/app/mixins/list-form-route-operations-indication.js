@@ -2,14 +2,14 @@
   @module ember-flexberry-dummy
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 
 /**
   Edit forms routes mixin which handles load/delete operations indication.
 
   @class ListFormRouteOperationsIndicationMixin
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   /* eslint-disable no-unused-vars */
   setupController: function(controller, model) {

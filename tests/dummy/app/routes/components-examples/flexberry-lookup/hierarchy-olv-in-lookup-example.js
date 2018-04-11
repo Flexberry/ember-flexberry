@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import { Query } from 'ember-flexberry-data';
 const { Builder } = Query;
@@ -45,7 +45,7 @@ export default EditFormRoute.extend({
         .selectByProjection(projectionName)
         .where(hierarchicalAttribute, 'eq', id);
 
-      Ember.set(target, property, this.store.query(modelName, builder.build()));
+      set(target, property, this.store.query(modelName, builder.build()));
     },
   }
 });

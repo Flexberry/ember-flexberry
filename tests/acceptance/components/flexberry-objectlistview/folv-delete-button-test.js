@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { later, run } from '@ember/runloop';
+import $ from 'jquery';
+import RSVP from 'rsvp';
+import { A } from '@ember/array';
 import { executeTest } from './execute-folv-test';
 import { loadingList } from './folv-tests-functions';
 
@@ -17,20 +20,20 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
   let uuid = '0' + generateUniqueId();
 
   // Add records for deliting.
-  Ember.run(() => {
-    let newRecords = Ember.A();
+  run(() => {
+    let newRecords = A();
 
     for (let i = 0; i < howAddRec; i++) {
       newRecords.pushObject(store.createRecord('ember-flexberry-dummy-suggestion-type', { name: uuid }));
     }
 
     let done2 = assert.async();
-    let promises = Ember.A();
+    let promises = A();
     newRecords.forEach(function(item) {
       promises.push(item.save());
     });
 
-    Ember.RSVP.Promise.all(promises).then(function(resolvedPromises) {
+    RSVP.Promise.all(promises).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');
 
       let builder = new Builder(store).from(modelName).count();
@@ -42,12 +45,12 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
           let olvContainerClass = '.object-list-view-container';
           let trTableClass = 'table.object-list-view tbody tr';
 
-          let $folvContainer = Ember.$(olvContainerClass);
-          let $rows = () => { return Ember.$(trTableClass, $folvContainer).toArray(); };
+          let $folvContainer = $(olvContainerClass);
+          let $rows = () => { return $(trTableClass, $folvContainer).toArray(); };
 
           // Check that the records have been added.
           let recordIsForDeleting = $rows().reduce((sum, current) => {
-            let nameRecord = Ember.$.trim(current.children[1].innerText);
+            let nameRecord = $.trim(current.children[1].innerText);
             let flag = (nameRecord.indexOf(uuid) >= 0);
             return sum + flag;
           }, 0);
@@ -56,9 +59,9 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
 
           // Мark records.
           let recordIsChecked = $rows().reduce((sum, current) => {
-            let nameRecord = Ember.$.trim(current.children[1].innerText);
-            let $firstCell = Ember.$('.object-list-view-helper-column-cell', current);
-            let checkboxInRow = Ember.$('.flexberry-checkbox', $firstCell);
+            let nameRecord = $.trim(current.children[1].innerText);
+            let $firstCell = $('.object-list-view-helper-column-cell', current);
+            let checkboxInRow = $('.flexberry-checkbox', $firstCell);
             let checked = true;
             if (nameRecord.indexOf(uuid) >= 0) {
               checkboxInRow.click();
@@ -70,7 +73,7 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
 
           assert.ok(recordIsChecked, 'Each entry begins with \'' + uuid + '\' is checked');
 
-          let $toolBar = Ember.$('.ui.secondary.menu')[0];
+          let $toolBar = $('.ui.secondary.menu')[0];
           let $deleteButton = $toolBar.children[2];
           let done = assert.async();
 
@@ -78,7 +81,7 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
           /* eslint-disable no-unused-vars */
           loadingList($deleteButton, olvContainerClass, trTableClass).then(($list) => {
             let recordsIsDelete = $rows().every((element) => {
-              let nameRecord = Ember.$.trim(element.children[1].innerText);
+              let nameRecord = $.trim(element.children[1].innerText);
               return nameRecord.indexOf(uuid) < 0;
             });
 

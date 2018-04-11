@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
 
 /* eslint-disable no-unused-vars */
@@ -12,20 +13,20 @@ executeTest('check operation datepicker', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationField = Ember.$(Ember.$('.field.error')[4]);
+    let $validationField = $($('.field.error')[4]);
     $validationField = $validationField.children('.inline');
     let $validationFlexberryErrorLable = $validationField.children('.label');
-    let $validationDateField = Ember.$('.calendar.link.icon');
+    let $validationDateField = $('.calendar.link.icon');
 
     // Check default validationmessage text.
     assert.equal($validationFlexberryErrorLable.text().trim(), 'Date is required', 'Datepicker have default value');
 
-    Ember.run(() => {
+    run(() => {
 
       // Open datepicker calendar.
       $validationDateField.click();
-      let $validationDateButton = Ember.$('.available:not(.active)');
-      $validationDateButton = Ember.$($validationDateButton[18]);
+      let $validationDateButton = $('.available:not(.active)');
+      $validationDateButton = $($validationDateButton[18]);
 
       // Select date.
       $validationDateButton.click();

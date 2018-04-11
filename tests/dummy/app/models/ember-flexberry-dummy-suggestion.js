@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { on } from '@ember/object/evented';
+import { observer } from '@ember/object';
+import { once } from '@ember/runloop';
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
 
@@ -67,8 +69,8 @@ var Model = Projection.Model.extend({
     }
   },
 
-  commentsChanged: Ember.on('init', Ember.observer('comments', function() {
-    Ember.run.once(this, 'commentsCountCompute');
+  commentsChanged: on('init', observer('comments', function() {
+    once(this, 'commentsCountCompute');
   })),
 
   commentsCountCompute: function() {

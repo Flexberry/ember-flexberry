@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { get } from '@ember/object';
 import { executeTest } from './execute-folv-test';
 import { loadingList, loadingLocales } from './folv-tests-functions';
 
@@ -16,29 +17,29 @@ executeTest('date format moment L', (store, assert, app) => {
       let olvContainerClass = '.object-list-view-container';
       let trTableClass = 'table.object-list-view tbody tr';
 
-      let $toolBar = Ember.$('.ui.secondary.menu')[0];
+      let $toolBar = $('.ui.secondary.menu')[0];
       let $toolBarButtons = $toolBar.children;
       let $refreshButton = $toolBarButtons[0];
-      assert.equal($refreshButton.innerText.trim(), Ember.get(I18nRuLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
+      assert.equal($refreshButton.innerText.trim(), get(I18nRuLocale, 'components.olv-toolbar.refresh-button-text'), 'button refresh exist');
 
       loadingList($refreshButton, olvContainerClass, trTableClass).then(($list) => {
         assert.ok($list, 'list loaded');
 
         let moment = app.__container__.lookup('service:moment');
-        let momentValue = Ember.get(moment, 'defaultFormat');
+        let momentValue = get(moment, 'defaultFormat');
 
         assert.equal(momentValue, 'L', 'moment value is \'L\' ');
 
-        let $folvContainer = Ember.$(olvContainerClass);
-        let $table = Ember.$('table.object-list-view', $folvContainer);
-        let $headRow = Ember.$('thead tr', $table)[0].children;
+        let $folvContainer = $(olvContainerClass);
+        let $table = $('table.object-list-view', $folvContainer);
+        let $headRow = $('thead tr', $table)[0].children;
 
         let indexDate = () => {
           let toReturn;
           /* eslint-disable no-unused-vars */
           Object.keys($headRow).forEach((element, index, array) => {
-            let $dateAttribute = Ember.$($headRow[element]).children('div');
-            if (($dateAttribute.length !== 0) && (Ember.$.trim($dateAttribute[0].getAttribute('data-olv-header-property-name')) === 'date')) {
+            let $dateAttribute = $($headRow[element]).children('div');
+            if (($dateAttribute.length !== 0) && ($.trim($dateAttribute[0].getAttribute('data-olv-header-property-name')) === 'date')) {
               toReturn = index;
               return false;
             }
@@ -48,7 +49,7 @@ executeTest('date format moment L', (store, assert, app) => {
           return toReturn;
         };
 
-        let $dateCell = () => { return Ember.$.trim(Ember.$('tbody tr', $table)[0].children[indexDate()].innerText); };
+        let $dateCell = () => { return $.trim($('tbody tr', $table)[0].children[indexDate()].innerText); };
 
         // Date format most be DD.MM.YYYY
         let dateFormatRuRe = /(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d/;

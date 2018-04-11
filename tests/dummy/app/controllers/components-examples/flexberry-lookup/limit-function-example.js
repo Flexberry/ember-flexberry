@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
+import { computed } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { Query } from 'ember-flexberry-data';
 
@@ -12,7 +13,7 @@ export default EditFormController.extend({
     @type BasePredicate
     @default undefined
    */
-  lookupCustomLimitPredicate: Ember.computed('model.type', function() {
+  lookupCustomLimitPredicate: computed('model.type', function() {
     let currentLookupValue = this.get('model.type');
     if (currentLookupValue) {
       let currentLookupText = this.get('model.type.name');
@@ -33,7 +34,7 @@ export default EditFormController.extend({
       @return {Object} Set of options for lookup window.
      */
     getLookupFolvProperties: function(options) {
-      let methodArgs = Ember.merge({
+      let methodArgs = merge({
         projection: undefined,
         relationName: undefined
       }, options);

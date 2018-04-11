@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import Ember from 'ember'; //TODO Import Module. Ember.assert. When import { assert as EmberAssert } from '@ember/debug'; Error "EmberAssert" is read-only.
+import $ from 'jquery';
+import { A } from '@ember/array';
 import FlexberryDdauCheckboxComponent from 'ember-flexberry/components/flexberry-ddau-checkbox';
 import FlexberryDdauCheckboxActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-checkbox-actions-handler';
 import { moduleForComponent, test } from 'ember-qunit';
@@ -46,14 +48,14 @@ test('Component renders properly', function(assert) {
     true,
     'Component\'s inner <label> has \'' + flexberryClassNames.checkboxCaption + '\' css-class');
   assert.strictEqual(
-    Ember.$.trim($checkboxCaption.text()).length === 0,
+    $.trim($checkboxCaption.text()).length === 0,
     true,
     'Component\'s inner <label> is empty by default');
 
   let checkboxCaptionText = 'Checkbox caption';
   this.set('caption', checkboxCaptionText);
   assert.strictEqual(
-    Ember.$.trim($checkboxCaption.text()),
+    $.trim($checkboxCaption.text()),
     checkboxCaptionText,
     'Component\'s inner <label> text changes when component\'s \'caption\' property changes');
 
@@ -62,7 +64,7 @@ test('Component renders properly', function(assert) {
   this.set('class', additioanlCssClasses);
 
   /* eslint-disable no-unused-vars */
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
@@ -72,7 +74,7 @@ test('Component renders properly', function(assert) {
 
   this.set('class', '');
   /* eslint-disable no-unused-vars */
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
@@ -111,7 +113,7 @@ test('Component invokes actions', function(assert) {
 
 test('Component changes binded value (without \'change\' action handler)', function(assert) {
   // Mock Ember.assert method.
-  let thrownExceptions = Ember.A();
+  let thrownExceptions = A();
   let originalEmberAssert = Ember.assert;
   Ember.assert = function(...args) {
     try {

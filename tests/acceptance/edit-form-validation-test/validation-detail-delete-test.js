@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { executeTest} from './execute-validation-test';
 
 /* eslint-disable no-unused-vars */
@@ -13,21 +14,21 @@ executeTest('check detail delete', (store, assert, app) => {
     assert.equal(currentPath(), path);
 
     // Сounting the number of validationmessage.
-    let $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
+    let $validationLablesContainer = $('.ember-view.ui.basic.label');
     assert.equal($validationLablesContainer.length, 11, 'All components have default value');
 
-    let $validationFlexberryCheckboxs = Ember.$('.flexberry-checkbox');
-    let $validationFlexberryCheckbox = Ember.$($validationFlexberryCheckboxs[1]);
-    let $validationFlexberryOLVDeleteButton = Ember.$(Ember.$('.ui.disabled.button')[1]);
+    let $validationFlexberryCheckboxs = $('.flexberry-checkbox');
+    let $validationFlexberryCheckbox = $($validationFlexberryCheckboxs[1]);
+    let $validationFlexberryOLVDeleteButton = $($('.ui.disabled.button')[1]);
 
     // Delete detail.
-    Ember.run(() => {
+    run(() => {
       $validationFlexberryCheckbox.click();
       $validationFlexberryOLVDeleteButton.click();
     });
 
     // Сounting the number of validationmessage = 8 afther detail delete.
-    $validationLablesContainer = Ember.$('.ember-view.ui.basic.label');
+    $validationLablesContainer = $('.ember-view.ui.basic.label');
     assert.equal($validationLablesContainer.length, 8, 'Detail was deleted without errors');
   });
 });

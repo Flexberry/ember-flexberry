@@ -7,7 +7,7 @@ import $ from 'jquery';
 import { isBlank, isNone } from '@ember/utils';
 import { oneWay } from '@ember/object/computed';
 import { inject as service} from '@ember/service';
-import EmberObject from '@ember/object';
+import EmberObject, { get, computed } from '@ember/object';
 import Evented from '@ember/object/evented';
 import { guidFor } from '@ember/object/internals';
 import { assert } from '@ember/debug';
@@ -15,7 +15,7 @@ import { merge } from '@ember/polyfills';
 import { A } from '@ember/array';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
-const { get, computed } = EmberObject;
+
 /**
   Component to view list of object.
 

@@ -3,7 +3,7 @@
 */
 
 import $ from 'jquery';
-import EmberObject from '@ember/object';
+import EmberObject, { get, set, computed, observer } from '@ember/object';
 import { on } from '@ember/object/evented';
 import { guidFor, copy } from '@ember/object/internals'
 import { A } from '@ember/array';
@@ -11,7 +11,7 @@ import { isBlank } from '@ember/utils';
 import { assert } from '@ember/debug';
 import { htmlSafe } from '@ember/string';
 import FlexberryBaseComponent from './flexberry-base-component';
-const { get, set, computed, observer } = EmberObject
+
 /**
   Component for displayed one record in {{#crossLink "ObjectListViewComponent"}}{{/crossLink}}.
 

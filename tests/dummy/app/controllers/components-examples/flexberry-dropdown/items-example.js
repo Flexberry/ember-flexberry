@@ -1,10 +1,11 @@
-import Ember from 'ember';
-
-export default Ember.Controller.extend({
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+export default Controller.extend({
   /**
     Message to be displayed in 'ui-message' component.
   */
-  message: new Ember.String.htmlSafe(
+  message: new htmlSafe(
     '<pre><code>' +
     '<strong>itemsArray: </strong>' +
       '["itemsArray1", "itemsArray2", "itemsArray3"]' +
@@ -41,7 +42,7 @@ export default Ember.Controller.extend({
   /**
     Current items in `flexberry-objectlistview`.
   */
-  currentItems: Ember.computed('usedArray', function() {
+  currentItems: computed('usedArray', function() {
     let usedArray = this.get('usedArray');
     let currentItems = null;
 

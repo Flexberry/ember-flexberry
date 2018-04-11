@@ -1,4 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { get } from '@ember/object';
+import { A } from '@ember/array';
 
 import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
@@ -16,8 +20,8 @@ moduleForComponent('flexberry-textarea', 'Integration | Component | flexberry-te
     this.register('service:i18n', I18nService);
 
     this.inject.service('i18n', { as: 'i18n' });
-    Ember.Component.reopen({
-      i18n: Ember.inject.service('i18n')
+    Component.reopen({
+      i18n: service('i18n')
     });
 
     // Set 'ru' as initial locale.
@@ -46,7 +50,7 @@ test('it renders properly', function(assert) {
   let additioanlCssClasses = 'fluid mini huge';
   this.set('class', additioanlCssClasses);
   /* eslint-disable no-unused-vars */
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
@@ -57,7 +61,7 @@ test('it renders properly', function(assert) {
   // Clean up wrapper's additional CSS-classes.
   this.set('class', '');
   /* eslint-disable no-unused-vars */
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
@@ -81,21 +85,21 @@ test('readonly mode works properly', function(assert) {
 
   // Check that <textarea>'s readonly attribute doesn't exist yet.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('readonly')),
+    $.trim($textareaInput.attr('readonly')),
     '',
     'Component\'s inner <textarea> hasn\'t readonly attribute');
 
   // Activate readonly mode & check that <textarea>'s readonly attribute exists now & has value equals to 'readonly'.
   this.set('readonly', true);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('readonly')),
+    $.trim($textareaInput.attr('readonly')),
     'readonly',
     'Component\'s inner <textarea> has readonly attribute with value equals to \'readonly\'');
 
   // Check that <textarea>'s readonly attribute doesn't exist now.
   this.set('readonly', false);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('readonly')),
+    $.trim($textareaInput.attr('readonly')),
     '',
     'Component\'s inner <textarea> hasn\'t readonly attribute');
 });
@@ -128,7 +132,7 @@ test('readonly mode works properly with value', function(assert) {
 
   // Check <textarea>'s value not changed.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.val()),
+    $.trim($textareaInput.val()),
     '',
     'Component\'s inner <textarea>\'s value not changed');
   assert.strictEqual(
@@ -149,15 +153,15 @@ test('it renders i18n-ed placeholder', function(assert) {
 
   // Check <textarea>'s placeholder.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('placeholder')),
-    Ember.get(I18nRuLocale, 'components.flexberry-textarea.placeholder'),
+    $.trim($textareaInput.attr('placeholder')),
+    get(I18nRuLocale, 'components.flexberry-textarea.placeholder'),
     'Component\'s inner <textarea>\'s placeholder is equals to it\'s default value from i18n locales/ru/translations');
 
   // Change current locale to 'en' & check <textarea>'s placeholder again.
   this.set('i18n.locale', 'en');
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('placeholder')),
-    Ember.get(I18nEnLocale, 'components.flexberry-textarea.placeholder'),
+    $.trim($textareaInput.attr('placeholder')),
+    get(I18nEnLocale, 'components.flexberry-textarea.placeholder'),
     'Component\'s inner <textarea>\'s placeholder is equals to it\'s value from i18n locales/en/translations');
 });
 
@@ -177,7 +181,7 @@ test('it renders manually defined placeholder', function(assert) {
 
   // Check <textarea>'s placeholder.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('placeholder')),
+    $.trim($textareaInput.attr('placeholder')),
     placeholder,
     'Component\'s inner <textarea>\'s placeholder is equals to manually defined value \'' + placeholder + '\'');
 
@@ -185,7 +189,7 @@ test('it renders manually defined placeholder', function(assert) {
   placeholder = 'textarea has no value';
   this.set('placeholder', placeholder);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('placeholder')),
+    $.trim($textareaInput.attr('placeholder')),
     placeholder,
     'Component\'s inner <textarea>\'s placeholder is equals to manually updated value \'' + placeholder + '\'');
 });
@@ -205,21 +209,21 @@ test('required mode works properly', function(assert) {
 
   // Check that <textarea>'s required attribute doesn't exist yet.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('required')),
+    $.trim($textareaInput.attr('required')),
     '',
     'Component\'s inner <textarea> hasn\'t required attribute');
 
   // Activate required mode & check that <textarea>'s required attribute exists now & has value equals to 'required'.
   this.set('required', true);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('required')),
+    $.trim($textareaInput.attr('required')),
     'required',
     'Component\'s inner <textarea> has required attribute with value equals to \'required\'');
 
   // Check that <textarea>'s required attribute doesn't exist now.
   this.set('required', false);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('required')),
+    $.trim($textareaInput.attr('required')),
     '',
     'Component\'s inner <textarea> hasn\'t required attribute');
 });
@@ -239,21 +243,21 @@ test('disabled mode works properly', function(assert) {
 
   // Check that <textarea>'s disabled attribute doesn't exist yet.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('disabled')),
+    $.trim($textareaInput.attr('disabled')),
     '',
     'Component\'s inner <textarea> hasn\'t disabled attribute');
 
   // Activate disabled mode & check that <textarea>'s disabled attribute exists now & has value equals to 'disabled'.
   this.set('disabled', true);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('disabled')),
+    $.trim($textareaInput.attr('disabled')),
     'disabled',
     'Component\'s inner <textarea> has disabled attribute with value equals to \'disabled\'');
 
   // Check that <textarea>'s disabled attribute doesn't exist now.
   this.set('disabled', false);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('disabled')),
+    $.trim($textareaInput.attr('disabled')),
     '',
     'Component\'s inner <textarea> hasn\'t disabled attribute');
 });
@@ -273,21 +277,21 @@ test('autofocus mode works properly', function(assert) {
 
   // Check that <textarea>'s autofocus attribute doesn't exist yet.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('autofocus')),
+    $.trim($textareaInput.attr('autofocus')),
     '',
     'Component\'s inner <textarea> hasn\'t autofocus attribute');
 
   // Activate autofocus mode & check that <textarea>'s autofocus attribute exists now & has value equals to 'autofocus'.
   this.set('autofocus', true);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('autofocus')),
+    $.trim($textareaInput.attr('autofocus')),
     'autofocus',
     'Component\'s inner <textarea> has autofocus attribute with value equals to \'autofocus\'');
 
   // Check that <textarea>'s autofocus attribute doesn't exist now.
   this.set('autofocus', false);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('autofocus')),
+    $.trim($textareaInput.attr('autofocus')),
     '',
     'Component\'s inner <textarea> hasn\'t autofocus attribute');
 });
@@ -307,21 +311,21 @@ test('spellcheck mode works properly', function(assert) {
 
   // Check that <textarea>'s spellcheck attribute doesn't exist yet.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('spellcheck')),
+    $.trim($textareaInput.attr('spellcheck')),
     '',
     'Component\'s inner <textarea> hasn\'t spellcheck attribute');
 
   // Activate spellcheck mode & check that <textarea>'s spellcheck attribute exists now & has value equals to 'spellcheck'.
   this.set('spellcheck', true);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('spellcheck')),
+    $.trim($textareaInput.attr('spellcheck')),
     'true',
     'Component\'s inner <textarea> has spellcheck attribute with value equals to \'spellcheck\'');
 
   // Check that <textarea>'s spellcheck attribute doesn't exist now.
   this.set('spellcheck', false);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('spellcheck')),
+    $.trim($textareaInput.attr('spellcheck')),
     'false',
     'Component\'s inner <textarea> hasn\'t spellcheck attribute');
 });
@@ -342,21 +346,21 @@ test('wrap mode works properly', function(assert) {
   // Check that <textarea>'s wrap attribute 'soft'.
   this.set('wrap', 'soft');
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('wrap')),
+    $.trim($textareaInput.attr('wrap')),
     'soft',
     'Component\'s inner <textarea> wrap attribute \'soft\'');
 
   // Check that <textarea>'s wrap attribute 'hard'.
   this.set('wrap', 'hard');
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('wrap')),
+    $.trim($textareaInput.attr('wrap')),
     'hard',
     'Component\'s inner <textarea> wrap attribute \'hard\'');
 
   // Check that <textarea>'s wrap attribute 'off'.
   this.set('wrap', 'off');
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('wrap')),
+    $.trim($textareaInput.attr('wrap')),
     'off',
     'Component\'s inner <textarea> wrap attribute \'off\'');
 });
@@ -448,14 +452,14 @@ test('maxlength mode works properly', function(assert) {
   // Check that <textarea>'s maxlength attribute.
   this.set('maxlength', maxlengthValue);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('maxlength')),
+    $.trim($textareaInput.attr('maxlength')),
     maxlengthValue,
     'Component\'s inner <textarea>\'s value \'maxlength\' is equals to \'' + maxlengthValue + '\'');
 
   // Check that <textarea>'s hasn\'t value maxlength attribute.
   this.set('maxlength', null);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('maxlength')),
+    $.trim($textareaInput.attr('maxlength')),
     '',
     'Component\'s inner <textarea> hasn\'t value maxlength attribute');
 });
@@ -492,7 +496,7 @@ test('selectionStart mode works properly', function(assert) {
   // Check that <textarea>'s hasn\'t value maxlength attribute.
   this.set('selectionStart', null);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('selectionStart')),
+    $.trim($textareaInput.attr('selectionStart')),
     '',
     'Component\'s inner <textarea> hasn\'t value selectionStart attribute');
 });
@@ -529,7 +533,7 @@ test('selectionEnd mode works properly', function(assert) {
   // Check that <textarea>'s hasn\'t value maxlength attribute.
   this.set('selectionEnd', null);
   assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('selectionEnd')),
+    $.trim($textareaInput.attr('selectionEnd')),
     '',
     'Component\'s inner <textarea> hasn\'t value selectionEnd attribute');
 });
@@ -570,7 +574,7 @@ test('changes in inner <textarea> causes changes in property binded to \'value\'
 
   // Check <textarea>'s value & binded value for initial emptyness.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.val()),
+    $.trim($textareaInput.val()),
     '',
     'Component\'s inner <textarea>\'s value is equals to \'\'');
   assert.strictEqual(
@@ -585,7 +589,7 @@ test('changes in inner <textarea> causes changes in property binded to \'value\'
   $textareaInput.change();
 
   assert.strictEqual(
-    Ember.$.trim($textareaInput.val()),
+    $.trim($textareaInput.val()),
     newValue,
     'Component\'s inner <textarea>\'s value is equals to \'' + newValue + '\'');
   assert.strictEqual(
@@ -609,7 +613,7 @@ test('changes in property binded to \'value\' causes changes in inner <textarea>
 
   // Check <textarea>'s value & binded value for initial emptyness.
   assert.strictEqual(
-    Ember.$.trim($textareaInput.val()),
+    $.trim($textareaInput.val()),
     '',
     'Component\'s inner <textarea>\'s value is equals to \'\'');
   assert.strictEqual(
@@ -622,7 +626,7 @@ test('changes in property binded to \'value\' causes changes in inner <textarea>
   this.set('value', newValue);
 
   assert.strictEqual(
-    Ember.$.trim($textareaInput.val()),
+    $.trim($textareaInput.val()),
     newValue,
     'Component\'s inner <textarea>\'s value is equals to \'' + newValue + '\'');
   assert.strictEqual(

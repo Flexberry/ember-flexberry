@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
 export default ListFormController.extend({
@@ -16,7 +16,7 @@ export default ListFormController.extend({
     @method  _currentFilterCondition
     @private
   */
-  _currentFilterCondition: Ember.observer('filterCondition', function() {
+  _currentFilterCondition: observer('filterCondition', function() {
     let filterCondition = this.get('filterCondition');
     if (filterCondition === 'or') {
       this.set('filterByAnyWord', true);
@@ -29,7 +29,7 @@ export default ListFormController.extend({
     return filterCondition;
   }),
 
-  customButtons: Ember.computed('filterByAnyWord', 'filterByAllWords', function() {
+  customButtons: computed('filterByAnyWord', 'filterByAllWords', function() {
     return [{
       buttonName: 'filterByAnyWord',
       buttonAction: 'toggleFilterByAnyWord',

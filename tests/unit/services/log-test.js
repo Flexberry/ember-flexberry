@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Ember from 'ember'; //TODO Import Module. Replace Ember.Logger, Ember.testing = false;
 import DS from 'ember-data';
 import { module, test } from 'qunit';
 import startApp from 'dummy/tests/helpers/start-app';

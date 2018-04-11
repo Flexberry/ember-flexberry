@@ -1,5 +1,7 @@
 /* global $ */
-import Ember from 'ember';
+import $ from 'jquery';
+import { get } from '@ember/object';
+import { later, run } from '@ember/runloop';
 import { executeTest} from './execute-folv-test';
 import { addRecords, deleteRecords, refreshListByFunction } from './folv-tests-functions';
 
@@ -12,7 +14,7 @@ executeTest('check paging dropdown', (store, assert, app) => {
   let uuid = generateUniqueId();
 
   // Add records for paging.
-  Ember.run(() => {
+  run(() => {
 
     addRecords(store, modelName, uuid).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');
@@ -27,20 +29,20 @@ executeTest('check paging dropdown', (store, assert, app) => {
 
         // Refresh function.
         let refreshFunction =  function() {
-          let $folvPerPageButton = Ember.$('.flexberry-dropdown.compact');
-          let $menu = Ember.$('.menu', $folvPerPageButton);
-          trTableBody = () => { return $(Ember.$('table.object-list-view tbody tr')).length.toString(); };
+          let $folvPerPageButton = $('.flexberry-dropdown.compact');
+          let $menu = $('.menu', $folvPerPageButton);
+          trTableBody = () => { return $($('table.object-list-view tbody tr')).length.toString(); };
 
-          activeItem =  () => { return $(Ember.$('.item.active.selected', $menu)).attr('data-value'); };
+          activeItem =  () => { return $($('.item.active.selected', $menu)).attr('data-value'); };
 
           // The list should be more than 5 items.
           assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
           $folvPerPageButton.click();
           let timeout = 500;
-          Ember.run.later((() => {
+          later((() => {
             let menuIsVisible = $menu.hasClass('visible');
             assert.strictEqual(menuIsVisible, true, 'menu is visible');
-            $choosedIthem = Ember.$('.item', $menu);
+            $choosedIthem = $('.item', $menu);
             $choosedIthem[1].click();
           }), timeout);
         };

@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import RSVP from 'rsvp';
 import { Query } from 'ember-flexberry-data';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
@@ -61,7 +61,7 @@ export default ListFormRoute.extend({
       return;
     }
 
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve, reject) => {
       let store = this.get('store');
 
       let query = new Query.Builder(store)

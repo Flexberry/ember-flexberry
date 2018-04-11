@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import { Query } from 'ember-flexberry-data';
 
@@ -12,7 +12,7 @@ export default EditFormController.extend({
     @type BasePredicate
     @default undefined
    */
-  lookupCustomLimitPredicate: Ember.computed(function() {
+  lookupCustomLimitPredicate: computed(function() {
     return new StringPredicate('name').contains('Type');
   })
 });

@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 
 export default ListFormController.extend({

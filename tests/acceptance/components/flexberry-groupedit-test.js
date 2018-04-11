@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import wait from 'ember-test-helpers/wait';
@@ -16,7 +17,7 @@ module('Acceptance | flexberry-groupedit', {
 
   afterEach() {
     // Destroy application.
-    Ember.run(app, 'destroy');
+    run(app, 'destroy');
   },
 });
 
@@ -28,7 +29,7 @@ test('it properly rerenders', function(assert) {
   visit(path);
   wait().then(() => {
 
-    assert.equal(Ember.$('.object-list-view').find('tr').length, 2);
+    assert.equal($('.object-list-view').find('tr').length, 2);
 
     // Add record.
     let controller = app.__container__.lookup('controller:' + currentRouteName());
@@ -41,34 +42,34 @@ test('it properly rerenders', function(assert) {
     detailModel.pushObjects([detail1, detail2]);
 
     wait().then(() => {
-      assert.equal(Ember.$('.object-list-view').find('tr').length, 3);
+      assert.equal($('.object-list-view').find('tr').length, 3);
 
-      let $componentGroupEditToolbar = Ember.$('.groupedit-toolbar');
+      let $componentGroupEditToolbar = $('.groupedit-toolbar');
       let $componentButtons = $componentGroupEditToolbar.children('.ui.button');
-      let $componentButtonAdd = Ember.$($componentButtons[0]);
+      let $componentButtonAdd = $($componentButtons[0]);
 
-      Ember.run(() => {
+      run(() => {
         $componentButtonAdd.click();
       });
 
       wait().then(() => {
-        assert.equal(Ember.$('.object-list-view').find('tr').length, 4, 'details add properly');
+        assert.equal($('.object-list-view').find('tr').length, 4, 'details add properly');
 
-        let $componentCheckBoxs = Ember.$('.flexberry-checkbox', Ember.$('.object-list-view'));
-        let $componentFirstCheckBox = Ember.$($componentCheckBoxs[0]);
+        let $componentCheckBoxs = $('.flexberry-checkbox', $('.object-list-view'));
+        let $componentFirstCheckBox = $($componentCheckBoxs[0]);
 
-        Ember.run(() => {
+        run(() => {
           $componentFirstCheckBox.click();
         });
 
         wait().then(() => {
-          let $componentButtonRemove = Ember.$($componentButtons[1]);
+          let $componentButtonRemove = $($componentButtons[1]);
 
-          Ember.run(() => {
+          run(() => {
             $componentButtonRemove.click();
           });
 
-          assert.equal(Ember.$('.object-list-view').find('tr').length, 3, 'details remove properly');
+          assert.equal($('.object-list-view').find('tr').length, 3, 'details remove properly');
           done();
         });
       });

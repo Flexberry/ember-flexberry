@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
 import { moduleFor, test } from 'ember-qunit';
 import startApp from '../../helpers/start-app';
@@ -18,8 +20,8 @@ moduleFor('controller:edit-form', 'Unit | Controller | edit form', {
     App = startApp();
   },
   afterEach: function() {
-    Ember.run(App, 'destroy');
-    Ember.$.mockjax.clear();
+    run(App, 'destroy');
+    $.mockjax.clear();
   }
 });
 
@@ -34,7 +36,7 @@ test('save hasMany relationships recursively', function(assert) {
 
   let TestModel = DS.Model.extend({
     save: function() {
-      return new Ember.RSVP.Promise((resolve) => {
+      return new RSVP.Promise((resolve) => {
         savedRecords.push(this);
         resolve(this);
       });
@@ -59,7 +61,7 @@ test('save hasMany relationships recursively', function(assert) {
   let controller = this.subject();
   let store = App.__container__.lookup('service:store');
 
-  Ember.run(function() {
+  run(function() {
     let record = store.createRecord('model1');
     let model21 = store.createRecord('model2');
     let model22 = store.createRecord('model2');

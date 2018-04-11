@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
+import EmberObject, { get, set, computed, observer } from '@ember/object';
 import { on } from '@ember/object/evented';
 import { oneWay } from '@ember/object/computed';
 import { guidFor, copy } from '@ember/object/internals';
@@ -17,7 +17,7 @@ import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-comp
 import { translationMacro as t } from 'ember-i18n';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 import serializeSortingParam from '../utils/serialize-sorting-param';
-const { get, set, computed, observer } = EmberObject;
+
 /**
   Simple object list view  component.
 

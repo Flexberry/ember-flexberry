@@ -1,4 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import RSVP from 'rsvp';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { run } from '@ember/runloop';
+import { assert as emberAssert } from '@ember/debug';
 import { Query } from 'ember-flexberry-data';
 import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
@@ -19,8 +24,8 @@ moduleForComponent('flexberry-lookup', 'Integration | Component | flexberry look
     this.register('service:i18n', I18nService);
 
     this.inject.service('i18n', { as: 'i18n' });
-    Ember.Component.reopen({
-      i18n: Ember.inject.service('i18n')
+    Component.reopen({
+      i18n: service('i18n')
     });
 
     this.set('i18n.locale', 'ru');
@@ -142,8 +147,8 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
 
   // Override store.query method.
   let ajaxMethodHasBeenCalled = false;
-  let originalAjaxMethod = Ember.$.ajax;
-  Ember.$.ajax = function() {
+  let originalAjaxMethod = $.ajax;
+  $.ajax = function() {
     ajaxMethodHasBeenCalled = true;
 
     return originalAjaxMethod.apply(this, arguments);
@@ -160,7 +165,7 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
   let asyncOperationsCompleted = assert.async();
   store.query(modelName, query.build()).then(suggestionTypes => {
     suggestionTypes = suggestionTypes.toArray();
-    Ember.assert('One or more \'' + modelName + '\' must exist', suggestionTypes.length > 0);
+    emberAssert('One or more \'' + modelName + '\' must exist', suggestionTypes.length > 0);
 
     // Remember model & render component.
     this.set('model', suggestionTypes[0]);
@@ -183,18 +188,18 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
 
     // Retrieve component.
     let $component = this.$();
-    let $componentInput = Ember.$('input', $component);
+    let $componentInput = $('input', $component);
 
     /* eslint-disable no-unused-vars */
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      Ember.run(() => {
+    return new RSVP.Promise((resolve, reject) => {
+      run(() => {
         ajaxMethodHasBeenCalled = false;
 
         // Imitate focus on component, which can cause async data-requests.
         $componentInput.focusin();
 
         // Wait for some time which can pass after focus, before possible async data-request will be sent.
-        Ember.run.later(() => {
+        run.later(() => {
           resolve();
         }, 300);
       });
@@ -207,7 +212,7 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
     throw e;
   }).finally(() => {
     // Restore original method.
-    Ember.$.ajax = originalAjaxMethod;
+    $.ajax = originalAjaxMethod;
 
     asyncOperationsCompleted();
   });

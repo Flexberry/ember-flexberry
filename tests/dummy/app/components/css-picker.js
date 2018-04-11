@@ -2,7 +2,9 @@
   @module ember-flexberry-dummy
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { A } from '@ember/array';
+import { set, observer } from '@ember/object';
 
 /**
   CSS picker component.
@@ -10,7 +12,7 @@ import Ember from 'ember';
   @class CssPickerComponent
   @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
 */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     Items containing possible CSS classes names with flags indicating whether class is selected or not.
 
@@ -27,7 +29,7 @@ export default Ember.Component.extend({
       @method actions.onChange
     */
     onChange() {
-      let classNames = Ember.A();
+      let classNames = A();
       this.$('input').each((index, input) => {
         if (input.checked) {
           classNames.pushObject(input.name);
@@ -67,7 +69,7 @@ export default Ember.Component.extend({
   /**
     Observes changes in items collection.
   */
-  _itemsDidChange: Ember.observer('items.[]', function() {
+  _itemsDidChange: observer('items.[]', function() {
     this._generateItems();
     this._checkItems();
   }),
@@ -75,7 +77,7 @@ export default Ember.Component.extend({
   /**
     Observes changes in value combined from selected CSS classes names.
   */
-  _valueDidChange: Ember.observer('value', function() {
+  _valueDidChange: observer('value', function() {
     this._checkItems();
   }),
 
@@ -85,7 +87,7 @@ export default Ember.Component.extend({
     @method _generateItems
   */
   _generateItems() {
-    let items = Ember.A(this.get('items'));
+    let items = A(this.get('items'));
 
     this.set('_items', items.map((item) => {
       return {
@@ -102,9 +104,9 @@ export default Ember.Component.extend({
     @method _checkItems
   */
   _checkItems() {
-    let classNames = Ember.A((this.get('value') || '').split(' '));
+    let classNames = A((this.get('value') || '').split(' '));
     this.get('_items').forEach((item) => {
-      Ember.set(item, 'checked', classNames.includes(item.name));
+      set(item, 'checked', classNames.includes(item.name));
     });
   }
 });

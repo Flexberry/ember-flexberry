@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 
 export default EditFormController.extend({
 
   actions: {
     modalWindow() {
-      let repeatWindow = Ember.$('#repeat-window').modal({
+      let repeatWindow = $('#repeat-window').modal({
         closable: false,
         autofocus: false,
         detachable: false,
@@ -17,7 +17,7 @@ export default EditFormController.extend({
     },
 
     modalWindowDouble() {
-      let repeatWindow = Ember.$('#repeat-window-double').modal({
+      let repeatWindow = $('#repeat-window-double').modal({
         closable: false,
         autofocus: false,
         detachable: false,

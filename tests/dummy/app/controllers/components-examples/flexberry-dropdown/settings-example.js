@@ -1,8 +1,11 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed, observer } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import { A } from '@ember/array';
 import Enumeration from '../../../enums/components-examples/flexberry-dropdown/settings-example/enumeration';
 import { translationMacro as t } from 'ember-i18n';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   /**
     Component's wrapper CSS classes.
 
@@ -25,7 +28,7 @@ export default Ember.Controller.extend({
     @method _placeholderChanged
     @private
    */
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-dropdown.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-dropdown.placeholder'));
     }
@@ -45,7 +48,7 @@ export default Ember.Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.String.htmlSafe(
+  componentTemplateText: new htmlSafe(
     '{{flexberry-dropdown<br>' +
     '  items=(flexberry-enum "components-examples/flexberry-dropdown/settings-example/enumeration")<br>' +
     '  value=model.enumeration<br>' +
@@ -60,9 +63,9 @@ export default Ember.Controller.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', function() {
-    let componentSettingsMetadata = Ember.A();
-    let enumCaptions = Ember.A(Object.keys(Enumeration)).map((key) => { return Enumeration[key]; });
+  componentSettingsMetadata: computed('i18n.locale', function() {
+    let componentSettingsMetadata = A();
+    let enumCaptions = A(Object.keys(Enumeration)).map((key) => { return Enumeration[key]; });
 
     componentSettingsMetadata.pushObject({
       settingName: 'value',

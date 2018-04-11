@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-import Ember from 'ember';
+import { registerWaiter } from '@ember/test';
 
 moduleForComponent('modal-dialog', 'Integration | Component | modal dialog', {
   integration: true,
@@ -17,7 +17,7 @@ moduleForComponent('modal-dialog', 'Integration | Component | modal dialog', {
       this.set('created', true);
     });
 
-    Ember.Test.registerWaiter(this, () => this.get('created'));
+    registerWaiter(this, () => this.get('created'));
   },
 
   afterEach() {

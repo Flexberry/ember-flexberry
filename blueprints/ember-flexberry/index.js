@@ -251,6 +251,7 @@ module.exports = {
           { name: 'ember-moment', target: '6.0.0' },
           { name: 'ember-link-action', target: '0.0.34' },
           { name: 'ember-cli-less', target: '1.5.4' },
+          { name: 'ember-cp-validations', target: '~3.5.2' },
           { name: 'broccoli-jscs', target: '1.2.2' },
           { name: 'ember-browserify', target: '1.1.9' }
         ]

@@ -32,14 +32,14 @@ var Locales = (function () {
             form.caption = "";
         var value = this.escapeValue(form.caption);
         this.push("caption: '" + value + "'", "caption: '" + form.name + "'");
-        form.caption = "t 'forms." + this.entityName + ".caption'";
+        form.caption = "t \"forms." + this.entityName + ".caption\"";
     };
     Locales.prototype.setupEditFormAttribute = function (projAttr) {
         if (!projAttr.caption)
             projAttr.caption = "";
         var value = this.escapeValue(projAttr.caption);
         this.push("'" + projAttr.name + "-caption': '" + value + "'", "'" + projAttr.name + "-caption': '" + projAttr.name + "'");
-        projAttr.caption = "t 'forms." + this.entityName + "." + projAttr.name + "-caption'";
+        projAttr.caption = "t \"forms." + this.entityName + "." + projAttr.name + "-caption\"";
     };
     Locales.prototype.push = function (currentLocaleStr, otherLocalesStr) {
         this.translations[this.currentLocale].push(currentLocaleStr);

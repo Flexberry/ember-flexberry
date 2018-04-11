@@ -36,7 +36,7 @@ export default class Locales {
       `caption: '${value}'`,
       `caption: '${form.name}'`
     );
-    form.caption = `t 'forms.${this.entityName}.caption'`;
+    form.caption = `t "forms.${this.entityName}.caption"`;
   }
 
   setupEditFormAttribute(projAttr: metadata.ProjAttr) {
@@ -47,7 +47,7 @@ export default class Locales {
       `'${projAttr.name}-caption': '${value}'`,
       `'${projAttr.name}-caption': '${projAttr.name}'`
     );
-    projAttr.caption = `t 'forms.${this.entityName}.${projAttr.name}-caption'`;
+    projAttr.caption = `t "forms.${this.entityName}.${projAttr.name}-caption"`;
   }
 
   push(currentLocaleStr: string, otherLocalesStr: string) {

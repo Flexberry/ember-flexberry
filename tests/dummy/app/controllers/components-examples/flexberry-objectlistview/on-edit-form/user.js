@@ -1,5 +1,6 @@
 import { inject as service } from '@ember/service';
 import { merge } from '@ember/polyfills';
+import { computed } from '@ember/object';
 import EditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
 import { StringPredicate, ComplexPredicate } from 'ember-flexberry-data/query/predicate';
@@ -69,7 +70,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
     @property customButtons
     @type Array
    */
-  customButtons: Ember.computed('i18n.locale', function() {
+  customButtons: computed('i18n.locale', function() {
     let i18n = this.get('i18n');
     return [{
       buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.on-edit-form.add-button-name'),

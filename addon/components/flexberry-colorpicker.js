@@ -63,10 +63,10 @@ const flexberryClassNames = {
 
   controllers/my-form.js
   ```javascript
-  import Ember from 'ember';
+  import Controller from '@ember/controller';
   import FlexberryColorpickerActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-colorpicker-actions-handler';
 
-  export default Ember.Controller.extend(FlexberryColorpickerActionsHandlerMixin, {
+  export default Controller.extend(FlexberryColorpickerActionsHandlerMixin, {
   });
   ```
 

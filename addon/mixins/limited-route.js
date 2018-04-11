@@ -14,7 +14,7 @@ const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredi
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import LimitedController from 'ember-flexberry/mixins/limited-controller'
     export default Controller.extend(LimitedController, {
       ...
@@ -23,7 +23,7 @@ const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredi
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import LimitedRoute from 'ember-flexberry/mixins/limited-route'
     export default Route.extend(LimitedRoute, {
       ...

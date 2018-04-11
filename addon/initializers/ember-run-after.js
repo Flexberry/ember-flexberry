@@ -2,8 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import { run } from '@ember/runloop'; //TODO Import Module. Replace Ember.run.after.
+import Ember from 'ember'; //TODO Import Module. Replace Ember.run.after.
+import { run } from '@ember/runloop';
 
 /**
   Injects 'after' method into 'Ember.run' namespace.

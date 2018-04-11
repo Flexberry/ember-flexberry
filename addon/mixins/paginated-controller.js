@@ -11,7 +11,7 @@ import { computed } from '@ember/object';
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import PaginatedController from 'ember-flexberry/mixins/paginated-controller'
     export default Controller.extend(PaginatedController, {
     });
@@ -19,7 +19,7 @@ import { computed } from '@ember/object';
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import PaginatedRoute from 'ember-flexberry/mixins/paginated-route'
     export default Route.extend(PaginatedRoute, {
     });

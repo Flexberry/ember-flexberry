@@ -1,7 +1,15 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import $ from 'jquery';
+import { get, set, computed, observer } from '@ember/object';
+import { isNone } from '@ember/utils';
+import { computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
 
-export default Ember.Controller.extend({
-  sitemap: Ember.computed('i18n.locale', function () {
+
+
+export default Controller.extend({
+  sitemap: computed('i18n.locale', function () {
     let i18n = this.get('i18n');
 
     return {
@@ -31,7 +39,7 @@ export default Ember.Controller.extend({
     @method _userSettingsServiceChanged
     @private
   */
-  _userSettingsServiceChanged: Ember.observer('userSettingsService.isUserSettingsServiceEnabled', function() {
+  _userSettingsServiceChanged: observer('userSettingsService.isUserSettingsServiceEnabled', function() {
     this.get('target.router').refresh();
   }),
 
@@ -42,13 +50,13 @@ export default Ember.Controller.extend({
     this._super(...arguments);
 
     let i18n = this.get('i18n');
-    if (Ember.isNone(i18n)) {
+    if (isNone(i18n)) {
       return;
     }
 
     // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.
     let shortCurrentLocale = this.get('i18n.locale').split('-')[0];
-    let availableLocales = Ember.A(this.get('locales'));
+    let availableLocales = A(this.get('locales'));
 
     // Force current locale to be one of available,
     // if browser's current language is not supported by dummy application,
@@ -66,7 +74,7 @@ export default Ember.Controller.extend({
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   actions: {
     /**
@@ -84,19 +92,19 @@ export default Ember.Controller.extend({
       @method actions.toggleSidebar
     */
     toggleSidebar() {
-      let sidebar = Ember.$('.ui.sidebar.main.menu');
+      let sidebar = $('.ui.sidebar.main.menu');
       sidebar.sidebar('toggle');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
+      if ($('.inverted.vertical.main.menu').hasClass('visible')) {
+        $('.sidebar.icon.text-menu-show').removeClass('hidden');
+        $('.sidebar.icon.text-menu-hide').addClass('hidden');
+        $('.bgw-opacity').addClass('hidden');
+        $('.full.height').css({ transition: 'width 0.45s ease-in-out 0s', width: '100%' });
       } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
-        Ember.$('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
+        $('.sidebar.icon.text-menu-show').addClass('hidden');
+        $('.sidebar.icon.text-menu-hide').removeClass('hidden');
+        $('.bgw-opacity').removeClass('hidden');
+        $('.full.height').css({ transition: 'width 0.3s ease-in-out 0s', width: 'calc(100% - ' + sidebar.width() + 'px)' });
       }
     },
 
@@ -106,16 +114,16 @@ export default Ember.Controller.extend({
       @method actions.toggleSidebarMobile
     */
     toggleSidebarMobile() {
-      Ember.$('.ui.sidebar.main.menu').sidebar('toggle');
+      $('.ui.sidebar.main.menu').sidebar('toggle');
 
-      if (Ember.$('.inverted.vertical.main.menu').hasClass('visible')) {
-        Ember.$('.sidebar.icon.text-menu-show').removeClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').addClass('hidden');
-        Ember.$('.bgw-opacity').addClass('hidden');
+      if ($('.inverted.vertical.main.menu').hasClass('visible')) {
+        $('.sidebar.icon.text-menu-show').removeClass('hidden');
+        $('.sidebar.icon.text-menu-hide').addClass('hidden');
+        $('.bgw-opacity').addClass('hidden');
       } else {
-        Ember.$('.sidebar.icon.text-menu-show').addClass('hidden');
-        Ember.$('.sidebar.icon.text-menu-hide').removeClass('hidden');
-        Ember.$('.bgw-opacity').removeClass('hidden');
+        $('.sidebar.icon.text-menu-show').addClass('hidden');
+        $('.sidebar.icon.text-menu-hide').removeClass('hidden');
+        $('.bgw-opacity').removeClass('hidden');
       }
     }
   }

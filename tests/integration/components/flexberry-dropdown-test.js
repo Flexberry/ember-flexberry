@@ -5,6 +5,7 @@ import { A } from '@ember/array';
 import RSVP from 'rsvp';
 import { run } from '@ember/runloop';
 import TestAdapter from '@ember/test/adapter';
+import { get } from '@ember/object';
 
 import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';

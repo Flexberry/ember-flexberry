@@ -1,6 +1,4 @@
 /* global $ */
-import $ from 'jquery';
-import { get } from '@ember/object';
 import { later, run } from '@ember/runloop';
 import { executeTest} from './execute-folv-test';
 import { addRecords, deleteRecords, refreshListByFunction } from './folv-tests-functions';

@@ -101,7 +101,6 @@ export default Mixin.create({
     @example
       ``` js
       // app/routes/limit-function-example.js
-      import Ember from 'ember';
       import ListFormRoute from 'ember-flexberry/routes/list-form';
       import { Query } from 'ember-flexberry-data';
 

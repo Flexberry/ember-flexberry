@@ -38,7 +38,7 @@ export default Mixin.create({
 
       controllers/my-form.js
       ```javascript
-        import Ember from 'ember';
+        import Controller from '@ember/controller';
         import FlexberryDdauCheckboxActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-checkbox-actions-handler';
 
         export default Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {

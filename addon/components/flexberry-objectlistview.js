@@ -857,7 +857,6 @@ export default FlexberryBaseComponent.extend({
         Example of how to add user buttons:
         1) it has to be defined computed property at corresponding controller (name of property is not fixed).
         ```
-        import Ember from 'ember';
         import ListFormController from 'ember-flexberry/controllers/list-form';
 
         export default ListFormController.extend({
@@ -875,7 +874,6 @@ export default FlexberryBaseComponent.extend({
 
         2) it has to be defined set as 'buttonAction' methods.
         ```
-        import Ember from 'ember';
         import ListFormController from 'ember-flexberry/controllers/list-form';
 
         export default ListFormController.extend({

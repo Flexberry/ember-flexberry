@@ -131,10 +131,10 @@ let getRenderedDynamicActionArguments = function(actionArguments, renderingConte
 
   controllers/my-form.js
   ```javascript
-  import Ember from 'ember';
+  import Controller from '@ember/controller';
   import TreeNodeObject from 'ember-flexberry/objects/flexberry-treenode';
 
-  export default Ember.Controller.extend({
+  export default Controller.extend({
     treeNodes: Ember.A([
       FlexberryTreenodeObject.create({
         caption: 'Node 1 (with child nodes)',

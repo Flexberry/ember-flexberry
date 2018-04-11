@@ -13,10 +13,10 @@ import EmberResolver from 'ember-resolver';
 
   Usage:
   ```javascript
-  import Ember from 'ember';
+  import Application from '@ember/application';
   import Resolver from 'ember-flexberry/resolver';
 
-  let App = Ember.Application.extend({
+  let App = Application.extend({
     Resolver: Resolver
   });
 

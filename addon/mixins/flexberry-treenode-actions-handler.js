@@ -32,7 +32,7 @@ export default Mixin.create({
 
       controllers/my-form.js
       ```javascript
-        import Ember from 'ember';
+        import Controller from '@ember/controller';
         import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 
         export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
@@ -63,7 +63,7 @@ export default Mixin.create({
 
       controllers/my-form.js
       ```javascript
-        import Ember from 'ember';
+        import Controller from '@ember/controller';
         import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 
         export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
@@ -94,7 +94,7 @@ export default Mixin.create({
 
       controllers/my-form.js
       ```javascript
-        import Ember from 'ember';
+        import Controller from '@ember/controller';
         import FlexberryTreenodeActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-treenode-actions-handler';
 
         export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {

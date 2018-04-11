@@ -12,7 +12,7 @@ import { inject as service } from '@ember/service';
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import LimitedController from 'ember-flexberry/mixins/limited-controller'
     export default Controller.extend(LimitedController, {
       ...
@@ -21,7 +21,7 @@ import { inject as service } from '@ember/service';
 
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import LimitedRoute from 'ember-flexberry/mixins/limited-route'
     export default Route.extend(LimitedRoute, {
       ...

@@ -64,10 +64,10 @@ const flexberryClassNames = {
 
   controllers/my-form.js
   ```javascript
-  import Ember from 'ember';
+  import Controller from '@ember/controller';
   import FlexberryDdauSliderActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-slider-actions-handler';
 
-  export default Ember.Controller.extend(FlexberryDdauSliderActionsHandlerMixin, {
+  export default Controller.extend(FlexberryDdauSliderActionsHandlerMixin, {
   });
   ```
 

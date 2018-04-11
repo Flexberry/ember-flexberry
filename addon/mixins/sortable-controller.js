@@ -15,14 +15,14 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
   @example
     ```javascript
     // app/controllers/employees.js
-    import Ember from 'ember';
+    import Controller from '@ember/controller';
     import SortableController from 'ember-flexberry/mixins/sortable-controller'
     export default Controller.extend(SortableController, {
     });
     ```
     ```javascript
     // app/routes/employees.js
-    import Ember from 'ember';
+    import Route from '@ember/routing/route';
     import SortableRoute from 'ember-flexberry/mixins/sortable-route'
     export default Route.extend(SortableRoute, {
     });

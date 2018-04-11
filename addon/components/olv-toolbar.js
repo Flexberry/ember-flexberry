@@ -2,7 +2,6 @@
   @module ember-flexberry
 */
 
-//import Ember from 'ember';
 import $ from 'jquery';
 import { assert } from '@ember/debug';
 import { set, computed, observer } from '@ember/object';

@@ -1,21 +1,20 @@
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = Projection.Model.extend({
+const Validations = buildValidations({
+  togglerExampleMasterProperty: validator('presence', {
+    presence: true,
+    message: 'Master property is required',
+  }),
+});
+
+let Model = Projection.Model.extend(Validations, {
   togglerExampleMasterProperty: DS.attr('string'),
   togglerExampleDetail: DS.hasMany('ember-flexberry-dummy-toggler-example-detail', {
     inverse: 'togglerExampleMaster',
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    togglerExampleMasterProperty: {
-      presence: {
-        message: 'Master property is required'
-      }
-    }
-  }
 });
 
 Model.defineProjection('TogglerExampleMasterE', 'ember-flexberry-dummy-toggler-example-master', {

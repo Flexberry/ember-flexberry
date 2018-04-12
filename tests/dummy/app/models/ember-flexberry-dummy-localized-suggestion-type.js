@@ -1,7 +1,15 @@
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = Projection.Model.extend({
+const Validations = buildValidations({
+  name: validator('presence', {
+    presence: true,
+    message: 'Name is required',
+  }),
+});
+
+let Model = Projection.Model.extend(Validations, {
   // Inversed relationship for ember-flexberry-dummy-suggestion-type.localizedTypes.
   // It's not a property for flexberry-lookup component.
   suggestionType: DS.belongsTo('ember-flexberry-dummy-suggestion-type', {
@@ -15,15 +23,6 @@ var Model = Projection.Model.extend({
     inverse: null,
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

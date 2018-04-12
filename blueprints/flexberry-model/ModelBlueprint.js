@@ -40,6 +40,7 @@ var ModelBlueprint = (function () {
         this.needsAllObjects = this.getNeedsTransforms(path.join(options.metadataDir, "objects"));
         var modelLocales = new Locales_1.ModelLocales(model, modelsDir, "ru");
         this.lodashVariables = modelLocales.getLodashVariablesProperties();
+        this.validations = this.getValidations(model);
     }
     ModelBlueprint.loadModel = function (modelsDir, modelFileName) {
         var modelFile = path.join(modelsDir, modelFileName);
@@ -102,7 +103,7 @@ var ModelBlueprint = (function () {
         return "      " + attrs.join(",\n      ");
     };
     ModelBlueprint.prototype.getJSForModel = function (model) {
-        var attrs = [], validations = [];
+        var attrs = [];
         var templateBelongsTo = lodash.template("<%=name%>: DS.belongsTo('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false<%if(polymorphic){%>, polymorphic: true<%}%> })");
         var templateHasMany = lodash.template("<%=name%>: DS.hasMany('<%=relatedTo%>', { inverse: <%if(inverse){%>'<%=inverse%>'<%}else{%>null<%}%>, async: false })");
         var attr;
@@ -134,14 +135,6 @@ var ModelBlueprint = (function () {
                 }
             }
             attrs.push("" + comment + attr.name + ": DS.attr('" + attr.type + "'" + defaultValue + ")");
-            if (attr.notNull) {
-                if (attr.type === "date") {
-                    validations.push(attr.name + ": { datetime: true }");
-                }
-                else {
-                    validations.push(attr.name + ": { presence: true }");
-                }
-            }
             if (attr.stored)
                 continue;
             var methodToSetNotStoredProperty = "/**\n" +
@@ -166,31 +159,13 @@ var ModelBlueprint = (function () {
         var belongsTo;
         for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
             belongsTo = _c[_b];
-            if (belongsTo.presence)
-                validations.push(belongsTo.name + ": { presence: true }");
             attrs.push(templateBelongsTo(belongsTo));
         }
         for (var _d = 0, _e = model.hasMany; _d < _e.length; _d++) {
             var hasMany = _e[_d];
             attrs.push(templateHasMany(hasMany));
         }
-        var validationsFunc = TAB + TAB + TAB + validations.join(",\n" + TAB + TAB + TAB) + "\n";
-        if (validations.length === 0) {
-            validationsFunc = "";
-        }
-        validationsFunc =
-            "getValidations: function () {\n" +
-                TAB + TAB + "let parentValidations = this._super();\n" +
-                TAB + TAB + "let thisValidations = {\n" +
-                validationsFunc + TAB + TAB + "};\n" +
-                TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
-                TAB + "}";
-        var initFunction = "init: function () {\n" +
-            TAB + TAB + "this.set('validations', this.getValidations());\n" +
-            TAB + TAB + "this._super.apply(this, arguments);\n" +
-            TAB + "}";
-        attrs.push(validationsFunc, initFunction);
-        return TAB + attrs.join(",\n" + TAB);
+        return attrs.length ? "\n" + (TAB + attrs.join(",\n" + TAB)) + "\n" : '';
     };
     ModelBlueprint.prototype.joinProjHasMany = function (detailHasMany, modelsDir, level) {
         var hasManyAttrs = [];
@@ -313,7 +288,53 @@ var ModelBlueprint = (function () {
             var attrsStr = lodash.map(projAttrs, "str").join(",\n    ");
             projections.push("  modelClass.defineProjection('" + proj.name + "', '" + proj.modelName + "', {\n    " + attrsStr + "\n  });");
         }
-        return "\n" + projections.join("\n") + "\n";
+        return "\n" + projections.join("\n\n") + "\n";
+    };
+    ModelBlueprint.prototype.getValidations = function (model) {
+        var validators = {};
+        for (var _i = 0, _a = model.attrs; _i < _a.length; _i++) {
+            var attr = _a[_i];
+            validators[attr.name] = ["validator('ds-error'),"];
+            switch (attr.type) {
+                case 'date':
+                    validators[attr.name].push("validator('date'),");
+                    if (attr.notNull) {
+                        validators[attr.name].push("validator('presence', true),");
+                    }
+                    break;
+                case 'string':
+                case 'boolean':
+                    if (attr.notNull) {
+                        validators[attr.name].push("validator('presence', true),");
+                    }
+                    break;
+                case 'number':
+                case 'decimal':
+                    var options = 'allowString: true';
+                    options += attr.notNull ? '' : ', allowBlank: true';
+                    options += attr.type === 'number' ? ', integer: true' : '';
+                    validators[attr.name].push("validator('number', { " + options + " }),");
+                    break;
+            }
+        }
+        for (var _b = 0, _c = model.belongsTo; _b < _c.length; _b++) {
+            var belongsTo = _c[_b];
+            validators[belongsTo.name] = ["validator('ds-error'),", "validator('belongs-to'),"];
+            if (belongsTo.presence) {
+                validators[belongsTo.name].push("validator('presence', true),");
+            }
+        }
+        for (var _d = 0, _e = model.hasMany; _d < _e.length; _d++) {
+            var hasMany = _e[_d];
+            validators[hasMany.name] = ["validator('ds-error'),", "validator('has-many'),"];
+        }
+        var validations = [];
+        for (var validationKey in validators) {
+            var descriptionKey = "descriptionKey: 'models." + model.modelName + ".validations." + validationKey + ".__caption__',";
+            var _validators = "validators: [\n" + (TAB + TAB + TAB + validators[validationKey].join("\n" + (TAB + TAB + TAB))) + "\n" + (TAB + TAB) + "],";
+            validations.push((TAB + validationKey) + ": {\n" + (TAB + TAB + descriptionKey) + "\n" + (TAB + TAB + _validators) + "\n" + TAB + "}");
+        }
+        return validations.length ? "\n" + validations.join(',\n') + ",\n" : '';
     };
     return ModelBlueprint;
 }());

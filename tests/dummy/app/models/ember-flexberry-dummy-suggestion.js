@@ -1,8 +1,24 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = Projection.Model.extend({
+const Validations = buildValidations({
+  type: validator('presence', {
+    presence: true,
+    message: 'Type is required',
+  }),
+  author: validator('presence', {
+    presence: true,
+    message: 'Author is required',
+  }),
+  editor1: validator('presence', {
+    presence: true,
+    message: 'Editor is required',
+  }),
+});
+
+let Model = Projection.Model.extend(Validations, {
   address: DS.attr('string'),
   text: DS.attr('string'),
   date: DS.attr('date'),
@@ -47,25 +63,6 @@ var Model = Projection.Model.extend({
     inverse: 'suggestion',
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    type: {
-      presence: {
-        message: 'Type is required'
-      }
-    },
-    author: {
-      presence: {
-        message: 'Author is required'
-      }
-    },
-    editor1: {
-      presence: {
-        message: 'Editor is required'
-      }
-    }
-  },
 
   commentsChanged: Ember.on('init', Ember.observer('comments', function() {
     Ember.run.once(this, 'commentsCountCompute');

@@ -1,21 +1,22 @@
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
-var Model = Projection.Model.extend({
+import { validator, buildValidations } from 'ember-cp-validations';
+
+const Validations = buildValidations({
+  name: validator('presence', {
+    presence: true,
+    message: 'Name is required',
+  }),
+  eMail: validator('presence', {
+    presence: true,
+    message: 'User email is required',
+  }),
+});
+
+let Model = Projection.Model.extend(Validations, {
   name: DS.attr('string'),
   eMail: DS.attr('string'),
   birthday: DS.attr('date'),
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    },
-    eMail: {
-      presence: {
-        message: 'User email is required'
-      }
-    }
-  }
 });
 Model.defineProjection('parentE', 'ember-flexberry-dummy-parent', {
   name: Projection.attr('Name'),

@@ -5,19 +5,48 @@
 import Ember from 'ember';
 
 /**
-  ValidationSummary component for Semantic UI.
+  Component for output messages of validation errors as a [Semantic UI Message](https://semantic-ui.com/collections/message.html) collection.
 
-  @class FlexberryValidationsummary
-  @extends Ember.Component
+  @example
+    ```handlebars
+    {{flexberry-validationsummary
+      color="orange"
+      header="Validation errors"
+      errors=errors
+    }}
+    ```
+
+  @class FlexberryValidationsummaryComponent
+  @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
 */
 export default Ember.Component.extend({
   /**
-    Default classes for component wrapper.
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNameBindings
+    @type Array
+    @default ['color']
+  */
+  classNameBindings: ['color'],
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNames
+    @type Array
+    @default ['ui', 'message']
   */
   classNames: ['ui', 'message'],
 
   /**
-    Semantic color class name for message text.
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property isVisible
+  */
+  isVisible: Ember.computed.notEmpty('errors'),
+
+  /**
+    See [Semantic UI API](https://semantic-ui.com/collections/message.html#colored).
 
     @property color
     @type String
@@ -26,92 +55,18 @@ export default Ember.Component.extend({
   color: 'red',
 
   /**
-    Errors object for display messages.
+    Header.
 
-    @property errors
-    @type Ember.Object
-  */
-  errors: undefined,
-
-  /**
-    Errors own properties with validation errors messages.
-
-    @property validationProperties
-    @private
-  */
-  validationProperties: undefined,
-
-  /**
-    Current errors messages
-
-    @property messages
-    @type Ember.A
-  */
-  messages: undefined,
-
-  /**
-    Header of validationsummary
-
-    @property headerText
+    @property header
     @type String
   */
-  headerText: undefined,
+  header: undefined,
 
   /**
-    An overridable method called when objects are instantiated.
-    For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
+    List of errors for output.
+
+    @property errors
+    @type Array
   */
-  init() {
-    this._super(...arguments);
-
-    let errors = this.get('errors');
-
-    if (!errors) {
-      throw new Error('Errors property for flexberry-validationsummary component must be set');
-    }
-
-    this.set('validationProperties', new Ember.A());
-
-    for (let propertyName in errors) {
-      // TODO: Delete after update Ember on 2.5.1 and up.
-      if (errors.hasOwnProperty(propertyName) && propertyName !== 'toString') {
-        this.get('validationProperties').push(propertyName);
-        errors.addObserver(propertyName + '.[]', this, 'changeMessages');
-      }
-    }
-
-    this.get('classNames').push(this.get('color'));
-    this.changeMessages();
-  },
-
-  /**
-    Override to implement teardown.
-    For more information see [willDestroy](http://emberjs.com/api/classes/Ember.Component.html#method_willDestroy) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
-  */
-  willDestroy() {
-    let errors = this.get('errors');
-    this.get('validationProperties').forEach(propertyName => errors.removeObserver(propertyName + '.[]', this, 'changeMessages'));
-    this._super(...arguments);
-  },
-
-  /**
-    Push validation errors to messages array
-    and change component visibility if no errors occurred.
-  */
-  changeMessages() {
-    let messages = new Ember.A();
-
-    this.get('validationProperties').forEach((property) => {
-      // TODO: Delete after update Ember on 2.5.1 and up.
-      if (property !== 'toString') {
-        let errorMessages = this.get('errors.' + property);
-        errorMessages.forEach((errorMessage) => {
-          messages.pushObject(errorMessage);
-        });
-      }
-    });
-
-    this.set('isVisible', !!messages.length);
-    this.set('messages', messages);
-  }
+  errors: undefined,
 });

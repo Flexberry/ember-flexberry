@@ -1,7 +1,15 @@
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = Projection.Model.extend({
+const Validations = buildValidations({
+  author: validator('presence', {
+    presence: true,
+    message: 'Author is required',
+  }),
+});
+
+let Model = Projection.Model.extend(Validations, {
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
     inverse: 'comments',
     async: false
@@ -22,15 +30,6 @@ var Model = Projection.Model.extend({
     inverse: 'comment',
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    author: {
-      presence: {
-        message: 'Author is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

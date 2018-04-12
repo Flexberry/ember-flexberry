@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import { Projection } from 'ember-flexberry-data';
 
-var Model = Projection.Model.extend({
+let Model = Projection.Model.extend({
   // Inversed relationship for ember-flexberry-dummy-comment.userVotes.
   // It's not a property for flexberry-lookup component.
   comment: DS.belongsTo('ember-flexberry-dummy-comment', {
@@ -15,10 +15,6 @@ var Model = Projection.Model.extend({
     inverse: null,
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-  }
 });
 
 // Edit form projection.

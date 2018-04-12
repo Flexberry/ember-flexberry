@@ -12,8 +12,14 @@ moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
 <% } %><% if (!!needsAllObjects === true) { %>
 <%= needsAllObjects %>,
 <% } %>
-<%= needsAllModels %>
-  ]
+<%= needsAllModels %>,
+    'validator:ds-error',
+    'validator:presence',
+    'validator:number',
+    'validator:date',
+    'validator:belongs-to',
+    'validator:has-many',
+  ],
 });
 
 // Replace this with your real tests.

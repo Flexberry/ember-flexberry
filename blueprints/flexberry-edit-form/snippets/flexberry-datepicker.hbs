@@ -1,11 +1,9 @@
-<div class="field">
-  <label>{{<%= caption %>}}</label>
-  {{
-    flexberry-datepicker
-    placeholder='(no value)'
-    readonly=<%= readonly %>
-    value=model.<%= name %>
-    class=(if model.errors.<%= name %> 'error' '')
-  }}
-  {{flexberry-validationmessage error=model.errors.<%= name %> pointing="pointing"}}
-</div>
+  <div class="field">
+    <label>{{<%= caption %>}}</label>
+    {{flexberry-datepicker
+      readonly=<%= readonly %>
+      value=model.<%= name %>
+      class=(if (v-get validationObject "<%= name %>" "isInvalid") "error")
+    }}
+    {{flexberry-validationmessage error=(v-get validationObject "<%= name %>" "messages")}}
+  </div>

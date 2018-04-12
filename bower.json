@@ -4,7 +4,6 @@
   "dependencies": {
     "jquery-mockjax": "~2.2.1",
     "semantic-ui": "git://github.com/Flexberry/Semantic-UI.git#fixed-abort",
-    "semantic-ui-daterangepicker": "git://github.com/BreadMaker/semantic-ui-daterangepicker.git#5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be",
     "blob-polyfill": "~1.0.20150320",
     "devicejs": "0.2.7",
     "flatpickr-calendar": "2.3.4",
@@ -12,7 +11,7 @@
     "blueimp-file-upload": "9.11.2",
     "jquery-minicolors": "2.2.6",
     "js-beautify": "1.6.4",
-    "moment": "^2.22.0"
+    "moment": "~2.22.0"
   },
   "resolutions": {
     "semantic-ui": "fixed-abort"

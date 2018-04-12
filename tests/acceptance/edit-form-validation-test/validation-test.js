@@ -13,18 +13,6 @@ executeTest('check complete all tests', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationDataField = $('.calendar.link.icon');
-
-    run(() => {
-      // Open datepicker calendar.
-      $validationDataField.click();
-      let $validationDateButton = $('.available');
-      $validationDateButton = $($validationDateButton[16]);
-
-      // Select date.
-      $validationDateButton.click();
-    });
-
     let $validationFlexberryLookupButtons = $('.ui.button');
     let $validationFlexberryLookupButton = $($validationFlexberryLookupButtons[2]);
 

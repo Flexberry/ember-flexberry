@@ -12,7 +12,7 @@ var ModelBlueprint_1 = require("../flexberry-model/ModelBlueprint");
 var componentMaps = [
     { name: "flexberry-file", types: ["file"] },
     { name: "flexberry-checkbox", types: ["boolean"] },
-    { name: "flexberry-datepicker", types: ["date"] },
+    { name: "flexberry-simpledatetime", types: ["date"] },
     { name: "flexberry-field", types: ["string", "number", "decimal"] }
 ];
 module.exports = {

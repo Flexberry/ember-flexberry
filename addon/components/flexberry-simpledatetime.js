@@ -7,7 +7,6 @@ import { isBlank, isNone } from '@ember/utils';
 import $ from 'jquery';
 import { scheduleOnce } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
-import moment from 'moment';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
@@ -197,9 +196,9 @@ export default FlexberryBaseComponent.extend({
 
     @property placeholder
     @type String
-    @default 't('components.flexberry-datepicker.placeholder')'
+    @default 't('components.flexberry-simpledatetime.placeholder')'
   */
-  placeholder: t('components.flexberry-datepicker.placeholder'),
+  placeholder: t('components.flexberry-simpledatetime.placeholder'),
 
   /**
     Array CSS class names.
@@ -279,7 +278,7 @@ export default FlexberryBaseComponent.extend({
   _validationDateTime() {
     let dateIsValid = true;
     let inputValue = this.$('.custom-flatpickr')[0].value;
-    let date = this.get('type') === 'date' ? moment(inputValue, 'DD.MM.YYYY') : moment(inputValue, 'DD.MM.YYYY HH:mm');
+    let date = this.get('type') === 'date' ? this.get('moment').moment(inputValue, 'DD.MM.YYYY') : this.get('moment').moment(inputValue, 'DD.MM.YYYY HH:mm');
     if (date.isValid()) {
       let dateArray = inputValue.match(/(\d+)/g) || [];
       if (dateArray.length > 0) {
@@ -292,7 +291,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (dateIsValid) {
-      if (!moment(this.get('_valueAsDate')).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
+      if (!this.get('moment').moment(this.get('_valueAsDate')).isSame(date, this.get('type') === 'date' ? 'day' : 'second')) {
         this.get('_flatpickr').setDate(date.toDate());
         this.set('_valueAsDate', this.get('_flatpickr').selectedDates[0]);
       }
@@ -410,7 +409,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     if (value instanceof Date) {
-      let date = moment(value);
+      let date = this.get('moment').moment(value);
       switch (this.get('type')) {
         case 'datetime-local':
         case 'datetime':
@@ -444,7 +443,7 @@ export default FlexberryBaseComponent.extend({
       throw new Error('Expected type the string.');
     }
 
-    return moment(value).toDate();
+    return this.get('moment').moment(value).toDate();
   },
 
   /**

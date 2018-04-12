@@ -21,7 +21,7 @@ export function initialize(applicationInstance) {
     let locale = i18n.get('locale');
 
     moment.changeLocale(locale);
-    window.moment.locale(locale);
+    window.moment.updateLocale(locale);
   };
 
   let changeMomentDefaultFormat = function() {

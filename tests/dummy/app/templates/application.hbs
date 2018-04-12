@@ -2,13 +2,14 @@
   {{outlet}}
   {{outlet "modal"}}
 {{else}}
-  {{#ui-sidebar
+  {{#flexberry-sidebar
     class="inverted vertical main menu"
-    ui_context=".ember-application > .ember-view"
-    closable=false
-    dimPage=false
-    onShow=(action "updateWidth")
-    onHidden=(action "updateWidth")
+    settings=(hash
+      closable=false
+      dimPage=false
+      onShow=(action "updateWidth")
+      onHidden=(action "updateWidth")
+    )
   }}
     <a class="item"
       href={{addonVersionHref}}
@@ -16,8 +17,8 @@
       title={{t "forms.application.sitemap.application-version.title"}}>
       {{t "forms.application.sitemap.application-version.caption" version=addonVersion}}
     </a>
-    {{render "sitemap" sitemap}}
-  {{/ui-sidebar}}
+    {{flexberry-sitemap sitemap=sitemap}}
+  {{/flexberry-sidebar}}
   <div class="bgw-fix">
     <div class="background-logo">
       <div class="ui top attached">
@@ -83,7 +84,7 @@
             items=locales
             value=i18n.locale
             placeholder=(t "forms.application.header.menu.language-dropdown.placeholder")
-            direction="upward"
+            settings=(hash direction="upward")
           }}
         </div>
         <div class="right menu">

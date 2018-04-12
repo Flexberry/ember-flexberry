@@ -29,14 +29,6 @@ module.exports = {
       '      paths: [\n' +
       '        \'bower_components/semantic-ui\'\n' +
       '      ]\n' +
-      '    },\n' +
-      '    SemanticUI: {\n' +
-      '      import: {\n' +
-      '        css: false,\n' +
-      '        javascript: true,\n' +
-      '        images: false,\n' +
-      '        fonts: true\n' +
-      '      }\n' +
       '    }\n';
 
     var env1 = '  // Replace this local address to remote when backed will be published.\n' +
@@ -235,6 +227,7 @@ module.exports = {
       );
     }).then(function() {
       return _this.addBowerPackagesToProject([
+        { name: 'semantic-ui', target: '2.3.1' },
         { name: 'devicejs', target: '0.2.7' },
         { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
@@ -243,8 +236,6 @@ module.exports = {
         { name: 'jquery-minicolors', target: '2.2.6' },
         { name: 'js-beautify', target: '1.6.4' }
       ]);
-    }).then(function() {
-      return _this.addBowerPackageToProject('semantic-ui','git://github.com/Flexberry/Semantic-UI.git#fixed-abort');
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [
@@ -260,8 +251,6 @@ module.exports = {
         { name: 'inflection', target: '1.10.0' },
         { name: 'node-uuid', target: '1.4.7' },
       ]);
-    }).then(function () {
-      return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
     }).then(function () {
       return _this.removePackageFromProject('ember-data');
     }).then(function () {

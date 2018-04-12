@@ -296,10 +296,9 @@ test('dropdown with items represented by object renders properly', function(asse
   $dropdownItem.each(function(i) {
     let $item = $(this);
     let itemKey = itemsObjectKeys[i];
-    let itemCaption = itemsObject[itemKey];
 
     // Check that the captions matches the objects.
-    assert.strictEqual($item.attr('data-value'), itemCaption, 'Component\'s item\'s сaptions matches the objects');
+    assert.strictEqual($item.attr('data-value'), itemKey, 'Component\'s item\'s сaptions matches the objects');
   });
 });
 
@@ -326,7 +325,7 @@ test('dropdown with items represented by array renders properly', function(asser
     let itemCaption = itemsArray[i];
 
     // Check that the captions matches the array.
-    assert.strictEqual($item.attr('data-value'), itemCaption, 'Component\'s item\'s сaptions matches the array');
+    assert.strictEqual($item.attr('data-value'), String(i), 'Component\'s item\'s сaptions matches the array');
   });
 });
 

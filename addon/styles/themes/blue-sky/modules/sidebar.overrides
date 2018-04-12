@@ -90,7 +90,7 @@ img.item-minus {
   padding: 0.7em 0.2em 0.7em 1em;
 }
 
-.ui.sidebar.menu > a.item {
+.ui.sidebar.menu a.item {
     padding-left: 41px;
 }
 

@@ -705,7 +705,8 @@ FolvOnEditControllerMixin, {
       }
 
       case 'date': {
-        cellComponent.componentName = 'flexberry-datepicker';
+        cellComponent.componentName = 'flexberry-simpledatetime';
+        cellComponent.componentProperties = { type: 'date' };
         break;
       }
 

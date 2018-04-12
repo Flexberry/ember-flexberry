@@ -34,16 +34,6 @@ module.exports = {
     });
 
     app.import({
-      development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.js',
-      production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.js'
-    });
-
-    app.import({
-      development: 'bower_components/semantic-ui-daterangepicker/daterangepicker.css',
-      production:  'bower_components/semantic-ui-daterangepicker/daterangepicker.min.css'
-    });
-
-    app.import({
       development: 'bower_components/flatpickr-calendar/dist/flatpickr.js',
       production:  'bower_components/flatpickr-calendar/dist/flatpickr.min.js'
     });

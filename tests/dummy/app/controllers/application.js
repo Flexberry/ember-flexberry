@@ -262,16 +262,6 @@ export default Controller.extend({
           }]
         }, {
           link: null,
-          caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.caption'),
-          title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.title'),
-          children: [{
-            link: 'components-examples/flexberry-datepicker/settings-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-datepicker.settings-example.title'),
-            children: null
-          }]
-        }, {
-          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-dropdown.title'),
           children: [{

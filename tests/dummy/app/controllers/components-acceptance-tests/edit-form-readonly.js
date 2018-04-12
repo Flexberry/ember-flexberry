@@ -48,6 +48,7 @@ export default EditFormController.extend({
       return {
         componentName: 'flexberry-simpledatetime',
         componentProperties: {
+          type: 'datetime-local'
         }
       };
     }

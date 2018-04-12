@@ -50,8 +50,8 @@ test('flexbery-checkbox on readonly editform', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($checkbox.hasClass('read-only'), false, 'Checkbox don\'t readonly');
-      assert.strictEqual($checkboxFge.hasClass('read-only'), false, 'Groupedit\'s checkbox don\'t readonly');
+      assert.strictEqual($checkbox.hasClass('read-only'), false, 'Checkbox is not readonly');
+      assert.strictEqual($checkboxFge.hasClass('read-only'), false, 'Groupedit\'s checkbox is not readonly');
     });
   });
 });
@@ -72,8 +72,8 @@ test('flexbery-textbox on readonly editform', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($textbox.is('readonly'), false, 'Textbox don\'t readonly');
-      assert.strictEqual($textboxFge.is('readonly'), false, 'Groupedit\'s textbox don\'t readonly');
+      assert.strictEqual($textbox.is('readonly'), false, 'Textbox is not readonly');
+      assert.strictEqual($textboxFge.is('readonly'), false, 'Groupedit\'s textbox is not readonly');
     });
   });
 });
@@ -94,37 +94,7 @@ test('flexberry-textarea on readonly editform', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($.trim($textareaInput.attr('readonly')), '', 'Textarea don\'t readonly');
-      assert.strictEqual($.trim($textareaInputFGE.attr('readonly')), '', 'Groupedit\'s textarea don\'t readonly');
-    });
-  });
-});
-
-test('flexberry-datepicker on readonly editform', (assert) => {
-  assert.expect(8);
-
-  visit(path);
-  andThen(() => {
-    let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let $datepicker = $('.not-in-groupedit .flexberry-datepicker');
-    let $datepickerInput = $datepicker.children('input');
-    assert.strictEqual($.trim($datepickerInput.attr('readonly')), 'readonly', 'Time is readonly');
-    let $button = $datepicker.children('.calendar');
-    assert.strictEqual($button.hasClass('link'), false, 'Datepicker hasn\'t link');
-
-    let $datepickerFge = $('.in-groupedit .flexberry-datepicker');
-    let $datepickerFgeInput = $datepickerFge.children('input');
-    assert.strictEqual($.trim($datepickerFgeInput.attr('readonly')), 'readonly', 'Groupedit\'s datepicker is readonly');
-    let $buttonFge = $datepickerFge.children('.calendar');
-    assert.strictEqual($buttonFge.hasClass('link'), false, 'Groupedit\'s datepicker hasn\'t link');
-
-    controller.set('readonly', false);
-    scheduleOnce('afterRender', () => {
-      assert.strictEqual($.trim($datepickerInput.attr('readonly')), '', 'Time don\'t readonly');
-      assert.strictEqual($button.hasClass('link'), true, 'Datepicker has link');
-
-      assert.strictEqual($.trim($datepickerFgeInput.attr('readonly')), '', 'Groupedit\'s datepicker don\'t readonly');
-      assert.strictEqual($buttonFge.hasClass('link'), true, 'Groupedit\'s datepicker has link');
+      assert.strictEqual($.trim($textareaInput.attr('readonly')), '', 'Textarea is not readonly');
     });
   });
 });
@@ -139,9 +109,13 @@ test('flexberry-simpledatetime on readonly editform', (assert) => {
 
     assert.strictEqual($.trim($simpledatetime.attr('readonly')), 'readonly', 'Time is readonly');
 
+    let $simpledatetimeFge = $('.in-groupedit .flexberry-simpledatetime .custom-flatpickr');
+    assert.strictEqual($.trim($simpledatetimeFge.attr('readonly')), 'readonly', 'Groupedit\'s datepicker is readonly');
+
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($.trim($simpledatetime.attr('readonly')), '', 'Time don\'t readonly');
+      assert.strictEqual($.trim($simpledatetime.attr('readonly')), '', 'Time is not readonly');
+      assert.strictEqual($.trim($simpledatetimeFge.attr('readonly')), '', 'Groupedit\'s datepicker is not readonly');
     });
   });
 });
@@ -160,8 +134,8 @@ test('flexberry-dropdown on readonly editform', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($dropdown.hasClass('disabled'), false, 'Dropdown don\'t readonly');
-      assert.strictEqual($dropdownFge.hasClass('disabled'), false, 'Groupedit\'s dropdown don\'t readonly');
+      assert.strictEqual($dropdown.hasClass('disabled'), false, 'Dropdown is not readonly');
+      assert.strictEqual($dropdownFge.hasClass('disabled'), false, 'Groupedit\'s dropdown is not readonly');
     });
   });
 });
@@ -184,18 +158,18 @@ test('flexberry-file on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($file.is('readonly'), false, 'Flexberry-file don\'t readonly');
+      assert.strictEqual($file.is('readonly'), false, 'Flexberry-file is not readonly');
       let $addButton = $('.not-in-groupedit label.flexberry-file-add-button');
-      assert.strictEqual($addButton.hasClass('disabled'), false, 'Flexberry-file\'s button \'Add\' don\'t readonly');
+      assert.strictEqual($addButton.hasClass('disabled'), false, 'Flexberry-file\'s button \'Add\' is not readonly');
       let $removeButton = $('.not-in-groupedit label.flexberry-file-remove-button');
       assert.strictEqual($removeButton.hasClass('disabled'), true, 'Flexberry-file has button \'Remove\'');
       let $uploadButton = $('.not-in-groupedit label.flexberry-file-upload-button');
       assert.strictEqual($uploadButton.hasClass('disabled'), true, 'Flexberry-file has button \'Upload\'');
       assert.strictEqual($downloadButton.hasClass('disabled'), true, 'Flexberry-file has button \'Download\'');
 
-      assert.strictEqual($fileFge.is('readonly'), false, 'Groupedit\'s flexberry-file don\'t readonly');
+      assert.strictEqual($fileFge.is('readonly'), false, 'Groupedit\'s flexberry-file is not readonly');
       let $addButtonFge = $('.in-groupedit label.flexberry-file-add-button');
-      assert.strictEqual($addButtonFge.hasClass('disabled'), false, 'Groupedit\'s flexberry-file\'s button \'Add\' don\'t readonly');
+      assert.strictEqual($addButtonFge.hasClass('disabled'), false, 'Groupedit\'s flexberry-file\'s button \'Add\' is not readonly');
       let $removeButtonFge = $('.in-groupedit label.flexberry-file-remove-button');
       assert.strictEqual($removeButtonFge.hasClass('disabled'), true, 'Groupedit\'s flexberry-file has button \'Remove\'');
       let $uploadButtonFge = $('.in-groupedit label.flexberry-file-upload-button');
@@ -233,9 +207,9 @@ test('flexberry-lookup on readonly edit form', (assert) => {
       assert.strictEqual($chooseButton.hasClass('disabled'), false, 'Flexberry-lookup\'s button \'Choose\' don\'t readonly');
       assert.strictEqual($removeButton.hasClass('disabled'), false, 'Flexberry-lookup\'s button \'Remove\' don\'t readonly');
 
-      assert.strictEqual($lookupFge.is('readonly'), false, 'Groupedit\'s lookup don\'t readonly');
-      assert.strictEqual($chooseButtonFge.hasClass('disabled'), false, 'Groupedit\'s flexberry-lookup\'s button \'Choose\' don\'t readonly');
-      assert.strictEqual($removeButtonFge.hasClass('disabled'), false, 'Groupedit\'s flexberry-lookup\'s button \'Remove\' don\'t readonly');
+      assert.strictEqual($lookupFge.is('readonly'), false, 'Groupedit\'s lookup is not readonly');
+      assert.strictEqual($chooseButtonFge.hasClass('disabled'), false, 'Groupedit\'s flexberry-lookup\'s button \'Choose\' is not readonly');
+      assert.strictEqual($removeButtonFge.hasClass('disabled'), false, 'Groupedit\'s flexberry-lookup\'s button \'Remove\' is not readonly');
     });
   });
 });
@@ -252,7 +226,7 @@ test('flexberry-lookup as dropdown on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($dropdown.hasClass('disabled'), false, 'Lookup as dropdown don\'t readonly');
+      assert.strictEqual($dropdown.hasClass('disabled'), false, 'Lookup as dropdown is not readonly');
     });
   });
 });
@@ -268,7 +242,7 @@ test('flexberry-groupedit on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($groupedit.hasClass('readonly'), false, 'Groupedit don\'t readonly');
+      assert.strictEqual($groupedit.hasClass('readonly'), false, 'Groupedit is not readonly');
     });
   });
 });
@@ -298,12 +272,12 @@ test('flexberry-groupedit\'s button on readonly edit form', (assert) => {
 
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
-      assert.strictEqual($addButton.is('disabled'), false, 'Flexberry-groupedit\'s button \'Add\' don\'t readonly');
-      assert.strictEqual($removeButton.is('disabled'), false, 'Flexberry-groupedit\'s button \'Remove\' don\'t readonly');
-      assert.strictEqual($checkbox.hasClass('read-only'), false, 'Flexberry-groupedit\'s checkbox helper don\'t readonly');
-      assert.strictEqual($removeButtonRow.hasClass('disabled'), false, 'Flexberry-groupedit\'s button \'Remove in row\' don\'t readonly');
-      assert.strictEqual($itemEditMenu.hasClass('disabled'), false, 'Flexberry-groupedit\'s item \'Edit\' in left menu don\'t readonly');
-      assert.strictEqual($itemDeleteMenu.hasClass('disabled'), false, 'Flexberry-groupedit\'s item \'Delete\' in left menu don\'t readonly');
+      assert.strictEqual($addButton.is('disabled'), false, 'Flexberry-groupedit\'s button \'Add\' is not readonly');
+      assert.strictEqual($removeButton.is('disabled'), false, 'Flexberry-groupedit\'s button \'Remove\' is not readonly');
+      assert.strictEqual($checkbox.hasClass('read-only'), false, 'Flexberry-groupedit\'s checkbox helper is not readonly');
+      assert.strictEqual($removeButtonRow.hasClass('disabled'), false, 'Flexberry-groupedit\'s button \'Remove in row\' is not readonly');
+      assert.strictEqual($itemEditMenu.hasClass('disabled'), false, 'Flexberry-groupedit\'s item \'Edit\' in left menu is not readonly');
+      assert.strictEqual($itemDeleteMenu.hasClass('disabled'), false, 'Flexberry-groupedit\'s item \'Delete\' in left menu is not readonly');
     });
   });
 });

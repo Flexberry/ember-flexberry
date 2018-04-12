@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Removed
+* `flexberry-datepicker` component. Please use `flexberry-simpledatetime` component instead or create an own component.
+
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.11.1-beta.1.

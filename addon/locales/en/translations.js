@@ -51,7 +51,7 @@ export default {
       'placeholder': '(no value)'
     },
 
-    'flexberry-datepicker': {
+    'flexberry-simpledatetime': {
       placeholder: '(no value)',
 
       // Months and days of week names are taken from moment.js.

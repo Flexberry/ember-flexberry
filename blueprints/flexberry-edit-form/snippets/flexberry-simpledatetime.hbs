@@ -1,8 +1,8 @@
 <div class="field">
   <label>{{<%= caption %>}}</label>
   {{
-    flexberry-datepicker
-    placeholder='(no value)'
+    flexberry-simpledatetime
+    type="date"
     readonly=<%= readonly %>
     value=model.<%= name %>
     class=(if model.errors.<%= name %> 'error' '')

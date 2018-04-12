@@ -322,7 +322,6 @@ test('dropdown with items represented by array renders properly', function(asser
   // Check component's captions and array.
   $dropdownItem.each(function(i) {
     let $item = $(this);
-    let itemCaption = itemsArray[i];
 
     // Check that the captions matches the array.
     assert.strictEqual($item.attr('data-value'), String(i), 'Component\'s item\'s сaptions matches the array');

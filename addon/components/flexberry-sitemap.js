@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
 
 /**
   Component for sitemap render from the object with links.
@@ -16,7 +16,7 @@ import Ember from 'ember';
   @class FlexberrySitemapComponent
   @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
 */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     Object with links description.
 

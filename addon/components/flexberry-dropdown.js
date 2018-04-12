@@ -1,10 +1,9 @@
 /**
   @module ember-flexberry
 */
-import { typeOf, isBlank, isNone } from '@ember/utils';
-import { computed, observer } from '@ember/object';
-import { A, isArray } from '@ember/array';
-import { on } from '@ember/object/evented';
+import { computed } from '@ember/object';
+import { isArray } from '@ember/array';
+import { run } from '@ember/runloop';
 import { or } from '@ember/object/computed';
 import $ from 'jquery';
 import FlexberryBaseComponent from './flexberry-base-component';

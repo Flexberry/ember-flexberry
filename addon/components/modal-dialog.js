@@ -5,7 +5,6 @@
 import $ from 'jquery';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import { run } from '@ember/runloop';
 import { or } from '@ember/object/computed';
 

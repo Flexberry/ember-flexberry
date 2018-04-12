@@ -135,13 +135,13 @@ let getRenderedDynamicActionArguments = function(actionArguments, renderingConte
   import TreeNodeObject from 'ember-flexberry/objects/flexberry-treenode';
 
   export default Controller.extend({
-    treeNodes: Ember.A([
+    treeNodes: A([
       FlexberryTreenodeObject.create({
         caption: 'Node 1 (with child nodes)',
         hasCheckbox: true,
         checkboxValue: false,
         iconClass: 'map icon',
-        nodes: Ember.A([
+        nodes: A([
           caption: 'Node 1.1 (leaf node)',
           hasCheckbox: true,
           checkboxValue: false,

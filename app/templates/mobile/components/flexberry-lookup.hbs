@@ -24,13 +24,15 @@
           {{placeholder}}
         {{/if}}
       </span>
-      {{#unless readonly}} 
+      {{#unless readonly}}
         <i class="chevron right icon"></i>
       {{/unless}}
     </div>
-    {{#unless readonly}} 
-      <button class="ui icon {{removeButtonClass}} {{if (or readonly isBlocked) " disabled"}} button" {{action "remove" removeData}}>
-        <i class="remove icon" ></i>
+    {{#unless readonly}}
+      <button
+        class="ui ui-clear {{if (or readonly isBlocked) " disabled"}} {{removeButtonClass}} button"
+        {{action "remove" removeData}}>
+        {{{removeText}}}
       </button>
     {{/unless}}
   </div>

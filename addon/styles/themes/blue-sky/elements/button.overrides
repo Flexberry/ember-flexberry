@@ -282,9 +282,10 @@ div.ui.secondary.menu.no-margin {
 }
 
 .flexberry-lookup {
-    .ui.fluid.action.input .ui.button.ui-change, .ui.fluid.action.input .ui.button.ui-clear {
+    .ui.action.input .ui.button.ui-change, .ui.action.input .ui.button.ui-clear {
         padding: 0em 0.3em 0em 0.3em;
         font-size: 1em;
+        border: none;
         i.icon {
          margin: 0px 3px 0px 3px;
        }

@@ -3,8 +3,8 @@ import $ from 'jquery';
 import { executeTest } from './execute-folv-test';
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
-import { Query } from 'ember-flexberry-data';
-const { Builder } = Query;
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import Builder from 'ember-flexberry-data/query/builder';
 
 /* eslint-disable no-unused-vars */
 executeTest('check delete button in row', (store, assert, app) => {
@@ -61,7 +61,7 @@ executeTest('check delete button in row', (store, assert, app) => {
           assert.ok(recordsIsDeleteBtnInRow, 'Each entry begins with \'' + uuid + '\' is delete with button in row');
 
           // Check that the records have been removed into store.
-          let builder2 = new Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid).count();
+          let builder2 = new Builder(store, modelName).where('name', FilterOperator.Eq, uuid).count();
           let timeout = 500;
           later((function() {
             let done2 = assert.async();

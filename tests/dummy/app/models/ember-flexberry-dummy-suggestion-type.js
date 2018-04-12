@@ -1,7 +1,8 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';
 
-var Model = Projection.Model.extend({
+var Model = EmberFlexberryDataModel.extend({
   name: DS.attr('string'),
   moderated: DS.attr('boolean'),
 
@@ -30,19 +31,19 @@ var Model = Projection.Model.extend({
 
 // Edit form projection.
 Model.defineProjection('SuggestionTypeE', 'ember-flexberry-dummy-suggestion-type', {
-  name: Projection.attr('Name'),
-  moderated: Projection.attr('Moderated'),
-  parent: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent', {
-    name: Projection.attr('Name', {
+  name: attr('Name'),
+  moderated: attr('Moderated'),
+  parent: belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent', {
+    name: attr('Name', {
       hidden: true
     })
   }, {
     displayMemberPath: 'name'
   }),
-  localizedTypes: Projection.hasMany('ember-flexberry-dummy-localized-suggestion-type', 'Localized types', {
-    name: Projection.attr('Name'),
-    localization: Projection.belongsTo('ember-flexberry-dummy-localization', 'Localization', {
-      name: Projection.attr('Name', {
+  localizedTypes: hasMany('ember-flexberry-dummy-localized-suggestion-type', 'Localized types', {
+    name: attr('Name'),
+    localization: belongsTo('ember-flexberry-dummy-localization', 'Localization', {
+      name: attr('Name', {
         hidden: true
       })
     }, {
@@ -53,10 +54,10 @@ Model.defineProjection('SuggestionTypeE', 'ember-flexberry-dummy-suggestion-type
 
 // List form projection.
 Model.defineProjection('SuggestionTypeL', 'ember-flexberry-dummy-suggestion-type', {
-  name: Projection.attr('Name'),
-  moderated: Projection.attr('Moderated'),
-  parent: Projection.belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent', {
-    name: Projection.attr('Name', {
+  name: attr('Name'),
+  moderated: attr('Moderated'),
+  parent: belongsTo('ember-flexberry-dummy-suggestion-type', 'Parent', {
+    name: attr('Name', {
       hidden: true
     })
   }, {
@@ -66,26 +67,26 @@ Model.defineProjection('SuggestionTypeL', 'ember-flexberry-dummy-suggestion-type
 
 // Projection for lookup example on window customization.
 Model.defineProjection('SettingLookupExampleView', 'ember-flexberry-dummy-suggestion-type', {
-  name: Projection.attr('Name'),
-  moderated: Projection.attr('Moderated')
+  name: attr('Name'),
+  moderated: attr('Moderated')
 });
 
 // Projection for lookup example on window customization.
 Model.defineProjection('CustomizeLookupWindowExampleView', 'ember-flexberry-dummy-suggestion-type', {
-  name: Projection.attr('Name'),
-  moderated: Projection.attr('Moderated')
+  name: attr('Name'),
+  moderated: attr('Moderated')
 });
 
 // Projection for lookup with limit function example.
 Model.defineProjection('LookupWithLimitFunctionExampleView', 'ember-flexberry-dummy-suggestion-type', {
-  name: Projection.attr('Name'),
-  moderated: Projection.attr('Moderated')
+  name: attr('Name'),
+  moderated: attr('Moderated')
 });
 
 // Projection for lookup in dropdown mode example.
 Model.defineProjection('DropDownLookupExampleView', 'ember-flexberry-dummy-suggestion-type', {
-  name: Projection.attr('Name'),
-  moderated: Projection.attr('Moderated')
+  name: attr('Name'),
+  moderated: attr('Moderated')
 });
 
 export default Model;

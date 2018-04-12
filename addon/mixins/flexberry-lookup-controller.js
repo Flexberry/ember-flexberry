@@ -8,10 +8,8 @@ import { merge } from '@ember/polyfills';
 import { get } from '@ember/object';
 import { assert, debug } from '@ember/debug';
 import ReloadListMixin from '../mixins/reload-list-mixin';
-import { Query } from 'ember-flexberry-data';
+import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 import serializeSortingParam from '../utils/serialize-sorting-param';
-
-const { BasePredicate } = Query;
 
 /**
   Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support work with modal windows at lookups.

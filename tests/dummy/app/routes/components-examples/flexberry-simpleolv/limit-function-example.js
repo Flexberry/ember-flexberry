@@ -1,8 +1,8 @@
 import { merge } from '@ember/polyfills';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-import { Query } from 'ember-flexberry-data';
-
-const { StringPredicate } = Query;
+import Builder from 'ember-flexberry-data/query/builder';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 export default ListFormRoute.extend({
 
@@ -109,7 +109,7 @@ export default ListFormRoute.extend({
 
     let store = this.get('store');
 
-    let query = new Query.Builder(store).from(this.get('modelName')).where('address', Query.FilterOperator.Neq, '');
+    let query = new Builder(store).from(this.get('modelName')).where('address', FilterOperator.Neq, '');
 
     store.query('ember-flexberry-dummy-suggestion', query.build()).then((limitdata) => {
       let limitTypesArr = limitdata.toArray();

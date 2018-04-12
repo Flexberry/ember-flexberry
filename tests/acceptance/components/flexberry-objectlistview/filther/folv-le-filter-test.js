@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
 
 executeTest('check le filter', (store, assert, app) => {
   assert.expect(3);
@@ -13,7 +13,7 @@ executeTest('check le filter', (store, assert, app) => {
   visit(path + '?perPage=500');
   andThen(function() {
     assert.equal(currentPath(), path);
-    let builder2 = new Query.Builder(store).from(modelName).top(1);
+    let builder2 = new Builder(store).from(modelName).top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertParametr = arr.objectAt(0).get('votes') + 1;

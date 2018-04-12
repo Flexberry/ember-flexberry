@@ -1,5 +1,6 @@
 import RSVP from 'rsvp';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 
 export default ListFormRoute.extend({
@@ -64,10 +65,10 @@ export default ListFormRoute.extend({
     return new RSVP.Promise((resolve, reject) => {
       let store = this.get('store');
 
-      let query = new Query.Builder(store)
+      let query = new Builder(store)
         .from('ember-flexberry-dummy-suggestion')
         .select('address')
-        .where('address', Query.FilterOperator.Neq, null)
+        .where('address', FilterOperator.Neq, null)
         .top(1);
 
       store.query('ember-flexberry-dummy-suggestion', query.build()).then((suggestion) => {

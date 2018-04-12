@@ -1,7 +1,6 @@
 import { set } from '@ember/object';
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-import { Query } from 'ember-flexberry-data';
-const { Builder } = Query;
+import Builder from 'ember-flexberry-data/query/builder';
 
 export default EditFormRoute.extend({
   /**

@@ -8,9 +8,7 @@ import $ from 'jquery';
 import { isNone } from '@ember/utils';
 import { set } from '@ember/object';
 import { A } from '@ember/array';
-import { Query } from 'ember-flexberry-data';
-
-const { Builder } = Query;
+import Builder from 'ember-flexberry-data/query/builder';
 
 /**
   Mixin for [Ember.Route](http://emberjs.com/api/classes/Ember.Route.html) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.

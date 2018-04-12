@@ -1,6 +1,6 @@
 import Mixin from '@ember/object/mixin';
 import DS from 'ember-data';
-<%if(projections) {%>import { Projection } from 'ember-flexberry-data';<%}%>
+<%if(projections) {%>import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';<%}%>
 export let Model = Mixin.create({
 <%= model %>
 });<%if(parentModelName) {%>

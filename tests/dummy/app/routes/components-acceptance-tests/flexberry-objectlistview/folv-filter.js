@@ -1,5 +1,6 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-import { Query } from 'ember-flexberry-data';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 
 export default ListFormRoute.extend({
   /**
@@ -51,7 +52,7 @@ export default ListFormRoute.extend({
    */
   /* eslint-disable no-unused-vars */
   objectListViewLimitPredicate: function(options) {
-    let limitFunction = new Query.SimplePredicate('address', Query.FilterOperator.Neq, undefined);
+    let limitFunction = new SimplePredicate('address', FilterOperator.Neq, undefined);
     return limitFunction;
   },
   /* eslint-enable no-unused-vars */

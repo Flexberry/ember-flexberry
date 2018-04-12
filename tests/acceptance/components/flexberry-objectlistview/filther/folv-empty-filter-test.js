@@ -3,7 +3,8 @@ import { A } from '@ember/array';
 import $ from 'jquery';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 
 executeTest('check empty filter', (store, assert, app) => {
   assert.expect(3);
@@ -12,7 +13,7 @@ executeTest('check empty filter', (store, assert, app) => {
   let filtreInsertOperation = 'empty';
   let filtreInsertParametr = '';
   run(() => {
-    let builder = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Eq, '');
+    let builder = new Builder(store).from(modelName).where('address', FilterOperator.Eq, '');
     store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
 

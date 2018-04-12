@@ -4,7 +4,8 @@ import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
 import { assert as emberAssert } from '@ember/debug';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 import I18nEnLocale from 'ember-flexberry/locales/en/translations';
@@ -156,10 +157,10 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
 
   // First, load model with existing master.
   let modelName = 'ember-flexberry-dummy-suggestion-type';
-  let query = new Query.Builder(store)
+  let query = new Builder(store)
     .from(modelName)
     .selectByProjection('SuggestionTypeE')
-    .where('parent', Query.FilterOperator.Neq, null)
+    .where('parent', FilterOperator.Neq, null)
     .top(1);
 
   let asyncOperationsCompleted = assert.async();

@@ -1,7 +1,8 @@
-import { Projection, Offline } from 'ember-flexberry-data';
+import StoreMixin from 'ember-flexberry-data/mixins/store';
+import BaseStore from 'ember-flexberry-data/stores/base-store';
 import config from '../config/environment';
 
-export default Offline.Store.reopen(Projection.StoreMixin, {
+export default BaseStore.reopen(StoreMixin, {
   init() {
     this.set('offlineSchema', {
       [config.APP.offline.dbName]: {

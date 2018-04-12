@@ -4,8 +4,8 @@ import { run } from '@ember/runloop';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
-import { Query } from 'ember-flexberry-data';
-const { StringPredicate } = Query;
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import Builder from 'ember-flexberry-data/query/builder';
 
 let openLookupDialog = function($lookup) {
   return new RSVP.Promise((resolve, reject) => {
@@ -205,7 +205,7 @@ test('changes in model\'s value causes changes in component\'s specified \'belon
     let suggestionType;
 
     // Create limit for query.
-    let query = new Query.Builder(store)
+    let query = new Builder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SettingLookupExampleView');
 
@@ -254,7 +254,7 @@ test('flexberry-lookup limit function test', function(assert) {
     let queryPredicate = new StringPredicate('name').contains(limitType);
 
     // Create limit for query.
-    let query = new Query.Builder(store)
+    let query = new Builder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SettingLookupExampleView')
       .where(queryPredicate);
@@ -301,7 +301,7 @@ test('flexberry-lookup limit function test', function(assert) {
 
 test('flexberry-lookup actions test', function(assert) {
   assert.expect(5);
-  
+
   let controller = app.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
 
   // Remap remove action.

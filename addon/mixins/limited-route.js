@@ -4,9 +4,11 @@
 
 import Mixin from '@ember/object/mixin';
 import { set } from '@ember/object';
-import { Query } from 'ember-flexberry-data';
-
-const { Condition, SimplePredicate, StringPredicate, ComplexPredicate, DatePredicate } = Query;
+import Condition from 'ember-flexberry-data/query/condition';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { DatePredicate } from 'ember-flexberry-data/query/predicate';
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
   Mixin for route, that restrictions on the list form.

@@ -1,9 +1,7 @@
 import { set } from '@ember/object';
 import BaseEditFormController from 'ember-flexberry/controllers/edit-form';
 import EditFormControllerOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-controller-operations-indication';
-import { Query } from 'ember-flexberry-data';
-
-const { StringPredicate } = Query;
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 export default BaseEditFormController.extend(EditFormControllerOperationsIndicationMixin, {
   /**

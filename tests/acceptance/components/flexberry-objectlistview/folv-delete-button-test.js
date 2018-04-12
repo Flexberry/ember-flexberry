@@ -7,8 +7,8 @@ import { loadingList } from './folv-tests-functions';
 
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
 
-import { Query } from 'ember-flexberry-data';
-const { Builder } = Query;
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import Builder from 'ember-flexberry-data/query/builder';
 
 /* eslint-disable no-unused-vars */
 executeTest('check delete using button on toolbar', (store, assert, app) => {
@@ -88,7 +88,7 @@ executeTest('check delete using button on toolbar', (store, assert, app) => {
             assert.ok(recordsIsDelete, 'Each entry begins with \'' + uuid + '\' is delete with button in toolbar button');
 
             // Check that the records have been removed into store.
-            let builder2 = new Builder(store).from(modelName).where('name', Query.FilterOperator.Eq, uuid).count();
+            let builder2 = new Builder(store).from(modelName).where('name', FilterOperator.Eq, uuid).count();
             let done3 = assert.async();
             store.query(modelName, builder2.build()).then((result) => {
               assert.notOk(result.meta.count, 'records \'' + uuid + '\'not found in store');

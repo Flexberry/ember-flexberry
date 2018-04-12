@@ -1,4 +1,4 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import StoreMixin from 'ember-flexberry-data/mixins/store';
 
-export default DS.Store.reopen(Projection.StoreMixin);
+export default DS.Store.reopen(StoreMixin);

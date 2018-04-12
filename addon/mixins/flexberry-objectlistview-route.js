@@ -102,9 +102,7 @@ export default Mixin.create({
       ``` js
       // app/routes/limit-function-example.js
       import ListFormRoute from 'ember-flexberry/routes/list-form';
-      import { Query } from 'ember-flexberry-data';
-
-      const { StringPredicate } = Query;
+      import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
       export default ListFormRoute.extend({
         modelProjection: 'FolvWithLimitFunctionExampleView',

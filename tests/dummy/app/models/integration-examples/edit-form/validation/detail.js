@@ -1,7 +1,8 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr } from 'ember-flexberry-data/utils/attributes';
 
-let Model = Projection.Model.extend({
+let Model = EmberFlexberryDataModel.extend({
   // Inversed relationship for integration-examples/edit-form/validation/base.details.
   // It's not a property for flexberry-lookup component.
   aggregator: DS.belongsTo('integration-examples/edit-form/validation/base', {
@@ -55,9 +56,9 @@ let Model = Projection.Model.extend({
 
 // Edit form projection.
 Model.defineProjection('DetailE', 'integration-examples/edit-form/validation/detail', {
-  flag: Projection.attr('Flag'),
-  number: Projection.attr('Number'),
-  text: Projection.attr('Text')
+  flag: attr('Flag'),
+  number: attr('Number'),
+  text: attr('Text')
 });
 
 export default Model;

@@ -5,7 +5,7 @@
 import Mixin from '@ember/object/mixin';
 import RSVP from 'rsvp';
 import { getOwner } from '@ember/application';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
 
 /**
   Mixin for {{#crossLink "EditFormRoute"}}{{/crossLink}}, which provides support locking.
@@ -89,7 +89,7 @@ export default Mixin.create({
       let userService = getOwner(this).lookup('service:user');
       result.then((parentResult) => {
         if (params.id) {
-          let builder = new Query.Builder(this.store)
+          let builder = new Builder(this.store)
             .from('new-platform-flexberry-services-lock')
             .selectByProjection('LockL')
             .byId(`'${params.id}'`);

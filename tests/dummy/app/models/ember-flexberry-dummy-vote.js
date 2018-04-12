@@ -1,7 +1,8 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
 
-var Model = Projection.Model.extend({
+var Model = EmberFlexberryDataModel.extend({
   // Inversed relationship for ember-flexberry-dummy-suggestion.userVotes.
   // It's not a property for flexberry-lookup component.
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
@@ -20,9 +21,9 @@ var Model = Projection.Model.extend({
 
 // Edit form projection.
 Model.defineProjection('VoteE', 'ember-flexberry-dummy-vote', {
-  voteType: Projection.attr('Vote type'),
-  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Projection.attr('Name', {
+  voteType: attr('Vote type'),
+  author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: attr('Name', {
       hidden: true
     })
   }, {

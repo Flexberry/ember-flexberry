@@ -1,7 +1,8 @@
 import $ from 'jquery';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
-import { Query } from 'ember-flexberry-data';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import Builder from 'ember-flexberry-data/query/builder';
 
 executeTest('check without operation filter', (store, assert, app) => {
   assert.expect(4);
@@ -13,7 +14,7 @@ executeTest('check without operation filter', (store, assert, app) => {
   visit(path);
   andThen(function() {
     assert.equal(currentPath(), path);
-    let builder2 = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Neq, '').top(1);
+    let builder2 = new Builder(store).from(modelName).where('address', FilterOperator.Neq, '').top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertParametr = arr.objectAt(0).get('address');

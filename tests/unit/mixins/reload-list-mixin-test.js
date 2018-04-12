@@ -4,15 +4,12 @@ import DS from 'ember-data';
 import ReloadListMixin from 'ember-flexberry/mixins/reload-list-mixin';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
-import { Projection } from 'ember-flexberry-data';
-import { Serializer } from 'ember-flexberry-data';
-import { Query } from 'ember-flexberry-data';
-
-const {
-  SimplePredicate,
-  StringPredicate,
-  ComplexPredicate
-} = Query;
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo } from 'ember-flexberry-data/utils/attributes';
+import OdataSerializer from 'ember-flexberry-data/serializers/odata';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 module('Unit | Mixin | reload list mixin');
 
@@ -23,15 +20,15 @@ test('it works', function(assert) {
 });
 
 test('it properly generates simple filter predicate', function(assert) {
-  let Model = Projection.Model.extend({
+  let Model = EmberFlexberryDataModel.extend({
     firstName: DS.attr('string'),
   });
 
   Model.defineProjection('EmployeeE', 'employeeTest', {
-    firstName: Projection.attr()
+    firstName: attr()
   });
 
-  let modelSerializer = Serializer.Odata.extend({});
+  let modelSerializer = OdataSerializer.extend({});
   let projection = get(Model, 'projections').EmployeeE;
 
   let app = startApp();
@@ -59,7 +56,7 @@ test('it properly generates simple filter predicate', function(assert) {
 });
 
 test('it properly generates complex filter predicate', function(assert) {
-  let Model0 = Projection.Model.extend({
+  let Model0 = EmberFlexberryDataModel.extend({
     firstName: DS.attr('string'),
     lastName: DS.attr('string'),
     dateField: DS.attr('date'),
@@ -69,7 +66,7 @@ test('it properly generates complex filter predicate', function(assert) {
   let app = startApp();
   app.register('model:employeeTest2', Model0);
 
-  let Model = Projection.Model.extend({
+  let Model = EmberFlexberryDataModel.extend({
     firstName: DS.attr('string'),
     lastName: DS.attr('string'),
     dateField: DS.attr('date'),
@@ -80,12 +77,12 @@ test('it properly generates complex filter predicate', function(assert) {
   app.register('model:employeeTest', Model);
 
   Model.defineProjection('EmployeeE', 'employeeTest', {
-    firstName: Projection.attr(),
-    lastName: Projection.attr(),
-    dateField: Projection.attr(),
-    numberField: Projection.attr(),
-    reportsTo: Projection.belongsTo('employeeTest2', 'Reports To', {
-      firstName: Projection.attr('Reports To - First Name', {
+    firstName: attr(),
+    lastName: attr(),
+    dateField: attr(),
+    numberField: attr(),
+    reportsTo: belongsTo('employeeTest2', 'Reports To', {
+      firstName: attr('Reports To - First Name', {
         hidden: true
       })
     }, {
@@ -93,8 +90,8 @@ test('it properly generates complex filter predicate', function(assert) {
     })
   });
 
-  let modelSerializer = Serializer.Odata.extend({});
-  let modelSerializer0 = Serializer.Odata.extend({});
+  let modelSerializer = OdataSerializer.extend({});
+  let modelSerializer0 = OdataSerializer.extend({});
   let projection = get(Model, 'projections').EmployeeE;
 
   app.register('serializer:employeeTest2', modelSerializer0);

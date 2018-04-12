@@ -1,9 +1,9 @@
 import Controller from '@ember/controller';
 import $ from 'jquery';
 import config from '../../config/environment';
-import { Query } from 'ember-flexberry-data';
 import getSerializedDateValue from 'ember-flexberry-data/utils/get-serialized-date-value';
-const { Builder } = Query;
+import Builder from 'ember-flexberry-data/query/builder';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 
 export default Controller.extend({
   logRecordsTotalCount: 0,
@@ -22,7 +22,7 @@ export default Controller.extend({
       if (_this.logRecordsOlderDate) {
         builder = new Builder(this.store, modelName)
           .top(1)
-          .where('timestamp', Query.FilterOperator.Leq, _this.logRecordsOlderDate)
+          .where('timestamp', FilterOperator.Leq, _this.logRecordsOlderDate)
           .count();
         this.store.query(modelName, builder.build()).then((data) => {
           _this.set('logRecordsOlderDateCount', data.meta.count);

@@ -1,7 +1,8 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';
 
-var Model = Projection.Model.extend({
+var Model = EmberFlexberryDataModel.extend({
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
     inverse: 'comments',
     async: false
@@ -35,25 +36,25 @@ var Model = Projection.Model.extend({
 
 // Edit form projection.
 Model.defineProjection('CommentE', 'ember-flexberry-dummy-comment', {
-  suggestion: Projection.belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', {
-    address: Projection.attr('Address', {
+  suggestion: belongsTo('ember-flexberry-dummy-suggestion', 'Suggestion', {
+    address: attr('Address', {
       hidden: true
     })
   }),
-  text: Projection.attr('Text'),
-  votes: Projection.attr('Votes'),
-  moderated: Projection.attr('Moderated'),
-  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Projection.attr('Name', {
+  text: attr('Text'),
+  votes: attr('Votes'),
+  moderated: attr('Moderated'),
+  author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: attr('Name', {
       hidden: true
     })
   }, {
     displayMemberPath: 'name'
   }),
-  userVotes: Projection.hasMany('ember-flexberry-dummy-comment-vote', 'User votes', {
-    voteType: Projection.attr('Vote type'),
-    applicationUser: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
-      name: Projection.attr('Name', {
+  userVotes: hasMany('ember-flexberry-dummy-comment-vote', 'User votes', {
+    voteType: attr('Vote type'),
+    applicationUser: belongsTo('ember-flexberry-dummy-application-user', 'Application user', {
+      name: attr('Name', {
         hidden: true
       })
     }, {
@@ -64,11 +65,11 @@ Model.defineProjection('CommentE', 'ember-flexberry-dummy-comment', {
 
 // Detail's list projection.
 Model.defineProjection('CommentD', 'ember-flexberry-dummy-comment', {
-  text: Projection.attr('Text'),
-  votes: Projection.attr('Votes'),
-  moderated: Projection.attr('Moderated'),
-  author: Projection.belongsTo('ember-flexberry-dummy-application-user', 'Author', {
-    name: Projection.attr('Name', {
+  text: attr('Text'),
+  votes: attr('Votes'),
+  moderated: attr('Moderated'),
+  author: belongsTo('ember-flexberry-dummy-application-user', 'Author', {
+    name: attr('Name', {
       hidden: true
     })
   }, {

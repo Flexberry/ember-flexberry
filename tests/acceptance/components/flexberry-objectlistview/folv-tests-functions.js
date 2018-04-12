@@ -2,7 +2,8 @@ import $ from 'jquery';
 import { A } from '@ember/array';
 import { later, run } from '@ember/runloop';
 import RSVP from 'rsvp';
-import { Query } from 'ember-flexberry-data';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import Builder from 'ember-flexberry-data/query/builder';
 
 // Function for waiting list loading.
 export function loadingList($ctrlForClick, list, records) {
@@ -123,7 +124,7 @@ export function checkSortingList(store, projection, $olv, ordr) {
   return new RSVP.Promise((resolve) => {
     run(() => {
       let modelName = projection.modelName;
-      let builder = new Query.Builder(store).from(modelName).selectByProjection(projection.projectionName);
+      let builder = new Builder(store).from(modelName).selectByProjection(projection.projectionName);
       builder = !ordr ? builder : builder.orderBy(ordr);
       store.query(modelName, builder.build()).then((records) => {
         let recordsArr = records.toArray();
@@ -146,7 +147,7 @@ export function addRecords(store, modelName, uuid) {
   let listCount = 55;
   run(() => {
 
-    let builder = new Query.Builder(store).from(modelName).count();
+    let builder = new Builder(store).from(modelName).count();
     store.query(modelName, builder.build()).then((result) => {
       let howAddRec = listCount - result.meta.count;
       let newRecords = A();
@@ -165,7 +166,7 @@ export function addRecords(store, modelName, uuid) {
 
 // Function for deleting records.
 export function deleteRecords(store, modelName, uuid) {
-  let builder = new Query.Builder(store, modelName).where('name', Query.FilterOperator.Eq, uuid);
+  let builder = new Builder(store, modelName).where('name', FilterOperator.Eq, uuid);
   return store.query(modelName, builder.build()).then(r => RSVP.all(r.map(i => i.destroyRecord())));
 }
 

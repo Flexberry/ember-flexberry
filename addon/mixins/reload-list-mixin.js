@@ -9,17 +9,14 @@ import { assert } from '@ember/debug';
 import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
 import { A } from '@ember/array';
-import { Query } from 'ember-flexberry-data';
-
-const {
-  Builder,
-  Condition,
-  BasePredicate,
-  SimplePredicate,
-  StringPredicate,
-  ComplexPredicate,
-  DatePredicate
-} = Query;
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
+import Builder from 'ember-flexberry-data/query/builder';
+import Condition from 'ember-flexberry-data/query/condition';
+import { BasePredicate } from 'ember-flexberry-data/query/predicate';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { DatePredicate } from 'ember-flexberry-data/query/predicate';
+import { ComplexPredicate } from 'ember-flexberry-data/query/predicate';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 
 /**
  * Mixin for {{#crossLink "DS.Controller"}}Controller{{/crossLink}} to support data reload.
@@ -345,11 +342,11 @@ export default Mixin.create({
       let sp1 = predicate;
       let sp2;
       if (predicate instanceof SimplePredicate) {
-        sp2 = new SimplePredicate(sp1._attributePath, Query.FilterOperator.Eq, null);
+        sp2 = new SimplePredicate(sp1._attributePath, FilterOperator.Eq, null);
       }
 
       if (predicate instanceof DatePredicate) {
-        sp2 = new DatePredicate(sp1._attributePath, Query.FilterOperator.Eq, null);
+        sp2 = new DatePredicate(sp1._attributePath, FilterOperator.Eq, null);
       }
 
       result = sp2 ? new ComplexPredicate(Condition.Or, sp1, sp2) : sp1;

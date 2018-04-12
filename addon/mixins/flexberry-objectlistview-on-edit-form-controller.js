@@ -8,7 +8,7 @@ import { on } from '@ember/object/evented';
 import { set, computed, observer } from '@ember/object';
 import { run, once  } from '@ember/runloop';
 import { inject as service } from '@ember/service';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
 import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
@@ -228,7 +228,7 @@ export default Mixin.create(PredicateFromFiltersMixin, {
       let hierarchicalAttribute = this.get('hierarchicalAttribute');
       let modelName = this.get('folvModelName');
       let projectionName = this.get('folvProjection');
-      let builder = new Query.Builder(this.store)
+      let builder = new Builder(this.store)
         .from(modelName)
         .selectByProjection(projectionName)
         .where(hierarchicalAttribute, 'eq', id);

@@ -168,8 +168,8 @@ export default class ModelBlueprint {
         TAB + TAB + "@private\n" +
         TAB + TAB + "@example\n" +
         TAB + TAB + TAB + "```javascript\n" +
-        TAB + TAB + TAB + `_${attr.name}Changed: Ember.on('init', Ember.observer('${attr.name}', function() {\n` +
-        TAB + TAB + TAB + TAB + `Ember.run.once(this, '_${attr.name}Compute');\n` +
+        TAB + TAB + TAB + `_${attr.name}Changed: on('init', observer('${attr.name}', function() {\n` +
+        TAB + TAB + TAB + TAB + `once(this, '_${attr.name}Compute');\n` +
         TAB + TAB + TAB + "}))\n" +
         TAB + TAB + TAB + "```\n" +
         TAB + "*/\n" +
@@ -197,7 +197,7 @@ export default class ModelBlueprint {
       TAB + TAB + "let parentValidations = this._super();\n" +
       TAB + TAB + "let thisValidations = {\n" +
       validationsFunc + TAB + TAB + "};\n" +
-      TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+      TAB + TAB + "return $.extend(true, {}, parentValidations, thisValidations);\n" +
       TAB + "}";
     let initFunction =
       "init: function () {\n" +

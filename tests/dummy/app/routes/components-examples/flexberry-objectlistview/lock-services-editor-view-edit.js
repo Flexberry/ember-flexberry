@@ -1,10 +1,8 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
 import EditFormRouteOperationsIndicationMixin from 'ember-flexberry/mixins/edit-form-route-operations-indication';
+import LockServicesMixineRoute from 'ember-flexberry/mixins/lock-route';
 
-import { Query } from 'ember-flexberry-data';
-import Ember from 'ember';
-
-export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
+export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, LockServicesMixineRoute, {
   /**
     Name of model projection to be used as record's properties limitation.
 
@@ -78,28 +76,37 @@ export default EditFormRoute.extend(EditFormRouteOperationsIndicationMixin, {
    */
   modelName: 'ember-flexberry-dummy-suggestion',
 
-  model(params) {
-    let userService = Ember.getOwner(this).lookup('service:user');
-    let modelName = 'new-platform-flexberry-services-lock';
+  blockedByUser: undefined,
 
-    let builder = new Query.Builder(this.store)
-      .from('new-platform-flexberry-services-lock')
-      .selectByProjection('LockL')
-      .byId(`'${params.id}'`);
+  /**
+    This function will be called to solve open form read only or transition to parent route.
+    You can override function for custom behavior.
 
-    this.store.query(modelName, builder.build()).then((lock) => {
-      if (lock.content.length) {
-        let lockUser = lock.objectAt(0).get('userName');
-        if (lockUser !== userService.getCurrentUserName()) {
-          this.set('controller.blockedByUser', lockUser);
-        } else {
-          this.set('controller.blockedByUser', undefined);
-        }
-      } else {
-        this.set('controller.blockedByUser', undefined);
-      }
-    });
+    @method openReadOnly
+    @param {String} lockUserName
+    @return {Promise}
+    @for EditFormRoute
+  */
 
+  openReadOnly(lockUserName) {
+    this.set('blockedByUser', lockUserName);
     return this._super(...arguments);
+  },
+
+  /**
+    Load limit accessible values for lookup.
+
+    @method setupController
+  */
+  setupController() {
+    this._super(...arguments);
+
+    this.set('controller.blockedByUser', this.get('blockedByUser'));
+  },
+
+  resetController(controller, isExiting, transition) {
+    this._super(...arguments);
+
+    this.set('blockedByUser', undefined);
   }
 });

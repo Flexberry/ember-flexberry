@@ -58,10 +58,8 @@ export default Ember.Mixin.create({
             this.set('_currentLock', null);
           });
         });
-      } else {
-        this.controller.set('readonly', false);
       }
-    },
+    }
   },
 
   /**

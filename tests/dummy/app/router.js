@@ -104,6 +104,12 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/lock-services-editor-view-list');
   this.route('components-examples/flexberry-objectlistview/lock-services-editor-view-edit',
   { path: 'components-examples/flexberry-objectlistview/lock-services-editor-view-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-cancel');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-immediately');
 
   this.route('components-examples/flexberry-simpleolv/settings-example');
   this.route('components-examples/flexberry-simpleolv/toolbar-custom-buttons-example');

@@ -468,6 +468,11 @@ export default Ember.Controller.extend({
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.object-list-view-resize.title'),
             children: null
+          }, {
+            link: 'ember-flexberry-dummy-study-record-obj-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.example-flexberry-simpleolv.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.example-flexberry-simpleolv.title'),
+            children: null
           }]
         }, {
           link: null,
@@ -506,6 +511,11 @@ export default Ember.Controller.extend({
             link: 'components-examples/flexberry-simpleolv/selected-rows',
             caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.caption'),
             title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.title'),
+            children: null
+          }, {
+            link: 'ember-flexberry-dummy-study-record-s-list',
+            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.example-flexberry-simpleolv.caption'),
+            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.example-flexberry-simpleolv.title'),
             children: null
           }]
         }, {

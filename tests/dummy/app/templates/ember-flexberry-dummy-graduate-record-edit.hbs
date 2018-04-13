@@ -1,0 +1,92 @@
+<h3 class="ui header">{{t 'forms.ember-flexberry-dummy-graduate-record-edit.caption'}}</h3>
+
+{{#if errorMessages}}
+  {{#each errorMessages as |currentError|}}
+    {{ui-message
+      type='error'
+      closeable=true
+      visible=true
+      title='Error occurred'
+      message=currentError
+    }}
+  {{/each}}
+{{/if}}
+<form class="ui {{state}} form flexberry-vertical-form" role="form">
+  <div class="field">
+    <div class="sixteen wide">
+      {{flexberry-validationsummary errors=model.errors}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="flexberry-edit-panel">
+      {{#unless readonly}}
+        <button type="submit" class="ui button save-button" {{action 'save'}}>
+          {{t "forms.edit-form.save-button-text"}}
+        </button>
+		{{#unless (and hasParentRoute (not saveBeforeRouteLeave))}}
+          <button type="submit" class="ui button save-close-button" {{action "saveAndClose"}}>{{t "forms.edit-form.saveAndClose-button-text"}}</button>
+        {{/unless}}
+        {{#unless model.isNew}}
+          <button type="submit" class="ui button save-del-button" {{action 'delete'}}>
+            {{t "forms.edit-form.delete-button-text"}}
+          </button>
+        {{/unless}}
+      {{/unless}}
+      <button type="submit" class="ui button close-button" {{action 'close'}}>
+        {{t "forms.edit-form.close-button-text"}}
+      </button>
+    </div>
+  </div>
+  <div class="field">
+  {{
+    flexberry-field
+    placeholder=(t 'components.flexberry-field.placeholder')
+    readonly=readonly
+    required=true
+    value=model.grFIO
+    class=(if model.errors.grFIO 'error' '')
+    label=(t 'forms.ember-flexberry-dummy-graduate-record-edit.grFIO-caption')
+  }}
+  {{flexberry-validationmessage error=model.errors.grFIO pointing="pointing"}}
+</div>
+
+<div class="field">
+  {{
+    flexberry-field
+    placeholder=(t 'components.flexberry-field.placeholder')
+    readonly=readonly
+    required=true
+    value=model.grYearGrad
+    class=(if model.errors.grYearGrad 'error' '')
+    label=(t 'forms.ember-flexberry-dummy-graduate-record-edit.grYearGrad-caption')
+  }}
+  {{flexberry-validationmessage error=model.errors.grYearGrad pointing="pointing"}}
+</div>
+
+<div class="field">
+  {{
+    flexberry-field
+    placeholder=(t 'components.flexberry-field.placeholder')
+    readonly=readonly
+    required=true
+    value=model.uniquelD
+    class=(if model.errors.uniquelD 'error' '')
+    label=(t 'forms.ember-flexberry-dummy-graduate-record-edit.uniquelD-caption')
+  }}
+  {{flexberry-validationmessage error=model.errors.uniquelD pointing="pointing"}}
+</div>
+
+<div class="field">
+  {{
+    flexberry-field
+    placeholder=(t 'components.flexberry-field.placeholder')
+    readonly=readonly
+    required=true
+    value=model.objectPK
+    class=(if model.errors.objectPK 'error' '')
+    label=(t 'forms.ember-flexberry-dummy-graduate-record-edit.objectPK-caption')
+  }}
+  {{flexberry-validationmessage error=model.errors.objectPK pointing="pointing"}}
+</div>
+
+</form>

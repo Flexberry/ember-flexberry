@@ -73,6 +73,9 @@ export default Ember.Mixin.create({
     if (message.indexOf('Ember Data Request') !== -1 && message.indexOf('returned a 0 Payload (Empty Content-Type)') !== -1) {
       errorData.name = 'forms.error-form.error';
       errorData.message = 'forms.error-form.ember-data-request';
+      errorData.connError = true;
+    } else {
+      errorData.connError = false;
     }
   }
 });

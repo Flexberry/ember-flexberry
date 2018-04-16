@@ -10,12 +10,16 @@
           <div class="ui bulleted list">
             {{#each error as |err|}}
               {{#if (eq err.state "rejected")}}
-                <div class="item">{{t err.reason.message}}</div>
+                <div class="item">{{err.reason.message}}</div>
               {{/if}}
             {{/each}}
           </div>
         {{else if error.message}}
-          {{t error.message}}
+          {{#if error.connError}}
+            {{t error.message}}
+          {{else}}
+            {{error.message}}
+          {{/if}}
         {{else}}
           {{t "components.flexberry-error.unknown-error"}}
         {{/if}}
@@ -38,10 +42,18 @@
       closeable=true
     }}
       <h2 class="ui header">
-        {{#if error.message}}
-          {{t error.message}}
+        {{#if error.connError}}
+          {{#if error.message}}
+            {{t "error.message"}}
+          {{else}}
+            {{t "components.flexberry-error.unknown-error"}}
+          {{/if}}
         {{else}}
-          {{t "components.flexberry-error.unknown-error"}}
+          {{#if error.message}}
+            {{error.message}}
+          {{else}}
+            {{t "components.flexberry-error.unknown-error"}}
+          {{/if}}
         {{/if}}
       </h2>
       {{#if error.errors}}
@@ -49,7 +61,13 @@
           caption=(t "components.flexberry-error.show-more")
         }}
           {{#each error.errors as |e|}}
-            <h3 class="ui header">{{t e.message}}</h3>
+            <h3 class="ui header">
+              {{#if error.connError}}
+                {{t e.message}}
+              {{else}}
+                {{e.message}}
+              {{/if}}
+            </h3>
             <pre>{{e.stack}}</pre>
           {{/each}}
         {{/flexberry-toggler}}

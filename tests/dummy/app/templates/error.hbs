@@ -1,10 +1,15 @@
 <h1 class="ui header">{{t "forms.error-form.caption"}}</h1>
 <h2 class="ui header">
-  {{#if model.name}}
-    {{t model.name}}:
-  {{/if}}
-  {{#if model.message}}
-    {{t model.message}}
+  {{#if (eq model.name "forms.error-form.error")}}
+    {{#if model.name}}
+      {{t model.name}}:
+    {{/if}}
+    {{#if model.message}}
+      {{t model.message}}
+    {{/if}}
+  {{else}}
+    {{if model.name (concat model.name ": ")}}
+    {{if model.message model.message}}
   {{/if}}
 </h2>
 {{#if model.stack}}

@@ -155,10 +155,6 @@ export default Ember.Component.extend({
     });
   },
 
-  didRender() {
-
-  },
-
   /**
     Destroys DOM-related component's properties.
   */

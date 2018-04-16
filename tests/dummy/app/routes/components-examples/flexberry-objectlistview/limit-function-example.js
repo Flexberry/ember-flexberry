@@ -135,5 +135,10 @@ export default ListFormRoute.extend({
     this.set('controller.firstLimitType', this.get('firstLimitType'));
 
     this.set('controller.secondLimitType', this.get('secondLimitType'));
+  },
+
+  onModelLoadingAlways(data) {
+    let loadCount = this.get('controller.loadCount') + 1;
+    this.set('controller.loadCount', loadCount);
   }
 });

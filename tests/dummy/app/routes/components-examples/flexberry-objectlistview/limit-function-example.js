@@ -108,7 +108,7 @@ export default ListFormRoute.extend({
 
     let store = this.get('store');
 
-    let query = new Query.Builder(store).from(this.get('modelName')).where('address', Query.FilterOperator.Neq, '');
+    let query = new Query.Builder(store).from(this.get('modelName')).selectByProjection('SuggestionL').where('address', Query.FilterOperator.Neq, '');
 
     store.query('ember-flexberry-dummy-suggestion', query.build()).then((limitdata) => {
       let limitTypesArr = limitdata.toArray();
@@ -135,5 +135,10 @@ export default ListFormRoute.extend({
     this.set('controller.firstLimitType', this.get('firstLimitType'));
 
     this.set('controller.secondLimitType', this.get('secondLimitType'));
+  },
+
+  onModelLoadingAlways(data) {
+    let loadCount = this.get('controller.loadCount') + 1;
+    this.set('controller.loadCount', loadCount);
   }
 });

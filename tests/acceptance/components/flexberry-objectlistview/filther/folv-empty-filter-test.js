@@ -10,7 +10,7 @@ executeTest('check empty filter', (store, assert, app) => {
   let filtreInsertOperation = 'empty';
   let filtreInsertParametr = '';
   Ember.run(() => {
-    let builder = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Eq, '');
+    let builder = new Query.Builder(store).from(modelName).selectByProjection('SuggestionL').where('address', Query.FilterOperator.Eq, '');
     store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
 

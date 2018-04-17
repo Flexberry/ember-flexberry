@@ -13,7 +13,7 @@ executeTest('check ge filter', (store, assert, app) => {
   visit(path + '?perPage=500');
   andThen(function() {
     assert.equal(currentPath(), path);
-    let builder2 = new Query.Builder(store).from(modelName).top(1);
+    let builder2 = new Query.Builder(store).from(modelName).selectByProjection('SuggestionL').top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertParametr = arr.objectAt(0).get('votes') - 1;

@@ -46,5 +46,11 @@ export default ListFormController.extend({
 
   init: function() {
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
-  }
+    this._super(...arguments);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
+  },
 });

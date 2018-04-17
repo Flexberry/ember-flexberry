@@ -13,13 +13,13 @@ export default ListFormController.extend({
   inHierarchicalMode: true,
 
   /**
-    Store the attribute name set by `hierarchyByAttribute`.
+    Store the attribute parent set by `hierarchyByAttribute`.
 
     @property _hierarchicalAttribute
     @type String
     @private
   */
-  hierarchicalAttribute: 'Name',
+  hierarchicalAttribute: 'parent',
 
   /**
     Name of related edit form route.

@@ -95,12 +95,13 @@ test('flexberry-textarea on readonly editform', (assert) => {
     controller.set('readonly', false);
     scheduleOnce('afterRender', () => {
       assert.strictEqual($.trim($textareaInput.attr('readonly')), '', 'Textarea is not readonly');
+      assert.strictEqual($.trim($textareaInputFGE.attr('readonly')), '', 'Groupedit\'s textarea is not readonly');
     });
   });
 });
 
 test('flexberry-simpledatetime on readonly editform', (assert) => {
-  assert.expect(2);
+  assert.expect(4);
 
   visit(path);
   andThen(() => {

@@ -7,6 +7,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `object-list-view-row` component:
   * Fix controls buttons logic of rows in the hierarchy.
 
+### Changed
+* Flexberry-toggler now saves status to user-settings.
+
+### Added
+* `flexberry-simpleolv` template:
+  * Add backlight on check and clear sorting buttons when mobile touch.
+
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.11.1-beta.1.

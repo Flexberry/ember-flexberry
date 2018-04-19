@@ -6,7 +6,7 @@
           <button
             class="ui {{if customButtonInRow.buttonClasses customButton.buttonClasses ""}} button"
             title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
-            {{action "customButtonInRowAction" customButtonInRow.buttonAction record.key}}>
+            {{action "customButtonInRowAction" customButtonInRow.buttonAction record.data}}>
             <i class={{customButtonInRow.buttonIcon}}></i>
           </button>
       {{/each}}

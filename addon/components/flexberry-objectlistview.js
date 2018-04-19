@@ -9,7 +9,7 @@ import { translationMacro as t } from 'ember-i18n';
 /**
   Component to view list of object.
 
-  @class FlexberryObjectlistview
+  @class FlexberryObjectlistviewComponent
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
@@ -916,15 +916,15 @@ export default FlexberryBaseComponent.extend({
       Handler to get user button's in rows actions and send action to corresponding controllers's handler.
 
       @method actions.customButtonInRowAction
-      @public
-      @param {String} actionName The name of action
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
     */
-    customButtonInRowAction(actionName, rowId) {
+    customButtonInRowAction(actionName, model) {
       if (!actionName) {
-        throw new Error('No handler for custom button of flexberry-objectlistview toolbar was found.');
+        throw new Error('No handler for custom button of flexberry-objectlistview row was found.');
       }
 
-      this.sendAction(actionName, rowId);
+      this.sendAction(actionName, model);
     },
 
     /**

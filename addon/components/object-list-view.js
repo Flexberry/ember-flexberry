@@ -828,14 +828,14 @@ export default FlexberryBaseComponent.extend(
 
   actions: {
     /**
-     Handler to get user button's in rows actions and send action to corresponding controllers's handler.
+      Just redirects action up to {{#crossLink "FlexberryObjectlistviewComponent"}}`flexberry-objectlistview`{{/crossLink}} component.
 
-     @method actions.customButtonInRowAction
-     @public
-     @param {String} actionName The name of action
-   */
-    customButtonInRowAction(actionName, rowId) {
-      this.sendAction('customButtonInRowAction', actionName, rowId);
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      this.sendAction('customButtonInRowAction', actionName, model);
     },
 
     /**

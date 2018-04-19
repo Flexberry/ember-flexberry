@@ -54,6 +54,7 @@ export default Ember.Controller.extend({
     '  expandedCaption=expandedCaption<br>' +
     '  collapsedCaption=collapsedCaption<br>' +
     '  expanded=true<br>' +
+    '  componentName="myToggler"<br>' +
     '  iconClass=iconClass<br>' +
     '}}<br>' +
     '  {{t "forms.components-examples.flexberry-toggler.settings-example.togglerContent"}}<br>' +

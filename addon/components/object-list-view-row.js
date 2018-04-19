@@ -100,7 +100,7 @@ export default FlexberryBaseComponent.extend({
     Current record.
     - `key` - Ember GUID for record.
     - `data` - Instance of DS.Model.
-    - `config` - Object with config for record.
+    - `rowConfig` - Object with config for record.
 
     @property record
     @type Object
@@ -108,7 +108,7 @@ export default FlexberryBaseComponent.extend({
   record: Ember.computed(() => ({
     key: undefined,
     data: undefined,
-    config: undefined,
+    rowConfig: undefined,
   })),
 
   /**
@@ -135,7 +135,7 @@ export default FlexberryBaseComponent.extend({
           let newRecord = Ember.Object.create({
             key: Ember.guidFor(record),
             data: record,
-            config: config,
+            rowConfig: config,
             doRenderData: true
           });
 

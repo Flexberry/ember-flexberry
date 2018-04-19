@@ -3,7 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+* `object-list-view-row` component:
+  * Fix controls buttons logic of rows in the hierarchy.
+
+### Changed
+* Flexberry-toggler now saves status to user-settings.
+
 ### Added
+* `flexberry-simpleolv` template:
+  * Add backlight on check and clear sorting buttons when mobile touch.
 * `colsconfig-dialog-content` component:
   * Add rename columns names in Excel export.
 

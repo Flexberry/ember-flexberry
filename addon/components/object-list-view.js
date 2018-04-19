@@ -1193,25 +1193,6 @@ export default FlexberryBaseComponent.extend(
   _renderedRowIndex: -1,
 
   /**
-    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
-
-    @example
-      ```
-      {
-        buttonName: '...', // Button displayed name.
-        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...', // Css classes for button.
-        buttonIcon: '...', // Button icon
-        buttonTitle: '...' // Button title.
-      }
-      ```
-
-    @property customButtonsInRow
-    @type Array
-  */
-  customButtonsInRow: undefined,
-
-  /**
     Called after a component has been rendered, both on initial render and in subsequent rerenders.
     For more information see [didRender](http://emberjs.com/api/classes/Ember.Component.html#method_didRender) method of [Ember.Component](http://emberjs.com/api/classes/Ember.Component.html).
   */

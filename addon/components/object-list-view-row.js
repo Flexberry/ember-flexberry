@@ -236,25 +236,6 @@ export default FlexberryBaseComponent.extend({
   */
   customButtonInRowAction: 'customButtonInRowAction',
 
-  /**
-    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
-
-    @example
-      ```
-      {
-        buttonName: '...', // Button displayed name.
-        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-        buttonClasses: '...', // Css classes for button.
-        buttonIcon: '...', // Button icon
-        buttonTitle: '...' // Button title.
-      }
-      ```
-
-    @property customButtonsInRow
-    @type Array
-  */
-  customButtonsInRow: undefined,
-
   actions: {
     /**
       Handler for click by custom button in row.

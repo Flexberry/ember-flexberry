@@ -227,7 +227,28 @@ export default FlexberryBaseComponent.extend({
   */
   hierarchyLoadedLevel: -1,
 
+  /**
+    Name of action to send out, action triggered by click on user button in row.
+
+    @property customButtonInRowAction
+    @type String
+    @default 'customButtonInRowAction'
+  */
+  customButtonInRowAction: 'customButtonInRowAction',
+
   actions: {
+    /**
+      Handler for click by custom button in row.
+      Sends action up to {{#crossLink "ObjectListViewComponent"}}`object-list-view`{{/crossLink}} component.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      this.sendAction('customButtonInRowAction', actionName, model);
+    },
+
     /**
       Show/hide embedded records.
 

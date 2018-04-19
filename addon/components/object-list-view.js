@@ -339,14 +339,20 @@ export default FlexberryBaseComponent.extend(
     'showCheckBoxInRow',
     'showDeleteButtonInRow',
     'showEditButtonInRow',
+    'customButtonsInRow',
     'modelProjection',
     function() {
       if (this.get('modelProjection')) {
-        return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow') || this.get('showEditButtonInRow');
+        return this.get('showAsteriskInRow') ||
+          this.get('showCheckBoxInRow') ||
+          this.get('showDeleteButtonInRow') ||
+          this.get('showEditButtonInRow') ||
+          !!this.get('customButtonsInRow');
       } else {
         return false;
       }
-    }),
+    }
+  ).readOnly(),
 
   /**
     Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.

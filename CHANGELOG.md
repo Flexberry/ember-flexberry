@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `flexberry-simpleolv` template:
   * Add backlight on check and clear sorting buttons when mobile touch.
+* `colsconfig-dialog-content` component:
+  * Add rename columns names in Excel export.
 
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed

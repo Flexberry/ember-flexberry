@@ -458,8 +458,7 @@ Ember.$.extend(true, translations, {
             },
             'edit-form-with-detail-list': {
               'caption': 'Пример списка',
-              'title': '',
-              'custom-row-button-name': 'Тестовая кнопка'
+              'title': ''
             },
             'hierarchy-example': {
               'caption': 'Пример иерархии на списке',
@@ -870,7 +869,8 @@ Ember.$.extend(true, translations, {
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
-          'custom-button-name': 'Передать привет'
+          'custom-button-name': 'Передать привет',
+          'custom-row-button-name': 'Пользовательская кнопка в строке',
         },
         'on-edit-form': {
           'caption': 'Flexberry-objectlistview. FlexberryObjectlistview на форме редактирования',

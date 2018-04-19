@@ -13,10 +13,13 @@ executeTest('check neq filter', (store, assert, app) => {
   visit(path + '?perPage=500');
   andThen(function() {
     assert.equal(currentPath(), path);
-    let builder2 = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Neq, '').top(1);
+    let builder2 = new Query.Builder(store).from(modelName).selectByProjection('SuggestionL').where('address', Query.FilterOperator.Neq, '').top(1);
     store.query(modelName, builder2.build()).then((result) => {
       let arr = result.toArray();
       filtreInsertParametr = arr.objectAt(0).get('address');
+      if (!filtreInsertParametr) {
+        assert.ok(false, 'Empty data');
+      }
     }).then(function() {
       let $filterButtonDiv = Ember.$('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');

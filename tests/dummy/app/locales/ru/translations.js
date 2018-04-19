@@ -480,6 +480,10 @@ Ember.$.extend(true, translations, {
             'object-list-view-resize': {
               'caption': 'Разметка столбцов',
               'title': ''
+            },
+            'lock-services-editor-view-list': {
+              'caption': 'Пример отображение имени пользователя заблокировшего объект',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -891,7 +895,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Разметка столбцов',
           'button-сaption': 'Добавить',
           'title': ''
-        }
+        },
+        'lock-services-editor-view': {
+          'blocked-by': 'Заблокированно пользователем',
+        },
       },
       'flexberry-simpleolv': {
         'limit-function-example': {

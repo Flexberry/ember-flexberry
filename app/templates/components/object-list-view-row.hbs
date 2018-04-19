@@ -4,7 +4,7 @@
       <div class="hidden">{{record.key}}</div>
       {{#each customButtonsInRow as |customButtonInRow|}}
           <button
-            class="ui {{if customButtonInRow.buttonClasses customButton.buttonClasses ""}} button"
+            class="ui {{customButtonInRow.buttonClasses}} button"
             title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
             {{action "customButtonInRowAction" customButtonInRow.buttonAction record.data}}>
             <i class={{customButtonInRow.buttonIcon}}></i>

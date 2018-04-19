@@ -23,7 +23,7 @@
                 <i class="chevron down icon"></i>
               </button>
             </td
-            ><td class="{{if colDesc.hide 'disabled' ''}}">{{input value=colDesc.name}}</td
+            ><td class="{{if colDesc.hide "disabled"}}">{{#if exportParams.isExportExcel}}{{input value=colDesc.name}}{{else}}{{colDesc.name}}{{/if}}</td
             ><td class="sort-direction-cell"
               ><select class="ui compact dropdown selection sort-direction-dropdown {{if colDesc.hide 'disabled' ''}} {{if colDesc.isHasMany 'hidden' ''}}"  id='{{colDesc.sortOrderId}}' name="sortorder[{{colDesc.name}}]" {{action 'setSortOrder' n on='change'}}>
                 <option selected='{{colDesc.sortOrderNot}}' value='0'>-</option>

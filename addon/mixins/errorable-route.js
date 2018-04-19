@@ -71,11 +71,11 @@ export default Ember.Mixin.create({
 
     let message = msg ? msg.replace(/\n/g, ' ') : '';
     if (message.indexOf('Ember Data Request') !== -1 && message.indexOf('returned a 0 Payload (Empty Content-Type)') !== -1) {
-      errorData.name = 'forms.error-form.error';
-      errorData.message = 'forms.error-form.ember-data-request';
-      errorData.connError = true;
+      errorData.nameLocaleKey = 'forms.error-form.error';
+      errorData.messageLocaleKey = 'forms.error-form.ember-data-request';
     } else {
-      errorData.connError = false;
+      errorData.nameLocaleKey = undefined;
+      errorData.messageLocaleKey = undefined;
     }
   }
 });

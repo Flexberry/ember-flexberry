@@ -854,7 +854,7 @@ export default FlexberryBaseComponent.extend({
               relationName: relationName,
               modelToLookup: relatedModel,
               newRelationValue: result.instance
-          });
+            });
         });
       },
 

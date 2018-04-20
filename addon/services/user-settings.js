@@ -10,6 +10,7 @@ import serializeSortingParam from '../utils/serialize-sorting-param';
 const { Builder, SimplePredicate, ComplexPredicate } = Query;
 
 const defaultSettingName = 'DEFAULT';
+
 /**
   Service to store/read user settings to/from application storage.
 
@@ -121,7 +122,7 @@ export default Ember.Service.extend({
   /**
    Get current Web Page.
 
-   @method setCurrentWebPage
+   @method getCurrentWebPage
    @return {String}
    */
   getCurrentWebPage() {
@@ -568,6 +569,52 @@ export default Ember.Service.extend({
     if (this.isUserSettingsServiceEnabled) {
       this.saveUserSetting(componentName, settingName, userSetting);
     }
+  },
+
+  /**
+   Set toggler status
+
+   @method setTogglerStatus
+   @param {String} componentName Name of component.
+   @param {Boolean} togglerStatus Status to save.
+   */
+  setTogglerStatus(componentName, settingName, togglerStatus) {
+    let userSetting;
+
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    if (this.exists() &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
+    }
+
+    userSetting.togglerStatus = togglerStatus;
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting(componentName, settingName, userSetting);
+    }
+  },
+
+  /**
+   Returns toggler status from user service.
+
+   @method getTogglerStatus
+   @param {String} componentName component Name to search by.
+   @return {Boolean} Saved status.
+   */
+  getTogglerStatus(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+
+    return currentUserSetting && 'togglerStatus' in currentUserSetting ? currentUserSetting.togglerStatus : null;
   },
 
   /**

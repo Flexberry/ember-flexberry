@@ -196,11 +196,12 @@ export default FlexberryBaseComponent.extend({
      @param {Int} n  column number (id suffix)
      */
     setSortOrder: function(n) {
+
       let select = this._getEventElement('SortOrder', n); // changed select DOM-element
       let $tr = Ember.$(select).parents('tr');  // TR DOM-element
       let $tbody = Ember.$(select).parents('tbody');  // TBODY DOM-element
       let value = select.options.item(select.selectedIndex).value;  // Chosen sort order
-      let input = Ember.$($tr).find('input').get(0); //sortPriority field in this row
+      let input = Ember.$($tr).find('input.sortPriority').get(0); //sortPriority field in this row
       let $inputs = Ember.$('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
       let SortPriority = 1;
       let index = this._getIndexFromId(input.id);

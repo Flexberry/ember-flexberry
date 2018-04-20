@@ -11,6 +11,7 @@ import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistvie
 import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import ErrorableRouteMixin from '../mixins/errorable-route';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 /**
   Base route for the List Forms.
@@ -101,6 +102,7 @@ ErrorableRouteMixin, {
     let projectionName = this.get('modelProjection');
     let filtersPredicate = this._filtersPredicate();
     let sortString = null;
+    this.set('filtersPredicate', filtersPredicate);
     let limitPredicate =
       this.objectListViewLimitPredicate({ modelName: modelName, projectionName: projectionName, params: params });
     let userSettingsService = this.get('userSettingsService');
@@ -187,6 +189,12 @@ ErrorableRouteMixin, {
         this.onModelLoadingFulfilled(records, transition);
         this.includeSorting(records, this.sorting);
         this.get('controller').set('model', records);
+
+        if (this.sorting.length > 0 && Ember.isNone(this.get('controller').get('sort'))) {
+          let sortQueryParam = serializeSortingParam(this.sorting, this.get('controller').get('sortDefaultValue'));
+          this.get('controller').set('sort', sortQueryParam);
+        }
+
         return records;
       }).catch((errorData) => {
         this.onModelLoadingRejected(errorData, transition);
@@ -304,6 +312,7 @@ ErrorableRouteMixin, {
     controller.set('modelProjection', proj);
     controller.set('developerUserSettings', this.get('developerUserSettings'));
     controller.set('resultPredicate', this.get('resultPredicate'));
+    controller.set('filtersPredicate', this.get('filtersPredicate'));
     if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }

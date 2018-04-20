@@ -48,6 +48,56 @@ export function loadingList($ctrlForClick, list, records) {
 }
 
 /**
+  Function for waiting editform loading afther open editform by function at acceptance test.
+
+  @public
+  @method openEditFormByFunction
+  @param {Function} openEditFormFunction Method options.
+ */
+export function openEditFormByFunction(openEditFormFunction) {
+  return new Ember.RSVP.Promise((resolve, reject) => {
+    let checkIntervalId;
+    let checkIntervalSucceed = false;
+    let checkInterval = 500;
+    let timeout = 10000;
+
+    openEditFormFunction();
+
+    Ember.run(() => {
+      checkIntervalId = window.setInterval(() => {
+        if (Ember.$('.ui.button.close-button').length === 0) {
+
+          // Edit form isn't loaded yet.
+          return;
+        }
+
+        // Edit form is loaded, wait to render.
+        // Stop interval & resolve promise.
+        window.setTimeout(() => {
+          window.clearInterval(checkIntervalId);
+          checkIntervalSucceed = true;
+          resolve();
+        });
+      }, checkInterval);
+    });
+
+    // Set wait timeout.
+    Ember.run(() => {
+      window.setTimeout(() => {
+        if (checkIntervalSucceed) {
+          return;
+        }
+
+        // Time is out.
+        // Stop intervals & reject promise.
+        window.clearInterval(checkIntervalId);
+        reject('editForm load operation is timed out');
+      }, timeout);
+    });
+  });
+}
+
+/**
   Function for waiting list loading afther refresh by function at acceptance test.
 
   @public
@@ -236,4 +286,22 @@ export function filterCollumn(objectListView, columnNumber, operation, filterVal
       resolve();
     }), timeout);
   });
+}
+
+export function getOrderByClause(currentSorting) {
+  return Object.keys(currentSorting).map(function(key) {
+    return { name: key, sortOrder: currentSorting[key].sortAscending ? 'asc' : 'desc', sortNumber: currentSorting[key].sortNumber };
+  }).sort(function(obj1, obj2) {
+    if (obj1.sortNumber < obj2.sortNumber) {
+      return -1;
+    }
+
+    if (obj1.sortNumber > obj2.sortNumber) {
+      return 1;
+    }
+
+    return 0;
+  }).map(function(obj) {
+    return `${obj.name} ${obj.sortOrder}`;
+  }).join(', ');
 }

@@ -9,7 +9,7 @@ import { translationMacro as t } from 'ember-i18n';
 /**
   Component to view list of object.
 
-  @class FlexberryObjectlistview
+  @class FlexberryObjectlistviewComponent
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
@@ -695,6 +695,95 @@ export default FlexberryBaseComponent.extend({
   */
   objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
 
+  /**
+    Array of custom user buttons.
+
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonTitle: '...' // Button title.
+      }
+      ```
+
+    @example
+      Example of how to add user buttons:
+      1) it has to be defined computed property at corresponding controller (name of property is not fixed).
+      ```
+      import Ember from 'ember';
+      import ListFormController from 'ember-flexberry/controllers/list-form';
+
+      export default ListFormController.extend({
+        ...
+        customButtonsMethod: Ember.computed('i18n.locale', function() {
+          let i18n = this.get('i18n');
+          return [{
+            buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name'),
+            buttonAction: 'userButtonActionTest',
+            buttonClasses: 'test-click-button'
+          }];
+        })
+      });
+      ```
+
+      2) it has to be defined set as 'buttonAction' methods.
+      ```
+      import Ember from 'ember';
+      import ListFormController from 'ember-flexberry/controllers/list-form';
+
+      export default ListFormController.extend({
+        ...
+        clickCounter: 1,
+        messageForUser: undefined,
+
+        actions: {
+          userButtonActionTest: function() {
+            let i18n = this.get('i18n');
+            let clickCounter = this.get('clickCounter');
+            this.set('clickCounter', clickCounter + 1);
+            this.set('messageForUser',
+              i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-message').string +
+              ' ' + clickCounter);
+          }
+        }
+      });
+      ```
+
+      3) defined methods and computed property have to be registered at component.
+      ```
+      {{flexberry-objectlistview
+        ...
+        customButtons=customButtonsMethod
+        userButtonActionTest='userButtonActionTest'
+      }}
+      ```
+
+    @property customButtons
+    @type Array
+  */
+  customButtons: undefined,
+
+  /**
+    Array of custom buttons of special structures [{ buttonName: ..., buttonAction: ..., buttonClasses: ... }, {...}, ...].
+
+    @example
+      ```
+      {
+        buttonName: '...', // Button displayed name.
+        buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
+        buttonClasses: '...', // Css classes for button.
+        buttonIcon: '...', // Button icon
+        buttonTitle: '...' // Button title.
+      }
+      ```
+
+    @property customButtonsInRow
+    @type Array
+  */
+  customButtonsInRow: undefined,
+
   actions: {
     /**
       Handles action from object-list-view when no handler for this component is defined.
@@ -817,77 +906,6 @@ export default FlexberryBaseComponent.extend({
     },
 
     /**
-      Array of custom user buttons.
-
-      @example
-        ```
-        {
-          buttonName: '...', // Button displayed name.
-          buttonAction: '...', // Action that is called from controller on this button click (it has to be registered at component).
-          buttonClasses: '...', // Css classes for button.
-          buttonTitle: '...' // Button title.
-        }
-        ```
-
-      @example
-        Example of how to add user buttons:
-        1) it has to be defined computed property at corresponding controller (name of property is not fixed).
-        ```
-        import Ember from 'ember';
-        import ListFormController from 'ember-flexberry/controllers/list-form';
-
-        export default ListFormController.extend({
-          ...
-          customButtonsMethod: Ember.computed('i18n.locale', function() {
-            let i18n = this.get('i18n');
-            return [{
-              buttonName: i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-button-name'),
-              buttonAction: 'userButtonActionTest',
-              buttonClasses: 'test-click-button'
-            }];
-          })
-        });
-        ```
-
-        2) it has to be defined set as 'buttonAction' methods.
-        ```
-        import Ember from 'ember';
-        import ListFormController from 'ember-flexberry/controllers/list-form';
-
-        export default ListFormController.extend({
-          ...
-          clickCounter: 1,
-          messageForUser: undefined,
-
-          actions: {
-            userButtonActionTest: function() {
-              let i18n = this.get('i18n');
-              let clickCounter = this.get('clickCounter');
-              this.set('clickCounter', clickCounter + 1);
-              this.set('messageForUser',
-                i18n.t('forms.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.custom-message').string +
-                ' ' + clickCounter);
-            }
-          }
-        });
-        ```
-
-        3) defined methods and computed property have to be registered at component.
-        ```
-        {{flexberry-objectlistview
-          ...
-          customButtons=customButtonsMethod
-          userButtonActionTest='userButtonActionTest'
-        }}
-        ```
-      @property customButtons
-      @type Array
-     */
-    customButtons() {
-      return undefined;
-    },
-
-    /**
       Handler to get user button's actions and send action to corresponding controllers's handler.
 
       @method actions.customButtonAction
@@ -900,6 +918,21 @@ export default FlexberryBaseComponent.extend({
       }
 
       this.sendAction(actionName);
+    },
+
+    /**
+      Handler to get user button's in rows actions and send action to corresponding controllers's handler.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      if (!actionName) {
+        throw new Error('No handler for custom button of flexberry-objectlistview row was found.');
+      }
+
+      this.sendAction(actionName, model);
     },
 
     /**

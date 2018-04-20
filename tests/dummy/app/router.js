@@ -101,6 +101,15 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-list');
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-edit',
   { path: 'components-examples/flexberry-objectlistview/downloading-files-from-olv-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/lock-services-editor-view-list');
+  this.route('components-examples/flexberry-objectlistview/lock-services-editor-view-edit',
+  { path: 'components-examples/flexberry-objectlistview/lock-services-editor-view-edit/:id' });
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-cancel');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-cancel');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-data-immediately');
+  this.route('components-examples/flexberry-objectlistview/before-delete-record/folv-for-before-delete-record-with-promise-data-immediately');
 
   this.route('components-examples/flexberry-simpleolv/settings-example');
   this.route('components-examples/flexberry-simpleolv/toolbar-custom-buttons-example');
@@ -136,6 +145,7 @@ Router.map(function() {
   this.route('components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
 
   this.route('components-acceptance-tests/flexberry-objectlistview/base-operations');
+  this.route('components-acceptance-tests/flexberry-objectlistview/computable-field');
   this.route('components-acceptance-tests/flexberry-objectlistview/folv-paging');
   this.route('components-acceptance-tests/flexberry-objectlistview/date-format');
   this.route('components-acceptance-tests/edit-form-readonly');

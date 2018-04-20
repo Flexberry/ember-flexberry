@@ -31,7 +31,7 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
-  _contentObserver: Ember.on('init', Ember.observer('content', function() {
+  _contentObserver: Ember.on('init', Ember.observer('content.[]', function() {
     this._setContent(this.get('componentName'));
 
     if (this.get('allSelect'))

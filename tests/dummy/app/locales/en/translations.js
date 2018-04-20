@@ -469,6 +469,10 @@ Ember.$.extend(true, translations, {
             'object-list-view-resize': {
               'caption': 'Columns markup',
               'title': ''
+            },
+            'lock-services-editor-view-list': {
+              'caption': 'Example displaying username which the object was locked',
+              'title': ''
             }
           },
           'flexberry-simpledatetime': {
@@ -854,7 +858,8 @@ Ember.$.extend(true, translations, {
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
           'custom-message': 'Hello!',
-          'custom-button-name': 'Send hello'
+          'custom-button-name': 'Send hello',
+          'custom-row-button-name': 'Custom button in row',
         },
         'on-edit-form': {
           'caption': 'Flexberry-objectlistview. FlexberryObjectlistview on edit form',
@@ -879,7 +884,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Columns markup',
           'button-сaption': 'Add',
           'title': ''
-        }
+        },
+        'lock-services-editor-view': {
+          'blocked-by': 'Blocked by user',
+        },
       },
       'flexberry-simpleolv': {
         'limit-function-example': {

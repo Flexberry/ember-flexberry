@@ -100,7 +100,7 @@ export default FlexberryBaseComponent.extend({
     Current record.
     - `key` - Ember GUID for record.
     - `data` - Instance of DS.Model.
-    - `config` - Object with config for record.
+    - `rowConfig` - Object with config for record.
 
     @property record
     @type Object
@@ -108,7 +108,7 @@ export default FlexberryBaseComponent.extend({
   record: Ember.computed(() => ({
     key: undefined,
     data: undefined,
-    config: undefined,
+    rowConfig: undefined,
   })),
 
   /**
@@ -135,7 +135,7 @@ export default FlexberryBaseComponent.extend({
           let newRecord = Ember.Object.create({
             key: Ember.guidFor(record),
             data: record,
-            config: config,
+            rowConfig: config,
             doRenderData: true
           });
 
@@ -227,7 +227,28 @@ export default FlexberryBaseComponent.extend({
   */
   hierarchyLoadedLevel: -1,
 
+  /**
+    Name of action to send out, action triggered by click on user button in row.
+
+    @property customButtonInRowAction
+    @type String
+    @default 'customButtonInRowAction'
+  */
+  customButtonInRowAction: 'customButtonInRowAction',
+
   actions: {
+    /**
+      Handler for click by custom button in row.
+      Sends action up to {{#crossLink "ObjectListViewComponent"}}`object-list-view`{{/crossLink}} component.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      this.sendAction('customButtonInRowAction', actionName, model);
+    },
+
     /**
       Show/hide embedded records.
 

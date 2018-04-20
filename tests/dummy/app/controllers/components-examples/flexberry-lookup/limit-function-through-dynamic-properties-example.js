@@ -32,6 +32,8 @@ export default EditFormController.extend({
    */
   secondLimitType: undefined,
 
+  lookupCustomLimitPredicate: undefined,
+
   actions: {
 
     /**

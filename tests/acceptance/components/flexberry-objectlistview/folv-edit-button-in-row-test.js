@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
+import { openEditFormByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
 // Need to add sort by multiple columns.
 executeTest('check edit button in row', (store, assert, app) => {
@@ -15,15 +16,17 @@ executeTest('check edit button in row', (store, assert, app) => {
 
     assert.equal($editButtonInRow.length, 5, 'All row have editButton');
 
-    let $button = $editButtonInRow[0];
-    $button.click();
+    // Apply filter function.
+    let openEditFormFunction =  function() {
+      let editButtonInRow = Ember.$('.object-list-view-row-edit-button')[0];
+      editButtonInRow.click();
+    };
 
-    let done = assert.async();
-
-    window.setTimeout(() => {
-      let saveButton = Ember.$('.save-button');
-      assert.equal(saveButton.length, 1, 'Edit button in row open editform');
-      done();
-    }, 1500);
+    // Open editform.
+    let done1 = assert.async();
+    openEditFormByFunction(openEditFormFunction).then(() => {
+      assert.ok(true, 'edit form open');
+      done1();
+    });
   });
 });

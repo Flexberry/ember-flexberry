@@ -13,10 +13,10 @@
   {{#if singleColumnHeaderTitle}}
     <thead>
       <tr>
-        <th class="object-list-view-operations collapsing {{unless showHelperColumn 'hidden'}}" data-olv-header-property-name="OlvRowToolbar"></th>
-            <th class="dt-head-left me class">
-                {{singleColumnHeaderTitle}}
-            </th>
+        {{#if showHelperColumn}}
+          <th class="object-list-view-operations collapsing" data-olv-header-property-name="OlvRowToolbar"></th>
+        {{/if}}
+        <th class="dt-head-left me class">{{singleColumnHeaderTitle}}</th>
         {{#if showMenuColumn}}
           <th class="object-list-view-menu collapsing" data-olv-header-property-name="OlvRowMenu"></th>
         {{/if}}

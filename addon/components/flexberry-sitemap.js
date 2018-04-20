@@ -51,6 +51,15 @@ export default Ember.Component.extend({
   */
   sitemap: undefined,
 
+  /**
+    Stores node state.
+
+    @property nodeIsOpen
+    @type String
+    @default 'false'
+  */
+  nodeIsOpen: false,
+
   actions: {
     /**
       Show or hide menu.
@@ -59,8 +68,7 @@ export default Ember.Component.extend({
     */
     menuToggle() {
       this.$('.subMenu:first').toggleClass('hidden');
-      this.$('.item-plus:first').toggleClass('hidden');
-      this.$('.item-minus:first').toggleClass('hidden');
+      this.set('nodeIsOpen', !this.get('nodeIsOpen'));
     }
   },
 });

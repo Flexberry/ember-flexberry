@@ -61,6 +61,10 @@ i.icon.calendar:before { content: "\e81c"; color: @colorIcon; font-family: 'Crim
 i.icon.check-square-o:before { content: "\f046"; font-size: 20px;}
 i.icon.check-all-square-o:before { content: "\e815"; font-family: 'Crimean'; font-size: 20px;}
 
+/* Site map */
+i.icon.fa-plus-square-o:before { content: "\f196"; font-size: 20px;}
+i.icon.fa-minus-square-o:before { content: "\f147"; font-size: 20px;}
+
 /*******************************
             Aliases
 *******************************/

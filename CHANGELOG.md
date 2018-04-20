@@ -6,6 +6,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `object-list-view-row` component:
   * Fix controls buttons logic of rows in the hierarchy.
+* `object-list-view`:
+  * Fix singleColumnHeaderTitle at mobile.
 
 ### Changed
 * Flexberry-toggler now saves status to user-settings.

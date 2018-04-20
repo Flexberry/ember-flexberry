@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
-import { checkSortingList, loadingLocales, refreshListByFunction } from './folv-tests-functions';
+import { checkSortingList, loadingLocales, refreshListByFunction, getOrderByClause } from './folv-tests-functions';
 
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
 
@@ -16,15 +16,22 @@ executeTest('check sorting clear', (store, assert, app) => {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
     let projectionName = Ember.get(controller, 'modelProjection');
 
+    let orderByClause = null;
+
     let $olv = Ember.$('.object-list-view ');
     let $thead = Ember.$('th.dt-head-left', $olv)[0];
+
+    let currentSorting = controller.get('computedSorting');
+    if (!$.isEmptyObject(currentSorting)) {
+      orderByClause = getOrderByClause(currentSorting);
+    }
 
     Ember.run(() => {
       let done = assert.async();
 
       // Check sortihg in the first column. Sorting is not append.
       loadingLocales('ru', app).then(() => {
-        checkSortingList(store, projectionName, $olv, null).then((isTrue) => {
+        checkSortingList(store, projectionName, $olv, orderByClause).then((isTrue) => {
           assert.ok(isTrue, 'sorting is not applied');
 
           // Check sortihg icon in the first column. Sorting icon is not added.

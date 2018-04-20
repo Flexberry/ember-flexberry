@@ -10,16 +10,14 @@
           <div class="ui bulleted list">
             {{#each error as |err|}}
               {{#if (eq err.state "rejected")}}
-                <div class="item">{{err.reason.message}} er0</div>
+                <div class="item">{{err.reason.message}}</div>
               {{/if}}
             {{/each}}
           </div>
-        {{else if (or error.messageLocaleKey error.message)}}
-          {{#if error.messageLocaleKey}}
-            {{t error.messageLocaleKey}}
-          {{else if error.message}}
-            {{error.message}}
-          {{/if}}
+        {{else if error.messageLocaleKey}}
+          {{t error.messageLocaleKey}}
+        {{else if error.message}}
+          {{error.message}}
         {{else}}
           {{t "components.flexberry-error.unknown-error"}}
         {{/if}}

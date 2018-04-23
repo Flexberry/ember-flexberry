@@ -10,6 +10,7 @@ executeTest('check select all at all page', (store, assert, app) => {
   assert.expect(10);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
+  click('.ui.clear-sorting-button');
   andThen(() => {
 
     // Check page path.

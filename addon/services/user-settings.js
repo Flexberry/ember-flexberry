@@ -5,6 +5,7 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 const { Builder, SimplePredicate, ComplexPredicate } = Query;
 
@@ -186,7 +187,7 @@ export default Ember.Service.extend({
     if (!(appPage in this.currentUserSettings)) {
       this.currentUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
       this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
-      this.developerUserSettings[appPage] = developerUserSettings;
+      this.developerUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
       if (this.isUserSettingsServiceEnabled) {
         return this._getUserSettings().then(
           foundRecords => {
@@ -273,18 +274,28 @@ export default Ember.Service.extend({
    Implements current URL-params to currentUserSettings
 
    @method setCurrentParams
-   @param {Object} params.
+   @param {Object} params
+   @return {String} URL params
    */
   setCurrentParams(componentName, params) {
     let appPage = this.currentAppPage;
-    let sorting;
-    if ('sort' in params && params.sort) {
-      sorting = deserializeSortingParam(params.sort);
-    } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
-      sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
-    }
+    if (params.sort === null) {
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = this.getCurrentSorting(componentName);
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
+    } else {
+      let sorting;
+      if ('sort' in params && params.sort) {
+        sorting = deserializeSortingParam(params.sort);
+      } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
+        sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
+      }
 
-    this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+      let userSetting = {};
+      userSetting.sorting = sorting;
+      this.saveUserSetting(componentName, defaultSettingName, userSetting);
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
+    }
   },
 
   /**
@@ -382,7 +393,7 @@ export default Ember.Service.extend({
   /**
    Returns current userSetting.
 
-   @method getCurrentSorting
+   @method getCurrentUserSetting
    @param {String} componentName Name of component.
    @param {String} settingName Name of setting.
    @return {String}

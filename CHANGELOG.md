@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * Flexberry-toggler now saves status to user-settings.
+* Column sorting is now saved to user-settings.
 
 ### Added
 * `flexberry-simpleolv` template:

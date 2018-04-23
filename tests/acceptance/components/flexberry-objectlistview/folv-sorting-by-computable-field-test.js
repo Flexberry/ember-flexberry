@@ -12,6 +12,7 @@ executeTest('check sorting by computable field', (store, assert, app) => {
   let maxValue;
 
   visit(path);
+  click('.ui.clear-sorting-button');
   andThen(() => {
     assert.equal(currentPath(), path);
     let builder = new Query.Builder(store).from(modelName).selectByProjection('SuggestionL').orderBy('commentsCount');
@@ -42,7 +43,7 @@ executeTest('check sorting by computable field', (store, assert, app) => {
           assert.equal($cellText.innerText, maxValue, 'sorting symbol added');
           let done3 = assert.async();
           refreshListByFunction(refreshFunction, controller).then(() => {
-            assert.equal(controller.sort, '!commentsCount', 'sorting symbol added');
+            assert.equal(controller.sort, null, 'sorting is reset');
             done3();
           });
           done2();

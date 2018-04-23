@@ -73,7 +73,7 @@ executeTest('check sorting', (store, assert, app) => {
 
                   let done5 = assert.async();
                   refreshListByFunction(refreshFunction, controller).then(() => {
-                    assert.equal(controller.sort, '!address', 'no sorting in URL');
+                    assert.equal(controller.sort, null, 'no sorting in URL');
                     let done6 = assert.async();
                     refreshListByFunction(refreshFunction, controller).then(() => {
                       assert.equal(controller.sort, '+address', 'up sorting in URL');

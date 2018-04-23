@@ -45,7 +45,7 @@ executeTest('check sorting with default setting', (store, assert, app) => {
 
           let done2 = assert.async();
           refreshListByFunction(refreshFunction, controller).then(() => {
-            assert.equal(controller.sort, '!name', 'no sorting in URL');
+            assert.equal(controller.sort, null, 'no sorting in URL');
             let done3 = assert.async();
             refreshListByFunction(refreshFunction, controller).then(() => {
               assert.equal(controller.sort, '+name', 'up sorting in URL');

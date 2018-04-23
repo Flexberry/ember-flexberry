@@ -9,6 +9,7 @@ executeTest('check sorting', (store, assert, app) => {
   assert.expect(14);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
+  click('.ui.clear-sorting-button');
   andThen(() => {
 
     // Check page path.

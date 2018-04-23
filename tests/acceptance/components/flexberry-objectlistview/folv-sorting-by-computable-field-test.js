@@ -12,6 +12,7 @@ executeTest('check sorting by computable field', (store, assert, app) => {
   let maxValue;
 
   visit(path);
+  click('.ui.clear-sorting-button');
   andThen(() => {
     assert.equal(currentPath(), path);
     let builder = new Query.Builder(store).from(modelName).selectByProjection('SuggestionL').orderBy('commentsCount');

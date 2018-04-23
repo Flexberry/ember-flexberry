@@ -9,6 +9,7 @@ executeTest('check sorting with default setting', (store, assert, app) => {
   assert.expect(9);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-paging';
   visit(path);
+  click('.ui.clear-sorting-button');
   andThen(() => {
 
     // Check page path.

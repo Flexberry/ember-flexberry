@@ -1,10 +1,9 @@
 /**
   @module ember-flexberry
 */
-import { typeOf, isBlank, isNone } from '@ember/utils';
+import { typeOf, isBlank, isNone, isEmpty } from '@ember/utils';
 import { computed, observer } from '@ember/object';
 import { A, isArray } from '@ember/array';
-import { on } from '@ember/object/evented';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -155,7 +154,7 @@ export default FlexberryBaseComponent.extend({
   /**
     Handles changes in available items & selected item (including changes on component initialization).
   */
-  itemsOrValueDidChange: on('init', observer('_items', 'value', function() {
+  itemsOrValueDidChange: observer('_items', 'value', function() {
     let destroyHasBeenCalled = this.get('destroyHasBeenCalled');
     if (destroyHasBeenCalled) {
       return;
@@ -193,7 +192,7 @@ export default FlexberryBaseComponent.extend({
     } else {
       dropdownDomElement.dropdown('set selected', value);
     }
-  })),
+  }),
 
   /**
     Flag indicates whether to show input with search class.
@@ -224,7 +223,9 @@ export default FlexberryBaseComponent.extend({
       // Semantic ui-dropdown component has only one way binding,
       // so we have to set selected value manually.
       this.set('value', newValue);
-      this.sendAction('onChange', newValue);
+      if (!isEmpty(this.get('onChange'))) {
+        this.get('onChange')(newValue);
+      }
     },
 
     /**
@@ -259,6 +260,7 @@ export default FlexberryBaseComponent.extend({
   */
   init() {
     this._super(...arguments);
+    this.get('itemsOrValueDidChange')();
   },
 
   /**

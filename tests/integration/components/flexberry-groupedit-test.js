@@ -1,7 +1,8 @@
-/* global $ */
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
+
+import $ from 'jquery';
 
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';

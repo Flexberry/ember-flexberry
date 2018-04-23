@@ -33,14 +33,7 @@ export default Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-ddau-checkbox<br>' +
-    '  class=class<br>' +
-    '  value=model.flag<br>' +
-    '  caption=caption<br>' +
-    '  readonly=readonly<br>' +
-    '  change=(action "onCheckboxChange" "model.flag")<br>' +
-    '}}'),
+  componentTemplateText: undefined,
 
   /**
     Component settings metadata.
@@ -81,5 +74,17 @@ export default Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {
     });
 
     return componentSettingsMetadata;
-  })
+  }),
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-ddau-checkbox<br>' +
+      '  class=class<br>' +
+      '  value=model.flag<br>' +
+      '  caption=caption<br>' +
+      '  readonly=readonly<br>' +
+      '  change=(action "onCheckboxChange" "model.flag")<br>' +
+      '}}'));
+  }
 });

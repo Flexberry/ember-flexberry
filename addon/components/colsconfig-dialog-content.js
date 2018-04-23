@@ -41,7 +41,7 @@ export default FlexberryBaseComponent.extend({
    @type {Object}
    @default '[]'
    */
-  modelForDOM: [],
+  modelForDOM: undefined,
 
   /**
    ObjectListView component name.
@@ -95,7 +95,7 @@ export default FlexberryBaseComponent.extend({
     @type {Object}
     @default {}
   */
-  exportParams: {},
+  exportParams: undefined,
 
   /**
     Current store.
@@ -117,19 +117,20 @@ export default FlexberryBaseComponent.extend({
 
   init: function() {
     this._super(...arguments);
-    this.modelForDOM = [];
-    if (!this.model || !('colDescs' in this.model)) {
+    this.set('modelForDOM', []);
+    this.set('exportParams', {});
+    if (!this.get('model') || !('colDescs' in this.get('model'))) {
       return;
     }
 
-    this.settingName = this.model.settingName;
-    this.componentName = this.model.componentName;
-    this.perPageValue = this.model.perPageValue;
-    this.saveColWidthState = this.model.saveColWidthState;
-    this.exportParams = this.model.exportParams;
-    this.modelName = this.model.modelName;
-    this.set('store', this.model.store);
-    let colDescs = this.model.colDescs;
+    this.set('settingName', this.get('model.settingName'));
+    this.set('componentName', this.get('model.componentName'));
+    this.set('perPageValue', this.get('model.perPageValue'));
+    this.set('saveColWidthState', this.get('model.saveColWidthState'));
+    this.set('exportParams', this.get('model.exportParams'));
+    this.set('modelName', this.get('model.modelName'));
+    this.set('store', this.get('model.store'));
+    let colDescs = this.get('model.colDescs');
     for (let i = 0; i < colDescs.length; i++) {
       let colDesc = colDescs[i];
       let sortOrder = colDesc.sortOrder;
@@ -150,7 +151,8 @@ export default FlexberryBaseComponent.extend({
       colDesc.columnWidthId = _idPrefix + 'ColumnWidth_' + i;
       colDesc.rowUpId = _idPrefix + 'RowUp_' + i;
       colDesc.rowDownId = _idPrefix + 'RowDown_' + i;
-      this.modelForDOM[i] = colDesc;
+      let modelForDOM = this.get('modelForDOM');
+      modelForDOM[i] = colDesc;
     }
   },
 
@@ -159,8 +161,8 @@ export default FlexberryBaseComponent.extend({
     firstButtonUp.addClass('disabled'); // Disable first button up
     let lastButtondown = $('#ColDescRowDown_' + (this.modelForDOM.length - 1));
     lastButtondown.addClass('disabled'); // Disable last button down
-    if (this.exportParams.isExportExcel && this.exportParams.immediateExport) {
-      this.exportParams.immediateExport = false;
+    if (this.get('exportParams').isExportExcel && this.get('exportParams').immediateExport) {
+      this.get('exportParams').immediateExport = false;
       this.actions.apply.call(this);
     }
   },
@@ -179,8 +181,8 @@ export default FlexberryBaseComponent.extend({
      */
     invertVisibility: function(n) {
       let element = this._getEventElement('Hide', n); // clicked DOM-element
-      let newHideState = !get(this.model.colDescs[n], 'hide'); // Invert Hide/Unhide state from model.colDescs
-      set(this.model.colDescs[n], 'hide', newHideState); // Set new state in model.colDescs
+      let newHideState = !get(this.get('model').colDescs[n], 'hide'); // Invert Hide/Unhide state from model.colDescs
+      set(this.get('model').colDescs[n], 'hide', newHideState); // Set new state in model.colDescs
       if (newHideState) { // Hide element
         element.className = element.className.replace('unhide', 'hide');  // Change picture
         $(element).parent().siblings('TD').addClass('disabled'); // Disable row
@@ -211,8 +213,8 @@ export default FlexberryBaseComponent.extend({
         input.value = '';
         input.disabled = true;  // Disable sortPriority field in this row
         input.style.display = 'none'; // Hide sortPriority field in this row
-        set(this.model.colDescs[index], 'sortPriority', undefined);
-        set(this.model.colDescs[n], 'sortOrder', undefined);
+        set(this.get('model').colDescs[index], 'sortPriority', undefined);
+        set(this.get('model').colDescs[n], 'sortOrder', undefined);
       } else {
         if (input.disabled) { // SortPriority disabled
           input.disabled = false;  // Enable SortPriority field in this row
@@ -226,8 +228,8 @@ export default FlexberryBaseComponent.extend({
           SortPriority = input.value;
         }
 
-        set(this.model.colDescs[index], 'sortPriority', SortPriority); // Remember values in model.colDescs
-        set(this.model.colDescs[n], 'sortOrder', parseInt(value));
+        set(this.get('model').colDescs[index], 'sortPriority', SortPriority); // Remember values in model.colDescs
+        set(this.get('model').colDescs[n], 'sortOrder', parseInt(value));
       }
 
       this._changed();
@@ -252,7 +254,7 @@ export default FlexberryBaseComponent.extend({
       }
 
       let index = this._getIndexFromId(eventInput.id);  // get index of initial order  (if  columns order is changed n!=index )
-      set(this.model.colDescs[index], 'sortPriority', newValue); // set new sortPriority value
+      set(this.get('model').colDescs[index], 'sortPriority', newValue); // set new sortPriority value
       if (prevValue === newValue) { //value not changed
         return;
       }
@@ -282,7 +284,7 @@ export default FlexberryBaseComponent.extend({
           input.value = inputValue; // Decrement/Increment value
           input.prevValue = inputValue; // Remeber previous value
           index = this._getIndexFromId(input.id); // get index of initial order
-          set(this.model.colDescs[index], 'sortPriority', inputValue); // Set computed value
+          set(this.get('model').colDescs[index], 'sortPriority', inputValue); // Set computed value
         }
       }
 
@@ -364,7 +366,7 @@ export default FlexberryBaseComponent.extend({
      @method actions.apply
     */
     apply: function() {
-      if (!this.exportParams.isExportExcel) {
+      if (!this.get('exportParams').isExportExcel) {
         let colsConfig = this._getSettings();
         let settingName =  $('#columnConfigurtionSettingName')[0].value.trim();
         if (settingName.length > 0 && this._isChanged && !confirm(this.get('i18n').t('components.colsconfig-dialog-content.use-without-save') + settingName)) {
@@ -386,7 +388,7 @@ export default FlexberryBaseComponent.extend({
         });
         /* eslint-enable no-unused-vars */
 
-        this.sendAction('close', colsConfig); // close modal window
+        this.get('close')(colsConfig); // close modal window
       } else {
         let _this = this;
         _this.get('objectlistviewEventsService').setLoadingState('loading');
@@ -416,7 +418,7 @@ export default FlexberryBaseComponent.extend({
           this.get('objectlistviewEventsService').setLoadingState('');
         }).catch((reason) => {
           this.get('objectlistviewEventsService').setLoadingState('');
-          this.sendAction('close'); // close modal window
+          this.get('close')(); // close modal window
           this.currentController.send('handleError', reason);
         });
       }
@@ -457,7 +459,7 @@ export default FlexberryBaseComponent.extend({
           this.set('currentController.message.visible', true);
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
           this.set('currentController.message.message', JSON.stringify(error));
-          this.sendAction('close', colsConfig); // close modal window
+          this.get('close')(colsConfig); // close modal window
           this.currentController.send('handleError', error);
         }
       );
@@ -526,7 +528,7 @@ export default FlexberryBaseComponent.extend({
   _getCurrentQuery: function() {
     let settings = this._getSettings();
     let sortString = '';
-    let modelName = this.modelName;
+    let modelName = this.get('modelName');
     settings.sorting.map(sort => {
       sortString += `${sort.propName} ${sort.direction},`;
     });
@@ -547,10 +549,10 @@ export default FlexberryBaseComponent.extend({
       builder.where(limitFunction);
     }
 
-    if (this.exportParams.isExportExcel) {
+    if (this.get('exportParams').isExportExcel) {
       builder.ofDataType('blob');
-      let customQueryParams = { colsOrder: colsOrder, exportExcel: this.exportParams.isExportExcel,
-        detSeparateRows: this.exportParams.detSeparateRows, detSeparateCols: this.exportParams.detSeparateCols };
+      let customQueryParams = { colsOrder: colsOrder, exportExcel: this.get('exportParams').isExportExcel,
+        detSeparateRows: this.get('exportParams').detSeparateRows, detSeparateCols: this.get('exportParams').detSeparateCols };
       builder.withCustomParams(customQueryParams);
     }
 
@@ -561,7 +563,7 @@ export default FlexberryBaseComponent.extend({
 
   /* eslint-disable no-unused-vars */
   _getSavePromise: function(settingName, colsConfig) {
-    return this.get('userSettingsService').saveUserSetting(this.componentName, settingName, colsConfig, this.exportParams.isExportExcel)
+    return this.get('userSettingsService').saveUserSetting(this.get('componentName'), settingName, colsConfig, this.get('exportParams').isExportExcel)
     .then(result => {
       this.get('colsConfigMenu').updateNamedSettingTrigger();
     });
@@ -579,7 +581,7 @@ export default FlexberryBaseComponent.extend({
     for (let i = 0; i < trs.length; i++) {  // Iterate TR list
       let tr = trs[i];
       let index = this._getIndexFromId(tr.id);  // get index of initial (model) order
-      let colDesc = this.model.colDescs[index];  // Model for this tr
+      let colDesc = this.get('model').colDescs[index];  // Model for this tr
       colsOrder[i] = { propName: colDesc.propName, hide: colDesc.hide, name: colDesc.name.toString() };  //Set colsOrder element
       if (colDesc.sortPriority !== undefined) { // Sort priority defined
         sortSettings[sortSettings.length] = { propName: colDesc.propName, sortOrder: colDesc.sortOrder, sortPriority: colDesc.sortPriority }; //Add sortSetting element
@@ -609,13 +611,13 @@ export default FlexberryBaseComponent.extend({
     }
 
     colsConfig = { colsOrder: colsOrder, sorting: sorting, perPage: perPage };  // Set colsConfig Object
-    if (this.saveColWidthState) {
+    if (this.get('saveColWidthState')) {
       colsConfig.columnWidths = widthSetting;
     }
 
-    if (this.exportParams.isExportExcel) {
-      colsConfig.detSeparateRows = this.exportParams.detSeparateRows;
-      colsConfig.detSeparateCols = this.exportParams.detSeparateCols;
+    if (this.get('exportParams').isExportExcel) {
+      colsConfig.detSeparateRows = this.get('exportParams').detSeparateRows;
+      colsConfig.detSeparateCols = this.get('exportParams').detSeparateCols;
     }
 
     return colsConfig;

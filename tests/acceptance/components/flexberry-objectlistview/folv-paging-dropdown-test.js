@@ -1,9 +1,10 @@
-/* global $ */
 import { later, run } from '@ember/runloop';
 import { executeTest} from './execute-folv-test';
 import { addRecords, deleteRecords, refreshListByFunction } from './folv-tests-functions';
 
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+
+import $ from 'jquery';
 
 executeTest('check paging dropdown', (store, assert, app) => {
   assert.expect(6);

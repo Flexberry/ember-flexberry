@@ -1,4 +1,3 @@
-/* global $ */
 import { get, set } from '@ember/object';
 import { run } from '@ember/runloop';
 import RSVP from 'rsvp';
@@ -6,6 +5,8 @@ import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
 import { StringPredicate } from 'ember-flexberry-data/query/predicate';
 import Builder from 'ember-flexberry-data/query/builder';
+
+import $ from 'jquery';
 
 let openLookupDialog = function($lookup) {
   return new RSVP.Promise((resolve, reject) => {

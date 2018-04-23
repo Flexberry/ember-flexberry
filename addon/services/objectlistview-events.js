@@ -33,6 +33,7 @@ export default Service.extend(Evented, {
     @method init
   */
   init() {
+    this._super(...arguments);
     this.set('_selectedRecords', []);
   },
 

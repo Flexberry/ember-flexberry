@@ -1,7 +1,8 @@
-/* global $ */
 import { run, scheduleOnce } from '@ember/runloop';
 import { module, test } from 'qunit';
 import startApp from '../../../helpers/start-app';
+
+import $ from 'jquery';
 
 let app;
 const path = 'components-acceptance-tests/edit-form-readonly';

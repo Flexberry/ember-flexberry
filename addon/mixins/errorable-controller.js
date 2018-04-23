@@ -50,6 +50,7 @@ export default Mixin.create({
     For more information see [init](http://emberjs.com/api/classes/Ember.View.html#method_init) method of [Ember.View](http://emberjs.com/api/classes/Ember.View.html).
   */
   init() {
+    this._super(...arguments);
     this._super.apply(this, arguments);
     this.set('errorMessages', A([]));
   },

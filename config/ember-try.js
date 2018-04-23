@@ -1,4 +1,4 @@
-/* eslint-env node */
+/* globals module */
 module.exports = {
   useYarn: true,
   scenarios: [

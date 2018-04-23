@@ -1,6 +1,7 @@
 import Ember from 'ember'; //TODO Import Module. Ember.assert. When import { assert as EmberAssert } from '@ember/debug'; Error "EmberAssert" is read-only.
 import $ from 'jquery';
 import { A } from '@ember/array';
+import { assert } from '@ember/debug';
 import FlexberryDdauCheckboxComponent from 'ember-flexberry/components/flexberry-ddau-checkbox';
 import FlexberryDdauCheckboxActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-checkbox-actions-handler';
 import { moduleForComponent, test } from 'ember-qunit';
@@ -111,11 +112,11 @@ test('Component invokes actions', function(assert) {
   assert.notStrictEqual(latestEventObjects.change, null, 'Component\'s \'change\' action was invoked after second click');
 });
 
-test('Component changes binded value (without \'change\' action handler)', function(assert) {
+test('Component changes binded value (without \'change\' action handler)', function(testAssert) {
   // Mock Ember.assert method.
   let thrownExceptions = A();
-  let originalEmberAssert = Ember.assert;
-  Ember.assert = function(...args) {
+  let originalEmberAssert = assert;
+  assert = function(...args) {
     try {
       originalEmberAssert(...args);
     } catch (ex) {
@@ -123,7 +124,7 @@ test('Component changes binded value (without \'change\' action handler)', funct
     }
   };
 
-  assert.expect(4);
+  testAssert.expect(4);
 
   this.set('flag', false);
   this.render(hbs`{{flexberry-ddau-checkbox value=flag}}`);
@@ -133,30 +134,30 @@ test('Component changes binded value (without \'change\' action handler)', funct
   let $checkboxInput = $component.children('input');
 
   // Check component's initial state.
-  assert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
+  testAssert.strictEqual($checkboxInput.prop('checked'), false, 'Component\'s inner checkbox <input> isn\'t checked before click');
 
   // Imitate click on component & check for exception.
   $component.click();
 
   // Check component's state after click (it should be changed).
-  assert.strictEqual(
+  testAssert.strictEqual(
     $checkboxInput.prop('checked'),
     true,
     'Component\'s inner checkbox <input> isn\'t checked after click (without \'change\' action handler)');
 
   // Check binded value state after click (it should be unchanged, because 'change' action handler is not defined).
-  assert.strictEqual(
+  testAssert.strictEqual(
     this.get('flag'),
     true,
     'Component\'s binded value changed (without \'change\' action handler)');
 
-  assert.strictEqual(
+  testAssert.strictEqual(
     thrownExceptions.length === 1 && (/.*required.*change.*action.*not.*defined.*/gi).test(thrownExceptions[0].message),
     true,
     'Component throws single exception if \'change\' action handler is not defined');
 
   // Clean up after mock Ember.assert.
-  Ember.assert = originalEmberAssert;
+  assert = originalEmberAssert;
 });
 
 test('Component changes binded value (with \'change\' action handler)', function(assert) {

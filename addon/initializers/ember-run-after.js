@@ -2,7 +2,6 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember'; //TODO Import Module. Replace Ember.run.after.
 import { run } from '@ember/runloop';
 
 /**
@@ -14,7 +13,7 @@ import { run } from '@ember/runloop';
 */
 /* eslint-disable no-unused-vars */
 export function initialize(application) {
-  Ember.run.after = function(context, condition, handler) {
+  run.after = function(context, condition, handler) {
     let checkIntervalId;
     let checkInterval = 50;
 

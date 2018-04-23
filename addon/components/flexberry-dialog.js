@@ -4,7 +4,7 @@
 
 import Component from '@ember/component';
 import { observer } from '@ember/object';
-import { isNone } from '@ember/utils';
+import { isNone, isEmpty } from '@ember/utils';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
@@ -224,7 +224,9 @@ let FlexberryDialogComponent = Component.extend(
         duration: this.get('duration'),
         onShow: () => {
           let e = { showDialog: true, target: this.get('_dialog') };
-          this.sendAction('beforeShow', e);
+          if (!isEmpty(this.get('beforeShow'))) {
+            this.get('beforeShow')(e);
+          }
 
           return e.showDialog;
         },
@@ -235,7 +237,9 @@ let FlexberryDialogComponent = Component.extend(
           }
 
           let e = { closeDialog: true, target: this.get('_dialog') };
-          this.sendAction('beforeHide', e);
+          if (!isEmpty(this.get('beforeHide'))) {
+            this.get('beforeHide')(e);
+          }
 
           return e.closeDialog;
         },
@@ -243,23 +247,31 @@ let FlexberryDialogComponent = Component.extend(
           this.set('visible', true);
 
           let e = { target: this.get('_dialog') };
-          this.sendAction('show', e);
+          if (!isEmpty(this.get('show'))) {
+            this.get('show')(e);
+          }
         },
         onHidden: () => {
           this.set('visible', false);
 
           let e = { target: this.get('_dialog') };
-          this.sendAction('hide', e);
+          if (!isEmpty(this.get('hide'))) {
+            this.get('hide')(e);
+          }
         },
         onApprove: () => {
           let e = { closeDialog: true, target: this.get('_dialog') };
-          this.sendAction('approve', e);
+          if (!isEmpty(this.get('approve'))) {
+            this.get('approve')(e);
+          }
 
           return e.closeDialog;
         },
         onDeny: () => {
           let e = { closeDialog: true, target: this.get('_dialog') };
-          this.sendAction('deny', e);
+          if (!isEmpty(this.get('deny'))) {
+            this.get('deny')(e);
+          }
 
           return e.closeDialog;
         }

@@ -1,11 +1,11 @@
-/* eslint-env node */
+/* globals module */
 'use strict';
 
 module.exports = {
   name: 'ember-flexberry',
 
   included: function(app) {
-    this._super(...arguments);
+    this._super.apply(this._super, arguments);
 
     app.import('vendor/polyfills.js', {
       prepend: true

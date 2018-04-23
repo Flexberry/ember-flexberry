@@ -7,6 +7,7 @@ import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
+import { isEmpty } from '@ember/utils';
 
 /**
   Component's CSS-classes names.
@@ -93,7 +94,7 @@ let FlexberryDdauSliderComponent = Component.extend(
       @type String[]
       @default ['change']
     */
-    _requiredActionNames: ['change'],
+    _requiredActionNames: undefined,
 
     /**
       Reference to component's CSS-classes names.
@@ -190,15 +191,25 @@ let FlexberryDdauSliderComponent = Component.extend(
         let value = e.value.newValue;
 
         // Invoke component's custom 'change' action.
-        this.sendAction('change', {
-          newValue: value,
-          originalEvent: e
-        });
+        if (!isEmpty(this.get('change'))) {
+          this.get('change')({
+            newValue: value,
+            originalEvent: e
+          });
+        }
 
         // Prevent second call to this.sendAction('change', ...) inside dom-actions mixin,
         // otherwise component's outer 'change' action handler will be called twice.
         return false;
       }
+    },
+
+    /**
+      An overridable method called when objects are instantiated.
+    */
+    init() {
+      this._super(...arguments);
+      this.set('_requiredActionNames', ['change']);
     },
 
     /**

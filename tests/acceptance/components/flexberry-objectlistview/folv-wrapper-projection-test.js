@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { executeTest } from './execute-folv-test';
-import { checkSortingList, loadingLocales } from './folv-tests-functions';
+import { checkSortingList, loadingLocales, getOrderByClause } from './folv-tests-functions';
 
 executeTest('check wrapper and projection', (store, assert, app) => {
   assert.expect(6);
@@ -22,8 +22,15 @@ executeTest('check wrapper and projection', (store, assert, app) => {
 
     let dtHeadTable = Ember.$('.dt-head-left.me.class', 'thead', $tableInFolvContainer);
 
+    let orderByClause = null;
+
+    let currentSorting = controller.get('computedSorting');
+    if (!$.isEmptyObject(currentSorting)) {
+      orderByClause = getOrderByClause(currentSorting);
+    }
+
     let done = assert.async();
-    checkSortingList(store, projectionName(), $olv, null).then((isTrue) => {
+    checkSortingList(store, projectionName(), $olv, orderByClause).then((isTrue) => {
       assert.ok(isTrue, 'records are displayed correctly');
       done();
     });

@@ -187,7 +187,7 @@ export default Ember.Service.extend({
     if (!(appPage in this.currentUserSettings)) {
       this.currentUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
       this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
-      this.developerUserSettings[appPage] = developerUserSettings;
+      this.developerUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
       if (this.isUserSettingsServiceEnabled) {
         return this._getUserSettings().then(
           foundRecords => {

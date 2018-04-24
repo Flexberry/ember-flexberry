@@ -556,7 +556,7 @@ export default FlexberryBaseComponent.extend({
 
       // Send 'choose' action after 'active' css-class will be completely added into component's DOM-element.
       later(() => {
-        this.sendAction('choose', chooseData);
+        this.get('choose')(chooseData);
         this.set('isActive', false);
       }, 300);
     },
@@ -572,7 +572,7 @@ export default FlexberryBaseComponent.extend({
         return;
       }
 
-      this.sendAction('remove', removeData);
+      this.get('remove')(removeData);
     }
   },
 

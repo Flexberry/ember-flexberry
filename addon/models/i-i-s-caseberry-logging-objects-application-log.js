@@ -26,9 +26,7 @@ let Model = EmberFlexberryDataModel.extend({
   threadName: DS.attr('string'),
   win32ThreadId: DS.attr('string'),
   message: DS.attr('string'),
-  formattedMessage: DS.attr('string'),
-  validations: {
-  }
+  formattedMessage: DS.attr('string')
 });
 
 Model.defineProjection('ApplicationLogE', 'i-i-s-caseberry-logging-objects-application-log', {

@@ -105,7 +105,7 @@ export default FlexberryBaseComponent.extend({
     @type Array|Object
     @default {}
   */
-  items: {},
+  items: undefined,
 
   /**
     DOM-element representing semantic ui-dropdown component.
@@ -261,6 +261,7 @@ export default FlexberryBaseComponent.extend({
   init() {
     this._super(...arguments);
     this.get('itemsOrValueDidChange')();
+    this.set('items', {});
   },
 
   /**

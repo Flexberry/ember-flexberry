@@ -76,10 +76,7 @@ export default FlexberryBaseComponent.extend({
     @property {String} [cellComponent.componentName=undefined]
     @property {String} [cellComponent.componentProperties=null]
   */
-  cellComponent: {
-    componentName: undefined,
-    componentProperties: null
-  },
+  cellComponent: undefined,
 
   /**
     Content to be displayed (models collection).
@@ -494,7 +491,7 @@ export default FlexberryBaseComponent.extend({
         options = merge(options, { editFormRoute: editFormRoute });
       }
 
-      this.sendAction('action', record, options);
+      this.get('action')(record, options);
     },
 
     /**
@@ -505,7 +502,7 @@ export default FlexberryBaseComponent.extend({
       @param {DS.Model} record
     */
     sendMenuItemAction(actionName, record) {
-      this.sendAction(actionName, record);
+      this.get(actionName)(record);
     },
   },
 
@@ -588,6 +585,15 @@ export default FlexberryBaseComponent.extend({
     }
 
     return recordsSort;
+  },
+
+  init() {
+    this._super(...arguments);
+
+    this.set('cellComponent', {
+      componentName: undefined,
+      componentProperties: null
+    });
   },
 
   didInsertElement() {

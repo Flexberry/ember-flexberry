@@ -28,10 +28,7 @@ export default ObjectListViewComponent.extend({
     @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
     @property {String} [singleColumnCellComponent.componentProperties=null]
   */
-  singleColumnCellComponent: {
-    componentName: 'object-list-view-single-column-cell',
-    componentProperties: null
-  },
+  singleColumnCellComponent: undefined,
 
   /**
     Header title of middlee column.
@@ -59,5 +56,13 @@ export default ObjectListViewComponent.extend({
     }
 
     return columnsCount;
-  })
+  }),
+
+  init() {
+    this._super(...arguments);
+    this.set('singleColumnCellComponent', {
+      componentName: 'object-list-view-single-column-cell',
+      componentProperties: null
+    });
+  }
 });

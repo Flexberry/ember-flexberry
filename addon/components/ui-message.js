@@ -260,9 +260,9 @@ export default Component.extend({
   */
   _didVisibilityChange: observer('visible', function() {
     if (this.get('visible')) {
-      this.sendAction('onShow');
+      this.get('onShow')();
     } else {
-      this.sendAction('onHide');
+      this.get('onHide')();
     }
   })
 });

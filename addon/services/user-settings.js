@@ -49,7 +49,7 @@ export default Service.extend({
     @type Object
     @default {}
    */
-  defaultDeveloperUserSettings: {},
+  defaultDeveloperUserSettings: undefined,
 
   /**
     Current Application name.
@@ -85,7 +85,7 @@ export default Service.extend({
     @type Object
     @default {}
    */
-  developerUserSettings: {},
+  developerUserSettings: undefined,
 
   /**
     User settings for all pages before params applying.
@@ -94,7 +94,7 @@ export default Service.extend({
     @type Object
     @default {}
     */
-  beforeParamUserSettings: {},
+  beforeParamUserSettings: undefined,
 
   /**
     Current user settings for all pages
@@ -103,7 +103,7 @@ export default Service.extend({
     @type Object
     @default {}
     */
-  currentUserSettings: {},
+  currentUserSettings: undefined,
 
   init() {
     this._super(...arguments);
@@ -111,6 +111,11 @@ export default Service.extend({
     if (!isNone(appConfig.APP.useUserSettingsService)) {
       this.set('isUserSettingsServiceEnabled', appConfig.APP.useUserSettingsService);
     }
+
+    this.set('defaultDeveloperUserSettings', {});
+    this.set('developerUserSettings', {});
+    this.set('beforeParamUserSettings', {});
+    this.set('currentUserSettings', {});
   },
 
   /**

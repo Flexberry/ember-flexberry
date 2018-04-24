@@ -2,7 +2,6 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember'; //TODO Import Module. Replace Ember.run.after.
 import $ from 'jquery';
 import { isBlank, isNone } from '@ember/utils';
 import { oneWay } from '@ember/object/computed';
@@ -13,6 +12,7 @@ import { guidFor } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { merge } from '@ember/polyfills';
 import { A } from '@ember/array';
+import { run } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -155,7 +155,7 @@ export default FlexberryBaseComponent.extend({
     },
     set(key, value) {
       this.set('_hierarchicalAttribute', value);
-      this.sendAction('_saveHierarchicalAttribute', value, true);
+      this.get('_saveHierarchicalAttribute')(value, true);
       return value;
     },
   }),
@@ -249,10 +249,7 @@ export default FlexberryBaseComponent.extend({
     @property {String} [cellComponent.componentName=undefined]
     @property {String} [cellComponent.componentProperties=null]
   */
-  cellComponent: {
-    componentName: undefined,
-    componentProperties: null,
-  },
+  cellComponent: undefined,
 
   /**
     Flag: indicates whether to show validation messages in every row or not.
@@ -755,9 +752,9 @@ export default FlexberryBaseComponent.extend({
     objectListViewRowClick(record, options) {
       if ((this.get('rowClickable') || options.rowEdit) && !this.get('readonly')) {
         let $clickedRow = this._getRowByKey(record.key || guidFor(record));
-        Ember.run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
+        run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
-            this.sendAction('action', record);
+            this.get('action')(record);
           } else {
             let editFormRoute = this.get('editFormRoute');
             assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
@@ -768,7 +765,7 @@ export default FlexberryBaseComponent.extend({
               options = merge(options, { editFormRoute: editFormRoute });
             }
 
-            this.sendAction('action', record, options);
+            this.get('action')(record, options);
           }
         });
 
@@ -921,7 +918,7 @@ export default FlexberryBaseComponent.extend({
         throw new Error('No handler for custom button of flexberry-objectlistview toolbar was found.');
       }
 
-      this.sendAction(actionName);
+      this.get(actionName)();
     },
 
     /**
@@ -982,7 +979,7 @@ export default FlexberryBaseComponent.extend({
     */
     availableHierarchicalMode(hierarchicalAttribute) {
       this.toggleProperty('_availableHierarchicalMode');
-      this.sendAction('_saveHierarchicalAttribute', hierarchicalAttribute);
+      this.get('_saveHierarchicalAttribute')(hierarchicalAttribute);
     },
 
     /**
@@ -991,7 +988,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.switchHierarchicalMode
     */
     switchHierarchicalMode() {
-      this.sendAction('_switchHierarchicalMode');
+      this.get('_switchHierarchicalMode')();
     },
 
     /**
@@ -1000,7 +997,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.switchExpandMode
     */
     switchExpandMode() {
-      this.sendAction('_switchExpandMode');
+      this.get('_switchExpandMode')();
     },
 
     /**
@@ -1013,7 +1010,7 @@ export default FlexberryBaseComponent.extend({
       @param {Boolean} Flag indicates that this is the first download of data.
     */
     loadRecords(id, target, property, firstRunMode) {
-      this.sendAction('_loadRecords', id, target, property, firstRunMode);
+      this.get('_loadRecords')(id, target, property, firstRunMode);
     },
 
     /**
@@ -1038,7 +1035,7 @@ export default FlexberryBaseComponent.extend({
       @param {DS.Model} record
     */
     sendMenuItemAction(actionName, record) {
-      this.sendAction(actionName, record);
+      this.get(actionName)(record);
     },
   },
 
@@ -1175,6 +1172,11 @@ export default FlexberryBaseComponent.extend({
         }
       });
     }
+
+    this.set('cellComponent', {
+      componentName: undefined,
+      componentProperties: null,
+    });
   },
 
   /**

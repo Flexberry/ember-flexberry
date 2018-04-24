@@ -7,9 +7,8 @@ import $ from 'jquery';
 import RSVP from 'rsvp';
 import { typeOf, isBlank, isNone } from '@ember/utils';
 import { isArray } from '@ember/array';
-import { run } from '@ember/runloop';
+import { run, bind } from '@ember/runloop';
 import { computed, observer } from '@ember/object';
-import { on } from '@ember/object/evented';
 import { copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import FlexberryBaseComponent from './flexberry-base-component';
@@ -489,7 +488,7 @@ export default FlexberryBaseComponent.extend({
       let fileName = this.get('_fileName');
       let previewImageAsBase64String = this.get('_previewImageAsBase64String');
       if (!isBlank(fileName) && !isBlank(previewImageAsBase64String)) {
-        this.sendAction('viewImageAction', {
+        this.get('viewImageAction')({
           fileSrc: previewImageAsBase64String,
           fileName: fileName
         });
@@ -560,6 +559,7 @@ export default FlexberryBaseComponent.extend({
     // Bind related model's 'preSave' event handler's context & subscribe on related model's 'preSave'event.
     this.set('_onRelatedModelPreSave', this.get('_onRelatedModelPreSave').bind(this));
     this._subscribeOnRelatedModelPreSaveEvent();
+    this.get('_previewOptionsDidChange')();
   },
 
   /**
@@ -697,7 +697,7 @@ export default FlexberryBaseComponent.extend({
         this.set('_uploadDataCopy', this.get('_uploadData'));
         this.set('_uploadData', null);
 
-        this.sendAction('uploadSuccess', {
+        this.get('uploadSuccess')({
           uploadData: uploadData,
           response: jqXhr,
           value: value
@@ -705,7 +705,7 @@ export default FlexberryBaseComponent.extend({
         resolve(this.get('_jsonValue'));
       }).fail((jqXhr, textStatus, errorThrown) => {
         let errorContent = this.showUploadErrorModalDialog(file.name, errorThrown ? ' (' + errorThrown + ')' : '');
-        this.sendAction('uploadFail', {
+        this.get('uploadFail')({
           uploadData: uploadData,
           response: jqXhr,
           value: this.get('value')
@@ -893,7 +893,7 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _valueDidChange: observer('value', function() {
-    this.sendAction('fileChange', {
+    this.get('fileChange')({
       uploadData: this.get('_uploadData'),
       value: this.get('value')
     });
@@ -926,7 +926,7 @@ export default FlexberryBaseComponent.extend({
     @method _previewOptionsDidChange
     @private
   */
-  _previewOptionsDidChange: on('init', observer('showPreview', '_selectedFile', '_jsonValue.previewUrl', function() {
+  _previewOptionsDidChange: observer('showPreview', '_selectedFile', '_jsonValue.previewUrl', function() {
     if (!this.get('showPreview') || !isBlank(this.get('_previewImageAsBase64String'))) {
       return;
     }
@@ -952,7 +952,7 @@ export default FlexberryBaseComponent.extend({
 
       /* eslint-disable no-unused-vars */
       $.ajax(previewUrl).done((data, textStatus, jqXHR) => {
-        this.set('_previewImageAsBase64String', data);
+        bind(this, this.set('_previewImageAsBase64String', data));
       }).fail((jqXHR, textStatus, errorThrown) => {
         this.previewError(this.get('_jsonValue.fileName'));
       }).always(() => {
@@ -960,5 +960,5 @@ export default FlexberryBaseComponent.extend({
       });
       /* eslint-enable no-unused-vars */
     }
-  }))
+  })
 });

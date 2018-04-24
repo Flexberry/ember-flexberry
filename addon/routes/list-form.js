@@ -69,7 +69,7 @@ ErrorableRouteMixin, {
     @type Array
     @default []
   */
-  sorting: [],
+  sorting: undefined,
 
   /**
     @property colsConfigMenu
@@ -84,6 +84,11 @@ ErrorableRouteMixin, {
     @type Service
   */
   objectlistviewEventsService: service('objectlistview-events'),
+
+  init() {
+    this._super(...arguments);
+    this.set('sorting', []);
+  },
 
   /**
     A hook you can implement to convert the URL into the model for this route.

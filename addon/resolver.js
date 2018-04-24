@@ -34,17 +34,18 @@ export default EmberResolver.extend({
     @type Array
     @default ['component', 'template', 'view']
   */
-  deviceRelatedTypes: [
-    'component',
-    'template',
-    'view',
-  ],
+  deviceRelatedTypes: undefined,
 
   /**
     Initializes resolver.
   */
   init() {
     this._super(...arguments);
+    this.set('deviceRelatedTypes', [
+      'component',
+      'template',
+      'view',
+    ]);
   },
 
   /**

@@ -31,7 +31,12 @@ export default EmberObject.extend({
     @type Ember.Object
     @default {}
   */
-  errors: {},
+  errors: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('errors', {});
+  },
 
   /**
     addError method.

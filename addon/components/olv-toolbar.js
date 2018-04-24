@@ -205,11 +205,7 @@ export default FlexberryBaseComponent.extend({
   */
   colsConfigMenu: service(),
 
-  menus: [
-    { name: 'use', icon: 'checkmark box' },
-    { name: 'edit', icon: 'setting' },
-    { name: 'remove', icon: 'remove' }
-  ],
+  menus: undefined,
 
   /**
     @property colsSettingsItems
@@ -492,7 +488,7 @@ export default FlexberryBaseComponent.extend({
       @param {String} actionName The name of action
     */
     customButtonAction(actionName) {
-      this.sendAction('customButtonAction', actionName);
+      this.get('customButtonAction')(actionName);
     },
 
     /**
@@ -679,6 +675,12 @@ export default FlexberryBaseComponent.extend({
     this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').on('deleteNamedSetting', this, this._deleteNamedSetting);
+
+    this.set('menus', [
+      { name: 'use', icon: 'checkmark box' },
+      { name: 'edit', icon: 'setting' },
+      { name: 'remove', icon: 'remove' }
+    ]);
   },
 
   didInsertElement() {

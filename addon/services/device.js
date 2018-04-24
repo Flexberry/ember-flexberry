@@ -58,15 +58,7 @@ export default Service.extend(Evented, {
     (for example 'ipad-portrait', 'ipad', 'tablet-portrait', 'tablet', 'mobile-portrait', 'mobile').
     @private
   */
-  _cache: {
-    orientation: null,
-    platform: null,
-    type: null,
-    pathPrefixes: {
-      landscape: null,
-      portrait: null
-    }
-  },
+  _cache: undefined,
 
   /**
     Initializes service.
@@ -98,6 +90,16 @@ export default Service.extend(Evented, {
     } else {
       throw new Error('Device service error. Can\'t find device.js entry point.');
     }
+
+    this.set('_cache', {
+      orientation: null,
+      platform: null,
+      type: null,
+      pathPrefixes: {
+        landscape: null,
+        portrait: null
+      }
+    });
   },
 
   /**

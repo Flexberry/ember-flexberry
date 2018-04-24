@@ -87,7 +87,7 @@ export default Component.extend({
     @type Object
     @default {}
   */
-  settings: {},
+  settings: undefined,
 
   /**
     Service that triggers lookup events.
@@ -104,6 +104,11 @@ export default Component.extend({
     @type String
   */
   componentName: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('settings', {});
+  },
 
   /**
     Initializes DOM-related component's logic.

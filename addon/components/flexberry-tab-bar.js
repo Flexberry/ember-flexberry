@@ -53,7 +53,7 @@ export default Component.extend({
    * @property tabs
    * @type {Array}
    */
-  tabs: computed('items.[]', 'items.@each.active', function () {
+  tabs: computed('items.{[],@each.active}', function () {
     let active = false;
     let items = this.get('items') || A();
     let result = A();
@@ -128,7 +128,7 @@ export default Component.extend({
         originalEvent: event
       };
 
-      this.sendAction('change', e);
+      this.get('change')(e);
     }
   },
 

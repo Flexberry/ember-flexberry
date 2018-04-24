@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import RSVP from 'rsvp';
 import EmberObject, { get, set, computed, observer } from '@ember/object';
-import { on } from '@ember/object/evented';
 import { oneWay } from '@ember/object/computed';
 import { guidFor, copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
@@ -39,7 +38,7 @@ export default folv.extend(
   */
   _modelProjection: null,
 
-  _contentObserver: on('init', observer('content', function() {
+  _contentObserver: observer('content', function() {
     let content = this.get('content');
     if (content && !content.isLoading) {
       this.set('contentWithKeys', A());
@@ -79,7 +78,7 @@ export default folv.extend(
 
       this.get('objectlistviewEventsService').setLoadingState('');
     }
-  })),
+  }),
 
   /**
     Model projection which should be used to display given content.
@@ -296,10 +295,7 @@ export default folv.extend(
     @property {String} [cellComponent.componentName='object-list-view-cell']
     @property {String} [cellComponent.componentProperties=null]
   */
-  cellComponent: {
-    componentName: undefined,
-    componentProperties: null,
-  },
+  cellComponent: undefined,
 
   /**
     Flag indicates whether to show asterisk icon in first column of every changed row.
@@ -465,7 +461,7 @@ export default folv.extend(
     @type Boolean
     @readOnly
   */
-  hasEditableValues: computed('columns.[]', 'columns.@each.cellComponent', function() {
+  hasEditableValues: computed('columns.{[],@each.cellComponent}', function() {
     let columns = this.get('columns');
     if (!isArray(columns)) {
       return true;
@@ -646,14 +642,14 @@ export default folv.extend(
   */
   configurateSelectedRows: undefined,
 
-  selectedRowsChanged: on('init', observer('selectedRecords.@each', function() {
+  selectedRowsChanged: observer('selectedRecords.@each', function() {
     let selectedRecords = this.get('selectedRecords');
     let configurateSelectedRows = this.get('configurateSelectedRows');
     if (configurateSelectedRows) {
       assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
     }
-  })),
+  }),
 
   /**
     Default settings for rows.
@@ -665,11 +661,7 @@ export default folv.extend(
     @param {Boolean} [canBeSelected=true] The row can be selected via checkbox
     @param {String} [customClass=''] Custom css classes for the row
   */
-  defaultRowConfig: {
-    canBeDeleted: true,
-    canBeSelected: true,
-    customClass: '',
-  },
+  defaultRowConfig: undefined,
 
   /**
     Flag indicates whether DELETE request should be immediately sended to server (on each deleted record) or not.
@@ -767,7 +759,7 @@ export default folv.extend(
       this.get('objectlistviewEventsService').setLoadingState('loading');
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
-      this.sendAction(action, column);
+      this.get(action)(column);
 
       let sortingChanged = this.get('_sortingChanged');
       this.set('_sortingChanged', !sortingChanged);
@@ -925,7 +917,7 @@ export default folv.extend(
       @param {String} actionName The name of action
     */
     customButtonAction(actionName) {
-      this.sendAction(actionName);
+      this.get(actionName)();
     },
 
     /**
@@ -1259,6 +1251,23 @@ export default folv.extend(
     if (cols) {
       this.set('columns', cols);
     }
+
+    this.set('cellComponent', {
+      componentName: undefined,
+      componentProperties: null,
+    });
+    this.set('defaultRowConfig', {
+      canBeDeleted: true,
+      canBeSelected: true,
+      customClass: ''
+    });
+    this.set('menus', [
+      { name: 'use', icon: 'checkmark box' },
+      { name: 'edit', icon: 'setting' },
+      { name: 'remove', icon: 'remove' }
+    ]);
+    this.get('_contentObserver')();
+    this.get('selectedRowsChanged')();
   },
 
   /**
@@ -2015,9 +2024,10 @@ export default folv.extend(
       }
 
       case 'boolean': {
+        let itemsArray = ['true', 'false'];
         component.name = 'flexberry-dropdown';
         component.properties = $.extend(true, component.properties, {
-          items: ['true', 'false'],
+          items: itemsArray,
           class: 'compact fluid',
         });
         break;
@@ -2067,7 +2077,7 @@ export default folv.extend(
         });
 
         if (hasFilters) {
-          this.sendAction('applyFilters', filters);
+          this.get('applyFilters')(filters);
         } else {
           if (this.get('currentController.filters')) {
             this.get('currentController').send('resetFilters');
@@ -2295,7 +2305,7 @@ export default folv.extend(
     this._removeModelWithKey(key);
 
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
-      this.sendAction('saveAgregator');
+      this.get('saveAgregator')();
     }) : record.deleteRecord()).catch((reason) => {
       this.get('currentController').send('handleError', reason);
       record.rollbackAll();
@@ -2342,7 +2352,7 @@ export default folv.extend(
       let allWords = this.get('filterByAllWords');
       assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.sendAction('filterByAnyMatch', pattern, filterCondition);
+      this.get('filterByAnyMatch')(pattern, filterCondition);
     }
   },
 
@@ -2640,11 +2650,7 @@ export default folv.extend(
   */
   colsConfigMenu: service(),
 
-  menus: [
-    { name: 'use', icon: 'checkmark box' },
-    { name: 'edit', icon: 'setting' },
-    { name: 'remove', icon: 'remove' }
-  ],
+  menus: undefined,
 
   /**
     @property colsSettingsItems

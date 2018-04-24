@@ -5,7 +5,6 @@
 import Component from '@ember/component';
 import { isBlank, isNone } from '@ember/utils';
 import { observer } from '@ember/object';
-import { on } from '@ember/object/evented';
 import { translationMacro as t } from 'ember-i18n';
 
 /**
@@ -170,6 +169,11 @@ let FlexberryJsonareaComponent = Component.extend({
     }
   },
 
+  init() {
+    this._super(...arguments);
+    this.get('_valueDidChange')();
+  },
+
   /**
     Observes changes in value.
     Changes related stringified value.
@@ -177,7 +181,7 @@ let FlexberryJsonareaComponent = Component.extend({
     @method _valueDidChange
     @private
   */
-  _valueDidChange: on('init', observer('value', function() {
+  _valueDidChange: observer('value', function() {
     let value = this.get('value');
     if (isNone(value)) {
       this.set('_jsonText', '');
@@ -189,7 +193,7 @@ let FlexberryJsonareaComponent = Component.extend({
         indent_size: 2
       }
     );
-  }))
+  })
 });
 
 // Add component's CSS-class names as component's class static constants

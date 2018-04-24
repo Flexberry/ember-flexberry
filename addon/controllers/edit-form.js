@@ -134,12 +134,7 @@ FolvOnEditControllerMixin, {
     @property lookupSettings
     @type Object
   */
-  lookupSettings: {
-    controllerName: 'lookup-dialog',
-    template: 'lookup-dialog',
-    contentTemplate: 'lookup-dialog-content',
-    loaderTemplate: 'loading'
-  },
+  lookupSettings: undefined,
 
   /**
     If `true`, all details will be deleted along with the main model.
@@ -349,6 +344,16 @@ FolvOnEditControllerMixin, {
     addColumnToSorting: function(column) {
       this._super.apply(this, [column, 'sorting']);
     },
+  },
+
+  init() {
+    this._super(...arguments);
+    this.set('lookupSettings', {
+      controllerName: 'lookup-dialog',
+      template: 'lookup-dialog',
+      contentTemplate: 'lookup-dialog-content',
+      loaderTemplate: 'loading'
+    });
   },
 
   /**

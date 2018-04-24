@@ -227,7 +227,7 @@ export default FlexberryBaseComponent.extend({
     }
 
     // Send 'onClick' action on clicked 'flexberry-menuitem' component.
-    this.sendAction('onItemClick', e);
+    this.get('onItemClick')(e);
   },
 
   /**

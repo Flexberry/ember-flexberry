@@ -4,7 +4,6 @@
 
 import $ from 'jquery';
 import EmberObject, { get, set, computed, observer } from '@ember/object';
-import { on } from '@ember/object/evented';
 import { guidFor, copy } from '@ember/object/internals'
 import { A } from '@ember/array';
 import { isBlank } from '@ember/utils';
@@ -203,9 +202,9 @@ export default FlexberryBaseComponent.extend({
   /**
     Observe inExpandMode changes.
   */
-  inExpandModeObserver: on('init', observer('inExpandMode', function() {
+  inExpandModeObserver: observer('inExpandMode', function() {
     this.set('_expanded', this.get('inExpandMode'));
-  })),
+  }),
 
   /**
     Tag name for the view's outer element. [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
@@ -286,9 +285,14 @@ export default FlexberryBaseComponent.extend({
       let classOfHierarchyExpandButton = 'hierarchy-expand';
       if (isBlank(e) || !$(get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
       {
-        this.sendAction('rowClick', record, params);
+        this.get('rowClick')(record, params);
       }
     }
+  },
+
+  init() {
+    this._super(...arguments);
+    this.get('inExpandModeObserver')();
   },
 
   /**
@@ -303,7 +307,7 @@ export default FlexberryBaseComponent.extend({
       if (id && this.get('inHierarchicalMode')) {
         let currentLevel = this.get('_currentLevel');
         let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
-        this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
+        this.get('loadRecords')(id, this, 'records', currentLevel > hierarchyLoadedLevel);
         this.set('recordsLoaded', true);
         if (currentLevel > hierarchyLoadedLevel) {
           this.set('hierarchyLoadedLevel', currentLevel);

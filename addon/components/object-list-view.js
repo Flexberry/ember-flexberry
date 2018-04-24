@@ -1,11 +1,9 @@
 /**
   @module ember-flexberry
 */
-import Ember from 'ember'; //TODO Import Module. Replace Ember.run.after.
 import $ from 'jquery';
 import RSVP from 'rsvp';
 import EmberObject, { get, set, computed, observer } from '@ember/object';
-import { on } from '@ember/object/evented';
 import { guidFor, copy } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { A, isArray } from '@ember/array';
@@ -13,7 +11,7 @@ import { inject as service } from '@ember/service';
 import { typeOf, isBlank, isNone } from '@ember/utils';
 import { htmlSafe, capitalize } from '@ember/string';
 import { getOwner } from '@ember/application';
-import { once } from '@ember/runloop';
+import { run, once } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import FlexberryLookupCompatibleComponentMixin from '../mixins/flexberry-lookup-compatible-component';
 import FlexberryFileCompatibleComponentMixin from '../mixins/flexberry-file-compatible-component';
@@ -42,7 +40,7 @@ export default FlexberryBaseComponent.extend(
   */
   _modelProjection: null,
 
-  _contentObserver: on('init', observer('content', function() {
+  _contentObserver: observer('content', function() {
     this._setContent(this.get('componentName'));
 
     if (this.get('allSelect'))
@@ -55,7 +53,7 @@ export default FlexberryBaseComponent.extend(
         item.set('rowConfig.canBeSelected', !checked);
       });
     }
-  })),
+  }),
 
   sortTitle: t('components.object-list-view.header-title-attr'),
 
@@ -282,10 +280,7 @@ export default FlexberryBaseComponent.extend(
     @property {String} [cellComponent.componentName='object-list-view-cell']
     @property {String} [cellComponent.componentProperties=null]
   */
-  cellComponent: {
-    componentName: undefined,
-    componentProperties: null,
-  },
+  cellComponent: undefined,
 
   /**
     Flag: indicates whether to show validation messages in every row or not.
@@ -548,7 +543,7 @@ export default FlexberryBaseComponent.extend(
     @type Boolean
     @readOnly
   */
-  hasEditableValues: computed('columns.[]', 'columns.@each.cellComponent', function() {
+  hasEditableValues: computed('columns.{[],@each.cellComponent}', function() {
     let columns = this.get('columns');
     if (!isArray(columns)) {
       return true;
@@ -756,14 +751,14 @@ export default FlexberryBaseComponent.extend(
   */
   configurateSelectedRows: undefined,
 
-  selectedRowsChanged: on('init', observer('selectedRecords.@each', function() {
+  selectedRowsChanged: observer('selectedRecords.@each', function() {
     let selectedRecords = this.get('selectedRecords');
     let configurateSelectedRows = this.get('configurateSelectedRows');
     if (configurateSelectedRows) {
       assert('configurateSelectedRows must be a function', typeof configurateSelectedRows === 'function');
       configurateSelectedRows(selectedRecords);
     }
-  })),
+  }),
 
   /**
     Default settings for rows.
@@ -775,11 +770,7 @@ export default FlexberryBaseComponent.extend(
     @param {Boolean} [canBeSelected=true] The row can be selected via checkbox
     @param {String} [customClass=''] Custom css classes for the row
   */
-  defaultRowConfig: {
-    canBeDeleted: true,
-    canBeSelected: true,
-    customClass: '',
-  },
+  defaultRowConfig: undefined,
 
   /**
     Flag indicates whether DELETE request should be immediately sended to server (on each deleted record) or not.
@@ -873,8 +864,8 @@ export default FlexberryBaseComponent.extend(
           goToEditForm: true
         });
 
-        Ember.run.after(this, () => { return isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
-          this.sendAction('action', recordData, params);
+        run.after(this, () => { return isNone($selectedRow) || $selectedRow.hasClass('active'); }, () => {
+          this.get('action')(recordData, params);
         });
 
         this._setActiveRecord(recordKey);
@@ -902,7 +893,7 @@ export default FlexberryBaseComponent.extend(
       this.get('objectlistviewEventsService').setLoadingState('loading');
 
       let action = e.ctrlKey ? 'addColumnToSorting' : 'sortByColumn';
-      this.sendAction(action, column);
+      this.get(action)(column);
     },
 
     /**
@@ -1113,6 +1104,17 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
+    this.get('_contentObserver')();
+    this.get('selectedRowsChanged')();
+    this.set('cellComponent', {
+      componentName: undefined,
+      componentProperties: null,
+    });
+    this.set('defaultRowConfig', {
+      canBeDeleted: true,
+      canBeSelected: true,
+      customClass: ''
+    });
   },
 
   /**
@@ -1820,9 +1822,10 @@ export default FlexberryBaseComponent.extend(
       }
 
       case 'boolean': {
+        let itemsArray = ['true', 'false'];
         component.name = 'flexberry-dropdown';
         component.properties = $.extend(true, component.properties, {
-          items: ['true', 'false'],
+          items: itemsArray,
           class: 'compact fluid',
         });
         break;
@@ -1927,7 +1930,7 @@ export default FlexberryBaseComponent.extend(
           });
 
           if (hasFilters) {
-            this.sendAction('applyFilters', filters);
+            this.get('applyFilters')(filters);
           } else {
             if (this.get('currentController.filters')) {
               this.get('currentController').send('resetFilters');
@@ -2157,7 +2160,7 @@ export default FlexberryBaseComponent.extend(
     this._removeModelWithKey(key);
 
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
-      this.sendAction('saveAgregator');
+      this.get('saveAgregator')();
       currentController.onDeleteActionFulfilled();
     }) : record.deleteRecord()).catch((reason) => {
 
@@ -2210,7 +2213,7 @@ export default FlexberryBaseComponent.extend(
       let allWords = this.get('filterByAllWords');
       assert(`Only one of the options can be used: 'filterByAnyWord' or 'filterByAllWords'.`, !(allWords && anyWord));
       let filterCondition = anyWord || allWords ? (anyWord ? 'or' : 'and') : undefined;
-      this.sendAction('filterByAnyMatch', pattern, filterCondition);
+      this.get('filterByAnyMatch')(pattern, filterCondition);
     }
   },
 

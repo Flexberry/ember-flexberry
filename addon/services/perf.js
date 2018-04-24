@@ -35,7 +35,7 @@ export default Service.extend({
   enabled: false,
 
   tagsHaveBeenPlaced: false,
-  perfObjects: [],
+  perfObjects: undefined,
 
   /**
     Initializes perf service.
@@ -43,7 +43,7 @@ export default Service.extend({
   */
   init() {
     this._super(...arguments);
-
+    this.set('perfObjects', []);
     let enabled = this.get('enabled');
     if (!enabled) {
       return;

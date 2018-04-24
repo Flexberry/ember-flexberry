@@ -176,7 +176,7 @@ let FlexberryTreenodeComponent = Component.extend(
       */
       onHeaderClick(e) {
         // Send 'headerClick' action anyway.
-        this.sendAction('headerClick', {
+        this.get('headerClick')({
           originalEvent: e
         });
 
@@ -200,11 +200,11 @@ let FlexberryTreenodeComponent = Component.extend(
 
         let expandedNodeClassName = $.fn.accordion.settings.className.active;
         if ($(e.currentTarget).hasClass(expandedNodeClassName)) {
-          this.sendAction('beforeCollapse', {
+          this.get('beforeCollapse')({
             originalEvent: e
           });
         } else {
-          this.sendAction('beforeExpand', {
+          this.get('beforeExpand')({
             originalEvent: e
           });
         }

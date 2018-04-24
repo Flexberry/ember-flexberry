@@ -268,7 +268,7 @@ module.exports = {
     }).then(function () {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-data', target: '2.4.3' },
+          { name: 'ember-data', target: '~2.12.0' },
           { name: 'ember-block-slots', target: '1.1.3' }
         ]
       });

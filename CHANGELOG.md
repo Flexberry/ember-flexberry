@@ -9,14 +9,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `object-list-view`:
   * Fix singleColumnHeaderTitle at mobile.
 
-### Changed
-* Flexberry-toggler now saves status to user-settings.
-
 ### Added
-* `flexberry-simpleolv` template:
-  * Add backlight on check and clear sorting buttons when mobile touch.
-* `colsconfig-dialog-content` component:
-  * Add rename columns names in Excel export.
+* `flexberry-toggler` component now save status in user settings (`componentName` must be specified).
+* `flexberry-objectlistview` component:
+    * `customButtonsInRow` property for adding buttons into rows (by analogy with `customButtons` property).
+    * Deleting records when "all on all pages" is selected.
+    * Renaming columns when exporting to Excel.
+* `flexberry-error` component and `error` template supports translating error messages if in error specified `messageLocaleKey` property.
+
+### Changed
+* `flexberry-simpleolv` mobile template:
+    * Backlight the buttons of reset the sorting and selecting, occurs when active, not when hover.
+* The sorting applied by clicking on the column header, is saved in the user settings.
+* Update dependency on `ember-flexberry-data` to version `0.12.0-beta.0`.
+
+### Fixed
+* `flexberry-objectlistview` component:
+    * Buttons in rows when the component is in hierarchical mode.
 
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed

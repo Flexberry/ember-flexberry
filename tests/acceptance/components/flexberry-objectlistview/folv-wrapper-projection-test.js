@@ -6,6 +6,7 @@ executeTest('check wrapper and projection', (store, assert, app) => {
   assert.expect(6);
   let path = 'components-acceptance-tests/flexberry-objectlistview/base-operations';
   visit(path);
+  click('.ui.clear-sorting-button');
   andThen(function() {
     assert.equal(currentPath(), path);
 

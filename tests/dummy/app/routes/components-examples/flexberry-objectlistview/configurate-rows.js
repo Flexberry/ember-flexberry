@@ -2,7 +2,7 @@ import RSVP from 'rsvp';
 import Builder from 'ember-flexberry-data/query/builder';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-
+import { computed } from '@ember/object';
 export default ListFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -33,7 +33,8 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { FOLVSettingExampleObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return { FOLVSettingExampleObjectListView: { } }}),
 
   /**
     Name of model to be used as list's records types.

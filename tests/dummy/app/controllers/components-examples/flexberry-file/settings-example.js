@@ -94,21 +94,26 @@ export default EditFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-file<br>' +
-    '  value=model.file<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  uploadUrl=uploadUrl<br>' +
-    '  maxUploadFileSize=maxUploadFileSize<br>' +
-    '  showPreview=showPreview<br>' +
-    '  showUploadButton=showUploadButton<br>' +
-    '  showDownloadButton=showDownloadButton<br>' +
-    '  showModalDialogOnUploadError=showModalDialogOnUploadError<br>' +
-    '  showModalDialogOnDownloadError=showModalDialogOnDownloadError<br>' +
-    '  inputClass=inputClass<br>' +
-    '  buttonClass=buttonClass<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-file<br>' +
+      '  value=model.file<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  uploadUrl=uploadUrl<br>' +
+      '  maxUploadFileSize=maxUploadFileSize<br>' +
+      '  showPreview=showPreview<br>' +
+      '  showUploadButton=showUploadButton<br>' +
+      '  showDownloadButton=showDownloadButton<br>' +
+      '  showModalDialogOnUploadError=showModalDialogOnUploadError<br>' +
+      '  showModalDialogOnDownloadError=showModalDialogOnDownloadError<br>' +
+      '  inputClass=inputClass<br>' +
+      '  buttonClass=buttonClass<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

@@ -51,17 +51,21 @@ export default Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{#flexberry-toggler<br>' +
-    '  caption=caption<br>' +
-    '  expandedCaption=expandedCaption<br>' +
-    '  collapsedCaption=collapsedCaption<br>' +
-    '  expanded=true<br>' +
-    '  iconClass=iconClass<br>' +
-    '}}<br>' +
-    '  {{t "forms.components-examples.flexberry-toggler.settings-example.togglerContent"}}<br>' +
-    '{{/flexberry-toggler}}'),
+  componentTemplateText: undefined,
 
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{#flexberry-toggler<br>' +
+      '  caption=caption<br>' +
+      '  expandedCaption=expandedCaption<br>' +
+      '  collapsedCaption=collapsedCaption<br>' +
+      '  expanded=true<br>' +
+      '  iconClass=iconClass<br>' +
+      '}}<br>' +
+      '  {{t "forms.components-examples.flexberry-toggler.settings-example.togglerContent"}}<br>' +
+      '{{/flexberry-toggler}}'));
+  },
   /**
     Component settings metadata.
 

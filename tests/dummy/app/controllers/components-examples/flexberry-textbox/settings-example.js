@@ -45,14 +45,19 @@ export default Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-textbox<br>' +
-    '  value=model.text<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  class=class<br>' +
-    '  maxlength=maxlength<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-textbox<br>' +
+      '  value=model.text<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  class=class<br>' +
+      '  maxlength=maxlength<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

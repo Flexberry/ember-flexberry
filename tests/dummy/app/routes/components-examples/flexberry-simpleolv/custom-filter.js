@@ -3,7 +3,7 @@ import ListFormRoute from 'ember-flexberry/routes/list-form';
 import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
 import { DatePredicate } from 'ember-flexberry-data/query/predicate';
 import { StringPredicate } from 'ember-flexberry-data/query/predicate';
-
+import { computed } from '@ember/object';
 export default ListFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -43,7 +43,8 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { SOLVCustomFilterObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return { SOLVCustomFilterObjectListView: { } }}),
 
   predicateForFilter(filter) {
     if (filter.type === 'string' && filter.condition === 'like') {

@@ -1,5 +1,5 @@
 import ApllicationLogListFormRoute from 'ember-flexberry/routes/i-i-s-caseberry-logging-objects-application-log-l';
-
+import { computed } from '@ember/object';
 export default ApllicationLogListFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -30,7 +30,8 @@ export default ApllicationLogListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { FOLVSettingExample: `
+  developerUserSettings: computed(function() {
+    return { FOLVSettingExample: `
     {
       "DEFAULT": {
         "colsOrder": [
@@ -218,7 +219,7 @@ export default ApllicationLogListFormRoute.extend({
       }
     }
     `
-  },
+  }}),
 
   /**
     Name of model to be used as list's records types.

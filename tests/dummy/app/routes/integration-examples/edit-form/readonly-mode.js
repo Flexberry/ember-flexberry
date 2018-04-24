@@ -1,5 +1,5 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-
+import { computed } from '@ember/object';
 export default EditFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -55,11 +55,12 @@ export default EditFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: {
+  developerUserSettings: computed(function() {
+    return {
     aggregatorDetailsGroupedit: {
       'DEFAULT': {
         'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 65 }]
       }
     }
-  },
+  }}),
 });

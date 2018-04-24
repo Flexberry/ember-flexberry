@@ -1,5 +1,6 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
 import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { computed } from '@ember/object';
 import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 
 export default ListFormRoute.extend({
@@ -32,7 +33,8 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { FOLVSettingExampleObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return { FOLVSettingExampleObjectListView: { } }}),
 
   /**
     Name of model to be used as list's records types.

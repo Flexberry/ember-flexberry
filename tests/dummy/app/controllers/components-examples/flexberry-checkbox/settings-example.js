@@ -34,13 +34,18 @@ export default Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-checkbox<br>' +
-    '  value=model.flag<br>' +
-    '  label=label<br>' +
-    '  readonly=readonly<br>' +
-    '  class=class<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-checkbox<br>' +
+      '  value=model.flag<br>' +
+      '  label=label<br>' +
+      '  readonly=readonly<br>' +
+      '  class=class<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

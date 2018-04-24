@@ -282,7 +282,7 @@ export default ListFormController.extend({
     @protected
     @readOnly
   */
-  records: [],
+  records: undefined,
 
   /**
     Template text for 'flexberry-objectlistview' component.
@@ -290,54 +290,60 @@ export default ListFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-objectlistview<br>' +
-    '  componentName="SuggestionsObjectListView"<br>' +
-    '  colsConfigButton=colsConfigButton<br>' +
-    '  exportExcelButton=exportExcelButton<br>' +
-    '  content=model<br>' +
-    '  modelName="ember-flexberry-dummy-suggestion"<br>' +
-    '  editFormRoute="ember-flexberry-dummy-suggestion"<br>' +
-    '  modelProjection=projection<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  tableStriped=tableStriped<br>' +
-    '  allowColumnResize=allowColumnResize<br>' +
-    '  minAutoColumnWidth=minAutoColumnWidth<br>' +
-    '  columnsWidthAutoresize=columnsWidthAutoresize<br>' +
-    '  createNewButton=createNewButton<br>' +
-    '  deleteButton=deleteButton<br>' +
-    '  enableFilters=enableFilters<br>' +
-    '  filters=filters<br>' +
-    '  applyFilters=(action "applyFilters")<br>' +
-    '  resetFilters=(action "resetFilters")<br>' +
-    '  refreshButton=refreshButton<br>' +
-    '  filterButton=filterButton<br>' +
-    '  showCheckBoxInRow=showCheckBoxInRow<br>' +
-    '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
-    '  showEditButtonInRow=showEditButtonInRow<br>' +
-    '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
-    '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
-    '  rowClickable=rowClickable<br>' +
-    '  orderable=orderable<br>' +
-    '  filterByAnyMatch=(action "filterByAnyMatch")<br>' +
-    '  filterText=filter<br>' +
-    '  filterByAnyWord=filterByAnyWord<br>' +
-    '  filterByAllWords=filterByAllWords<br>' +
-    '  sorting=computedSorting<br>' +
-    '  sortByColumn=(action "sortByColumn")<br>' +
-    '  addColumnToSorting=(action "addColumnToSorting")<br>' +
-    '  _availableHierarchicalMode=availableHierarchicalMode<br>' +
-    '  _availableCollExpandMode=availableCollExpandMode<br>' +
-    '  pages=pages<br>' +
-    '  perPageValue=perPageValue<br>' +
-    '  perPageValues=perPageValues<br>' +
-    '  hasPreviousPage=hasPreviousPage<br>' +
-    '  hasNextPage=hasNextPage<br>' +
-    '  previousPage=(action "previousPage")<br>' +
-    '  gotoPage=(action "gotoPage")<br>' +
-    '  nextPage=(action "nextPage")<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('records', []);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-objectlistview<br>' +
+      '  componentName="SuggestionsObjectListView"<br>' +
+      '  colsConfigButton=colsConfigButton<br>' +
+      '  exportExcelButton=exportExcelButton<br>' +
+      '  content=model<br>' +
+      '  modelName="ember-flexberry-dummy-suggestion"<br>' +
+      '  editFormRoute="ember-flexberry-dummy-suggestion"<br>' +
+      '  modelProjection=projection<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  tableStriped=tableStriped<br>' +
+      '  allowColumnResize=allowColumnResize<br>' +
+      '  minAutoColumnWidth=minAutoColumnWidth<br>' +
+      '  columnsWidthAutoresize=columnsWidthAutoresize<br>' +
+      '  createNewButton=createNewButton<br>' +
+      '  deleteButton=deleteButton<br>' +
+      '  enableFilters=enableFilters<br>' +
+      '  filters=filters<br>' +
+      '  applyFilters=(action "applyFilters")<br>' +
+      '  resetFilters=(action "resetFilters")<br>' +
+      '  refreshButton=refreshButton<br>' +
+      '  filterButton=filterButton<br>' +
+      '  showCheckBoxInRow=showCheckBoxInRow<br>' +
+      '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
+      '  showEditButtonInRow=showEditButtonInRow<br>' +
+      '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+      '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
+      '  rowClickable=rowClickable<br>' +
+      '  orderable=orderable<br>' +
+      '  filterByAnyMatch=(action "filterByAnyMatch")<br>' +
+      '  filterText=filter<br>' +
+      '  filterByAnyWord=filterByAnyWord<br>' +
+      '  filterByAllWords=filterByAllWords<br>' +
+      '  sorting=computedSorting<br>' +
+      '  sortByColumn=(action "sortByColumn")<br>' +
+      '  addColumnToSorting=(action "addColumnToSorting")<br>' +
+      '  _availableHierarchicalMode=availableHierarchicalMode<br>' +
+      '  _availableCollExpandMode=availableCollExpandMode<br>' +
+      '  pages=pages<br>' +
+      '  perPageValue=perPageValue<br>' +
+      '  perPageValues=perPageValues<br>' +
+      '  hasPreviousPage=hasPreviousPage<br>' +
+      '  hasNextPage=hasNextPage<br>' +
+      '  previousPage=(action "previousPage")<br>' +
+      '  gotoPage=(action "gotoPage")<br>' +
+      '  nextPage=(action "nextPage")<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

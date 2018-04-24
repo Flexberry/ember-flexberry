@@ -78,7 +78,7 @@ export default ListFormController.extend({
     @protected
     @readOnly
   */
-  records: [],
+  records: undefined,
 
   /**
     Configurate rows 'flexberry-simpleolv' component by address.
@@ -104,10 +104,16 @@ export default ListFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-simpleolv<br>' +
-    '  configurateRow=(action "configurateRow")<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('records', []);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-simpleolv<br>' +
+      '  configurateRow=(action "configurateRow")<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

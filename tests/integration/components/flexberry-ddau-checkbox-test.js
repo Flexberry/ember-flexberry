@@ -1,4 +1,3 @@
-import Ember from 'ember'; //TODO Import Module. Ember.assert. When import { assert as EmberAssert } from '@ember/debug'; Error "EmberAssert" is read-only.
 import $ from 'jquery';
 import { A } from '@ember/array';
 import { assert } from '@ember/debug';

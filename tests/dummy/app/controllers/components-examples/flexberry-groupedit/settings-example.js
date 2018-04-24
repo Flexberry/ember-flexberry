@@ -195,26 +195,31 @@ export default EditFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-groupedit<br>' +
-    '  componentName="aggregatorDetailsGroupedit"<br>' +
-    '  content=model.details<br>' +
-    '  modelProjection=detailsProjection<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  tableStriped=tableStriped<br>' +
-    '  createNewButton=createNewButton<br>' +
-    '  deleteButton=deleteButton<br>' +
-    '  allowColumnResize=allowColumnResize<br>' +
-    '  showAsteriskInRow=showAsteriskInRow<br>' +
-    '  showCheckBoxInRow=showCheckBoxInRow<br>' +
-    '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
-    '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
-    '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
-    '  singleColumnHeaderTitle=singleColumnHeaderTitle<br>' +
-    '  rowClickable=rowClickable<br>' +
-    '  immediateDelete=immediateDelete<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-groupedit<br>' +
+      '  componentName="aggregatorDetailsGroupedit"<br>' +
+      '  content=model.details<br>' +
+      '  modelProjection=detailsProjection<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  tableStriped=tableStriped<br>' +
+      '  createNewButton=createNewButton<br>' +
+      '  deleteButton=deleteButton<br>' +
+      '  allowColumnResize=allowColumnResize<br>' +
+      '  showAsteriskInRow=showAsteriskInRow<br>' +
+      '  showCheckBoxInRow=showCheckBoxInRow<br>' +
+      '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
+      '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+      '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
+      '  singleColumnHeaderTitle=singleColumnHeaderTitle<br>' +
+      '  rowClickable=rowClickable<br>' +
+      '  immediateDelete=immediateDelete<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

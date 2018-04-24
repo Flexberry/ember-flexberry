@@ -19,7 +19,12 @@ export default EditFormController.extend({
     @protected
     @readOnly
   */
-  records: [],
+  records: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('records', []);
+  },
 
   actions: {
     /**

@@ -109,25 +109,30 @@ export default Controller.extend(FlexberryTreenodeActionsHandlerMixin, {
     @property jsonTreeComponentTemplateText
     @type String
   */
-  jsonTreeComponentTemplateText: new htmlSafe(
-    '{{flexberry-tree<br>' +
-    '  class=jsonTreeClass<br>' +
-    '  exclusive=jsonTreeExclusive<br>' +
-    '  collapsible=jsonTreeCollapsible<br>' +
-    '  animateChildren=jsonTreeAnimateChildren<br>' +
-    '  duration=jsonTreeDuration<br>' +
-    '  nodes=(get-with-dynamic-actions this "jsonTreeNodes"<br>' +
-    '    hierarchyPropertyName="nodes"<br>' +
-    '    pathKeyword="nodePath"<br>' +
-    '    dynamicActions=(array<br>' +
-    '      (hash<br>' +
-    '        on="headerClick"<br>' +
-    '        actionName="onTreenodeHeaderClick"<br>' +
-    '        actionArguments=(array "{% nodePath %}")<br>' +
-    '      )<br>' +
-    '    )<br>' +
-    '  )<br>' +
-    '}}'),
+  jsonTreeComponentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('jsonTreeComponentTemplateText', new htmlSafe(
+      '{{flexberry-tree<br>' +
+      '  class=jsonTreeClass<br>' +
+      '  exclusive=jsonTreeExclusive<br>' +
+      '  collapsible=jsonTreeCollapsible<br>' +
+      '  animateChildren=jsonTreeAnimateChildren<br>' +
+      '  duration=jsonTreeDuration<br>' +
+      '  nodes=(get-with-dynamic-actions this "jsonTreeNodes"<br>' +
+      '    hierarchyPropertyName="nodes"<br>' +
+      '    pathKeyword="nodePath"<br>' +
+      '    dynamicActions=(array<br>' +
+      '      (hash<br>' +
+      '        on="headerClick"<br>' +
+      '        actionName="onTreenodeHeaderClick"<br>' +
+      '        actionArguments=(array "{% nodePath %}")<br>' +
+      '      )<br>' +
+      '    )<br>' +
+      '  )<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

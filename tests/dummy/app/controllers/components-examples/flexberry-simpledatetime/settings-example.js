@@ -138,15 +138,20 @@ export default Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-simpledatetime<br>' +
-    '  type=type<br>' +
-    '  removeButton=removeButton<br>' +
-    '  value=model.date<br>' +
-    '  min=min<br>' +
-    '  max=max<br>' +
-    '  readonly=readonly<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-simpledatetime<br>' +
+      '  type=type<br>' +
+      '  removeButton=removeButton<br>' +
+      '  value=model.date<br>' +
+      '  min=min<br>' +
+      '  max=max<br>' +
+      '  readonly=readonly<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

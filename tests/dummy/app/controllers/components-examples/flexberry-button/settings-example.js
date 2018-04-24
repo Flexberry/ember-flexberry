@@ -55,15 +55,20 @@ export default Controller.extend(FlexberryDdauCheckboxActionsHandlerMixin, {
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-button<br>' +
-    '  class=class<br>' +
-    '  iconClass=class<br>' +
-    '  caption=caption<br>' +
-    '  tooltip=tooltip<br>' +
-    '  readonly=readonly<br>' +
-    '  click=(action "onButtonClick")<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-button<br>' +
+      '  class=class<br>' +
+      '  iconClass=class<br>' +
+      '  caption=caption<br>' +
+      '  tooltip=tooltip<br>' +
+      '  readonly=readonly<br>' +
+      '  click=(action "onButtonClick")<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

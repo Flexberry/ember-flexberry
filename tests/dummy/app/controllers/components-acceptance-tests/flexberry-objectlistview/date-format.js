@@ -154,9 +154,14 @@ export default ListFormController.extend({
     @protected
     @readOnly
   */
-  records: [],
+  records: undefined,
 
   dateFormat: '1',
+
+  init() {
+    this._super(...arguments);
+    this.set('records', []);
+  },
 
   /* eslint-disable no-unused-vars */
   getCellComponent: function(attr, bindingPath, modelClass) {

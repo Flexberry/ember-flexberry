@@ -119,7 +119,7 @@ export default Controller.extend({
     @type String[]
     @default ['ru', 'en']
   */
-  locales: ['ru', 'en'],
+  locales: undefined,
 
   /**
     Handles changes in userSettingsService.isUserSettingsServiceEnabled.
@@ -141,6 +141,8 @@ export default Controller.extend({
     if (isNone(i18n)) {
       return;
     }
+
+    this.set('locales', ['ru', 'en']);
 
     // If i18n.locale is long value like 'ru-RU', 'en-GB', ... this code will return short variant 'ru', 'en', etc.
     let shortCurrentLocale = this.get('i18n.locale').split('-')[0];

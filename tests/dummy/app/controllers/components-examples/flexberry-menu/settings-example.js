@@ -91,14 +91,7 @@ export default Controller.extend({
     @property componentTemplateText
     @type String
   */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-menu<br>' +
-    '  placeholder=placeholder<br>' +
-    '  class="compact"<br>' +
-    '  items=items<br>' +
-    '  collapseMenuOnItemClick=collapseMenuOnItemClick<br>' +
-    '  onItemClick=(action "onMenuItemClick")<br>' +
-    '}}'),
+  componentTemplateText: undefined,
 
   /**
     Initializes controller.
@@ -107,6 +100,14 @@ export default Controller.extend({
   */
   init() {
     this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-menu<br>' +
+      '  placeholder=placeholder<br>' +
+      '  class="compact"<br>' +
+      '  items=items<br>' +
+      '  collapseMenuOnItemClick=collapseMenuOnItemClick<br>' +
+      '  onItemClick=(action "onMenuItemClick")<br>' +
+      '}}'));
 
     let i18n = this.get('i18n');
     let itemsLeft = [{

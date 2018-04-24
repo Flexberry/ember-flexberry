@@ -48,14 +48,19 @@ export default Controller.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-dropdown<br>' +
-    '  items=(flexberry-enum "components-examples/flexberry-dropdown/settings-example/enumeration")<br>' +
-    '  value=model.enumeration<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  class=class<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-dropdown<br>' +
+      '  items=(flexberry-enum "components-examples/flexberry-dropdown/settings-example/enumeration")<br>' +
+      '  value=model.enumeration<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  class=class<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

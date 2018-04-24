@@ -20,7 +20,7 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
 
   getCellComponent: null,
 
-  perPageValues: [],
+  perPageValues: undefined,
 
   customContent: computed('model.name', function() {
     let name = this.get('model.name');
@@ -29,5 +29,10 @@ export default EditFormController.extend(EditFormControllerOperationsIndicationM
       .selectByProjection('SuggestionL')
       .where(new StringPredicate('author.name').contains(name));
     return this.get('store').query('ember-flexberry-dummy-suggestion', builder.build());
-  })
+  }),
+
+  init() {
+    this._super(...arguments);
+    this.set('perPageValues', []);
+  }
 });

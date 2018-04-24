@@ -102,25 +102,30 @@ export default EditFormController.extend({
     @property componentTemplateText
     @type String
   */
-  componentTemplateText: new htmlSafe(
-    '{{flexberry-lookup<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  value=model.type<br>' +
-    '  projection="SettingLookupExampleView"<br>' +
-    '  displayAttributeName="name"<br>' +
-    '  title="Master"<br>' +
-    '  relatedModel=model<br>' +
-    '  relationName="type"<br>' +
-    '  choose="showLookupDialog"<br>' +
-    '  remove="removeLookupValue"<br>' +
-    '  autocomplete=autocomplete<br>' +
-    '  dropdown=dropdown<br>' +
-    '  chooseText=chooseText<br>' +
-    '  removeText=removeText<br>' +
-    '  chooseButtonClass=chooseButtonClass<br>' +
-    '  removeButtonClass=removeButtonClass<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-lookup<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  value=model.type<br>' +
+      '  projection="SettingLookupExampleView"<br>' +
+      '  displayAttributeName="name"<br>' +
+      '  title="Master"<br>' +
+      '  relatedModel=model<br>' +
+      '  relationName="type"<br>' +
+      '  choose="showLookupDialog"<br>' +
+      '  remove="removeLookupValue"<br>' +
+      '  autocomplete=autocomplete<br>' +
+      '  dropdown=dropdown<br>' +
+      '  chooseText=chooseText<br>' +
+      '  removeText=removeText<br>' +
+      '  chooseButtonClass=chooseButtonClass<br>' +
+      '  removeButtonClass=removeButtonClass<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.

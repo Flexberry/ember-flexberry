@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Backlight the buttons of reset the sorting and selecting, occurs when active, not when hover.
 * The sorting applied by clicking on the column header, is saved in the user settings.
 * Update dependency on `ember-flexberry-data` to version `0.12.0-beta.0`.
+* Downgrade `ember-data` version to `2.4.3` when installing or updating with the command `ember install ember-flexberry`.
 
 ### Fixed
 * `flexberry-objectlistview` component:

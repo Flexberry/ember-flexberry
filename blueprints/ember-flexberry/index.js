@@ -264,11 +264,14 @@ module.exports = {
     }).then(function () {
       return _this.addPackageToProject('semantic-ui-ember','git://github.com/Flexberry/Semantic-UI-Ember.git#version-0.9.3');
     }).then(function () {
-      return _this.removePackageFromProject('ember-data');
+      return _this.removePackagesFromProject([
+        { name: 'ember-data' },
+        { name: 'ember-inflector' }
+      ]);
     }).then(function () {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-data', target: '~2.12.0' },
+          { name: 'ember-data', target: '2.4.3' },
           { name: 'ember-block-slots', target: '1.1.3' }
         ]
       });

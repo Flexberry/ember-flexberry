@@ -31,36 +31,6 @@ import FlexberryBaseComponent from 'ember-flexberry/components/flexberry-base-co
 */
 export default FlexberryBaseComponent.extend({
   /**
-    Initializes component.
-  */
-  init() {
-    this._super(...arguments);
-
-    if (Ember.isNone(this.get('value')))
-    {
-      this.set('value', false);
-    }
-  },
-
-  /**
-    Handles changes in value and change attribute checked.
-
-    @property _valueDidChange
-    @type Ember.observer
-    @readOnly
-  */
-  _valueDidChange: Ember.observer('value', '_$input', function() {
-    let $input = this.get('_$input');
-    if (this.get('value'))
-    {
-      $input.attr('checked', 'checked');
-    }else
-    {
-      $input.removeAttr('checked');
-    }
-  }),
-
-  /**
     Component's wrapping <div> CSS-classes names.
 
     Any other CSS-classes can be added through component's 'class' property.
@@ -109,21 +79,9 @@ export default FlexberryBaseComponent.extend({
   }),
 
   /**
-    Selected jQuery object, containing checkbox-input.
-
-  @property _$input
-  @type <a href="http://api.jquery.com/Types/#jQuery">JQuery.Object</a>
-  @default null
-  @private
-  */
-  _$input: null,
-
-  /**
     Initializes DOM-related component's properties.
   */
   didInsertElement() {
-    this.set('_$input', this.$('input'));
-
     this._super(...arguments);
 
     // Initialize Semantic UI checkbox.
@@ -152,8 +110,6 @@ export default FlexberryBaseComponent.extend({
   */
   willDestroyElement() {
     this._super(...arguments);
-
-    this.set('_$input', null);
 
     // Destroys Semantic UI checkbox.
     this.$().checkbox('destroy');

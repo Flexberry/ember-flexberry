@@ -367,6 +367,14 @@ Ember.$.extend(true, translations, {
             'configurate-row-example': {
               'caption': 'Настройка строк',
               'title': ''
+            },
+            'groupedit-with-lookup-with-computed-atribute': {
+              'caption': 'Computed атрибуты LookUp в GroupEdit',
+              'title': ''
+            },
+            'readonly-columns-by-configurate-row-example': {
+              'caption': 'Установка readonly columns через configurateRow в GrouptEdit',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -378,6 +386,10 @@ Ember.$.extend(true, translations, {
             },
             'customizing-window-example': {
               'caption': 'Настройка окна',
+              'title': ''
+            },
+            'hierarchy-olv-in-lookup-example': {
+              'caption': 'Пример иерархического OLV-а в lookup-e',
               'title': ''
             },
             'limit-function-example': {
@@ -466,6 +478,10 @@ Ember.$.extend(true, translations, {
             },
             'object-list-view-resize': {
               'caption': 'Разметка столбцов',
+              'title': ''
+            },
+            'lock-services-editor-view-list': {
+              'caption': 'Пример отображение имени пользователя заблокировшего объект',
               'title': ''
             }
           },
@@ -627,7 +643,9 @@ Ember.$.extend(true, translations, {
       'comments-caption': 'Комментарии',
       'type-validation-message-caption': 'Заполните тип предложения',
       'author-validation-message-caption': 'Заполните поле "Автор"',
-      'editor-validation-message-caption': 'Заполните поле "Редактор"'
+      'editor-validation-message-caption': 'Заполните поле "Редактор"',
+      'readonly-groupedit-with-lookup-with-computed-atribute-field': 'Readonly для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"',
+      'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Ограничения для LookUp "Пользователь приложения" в GroupEdit "Голоса пользователей"'
     },
 
     'ember-flexberry-dummy-toggler-example-master-e': {
@@ -769,6 +787,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Настройка окна',
           'titleLookup': 'Мастер'
         },
+        'hierarchy-olv-in-lookup-example': {
+          'caption': 'Flexberry-lookup. Пример иерархического OLV-а в lookup-e',
+          'titleLookup': 'Мастер'
+        },
         'limit-function-example': {
           'caption': 'Flexberry-lookup. Функция ограничения',
           'titleLookup': 'Мастер'
@@ -847,7 +869,8 @@ Ember.$.extend(true, translations, {
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Пользовательские кнопки',
           'custom-message': 'Привет!',
-          'custom-button-name': 'Передать привет'
+          'custom-button-name': 'Передать привет',
+          'custom-row-button-name': 'Пользовательская кнопка в строке',
         },
         'on-edit-form': {
           'caption': 'Flexberry-objectlistview. FlexberryObjectlistview на форме редактирования',
@@ -872,7 +895,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Разметка столбцов',
           'button-сaption': 'Добавить',
           'title': ''
-        }
+        },
+        'lock-services-editor-view': {
+          'blocked-by': 'Заблокированно пользователем',
+        },
       },
       'flexberry-simpleolv': {
         'limit-function-example': {

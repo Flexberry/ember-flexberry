@@ -196,11 +196,12 @@ export default FlexberryBaseComponent.extend({
      @param {Int} n  column number (id suffix)
      */
     setSortOrder: function(n) {
+
       let select = this._getEventElement('SortOrder', n); // changed select DOM-element
       let $tr = Ember.$(select).parents('tr');  // TR DOM-element
       let $tbody = Ember.$(select).parents('tbody');  // TBODY DOM-element
       let value = select.options.item(select.selectedIndex).value;  // Chosen sort order
-      let input = Ember.$($tr).find('input').get(0); //sortPriority field in this row
+      let input = Ember.$($tr).find('input.sortPriority').get(0); //sortPriority field in this row
       let $inputs = Ember.$('input.sortPriority:enabled', $tbody); // enabled sortPriority fields
       let SortPriority = 1;
       let index = this._getIndexFromId(input.id);
@@ -376,7 +377,10 @@ export default FlexberryBaseComponent.extend({
             let sort = serializeSortingParam(colsConfig.sorting);
             router.router.transitionTo(router.currentRouteName, { queryParams: { sort: sort, perPage: colsConfig.perPage || 5 } });
           }
-        );
+        ).catch((reason) => {
+          this.currentController.send('handleError', reason);
+        });
+
         this.sendAction('close', colsConfig); // close modal window
       } else {
         let _this = this;
@@ -405,8 +409,10 @@ export default FlexberryBaseComponent.extend({
           }
 
           this.get('objectlistviewEventsService').setLoadingState('');
-        }).catch(() => {
+        }).catch((reason) => {
           this.get('objectlistviewEventsService').setLoadingState('');
+          this.sendAction('close'); // close modal window
+          this.currentController.send('handleError', reason);
         });
       }
     },
@@ -444,6 +450,8 @@ export default FlexberryBaseComponent.extend({
           this.set('currentController.message.visible', true);
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
           this.set('currentController.message.message', JSON.stringify(error));
+          this.sendAction('close', colsConfig); // close modal window
+          this.currentController.send('handleError', error);
         }
       );
     },
@@ -492,6 +500,11 @@ export default FlexberryBaseComponent.extend({
     detSeparateRowsChange: function() {
       this._changed();
     },
+
+    handleError(error) {
+      this._super(...arguments);
+      return true;
+    }
   },
 
   /**

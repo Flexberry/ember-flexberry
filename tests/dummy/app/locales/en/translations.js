@@ -92,6 +92,13 @@ Ember.$.extend(true, translations, {
               }
             }
           }
+        },
+        'SuggestionMainModelProjectionTest': {
+          'userVotes': {
+            'voteType': {
+              'caption': 'Temp text for test'
+            }
+          }
         }
       }
     },
@@ -350,6 +357,14 @@ Ember.$.extend(true, translations, {
             'configurate-row-example': {
               'caption': 'Configurate rows',
               'title': ''
+            },
+            'groupedit-with-lookup-with-computed-atribute': {
+              'caption': 'Computed attributes LookUp  in GroupEdit',
+              'title': ''
+            },
+            'readonly-columns-by-configurate-row-example': {
+              'caption': 'GrouptEdit readonly columns by configurateRow',
+              'title': ''
             }
           },
           'flexberry-lookup': {
@@ -361,6 +376,10 @@ Ember.$.extend(true, translations, {
             },
             'customizing-window-example': {
               'caption': 'Window customization',
+              'title': ''
+            },
+            'hierarchy-olv-in-lookup-example': {
+              'caption': 'Example hierarchical OLV in lookup',
               'title': ''
             },
             'limit-function-example': {
@@ -449,6 +468,10 @@ Ember.$.extend(true, translations, {
             },
             'object-list-view-resize': {
               'caption': 'Columns markup',
+              'title': ''
+            },
+            'lock-services-editor-view-list': {
+              'caption': 'Example displaying username which the object was locked',
               'title': ''
             }
           },
@@ -610,7 +633,9 @@ Ember.$.extend(true, translations, {
       'comments-caption': 'Comments',
       'type-validation-message-caption': 'Type is required',
       'author-validation-message-caption': 'Author is required',
-      'editor-validation-message-caption': 'Editor is required'
+      'editor-validation-message-caption': 'Editor is required',
+      'readonly-groupedit-with-lookup-with-computed-atribute-field': 'Readonly for LookUp "Application User" in GroupEdit "User votes"',
+      'limit-function-groupedit-with-lookup-with-computed-atribute-field': 'Limitations for LookUp "Application User" in GroupEdit "User votes"'
     },
 
     'ember-flexberry-dummy-toggler-example-master-e': {
@@ -751,6 +776,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-lookup. Window customization',
           'titleLookup': 'Master'
         },
+        'hierarchy-olv-in-lookup-example': {
+          'caption': 'Flexberry-lookup. Example hierarchical OLV in lookup',
+          'titleLookup': 'Master'
+        },
         'limit-function-example': {
           'caption': 'Flexberry-lookup. Limit function example',
           'titleLookup': 'Master'
@@ -829,7 +858,8 @@ Ember.$.extend(true, translations, {
         'toolbar-custom-buttons-example': {
           'caption': 'Flexberry-objectlistview. Custom buttons on toolbar',
           'custom-message': 'Hello!',
-          'custom-button-name': 'Send hello'
+          'custom-button-name': 'Send hello',
+          'custom-row-button-name': 'Custom button in row',
         },
         'on-edit-form': {
           'caption': 'Flexberry-objectlistview. FlexberryObjectlistview on edit form',
@@ -854,7 +884,10 @@ Ember.$.extend(true, translations, {
           'caption': 'Flexberry-objectlistview. Columns markup',
           'button-сaption': 'Add',
           'title': ''
-        }
+        },
+        'lock-services-editor-view': {
+          'blocked-by': 'Blocked by user',
+        },
       },
       'flexberry-simpleolv': {
         'limit-function-example': {

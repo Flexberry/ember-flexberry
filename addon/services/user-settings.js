@@ -5,10 +5,12 @@
 import Ember from 'ember';
 import { Query } from 'ember-flexberry-data';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
+import serializeSortingParam from '../utils/serialize-sorting-param';
 
 const { Builder, SimplePredicate, ComplexPredicate } = Query;
 
 const defaultSettingName = 'DEFAULT';
+
 /**
   Service to store/read user settings to/from application storage.
 
@@ -120,7 +122,7 @@ export default Ember.Service.extend({
   /**
    Get current Web Page.
 
-   @method setCurrentWebPage
+   @method getCurrentWebPage
    @return {String}
    */
   getCurrentWebPage() {
@@ -185,9 +187,34 @@ export default Ember.Service.extend({
     if (!(appPage in this.currentUserSettings)) {
       this.currentUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
       this.beforeParamUserSettings[appPage] = JSON.parse(JSON.stringify(this.currentUserSettings[appPage]));
-      this.developerUserSettings[appPage] = developerUserSettings;
+      this.developerUserSettings[appPage] = JSON.parse(JSON.stringify(developerUserSettings));
       if (this.isUserSettingsServiceEnabled) {
         return this._getUserSettings().then(
+          foundRecords => {
+            let ret = {};
+            if (foundRecords) {
+              for (let i = 0; i < foundRecords.length; i++) {
+                let foundRecord = foundRecords[i];
+                let userSettingValue = foundRecord.record.get('txtVal');
+                let settName = foundRecord.record.get('settName');
+                let componentName = foundRecord.record.get('moduleName');
+                if (!settName) {
+                  settName = defaultSettingName;
+                }
+
+                if (userSettingValue) {
+                  if (!(componentName in ret)) {
+                    ret[componentName] = {};
+                  }
+
+                  ret[componentName][settName] = JSON.parse(userSettingValue);
+                }
+              }
+            }
+
+            return ret;
+          }
+        ).then(
           appPageUserSettings => {
             return this._setCurrentUserSettings(appPageUserSettings);
           }
@@ -247,18 +274,28 @@ export default Ember.Service.extend({
    Implements current URL-params to currentUserSettings
 
    @method setCurrentParams
-   @param {Object} params.
+   @param {Object} params
+   @return {String} URL params
    */
   setCurrentParams(componentName, params) {
     let appPage = this.currentAppPage;
-    let sorting;
-    if ('sort' in params && params.sort) {
-      sorting = deserializeSortingParam(params.sort);
+    if (params.sort === null) {
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = this.getCurrentSorting(componentName);
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
     } else {
-      sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
-    }
+      let sorting;
+      if ('sort' in params && params.sort) {
+        sorting = deserializeSortingParam(params.sort);
+      } else if (this.beforeParamUserSettings[appPage] && this.beforeParamUserSettings[appPage][componentName]) {
+        sorting = this.beforeParamUserSettings[appPage][componentName][defaultSettingName].sorting;
+      }
 
-    this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+      let userSetting = {};
+      userSetting.sorting = sorting;
+      this.saveUserSetting(componentName, defaultSettingName, userSetting);
+      this.currentUserSettings[appPage][componentName][defaultSettingName].sorting = sorting;
+      return serializeSortingParam(this.currentUserSettings[appPage][componentName][defaultSettingName].sorting);
+    }
   },
 
   /**
@@ -286,6 +323,26 @@ export default Ember.Service.extend({
   },
 
   /**
+    Creates default user setting if setting for specified component isn't exists.
+
+    @method createDefaultUserSetting
+    @param {String} componentName
+   */
+  createDefaultUserSetting(componentName) {
+    if (!(this.exists())) {
+      Ember.set(this, `currentUserSettings.${this.currentAppPage}`, {});
+    }
+
+    if (!(componentName in this.currentUserSettings[this.currentAppPage])) {
+      Ember.set(this, `currentUserSettings.${this.currentAppPage}.${componentName}`, {});
+    }
+
+    if (!(defaultSettingName in this.currentUserSettings[this.currentAppPage][componentName])) {
+      Ember.set(this, `currentUserSettings.${this.currentAppPage}.${componentName}.${defaultSettingName}`, {});
+    }
+  },
+
+  /**
    *   Returns current list of userSetting.
    *
    *   @method getListCurrentUserSetting
@@ -293,7 +350,7 @@ export default Ember.Service.extend({
    */
   getListCurrentUserSetting(componentName, isExportExcel) {
     let ret = {};
-    if (this.currentAppPage in this.currentUserSettings &&
+    if (this.exists() &&
       componentName in this.currentUserSettings[this.currentAppPage]
     ) {
       let sets = this.currentUserSettings[this.currentAppPage][componentName];
@@ -336,7 +393,7 @@ export default Ember.Service.extend({
   /**
    Returns current userSetting.
 
-   @method getCurrentSorting
+   @method getCurrentUserSetting
    @param {String} componentName Name of component.
    @param {String} settingName Name of setting.
    @return {String}
@@ -347,7 +404,7 @@ export default Ember.Service.extend({
     }
 
     let ret;
-    if (this.currentAppPage in this.currentUserSettings &&
+    if (this.exists() &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName]
     ) {
@@ -470,7 +527,7 @@ export default Ember.Service.extend({
     }
 
     let userSetting;
-    if (this.currentAppPage in this.currentUserSettings &&
+    if (this.exists() &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName]
     ) {
@@ -499,7 +556,7 @@ export default Ember.Service.extend({
     }
 
     let userSetting;
-    if (this.currentAppPage in this.currentUserSettings &&
+    if (this.exists() &&
       componentName in this.currentUserSettings[this.currentAppPage] &&
       settingName in this.currentUserSettings[this.currentAppPage][componentName]
     ) {
@@ -512,6 +569,52 @@ export default Ember.Service.extend({
     if (this.isUserSettingsServiceEnabled) {
       this.saveUserSetting(componentName, settingName, userSetting);
     }
+  },
+
+  /**
+   Set toggler status
+
+   @method setTogglerStatus
+   @param {String} componentName Name of component.
+   @param {Boolean} togglerStatus Status to save.
+   */
+  setTogglerStatus(componentName, settingName, togglerStatus) {
+    let userSetting;
+
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    if (this.exists() &&
+      componentName in this.currentUserSettings[this.currentAppPage] &&
+      settingName in this.currentUserSettings[this.currentAppPage][componentName]
+    ) {
+      userSetting = this.currentUserSettings[this.currentAppPage][componentName][settingName];
+    } else {
+      userSetting = {};
+    }
+
+    userSetting.togglerStatus = togglerStatus;
+    if (this.isUserSettingsServiceEnabled) {
+      this.saveUserSetting(componentName, settingName, userSetting);
+    }
+  },
+
+  /**
+   Returns toggler status from user service.
+
+   @method getTogglerStatus
+   @param {String} componentName component Name to search by.
+   @return {Boolean} Saved status.
+   */
+  getTogglerStatus(componentName, settingName) {
+    if (settingName === undefined) {
+      settingName = defaultSettingName;
+    }
+
+    let currentUserSetting = this.getCurrentUserSetting(componentName, settingName);
+
+    return currentUserSetting && 'togglerStatus' in currentUserSetting ? currentUserSetting.togglerStatus : null;
   },
 
   /**
@@ -577,7 +680,7 @@ export default Ember.Service.extend({
     Ember.assert('saveUserSetting:: User setting data are not defined for user setting saving.', userSetting);
     Ember.assert('saveUserSetting:: Setting name is not defined for user setting saving.', settingName !== undefined);
 
-    if (!(this.currentAppPage in this.currentUserSettings)) {
+    if (!(this.exists())) {
       this.currentUserSettings[this.currentAppPage] = {};
     }
 
@@ -641,33 +744,7 @@ export default Ember.Service.extend({
 
     let settingsPromise = this._getExistingSettings();
 
-    let ret = settingsPromise.then(
-      foundRecords => {
-        let ret = {};
-        if (foundRecords) {
-          for (let i = 0; i < foundRecords.length; i++) {
-            let foundRecord = foundRecords[i];
-            let userSettingValue = foundRecord.record.get('txtVal');
-            let settName = foundRecord.record.get('settName');
-            let componentName = foundRecord.record.get('moduleName');
-            if (!settName) {
-              settName = defaultSettingName;
-            }
-
-            if (userSettingValue) {
-              if (!(componentName in ret)) {
-                ret[componentName] = {};
-              }
-
-              ret[componentName][settName] = JSON.parse(userSettingValue);
-            }
-          }
-        }
-
-        return ret;
-      }
-    );
-    return ret;
+    return settingsPromise;
   },
 
   /**

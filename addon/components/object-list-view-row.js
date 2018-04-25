@@ -100,7 +100,7 @@ export default FlexberryBaseComponent.extend({
     Current record.
     - `key` - Ember GUID for record.
     - `data` - Instance of DS.Model.
-    - `config` - Object with config for record.
+    - `rowConfig` - Object with config for record.
 
     @property record
     @type Object
@@ -108,7 +108,7 @@ export default FlexberryBaseComponent.extend({
   record: Ember.computed(() => ({
     key: undefined,
     data: undefined,
-    config: undefined,
+    rowConfig: undefined,
   })),
 
   /**
@@ -135,7 +135,7 @@ export default FlexberryBaseComponent.extend({
           let newRecord = Ember.Object.create({
             key: Ember.guidFor(record),
             data: record,
-            config: config,
+            rowConfig: config,
             doRenderData: true
           });
 
@@ -218,7 +218,37 @@ export default FlexberryBaseComponent.extend({
   */
   recordsLoaded: false,
 
+  /**
+    Level of hierarchy, that already was loaded.
+
+    @property hierarchyLoadedLevel
+    @type Integer
+    @default -1
+  */
+  hierarchyLoadedLevel: -1,
+
+  /**
+    Name of action to send out, action triggered by click on user button in row.
+
+    @property customButtonInRowAction
+    @type String
+    @default 'customButtonInRowAction'
+  */
+  customButtonInRowAction: 'customButtonInRowAction',
+
   actions: {
+    /**
+      Handler for click by custom button in row.
+      Sends action up to {{#crossLink "ObjectListViewComponent"}}`object-list-view`{{/crossLink}} component.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      this.sendAction('customButtonInRowAction', actionName, model);
+    },
+
     /**
       Show/hide embedded records.
 
@@ -266,7 +296,12 @@ export default FlexberryBaseComponent.extend({
         Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
       }
 
-      this.sendAction('rowClick', record, params);
+      // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
+      let classOfHierarchyExpandButton = 'hierarchy-expand';
+      if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
+      {
+        this.sendAction('rowClick', record, params);
+      }
     }
   },
 
@@ -280,13 +315,13 @@ export default FlexberryBaseComponent.extend({
     if (!this.get('recordsLoaded')) {
       let id = this.get('record.data.id');
       if (id && this.get('inHierarchicalMode')) {
+        let currentLevel = this.get('_currentLevel');
+        let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
+        this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
         this.set('recordsLoaded', true);
-        if (this.get('_level') > 0) {
-          this.sendAction('loadRecords', id, this, 'records', false);
-        } else {
-          this.sendAction('loadRecords', id, this, 'records', true);
+        if (currentLevel > hierarchyLoadedLevel) {
+          this.set('hierarchyLoadedLevel', currentLevel);
         }
-
       }
     }
   },

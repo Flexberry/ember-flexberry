@@ -33,3 +33,27 @@
    width: 0;
    height: 0;
 }
+
+.ui.form input.ember-view.ember-text-field:-ms-input-placeholder {
+   color: @placeholderColor;
+}
+
+.ui.form textarea.ember-view.ember-text-area:-ms-input-placeholder {
+   color: @placeholderColor;
+}
+
+.ember-view.ui.dropdown div.default.text {
+   color: @placeholderColor;
+}
+
+.flexberry-file.mobile .flexberry-file-grid {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.flexberry-lookup .input span.lookup-field {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 15px;
+}

@@ -119,10 +119,13 @@ export default Ember.Component.extend(
     this._super(...arguments);
 
     // Get and remember current controller.
-    let currentController = this.getTargetObjectByCondition((targetObject) => {
-      return targetObject instanceof Ember.Controller;
-    });
-    this.set('currentController', currentController);
+    let currentController = this.get('currentController');
+    if (Ember.isNone(currentController)) {
+      currentController = this.getTargetObjectByCondition((targetObject) => {
+        return targetObject instanceof Ember.Controller;
+      });
+      this.set('currentController', currentController);
+    }
 
     // Set related model.
     let relatedModel = this.get('relatedModel');

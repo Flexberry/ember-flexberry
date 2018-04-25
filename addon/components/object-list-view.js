@@ -339,14 +339,20 @@ export default FlexberryBaseComponent.extend(
     'showCheckBoxInRow',
     'showDeleteButtonInRow',
     'showEditButtonInRow',
+    'customButtonsInRow',
     'modelProjection',
     function() {
       if (this.get('modelProjection')) {
-        return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow') || this.get('showEditButtonInRow');
+        return this.get('showAsteriskInRow') ||
+          this.get('showCheckBoxInRow') ||
+          this.get('showDeleteButtonInRow') ||
+          this.get('showEditButtonInRow') ||
+          !!this.get('customButtonsInRow');
       } else {
         return false;
       }
-    }),
+    }
+  ).readOnly(),
 
   /**
     Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
@@ -821,6 +827,16 @@ export default FlexberryBaseComponent.extend(
   componentName: '',
 
   actions: {
+    /**
+      Just redirects action up to {{#crossLink "FlexberryObjectlistviewComponent"}}`flexberry-objectlistview`{{/crossLink}} component.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      this.sendAction('customButtonInRowAction', actionName, model);
+    },
 
     /**
       This action is called when user click on row.
@@ -1009,6 +1025,7 @@ export default FlexberryBaseComponent.extend(
     */
     checkAll(e) {
       let contentWithKeys = this.get('contentWithKeys');
+      let selectedRecords = this.get('selectedRecords');
 
       let checked = !this.get('allSelect');
       Ember.set(this, 'allSelect', checked);
@@ -1027,12 +1044,14 @@ export default FlexberryBaseComponent.extend(
           }
         }
 
+        selectedRecords.removeObject(recordWithKey.data);
         recordWithKey.set('selected', checked);
         recordWithKey.set('rowConfig.canBeSelected', !checked);
       }
 
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
+      this.selectedRowsChanged();
     },
 
     /**
@@ -1235,16 +1254,11 @@ export default FlexberryBaseComponent.extend(
     } else {
       this._restoreSelectedRecords();
 
-      if (!this._colResizableInit) {
-        let $currentTable = this.$('table.object-list-view');
-        if (this.get('allowColumnResize')) {
-          $currentTable.addClass('fixed');
-          this._reinitResizablePlugin();
-        } else {
-          $currentTable.colResizable({ disable: true });
-        }
-
-        this.set('_colResizableInit', true);
+      if (this.get('allowColumnResize')) {
+        this._reinitResizablePlugin();
+      } else {
+        let $table = this.$('table.object-list-view');
+        $table.colResizable({ disable: true });
       }
 
       this.$('.object-list-view-menu > .ui.dropdown').dropdown();
@@ -1424,6 +1438,10 @@ export default FlexberryBaseComponent.extend(
       let helperColumnsWidth = (olvRowMenuWidth || 0) + (olvRowToolbarWidth || 0);
       let containerWidth = $table[0].parentElement.clientWidth - 5;
       let columnsWidthAutoresize = this.get('columnsWidthAutoresize');
+      if ($columns.length === 0) {
+        tableWidth = containerWidth;
+      }
+
       let widthCondition = columnsWidthAutoresize && containerWidth > tableWidth;
       $table.css({ 'width': (columnsWidthAutoresize ? containerWidth : tableWidth) + 'px' });
       if (this.get('eventsBus')) {

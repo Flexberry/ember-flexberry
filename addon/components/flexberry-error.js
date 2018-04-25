@@ -21,10 +21,32 @@ export default Ember.Component.extend({
     Internal property to store the error.
 
     @property _error
-    @type Error
+    @type Error or Array
     @private
   */
   _error: undefined,
+
+  /**
+    Detects if error is an array.
+
+    @property _errorIsArray
+    @type Boolean
+    @private
+  */
+  _errorIsArray: Ember.computed('_error', function () {
+    return Ember.isArray(this.get('_error'));
+  }),
+
+  /**
+    Detects if error has not own property with message.
+
+    @property _messageIsNotSpecified
+    @type Boolean
+    @private
+  */
+  _messageIsNotSpecified: Ember.computed('_error', function () {
+    return Ember.isNone(this.get('_error.message'));
+  }),
 
   /**
     Define error display mode, in `{{modal-dailog}}` or `{{ui-message}}` component.
@@ -54,6 +76,7 @@ export default Ember.Component.extend({
     get() {
       return this.get('_error');
     },
+
     set(key, value) {
       return this.set('_error', value);
     },

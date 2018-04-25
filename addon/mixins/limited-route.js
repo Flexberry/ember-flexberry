@@ -81,6 +81,15 @@ export default Ember.Mixin.create({
   resultPredicate: null,
 
   /**
+    Result predicate with filters restrictions for olv.
+
+    @property filterPredicate
+    @type BasePredicate
+    @default null
+   */
+  filterPredicate: null,
+
+  /**
     Return predicate to filter through.
 
     @example

@@ -95,6 +95,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       @param {Object} chooseData Lookup parameters (projection name, relation name, etc).
     */
     showLookupDialog(chooseData) {
+      let lookupController = this.get('lookupController');
       let options = Ember.$.extend(true, {
         projection: undefined,
         relationName: undefined,
@@ -104,9 +105,11 @@ export default Ember.Mixin.create(ReloadListMixin, {
         sizeClass: undefined,
         lookupWindowCustomPropertiesData: undefined,
         componentName: undefined,
+        folvComponentName: undefined,
         notUseUserSettings: undefined,
         perPage: this.get('lookupModalWindowPerPage'),
-        sorting: undefined
+        sorting: undefined,
+        hierarchicalAttribute: lookupController.get('hierarchicalAttribute')
       }, chooseData);
 
       let projectionName = options.projection;
@@ -123,9 +126,14 @@ export default Ember.Mixin.create(ReloadListMixin, {
       let lookupWindowCustomPropertiesData = options.lookupWindowCustomPropertiesData;
       let sizeClass = options.sizeClass;
       let componentName = options.componentName;
+      let folvComponentName = options.folvComponentName;
+      let hierarchicalAttribute = options.hierarchicalAttribute;
+
+      let userSettingsService = this.get('userSettingsService');
+      userSettingsService.createDefaultUserSetting(folvComponentName);
 
       let model = modelToLookup ? modelToLookup : this.get('model');
-      let sorting = options.sorting ? options.sorting : [];
+      let sorting = userSettingsService.getCurrentSorting(folvComponentName) || options.sorting || [];
       let perPage = (lookupWindowCustomPropertiesData ? lookupWindowCustomPropertiesData.perPage : false) || options.perPage;
 
       // Get ember static function to get relation by name.
@@ -154,6 +162,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         sorting: sorting,
         filter: undefined,
         predicate: limitPredicate,
+        hierarchicalAttribute: hierarchicalAttribute,
 
         title: title,
         sizeClass: sizeClass,
@@ -164,6 +173,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
         currentLookupRow: model.get(relationName),
         customPropertiesData: lookupWindowCustomPropertiesData,
         componentName: componentName,
+        folvComponentName: folvComponentName,
         notUseUserSettings: options.notUseUserSettings,
       };
 
@@ -275,6 +285,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filter: undefined,
       filterCondition: undefined,
       predicate: undefined,
+      hierarchicalAttribute: undefined,
 
       title: undefined,
       sizeClass: undefined,
@@ -282,6 +293,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       currentLookupRow: undefined,
       customPropertiesData: undefined,
       componentName: undefined,
+      folvComponentName: undefined,
       notUseUserSettings: undefined,
     }, options);
 
@@ -303,6 +315,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       throw new Error('Limit predicate is not correct. It has to be instance of BasePredicate.');
     }
 
+    let controller = currentContext.get('lookupController');
     let queryParameters = {
       modelName: reloadData.relatedToType,
       projectionName: reloadData.projectionName,
@@ -312,10 +325,10 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filters: reloadData.filters,
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
-      predicate: limitPredicate
+      predicate: limitPredicate,
+      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined
     };
 
-    let controller = currentContext.get('lookupController');
     controller.clear(reloadData.initialLoad);
     controller.setProperties({
       modelProjection: projection,
@@ -325,6 +338,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       currentLookupRow: reloadData.currentLookupRow,
       customPropertiesData: reloadData.customPropertiesData,
       componentName: reloadData.componentName,
+      folvComponentName: reloadData.folvComponentName,
       notUseUserSettings: reloadData.notUseUserSettings,
 
       perPage: queryParameters.perPage,
@@ -333,6 +347,7 @@ export default Ember.Mixin.create(ReloadListMixin, {
       filter: reloadData.filter,
       filterCondition: reloadData.filterCondition,
       predicate: limitPredicate,
+      hierarchicalAttribute: controller.get('inHierarchicalMode') ? reloadData.hierarchicalAttribute : undefined,
 
       modelType: reloadData.relatedToType,
       projectionName: reloadData.projectionName,

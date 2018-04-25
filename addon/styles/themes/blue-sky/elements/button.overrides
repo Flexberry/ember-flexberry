@@ -281,12 +281,18 @@ div.ui.secondary.menu.no-margin {
     content: '';
 }
 
-.ui.button.ui-change i.icon, .ui.button.ui-clear i.icon {
-    margin: 0em 0.5em 0em 0.5em;
-    font-size: 1em;
+.flexberry-lookup {
+    .ui.action.input .ui.button.ui-change, .ui.action.input .ui.button.ui-clear {
+        padding: 0em 0.3em 0em 0.3em;
+        font-size: 1em;
+        border: none;
+        i.icon {
+         margin: 0px 3px 0px 3px;
+       }
+    }
 }
 
-ui.button.ui-clear:hover {
+.flexberry-lookup .ui.fluid.action.input .ui.button.ui-clear:hover {
     color: @uiHoveredNegitveTextColor;
     opacity: 1;
 }
@@ -302,21 +308,6 @@ ui.button.ui-clear:hover {
     &:hover {
         color: @blue
     }
-}
-
-.ui.fluid.action.input .ui.button.ui-change {
-    position: absolute;
-    right: 30px;
-}
-
-.ui.fluid.action.input .ui.button.ui-clear {
-    position: absolute;
-    right: 0px;
-}
-
-.ui.fluid.action.input .ui.loading.button.ui-change {
-    position: absolute;
-    right: 30px;
 }
 
 /* Table cell buttons */
@@ -388,6 +379,64 @@ ui.button.ui-clear:hover {
     background: none;
     margin: 0 0 0 0px;
     &:hover {
+        border: 0px;
+        background: none;
+        & i.icon.sort:before {
+            color: @uiHoveredNegitveTextColor;
+        }
+    }
+}
+
+
+.ui.check-all-at-page-button-mobile.button {
+    padding: 0px;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    border: 0px;
+    background: none;
+    margin: 0 0 0 0px;
+    &:active {
+        border: 0px;
+        background: none;
+        & i.icon.check-square-o:before {
+            color: @uiHoveredNegitveTextColor;
+        }
+    }
+}
+
+.ui.check-all-button-mobile.button {
+    padding: 0px;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    border: 0px;
+    background: none;
+    margin: 0 0 0 0px;
+    &:active {
+        border: 0px;
+        background: none;
+        & i.icon.check-all-square-o:before {
+            color: @uiHoveredNegitveTextColor;
+        }
+    }
+}
+
+.ui.check-all-button-mobile.button.activated {
+  & i.icon.check-all-square-o:before {
+    color: @uiHoveredNegitveTextColor;
+  }
+}
+
+.ui.clear-sorting-button-mobile.button {
+    padding: 0px;
+    height: 25px;
+    width: 10px;
+    text-align: center;
+    border: 0px;
+    background: none;
+    margin: 0 0 0 0px;
+    &:active {
         border: 0px;
         background: none;
         & i.icon.sort:before {

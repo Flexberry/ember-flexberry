@@ -7,6 +7,7 @@ import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
 import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-objectlistview-hierarchical-route';
+import ErrorableRouteMixin from '../mixins/errorable-route';
 
 /**
   Base route for the Edit Forms.
@@ -37,7 +38,8 @@ import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-o
 export default ProjectedModelFormRoute.extend(
 FlexberryObjectlistviewRouteMixin,
 FlexberryGroupeditRouteMixin,
-FlexberryObjectlistviewHierarchicalRouteMixin, {
+FlexberryObjectlistviewHierarchicalRouteMixin,
+ErrorableRouteMixin, {
   actions: {
     /**
       It sends message about transition to corresponding controller.
@@ -69,6 +71,14 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
   },
 
   /**
+    Suffix for new route (has value only on new routes).
+
+    @property newSuffix
+    @type String
+  */
+  newSuffix: undefined,
+
+  /**
     Service that triggers objectlistview events.
 
     @property objectlistviewEventsService
@@ -88,6 +98,11 @@ FlexberryObjectlistviewHierarchicalRouteMixin, {
     this._super(...arguments);
 
     let webPage = transition.targetName;
+    let newSuffix = this.get('newSuffix');
+    if (!Ember.isBlank(newSuffix) && webPage.substr(webPage.length - newSuffix.length) === newSuffix) {
+      webPage = webPage.substr(0, webPage.length - newSuffix.length);
+    }
+
     let userSettingsService = this.get('userSettingsService');
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings') || {};

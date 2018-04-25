@@ -1130,6 +1130,7 @@ export default folv.extend(
     */
     checkAll(e) {
       let contentWithKeys = this.get('contentWithKeys');
+      let selectedRecords = this.get('selectedRecords');
 
       let checked = !this.get('allSelect');
       Ember.set(this, 'allSelect', checked);
@@ -1149,12 +1150,14 @@ export default folv.extend(
           }
         }
 
+        selectedRecords.removeObject(recordWithKey.data);
         recordWithKey.set('selected', checked);
         recordWithKey.set('rowConfig.canBeSelected', !checked);
       }
 
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
+      this.selectedRowsChanged();
     },
 
     /**
@@ -2243,7 +2246,7 @@ export default folv.extend(
     this._deleteHasManyRelationships(record, immediately).then(() => immediately ? record.destroyRecord().then(() => {
       this.sendAction('saveAgregator');
     }) : record.deleteRecord()).catch((reason) => {
-      this.get('currentController').send('error', reason);
+      this.get('currentController').send('handleError', reason);
       record.rollbackAll();
     });
 

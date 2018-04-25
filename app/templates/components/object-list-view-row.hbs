@@ -2,6 +2,14 @@
   <tr class="{{record.rowConfig.customClass}}">
     <td class="object-list-view-helper-column {{unless showHelperColumn "hidden"}}" style={{defaultPaddingStyle}}>
       <div class="hidden">{{record.key}}</div>
+      {{#each customButtonsInRow as |customButtonInRow|}}
+          <button
+            class="ui {{customButtonInRow.buttonClasses}} button"
+            title={{if customButtonInRow.buttonTitle customButtonInRow.buttonTitle}}
+            {{action "customButtonInRowAction" customButtonInRow.buttonAction record.data}}>
+            <i class={{customButtonInRow.buttonIcon}}></i>
+          </button>
+      {{/each}}
       {{#if showHelperColumn}}
         <div class="object-list-view-helper-column-cell">
           {{#if showAsteriskInRow}}
@@ -54,6 +62,7 @@
               value=(mut (get record.data column.propName))
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
+              componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
             }}
               {{#if (and (not index) inHierarchicalMode)}}
                 {{#if hasRecords}}
@@ -70,6 +79,7 @@
               value=(mut (get record.data column.propName))
               readonly=(readonly-cell record.rowConfig.readonlyColumns column.propName readonly column.cellComponent.componentProperties.readonly)
               required=required
+              componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
             }}
             {{#if showValidationMessages}}
               {{flexberry-validationmessage
@@ -155,6 +165,8 @@
         hierarchicalIndent=_hierarchicalIndent
         defaultLeftPadding=defaultLeftPadding
         overflowedComponents=overflowedComponents
+        folvComponentName=folvComponentName
+        hierarchyLoadedLevel=hierarchyLoadedLevel
       }}
     {{/each}}
   {{/if}}

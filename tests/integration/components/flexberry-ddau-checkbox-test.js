@@ -1,6 +1,6 @@
+import Ember from 'ember';
 import $ from 'jquery';
 import { A } from '@ember/array';
-import { assert } from '@ember/debug';
 import FlexberryDdauCheckboxComponent from 'ember-flexberry/components/flexberry-ddau-checkbox';
 import FlexberryDdauCheckboxActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-checkbox-actions-handler';
 import { moduleForComponent, test } from 'ember-qunit';
@@ -94,7 +94,7 @@ test('Component invokes actions', function(assert) {
   this.set('actions.onFlagChange', e => {
     latestEventObjects.change = e;
   });
-  this.render(hbs`{{flexberry-ddau-checkbox change=(action "onFlagChange")}}`);
+  this.render(hbs`{{flexberry-ddau-checkbox onChange=(action \"onFlagChange\")}}`);
 
   // Retrieve component.
   let $component = this.$().children();
@@ -114,8 +114,8 @@ test('Component invokes actions', function(assert) {
 test('Component changes binded value (without \'change\' action handler)', function(testAssert) {
   // Mock Ember.assert method.
   let thrownExceptions = A();
-  let originalEmberAssert = assert;
-  assert = function(...args) {
+  let originalEmberAssert = Ember.assert;
+  Ember.assert = function(...args) {
     try {
       originalEmberAssert(...args);
     } catch (ex) {
@@ -156,7 +156,7 @@ test('Component changes binded value (without \'change\' action handler)', funct
     'Component throws single exception if \'change\' action handler is not defined');
 
   // Clean up after mock Ember.assert.
-  assert = originalEmberAssert;
+  Ember.assert = originalEmberAssert;
 });
 
 test('Component changes binded value (with \'change\' action handler)', function(assert) {
@@ -170,7 +170,7 @@ test('Component changes binded value (with \'change\' action handler)', function
     this.set('flag', e.newValue);
   });
 
-  this.render(hbs`{{flexberry-ddau-checkbox value=flag change=(action "onFlagChange")}}`);
+  this.render(hbs`{{flexberry-ddau-checkbox value=flag onChange=(action "onFlagChange")}}`);
 
   // Retrieve component & it's inner <input>.
   let $component = this.$().children();
@@ -210,7 +210,7 @@ test('Component changes binded value (with \'change\' action handler from specia
   // Bind component's 'change' action handler from specialized mixin.
   this.set('actions.onCheckboxChange', FlexberryDdauCheckboxActionsHandlerMixin.mixins[0].properties.actions.onCheckboxChange);
 
-  this.render(hbs`{{flexberry-ddau-checkbox value=flag change=(action "onCheckboxChange" "flag")}}`);
+  this.render(hbs`{{flexberry-ddau-checkbox value=flag onChange=(action "onCheckboxChange" "flag")}}`);
 
   // Retrieve component & it's inner <input>.
   let $component = this.$().children();
@@ -257,7 +257,7 @@ test('Component works properly in readonly mode', function(assert) {
   // Render component in readonly mode.
   this.set('flag', false);
   this.set('readonly', true);
-  this.render(hbs`{{flexberry-ddau-checkbox value=flag readonly=readonly change=(action "onFlagChange")}}`);
+  this.render(hbs`{{flexberry-ddau-checkbox value=flag readonly=readonly onChange=(action "onFlagChange")}}`);
 
   // Retrieve component & it's inner <input>.
   let $component = this.$().children();

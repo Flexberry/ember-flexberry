@@ -99,7 +99,7 @@ export default FlexberryBaseComponent.extend({
         this.set('value', false);
         if (!isEmpty(this.get('onChange'))) {
           this.get('onChange')({
-            checked: true
+            checked: false
           });
         }
       }

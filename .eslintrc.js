@@ -63,6 +63,25 @@ module.exports = {
       rules: {
         'ember/avoid-leaking-state-in-ember-objects': 'off'
       }
+    },
+
+    // TODO Action objectListViewRowClick from route in controller and fix .eslintrc
+    {
+      files: [
+        'addon/addon/components/flexberry-objectlistview.js',
+      ],
+      rules: {
+        'ember/closure-actions': 'off'
+      }
+    },
+
+    {
+      files: [
+        'tests/integration/components/flexberry-ddau-checkbox-test.js',
+      ],
+      rules: {
+        'ember/new-module-imports': 'off'
+      }
     }
   ]
 };

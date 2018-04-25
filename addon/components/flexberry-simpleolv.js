@@ -1266,8 +1266,8 @@ export default folv.extend(
       { name: 'edit', icon: 'setting' },
       { name: 'remove', icon: 'remove' }
     ]);
-    this.get('_contentObserver')();
-    this.get('selectedRowsChanged')();
+    this.get('_contentObserver').apply(this);
+    this.get('selectedRowsChanged').apply(this);
   },
 
   /**

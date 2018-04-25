@@ -116,8 +116,8 @@ export default EditFormController.extend({
       '  title="Master"<br>' +
       '  relatedModel=model<br>' +
       '  relationName="type"<br>' +
-      '  choose="showLookupDialog"<br>' +
-      '  remove="removeLookupValue"<br>' +
+      '  choose=(action "showLookupDialog")<br>' +
+      '  remove=(action "removeLookupValue")<br>' +
       '  autocomplete=autocomplete<br>' +
       '  dropdown=dropdown<br>' +
       '  chooseText=chooseText<br>' +

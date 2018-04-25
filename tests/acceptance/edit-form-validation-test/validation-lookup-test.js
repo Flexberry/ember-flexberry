@@ -19,8 +19,9 @@ executeTest('check operation lookup', (store, assert, app) => {
     // Check default validationmessage text.
     assert.equal($validationFlexberryErrorLable.text().trim(), 'Master is required', 'Lookup have default value');
 
-    let $validationFlexberryLookupButtons = $('.ui.button');
-    let $validationFlexberryLookupButton = $($validationFlexberryLookupButtons[2]);
+    let $validationFlexberryLookup = $('.flexberry-lookup');
+    let $validationFlexberryLookupInput = $validationFlexberryLookup.children('.input');
+    let $validationFlexberryLookupButton = $validationFlexberryLookupInput.children('.ui-change.button');
 
     // Click lookup button.
     run(() => {

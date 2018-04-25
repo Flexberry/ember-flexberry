@@ -169,8 +169,8 @@ let FlexberryDdauCheckboxComponent = Component.extend(
         let checked = e.target.checked === true;
 
         // Invoke component's custom 'change' action.
-        if (!isEmpty(this.get('change'))) {
-          this.get('change')({
+        if (!isEmpty(this.get('onChange'))) {
+          this.get('onChange')({
           newValue: checked,
             originalEvent: e
           });

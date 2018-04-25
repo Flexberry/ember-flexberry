@@ -171,7 +171,7 @@ let FlexberryJsonareaComponent = Component.extend({
 
   init() {
     this._super(...arguments);
-    this.get('_valueDidChange')();
+    this.get('_valueDidChange').apply(this);
   },
 
   /**

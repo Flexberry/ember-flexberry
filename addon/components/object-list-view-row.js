@@ -292,7 +292,7 @@ export default FlexberryBaseComponent.extend({
 
   init() {
     this._super(...arguments);
-    this.get('inExpandModeObserver')();
+    this.get('inExpandModeObserver').apply(this);
   },
 
   /**

@@ -260,8 +260,11 @@ export default FlexberryBaseComponent.extend({
   */
   init() {
     this._super(...arguments);
-    this.get('itemsOrValueDidChange')();
-    this.set('items', {});
+    this.get('itemsOrValueDidChange').apply(this);
+    if (isNone(this.get('items'))) {
+      this.set('items', {});
+    }
+
   },
 
   /**

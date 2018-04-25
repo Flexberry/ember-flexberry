@@ -4,7 +4,7 @@
 
 import Component from '@ember/component';
 import { computed, observer } from '@ember/object';
-import { typeOf } from '@ember/utils';
+import { typeOf, isNone } from '@ember/utils';
 
 /**
   UIMessage component for Semantic UI.
@@ -260,9 +260,14 @@ export default Component.extend({
   */
   _didVisibilityChange: observer('visible', function() {
     if (this.get('visible')) {
-      this.get('onShow')();
+      if (!isNone(this.get('onShow'))) {
+        this.get('onShow')();
+      }
+
     } else {
-      this.get('onHide')();
+      if (!isNone(this.get('onHide'))) {
+        this.get('onHide')();
+      }
     }
   })
 });

@@ -33,8 +33,8 @@ import { StringPredicate } from 'ember-flexberry-data/query/predicate';
     ...
     {{flexberry-lookup
       componentName="AuthorLookup"
-      choose="showLookupDialog"
-      remove="removeLookupValue"
+      choose=(action "showLookupDialog")
+      remove=(action "removeLookupValue")
       value=model.author
       projection="UserL"
       relationName="author"
@@ -279,8 +279,8 @@ export default FlexberryBaseComponent.extend({
       <!-- app/templates/post.hbs -->
       {{flexberry-lookup
         componentName="AuthorLookup"
-        choose="showLookupDialog"
-        remove="removeLookupValue"
+        choose=(action "showLookupDialog")
+        remove=(action "removeLookupValue")
         value=model.author
         projection="UserL"
         relationName="author"

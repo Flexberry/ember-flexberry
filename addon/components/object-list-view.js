@@ -1104,8 +1104,8 @@ export default FlexberryBaseComponent.extend(
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('geSortApply', this, this._setContent);
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
-    this.get('_contentObserver')();
-    this.get('selectedRowsChanged')();
+    this.get('_contentObserver').apply(this);
+    this.get('selectedRowsChanged').apply(this);
     this.set('cellComponent', {
       componentName: undefined,
       componentProperties: null,

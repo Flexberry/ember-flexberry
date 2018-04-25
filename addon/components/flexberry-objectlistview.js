@@ -754,7 +754,8 @@ export default FlexberryBaseComponent.extend({
         let $clickedRow = this._getRowByKey(record.key || guidFor(record));
         run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
-            this.get('action')(record);
+            this.sendAction('action', record); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
+
           } else {
             let editFormRoute = this.get('editFormRoute');
             assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
@@ -765,7 +766,8 @@ export default FlexberryBaseComponent.extend({
               options = merge(options, { editFormRoute: editFormRoute });
             }
 
-            this.get('action')(record, options);
+            this.sendAction('action', record, options); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
+
           }
         });
 

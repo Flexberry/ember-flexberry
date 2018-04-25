@@ -191,8 +191,8 @@ let FlexberryDdauSliderComponent = Component.extend(
         let value = e.value.newValue;
 
         // Invoke component's custom 'change' action.
-        if (!isEmpty(this.get('change'))) {
-          this.get('change')({
+        if (!isEmpty(this.get('onChange'))) {
+          this.get('onChange')({
             newValue: value,
             originalEvent: e
           });

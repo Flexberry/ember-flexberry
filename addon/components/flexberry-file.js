@@ -559,7 +559,7 @@ export default FlexberryBaseComponent.extend({
     // Bind related model's 'preSave' event handler's context & subscribe on related model's 'preSave'event.
     this.set('_onRelatedModelPreSave', this.get('_onRelatedModelPreSave').bind(this));
     this._subscribeOnRelatedModelPreSaveEvent();
-    this.get('_previewOptionsDidChange')();
+    this.get('_previewOptionsDidChange').apply(this);
   },
 
   /**
@@ -893,10 +893,12 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _valueDidChange: observer('value', function() {
-    this.get('fileChange')({
-      uploadData: this.get('_uploadData'),
-      value: this.get('value')
-    });
+    if(!isNone(this.get('fileChange'))){
+      this.get('fileChange')({
+        uploadData: this.get('_uploadData'),
+        value: this.get('value')
+      });
+    }
   }),
 
   /**

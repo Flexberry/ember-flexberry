@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+* `flexberry-ddau-checkbox` component: : change external action on `onChange`.
+* `flexberry-ddau-slider` component: change external action on `onChange`.
+
 ### Removed
 * `flexberry-datepicker` component. Please use `flexberry-simpledatetime` component instead or create an own component.
 

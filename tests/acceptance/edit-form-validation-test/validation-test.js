@@ -13,8 +13,23 @@ executeTest('check complete all tests', (store, assert, app) => {
   andThen(() => {
     assert.equal(currentPath(), path);
 
-    let $validationFlexberryLookupButtons = $('.ui.button');
-    let $validationFlexberryLookupButton = $($validationFlexberryLookupButtons[2]);
+    let $validationDataField = $('.flexberry-simpledatetime');
+    let $validationDataDiv = $validationDataField.children('.input');
+    let $validationDataInput = $validationDataDiv.children('.flatpickr-input');
+
+    run(() => {
+      // Open datepicker calendar.
+      $($validationDataInput[0]).click();
+      let $validationDateButton = $('.flatpickr-day');
+      $validationDateButton = $($validationDateButton[16]);
+
+      // Select date.
+      $validationDateButton.click();
+    });
+
+    let $validationFlexberryLookup = $('.flexberry-lookup');
+    let $validationFlexberryLookupInput = $validationFlexberryLookup.children('.input');
+    let $validationFlexberryLookupButton = $validationFlexberryLookupInput.children('.ui-change.button');
 
     // Click lookup button.
     run(() => {

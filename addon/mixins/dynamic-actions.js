@@ -73,7 +73,7 @@ export default Mixin.create({
     @private
   */
   _dynamicActions: computed(
-    'dynamicActions.{[],@each.{actionHandler,actionName,actionContext,actionArguments}}',
+    'dynamicActions.{[],@each.actionHandler,@each.actionName,@each.actionContext,@each.actionArguments}',
     function() {
       let dynamicActions = this.get('dynamicActions');
       let result = {};

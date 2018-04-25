@@ -16,7 +16,7 @@ executeTest('check goto new form', (store, assert, app) => {
       let $toolBar = Ember.$('.ui.secondary.menu')[0];
       let $toolBarButtons = $toolBar.children;
 
-      assert.equal($toolBarButtons[1].innerText, Ember.get(I18nRuLocale, 'components.olv-toolbar.add-button-text'), 'button create exist');
+      assert.equal($toolBarButtons[1].innerText.trim(), Ember.get(I18nRuLocale, 'components.olv-toolbar.add-button-text'), 'button create exist');
 
       let asyncOperationsCompleted = assert.async();
       loadingList($toolBarButtons[1], 'form', '.field').then(($editForm) => {

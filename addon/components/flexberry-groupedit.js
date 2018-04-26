@@ -491,7 +491,7 @@ export default FlexberryBaseComponent.extend({
         options = merge(options, { editFormRoute: editFormRoute });
       }
 
-      this.get('action')(record, options);
+      this.sendAction('action', record, options); //TODO Action groupEditRowClick from route in controller and fix .eslintrc
     },
 
     /**

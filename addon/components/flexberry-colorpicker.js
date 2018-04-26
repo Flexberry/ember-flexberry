@@ -8,7 +8,6 @@ import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
-import { isEmpty } from '@ember/utils';
 
 /**
   Component's CSS-classes names.
@@ -135,13 +134,11 @@ let FlexberryColorpickerComponent = Component.extend(
         let { value, opacity } = $input.data('minicolors-lastChange') || { value: null, opacity: null };
 
         // Invoke component's custom 'change' action.
-        if (!isEmpty(this.get('change'))) {
-          this.get('change')({
-            newValue: value,
-            newOpacity: opacity,
-            originalEvent: e
-          });
-        }
+        this.sendDynamicAction('change', {
+          newValue: value,
+          newOpacity: opacity,
+          originalEvent: e
+        });
 
         // Prevent second call to this.sendAction('change', ...) inside dom-actions mixin,
         // otherwise component's outer 'change' action handler will be called twice.

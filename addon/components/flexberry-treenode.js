@@ -175,8 +175,7 @@ let FlexberryTreenodeComponent = Component.extend(
         which describes Inner header element's 'click' event.
       */
       onHeaderClick(e) {
-        // Send 'headerClick' action anyway.
-        this.get('headerClick')({
+        this.sendDynamicAction('headerClick', {
           originalEvent: e
         });
 
@@ -200,11 +199,11 @@ let FlexberryTreenodeComponent = Component.extend(
 
         let expandedNodeClassName = $.fn.accordion.settings.className.active;
         if ($(e.currentTarget).hasClass(expandedNodeClassName)) {
-          this.get('beforeCollapse')({
+          this.sendDynamicAction('beforeCollapse', {
             originalEvent: e
           });
         } else {
-          this.get('beforeExpand')({
+          this.sendDynamicAction('beforeExpand', {
             originalEvent: e
           });
         }

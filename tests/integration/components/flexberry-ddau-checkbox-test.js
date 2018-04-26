@@ -94,7 +94,7 @@ test('Component invokes actions', function(assert) {
   this.set('actions.onFlagChange', e => {
     latestEventObjects.change = e;
   });
-  this.render(hbs`{{flexberry-ddau-checkbox onChange=(action \"onFlagChange\")}}`);
+  this.render(hbs`{{flexberry-ddau-checkbox change=(action \"onFlagChange\")}}`);
 
   // Retrieve component.
   let $component = this.$().children();
@@ -170,7 +170,7 @@ test('Component changes binded value (with \'change\' action handler)', function
     this.set('flag', e.newValue);
   });
 
-  this.render(hbs`{{flexberry-ddau-checkbox value=flag onChange=(action "onFlagChange")}}`);
+  this.render(hbs`{{flexberry-ddau-checkbox value=flag change=(action "onFlagChange")}}`);
 
   // Retrieve component & it's inner <input>.
   let $component = this.$().children();
@@ -210,7 +210,7 @@ test('Component changes binded value (with \'change\' action handler from specia
   // Bind component's 'change' action handler from specialized mixin.
   this.set('actions.onCheckboxChange', FlexberryDdauCheckboxActionsHandlerMixin.mixins[0].properties.actions.onCheckboxChange);
 
-  this.render(hbs`{{flexberry-ddau-checkbox value=flag onChange=(action "onCheckboxChange" "flag")}}`);
+  this.render(hbs`{{flexberry-ddau-checkbox value=flag change=(action "onCheckboxChange" "flag")}}`);
 
   // Retrieve component & it's inner <input>.
   let $component = this.$().children();
@@ -257,7 +257,7 @@ test('Component works properly in readonly mode', function(assert) {
   // Render component in readonly mode.
   this.set('flag', false);
   this.set('readonly', true);
-  this.render(hbs`{{flexberry-ddau-checkbox value=flag readonly=readonly onChange=(action "onFlagChange")}}`);
+  this.render(hbs`{{flexberry-ddau-checkbox value=flag readonly=readonly change=(action "onFlagChange")}}`);
 
   // Retrieve component & it's inner <input>.
   let $component = this.$().children();

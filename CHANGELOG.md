@@ -5,8 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Changed
-* `flexberry-ddau-checkbox` component: : change external action on `onChange`.
-* `flexberry-ddau-slider` component: change external action on `onChange`.
+* `dynamic-actions` mixins: : mixins don't override `sendAction` method to add some custom logic, they add custom logic in method `sendDynamicAction`.
+* `required-actions` mixins: mixins don't override `sendAction` method to add some custom logic, they add custom logic in method `sendDynamicAction`.
 
 ### Removed
 * `flexberry-datepicker` component. Please use `flexberry-simpledatetime` component instead or create an own component.

@@ -3,7 +3,6 @@
 */
 
 import Mixin from '@ember/object/mixin';
-import Component from '@ember/component';
 import { get, computed } from '@ember/object';
 import { A, isArray } from '@ember/array';
 import { assert } from '@ember/debug';
@@ -138,34 +137,23 @@ export default Mixin.create({
   */
   init() {
     this._super(...arguments);
+    let originalSendDynamicAction = this.get('sendDynamicAction');
 
-    let originalSendAction = this.get('sendAction');
-    assert(
-      `Wrong type of \`sendAction\` propery: actual type is ${typeOf(originalSendAction)}, ` +
-      `but \`function\` is expected.`,
-      typeOf(originalSendAction) === 'function');
-
-    // Override 'sendAction' method to add some custom logic.
-    this.sendAction = (...args) => {
+    this.sendDynamicAction = (...args) => {
       let actionName = args[0];
-      let originalSendActionIsOverridden = originalSendAction !== Component.prototype.sendAction;
-      let outerActionHandlerIsDefined = typeOf(this.get(`attrs.${actionName}`)) === 'function' ||
-        typeOf(this.get(`attrs.${actionName}`)) === 'string';
 
-      // Call for overridden send action, or call for standard 'sendAction' (sending action outside).
-      // Overridden 'sendAction' must be called anywhere,
-      // but call for standard 'sendAction' must be executed only if outer action handler is defined,
-      // otherwise ember will call to component's inner method with the same name (as action name),
-      // for example if you send 'remove' action, then (if outer handler isn't defined) component's
-      // 'remove' method will be called, what will cause unexpected behavior and exceptions.
-      if (originalSendActionIsOverridden || outerActionHandlerIsDefined) {
-        originalSendAction.apply(this, args);
+      if (!isNone(originalSendDynamicAction)){
+        originalSendDynamicAction.apply(this, args);
+      }
+
+      if (!isNone(this.get(`attrs.${actionName}`))) {
+        this.get(`attrs.${actionName}`)(...args.slice(1));
       }
 
       let dynamicActions = this.get(`_dynamicActions.${actionName}`);
 
       // If no dynamic actions defined for action with given name,
-      // break custom 'sendAction' logic then.
+      // break logic then.
       if (!isArray(dynamicActions)) {
         return;
       }
@@ -180,7 +168,7 @@ export default Mixin.create({
         let actionContext = get(dynamicAction, 'actionContext');
         let actionArguments = get(dynamicAction, 'actionArguments') || [];
 
-        // Original action arguments (without action name passed to 'sendAction' method).
+        // Original action arguments (without action name passed to method).
         let originalActionArguments = args.slice(1);
 
         // Combined action arguments.
@@ -198,4 +186,5 @@ export default Mixin.create({
       }
     };
   }
+
 });

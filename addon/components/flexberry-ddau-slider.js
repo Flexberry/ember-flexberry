@@ -7,7 +7,6 @@ import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
-import { isEmpty } from '@ember/utils';
 
 /**
   Component's CSS-classes names.
@@ -191,12 +190,10 @@ let FlexberryDdauSliderComponent = Component.extend(
         let value = e.value.newValue;
 
         // Invoke component's custom 'change' action.
-        if (!isEmpty(this.get('onChange'))) {
-          this.get('onChange')({
-            newValue: value,
-            originalEvent: e
-          });
-        }
+        this.sendDynamicAction('change', {
+          newValue: value,
+          originalEvent: e
+        });
 
         // Prevent second call to this.sendAction('change', ...) inside dom-actions mixin,
         // otherwise component's outer 'change' action handler will be called twice.

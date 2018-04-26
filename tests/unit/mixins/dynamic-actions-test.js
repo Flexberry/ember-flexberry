@@ -1,29 +1,14 @@
 import Component from '@ember/component';
 import Controller from '@ember/controller';
-import EmberObject from '@ember/object';
 import { A } from '@ember/array';
 import { typeOf } from '@ember/utils';
 import DynamicActionsMixin from 'ember-flexberry/mixins/dynamic-actions';
 import DynamicActionObject from 'ember-flexberry/objects/dynamic-action';
 import { module, test } from 'qunit';
 
-let ClassWithDynamicActionsMixin = EmberObject.extend(DynamicActionsMixin, {});
 let ComponentWithDynamicActionsMixin = Component.extend(DynamicActionsMixin, {});
 
 module('Unit | Mixin | dynamic-actions mixin');
-
-test('Mixin throws assertion failed exception if it\'s owner hasn\'t \'sendAction\' method', function (assert) {
-  assert.expect(1);
-
-  try {
-    ClassWithDynamicActionsMixin.create({ dynamicActions: [] });
-  } catch (ex) {
-    assert.strictEqual(
-      (/wrong\s*type\s*of\s*.*sendAction.*/gi).test(ex.message),
-      true,
-      'Throws assertion failed exception if owner hasn\'t \'sendAction\' method');
-  }
-});
 
 test('Mixin throws assertion failed exception if specified \'dynamicActions\' is not array', function (assert) {
   let wrongDynamicActionsArray = A([1, true, false, 'some string', {}, function() {}, new Date(), new RegExp()]);
@@ -38,7 +23,7 @@ test('Mixin throws assertion failed exception if specified \'dynamicActions\' is
     });
 
     try {
-      component.sendAction('someAction');
+      component.sendDynamicAction('someAction');
     } catch (ex) {
       assert.strictEqual(
         (/wrong\s*type\s*of\s*.*dynamicActions.*/gi).test(ex.message),
@@ -71,7 +56,7 @@ test(
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/wrong\s*type\s*of\s*.*on.*/gi).test(ex.message),
@@ -104,7 +89,7 @@ test(
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/wrong\s*type\s*of\s*.*actionHandler.*/gi).test(ex.message),
@@ -137,7 +122,7 @@ test(
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/wrong\s*type\s*of\s*.*actionName.*/gi).test(ex.message),
@@ -173,7 +158,7 @@ test(
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/method\s*.*send.*\s*.*actionContext.*/gi).test(ex.message),
@@ -206,7 +191,7 @@ test(
       });
 
       try {
-        component.sendAction('someAction');
+        component.sendDynamicAction('someAction');
       } catch (ex) {
         assert.strictEqual(
           (/wrong\s*type\s*of\s*.*actionArguments.*/gi).test(ex.message),
@@ -238,7 +223,7 @@ test('Mixin does\'t break it\'s owner\'s standard \'sendAction\' logic', functio
     someActionHandlerHasBeenCalled = true;
   };
 
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
 
   assert.strictEqual(
     someActionHandlerHasBeenCalled,
@@ -296,7 +281,7 @@ test(
       someAnotherActionHandlerHasBeenCalled = true;
     };
 
-    component.sendAction('someAction');
+    component.sendDynamicAction('someAction');
     assert.strictEqual(
       someActionHandlerHasBeenCalled,
       true,
@@ -326,7 +311,7 @@ test(
     someActionDynamicHandlerHasBeenCalled = false;
     someActionAgainDynamicHandlerHasBeenCalled = false;
 
-    component.sendAction('someAnotherAction');
+    component.sendDynamicAction('someAnotherAction');
     assert.strictEqual(
       someActionHandlerHasBeenCalled,
       false,
@@ -437,7 +422,7 @@ test(
       someAnotherActionHandlerHasBeenCalled = true;
     };
 
-    component.sendAction('someAction');
+    component.sendDynamicAction('someAction');
     assert.strictEqual(
       someActionHandlerHasBeenCalled,
       true,
@@ -516,7 +501,7 @@ test(
     someActionAgainControllersHandlerHasBeenCalled = false;
     someActionAgainControllersHandlerContext = null;
 
-    component.sendAction('someAnotherAction');
+    component.sendDynamicAction('someAnotherAction');
     assert.strictEqual(
       someActionHandlerHasBeenCalled,
       false,
@@ -616,7 +601,7 @@ test('Mixin works properly with \'dynamicActions\' added/removed after component
   dynamicActions.pushObject(someDynamicAction);
 
   // Check that all handlers were called with expected context.
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
   assert.strictEqual(
     someActionHandlerHasBeenCalled,
     true,
@@ -649,7 +634,7 @@ test('Mixin works properly with \'dynamicActions\' added/removed after component
 
   // Remove defined dynamic action to a component after it has been already initialized.
   dynamicActions.removeObject(someDynamicAction);
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
   assert.strictEqual(
     someActionHandlerHasBeenCalled,
     true,
@@ -704,7 +689,7 @@ test(
 
     // Check that all handlers were called with expected arguments.
     let originalActionArguments = A(['firstOriginalArgument', 'secondOriginalArgument']);
-    component.sendAction('someAction', ...originalActionArguments);
+    component.sendDynamicAction('someAction', ...originalActionArguments);
     assert.strictEqual(
       someActionHandlerArguments[0] === originalActionArguments[0] &&
       someActionHandlerArguments[1] === originalActionArguments[1],
@@ -740,7 +725,7 @@ test('Mixin doesn\'t trigger component\'s inner method if outer action handler i
     innerSomeActionHasBeenCalled = true;
   };
 
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
   assert.strictEqual(
     innerSomeActionHasBeenCalled,
     false,
@@ -751,7 +736,7 @@ test('Mixin doesn\'t trigger component\'s inner method if outer action handler i
     outerSomeActionHasBeenCalled = true;
   };
 
-  component.sendAction('someAction');
+  component.sendDynamicAction('someAction');
   assert.strictEqual(
     outerSomeActionHasBeenCalled && !innerSomeActionHasBeenCalled,
     true,

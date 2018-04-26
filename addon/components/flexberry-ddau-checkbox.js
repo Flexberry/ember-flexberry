@@ -7,7 +7,6 @@ import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
 import DynamicActionsMixin from '../mixins/dynamic-actions';
-import { isEmpty } from '@ember/utils';
 
 /**
   Component's CSS-classes names.
@@ -169,12 +168,10 @@ let FlexberryDdauCheckboxComponent = Component.extend(
         let checked = e.target.checked === true;
 
         // Invoke component's custom 'change' action.
-        if (!isEmpty(this.get('onChange'))) {
-          this.get('onChange')({
+        this.sendDynamicAction('change', {
           newValue: checked,
-            originalEvent: e
-          });
-        }
+          originalEvent: e
+        });
 
         // Prevent second call to this.sendAction('change', ...) inside dom-actions mixin,
         // otherwise component's outer 'change' action handler will be called twice.

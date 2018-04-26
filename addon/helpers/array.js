@@ -31,6 +31,6 @@ export default Helper.extend({
     @return {[Ember.NativeArray](http://emberjs.com/api/classes/Ember.NativeArray.html)} Wrapped arguments.
   */
   compute(args) {
-    return A(args);
+    return A(args.slice());
   }
 });

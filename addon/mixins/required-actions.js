@@ -7,7 +7,6 @@ import { assert } from '@ember/debug';
 import { typeOf, isNone } from '@ember/utils';
 import { get } from '@ember/object';
 import { A, isArray } from '@ember/array';
-import Component from '@ember/component';
 
 /**
   Mixin containing logic which forces assertion exceptions
@@ -51,27 +50,14 @@ export default Mixin.create({
   init() {
     this._super(...arguments);
 
-    let originalSendAction = this.sendAction;
-    assert(
-      `Wrong type of \`sendAction\` propery: actual type is ${typeOf(originalSendAction)}, ` +
-      `but \`function\` is expected.`,
-      typeOf(originalSendAction) === 'function');
+    let originalSendDynamicAction = this.get('sendDynamicAction');
 
     // Override 'sendAction' method to add some custom logic.
-    this.sendAction = (...args) => {
+    this.sendDynamicAction = (...args) => {
       let actionName = args[0];
-      let originalSendActionIsOverridden = originalSendAction !== Component.prototype.sendAction;
-      let outerActionHandlerIsDefined = typeOf(this.get(`attrs.${actionName}`)) === 'function' ||
-        typeOf(this.get(`attrs.${actionName}`)) === 'string';
 
-      // Call for overridden send action, or call for standard 'sendAction' (sending action outside).
-      // Overridden 'sendAction' must be called anywhere,
-      // but call for standard 'sendAction' must be executed only if outer action handler is defined,
-      // otherwise ember will call to component's inner method with the same name (as action name),
-      // for example if you send 'remove' action, then (if outer handler isn't defined) component's
-      // 'remove' method will be called, what will cause unexpected behavior and exceptions.
-      if (originalSendActionIsOverridden || outerActionHandlerIsDefined) {
-        originalSendAction.apply(this, args);
+      if (!isNone(originalSendDynamicAction)){
+        originalSendDynamicAction.apply(this, args);
       }
 
       let requiredActionNames = this.get('_requiredActionNames');
@@ -89,7 +75,6 @@ export default Mixin.create({
       assert(
         `Handler for required \`${actionName}\` action is not defined in ${this}`,
         !A(requiredActionNames).includes(actionName) || this._actionHandlerIsDefined({ actionName: actionName }));
-
     };
   }
 });

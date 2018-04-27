@@ -11,6 +11,7 @@ import { typeOf, isNone } from '@ember/utils';
 import { A, isArray } from '@ember/array';
 import { assert } from '@ember/debug';
 import { set } from '@ember/object';
+import Queue from 'ember-flexberry-data/utils/queue';
 
 const messageCategory = {
   error: { name: 'ERROR', priority: 1 },
@@ -54,6 +55,9 @@ export default Service.extend(Evented, {
     @private
   */
   _originalMethodsCache: null,
+
+  /* Queue for storing to log operation calls */
+  _queue: Queue.create(),
 
   /**
     Ember data store.
@@ -337,7 +341,13 @@ export default Service.extend(Evented, {
     Ember.Logger.error = function() {
       originalEmberLoggerError(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '');
+      _this._queue.attach((resolve, reject) => {
+        return _this._storeToApplicationLog(messageCategory.error, joinArguments(...arguments), '').then((result) => {
+          resolve(result);
+        }).catch((reason) => {
+          reject(reason);
+        });
+      });
     };
 
     // Extend Ember.Logger.warn logic.
@@ -351,12 +361,22 @@ export default Service.extend(Evented, {
     Ember.Logger.warn = function() {
       originalEmberLoggerWarn(...arguments);
 
-      let message = joinArguments(...arguments);
-      if (message.indexOf('DEPRECATION') === 0) {
-        _this._storeToApplicationLog(messageCategory.deprecate, message, '');
-      } else {
-        _this._storeToApplicationLog(messageCategory.warn, message, '');
-      }
+      _this._queue.attach((resolve, reject) => {
+        let message = joinArguments(...arguments);
+        if (message.indexOf('DEPRECATION') === 0) {
+          return _this._storeToApplicationLog(messageCategory.deprecate, message, '').then((result) => {
+            resolve(result);
+          }).catch((reason) => {
+            reject(reason);
+          });
+        } else {
+          return _this._storeToApplicationLog(messageCategory.warn, message, '').then((result) => {
+            resolve(result);
+          }).catch((reason) => {
+            reject(reason);
+          });
+        }
+      });
     };
 
     // Extend Ember.Logger.log logic.
@@ -370,8 +390,14 @@ export default Service.extend(Evented, {
     Ember.Logger.log = function() {
       originalEmberLoggerLog(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '');
-    };
+      _this._queue.attach((resolve, reject) => {
+        return _this._storeToApplicationLog(messageCategory.log, joinArguments(...arguments), '').then((result) => {
+          resolve(result);
+        }).catch((reason) => {
+          reject(reason);
+        });
+      });
+   };
 
     // Extend Ember.Logger.info logic.
     let originalEmberLoggerInfo = Ember.Logger.info;
@@ -384,7 +410,13 @@ export default Service.extend(Evented, {
     Ember.Logger.info = function() {
       originalEmberLoggerInfo(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '');
+      _this._queue.attach((resolve, reject) => {
+        return _this._storeToApplicationLog(messageCategory.info, joinArguments(...arguments), '').then((result) => {
+          resolve(result);
+        }).catch((reason) => {
+          reject(reason);
+        });
+      });
     };
 
     // Extend Ember.Logger.debug logic.
@@ -398,7 +430,13 @@ export default Service.extend(Evented, {
     Ember.Logger.debug = function() {
       originalEmberLoggerDebug(...arguments);
 
-      _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '');
+      _this._queue.attach((resolve, reject) => {
+        return _this._storeToApplicationLog(messageCategory.debug, joinArguments(...arguments), '').then((result) => {
+          resolve(result);
+        }).catch((reason) => {
+          reject(reason);
+        });
+      });
     };
 
     this.set('_originalMethodsCache', originalMethodsCache);
@@ -480,12 +518,15 @@ export default Service.extend(Evented, {
     }
 
     /* eslint-disable no-unused-vars */
-    return store.createRecord(applicationLogModelName, applicationLogProperties).save().then((applicationLogModel) => {
-      this._triggerEvent(category.name, applicationLogModel);
-      return applicationLogModel;
-    }).catch((reason) => {
-      // Switch off remote logging on rejection to avoid infinite loop.
-      this.set('enabled', false);
+    return new RSVP.Promise((resolve, reject) => {
+      store.createRecord(applicationLogModelName, applicationLogProperties).save().then((applicationLogModel) => {
+        this._triggerEvent(category.name, applicationLogModel);
+        resolve(applicationLogModel);
+      }).catch((reason) => {
+        // Switch off remote logging on rejection to avoid infinite loop.
+        this.set('enabled', false);
+        reject(reason);
+      });
     });
     /* eslint-enable no-unused-vars */
   },
@@ -497,27 +538,34 @@ export default Service.extend(Evented, {
   },
 
   _onError(error, isPromiseError) {
-    if (isNone(error)) {
-      return;
-    }
+    let _this = this;
+    _this._queue.attach((resolve, reject) => {
+      if (isNone(error)) {
+        resolve();
+      }
 
-    if (typeOf(error) === 'string') {
-      error = new Error(error);
-    }
+      if (typeOf(error) === 'string') {
+        error = new Error(error);
+      }
 
-    let message = error.message || error.toString();
+      let message = error.message || error.toString();
 
-    let formattedMessageBlank = {
-      name: error && error.name ? error.name : null,
-      message: error && error.message ? error.message : null,
-      fileName: error && error.fileName ? error.fileName : null,
-      lineNumber: error && error.lineNumber ? error.lineNumber : null,
-      columnNumber: error && error.columnNumber ? error.columnNumber : null,
-      stack: error && error.stack ? error.stack : null
-    };
+      let formattedMessageBlank = {
+        name: error && error.name ? error.name : null,
+        message: error && error.message ? error.message : null,
+        fileName: error && error.fileName ? error.fileName : null,
+        lineNumber: error && error.lineNumber ? error.lineNumber : null,
+        columnNumber: error && error.columnNumber ? error.columnNumber : null,
+        stack: error && error.stack ? error.stack : null
+      };
 
-    let formattedMessage = JSON.stringify(formattedMessageBlank);
+      let formattedMessage = JSON.stringify(formattedMessageBlank);
 
-    this._storeToApplicationLog(isPromiseError ? messageCategory.promise : messageCategory.error, message, formattedMessage);
+      return _this._storeToApplicationLog(isPromiseError ? messageCategory.promise : messageCategory.error, message, formattedMessage).then((result) => {
+        resolve(result);
+      }).catch((reason) => {
+        reject(reason);
+      });
+    });
   }
 });

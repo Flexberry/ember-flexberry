@@ -61,9 +61,14 @@ Ember Flexberry comes with a [dummy app](/tests/dummy) that covers functionality
 
 #### Running Tests
 
-* `yarn test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `yarn test` – Runs `ember try:each` to test your addon against multiple Ember versions
+
+#### Linting
+
+* `yarn lint:js`
+* `yarn lint:js --fix`
 
 #### Building
 
@@ -119,3 +124,7 @@ Manual deployment on [Firebase](https://www.firebase.com):
 * Development Browser Extensions
   * [Ember Inspector for Chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [Ember Inspector for Firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+
+## License
+
+This project is licensed under the [MIT License](LICENSE.md).

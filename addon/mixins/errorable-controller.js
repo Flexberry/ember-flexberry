@@ -51,7 +51,6 @@ export default Mixin.create({
   */
   init() {
     this._super(...arguments);
-    this._super.apply(this, arguments);
     this.set('errorMessages', A([]));
   },
 

@@ -263,8 +263,6 @@ export default FlexberryBaseComponent.extend({
         rootItem.items[rootItem.items.length] = showDefaultItem;
       }
 
-      this.colsSettingsItems = [rootItem];
-
       return this.get('userSettingsService').isUserSettingsServiceEnabled ? [rootItem] : [];
     }
   ),

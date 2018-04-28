@@ -6,7 +6,7 @@ import lodash = require('lodash');
 import fs = require("fs");
 import path = require('path');
 const stripBom = require("strip-bom");
-const Promise = require('ember-cli/lib/ext/promise');
+const Promise = require('rsvp');
 
 const Blueprint = require('ember-cli/lib/models/blueprint');
 

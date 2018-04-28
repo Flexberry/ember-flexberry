@@ -3,7 +3,7 @@ var lodash = require('lodash');
 var fs = require("fs");
 var path = require('path');
 var stripBom = require("strip-bom");
-var Promise = require('ember-cli/lib/ext/promise');
+var Promise = require('rsvp');
 var Blueprint = require('ember-cli/lib/models/blueprint');
 module.exports = {
     description: 'Generates an group of entities for flexberry.',

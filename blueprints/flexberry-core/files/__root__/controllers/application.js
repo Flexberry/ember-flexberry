@@ -1,8 +1,7 @@
 import Controller from '@ember/controller';
 import $ from 'jquery';
-import { get, set, computed, observer } from '@ember/object';
-import { isNone } from '@ember/utils';
 import { computed, observer } from '@ember/object';
+import { isNone } from '@ember/utils';
 import { A } from '@ember/array';
 import { inject as service } from '@ember/service';
 

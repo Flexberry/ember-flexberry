@@ -2,7 +2,7 @@
 var child_process = require('child_process');
 var stripBom = require("strip-bom");
 var Blueprint = require('ember-cli/lib/models/blueprint');
-var Promise = require('ember-cli/lib/ext/promise');
+var Promise = require('rsvp');
 var lodash = require('lodash');
 module.exports = {
     description: 'Generates all entities for flexberry.',

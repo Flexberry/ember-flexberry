@@ -187,7 +187,7 @@ var ModelBlueprint = (function () {
                 TAB + "}";
         var initFunction = "init: function () {\n" +
             TAB + TAB + "this.set('validations', this.getValidations());\n" +
-            TAB + TAB + "this._super.apply(this, arguments);\n" +
+            TAB + TAB + "this._super(...arguments);\n" +
             TAB + "}";
         attrs.push(validationsFunc, initFunction);
         return TAB + attrs.join(",\n" + TAB);

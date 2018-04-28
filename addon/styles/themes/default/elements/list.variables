@@ -35,7 +35,7 @@
 
 /* Icon */
 @iconDistance: @relative4px;
-@iconOffset: ((@itemLineHeight - 1rem) / 2);
+@iconOffset: 0em;
 @iconTransition: color @defaultDuration @defaultEasing;
 @iconVerticalAlign: top;
 @iconContentVerticalAlign: top;
@@ -52,7 +52,7 @@
 
 /* Header */
 @itemHeaderFontFamily: @headerFont;
-@itemHeaderFontWeight: bold;
+@itemHeaderFontWeight: @bold;
 @itemHeaderColor: @textColor;
 
 /* Description */
@@ -162,6 +162,7 @@
 @bulletOpacity: 1;
 @bulletCharacter: '•';
 @bulletColor: inherit;
+@bulletLinkColor: @textColor;
 @bulletVerticalAlign: top;
 @bulletChildDistance: @bulletDistance;
 
@@ -183,7 +184,7 @@
 
 @orderedInvertedCountColor: @invertedLightTextColor;
 
-/* Horizontal Ordereded */
+/* Horizontal Ordered */
 @horizontalOrderedCountDistance: 0.5em;
 
 /* Divided */

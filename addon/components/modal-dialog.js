@@ -7,19 +7,23 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { run } from '@ember/runloop';
+import { isEmpty } from '@ember/utils';
 
 /**
-  ModalDialog component for Semantic UI.
+  Modal dialog component based on Semantic UI Modal module.
 
   @example
     ```handlebars
     {{#modal-dialog
-      title='Title'
-      sizeClass='large'
-      close='removeModalDialog'
-      created='createdModalDialog'
+      title="Title"
+      sizeClass="large"
+      close=(action "removeModalDialog")
+      created=(action "createdModalDialog")
       useOkButton=false
       useCloseButton=false
+      settings=(hash
+        duration=500
+      )
     }}
       {{outlet 'modal-content'}}
     {{/modal-dialog}}
@@ -29,6 +33,45 @@ import { run } from '@ember/runloop';
   @extends <a href="http://emberjs.com/api/classes/Ember.Component.html">Ember.Component</a>
 */
 export default Component.extend({
+  /**
+    Service that triggers lookup events.
+
+    @private
+    @property _lookupEvents
+    @type Ember.Service
+  */
+  _lookupEvents: service('lookup-events'),
+
+  /**
+    @private
+    @property _toolbarVisible
+    @type Boolean
+    @readOnly
+  */
+  _toolbarVisible: computed.or('useOkButton', 'useCloseButton').readOnly(),
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNameBindings
+  */
+  classNameBindings: ['sizeClass'],
+
+  /**
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @property classNames
+  */
+  classNames: ['ui', 'modal', 'flexberry-modal'],
+
+  /**
+    See [Semantic UI API](http://semantic-ui.com/modules/modal.html#settings).
+
+    @property settings
+    @type Object
+  */
+  settings: undefined,
+
   /**
     Size of Semantic UI modal.
     Possible variants:
@@ -70,34 +113,6 @@ export default Component.extend({
   useCloseButton: true,
 
   /**
-    Flag indicates toolbar visibility, `true` if at least one of buttons is visible.
-
-    @property toolbarVisible
-    @type Boolean
-    @readOnly
-  */
-  toolbarVisible: computed('useOkButton', 'useCloseButton', function () {
-    return this.get('useOkButton') || this.get('useCloseButton');
-  }),
-
-  /**
-    Semantic UI Modal settings, [more info here](http://semantic-ui.com/modules/modal.html#settings).
-
-    @property settings
-    @type Object
-    @default {}
-  */
-  settings: undefined,
-
-  /**
-    Service that triggers lookup events.
-
-    @property lookupEventsService
-    @type Service
-  */
-  lookupEventsService: service('lookup-events'),
-
-  /**
     Used to identify lookup on the page.
 
     @property componentName
@@ -111,42 +126,49 @@ export default Component.extend({
   },
 
   /**
-    Initializes DOM-related component's logic.
+    See [EmberJS API](https://emberjs.com/api/).
+
+    @method didInsertElement
   */
   didInsertElement() {
-    let _this = this;
-    let componentName = this.get('componentName');
-    let modalSettings = $.extend({
-        observeChanges: true,
-        detachable: false,
-        allowMultiple: true,
-        context: '.ember-application > .ember-view',
+    this._super(...arguments);
 
-        onApprove: function () {
-          // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
-          run(() => {
-            _this.sendAction('ok');
-            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
-          });
-        },
-        onHidden: function () {
-          run(() => {
-            _this.sendAction('close');
+    let settings = $.extend({
+      observeChanges: true,
+      detachable: false,
+      allowMultiple: true,
+      context: '.ember-application > .ember-view',
+      onApprove: () => {
+        // Call to 'lookupDialogOnHiddenTrigger' causes asynchronous animation, so Ember.run is necessary.
+        run(() => {
+          if (!isEmpty(this.get('ok'))) {
+            this.get('ok')();
+          }
 
-            // IE doesn't support "this.remove()", that's why "Ember.$(this).remove()" is used.
-            $(this).remove();
-            _this.get('lookupEventsService').lookupDialogOnHiddenTrigger(componentName);
-          });
-        },
-        onVisible: function () {
-          // Handler of 'created' action causes asynchronous animation, so Ember.run is necessary.
-          run(() => {
-            _this.sendAction('created', $(this));
-          });
-        }
+          this.get('_lookupEvents').lookupDialogOnHiddenTrigger(this.get('componentName'));
+        });
       },
-      _this.get('settings'));
+      onHidden: () => {
+        run(() => {
+          if (!isEmpty(this.get('close'))) {
+            this.get('close')();
+          }
 
-    this.$('.ui.modal').modal(modalSettings).modal('show');
+          // IE doesn't support "this.remove()", that's why "thi.$().remove()" is used.
+          this.$().remove();
+          this.get('_lookupEvents').lookupDialogOnHiddenTrigger(this.get('componentName'));
+        });
+      },
+      onVisible: () => {
+        // Handler of 'created' action causes asynchronous animation, so Ember.run is necessary.
+        run(() => {
+          if (!isEmpty(this.get('created'))) {
+            this.get('created')();
+          }
+        });
+      },
+    }, this.get('settings'));
+
+    this.$().modal(settings).modal('show');
   },
 });

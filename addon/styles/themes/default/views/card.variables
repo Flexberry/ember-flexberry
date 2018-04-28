@@ -71,7 +71,7 @@
 
 /* Header */
 @headerMargin: '';
-@headerFontWeight: bold;
+@headerFontWeight: @bold;
 @headerFontSize: @relativeBig;
 @headerLineHeightOffset: -(@lineHeight - 1em) / 2;
 @headerColor: @darkTextColor;
@@ -158,6 +158,17 @@
 @linkHoverBoxShadow:
   @shadowHoverBoxShadow,
   @borderShadow
+;
+
+
+/* Raised */
+@raisedShadow:
+  @borderShadow,
+  @floatingShadow
+;
+@raisedShadowHover:
+  @borderShadow,
+  @floatingShadowHover
 ;
 
 /* Card Count */

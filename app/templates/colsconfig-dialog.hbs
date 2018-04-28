@@ -1,10 +1,10 @@
 {{#modal-dialog
-  title=(if model.exportParams.isExportExcel (t 'components.colsconfig-dialog-content.export-modal-dialog-title') (t 'components.colsconfig-dialog-content.title'))
-  sizeClass='small'
-  close='removeModalDialog'
-  created='createdModalDialog'
+  title=(if model.exportParams.isExportExcel (t "components.colsconfig-dialog-content.export-modal-dialog-title") (t "components.colsconfig-dialog-content.title"))
+  sizeClass="small"
+  close=(action "removeModalDialog")
+  created=(action "createdModalDialog")
   useOkButton=false
   useCloseButton=false
 }}
-  {{outlet 'modal-content'}}
+  {{outlet "modal-content"}}
 {{/modal-dialog}}

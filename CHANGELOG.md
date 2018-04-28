@@ -3,6 +3,24 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+* `flexberry-sidebar` component, simple component for use sidebar from `Semantic UI`.
+* `flexberry-sitemap` component, component for render sitemap by object with links.
+
+### Changed
+* `flexberry-dropdown` component:
+    * Does not use `ui-dropdown` component from `semantic-ui-ember` addon.
+    * Instead of many properties one `settings` property for manage `Semantic UI` settings.
+* `modal-dialog` component:
+    * Does not use `ui-modal` component from `semantic-ui-ember` addon.
+
+### Removed
+* The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.
+* Controller `sitemap-node` from final app.
+
+### Breaking changes
+* Delete `semantic-ui-ember` dependency.
+* Update dependency on `semantic-ui` to version `2.3.1`.
 
 ### Changed
 * `dynamic-actions` mixins: : mixins don't override `sendAction` method to add some custom logic, they add custom logic in method `sendDynamicAction`.

@@ -1,5 +1,7 @@
 {{#if sitemap.link}}
-  {{#link-to sitemap.link class="item" title=sitemap.title}}
+<a class="item"
+  href={{sitemap.link}}
+  title={{sitemap.title}}>
     <div class="title-item-menu" {{action "menuToggle"}}>{{sitemap.caption}}</div>
     {{#if sitemap.children.length}}
       <div class="menu subMenu hidden">
@@ -8,7 +10,7 @@
         {{/each}}
       </div>
     {{/if}}
-  {{/link-to}}
+</a>
 {{else if sitemap.caption}}
   <div class="item item-menu">
     <div class="item-plus" {{action "menuToggle"}}></div>

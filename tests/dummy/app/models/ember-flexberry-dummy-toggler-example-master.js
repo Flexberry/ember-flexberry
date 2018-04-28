@@ -1,7 +1,8 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr, hasMany } from 'ember-flexberry-data/utils/attributes';
 
-var Model = Projection.Model.extend({
+var Model = EmberFlexberryDataModel.extend({
   togglerExampleMasterProperty: DS.attr('string'),
   togglerExampleDetail: DS.hasMany('ember-flexberry-dummy-toggler-example-detail', {
     inverse: 'togglerExampleMaster',
@@ -19,13 +20,13 @@ var Model = Projection.Model.extend({
 });
 
 Model.defineProjection('TogglerExampleMasterE', 'ember-flexberry-dummy-toggler-example-master', {
-  togglerExampleMasterProperty: Projection.attr('Наименование мастера'),
-  togglerExampleDetail: Projection.hasMany('ember-flexberry-dummy-toggler-example-detail', '', {
-    togglerExampleDetailProperty: Projection.attr('Наименование детейла')
+  togglerExampleMasterProperty: attr('Наименование мастера'),
+  togglerExampleDetail: hasMany('ember-flexberry-dummy-toggler-example-detail', '', {
+    togglerExampleDetailProperty: attr('Наименование детейла')
   })
 });
 Model.defineProjection('TogglerExampleMasterL', 'ember-flexberry-dummy-toggler-example-master', {
-  togglerExampleMasterProperty: Projection.attr('Наименование мастера'),
+  togglerExampleMasterProperty: attr('Наименование мастера'),
 });
 
 export default Model;

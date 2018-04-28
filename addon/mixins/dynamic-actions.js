@@ -2,7 +2,11 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { get, computed } from '@ember/object';
+import { A, isArray } from '@ember/array';
+import { assert } from '@ember/debug';
+import { typeOf, isNone } from '@ember/utils';
 
 // Validates every dynamic action properties.
 // Not a mixin member, so yuidoc-comments are unnecessary.
@@ -10,41 +14,41 @@ let validateDynamicActionProperties = function(dynamicAction, dynamicActionIndex
   dynamicAction = dynamicAction || {};
 
   // Property 'on' must be a string.
-  let on = Ember.get(dynamicAction, 'on');
-  Ember.assert(
+  let on = get(dynamicAction, 'on');
+  assert(
     `Wrong type of dynamicActions[${dynamicActionIndex}].on property: ` +
-    `actual type is ${Ember.typeOf(on)}, but \`string\` is expected.`,
-    Ember.typeOf(on) === 'string');
+    `actual type is ${typeOf(on)}, but \`string\` is expected.`,
+    typeOf(on) === 'string');
 
   // Property 'actionHandler' must be a function (if defined).
-  let actionHandler = Ember.get(dynamicAction, 'actionHandler');
-  Ember.assert(
+  let actionHandler = get(dynamicAction, 'actionHandler');
+  assert(
     `Wrong type of dynamicActions[${dynamicActionIndex}].actionHandler property: ` +
-    `actual type is ${Ember.typeOf(actionHandler)}, but \`function\` is expected.`,
-    Ember.isNone(actionHandler) || Ember.typeOf(actionHandler) === 'function');
+    `actual type is ${typeOf(actionHandler)}, but \`function\` is expected.`,
+    isNone(actionHandler) || typeOf(actionHandler) === 'function');
 
   // Property 'actionName' must be a string (if defined).
-  let actionName = Ember.get(dynamicAction, 'actionName');
-  Ember.assert(
+  let actionName = get(dynamicAction, 'actionName');
+  assert(
     `Wrong type of dynamicActions[${dynamicActionIndex}].actionName property: ` +
-    `actual type is ${Ember.typeOf(actionName)}, but \`string\` is expected.`,
-    Ember.isNone(actionName) || Ember.typeOf(actionName) === 'string');
+    `actual type is ${typeOf(actionName)}, but \`string\` is expected.`,
+    isNone(actionName) || typeOf(actionName) === 'string');
 
   // Action context's 'send' method must be defined if 'actionName' is defined.
-  let actionContext = Ember.get(dynamicAction, 'actionContext');
-  Ember.assert(
+  let actionContext = get(dynamicAction, 'actionContext');
+  assert(
     `Method \`send\` must be defined in given dynamicActions[${dynamicActionIndex}].actionContext ` +
     `in order to trigger dynamic action with defined ` +
     `dynamicActions[${dynamicActionIndex}].actionName (\`${actionName}\`).`,
-    Ember.isNone(actionName) ||
-    (Ember.typeOf(actionName) === 'string' && !Ember.isNone(actionContext) && Ember.typeOf(actionContext.send) === 'function'));
+    isNone(actionName) ||
+    (typeOf(actionName) === 'string' && !isNone(actionContext) && typeOf(actionContext.send) === 'function'));
 
   // Property 'actionArguments' must be an array (if defined).
-  let actionArguments = Ember.get(dynamicAction, 'actionArguments');
-  Ember.assert(
+  let actionArguments = get(dynamicAction, 'actionArguments');
+  assert(
     `Wrong type of dynamicActions[${dynamicActionIndex}].actionArguments property: ` +
-    `actual type is ${Ember.typeOf(actionArguments)}, but \`array\` is expected.`,
-    Ember.isNone(actionArguments) || Ember.isArray(actionArguments));
+    `actual type is ${typeOf(actionArguments)}, but \`array\` is expected.`,
+    isNone(actionArguments) || isArray(actionArguments));
 };
 
 /**
@@ -56,7 +60,7 @@ let validateDynamicActionProperties = function(dynamicAction, dynamicActionIndex
   @class DynamicActionsMixin
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Component's dynamic actions from
     {{#crossLink "DynamicActionsMixin:dynamicActions:property"}}'dynamicActions' property{{/crossLink}},
@@ -67,23 +71,18 @@ export default Ember.Mixin.create({
     @readOnly
     @private
   */
-  _dynamicActions: Ember.computed(
-    'dynamicActions.[]',
-    'dynamicActions.@each.on',
-    'dynamicActions.@each.actionHandler',
-    'dynamicActions.@each.actionName',
-    'dynamicActions.@each.actionContext',
-    'dynamicActions.@each.actionArguments',
+  _dynamicActions: computed(
+    'dynamicActions.{[],@each.actionHandler,@each.actionName,@each.actionContext,@each.actionArguments}',
     function() {
       let dynamicActions = this.get('dynamicActions');
       let result = {};
 
-      Ember.assert(
+      assert(
         `Wrong type of \`dynamicActions\` propery: ` +
-        `actual type is ${Ember.typeOf(dynamicActions)}, but \`array\` is expected.`,
-        Ember.isNone(dynamicActions) || Ember.isArray(dynamicActions));
+        `actual type is ${typeOf(dynamicActions)}, but \`array\` is expected.`,
+        isNone(dynamicActions) || isArray(dynamicActions));
 
-      if (!Ember.isArray(dynamicActions)) {
+      if (!isArray(dynamicActions)) {
         return result;
       }
 
@@ -91,9 +90,9 @@ export default Ember.Mixin.create({
         let dynamicAction = dynamicActions[i];
         validateDynamicActionProperties(dynamicAction, i);
 
-        let on = Ember.get(dynamicAction, 'on');
-        if (Ember.isNone(result[on])) {
-          result[on] = Ember.A();
+        let on = get(dynamicAction, 'on');
+        if (isNone(result[on])) {
+          result[on] = A();
         }
 
         result[on].pushObject(dynamicAction);
@@ -128,7 +127,7 @@ export default Ember.Mixin.create({
   */
   _actionHandlerIsDefined(options) {
     options = options || {};
-    let actionName = Ember.get(options, 'actionName');
+    let actionName = get(options, 'actionName');
 
     return this.get(`_dynamicActions.${actionName}.length`) > 0 || this._super(...arguments);
   },
@@ -138,35 +137,24 @@ export default Ember.Mixin.create({
   */
   init() {
     this._super(...arguments);
+    let originalSendDynamicAction = this.get('sendDynamicAction');
 
-    let originalSendAction = this.get('sendAction');
-    Ember.assert(
-      `Wrong type of \`sendAction\` propery: actual type is ${Ember.typeOf(originalSendAction)}, ` +
-      `but \`function\` is expected.`,
-      Ember.typeOf(originalSendAction) === 'function');
-
-    // Override 'sendAction' method to add some custom logic.
-    this.sendAction = (...args) => {
+    this.sendDynamicAction = (...args) => {
       let actionName = args[0];
-      let originalSendActionIsOverridden = originalSendAction !== Ember.Component.prototype.sendAction;
-      let outerActionHandlerIsDefined = Ember.typeOf(this.get(`attrs.${actionName}`)) === 'function' ||
-        Ember.typeOf(this.get(`attrs.${actionName}`)) === 'string';
 
-      // Call for overridden send action, or call for standard 'sendAction' (sending action outside).
-      // Overridden 'sendAction' must be called anywhere,
-      // but call for standard 'sendAction' must be executed only if outer action handler is defined,
-      // otherwise ember will call to component's inner method with the same name (as action name),
-      // for example if you send 'remove' action, then (if outer handler isn't defined) component's
-      // 'remove' method will be called, what will cause unexpected behavior and exceptions.
-      if (originalSendActionIsOverridden || outerActionHandlerIsDefined) {
-        originalSendAction.apply(this, args);
+      if (!isNone(originalSendDynamicAction)){
+        originalSendDynamicAction.apply(this, args);
+      }
+
+      if (!isNone(this.get(`attrs.${actionName}`))) {
+        this.get(`attrs.${actionName}`)(...args.slice(1));
       }
 
       let dynamicActions = this.get(`_dynamicActions.${actionName}`);
 
       // If no dynamic actions defined for action with given name,
-      // break custom 'sendAction' logic then.
-      if (!Ember.isArray(dynamicActions)) {
+      // break logic then.
+      if (!isArray(dynamicActions)) {
         return;
       }
 
@@ -175,27 +163,28 @@ export default Ember.Mixin.create({
       // because they were validated in process of '_dynamicActions' computation.
       for (let i = 0, len = dynamicActions.length; i < len; i++) {
         let dynamicAction = dynamicActions[i];
-        let actionHandler = Ember.get(dynamicAction, 'actionHandler');
-        let actionName = Ember.get(dynamicAction, 'actionName');
-        let actionContext = Ember.get(dynamicAction, 'actionContext');
-        let actionArguments = Ember.get(dynamicAction, 'actionArguments') || [];
+        let actionHandler = get(dynamicAction, 'actionHandler');
+        let actionName = get(dynamicAction, 'actionName');
+        let actionContext = get(dynamicAction, 'actionContext');
+        let actionArguments = get(dynamicAction, 'actionArguments') || [];
 
-        // Original action arguments (without action name passed to 'sendAction' method).
+        // Original action arguments (without action name passed to method).
         let originalActionArguments = args.slice(1);
 
         // Combined action arguments.
         let combinedActionArguments = [...actionArguments, ...originalActionArguments];
 
         // Call to action handler (if defined).
-        if (Ember.typeOf(actionHandler) === 'function') {
+        if (typeOf(actionHandler) === 'function') {
           actionHandler.apply(actionContext, combinedActionArguments);
         }
 
         // Send action (if defined).
-        if (Ember.typeOf(actionName) === 'string') {
+        if (typeOf(actionName) === 'string') {
           actionContext.send(actionName, ...combinedActionArguments);
         }
       }
     };
   }
+
 });

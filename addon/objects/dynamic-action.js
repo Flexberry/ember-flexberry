@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 
 /**
   Class for object describing dynamic action, which can be binded to component,
@@ -13,7 +13,7 @@ import Ember from 'ember';
   @class DynamicActionObject
   @extends <a href="http://emberjs.com/api/classes/Ember.Object.html">Ember.Object</a>
 */
-export default Ember.Object.extend({
+export default EmberObject.extend({
   /**
     Name of component's action which will play a trigger role
     for the specified {{#crossLink "DynamicActionObject/actionHandler:property"}}handler{{/crossLink}},

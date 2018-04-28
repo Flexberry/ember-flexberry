@@ -2,10 +2,13 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
-import { Query } from 'ember-flexberry-data';
-
-const { Builder } = Query;
+import Mixin from '@ember/object/mixin';
+import RSVP from 'rsvp';
+import $ from 'jquery';
+import { isNone } from '@ember/utils';
+import { set } from '@ember/object';
+import { A } from '@ember/array';
+import Builder from 'ember-flexberry-data/query/builder';
 
 /**
   Mixin for [Ember.Route](http://emberjs.com/api/classes/Ember.Route.html) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
@@ -13,7 +16,7 @@ const { Builder } = Query;
   @class FlexberryObjectlistviewHierarchicalRouteMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   actions: {
     /**
@@ -38,31 +41,33 @@ export default Ember.Mixin.create({
           .selectByProjection(projectionName)
           .where(hierarchicalAttribute, 'eq', id);
 
-        Ember.set(target, property, this.store.query(modelName, builder.build()));
+        set(target, property, this.store.query(modelName, builder.build()));
       } else {
         let store = this.get('store');
         let records = store.peekAll(modelName);
         let recordsArray = records.content;
-        let sortRecordsArray = Ember.A();
+        let sortRecordsArray = A();
         for (let i = 0; i < recordsArray.length; i++) {
           let record = store.peekRecord(modelName, recordsArray[i].id);
 
-          if (record && (!Ember.isNone(record.get(hierarchicalAttribute))) && (record.get(hierarchicalAttribute).id === id)) {
+          if (record && (!isNone(record.get(hierarchicalAttribute))) && (record.get(hierarchicalAttribute).id === id)) {
             sortRecordsArray.push(record);
           }
         }
 
-        let recordsArrayinPromise = new Ember.RSVP.Promise((resolve, reject) => {
+        /* eslint-disable no-unused-vars */
+        let recordsArrayinPromise = new RSVP.Promise((resolve, reject) => {
           resolve(sortRecordsArray);
         });
+        /* eslint-enable no-unused-vars */
 
-        Ember.set(target, property, recordsArrayinPromise);
+        set(target, property, recordsArrayinPromise);
       }
     },
 
     objectListViewRowClick(record, params) {
       // Prevent transition to edit form if click target is hierarchy expand button.
-      if (params.originalEvent && Ember.$(params.originalEvent.target).hasClass('hierarchy-expand')) {
+      if (params.originalEvent && $(params.originalEvent.target).hasClass('hierarchy-expand')) {
         params.goToEditForm = false;
       }
 

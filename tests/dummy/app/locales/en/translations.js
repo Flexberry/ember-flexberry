@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import $ from 'jquery';
 import emberFlexberryTranslations from 'ember-flexberry/locales/en/translations';
 
 const translations = {};
-Ember.$.extend(true, translations, emberFlexberryTranslations);
+$.extend(true, translations, emberFlexberryTranslations);
 
-Ember.$.extend(true, translations, {
+$.extend(true, translations, {
   'models': {
     'ember-flexberry-dummy-suggestion': {
       'projections': {
@@ -49,6 +49,36 @@ Ember.$.extend(true, translations, {
         'SuggestionE': {
           'address': {
             __caption__: 'Address'
+          },
+          'text': {
+            __caption__: 'Text'
+          },
+          'date': {
+            __caption__: 'Date'
+          },
+          'votes': {
+            __caption__: 'Votes'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          },
+          'type': {
+            __caption__: 'Type',
+            'name': {
+              __caption__: 'Type'
+            }
+          },
+          'author': {
+            __caption__: 'Author',
+            'name': {
+              __caption__: 'Author'
+            }
+          },
+          'editor1': {
+            __caption__: 'Editor',
+            'name': {
+              __caption__: 'Editor'
+            }
           },
           'userVotes': {
             'name': {
@@ -96,7 +126,151 @@ Ember.$.extend(true, translations, {
         'SuggestionMainModelProjectionTest': {
           'userVotes': {
             'voteType': {
-              'caption': 'Temp text for test'
+              __caption__: 'Temp text for test'
+            }
+          }
+        },
+        'SettingLookupExampleView': {
+          'type': {
+            __caption__: 'Type',
+            'name': {
+              __caption__: 'Type'
+            },
+          },
+        },
+        'CustomizeLookupWindowExampleView': {
+          'type': {
+            __caption__: 'Type',
+            'name': {
+              __caption__: 'Type'
+            },
+          },
+        },
+        'LookupWithLimitFunctionExampleView': {
+          'type': {
+            __caption__: 'Type',
+            'name': {
+              __caption__: 'Type'
+            },
+          },
+        },
+        'DropDownLookupExampleView': {
+          'type': {
+            __caption__: 'Type',
+            'name': {
+              __caption__: 'Type'
+            },
+          },
+        },
+        'FolvWithLimitFunctionExampleView': {
+          'address': {
+            __caption__: 'Address'
+          },
+          'text': {
+            __caption__: 'Text'
+          },
+          'votes': {
+            __caption__: 'Votes'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          },
+          'type': {
+            __caption__: 'Type',
+            'name': {
+              __caption__: 'Type'
+            },
+          }
+        },
+        'LookupInBlockFormView': {
+          'editor1': {
+            __caption__: 'Editor',
+            'name': {
+              __caption__: 'Editor'
+            },
+            'eMail': {
+              __caption__: 'E-mail'
+            },
+            'gender': {
+              __caption__: 'Gender'
+            }
+          },
+        },
+        'FlexberryObjectlistviewCustomFilter': {
+          'address': {
+            __caption__: 'Address'
+          },
+          'date': {
+            __caption__: 'Date'
+          },
+          'votes': {
+            __caption__: 'Votes'
+          },
+          'type': {
+            __caption__: 'Type',
+            'name': {
+              __caption__: 'Type'
+            },
+            'moderated': {
+              __caption__: 'Moderated'
+            },
+            'parent': {
+              __caption__: 'Parent',
+              'name': {
+                __caption__: 'Type'
+              },
+              'moderated': {
+                __caption__: 'Moderated'
+              },
+            },
+          },
+          'author': {
+            __caption__: 'Author',
+            'name': {
+              __caption__: 'Author'
+            },
+            'eMail': {
+              __caption__: 'E-mail'
+            }
+          },
+          'editor1': {
+            __caption__: 'Editor',
+            'name': {
+              __caption__: 'Editor'
+            }
+          }
+        },
+        'DefaultOrderingExampleView': {
+          'type': {
+            __caption__: 'Type',
+            'name': {
+              __caption__: 'Type'
+            },
+          },
+        },
+        'FlexberryObjectlistviewFilterTest': {
+          'address': {
+            __caption__: 'Address'
+          },
+          'date': {
+            __caption__: 'Date'
+          },
+          'votes': {
+            __caption__: 'Votes'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          },
+          'type': {
+            __caption__: 'Type',
+            'name': {
+              __caption__: 'Type'
+            }
+          },
+          'author': {
+            __caption__: 'Author',
+            'name': {
+              __caption__: 'Author'
             }
           }
         }
@@ -152,6 +326,12 @@ Ember.$.extend(true, translations, {
           'name': {
             __caption__: 'Name'
           },
+          'moderated': {
+            __caption__: 'Moderated'
+          },
+          'parent': {
+            __caption__: 'Parent'
+          },
           'localizedTypes': {
             'name': {
               __caption__: 'Name'
@@ -163,9 +343,86 @@ Ember.$.extend(true, translations, {
               }
             }
           },
+        },
+        'SettingLookupExampleView': {
+          'name': {
+            __caption__: 'Name'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          }
+        },
+        'CustomizeLookupWindowExampleView': {
+          'name': {
+            __caption__: 'Name'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          }
+        },
+        'LookupWithLimitFunctionExampleView': {
+          'name': {
+            __caption__: 'Name'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          }
+        },
+        'DropDownLookupExampleView': {
+          'name': {
+            __caption__: 'Name'
+          },
+          'moderated': {
+            __caption__: 'Moderated'
+          }
         }
       }
     },
+    'integration-examples/edit-form/validation/base': {
+      'projections': {
+        'BaseE': {
+          'flag': {
+            __caption__: 'Flag'
+          },
+          'number': {
+            __caption__: 'Number'
+          },
+          'text': {
+            __caption__: 'Text'
+          },
+          'longText': {
+            __caption__: 'Long text'
+          },
+          'date': {
+            __caption__: 'Date'
+          },
+          'enumeration': {
+            __caption__: 'Enumeration'
+          },
+          'file': {
+            __caption__: 'File'
+          },
+          'master': {
+            __caption__: 'Master',
+            'text': {
+              __caption__: 'Text'
+            }
+          },
+          'details': {
+            __caption__: 'Details',
+            'flag': {
+              __caption__: 'Flag'
+            },
+            'number': {
+              __caption__: 'Number'
+            },
+            'text': {
+              __caption__: 'Text'
+            }
+          }
+        }
+      }
+    }
   },
 
   'application-name': 'Test stand for ember-flexberry',
@@ -293,14 +550,6 @@ Ember.$.extend(true, translations, {
           },
           'flexberry-ddau-checkbox': {
             'caption': 'flexberry-ddau-checkbox',
-            'title': '',
-            'settings-example': {
-              'caption': 'Settings example',
-              'title': ''
-            }
-          },
-          'flexberry-datepicker': {
-            'caption': 'flexberry-datepicker',
             'title': '',
             'settings-example': {
               'caption': 'Settings example',
@@ -714,11 +963,6 @@ Ember.$.extend(true, translations, {
           'caption': 'Settings example for flexberry-ddau-checkbox'
         }
       },
-      'flexberry-datepicker': {
-        'settings-example': {
-          'caption': 'Flexberry-datepicker. Settings example'
-        }
-      },
       'flexberry-dropdown': {
         'settings-example': {
           'caption': 'Flexberry-dropdown. Settings example'
@@ -729,7 +973,7 @@ Ember.$.extend(true, translations, {
           'info-message': 'The page template looks like following:' +
             '{{pageTemplate}}' +
             'So, once the value is selected, the component will be rendered as &lt;span&gt;selected value&lt;/span&gt;,<br>' +
-            'after that check browser\'s console, it must be free from \"Semantic-UI\" and other errors.'
+            'after that check browser\'s console, it must be free from "Semantic-UI" and other errors.'
         },
         'empty-value-example': {
           'caption': 'Flexberry-dropdown. Example dropdown with empty value',

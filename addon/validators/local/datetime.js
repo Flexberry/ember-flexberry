@@ -1,10 +1,8 @@
 /* global moment:true */
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import { get, set } from '@ember/object';
 import Base from 'ember-validations/validators/base';
 import Messages from 'ember-validations/messages';
-
-let get = Ember.get;
-let set = Ember.set;
 
 export default Base.extend({
   /**
@@ -32,7 +30,7 @@ export default Base.extend({
   },
 
   call() {
-    if (Ember.isEmpty(get(this.model, this.property))) {
+    if (isEmpty(get(this.model, this.property))) {
       if (!this.options.allowBlank) {
         this.errors.pushObject(this.options.messages.blank);
       }

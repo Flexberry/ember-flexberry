@@ -2,8 +2,8 @@
   <label>{{<%= caption %>}}</label>
   {{
     flexberry-lookup
-    choose='showLookupDialog'
-    remove='removeLookupValue'
+    choose=(action 'showLookupDialog')
+    remove=(action 'removeLookupValue')
     value=model.<%= name %>
     <%if(lookupValueField){%>displayAttributeName='<%= lookupValueField %>'<%}else{%><%}%>
     relationName='<%= name %>'

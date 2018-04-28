@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import $ from 'jquery';
 import RequiredActionsMixin from '../mixins/required-actions';
 import DomActionsMixin from '../mixins/dom-actions';
 import DynamicPropertiesMixin from '../mixins/dynamic-properties';
@@ -62,10 +63,10 @@ const flexberryClassNames = {
 
   controllers/my-form.js
   ```javascript
-  import Ember from 'ember';
+  import Controller from '@ember/controller';
   import FlexberryColorpickerActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-colorpicker-actions-handler';
 
-  export default Ember.Controller.extend(FlexberryColorpickerActionsHandlerMixin, {
+  export default Controller.extend(FlexberryColorpickerActionsHandlerMixin, {
   });
   ```
 
@@ -76,7 +77,7 @@ const flexberryClassNames = {
   @uses DynamicActionsMixin
   @uses DynamicPropertiesMixin
 */
-let FlexberryColorpickerComponent = Ember.Component.extend(
+let FlexberryColorpickerComponent = Component.extend(
   RequiredActionsMixin,
   DomActionsMixin,
   DynamicActionsMixin,
@@ -91,7 +92,7 @@ let FlexberryColorpickerComponent = Ember.Component.extend(
       @type String[]
       @default ['change']
     */
-    _requiredActionNames: ['change'],
+    _requiredActionNames: undefined,
 
     /**
       Reference to component's CSS-classes names.
@@ -125,7 +126,7 @@ let FlexberryColorpickerComponent = Ember.Component.extend(
         which describes inner input's 'change' event.
       */
       change(e) {
-        let $input = Ember.$(e.target);
+        let $input = $(e.target);
         if (!$input.hasClass(flexberryClassNames.input)) {
           return false;
         }
@@ -133,7 +134,7 @@ let FlexberryColorpickerComponent = Ember.Component.extend(
         let { value, opacity } = $input.data('minicolors-lastChange') || { value: null, opacity: null };
 
         // Invoke component's custom 'change' action.
-        this.sendAction('change', {
+        this.sendDynamicAction('change', {
           newValue: value,
           newOpacity: opacity,
           originalEvent: e
@@ -143,6 +144,14 @@ let FlexberryColorpickerComponent = Ember.Component.extend(
         // otherwise component's outer 'change' action handler will be called twice.
         return false;
       }
+    },
+
+    /**
+      An overridable method called when objects are instantiated.
+    */
+    init() {
+      this._super(...arguments);
+      this.set('_requiredActionNames', ['change']);
     },
 
     /**

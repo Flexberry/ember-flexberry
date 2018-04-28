@@ -1,65 +1,66 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { typeOf } from '@ember/utils';
 import LogService from 'ember-flexberry/services/log';
 import config from '../config/environment';
 
-let enabled = Ember.get(config, 'APP.log.enabled');
-if (Ember.typeOf(enabled) === 'boolean') {
+let enabled = get(config, 'APP.log.enabled');
+if (typeOf(enabled) === 'boolean') {
   LogService.reopen({
     enabled: enabled
   });
 }
 
-let storeErrorMessages = Ember.get(config, 'APP.log.storeErrorMessages');
-if (Ember.typeOf(storeErrorMessages) === 'boolean') {
+let storeErrorMessages = get(config, 'APP.log.storeErrorMessages');
+if (typeOf(storeErrorMessages) === 'boolean') {
   LogService.reopen({
     storeErrorMessages: storeErrorMessages
   });
 }
 
-let storeWarnMessages = Ember.get(config, 'APP.log.storeWarnMessages');
-if (Ember.typeOf(storeWarnMessages) === 'boolean') {
+let storeWarnMessages = get(config, 'APP.log.storeWarnMessages');
+if (typeOf(storeWarnMessages) === 'boolean') {
   LogService.reopen({
     storeWarnMessages: storeWarnMessages
   });
 }
 
-let storeLogMessages = Ember.get(config, 'APP.log.storeLogMessages');
-if (Ember.typeOf(storeLogMessages) === 'boolean') {
+let storeLogMessages = get(config, 'APP.log.storeLogMessages');
+if (typeOf(storeLogMessages) === 'boolean') {
   LogService.reopen({
     storeLogMessages: storeLogMessages
   });
 }
 
-let storeInfoMessages = Ember.get(config, 'APP.log.storeInfoMessages');
-if (Ember.typeOf(storeInfoMessages) === 'boolean') {
+let storeInfoMessages = get(config, 'APP.log.storeInfoMessages');
+if (typeOf(storeInfoMessages) === 'boolean') {
   LogService.reopen({
     storeInfoMessages: storeInfoMessages
   });
 }
 
-let storeDebugMessages = Ember.get(config, 'APP.log.storeDebugMessages');
-if (Ember.typeOf(storeDebugMessages) === 'boolean') {
+let storeDebugMessages = get(config, 'APP.log.storeDebugMessages');
+if (typeOf(storeDebugMessages) === 'boolean') {
   LogService.reopen({
     storeDebugMessages: storeDebugMessages
   });
 }
 
-let storeDeprecationMessages = Ember.get(config, 'APP.log.storeDeprecationMessages');
-if (Ember.typeOf(storeDeprecationMessages) === 'boolean') {
+let storeDeprecationMessages = get(config, 'APP.log.storeDeprecationMessages');
+if (typeOf(storeDeprecationMessages) === 'boolean') {
   LogService.reopen({
     storeDeprecationMessages: storeDeprecationMessages
   });
 }
 
-let storePromiseErrors = Ember.get(config, 'APP.log.storePromiseErrors');
-if (Ember.typeOf(storePromiseErrors) === 'boolean') {
+let storePromiseErrors = get(config, 'APP.log.storePromiseErrors');
+if (typeOf(storePromiseErrors) === 'boolean') {
   LogService.reopen({
     storePromiseErrors: storePromiseErrors
   });
 }
 
-let showPromiseErrors = Ember.get(config, 'APP.log.showPromiseErrors');
-if (Ember.typeOf(showPromiseErrors) === 'boolean') {
+let showPromiseErrors = get(config, 'APP.log.showPromiseErrors');
+if (typeOf(showPromiseErrors) === 'boolean') {
   LogService.reopen({
     showPromiseErrors: showPromiseErrors
   });

@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { assert } from '@ember/debug';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -19,7 +20,7 @@ export default FlexberryBaseComponent.extend({
     @type Service
     @private
   */
-  _groupEditEventsService: Ember.inject.service('objectlistview-events'),
+  _groupEditEventsService: service('objectlistview-events'),
 
   /**
     Boolean flag to indicate enabled state of delete rows button.
@@ -99,7 +100,7 @@ export default FlexberryBaseComponent.extend({
 
       let confirmDeleteRows = this.get('confirmDeleteRows');
       if (confirmDeleteRows) {
-        Ember.assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
+        assert('Error: confirmDeleteRows must be a function.', typeof confirmDeleteRows === 'function');
         if (!confirmDeleteRows()) {
           return;
         }
@@ -128,11 +129,13 @@ export default FlexberryBaseComponent.extend({
       currentUserSetting.sorting = defaultDeveloperUserSetting.sorting || [];
       currentUserSetting.colsOrder = defaultDeveloperUserSetting.colsOrder;
       currentUserSetting.columnWidths = defaultDeveloperUserSetting.columnWidths;
+      /* eslint-disable no-unused-vars */
       userSettingsService.saveUserSetting(componentName, undefined, currentUserSetting)
       .then(record => {
         this.set('sorting', currentUserSetting.sorting);
         _this.get('_groupEditEventsService').updateWidthTrigger(componentName);
       });
+      /* eslint-enable no-unused-vars */
     }
   },
 
@@ -180,11 +183,13 @@ export default FlexberryBaseComponent.extend({
     @param {Boolean} checked Current state of row in objectlistview (checked or not)
     @param {Object} recordWithKey The model wrapper with additional key corresponding to selected row
   */
+  /* eslint-disable no-unused-vars */
   _rowSelected(componentName, record, count, checked, recordWithKey) {
     if (componentName === this.get('componentName')) {
       this.set('_isDeleteRowsEnabled', count > 0);
     }
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     Event handler for "selected rows has been deleted" event in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
@@ -195,9 +200,11 @@ export default FlexberryBaseComponent.extend({
     @param {String} componentName The name of {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
     @param {Integer} count Count of deleted rows in {{#crossLink "FlexberryGroupeditComponent"}}{{/crossLink}}.
   */
+  /* eslint-disable no-unused-vars */
   _rowsDeleted(componentName, count) {
     if (componentName === this.get('componentName')) {
       this.set('_isDeleteRowsEnabled', false);
     }
   }
+  /* eslint-enable no-unused-vars */
 });

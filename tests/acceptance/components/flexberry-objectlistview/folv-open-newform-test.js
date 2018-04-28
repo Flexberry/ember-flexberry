@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { get } from '@ember/object';
 import { executeTest } from './execute-folv-test';
 import { loadingList, loadingLocales } from './folv-tests-functions';
 
@@ -13,10 +14,10 @@ executeTest('check goto new form', (store, assert, app) => {
     // Set 'ru' as current locale.
     loadingLocales('ru', app).then(() => {
       assert.equal(currentPath(), path);
-      let $toolBar = Ember.$('.ui.secondary.menu')[0];
+      let $toolBar = $('.ui.secondary.menu')[0];
       let $toolBarButtons = $toolBar.children;
 
-      assert.equal($toolBarButtons[1].innerText, Ember.get(I18nRuLocale, 'components.olv-toolbar.add-button-text'), 'button create exist');
+      assert.equal($toolBarButtons[1].innerText, get(I18nRuLocale, 'components.olv-toolbar.add-button-text'), 'button create exist');
 
       let asyncOperationsCompleted = assert.async();
       loadingList($toolBarButtons[1], 'form', '.field').then(($editForm) => {

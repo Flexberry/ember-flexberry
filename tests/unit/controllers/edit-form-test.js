@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
+import RSVP from 'rsvp';
 import DS from 'ember-data';
 import { moduleFor, test } from 'ember-qunit';
 import startApp from '../../helpers/start-app';
@@ -6,14 +8,20 @@ import startApp from '../../helpers/start-app';
 var App;
 
 moduleFor('controller:edit-form', 'Unit | Controller | edit form', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: [
+    'controller:flexberry-file-view-dialog',
+    'controller:lookup-dialog',
+    'service:detail-interaction',
+    'service:objectlistview-events',
+    'service:user-settings',
+  ],
+
   beforeEach: function() {
     App = startApp();
   },
   afterEach: function() {
-    Ember.run(App, 'destroy');
-    Ember.$.mockjax.clear();
+    run(App, 'destroy');
+    $.mockjax.clear();
   }
 });
 
@@ -28,7 +36,7 @@ test('save hasMany relationships recursively', function(assert) {
 
   let TestModel = DS.Model.extend({
     save: function() {
-      return new Ember.RSVP.Promise((resolve) => {
+      return new RSVP.Promise((resolve) => {
         savedRecords.push(this);
         resolve(this);
       });
@@ -53,7 +61,7 @@ test('save hasMany relationships recursively', function(assert) {
   let controller = this.subject();
   let store = App.__container__.lookup('service:store');
 
-  Ember.run(function() {
+  run(function() {
     let record = store.createRecord('model1');
     let model21 = store.createRecord('model2');
     let model22 = store.createRecord('model2');
@@ -67,7 +75,5 @@ test('save hasMany relationships recursively', function(assert) {
       assert.equal(savedRecords[1], model22);
       assert.equal(savedRecords[2], model31);
     });
-
-    wait();
   });
 });

@@ -227,11 +227,10 @@ module.exports = {
       );
     }).then(function() {
       return _this.addBowerPackagesToProject([
-        { name: 'semantic-ui', target: '2.3.1' },
-        { name: 'semantic-ui-daterangepicker', target: '5d46ed2e6e5a0bf398bb6a5df82e06036dfc46be' },
-        { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
-        { name: 'blueimp-file-upload', target: '9.11.2' },
         { name: 'devicejs', target: '0.2.7' },
+        { name: 'blueimp-file-upload', target: '9.11.2' },
+        { name: 'flatpickr-calendar', source: 'git://github.com/chmln/flatpickr.git', target: '2.3.4' },
+        { name: 'semantic-ui', target: '2.3.1' },
         { name: 'seiyria-bootstrap-slider', target: '6.0.6' },
         { name: 'jquery-minicolors', target: '2.2.6' },
         { name: 'js-beautify', target: '1.6.4' }
@@ -239,26 +238,25 @@ module.exports = {
     }).then(function() {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-moment', target: '6.0.0' },
-          { name: 'ember-link-action', target: '0.0.34' },
+          { name: 'ember-browserify', target: '1.1.9' },
           { name: 'ember-cli-less', target: '1.5.4' },
-          { name: 'broccoli-jscs', target: '1.2.2' },
-          { name: 'ember-browserify', target: '1.1.9' }
+          { name: 'ember-link-action', target: '0.0.36' },
+          { name: 'ember-moment', target: '7.6.0' },
         ]
       });
     }).then(function () {
       return _this.addPackagesToProject([
-        { name: 'dexie', target: '1.4.2' },
+        { name: 'dexie', target: '2.0.2' },
+        { name: 'inflection', target: '1.12.0' },
         { name: 'node-uuid', target: '1.4.7' },
-        { name: 'inflection', target: '1.10.0' }
       ]);
     }).then(function () {
       return _this.removePackageFromProject('ember-data');
     }).then(function () {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-data', target: '2.13.1' },
-          { name: 'ember-block-slots', target: '1.1.3' }
+          { name: 'ember-data', target: '3.0.2' },
+          { name: 'ember-block-slots', target: '1.1.11' }
         ]
       });
     });

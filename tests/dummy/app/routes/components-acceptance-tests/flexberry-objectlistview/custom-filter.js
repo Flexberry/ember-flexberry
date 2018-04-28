@@ -1,8 +1,8 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-
-import { Query } from 'ember-flexberry-data';
-
-const { SimplePredicate, StringPredicate, DatePredicate } = Query;
+import { computed } from '@ember/object';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import { DatePredicate } from 'ember-flexberry-data/query/predicate';
 
 export default ListFormRoute.extend({
   /**
@@ -43,7 +43,8 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { FOLVCustomFilterObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return { FOLVCustomFilterObjectListView: { } }}),
 
   predicateForFilter(filter) {
     if (filter.type === 'string' && filter.condition === 'like') {
@@ -67,7 +68,7 @@ export default ListFormRoute.extend({
 
   predicateForAttribute(attribute, filter) {
     switch (attribute.type) {
-      case 'boolean':
+      case 'boolean': {
         let yes = ['TRUE', 'True', 'true', 'YES', 'Yes', 'yes', 'ДА', 'Да', 'да', '1', '+'];
         let no = ['False', 'False', 'false', 'NO', 'No', 'no', 'НЕТ', 'Нет', 'нет', '0', '-'];
 
@@ -80,9 +81,11 @@ export default ListFormRoute.extend({
         }
 
         return null;
+      }
 
-      default:
+      default: {
         return this._super(...arguments);
+      }
     }
   },
 
@@ -93,8 +96,10 @@ export default ListFormRoute.extend({
     @method onModelLoadingAlways.
     @param {Object} data Data about completed load operation.
    */
+  /* eslint-disable no-unused-vars */
   onModelLoadingAlways(data) {
     let loadCount = this.get('controller.loadCount') + 1;
     this.set('controller.loadCount', loadCount);
   },
+  /* eslint-enable no-unused-vars */
 });

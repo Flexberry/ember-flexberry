@@ -1,4 +1,11 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { A } from '@ember/array';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import TestAdapter from '@ember/test/adapter';
+import { get } from '@ember/object';
 
 import I18nService from 'ember-i18n/services/i18n';
 import I18nRuLocale from 'ember-flexberry/locales/ru/translations';
@@ -7,7 +14,7 @@ import I18nEnLocale from 'ember-flexberry/locales/en/translations';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-const animationDuration = Ember.$.fn.dropdown.settings.duration + 100;
+const animationDuration = $.fn.dropdown.settings.duration + 100;
 
 moduleForComponent('flexberry-dropdown', 'Integration | Component | flexberry dropdown', {
   integration: true,
@@ -18,8 +25,8 @@ moduleForComponent('flexberry-dropdown', 'Integration | Component | flexberry dr
     this.register('service:i18n', I18nService);
 
     this.inject.service('i18n', { as: 'i18n' });
-    Ember.Component.reopen({
-      i18n: Ember.inject.service('i18n')
+    Component.reopen({
+      i18n: service('i18n')
     });
 
     // Set 'ru' as initial locale.
@@ -34,12 +41,12 @@ let expandDropdown = function(options) {
   let $component = options.dropdown;
   let $menu = $component.children('div.menu');
 
-  let callbacks = Ember.A(options.callbacks || []);
+  let callbacks = A(options.callbacks || []);
 
-  return new Ember.RSVP.Promise((resolve, reject) => {
+  return new RSVP.Promise((resolve, reject) => {
 
     // Click on component to trigger expand animation.
-    Ember.run(() => {
+    run(() => {
       $component.click();
 
       // Set timeouts for possibly defined additional callbacks.
@@ -67,9 +74,9 @@ let selectDropdownItem = function(options) {
   let $menu = $component.children('div.menu');
 
   let itemCaption = options.itemCaption;
-  let callbacks = Ember.A(options.callbacks || []);
+  let callbacks = A(options.callbacks || []);
 
-  return new Ember.RSVP.Promise((resolve, reject) => {
+  return new RSVP.Promise((resolve, reject) => {
 
     // To select some item, menu must be expanded.
     if (!($component.hasClass('active') && $component.hasClass('visible') && $menu.hasClass('visible'))) {
@@ -83,7 +90,7 @@ let selectDropdownItem = function(options) {
     }
 
     // Click on item to select it & trigger collapse animation.
-    Ember.run(() => {
+    run(() => {
       $item.click();
 
       // Set timeouts for possibly defined additional callbacks.
@@ -130,21 +137,25 @@ test('it renders properly', function(assert) {
   // Check wrapper's additional CSS-classes.
   let additioanlCssClasses = 'scrolling compact fluid';
   this.set('class', additioanlCssClasses);
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  /* eslint-disable no-unused-vars */
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     true,
     'Component\'s wrapper has additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 
   // Clean up wrapper's additional CSS-classes.
   this.set('class', '');
-  Ember.A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
+  /* eslint-disable no-unused-vars */
+  A(additioanlCssClasses.split(' ')).forEach((cssClassName, index) => {
     assert.strictEqual(
     $component.hasClass(cssClassName),
     false,
     'Component\'s wrapper hasn\'t additional css class \'' + cssClassName + '\'');
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('it renders i18n-ed placeholder', function(assert) {
@@ -159,15 +170,15 @@ test('it renders i18n-ed placeholder', function(assert) {
 
   // Check <dropdown>'s placeholder.
   assert.strictEqual(
-    Ember.$.trim($dropdownText.text()),
-    Ember.get(I18nRuLocale, 'components.flexberry-dropdown.placeholder'),
+    $.trim($dropdownText.text()),
+    get(I18nRuLocale, 'components.flexberry-dropdown.placeholder'),
     'Component\'s inner <dropdown>\'s placeholder is equals to it\'s default value from i18n locales/ru/translations');
 
   // Change current locale to 'en' & check <dropdown>'s placeholder again.
   this.set('i18n.locale', 'en');
   assert.strictEqual(
-    Ember.$.trim($dropdownText.text()),
-    Ember.get(I18nEnLocale, 'components.flexberry-dropdown.placeholder'),
+    $.trim($dropdownText.text()),
+    get(I18nEnLocale, 'components.flexberry-dropdown.placeholder'),
     'Component\'s inner <dropdown>\'s placeholder is equals to it\'s value from i18n locales/en/translations');
 });
 
@@ -189,12 +200,12 @@ test('it renders manually defined placeholder', function(assert) {
 
   // Check <dropdown>'s placeholder.
   assert.strictEqual(
-    Ember.$.trim($dropdownText.text()), placeholder);
+    $.trim($dropdownText.text()), placeholder);
 
   // Change placeholder's value & check <dropdown>'s placeholder again.
   placeholder = 'dropdown has no value';
   this.set('placeholder', placeholder);
-  assert.strictEqual(Ember.$.trim($dropdownText.text()), placeholder);
+  assert.strictEqual($.trim($dropdownText.text()), placeholder);
 });
 
 test('readonly mode works properly', function(assert) {
@@ -213,12 +224,13 @@ test('readonly mode works properly', function(assert) {
   assert.strictEqual($component.hasClass('disabled'), true, 'Component\'s has readonly');
 
   // Check that component is disabled.
-  new Ember.RSVP.Promise((resolve, reject) => {
-    Ember.run(() => {
+  /* eslint-disable no-unused-vars */
+  new RSVP.Promise((resolve, reject) => {
+    run(() => {
       $component.click();
     });
 
-    Ember.run(() => {
+    run(() => {
       let animation = assert.async();
       setTimeout(() => {
         assert.strictEqual($dropdownMenu.hasClass('animating'), false, 'Component is not active');
@@ -228,10 +240,14 @@ test('readonly mode works properly', function(assert) {
       }, animationDuration / 2);
     });
   });
+  /* eslint-enable no-unused-vars */
 });
 
 test('needChecksOnValue mode properly', function(assert) {
-  assert.expect(2);
+  let exceptionHandler = TestAdapter.exception;
+  TestAdapter.exception = (error) => {
+    throw error;
+  };
 
   // Create array for testing.
   let itemsArray = ['Caption1', 'Caption2', 'Caption3'];
@@ -244,24 +260,14 @@ test('needChecksOnValue mode properly', function(assert) {
     needChecksOnValue=needChecksOnValue
   }}`);
 
-  // Stub Ember.onerror method.
-  let originalOnError = Ember.onerror;
-
   // Change property binded to 'value' & check them.
   this.set('needChecksOnValue', true);
   let newValue = 'Caption4';
-  let latestLoggerErrorMessage;
-  Ember.onerror = function(error) {
-    latestLoggerErrorMessage = error.message;
-  };
 
   // Check that errors handled properly.
-  this.set('value', newValue);
-  assert.strictEqual(Ember.typeOf(latestLoggerErrorMessage) === 'string', true, 'Check message exists');
-  assert.strictEqual(latestLoggerErrorMessage.indexOf(newValue) > 0, true, 'Invalid value exists');
+  assert.throws(() => { this.set('value', newValue); }, new RegExp(newValue));
 
-  // Restore original method in the and of the test.
-  Ember.onerror = originalOnError;
+  TestAdapter.exception = exceptionHandler;
 });
 
 test('dropdown with items represented by object renders properly', function(assert) {
@@ -288,7 +294,7 @@ test('dropdown with items represented by object renders properly', function(asse
   // Check component's captions and objects.
   let itemsObjectKeys = Object.keys(itemsObject);
   $dropdownItem.each(function(i) {
-    let $item = Ember.$(this);
+    let $item = $(this);
     let itemKey = itemsObjectKeys[i];
 
     // Check that the captions matches the objects.
@@ -315,7 +321,7 @@ test('dropdown with items represented by array renders properly', function(asser
 
   // Check component's captions and array.
   $dropdownItem.each(function(i) {
-    let $item = Ember.$(this);
+    let $item = $(this);
 
     // Check that the captions matches the array.
     assert.strictEqual($item.attr('data-value'), String(i), 'Component\'s item\'s сaptions matches the array');
@@ -458,16 +464,16 @@ test('changes in inner <dropdown> causes changes in property binded to \'value\'
     });
   }).then(() => {
     let $selectedItems = $dropdownMenu.children('div.item.active.selected');
-    let $selectedItem = Ember.$($selectedItems[0]);
+    let $selectedItem = $($selectedItems[0]);
     let $dropdownText = $component.children('div.text');
 
     // Check that specified item is selected now & it is the only one selected item.
     assert.strictEqual($selectedItems.length, 1, 'Only one component\'s item is active');
-    assert.strictEqual(Ember.$.trim($selectedItem.text()), itemCaption, 'Selected item\'s caption is \'' + itemCaption + '\'');
+    assert.strictEqual($.trim($selectedItem.text()), itemCaption, 'Selected item\'s caption is \'' + itemCaption + '\'');
 
     // Check that dropdown's text <div> has text equals to selected item's caption.
     assert.strictEqual($dropdownText.hasClass('default'), false, 'Component\'s text <div> hasn\'t class \'default\'');
-    assert.strictEqual(Ember.$.trim($dropdownText.text()), itemCaption, 'Component\'s text <div> has content equals to selected item \'' + itemCaption + '\'');
+    assert.strictEqual($.trim($dropdownText.text()), itemCaption, 'Component\'s text <div> has content equals to selected item \'' + itemCaption + '\'');
 
     // Check that related model's value binded to dropdown is equals to selected item's caption.
     assert.strictEqual(this.get('value'), itemCaption, 'Related model\'s value binded to dropdown is \'' + itemCaption + '\'');

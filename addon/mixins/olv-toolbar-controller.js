@@ -1,8 +1,15 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import Mixin from '@ember/object/mixin';
+import { inject as service } from '@ember/service';
+import { assert } from '@ember/debug';
+import { typeOf, isNone } from '@ember/utils';
+import { get } from '@ember/object';
+import { isArray } from '@ember/array';
+import { capitalize } from '@ember/string';
 import { getValueFromLocales } from 'ember-flexberry-data/utils/model-functions';
 
-export default Ember.Mixin.create({
-  _userSettingsService: Ember.inject.service('user-settings'),
+export default Mixin.create({
+  _userSettingsService: service('user-settings'),
   /**
     Default cell component that will be used to display values in columns cells.
 
@@ -41,10 +48,10 @@ export default Ember.Mixin.create({
       let modelName = this.get('modelProjection.modelName');
       if (isExportExcel) {
         let exportExcelProjectionName = this.get('exportExcelProjection') || this.get('modelProjection.projectionName');
-        Ember.assert('Property exportExcelProjection is not defined in controller.', exportExcelProjectionName);
+        assert('Property exportExcelProjection is not defined in controller.', exportExcelProjectionName);
 
         let exportExcelProjection = this.store.modelFor(modelName).projections.get(exportExcelProjectionName);
-        Ember.assert(`Projection "${exportExcelProjectionName}" is not defined in model "${modelName}".`, exportExcelProjection);
+        assert(`Projection "${exportExcelProjectionName}" is not defined in model "${modelName}".`, exportExcelProjection);
 
         projectionAttributes = exportExcelProjection.attributes;
       } else {
@@ -60,7 +67,7 @@ export default Ember.Mixin.create({
         namedColList[propName] = colDesc;
       }
 
-      if (Ember.isArray(colsOrder)) {
+      if (isArray(colsOrder)) {
         /*
          Remove propName, that are not in colList
          */
@@ -99,7 +106,7 @@ export default Ember.Mixin.create({
 
       let namedColWidth = {};
 
-      if (Ember.isNone(settingName)) {
+      if (isNone(settingName)) {
         namedColWidth = this.get('currentColumnsWidths') || {};
       } else {
         for (let i = 0; i < columnWidths.length; i++) {
@@ -199,9 +206,9 @@ export default Ember.Mixin.create({
       }
 
       let attr = attributes[attrName];
-      Ember.assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
+      assert(`Unknown kind of projection attribute: ${attr.kind}`, attr.kind === 'attr' || attr.kind === 'belongsTo' || attr.kind === 'hasMany');
       switch (attr.kind) {
-        case 'hasMany':
+        case 'hasMany': {
           if (isExportExcel && !attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath, true);
@@ -209,8 +216,9 @@ export default Ember.Mixin.create({
           }
 
           break;
+        }
 
-        case 'belongsTo':
+        case 'belongsTo': {
           if (!attr.options.hidden) {
             let bindingPath = currentRelationshipPath + attrName;
             let column = this._createColumn(attr, attrName, bindingPath);
@@ -229,8 +237,9 @@ export default Ember.Mixin.create({
           currentRelationshipPath += attrName + '.';
           this._generateColumns(attr.attributes, isExportExcel, columnsBuf, currentRelationshipPath);
           break;
+        }
 
-        case 'attr':
+        case 'attr': {
           if (attr.options.hidden) {
             break;
           }
@@ -239,6 +248,7 @@ export default Ember.Mixin.create({
           let column = this._createColumn(attr, attrName, bindingPath);
           columnsBuf.push(column);
           break;
+        }
       }
     }
 
@@ -285,11 +295,11 @@ export default Ember.Mixin.create({
     // to avoid 'Ember.Object.create no longer supports defining methods that call _super' error,
     // if controller's 'getCellComponent' method call its super method from the base controller.
     let currentController = this.get('currentController');
-    let getCellComponent = Ember.get(currentController || {}, 'getCellComponent');
+    let getCellComponent = get(currentController || {}, 'getCellComponent');
     let cellComponent = this.get('cellComponent');
 
-    if (!this.get('editOnSeparateRoute') && Ember.typeOf(getCellComponent) === 'function') {
-      let recordModel = Ember.isNone(this.get('content')) ? null : this.get('content.type');
+    if (!this.get('editOnSeparateRoute') && typeOf(getCellComponent) === 'function') {
+      let recordModel = isNone(this.get('content')) ? null : this.get('content.type');
       cellComponent = getCellComponent.call(currentController, attr, bindingPath, recordModel);
     }
 
@@ -297,7 +307,7 @@ export default Ember.Mixin.create({
     let valueFromLocales = getValueFromLocales(this.get('i18n'), key);
 
     let column = {
-      header: valueFromLocales || attr.caption || Ember.String.capitalize(attrName),
+      header: valueFromLocales || attr.caption || capitalize(attrName),
       propName: bindingPath, // TODO: rename column.propName
       cellComponent: cellComponent,
       isHasMany: isHasMany,
@@ -311,7 +321,7 @@ export default Ember.Mixin.create({
     if (customColumnAttributesFunc) {
       let customColAttr = customColumnAttributesFunc(attr, bindingPath);
       if (customColAttr && (typeof customColAttr === 'object')) {
-        Ember.$.extend(true, column, customColAttr);
+        $.extend(true, column, customColAttr);
       }
     }
 

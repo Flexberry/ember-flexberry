@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { addObserver } from '@ember/object/observers';
 
 /**
   Configures a <a href="https://github.com/stefanpenner/ember-moment">moment service</a> for current application instance.
@@ -21,7 +21,7 @@ export function initialize(applicationInstance) {
     let locale = i18n.get('locale');
 
     moment.changeLocale(locale);
-    window.moment.locale(locale);
+    window.moment.updateLocale(locale);
   };
 
   let changeMomentDefaultFormat = function() {
@@ -30,11 +30,11 @@ export function initialize(applicationInstance) {
 
   // Initialize moment locale and change it every time i18n locale changes.
   changeMomentLocale();
-  Ember.addObserver(i18n, 'locale', changeMomentLocale);
+  addObserver(i18n, 'locale', changeMomentLocale);
 
   // Initialize moment default format and change it every time default format changes.
   changeMomentDefaultFormat();
-  Ember.addObserver(moment, 'defaultFormat', changeMomentDefaultFormat);
+  addObserver(moment, 'defaultFormat', changeMomentDefaultFormat);
 }
 
 export default {

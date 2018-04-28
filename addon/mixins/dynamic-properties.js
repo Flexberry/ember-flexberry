@@ -2,7 +2,12 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import Mixin from '@ember/object/mixin';
+import { get, computed, observer } from '@ember/object';
+import { A, isArray } from '@ember/array';
+import { assert } from '@ember/debug';
+import { typeOf, isNone } from '@ember/utils';
 
 /**
   Mixin containing logic making available passing all desirable properties to components
@@ -11,7 +16,7 @@ import Ember from 'ember';
   @class DynamicPropertiesMixin
   @uses <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   /**
     Flag: indicates whether component is tagless or not
     (has empty [tagName](http://emberjs.com/api/classes/Ember.Component.html#property_tagName) or not).
@@ -20,10 +25,10 @@ export default Ember.Mixin.create({
     @type Boolean
     @readOnly
    */
-  isTagless: Ember.computed('tagName', function () {
+  isTagless: computed('tagName', function () {
     let tagName = this.get('tagName');
-    if (Ember.typeOf(tagName) === 'string') {
-      tagName = Ember.$.trim(tagName);
+    if (typeOf(tagName) === 'string') {
+      tagName = $.trim(tagName);
     }
 
     return tagName === '';
@@ -72,54 +77,50 @@ export default Ember.Mixin.create({
   */
   _addDynamicProperty(propertyName) {
     let dynamicProperties = this.get('dynamicProperties');
-    if (Ember.isNone(dynamicProperties)) {
+    if (isNone(dynamicProperties)) {
       return;
     }
 
     let previousCustomClassNames = [];
     let setDynamicClassProperty = (propertyValue) => {
-      Ember.assert(
+      assert(
           `Wrong type of \`class\` property: ` +
-          `actual type is \`${Ember.typeOf(propertyValue)}\`, but \`string\` is expected.`,
-          Ember.typeOf(propertyValue) === 'string');
+          `actual type is \`${typeOf(propertyValue)}\`, but \`string\` is expected.`,
+          typeOf(propertyValue) === 'string');
 
-      let customClassNames = Ember.A(propertyValue.split(' ')).map((customClassName) => {
-        return Ember.$.trim(customClassName);
+      let customClassNames = A(propertyValue.split(' ')).map((customClassName) => {
+        return $.trim(customClassName);
       });
 
       let classNames = this.get('classNames');
       let $component = this.get('_componentWrapperIsAvailable') ? this.$() : null;
 
-      if (!Ember.isArray(classNames)) {
+      if (!isArray(classNames)) {
         classNames = [];
         this.set('classNames', classNames);
       }
 
-      // Remove previously added custom class names.
-      Ember.A(previousCustomClassNames).forEach((previousCustomClassName) => {
-        let index = classNames.indexOf(previousCustomClassName);
+      if ($component) {
+        // Remove previously added custom class names.
+        A(previousCustomClassNames).forEach((previousCustomClassName) => {
+          let index = classNames.indexOf(previousCustomClassName);
 
-        if (index >= 0) {
-          classNames.splice(index, 1);
-
-          // For some reason changes to classNames will not cause automatic rerender,
-          // so there is no other way to remove class names manually through jQuery methods.
-          if (!Ember.isNone($component)) {
+          if (index >= 0) {
+            // For some reason changes to classNames will not cause automatic rerender,
+            // so there is no other way to remove class names manually through jQuery methods.
             $component.removeClass(previousCustomClassName);
           }
-        }
-      });
+        });
 
-      // Add new custom class names.
-      Ember.A(customClassNames).forEach((customClassName) => {
-        classNames.push(customClassName);
-
-        // For some reason changes to classNames will not cause automatic rerender,
-        // so there is no other way to add class names manually through jQuery methods.
-        if (!Ember.isNone($component)) {
+        // Add new custom class names.
+        A(customClassNames).forEach((customClassName) => {
+          // For some reason changes to classNames will not cause automatic rerender,
+          // so there is no other way to add class names manually through jQuery methods.
           $component.addClass(customClassName);
-        }
-      });
+        });
+      }
+
+      this.set('classNames', customClassNames);
 
       // Remember added custom class names in the context of property observer handler.
       previousCustomClassNames = customClassNames;
@@ -165,7 +166,7 @@ export default Ember.Mixin.create({
       return metadata.propertyName === propertyName;
     })[0];
 
-    if (Ember.isNone(dynamicPropertyMetadata)) {
+    if (isNone(dynamicPropertyMetadata)) {
       return;
     }
 
@@ -176,7 +177,7 @@ export default Ember.Mixin.create({
     delete this[propertyName];
 
     // Remove observer.
-    this.removeObserver(`dynamicProperties.${propertyName}`, Ember.get(dynamicPropertyMetadata, 'propertyObserverHandler'));
+    this.removeObserver(`dynamicProperties.${propertyName}`, get(dynamicPropertyMetadata, 'propertyObserverHandler'));
 
     // Remove metadata.
     dynamicPropertiesMetadata.removeObject(dynamicPropertyMetadata);
@@ -191,10 +192,10 @@ export default Ember.Mixin.create({
   */
   _removeDynamicProperties() {
     let dynamicPropertiesMetadata = this.get('_dynamicPropertiesMetadata');
-    var len = Ember.get(dynamicPropertiesMetadata, 'length');
+    var len = get(dynamicPropertiesMetadata, 'length');
     while (--len >= 0) {
       let dynamicPropertyMetadata = dynamicPropertiesMetadata[len];
-      this._removeDynamicProperty(Ember.get(dynamicPropertyMetadata, 'propertyName'));
+      this._removeDynamicProperty(get(dynamicPropertyMetadata, 'propertyName'));
     }
   },
 
@@ -206,18 +207,18 @@ export default Ember.Mixin.create({
     @method _dynamicPropertiesDidChange
     @private
   */
-  _dynamicPropertiesDidChange: Ember.observer('dynamicProperties', function () {
+  _dynamicPropertiesDidChange: observer('dynamicProperties', function () {
     let dynamicProperties = this.get('dynamicProperties');
-    Ember.assert(
+    assert(
       `Wrong type of \`dynamicProperties\` property: ` +
-      `actual type is \`${Ember.typeOf(dynamicProperties)}\`, but \`object\` or \`instance\` is expected.`,
-      Ember.isNone(dynamicProperties) ||
-      Ember.typeOf(dynamicProperties) === 'object' ||
-      Ember.typeOf(dynamicProperties) === 'instance');
+      `actual type is \`${typeOf(dynamicProperties)}\`, but \`object\` or \`instance\` is expected.`,
+      isNone(dynamicProperties) ||
+      typeOf(dynamicProperties) === 'object' ||
+      typeOf(dynamicProperties) === 'instance');
 
     let dynamicPropertiesMetadata = this.get('_dynamicPropertiesMetadata');
-    if (Ember.isNone(dynamicPropertiesMetadata)) {
-      dynamicPropertiesMetadata = Ember.A();
+    if (isNone(dynamicPropertiesMetadata)) {
+      dynamicPropertiesMetadata = A();
       this.set('_dynamicPropertiesMetadata', dynamicPropertiesMetadata);
     }
 
@@ -225,7 +226,7 @@ export default Ember.Mixin.create({
     this._removeDynamicProperties();
 
     // Break after clean up, if new dynamic properties are none.
-    if (Ember.isNone(dynamicProperties)) {
+    if (isNone(dynamicProperties)) {
       return;
     }
 

@@ -168,8 +168,8 @@ export default class ModelBlueprint {
         TAB + TAB + "@private\n" +
         TAB + TAB + "@example\n" +
         TAB + TAB + TAB + "```javascript\n" +
-        TAB + TAB + TAB + `_${attr.name}Changed: Ember.on('init', Ember.observer('${attr.name}', function() {\n` +
-        TAB + TAB + TAB + TAB + `Ember.run.once(this, '_${attr.name}Compute');\n` +
+        TAB + TAB + TAB + `_${attr.name}Changed: on('init', observer('${attr.name}', function() {\n` +
+        TAB + TAB + TAB + TAB + `once(this, '_${attr.name}Compute');\n` +
         TAB + TAB + TAB + "}))\n" +
         TAB + TAB + TAB + "```\n" +
         TAB + "*/\n" +
@@ -197,7 +197,7 @@ export default class ModelBlueprint {
       TAB + TAB + "let parentValidations = this._super();\n" +
       TAB + TAB + "let thisValidations = {\n" +
       validationsFunc + TAB + TAB + "};\n" +
-      TAB + TAB + "return Ember.$.extend(true, {}, parentValidations, thisValidations);\n" +
+      TAB + TAB + "return $.extend(true, {}, parentValidations, thisValidations);\n" +
       TAB + "}";
     let initFunction =
       "init: function () {\n" +
@@ -232,7 +232,7 @@ export default class ModelBlueprint {
         attrsStr = "";
         indentStr = "";
       }
-      return new SortedPair(Number.MAX_VALUE,`${detailHasMany.name}: Projection.hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}})`);
+      return new SortedPair(Number.MAX_VALUE,`${detailHasMany.name}: hasMany('${detailHasMany.relatedTo}', '${detailHasMany.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}})`);
     }
     return new SortedPair(Number.MAX_VALUE,"");
   }
@@ -270,7 +270,7 @@ export default class ModelBlueprint {
       if(index==-1)
         index=Number.MAX_VALUE;
     }
-    return new SortedPair(index,`${belongsTo.name}: Projection.belongsTo('${belongsTo.relatedTo}', '${belongsTo.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}}${hiddenStr})`);
+    return new SortedPair(index,`${belongsTo.name}: belongsTo('${belongsTo.relatedTo}', '${belongsTo.caption}', {\n${indentStr}${attrsStr}\n${indentStr2}}${hiddenStr})`);
   }
 
   declareProjAttr(attr: metadata.ProjAttr): SortedPair {
@@ -278,7 +278,7 @@ export default class ModelBlueprint {
     if (attr.hidden) {
       hiddenStr = ", { hidden: true }";
     }
-    return new SortedPair(attr.index, `${attr.name}: Projection.attr('${attr.caption}'${hiddenStr})`);
+    return new SortedPair(attr.index, `${attr.name}: attr('${attr.caption}'${hiddenStr})`);
   }
 
   getJSForProjections(model: metadata.Model, modelsDir: string): string {
@@ -315,7 +315,7 @@ export default class ModelBlueprint {
         hasManyAttrs=lodash.sortBy(hasManyAttrs,["index"]);
         let attrsStr = lodash.map(hasManyAttrs, "str").join(",\n      ");
 
-        projAttrs.push(new SortedPair(Number.MAX_VALUE, `${hasMany.name}: Projection.hasMany('${hasMany.relatedTo}', '${hasMany.caption}', {\n      ${attrsStr}\n    })`));
+        projAttrs.push(new SortedPair(Number.MAX_VALUE, `${hasMany.name}: hasMany('${hasMany.relatedTo}', '${hasMany.caption}', {\n      ${attrsStr}\n    })`));
       }
       projAttrs=lodash.sortBy(projAttrs,["index"]);
       let attrsStr = lodash.map(projAttrs, "str").join(",\n    ");

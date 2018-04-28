@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import { later, run } from '@ember/runloop';
 import { executeTest} from './execute-folv-test';
 import { addRecords, deleteRecords, refreshListByFunction } from './folv-tests-functions';
 
 import generateUniqueId from 'ember-flexberry-data/utils/generate-unique-id';
+
+import $ from 'jquery';
 
 executeTest('check paging dropdown', (store, assert, app) => {
   assert.expect(5);
@@ -11,7 +13,7 @@ executeTest('check paging dropdown', (store, assert, app) => {
   let uuid = generateUniqueId();
 
   // Add records for paging.
-  Ember.run(() => {
+  run(() => {
 
     addRecords(store, modelName, uuid).then(function(resolvedPromises) {
       assert.ok(resolvedPromises, 'All records saved.');
@@ -26,20 +28,20 @@ executeTest('check paging dropdown', (store, assert, app) => {
 
         // Refresh function.
         let refreshFunction =  function() {
-          let $folvPerPageButton = Ember.$('.flexberry-dropdown.compact');
-          let $menu = Ember.$('.menu', $folvPerPageButton);
-          trTableBody = () => { return $(Ember.$('table.object-list-view tbody tr')).length.toString(); };
+          let $folvPerPageButton = $('.flexberry-dropdown.compact');
+          let $menu = $('.menu', $folvPerPageButton);
+          trTableBody = () => { return $($('table.object-list-view tbody tr')).length.toString(); };
 
-          activeItem =  () => { return $(Ember.$('.item.active.selected', $menu)).text(); };
+          activeItem =  () => { return $($('.item.active.selected', $menu)).text(); };
 
           // The list should be more than 5 items.
           assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
           $folvPerPageButton.click();
           let timeout = 500;
-          Ember.run.later((() => {
+          later((() => {
             let menuIsVisible = $menu.hasClass('visible');
             assert.strictEqual(menuIsVisible, true, 'menu is visible');
-            $choosedIthem = Ember.$('.item', $menu);
+            $choosedIthem = $('.item', $menu);
             $choosedIthem[1].click();
           }), timeout);
         };

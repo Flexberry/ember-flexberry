@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Service from '@ember/service';
+import Evented from '@ember/object/evented';
 
 /**
   Service for triggering lookup events.
@@ -12,7 +13,7 @@ import Ember from 'ember';
   @uses Ember.Evented
   @public
 */
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
   /**
     Trigger is called when a modal starts to show.
 

@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { isArray } from '@ember/array';
 
 /**
   Mixin for handling errors.
@@ -7,7 +8,7 @@ import Ember from 'ember';
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
   @public
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Event handler for processing promise model rejecting.
@@ -58,7 +59,7 @@ export default Ember.Mixin.create({
   */
   _updateErrorToDisplay(errorData) {
     let msg;
-    if (Ember.isArray(errorData)) {
+    if (isArray(errorData)) {
       for (let i = 0; i < errorData.length; i++) {
         if (errorData[i].state && errorData[i].state === 'rejected') {
           msg += errorData[i].reason.message;

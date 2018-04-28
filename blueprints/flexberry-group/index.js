@@ -37,14 +37,6 @@ var GroupBlueprint = (function () {
             case 'transform-test':
                 this.emberGenerate("objects");
                 break;
-            case 'controller-test':
-                this.emberGenerate("list-forms");
-                this.emberGenerate("edit-forms");
-                break;
-            case 'route-test':
-                this.emberGenerate("list-forms");
-                this.emberGenerate("edit-forms");
-                break;
             case 'flexberry-enum':
                 this.emberGenerate("enums");
                 break;
@@ -82,7 +74,7 @@ var GroupBlueprint = (function () {
             ui: undefined,
             analytics: undefined,
             project: undefined,
-            paths: ["node_modules/ember-flexberry/blueprints"]
+            paths: this.options.project.blueprintLookupPaths()
         });
     };
     GroupBlueprint.prototype.emberGenerate = function (metadataSubDir, notOverwrite, folderJsFiles) {

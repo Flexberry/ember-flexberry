@@ -2,7 +2,11 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import { inject as service } from '@ember/service';
+import { isBlank, isNone } from '@ember/utils';
+import { isArray } from '@ember/array';
+import { assert } from '@ember/debug';
 import ProjectedModelFormRoute from './projected-model-form';
 import FlexberryGroupeditRouteMixin from '../mixins/flexberry-groupedit-route';
 import FlexberryObjectlistviewRouteMixin from '../mixins/flexberry-objectlistview-route';
@@ -84,7 +88,7 @@ ErrorableRouteMixin, {
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: service('objectlistview-events'),
 
   /**
     This hook is the first of the route entry validation hooks called when an attempt is made to transition into a route or one of its children.
@@ -99,7 +103,7 @@ ErrorableRouteMixin, {
 
     let webPage = transition.targetName;
     let newSuffix = this.get('newSuffix');
-    if (!Ember.isBlank(newSuffix) && webPage.substr(webPage.length - newSuffix.length) === newSuffix) {
+    if (!isBlank(newSuffix) && webPage.substr(webPage.length - newSuffix.length) === newSuffix) {
       webPage = webPage.substr(0, webPage.length - newSuffix.length);
     }
 
@@ -107,7 +111,6 @@ ErrorableRouteMixin, {
     userSettingsService.setCurrentWebPage(webPage);
     let developerUserSettings = this.get('developerUserSettings') || {};
 
-    let nComponents = 0;
     let componentName;
     for (componentName in developerUserSettings) {
       let componentDesc = developerUserSettings[componentName];
@@ -118,10 +121,9 @@ ErrorableRouteMixin, {
         case 'object':
           break;
         default:
-          Ember.assert('Component description ' + 'developerUserSettings.' + componentName +
+          assert('Component description ' + 'developerUserSettings.' + componentName +
             'in /app/routes/' + transition.targetName + '.js must have types object or string', false);
       }
-      nComponents += 1;
     }
 
     userSettingsService.setDefaultDeveloperUserSettings(developerUserSettings);
@@ -136,6 +138,7 @@ ErrorableRouteMixin, {
     @param {Object} params
     @param {Object} transition
    */
+  /* eslint-disable no-unused-vars */
   model(params, transition) {
     this._super.apply(this, arguments);
 
@@ -156,6 +159,7 @@ ErrorableRouteMixin, {
     // :id param defined in router.js
     return this.store.findRecord(modelName, params.id, findRecordParameters);
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to reset controller values either when the model changes or the route is exiting.
@@ -166,10 +170,11 @@ ErrorableRouteMixin, {
     @param {Boolean} isExisting
     @param {Object} transition
    */
+  /* eslint-disable no-unused-vars */
   resetController(controller, isExisting, transition) {
     this._super.apply(this, arguments);
     let modelCurrentAgregators = controller.get('modelCurrentAgregators');
-    let keptAgregators = modelCurrentAgregators && Ember.isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
+    let keptAgregators = modelCurrentAgregators && isArray(modelCurrentAgregators) ? modelCurrentAgregators.slice() : [];
 
     controller.send('dismissErrorMessages');
     controller.set('modelCurrentAgregatorPathes', undefined);
@@ -199,6 +204,7 @@ ErrorableRouteMixin, {
       }
     });
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     A hook you can use to setup the controller for the current route.
@@ -218,8 +224,8 @@ ErrorableRouteMixin, {
     controller.set('modelProjection', proj);
     controller.set('routeName', this.get('routeName'));
     controller.set('developerUserSettings', this.get('developerUserSettings'));
-    if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
-      controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
+    if (isNone(controller.get('defaultDeveloperUserSettings'))) {
+      controller.set('defaultDeveloperUserSettings', $.extend(true, {}, this.get('developerUserSettings')));
     }
 
     if (this.get('objectlistviewEventsService.loadingState') === 'loading') {

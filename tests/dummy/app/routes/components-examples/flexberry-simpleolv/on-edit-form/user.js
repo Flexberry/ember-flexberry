@@ -1,5 +1,5 @@
 import EditFormRoute from 'ember-flexberry/routes/edit-form';
-
+import { computed } from '@ember/object';
 export default EditFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -10,7 +10,8 @@ export default EditFormRoute.extend({
    */
   modelProjection: 'ApplicationUserE',
 
-  developerUserSettings: { FOLVOnEditFormSuggestionsObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return { FOLVOnEditFormSuggestionsObjectListView: { } }}),
   /**
     Name of model to be used as form's record type.
 

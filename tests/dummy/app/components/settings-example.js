@@ -2,7 +2,7 @@
   @module ember-flexberry-dummy
  */
 
-import Ember from 'ember';
+import Component from '@ember/component';
 
 /**
   Settings example component.
@@ -10,7 +10,7 @@ import Ember from 'ember';
   @class SettingsExampleComponent
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   /**
     A hash of controller properties.
 

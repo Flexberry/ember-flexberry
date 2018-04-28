@@ -117,10 +117,7 @@ export default FlexberryObjectlistview.extend({
     @property {String} [singleColumnCellComponent.componentName='object-list-view-single-column-cell']
     @property {String} [singleColumnCellComponent.componentProperties=null]
   */
-  singleColumnCellComponent: {
-    componentName: 'object-list-view-single-column-cell',
-    componentProperties: null
-  },
+  singleColumnCellComponent: undefined,
 
   /**
     Header title of single column.
@@ -129,4 +126,12 @@ export default FlexberryObjectlistview.extend({
     @type String
   */
   singleColumnHeaderTitle: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('singleColumnCellComponent', {
+      componentName: 'object-list-view-single-column-cell',
+      componentProperties: null
+    });
+  }
 });

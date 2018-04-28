@@ -1,11 +1,11 @@
 {{#modal-dialog
   title=title
   sizeClass=sizeClass
-  close='removeModalDialog'
-  created='createdModalDialog'
+  close=(action "removeModalDialog")
+  created=(action "createdModalDialog")
   useOkButton=false
   useCloseButton=false
   componentName=componentName
 }}
-  {{outlet 'modal-content'}}
+  {{outlet "modal-content"}}
 {{/modal-dialog}}

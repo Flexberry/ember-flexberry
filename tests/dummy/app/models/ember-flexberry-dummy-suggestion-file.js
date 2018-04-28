@@ -1,7 +1,8 @@
 import DS from 'ember-data';
-import { Projection } from 'ember-flexberry-data';
+import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
+import { attr } from 'ember-flexberry-data/utils/attributes';
 
-var Model = Projection.Model.extend({
+var Model = EmberFlexberryDataModel.extend({
   // Inversed relationship for ember-flexberry-dummy-suggestion.files.
   // It's not a property for flexberry-lookup component.
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
@@ -18,8 +19,8 @@ var Model = Projection.Model.extend({
 
 // Edit form projection.
 Model.defineProjection('SuggestionFileE', 'ember-flexberry-dummy-suggestion-file', {
-  order: Projection.attr('Order'),
-  file: Projection.attr('File')
+  order: attr('Order'),
+  file: attr('File')
 });
 
 export default Model;

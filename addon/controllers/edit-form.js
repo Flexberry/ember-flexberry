@@ -2,7 +2,17 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import RSVP from 'rsvp';
+import Controller, { inject as injectController } from '@ember/controller';
+import Evented from '@ember/object/evented';
+import { inject as injectService} from '@ember/service';
+import { get, computed } from '@ember/object';
+import { A, isArray } from '@ember/array';
+import { assert } from '@ember/debug';
+import { isNone } from '@ember/utils';
+import { getOwner } from '@ember/application';
+import { deprecate } from '@ember/application/deprecations';
 import Errors from 'ember-validations/errors';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
@@ -15,8 +25,6 @@ import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
 import FolvOnEditControllerMixin from '../mixins/flexberry-objectlistview-on-edit-form-controller';
 import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexberry-objectlistview-hierarchical-controller';
-
-const { getOwner } = Ember;
 
 /**
   Base controller for the Edit Forms.
@@ -47,8 +55,8 @@ const { getOwner } = Ember;
   @uses ErrorableControllerMixin
   @uses FlexberryFileControllerMixin
 */
-export default Ember.Controller.extend(
-Ember.Evented,
+export default Controller.extend(
+Evented,
 FlexberryLookupMixin,
 ErrorableControllerMixin,
 FlexberryFileControllerMixin,
@@ -98,7 +106,7 @@ FolvOnEditControllerMixin, {
     @property objectlistviewEventsService
     @type Service
   */
-  objectlistviewEventsService: Ember.inject.service('objectlistview-events'),
+  objectlistviewEventsService: injectService('objectlistview-events'),
 
   /**
     Readonly HTML attribute following to the `readonly` query param. According to the W3C standard, returns 'readonly' if `readonly` is `true` and `undefined` otherwise.
@@ -110,7 +118,7 @@ FolvOnEditControllerMixin, {
     @default undefined
     @readOnly
   */
-  readonlyAttr: Ember.computed('readonly', function() {
+  readonlyAttr: computed('readonly', function() {
     return this.get('readonly') ? 'readonly' : undefined;
   }),
 
@@ -126,12 +134,7 @@ FolvOnEditControllerMixin, {
     @property lookupSettings
     @type Object
   */
-  lookupSettings: {
-    controllerName: 'lookup-dialog',
-    template: 'lookup-dialog',
-    contentTemplate: 'lookup-dialog-content',
-    loaderTemplate: 'loading'
-  },
+  lookupSettings: undefined,
 
   /**
     If `true`, all details will be deleted along with the main model.
@@ -149,7 +152,7 @@ FolvOnEditControllerMixin, {
     @type Ember.Controller
     @default LookupDialog
   */
-  lookupController: Ember.inject.controller('lookup-dialog'),
+  lookupController: injectController('lookup-dialog'),
 
   /**
     Flag to cancel rollback of model on controller resetting.
@@ -343,6 +346,16 @@ FolvOnEditControllerMixin, {
     },
   },
 
+  init() {
+    this._super(...arguments);
+    this.set('lookupSettings', {
+      controllerName: 'lookup-dialog',
+      template: 'lookup-dialog',
+      contentTemplate: 'lookup-dialog-content',
+      loaderTemplate: 'loading'
+    });
+  },
+
   /**
     Save object.
 
@@ -370,9 +383,11 @@ FolvOnEditControllerMixin, {
         if (routeName.indexOf('.new') > 0) {
           let qpars = {};
           let queryParams = _this.get('queryParams');
+          /* eslint-disable no-unused-vars */
           queryParams.forEach(function(item, i, params) {
             qpars[item] = this.get(item);
           }, _this);
+          /* eslint-enable no-unused-vars */
           let transitionQuery = {};
           transitionQuery.queryParams = qpars;
           transitionQuery.queryParams.recordAdded = true;
@@ -385,23 +400,23 @@ FolvOnEditControllerMixin, {
       let agragatorModel = getCurrentAgregator.call(this);
       if (needSaveCurrentAgregator.call(this, agragatorModel)) {
         return this._saveHasManyRelationships(model).then((result) => {
-          if (result && Ember.isArray(result)) {
-            let arrayWrapper = Ember.A();
+          if (result && isArray(result)) {
+            let arrayWrapper = A();
             arrayWrapper.addObjects(result);
             let errors = arrayWrapper.filterBy('state', 'rejected');
-            return errors.length > 0 ? Ember.RSVP.reject(errors) : agragatorModel.save().then(afterSaveModelFunction);
+            return errors.length > 0 ? RSVP.reject(errors) : agragatorModel.save().then(afterSaveModelFunction);
           } else {
             return agragatorModel.save().then(afterSaveModelFunction);
           }
         });
       } else {
         return this._saveHasManyRelationships(model).then((result) => {
-          if (result && Ember.isArray(result)) {
-            let arrayWrapper = Ember.A();
+          if (result && isArray(result)) {
+            let arrayWrapper = A();
             arrayWrapper.addObjects(result);
             let errors = arrayWrapper.filterBy('state', 'rejected');
             if (errors.length > 0) {
-              return Ember.RSVP.reject(errors);
+              return RSVP.reject(errors);
             } else {
               afterSaveModelFunction();
             }
@@ -413,7 +428,7 @@ FolvOnEditControllerMixin, {
     }).catch((errorData) => {
       this.get('objectlistviewEventsService').setLoadingState('error');
       this.onSaveActionRejected(errorData);
-      return Ember.RSVP.reject(errorData);
+      return RSVP.reject(errorData);
     }).finally((data) => {
       this.onSaveActionAlways(data);
     });
@@ -525,7 +540,7 @@ FolvOnEditControllerMixin, {
     @param {Object} errorData Data about save operation fail.
   */
   onSaveActionRejected(errorData) {
-    Ember.$('.ui.form .full.height').scrollTop(0);
+    $('.ui.form .full.height').scrollTop(0);
     if (!(errorData instanceof Errors)) {
       this.send('handleError', errorData);
     }
@@ -546,8 +561,10 @@ FolvOnEditControllerMixin, {
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
   */
+  /* eslint-disable no-unused-vars */
   onSaveActionAlways(data) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before delete operation will be called.
@@ -614,8 +631,10 @@ FolvOnEditControllerMixin, {
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
   */
+  /* eslint-disable no-unused-vars */
   onDeleteActionAlways(data) {
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before close method will be called.
@@ -644,7 +663,7 @@ FolvOnEditControllerMixin, {
       // Без сервера не обойтись, наверное. Нужно определять, на какую страницу редиректить.
       // Либо редиректить на что-то типа /{parentRoute}/page/whichContains/{object id}, а контроллер/роут там далее разрулит, куда дальше послать редирект.
       let parentRoute = this.get('parentRoute');
-      Ember.assert('Parent route must be defined.', parentRoute);
+      assert('Parent route must be defined.', parentRoute);
       this.transitionToRoute(parentRoute);
     }
   },
@@ -669,12 +688,12 @@ FolvOnEditControllerMixin, {
       return cellComponent;
     }
 
-    let modelAttr = !Ember.isNone(modelClass) ? Ember.get(modelClass, 'attributes').get(bindingPath) : null;
+    let modelAttr = !isNone(modelClass) ? get(modelClass, 'attributes').get(bindingPath) : null;
     if (!(attr.kind === 'attr' && modelAttr && modelAttr.type)) {
       return cellComponent;
     }
 
-    let modelAttrOptions = Ember.get(modelAttr, 'options');
+    let modelAttrOptions = get(modelAttr, 'options');
 
     // Handle order attributes (they must be readonly).
     if (modelAttrOptions && modelAttrOptions.isOrderAttribute) {
@@ -685,21 +704,28 @@ FolvOnEditControllerMixin, {
       case 'string':
       case 'number':
         break;
-      case 'boolean':
+      case 'boolean': {
         cellComponent.componentName = 'flexberry-checkbox';
         break;
-      case 'date':
-        cellComponent.componentName = 'flexberry-datepicker';
+      }
+
+      case 'date': {
+        cellComponent.componentName = 'flexberry-simpledatetime';
+        cellComponent.componentProperties = { type: 'date' };
         break;
-      case 'file':
+      }
+
+      case 'file': {
         cellComponent.componentName = 'flexberry-file';
         cellComponent.componentProperties = { inputClass: 'fluid' };
         break;
-      default:
+      }
+
+      default: {
 
         // Current cell type is possibly custom transform.
         let transformInstance = getOwner(this).lookup('transform:' + modelAttr.type);
-        let transformClass = !Ember.isNone(transformInstance) ? transformInstance.constructor : null;
+        let transformClass = !isNone(transformInstance) ? transformInstance.constructor : null;
 
         // Handle enums (extended from transforms/flexberry-enum.js).
         if (transformClass && transformClass.isEnum) {
@@ -711,6 +737,7 @@ FolvOnEditControllerMixin, {
         }
 
         break;
+      }
     }
 
     return cellComponent;
@@ -725,7 +752,7 @@ FolvOnEditControllerMixin, {
     @deprecated Use `rollbackHasMany` from model.
   */
   rollbackHasManyRelationships(model) {
-    Ember.deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
+    deprecate(`This method deprecated, use 'rollbackHasMany' from model.`);
     model.rollbackHasMany();
   },
 
@@ -737,7 +764,7 @@ FolvOnEditControllerMixin, {
     @readOnly
     @private
   */
-  _flexberryDetailInteractionService: Ember.inject.service('detail-interaction'),
+  _flexberryDetailInteractionService: injectService('detail-interaction'),
 
   /**
     Save dirty hasMany relationships in the `model` recursively.
@@ -749,17 +776,17 @@ FolvOnEditControllerMixin, {
     @private
   */
   _saveHasManyRelationships(model) {
-    let promises = Ember.A();
+    let promises = A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).filterBy('hasDirtyAttributes', true).forEach((record) => {
           let promise = record.save().then((record) => {
             return this._saveHasManyRelationships(record).then((result) => {
-              if (result && Ember.isArray(result) && result.length > 0) {
-                let arrayWrapper = Ember.A();
+              if (result && isArray(result) && result.length > 0) {
+                let arrayWrapper = A();
                 arrayWrapper.addObjects(result);
                 let errors = arrayWrapper.filterBy('state', 'rejected');
-                return errors.length > 0 ? Ember.RSVP.reject(errors) : record;
+                return errors.length > 0 ? RSVP.reject(errors) : record;
               } else {
                 return record;
               }
@@ -771,7 +798,7 @@ FolvOnEditControllerMixin, {
       }
     });
 
-    return Ember.RSVP.allSettled(promises);
+    return RSVP.allSettled(promises);
   },
 
   /**
@@ -783,7 +810,7 @@ FolvOnEditControllerMixin, {
     @return {Promise} A promise that will be resolved to array of destroyed records.
   */
   _destroyHasManyRelationships(model) {
-    let promises = Ember.A();
+    let promises = A();
     model.eachRelationship((name, desc) => {
       if (desc.kind === 'hasMany') {
         model.get(name).forEach((record) => {
@@ -796,6 +823,6 @@ FolvOnEditControllerMixin, {
       }
     });
 
-    return Ember.RSVP.allSettled(promises);
+    return RSVP.allSettled(promises);
   },
 });

@@ -4,6 +4,7 @@ moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
   // Specify the other units that are required for this test.
   needs: [
     'serializer:<%= name %>',
+    'service:syncer',
     'transform:file',
     'transform:decimal',
     'transform:guid',
@@ -13,7 +14,7 @@ moduleForModel('<%= name %>', 'Unit | Serializer | <%= name %>', {
 <%= needsAllObjects %>,
 <% } %>
 <%= needsAllModels %>
-  ]
+  ],
 });
 
 // Replace this with your real tests.

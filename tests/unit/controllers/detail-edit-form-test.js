@@ -1,8 +1,13 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('controller:detail-edit-form', 'Unit | Controller | detail edit form', {
-  // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: [
+    'controller:flexberry-file-view-dialog',
+    'controller:lookup-dialog',
+    'service:detail-interaction',
+    'service:objectlistview-events',
+    'service:user-settings',
+  ],
 });
 
 // Replace this with your real tests.

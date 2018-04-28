@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import { isArray } from '@ember/array';
+import { assign } from '@ember/polyfills';
+import { set } from '@ember/object';
 
 /**
   Used for setting objects properties by path containing Ember.RecordArray
@@ -36,12 +38,12 @@ let setRecord = function (source, keyName, value) {
 
       if (i === (len - 1)) {
         // if previous object is array and key is index
-        if (Ember.isArray(result) && !isNaN(keyValue)) {
-          return Ember.assign(result.objectAt(keys[i]), value);
+        if (isArray(result) && !isNaN(keyValue)) {
+          return assign(result.objectAt(keys[i]), value);
         } else {
-          return Ember.set(result, keys[i], value);
+          return set(result, keys[i], value);
         }
-      } else if (Ember.isArray(result) && !isNaN(keyValue)) {
+      } else if (isArray(result) && !isNaN(keyValue)) {
         result = result.objectAt(keys[i]);
       } else {
         result = result.get(keys[i]);
@@ -50,7 +52,7 @@ let setRecord = function (source, keyName, value) {
   }
 
   // if key is lonely - directly set value for this property
-  return Ember.set(source, keys[0] || keyName, value);
+  return set(source, keys[0] || keyName, value);
 };
 
 export {

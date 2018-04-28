@@ -1,5 +1,7 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-import { Query } from 'ember-flexberry-data';
+import { SimplePredicate } from 'ember-flexberry-data/query/predicate';
+import { computed } from '@ember/object';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 
 export default ListFormRoute.extend({
   /**
@@ -31,7 +33,8 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { FOLVSettingExampleObjectListView: { } },
+  developerUserSettings: computed(function() {
+    return { FOLVSettingExampleObjectListView: { } }}),
 
   /**
     Name of model to be used as list's records types.
@@ -49,10 +52,12 @@ export default ListFormRoute.extend({
     @method objectListViewLimitPredicate
     @param {Object} options Method options..
    */
+  /* eslint-disable no-unused-vars */
   objectListViewLimitPredicate: function(options) {
-    let limitFunction = new Query.SimplePredicate('address', Query.FilterOperator.Neq, undefined);
+    let limitFunction = new SimplePredicate('address', FilterOperator.Neq, undefined);
     return limitFunction;
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked always when load operation completed,
@@ -61,8 +66,10 @@ export default ListFormRoute.extend({
     @method onModelLoadingAlways.
     @param {Object} data Data about completed load operation.
    */
+  /* eslint-disable no-unused-vars */
   onModelLoadingAlways(data) {
     let loadCount = this.get('controller.loadCount') + 1;
     this.set('controller.loadCount', loadCount);
   },
+  /* eslint-enable no-unused-vars */
 });

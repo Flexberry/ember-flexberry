@@ -72,8 +72,6 @@ var ApplicationBlueprint = (function () {
         this.promise = this.emberGenerateFlexberryGroup("flexberry-object");
         this.promise = this.emberGenerateFlexberryGroup("transform");
         this.promise = this.emberGenerateFlexberryGroup("transform-test");
-        this.promise = this.emberGenerateFlexberryGroup("controller-test");
-        this.promise = this.emberGenerateFlexberryGroup("route-test");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-model-init");
         this.promise = this.emberGenerateFlexberryGroup("flexberry-serializer-init");
@@ -95,7 +93,7 @@ var ApplicationBlueprint = (function () {
             ui: undefined,
             analytics: undefined,
             project: undefined,
-            paths: ["node_modules/ember-flexberry/blueprints"]
+            paths: this.options.project.blueprintLookupPaths()
         });
     };
     ApplicationBlueprint.prototype.emberGenerateFlexberryGroup = function (blueprintName) {

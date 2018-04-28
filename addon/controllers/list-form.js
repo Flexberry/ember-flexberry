@@ -2,7 +2,7 @@
   @module ember-flexberry
  */
 
-import Ember from 'ember';
+import Controller, { inject } from '@ember/controller';
 import PaginatedControllerMixin from '../mixins/paginated-controller';
 import SortableControllerMixin from '../mixins/sortable-controller';
 import LimitedControllerMixin from '../mixins/limited-controller';
@@ -40,7 +40,7 @@ import FlexberryObjectlistviewHierarchicalControllerMixin from '../mixins/flexbe
   @uses SortableControllerMixin
   @uses LimitedControllerMixin
  */
-export default Ember.Controller.extend(PaginatedControllerMixin,
+export default Controller.extend(PaginatedControllerMixin,
   SortableControllerMixin,
   LimitedControllerMixin,
   FlexberryOlvToolbarMixin,
@@ -52,9 +52,9 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
 
     @property lookupController
     @type <a href="http://emberjs.com/api/classes/Ember.InjectedProperty.html">Ember.InjectedProperty</a>
-    @default Ember.inject.controller('colsconfig-dialog')
+    @default inject.controller('colsconfig-dialog')
   */
-  colsconfigController: Ember.inject.controller('colsconfig-dialog'),
+  colsconfigController: inject('colsconfig-dialog'),
 
   /**
     Object with developer user settings.
@@ -92,6 +92,7 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     @return {Object} Object containing name & properties of component, which will be used to render current table cell
     ({ componentName: 'my-component',  componentProperties: { ... } }).
   */
+  /* eslint-disable no-unused-vars */
   getCellComponent(attr, bindingPath, modelClass) {
     let cellComponent = {
       componentName: undefined,
@@ -100,6 +101,7 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
 
     return cellComponent;
   },
+  /* eslint-enable no-unused-vars */
 
   /**
     This method will be invoked before delete operation will be called.
@@ -163,6 +165,8 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     @method onSaveActionAlways.
     @param {Object} data Data about completed save operation.
   */
+  /* eslint-disable no-unused-vars */
   onDeleteActionAlways(data) {
   }
+  /* eslint-enable no-unused-vars */
 });

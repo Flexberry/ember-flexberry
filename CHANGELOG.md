@@ -22,6 +22,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Delete `semantic-ui-ember` dependency.
 * Update dependency on `semantic-ui` to version `2.3.1`.
 
+### Changed
+* `dynamic-actions` mixins: : mixins don't override `sendAction` method to add some custom logic, they add custom logic in method `sendDynamicAction`.
+* `required-actions` mixins: mixins don't override `sendAction` method to add some custom logic, they add custom logic in method `sendDynamicAction`.
+
+### Removed
+* `flexberry-datepicker` component. Please use `flexberry-simpledatetime` component instead or create an own component.
+
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.11.1-beta.1.

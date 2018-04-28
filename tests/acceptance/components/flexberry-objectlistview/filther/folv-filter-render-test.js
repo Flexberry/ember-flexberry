@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 
@@ -6,17 +7,17 @@ executeTest('check filter renders', (store, assert, app) => {
   assert.expect(34);
   let path = 'components-acceptance-tests/flexberry-objectlistview/folv-filter';
 
-  Ember.run(() => {
+  run(() => {
     visit(path);
     andThen(function() {
       assert.equal(currentPath(), path);
 
-      let $filterButtonDiv = Ember.$('.buttons.filter-active');
+      let $filterButtonDiv = $('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
       let $filterRemoveButton = $filterButtonDiv.children('.removeFilter-button');
       let $filterButtonIcon = $filterButton.children('i');
 
-      let $table = Ember.$('.object-list-view');
+      let $table = $('.object-list-view');
       let $tableTbody = $table.children('tbody');
       let $tableRows = $tableTbody.children('tr');
 
@@ -43,7 +44,7 @@ executeTest('check filter renders', (store, assert, app) => {
       // Check filtre row.
       assert.strictEqual($tableRows .length === 5, true, 'Filtre row aren\'t active');
 
-      let $objectListView = Ember.$('.object-list-view');
+      let $objectListView = $('.object-list-view');
 
       // Activate filtre row.
       $filterButton.click();
@@ -59,7 +60,7 @@ executeTest('check filter renders', (store, assert, app) => {
       filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter function.
         let refreshFunction =  function() {
-          let refreshButton = Ember.$('.refresh-button')[0];
+          let refreshButton = $('.refresh-button')[0];
           refreshButton.click();
         };
 
@@ -67,7 +68,7 @@ executeTest('check filter renders', (store, assert, app) => {
         let controller = app.__container__.lookup('controller:' + currentRouteName());
         let done1 = assert.async();
         refreshListByFunction(refreshFunction, controller).then(() => {
-          $filterButtonDiv = Ember.$('.buttons.filter-active');
+          $filterButtonDiv = $('.buttons.filter-active');
           $filterButton = $filterButtonDiv.children('.button.active');
           $filterButtonIcon = $filterButton.children('i');
           $filterRemoveButton = $filterButtonDiv.children('.removeFilter-button');

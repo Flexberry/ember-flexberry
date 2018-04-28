@@ -2,7 +2,7 @@
   @module ember-flexberry
 */
 
-import { Adapter } from 'ember-flexberry-data';
+import OdataAdapter from 'ember-flexberry-data/adapters/odata';
 
 /**
   Adapter for {{#crossLink "NewPlatformFlexberryServicesLockModel"}}{{/crossLink}}.
@@ -10,7 +10,7 @@ import { Adapter } from 'ember-flexberry-data';
   @class NewPlatformFlexberryServicesLockAdapter
   @extends OData
 */
-export default Adapter.Odata.extend({
+export default OdataAdapter.extend({
   /**
     In this model, primary key type `String`.
 

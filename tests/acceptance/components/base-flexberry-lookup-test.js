@@ -1,29 +1,33 @@
-import Ember from 'ember';
+import { get, set } from '@ember/object';
+import { run } from '@ember/runloop';
+import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import startApp from '../../helpers/start-app';
-import { Query } from 'ember-flexberry-data';
-const { StringPredicate } = Query;
+import { StringPredicate } from 'ember-flexberry-data/query/predicate';
+import Builder from 'ember-flexberry-data/query/builder';
+
+import $ from 'jquery';
 
 let openLookupDialog = function($lookup) {
-  return new Ember.RSVP.Promise((resolve, reject) => {
+  return new RSVP.Promise((resolve, reject) => {
     let checkIntervalId;
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
     let timeout = 4000;
 
-    let $lookupChooseButton = Ember.$('.ui-change', $lookup);
+    let $lookupChooseButton = $('.ui-change', $lookup);
 
     // Try to open lookup dialog.
-    Ember.run(() => {
+    run(() => {
       $lookupChooseButton.click();
     });
 
     // Wait for lookup dialog to be opened & data loaded.
-    Ember.run(() => {
+    run(() => {
       checkIntervalId = window.setInterval(() => {
-        let $lookupDialog = Ember.$('.flexberry-modal');
-        let $records = Ember.$('.content table.object-list-view tbody tr', $lookupDialog);
+        let $lookupDialog = $('.flexberry-modal');
+        let $records = $('.content table.object-list-view tbody tr', $lookupDialog);
         if ($records.length === 0) {
           // Data isn't loaded yet.
           return;
@@ -39,7 +43,7 @@ let openLookupDialog = function($lookup) {
     });
 
     // Set wait timeout.
-    Ember.run(() => {
+    run(() => {
       window.setTimeout(() => {
         if (checkIntervalSucceed) {
           return;
@@ -55,31 +59,31 @@ let openLookupDialog = function($lookup) {
 };
 
 let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
-  return new Ember.RSVP.Promise((resolve, reject) => {
+  return new RSVP.Promise((resolve, reject) => {
     let checkIntervalId;
     let checkIntervalSucceed = false;
     let checkInterval = 500;
 
     let timeout = 4000;
 
-    let $records = Ember.$('.content table.object-list-view tbody tr', $lookupDialog);
-    let $choosedRecord = Ember.$($records[recordIndex]);
+    let $records = $('.content table.object-list-view tbody tr', $lookupDialog);
+    let $choosedRecord = $($records[recordIndex]);
 
     // Try to choose record in the lookup dialog.
-    Ember.run(() => {
+    run(() => {
       // Inside object-list-views component click actions are available only if cell in row has been clicked.
       // Click on whole row wont take an effect.
-      let $choosedRecordFirstCell = Ember.$(Ember.$('td', $choosedRecord)[1]);
+      let $choosedRecordFirstCell = $($('td', $choosedRecord)[1]);
       $choosedRecordFirstCell.click();
 
       // Click on modal-dialog close icon.
       // Сrutch correcting irregular bug
-      let $modelDilogClose = Ember.$('.close.icon');
+      let $modelDilogClose = $('.close.icon');
       $modelDilogClose.click();
     });
 
     // Wait for lookup dialog to be closed.
-    Ember.run(() => {
+    run(() => {
       checkIntervalId = window.setInterval(() => {
         if (!$lookupDialog.hasClass('hidden')) {
           // Dialog is still opened.
@@ -96,7 +100,7 @@ let chooseRecordInLookupDialog = function($lookupDialog, recordIndex) {
     });
 
     // Set wait timeout.
-    Ember.run(() => {
+    run(() => {
       window.setTimeout(() => {
         if (checkIntervalSucceed) {
           return;
@@ -138,10 +142,10 @@ module('Acceptance | flexberry-lookup-base', {
 
   afterEach() {
     // Remove semantic ui modal dialog's dimmer.
-    Ember.$('body .ui.dimmer.modals').remove();
+    $('body .ui.dimmer.modals').remove();
 
     // Destroy application.
-    Ember.run(app, 'destroy');
+    run(app, 'destroy');
   },
 });
 
@@ -149,12 +153,12 @@ test('changes in component\'s value causes changes in related model\'s specified
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
   andThen(function() {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let model = Ember.get(controller, 'model');
-    let relationName = Ember.get(controller, 'relationName');
-    let displayAttributeName = Ember.get(controller, 'displayAttributeName');
+    let model = get(controller, 'model');
+    let relationName = get(controller, 'relationName');
+    let displayAttributeName = get(controller, 'displayAttributeName');
 
-    let $lookup = Ember.$('.flexberry-lookup');
-    let $lookupInput = Ember.$('input', $lookup);
+    let $lookup = $('.flexberry-lookup');
+    let $lookupInput = $('input', $lookup);
     assert.strictEqual($lookupInput.val(), '', 'lookup display value is empty by default');
 
     // Wait for lookup dialog to be opened, choose first record & check component's state.
@@ -192,17 +196,17 @@ test('changes in model\'s value causes changes in component\'s specified \'belon
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
   andThen(function() {
 
-    let $lookup = Ember.$('.flexberry-lookup');
-    let $lookupInput = Ember.$('input', $lookup);
+    let $lookup = $('.flexberry-lookup');
+    let $lookupInput = $('input', $lookup);
     assert.strictEqual($lookupInput.val() === '', true, 'lookup display value is empty by default');
 
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let model = Ember.get(controller, 'model');
+    let model = get(controller, 'model');
     let store = app.__container__.lookup('service:store');
     let suggestionType;
 
     // Create limit for query.
-    let query = new Query.Builder(store)
+    let query = new Builder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SettingLookupExampleView');
 
@@ -221,7 +225,7 @@ test('changes in model\'s value causes changes in component\'s specified \'belon
       let done = assert.async();
 
       setTimeout(function() {
-        $lookupInput = Ember.$('input', $lookup);
+        $lookupInput = $('input', $lookup);
         assert.strictEqual($lookupInput.val() === suggestionType.get('name'), true, 'lookup display value isn\'t empty');
         done();
       }, 100);
@@ -237,10 +241,10 @@ test('flexberry-lookup limit function test', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-limit-function');
 
-    let $limitFunctionButton = Ember.$('.limitFunction');
-    let $lookupChouseButton = Ember.$('.ui-change');
+    let $limitFunctionButton = $('.limitFunction');
+    let $lookupChouseButton = $('.ui-change');
 
-    Ember.run(() => {
+    run(() => {
       $limitFunctionButton.click();
       $lookupChouseButton.click();
     });
@@ -251,7 +255,7 @@ test('flexberry-lookup limit function test', function(assert) {
     let queryPredicate = new StringPredicate('name').contains(limitType);
 
     // Create limit for query.
-    let query = new Query.Builder(store)
+    let query = new Builder(store)
       .from('ember-flexberry-dummy-suggestion-type')
       .selectByProjection('SettingLookupExampleView')
       .where(queryPredicate);
@@ -264,9 +268,9 @@ test('flexberry-lookup limit function test', function(assert) {
 
       let done = assert.async();
 
-      Ember.run(() => {
+      run(() => {
         setTimeout(function() {
-          let $lookupSearch = Ember.$('.content table.object-list-view');
+          let $lookupSearch = $('.content table.object-list-view');
           let $lookupSearchThead = $lookupSearch.children('tbody');
           let $lookupSearchTr = $lookupSearchThead.children('tr');
           let $lookupRows = $lookupSearchTr.children('td');
@@ -303,7 +307,7 @@ test('flexberry-lookup actions test', function(assert) {
 
   // Remap remove action.
   let $onRemoveData;
-  Ember.set(controller, 'actions.externalRemoveAction', (actual) => {
+  set(controller, 'actions.externalRemoveAction', (actual) => {
     $onRemoveData = actual;
     assert.notEqual($onRemoveData, undefined, 'Component sends \'remove\' action after first click');
     assert.strictEqual($onRemoveData.relationName, 'type', 'Component sends \'remove\' with actual relationName');
@@ -311,7 +315,7 @@ test('flexberry-lookup actions test', function(assert) {
 
   // Remap chose action.
   let $onChooseData;
-  Ember.set(controller, 'actions.externalChooseAction', (actual) => {
+  set(controller, 'actions.externalChooseAction', (actual) => {
     $onChooseData = actual;
     assert.notEqual($onChooseData, undefined, 'Component sends \'choose\' action after first click');
     assert.strictEqual($onChooseData.componentName, 'flexberry-lookup',
@@ -322,10 +326,10 @@ test('flexberry-lookup actions test', function(assert) {
 
   visit('components-acceptance-tests/flexberry-lookup/settings-example-actions');
   andThen(function() {
-    let $lookupButtouChoose = Ember.$('.ui-change');
-    let $lookupButtouRemove = Ember.$('.ui-clear');
+    let $lookupButtouChoose = $('.ui-change');
+    let $lookupButtouRemove = $('.ui-clear');
 
-    Ember.run(() => {
+    run(() => {
       $lookupButtouChoose.click();
       $lookupButtouRemove.click();
     });
@@ -336,7 +340,7 @@ test('flexberry-lookup relation name test', function(assert) {
   visit('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
   andThen(function() {
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let relationName = Ember.get(controller, 'relationName');
+    let relationName = get(controller, 'relationName');
     assert.strictEqual(
       relationName,
       'Temp relation name',
@@ -352,18 +356,18 @@ test('flexberry-lookup projection test', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-projection');
 
-    let $lookupButtouChoose = Ember.$('.ui-change');
+    let $lookupButtouChoose = $('.ui-change');
 
     // Click choose button.
-    Ember.run(() => {
+    run(() => {
       $lookupButtouChoose.click();
     });
 
-    Ember.run(() => {
+    run(() => {
       var done = assert.async();
       setTimeout(function() {
 
-        let $lookupSearch = Ember.$('.content table.object-list-view');
+        let $lookupSearch = $('.content table.object-list-view');
         let $lookupSearchThead = $lookupSearch.children('thead');
         let $lookupSearchTr = $lookupSearchThead.children('tr');
         let $lookupHeaders = $lookupSearchTr.children('th');
@@ -387,16 +391,16 @@ test('visiting flexberry-lookup dropdown', function(assert) {
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-dropdown');
 
     // Retrieve component, it's inner <input>.
-    let $lookupSearch = Ember.$('.lookup-field');
-    let $lookupButtonChoose = Ember.$('.ui-change');
-    let $lookupButtonClear = Ember.$('.lookup-remove-button');
+    let $lookupSearch = $('.lookup-field');
+    let $lookupButtonChoose = $('.ui-change');
+    let $lookupButtonClear = $('.lookup-remove-button');
 
     assert.strictEqual($lookupSearch.length === 0, true, 'Component has n\'t flexberry-lookup');
     assert.strictEqual($lookupButtonChoose.length === 0, true, 'Component has n\'t button choose');
     assert.strictEqual($lookupButtonClear.length === 0, true, 'Component has n\'t button remove');
 
     // Retrieve component, it's inner <input>.
-    let $dropdown = Ember.$('.flexberry-dropdown.search.selection');
+    let $dropdown = $('.flexberry-dropdown.search.selection');
     let $dropdownSearch = $dropdown.children('.search');
     let $dropdownIcon = $dropdown.children('.dropdown.icon');
     let $dropdownMenu = $dropdown.children('.menu');
@@ -428,16 +432,16 @@ test('visiting flexberry-lookup autocomplete', function(assert) {
 
     assert.equal(currentURL(), 'components-acceptance-tests/flexberry-lookup/settings-example-autocomplete');
 
-    let $lookup = Ember.$('.flexberry-lookup');
+    let $lookup = $('.flexberry-lookup');
 
     assert.strictEqual($lookup.hasClass('ui'), true, 'Component\'s wrapper has \'ui\' css-class');
     assert.strictEqual($lookup.hasClass('search'), true, 'Component\'s wrapper has \'search\' css-class');
 
-    let $lookupField = Ember.$('.lookup-field');
+    let $lookupField = $('.lookup-field');
 
     assert.strictEqual($lookupField.hasClass('prompt'), true, 'Component\'s wrapper has \'prompt\' css-class');
 
-    let $result = Ember.$('.result');
+    let $result = $('.result');
 
     assert.strictEqual($result.length === 1, true, 'Component has inner class \'result\'');
   });

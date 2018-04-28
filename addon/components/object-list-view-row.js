@@ -2,7 +2,13 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import $ from 'jquery';
+import EmberObject, { get, set, computed, observer } from '@ember/object';
+import { guidFor, copy } from '@ember/object/internals'
+import { A } from '@ember/array';
+import { isBlank } from '@ember/utils';
+import { assert } from '@ember/debug';
+import { htmlSafe } from '@ember/string';
 import FlexberryBaseComponent from './flexberry-base-component';
 
 /**
@@ -50,7 +56,7 @@ export default FlexberryBaseComponent.extend({
     @default 0
     @private
   */
-  _currentLevel: Ember.computed({
+  _currentLevel: computed({
     get() {
       return this.get('_level');
     },
@@ -67,7 +73,7 @@ export default FlexberryBaseComponent.extend({
     @default Empty
     @private
   */
-  _records: Ember.computed(() => Ember.A()),
+  _records: computed(() => A()),
 
   /**
     Flag: indicates whether to show validation messages or not.
@@ -105,7 +111,7 @@ export default FlexberryBaseComponent.extend({
     @property record
     @type Object
   */
-  record: Ember.computed(() => ({
+  record: computed(() => ({
     key: undefined,
     data: undefined,
     config: undefined,
@@ -118,22 +124,22 @@ export default FlexberryBaseComponent.extend({
     @type Ember.NativeArray
     @default Empty
   */
-  records: Ember.computed({
+  records: computed({
     get() {
       return this.get('_records');
     },
     set(key, value) {
       value.then((records) => {
         records.forEach((record) => {
-          let config = Ember.copy(this.get('defaultRowConfig'));
+          let config = copy(this.get('defaultRowConfig'));
           let configurateRow = this.get('configurateRow');
           if (configurateRow) {
-            Ember.assert('configurateRow must be a function', typeof configurateRow === 'function');
+            assert('configurateRow must be a function', typeof configurateRow === 'function');
             configurateRow(config, record);
           }
 
-          let newRecord = Ember.Object.create({
-            key: Ember.guidFor(record),
+          let newRecord = EmberObject.create({
+            key: guidFor(record),
             data: record,
             config: config,
             doRenderData: true
@@ -153,7 +159,7 @@ export default FlexberryBaseComponent.extend({
     @type Boolean
     @default false
   */
-  hasRecords: Ember.computed('records.length', function() {
+  hasRecords: computed('records.length', function() {
     return this.get('records.length') > 0;
   }),
 
@@ -164,7 +170,7 @@ export default FlexberryBaseComponent.extend({
     @type String
     @default ''
   */
-  hierarchicalIndent: Ember.computed({
+  hierarchicalIndent: computed({
     get() {
       let result = (this.get('_currentLevel')) * this.get('_hierarchicalIndent') + this.get('defaultLeftPadding');
       if (this.get('_currentLevel') === 0) {
@@ -182,23 +188,23 @@ export default FlexberryBaseComponent.extend({
     },
   }),
 
-  hierarchicalIndentStyle: Ember.computed('_hierarchicalIndent', 'defaultLeftPadding', function() {
+  hierarchicalIndentStyle: computed('_hierarchicalIndent', 'defaultLeftPadding', function() {
     let defaultLeftPadding = this.get('defaultLeftPadding');
     let hierarchicalIndent = this.get('hierarchicalIndent');
-    return Ember.String.htmlSafe(`padding-left:${hierarchicalIndent}px !important; padding-right:${defaultLeftPadding}px !important;`);
+    return htmlSafe(`padding-left:${hierarchicalIndent}px !important; padding-right:${defaultLeftPadding}px !important;`);
   }),
 
-  defaultPaddingStyle: Ember.computed('defaultLeftPadding', function() {
+  defaultPaddingStyle: computed('defaultLeftPadding', function() {
     let defaultLeftPadding = this.get('defaultLeftPadding');
-    return Ember.String.htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
+    return htmlSafe(`padding-left:${defaultLeftPadding}px !important; padding-right:${defaultLeftPadding}px !important;`);
   }),
 
   /**
     Observe inExpandMode changes.
   */
-  inExpandModeObserver: Ember.on('init', Ember.observer('inExpandMode', function() {
+  inExpandModeObserver: observer('inExpandMode', function() {
     this.set('_expanded', this.get('inExpandMode'));
-  })),
+  }),
 
   /**
     Tag name for the view's outer element. [More info](http://emberjs.com/api/classes/Ember.Component.html#property_tagName).
@@ -271,17 +277,22 @@ export default FlexberryBaseComponent.extend({
       @param {Object} e Click event object.
     */
     onRowClick(record, params, e) {
-      if (!Ember.isBlank(e)) {
-        Ember.set(params, 'originalEvent', Ember.$.event.fix(e));
+      if (!isBlank(e)) {
+        set(params, 'originalEvent', $.event.fix(e));
       }
 
       // If user clicked on hierarchy expand button on lookup form we should not process row clicking.
       let classOfHierarchyExpandButton = 'hierarchy-expand';
-      if (Ember.isBlank(e) || !Ember.$(Ember.get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
+      if (isBlank(e) || !$(get(params, 'originalEvent.target')).hasClass(classOfHierarchyExpandButton))
       {
-        this.sendAction('rowClick', record, params);
+        this.get('rowClick')(record, params);
       }
     }
+  },
+
+  init() {
+    this._super(...arguments);
+    this.get('inExpandModeObserver').apply(this);
   },
 
   /**
@@ -296,7 +307,7 @@ export default FlexberryBaseComponent.extend({
       if (id && this.get('inHierarchicalMode')) {
         let currentLevel = this.get('_currentLevel');
         let hierarchyLoadedLevel = this.get('hierarchyLoadedLevel');
-        this.sendAction('loadRecords', id, this, 'records', currentLevel > hierarchyLoadedLevel);
+        this.get('loadRecords')(id, this, 'records', currentLevel > hierarchyLoadedLevel);
         this.set('recordsLoaded', true);
         if (currentLevel > hierarchyLoadedLevel) {
           this.set('hierarchyLoadedLevel', currentLevel);

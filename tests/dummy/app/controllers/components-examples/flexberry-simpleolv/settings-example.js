@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
+import { A } from '@ember/array';
+import { htmlSafe } from '@ember/string';
 import ListFormController from 'ember-flexberry/controllers/list-form';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -33,7 +35,7 @@ export default ListFormController.extend({
     @method _placeholderChanged
     @private
   **/
-  _placeholderChanged: Ember.observer('placeholder', function() {
+  _placeholderChanged: observer('placeholder', function() {
     if (this.get('placeholder') === this.get('i18n').t('components.flexberry-objectlistview.placeholder').toString()) {
       this.set('placeholder', t('components.flexberry-objectlistview.placeholder'));
     }
@@ -207,7 +209,7 @@ export default ListFormController.extend({
     @protected
     @readOnly
   */
-  records: [],
+  records: undefined,
 
   /**
     Template text for 'flexberry-simpleolv' component.
@@ -215,52 +217,58 @@ export default ListFormController.extend({
     @property componentTemplateText
     @type String
    */
-  componentTemplateText: new Ember.Handlebars.SafeString(
-    '{{flexberry-simpleolv<br>' +
-    '  componentName=\"SuggestionsObjectListView\"<br>' +
-    '  colsConfigButton=colsConfigButton<br>' +
-    '  exportExcelButton=exportExcelButton<br>' +
-    '  content=model<br>' +
-    '  modelName=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '  editFormRoute=\"ember-flexberry-dummy-suggestion\"<br>' +
-    '  modelProjection=modelProjection<br>' +
-    '  placeholder=placeholder<br>' +
-    '  readonly=readonly<br>' +
-    '  tableStriped=tableStriped<br>' +
-    '  allowColumnResize=allowColumnResize<br>' +
-    '  minAutoColumnWidth=minAutoColumnWidth<br>' +
-    '  columnsWidthAutoresize=columnsWidthAutoresize<br>' +
-    '  createNewButton=createNewButton<br>' +
-    '  deleteButton=deleteButton<br>' +
-    '  enableFilters=enableFilters<br>' +
-    '  filters=filters<br>' +
-    '  applyFilters=(action "applyFilters")<br>' +
-    '  resetFilters=(action "resetFilters")<br>' +
-    '  refreshButton=refreshButton<br>' +
-    '  filterButton=filterButton<br>' +
-    '  showCheckBoxInRow=showCheckBoxInRow<br>' +
-    '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
-    '  showEditButtonInRow=showEditButtonInRow<br>' +
-    '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
-    '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
-    '  rowClickable=rowClickable<br>' +
-    '  orderable=orderable<br>' +
-    '  filterByAnyMatch=(action \"filterByAnyMatch\"")<br>' +
-    '  filterText=filter<br>' +
-    '  filterByAnyWord=filterByAnyWord<br>' +
-    '  filterByAllWords=filterByAllWords<br>' +
-    '  sorting=computedSorting<br>' +
-    '  sortByColumn=(action \"sortByColumn\")<br>' +
-    '  addColumnToSorting=(action \"addColumnToSorting\")<br>' +
-    '  pages=pages<br>' +
-    '  perPageValue=perPageValue<br>' +
-    '  perPageValues=perPageValues<br>' +
-    '  hasPreviousPage=hasPreviousPage<br>' +
-    '  hasNextPage=hasNextPage<br>' +
-    '  previousPage=(action \"previousPage\")<br>' +
-    '  gotoPage=(action \"gotoPage\")<br>' +
-    '  nextPage=(action \"nextPage\")<br>' +
-    '}}'),
+  componentTemplateText: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('records', []);
+    this.set('componentTemplateText', new htmlSafe(
+      '{{flexberry-simpleolv<br>' +
+      '  componentName="SuggestionsObjectListView"<br>' +
+      '  colsConfigButton=colsConfigButton<br>' +
+      '  exportExcelButton=exportExcelButton<br>' +
+      '  content=model<br>' +
+      '  modelName="ember-flexberry-dummy-suggestion"<br>' +
+      '  editFormRoute="ember-flexberry-dummy-suggestion"<br>' +
+      '  modelProjection=modelProjection<br>' +
+      '  placeholder=placeholder<br>' +
+      '  readonly=readonly<br>' +
+      '  tableStriped=tableStriped<br>' +
+      '  allowColumnResize=allowColumnResize<br>' +
+      '  minAutoColumnWidth=minAutoColumnWidth<br>' +
+      '  columnsWidthAutoresize=columnsWidthAutoresize<br>' +
+      '  createNewButton=createNewButton<br>' +
+      '  deleteButton=deleteButton<br>' +
+      '  enableFilters=enableFilters<br>' +
+      '  filters=filters<br>' +
+      '  applyFilters=(action "applyFilters")<br>' +
+      '  resetFilters=(action "resetFilters")<br>' +
+      '  refreshButton=refreshButton<br>' +
+      '  filterButton=filterButton<br>' +
+      '  showCheckBoxInRow=showCheckBoxInRow<br>' +
+      '  showDeleteButtonInRow=showDeleteButtonInRow<br>' +
+      '  showEditButtonInRow=showEditButtonInRow<br>' +
+      '  showEditMenuItemInRow=showEditMenuItemInRow<br>' +
+      '  showDeleteMenuItemInRow=showDeleteMenuItemInRow<br>' +
+      '  rowClickable=rowClickable<br>' +
+      '  orderable=orderable<br>' +
+      '  filterByAnyMatch=(action "filterByAnyMatch")<br>' +
+      '  filterText=filter<br>' +
+      '  filterByAnyWord=filterByAnyWord<br>' +
+      '  filterByAllWords=filterByAllWords<br>' +
+      '  sorting=computedSorting<br>' +
+      '  sortByColumn=(action "sortByColumn")<br>' +
+      '  addColumnToSorting=(action "addColumnToSorting")<br>' +
+      '  pages=pages<br>' +
+      '  perPageValue=perPageValue<br>' +
+      '  perPageValues=perPageValues<br>' +
+      '  hasPreviousPage=hasPreviousPage<br>' +
+      '  hasNextPage=hasNextPage<br>' +
+      '  previousPage=(action "previousPage")<br>' +
+      '  gotoPage=(action "gotoPage")<br>' +
+      '  nextPage=(action "nextPage")<br>' +
+      '}}'));
+  },
 
   /**
     Component settings metadata.
@@ -268,8 +276,8 @@ export default ListFormController.extend({
     @property componentSettingsMetadata
     @type Object[]
    */
-  componentSettingsMetadata: Ember.computed('i18n.locale', 'model.content', function() {
-    let componentSettingsMetadata = Ember.A();
+  componentSettingsMetadata: computed('i18n.locale', 'model.content', function() {
+    let componentSettingsMetadata = A();
 
     componentSettingsMetadata.pushObject({
       settingName: 'componentName',
@@ -445,7 +453,7 @@ export default ListFormController.extend({
     return componentSettingsMetadata;
   }),
 
-  _enableFilters: Ember.observer('enableFilters', function() {
+  _enableFilters: observer('enableFilters', function() {
     if (this.get('enableFilters')) {
       this.set('refreshButton', true);
     }

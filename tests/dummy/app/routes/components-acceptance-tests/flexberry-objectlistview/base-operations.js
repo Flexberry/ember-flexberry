@@ -1,5 +1,5 @@
 import ListFormRoute from 'ember-flexberry/routes/list-form';
-
+import { computed } from '@ember/object';
 export default ListFormRoute.extend({
   /**
     Name of model projection to be used as record's properties limitation.
@@ -30,13 +30,14 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: {
+  developerUserSettings: computed(function() {
+    return {
     FOLVSettingExampleObjectListView: {
       'DEFAULT': {
         'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': true, 'width': 120 }, { 'propName': 'OlvRowMenu', 'fixed': true, 'width': 68 }]
       }
     }
-  },
+  }}),
 
   /**
     Name of model to be used as list's records types.
@@ -54,8 +55,10 @@ export default ListFormRoute.extend({
     @method onModelLoadingAlways.
     @param {Object} data Data about completed load operation.
    */
+  /* eslint-disable no-unused-vars */
   onModelLoadingAlways(data) {
     let loadCount = this.get('controller.loadCount') + 1;
     this.set('controller.loadCount', loadCount);
   },
+  /* eslint-enable no-unused-vars */
 });

@@ -1,3 +1,4 @@
+import TestAdapter from '@ember/test/adapter';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import DS from 'ember-data';
@@ -38,11 +39,14 @@ test('it pointing property should pass to classes', function (assert) {
 });
 
 test('it should throw exception on unknown pointing property', function (assert) {
+  let exceptionHandler = TestAdapter.exception;
+  TestAdapter.exception = (error) => {
+    throw error;
+  };
 
-  assert.throws(() => {
-    this.render(hbs`{{flexberry-validationmessage pointing='some unknown pointing'}}`);
-  });
+  assert.throws(() => { this.render(hbs`{{flexberry-validationmessage pointing='some unknown pointing'}}`); });
 
+  TestAdapter.exception = exceptionHandler;
 });
 
 test('it should change visibility based on array error value', function (assert) {

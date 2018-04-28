@@ -2,7 +2,9 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { typeOf } from '@ember/utils';
+import { assert } from '@ember/debug';
 import { setRecord } from '../utils/extended-set';
 
 /**
@@ -12,7 +14,7 @@ import { setRecord } from '../utils/extended-set';
   @class FlexberryDdauSliderActionsHandlerMixin
   @extends <a href="http://emberjs.com/api/classes/Ember.Mixin.html">Ember.Mixin</a>
 */
-export default Ember.Mixin.create({
+export default Mixin.create({
   actions: {
     /**
       Handles {{#crossLink "FlexberryDdauSliderComponent/sendingActions.change:method"}}flexberry-ddau-slider component's 'change' action{{/crossLink}}.
@@ -36,10 +38,10 @@ export default Ember.Mixin.create({
 
       controllers/my-form.js
       ```javascript
-        import Ember from 'ember';
+        import Controller from '@ember/controller';
         import FlexberryDdauSliderActionsHandlerMixin from 'ember-flexberry/mixins/flexberry-ddau-slider-actions-handler';
 
-        export default Ember.Controller.extend(FlexberryDdauSliderActionsHandlerMixin, {
+        export default Controller.extend(FlexberryDdauSliderActionsHandlerMixin, {
         });
       ```
     */
@@ -49,8 +51,8 @@ export default Ember.Mixin.create({
       let mutablePropertyPath = args[0];
       let e = args[args.length - 1];
 
-      let mutablePropertyPathType = Ember.typeOf(mutablePropertyPath);
-      Ember.assert(
+      let mutablePropertyPathType = typeOf(mutablePropertyPath);
+      assert(
         `Wrong type of \`mutablePropertyPath\` argument: actual type is \`${mutablePropertyPathType}\`, ` +
         `but \`string\` is expected`,
         mutablePropertyPathType === 'string');

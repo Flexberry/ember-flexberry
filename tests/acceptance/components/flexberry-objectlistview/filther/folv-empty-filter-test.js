@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { A } from '@ember/array';
+import $ from 'jquery';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
-import { Query } from 'ember-flexberry-data';
+import Builder from 'ember-flexberry-data/query/builder';
+import FilterOperator from 'ember-flexberry-data/query/filter-operator';
 
 executeTest('check empty filter', (store, assert, app) => {
   assert.expect(3);
@@ -9,14 +12,14 @@ executeTest('check empty filter', (store, assert, app) => {
   let modelName = 'ember-flexberry-dummy-suggestion';
   let filtreInsertOperation = 'empty';
   let filtreInsertParametr = '';
-  Ember.run(() => {
-    let builder = new Query.Builder(store).from(modelName).where('address', Query.FilterOperator.Eq, '');
+  run(() => {
+    let builder = new Builder(store).from(modelName).where('address', FilterOperator.Eq, '');
     store.query(modelName, builder.build()).then((result) => {
       let arr = result.toArray();
 
       // Add an object with an empty address, if it is not present.
       if (arr.length === 0) {
-        let newRecords = Ember.A();
+        let newRecords = A();
         let user = newRecords.pushObject(store.createRecord('ember-flexberry-dummy-application-user', { name: 'Random name fot empty filther test',
         eMail: 'Random eMail fot empty filther test' }));
         let type = newRecords.pushObject(store.createRecord('ember-flexberry-dummy-suggestion-type', { name: 'Random name fot empty filther test' }));
@@ -27,8 +30,8 @@ executeTest('check empty filter', (store, assert, app) => {
 
         let done = assert.async();
         window.setTimeout(() => {
-          Ember.run(() => {
-            newRecords = Ember.A();
+          run(() => {
+            newRecords = A();
             newRecords.pushObject(store.createRecord(modelName, { type: type, author: user, editor1: user }));
             newRecords.forEach(function(item) {
               item.save();
@@ -42,9 +45,9 @@ executeTest('check empty filter', (store, assert, app) => {
     visit(path + '?perPage=500');
     andThen(function() {
       assert.equal(currentPath(), path);
-      let $filterButtonDiv = Ember.$('.buttons.filter-active');
+      let $filterButtonDiv = $('.buttons.filter-active');
       let $filterButton = $filterButtonDiv.children('button');
-      let $objectListView = Ember.$('.object-list-view');
+      let $objectListView = $('.object-list-view');
 
       // Activate filtre row.
       $filterButton.click();
@@ -52,7 +55,7 @@ executeTest('check empty filter', (store, assert, app) => {
       filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter function.
         let refreshFunction =  function() {
-          let refreshButton = Ember.$('.refresh-button')[0];
+          let refreshButton = $('.refresh-button')[0];
           refreshButton.click();
         };
 

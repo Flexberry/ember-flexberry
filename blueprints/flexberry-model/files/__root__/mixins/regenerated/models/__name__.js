@@ -1,7 +1,11 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { on } from '@ember/object/evented';
+import { once } from '@ember/runloop';
+import { observer } from '@ember/object';
+import $ from 'jquery';
 import DS from 'ember-data';
-<%if(projections) {%>import { Projection } from 'ember-flexberry-data';<%}%>
-export let Model = Ember.Mixin.create({
+<%if(projections) {%>import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';<%}%>
+export let Model = Mixin.create({
 <%= model %>
 });<%if(parentModelName) {%>
 export let defineBaseModel = function (modelClass) {

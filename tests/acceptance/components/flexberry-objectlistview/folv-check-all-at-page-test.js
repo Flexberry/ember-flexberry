@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
+import { get } from '@ember/object';
 import { executeTest } from './execute-folv-test';
-import { loadingList, checkSortingList, loadingLocales } from './folv-tests-functions';
+import { loadingList, checkSortingList, loadingLocales, getOrderByClause } from './folv-tests-functions';
 
 var olvContainerClass = '.object-list-view-container';
 var trTableClass = 'table.object-list-view tbody tr';
@@ -15,17 +17,24 @@ executeTest('check select all at page', (store, assert, app) => {
     // Check page path.
     assert.equal(currentPath(), path);
     let controller = app.__container__.lookup('controller:' + currentRouteName());
-    let projectionName = Ember.get(controller, 'modelProjection');
+    let projectionName = get(controller, 'modelProjection');
 
-    let $olv = Ember.$('.object-list-view ');
-    let $thead = Ember.$('th.dt-head-left', $olv)[0];
+    let orderByClause = null;
 
-    Ember.run(() => {
+    let $olv = $('.object-list-view ');
+    let $thead = $('th.dt-head-left', $olv)[0];
+
+    let currentSorting = controller.get('computedSorting');
+    if (!$.isEmptyObject(currentSorting)) {
+      orderByClause = getOrderByClause(currentSorting);
+    }
+
+    run(() => {
       let done = assert.async();
 
       // Check sortihg in the first column. Sorting is not append.
       loadingLocales('ru', app).then(() => {
-        checkSortingList(store, projectionName, $olv, null).then((isTrue) => {
+        checkSortingList(store, projectionName, $olv, orderByClause).then((isTrue) => {
           assert.ok(isTrue, 'sorting is not applied');
 
           // Check sortihg icon in the first column. Sorting icon is not added.
@@ -35,17 +44,17 @@ executeTest('check select all at page', (store, assert, app) => {
 
             assert.ok($list);
 
-            let $checkAllAtPageButton = Ember.$('.check-all-at-page-button');
+            let $checkAllAtPageButton = $('.check-all-at-page-button');
             $checkAllAtPageButton.click();
-            let $deleteButton = Ember.$('.delete-button');
-            let $checkCheckBox = Ember.$('.flexberry-checkbox.checked');
+            let $deleteButton = $('.delete-button');
+            let $checkCheckBox = $('.flexberry-checkbox.checked');
 
             // Check afther select all at page.
             assert.equal($checkCheckBox.length, 5, 'all checkBox in row are select');
             assert.equal($deleteButton.hasClass('disabled'), false, 'delete are available');
 
             $checkAllAtPageButton.click();
-            $checkCheckBox = Ember.$('.flexberry-checkbox.checked');
+            $checkCheckBox = $('.flexberry-checkbox.checked');
 
             // Check afther unselect all at page.
             assert.equal($checkCheckBox.length, 0, 'all checkBox in row are unselect');

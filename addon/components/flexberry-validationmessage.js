@@ -2,7 +2,8 @@
   @module ember-flexberry
 */
 
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 /**
   Component for showing error message from model validators.
@@ -10,7 +11,16 @@ import Ember from 'ember';
   @class FlexberryValidationmessage
   @extends Ember.Component
 */
-export default Ember.Component.extend({
+export default Component.extend({
+  /**
+    A list of properties of the view to apply as class names. If the property is a string value, the value of that string will be applied as a class name.
+
+    @property classNameBindings
+    @type Array
+    @default ['color', 'pointing']
+  */
+  classNameBindings: ['color', 'pointing'],
+
   /**
     Default classes for component wrapper.
   */
@@ -54,7 +64,7 @@ export default Ember.Component.extend({
     @type Boolean
     @readOnly
   */
-  isVisible: Ember.computed('error', function() {
+  isVisible: computed('error', function() {
     let error = this.get('error');
     return !!(Array.isArray(error) ? error.length : error);
   }),
@@ -65,8 +75,6 @@ export default Ember.Component.extend({
   */
   init() {
     this._super(...arguments);
-
-    this.get('classNames').push(this.get('color'));
 
     let pointing = this.get('pointing');
     if (pointing) {
@@ -84,8 +92,6 @@ export default Ember.Component.extend({
         throw new Error(
           `Wrong value of flexberry-validationmessage pointing property, actual is '${pointing}', possible values are: ${messagePointings}`);
       }
-
-      this.get('classNames').push(pointing);
     }
   }
 });

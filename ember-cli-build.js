@@ -1,14 +1,9 @@
-/*jshint node:true*/
-/* global require, module */
-var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+'use strict';
+
+const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  var app = new EmberAddon(defaults, {
-    jscsOptions: {
-      enabled: true,
-      esnext: true,
-      configPath: './.jscsrc'
-    },
+  let app = new EmberAddon(defaults, {
     lessOptions: {
       paths: [
         'bower_components/semantic-ui'

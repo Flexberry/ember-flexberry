@@ -1,8 +1,11 @@
 /**
   @module ember-flexberry
 */
-
-import Ember from 'ember';
+import $ from 'jquery';
+import { computed } from '@ember/object';
+import { isArray } from '@ember/array';
+import { isEmpty } from '@ember/utils';
+import { run } from '@ember/runloop';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -115,13 +118,13 @@ export default FlexberryBaseComponent.extend({
     @property items
     @type Object
   */
-  items: Ember.computed('_items', {
+  items: computed('_items', {
     get() {
       return this.get('_items');
     },
     set(key, value) {
       let items = value;
-      if (Ember.isArray(value)) {
+      if (isArray(value)) {
         items = {};
         for (let i = 0; i < value.length; i++) {
           items[i] = value[i];
@@ -138,7 +141,7 @@ export default FlexberryBaseComponent.extend({
     @property value
     @type Any
   */
-  value: Ember.computed('_value', 'items', {
+  value: computed('_value', 'items', {
     get() {
       let valueKey = this.get('_value');
       return valueKey ? this.get(`items.${valueKey}`) : undefined;
@@ -179,7 +182,7 @@ export default FlexberryBaseComponent.extend({
     @type Any
     @readOnly
   */
-  text: Ember.computed.or('value', 'placeholder').readOnly(),
+  text: computed.or('value', 'placeholder').readOnly(),
 
   /**
     See [EmberJS API](https://emberjs.com/api/).
@@ -189,13 +192,15 @@ export default FlexberryBaseComponent.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    let settings = Ember.$.extend({
+    let settings = $.extend({
       action: 'select',
       onChange: (value) => {
-        Ember.run(() => {
+        run(() => {
           if (this.get('_value') !== value) {
             this.set('_value', value);
-            this.sendAction('onChange', this.get('value'));
+            if (!isEmpty(this.get('onChange'))) {
+              this.get('onChange')(this.get('value'));
+            }
           }
         });
       },

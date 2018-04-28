@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 
 /**
   @class ValidationDataObject
   @extends <a href="http://emberjs.com/api/classes/Ember.Object.html">Ember.Object</a>
   @public
 */
-export default Ember.Object.extend({
+export default EmberObject.extend({
   /**
     noChanges property.
 
@@ -31,7 +31,12 @@ export default Ember.Object.extend({
     @type Ember.Object
     @default {}
   */
-  errors: {},
+  errors: undefined,
+
+  init() {
+    this._super(...arguments);
+    this.set('errors', {});
+  },
 
   /**
     addError method.

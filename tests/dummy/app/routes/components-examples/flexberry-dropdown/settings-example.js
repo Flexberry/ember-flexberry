@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   /**
     Returns model related to current route.
 
     @method model
    */
+  /* eslint-disable no-unused-vars */
   model(params) {
     var store = this.get('store');
 
@@ -13,4 +14,5 @@ export default Ember.Route.extend({
 
     return base;
   }
+  /* eslint-enable no-unused-vars */
 });

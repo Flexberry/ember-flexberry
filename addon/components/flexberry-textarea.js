@@ -2,6 +2,7 @@
   @module ember-flexberry
 */
 
+import { computed } from '@ember/object';
 import FlexberryBaseComponent from './flexberry-base-component';
 import { translationMacro as t } from 'ember-i18n';
 
@@ -20,6 +21,29 @@ import { translationMacro as t } from 'ember-i18n';
   @extends FlexberryBaseComponent
 */
 export default FlexberryBaseComponent.extend({
+  /**
+    Keeps `readonly` current value.
+
+    @property _readonly
+    @type Boolean
+  */
+  _readonly: undefined,
+
+  /**
+    Standard HTML attribute.
+
+    @property readonly
+    @type Boolean
+  */
+  readonly: computed('_readonly', {
+    get() {
+      return this.get('_readonly') === true ? true : undefined;
+    },
+    set(key, value) {
+      return this.set('_readonly', value === true ? true : undefined);
+    },
+  }),
+
   /**
     Input value.
 

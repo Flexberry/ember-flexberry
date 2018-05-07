@@ -339,14 +339,20 @@ export default FlexberryBaseComponent.extend(
     'showCheckBoxInRow',
     'showDeleteButtonInRow',
     'showEditButtonInRow',
+    'customButtonsInRow',
     'modelProjection',
     function() {
       if (this.get('modelProjection')) {
-        return this.get('showAsteriskInRow') || this.get('showCheckBoxInRow') || this.get('showDeleteButtonInRow') || this.get('showEditButtonInRow');
+        return this.get('showAsteriskInRow') ||
+          this.get('showCheckBoxInRow') ||
+          this.get('showDeleteButtonInRow') ||
+          this.get('showEditButtonInRow') ||
+          !!this.get('customButtonsInRow');
       } else {
         return false;
       }
-    }),
+    }
+  ).readOnly(),
 
   /**
     Flag indicates whether to show dropdown menu with edit menu item, in last column of every row.
@@ -821,6 +827,16 @@ export default FlexberryBaseComponent.extend(
   componentName: '',
 
   actions: {
+    /**
+      Just redirects action up to {{#crossLink "FlexberryObjectlistviewComponent"}}`flexberry-objectlistview`{{/crossLink}} component.
+
+      @method actions.customButtonInRowAction
+      @param {String} actionName The name of action.
+      @param {DS.Model} model Model in row.
+    */
+    customButtonInRowAction(actionName, model) {
+      this.sendAction('customButtonInRowAction', actionName, model);
+    },
 
     /**
       This action is called when user click on row.
@@ -1009,6 +1025,7 @@ export default FlexberryBaseComponent.extend(
     */
     checkAll(e) {
       let contentWithKeys = this.get('contentWithKeys');
+      let selectedRecords = this.get('selectedRecords');
 
       let checked = !this.get('allSelect');
       Ember.set(this, 'allSelect', checked);
@@ -1027,12 +1044,14 @@ export default FlexberryBaseComponent.extend(
           }
         }
 
+        selectedRecords.removeObject(recordWithKey.data);
         recordWithKey.set('selected', checked);
         recordWithKey.set('rowConfig.canBeSelected', !checked);
       }
 
       let componentName = this.get('componentName');
       this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
+      this.selectedRowsChanged();
     },
 
     /**

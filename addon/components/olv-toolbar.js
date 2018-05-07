@@ -167,6 +167,15 @@ export default FlexberryBaseComponent.extend({
   */
   listNamedUserSettings: undefined,
 
+  /**
+    Current store. Used for loading data for autocomplete and for dropdown.
+
+    @property store
+    @type Projection.OnlineStore
+    @readOnly
+  */
+  store: Ember.inject.service('store'),
+
   _listNamedUserSettings: Ember.observer('listNamedUserSettings', function() {
     let listNamedUserSettings = this.get('listNamedUserSettings');
     for (let namedSetting in listNamedUserSettings) {
@@ -431,6 +440,21 @@ export default FlexberryBaseComponent.extend({
       if (!this.get('allSelect'))
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      } else {
+        let modelName = this.get('modelController.modelProjection.modelName');
+
+        let filterQuery = {
+          predicate: this.get('currentController.filtersPredicate'),
+          modelName: modelName
+        };
+
+        let promise = this.get('store').deleteAllRecords(modelName, filterQuery);
+
+        promise.then(()=> {
+          this.get('objectlistviewEventsService').refreshListTrigger(componentName);
+        }).catch((errorData) => {
+          Ember.assert(errorData);
+        });
       }
     },
 

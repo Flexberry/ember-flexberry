@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import { executeTest} from './execute-folv-test';
+import { executeTest } from './execute-folv-test';
 
 executeTest('user button test', (store, assert, app) => {
-  assert.expect(3);
+  assert.expect(5);
   let path = 'components-examples/flexberry-objectlistview/toolbar-custom-buttons-example';
 
   visit(path);
@@ -19,5 +19,11 @@ executeTest('user button test', (store, assert, app) => {
     // Second click.
     $testBudtton.click();
     assert.equal(controller.clickCounter, 3, 'Test button was pressed');
+
+    assert.notOk(controller.get('modelFromClickedRow'));
+    click('.ui.button > .bug.icon:first');
+    andThen(() => {
+      assert.equal(controller.get('modelFromClickedRow.id'), controller.get('model.firstObject.id'));
+    });
   });
 });

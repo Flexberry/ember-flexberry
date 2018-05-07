@@ -895,8 +895,6 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _uploadDataDidChange: Ember.observer('_uploadData', function() {
-    this.set('_previewImageAsBase64String', null);
-
     Ember.run(() => {
       let file = this.get('_selectedFile');
       if (!Ember.isNone(file)) {

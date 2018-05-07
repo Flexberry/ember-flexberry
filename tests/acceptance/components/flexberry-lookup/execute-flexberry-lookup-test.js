@@ -9,6 +9,7 @@ export function executeTest(testName, callback) {
 
   module('Acceptance | flexberry-lookup-base |' + testName, {
     beforeEach() {
+
       // Start application.
       app = startApp();
 

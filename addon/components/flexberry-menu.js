@@ -144,7 +144,7 @@ export default FlexberryBaseComponent.extend({
     this.set('_onClickHandler', onClickHandler);
 
     // Attach menu click event handler.
-    this.$().on('click', onClickHandler);
+    this.$().on('touchstart click', onClickHandler);
     this.$().dropdown();
     this._getActionForMenu(this.get('collapseMenuOnItemClick'));
   },

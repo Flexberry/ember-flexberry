@@ -11,10 +11,6 @@ var Model = EmberFlexberryDataModel.extend({
   }),
   order: DS.attr('number'),
   file: DS.attr('file'),
-
-  // Model validation rules.
-  validations: {
-  }
 });
 
 // Edit form projection.

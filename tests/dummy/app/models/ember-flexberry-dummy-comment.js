@@ -1,8 +1,16 @@
 import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = EmberFlexberryDataModel.extend({
+const Validations = buildValidations({
+  author: validator('presence', {
+    presence: true,
+    message: 'Author is required',
+  }),
+});
+
+let Model = EmberFlexberryDataModel.extend(Validations, {
   suggestion: DS.belongsTo('ember-flexberry-dummy-suggestion', {
     inverse: 'comments',
     async: false
@@ -23,15 +31,6 @@ var Model = EmberFlexberryDataModel.extend({
     inverse: 'comment',
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    author: {
-      presence: {
-        message: 'Author is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

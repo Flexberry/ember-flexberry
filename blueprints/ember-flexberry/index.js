@@ -236,8 +236,9 @@ module.exports = {
         packages: [
           { name: 'ember-browserify', target: '1.1.9' },
           { name: 'ember-cli-less', target: '1.5.4' },
+          { name: 'ember-cp-validations', target: '~3.5.2' },
           { name: 'ember-link-action', target: '0.0.36' },
-          { name: 'ember-moment', target: '7.6.0' },
+          { name: 'ember-moment', target: '7.7.0' },
         ]
       });
     }).then(function () {
@@ -251,7 +252,7 @@ module.exports = {
     }).then(function () {
       return _this.addAddonsToProject({
         packages: [
-          { name: 'ember-data', target: '3.0.2' },
+          { name: 'ember-data', target: '~3.1.1' },
           { name: 'ember-block-slots', target: '1.1.11' }
         ]
       });

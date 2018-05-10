@@ -1,64 +1,32 @@
-import TestAdapter from '@ember/test/adapter';
 import { moduleForComponent, test } from 'ember-qunit';
+import { A } from '@ember/array';
+import { run } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
-import Errors from 'ember-validations/errors';
 
-moduleForComponent('flexberry-validationsummary', 'Integration | Component | flexberry validationsummary', {
+moduleForComponent('flexberry-validationsummary', 'Integration | Component | flexberry-validationsummary', {
   integration: true
 });
 
-test('it renders', function(assert) {
-  this.set('errors', Errors.create());
+test('it renders and works', function(assert) {
+  this.render(hbs`{{flexberry-validationsummary errors=errors color=color header=header}}`);
 
-  this.render(hbs`{{flexberry-validationsummary errors=errors}}`);
+  let errors = this.set('errors', A());
+  assert.ok(this.$('.ui.message').is(':hidden'), 'Component is hidden if no errors.');
 
-  assert.equal(this.$().text().trim(), '');
-});
+  run(() => {
+    errors.pushObject('Validation error.');
+  });
+  assert.ok(this.$('.ui.message').is(':visible'), 'Component is visible if there errors.');
+  assert.ok(this.$().text().trim(), 'Validation error.', 'Component shows errors at added.');
 
-test('it render error message', function (assert) {
-  let errors = Errors.create();
-  errors.set('test', ['some validation error message']);
-  this.set('errors', errors);
+  this.set('header', 'Validation errors');
+  assert.ok(/Validation errors\s*/.test(this.$().text().trim()), 'Component has a header.');
 
-  this.render(hbs`{{flexberry-validationsummary errors=errors}}`);
+  assert.notOk(this.$('.ui.label').hasClass('red'), 'Override default color with undefined value.');
 
-  assert.equal(this.$().text().trim(), 'some validation error message');
-});
+  this.set('color', 'blue');
+  assert.ok(this.$('.ui.message').hasClass('blue'), 'Color works through CSS class.');
 
-test('it color property should pass to classes', function (assert) {
-  this.set('errors', Errors.create());
-
-  this.render(hbs`{{flexberry-validationsummary errors=errors color='someColor'}}`);
-
-  assert.equal(this.$(':first-child').hasClass('someColor'), true);
-});
-
-test('it should throw exception on unset errors property', function (assert) {
-  let exceptionHandler = TestAdapter.exception;
-  TestAdapter.exception = (error) => {
-    throw error;
-  };
-
-  assert.throws(() => { this.render(hbs`{{flexberry-validationsummary}}`); });
-
-  TestAdapter.exception = exceptionHandler;
-});
-
-test('it should be invisible if no errors', function (assert) {
-  this.set('errors', Errors.create());
-
-  this.render(hbs`{{flexberry-validationsummary errors=errors}}`);
-
-  // FIXME: On 06.06.2016 this test started to lead to error.
-  // assert.equal(this.$(':first-child').is(':visible'), false);
-  assert.equal(false, false);
-});
-
-test('it should be visible if errors presence', function (assert) {
-  let errors = Errors.create();
-  errors.set('testProperty', ['validation error message']);
-  this.set('errors', errors);
-
-  this.render(hbs`{{flexberry-validationsummary errors=errors}}`);
-  assert.equal(this.$(':first-child').is(':visible'), true);
+  this.render(hbs`{{flexberry-validationsummary}}`);
+  assert.ok(this.$('.ui.message').hasClass('red'), `Default color 'red'.`);
 });

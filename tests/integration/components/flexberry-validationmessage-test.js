@@ -1,80 +1,34 @@
-import TestAdapter from '@ember/test/adapter';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import DS from 'ember-data';
 
-moduleForComponent(
-  'flexberry-validationmessage',
-  'Integration | Component | flexberry validationmessage',
-  {
-    integration: true
+moduleForComponent('flexberry-validationmessage', 'Integration | Component | flexberry-validationmessage', {
+  integration: true
+});
+
+test('it renders and works', function (assert) {
+  this.render(hbs`{{flexberry-validationmessage error=error color=color pointing=pointing}}`);
+
+  [undefined, null, '', []].forEach((error) => {
+    this.set('error', error);
+    assert.ok(this.$('.ui.label').is(':hidden'), 'Component is hidden if no error.');
   });
 
-test('it renders', function (assert) {
+  this.set('error', 'This is error.');
+  assert.ok(this.$('.ui.label').is(':visible'), 'Component is visible if there errors.');
+  assert.equal(this.$().text().trim(), 'This is error.', 'Component shows error.');
 
-  this.render(hbs`{{flexberry-validationmessage error='error sample'}}`);
+  this.set('error', ['First error.', 'Second error.']);
+  assert.equal(this.$().text().trim(), 'First error.,Second error.', 'Component shows all errors.');
 
-  assert.equal(this.$().text().trim(), 'error sample');
+  assert.notOk(this.$('.ui.label').hasClass('red'), 'Override default color with undefined value.');
+  assert.notOk(this.$('.ui.label').hasClass('pointing'), 'Override default pointing with undefined value.');
+
+  this.set('color', 'pink');
+  this.set('pointing', 'left pointing');
+  assert.ok(this.$('.ui.label').hasClass('pink'), 'Color works through CSS class.');
+  assert.ok(this.$('.ui.label').hasClass('left'), 'Pointing works through CSS class.');
 
   this.render(hbs`{{flexberry-validationmessage}}`);
-
-  assert.equal(this.$().text().trim(), '');
-
-});
-
-test('it color property should pass to classes', function (assert) {
-
-  this.render(hbs`{{flexberry-validationmessage color='someColor'}}`);
-
-  assert.equal(this.$(':first-child').hasClass('someColor'), true);
-
-});
-
-test('it pointing property should pass to classes', function (assert) {
-
-  this.render(hbs`{{flexberry-validationmessage pointing='left pointing'}}`);
-
-  assert.equal(this.$(':first-child').hasClass('left pointing'), true);
-
-});
-
-test('it should throw exception on unknown pointing property', function (assert) {
-  let exceptionHandler = TestAdapter.exception;
-  TestAdapter.exception = (error) => {
-    throw error;
-  };
-
-  assert.throws(() => { this.render(hbs`{{flexberry-validationmessage pointing='some unknown pointing'}}`); });
-
-  TestAdapter.exception = exceptionHandler;
-});
-
-test('it should change visibility based on array error value', function (assert) {
-
-  let errors = DS.Errors.create();
-  this.set('error', errors.get('somefield'));
-  this.render(hbs`{{flexberry-validationmessage error=error}}`);
-
-  // FIXME: On 06.06.2016 this test started to lead to error.
-  // assert.equal(this.$(':first-child').is(':visible'), false);
-
-  errors.add('somefield', 'somefield is invalid');
-  this.set('error', errors.get('somefield'));
-
-  assert.equal(this.$(':first-child').is(':visible'), true);
-
-});
-
-test('it should change visibility based on string error value', function (assert) {
-
-  this.set('error', '');
-  this.render(hbs`{{flexberry-validationmessage error=error}}`);
-
-  // FIXME: On 06.06.2016 this test started to lead to error.
-  // assert.equal(this.$(':first-child').is(':visible'), false);
-
-  this.set('error', 'alarma there is error here');
-
-  assert.equal(this.$(':first-child').is(':visible'), true);
-
+  assert.ok(this.$('.ui.label').hasClass('red'), `Default color 'red'.`);
+  assert.ok(this.$('.ui.label').hasClass('pointing'), `Default pointing 'pointing'.`);
 });

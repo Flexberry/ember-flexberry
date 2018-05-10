@@ -1,2 +1,1 @@
-import FlexberryValidationMessage from 'ember-flexberry/components/flexberry-validationmessage';
-export default FlexberryValidationMessage;
+export { default } from 'ember-flexberry/components/flexberry-validationmessage';

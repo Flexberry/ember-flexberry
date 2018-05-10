@@ -20,7 +20,7 @@
   }}
   <div class="field">
     <div class="sixteen wide">
-      {{flexberry-validationsummary errors=model.errors}}
+      {{flexberry-validationsummary errors=(v-get validationObject "messages")}}
     </div>
   </div>
   <div class="field">
@@ -28,14 +28,14 @@
       <button type="submit" class="ui button close-button" {{action "close"}}>{{t "forms.edit-form.close-button-text"}}</button>
     </div>
   </div>
-  <div class="field {{if model.errors.name "error" ""}}">
+  <div class="field {{if (v-get validationObject "name" "isInvalid") "error"}}">
     {{flexberry-field
       value=model.order
       readonly=readonly
     }}
-    {{flexberry-validationmessage error=model.errors.name pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "name" "messages")}}
   </div>
-  <div class="field {{if model.errors.eMail "error" ""}}">
+  <div class="field {{if (v-get validationObject "eMail" "isInvalid") "error"}}">
     {{flexberry-file
       value=model.file
       placeholder=placeholder
@@ -44,6 +44,6 @@
       inputClass=inputClass
       buttonClass=buttonClass
     }}
-    {{flexberry-validationmessage error=model.errors.file pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "file" "messages")}}
   </div>
 </form>

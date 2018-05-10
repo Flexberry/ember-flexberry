@@ -5,9 +5,6 @@ let Model = BaseModel.extend({
   phone1: DS.attr('string'),
   phone2: DS.attr('string'),
   phone3: DS.attr('string'),
-  validations: {
-
-  }
 });
 Model.defineProjection('SuccessorE', 'ember-flexberry-dummy-successor-phone', {
   name: attr('Name'),

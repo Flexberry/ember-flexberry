@@ -1,8 +1,16 @@
 import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = EmberFlexberryDataModel.extend({
+const Validations = buildValidations({
+  name: validator('presence', {
+    presence: true,
+    message: 'Name is required',
+  }),
+});
+
+let Model = EmberFlexberryDataModel.extend(Validations, {
   name: DS.attr('string'),
   moderated: DS.attr('boolean'),
 
@@ -18,15 +26,6 @@ var Model = EmberFlexberryDataModel.extend({
     inverse: 'suggestionType',
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

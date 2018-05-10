@@ -16,6 +16,6 @@
       {{model.editor1.eMail}}<br>
       {{model.editor1.gender}}
     {{/flexberry-lookup}}
-    {{flexberry-validationmessage error=model.errors.editor1 pointing="pointing"}}
+    {{flexberry-validationmessage error=(v-get validationObject "editor1" "messages")}}
   </div>
 </form>

@@ -6,7 +6,7 @@ import Mixin from '@ember/object/mixin';
 import RSVP from 'rsvp';
 import { on } from '@ember/object/evented';
 import { set, computed, observer } from '@ember/object';
-import { run, once  } from '@ember/runloop';
+import { once } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import Builder from 'ember-flexberry-data/query/builder';
 import PredicateFromFiltersMixin from '../mixins/predicate-from-filters';
@@ -95,9 +95,8 @@ export default Mixin.create(PredicateFromFiltersMixin, {
   customFolvContentObserver: observer('model', 'perPage', 'page', 'sorting', 'filter', 'filters', function() {
     let _this = this;
 
-    run(function() {
-      once(_this, 'getCustomContent');
-    });
+    // https://github.com/emberjs/ember.js/issues/15479
+    once(_this, 'getCustomContent');
   }),
 
   getCustomContent() {

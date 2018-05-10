@@ -13,7 +13,7 @@ import { assert } from '@ember/debug';
 import { isNone } from '@ember/utils';
 import { getOwner } from '@ember/application';
 import { deprecate } from '@ember/application/deprecations';
-import Errors from 'ember-validations/errors';
+import ResultCollection from 'ember-cp-validations/validations/result-collection';
 import FlexberryLookupMixin from '../mixins/flexberry-lookup-controller';
 import ErrorableControllerMixin from '../mixins/errorable-controller';
 import FlexberryFileControllerMixin from '../mixins/flexberry-file-controller';
@@ -191,6 +191,15 @@ FolvOnEditControllerMixin, {
   */
   defaultDeveloperUserSettings: undefined,
 
+  /**
+    Reference to object to be validated.
+
+    @property validationObject
+    @type Any
+    @default model
+  */
+  validationObject: computed.alias('model'),
+
   actions: {
     /**
       Default action for button 'Save'.
@@ -357,6 +366,22 @@ FolvOnEditControllerMixin, {
   },
 
   /**
+    Runs validation on {{#crossLink "EditFormController/validationObject:property"}}{{/crossLink}} and returns promise.
+    Promise resolved if validation successful or rejected if validation failed.
+    Promise always settled with [ResultCollection](http://offirgolan.github.io/ember-cp-validations/docs/classes/ResultCollection.html) object.
+
+    @method validate
+    @return {Ember.RSVP.Promise}
+  */
+  validate() {
+    return new RSVP.Promise((resolve, reject) => {
+      this.get('validationObject').validate().then(({ validations }) => {
+        (validations.get('isValid') ? resolve : reject)(validations);
+      });
+    });
+  },
+
+  /**
     Save object.
 
     @method save
@@ -396,7 +421,7 @@ FolvOnEditControllerMixin, {
       }
     };
 
-    let savePromise = this.get('model').save().then((model) => {
+    let savePromise = this.validate().then(() => this.get('model').save().then((model) => {
       let agragatorModel = getCurrentAgregator.call(this);
       if (needSaveCurrentAgregator.call(this, agragatorModel)) {
         return this._saveHasManyRelationships(model).then((result) => {
@@ -425,7 +450,7 @@ FolvOnEditControllerMixin, {
           }
         });
       }
-    }).catch((errorData) => {
+    })).catch((errorData) => {
       this.get('objectlistviewEventsService').setLoadingState('error');
       this.onSaveActionRejected(errorData);
       return RSVP.reject(errorData);
@@ -541,7 +566,7 @@ FolvOnEditControllerMixin, {
   */
   onSaveActionRejected(errorData) {
     $('.ui.form .full.height').scrollTop(0);
-    if (!(errorData instanceof Errors)) {
+    if (!(errorData instanceof ResultCollection)) {
       this.send('handleError', errorData);
     }
   },

@@ -4,8 +4,24 @@ import { once } from '@ember/runloop';
 import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr, belongsTo, hasMany } from 'ember-flexberry-data/utils/attributes';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = EmberFlexberryDataModel.extend({
+const Validations = buildValidations({
+  type: validator('presence', {
+    presence: true,
+    message: 'Type is required',
+  }),
+  author: validator('presence', {
+    presence: true,
+    message: 'Author is required',
+  }),
+  editor1: validator('presence', {
+    presence: true,
+    message: 'Editor is required',
+  }),
+});
+
+let Model = EmberFlexberryDataModel.extend(Validations, {
   address: DS.attr('string'),
   text: DS.attr('string'),
   date: DS.attr('date'),
@@ -50,25 +66,6 @@ var Model = EmberFlexberryDataModel.extend({
     inverse: 'suggestion',
     async: false
   }),
-
-  // Model validation rules.
-  validations: {
-    type: {
-      presence: {
-        message: 'Type is required'
-      }
-    },
-    author: {
-      presence: {
-        message: 'Author is required'
-      }
-    },
-    editor1: {
-      presence: {
-        message: 'Editor is required'
-      }
-    }
-  },
 
   commentsChanged: on('init', observer('comments', function() {
     once(this, 'commentsCountCompute');

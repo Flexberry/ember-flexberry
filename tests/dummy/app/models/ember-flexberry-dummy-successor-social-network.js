@@ -5,9 +5,6 @@ let Model = BaseModel.extend({
   vK: DS.attr('string'),
   facebook: DS.attr('string'),
   twitter: DS.attr('string'),
-  validations: {
-
-  }
 });
 Model.defineProjection('SuccessorE', 'ember-flexberry-dummy-successor-social-network', {
   name: attr('Name'),

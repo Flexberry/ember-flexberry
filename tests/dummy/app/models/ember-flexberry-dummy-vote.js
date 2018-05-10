@@ -13,10 +13,6 @@ var Model = EmberFlexberryDataModel.extend({
 
   // This property is for flexberry-lookup component. No inverse relationship here.
   author: DS.belongsTo('ember-flexberry-dummy-application-user', { inverse: null, async: false }),
-
-  // Model validation rules.
-  validations: {
-  }
 });
 
 // Edit form projection.

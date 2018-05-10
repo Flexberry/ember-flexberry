@@ -1,8 +1,20 @@
 import DS from 'ember-data';
 import EmberFlexberryDataModel from 'ember-flexberry-data/models/model';
 import { attr } from 'ember-flexberry-data/utils/attributes';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-var Model = EmberFlexberryDataModel.extend({
+const Validations = buildValidations({
+  name: validator('presence', {
+    presence: true,
+    message: 'Name is required',
+  }),
+  eMail: validator('presence', {
+    presence: true,
+    message: 'User email is required',
+  }),
+});
+
+let Model = EmberFlexberryDataModel.extend(Validations, {
   name: DS.attr('string'),
   eMail: DS.attr('string'),
   phone1: DS.attr('string'),
@@ -16,20 +28,6 @@ var Model = EmberFlexberryDataModel.extend({
   gender: DS.attr('ember-flexberry-dummy-gender'),
   vip: DS.attr('boolean'),
   karma: DS.attr('decimal'),
-
-  // Model validation rules.
-  validations: {
-    name: {
-      presence: {
-        message: 'Name is required'
-      }
-    },
-    eMail: {
-      presence: {
-        message: 'User email is required'
-      }
-    }
-  }
 });
 
 // Edit form projection.

@@ -53,6 +53,30 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * Dependency on `ember-validations@~2.0.0-alpha.4` addon.
 
+### Breaking changes
+* Validations full changed, after upgrade to this version you need regenerate your application.
+
+### Added
+* Dependency on `ember-cp-validations@~3.5.2` addon.
+* Dependency on `ember-i18n-cp-validations@~3.1.0` addon.
+* The `ModelLocales` class in `flexberry-core` blueprint generate locales with model attributes for validations.
+
+### Changed
+* `flexberry-validationsummary` component:
+    * The `headerText` property renamed to `header`.
+    * Added wrapper `DIV` with `header` CSS-class for passed `header`.
+* The `pointing` property in `flexberry-validationmessage` component now have default value `pointing`.
+* The `edit-form` controller runs validations before attempting save the model.
+* Template for model in `flexberry-model-init` blueprint:
+    * Added import of default validation rules (you can override or extend them) from regenerated model file and build validations mixin.
+    * Fixed code style.
+* The `flexberry-model` blueprint:
+    * Generation of default validation rules with using syntax from `ember-cp-validations` addon in separate object.
+    * Fixed code style in regenerated model file.
+
+### Removed
+* Dependency on `ember-validations@~2.0.0-alpha.4` addon.
+
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed
 * Update dependency on `ember-flexberry-data` to version 0.11.1-beta.1.

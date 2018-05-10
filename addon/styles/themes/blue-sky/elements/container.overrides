@@ -24,6 +24,11 @@
     overflow: auto;
 }
 
+#example-mobile .ui.form .full.height {
+    height: calc(~"100vh - @{headerHeightMobile} - @{footerHeightMobile}") !important;
+    min-height: calc(~"100vh - @{headerHeightMobile} - @{footerHeightMobile}") !important;
+}
+
 .ui.attached.segment {
     width: 100%!important;
 }

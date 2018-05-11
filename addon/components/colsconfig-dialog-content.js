@@ -362,6 +362,7 @@ export default FlexberryBaseComponent.extend({
      @method actions.apply
     */
     apply: function() {
+      this.get('objectlistviewEventsService').setLoadingState('loading');
       if (!this.exportParams.isExportExcel) {
         let colsConfig = this._getSettings();
         let settingName =  Ember.$('#columnConfigurtionSettingName')[0].value.trim();
@@ -383,8 +384,6 @@ export default FlexberryBaseComponent.extend({
 
         this.sendAction('close', colsConfig); // close modal window
       } else {
-        let _this = this;
-        _this.get('objectlistviewEventsService').setLoadingState('loading');
         let store = this.get('store.onlineStore') || this.get('store');
         let adapter = store.adapterFor(this.modelName);
         let currentQuery = this._getCurrentQuery();

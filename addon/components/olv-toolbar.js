@@ -507,10 +507,17 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.customButtonAction
       @public
-      @param {String} actionName The name of action
+      @param {Function|String} action The action or name of action.
     */
-    customButtonAction(actionName) {
-      this.sendAction('customButtonAction', actionName);
+    customButtonAction(action) {
+      let actionType = typeof action;
+      if (actionType === 'function') {
+        action();
+      } else if (actionType === 'string') {
+        this.sendAction('customButtonAction', action);
+      } else {
+        throw new Error('Unsupported action type for custom buttons.');
+      }
     },
 
     /**

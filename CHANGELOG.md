@@ -3,12 +3,6 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Fixed
-* `object-list-view-row` component:
-  * Fix controls buttons logic of rows in the hierarchy.
-* `object-list-view`:
-  * Fix singleColumnHeaderTitle at mobile.
-
 ### Added
 * `flexberry-toggler` component now save status in user settings (`componentName` must be specified).
 * `flexberry-objectlistview` component:
@@ -19,15 +13,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-error` component and `error` template supports translating error messages if in error specified `messageLocaleKey` property.
 
 ### Changed
+* Update dependency on `ember-flexberry-data` to version `0.12.0-beta.0`.
 * `flexberry-simpleolv` mobile template:
     * Backlight the buttons of reset the sorting and selecting, occurs when active, not when hover.
 * The sorting applied by clicking on the column header, is saved in the user settings.
-* Update dependency on `ember-flexberry-data` to version `0.12.0-beta.0`.
-* Downgrade `ember-data` version to `2.4.3` when installing or updating with the command `ember install ember-flexberry`.
+* Downgrade `ember-data` version to `2.4.3` when installing or updating addon using command `ember install ember-flexberry`.
 
 ### Fixed
 * `flexberry-objectlistview` component:
     * Buttons in rows when the component is in hierarchical mode.
+* `object-list-view-row` component:
+  * Fix controls buttons logic of rows in the hierarchy.
+* `object-list-view` component:
+  * Fix singleColumnHeaderTitle at mobile.
+* Displaying spinner when appying user settings using user settings dialog.
 
 ## [0.11.1-beta.1] - 2018-03-07
 ### Changed

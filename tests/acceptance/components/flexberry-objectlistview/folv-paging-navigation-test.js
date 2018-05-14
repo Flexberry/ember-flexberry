@@ -32,7 +32,8 @@ executeTest('check paging nav', (store, assert) => {
           assert.equal($($basicButtons[1]).hasClass('active'), false, 'page 1 is not active');
           assert.equal($($basicButtons[2]).hasClass('active'), true, 'page 2 is active');
         }).catch((reason) => {
-          throw new Error(reason);
+          // Error output.
+          assert.ok(false, reason);
         }).finally(() => {
           deleteRecords(store, modelName, uuid).finally(done);
         });

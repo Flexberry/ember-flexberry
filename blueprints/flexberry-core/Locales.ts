@@ -109,8 +109,6 @@ export class ModelLocales extends Locales {
 
   constructor(model: metadata.Model, modelsDir: string, currentLocale: string) {
     super("", currentLocale);
-    let projections: string[] = [];
-    let projectionsOtherLocales: string[] = [];
     let projName: string;
 
     for (let proj of model.projections) {

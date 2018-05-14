@@ -24,7 +24,8 @@ executeTest('check goto new form', (store, assert, app) => {
         assert.ok($editForm, 'new form open');
         assert.equal(currentPath(), 'ember-flexberry-dummy-suggestion-edit.new', 'new form open');
       }).catch((reason) => {
-        throw new Error(reason);
+        // Error output.
+        assert.ok(false, reason);
       }).finally(() => {
         asyncOperationsCompleted();
       });

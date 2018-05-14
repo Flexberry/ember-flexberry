@@ -45,7 +45,10 @@ executeTest('check select all at page', (store, assert, app) => {
             assert.ok($list);
 
             let $checkAllAtPageButton = $('.check-all-at-page-button');
-            $checkAllAtPageButton.click();
+            run(() => {
+              $checkAllAtPageButton.click();
+            });
+
             let $deleteButton = $('.delete-button');
             let $checkCheckBox = $('.flexberry-checkbox.checked');
 
@@ -53,7 +56,9 @@ executeTest('check select all at page', (store, assert, app) => {
             assert.equal($checkCheckBox.length, 5, 'all checkBox in row are select');
             assert.equal($deleteButton.hasClass('disabled'), false, 'delete are available');
 
-            $checkAllAtPageButton.click();
+            run(() => {
+              $checkAllAtPageButton.click();
+            });
             $checkCheckBox = $('.flexberry-checkbox.checked');
 
             // Check afther unselect all at page.

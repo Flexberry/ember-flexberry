@@ -23,6 +23,7 @@ module('Acceptance | flexberry-groupedit', {
 
 
 test('it properly rerenders', function(assert) {
+  assert.expect(4);
   let done = assert.async();
 
   let path = 'components-acceptance-tests/flexberry-groupedit/properly-rerenders';

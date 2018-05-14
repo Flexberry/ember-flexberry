@@ -47,7 +47,9 @@ executeTest('check delete button in row', (store, assert, app) => {
             let nameRecord = $.trim(element.children[1].innerText);
             if (nameRecord.indexOf(uuid) >= 0) {
               let $deleteBtnInRow = $('.object-list-view-row-delete-button', element);
-              $deleteBtnInRow.click();
+              run(() => {
+                $deleteBtnInRow.click();
+              });
             }
           });
           /* eslint-enable no-unused-vars */

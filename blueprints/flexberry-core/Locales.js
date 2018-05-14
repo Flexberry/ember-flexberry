@@ -85,8 +85,6 @@ var ModelLocales = (function (_super) {
     __extends(ModelLocales, _super);
     function ModelLocales(model, modelsDir, currentLocale) {
         _super.call(this, "", currentLocale);
-        var projections = [];
-        var projectionsOtherLocales = [];
         var projName;
         for (var _i = 0, _a = model.projections; _i < _a.length; _i++) {
             var proj = _a[_i];

@@ -1,6 +1,5 @@
 "use strict";
 var child_process = require('child_process');
-var stripBom = require("strip-bom");
 var Blueprint = require('ember-cli/lib/models/blueprint');
 var Promise = require('rsvp');
 var lodash = require('lodash');
@@ -45,9 +44,9 @@ var ElapsedTime = (function () {
         console.log("Total: " + ElapsedTime.format(total));
     };
     ElapsedTime.format = function (sec) {
-        var hours = Math.floor(sec / 3600);
-        var min = Math.floor((sec - hours * 3600) / 60);
-        var sec2 = sec - hours * 3600 - min * 60;
+        //var hours = Math.floor(sec / 3600);
+        //var min = Math.floor((sec - hours * 3600) / 60);
+        //var sec2 = sec - hours * 3600 - min * 60;
         //return `${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
         return ElapsedTime.formatterFrac.format(sec) + " sec";
     };

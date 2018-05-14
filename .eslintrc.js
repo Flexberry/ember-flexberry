@@ -58,18 +58,6 @@ module.exports = {
       }
     },
 
-    // TODO Action objectListViewRowClick from route in controller and fix .eslintrc
-    // TODO Action groupEditRowClick from route in controller and fix .eslintrc
-    {
-      files: [
-        'addon/addon/components/flexberry-objectlistview.js',
-        'addon/addon/components/flexberry-groupedit.js'
-      ],
-      rules: {
-        'ember/closure-actions': 'off'
-      }
-    },
-
     {
       files: [
         'tests/integration/components/flexberry-ddau-checkbox-test.js',

@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { run } from '@ember/runloop';
 import { executeTest } from './execute-folv-test';
 
 // Need to add sort by multiple columns.
@@ -17,7 +18,9 @@ executeTest('check edit button in row', (store, assert, app) => {
     assert.equal($editButtonInRow.length, 5, 'All row have editButton');
 
     let $button = $editButtonInRow[0];
-    $button.click();
+    run(() => {
+      $button.click();
+    });
 
     let done = assert.async();
 

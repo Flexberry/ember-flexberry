@@ -73,7 +73,8 @@ executeTest('date format moment L', (store, assert, app) => {
             assert.ok(findDateEn, 'date format is \'MM/DD/YYYY\' ');
 
           }).catch((reason) => {
-            throw new Error(reason);
+            // Error output.
+            assert.ok(false, reason);
           }).finally(() => {
             done1();
           });

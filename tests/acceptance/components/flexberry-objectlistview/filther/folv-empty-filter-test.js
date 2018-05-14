@@ -50,7 +50,9 @@ executeTest('check empty filter', (store, assert, app) => {
       let $objectListView = $('.object-list-view');
 
       // Activate filtre row.
-      $filterButton.click();
+      run(() => {
+        $filterButton.click();
+      });
 
       filterCollumn($objectListView, 0, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter function.

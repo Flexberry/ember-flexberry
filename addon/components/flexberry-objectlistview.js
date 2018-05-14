@@ -754,8 +754,9 @@ export default FlexberryBaseComponent.extend({
         let $clickedRow = this._getRowByKey(record.key || guidFor(record));
         run.after(this, () => { return $clickedRow.hasClass('active'); }, () => {
           if (this.get('componentMode') === 'lookupform') {
+            /* eslint-disable ember/closure-actions */
             this.sendAction('action', record); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
-
+            /* eslint-enable ember/closure-actions */
           } else {
             let editFormRoute = this.get('editFormRoute');
             assert('Edit form route must be defined for flexberry-objectlistview', editFormRoute);
@@ -766,8 +767,9 @@ export default FlexberryBaseComponent.extend({
               options = merge(options, { editFormRoute: editFormRoute });
             }
 
+            /* eslint-disable ember/closure-actions */
             this.sendAction('action', record, options); //TODO Action objectListViewRowClick from route in controller and fix .eslintrc
-
+            /* eslint-enable ember/closure-actions */
           }
         });
 

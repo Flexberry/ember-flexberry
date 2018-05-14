@@ -130,6 +130,7 @@ var ModelBlueprint = (function () {
                             defaultValue = ", { defaultValue() { return new Date(); } }";
                             break;
                         }
+                        break;
                     default:
                         defaultValue = ", { defaultValue: '" + attr.defaultValue + "' }";
                 }

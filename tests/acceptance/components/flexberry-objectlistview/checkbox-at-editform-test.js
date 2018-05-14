@@ -25,7 +25,8 @@ executeTest('check checkbox at editform', (store, assert, app) => {
           assert.ok($editForm, 'edit form open');
           assert.equal(checkbox.hasClass('checked'), true, 'checkbox is check');
         }).catch((reason) => {
-          throw new Error(reason);
+          // Error output.
+          assert.ok(false, reason);
         }).finally(() => {
           asyncOperationsCompleted();
         });

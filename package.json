@@ -78,7 +78,8 @@
     "moment": "~2.22.0",
     "moment-timezone": "0.5.14",
     "node-uuid": "^1.4.7",
-    "ui-ember-slider": "0.5.0"
+    "ui-ember-slider": "0.5.0",
+    "ember-cp-validations": "~3.5.2"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"

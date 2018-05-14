@@ -118,6 +118,7 @@ test('it renders', function(assert) {
 });
 
 test('it properly rerenders', function(assert) {
+  assert.expect(5);
   let done = assert.async();
   let store = App.__container__.lookup('service:store');
 

@@ -5,7 +5,6 @@ import metadata = require('MetadataClasses');
 import fs = require("fs");
 import path = require('path');
 import child_process = require('child_process');
-const stripBom = require("strip-bom");
 const Blueprint = require('ember-cli/lib/models/blueprint');
 const Promise = require('rsvp');
 import lodash = require('lodash');
@@ -66,9 +65,9 @@ class ElapsedTime {
   }
 
   public static format(sec: number): string {
-    let hours = Math.floor(sec / 3600);
-    let min = Math.floor((sec - hours * 3600) / 60);
-    let sec2 = sec - hours * 3600 - min * 60;
+    //let hours = Math.floor(sec / 3600);
+    //let min = Math.floor((sec - hours * 3600) / 60);
+    //let sec2 = sec - hours * 3600 - min * 60;
     //return `${ElapsedTime.formatter.format(min)}:${ElapsedTime.formatter.format(sec2)}`;
     return `${ElapsedTime.formatterFrac.format(sec)} sec`;
   }

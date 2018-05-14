@@ -47,7 +47,9 @@ executeTest('check filter renders', (store, assert, app) => {
       let $objectListView = $('.object-list-view');
 
       // Activate filtre row.
-      $filterButton.click();
+      run(() => {
+        $filterButton.click();
+      });
 
       $tableRows = $tableTbody.children('tr');
 
@@ -103,7 +105,9 @@ executeTest('check filter renders', (store, assert, app) => {
           assert.strictEqual($filterRemoveButtonIcon.hasClass('remove icon'), true, 'Filtre button\'s icon block has \'remove icon\' css-class');
 
           // Deactivate filtre row.
-          $filterButton.click();
+          run(() => {
+            $filterButton.click();
+          });
 
           // Apply filter.
           let done2 = assert.async();

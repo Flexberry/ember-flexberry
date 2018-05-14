@@ -1,4 +1,5 @@
 import { moduleFor, test } from 'ember-qunit';
+import { run } from '@ember/runloop';
 
 moduleFor('controller:detail-edit-form', 'Unit | Controller | detail edit form', {
   needs: [
@@ -12,6 +13,10 @@ moduleFor('controller:detail-edit-form', 'Unit | Controller | detail edit form',
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
-  let controller = this.subject();
+  let controller;
+  run(() => {
+    controller = this.subject();
+  });
+
   assert.ok(controller);
 });

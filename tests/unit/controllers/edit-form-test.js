@@ -27,7 +27,10 @@ moduleFor('controller:edit-form', 'Unit | Controller | edit form', {
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
-  let controller = this.subject();
+  let controller;
+  run(() => {
+    controller = this.subject();
+  });
   assert.ok(controller);
 });
 
@@ -58,8 +61,12 @@ test('save hasMany relationships recursively', function(assert) {
   App.register('model:model2', Model2);
   App.register('model:model3', Model3);
 
-  let controller = this.subject();
-  let store = App.__container__.lookup('service:store');
+  let controller;
+  let store;
+  run(() => {
+    controller = this.subject();
+    store = App.__container__.lookup('service:store');
+  });
 
   run(function() {
     let record = store.createRecord('model1');

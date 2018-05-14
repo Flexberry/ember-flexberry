@@ -369,7 +369,8 @@ test('expand animation works properly', function(assert) {
     assert.strictEqual($dropdownMenu.hasClass('visible'), true, 'Component\'s menu has class \'visible\'');
     assert.strictEqual($dropdownMenu.hasClass('hidden'), false, 'Component\'s menu hasn\'t class \'hidden\'');
   }).catch((e) => {
-    throw e;
+    // Error output.
+    assert.ok(false, e);
   }).finally(() => {
     asyncAnimationsCompleted();
   });
@@ -424,7 +425,8 @@ test('collapse animation works properly', function(assert) {
     assert.strictEqual($dropdownMenu.hasClass('visible'), false, 'Component\'s menu hasn\'t class \'visible\'');
     assert.strictEqual($dropdownMenu.hasClass('hidden'), true, 'Component\'s menu has class \'hidden\'');
   }).catch((e) => {
-    throw e;
+    // Error output.
+    assert.ok(false, e);
   }).finally(() => {
     asyncAnimationsCompleted();
   });
@@ -478,7 +480,8 @@ test('changes in inner <dropdown> causes changes in property binded to \'value\'
     // Check that related model's value binded to dropdown is equals to selected item's caption.
     assert.strictEqual(this.get('value'), itemCaption, 'Related model\'s value binded to dropdown is \'' + itemCaption + '\'');
   }).catch((e) => {
-    throw e;
+    // Error output.
+    assert.ok(false, e);
   }).finally(() => {
     asyncAnimationsCompleted();
   });
@@ -529,7 +532,8 @@ test('changes in inner <dropdown> causes call to \'onChange\' action', function(
     assert.strictEqual(onChangeHasBeenCalled, true, 'Component\'s \'onChange\' action has been called');
     assert.strictEqual(onChangeArgument, itemCaption, 'Component\'s \'onChange\' action has been called with \'' + itemCaption + '\' as argument');
   }).catch((e) => {
-    throw e;
+    // Error output.
+    assert.ok(false, e);
   }).finally(() => {
     asyncAnimationsCompleted();
   });

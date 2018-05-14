@@ -185,7 +185,8 @@ test('changes in component\'s value causes changes in related model\'s specified
         chosenRecordDisplayAttribute,
         'lookup display value is equals to chosen record\'s \'' + displayAttributeName + '\' attribute');
     }).catch((reason) => {
-      throw new Error(reason);
+      // Error output.
+      assert.ok(false, reason);
     }).finally(() => {
       asyncOperationsCompleted();
     });
@@ -193,6 +194,7 @@ test('changes in component\'s value causes changes in related model\'s specified
 });
 
 test('changes in model\'s value causes changes in component\'s specified \'belongsTo\' model', function(assert) {
+  assert.expect(2);
   visit('components-acceptance-tests/flexberry-lookup/base-operations');
   andThen(function() {
 
@@ -303,7 +305,10 @@ test('flexberry-lookup limit function test', function(assert) {
 test('flexberry-lookup actions test', function(assert) {
   assert.expect(5);
 
-  let controller = app.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
+  let controller;
+  run(() => {
+    controller = app.__container__.lookup('controller:components-acceptance-tests/flexberry-lookup/settings-example-actions');
+  });
 
   // Remap remove action.
   let $onRemoveData;
@@ -337,6 +342,7 @@ test('flexberry-lookup actions test', function(assert) {
 });
 
 test('flexberry-lookup relation name test', function(assert) {
+  assert.expect(1);
   visit('components-acceptance-tests/flexberry-lookup/settings-example-relation-name');
   andThen(function() {
     let controller = app.__container__.lookup('controller:' + currentRouteName());

@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import { executeTest } from 'dummy/tests/acceptance/components/flexberry-objectlistview/execute-folv-test';
+import { run } from '@ember/runloop';
 import { filterCollumn, refreshListByFunction } from 'dummy/tests/acceptance/components/flexberry-objectlistview/folv-tests-functions';
 import Builder from 'ember-flexberry-data/query/builder';
 
@@ -23,7 +24,9 @@ executeTest('check le filter', (store, assert, app) => {
       let $objectListView = $('.object-list-view');
 
       // Activate filtre row.
-      $filterButton.click();
+      run(() => {
+        $filterButton.click();
+      });
 
       filterCollumn($objectListView, 2, filtreInsertOperation, filtreInsertParametr).then(function() {
         // Apply filter function.

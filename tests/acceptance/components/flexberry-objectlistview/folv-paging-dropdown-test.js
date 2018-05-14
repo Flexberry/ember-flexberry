@@ -52,7 +52,8 @@ executeTest('check paging dropdown', (store, assert, app) => {
           // The list should be more than 10 items
           assert.equal(activeItem(), trTableBody(), 'equal perPage and visible element count');
         }).catch((reason) => {
-          throw new Error(reason);
+          // Error output.
+          assert.ok(false, reason);
         }).finally(() => {
           deleteRecords(store, modelName, uuid, assert);
           done();

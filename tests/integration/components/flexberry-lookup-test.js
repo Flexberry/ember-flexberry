@@ -210,7 +210,8 @@ test('autocomplete doesn\'t send data-requests in readonly mode', function(asser
     // Check that store.query hasn\'t been called after focus.
     assert.strictEqual(ajaxMethodHasBeenCalled, false, '$.ajax hasn\'t been called after click on autocomplete lookup in readonly mode');
   }).catch((e) => {
-    throw e;
+    // Error output.
+    assert.ok(false, e);
   }).finally(() => {
     // Restore original method.
     $.ajax = originalAjaxMethod;

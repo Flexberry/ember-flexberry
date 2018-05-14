@@ -147,6 +147,7 @@ export default class ModelBlueprint {
               defaultValue = `, { defaultValue() { return new Date(); } }`;
               break;
             }
+            break;
           default:
             defaultValue = `, { defaultValue: '${attr.defaultValue}' }`;
         }

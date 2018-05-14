@@ -491,7 +491,9 @@ export default FlexberryBaseComponent.extend({
         options = merge(options, { editFormRoute: editFormRoute });
       }
 
+      /* eslint-disable ember/closure-actions */
       this.sendAction('action', record, options); //TODO Action groupEditRowClick from route in controller and fix .eslintrc
+      /* eslint-enable ember/closure-actions */
     },
 
     /**

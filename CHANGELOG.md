@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * `flexberry-toggler` component now save status in user settings (`componentName` must be specified).
 * `flexberry-objectlistview` component:
     * `customButtonsInRow` property for adding buttons into rows (by analogy with `customButtons` property).
+    * For the properties of `customButtons` and `customButtonsInRow`, you can pass the function in the `buttonAction` property.
     * Deleting records when "all on all pages" is selected.
     * Renaming columns when exporting to Excel.
 * `flexberry-error` component and `error` template supports translating error messages if in error specified `messageLocaleKey` property.

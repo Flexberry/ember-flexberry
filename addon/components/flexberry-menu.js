@@ -157,7 +157,7 @@ export default FlexberryBaseComponent.extend({
 
     // Remove menu item click event handler.
     let onClickHandler = this.get('_onClickHandler');
-    this.$().off('click', onClickHandler);
+    this.$().off('touchstart click', onClickHandler);
   },
 
   /**

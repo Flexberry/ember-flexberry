@@ -20,13 +20,13 @@
 }
 
 .full.height {
-    height: calc(~"100vh - @{headerHeight} - @{footerHeight}") !important;
+    height: calc(~"100vh - @{headerHeight} - @{footerHeight}");
     overflow: auto;
 }
 
-#example-mobile .ui.form .full.height {
-    height: calc(~"100vh - @{headerHeightMobile} - @{footerHeightMobile}") !important;
-    min-height: calc(~"100vh - @{headerHeightMobile} - @{footerHeightMobile}") !important;
+.pusher.mobile .ui.form .full.height {
+    height: calc(~"100vh - @{headerHeightMobile} - @{footerHeightMobile}");
+    min-height: calc(~"100vh - @{headerHeightMobile} - @{footerHeightMobile}");
 }
 
 .ui.attached.segment {

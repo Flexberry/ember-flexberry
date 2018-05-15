@@ -22,10 +22,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `flexberry-objectlistview` component:
     * Buttons in rows when the component is in hierarchical mode.
-* `object-list-view-row` component:
-  * Fix controls buttons logic of rows in the hierarchy.
-* `object-list-view` component:
-  * Fix singleColumnHeaderTitle at mobile.
+    * Fix `singleColumnHeaderTitle` at mobile.
+    * After disable hierarchical mode in mobile, button for show/hide nested records remains.
 * Displaying spinner when appying user settings using user settings dialog.
 
 ## [0.11.1-beta.1] - 2018-03-07

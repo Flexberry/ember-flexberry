@@ -757,7 +757,7 @@ FolvOnEditControllerMixin, {
           cellComponent.componentName = 'flexberry-dropdown';
           cellComponent.componentProperties = {
             items: transformInstance.get('captions'),
-            class: 'compact fluid'
+            class: 'compact fluid ui dropdown flexberry-dropdown selection'
           };
         }
 

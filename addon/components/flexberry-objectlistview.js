@@ -43,26 +43,6 @@ export default FlexberryBaseComponent.extend({
   formLoadTimeTracker: service(),
 
   /**
-    Store the action name at controller for loading records.
-
-    @property _loadRecords
-    @type String
-    @default 'loadRecords'
-    @private
-  */
-  _loadRecords: 'loadRecords',
-
-  /**
-    Store the action name at controller for switch to the hierarchical mode.
-
-    @property _switchHierarchicalMode
-    @type String
-    @default 'switchHierarchicalMode'
-    @private
-  */
-  _switchHierarchicalMode: 'switchHierarchicalMode',
-
-  /**
     Store the action name at controller for switch to the collapse/expand mode.
 
     @property _switchExpandMode
@@ -71,15 +51,6 @@ export default FlexberryBaseComponent.extend({
     @private
   */
   _switchExpandMode: 'switchExpandMode',
-  /**
-    Store the action name at controller for save the hierarchical attribute name.
-
-    @property _saveHierarchicalAttribute
-    @type String
-    @default 'saveHierarchicalAttribute'
-    @private
-  */
-  _saveHierarchicalAttribute: 'saveHierarchicalAttribute',
 
   /**
     Flag indicate when available the hierarchical mode.
@@ -155,7 +126,7 @@ export default FlexberryBaseComponent.extend({
     },
     set(key, value) {
       this.set('_hierarchicalAttribute', value);
-      this.get('_saveHierarchicalAttribute')(value, true);
+      this.get('currentController').send('saveHierarchicalAttribute', value, true);
       return value;
     },
   }),
@@ -983,7 +954,7 @@ export default FlexberryBaseComponent.extend({
     */
     availableHierarchicalMode(hierarchicalAttribute) {
       this.toggleProperty('_availableHierarchicalMode');
-      this.get('_saveHierarchicalAttribute')(hierarchicalAttribute);
+      this.get('currentController').send('saveHierarchicalAttribute', hierarchicalAttribute);
     },
 
     /**
@@ -992,7 +963,7 @@ export default FlexberryBaseComponent.extend({
       @method actions.switchHierarchicalMode
     */
     switchHierarchicalMode() {
-      this.get('_switchHierarchicalMode')();
+      this.get('currentController').send('switchHierarchicalMode');
     },
 
     /**
@@ -1014,7 +985,7 @@ export default FlexberryBaseComponent.extend({
       @param {Boolean} Flag indicates that this is the first download of data.
     */
     loadRecords(id, target, property, firstRunMode) {
-      this.get('_loadRecords')(id, target, property, firstRunMode);
+      this.get('currentController').send('loadRecords', id, target, property, firstRunMode);
     },
 
     /**

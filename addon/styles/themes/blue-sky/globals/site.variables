@@ -53,4 +53,4 @@
 @headerHeight : 80px;
 @footerHeight : 40px;
 @headerHeightMobile : 50px;
-@footerHeightMobile : 30px;
+@footerHeightMobile : 40px;

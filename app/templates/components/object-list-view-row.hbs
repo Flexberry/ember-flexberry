@@ -64,12 +64,10 @@
               required=required
               componentName=(concat "(" folvComponentName "_" column.cellComponent.componentName "_" column.propName ")")
             }}
-              {{#if (and (not index) inHierarchicalMode)}}
-                {{#if hasRecords}}
-                  <button class="ui button hierarchy-expand icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
-                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
-                  </button>
-                {{/if}}
+              {{#if (and (not index) inHierarchicalMode hasRecords)}}
+                <button class="ui button hierarchy-expand icon mini compact {{buttonClass}}" {{action "expand" bubbles=false}}>
+                  <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
+                </button>
               {{/if}}
             {{/component}}
           {{else}}
@@ -90,16 +88,14 @@
           {{/if}}
         {{else}}
           <div class="oveflow-text">
-            {{#if (and (not index) inHierarchicalMode)}}
-              {{#if hasRecords}}
-                <button
-                  class="ui button hierarchy-expand icon mini compact {{buttonClass}}"
-                  title={{if _expanded (t "components.object-list-view.hierarchy-buttons.minus-button-title")
-                   (t "components.object-list-view.hierarchy-buttons.plus-button-title")}}
-                  {{action "expand" bubbles=false}}>
-                    <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
-                </button>
-              {{/if}}
+            {{#if (and (not index) inHierarchicalMode hasRecords)}}
+              <button
+                class="ui button hierarchy-expand icon mini compact {{buttonClass}}"
+                title={{if _expanded (t "components.object-list-view.hierarchy-buttons.minus-button-title")
+                 (t "components.object-list-view.hierarchy-buttons.plus-button-title")}}
+                {{action "expand" bubbles=false}}>
+                  <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
+              </button>
             {{/if}}
             {{get-formatted record.data column.propName
               dateFormat=dateFormat

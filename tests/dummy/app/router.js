@@ -102,14 +102,6 @@ Router.map(function() {
   this.route('components-examples/flexberry-objectlistview/downloading-files-from-olv-edit',
   { path: 'components-examples/flexberry-objectlistview/downloading-files-from-olv-edit/:id' });
 
-  this.route('components-examples/flexberry-simpleolv/settings-example');
-  this.route('components-examples/flexberry-simpleolv/toolbar-custom-buttons-example');
-  this.route('components-examples/flexberry-simpleolv/limit-function-example');
-  this.route('components-examples/flexberry-simpleolv/on-edit-form');
-  this.route('components-examples/flexberry-simpleolv/on-edit-form/user', { path: 'components-examples/flexberry-simpleolv/on-edit-form/user/:id' });
-  this.route('components-examples/flexberry-simpleolv/custom-filter');
-  this.route('components-examples/flexberry-simpleolv/configurate-rows');
-  this.route('components-examples/flexberry-simpleolv/selected-rows');
   this.route('components-examples/flexberry-simpledatetime/settings-example');
   this.route('components-examples/flexberry-textarea/settings-example');
   this.route('components-examples/flexberry-textbox/settings-example');

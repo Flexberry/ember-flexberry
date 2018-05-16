@@ -468,45 +468,6 @@ export default Controller.extend({
           }]
         }, {
           link: null,
-          caption: 'flexberry-simpleolv',
-          title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.title'),
-          children: [{
-            link: 'components-examples/flexberry-simpleolv/limit-function-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.limit-function-example.title'),
-            children: null
-          }, {
-            link: 'components-examples/flexberry-simpleolv/settings-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.settings-example.title'),
-            children: null
-          }, {
-            link: 'components-examples/flexberry-simpleolv/toolbar-custom-buttons-example',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.toolbar-custom-buttons-example.title'),
-            children: null
-          }, {
-            link: 'components-examples/flexberry-simpleolv/on-edit-form',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.on-edit-form.title'),
-          }, {
-            link: 'components-examples/flexberry-simpleolv/custom-filter',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.custom-filter.title'),
-            children: null
-          }, {
-            link: 'components-examples/flexberry-simpleolv/configurate-rows',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.configurate-rows.title'),
-            children: null
-          }, {
-            link: 'components-examples/flexberry-simpleolv/selected-rows',
-            caption: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.caption'),
-            title: i18n.t('forms.application.sitemap.components-examples.flexberry-objectlistview.selected-rows.title'),
-            children: null
-          }]
-        }, {
-          link: null,
           caption: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.caption'),
           title: i18n.t('forms.application.sitemap.components-examples.flexberry-simpledatetime.title'),
           children: [{

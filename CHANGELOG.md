@@ -17,6 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * The following templates: `sitemap`, `sitemap-node` (and mobile), `sitemap-node-content`.
 * Controller `sitemap-node` from final app.
+* Delete `flexberry-simpleolv` component.
 
 ### Breaking changes
 * Delete `semantic-ui-ember` dependency.

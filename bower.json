@@ -3,7 +3,7 @@
   "version": "0.11.1-beta.1",
   "dependencies": {
     "jquery-mockjax": "~2.2.1",
-    "semantic-ui": "2.3.1",
+    "semantic-ui": "2.2.14",
     "blob-polyfill": "~1.0.20150320",
     "devicejs": "0.2.7",
     "flatpickr-calendar": "2.3.4",

@@ -7,6 +7,7 @@ import $ from 'jquery';
 import { merge } from '@ember/polyfills';
 import { get } from '@ember/object';
 import { assert, debug } from '@ember/debug';
+import { isNone } from '@ember/utils';
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import { BasePredicate } from 'ember-flexberry-data/query/predicate';
 import serializeSortingParam from '../utils/serialize-sorting-param';
@@ -369,6 +370,11 @@ export default Mixin.create(ReloadListMixin, {
     currentContext.send('showModalDialog', lookupSettings.loaderTemplate, null, loadingParams);
 
     currentContext.reloadList(queryParameters).then(data => {
+
+      if (!isNone(currentContext.get('objectlistviewEventsService'))) {
+        currentContext.get('objectlistviewEventsService').setLoadingState('');
+      }
+
       data.set('sorting', queryParameters.sorting);
       currentContext.send('removeModalDialog', loadingParams);
       currentContext.send('showModalDialog', lookupSettings.contentTemplate, {

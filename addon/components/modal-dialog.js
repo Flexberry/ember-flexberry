@@ -150,21 +150,22 @@ export default Component.extend({
       },
       onHidden: () => {
         run(() => {
-          if (!isEmpty(this.get('close'))) {
-            this.get('close')();
-          }
 
-          // IE doesn't support "this.remove()", that's why "thi.$().remove()" is used.
-          this.$().remove();
+          /* eslint-disable ember/closure-actions */
+          this.sendAction('close'); //TODO
+          /* eslint-enable ember/closure-actions */
+
+          // IE doesn't support "this.remove()", that's why "this.$().remove()" is used.
+          $(this).remove();
           this.get('_lookupEvents').lookupDialogOnHiddenTrigger(this.get('componentName'));
         });
       },
       onVisible: () => {
         // Handler of 'created' action causes asynchronous animation, so Ember.run is necessary.
         run(() => {
-          if (!isEmpty(this.get('created'))) {
-            this.get('created')();
-          }
+          /* eslint-disable ember/closure-actions */
+          this.sendAction('created', this.$()); //TODO
+          /* eslint-enable ember/closure-actions */
         });
       },
     }, this.get('settings'));

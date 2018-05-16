@@ -388,7 +388,9 @@ export default FlexberryBaseComponent.extend({
         });
         /* eslint-enable no-unused-vars */
 
-        this.get('close')(colsConfig); // close modal window
+        /* eslint-disable ember/closure-actions */
+        this.sendAction('close', colsConfig); //TODO
+        /* eslint-enable ember/closure-actions */
       } else {
         let _this = this;
         _this.get('objectlistviewEventsService').setLoadingState('loading');
@@ -418,7 +420,11 @@ export default FlexberryBaseComponent.extend({
           this.get('objectlistviewEventsService').setLoadingState('');
         }).catch((reason) => {
           this.get('objectlistviewEventsService').setLoadingState('');
-          this.get('close')(); // close modal window
+
+          /* eslint-disable ember/closure-actions */
+          this.sendAction('close'); //TODO
+          /* eslint-enable ember/closure-actions */
+
           this.currentController.send('handleError', reason);
         });
       }
@@ -459,7 +465,11 @@ export default FlexberryBaseComponent.extend({
           this.set('currentController.message.visible', true);
           this.set('currentController.message.caption', this.get('i18n').t('components.colsconfig-dialog-content.have-errors'));
           this.set('currentController.message.message', JSON.stringify(error));
-          this.get('close')(colsConfig); // close modal window
+
+          /* eslint-disable ember/closure-actions */
+          this.sendAction('close', colsConfig); //TODO
+          /* eslint-enable ember/closure-actions */
+
           this.currentController.send('handleError', error);
         }
       );

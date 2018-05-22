@@ -60,6 +60,13 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
           break;
 
       }
+    } else if (attr.kind === 'attr') {
+      switch (`${model.modelName}+${bindingPath}`) {
+        case 'ember-flexberry-dummy-vote+author.eMail':
+        cellComponent.componentProperties = {
+          readonly: true,
+        };
+      }
     }
 
     return cellComponent;

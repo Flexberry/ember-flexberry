@@ -63,9 +63,9 @@ export default BaseEditFormController.extend(EditFormControllerOperationsIndicat
     } else if (attr.kind === 'attr') {
       switch (`${model.modelName}+${bindingPath}`) {
         case 'ember-flexberry-dummy-vote+author.eMail':
-        cellComponent.componentProperties = {
-          readonly: true,
-        };
+          cellComponent.componentProperties = {
+            readonly: true,
+          };
       }
     }
 

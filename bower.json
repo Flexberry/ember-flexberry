@@ -12,7 +12,7 @@
     "blob-polyfill": "~1.0.20150320",
     "devicejs": "0.2.7",
     "blueimp-file-upload": "9.11.2",
-    "flatpickr-calendar": "2.3.4",
+    "flatpickr-calendar": "2.6.3",
     "seiyria-bootstrap-slider": "6.0.6",
     "jquery-minicolors": "2.2.6",
     "js-beautify": "1.6.4"

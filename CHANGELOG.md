@@ -24,6 +24,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     * Buttons in rows when the component is in hierarchical mode.
     * Fix `singleColumnHeaderTitle` at mobile.
     * After disable hierarchical mode in mobile, button for show/hide nested records remains.
+* `flexberry-simpledatetime` component:
+    * Inability to choose extreme values of date range when min or max values are set.
 * Displaying spinner when appying user settings using user settings dialog.
 
 ## [0.11.1-beta.1] - 2018-03-07

@@ -12,6 +12,7 @@ import FlexberryObjectlistviewHierarchicalRouteMixin from '../mixins/flexberry-o
 import ReloadListMixin from '../mixins/reload-list-mixin';
 import ErrorableRouteMixin from '../mixins/errorable-route';
 import serializeSortingParam from '../utils/serialize-sorting-param';
+import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 /**
   Base route for the List Forms.
@@ -139,6 +140,10 @@ ErrorableRouteMixin, {
     componentName = listComponentNames[0];
     userSettingPromise
       .then(currectPageUserSettings => {
+        if (this._invalidSorting(params.sort)) {
+          throw new Error('Invalid sorting value...');
+        }
+
         if (params) {
           sortString = userSettingsService.setCurrentParams(componentName, params);
         }
@@ -316,5 +321,35 @@ ErrorableRouteMixin, {
     if (Ember.isNone(controller.get('defaultDeveloperUserSettings'))) {
       controller.set('defaultDeveloperUserSettings', Ember.$.extend(true, {}, this.get('developerUserSettings')));
     }
+  },
+
+  /**
+    @method _invalidSorting
+    @param {String} sorting
+    @return {Boolean}
+  */
+  _invalidSorting(sorting) {
+    let invalid = false;
+    let store = this.get('store');
+
+    deserializeSortingParam(sorting).forEach((descriptor) => {
+      let path = descriptor.propName.split('.');
+      let propertyName = path.pop();
+
+      let modelClass = store.modelFor(this.get('modelName'));
+      for (let i = 0; i < path.length; i++) {
+        let relationshipsByName = Ember.get(modelClass, 'relationshipsByName');
+        let relationship = relationshipsByName.get(path[i]);
+        if (relationship) {
+          modelClass = store.modelFor(relationship.type);
+        } else {
+          invalid = true;
+        }
+      }
+
+      invalid = invalid || !Ember.get(modelClass, 'attributes').get(propertyName);
+    });
+
+    return invalid;
   },
 });

@@ -43,6 +43,7 @@ export default Ember.Mixin.create({
       // Trying to figure out if there is an id param.
       errorData.id = transition && transition.params[this.routeName] ? transition.params[this.routeName].id : undefined;
 
+      transition.abort();
       this.intermediateTransitionTo('error', errorData);
     } else {
       this.controller.send('error', errorData);

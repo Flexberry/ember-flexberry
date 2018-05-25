@@ -74,6 +74,10 @@ export default Ember.Mixin.create({
     if (message.indexOf('Ember Data Request') !== -1 && message.indexOf('returned a 0 Payload (Empty Content-Type)') !== -1) {
       errorData.nameLocaleKey = 'forms.error-form.error';
       errorData.messageLocaleKey = 'forms.error-form.ember-data-request';
+    } else if (message.indexOf('Invalid sorting value') !== -1) {
+      errorData.nameLocaleKey = 'forms.error-form.error';
+      errorData.messageLocaleKey = 'forms.error-form.invalid-sorting-value';
     }
+
   }
 });

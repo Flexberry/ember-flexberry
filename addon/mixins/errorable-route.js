@@ -79,5 +79,14 @@ export default Ember.Mixin.create({
       errorData.messageLocaleKey = 'forms.error-form.invalid-sorting-value';
     }
 
+  },
+
+  resetController(controller, isExiting, transition) {
+    if (isExiting) {
+      if (controller.get('isSortingError')) {
+        controller.set('sort', null);
+        controller.set('isSortingError', undefined);
+      }
+    }
   }
 });

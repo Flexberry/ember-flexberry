@@ -141,7 +141,9 @@ ErrorableRouteMixin, {
     userSettingPromise
       .then(currectPageUserSettings => {
         if (this._invalidSorting(params.sort)) {
-          throw new Error('Invalid sorting value...');
+          this.get('controller').set('isSortingError', true);
+          transition.abort();
+          throw new Error('Invalid sorting value');
         }
 
         if (params) {

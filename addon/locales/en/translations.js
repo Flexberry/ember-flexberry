@@ -17,6 +17,7 @@ export default {
       retry: 'Retry',
       error: 'Error',
       'ember-data-request': 'Server is not available, check the connection to the server',
+      'invalid-sorting-value': 'Invalid sorting parameters value',
     },
 
     'i-i-s-caseberry-logging-objects-application-log-l': {

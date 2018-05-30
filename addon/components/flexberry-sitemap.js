@@ -55,7 +55,7 @@ export default Ember.Component.extend({
     Stores node state.
 
     @property nodeIsOpen
-    @type String
+    @type Boolean
     @default 'false'
   */
   nodeIsOpen: false,

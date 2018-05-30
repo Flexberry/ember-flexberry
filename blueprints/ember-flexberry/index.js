@@ -14,6 +14,11 @@ module.exports = {
       '  app.import(\'vendor/fonts/crim.ttf\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/fonts/crim.woff\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/fonts/crim.woff2\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.eot\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.svg\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.ttf\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.woff\', { destDir: \'assets/fonts\' });\n' +
+      '  app.import(\'vendor/fonts/outline-icons.woff2\', { destDir: \'assets/fonts\' });\n' +
       '  app.import(\'vendor/serviceImages/close.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
       '  app.import(\'vendor/serviceImages/close-hover.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +
       '  app.import(\'vendor/serviceImages/plus.png\', { destDir: \'assets/themes/blue-sky/assets/images\' });\n' +

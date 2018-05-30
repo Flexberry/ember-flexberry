@@ -28,6 +28,11 @@ module.exports = function(defaults) {
   app.import('vendor/fonts/crim.ttf', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.woff', { destDir: 'assets/fonts' });
   app.import('vendor/fonts/crim.woff2', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.eot', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.svg', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.ttf', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.woff', { destDir: 'assets/fonts' });
+  app.import('vendor/fonts/outline-icons.woff2', { destDir: 'assets/fonts' });
   app.import('vendor/serviceImages/close.png', {
     destDir: 'assets/themes/blue-sky/assets/images'
   });

@@ -13,11 +13,7 @@
   <div class="item item-menu">
     <div class="title-item-menu" {{action "menuToggle"}}>
       {{#if sitemap.children.length}}
-        {{#if nodeIsOpen}}
-          <i class="icon fa-minus-square-o"></i>
-        {{else}}
-          <i class="icon fa-plus-square-o"></i>
-        {{/if}}
+        <i class="{{if nodeIsOpen "minus" "plus"}} square outline icon"></i>
       {{/if}}
       {{sitemap.caption}}
     </div>

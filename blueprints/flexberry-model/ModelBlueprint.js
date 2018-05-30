@@ -9,14 +9,14 @@ var path = require("path");
 var lodash = require("lodash");
 var Locales_1 = require("../flexberry-core/Locales");
 var TAB = "  ";
-var SortedPair = (function () {
+var SortedPair = /** @class */ (function () {
     function SortedPair(index, str) {
         this.index = index;
         this.str = str;
     }
     return SortedPair;
 }());
-var ModelBlueprint = (function () {
+var ModelBlueprint = /** @class */ (function () {
     function ModelBlueprint(blueprint, options) {
         var modelsDir = path.join(options.metadataDir, "models");
         if (!options.file) {
@@ -158,7 +158,8 @@ var ModelBlueprint = (function () {
                 TAB + TAB + TAB + "```\n" +
                 TAB + "*/\n" +
                 TAB + ("_" + attr.name + "Compute: function() {\n") +
-                TAB + TAB + ("let result = (this." + attr.name + "Compute && typeof this." + attr.name + "Compute === 'function') ? this." + attr.name + "Compute() : null;\n") +
+                TAB + TAB + ("let result = (this." + attr.name + "Compute && typeof this." + attr.name + "Compute === 'function') ?\n") +
+                TAB + TAB + TAB + ("this." + attr.name + "Compute() : null;\n") +
                 TAB + TAB + ("this.set('" + attr.name + "', result);\n") +
                 TAB + "}";
             attrs.push(methodToSetNotStoredProperty);

@@ -39,12 +39,6 @@ module.exports = function(defaults) {
   app.import('vendor/serviceImages/close-hover.png', {
     destDir: 'assets/themes/blue-sky/assets/images'
   });
-  app.import('vendor/serviceImages/plus.png', {
-    destDir: 'assets/themes/blue-sky/assets/images'
-  });
-  app.import('vendor/serviceImages/minus.png', {
-    destDir: 'assets/themes/blue-sky/assets/images'
-  });
   app.import('vendor/serviceImages/header-bgw.png', {
     destDir: 'assets/themes/orange/assets/images'
   });

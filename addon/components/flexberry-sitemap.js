@@ -56,7 +56,7 @@ export default Ember.Component.extend({
 
     @property nodeIsOpen
     @type Boolean
-    @default 'false'
+    @default false
   */
   nodeIsOpen: false,
 

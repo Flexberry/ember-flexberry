@@ -4,9 +4,12 @@
   {{/link-to}}
 {{else if sitemap.caption}}
   <div class="item item-menu">
-    <div class="item-plus" {{action "menuToggle"}}></div>
-    <div class="item-minus hidden" {{action "menuToggle"}}></div>
-    <div class="title-item-menu" {{action "menuToggle"}}>{{sitemap.caption}}</div>
+    <div class="title-item-menu" {{action "menuToggle"}}>
+      {{#if sitemap.children.length}}
+        <i class="{{if nodeIsOpen "minus" "plus"}} square outline icon"></i>
+      {{/if}}
+      {{sitemap.caption}}
+    </div>
     {{#if sitemap.children.length}}
       <div class="menu subMenu hidden">
         {{#each sitemap.children as |child|}}

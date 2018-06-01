@@ -30,5 +30,5 @@ test('it renders and works', function(assert) {
   this.render(hbs`{{flexberry-sitemap sitemap=sitemap}}`);
   assert.equal(this.$('.title-item-menu:visible').text().trim(), 'Superheroes', 'Menu is closed.');
   this.$('.title-item-menu:visible').click();
-  assert.equal(this.$('.title-item-menu:visible').text().trim(), 'SuperheroesSupermanIronman', 'Menu is open.');
+  assert.equal(this.$('.title-item-menu:visible').text().trim().replace(/\s+/g, ''), 'SuperheroesSupermanIronman', 'Menu is open.');
 });

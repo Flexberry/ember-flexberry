@@ -66,7 +66,7 @@ module.exports = {
   locals: function (options) {
     let projectTypeNameCamel = "App";
     let projectTypeNameCebab = "app";
-    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon" ) {
+    if (options.project.pkg.keywords && options.project.pkg.keywords["0"] === "ember-addon") {
       options.dummy = true;
       projectTypeNameCamel = "Addon";
       projectTypeNameCebab = "addon";

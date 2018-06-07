@@ -1113,7 +1113,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Hook that executes before deleting the record.
-    Not use async functions.
 
     @example
       ```handlebars
@@ -1147,6 +1146,42 @@ export default FlexberryBaseComponent.extend({
     @param {Boolean} [data.immediately] See {{#crossLink "ObjectListView/immediateDelete:property"}}{{/crossLink}} property for details.
   */
   beforeDeleteRecord: undefined,
+
+  /**
+    Hook that executes before deleting all records on all pages.
+
+    @example
+      ```handlebars
+      <!-- app/templates/employees.hbs -->
+      {{flexberry-objectlistview
+        ...
+        beforeDeleteAllRecords=(action 'beforeDeleteAllRecords')
+        ...
+      }}
+      ```
+
+      ```javascript
+      // app/controllers/employees.js
+      import ListFormController from './list-form';
+
+      export default ListFormController.extend({
+        actions: {
+          beforeDeleteAllRecords(modelName, data) {
+            if (modelName === 'application-user') {
+              data.cancel = true;
+            }
+          }
+        }
+      });
+      ```
+
+    @method beforeDeleteAllRecords
+    @param {String} modelName Model name for deleting records.
+    @param {Object} data Metadata.
+    @param {Boolean} [data.cancel=false] Flag for canceling deletion.
+    @param {Object} [data.filterQuery] Filter applying before delete all records on all pages.
+  */
+  beforeDeleteAllRecords: undefined,
 
   /**
     An overridable method called when objects are instantiated.

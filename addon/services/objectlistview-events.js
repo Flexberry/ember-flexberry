@@ -72,6 +72,19 @@ export default Ember.Service.extend(Ember.Evented, {
   },
 
   /**
+    Trigger for "delete all rows on all pages" event in objectlistview.
+    Event name: olvDeleteAllRows.
+
+    @method deleteAllRowsTrigger
+
+    @param {String} componentName The name of objectlistview component
+    @param {Object} filterQuery Filter applying before delete all records on all pages
+  */
+  deleteAllRowsTrigger(componentName, filterQuery) {
+    this.trigger('olvDeleteAllRows', componentName, filterQuery);
+  },
+
+  /**
     Trigger for "refresh list" event in OLV component.
 
     @method refreshListTrigger

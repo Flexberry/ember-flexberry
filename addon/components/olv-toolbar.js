@@ -436,7 +436,6 @@ export default FlexberryBaseComponent.extend({
 
       let componentName = this.get('componentName');
 
-      //TODO: Implement the method of removing all objects.
       if (!this.get('allSelect'))
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
@@ -448,13 +447,7 @@ export default FlexberryBaseComponent.extend({
           modelName: modelName
         };
 
-        let promise = this.get('store').deleteAllRecords(modelName, filterQuery);
-
-        promise.then(()=> {
-          this.get('objectlistviewEventsService').refreshListTrigger(componentName);
-        }).catch((errorData) => {
-          Ember.assert(errorData);
-        });
+        this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
       }
     },
 
@@ -735,6 +728,10 @@ export default FlexberryBaseComponent.extend({
     @param {Integer} count Number of deleted records
   */
   _rowsDeleted(componentName, count) {
+    if (this.get('allSelect')) {
+      this.get('objectlistviewEventsService').updateSelectAllTrigger(this.get('componentName'), false);
+    }
+
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', false);
     }

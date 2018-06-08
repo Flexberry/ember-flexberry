@@ -3,18 +3,19 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.12.0] - 2018-06-08
 ### Added
 * `flexberry-toggler` component:
     * Saving status in user settings (`componentName` must be specified).
 * `flexberry-objectlistview` component:
     * `customButtonsInRow` property for adding buttons into rows (analog of `customButtons` property).
     * Ability to pass function in `buttonAction` property inside `customButtons` and `customButtonsInRow` properties.
-    * Deleting records when "all on all pages" is selected.
     * Renaming columns when exporting to Excel.
 * `flexberry-error` component and `error` template:
     * Translating of error messages support if `messageLocaleKey` property is specified in error.
 * List components:
-    * `beforeDeleteAllRecords` action for processing actions and possible cancel of deleting when trying to delete all records on all pages.
+    * Deleting records when "all on all pages" is selected. Now `beforeDeleteAllRecords` action could be overriden in list form controller for processing custom actions and possible cancel of deleting when trying to delete all records on all pages. It is also required `DeleteAllSelect` action to be implemented in OData-backend to make this functionality avaliable. __`beforeDeleteAllRecords` parameter with passing corresponding action should be added to all list components in application (it could be "default" action with same name from `list-form` controller), otherwise all records from all pages in some list form could be deleted by user permanently without any confirmation or notication!__.
 
 ### Changed
 * Update dependency on `ember-flexberry-data` to version `0.12.0`.

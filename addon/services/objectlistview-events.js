@@ -233,14 +233,15 @@ export default Ember.Service.extend(Ember.Evented, {
     @method updateSelectAll
 
     @param {String} componentName The name of object-list-view component
-    @param {Boolean} selectAllParameter Flag to selet all records parameter.
+    @param {Boolean} selectAllParameter Flag to specify if all records should be selected or unselected.
+    @param {Boolean} skipConfugureRows Flag to specify if configuring rows needs to be skipped.
   */
-  updateSelectAllTrigger(componentName, selectAllParameter) {
+  updateSelectAllTrigger(componentName, selectAllParameter, skipConfugureRows) {
     if (!selectAllParameter) {
       this.clearSelectedRecords(componentName);
     }
 
-    this.trigger('updateSelectAll', componentName, selectAllParameter);
+    this.trigger('updateSelectAll', componentName, selectAllParameter, skipConfugureRows);
   },
 
   /**

@@ -1139,7 +1139,8 @@ export default folv.extend(
     checkAll(e) {
       let checked = !this.get('allSelect');
       let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
+      this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked, true);
+      this.selectedRowsChanged();
     },
 
     /**
@@ -2923,7 +2924,7 @@ export default folv.extend(
     @method _selectAll
     @private
   */
-  _selectAll(componentName, selectAllParameter) {
+  _selectAll(componentName, selectAllParameter, skipConfugureRows) {
     if (componentName === this.componentName)
     {
       this.set('allSelect', selectAllParameter);
@@ -2950,8 +2951,9 @@ export default folv.extend(
         recordWithKey.set('rowConfig.canBeSelected', !selectAllParameter);
       }
 
-      this.selectedRowsChanged();
-
+      if (!skipConfugureRows) {
+        this.selectedRowsChanged();
+      }
     }
   },
 });

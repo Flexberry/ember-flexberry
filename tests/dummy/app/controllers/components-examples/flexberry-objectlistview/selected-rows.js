@@ -38,7 +38,7 @@ export default ListFormController.extend({
     }
   },
 
-  _selectAll(componentName, selectAllParameter) {
+  _selectAll(componentName, selectAllParameter, skipConfugureRows) {
     if (componentName === this.get('componentName')) {
       this.set('allSelect', selectAllParameter);
     }
@@ -50,7 +50,7 @@ export default ListFormController.extend({
   },
 
   willDestroyElement() {
-    this._super(...arguments);
     this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
+    this._super(...arguments);
   },
 });

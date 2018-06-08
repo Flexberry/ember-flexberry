@@ -784,7 +784,7 @@ export default FlexberryBaseComponent.extend({
     this._updateListNamedUserSettings();
   },
 
-  _selectAll(componentName, selectAllParameter) {
+  _selectAll(componentName, selectAllParameter, skipConfugureRows) {
     if (componentName === this.componentName)
     {
       this.set('allSelect', selectAllParameter);

@@ -1027,7 +1027,8 @@ export default FlexberryBaseComponent.extend(
       let checked = !this.get('allSelect');
 
       let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
+      this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked, true);
+      this.selectedRowsChanged();
     },
 
     /**
@@ -2442,7 +2443,7 @@ export default FlexberryBaseComponent.extend(
     @method _selectAll
     @private
   */
-  _selectAll(componentName, selectAllParameter) {
+  _selectAll(componentName, selectAllParameter, skipConfugureRows) {
     if (componentName === this.componentName)
     {
       this.set('allSelect', selectAllParameter);
@@ -2468,7 +2469,9 @@ export default FlexberryBaseComponent.extend(
         recordWithKey.set('rowConfig.canBeSelected', !selectAllParameter);
       }
 
-      this.selectedRowsChanged();
+      if (!skipConfugureRows) {
+        this.selectedRowsChanged();
+      }
     }
   },
 });

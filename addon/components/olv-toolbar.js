@@ -167,6 +167,15 @@ export default FlexberryBaseComponent.extend({
   */
   listNamedUserSettings: undefined,
 
+  /**
+    Current store. Used for loading data for autocomplete and for dropdown.
+
+    @property store
+    @type Projection.OnlineStore
+    @readOnly
+  */
+  store: Ember.inject.service('store'),
+
   _listNamedUserSettings: Ember.observer('listNamedUserSettings', function() {
     let listNamedUserSettings = this.get('listNamedUserSettings');
     for (let namedSetting in listNamedUserSettings) {
@@ -427,10 +436,18 @@ export default FlexberryBaseComponent.extend({
 
       let componentName = this.get('componentName');
 
-      //TODO: Implement the method of removing all objects.
       if (!this.get('allSelect'))
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      } else {
+        let modelName = this.get('modelController.modelProjection.modelName');
+
+        let filterQuery = {
+          predicate: this.get('currentController.filtersPredicate'),
+          modelName: modelName
+        };
+
+        this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
       }
     },
 
@@ -483,10 +500,17 @@ export default FlexberryBaseComponent.extend({
 
       @method actions.customButtonAction
       @public
-      @param {String} actionName The name of action
+      @param {Function|String} action The action or name of action.
     */
-    customButtonAction(actionName) {
-      this.sendAction('customButtonAction', actionName);
+    customButtonAction(action) {
+      let actionType = typeof action;
+      if (actionType === 'function') {
+        action();
+      } else if (actionType === 'string') {
+        this.sendAction('customButtonAction', action);
+      } else {
+        throw new Error('Unsupported action type for custom buttons.');
+      }
     },
 
     /**
@@ -704,6 +728,10 @@ export default FlexberryBaseComponent.extend({
     @param {Integer} count Number of deleted records
   */
   _rowsDeleted(componentName, count) {
+    if (this.get('allSelect')) {
+      this.get('objectlistviewEventsService').updateSelectAllTrigger(this.get('componentName'), false);
+    }
+
     if (componentName === this.get('componentName')) {
       this.set('isDeleteButtonEnabled', false);
     }
@@ -756,7 +784,7 @@ export default FlexberryBaseComponent.extend({
     this._updateListNamedUserSettings();
   },
 
-  _selectAll(componentName, selectAllParameter) {
+  _selectAll(componentName, selectAllParameter, skipConfugureRows) {
     if (componentName === this.componentName)
     {
       this.set('allSelect', selectAllParameter);

@@ -26,6 +26,28 @@
     outline: none;
 }
 
+.ember-view.flexberry-lookup input.lookup-field.ember-view.ember-text-field {
+    border-bottom: none;
+}
+
+.flexberry-lookup .ui.fluid.action.input {
+    border: none;
+    border-bottom: 1px solid @inputBorderColor;
+    border-radius: 0px;
+    outline: none;
+}
+
+.ember-view.example-simpledatetime input.flatpickr-input {
+    border-bottom: none;
+}
+
+.flexberry-simpledatetime .ui.fluid.action.input {
+    border: none;
+    border-bottom: 1px solid @inputBorderColor;
+    border-radius: 0px;
+    outline: none;
+}
+
 input[type="checkbox"]:after {
     content: "";
     display: inline-block;

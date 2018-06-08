@@ -862,10 +862,18 @@ export default folv.extend(
 
       let componentName = this.get('componentName');
 
-      //TODO: Implement the method of removing all objects.
       if (!this.get('allSelect'))
       {
         this.get('objectlistviewEventsService').deleteRowsTrigger(componentName, true);
+      } else {
+        let modelName = this.get('modelProjection.modelName');
+
+        let filterQuery = {
+          predicate: this.get('currentController.filtersPredicate'),
+          modelName: modelName
+        };
+
+        this.get('objectlistviewEventsService').deleteAllRowsTrigger(componentName, filterQuery);
       }
     },
 
@@ -1129,32 +1137,10 @@ export default folv.extend(
       @param {jQuery.Event} e jQuery.Event by click on ckeck all button
     */
     checkAll(e) {
-      let contentWithKeys = this.get('contentWithKeys');
-
       let checked = !this.get('allSelect');
-      Ember.set(this, 'allSelect', checked);
-      Ember.set(this, 'isDeleteButtonEnabled', checked);
-
-      for (let i = 0; i < contentWithKeys.length; i++) {
-        let recordWithKey = contentWithKeys[i];
-        let selectedRow = this._getRowByKey(recordWithKey.key);
-
-        if (checked) {
-          if (!selectedRow.hasClass('active')) {
-            selectedRow.addClass('active');
-          }
-        } else {
-          if (selectedRow.hasClass('active')) {
-            selectedRow.removeClass('active');
-          }
-        }
-
-        recordWithKey.set('selected', checked);
-        recordWithKey.set('rowConfig.canBeSelected', !checked);
-      }
-
       let componentName = this.get('componentName');
-      this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked);
+      this.get('objectlistviewEventsService').updateSelectAllTrigger(componentName, checked, true);
+      this.selectedRowsChanged();
     },
 
     /**
@@ -1203,12 +1189,14 @@ export default folv.extend(
 
     this.get('objectlistviewEventsService').on('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').on('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').on('olvDeleteAllRows', this, this._deleteAllRows);
     this.get('objectlistviewEventsService').on('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').on('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').on('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').on('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').on('resetFilters', this, this._resetColumnFilters);
     this.get('objectlistviewEventsService').on('updateWidth', this, this.setColumnWidths);
+    this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
 
     this.get('colsConfigMenu').on('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').on('addNamedSetting', this, this.__addNamedSetting);
@@ -1329,12 +1317,14 @@ export default folv.extend(
 
     this.get('objectlistviewEventsService').off('olvAddRow', this, this._addRow);
     this.get('objectlistviewEventsService').off('olvDeleteRows', this, this._deleteRows);
+    this.get('objectlistviewEventsService').off('olvDeleteAllRows', this, this._deleteAllRows);
     this.get('objectlistviewEventsService').off('filterByAnyMatch', this, this._filterByAnyMatch);
     this.get('objectlistviewEventsService').off('refreshList', this, this._refreshList);
     this.get('objectlistviewEventsService').off('olvRowSelected', this, this._rowSelected);
     this.get('objectlistviewEventsService').off('olvRowsDeleted', this, this._rowsDeleted);
     this.get('objectlistviewEventsService').off('resetFilters', this, this._resetColumnFilters);
     this.get('objectlistviewEventsService').off('updateWidth', this, this.setColumnWidths);
+    this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
     this.get('colsConfigMenu').off('updateNamedSetting', this, this._updateListNamedUserSettings);
     this.get('colsConfigMenu').off('addNamedSetting', this, this.__addNamedSetting);
     this.get('colsConfigMenu').off('deleteNamedSetting', this, this._deleteNamedSetting);
@@ -2152,6 +2142,91 @@ export default folv.extend(
   },
 
   /**
+    Handler for "delete all rows on all pages" event in objectlistview.
+
+    @method _deleteRows
+
+    @param {String} componentName The name of objectlistview component
+    @param {Object} filterQuery Filter applying before delete all records on all pages
+  */
+  _deleteAllRows(componentName, filterQuery) {
+    if (componentName === this.get('componentName')) {
+      let currentController = this.get('currentController');
+      currentController.onDeleteActionStarted();
+      let beforeDeleteAllRecords = this.get('beforeDeleteAllRecords');
+      let possiblePromise = null;
+      let modelName = this.get('modelName');
+      let data = {
+        cancel: false,
+        filterQuery: filterQuery
+      };
+
+      if (beforeDeleteAllRecords) {
+        Ember.assert('beforeDeleteAllRecords must be a function', typeof beforeDeleteAllRecords === 'function');
+
+        possiblePromise = beforeDeleteAllRecords(modelName, data);
+
+        if ((!possiblePromise || !(possiblePromise instanceof Ember.RSVP.Promise)) && data.cancel) {
+          return;
+        }
+      }
+
+      if (possiblePromise || (possiblePromise instanceof Ember.RSVP.Promise)) {
+        possiblePromise.then(() => {
+          if (!data.cancel) {
+            this._actualDeleteAllRecords(componentName, modelName, data.filterQuery);
+          }
+        });
+      } else {
+        this._actualDeleteAllRecords(componentName, modelName, data.filterQuery);
+      }
+    }
+  },
+
+  /**
+    Actually delete the all records on all pages.
+
+    @method _actualDeleteAllRecords
+    @private
+
+    @param {String} componentName The name of objectlistview component
+    @param {String} modelName Model name that defines type of records to delete
+    @param {Object} filterQuery Filter applying before delete all records
+  */
+  _actualDeleteAllRecords(componentName, modelName, filterQuery) {
+    this.get('objectlistviewEventsService').setLoadingState('loading');
+    let promise = this.get('store').deleteAllRecords(modelName, filterQuery);
+
+    promise.then((data)=> {
+      if (data.deletedCount > -1) {
+        this.get('objectlistviewEventsService').setLoadingState('success');
+        this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, data.deletedCount, true);
+        this.get('currentController').onDeleteActionFulfilled();
+        this.get('objectlistviewEventsService').refreshListTrigger(componentName);
+      } else {
+        this.get('objectlistviewEventsService').setLoadingState('error');
+        let errorData = {
+          message: data.message
+        };
+
+        this.get('currentController').onDeleteActionRejected(errorData);
+        this.get('currentController').send('handleError', errorData);
+      }
+    }).catch((errorData) => {
+      this.get('objectlistviewEventsService').setLoadingState('error');
+      if (!Ember.isNone(errorData.status) && errorData.status === 0 && !Ember.isNone(errorData.statusText) &&  errorData.statusText === 'error') {
+        // This message will be converted to corresponding localized message.
+        errorData.message = 'Ember Data Request returned a 0 Payload (Empty Content-Type)';
+      }
+
+      this.get('currentController').onDeleteActionRejected(errorData);
+      this.get('currentController').send('handleError', errorData);
+    }).finally((data) => {
+      this.get('currentController').onDeleteActionAlways(data);
+    });
+  },
+
+  /**
     Handler for "delete selected rows" event in objectlistview.
 
     @method _deleteRows
@@ -2170,7 +2245,7 @@ export default folv.extend(
       }, this);
 
       selectedRecords.clear();
-      this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count);
+      this.get('objectlistviewEventsService').rowsDeletedTrigger(componentName, count, immediately);
     }
   },
 
@@ -2841,5 +2916,44 @@ export default folv.extend(
         this.get('colsSettingsItems')[0].items[i + 1].items.sort((a, b) => a.title > b.title);
       }
     }
-  }
+  },
+
+  /**
+    Select/Unselect all records on all pages.
+
+    @method _selectAll
+    @private
+  */
+  _selectAll(componentName, selectAllParameter, skipConfugureRows) {
+    if (componentName === this.componentName)
+    {
+      this.set('allSelect', selectAllParameter);
+      this.set('isDeleteButtonEnabled', selectAllParameter);
+
+      let contentWithKeys = this.get('contentWithKeys');
+      let selectedRecords = this.get('selectedRecords');
+      for (let i = 0; i < contentWithKeys.length; i++) {
+        let recordWithKey = contentWithKeys[i];
+        let selectedRow = this._getRowByKey(recordWithKey.key);
+
+        if (selectAllParameter) {
+          if (!selectedRow.hasClass('active')) {
+            selectedRow.addClass('active');
+          }
+        } else {
+          if (selectedRow.hasClass('active')) {
+            selectedRow.removeClass('active');
+          }
+        }
+
+        selectedRecords.removeObject(recordWithKey.data);
+        recordWithKey.set('selected', selectAllParameter);
+        recordWithKey.set('rowConfig.canBeSelected', !selectAllParameter);
+      }
+
+      if (!skipConfugureRows) {
+        this.selectedRowsChanged();
+      }
+    }
+  },
 });

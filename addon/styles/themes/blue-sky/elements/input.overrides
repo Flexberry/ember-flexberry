@@ -51,3 +51,13 @@
   margin-left: 0;
   margin-right: 0;
 }
+
+.flexberry-lookup .input span.lookup-field {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 15px;
+}
+
+span.lookup-field {
+  word-break: break-all;
+}

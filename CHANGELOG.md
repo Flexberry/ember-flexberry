@@ -4,6 +4,39 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.0] - 2018-06-08
+### Added
+* `flexberry-toggler` component:
+    * Saving status in user settings (`componentName` must be specified).
+* `flexberry-objectlistview` component:
+    * `customButtonsInRow` property for adding buttons into rows (analog of `customButtons` property).
+    * Ability to pass function in `buttonAction` property inside `customButtons` and `customButtonsInRow` properties.
+    * Renaming columns when exporting to Excel.
+* `flexberry-error` component and `error` template:
+    * Translating of error messages support if `messageLocaleKey` property is specified in error.
+* List components:
+    * Deleting records when "all on all pages" is selected. Now `beforeDeleteAllRecords` action could be overriden in list form controller for processing custom actions and possible cancel of deleting when trying to delete all records on all pages. It is also required `DeleteAllSelect` action to be implemented in OData-backend to make this functionality avaliable. __`beforeDeleteAllRecords` parameter with passing corresponding action should be added to all list components in application (it could be "default" action with same name from `list-form` controller), otherwise all records from all pages in some list form could be deleted by user permanently without any confirmation or notication!__.
+
+### Changed
+* Update dependency on `ember-flexberry-data` to version `0.12.0`.
+* List components:
+    * Sorting applied by clicking on the column header, is saving in user settings now.
+* Downgrade `ember-data` version to `2.4.3` when installing or updating addon using `ember install ember-flexberry` command.
+
+### Fixed
+* `flexberry-simpleolv`:
+    * Hightliting of resert sorting and reset selecting buttons is now applying on active instead of hover in mobile template.
+* `flexberry-objectlistview` component:
+    * Buttons in rows when the component is in hierarchical mode.
+    * Fix behavior of `singleColumnHeaderTitle` in mobile mode.
+    * Displaying of button for showing/hiding nested records after disable hierarchical mode in mobile mode.
+* List components:
+    * Displaying spinner when appying user settings using user settings dialog.
+* `flexberry-lookup` component:
+    * Word breaking when displaying value is longer than component width in mobile mode.
+* `flexberry-simpledatetime` component:
+    * Inability to choose extreme values of date range when min or max values are set.
+
 ## [0.11.0] - 2018-02-20
 ### Added
 * `flexberry-groupedit` component:

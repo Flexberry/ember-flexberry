@@ -82,6 +82,17 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
   */
   state: undefined,
 
+  actions: {
+    /**
+      Hook that executes before deleting all records on all pages.
+      Need to be overriden in corresponding application controller.
+    */
+    beforeDeleteAllRecords(modelName, data) {
+      data.cancel = true;
+      Ember.assert(`Please specify 'beforeDeleteAllRecords' action for '${this.componentName}' list compoenent in corresponding controller`);
+    }
+  },
+
   /**
     Method to get type and attributes of component, which will be embeded in object-list-view cell.
 
@@ -145,7 +156,9 @@ export default Ember.Controller.extend(PaginatedControllerMixin,
     @param {Object} errorData Data about delete operation fail.
   */
   onDeleteActionRejected(errorData, record) {
-    this.rejectError(errorData, `Unable to delete a record: ${record.toString()}.`);
+    if (!Ember.isNone(record)) {
+      this.rejectError(errorData, `Unable to delete a record: ${record.toString()}.`);
+    }
   },
 
   /**

@@ -30,7 +30,13 @@ export default ListFormRoute.extend({
   @type Object
   @default {}
   */
-  developerUserSettings: { FOLVSettingsExampleObjectListView: { } },
+  developerUserSettings: {
+    FOLVSettingsExampleObjectListView: {
+      'DEFAULT': {
+        'columnWidths': [{ 'propName': 'OlvRowToolbar', 'fixed': false, 'width': 90 }]
+      }
+    }
+  },
 
   /**
     Name of model to be used as list's records types.

@@ -656,7 +656,6 @@ export default FlexberryBaseComponent.extend({
 
   /**
     Hook that executes before deleting the record.
-    Not use async functions.
 
     @example
       ```handlebars

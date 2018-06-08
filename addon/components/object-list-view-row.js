@@ -242,11 +242,18 @@ export default FlexberryBaseComponent.extend({
       Sends action up to {{#crossLink "ObjectListViewComponent"}}`object-list-view`{{/crossLink}} component.
 
       @method actions.customButtonInRowAction
-      @param {String} actionName The name of action.
+      @param {Function|String} action The action or name of action.
       @param {DS.Model} model Model in row.
     */
-    customButtonInRowAction(actionName, model) {
-      this.sendAction('customButtonInRowAction', actionName, model);
+    customButtonInRowAction(action, model) {
+      let actionType = typeof action;
+      if (actionType === 'function') {
+        action(model);
+      } else if (actionType === 'string') {
+        this.sendAction('customButtonInRowAction', action, model);
+      } else {
+        throw new Error('Unsupported action type for custom buttons in row.');
+      }
     },
 
     /**

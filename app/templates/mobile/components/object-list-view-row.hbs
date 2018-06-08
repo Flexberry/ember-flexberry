@@ -37,7 +37,7 @@
         dynamicProperties=singleColumnCellComponent.componentProperties
         readonly=readonly
       }}
-      {{#if hasRecords}}
+      {{#if (and inHierarchicalMode hasRecords)}}
         <button class="ui button icon mini {{buttonClass}}" {{action "expand" bubbles=false}}>
           <i class="{{if _expanded "minus" "plus"}} hierarchy-expand icon"></i>
         </button>

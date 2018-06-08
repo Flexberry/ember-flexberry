@@ -11,5 +11,15 @@ export default ListFormController.extend(ListFormControllerOperationsIndicationM
    */
   editFormRoute: 'ember-flexberry-dummy-suggestion-edit',
 
-  exportExcelProjection: 'SuggestionL'
+  exportExcelProjection: 'SuggestionL',
+
+  actions: {
+    /**
+      Hook that executes before deleting all records on all pages.
+      Need to be overriden in corresponding application controller.
+    */
+    beforeDeleteAllRecords(modelName, data) {
+      data.cancel = false;
+    }
+  }
 });

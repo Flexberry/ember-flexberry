@@ -125,7 +125,7 @@ export default ListFormController.extend({
     @property showCheckBoxInRow
     @type Boolean
    */
-  showCheckBoxInRow: false,
+  showCheckBoxInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-simpleolv' component is in 'showDeleteButtonInRow' mode or not.

@@ -17,6 +17,7 @@ export default {
       retry: 'Повторить попытку',
       error: 'Ошибка',
       'ember-data-request': 'Сервер недоступен, необходимо проверить соединение с сервером',
+      'invalid-sorting-value': 'Указаны неправильные параметры сортировки',
     },
 
     'i-i-s-caseberry-logging-objects-application-log-l': {

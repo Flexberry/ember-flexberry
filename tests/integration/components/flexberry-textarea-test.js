@@ -335,19 +335,19 @@ test('wrap mode works properly', function(assert) {
   let $component = this.$().children();
   let $textareaInput = $component.children('textarea');
 
-  // Check that <textarea>'s wrap attribute 'soft'.
-  this.set('wrap', 'soft');
-  assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('wrap')),
-    'soft',
-    'Component\'s inner <textarea> wrap attribute \'soft\'');
-
   // Check that <textarea>'s wrap attribute 'hard'.
   this.set('wrap', 'hard');
   assert.strictEqual(
     Ember.$.trim($textareaInput.attr('wrap')),
     'hard',
     'Component\'s inner <textarea> wrap attribute \'hard\'');
+
+  // Check that <textarea>'s wrap attribute 'soft'.
+  this.set('wrap', 'soft');
+  assert.strictEqual(
+    Ember.$.trim($textareaInput.attr('wrap')),
+    'soft',
+    'Component\'s inner <textarea> wrap attribute \'soft\'');
 
   // Check that <textarea>'s wrap attribute 'off'.
   this.set('wrap', 'off');
@@ -476,21 +476,27 @@ test('selectionStart mode works properly', function(assert) {
   $textareaInput.change();
 
   //Generate a random value 'selectionStart' and convert to a string.
-  let selectionStartValue = (Math.floor(Math.random() * 10));
+  let selectionStartValue = (Math.floor(Math.random() * 10 + 1));
 
-  // Check that <textarea>'s selectionStart attribute.
-  this.set('selectionStart', selectionStartValue);
-  assert.strictEqual(
-    $textareaInput.prop('selectionStart'),
-    selectionStartValue,
-    'Component\'s inner <textarea>\'s value \'selectionStart\' is equals to \'' + selectionStartValue + '\'');
+  let $this = this;
 
-  // Check that <textarea>'s hasn\'t value maxlength attribute.
-  this.set('selectionStart', null);
-  assert.strictEqual(
-    Ember.$.trim($textareaInput.attr('selectionStart')),
-    '',
-    'Component\'s inner <textarea> hasn\'t value selectionStart attribute');
+  // This timeout  is correcting problem with selectionStart in Mozila Firefox.
+  let done = assert.async();
+  setTimeout(function() {
+    $this.set('selectionStart', selectionStartValue);
+    assert.strictEqual(
+      $textareaInput.prop('selectionStart'),
+      selectionStartValue,
+      'Component\'s inner <textarea>\'s value \'selectionStart\' is equals to \'' + selectionStartValue + '\'');
+
+    // Check that <textarea>'s hasn\'t value maxlength attribute.
+    $this.set('selectionStart', null);
+    assert.strictEqual(
+      Ember.$.trim($textareaInput.attr('selectionStart')),
+      '',
+      'Component\'s inner <textarea> hasn\'t value selectionStart attribute');
+    done();
+  }, 10);
 });
 
 test('selectionEnd mode works properly', function(assert) {
@@ -513,7 +519,7 @@ test('selectionEnd mode works properly', function(assert) {
   $textareaInput.change();
 
   //Generate a random value 'selectionEnd' and convert to a string.
-  let selectionEndValue = (Math.floor(Math.random() * 10));
+  let selectionEndValue = (Math.floor(Math.random() * 10 + 1));
 
   // Check that <textarea>'s selectionEnd attribute.
   this.set('selectionEnd', selectionEndValue);

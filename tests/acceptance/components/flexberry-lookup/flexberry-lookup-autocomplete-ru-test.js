@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import { executeTest } from './execute-flexberry-lookup-test';
+import { loadingLocales } from './lookup-test-functions';
 
-executeTest('flexberry-lookup autocomplete message', (store, assert, app) => {
+executeTest('flexberry-lookup autocomplete message ru', (store, assert, app) => {
   assert.expect(4);
   let path = 'components-acceptance-tests/flexberry-lookup/settings-example-autocomplete';
   visit(path);
@@ -9,8 +10,10 @@ executeTest('flexberry-lookup autocomplete message', (store, assert, app) => {
   andThen(function() {
     assert.equal(currentPath(), path);
 
-    let textbox = Ember.$('.ember-text-field');
-    fillIn(textbox, 'gfhfkjglkhlh');
+    loadingLocales('ru', app).then(() => {
+      let textbox = Ember.$('.ember-text-field');
+      fillIn(textbox, 'gfhfkjglkhlh');
+    });
 
     let asyncOperationsCompleted = assert.async();
     Ember.run.later(function() {

@@ -38,13 +38,19 @@ export default ListFormController.extend({
     }
   },
 
-  _selectAll(componentName, selectAllParameter) {
+  _selectAll(componentName, selectAllParameter, skipConfugureRows) {
     if (componentName === this.get('componentName')) {
       this.set('allSelect', selectAllParameter);
     }
   },
 
   init: function() {
+    this._super(...arguments);
     this.get('objectlistviewEventsService').on('updateSelectAll', this, this._selectAll);
-  }
+  },
+
+  willDestroyElement() {
+    this.get('objectlistviewEventsService').off('updateSelectAll', this, this._selectAll);
+    this._super(...arguments);
+  },
 });

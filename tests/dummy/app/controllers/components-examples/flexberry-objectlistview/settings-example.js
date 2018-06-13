@@ -177,7 +177,7 @@ export default ListFormController.extend({
     @property showCheckBoxInRow
     @type Boolean
    */
-  showCheckBoxInRow: false,
+  showCheckBoxInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteButtonInRow' mode or not.
@@ -201,7 +201,7 @@ export default ListFormController.extend({
     @property showEditMenuItemInRow
     @type Boolean
    */
-  showEditMenuItemInRow: false,
+  showEditMenuItemInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'showDeleteMenuItemInRow' mode or not.
@@ -209,7 +209,7 @@ export default ListFormController.extend({
     @property showDeleteMenuItemInRow
     @type Boolean
    */
-  showDeleteMenuItemInRow: false,
+  showDeleteMenuItemInRow: true,
 
   /**
     Flag: indicates whether 'flexberry-objectlistview' component is in 'rowClickable' mode or not.
